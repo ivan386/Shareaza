@@ -111,6 +111,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
 	AddSetting( &Settings.Gnutella.HostCacheSize, 1, 32, 16384 );
 	AddSetting( &Settings.Gnutella.HostCacheExpire, 60, 1, 24*60, _T(" m") );
+	AddSetting( &Settings.Gnutella.BlockBlankClients, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella1.PacketBufferSize, 1, 1, 1024 );
 	AddSetting( &Settings.Gnutella1.PacketBufferTime, 1000, 10, 180, _T(" s") );
