@@ -1,2 +1,0 @@
-﻿Pradedant 2.0.0.1 versija, Jūs galite pasirinkti, ar sukurti  asmeninę parsisiuntimų kolekciją ar ją padaryti bendrą visiems kompiuterio vartotojams.
-Tačiau visa tai neveiks, jei Jūs diegsite „Shareaza“ virš senesnės versijos.

@@ -1,2 +1,0 @@
-Starting from version 2.0.0.1 you can choose whether you want to make your download library personal or share it with other users of this computer.
-This will not work if your are installing over an older version of Shareaza however.
