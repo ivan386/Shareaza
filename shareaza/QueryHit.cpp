@@ -546,6 +546,10 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD
 	{
 		if ( pPacket->GetRemaining() < sizeof(MD4) + 1 ) return NULL;
 		pPacket->Read( &pHash, sizeof(MD4) );
+
+theApp.Message( MSG_ERROR, _T("Processing FoundSources") );
+theApp.Message( MSG_ERROR, CED2K::HashToString( &pHash ) );
+
 		BYTE nCount = pPacket->ReadByte();
 		
 		while ( nCount-- > 0 && pPacket->GetRemaining() >= 6 )

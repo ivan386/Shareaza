@@ -169,6 +169,8 @@ BOOL CEDClient::Connect()
 	{
 		if ( ! m_pDownload || m_pDownload->m_nState != dtsQueued )
 			return FALSE;	
+		Beep(800,400);
+		theApp.Message( MSG_ERROR, _T("*** ED2K Queued download over-riding max client connections") );
 	}
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) )
@@ -1231,7 +1233,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	// Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
 	{
-		theApp.Message( MSG_ERROR, _T("Empty message packet recieved from %s"), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, _T("Empty message packet received from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 
@@ -1241,7 +1243,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	// Validate message length
 	if ( ( nMessageLength < 1 ) || ( nMessageLength > 500 ) || ( nMessageLength != pPacket->GetRemaining() ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Invalid message packet recieved from %s"), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, _T("Invalid message packet received from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 

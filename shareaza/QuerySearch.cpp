@@ -334,6 +334,8 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			// For newer servers, send the file size if it's valid (and not over 4GB)
 			if ( ( bGetS2 ) && ( m_nMinSize == m_nMaxSize ) && ( m_nMaxSize < 0xFFFFFFFF ) )
 			{
+				theApp.Message( MSG_ERROR, ( _T("Creating multi-hash capapbe GetSources2 for: ") + CED2K::HashToString( &m_pED2K ) ) );
+
 				// Newer server, send size as well as hash
 				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
 				// Add the hash/size this packet is for
@@ -421,7 +423,7 @@ BOOL CQuerySearch::WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP )
 	CSingleLock pLock( &Transfers.m_pSection );
 	pLock.Lock();
 
-theApp.Message( MSG_ERROR, _T("Creating GetSources multi-packet") );
+theApp.Message( MSG_ERROR, _T("Adding additional hashes to GetSources2 packet") );
 
 	// Run through all active downloads
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
@@ -449,7 +451,7 @@ theApp.Message( MSG_ERROR, _T("Creating GetSources multi-packet") );
 
 					if ( ( bFewSources ) || ( bDataStarve ) || ( nFiles < 10 ) )
 					{
-theApp.Message( MSG_ERROR, pDownload->m_sLocalName );
+theApp.Message( MSG_ERROR, ( CED2K::HashToString( &pDownload->m_pED2K ) + _T(" - ") + pDownload->m_sLocalName ) );
 						// Add the hash/size for this download
 						pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 						pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );
