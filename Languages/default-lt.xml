@@ -1516,6 +1516,14 @@ right quote	&#147;
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Trumpas žinynas</link>
 		<text align="middle">&#160;- Sužinokite esminius dalykus apie „Shareaza“</text>
+		<newline gap="8"/>
+
+		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
+		<gap size="8"/>
+		<link target="http://sourceforge.net/projects/corefonts/" format="bu" align="middle">Šriftų atnaujinimas</link>
+		<text align="middle">&#160;- Nematote lietuviškų raidžių šiame puslapyje?</text>
+		<newline indent="82"/>
+		<text align="middle">Čia rasite taisyklingą „MS Trebuchet“ ir kitus šriftus.</text>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
