@@ -26,6 +26,7 @@ ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\TorrentWizard.exe
 UninstallDisplayName={cm:NameAndVersion,Torrent Wizard,{#version}}
 UninstallFilesDir={app}\Uninstall
+LicenseFile=setup\license\default.rtf
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
