@@ -193,9 +193,11 @@ void CTransfers::OnRunTransfers()
 	CTransfers::Lock oLock;
 	++m_nRunCookie;
 	
-	for ( POSITION pos = GetIterator(); pos; )
+	while ( !m_pList.IsEmpty()
+		&& static_cast< CTransfer* >( m_pList.GetHead() )->m_nRunCookie != m_nRunCookie )
 	{
-		CTransfer* pTransfer = GetNext( pos );
+		CTransfer* pTransfer = static_cast< CTransfer* >( m_pList.RemoveHead() );
+		m_pList.AddTail( pTransfer );
 		pTransfer->m_nRunCookie = m_nRunCookie;
 		pTransfer->DoRun();
 	}
