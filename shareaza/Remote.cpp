@@ -194,6 +194,7 @@ BOOL CRemote::OnHeadersComplete()
 	{
 		m_pOutput->Print( "HTTP/1.1 404 Not Found\r\n" );
 		m_pOutput->Print( "Content-Length: 0\r\n" );
+		m_pOutput->Print( "Content-Type: text/html\r\n" );
 		m_pOutput->Print( "\r\n" );
 	}
 	
