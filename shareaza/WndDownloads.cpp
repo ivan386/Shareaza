@@ -1525,6 +1525,10 @@ void CDownloadsWnd::OnDownloadsHelp()
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Tracker") );
 	}
+	else if ( !pDownload->IsTrying() )
+	{
+		CHelpDlg::Show( _T("DownloadHelp.Pending") );
+	}
 	else
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
