@@ -480,7 +480,7 @@
                        </menu>
                        <separator/>
                        <item id="ID_NETWORK_CONNECT_TO" text="Kapcsolódás" shortcut="Ctrl+T"/>
-                       <item id="ID_NETWORK_BROWSE_TO" text="Kiszolgáló böngészése..."/>
+                       <item id="ID_NETWORK_BROWSE_TO" text="Fájllista és profil..."/>
                        <separator/>
                        <item id="ID_NETWORK_AUTO_CLOSE" text="Forgalom után kilépés"/>
                        <item id="ID_NETWORK_EXIT" text="Kilépés"/>
@@ -561,7 +561,7 @@
                        <item id="ID_NETWORK_DISCONNECT" text="Lekapcsolódás"/>
                        <separator/>
                        <item id="ID_NETWORK_CONNECT_TO" text="Kapcsolódás" shortcut="Ctrl+T"/>
-                       <item id="ID_NETWORK_BROWSE_TO" text="Kiszolgáló böngészése..."/>
+                       <item id="ID_NETWORK_BROWSE_TO" text="Fájllista és profil..."/>
                        <separator/>
                        <menu text="Hálózat kiválasztása">
                                <item id="ID_NETWORK_G2" text="Kapcsolódás a Gnutella2-höz"/>
@@ -3424,8 +3424,8 @@
 
        <dialog name="CLanguageDlg" cookie="" caption="Nyelv kiválasztása"/>
 
-       <dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Manuális kapcsolódás|Kiszolgáló böngészése">
-               <control caption="Kapcsolódás ehhez:|Kiszolgáló böngészése:"/>
+       <dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Manuális kapcsolódás|Fájllista és profil">
+               <control caption="Kapcsolódás ehhez:|Fájllista és profil:"/>
                <control/><control/>
                <control caption="Protokoll:"/>
                <control/>
