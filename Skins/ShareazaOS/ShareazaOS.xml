@@ -15,7 +15,8 @@
 		type="Skin"
 		language="en" />
       <fonts> 
-        <font name="Panel.Caption" face="Arial" size="12" weight="plain"/> </fonts>
+        <font name="Panel.Caption" face="Arial" size="12" weight="plain"/>
+	  </fonts>
       <!-- Manifest -->
       <colourScheme> 
         <colour name="System.Base.Window"           value="FFFFFF"/>        <!-- main window bg / menu selected hovers -->
@@ -117,7 +118,7 @@
           <region> 
             <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
           </region>
-          <caption align="left" rect="40,0,320,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,0,320,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- floating windows -->
         <windowSkin> 
@@ -151,7 +152,7 @@
           <region> 
             <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
           </region>
-          <caption align="left" rect="40,0,600,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,0,600,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- Other Panels -->
         <windowSkin> 
@@ -173,7 +174,7 @@
           </parts>
           <anchors> 
             <anchor name="Close" rect="-44,6,42,16"/> </anchors>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- MEDIA PLAYER -->
         <windowSkin> 
@@ -189,7 +190,7 @@
           </parts>
           <anchors> 
             <anchor name="Close" rect="-44,6,42,16"/> </anchors>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- SEARCH -->
         <windowSkin> 
@@ -205,7 +206,7 @@
           </parts>
           <anchors> 
             <anchor name="Close" rect="-44,6,42,16"/> </anchors>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- HOME -->
         <windowSkin> 
@@ -216,7 +217,7 @@
             <part name="Top" rect="56,3,5,29"/>
             <part name="TopRight" rect="66,189,76,29"/>
           </parts>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- LIBRARY -->
         <windowSkin> 
@@ -227,7 +228,7 @@
             <part name="Top" rect="56,3,5,29"/>
             <part name="TopRight" rect="66,189,76,29"/>
           </parts>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- DOWNLOADS -->
         <windowSkin> 
@@ -238,7 +239,7 @@
             <part name="Top" rect="56,3,5,29"/>
             <part name="TopRight" rect="66,189,76,29"/>
           </parts>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- UPLOADS -->
         <windowSkin> 
@@ -249,7 +250,7 @@
             <part name="Top" rect="56,1,5,31"/>
             <part name="TopRight" rect="66,187,76,31"/>
           </parts>
-          <caption align="left" rect="40,-0,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-0,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- NEIGHBOURS -->
         <windowSkin> 
@@ -260,7 +261,7 @@
             <part name="Top" rect="56,3,5,29"/>
             <part name="TopRight" rect="66,189,76,29"/>
           </parts>
-          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-2,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- SYSTEM -->
         <windowSkin> 
@@ -271,7 +272,7 @@
             <part name="Top" rect="56,1,5,31"/>
             <part name="TopRight" rect="66,187,76,31"/>
           </parts>
-          <caption align="left" rect="40,-0,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,-0,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- Download Monitor contributed by StevenB -->
         <windowSkin> 
@@ -305,7 +306,7 @@
           <region> 
             <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
           </region>
-          <caption align="left" rect="40,0,250,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999"></caption>
+          <caption align="left" rect="40,0,250,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- MULTI-LANGUAGE NAVBARS -->
         <!-- navbar language for es -->
