@@ -970,11 +970,6 @@
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
-	<menu name="CUploadsWnd.Queue.Basic">
-		<item id="ID_UPLOADS_HELP" text="_Help..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
-	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
