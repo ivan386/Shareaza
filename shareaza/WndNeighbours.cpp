@@ -164,7 +164,7 @@ void CNeighboursWnd::Update()
 		CLiveItem* pItem = pLiveList.Add( pNeighbour->m_nUnique );
 		
 		pItem->Set( 0, pNeighbour->m_sAddress );
-		pItem->Format( 1, _T("%i"), htons( pNeighbour->m_pHost.sin_port ) );
+		pItem->Format( 1, _T("%hu"), htons( pNeighbour->m_pHost.sin_port ) );
 		
 		DWORD nTime = ( nTimeNow - pNeighbour->m_tConnected ) / 1000;
 		
@@ -199,17 +199,19 @@ void CNeighboursWnd::Update()
 		
 		pNeighbour->Measure();
 		
-		pItem->Format( 3, _T("%i/%i"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
+		pItem->Format( 3, _T("%u/%u"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		pItem->Format( 5, _T("%s/%s"), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nTotal, FALSE ), (LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nTotal, FALSE ) );
-		pItem->Format( 6, _T("%i (%i)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
+		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
 		
 		if ( Settings.General.RatesInBytes )
 		{
-			pItem->Format( 4, _T("%.3f/%.3f"), (float)pNeighbour->m_mInput.nMeasure / 1024, (float)pNeighbour->m_mOutput.nMeasure / 1024 );
+			pItem->Format( 4, _T("%.3f/%.3f"), pNeighbour->m_mInput.nMeasure / 1024.0, 
+				pNeighbour->m_mOutput.nMeasure / 1024.0 );
 		}
 		else
 		{
-			pItem->Format( 4, _T("%.3f/%.3f"), (float)pNeighbour->m_mInput.nMeasure / 128, (float)pNeighbour->m_mOutput.nMeasure / 128 );
+			pItem->Format( 4, _T("%.3f/%.3f"), pNeighbour->m_mInput.nMeasure / 128.0,
+				pNeighbour->m_mOutput.nMeasure / 128.0 );
 		}
 		
 		pItem->Set( 9, pNeighbour->m_sUserAgent );
@@ -256,11 +258,11 @@ void CNeighboursWnd::Update()
 			{
 				if ( pG2->m_nLeafLimit > 0 )
 				{
-					pItem->Format( 7, _T("%i/%i"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
+					pItem->Format( 7, _T("%u/%u"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
 				}
 				else
 				{
-					pItem->Format( 7, _T("%i"), pG2->m_nLeafCount );
+					pItem->Format( 7, _T("%u"), pG2->m_nLeafCount );
 				}
 			}
 			else if ( pG2->m_nNodeType != ntLeaf )
@@ -282,11 +284,11 @@ void CNeighboursWnd::Update()
 			{
 				if ( pED2K->m_nUserLimit > 0 )
 				{
-					pItem->Format( 7, _T("%i/%i"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
+					pItem->Format( 7, _T("%u/%u"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
 				}
 				else
 				{
-					pItem->Format( 7, _T("%i"), pED2K->m_nUserCount );
+					pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
 				}
 				
 				LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );

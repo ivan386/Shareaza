@@ -176,11 +176,11 @@ void CHostCacheWnd::Update()
 		pItem->m_nMaskOverlay	= pHost->m_bPriority;
 		
 		pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
-		pItem->Format( 1, _T("%i"), pHost->m_nPort );
+		pItem->Format( 1, _T("%hu"), pHost->m_nPort );
 		
 #ifdef _DEBUG
-		pItem->Format( 2, _T("K:%i A:%i Q:%i"),
-			pHost->m_nKeyValue > 0, pHost->m_tAck > 0, pHost->m_tQuery > 0 );
+		pItem->Format( 2, _T("K:%u A:%u Q:%u"),
+			pHost->m_nKeyValue, pHost->m_tAck, pHost->m_tQuery );
 #else
 		if ( pHost->m_pVendor )
 			pItem->Set( 2, pHost->m_pVendor->m_sName );
@@ -196,8 +196,8 @@ void CHostCacheWnd::Update()
 		pItem->Set( 4, pHost->m_sName );
 		pItem->Set( 5, pHost->m_sDescription );
 		
-		if ( pHost->m_nUserCount ) pItem->Format( 6, _T("%lu"), pHost->m_nUserCount );
-		if ( pHost->m_nUserLimit ) pItem->Format( 7, _T("%lu"), pHost->m_nUserLimit );
+		if ( pHost->m_nUserCount ) pItem->Format( 6, _T("%u"), pHost->m_nUserCount );
+		if ( pHost->m_nUserLimit ) pItem->Format( 7, _T("%u"), pHost->m_nUserLimit );
 	}
 	
 	pLiveList.Apply( &m_wndList, TRUE );

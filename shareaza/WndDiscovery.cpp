@@ -186,13 +186,13 @@ void CDiscoveryWnd::Update()
 		if ( pService->m_nType == CDiscoveryService::dsWebCache ||
 			 pService->m_nType == CDiscoveryService::dsServerMet )
 		{
-			pItem->Format( 4, _T("%lu"), pService->m_nAccesses );
-			pItem->Format( 6, _T("%lu"), pService->m_nFailures );
+			pItem->Format( 4, _T("%u"), pService->m_nAccesses );
+			pItem->Format( 6, _T("%u"), pService->m_nFailures );
 			
 			if ( pService->m_tAccessed )
 			{
-				pItem->Format( 3, _T("%lu"), pService->m_nHosts );
-				pItem->Format( 5, _T("%lu"), pService->m_nUpdates );
+				pItem->Format( 3, _T("%u"), pService->m_nHosts );
+				pItem->Format( 5, _T("%u"), pService->m_nUpdates );
 			}
 		}
 	}

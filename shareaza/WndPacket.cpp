@@ -233,7 +233,7 @@ void CPacketWnd::Process(const CNeighbour* pNeighbour, const IN_ADDR* pUDP, BOOL
 	
 	if ( pPacketG1 )
 	{
-		pItem->Format( 3, _T("%i/%i"), pPacketG1->m_nTTL, pPacketG1->m_nHops );
+		pItem->Format( 3, _T("%u/%u"), unsigned( pPacketG1->m_nTTL ), unsigned( pPacketG1->m_nHops ) );
 		pItem->Set( 6, pPacketG1->GetGUID() );
 	}
 	

@@ -161,14 +161,17 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 		{
 			if ( *(DWORD*)pRule->m_nMask == 0xFFFFFFFF )
 			{
-				pItem->Format( 0, _T("%i.%i.%i.%i"),
-					pRule->m_nIP[0], pRule->m_nIP[1], pRule->m_nIP[2], pRule->m_nIP[3] );
+				pItem->Format( 0, _T("%u.%u.%u.%u"),
+					unsigned( pRule->m_nIP[0] ), unsigned( pRule->m_nIP[1] ),
+					unsigned( pRule->m_nIP[2] ), unsigned( pRule->m_nIP[3] ) );
 			}
 			else
 			{
-				pItem->Format( 0, _T("%i.%i.%i.%i/%i.%i.%i.%i"),
-					pRule->m_nIP[0], pRule->m_nIP[1], pRule->m_nIP[2], pRule->m_nIP[3],
-					pRule->m_nMask[0], pRule->m_nMask[1], pRule->m_nMask[2], pRule->m_nMask[3] );
+				pItem->Format( 0, _T("%u.%u.%u.%u/%u.%u.%u.%u"),
+					unsigned( pRule->m_nIP[0] ), unsigned( pRule->m_nIP[1] ),
+					unsigned( pRule->m_nIP[2] ), unsigned( pRule->m_nIP[3] ),
+					unsigned( pRule->m_nMask[0] ), unsigned( pRule->m_nMask[1] ),
+					unsigned( pRule->m_nMask[2] ), unsigned( pRule->m_nMask[3] ) );
 			}
 		}
 		else if ( pRule->m_nType == CSecureRule::srContent )
@@ -200,12 +203,12 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 		else if ( pRule->m_nExpire >= nNow )
 		{
 			DWORD nTime = ( pRule->m_nExpire - nNow );
-			pItem->Format( 2, _T("%id %ih %im"), nTime / 86400, (nTime % 86400) / 3600, ( nTime % 3600 ) / 60 );
+			pItem->Format( 2, _T("%ud %uh %um"), nTime / 86400u, (nTime % 86400u) / 3600u, ( nTime % 3600u ) / 60u );
 			//pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 		}
 
-		pItem->Format( 3, _T("%lu"), nCount );
-		pItem->Format( 4, _T("%lu (%lu)"), pRule->m_nToday, pRule->m_nEver );
+		pItem->Format( 3, _T("%i"), nCount );
+		pItem->Format( 4, _T("%u (%u)"), pRule->m_nToday, pRule->m_nEver );
 		pItem->Set( 5, pRule->m_sComment );
 	}
 
