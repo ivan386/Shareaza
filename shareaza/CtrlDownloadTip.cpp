@@ -167,6 +167,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	m_sz.cy += 36;
 	m_sz.cy += TIP_RULE;
 	
+	//Torrent Tracker error
 	if ( pDownload->m_bTorrentTrackerError && ( pDownload->m_sTorrentTrackerError ) )
 	{
 		m_bDrawError = TRUE;
@@ -176,19 +177,25 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	else
 		m_bDrawError = FALSE;
 
-	if ( pDownload->IsSeeding() )
-	{
+
+	if ( pDownload->m_bBTH )
+	{	//Torrent ratio
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
-	else if ( pDownload->m_bBTH )
-	{
-		m_sz.cy += TIP_TEXTHEIGHT * 5;
-	}
-	else
-	{
-		m_sz.cy += TIP_TEXTHEIGHT * 4;
+
+	if ( ! pDownload->IsSeeding() )
+	{	//Seeding torrent display none of this
+		if ( pDownload->IsCompleted() )
+		{	//ETA and downloaded
+			m_sz.cy += TIP_TEXTHEIGHT * 2;
+		}
+		else
+		{	//Speed, ETA, Downloaded, No. Sources
+			m_sz.cy += TIP_TEXTHEIGHT * 4;
+		}
 	}
 	
+	//URL
 	if ( m_sURL.GetLength() )
 	{
 		m_sz.cy += TIP_RULE;
@@ -196,12 +203,14 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
+	//Progress bar (not applicable for seeding torrents)
 	if ( ! pDownload->IsSeeding() )
 	{
 		m_sz.cy += 2;
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 	
+	//Graph (Only for files in progress)
 	if ( pDownload->IsCompleted() )
 		m_bDrawGraph = FALSE;
 	else
@@ -286,14 +295,14 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	
 	if ( pDownload->IsMoving() )
 	{
-		strETA		= strFormat;
-		strSpeed	= strFormat;
+		LoadString( strETA, IDS_DLM_COMPLETED_WORD );
+		strSpeed = strFormat;
 		LoadString( strSources, IDS_DLM_COMPLETED_WORD );
 	}
 	else if ( pDownload->IsPaused() )
 	{
-		strETA		= strFormat;
-		strSpeed	= strFormat;
+		strETA = strFormat;
+		strSpeed = strFormat;
 		strSources.Format( _T("%i"), nSourceCount );
 	}
 	else if ( nTransferCount )
@@ -369,30 +378,37 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		pt.y += TIP_TEXTHEIGHT;
 		DrawRule( pDC, &pt );
 	}
-	if ( ! pDownload->IsSeeding() )
-	{	//Not applicable for seeding torrents.
+
+	if ( ! pDownload->IsCompleted() )
+	{	//Speed. Not for completed files
 		LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strSpeed, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
+	}
+	if ( ! pDownload->IsSeeding() )
+	{	//ETA. Not applicable for seeding torrents.
 		LoadString( strFormat, IDS_DLM_ESTIMATED_TIME );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strETA, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
+	}
+	if ( ! pDownload->IsSeeding() )
+	{	//Volume downloaded. Not for seeding torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( pDownload->m_bBTH )
-	{	//Only torrents have the uploaded count
+	{	//Upload- only for torrents
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strTorrentUpload, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( ! pDownload->IsSeeding() )
-	{	//Not applicable for seeding torrents.
+	if ( ! pDownload->IsCompleted() )
+	{	//No. Sources- Not applicable for completed files.
 		LoadString( strFormat, IDS_DLM_NUMBER_OF_SOURCES );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strSources, m_nStatWidth );
