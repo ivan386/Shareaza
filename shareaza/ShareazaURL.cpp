@@ -429,32 +429,52 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	if ( nSep < 0 ) return FALSE;
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
-	
+
 	m_bED2K = CED2K::HashFromString( strPart, &m_pED2K );
 
 	// URL is valid
 	m_nAction = uriDownload;
 
-	// AICH hash (if present)
+	// AICH hash (h), HTTP source (s) and/or hash set (p)
 	nSep = strURL.Find( '|' );
 	if ( nSep < 0 ) return TRUE;
-	if ( nSep > 32 )
+	strPart	= strURL.Left( nSep );
+	strURL	= strURL.Mid( nSep + 1 );
+	while ( strPart != _T("/") )
 	{
+
+		if ( _tcsncmp( strPart, _T("h="), 2 ) == 0 )
+		{
+			// AICH hash
+			 // theApp.Message(MSG_DEFAULT, _T("AICH") );
+			 strPart = strPart.Mid( 2 );
+		}
+		else if ( _tcsncmp( strPart, _T("s="), 2 ) == 0 )
+		{
+			// HTTP source
+			// theApp.Message(MSG_DEFAULT, _T("HTTP") );
+			strPart = strPart.Mid( 2 );
+
+			if ( m_sURL.GetLength() ) m_sURL += _T(", ");
+			SafeString( strPart );
+			m_sURL += strPart;
+		}
+		else if ( _tcsncmp( strPart, _T("p="), 2 ) == 0 )
+		{
+			// Hash set
+			// theApp.Message(MSG_DEFAULT, _T("hash set") );
+			strPart = strPart.Mid( 2 );
+		}
+
+		// Read in next chunk
+		nSep = strURL.Find( '|' );
+		if ( nSep < 0 ) return TRUE;
 		strPart	= strURL.Left( nSep );
 		strURL	= strURL.Mid( nSep + 1 );
 
-		// Read AICH hash here
-
-		nSep = strURL.Find( '|' );
-		if ( nSep < 0 ) return TRUE;
 	}
 
 	// Source (Starts with |/|sources,
-	strPart	= strURL.Left( nSep );
-	strURL	= strURL.Mid( nSep + 1 );
-	if ( nSep != 1 ) return TRUE;
-	if ( strPart != _T("/") ) return TRUE;
-
 	nSep = strURL.Find( ',' );
 	if ( nSep < 0 ) return TRUE;
 	strPart	= strURL.Left( nSep );
@@ -462,20 +482,24 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 	if ( _tcsncmp( strPart, _T("sources"), 7 ) != 0 ) return TRUE;
 
-	nSep = strURL.Find( '|' );
+	nSep = strURL.Find( ',' );
+	if ( nSep < 0 ) nSep = strURL.Find( '|' );
 	if ( nSep < 0 ) return TRUE;
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 
-	// Now we have the source in x.x.x.x:port format
-	// theApp.Message(MSG_DEFAULT, strPart);
-
+	// Now we have the source in x.x.x.x:port format.
+	CString strEDFTP;
+	strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)CED2K::HashToString( &m_pED2K ), m_nSize );
+	SafeString( strEDFTP );
+	if ( m_sURL.GetLength() ) m_sURL += _T(", ");
+	m_sURL += strEDFTP;
 	
 	return TRUE;
 }
 
 // ed2k://|file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370|/
-// ed2k://|file|Shareaza_2.1.0.0.exe|3304944|A63D221505E99043B7E7308C67F81986|h=XY5FGKFVGJFYWMOBR5XS44YCEPXSL2JZ|/|sources,1.2.3.4:5555|/
+// ed2k://|file|Shareaza_2.1.0.0.exe|3304944|A63D221505E99043B7E7308C67F81986|h=XY5VGKFVGJFYWMOAR5XS44YCEPXSL2JZ|/|sources,1.2.3.4:5555|/
 
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse eDonkey2000 server URL
