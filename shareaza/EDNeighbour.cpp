@@ -170,8 +170,8 @@ BOOL CEDNeighbour::OnRun()
 BOOL CEDNeighbour::OnConnected()
 {
 	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
-							( ( theApp.m_nVersion[1] & 0x7F ) << 17 ) | 
-							( ( theApp.m_nVersion[2] & 0x7F ) << 10 ) |
+							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) | 
+							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
 							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
@@ -197,7 +197,7 @@ BOOL CEDNeighbour::OnConnected()
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket, 0 );
 	// Port
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
-	// Software Version ('eMule Version').	
+	// Software Version ('Client Version').	
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
 	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket, 0 );
