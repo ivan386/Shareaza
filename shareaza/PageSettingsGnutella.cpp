@@ -38,10 +38,6 @@ BEGIN_MESSAGE_MAP(CGnutellaSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CGnutellaSettingsPage)
 	ON_BN_CLICKED(IDC_G2_TODAY, OnG2Today)
 	ON_BN_CLICKED(IDC_G1_TODAY, OnG1Today)
-	ON_BN_CLICKED(IDC_ULTRAPEER_ENABLE, OnUltrapeerEnable)
-	ON_BN_CLICKED(IDC_ULTRALEAF_ENABLE, OnUltraLeafEnable)
-	ON_BN_CLICKED(IDC_ULTRAPEER_FORCE, OnUltraPeerForce)
-	ON_BN_CLICKED(IDC_ULTRALEAF_FORCE, OnUltraLeafForce)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -52,10 +48,6 @@ END_MESSAGE_MAP()
 CGnutellaSettingsPage::CGnutellaSettingsPage() : CSettingsPage( CGnutellaSettingsPage::IDD )
 {
 	//{{AFX_DATA_INIT(CGnutellaSettingsPage)
-	m_bLeafEnable = FALSE;
-	m_bHubEnable = FALSE;
-	m_bHubForce = FALSE;
-	m_bLeafForce = FALSE;
 	m_bG2Today = FALSE;
 	m_bG1Today = FALSE;
 	m_bG1Always = FALSE;
@@ -85,12 +77,6 @@ void CGnutellaSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_G1_PEERS_SPIN, m_wndG1Peers);
 	DDX_Control(pDX, IDC_G1_LEAFS_SPIN, m_wndG1Leafs);
 	DDX_Control(pDX, IDC_G1_HUBS_SPIN, m_wndG1Hubs);
-	DDX_Control(pDX, IDC_ULTRALEAF_FORCE, m_wndUltraLeafForce);
-	DDX_Control(pDX, IDC_ULTRAPEER_FORCE, m_wndUltraPeerForce);
-	DDX_Check(pDX, IDC_ULTRALEAF_ENABLE, m_bLeafEnable);
-	DDX_Check(pDX, IDC_ULTRAPEER_ENABLE, m_bHubEnable);
-	DDX_Check(pDX, IDC_ULTRAPEER_FORCE, m_bHubForce);
-	DDX_Check(pDX, IDC_ULTRALEAF_FORCE, m_bLeafForce);
 	DDX_Check(pDX, IDC_G2_TODAY, m_bG2Today);
 	DDX_Check(pDX, IDC_G1_TODAY, m_bG1Today);
 	DDX_Check(pDX, IDC_G1_ALWAYS, m_bG1Always);
@@ -103,6 +89,8 @@ void CGnutellaSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_DEFLATE_HUB2HUB, m_bDeflateHub2Hub);
 	DDX_Check(pDX, IDC_DEFLATE_LEAF2HUB, m_bDeflateLeaf2Hub);
 	DDX_Check(pDX, IDC_DEFLATE_HUB2LEAF, m_bDeflateHub2Leaf);
+	DDX_Control(pDX, IDC_G1_CLIENTMODE, m_wndG1ClientMode);
+	DDX_Control(pDX, IDC_G2_CLIENTMODE, m_wndG2ClientMode);
 	//}}AFX_DATA_MAP
 }
 
@@ -116,10 +104,6 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_bG2Today			= Settings.Gnutella2.EnableToday;
 	m_bG1Today			= Settings.Gnutella1.EnableToday;
 	m_bG1Always			= Settings.Gnutella1.EnableAlways;
-	m_bHubEnable		= Settings.Gnutella.HubEnable;
-	m_bHubForce			= Settings.Gnutella.HubForce;
-	m_bLeafEnable		= Settings.Gnutella.LeafEnable;
-	m_bLeafForce		= Settings.Gnutella.LeafForce;
 	m_bDeflateHub2Hub	= Settings.Gnutella.DeflateHub2Hub;
 	m_bDeflateLeaf2Hub	= Settings.Gnutella.DeflateLeaf2Hub;
 	m_bDeflateHub2Leaf	= Settings.Gnutella.DeflateHub2Leaf;
@@ -138,8 +122,28 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_wndG2Leafs.SetRange( 0, 1024 );
 	m_wndG2Hubs.SetRange( 0, 3 );
 	
-	m_wndUltraPeerForce.EnableWindow( m_bHubEnable );
-	m_wndUltraLeafForce.EnableWindow( m_bLeafEnable );
+	m_wndG1ClientMode.SetItemData( 0, MODE_AUTO );
+	m_wndG1ClientMode.SetItemData( 1, MODE_LEAF );
+	m_wndG1ClientMode.SetItemData( 2, MODE_ULTRAPEER );
+
+	//***
+	//G1 UPeer mode is not active yet. Remove this section when it is.
+	Settings.Gnutella1.ClientMode = MODE_AUTO;
+	m_wndG1ClientMode.EnableWindow( FALSE ); 
+	//***
+
+	m_wndG1ClientMode.SetCurSel( Settings.Gnutella1.ClientMode );
+
+	m_wndG2ClientMode.SetItemData( 0, MODE_AUTO );
+	m_wndG2ClientMode.SetItemData( 1, MODE_LEAF );
+	m_wndG2ClientMode.SetItemData( 2, MODE_HUB );
+
+	if ( ! theApp.m_bNT )
+	{	//Win9x systems cannot handle G2 hub mode
+		Settings.Gnutella2.ClientMode = MODE_LEAF;
+		m_wndG2ClientMode.EnableWindow( FALSE ); 
+	}
+	m_wndG2ClientMode.SetCurSel( Settings.Gnutella2.ClientMode );
 	
 	UpdateData( FALSE );
 	
@@ -203,43 +207,6 @@ void CGnutellaSettingsPage::OnG1Today()
 	}
 }
 
-void CGnutellaSettingsPage::OnUltrapeerEnable() 
-{
-	UpdateData();
-	m_wndUltraPeerForce.EnableWindow( m_bHubEnable );
-}
-
-void CGnutellaSettingsPage::OnUltraLeafEnable() 
-{
-	UpdateData();
-	m_wndUltraLeafForce.EnableWindow( m_bLeafEnable );
-}
-
-void CGnutellaSettingsPage::OnUltraPeerForce() 
-{
-	UpdateData();
-
-	if ( m_bHubForce )
-	{
-		m_wndUltraLeafForce.SetCheck( FALSE );
-
-		CString strMessage;
-		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
-
-		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
-		{
-			m_bHubForce = FALSE;
-			UpdateData( FALSE );
-		}
-	}
-}
-
-void CGnutellaSettingsPage::OnUltraLeafForce() 
-{
-	UpdateData();
-	if ( m_bLeafForce ) m_wndUltraPeerForce.SetCheck( FALSE );
-}
-
 void CGnutellaSettingsPage::OnOK() 
 {
 	UpdateData();
@@ -247,10 +214,6 @@ void CGnutellaSettingsPage::OnOK()
 	Settings.Gnutella2.EnableToday		= m_bG2Today;
 	Settings.Gnutella1.EnableToday		= m_bG1Today || m_bG1Always;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always;
-	Settings.Gnutella.HubEnable			= m_bHubEnable;
-	Settings.Gnutella.HubForce			= m_bHubForce;
-	Settings.Gnutella.LeafEnable		= m_bLeafEnable;
-	Settings.Gnutella.LeafForce			= m_bLeafForce;
 	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub;
 	Settings.Gnutella.DeflateLeaf2Hub	= m_bDeflateLeaf2Hub;
 	Settings.Gnutella.DeflateHub2Leaf	= m_bDeflateHub2Leaf;
@@ -261,5 +224,49 @@ void CGnutellaSettingsPage::OnOK()
 	Settings.Gnutella2.NumLeafs			= m_nG2Leafs;
 	Settings.Gnutella2.NumPeers			= m_nG2Peers;
 	
+	Settings.Gnutella1.ClientMode = m_wndG1ClientMode.GetCurSel(); // Mode is equal to select position
+	if ( Settings.Gnutella1.ClientMode > MODE_ULTRAPEER ) Settings.Gnutella1.ClientMode = MODE_AUTO;
+
+	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position
+	if ( Settings.Gnutella2.ClientMode > MODE_HUB ) Settings.Gnutella2.ClientMode = MODE_AUTO;
+
+	if (  Settings.Gnutella2.ClientMode == MODE_HUB )	//Check if hub mode is forced.
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
+
+		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
+		{
+			m_wndG2ClientMode.SetCurSel( MODE_AUTO );
+			Settings.Gnutella2.ClientMode = MODE_AUTO;
+			UpdateData( FALSE );
+		}
+	}
+
+	//***
+	//Tempary code- the 'gnutella' setting should be removed and use the seperate G1/G2 modes instead.
+	switch (Settings.Gnutella2.ClientMode)
+	{
+	case MODE_AUTO:
+		Settings.Gnutella.HubEnable			= TRUE;
+		Settings.Gnutella.HubForce			= FALSE;
+		Settings.Gnutella.LeafEnable		= TRUE;
+		Settings.Gnutella.LeafForce			= FALSE;
+		break;
+	case MODE_LEAF:
+		Settings.Gnutella.HubEnable			= FALSE;
+		Settings.Gnutella.HubForce			= FALSE;
+		Settings.Gnutella.LeafEnable		= TRUE;
+		Settings.Gnutella.LeafForce			= TRUE;
+		break;
+	case MODE_HUB:
+		Settings.Gnutella.HubEnable			= TRUE;
+		Settings.Gnutella.HubForce			= TRUE;
+		Settings.Gnutella.LeafEnable		= FALSE;
+		Settings.Gnutella.LeafForce			= FALSE;
+		break;
+	}
+	//***
+
 	CSettingsPage::OnOK();
 }

@@ -70,7 +70,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_TORRENT_INTERFACE, m_bTorrentInterface);
 	DDX_Check(pDX, IDC_TORRENT_ENDGAME, m_bEndGame);
 	DDX_Text(pDX, IDC_TORRENT_CLIENTLINKS, m_nLinks);
-	DDX_Control(pDX, IDC_TORRENTLINKS_SPIN, m_wndLinksSpin);
+	DDX_Control(pDX, IDC_TORRENT_LINKS_SPIN, m_wndLinksSpin);
 	DDX_Text(pDX, IDC_TORRENT_DOWNLOADS, m_nDownloads);
 	DDX_Control(pDX, IDC_TORRENT_DOWNLOADS_SPIN, m_wndDownloadsSpin);
 	DDX_Text(pDX, IDC_TORRENT_DEFAULTTRACKER, m_sTracker);
@@ -86,7 +86,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CBitTorrentSettingsPage::OnInitDialog() 
 {
-	CSettingsPage::OnInitDialog();
+	//CSettingsPage::OnInitDialog();
 	m_bTorrentInterface = Settings.BitTorrent.AdvancedInterface;
 	m_bEndGame			= Settings.BitTorrent.Endgame;
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;

@@ -46,18 +46,14 @@ public:
 	CSpinButtonCtrl	m_wndG1Peers;
 	CSpinButtonCtrl	m_wndG1Leafs;
 	CSpinButtonCtrl	m_wndG1Hubs;
-	CButton	m_wndUltraLeafForce;
-	CButton	m_wndUltraPeerForce;
 	BOOL	m_bG2Today;
 	BOOL	m_bG1Today;
 	BOOL	m_bG1Always;
-	BOOL	m_bLeafEnable;
-	BOOL	m_bHubEnable;
-	BOOL	m_bHubForce;
-	BOOL	m_bLeafForce;
+	CComboBox m_wndG1ClientMode;
 	int		m_nG1Hubs;
 	int		m_nG1Leafs;
 	int		m_nG1Peers;
+	CComboBox m_wndG2ClientMode;
 	int		m_nG2Hubs;
 	int		m_nG2Leafs;
 	int		m_nG2Peers;
@@ -83,10 +79,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnG2Today();
 	afx_msg void OnG1Today();
-	afx_msg void OnUltrapeerEnable();
-	afx_msg void OnUltraLeafEnable();
-	afx_msg void OnUltraPeerForce();
-	afx_msg void OnUltraLeafForce();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

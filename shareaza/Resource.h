@@ -630,8 +630,8 @@
 #define IDC_COLLECTIONS_FOLDER          1381
 #define IDC_COLLECTIONS_BROWSE          1382
 #define IDC_TORRENTS_FOLDER             1383
-#define IDC_TORRENTS_BROWSE             1384
-#define IDC_TORRENTLINKS_SPIN           1385
+#define IDC_TORRENTS_BROWSE             1384          
+#define IDC_TORRENT_LINKS_SPIN          1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
 #define IDC_TORRENT_ENDGAME             1387
 #define IDC_TORRENT_INTERFACE           1388
@@ -640,6 +640,8 @@
 #define IDC_TORRENT_DOWNLOADS_SPIN      1391
 #define IDC_TORRENTS_TORRENTMAKER       1392
 #define IDC_TORRENTS_TORRENTMAKERBROWSE 1393
+#define IDC_G1_CLIENTMODE               1396
+#define IDC_G2_CLIENTMODE               1397
 #define IDC_SCHEDULER_ENABLE            1400
 #define IDC_SCHEDULER_LIMITED           1401
 #define IDC_SCHEDULER_LIMITED_SPIN      1402
@@ -1576,7 +1578,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33120
-#define _APS_NEXT_CONTROL_VALUE         1384
+#define _APS_NEXT_CONTROL_VALUE         1386
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif
