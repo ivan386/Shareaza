@@ -114,6 +114,9 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 		
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+
+		if( pDownload->m_bSHA1 ) pDownload->m_bSHA1Trusted = TRUE;
+		else if( pDownload->m_bED2K ) pDownload->m_bED2KTrusted = TRUE;
 	}
 
 	pHit->m_bDownload = TRUE;
@@ -176,6 +179,9 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+
+		if( pDownload->m_bSHA1 ) pDownload->m_bSHA1Trusted = TRUE;
+		else if( pDownload->m_bED2K ) pDownload->m_bED2KTrusted = TRUE;
 	}
 	
 	pFile->m_bDownload = TRUE;
