@@ -622,10 +622,14 @@
 #define IDC_TORRENTS_FOLDER             1383
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENTLINKS_SPIN           1385
-#define IDC_TORRENT_DEFAULTTRACKER	1386
-#define IDC_TORRENT_ENDGAME		1387
-#define IDC_TORRENT_INTERFACE		1388
+#define IDC_TORRENT_DEFAULTTRACKER      1386
+#define IDC_TORRENT_ENDGAME             1387
+#define IDC_TORRENT_INTERFACE           1388
 #define IDC_TORRENT_CLIENTLINKS         1389
+#define IDC_TORRENT_DOWNLOADS           1390
+#define IDC_TORRENT_DOWNLOADS_SPIN      1391
+#define IDC_TORRENTS_TORRENTMAKER       1392
+#define IDC_TORRENTS_TORRENTMAKERBROWSE 1393
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -983,10 +987,10 @@
 #define IDS_URL_PARSE_ERROR             16769
 #define IDS_URL_BUSY                    16770
 #define IDS_URL_ALREADY_HAVE            16771
-#define IDS_URL_HOST            	16772
-#define IDS_URL_PORT            	16773
-#define IDS_URL_CONNECT          	16774
-#define IDS_URL_BROWSE            	16775
+#define IDS_URL_HOST                    16772
+#define IDS_URL_PORT                    16773
+#define IDS_URL_CONNECT                 16774
+#define IDS_URL_BROWSE                  16775
 #define IDS_WIZARD_NEED_SPEED           16800
 #define IDS_WIZARD_NEED_CONNECTION      16801
 #define IDS_WIZARD_SHARE_CONFIRM        16802
@@ -1125,9 +1129,10 @@
 #define IDS_DOWNLOAD_QUEUE_HUGE         18508
 #define IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH 18509
 #define IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 18510
-#define IDS_REMOTE_DISABLED		19000
-#define IDS_REMOTE_ENABLED		19001
-#define IDS_REMOTE_UNAVAILABLE		19002
+#define IDS_REMOTE_DISABLED             19000
+#define IDS_REMOTE_ENABLED              19001
+#define IDS_REMOTE_UNAVAILABLE          19002
+#define IDS_GENERAL_NOURNAVAILABLE      20000
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
@@ -1432,7 +1437,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        263
 #define _APS_NEXT_COMMAND_VALUE         33120
 #define _APS_NEXT_CONTROL_VALUE         1382
