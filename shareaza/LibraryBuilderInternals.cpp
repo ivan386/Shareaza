@@ -1997,14 +1997,21 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		}
 	}
 	
+	// TODO: Check bBook
 	if ( bBook )
 	{
 		pXML->AddAttribute( _T("format"), _T("PDF") );
 		pXML->AddAttribute( _T("back"), _T("Digital") );
+		return SubmitMetadata( CSchema::uriBook, pXML );
 	}
-	
-	// TODO: Check bBook, and do uriDocument
-	return SubmitMetadata( CSchema::uriBook, pXML );
+	else
+	{
+		pXML->AddAttribute( _T("format"), _T("Adobe Acrobat PDF") );
+		// CString strTemp;
+		// strTemp.Format( _T("1.%i"), nVersion );
+		// pXML->AddAttribute( _T("formatVersion"), strTemp );
+		return SubmitMetadata( CSchema::uriDocument, pXML );
+	}
 }
 
 CString CLibraryBuilderInternals::ReadLine(HANDLE hFile)
