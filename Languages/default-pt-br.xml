@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
 
@@ -16,7 +16,7 @@
 			description="Tradução para o português brasileiro da última versão do Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
-			version="2.0.0.38"
+			version="2.0.3.8"
 			type="Language"
 			language="br"
 			prompt="Clique aqui para a tradução do Shareaza em português do Brasil."
@@ -2664,12 +2664,12 @@
 	<string id="16399" value="Shareaza não conseguiu apagar o arquivo:\n\n%s"/>
 	<string id="16400" value="Arquivo Alvo Existe:\n\n%s\n\n Gostaria de sobrescreve-lo?"/>
 	<string id="16401" value="Todos Os Tipos de Arquivos"/>
-	<string id="16402" value="Shareaza received a collection file:\n\n&quot;%s&quot;\n\nThis file does not appear to be a valid collection file."/>
-	<string id="16403" value="Shareaza has added the collection file &quot;%s&quot; to your library."/>
-	<string id="16404" value="Shareaza was unable to install the collection file &quot;%s&quot; by copying it to the folder &quot;%s&quot;."/>
-	<string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
-	<string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
-	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
+	<string id="16402" value="O Shareaza recebeu um arquivo de coleção:\n\n&quot;%s&quot;\n\n Este arquivo não parece ser uma coleção válida."/>
+	<string id="16403" value="O Shareaza adicionou o arquivo de coleção &quot;%s&quot; to your library."/>
+	<string id="16404" value="Não foi possível instalar este arquivo de coleção &quot;%s&quot; by copying it to the folder &quot;%s&quot;."/>
+	<string id="16405" value="Você gostaria de baixar esse arquivo?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16406" value="Você gostaria de baixar todos os arquivos dessa coleção?\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16407" value="Você gostaria de impedir essa coleção de pedir para baixar mais alguma coisa?"/>
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>
 	<string id="16448" value="Conectado a %s, inicializando..."/>
@@ -2835,29 +2835,29 @@
 	<string id="17488" value="Você mudou a URL para o Tracker deste arquivo.  Tem certeza que deseja salvar esta mudança?\n\nUma URL de Tracker inválida pode impedir o término do download."/>
 	<string id="17489" value="BitTorrent conectando com %s é protocolo extendido, identificado &quot;%s&quot;."/>
 	<string id="17490" value="Você recebeu %i novas fontes do BitTorrent %s."/>
-	<string id="17491" value="The torrent &quot;%s&quot; is already on your download list, and cannot be seeded."/>
-	<string id="17492" value="Error loading the torrent file &quot;%s&quot;.  This may not be a valid torrent."/>
-	<string id="17493" value="Unable to create BitTorrent share file &quot;%s&quot;."/>
-	<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library.  If possible, move the file to the same folder as the torrent and try again."/>
-	<string id="17495" value="This torrent includes the file &quot;%s&quot; which should be %s, however your version of the file is %s."/>
+	<string id="17491" value="O torrent &quot;%s&quot; já está na sua lista de download, e portanto não é possível fazer seed."/>
+	<string id="17492" value="Erro ao carregar o arquivo de torrent &quot;%s&quot;.  Este pode não ser um torrent válido."/>
+	<string id="17493" value="Não foi possível criar o arquivo de BitTorrent para compartilhar &quot;%s&quot;."/>
+	<string id="17494" value="Este arquivo possui o arquivo &quot;%s&quot;, mas o Shareaza não consegue localizá-lo na sua biblioteca. Se possível, mova o arquivo para o mesmo diretório do torrent e tente novamente."/>
+	<string id="17495" value="Este torrent inclui o arquivo &quot;%s&quot; que deveria ser %s, entretanto a sua versão do arquivo é %s."/>
 	<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 	<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
-	<string id="18496" value="You have made changes to the name field.  Are you sure you want to rename this download?"/>
-	<string id="18497" value="You have typed a SHA1 value, however it is invalid.  Please check it and try again."/>
-	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."/>
-	<string id="18499" value="You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."/>
-	<string id="18500" value="You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"/>
-	<string id="18501" value="You have provided a root tiger-tree hash value which is different to the one currently associated with this download.  Are you sure you want to change the tiger-tree root hash now?"/>
-	<string id="18502" value="You have provided an eDonkey2000 hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey2000 hash now?"/>
-	<string id="18503" value="Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
-	<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
-	<string id="18505" value="Please enter a valid range to erase.  The &quot;from&quot; field is the first byte to erase, the &quot;last&quot; field is the last byte to erase."/>
-	<string id="18506" value="Unable to erase the selected range from the download because no part of the range is present."/>
-	<string id="18507" value="Erased %I64i bytes from the download."/>
-	<string id="18508" value="Dropping download source %s for &quot;%s&quot; because queue position %i is too high."/>
-	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
-	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
+	<string id="18496" value="Você mudou o nome do download. Tem certeza que deseja renomeá-lo?"/>
+	<string id="18497" value="Você digitou um valor de hash SHA1, entretanto ele é inválido.  Por favor cheque-o e tente novamente."/>
+	<string id="18498" value="Você digitou um valor de hash do tipo Tiger-Tree, entretanto ele é inválido.  Por favor cheque-o e tente novamente."/>
+	<string id="18499" value="Você digitou um valor de hash do Edonkey2000, entretanto ele é inválido.  Por favor cheque-o e tente novamente."/>
+	<string id="18500" value="Você marcou um valor de hash SHA1 que é diferente do valor associado a este download. Tem certeaza que qure mudar o hash SHA1?"/>
+	<string id="18501" value="Você marcou um valor de hash do tipo Tiger-Tree que é diferente do valor associado a este download. Tem certeaza que qure mudar o hash do tipo Tiger-Tree?"/>
+	<string id="18502" value="Você marcou um valor de hash do Edonkey2000 que é diferente do valor associado a este download. Tem certeaza que qure mudar o hash do Edonkey2000?"/>
+	<string id="18503" value="Você tem certeza que deseja esquecer todo o estado atual da verificação? Todos os dados baixados serão tratados como não verificados e as árvores e conjunto de hashes serão limpados."/>
+	<string id="18504" value="Você tem certeza de que deseja esquecer todas as fontes do download selecionado?"/>
+	<string id="18505" value="Por favor entre um intervalo válido para apagar.  O campo &quot;de&quot; é o primeiro byte a ser apagado, o campo &quot;último&quot; é o último byte a ser apagado."/>
+	<string id="18506" value="Incapaz de apagar o intervalo selecionado do download porque não há nenhuma parte do intervalo presente."/>
+	<string id="18507" value="Apagados %I64i bytes do download."/>
+	<string id="18508" value="Desconectando da fonte de download %s para &quot;%s&quot; porque a posição na fila %i é muito alta."/>
+	<string id="18509" value="Você não pode assumir esse download como completo e reverificá-lo pois você ainda não tem nenhum dado de verificação de partes, como por exemplo, um volume  tiger-tree, um conjunto de hashes do eDonkey ou BitTorrent. Sem essas informações o download não pode ser reverificado."/>
+	<string id="18510" value="Você tem certeza de que deseja assumnir esse download como completo e reverificá-lo? O arquivo completo será considerado, e o shareaza irá aceitar partes que passarem na verificação e baixar novamente as partes que falharem."/>
 	<string id="19000" value="Acesso Remoto está Desativado."/>
 	<string id="19001" value="Você deve escolher um nome de usuário e uma senha."/>
 	<string id="19002" value="Incapaz de acietar conexões, URL não disponível."/>
@@ -3875,11 +3875,11 @@
 
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade Alert">
 		<control/>
-		<control caption="A new version of Shareaza is now available.  Would you like to upgrade?"/>
-		<control caption="If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."/>
-		<control caption="_Upgrade Now"/>
-		<control caption="Don't check for new versions"/>
-		<control caption="Don't Upgrade"/>
+		<control caption="Uma nova versão do Shareaza está disponível.  Você gostaria de atualizar?"/>
+		<control caption="Se você selecionar Atualizar Agora, o Shareaza irá adicionar a atualização na sua lista de downloads e começará a baixá-lo automaticamente."/>
+		<control caption="_Atualizar Agora"/>
+		<control caption="Não cheque por novas versões"/>
+		<control caption="Não Atualizar"/>
 	</dialog>
 </dialogs>
 
@@ -3929,7 +3929,7 @@
         <column from="Address / Content" to="IP / Conteúdo"/>
         <column from="Action" to="Ação"/>
         <column from="Expires" to="Expira"/>
-        <column from="Precedence" to=""/>
+        <column from="Precedence" to="Precedência"/>
         <column from="Hits" to="Acertos"/>
         <column from="Comment" to="Comentários"/>
     </list>
@@ -3953,16 +3953,16 @@
         <column from="Failures" to="Falhas"/>
     </list>
     <list name="CPacketWnd">
-        <column from="Address" to=""/>
-        <column from="Protocol" to=""/>
-        <column from="Type" to=""/>
+        <column from="Address" to="Endereço"/>
+        <column from="Protocol" to="Protocolo"/>
+        <column from="Type" to="Tipo"/>
         <column from="T/H" to=""/>
         <column from="Hex" to=""/>
         <column from="ASCII" to=""/>
         <column from="G1-ID" to=""/>
     </list>
     <list name="CSearchMonitorWnd">
-        <column from="Search" to=""/>
+        <column from="Search" to="Pesquisar"/>
         <column from="URN" to=""/>
         <column from="Schema" to=""/>
     </list>
@@ -3978,10 +3978,10 @@
     </list>
     <list name="CUploadQueueList">
         <column from="Name" to="Nome"/>
-        <column from="Criteria" to=""/>
-        <column from="Bandwidth" to=""/>
-        <column from="Transfers" to=""/>
-        <column from="Order" to=""/>
+        <column from="Criteria" to="Critério"/>
+        <column from="Bandwidth" to="Banda"/>
+        <column from="Transfers" to="Tranferências"/>
+        <column from="Order" to="Ordem"/>
     </list>
 </listColumns>
 </skin>
