@@ -41,6 +41,7 @@ CSettings Settings;
 void CSettings::Setup()
 {
 	Add( _T(".Path"), &General.Path, General.Path );
+	Add( _T(".UserPath"), &General.UserPath, General.UserPath );
 	Add( _T(".Debug"), &General.Debug, FALSE );
 	Add( _T(".DebugLog"), &General.DebugLog, FALSE );
 	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
@@ -273,10 +274,10 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
 	
-	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.Path + _T("\\Incomplete") );
-	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.Path + _T("\\Downloads") );
-	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.Path + _T("\\Torrents") );
-	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.Path + _T("\\Collections") );
+	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.UserPath + _T("\\Incomplete") );
+	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.UserPath + _T("\\Downloads") );
+	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.UserPath + _T("\\Torrents") );
+	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.UserPath + _T("\\Collections") );
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
 	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
@@ -355,6 +356,8 @@ CSettings::CSettings()
 	General.Path = szPath;
 	if ( General.Path.ReverseFind( '\\' ) >= 0 )
 		General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
+
+	General.UserPath = General.Path;
 	
 	Live.BandwidthScale		= 90;
 	Live.LoadWindowState	= FALSE;
@@ -438,6 +441,7 @@ void CSettings::Load()
 	eDonkey.EnableToday		= eDonkey.EnableAlways;
 	
 	CreateDirectory( General.Path + _T("\\Data"), NULL );
+	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
 }
 
 void CSettings::Save(BOOL bShutdown)
