@@ -142,7 +142,7 @@ void CScheduler::Update()
 		if ( ( nDay >= 7 ) || ( nDay < 0 ) || ( nHour >= 24 ) || ( nHour < 0 ) )
 		{
 			// Really Really Strange Error That Should Never Happen. 
-			theApp.Message( MSG_ERROR, _T("Scheduler recieved invalid time") );
+			theApp.Message( MSG_ERROR, _T("Scheduler received invalid time") );
 			return;
 		}
 

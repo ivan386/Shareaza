@@ -275,7 +275,7 @@ BOOL CBTClient::OnRead()
 			DWORD tNow = GetTickCount();
 			if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake / 2 )
 			{
-				theApp.Message( MSG_ERROR,  _T("No peer-id recieved, forcing connection") );
+				theApp.Message( MSG_ERROR,  _T("No peer-id received, forcing connection") );
 				bSuccess = OnNoHandshake2();
 			}
 		}*/

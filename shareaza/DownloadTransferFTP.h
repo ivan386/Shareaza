@@ -105,7 +105,7 @@ protected:
 		}
 
 	protected:
-		CString m_sData;	// Recieved file listing data
+		CString m_sData;	// Received file listing data
 
 		inline bool Split(CString& in, TCHAR token, CString& out) const
 		{
@@ -200,8 +200,8 @@ protected:
 
 	protected:
 		CDownloadTransferFTP* m_pOwner;	// Owner object
-		DWORD m_tContent;				// Last Recieve time
-		QWORD					m_nTotal;	// Recieved bytes by m_tContent time
+		DWORD m_tContent;				// Last Receive time
+		QWORD					m_nTotal;	// Received bytes by m_tContent time
 	};
 
 	enum FTP_STATES {

@@ -44,7 +44,7 @@ public:
 	BOOL			m_bHashset;
 	DWORD			m_tRequest;				//When request was last sent
 	DWORD			m_tSources;				//When source request was last sent
-	DWORD			m_tRanking;				//When queue ranking was last recieved
+	DWORD			m_tRanking;				//When queue ranking was last received
 	BYTE*			m_pAvailable;
 	CFileFragment*	m_pRequested;
 	int				m_nRequested;

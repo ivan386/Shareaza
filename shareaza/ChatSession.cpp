@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/01/08 14:18:14 $"
-//	Revision:		"$Revision: 1.10 $"
+//	Date:			"$Date: 2005/02/17 00:36:42 $"
+//	Revision:		"$Revision: 1.11 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -176,7 +176,7 @@ void CChatSession::OnED2KMessage(CEDPacket* pPacket)
 	// Open a window (if one is not already open)
 	PostOpenWindow();
 
-	// Put the packet into the input buffer so it can be 'recieved' (and displayed) later.
+	// Put the packet into the input buffer so it can be 'received' (and displayed) later.
 	if ( pPacket && m_pInput ) pPacket->ToBuffer( m_pInput );
 
 	// If this client wasn't active, it is now.
@@ -567,7 +567,7 @@ BOOL CChatSession::ReadPacketsED2K()
 			}
 			else
 			{
-				theApp.Message( MSG_ERROR, _T("Unrecognised packet type recieved during chat") );
+				theApp.Message( MSG_ERROR, _T("Unrecognised packet type received during chat") );
 			}
 		}
 		catch ( CException* pException )

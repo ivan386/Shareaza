@@ -67,7 +67,7 @@ protected:
 	void			SendHandshake(BOOL bPart1, BOOL bPart2);
 	BOOL			OnHandshake1();								// First part of handshake
 	BOOL			OnHandshake2();								// Second part- Peer ID
-	BOOL			OnNoHandshake2();							// If no peer ID is recieved
+	BOOL			OnNoHandshake2();							// If no peer ID is received
 	BOOL			OnOnline();
 	BOOL			OnPacket(CBTPacket* pPacket);
 	void			SendBeHandshake();							// Send extended client handshake

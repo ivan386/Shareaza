@@ -66,7 +66,7 @@ public:
 public:
 	virtual BOOL	IsStarted() const;		//Has the download actually downloaded anything?
 	virtual BOOL	IsPaused() const;
-	virtual BOOL	IsDownloading() const;	//Is the download recieving data?
+	virtual BOOL	IsDownloading() const;	//Is the download receiving data?
 	virtual BOOL	IsMoving() const;
 	virtual BOOL	IsCompleted() const;
 	virtual BOOL	IsBoosted() const;

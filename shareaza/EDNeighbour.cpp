@@ -546,7 +546,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 		{	// This will be remembered by the neighbour, and if the search continues, more results can be requested.
 			m_pMoreResultsGUID = pGUID;
 			pGUID = NULL;
-			theApp.Message( MSG_DEBUG, _T("Additional results packet recieved.") );
+			theApp.Message( MSG_DEBUG, _T("Additional results packet received.") );
 		}
 	}
 	
