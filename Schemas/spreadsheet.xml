@@ -3,6 +3,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Document:Spreadsheet</title>
                <title language="af">Dokument:Bloktabel</title>
+               <title language="chs">文档: 表格类资料</title>
                <title language="de">Dokument:Tabellenkalkulation</title>
                <title language="es-mx">Documento: Presentación</title>
                <title language="fr">Document:Bilan</title>
@@ -30,6 +32,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -42,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
+                       <title language="chs">作者</title>
                        <title language="de">Autor</title>
                        <title language="es-mx">Autor</title>
                        <title language="fr">Auteur</title>
@@ -53,6 +57,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="subject">
                        <title language="en">Subject</title>
                        <title language="af">Onderwerp</title>
+                       <title language="chs">主题</title>
                        <title language="de">Thema</title>
                        <title language="es-mx">Sujeto</title>
                        <title language="fr">Sujet</title>
@@ -64,6 +69,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="keywords">
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
+                       <title language="chs">关键字</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es-mx">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
@@ -75,6 +81,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="abstract">
                        <title language="en">Abstract</title>
                        <title language="af">Abstrak</title>
+                       <title language="chs">摘要</title>
                        <title language="de">Zusammenfassung</title>
                        <title language="es-mx">Abstracto</title>
                        <title language="fr">Abstrait</title>
@@ -86,6 +93,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="initials">
                        <title language="en">Initials</title>
                        <title language="af">Voorletters</title>
+                       <title language="chs">首字</title>
                        <title language="de">Initialen</title>
                        <title language="es-mx">Iniciales</title>
                        <title language="fr">Initiales</title>
@@ -97,6 +105,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="copyright">
                        <title language="en">Copyright</title>
                        <title language="af">Kopiereg</title>
+                       <title language="chs">版权</title>
                        <title language="de">Copyright</title>
                        <title language="es-mx">Copyright</title>
                        <title language="fr">Copyright</title>
@@ -108,6 +117,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="version">
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
+                       <title language="chs">版本</title>
                        <title language="de">Version</title>
                        <title language="es-mx">Versión</title>
                        <title language="fr">Version</title>
@@ -119,6 +129,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="revision">
                        <title language="en">Revision</title>
                        <title language="af">Hersiening</title>
+                       <title language="chs">修订版</title>
                        <title language="de">Revision</title>
                        <title language="es-mx">Revision</title>
                        <title language="fr">Révision</title>
@@ -130,6 +141,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="type">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es-mx">Arte</title>
                        <title language="fr">Type</title>
@@ -142,6 +154,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Format</title>
                        <title language="af">Formaat</title>
+                       <title language="chs">格式</title>
                        <title language="de">Format</title>
                        <title language="es-mx">Formato</title>
                        <title language="fr">Format</title>
@@ -153,6 +166,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="formatversion">
                        <title language="en">Format Version</title>
                        <title language="af">Formaat Weerg.</title>
+                       <title language="chs">格式版本</title>
                        <title language="de">Formatversion</title>
                        <title language="es-mx">Versión del Formato</title>
                        <title language="fr">Version du format</title>
@@ -164,6 +178,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="records">
                        <title language="en">Records</title>
                        <title language="af">Rekords</title>
+                       <title language="chs">记录</title>
                        <title language="de">Einträge</title>
                        <title language="es-mx">Records</title>
                        <title language="fr">Enregistrements</title>
@@ -176,6 +191,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es-mx">Link</title>
                        <title language="fr">Lien</title>
@@ -188,6 +204,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>

@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Video:Music Videos</title>
                <title language="af">Video:Musiek Video's</title>
+               <title language="chs">视频: MTV</title>
                <title language="de">Video:Musikvideos</title>
                <title language="es-mx">Video: Videos de Música</title>
                <title language="fr">Vidéo:Clips vidéos</title>
@@ -33,6 +35,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -48,15 +51,17 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">Music Videos</title>
                <title language="af">Musiek Video's</title>
+               <title language="chs">音乐视频</title>
                <title language="de">Musikvideos</title>
                <title language="es-mx">Videos de Música</title>
                <title language="fr">Clips vidéos</title>
-               <title language="hu">Zene viedó</title>
+               <title language="hu">Zene videó</title>
                <title language="lt">Muzikiniai klipai</title>
                <title language="nl">Muziek Video's</title>
                <title language="no">Musikk video</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
+               <subtitle language="chs">这个文件夹包括音乐电视(MTV)。</subtitle>
                <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene videos de música</subtitle>
                <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>

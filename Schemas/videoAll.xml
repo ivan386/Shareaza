@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Video:All Video</title>
                <title language="af">Video:Alle Video</title>
+               <title language="chs">视频: 所有视频</title>
                <title language="de">Video:Alle Videos</title>
                <title language="es-mx">Video:Todos los videos</title>
                <title language="fr">Vidéo:Toutes les vidéos</title>
@@ -33,6 +35,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -48,6 +51,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">All Video</title>
                <title language="af">Alle Video</title>
+               <title language="chs">所有视频</title>
                <title language="de">Alle Videos</title>
                <title language="es-mx">Todos los videos</title>
                <title language="fr">Toutes les vidéos</title>
@@ -57,6 +61,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="no">All video</title>
                <subtitle language="en">This folder contains every video file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle videolêers in jou biblioteek.</subtitle>
+               <subtitle language="chs">这个文件夹包含收藏中所有的视频文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Videos in ihrer Bibliothek.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les vidéo de votre bibliothèque.</subtitle>

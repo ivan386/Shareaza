@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">General:My Shareaza Library</title>
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
+               <title language="chs">总体: 我的Shareaza收藏</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
                <title language="es-mx">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
@@ -30,6 +32,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -41,6 +44,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="owner" search="indexed">
                        <title language="en">Owner</title>
                        <title language="af">Eienaar</title>
+                       <title language="chs">所有者</title>
                        <title language="de">Besitzer</title>
                        <title language="es-mx">Dueño</title>
                        <title language="fr">Propriétaire</title>
@@ -52,6 +56,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
@@ -67,6 +72,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">Welcome to Your Library!</title>
                <title language="af">Welkom by Jou Biblioteek!</title>
+               <title language="chs">欢迎来到您的库！</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
                <title language="es-mx">Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
@@ -76,6 +82,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="no">Velkommen til mine filer</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
+               <subtitle language="chs">您总共有 {totalFiles} 个文件，共计 {totalVolume} 在您的库中。</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>

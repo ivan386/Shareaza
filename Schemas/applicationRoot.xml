@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Application:My Applications</title>
                <title language="af">Program:My Programme</title>
+               <title language="chs">应用程序: 我的应用程序</title>
                <title language="de">Anwendung:Eigene Anwendungen</title>
                <title language="es-mx">Aplicación: Todas mis aplicaciones</title>
                <title language="fr">Application:Mes applications</title>
@@ -33,6 +35,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -48,6 +51,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">Welcome to My Applications!</title>
                <title language="af">Welkom by My Programme!</title>
+               <title language="chs">欢迎来到我的应用程序！</title>
                <title language="de">Willkommen bei Eigene Anwendungen!</title>
                <title language="es-mx">Bienvenido a Mis Aplicaciones!</title>
                <title language="fr">Bienvenue dans Mes applications!</title>
@@ -57,6 +61,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="no">Velkommen til mine programmer</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
+               <subtitle language="chs">这些文件夹包含所有您的应用程序。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Anwendungen.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>

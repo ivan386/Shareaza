@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -16,6 +17,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Video</title>
                <title language="af">Video</title>
+               <title language="chs">视频</title>
                <title language="de">Video</title>
                <title language="es-mx">Video</title>
                <title language="fr">Vidéo</title>
@@ -29,6 +31,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -41,6 +44,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es-mx">Arte</title>
                        <title language="fr">Type</title>
@@ -53,6 +57,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Series</title>
                        <title language="af">Reeks</title>
+                       <title language="chs">序列</title>
                        <title language="de">Serie</title>
                        <title language="es-mx">Series</title>
                        <title language="fr">Séries</title>
@@ -65,6 +70,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Genre</title>
                        <title language="af">Genre</title>
+                       <title language="chs">流派</title>
                        <title language="de">Genre</title>
                        <title language="es-mx">Género</title>
                        <title language="fr">Genre</title>
@@ -77,6 +83,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Episode Number</title>
                        <title language="af">Episode Nommer</title>
+                       <title language="chs">剧情编号</title>
                        <title language="de">Folge</title>
                        <title language="es-mx">Número de Episodio</title>
                        <title language="fr">Numéro d'épisode</title>
@@ -89,6 +96,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Season/Series</title>
                        <title language="af">Seisoen/Reeks</title>
+                       <title language="chs">季度 / 系列</title>
                        <title language="de">Staffel</title>
                        <title language="es-mx">Temporada/Series</title>
                        <title language="fr">Saison/Séries</title>
@@ -100,10 +108,11 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="airDate">
                        <title language="en">Original Air date</title>
                        <title language="af">Uitsaaidatum</title>
+                       <title language="chs">原始 时间</title>
                        <title language="de">Erstmalige Ausstrahlung</title>
                        <title language="es-mx">Fecha Original al aire</title>
                        <title language="fr">Date de sortie</title>
-                       <title language="hu"></title>
+                       <title language="hu">Első kiadás</title>
                        <title language="lt">Pasirodė eteryje</title>
                        <title language="nl">Datum Originele Uitzending</title>
                        <title language="no">Første gang vist</title>
@@ -111,6 +120,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="description" search="none">
                        <title language="en">Synopsis</title>
                        <title language="af">Oorsig</title>
+                       <title language="chs">大纲</title>
                        <title language="de">Zusammenfassung</title>
                        <title language="es-mx">Sipnosis</title>
                        <title language="fr">Synopsis (Résumé)</title>
@@ -122,6 +132,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="realdescription" search="none">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
+                       <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es-mx">Descripción</title>
                        <title language="fr">Description</title>
@@ -133,6 +144,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="language" search="indexed">
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
+                       <title language="chs">语言</title>
                        <title language="de">Sprache</title>
                        <title language="es-mx">Lenguaje</title>
                        <title language="fr">Langue</title>
@@ -144,6 +156,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="source" search="indexed">
                        <title language="en">Source</title>
                        <title language="af">Bron</title>
+                       <title language="chs">源</title>
                        <title language="de">Source</title>
                        <title language="es-mx">Fuente</title>
                        <title language="fr">Source</title>
@@ -155,6 +168,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="director">
                        <title language="en">Director</title>
                        <title language="af">Regisseur</title>
+                       <title language="chs">导演</title>
                        <title language="de">Regisseur</title>
                        <title language="es-mx">Director</title>
                        <title language="fr">Réalisateur</title>
@@ -166,6 +180,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="producer">
                        <title language="en">Producer</title>
                        <title language="af">Vervaardiger</title>
+                       <title language="chs">生产商</title>
                        <title language="de">Produzent</title>
                        <title language="es-mx">Productor</title>
                        <title language="fr">Producteur</title>
@@ -177,6 +192,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="studio">
                        <title language="en">Studio</title>
                        <title language="af">Studio</title>
+                       <title language="chs">工作室</title>
                        <title language="de">Studio</title>
                        <title language="es-mx">Studio</title>
                        <title language="fr">Studio</title>
@@ -189,6 +205,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display prompt="true"/>
                        <title language="en">Actors</title>
                        <title language="af">Akteurs</title>
+                       <title language="chs">演员</title>
                        <title language="de">Schauspieler</title>
                        <title language="es-mx">Actores</title>
                        <title language="fr">Acteurs</title>
@@ -200,6 +217,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="imdbLink">
                        <title language="en">IMDB Link</title>
                        <title language="af">IMDB Skakel</title>
+                       <title language="chs">IMIDB 链接</title>
                        <title language="de">IMDB Link</title>
                        <title language="es-mx">IMDB Link</title>
                        <title language="fr">Lien IMDB</title>
@@ -211,6 +229,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="minutes">
                        <title language="en">Duration</title>
                        <title language="af">Tydsduur</title>
+                       <title language="chs">持续时间</title>
                        <title language="de">Dauer</title>
                        <title language="es-mx">Duración</title>
                        <title language="fr">Durée</title>
@@ -224,6 +243,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Width</title>
                        <title language="af">Breedte</title>
+                       <title language="chs">宽度</title>
                        <title language="de">Breite</title>
                        <title language="es-mx">Ancho</title>
                        <title language="fr">Largeur</title>
@@ -236,6 +256,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Height</title>
                        <title language="af">Hoogte</title>
+                       <title language="chs">高度</title>
                        <title language="de">Höhe</title>
                        <title language="es-mx">Altura</title>
                        <title language="fr">Hauteur</title>
@@ -247,6 +268,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="codec">
                        <title language="en">Codec</title>
                        <title language="af">Kodek</title>
+                       <title language="chs">编码</title>
                        <title language="de">Codec</title>
                        <title language="es-mx">Codec</title>
                        <title language="fr">Codec</title>
@@ -258,6 +280,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="year">
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
+                       <title language="chs">年份</title>
                        <title language="de">Jahr</title>
                        <title language="es-mx">Año</title>
                        <title language="fr">Année</title>
@@ -269,6 +292,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="artist">
                        <title language="en">Artist</title>
                        <title language="af">Kunstenaar</title>
+                       <title language="chs">艺术家</title>
                        <title language="de">Künstler</title>
                        <title language="es-mx">Artista</title>
                        <title language="fr">Artiste</title>
@@ -280,6 +304,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="subtitles" search="indexed">
                        <title language="en">Subtitles</title>
                        <title language="af">Onderskrifte</title>
+                       <title language="chs">副标题</title>
                        <title language="de">Untertitel</title>
                        <title language="es-mx">Subtitulos</title>
                        <title language="fr">Sous-titres</title>
@@ -291,6 +316,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="rating">
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
+                       <title language="chs">分级</title>
                        <title language="de">FSK</title>
                        <title language="es-mx">Rating</title>
                        <title language="fr">Estimation</title>
@@ -302,6 +328,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="partnumber">
                        <title language="en">Part Number</title>
                        <title language="af">Deel Nommer</title>
+                       <title language="chs">部分编号</title>
                        <title language="de">Teil</title>
                        <title language="es-mx">Número de Parte</title>
                        <title language="fr">Partie numéro</title>
@@ -313,6 +340,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="partcount">
                        <title language="en">Part Count</title>
                        <title language="af">Hoeveelheid Dele</title>
+                       <title language="chs">部分计数</title>
                        <title language="de">Teile gesamt</title>
                        <title language="es-mx">Parte de Cuenta</title>
                        <title language="fr">Nombre de partie</title>
@@ -324,6 +352,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="standard" search="indexed">
                        <title language="en">Standard</title>
                        <title language="af">Standaard</title>
+                       <title language="chs">标准</title>
                        <title language="de">Standard</title>
                        <title language="es-mx">Standard</title>
                        <title language="fr">Standard</title>
@@ -335,6 +364,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="quality">
                        <title language="en">Quality</title>
                        <title language="af">Kwaliteit</title>
+                       <title language="chs">质量</title>
                        <title language="de">Qualität</title>
                        <title language="es-mx">Calidad</title>
                        <title language="fr">Qualité</title>
@@ -346,6 +376,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="qualityNotes">
                        <title language="en">Quality Notes</title>
                        <title language="af">Kwaliteit Notas</title>
+                       <title language="chs">质量说明项</title>
                        <title language="de">Qualitätshinweise</title>
                        <title language="es-mx">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
@@ -357,6 +388,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="releaseDate">
                        <title language="en">P2P Release Date</title>
                        <title language="af">P2P Vrystelling</title>
+                       <title language="chs">P2P 发行时间</title>
                        <title language="de">P2P Releasedatum</title>
                        <title language="es-mx">Fecha de Lanzamiento en P2P</title>
                        <title language="fr">Date de release P2P</title>
@@ -368,6 +400,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="Distributer" search="indexed">
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
+                       <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
                        <title language="es-mx">Distribuidor</title>
                        <title language="fr">Distributeur</title>
@@ -379,6 +412,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="DistributerLink">
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
+                       <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
                        <title language="es-mx">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
@@ -390,6 +424,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="Releasegroup" search="indexed">
                        <title language="en">Release Group</title>
                        <title language="af">Uitgewers Groep</title>
+                       <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
                        <title language="es-mx">Release Group</title>
                        <title language="fr">Groupe de release</title>
@@ -401,6 +436,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="releasegroupLink">
                        <title language="en">Release Group Link</title>
                        <title language="af">Uitgewers Skakel</title>
+                       <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
                        <title language="es-mx">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
@@ -412,6 +448,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="keywords" search="generic">
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
+                       <title language="chs">关键字</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es-mx">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
@@ -423,6 +460,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="link" search="none">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es-mx">Link</title>
                        <title language="fr">Lien</title>

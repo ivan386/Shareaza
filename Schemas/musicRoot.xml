@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Music:My Music</title>
                <title language="af">Musiek:My Musiek</title>
+               <title language="chs">音乐: 我的音乐</title>
                <title language="de">Musik:Eigene Musik</title>
                <title language="es-mx">Musica: Mi Música</title>
                <title language="fr">Musique:Ma musique</title>
@@ -33,6 +35,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -50,6 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">Welcome to My Music!</title>
                <title language="af">Welkom by My Musiek!</title>
+               <title language="chs">欢悦来到我的音乐！</title>
                <title language="de">Willkommen bei Eigener Musik!</title>
                <title language="es-mx">Bienvenido a Mi Música</title>
                <title language="fr">Bienvenue dans Ma musique!</title>
@@ -59,6 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="no">Velkommen til min musikk</title>
                <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die musiek in jou biblioteek, georganiseer volgens album, kunstenaar en genre. Open 'n gids hieronder om voort te gaan.</subtitle>
+               <subtitle language="chs">这些文件夹包括您收藏中所有的音乐，按专辑，艺术家和流派进行编制。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Musik in ihrer Bibliothek, geordnet nach Album, Künstler und Genre. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
                <subtitle language="es-mx">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque, organisées par album, par artiste et par genre.  Ouvrez un sous-dossier pour continuer.</subtitle>

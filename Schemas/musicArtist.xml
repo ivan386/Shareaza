@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -17,6 +18,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">Music Artist</title>
                <title language="af">Musiek Kunstenaar</title>
+               <title language="chs">音乐艺术家</title>
                <title language="de">Musiker</title>
                <title language="es-mx">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
@@ -33,6 +35,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
+                       <title language="chs">名称</title>
                        <title language="de">Name</title>
                        <title language="es-mx">Nombre</title>
                        <title language="fr">Nom</title>
@@ -44,6 +47,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="description">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
+                       <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es-mx">Descripción</title>
                        <title language="fr">Description</title>
@@ -55,6 +59,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="collector">
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
+                       <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="es-mx">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -66,6 +71,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
@@ -92,6 +98,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <headerContent version="1.0">
                <title language="en">{name} - Discography</title>
                <title language="af">{name} - Diskografie</title>
+               <title language="chs">{name} - 分类</title>
                <title language="de">{name}</title>
                <title language="es-mx">{name}</title>
                <title language="fr">{name} - Discographie</title>
@@ -101,6 +108,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="no">Diskografi av {name}</title>
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
+               <subtitle language="chs">这个文件夹中包括您所有的音乐，按 {name}。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>

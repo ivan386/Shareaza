@@ -3,6 +3,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -18,6 +19,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
        <titles>
                <title language="en">ROM Image</title>
                <title language="af">ROM / CD Afdruk</title>
+               <title language="chs">ROM 镜像</title>
                <title language="de">ROM Image</title>
                <title language="es-mx">ROM Image</title>
                <title language="fr">Image ROM</title>
@@ -31,6 +33,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es-mx">Título</title>
                        <title language="fr">Titre</title>
@@ -43,6 +46,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">Company</title>
                        <title language="af">Maatskappy</title>
+                       <title language="chs">公司</title>
                        <title language="de">Firma</title>
                        <title language="es-mx">Compañia</title>
                        <title language="fr">Compagnie</title>
@@ -55,6 +59,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <display defaultColumn="true"/>
                        <title language="en">System</title>
                        <title language="af">Stelsel</title>
+                       <title language="chs">系统</title>
                        <title language="de">System</title>
                        <title language="es-mx">Sistema</title>
                        <title language="fr">Système</title>
@@ -66,6 +71,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="year">
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
+                       <title language="chs">年份</title>
                        <title language="de">Jahr</title>
                        <title language="es-mx">Año</title>
                        <title language="fr">Année</title>
@@ -77,6 +83,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="type">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es-mx">Arte</title>
                        <title language="fr">Type</title>
@@ -88,6 +95,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="language">
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
+                       <title language="chs">语言</title>
                        <title language="de">Sprache</title>
                        <title language="es-mx">Lenguaje</title>
                        <title language="fr">Langue</title>
@@ -99,6 +107,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="rating">
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
+                       <title language="chs">分级</title>
                        <title language="de">FSK</title>
                        <title language="es-mx">Rating</title>
                        <title language="fr">Estimation</title>
@@ -110,6 +119,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="price">
                        <title language="en">Price</title>
                        <title language="af">Prys</title>
+                       <title language="chs">价格</title>
                        <title language="de">Preis</title>
                        <title language="es-mx">Precio</title>
                        <title language="fr">Prix</title>
@@ -121,6 +131,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="link">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es-mx">Link</title>
                        <title language="fr">Lien</title>
@@ -132,6 +143,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es-mx">Comentarios</title>
                        <title language="fr">Commentaires</title>
