@@ -101,7 +101,7 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_bSwitchToTransfers	= Settings.Search.SwitchToTransfers;
 	m_bExpandDownloads		= Settings.Downloads.AutoExpand;
 	m_bPromptURLs			= ! Settings.General.AlwaysOpenURLs;
-	m_bHideSearch			= Settings.General.HideSearchBar;
+	m_bHideSearch			= Settings.Search.HideSearchPanel;
 	
 	m_bRatesInBytes			= Settings.General.RatesInBytes
 							+ Settings.General.RatesUnit * 2;
@@ -154,7 +154,7 @@ void CGeneralSettingsPage::OnOK()
 	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers;
 	Settings.Downloads.AutoExpand		= m_bExpandDownloads;
 	Settings.General.AlwaysOpenURLs		= ! m_bPromptURLs;
-	Settings.General.HideSearchBar		= m_bHideSearch;
+	Settings.Search.HideSearchPanel		= m_bHideSearch;
 	
 	Settings.General.RatesInBytes		= m_bRatesInBytes % 2;
 	Settings.General.RatesUnit			= m_bRatesInBytes / 2;
