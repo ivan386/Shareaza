@@ -957,24 +957,20 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 					else
 						switch (nLastTwoDigits % 10)
 						{
-							case 0:
+							case 0: 
 								LoadString( strSource, IDS_STATUS_SOURCESTENS );
 								break;
-							case 1:LoadString( strSource, IDS_STATUS_SOURCES );
+							case 1:
+								LoadString( strSource, IDS_STATUS_SOURCES );
 								break;
 							case 2:
 							case 3:
 							case 4:
 								LoadString( strSource, IDS_STATUS_SOURCES2TO4);
 								break;
-							case 5:
-							case 6:
-							case 7:
-							case 8:
-							case 9:
+							default:
 								LoadString( strSource,  IDS_STATUS_SOURCES5TO9);
 								break;
-
 						}
 						strText.Format( _T("(%i %s)"), nSources, strSource );
 				}
