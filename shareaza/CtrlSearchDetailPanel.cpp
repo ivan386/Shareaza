@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -438,7 +438,7 @@ void CSearchDetailPanel::OnPaint()
 	
 	dc.SelectObject( &CoolInterface.m_fntBold );
 	LoadString( str, IDS_TIP_SIZE );
-	DrawText( &dc, rcWork.right - 100, rcWork.top, str + ':' );
+	DrawText( &dc, rcWork.right - 125, rcWork.top, str + ':' );
 	dc.SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( &dc, rcWork.right - 60, rcWork.top, m_sSize );
 	if ( m_pReviews.GetCount() )
