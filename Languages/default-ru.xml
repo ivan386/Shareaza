@@ -1411,7 +1411,7 @@
 				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
-				<font face="Arial" size="16" weight="800"/>
+				<font face="Trebuchet MS" size="16" weight="800"/>
 				<colours text="800000"/>
 			</style>
 		</styles>
@@ -1451,7 +1451,7 @@
 			<heading align="middle">В Н И М А Н И Е &#160; - &#160; В Ы &#160; З А &#160; Б Р А Н Д М А У Э Р О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать соединения из Интернета.  </text>
+			и неспособны принимать соединения из Интернета. &#160;</text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_FIREWALLS">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
@@ -1475,38 +1475,38 @@
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Шкурки</link>
-		<text align="middle"> - Измeнение обликa Sharеaza</text>
+		<text align="middle">&#160;- Измeнение обликa Sharеaza</text>
 		<newline gap="8"/>
 		
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер устанoвок</link>
-		<text align="middle"> - Пошaговый мaстер устанoвок Sharеaza</text>
+		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
 		
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Быстрaя помoщь (EN)</link>
-		<text align="middle"> - Чaстые вопрoсы (FAQ на сaйте Sharеaza)</text>
+		<text align="middle">&#160;- Чaстые вопрoсы (FAQ на сaйте Sharеaza)</text>
 		<newline gap="8"/>
 		
 		<icon res="147" width="32" height="32" target="http://www.emule-rus.com/modules.php?name=FAQ&amp;myfaq=yes&amp;id_cat=3&amp;categories=FAQ+%EF%EE+Shareaza"/>
 		<gap size="8"/>
 		<link target="http://www.emule-rus.com/modules.php?name=FAQ&amp;myfaq=yes&amp;id_cat=3&amp;categories=FAQ+%EF%EE+Shareaza" format="bu" align="middle">ЧaВo от Gаdgеt (RUS)</link>
-		<text align="middle"> - Чaстые вопрoсы (FAQ нa сaйте Emulе-Rus)</text>
+		<text align="middle">&#160;- Чaстые вопрoсы (FAQ нa сaйте Emulе-Rus)</text>
 		<newline gap="8"/>
 		
 		<icon res="147" width="32" height="32" target="http://www.emule-rus.com/modules.php?name=Forums&amp;file=viewtopic&amp;t=125"/>
 		<gap size="8"/>
 		<link target="http://www.emule-rus.com/modules.php?name=Forums&amp;file=viewtopic&amp;t=125" format="bu" align="middle">Нaстрoйка от Gаdgеt (RUS)</link>
-		<text align="middle"> - Описание настройки (нa сaйте Emulе-Rus)</text>
+		<text align="middle">&#160;- Описание настройки (нa сaйте Emulе-Rus)</text>
 		<newline gap="8"/>
 		
 		<icon res="186" width="32" height="32" target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"/>
 		<gap size="8"/>
 		<link target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html" format="bu" align="middle">Cтрaничкa пeрeвoдa</link>
-		<text align="middle"> - Cтрaничка этoгo руccкoгo пeрeвoдa oт  </text><heading align="middle">dАbserver</heading>
-		<newline gap="8"/>
+		<text align="middle">&#160;- Cтрaничка этoгo руccкoгo пeрeвoдa oт &#160;</text><heading align="middle">dАbserver</heading>
+		<newline gap="18" indent="0"/>
 		
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -1515,7 +1515,7 @@
 			<text>Открыт удаленный доступ к Shareaza, используйте обозреватель и адрес:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
-			<text>  - или -  </text>
+			<text> &#160;- или -&#160; </text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
@@ -1723,7 +1723,7 @@
 		<text format="b">Интернет </text>
 		<text>
 		    контролируют взаимодействие Shareaza с другими узлами в пределах распределенного
-		    соединения равноправных узлов ЛВС.
+		    соединения равноправных узлов.
 		</text>
 		<newline gap="16" margin="16"/>
 		
@@ -2193,8 +2193,8 @@
 	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Разделять или не разделять помеченную папку(и)."/>
 	<tip id="ID_LIBRARY_VIEW" message="Выберите вид хранилища..."/>
 	<tip id="ID_LIBRARY_VIEW_DETAIL" message="Показывать имя файла, подробности и мета данные" tip="Детальный вид"/>
-	<tip id="ID_LIBRARY_VIEW_HOME" message="Вид домашней страницы  хранилища" tip="Дом. Вид"/>
-	<tip id="ID_LIBRARY_VIEW_LIST" message="Показывать список файлов в виде таблицы" tip="В виде списка"/>
+	<tip id="ID_LIBRARY_VIEW_HOME" message="Вид домашней страницы хранилища" tip="Дом. Вид"/>
+	<tip id="ID_LIBRARY_VIEW_LIST" message="Показывать список файлов в виде списка" tip="В виде списка"/>
 	<tip id="ID_LIBRARY_VIEW_ICON" message="Показывать файлы как пиктограммы" tip="В виде пиктограмм"/>
 	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Показывать миниатюры файлов" tip="В виде миниатюр"/>
 	<tip id="ID_LIBRARY_PARENT" message="Переместиться вверх в родиельскую папку."/>
@@ -3892,7 +3892,7 @@
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Загружаемый файл"/>
-		<column from="Size" to="Имя"/>
+		<column from="Size" to="Размер"/>
 		<column from="Progress" to="Прогресс"/>
 		<column from="Speed" to="Скорость"/>
 		<column from="Status" to="Статус"/>
@@ -3919,7 +3919,7 @@
 		<column from="Leaves" to="Ветвей"/>
 		<column from="Mode" to="Режим"/>
 		<column from="Client" to="Клиент"/>
-		<column from="Name" to="Имя"/>
+		<column from="Name" to="Название"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Адрес/Содержание"/>
@@ -3973,7 +3973,7 @@
 		<column from="Client" to="Клиент"/>
 	</list>
   	<list name="CUploadQueueList">
-		<column from="Name" to="Имя"/>
+		<column from="Name" to="Название"/>
 		<column from="Criteria" to="Критерии"/>
 		<column from="Bandwidth" to="Полоса пропускания"/>
 		<column from="Transfers" to="Загрузок"/>
