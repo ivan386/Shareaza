@@ -187,7 +187,7 @@ no.reg_apptitle=Shareaza Ultimate File Sharing
 no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
-it.dialog_shutdown=Do you wish to shut down %1?
+no.dialog_shutdown=Do you wish to shut down %1?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
