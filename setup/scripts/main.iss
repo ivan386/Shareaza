@@ -54,7 +54,7 @@ Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 [Files]
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension regserver; MinVersion: 4.0,0
+Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension regserver noerror; MinVersion: 4.0,0
 
 ; Main files
 Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
