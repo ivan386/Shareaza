@@ -3114,16 +3114,16 @@ right quote    &#147;
                <control caption="Leisti tapti atšaka"/>
                <control caption="Priimti tik ryšius su mazgais"/>
                <control caption="Gnutella-G_2:"/>
-               <control caption="Atšakų į mazgą:"/>
-               <control/><control/>
                <control caption="Mazgų į atšaką:"/>
+               <control/><control/>
+               <control caption="Atšakų į mazgą:"/>
                <control/><control/>
                <control caption="Mazgų į mazgą:"/>
                <control/><control/>
                <control caption="Gnutella-G_1:"/>
-               <control caption="Atšakų į mazgą:"/>
-               <control/><control/>
                <control caption="Mazgų į atšaką:"/>
+               <control/><control/>
+               <control caption="Atšakų į mazgą:"/>
                <control/><control/>
                <control caption="Mazgų į mazgą:"/>
                <control/><control/>
