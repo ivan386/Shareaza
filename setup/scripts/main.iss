@@ -62,6 +62,7 @@ Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: 
 Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
+Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
 
 [Files]
 #ifndef debug
@@ -83,6 +84,7 @@ Source: "Data\gwebcache.txt"; DestDir: "{app}\Data"; Flags: ignoreversion overwr
 Source: "Data\Vendors.xml"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\WorldGPS.dat"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\DefaultAvatar.png"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "Data\DefaultServices.dat"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Copy repair installer
 Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
@@ -402,7 +404,7 @@ var
   FirewallManager: Variant;
   FirewallProfile: Variant;
 Begin
-  if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
+  if IsTaskSelected('firewall') then begin
     FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
     InstallFolder := ExpandConstant('{app}\Shareaza.exe');
     FirewallObject.ProcessImageFileName := InstallFolder;
