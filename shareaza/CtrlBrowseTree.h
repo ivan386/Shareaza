@@ -38,6 +38,7 @@ public:
 	
 // Attributes
 protected:
+	CCriticalSection	m_csRoot;
 	CBrowseTreeItem*	m_pRoot;
 	int					m_nTotal;
 	int					m_nVisible;
@@ -53,7 +54,7 @@ protected:
 // Operations
 public:
 	virtual BOOL		Create(CWnd* pParentWnd);
-	void				Clear();
+	void				Clear(BOOL bGUI = TRUE);
 	BOOL				Expand(CBrowseTreeItem* pItem, TRISTATE bExpand = TS_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				Select(CBrowseTreeItem* pItem, TRISTATE bSelect = TS_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				DeselectAll(CBrowseTreeItem* pExcept = NULL, CBrowseTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);
@@ -75,6 +76,13 @@ protected:
 	BOOL				CollapseRecursive(CBrowseTreeItem* pItem);
 	void				NotifySelection();
 	void				OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTreeItem* pItem);
+	
+// Inlines
+public:
+	inline CSyncObject* SyncRoot()
+	{
+		return &m_csRoot;
+	}
 	
 // Implementation
 protected:

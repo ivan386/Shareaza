@@ -399,6 +399,9 @@ BOOL CBrowseFrameCtrl::DoSizePanel()
 
 void CBrowseFrameCtrl::OnPhysicalTree(CG2Packet* pPacket)
 {
+	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
+	
+	if ( m_pTree[0] != NULL ) m_pTree[0]->Release();
 	m_pTree[0] = pPacket;
 	pPacket->AddRef();
 	if ( m_nTree == 0 ) m_wndTree.OnTreePacket( pPacket );
@@ -412,6 +415,9 @@ void CBrowseFrameCtrl::OnPhysicalTree(CG2Packet* pPacket)
 
 void CBrowseFrameCtrl::OnVirtualTree(CG2Packet* pPacket)
 {
+	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
+	
+	if ( m_pTree[1] != NULL ) m_pTree[1]->Release();
 	m_pTree[1] = pPacket;
 	pPacket->AddRef();
 	if ( m_nTree == 1 ) m_wndTree.OnTreePacket( pPacket );
@@ -425,7 +431,8 @@ void CBrowseFrameCtrl::OnVirtualTree(CG2Packet* pPacket)
 
 void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 {
-	CSingleLock pLock( &m_wndList->m_pMatches->m_pSection, TRUE );
+	CSingleLock lMatches( &m_wndList->m_pMatches->m_pSection, TRUE );
+	CSingleLock lTree( m_wndTree.SyncRoot(), TRUE );	
 	
 	CMatchFile** ppFile = m_wndList->m_pMatches->m_pFiles;
 	BOOL bGlobal = m_wndTree.GetSelectedCount() == 0;
@@ -529,6 +536,8 @@ void CBrowseFrameCtrl::OnUpdateLibraryTreePhysical(CCmdUI *pCmdUI)
 
 void CBrowseFrameCtrl::OnLibraryTreePhysical()
 {
+	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
+	
 	if ( m_pTree[0] != NULL )
 	{
 		m_nTree = 0;
@@ -544,6 +553,8 @@ void CBrowseFrameCtrl::OnUpdateLibraryTreeVirtual(CCmdUI *pCmdUI)
 
 void CBrowseFrameCtrl::OnLibraryTreeVirtual()
 {
+	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
+	
 	if ( m_pTree[1] != NULL )
 	{
 		m_nTree = 1;
