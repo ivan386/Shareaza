@@ -197,7 +197,7 @@ ReadyMemoTasks=Papildomos operacijos:
 ; *** "Preparing to Install" wizard page
 WizardPreparing=Pasirengimas ádiegimui
 PreparingDesc=Ádiegimo programa pasirengusi „[name]“ ádiegimui Jûsø kompiuteryje.
-PreviousInstallNotCompleted=Ankstesnës programos ádiegimas/ðalinimas buvo neuþbaigtas. Jûs reikëtø perkrauti kompiuterá, kad uþbaigtumëte ádiegimà.%n%nKai perkrausite kompiuterá, paleiskite ádiegimo programà dar kartà, kad pabaigtumëte „[name]“ ádiegimà.
+PreviousInstallNotCompleted=Ankstesnës programos ádiegimas/ðalinimas buvo neuþbaigtas. Jums reikëtø perkrauti kompiuterá, kad uþbaigtumëte ádiegimà.%n%nKai perkrausite kompiuterá, paleiskite ádiegimo programà dar kartà, kad pabaigtumëte „[name]“ ádiegimà.
 CannotContinue=Ádiegimas negali bûti tæsiamas. Praðome paspausti „Atðaukti“, kad baigtumëte ádiegimà.
 
 ; *** "Installing" wizard page
