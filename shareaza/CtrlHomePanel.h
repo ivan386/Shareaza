@@ -238,12 +238,12 @@ public:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CHomeDownloadsBox)
+	//{{AFX_VIRTUAL(CHomeTorrentsBox)
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeDownloadsBox)
+	//{{AFX_MSG(CHomeTorrentsBox)
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
