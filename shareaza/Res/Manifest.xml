@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
- <assemblyIdentity name="Shareaza.Shareaza" version="1.8.9.34" processorArchitecture="X86" type="win32"/>
+ <assemblyIdentity name="Shareaza.Shareaza" version="2.0.0.0" processorArchitecture="X86" type="win32"/>
  <description>Shareaza P2P</description>
  <dependency>
   <dependentAssembly>
