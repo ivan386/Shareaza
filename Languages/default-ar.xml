@@ -16,7 +16,7 @@
 			description="Shareaza Default Arabic Skin File"
 			link="http://www.shareaza.com/"
 			email="lazorde_sa@hotmail.com"
-			version="2.1.0.15"
+			version="2.1.0.18"
 			type="Language"
 			language="ar"
 			prompt="هنا اضغط العربية للغة."
@@ -2745,6 +2745,8 @@
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
 	<string id="16809" value="خ&amp;روج"/>
+    <string id="16810" value="year old"/> 
+    <string id="16811" value="تلاقائي"/> 
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2970,7 +2972,7 @@
 		<control caption="Expand new downloads by default"/>
 		<control caption="Show a prompt before opening URLs"/>
 		<control caption="Show rates in:"/>
-		<control/>
+		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Tooltips:"/>
 		<control/>
 		<control caption="التأخير (ث):"/>
@@ -2979,9 +2981,9 @@
 		<control/>
 		<control caption="_Tray:"/>
 		<control caption="عند الضغط على اغلاق:"/>
-		<control/>
+		<control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers"/>
 		<control caption="When I click minimise:"/>
-		<control/>
+		<control caption="Normal|Minimise to Tray"/>
         <control caption="Hide side bar when starting search"/>
 		<control caption="Filter adult content from searches"/>
 	</dialog>
@@ -3057,7 +3059,7 @@
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="الاتصال">
 		<control caption="_العنوان الداخلي:"/>
 		<control caption="العنوان:"/>
-		<control/>
+		<control caption="تلاقائي"/>
 		<control caption="المنفذ:"/>
 		<control/>
 		<control caption="عشوائي"/>
@@ -3066,8 +3068,8 @@
 		<control caption="Force binding to this address"/>
 		<control caption="_Outbound Address:"/>
 		<control caption="العنوان:"/>
-		<control/>
-		<control caption="السرغة:"/>
+		<control caption="تلاقائي"/>
+		<control caption="السرعة:"/>
 		<control/>
 		<control caption="خ_صائص:"/>
 		<control caption="حظر الاي بي الخاص بالشبكة المحلية"/>
@@ -3117,7 +3119,7 @@
 		<control caption="Limit:"/>
 		<control/>
 		<control caption="Mode:"/>
-		<control/>
+		<control caption="Maximum|Average"/>
 		<control caption="_Queues:"/>
 		<control/>
 		<control caption="_جديد..."/>
@@ -3344,13 +3346,13 @@
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza مرحبا بك في [3 of 7]">
 		<control caption="للحصول على اداء افضل يجب عليك وضع اعداد الاتصال ونوع الاتصال ."/>
-		<control/>
+	    	<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
 		<control caption="هل شبكتك محمية ببرنامج جدادر ناري ؟"/>
-		<control/>
+	    	<control caption="&#160;No, I CAN accept all incoming connections| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
 		<control caption="هل لديك برنامج حماية جدار ناري على جهازك في المنزل ؟"/>
-		<control/>
+	    	<control caption="&#160;No, I have FULL ACCESS to the Internet| Yes, but I will set up port-forwarding for Shareaza| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
 		<control caption="اذا كنت تجهل نوع الاتصال لديك اختر النوع من بين القوائم التالية:"/>
-		<control/>
+		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="او, اختر:"/>
 		<control/>
 	</dialog>
@@ -3380,7 +3382,8 @@
 		<control caption="I use the name:"/>
 		<control/>
 		<control caption="and I'm a:"/>
-		<control/><control/>
+		<control caption="&#160;(choose)"/> 
+        <control caption="&#160;(choose)| guy| ونثاء| رجل| امرئه"/> 
 		<control caption="from:"/>
 		<control/><control/>
 	</dialog>
@@ -3429,7 +3432,7 @@
 		<control caption="الاسم الحقيقي:"/>
 		<control/><control/>
 		<control caption="_الأعضاء الحيوية:"/>
-		<control/>
+		<control caption="|ذكر|ؤنثاء"/>
 		<control caption="الجنس:"/>
 		<control/>
 		<control caption="العمر:"/>
@@ -3517,7 +3520,7 @@
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/><control/>
 		<control caption="بروتوكولات _الشبكة:"/>
-		<control/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Suppress Ultrapeer"/>
 		<control caption="اتصال"/>
 		<control caption="الغاء"/>
@@ -3612,7 +3615,7 @@
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="مراجعتي">
 		<control caption="مراجعتي"/>
 		<control caption="أقدّر هذا الملف:"/>
-		<control/>
+		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 		<control caption="مراجعتي وتعليقاتي"/>
 		<control/><control/>
 	</dialog>
@@ -3701,7 +3704,7 @@
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="قاعدة الامن">
 		<control caption="_القاعده:"/>
 		<control caption="النوع:"/>
-		<control/>
+		<control caption="Network (IP) Address|Content Filter"/>
 		<control caption="ملاحظات:"/>
 		<control/>
 		<control caption="_عنوان الشبكة:"/>
@@ -3715,9 +3718,10 @@
 		<control caption="Match All"/>
 		<control caption="_خيارات:"/>
 		<control caption="Action:"/>
-		<control/>
+		<control caption="None|Accept|Deny"/>
 		<control caption="تصدير:"/>
-		<control/><control/>
+		<control caption="Never (Indefinite)|At End of Session|After:"/> 
+        <control/> 
 		<control caption="d"/>
 		<control/>
 		<control caption="h"/>
@@ -3749,7 +3753,7 @@
 		<control/>
 		<control caption="You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"/>
 		<control/>
-		<control caption="Insert Token:"/>
+	    	<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control/>
 		<control caption="Select preset:"/>
 		<control/>
@@ -3941,7 +3945,8 @@
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Select Visualisation">
 	    <control/>
 	    <control caption="Select an audio visualisation from the list:"/>
-	    <control/><control/>
+	    <control/> 
+        <control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display"/> 
 	    <control caption="_تركيب..."/>
 	    <control caption="موافق"/>
 	    <control caption="الغاء"/>
