@@ -81,10 +81,10 @@ lt.components_languages=Kalbos
 lt.tasks_allusers=Visiems vartotojams
 lt.tasks_selectusers=Ádiegti „%1“ ðiems vartotojams:
 lt.tasks_currentuser=Tik vartotojui %1
-lt.tasks_multisetup=Enable multi-user support
+lt.tasks_multisetup=Ágalinti keliø vartotojø palaikymà
 lt.run_skinexe=Vykdoma apvalkalo sàranka...
 lt.reg_incomingchat=Gaunama þinutë pokalbiui
-lt.reg_apptitle=Shareaza Ultimate File Sharing
+lt.reg_apptitle=Shareaza — geriausia programa bylø mainams
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Paðalinti
 ; German
