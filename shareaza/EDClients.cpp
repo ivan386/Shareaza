@@ -488,9 +488,11 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		// We are waiting for a response
 		if ( tNow > m_tLastServerStats + Settings.Connection.TimeoutHandshake )
 		{
+			CSingleLock pLock( &Network.m_pSection );
+			pLock.Lock();
+
 			// Timed out
 			m_nLastServerKey = 0;
-			// m_tLastServerStats = 0;
 			theApp.Message( MSG_DEBUG, _T("Time-out waiting for ed2k server status") );
 
 			pHost = HostCache.eDonkey.Find( &m_pLastServer );
@@ -506,12 +508,17 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 					HostCache.eDonkey.Remove( pHost );
 				}
 			}	
+			// Reset the timer so we query another server right away
+			// m_tLastServerStats = 0;
+			pLock.Unlock();
 		}
 	}
 
 	if ( tNow > m_tLastServerStats + Settings.eDonkey.StatsGlobalThrottle )	// Limit requests to every 30 minutes
 	{
 		// We are due to send another stats request
+		CSingleLock pLock( &Network.m_pSection );
+		pLock.Lock();
 
 		// Get the current time (in seconds)
 		DWORD tSecs	= time( NULL );
@@ -547,6 +554,8 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				}
 			}
 		}
+		pLock.Unlock();
+
 		// We have checked all known servers, we may go back and re-query any that didn't respond.
 		m_bAllServersDone = TRUE;
 		// Try again later. (we don't want to keep running this section, it's a little slow)
