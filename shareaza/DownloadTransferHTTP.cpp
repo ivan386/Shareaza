@@ -294,7 +294,8 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD REQUEST: %s"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)pURL.m_sPath );
 	
-	// m_pOutput->Print( "Connection: Keep-Alive\r\n" );
+	m_pOutput->Print( "Connection: Keep-Alive\r\n" ); //BearShare assumes close
+
 	if ( Settings.Gnutella2.EnableToday ) m_pOutput->Print( "X-Features: g2/1.0\r\n" );
 	
 	if ( m_bTigerFetch )
