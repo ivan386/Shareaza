@@ -95,6 +95,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_SEARCH_FOR_ALBUM, OnSearchForAlbum)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FOR_SERIES, OnUpdateSearchForSeries)
 	ON_COMMAND(ID_SEARCH_FOR_SERIES, OnSearchForSeries)
+	ON_UPDATE_COMMAND_UI(ID_LIBRARY_CREATETORRENT, OnUpdateLibraryCreateTorrent)
+	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
 	//ON_UPDATE_COMMAND_UI(ID_LIBRARY_JIGLE, OnUpdateLibraryJigle)
 	//ON_COMMAND(ID_LIBRARY_JIGLE, OnLibraryJigle)
 	//}}AFX_MSG_MAP
@@ -483,6 +485,34 @@ void CLibraryFileView::OnLibraryBitziWeb()
 		CFileExecutor::ShowBitziTicket( nIndex );
 	}
 }
+
+
+void CLibraryFileView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount() == 1 && ( Settings.BitTorrent.DefaultTracker.GetLength() > 5 ) );
+}
+
+void CLibraryFileView::OnLibraryCreateTorrent() 
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	
+	if ( CLibraryFile* pFile = GetSelectedFile() )
+	{
+		CString sCommandLine, sPath = pFile->GetPath();
+		pLock.Unlock();
+
+		if ( sPath.GetLength() > 0 )
+		{
+			sCommandLine = _T(" -sourcefile \"") + sPath + _T("\" -destination \"") + Settings.Downloads.TorrentPath + _T("\" -tracker \"" + Settings.BitTorrent.DefaultTracker + "\"" );
+
+			ShellExecute( GetSafeHwnd(), _T("open"), _T("TorrentWizard.exe"), sCommandLine, NULL, SW_SHOWNORMAL );
+		
+		}
+
+	}
+}
+
+
 
 /*
 void CLibraryFileView::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
