@@ -579,7 +579,8 @@ CDownload* CDownloads::FindByED2K(const MD4* pED2K, BOOL bSharedOnly) const
 		CDownload* pDownload = GetNext( pos );
 		if ( pDownload->m_bED2K && pDownload->m_pED2K == *pED2K )
 		{
-			if ( ! bSharedOnly || ( pDownload->IsShared() && pDownload->IsStarted() ) )
+			if ( ! bSharedOnly || ( pDownload->IsShared() && pDownload->IsStarted() )
+				&& ( pDownload->m_nSize > ED2K_PART_SIZE || pDownload->IsCompleted() ) )
 				return pDownload;
 		}
 	}

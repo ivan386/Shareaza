@@ -255,6 +255,15 @@ void CDownloadTransferED2K::OnDropped(BOOL bError)
 
 BOOL CDownloadTransferED2K::OnFileReqAnswer(CEDPacket* pPacket)
 {
+	if ( m_pDownload->m_nSize <= ED2K_PART_SIZE )
+	{
+		if ( m_pAvailable ) delete [] m_pAvailable;
+		m_pAvailable = new BYTE[ 1 ];
+		m_pAvailable[ 0 ] = TRUE;
+		m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
+			FF::SimpleFragment( 0, m_pDownload->m_nSize ) );
+		SendSecondaryRequest();
+	}
 	// Not really interested
 	return TRUE;
 }
@@ -698,10 +707,17 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	*/
 	Send( pPacket );
 	
-	//Send ed2k status request
-	pPacket = CEDPacket::New( ED2K_C2C_FILESTATUSREQUEST );
-	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
-	Send( pPacket );
+	if ( m_pDownload->m_nSize <= ED2K_PART_SIZE )
+	{
+		// Don't ask for status - if the client answers we know the file is complete anyway
+	}
+	else
+	{
+		//Send ed2k status request
+		pPacket = CEDPacket::New( ED2K_C2C_FILESTATUSREQUEST );
+		pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
+		Send( pPacket );
+	}
 	
 	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&//We want more sources
 		 ( tNow > m_tSources ) && ( tNow - m_tSources > 30 * 60 * 1000 ) &&		//We have not asked for at least 30 minutes
