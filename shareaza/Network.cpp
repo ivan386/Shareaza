@@ -294,6 +294,8 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	if ( IsFirewalledAddress( &pAddress ) ) return;
 	
 	m_pHost.sin_addr = pAddress;
+
+	Security.SessionBan( &pAddress );		// Ban self
 }
 
 //////////////////////////////////////////////////////////////////////
