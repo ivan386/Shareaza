@@ -217,7 +217,7 @@ br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
 br.icons_license=Licença
 br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
-br.dialog_shutdown=Do you wish to shut down %1?
+br.dialog_shutdown=Você deseja fechar o %1?
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
