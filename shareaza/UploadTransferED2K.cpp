@@ -337,9 +337,11 @@ BOOL CUploadTransferED2K::OnRequestParts(CEDPacket* pPacket)
 	
 	for ( int nRequest = 0 ; nRequest < 3 ; nRequest++ )
 	{
-		if ( ( nOffset[0][nRequest] < nOffset[1][nRequest] ) && ( nOffset[1][nRequest] <= m_nFileSize ) )
+		if ( nOffset[1][nRequest] <= m_nFileSize )
 		{
-			AddRequest( nOffset[0][nRequest], nOffset[1][nRequest] - nOffset[0][nRequest] );
+			// Valid (or null) request
+			if ( nOffset[0][nRequest] < nOffset[1][nRequest] )
+				AddRequest( nOffset[0][nRequest], nOffset[1][nRequest] - nOffset[0][nRequest] );
 		}
 		else
 		{
