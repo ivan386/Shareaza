@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="dabserver@mail.ru"
-		version="2.1.0.17"
+		version="2.1.0.18"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -1756,7 +1756,7 @@
 
 	<document name="CBrowseHostProfile.1">
 
-		<heading>Профиль</heading>
+		<heading>Профиль </heading>
 		<heading id="Nick"/>
 		<newline gap="8"/>
 
@@ -1780,7 +1780,7 @@
 			<newline gap="2" indent="8"/>
 			<text id="GenderMale">Мужской</text>
 			<text id="GenderFemale">Женский</text>
-			<text>,</text>
+			<text>, </text>
 			<text id="Age"/>
 		</group>
 
@@ -2539,7 +2539,7 @@
 	<string id="16194" value="Хост %s отправил пакет c чрезмерным размером TTL, отклоняю (TTL=%i, Hops=%i)."/>
 	<string id="16195" value="Хост %s отправил ping пакет с недействительной длиной, игнорирую."/>
 	<string id="16196" value="Хост %s отправил pong пакет с недействительной длиной, игнорирую."/>
-	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
+
 	<string id="16198" value="Лепестковый узел %s пересылает запросы, соединение обрывается."/>
 	<string id="16199" value="Хост %s пересылает непонятный пакет (0x%.2x), игнорирую."/>
 	<string id="16200" value="Хост %s пересылает pong с неправильным адресом, игнорирую."/>
@@ -2749,6 +2749,8 @@
 	<string id="16807" value="Введите устанавливаемый лимит пропускной способности в виде «123 kb/s» для килобитов за секунду или «123 KB/s» - для килобайтов за секунду."/>
 	<string id="16808" value="Вы не указали Ваш пол и возраст.  Уверенны что хотите продолжить не делая этого?"/>
 	<string id="16809" value="Вы&amp;ход"/>
+	<string id="16810" value="лет"/>
+	<string id="16811" value="Автоматический"/>
 	<string id="16864" value="Запрашивается список ресурсов соединений..."/>
 	<string id="16865" value="Запрашивается список ресурсов соединений «%s»..."/>
 	<string id="16866" value="GWebCache транзакция успешна («%s»)."/>
@@ -2833,7 +2835,7 @@
 	<string id="17130" value="eDonkey2000 (высокий ID)"/>
 	<string id="17216" value="Инициализация соединения с eDonkey2000 сервером %s..."/>
 	<string id="17217" value="Соединение с eDonkey2000 сервером %s установлено, посылаю подтверждение..."/>
-	<string id="17218" value="ED2K[%s] %s"/>
+
 	<string id="17219" value="eDonkey2000 сервер %s отказал соединению."/>
 	<string id="17220" value="eDonkey2000 сервер %s доступен, ИД клиента - %lu."/>
 	<string id="17221" value="eDonkey2000 сервер %s сменил свой ИД клиента с %lu в %lu."/>
@@ -2974,7 +2976,7 @@
 		<control caption="Раскрывать дерево новых эагрузок"/>
 		<control caption="Спрашивать о перехвате ссылок"/>
 		<control caption="Скорость в:"/>
-		<control/>
+		<control caption="бит/сек.|байт/сек.|б/с|Б/с|Кб/с|КБ/с|Мб/с|МБ/с"/>
 		<control caption="Показывать _подсказки для:"/>
 		<control/>
 		<control caption="Задерж.(мс):"/>
@@ -2983,9 +2985,9 @@
 		<control/>
 		<control caption="_Трей:"/>
 		<control caption="Когда щелкаю закрыть:"/>
-		<control/>
+		<control caption="Спрашивать|Сразу закрыть|Отправить в трей|Закр. после пересылок"/>
 		<control caption="Когда щелкаю свернуть:"/>
-		<control/>
+		<control caption="Обычное действие|Отправить в трей"/>
 		<control caption="Скрыть панель поиска начав поиск"/>
 		<control caption="Фильтровать содерж. для взрослых"/>
 	</dialog>
@@ -3061,7 +3063,7 @@
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Соединения">
 		<control caption="_Локальные адреса:"/>
 		<control caption="Адрес:"/>
-		<control/>
+		<control caption="Автоматический"/>
 		<control caption="Порт:"/>
 		<control/>
 		<control caption="Случайный"/>
@@ -3070,7 +3072,7 @@
 		<control caption="Настоять на этом адресе"/>
 		<control caption="_Внешние адреса:"/>
 		<control caption="Адрес:"/>
-		<control/>
+		<control caption="Автоматический"/>
 		<control caption="Скорость:"/>
 		<control/>
 		<control caption="О_пции:"/>
@@ -3121,7 +3123,7 @@
 		<control caption="Лимит:"/>
 		<control/>
 		<control caption="Режим:"/>
-		<control/>
+		<control caption="На максимум|Среднее"/>
 		<control caption="О_череди:"/>
 		<control/>
 		<control caption="_Новое..."/>
@@ -3240,7 +3242,7 @@
 		<control caption="Клиентских соединений"/>
 		<control caption="_Интерфейс:"/>
 		<control caption="Показывать дополнительные элементы BitTorrent интерфейса"/>
-		<control caption="_ЕndGame:"/>
+		<control caption="_ЕndGame (ускорение):"/>
 		<control caption="Переходить в режим EndGame при завершении торрентов"/>
 		<control caption="_Программа для создания торрентов"/>
 		<control caption="Трекер:"/>
@@ -3250,7 +3252,7 @@
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Протоколы">
-		<control caption="Shareaza - Обозреватель протоколов общей архитектуры:"/>
+		<control caption="Shareaza обозреватель протоколов общей архитектуры:"/>
 		<control/>
 	</dialog>
 
@@ -3348,13 +3350,13 @@
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Добро пожаловать в Shareaza [3 из 7]">
 		<control caption="Для оптимальной работы Shareaza должна знать о вашем соединении с Интернетом."/>
-		<control/>
+		<control caption="&#160;( выберите )| Я пользуюсь Интернетом дома| Я пользуюсь Интернетом в сети учебного заведения| Я пользуюсь Интернетом в офисе| Я пользуюсь Интернетом в гостинице или в аэропорту"/>
 		<control caption="Ваша сеть или университетский городок защищены брандмауэром или маршрутизатором?"/>
-		<control/>
+		<control caption="&#160;Нет, я МОГУ принимать все соединения| Да, и я НЕ МОГУ принять входящих соединений из Интернета| Я не знаю, ОБНАРУЖЬТЕ заслон автоматически"/>
 		<control caption="У Вас есть брандмауэр или маршрутизатор на пути вашего соединения с Интернетом?"/>
-		<control/>
+		<control caption="&#160;Нет, у меня есть ПОЛНЫЙ ДОСТУП к Интернету| Да, но я переадресую порт на Shareaza'у| Да, и я НЕ МОГУ принять входящих соединений из Интернета| Я не знаю, ОБНАРУЖЬТЕ заслон автоматически"/>
 		<control caption="Если Вы знаете скорость вашего соединения с Интернетом, выберите опцию ниже:"/>
-		<control/>
+		<control caption="| Коммутир. соединение| ИСДН| АДСЛ (256 К)| АДСЛ (512 К)| АДСЛ (768 К)| АДСЛ (1,5 М)| Кабельный модем/СДСЛ| Т1| Т3| Локальная сеть| OC3"/>
 		<control caption="ИЛИ, выберите:"/>
 		<control/>
 	</dialog>
@@ -3384,7 +3386,8 @@
 		<control caption="Мой ник будет:"/>
 		<control/>
 		<control caption="и мне (я):"/>
-		<control/><control/>
+		<control caption="&#160;(выберите)"/>
+		<control caption="&#160;(выберите)| парень| девушка| мужчина| женщина"/>
 		<control caption="Из:"/>
 		<control/><control/>
 	</dialog>
@@ -3433,10 +3436,10 @@
 		<control caption="Настоящее:"/>
 		<control/><control/>
 		<control caption="_Важное:"/>
-		<control/>
+		<control caption="|Мужской|Женский"/>
 		<control caption="Пол:"/>
 		<control/>
-		<control caption="Лет:"/>
+		<control caption="Возраст:"/>
 		<control caption="Другим можно смотреть мой профиль"/>
 	</dialog>
 
@@ -3521,7 +3524,7 @@
 		<control caption="Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"/>
 		<control/><control/>
 		<control caption="Протокол _сети:"/>
-		<control/>
+		<control caption="Gnutella1 (авто)|Gnutella2 (авто)|eDonkey2000"/>
 		<control caption="Подавить _ведущего"/>
 		<control caption="Соединиться"/>
 		<control caption="Отмена"/>
@@ -3571,7 +3574,7 @@
 		<control caption="Адрес службы:"/>
 		<control/>
 		<control caption="Тип ресурса соединений:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка"/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -3616,7 +3619,7 @@
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Мой обзор">
 		<control caption="Моя оценка"/>
 		<control caption="Я оцениваю файл:"/>
-		<control/>
+		<control caption="(Без оценки)|Фальшивка/Испорчен/Обман|Плохой|Средний|Хороший|Очень хороший|Отменный"/>
 		<control caption="Мой обзор и комментарии"/>
 		<control/><control/>
 	</dialog>
@@ -3626,7 +3629,7 @@
 		<control caption="Разделять, если папка файла разделяема"/>
 		<control caption="Отменить установки разделения этого файла:"/>
 		<control caption="Сделать файл достуным для других пользователей"/>
-		<control caption="Тег(и) для выборки очереди выгрузки"/>
+		<control caption="Марка(и) для выборки очереди выгрузки"/>
 		<control/>
 		<control caption="-Сети, в которых разделять"/>
 		<control/><control/>
@@ -3705,7 +3708,7 @@
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Правило безопасности">
 		<control caption="_Правило:"/>
 		<control caption="Тип:"/>
-		<control/>
+		<control caption="Адрес сети (IP)|Фильтр содержания"/>
 		<control caption="Заметка:"/>
 		<control/>
 		<control caption="_Сетевой адрес:"/>
@@ -3719,9 +3722,10 @@
 		<control caption="Удовл. всем"/>
 		<control caption="_Опции:"/>
 		<control caption="Действие:"/>
-		<control/>
+		<control caption="Никакое|Допустить|Запретить"/>
 		<control caption="Истекает:"/>
-		<control/><control/>
+		<control caption="Никогда (навсегда)|В конце сессии|После:"/>
+		<control/>
 		<control caption="д"/>
 		<control/>
 		<control caption="ч"/>
@@ -3754,7 +3758,7 @@
 		<control caption="Вы выбрали %lu файл(а/ов) для экспорта как Shareaza-поддерживаемые ссылки.  Выберите формат ссылок и нажмите «Сохранить»:"/>
 		<control/>
 		<control caption="Вставить:"/>
-		<control/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Полное имя файла|Имя файла (ссылка)|Имя файла|Расширение файла|Размер файла|Размер файла (в байтах)|Путь к папке|Локальный адрес|Локальный порт"/>
 		<control caption="Шаблоны:"/>
 		<control/>
 		<control caption="_Копировать"/>
@@ -3945,7 +3949,8 @@
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Выбор визуализации">
 		<control/>
 		<control caption="Выберите аудио визуализацию из списка:"/>
-		<control/><control/>
+		<control/>
+		<control caption="Footer экран|Полный экран|Большой экран|Средний экран|Малый экран"/>
 		<control caption="_Установки..."/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
@@ -4049,10 +4054,10 @@
 		<column from="Type" to="Тип"/>
 		<column from="Size" to="Размер"/>
 		<column from="Rating" to="Оценка"/>
-		<column from="Status" to="Статус"/>
 		<column from="Host/Count" to="Кол-во хостов"/>
 		<column from="Speed" to="Скорость"/>
 		<column from="Client" to="Клиент"/>
+		<column from="Status" to="Статус"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Название"/>

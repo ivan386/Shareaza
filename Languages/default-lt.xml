@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.17"
+		version="2.1.0.18"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -1418,6 +1418,10 @@ right quote	&#147;
 		<item id="ID_CHAT_TIMESTAMP" text="Rodyti _laiką"/>
 		<item id="ID_CHAT_CLEAR" text="_Valyti langą"/>
 	</menu>
+	<!-- SEARCH RESULTS HEADER MENU -->
+	<menu name="CBaseMatchWnd">
+		<item id="ID_SEARCH_COLUMNS" text="_Schemos..."/>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -2754,6 +2758,8 @@ right quote	&#147;
 	<string id="16807" value="Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."/>
 	<string id="16808" value="Jūs nenurodėte savo amžiaus ir lyties. Ar tikrai norite tęsti be šių duomenų?"/>
 	<string id="16809" value="&amp;Užverti"/>
+	<string id="16810" value="m. amžiaus"/>
+	<string id="16811" value="Automatinis"/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
@@ -2979,7 +2985,7 @@ right quote	&#147;
 		<control caption="Visada išskleisti naujų bylų šaltinių medį"/>
 		<control caption="Klausti prieš pridedant nuorodas"/>
 		<control caption="Spartą rodyti:"/>
-		<control/>
+		<control caption="bitai/sek.|baitai/sek.|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Užuominos:"/>
 		<control/>
 		<control caption="Delsa (ms):"/>
@@ -2988,9 +2994,9 @@ right quote	&#147;
 		<control/>
 		<control caption="_Sistemos juostelė:"/>
 		<control caption="Kai paspaudžiu baigti:"/>
-		<control/>
+		<control caption="Paklausti|Iškart užverti|Patalpinti juostelėn|Baigti atsisiuntus"/>
 		<control caption="Kai paspaudžiu sutraukti:"/>
-		<control/>
+		<control caption="Įprastas veiksmas|Patalpinti juostelėn"/>
 		<control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
 		<control caption="Paieškose filtruoti turinį suaugusiems"/>
 	</dialog>
@@ -3066,7 +3072,7 @@ right quote	&#147;
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Ryšys">
 		<control caption="_Išorinis adresas:"/>
 		<control caption="Adresas:"/>
-		<control/>
+		<control caption="Automatinis"/>
 		<control caption="Prievadas:"/>
 		<control/>
 		<control caption="Atsitiktinis"/>
@@ -3075,7 +3081,7 @@ right quote	&#147;
 		<control caption="Dirbtinai susieti su adresu"/>
 		<control caption="_Vidinis adresas:"/>
 		<control caption="Adresas:"/>
-		<control/>
+		<control caption="Automatinis"/>
 		<control caption="Sparta:"/>
 		<control/>
 		<control caption="_Parinktys:"/>
@@ -3126,7 +3132,7 @@ right quote	&#147;
 		<control caption="Limitas:"/>
 		<control/>
 		<control caption="Veiksena:"/>
-		<control/>
+		<control caption="Maksimali|Vidurkis"/>
 		<control caption="_Eilės:"/>
 		<control/>
 		<control caption="_Nauja..."/>
@@ -3167,7 +3173,7 @@ right quote	&#147;
 		<control caption="% greitaveikos, kai ribojama"/>
 		<control/>
 		<control caption="Pagalba"/>
-		<control caption="Planuotojas yra sukurtas tam, kad leistų Jums nustatyti, kada „Shareaza“ prisijungs ir siųsis bylas.&#13;&#10;&#13;&#10;&#13;&#10;Pastaba: Jei esate atvėrę „Shareaza“ tuo metu, kai planuotojas veikia, Jūs galite pastebėti, jog nuostatos keičiasi — tai normalu!"/>
+		<control caption="Planuotojas yra sukurtas tam, kad leistų Jums nustatyti, kada „Shareaza“ prisijungs ir siųsis bylas.{n}{n}{n}Pastaba: Jei esate atvėrę „Shareaza“ tuo metu, kai planuotojas veikia, Jūs galite pastebėti, jog nuostatos keičiasi — tai normalu!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Tinklai">
@@ -3353,13 +3359,13 @@ right quote	&#147;
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Sveiki! Čia „Shareaza“ [3 iš 7]">
 		<control caption="Optimaliam darbui „Shareazai“ reikia žinoti šiek tiek apie Jūsų interneto ryšį."/>
-		<control/>
+		<control caption="&#160;( prašome pasirinkti )| Aš naudojuosi Internetu namuose| Aš naudojuosi Internetu mokymosi įstaigos tinkle| Aš naudojuosi Internetu biuro tinkle| Aš naudojuosi Internetu viešbutyje ar oro uoste"/>
 		<control caption="Ar Jūsų organizacijos tinklas yra saugomas užkarda ar NAT maršrutizatoriumi?"/>
-		<control/>
+		<control caption="&#160;Ne, aš GALIU priimti visus ryšius| Taip, ir aš NEGALIU primti įeinančio ryšio iš Interneto| Aš nežinau, prašau APTIKTI užkardą automatiškai"/>
 		<control caption="Ar Jūsų namų interneto ryšys yra už užkardos ar NAT maršrutizatioriaus?"/>
-		<control/>
+		<control caption="&#160;Ne, aš turiu PILNĄ PRIĖJIMĄ prie Interneto| Taip, bet aš peradresuosiu prievadą programai| Taip, ir aš NEGALIU primti įeinančio ryšio iš Interneto| Aš nežinau, prašau APTIKTI užkardą automatiškai"/>
 		<control caption="Jei Jūs žinote, kokios spartos interneto ryšį turite, žemiau pasirinkite artimiausią spartos variantą:"/>
-		<control/>
+		<control caption="| Telefono ryšys| ISDN| ADSL (256 K)| ADSL (512 K)| ADSL (768 K)| ADSL (1,5 M)| Kabelinis modemas/SDSL| T1| T3| Vietinis tinklas| OC3"/>
 		<control caption="ARBA, pasirinkite:"/>
 		<control/>
 	</dialog>
@@ -3389,7 +3395,8 @@ right quote	&#147;
 		<control caption="Mano vardas:"/>
 		<control/>
 		<control caption="ir aš esu:"/>
-		<control/><control/>
+		<control caption="&#160;(pasirinkite)"/>
+		<control caption="&#160;(pasirinkite)| vaikinas| mergina| vyras| moteris"/>
 		<control caption="iš:"/>
 		<control/><control/>
 	</dialog>
@@ -3438,7 +3445,7 @@ right quote	&#147;
 		<control caption="Vardas, pav.:"/>
 		<control/><control/>
 		<control caption="_Demografiniai duomenys:"/>
-		<control/>
+		<control caption="|Vyras|Moteris"/>
 		<control caption="Lytis:"/>
 		<control/>
 		<control caption="Amžius:"/>
@@ -3526,7 +3533,7 @@ right quote	&#147;
 		<control caption="Užmegzti naują ryšį su kompiuteriu ar serveriu:|Naršyti šį kompiuterį:"/>
 		<control/><control/>
 		<control caption="Tinklo _protokolas:"/>
-		<control/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (аuto)|eDonkey2000"/>
 		<control caption="_Slopinti vedančiuosius"/>
 		<control caption="Jungtis"/>
 		<control caption="Atšaukti"/>
@@ -3576,7 +3583,7 @@ right quote	&#147;
 		<control caption="Tarnybos _adresas:"/>
 		<control/>
 		<control caption="Tarnybos tipas:"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met nuoroda"/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -3621,7 +3628,7 @@ right quote	&#147;
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Mano apžvalga">
 		<control caption="Mano įvertinimas"/>
 		<control caption="Įvertinu šią bylą(-as):"/>
-		<control/>
+		<control caption="(Be įvertinimo)|Klastotė/Sugadinta/Klaidinanti|Prasta|Vidutinė|Gera|Labai gera|Puiki"/>
 		<control caption="Mano apžvalga ir komentarai"/>
 		<control/><control/>
 	</dialog>
@@ -3710,7 +3717,7 @@ right quote	&#147;
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Saugos taisyklė">
 		<control caption="_Taisyklė:"/>
 		<control caption="Tipas:"/>
-		<control/>
+		<control caption="Tinklo (IP) adresas|Turinio filtras"/>
 		<control caption="Komentaras:"/>
 		<control/>
 		<control caption="Tinklo _adresas:"/>
@@ -3724,9 +3731,10 @@ right quote	&#147;
 		<control caption="Visi žodžiai"/>
 		<control caption="_Parinktys:"/>
 		<control caption="Veiksmas:"/>
-		<control/>
+		<control caption="Jokio|Prileisti|Drausti"/>
 		<control caption="Panaikinti:"/>
-		<control/><control/>
+		<control caption="Niekada (Visam laikui)|Sesijos pabaigoje|Po:"/>
+		<control/>
 		<control caption="d"/>
 		<control/>
 		<control caption="h"/>
@@ -3759,7 +3767,7 @@ right quote	&#147;
 		<control caption="Jūs pasirinkote %lu bylą(-ų,-as) su „Shareaza“ susietų nuorodų ekspotavimui. Pasirinkite nuorodos formatą ir paspauskite „Išsaugoti“:"/>
 		<control/>
 		<control caption="Įterpti ženklą:"/>
-		<control/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Pilnas bylos vardas|Bylos vardas (nuoroda)|Bylos vardas|Bylos plėtinys|Bylos dydis|Bylos dydis (baitais)|Aplanko kelias|Vietinis adresas|Vietinis prievadas"/>
 		<control caption="Šablonai:"/>
 		<control/>
 		<control caption="_Kopijuoti"/>
@@ -3950,7 +3958,8 @@ right quote	&#147;
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Pasirinkite muzikos vaizdą">
 		<control/>
 		<control caption="Pasirinkite muzikos vaizdo papildinį iš sąrašo:"/>
-		<control/><control/>
+		<control/>
+		<control caption="Footer ekranas|Pilnas ekranas|Didelis ekranas|Vidutinis ekranas|Mažas ekranas"/>
 		<control caption="_Derinimas..."/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
