@@ -1,7 +1,7 @@
 //
 // DlgTorrentTracker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -216,22 +216,27 @@ void CTorrentTrackerDlg::OnRun()
 	
 	CString strURL = m_pInfo.m_sTracker;
 	Replace( strURL, _T("/announce"), _T("/scrape") );
-	m_pRequest.SetURL( strURL );
-	
-	if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
+
+	// Skip obviously invalid trackers
+	if ( m_pInfo.m_sTracker.GetLength() > 7 ) 
 	{
-		CBuffer* pResponse = m_pRequest.GetResponseBuffer();
+		m_pRequest.SetURL( strURL );
 		
-		if ( CBENode* pNode = CBENode::Decode( pResponse ) )
+		if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
 		{
-			if ( OnTree( pNode ) )
-			{
-				delete pNode;
-				PostMessage( WM_TIMER, 3 );
-				return;
-			}
+			CBuffer* pResponse = m_pRequest.GetResponseBuffer();
 			
-			delete pNode;
+			if ( CBENode* pNode = CBENode::Decode( pResponse ) )
+			{
+				if ( OnTree( pNode ) )
+				{
+					delete pNode;
+					PostMessage( WM_TIMER, 3 );
+					return;
+				}
+				
+				delete pNode;
+			}
 		}
 	}
 	
