@@ -5,7 +5,7 @@ Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseF
 Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"; InfoBeforeFile: "setup/readme/dutch.txt"
 
 [Files]
-; Install localized remotes
+; Install localized remote
 ; English:
 Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: en
 Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist ; Components: mainfiles; Languages: en
@@ -18,6 +18,12 @@ Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreve
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: en
 ; Dutch
 Source: "setup\license\dutch.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
+
+; Install localized readme
+; English
+Source: "setup\readme\default.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: en
+; Dutch
+Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
 
 ; Always install user's local language
 ; English is always installed and specified in main script
