@@ -42,6 +42,7 @@ protected:
 	CListCtrl		m_wndList;
 	CImageList		m_gdiImageList;
 	CLiveListSizer	m_pSizer;
+	DWORD			tLastUpdate;
 
 // Operations
 public:

@@ -145,6 +145,8 @@ void CSecurityWnd::Update(int nColumn)
 	pDefault->Set( 3, _T("X") );
 	pDefault->m_nImage = Security.m_bDenyPolicy ? 2 : 1;
 
+	tLastUpdate = GetTickCount();
+
 	Security.Expire();
 
 	DWORD nNow = time( NULL );
@@ -201,7 +203,8 @@ void CSecurityWnd::Update(int nColumn)
 		else if ( pRule->m_nExpire >= nNow )
 		{
 			DWORD nTime = ( pRule->m_nExpire - nNow );
-			pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
+			pItem->Format( 2, _T("%id %ih %im"), nTime / 86400, (nTime % 86400) / 3600, ( nTime % 3600 ) / 60 );
+			//pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 		}
 
 		pItem->Format( 3, _T("%lu"), nCount );
@@ -214,7 +217,10 @@ void CSecurityWnd::Update(int nColumn)
 		SetWindowLong( m_wndList.GetSafeHwnd(), GWL_USERDATA, 0 - nColumn - 1 );
 	}
 
-	pLiveList.Apply( &m_wndList );
+	if ( pLiveList.Apply( &m_wndList ) )
+	{
+		CLiveList::Sort( &m_wndList, -1 );
+	}
 }
 
 CSecureRule* CSecurityWnd::GetItem(int nItem)
@@ -240,7 +246,12 @@ void CSecurityWnd::OnSize(UINT nType, int cx, int cy)
 
 void CSecurityWnd::OnTimer(UINT nIDEvent) 
 {
-	Update();
+	DWORD tTicks = GetTickCount();
+
+	if( ( tTicks - tLastUpdate ) > 20000 )
+	{
+		Update();
+	}
 }
 
 void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
