@@ -41,6 +41,7 @@ Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "Col
 ; Delete all settings before starting reparation
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey deletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey deletekey
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "Shareaza"; Flags: dontcreatekey deletevalue
 
 [InstallDelete]
 ; Delete all files exept uninstall dir

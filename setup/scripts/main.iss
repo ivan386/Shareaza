@@ -118,6 +118,7 @@ Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg
 Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; MinVersion: 4.0,0
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
 Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Check: ShareazaInstalled
+
 [Icons]
 ; Shareaza icons
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
@@ -136,7 +137,6 @@ Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallex
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Check: ShareazaInstalled
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Check: ShareazaInstalled
 Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Check: ShareazaInstalled; IconFilename: "{app}\Uninstall\uninstall.ico"
-
 
 [Messages]
 ; Overwrite standard ISL entries
@@ -183,6 +183,7 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "Shareaza"; Flags: dontcreatekey uninsdeletevalue
 
 ; Delete NSIS entry on software panel
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza"; Flags: dontcreatekey deletekey
