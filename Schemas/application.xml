@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/application.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="default"/>
+       <titles>
+              <title language="en">Application</title>
+              <title language="af">Program</title>
+              <title language="cht">應用程式</title>
+              <title language="de">Anwendungen</title>
+              <title language="fr">Application</title>
+              <title language="lt">Programa</title>
+              <title language="nl">Programma</title>
+              <title language="no">Program</title>
+              <title language="ru">&#160;Приложение</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="version" search="indexed">
+                       <display defaultColumn="true"/>
+                       <title language="en">Version</title>
+                       <title language="af">Weergawe</title>
+                       <title language="cht">版本</title>
+                       <title language="de">Version</title>
+                       <title language="fr">Version</title>
+                       <title language="lt">Versija</title>
+                       <title language="nl">Versie</title>
+                       <title language="no">Versjon</title>
+                       <title language="ru">&#160;Версия</title>
+               </member>
+               <member name="fileDescription" search="generic">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="cht">描述</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="fr">Description</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Описание</title>
+               </member>
+               <member name="releaseNotes">
+                       <title language="en">Release Notes</title>
+                       <title language="af">Uitgewers Notas</title>
+                       <title language="cht">釋放注解</title>
+                       <title language="de">Release Notes</title>
+                       <title language="fr">Notes sur la release</title>
+                       <title language="lt">Apie leidimą</title>
+                       <title language="nl">Aantekeningen bij Verschijning</title>
+                       <title language="no">Release notat</title>
+                       <title language="ru">&#160;Заметки&#160;по&#160;Релизу</title>
+               </member>
+               <member name="fileVersion" search="none">
+                       <title language="en">File Version</title>
+                       <title language="af">Lêer Weergawe</title>
+                       <title language="cht">檔案版本</title>
+                       <title language="de">Dateiversion</title>
+                       <title language="fr">Version du fichier</title>
+                       <title language="lt">Bylos versija</title>
+                       <title language="nl">Bestandsversie</title>
+                       <title language="no">Fil versjon</title>
+                       <title language="ru">&#160;Версия&#160;Файла</title>
+               </member>
+               <member name="OriginalFileName" search="none">
+                       <title language="en">Original File Name</title>
+                       <title language="af">Oorspronklike Lêernaam</title>
+                       <title language="cht">原始的檔案名稱</title>
+                       <title language="de">Originaldateiname</title>
+                       <title language="fr">Nom original du fichier</title>
+                       <title language="lt">Pradinis vardas</title>
+                       <title language="nl">Naam Originele Bestand</title>
+                       <title language="no">Original navn</title>
+                       <title language="ru">&#160;Оригинальное&#160;Имя&#160;Файла</title>
+               </member>
+               <member name="company" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Company</title>
+                       <title language="af">Maatskappy</title>
+                       <title language="cht">公司</title>
+                       <title language="de">Firma</title>
+                       <title language="fr">Compagnie</title>
+                       <title language="lt">Kompanija</title>
+                       <title language="nl">Bedrijf</title>
+                       <title language="no">Firma</title>
+                       <title language="ru">&#160;Компания</title>
+               </member>
+               <member name="copyright">
+                       <title language="en">Copyright</title>
+                       <title language="af">Kopiereg</title>
+                       <title language="cht">版權</title>
+                       <title language="de">Copyright</title>
+                       <title language="fr">Copyright</title>
+                       <title language="lt">Autorių teisės</title>
+                       <title language="nl">Copyright</title>
+                       <title language="no">Kopibeskyttelse</title>
+                       <title language="ru">&#160;ПравоОбладатель</title>
+               </member>
+               <member name="type">
+                       <display defaultColumn="true"/>
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Art</title>
+                       <title language="fr">Type</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="ru">&#160;Тип</title>
+               </member>
+               <member name="archive" search="indexed">
+                       <title language="en">Archive Type</title>
+                       <title language="af">Argieftipe</title>
+                       <title language="cht">檔案類型</title>
+                       <title language="de">Archivtyp</title>
+                       <title language="fr">Type d'archive</title>
+                       <title language="lt">Archyvo tipas</title>
+                       <title language="nl">Archief Types</title>
+                       <title language="no">Arkiv type</title>
+                       <title language="ru">&#160;Архивный&#160;Тип</title>
+               </member>
+               <member name="os">
+                       <display defaultColumn="true"/>
+                       <title language="en">OS</title>
+                       <title language="af">OS</title>
+                       <title language="cht">OS</title>
+                       <title language="de">OS</title>
+                       <title language="fr">OS</title>
+                       <title language="lt">OS</title>
+                       <title language="nl">OS</title>
+                       <title language="no">OS</title>
+                       <title language="ru">&#160;ОС</title>
+               </member>
+               <member name="keywords">
+                       <title language="en">Keywords</title>
+                       <title language="af">Sleutelwoorde</title>
+                       <title language="cht">關鍵字</title>
+                       <title language="de">Schlüsselwörter</title>
+                       <title language="fr">Mots clés</title>
+                       <title language="lt">Raktažodžiai</title>
+                       <title language="nl">Sleutelwoorden</title>
+                       <title language="no">Nøkkelord</title>
+                       <title language="ru">&#160;Ключевые&#160;Слова</title>
+               </member>
+               <member name="releaseDate">
+                       <title language="en">P2P Release Date</title>
+                       <title language="af">P2P Vrystellingsdatum</title>
+                       <title language="cht">P2P 釋放日期</title>
+                       <title language="de">P2P Releasedatum</title>
+                       <title language="fr">Date de release P2P</title>
+                       <title language="lt">P2P išleidimo data</title>
+                       <title language="nl">Datum P2P Verschijning</title>
+                       <title language="no">P2P release dato</title>
+                       <title language="ru">&#160;Дата&#160;Релиза&#160;в&#160;P2P</title>
+               </member>
+               <member name="distributer">
+                       <title language="en">Distributer</title>
+                       <title language="af">Verspreider</title>
+                       <title language="cht">經銷商</title>
+                       <title language="de">Herausgeber</title>
+                       <title language="fr">Distributeur</title>
+                       <title language="lt">Distributorius</title>
+                       <title language="nl">Verdeler</title>
+                       <title language="no">Distributør</title>
+                       <title language="ru">&#160;Дистрибьютер</title>
+               </member>
+               <member name="distributerLink">
+                       <title language="en">Distributer Link</title>
+                       <title language="af">Verspreider Skakel</title>
+                       <title language="cht">經銷商連結</title>
+                       <title language="de">Link zum Herausgeber</title>
+                       <title language="fr">Lien du distributeur</title>
+                       <title language="lt">Distrib. nuoroda</title>
+                       <title language="nl">Link naar Distributeur</title>
+                       <title language="no">Distributør link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Дистрибьютера</title>
+               </member>
+               <member name="releaseGroup">
+                       <title language="en">Release Group</title>
+                       <title language="af">Uitgewers Groep</title>
+                       <title language="cht">釋放團體</title>
+                       <title language="de">Release Group</title>
+                       <title language="fr">Groupe de release</title>
+                       <title language="lt">Leidimo grupė</title>
+                       <title language="nl">Verschijningsgroep</title>
+                       <title language="no">Release gruppe</title>
+                       <title language="ru">&#160;Релиз&#160;Группа</title>
+               </member>
+               <member name="releasegroupLink">
+                       <title language="en">Release Group Link</title>
+                       <title language="af">Uitgewers Groep Skakel</title>
+                       <title language="cht">釋放團體連結</title>
+                       <title language="de">Release Group Link</title>
+                       <title language="fr">Lien du groupe de release</title>
+                       <title language="lt">Leid. gr. nuoroda</title>
+                       <title language="nl">Link Verschijningsgroep</title>
+                       <title language="no">Release gruppe link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Релиз&#160;Группу</title>
+               </member>
+               <member name="link">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="cht">連結</title>
+                       <title language="de">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Snelkoppeling</title>
+                       <title language="no">Link</title>
+                       <title language="ru">&#160;Ссылка</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="7z"/>
+               <type extension="ace"/>
+               <type extension="arj"/>
+               <type extension="bin"/>
+               <type extension="cue"/>
+               <type extension="exe"/>
+               <type extension="iso"/>
+               <type extension="gz"/>
+               <type extension="gzip"/>
+               <type extension="msi"/>
+               <type extension="rar"/>
+               <type extension="t"/>
+               <type extension="tar"/>
+               <type extension="tar.gz"/>
+               <type extension="tar.gzip"/>
+               <type extension="tar.z"/>
+               <type extension="tgz"/>
+               <type extension="zip"/>
+       </typeFilter>
+</schemaDescriptor>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicGenreCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:By Genre</title>
+               <title language="af">Musiek:Volgens Genre</title>
+               <title language="cht">音樂:由-類型</title>
+               <title language="de">Musik:Nach Genre</title>
+               <title language="fr">Musique:Par genre</title>
+               <title language="lt">Muzika:Pagal stilių</title>
+               <title language="nl">Muziek:Per Genre</title>
+               <title language="no">Musikk: per sjanger</title>
+               <title language="ru">&#160;Музыка:&#160;по&#160;Стилям</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicGenre.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music By Genre</title>
+               <title language="af">Musiek Volgens Genre</title>
+               <title language="cht">音樂-由-類型</title>
+               <title language="de">Musik nach Genre</title>
+               <title language="fr">Musique par genre</title>
+               <title language="lt">Muzika pagal stilių</title>
+               <title language="nl">Muziek Per Genre</title>
+               <title language="no">Musikk per sjanger</title>
+               <title language="ru">&#160;Музыка&#160;по&#160;Стилям</title>
+               <subtitle language="en">This folder contains a list of musical genres found in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat 'n lys van die musiek genres wat jy in jou biblioteek het.</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中一個發現的音樂流派清單.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste aller Musikgenres in ihrer Bibliothek.</subtitle>
+               <subtitle language="fr">Ce dossier contient la liste des genres musicaux trouvés dans votre bibliothèque.</subtitle>
+               <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
+               <subtitle language="nl">Deze map bevat een lijst met muziekgenres die in je bibliotheek zijn gevonden.</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste med musikk sjangrer som fin i mine filer</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;список&#160;Музыкальных&#160;Стилей&#160;найденных&#160;в&#160;файлах&#160;Вашего&#160;Хранилища.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoSeries.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Video Series</title>
+               <title language="af">Video Reeks</title>
+               <title language="cht">影像-系列</title>
+               <title language="de">Fernsehserien</title>
+               <title language="fr">Séries</title>
+               <title language="lt">Serialai</title>
+               <title language="nl">Video Series</title>
+               <title language="no">Serie</title>
+               <title language="ru">&#160;Видео&#160;Серии</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <members>
+               <member name="name" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Name</title>
+                       <title language="af">Naam</title>
+                       <title language="cht">名稱</title>
+                       <title language="de">Name</title>
+                       <title language="fr">Nom</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Naam</title>
+                       <title language="no">Navn</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="series" search="generic">
+                       <display prompt="true"/>
+                       <title language="en">Series</title>
+                       <title language="af">Reeks</title>
+                       <title language="cht">系列</title>
+                       <title language="de">Serie</title>
+                       <title language="fr">Séries</title>
+                       <title language="lt">Serialas</title>
+                       <title language="nl">Serie</title>
+                       <title language="no">Serie</title>
+                       <title language="ru">&#160;Серии</title>
+               </member>
+               <member name="producer">
+                       <title language="en">Producer</title>
+                       <title language="af">Vervaardiger</title>
+                       <title language="cht">製作者</title>
+                       <title language="de">Produzent</title>
+                       <title language="fr">Producteur</title>
+                       <title language="lt">Prodiuseris</title>
+                       <title language="nl">Producent</title>
+                       <title language="no">Produsent</title>
+                       <title language="ru">&#160;Продюсер</title>
+               </member>
+               <member name="subtitles" search="indexed">
+                       <title language="en">Subtitles</title>
+                       <title language="af">Onderskrifte</title>
+                       <title language="cht">副標題</title>
+                       <title language="de">Untertitel</title>
+                       <title language="fr">Sous-titres</title>
+                       <title language="lt">Subtitrai</title>
+                       <title language="nl">Ondertiteling</title>
+                       <title language="no">Teksting</title>
+                       <title language="ru">&#160;Субтитры</title>
+               </member>
+               <member name="type">
+                       <display prompt="true"/>
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Art</title>
+                       <title language="fr">Type</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="ru">&#160;Тип</title>
+               </member>
+               <member name="rating">
+                       <title language="en">Rating</title>
+                       <title language="af">Gradering</title>
+                       <title language="cht">評價</title>
+                       <title language="de">FSK</title>
+                       <title language="fr">Estimation</title>
+                       <title language="lt">Vertinimas</title>
+                       <title language="nl">Beoordeling</title>
+                       <title language="no">Vurdering</title>
+                       <title language="ru">&#160;Райтинг</title>
+               </member>
+               <member name="source" search="indexed">
+                       <title language="en">Source</title>
+                       <title language="af">Bron</title>
+                       <title language="cht">來源</title>
+                       <title language="de">Source</title>
+                       <title language="fr">Source</title>
+                       <title language="lt">Šaltinis</title>
+                       <title language="nl">Bron</title>
+                       <title language="no">Kilde</title>
+                       <title language="ru">&#160;Источник</title>
+               </member>
+               <member name="description" search="none">
+                       <title language="en">Synopsis</title>
+                       <title language="af">Oorsig</title>
+                       <title language="cht">摘要</title>
+                       <title language="de">Zusammenfassung</title>
+                       <title language="fr">Résumé</title>
+                       <title language="lt">Trumpa apžvalga</title>
+                       <title language="nl">Synopsis</title>
+                       <title language="no">Sammendrag</title>
+                       <title language="ru">&#160;Краткий&#160;Обзор</title>
+               </member>
+               <member name="studio">
+                       <title language="en">Studio</title>
+                       <title language="af">Studio</title>
+                       <title language="cht">工作室</title>
+                       <title language="de">Studio</title>
+                       <title language="fr">Studio</title>
+                       <title language="lt">Studija</title>
+                       <title language="nl">Studio</title>
+                       <title language="no">Studio</title>
+                       <title language="ru">&#160;Студия</title>
+               </member>
+               <member name="stars">
+                       <title language="en">Actors</title>
+                       <title language="af">Akteurs</title>
+                       <title language="cht">演員</title>
+                       <title language="de">Schauspieler</title>
+                       <title language="fr">Acteurs</title>
+                       <title language="lt">Aktoriai</title>
+                       <title language="nl">Acteurs</title>
+                       <title language="no">Skuespillere</title>
+                       <title language="ru">&#160;Актеры</title>
+               </member>
+               <member name="Distributer" search="indexed">
+                       <title language="en">Distributer</title>
+                       <title language="af">Verspreider</title>
+                       <title language="cht">經銷商</title>
+                       <title language="de">Herausgeber</title>
+                       <title language="fr">Distributeur</title>
+                       <title language="lt">Distributorius</title>
+                       <title language="nl">Verdeler</title>
+                       <title language="no">Distributør</title>
+                       <title language="ru">&#160;Дистрибьютер</title>
+               </member>
+               <member name="distributerLink">
+                       <title language="en">Distributer Link</title>
+                       <title language="af">Verspreider Skakel</title>
+                       <title language="cht">經銷商連結</title>
+                       <title language="de">Link zum Herausgeber</title>
+                       <title language="fr">Lien du distributeur</title>
+                       <title language="lt">Distrib. nuoroda</title>
+                       <title language="nl">Link naar Distributeur</title>
+                       <title language="no">Distributør link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Дистрибьютера</title>
+               </member>
+               <member name="qualitynotes">
+                       <title language="en">Quality Notes</title>
+                       <title language="af">Kwaliteit Notas</title>
+                       <title language="cht">品質注解</title>
+                       <title language="de">Qualitätshinweise</title>
+                       <title language="fr">Notes sur la qualité</title>
+                       <title language="lt">Apie kokybę</title>
+                       <title language="nl">Kwaliteitsaantekeningen</title>
+                       <title language="no">Kvalitetsnotat</title>
+                       <title language="ru">&#160;Заметки&#160;по&#160;качеству</title>
+               </member>
+               <member name="releasegroup">
+                       <title language="en">Release Group</title>
+                       <title language="af">Uitgewers Groep</title>
+                       <title language="cht">釋放團體</title>
+                       <title language="de">Release Group</title>
+                       <title language="fr">Groupe de release</title>
+                       <title language="lt">Leidimo grupė</title>
+                       <title language="nl">Verschijningsgroep</title>
+                       <title language="no">Release gruppe</title>
+                       <title language="ru">&#160;Релиз&#160;Группа</title>
+               </member>
+               <member name="releasegroupLink">
+                       <title language="en">Release Group Link</title>
+                       <title language="af">Uitgewers Groep Skakel</title>
+                       <title language="cht">釋放團體連結</title>
+                       <title language="de">Release Group Link</title>
+                       <title language="fr">Lien du groupe de release</title>
+                       <title language="lt">Leid. gr. nuoroda</title>
+                       <title language="nl">Link Verschijningsgroep</title>
+                       <title language="no">Release gruppe link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Релиз&#160;Группу</title>
+               </member>
+                <member name="keywords" search="generic">
+                       <title language="en">Keywords</title>
+                       <title language="af">Sleutelwoorde</title>
+                       <title language="cht">關鍵字</title>
+                       <title language="de">Schlüsselwörter</title>
+                       <title language="fr">Mots clés</title>
+                       <title language="lt">Raktažodžiai</title>
+                       <title language="nl">Sleutelwoorden</title>
+                       <title language="no">Nøkkelord</title>
+                       <title language="ru">&#160;Ключевые&#160;Слова</title>
+               </member>
+               <member name="link" search="none">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="cht">連結</title>
+                       <title language="de">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Snelkoppeling</title>
+                       <title language="no">Link</title>
+                       <title language="ru">&#160;Ссылка</title>
+               </member>
+               <member name="collector" search="indexed">
+                       <title language="en">Collector</title>
+                       <title language="af">Versamelaar</title>
+                       <title language="cht">美術品收藏者</title>
+                       <title language="de">Sammler</title>
+                       <title language="fr"></title>
+                       <title language="lt">Kolekcionierius</title>
+                       <title language="nl"></title>
+                       <title language="no">Samler</title>
+                       <title language="ru"></title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="cht">注釋</title>
+                       <title language="de">Kommentar</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Commentaren</title>
+                       <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Коментарии</title>
+               </member>
+       </members>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/video.xsd">
+                       <identity local="name" remote="series" compare="loose"/>
+                       <shared local="series" remote="series"/>
+                       <shared local="producer" remote="producer"/>
+                       <shared local="studio" remote="studio"/>
+                       <shared local="source" remote="source"/>
+                       <shared local="stars" remote="stars"/>
+                       <shared local="language" remote="language"/>
+                       <shared local="type" remote="type"/>
+                       <shared local="rating" remote="rating"/>
+                       <shared local="distributer" remote="distributer"/>
+                       <shared local="distributerLink" remote="distributerLink"/>
+                       <shared local="releasegroup" remote="distributer"/>
+                       <shared local="releasegroupLink" remote="distributerLink"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title>{name}</title>
+               <subtitle language="en">This folder contains episodes of {name}.</subtitle>
+               <subtitle language="af">Hierdie gids bevat episodes van {name} .</subtitle>
+               <subtitle language="cht">這個資料夾包含了 {name} 插曲.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält {name} Folgen.</subtitle>
+               <subtitle language="fr">Ce dossier contient les épisodes de {name}.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra filmo&#160;„{name}“&#160;serijos.</subtitle>
+               <subtitle language="nl">Deze map bevat alle episodes van {name}.</subtitle>
+               <subtitle language="no">Denne mappen inneholder episoder av {name}.</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Эпизоды&#160;{name}.</subtitle>
+        </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryThumbView">
+               <tileLine1>{studio}</tileLine1>
+       </viewContent>
+
+</schemaDescriptor>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:My Video</title>
+               <title language="af">Video:My Video</title>
+               <title language="cht">影像:我的影像</title>
+               <title language="de">Video:Eigene Videos</title>
+               <title language="fr">Vidéo:Mes vidéos</title>
+               <title language="lt">Video:Mano vaizdo įrašai</title>
+               <title language="nl">Video:Mijn Video's</title>
+               <title language="no">Video: mine videoer</title>
+               <title language="ru">&#160;Видео:&#160;Мои&#160;Видео</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoFilmCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoMusicCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoSeriesCollection.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Video!</title>
+               <title language="af">Welkom by My Video's!</title>
+               <title language="cht">歡迎來到我的影像!</title>
+               <title language="de">Willkommen bei Eigene Videos!</title>
+               <title language="fr">Bienvenue dans Mes vidéos!</title>
+               <title language="lt">Sveiki apsilankę&#160;„Mano vaizdo įrašuose“!</title>
+               <title language="nl">Welkom bij Mijn Video's!</title>
+               <title language="no">Velkommen til mine videoer</title>
+               <title language="ru">&#160;Добро&#160;Пожаловать&#160;в&#160;Ваши&#160;Видео!</title>
+               <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
+               <subtitle language="cht">這些資料夾包含了在您的收藏中所有的影像檔案, 分割的電影, TV 演出和音樂影像.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéo.  Ouvrez un sous-dossier pour continuer.</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visos Jūsų kolekcijos vaizdo bylos, suskirstytos į filmus, TV pasirodymus ir muzikinius klipus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten alle video-bestanden uit je bibliotheek, verdeeld onder films, TV-shows en muziekvideo's.  Open een map hieronder om verder te gaan.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine videofiler, delt inn i film, Tv-show, og musikk video. Åpne en mappe for å forsette.</subtitle>
+               <subtitle language="ru">&#160;Эти&#160;папки&#160;отображают&#160;Все&#160;Видео&#160;подразделенные&#160;на&#160;Фильмы,&#160;ТВ&#160;Шоу&#160;и&#160;Музыкальные&#160;Видео.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

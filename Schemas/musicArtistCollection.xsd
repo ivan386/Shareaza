@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/musicArtistCollection.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+	
+	<element name="musicArtistCollections">
+		<complexType>
+			<element name="musicArtistCollection" type="musicArtistCollectionType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	<complexType name="musicArtistCollectionType">
+		<all>
+			<attribute name="title" type="string"/>
+		</all>
+	</complexType>
+	
+</schema>

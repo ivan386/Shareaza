@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/shareazaSkin.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="advanced"/>
+       <titles>
+               <title language="en">Skin</title>
+               <title language="af">Omslag</title>
+               <title language="cht">面板</title>
+               <title language="de">Skin</title>
+               <title language="fr">Skin</title>
+               <title language="lt">Apvalkalas</title>
+               <title language="nl">Skin</title>
+               <title language="no">Skin</title>
+               <title language="ru">&#160;Шкурка</title>
+       </titles>
+       <members>
+               <member name="name" search="generic">
+                       <display defaultColumn="true" columnAlign="left"/>
+                       <title language="en">Name</title>
+                       <title language="af">Naam</title>
+                       <title language="cht">名稱</title>
+                       <title language="de">Name</title>
+                       <title language="fr">Nom</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Naam</title>
+                       <title language="no">Navn</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="author" search="generic">
+                       <title language="en">Author</title>
+                       <title language="af">Outeur</title>
+                       <title language="cht">作者</title>
+                       <title language="de">Autor</title>
+                       <title language="fr">Auteur</title>
+                       <title language="lt">Autorius</title>
+                       <title language="nl">Auteur</title>
+                       <title language="no">Forfatter</title>
+                       <title language="ru">&#160;Автор</title>
+               </member>
+               <member name="link">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="cht">連結</title>
+                       <title language="de">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Snelkoppeling</title>
+                       <title language="no">Link</title>
+                       <title language="ru">&#160;Ссылка</title>
+               </member>
+               <member name="email">
+                       <title language="en">Email</title>
+                       <title language="af">E-pos</title>
+                       <title language="cht">電子郵件</title>
+                       <title language="de">E-Mail</title>
+                       <title language="fr">Email</title>
+                       <title language="lt">El. paštas</title>
+                       <title language="nl">Email</title>
+                       <title language="no">E-post</title>
+                       <title language="ru">E-mail</title>
+               </member>
+               <member name="version">
+                       <title language="en">Version</title>
+                       <title language="af">Weergawe</title>
+                       <title language="cht">版本</title>
+                       <title language="de">Version</title>
+                       <title language="fr">Version</title>
+                       <title language="lt">Versija</title>
+                       <title language="nl">Versie</title>
+                       <title language="no">Versjon</title>
+                       <title language="ru">&#160;Версия</title>
+               </member>
+               <member name="type">
+                       <display defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Art</title>
+                       <title language="fr">Type</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="ru">&#160;Тип</title>
+               </member>
+               <member name="language">
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="cht">語言</title>
+                       <title language="de">Sprache</title>
+                       <title language="fr">Langue</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="ru">&#160;Язык</title>
+               </member>
+               <member name="description">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="cht">描述</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="fr">Description</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Описание</title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="cht">注釋</title>
+                       <title language="de">Kommentar</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Commentaren</title>
+                       <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Коментарии</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="sks"/>
+       </typeFilter>
+</schemaDescriptor>

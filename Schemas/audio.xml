@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.limewire.com/schemas/audio.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="default"/>
+       <titles>
+               <title language="en">Audio</title>
+               <title language="af">Musiek</title>
+               <title language="cht">聲音</title>
+               <title language="de">Audio</title>
+               <title language="fr">Audio</title>
+               <title language="lt">Audio</title>
+               <title language="nl">Audio</title>
+               <title language="no">Audio</title>
+               <title language="ru">&#160;Аудио</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display prompt="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="artist" search="generic">
+                       <display prompt="true"/>
+                       <link location="http://www.shareaza.com/schemas/musicArtist.xsd" remote="name"/>
+                       <title language="en">Artist</title>
+                       <title language="af">Kunstenaar</title>
+                       <title language="cht">藝人</title>
+                       <title language="de">Künstler</title>
+                       <title language="fr">Artiste</title>
+                       <title language="lt">Atlikėjas/Menininkas</title>
+                       <title language="nl">Artiest</title>
+                       <title language="no">Artist</title>
+                       <title language="ru">&#160;Артист</title>
+               </member>
+               <member name="album" search="generic">
+                       <display prompt="true"/>
+                       <link location="http://www.shareaza.com/schemas/musicAlbum.xsd" remote="title"/>
+                       <title language="en">Album</title>
+                       <title language="af">Album</title>
+                       <title language="cht">專輯</title>
+                       <title language="de">Album</title>
+                       <title language="fr">Album</title>
+                       <title language="lt">Albumas</title>
+                       <title language="nl">Album</title>
+                       <title language="no">Album</title>
+                       <title language="ru">&#160;Альбом</title>
+               </member>
+               <member name="genre" search="generic">
+                       <display prompt="true"/>
+                       <link location="http://www.shareaza.com/schemas/musicGenre.xsd" remote="name"/>
+                       <title language="en">Genre</title>
+                       <title language="af">Genre</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Genre</title>
+                       <title language="fr">Genre</title>
+                       <title language="lt">Žanras/Stilius</title>
+                       <title language="nl">Genre</title>
+                       <title language="no">Sjanger</title>
+                       <title language="ru">&#160;Жанр</title>
+               </member>
+               <member name="track" search="none">
+                       <title language="en">Track</title>
+                       <title language="af">Snit</title>
+                       <title language="cht">軌段</title>
+                       <title language="de">Track</title>
+                       <title language="fr">Piste</title>
+                       <title language="lt">Takelis</title>
+                       <title language="nl">Nummer</title>
+                       <title language="no">Spor</title>
+                       <title language="ru">&#160;Трек</title>
+               </member>
+               <member name="disc" search="none">
+                       <title language="en">Disc</title>
+                       <title language="af">Skyf</title>
+                       <title language="cht">唱片</title>
+                       <title language="de">Disk</title>
+                       <title language="fr">Disque</title>
+                       <title language="lt">Plokštelė</title>
+                       <title language="nl">Schijf</title>
+                       <title language="no">Disk</title>
+                       <title language="ru">&#160;Диск</title>
+               </member>
+               <member name="year" search="none">
+                       <title language="en">Year</title>
+                       <title language="af">Jaar</title>
+                       <title language="cht">年份</title>
+                       <title language="de">Jahr</title>
+                       <title language="fr">Année</title>
+                       <title language="lt">Metai</title>
+                       <title language="nl">Jaar</title>
+                       <title language="no">År</title>
+                       <title language="ru">&#160;Год</title>
+               </member>
+               <member name="seconds">
+                       <display format="timeMMSS" defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Time</title>
+                       <title language="af">Tydsduur</title>
+                       <title language="cht">時間</title>
+                       <title language="de">Dauer</title>
+                       <title language="fr">Durée</title>
+                       <title language="lt">Trukmė</title>
+                       <title language="nl">Tijd</title>
+                       <title language="no">Tid</title>
+                       <title language="ru">&#160;Время</title>
+               </member>
+               <member name="bitrate" search="indexed">
+                       <display format="bitrate" prompt="true" defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Bitrate</title>
+                       <title language="af">Bistempo</title>
+                       <title language="cht">位元率</title>
+                       <title language="de">Bitrate</title>
+                       <title language="fr">Fréquence</title>
+                       <title language="lt">Bitratas</title>
+                       <title language="nl">Bitrate</title>
+                       <title language="no">Bitrate</title>
+                       <title language="ru">&#160;Битрейт</title>
+               </member>
+               <member name="sampleRate">
+                       <display format="frequency" prompt="true" columnAlign="center"/>
+                       <title language="en">Sample Rate</title>
+                       <title language="af">Klanktempo</title>
+                       <title language="cht">取樣率</title>
+                       <title language="de">Abtastrate</title>
+                       <title language="fr">Echantillonage</title>
+                       <title language="lt">Išrankos dažnis</title>
+                       <title language="nl">Sample Rate</title>
+                       <title language="no">Sample rate</title>
+                       <title language="ru">&#160;Средний&#160;Битрейт</title>
+               </member>
+               <member name="type" search="indexed">
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Art</title>
+                       <title language="fr">Type</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="ru">&#160;Тип</title>
+               </member>
+               <member name="language" search="none">
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="cht">語言</title>
+                       <title language="de">Sprache</title>
+                       <title language="fr">Langue</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="ru">&#160;Язык</title>
+               </member>
+               <member name="source">
+                       <title language="en">Source</title>
+                       <title language="af">Bron</title>
+                       <title language="cht">來源</title>
+                       <title language="de">Source</title>
+                       <title language="fr">Source</title>
+                       <title language="lt">Šaltinis</title>
+                       <title language="nl">Bron</title>
+                       <title language="no">Kilde</title>
+                       <title language="ru">&#160;Источник</title>
+               </member>
+               <member name="description">
+                      <title language="en">Description</title>
+                      <title language="af">Beskrywing</title>
+                      <title language="cht">描述</title>
+                      <title language="de">Beschreibung</title>
+                      <title language="fr">Description</title>
+                      <title language="lt">Aprašas</title>
+                      <title language="nl">Omschrijving</title>
+                      <title language="no">Beskrivelse</title>
+                      <title language="ru">&#160;Описание</title>
+               </member>
+               <member name="standard">
+                       <title language="en">Standard</title>
+                       <title language="af">Standaard</title>
+                       <title language="cht">標準</title>
+                       <title language="de">Standard</title>
+                       <title language="fr">Standard</title>
+                       <title language="lt">Standartas</title>
+                       <title language="nl">Standaard</title>
+                       <title language="no">Standard</title>
+                       <title language="ru">&#160;Стандарт</title>
+               </member>
+               <member name="qualitynotes" search="none">
+                       <title language="en">Quality Notes</title>
+                       <title language="af">Kwaliteit Notas</title>
+                       <title language="cht">品質注解</title>
+                       <title language="de">Qualitätshinweise</title>
+                       <title language="fr">Notes sur la qualité</title>
+                       <title language="lt">Apie kokybę</title>
+                       <title language="nl">Kwaliteitsaantekeningen</title>
+                       <title language="no">Kvalitetsnotat</title>
+                       <title language="ru">&#160;Заметки&#160;по&#160;качеству</title>
+               </member>
+               <member name="keywords" search="generic">
+                       <title language="en">Keywords</title>
+                       <title language="af">Sleutelwoorde</title>
+                       <title language="cht">關鍵字</title>
+                       <title language="de">Schlüsselwörter</title>
+                       <title language="fr">Mots clés</title>
+                       <title language="lt">Raktažodžiai</title>
+                       <title language="nl">Sleutelwoorden</title>
+                       <title language="no">Nøkkelord</title>
+                       <title language="ru">&#160;Ключевые&#160;Слова</title>
+               </member>
+               <member name="releasedate" search="none">
+                       <title language="en">P2P Release Date</title>
+                       <title language="af">P2P Vrystellingsdatum</title>
+                       <title language="cht">P2P 釋放日期</title>
+                       <title language="de">P2P Releasedatum</title>
+                       <title language="fr">Date de release P2P</title>
+                       <title language="lt">P2P išleidimo data</title>
+                       <title language="nl">Datum P2P Verschijning</title>
+                       <title language="no">P2P release dato</title>
+                       <title language="ru">&#160;Дата&#160;Релиза&#160;в&#160;P2P</title>
+               </member>
+               <member name="distributer" search="indexed">
+                       <title language="en">Distributer</title>
+                       <title language="af">Verspreider</title>
+                       <title language="cht">經銷商</title>
+                       <title language="de">Herausgeber</title>
+                       <title language="fr">Distributeur</title>
+                       <title language="lt">Distributorius</title>
+                       <title language="nl">Verdeler</title>
+                       <title language="no">Distributør</title>
+                       <title language="ru">&#160;Дистрибьютер</title>
+               </member>
+               <member name="distributerLink">
+                       <title language="en">Distributer Link</title>
+                       <title language="af">Verspreider Skakel</title>
+                       <title language="cht">經銷商連結</title>
+                       <title language="de">Link zum Herausgeber</title>
+                       <title language="fr">Lien du distributeur</title>
+                       <title language="lt">Distrib. nuoroda</title>
+                       <title language="nl">Link naar Distributeur</title>
+                       <title language="no">Distributør link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Дистрибьютера</title>
+               </member>
+               <member name="releasegroup" search="indexed">
+                       <title language="en">Release Group</title>
+                       <title language="af">Uitgewers Groep</title>
+                       <title language="cht">釋放團體</title>
+                       <title language="de">Release Group</title>
+                       <title language="fr">Groupe de release</title>
+                       <title language="lt">Leidimo grupė</title>
+                       <title language="nl">Verschijningsgroep</title>
+                       <title language="no">Release gruppe</title>
+                       <title language="ru">&#160;Релиз&#160;Группа</title>
+               </member>
+               <member name="releasegroupLink" search="none">
+                       <title language="en">Release Group Link</title>
+                       <title language="af">Uitgewers Groep Skakel</title>
+                       <title language="cht">釋放團體連結</title>
+                       <title language="de">Release Group Link</title>
+                       <title language="fr">Lien du groupe de release</title>
+                       <title language="lt">Leid. gr. nuoroda</title>
+                       <title language="nl">Link Verschijningsgroep</title>
+                       <title language="no">Release gruppe link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Релиз&#160;Группу</title>
+               </member>
+               <member name="link" search="none">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="cht">連結</title>
+                       <title language="de">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Snelkoppeling</title>
+                       <title language="no">Link</title>
+                       <title language="ru">&#160;Ссылка</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="aac"/>
+               <type extension="aif"/>
+               <type extension="aiff"/>
+               <type extension="ape"/>
+               <type extension="apl"/>
+               <type extension="au"/>
+               <type extension="dwd"/>
+               <type extension="fla"/>
+               <type extension="iff"/>
+               <type extension="mac"/>
+               <type extension="med"/>
+               <type extension="mid"/>
+               <type extension="mod"/>
+               <type extension="mp1"/>
+               <type extension="mp2"/>
+               <type extension="mp3"/>
+               <type extension="mp4"/>
+               <type extension="mpc"/>
+               <type extension="ogg"/>
+               <type extension="pcm"/>
+               <type extension="ra"/>
+               <type extension="rm"/>
+               <type extension="sam"/>
+               <type extension="smp"/>
+               <type extension="snd"/>
+               <type extension="svx"/>
+               <type extension="vba"/>
+               <type extension="vce"/>
+               <type extension="voc"/>
+               <type extension="vox"/>
+               <type extension="vqf"/>
+               <type extension="wav"/>
+               <type extension="wma"/>
+       </typeFilter>
+       <bitziImport testExists="rdf:rdf/rdf:Description/bz:audioBitrate">
+               <mapping from="rdf:rdf/rdf:Description/mm:duration" to="seconds" factor="0.001"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:audioBitrate" to="bitrate"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:audioSamplerate" to="sampleRate"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:title" to="title"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:creator" to="artist"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/bz:albumName" to="album"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/mm:trackNum" to="track"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:date" to="year"/>
+       </bitziImport>
+</schemaDescriptor>

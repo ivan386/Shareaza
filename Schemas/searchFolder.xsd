@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/searchFolder.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  
+  <element name="searchFolders">
+	<complexType>
+		<element name="searchFolder" type="searchType" minOccurs="1" maxOccurs="unbounded"/>
+	</complexType>
+  </element>     
+  <complexType name="searchType">
+	<all>
+		<attribute name="title" type="string"/>
+		<attribute name="content" type="string"/>
+		<attribute name="date" type="string"/>
+		<attribute name="time" type="string"/>
+	</all>
+  </complexType>
+  
+</schema>

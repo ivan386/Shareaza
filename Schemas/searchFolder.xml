@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/searchFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system" private="true"/>
+       <titles>
+               <title language="en">Search:Search Results</title>
+               <title language="af">Soek:Soekresultate</title>
+               <title language="cht">搜尋:搜尋結果</title>
+               <title language="de">Suche:Suchergebnisse</title>
+               <title language="fr">Recherche:Résultats de recherche</title>
+               <title language="lt">Paieška:Radiniai</title>
+               <title language="nl">Zoekopdracht:Zoekresultaten</title>
+               <title language="no">Søk: søkeresultat</title>
+               <title language="ru">&#160;Поиск:&#160;Результаты&#160;Поиска</title>
+       </titles>
+       <images>
+               <icon path="searchFolder.ico"/>
+       </images>
+       <headerContent version="1.0">
+               <title language="en">Search for "{content}"</title>
+               <title language="af">Soek vir " {content} "</title>
+               <title language="cht">搜尋於 "{content}"</title>
+               <title language="de">Suche nach "{content}"</title>
+               <title language="fr">Recherche de "{content}"</title>
+               <title language="lt">„{content}“ radiniai</title>
+               <title language="nl">Zoeken naar "{content}"</title>
+               <title language="no">Søk etter "{content}"</title>
+               <title language="ru">&#160;Поиск&#160;для&#160;"{content}"</title>
+               <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
+               <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
+               <subtitle language="cht">這個資料夾包含了符合您搜尋 "{content}" 的檔案</subtitle>
+               <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
+               <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį&#160;„{content}“.</subtitle>
+               <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
+               <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Результаты&#160;Поиска&#160;для&#160;{content}.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Music Genre</title>
+               <title language="af">Musiek Genre</title>
+               <title language="cht">音樂-類型</title>
+               <title language="de">Musikgenre</title>
+               <title language="fr">Genre musical</title>
+               <title language="lt">Muzikos stilius</title>
+               <title language="nl">Muziek Genre</title>
+               <title language="no">Musikk sjanger</title>
+               <title language="ru">&#160;Стиль&#160;Музыки</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <members>
+               <member name="name">
+                       <display defaultColumn="true"/>
+               </member>
+       </members>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/audio.xsd">
+                       <identity local="name" remote="genre" compare="exact"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">{name} Music</title>
+               <title language="af">{name} Musiek</title>
+               <title language="cht">{name} 音樂</title>
+               <title language="de">{name} Musik</title>
+               <title language="fr">Musique {name}</title>
+               <title language="lt">{name} muzika</title>
+               <title language="nl">Muziek {name}</title>
+               <title language="no">{name} Musikk</title>
+               <title language="ru">&#160;Музыка&#160;{name}</title>
+               <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
+               <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
+               <subtitle language="cht">這個資料夾包含了您所有以 {name} 流派的音樂.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>
+               <subtitle language="nl">Deze map bevat al je muziek die valt onder het {name} genre.</subtitle>
+               <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name} sjangeren.</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Всю&#160;Музыку&#160;Стиля&#160;{name}.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
+
+</schemaDescriptor>

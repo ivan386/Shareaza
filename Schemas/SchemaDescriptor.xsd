@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Update Me -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/SchemaDescriptor.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="schemaDescriptor">
+		<complexType>
+			<all>
+				<element name="title" type="string" minOccurs="0" maxOccurs="1"/>
+				<element name="extends" type="extendsType" minOccurs="0" maxOccurs="1"/>
+				<element name="memberDisplay" type="memberDisplayType" minOccurs="0" maxOccurs="1"/>
+				<element name="typeFilter" type="typeFilterType" minOccurs="0" maxOccurs="1"/>
+				<element name="bitziImport" type="bitziImportType" minOccurs="0" maxOccurs="1"/>
+			</all>
+		</complexType>
+	</element>
+	
+	<complexType name="extendsType">
+		<sequence>
+			<element name="schema" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="location" type="uriReference" use="required"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="memberDisplayType">
+		<sequence>
+			<element name="member" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="name" type="NMTOKEN" use="required"/>
+					<attribute name="title" type="string"/>
+					<attribute name="format" type="string"/>
+					<attribute name="defaultColumn" type="boolean"/>
+					<attribute name="columnWidth" type="int"/>
+					<attribute name="columnAlign">
+						<simpleType base="string">
+							<enumeration value="left"/>
+							<enumeration value="center"/>
+							<enumeration value="right"/>
+						</simpleType>
+					</attribute>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="typeFilterType">
+		<sequence>
+			<element name="type" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="extension" type="string" use="required"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="bitziImportType">
+		<attribute name="testExists" type="string" use="required"/>
+		<sequence>
+			<element name="mapping" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="from" type="string" use="required"/>
+					<attribute name="to" type="string" use="required"/>
+					<attribute name="factor" type="decimal"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	
+</schema>

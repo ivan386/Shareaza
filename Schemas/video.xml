@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.limewire.com/schemas/video.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="default"/>
+       <titles>
+               <title language="en">Video</title>
+               <title language="af">Video</title>
+               <title language="cht">影像</title>
+               <title language="de">Video</title>
+               <title language="fr">Vidéo</title>
+               <title language="lt">Vaizdo įrašai</title>
+               <title language="nl">Video</title>
+               <title language="no">Video</title>
+               <title language="ru">&#160;Видео</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display prompt="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="type">
+                       <display prompt="true"/>
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Art</title>
+                       <title language="fr">Type</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="ru">&#160;Тип</title>
+               </member>
+               <member name="series" search="generic">
+                       <display prompt="true"/>
+                       <title language="en">Series</title>
+                       <title language="af">Reeks</title>
+                       <title language="cht">系列</title>
+                       <title language="de">Serie</title>
+                       <title language="fr">Séries</title>
+                       <title language="lt">Serialas</title>
+                       <title language="nl">Serie</title>
+                       <title language="no">Serie</title>
+                       <title language="ru">&#160;Серии</title>
+               </member>
+               <member name="genre">
+                       <display prompt="true"/>
+                       <title language="en">Genre</title>
+                       <title language="af">Genre</title>
+                       <title language="cht">類型</title>
+                       <title language="de">Genre</title>
+                       <title language="fr">Genre</title>
+                       <title language="lt">Žanras/Stilius</title>
+                       <title language="nl">Genre</title>
+                       <title language="no">Sjanger</title>
+                       <title language="ru">&#160;Жанр</title>
+               </member>
+               <member name="episodenumber" search="indexed">
+                       <display prompt="true"/>
+                       <title language="en">Episode Number</title>
+                       <title language="af">Episode Nommer</title>
+                       <title language="cht">插曲號碼</title>
+                       <title language="de">Folge</title>
+                       <title language="fr">Numéro d'épisode</title>
+                       <title language="lt">Serijos numeris</title>
+                       <title language="nl">Episode Nummer</title>
+                       <title language="no">Episode nummer</title>
+                       <title language="ru">&#160;Номер&#160;Серии/Эпизода</title>
+               </member>
+               <member name="seriesnumber" search="indexed">
+                       <display prompt="true"/>
+                       <title language="en">Season/Series</title>
+                       <title language="af">Seisoen/Reeks</title>
+                       <title language="cht">季/系列</title>
+                       <title language="de">Staffel</title>
+                       <title language="fr">Saison/Séries</title>
+                       <title language="lt">Sezonas/Serialas</title>
+                       <title language="nl">Seizoen/Serie</title>
+                       <title language="no">Sesong/serie</title>
+                       <title language="ru">&#160;Сезон/Серии</title>
+               </member>
+               <member name="airDate">
+                       <title language="en">Original Air date</title>
+                       <title language="af">Oorspronklike Uitsaaidatum</title>
+                       <title language="cht">原始的發表日期</title>
+                       <title language="de">Erstmalige Ausstrahlung</title>
+                       <title language="fr">Date de sortie</title>
+                       <title language="lt">Pasirodė eteryje</title>
+                       <title language="nl">Datum Originele Uitzending</title>
+                       <title language="no">Første gang vist</title>
+                       <title language="ru">&#160;Дата&#160;Выхода</title>
+               </member>
+               <member name="description" search="none">
+                       <title language="en">Synopsis</title>
+                       <title language="af">Oorsig</title>
+                       <title language="cht">摘要</title>
+                       <title language="de">Zusammenfassung</title>
+                       <title language="fr">Résumé</title>
+                       <title language="lt">Trumpa apžvalga</title>
+                       <title language="nl">Synopsis</title>
+                       <title language="no">Sammendrag</title>
+                       <title language="ru">&#160;Краткий&#160;Обзор</title>
+               </member>
+               <member name="realdescription" search="none">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="cht">描述</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="fr">Description</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Описание</title>
+               </member>
+               <member name="language" search="indexed">
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="cht">語言</title>
+                       <title language="de">Sprache</title>
+                       <title language="fr">Langue</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="ru">&#160;Язык</title>
+               </member>
+               <member name="source" search="indexed">
+                       <title language="en">Source</title>
+                       <title language="af">Bron</title>
+                       <title language="cht">來源</title>
+                       <title language="de">Source</title>
+                       <title language="fr">Source</title>
+                       <title language="lt">Šaltinis</title>
+                       <title language="nl">Bron</title>
+                       <title language="no">Kilde</title>
+                       <title language="ru">&#160;Источник</title>
+               </member>
+               <member name="director">
+                       <title language="en">Director</title>
+                       <title language="af">Regisseur</title>
+                       <title language="cht">導演</title>
+                       <title language="de">Regisseur</title>
+                       <title language="fr">Réalisateur</title>
+                       <title language="lt">Režisierius</title>
+                       <title language="nl">Regisseur</title>
+                       <title language="no">Direktør</title>
+                       <title language="ru">&#160;Режисер</title>
+               </member>
+               <member name="producer">
+                       <title language="en">Producer</title>
+                       <title language="af">Vervaardiger</title>
+                       <title language="cht">製作者</title>
+                       <title language="de">Produzent</title>
+                       <title language="fr">Producteur</title>
+                       <title language="lt">Prodiuseris</title>
+                       <title language="nl">Producent</title>
+                       <title language="no">Produsent</title>
+                       <title language="ru">&#160;Продюсер</title>
+               </member>
+               <member name="studio">
+                       <title language="en">Studio</title>
+                       <title language="af">Studio</title>
+                       <title language="cht">工作室</title>
+                       <title language="de">Studio</title>
+                       <title language="fr">Studio</title>
+                       <title language="lt">Studija</title>
+                       <title language="nl">Studio</title>
+                       <title language="no">Studio</title>
+                       <title language="ru">&#160;Студия</title>
+               </member>
+               <member name="stars" search="indexed">
+                       <display prompt="true"/>
+                       <title language="en">Actors</title>
+                       <title language="af">Akteurs</title>
+                       <title language="cht">演員</title>
+                       <title language="de">Schauspieler</title>
+                       <title language="fr">Acteurs</title>
+                       <title language="lt">Aktoriai</title>
+                       <title language="nl">Acteurs</title>
+                       <title language="no">Skuespillere</title>
+                       <title language="ru">&#160;Актеры</title>
+               </member>
+               <member name="imdbLink">
+                       <title language="en">IMDB Link</title>
+                       <title language="af">IMDB Skakel</title>
+                       <title language="cht">IMDB 連結</title>
+                       <title language="de">IMDB Link</title>
+                       <title language="fr">Lien IMDB</title>
+                       <title language="lt">IMDB nuoroda</title>
+                       <title language="nl">Link naar IMDB</title>
+                       <title language="no">IMDB link</title>
+                       <title language="ru">&#160;IMDB&#160;Ссылка</title>
+               </member>
+               <member name="minutes">
+                       <title language="en">Time</title>
+                       <title language="af">Tydsduur</title>
+                       <title language="cht">時間</title>
+                       <title language="de">Dauer</title>
+                       <title language="fr">Durée</title>
+                       <title language="lt">Trukmė</title>
+                       <title language="nl">Tijd</title>
+                       <title language="no">Tid</title>
+                       <title language="ru">&#160;Время</title>
+                       <display format="timeHHMMSSdec" defaultColumn="true" columnAlign="center"/>
+               </member>
+               <member name="width">
+                       <display defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Width</title>
+                       <title language="af">Breedte</title>
+                       <title language="cht">寬度</title>
+                       <title language="de">Breite</title>
+                       <title language="fr">Largeur</title>
+                       <title language="lt">Plotis</title>
+                       <title language="nl">Breedte</title>
+                       <title language="no">Bredde</title>
+                       <title language="ru">&#160;Ширина</title>
+               </member>
+               <member name="height">
+                       <display defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Height</title>
+                       <title language="af">Hoogte</title>
+                       <title language="cht">高度</title>
+                       <title language="de">Höhe</title>
+                       <title language="fr">Hauteur</title>
+                       <title language="lt">Aukštis</title>
+                       <title language="nl">Hoogte</title>
+                       <title language="no">Høyde</title>
+                       <title language="ru">&#160;Высота</title>
+               </member>
+               <member name="codec">
+                       <title language="en">Codec</title>
+                       <title language="af">Kodek</title>
+                       <title language="cht">編碼</title>
+                       <title language="de">Codec</title>
+                       <title language="fr">Codec</title>
+                       <title language="lt">Kodekas</title>
+                       <title language="nl">Codec</title>
+                       <title language="no">Codec</title>
+                       <title language="ru">&#160;Кодек</title>
+               </member>
+               <member name="year">
+                       <title language="en">Year</title>
+                       <title language="af">Jaar</title>
+                       <title language="cht">年份</title>
+                       <title language="de">Jahr</title>
+                       <title language="fr">Année</title>
+                       <title language="lt">Metai</title>
+                       <title language="nl">Jaar</title>
+                       <title language="no">År</title>
+                       <title language="ru">&#160;Год</title>
+               </member>
+               <member name="artist">
+                       <title language="en">Artist</title>
+                       <title language="af">Kunstenaar</title>
+                       <title language="cht">藝人</title>
+                       <title language="de">Künstler</title>
+                       <title language="fr">Artiste</title>
+                       <title language="lt">Atlikėjas/Menininkas</title>
+                       <title language="nl">Artiest</title>
+                       <title language="no">Artist</title>
+                       <title language="ru">&#160;Артист</title>
+               </member>
+               <member name="subtitles" search="indexed">
+                       <title language="en">Subtitles</title>
+                       <title language="af">Onderskrifte</title>
+                       <title language="cht">副標題</title>
+                       <title language="de">Untertitel</title>
+                       <title language="fr">Sous-titres</title>
+                       <title language="lt">Subtitrai</title>
+                       <title language="nl">Ondertiteling</title>
+                       <title language="no">Teksting</title>
+                       <title language="ru">&#160;Субтитры</title>
+               </member>
+               <member name="rating">
+                       <title language="en">Rating</title>
+                       <title language="af">Gradering</title>
+                       <title language="cht">評價</title>
+                       <title language="de">FSK</title>
+                       <title language="fr">Estimation</title>
+                       <title language="lt">Vertinimas</title>
+                       <title language="nl">Beoordeling</title>
+                       <title language="no">Vurdering</title>
+                       <title language="ru">&#160;Райтинг</title>
+               </member>
+               <member name="partnumber">
+                       <title language="en">Part Number</title>
+                       <title language="af">Deel Nommer</title>
+                       <title language="cht">部分號碼</title>
+                       <title language="de">Teil</title>
+                       <title language="fr">Partie numéro</title>
+                       <title language="lt">Dalies numeris</title>
+                       <title language="nl">Deel Nummer</title>
+                       <title language="no">Del nummer</title>
+                       <title language="ru">&#160;Номер&#160;Части</title>
+               </member>
+               <member name="partcount">
+                       <title language="en">Part Count</title>
+                       <title language="af">Hoeveelheid Dele</title>
+                       <title language="cht">部分計數</title>
+                       <title language="de">Teile gesamt</title>
+                       <title language="fr">Nombre de partie</title>
+                       <title language="lt">Dalių skaičius</title>
+                       <title language="nl">Aantal Delen</title>
+                       <title language="no">Side tall</title>
+                       <title language="ru">&#160;Частей</title>
+               </member>
+               <member name="standard" search="indexed">
+                       <title language="en">Standard</title>
+                       <title language="af">Standaard</title>
+                       <title language="cht">標準</title>
+                       <title language="de">Standard</title>
+                       <title language="fr">Standard</title>
+                       <title language="lt">Standartas</title>
+                       <title language="nl">Standaard</title>
+                       <title language="no">Standard</title>
+                       <title language="ru">&#160;Стандарт</title>
+               </member>
+               <member name="quality">
+                       <title language="en">Quality</title>
+                       <title language="af">Kwaliteit</title>
+                       <title language="cht">品質</title>
+                       <title language="de">Qualität</title>
+                       <title language="fr">Qualité</title>
+                       <title language="lt">Kokybė</title>
+                       <title language="nl">Kwaliteit</title>
+                       <title language="no">Kvalitet</title>
+                       <title language="ru">&#160;Качество</title>
+               </member>
+               <member name="qualityNotes">
+                       <title language="en">Quality Notes</title>
+                       <title language="af">Kwaliteit Notas</title>
+                       <title language="cht">品質注解</title>
+                       <title language="de">Qualitätshinweise</title>
+                       <title language="fr">Notes sur la qualité</title>
+                       <title language="lt">Apie kokybę</title>
+                       <title language="nl">Kwaliteitsaantekeningen</title>
+                       <title language="no">Kvalitetsnotat</title>
+                       <title language="ru">&#160;Заметки&#160;по&#160;качеству</title>
+               </member>
+               <member name="releaseDate">
+                       <title language="en">P2P Release Date</title>
+                       <title language="af">P2P Vrystellingsdatum</title>
+                       <title language="cht">P2P 釋放日期</title>
+                       <title language="de">P2P Releasedatum</title>
+                       <title language="fr">Date de release P2P</title>
+                       <title language="lt">P2P išleidimo data</title>
+                       <title language="nl">Datum P2P Verschijning</title>
+                       <title language="no">P2P release dato</title>
+                       <title language="ru">&#160;Дата&#160;Релиза&#160;в&#160;P2P</title>
+               </member>
+               <member name="Distributer" search="indexed">
+                       <title language="en">Distributer</title>
+                       <title language="af">Verspreider</title>
+                       <title language="cht">經銷商</title>
+                       <title language="de">Herausgeber</title>
+                       <title language="fr">Distributeur</title>
+                       <title language="lt">Distributorius</title>
+                       <title language="nl">Verdeler</title>
+                       <title language="no">Distributør</title>
+                       <title language="ru">&#160;Дистрибьютер</title>
+               </member>
+               <member name="DistributerLink">
+                       <title language="en">Distributer Link</title>
+                       <title language="af">Verspreider Skakel</title>
+                       <title language="cht">經銷商連結</title>
+                       <title language="de">Link zum Herausgeber</title>
+                       <title language="fr">Lien du distributeur</title>
+                       <title language="lt">Distrib. nuoroda</title>
+                       <title language="nl">Link naar Distributeur</title>
+                       <title language="no">Distributør link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Дистрибьютера</title>
+               </member>
+               <member name="Releasegroup" search="indexed">
+                       <title language="en">Release Group</title>
+                       <title language="af">Uitgewers Groep</title>
+                       <title language="cht">釋放團體</title>
+                       <title language="de">Release Group</title>
+                       <title language="fr">Groupe de release</title>
+                       <title language="lt">Leidimo grupė</title>
+                       <title language="nl">Verschijningsgroep</title>
+                       <title language="no">Release gruppe</title>
+                       <title language="ru">&#160;Релиз&#160;Группа</title>
+               </member>
+               <member name="releasegroupLink">
+                       <title language="en">Release Group Link</title>
+                       <title language="af">Uitgewers Groep Skakel</title>
+                       <title language="cht">釋放團體連結</title>
+                       <title language="de">Release Group Link</title>
+                       <title language="fr">Lien du groupe de release</title>
+                       <title language="lt">Leid. gr. nuoroda</title>
+                       <title language="nl">Link Verschijningsgroep</title>
+                       <title language="no">Release gruppe link</title>
+                       <title language="ru">&#160;Ссылка&#160;на&#160;Релиз&#160;Группу</title>
+               </member>
+               <member name="keywords" search="generic">
+                       <title language="en">Keywords</title>
+                       <title language="af">Sleutelwoorde</title>
+                       <title language="cht">關鍵字</title>
+                       <title language="de">Schlüsselwörter</title>
+                       <title language="fr">Mots clés</title>
+                       <title language="lt">Raktažodžiai</title>
+                       <title language="nl">Sleutelwoorden</title>
+                       <title language="no">Nøkkelord</title>
+                       <title language="ru">&#160;Ключевые&#160;Слова</title>
+               </member>
+               <member name="link" search="none">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="cht">連結</title>
+                       <title language="de">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Snelkoppeling</title>
+                       <title language="no">Link</title>
+                       <title language="ru">&#160;Ссылка</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="avi"/>
+               <type extension="divx"/>
+               <type extension="mov"/>
+               <type extension="mpe"/>
+               <type extension="mpeg"/>
+               <type extension="mpg"/>
+               <type extension="nsv"/>
+               <type extension="ogm"/>
+               <type extension="rm"/>
+               <type extension="ram"/>
+               <type extension="wm"/>
+               <type extension="wmv"/>
+       </typeFilter>
+</schemaDescriptor>

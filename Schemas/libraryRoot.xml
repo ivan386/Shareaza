@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/libraryRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">General:My Shareaza Library</title>
+               <title language="af">Algemeen:My Shareaza Biblioteek</title>
+               <title language="cht">一般:我的 Shareaza 收藏</title>
+               <title language="de">Allgemein:Shareaza Bibliothek</title>
+               <title language="fr">Général:Ma bibliothèque Shareaza</title>
+               <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
+               <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
+               <title language="no">Generelt: mine filer</title>
+               <title language="ru">&#160;Основное:&#160;Моё&#160;Хранилище</title>
+       </titles>
+       <images>
+               <icon path="libraryRoot.ico"/>
+       </images>
+       <headerContent version="1.0">
+               <title language="en">Welcome to Your Library!</title>
+               <title language="af">Welkom by Jou Biblioteek!</title>
+               <title language="cht">歡迎來到您的收藏!</title>
+               <title language="de">Willkommen in ihrere Bibliothek!</title>
+               <title language="fr">Bienvenue dans votre bibliothèque!</title>
+               <title language="lt">Sveiki apsilankę&#160;savo kolekcijoje!</title>
+               <title language="nl">Welkom bij Mijn Bibliotheek!</title>
+               <title language="no">Velkommen til mine filer</title>
+               <title language="ru">&#160;Добро&#160;Пожаловать&#160;в&#160;Ваше&#160;Хранилище!</title>
+               <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
+               <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
+               <subtitle language="cht">您有 {totalFiles} 個檔案，總計大小 {totalVolume} 在您的收藏.</subtitle>
+               <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
+               <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
+               <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}. </subtitle>
+               <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
+               <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
+               <subtitle language="ru">&#160;У&#160;Вас&#160;Файлов&#160;{totalFiles}&#160;занимающих&#160;{totalVolume}&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/collectionsFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+              <title language="en">Collections:My Collections</title>
+              <title language="af">Versamelings:My Versamelings</title>
+              <title language="cht">收藏:我的收藏</title>
+              <title language="de">Kollektionen:Eigene Kollektionen</title>
+              <title language="fr">Collections:Mes collections</title>
+              <title language="lt">Rinkiniai:Mano rinkiniai</title>
+              <title language="nl">Collecties:Mijn Collecties</title>
+              <title language="no">Samlinger: mine samlinger</title>
+              <title language="ru">&#160;Коллекции:&#160;Мои&#160;Коллекции</title>
+       </titles>
+       <images>
+               <icon path="collectionsFolder.ico"/>
+       </images>
+       <headerContent version="1.0">
+               <title language="en">My Collections</title>
+               <title language="af">My Versamelings</title>
+               <title language="cht">我的收藏</title>
+               <title language="de">Eigene Kollektionen</title>
+               <title language="fr">Mes collections</title>
+               <title language="lt">Mano rinkiniai</title>
+               <title language="nl">Mijn Collecties</title>
+               <title language="no">Mine samlinger</title>
+               <title language="ru">&#160;Мои&#160;Коллекции</title>
+               <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中何任的豐富檔案收藏.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
+               <subtitle language="nl">Deze map bevat alle Rich File Collections uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholde hvilken som helst filsamling i mine filer.</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Все&#160;Файлы&#160;Коллекций&#160;(.collection)&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

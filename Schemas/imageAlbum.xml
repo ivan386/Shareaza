@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/imageAlbum.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Image Album</title>
+               <title language="af">Fotoalbum</title>
+               <title language="cht">圖片相簿</title>
+               <title language="de">Bilderalbum</title>
+               <title language="fr">Album d'image</title>
+               <title language="lt">Paveikslėlių albumas</title>
+               <title language="nl">Album met Afbeeldingen</title>
+               <title language="no">Bilde album</title>
+               <title language="ru">&#160;Альбом&#160;Картинок</title>
+       </titles>
+       <images>
+               <icon path="imageFolder.ico"/>
+       </images>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.shareaza.com/schemas/image.xsd">
+                       <shared local="type" remote="type"/>
+                       <shared local="rating" remote="rating"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title>{name}</title>
+               <subtitle>{description}</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryThumbView"/>
+
+</schemaDescriptor>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicArtist.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Music Artist</title>
+               <title language="af">Musiek Kunstenaar</title>
+               <title language="cht">音樂-藝人</title>
+               <title language="de">Musiker</title>
+               <title language="fr">Artiste Musical</title>
+               <title language="lt">Muzikantas</title>
+               <title language="nl">Muziek Artiest</title>
+               <title language="no">Artist</title>
+               <title language="ru">&#160;Музыкальный&#160;Артист</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <members>
+               <member name="name">
+                       <display defaultColumn="true"/>
+               </member>
+               <member name="album">
+                       <link location="http://www.shareaza.com/schemas/musicAlbum.xsd" remote="title"/>
+               </member>
+               <member name="genre">
+                       <link location="http://www.shareaza.com/schemas/musicGenre.xsd" remote="name"/>
+               </member>
+       </members>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/audio.xsd">
+                       <identity local="name" remote="artist" compare="loose"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">{name} - Discography</title>
+               <title language="af">{name} - Diskografie</title>
+               <title language="cht">{name} - 唱片分類目錄</title>
+               <title language="de">{name}</title>
+               <title language="fr">{name} - Discographie</title>
+               <title language="lt">{name} diskografija</title>
+               <title language="nl">{name} - Discografie</title>
+               <title language="no">Diskografi av {name}</title>
+               <title language="ru">&#160;Дискография&#160;{name}</title>
+               <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
+               <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
+               <subtitle language="cht">這個資料夾包含了您所有以 {name} 的音樂.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visa&#160;„{name}“&#160;muzika.</subtitle>
+               <subtitle language="nl">Deze map bevat al je muziek gesorteerd op {name}.</subtitle>
+               <subtitle language="no">Denne mappen inneholder all musikk sortert etter {name}.</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Всю&#160;Музыку&#160;{name}.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
+
+</schemaDescriptor>

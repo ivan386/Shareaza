@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Document:Presentation XML Framework; v1.4; Jonathan C. Nilson -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/presentation.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="presentations">
+		<complexType>
+			<element name="presentation" type="presentationType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	
+	<complexType name="presentationType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="subject" type="string"/>
+			<attribute name="keywords" type="string"/>
+			<attribute name="abstract" type="string"/>
+			<attribute name="initials" type="string"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="version" type="string"/>
+			<attribute name="revision" type="string"/>
+
+			<attribute name="format">
+				<simpleType base="string">
+					<enumeration value="Adobe Acrobat PDF"/>
+					<enumeration value="Corel Presentations"/>
+					<enumeration value="HTML"/>
+					<enumeration value="Macromedia Flash"/>
+					<enumeration value="Microsoft PowerPoint"/>
+					<enumeration value="Openoffice.org Presentation"/>
+					<enumeration value="Openoffice.org Presentation Template"/>
+				</simpleType>
+			</attribute>
+	
+			<attribute name="formatVersion" type="string"/>
+			<attribute name="slides" type="int"/>
+		        <attribute name="link" type="uriReference"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="100"/>
+				</simpleType>
+			</attribute>
+			<attribute name="SHA1" type="string"/>
+		</all>
+	</complexType>
+
+</schema>

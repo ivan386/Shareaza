@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/libraryRoot.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  
+  <element name="libraryRoots">
+	<complexType>
+		<element name="libraryRoot" type="libraryType" minOccurs="1" maxOccurs="unbounded"/>
+	</complexType>
+  </element>     
+  <complexType name="libraryType">
+	<all>
+		<attribute name="title" type="string"/>
+		<attribute name="owner" type="string"/>
+		<attribute name="comments" type="string"/>
+	</all>
+  </complexType>
+  
+</schema>

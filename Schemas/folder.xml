@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Folder</title>
+               <title language="af">Gids</title>
+               <title language="cht">資料夾</title>
+               <title language="de">Ordner</title>
+               <title language="fr">Dossier</title>
+               <title language="lt">Katalogas</title>
+               <title language="nl">Map</title>
+               <title language="no">Mappe</title>
+               <title language="ru">&#160;Папка</title>
+       </titles>
+       <images>
+               <icon path="folder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic"/>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/folder.xsd"/>
+               <object type="file" location="http://www.shareaza.com/schemas/file.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title>{title}</title>
+               <subtitle>{description}</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

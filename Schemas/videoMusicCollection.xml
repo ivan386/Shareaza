@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoMusicCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:Music Videos</title>
+               <title language="af">Video:Musiek Video's</title>
+               <title language="cht">影像:音樂影像</title>
+               <title language="de">Video:Musikvideos</title>
+               <title language="fr">Vidéo:Clips vidéo</title>
+               <title language="lt">Video:Muzikiniai klipai</title>
+               <title language="nl">Video:Muziek Video's</title>
+               <title language="no">Video: musikk video</title>
+               <title language="ru">&#160;Видео:&#160;Музыкальные&#160;Видео</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/video.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music Videos</title>
+               <title language="af">Musiek Video's</title>
+               <title language="cht">音樂-影像</title>
+               <title language="de">Musikvideos</title>
+               <title language="fr">Clips vidéo</title>
+               <title language="lt">Muzikiniai klipai</title>
+               <title language="nl">Muziek Video's</title>
+               <title language="no">Musikk video</title>
+               <title language="ru">&#160;Музыкальные&#160;Видео</title>
+               <subtitle language="en">This folder contains music videos.</subtitle>
+               <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
+               <subtitle language="cht">這個資料夾包含了音樂影像.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra muzikiniai klipai.</subtitle>
+               <subtitle language="nl">Deze map bevat alle muziekvideo's uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder musikk videoer</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждое&#160;Музыкальное&#160;Видео&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

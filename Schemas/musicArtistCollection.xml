@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicArtistCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:By Artist</title>
+               <title language="af">Musiek:Volgens Kunstenaar</title>
+               <title language="cht">音樂:由-藝人</title>
+               <title language="de">Musik:Nach Künstler</title>
+               <title language="fr">Musique:Par artiste</title>
+               <title language="lt">Muzika:Pagal atlikėjus</title>
+               <title language="nl">Muziek:Per Artiest</title>
+               <title language="no">Musikk: per artist</title>
+               <title language="ru">&#160;Музыка:&#160;по&#160;Артистам</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicArtist.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music By Artist</title>
+               <title language="af">Musiek Volgens Kunstenaar</title>
+               <title language="cht">音樂-由-藝人</title>
+               <title language="de">Musik nach Künstler</title>
+               <title language="fr">Musique par artiste</title>
+               <title language="lt">Muzika pagal atlikėjus</title>
+               <title language="nl">Muziek Per Artiest</title>
+               <title language="no">Musikk per artist</title>
+               <title language="ru">&#160;Музыка&#160;по&#160;Артистам</title>
+               <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的音樂收藏中一個藝人清單.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
+               <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas. </subtitle>
+               <subtitle language="nl">Deze map bevat een lijst met artiesten uit je muziekbibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste med artister i mine filer</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;список&#160;Артистов&#160;найденных&#160;в&#160;Музыкальных&#160;файлах&#160;Вашего&#160;Хранилища.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

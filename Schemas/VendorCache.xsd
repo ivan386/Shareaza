@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/VendorCache.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="vendorCache">
+		<complexType>
+			<sequence>
+				<element name="vendor" type="vendorType" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<complexType name="vendorType">
+		<attribute name="code" type="NMTOKEN" use="required"/>
+		<sequence>
+			<element name="title" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="link" type="uriReference" minOccurs="0" maxOccurs="1"/>
+			<element name="capability" type="capabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="capabilityType">
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="value" type="boolean" default="true"/>
+	</complexType>
+	
+</schema>

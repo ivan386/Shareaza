@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Chinese Traditional Schemas File translated by CML
+Shareaza German Schemas File translated by Spooky
+Shareaza French Schemas File translated by Surf@ceS
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:All Music</title>
+               <title language="af">Musiek:Alle Musiek</title>
+               <title language="cht">音樂:所有音樂</title>
+               <title language="de">Musik:Alle Musik</title>
+               <title language="fr">Musique:Toutes les musiques</title>
+               <title language="lt">Muzika:Visa muzika</title>
+               <title language="nl">Muziek:Alle Muziek</title>
+               <title language="no">Musikk: all musikk</title>
+               <title language="ru">&#160;Музыка:&#160;Вся&#160;Музыка</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/audio.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">All Music</title>
+               <title language="af">Alle Musiek</title>
+               <title language="cht">所有音樂</title>
+               <title language="de">Alle Musik</title>
+               <title language="fr">Toutes les musiques</title>
+               <title language="lt">Visa muzika</title>
+               <title language="nl">Alle Muziek</title>
+               <title language="no">All musikk</title>
+               <title language="ru">&#160;Вся&#160;Музыка</title>
+               <subtitle language="en">This folder contains every music file in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat alle musieklêers in jou biblioteek.</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的音樂檔案.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Musikdateien in ihrer Bibliothek.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos muzikinės bylos.</subtitle>
+               <subtitle language="nl">Deze map bevat elk muziekbestand uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle musikkfilene i mine filer</subtitle>
+               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждый&#160;Музыкальный&#160Файл&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
+
+</schemaDescriptor>
