@@ -1221,7 +1221,6 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 {
 	DWORD nMessageLength;
 	CString sMessage;
-	BOOL bDisplay;
 
 	// Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
@@ -1247,19 +1246,25 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		sMessage = pPacket->ReadString( nMessageLength );
 
 
-	// Check if chat is enabled and the message is not blocked
-	bDisplay = Settings.Community.ChatEnable && Settings.Community.ChatAllNetworks;
+	// Check the message is not spam
+	if ( MessageFilter.IsBlockedED2K( sMessage ) ) 	
+	{
+		// Block L33cher mods
+		if ( m_pDownload == NULL ) Security.SessionBan( &m_pHost.sin_addr, FALSE );
+		// Don't display message
+		return TRUE;
+	}
+	if ( MessageFilter.IsFiltered( sMessage ) ) return TRUE;	// General spam filter (if enabled)
 
-	if ( MessageFilter.IsBlockedED2K( sMessage ) ) bDisplay = FALSE;	// Block some ed2k client generated messages
-	if ( MessageFilter.IsFiltered( sMessage ) ) bDisplay = FALSE;		// General spam filter (if enabled)
-
-	if ( bDisplay )	// Chat is enabled, message OK. Accept/open a chat window.
+	// Check chat settings.
+	if ( Settings.Community.ChatEnable && Settings.Community.ChatAllNetworks )	
 	{	
+		// Chat is enabled, open/update a chat window
 		ChatCore.OnED2KMessage( this, pPacket );
 	}
-	else									// Chat is disabled- don't open a chat window. 
+	else
 	{	
-		// Display in system window
+		// Chat is disabled- don't open a chat window. Display in system window instead.
 		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
 	return TRUE;
