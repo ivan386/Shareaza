@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.94"
+		version="2.1.0.97"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3988,7 +3988,7 @@
 		<control caption="_Обновить"/>
 		<control/>
 		<control caption="Закрыть"/>
-		<control caption="Когда необходимо|Когда соотношение выше 100%|Никогда"/>
+		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
 		<control caption="Начать новые пересылки:"/>
 		<control caption="Пересылки:"/>
 	</dialog>

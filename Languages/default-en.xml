@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.94"
+		version="2.1.0.97"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3992,7 +3992,7 @@
 		<control caption="_Refresh"/>
 		<control/>
 		<control caption="Close"/>
-		<control caption="As needed|When ratio over 100%|Never"/>
+		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
 		<control caption="Start new download transfers:"/>
 		<control caption="Transfers:"/>
 	</dialog>
