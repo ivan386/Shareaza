@@ -515,11 +515,8 @@ BOOL CSecureRule::Match(IN_ADDR* pAddress, LPCTSTR pszContent)
 		DWORD* pMask = (DWORD*)m_nMask;
 		DWORD* pTest = (DWORD*)pAddress;
 
-// this shorter method only works if you do the & before entering it in the list
-// change it later after CSecureRule::MaskFix() has been in for a while
-//		if ( ( ( *pTest ) & ( *pMask ) ) == ( *pBase ) )	// one less & to do
-
-		if ( ( ( *pTest ) & ( *pMask ) ) == ( ( *pBase ) & ( *pMask ) ) )
+// This only works if IP's are &ed before entered in the list
+		if ( ( ( *pTest ) & ( *pMask ) ) == ( *pBase ) )
 		{
 			return TRUE;
 		}
@@ -666,6 +663,7 @@ void CSecureRule::Serialize(CArchive& ar, int nVersion)
 		case srAddress:
 			ar.Read( m_nIP, 4 );
 			ar.Read( m_nMask, 4 );
+			MaskFix();				// Make sure old rules are updated to new format
 			break;
 		case srContent:
 			ar >> m_nIP[0];
