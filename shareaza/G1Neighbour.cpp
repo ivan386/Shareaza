@@ -72,8 +72,8 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase) : CNeighbour( PROTOCOL_G1, pBase )
 	m_pOutbound		= new CG1PacketBuffer( m_pZOutput ? m_pZOutput : m_pOutput );
 
 	theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_ONLINE, (LPCTSTR)m_sAddress,
-		0, m_bShake06 ? 6 : 4,
-		m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
+				0, 6, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
+				//0, m_bShake06 ? 6 : 4, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
 
 	Send( CG1Packet::New( G1_PACKET_PING ) );
 	

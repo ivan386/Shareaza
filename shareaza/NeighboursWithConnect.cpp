@@ -810,7 +810,11 @@ void CNeighboursWithConnect::Maintain()
 	}
 	
 	//Set numbers of neighbours (G1)
-	if ( bIsG1Leaf )
+	if ( Settings.Gnutella1.EnableToday == FALSE )
+	{
+		nLimit[ PROTOCOL_G1 ][ ntHub ] = nLimit[ PROTOCOL_G1 ][ ntLeaf ] = 0;
+	}
+	else if ( bIsG1Leaf )
 	{
 		nLimit[ PROTOCOL_G1 ][ ntHub ]	= min( Settings.Gnutella1.NumHubs, 2 );
 	}
@@ -820,13 +824,14 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G1 ][ ntLeaf ]	= Settings.Gnutella1.NumLeafs;
 	}
 
-	if ( Settings.Gnutella1.EnableToday == FALSE )
-	{
-		nLimit[ PROTOCOL_G1 ][ ntHub ] = nLimit[ PROTOCOL_G1 ][ ntLeaf ] = 0;
-	}
+
 
 	//Set numbers of neighbours (G2)
-	if ( bIsG2Leaf )
+	if ( Settings.Gnutella2.EnableToday == FALSE )
+	{
+		nLimit[ PROTOCOL_G2 ][ ntHub ] = nLimit[ PROTOCOL_G2 ][ ntLeaf ] = 0;
+	}
+	else if ( bIsG2Leaf )
 	{
 		nLimit[ PROTOCOL_G2 ][ ntHub ]	= min( Settings.Gnutella2.NumHubs, 3 );
 	}
@@ -836,10 +841,7 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G2 ][ ntLeaf ]	= Settings.Gnutella2.NumLeafs;
 	}
 	
-	if ( Settings.Gnutella2.EnableToday == FALSE )
-	{
-		nLimit[ PROTOCOL_G2 ][ ntHub ] = nLimit[ PROTOCOL_G2 ][ ntLeaf ] = 0;
-	}
+
 	
 	//Set numbers of neighbours (ED2K)
 	if ( Settings.eDonkey.EnableToday )

@@ -107,10 +107,11 @@ void CShakeNeighbour::AttachTo(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CShakeNeighbour close
 
-void CShakeNeighbour::Close(UINT nError, BOOL bRetry04)
+void CShakeNeighbour::Close(UINT nError) //, BOOL bRetry04)
 {
 	if ( m_bInitiated )
 	{
+		/*
 		if ( bRetry04 && m_bShake06 && m_nState == nrsHandshake1 && ( Settings.Gnutella1.EnableToday && Settings.Gnutella1.Handshake04 ) )
 		{
 			Neighbours.Remove( this );
@@ -126,7 +127,7 @@ void CShakeNeighbour::Close(UINT nError, BOOL bRetry04)
 			
 			return;
 		}
-		else if ( m_nState < nrsHandshake2 )
+		else */if ( m_nState < nrsHandshake2 )
 		{
 			HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
 		}
@@ -144,17 +145,21 @@ BOOL CShakeNeighbour::OnConnected()
 
 	theApp.Message( MSG_DEFAULT, IDS_CONNECTION_CONNECTED, (LPCTSTR)m_sAddress );
 
+	/*
 	if ( m_bShake06 )
 	{
+	*/
 		m_pOutput->Print( "GNUTELLA CONNECT/0.6\r\n" );
 		SendPublicHeaders();
 		SendHostHeaders();
 		m_pOutput->Print( "\r\n" );
+	/*
 	}
 	else
 	{
 		m_pOutput->Print( "GNUTELLA CONNECT/0.4\n\n" );
 	}
+	*/
 	
 	m_nState = nrsHandshake1;
 
@@ -174,7 +179,7 @@ void CShakeNeighbour::OnDropped(BOOL bError)
 	}
 	else
 	{
-		Close( IDS_CONNECTION_DROPPED, TRUE );
+		Close( IDS_CONNECTION_DROPPED ); //, TRUE );
 	}
 }
 
@@ -220,7 +225,7 @@ BOOL CShakeNeighbour::OnRun()
 
 		if ( nTimeNow - m_tConnected > Settings.Connection.TimeoutHandshake )
 		{
-			Close( IDS_HANDSHAKE_TIMEOUT, TRUE );
+			Close( IDS_HANDSHAKE_TIMEOUT ); //, TRUE );
 			return FALSE;
 		}
 		break;
@@ -262,7 +267,7 @@ void CShakeNeighbour::SendMinimalHeaders()
 	}
 }
 
-void CShakeNeighbour::SendPublicHeaders()
+void CShakeNeighbour::SendPublicHeaders(PROTOCOLID nProtocol)
 {
 	CString strHeader = Settings.SmartAgent( Settings.General.UserAgent );
 	
@@ -278,7 +283,7 @@ void CShakeNeighbour::SendPublicHeaders()
 		(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 	m_pOutput->Print( strHeader );
 	
-	if ( Settings.Gnutella2.EnableToday )
+	if ( ( Settings.Gnutella2.EnableToday ) && ( nProtocol != PROTOCOL_G1 ) )	//If G2 (or unknown)
 	{
 		if ( m_bInitiated )
 		{
@@ -301,7 +306,7 @@ void CShakeNeighbour::SendPublicHeaders()
 		}
 	}
 	
-	if ( Settings.Gnutella1.EnableToday )
+	if ( ( Settings.Gnutella1.EnableToday ) && ( nProtocol != PROTOCOL_G2 ) )	//If G1 (or unknown)
 	{
 		if ( Settings.Gnutella1.EnableGGEP ) m_pOutput->Print( "GGEP: 0.5\r\n" );
 		m_pOutput->Print( "Pong-Caching: 0.1\r\n" );
@@ -315,19 +320,7 @@ void CShakeNeighbour::SendPublicHeaders()
 	}
 	else
 	{
-		/*
-		if ( 1 )	//Add proper G2 detection here
-		{
-			if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
-			{
-				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
-			}
-			else if ( Settings.Gnutella2.ClientMode != MODE_HUB )
-			{
-				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
-			}
-		}
-		else
+		if ( nProtocol == PROTOCOL_G1 )
 		{
 			if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
 			{
@@ -338,14 +331,16 @@ void CShakeNeighbour::SendPublicHeaders()
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 			}
 		}
-		*/
-		if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+		else
 		{
-			m_pOutput->Print( "X-Ultrapeer: True\r\n" );
-		}
-		else if ( Settings.Gnutella2.ClientMode != MODE_HUB && Settings.Gnutella1.ClientMode != MODE_ULTRAPEER )
-		{
-			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+			if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
+			{
+				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
+			}
+			else if ( Settings.Gnutella2.ClientMode != MODE_HUB )
+			{
+				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+			}
 		}
 	}
 }
@@ -439,7 +434,7 @@ BOOL CShakeNeighbour::ReadResponse()
 
 	if ( strLine == _T("GNUTELLA OK") && m_bInitiated )
 	{
-		m_bShake06 = FALSE;
+		//m_bShake06 = FALSE;
 		OnHandshakeComplete();
 		return FALSE;
 	}
@@ -457,12 +452,16 @@ BOOL CShakeNeighbour::ReadResponse()
 		}
 		else
 		{
-			m_bShake06 = TRUE;
+			//m_bShake06 = TRUE;
 			m_nState = nrsHandshake2;
 		}
 	}
 	else if ( strLine == _T("GNUTELLA CONNECT/0.4") && ! m_bInitiated )
 	{
+		//We aren't interested in older 0.4 connections.
+		DelayClose( IDS_HANDSHAKE_SURPLUS );
+		return FALSE;
+		/*
 		if ( Neighbours.IsG1Leaf() )
 		{
 			DelayClose( IDS_HANDSHAKE_IAMLEAF );
@@ -480,20 +479,21 @@ BOOL CShakeNeighbour::ReadResponse()
 			OnHandshakeComplete();
 			return FALSE;
 		}
+		*/
 	}
 	else if ( strLine.GetLength() > 17 && strLine.Left( 17 ) == _T("GNUTELLA CONNECT/") && ! m_bInitiated )
 	{
-		m_bShake06 = TRUE;
+		//m_bShake06 = TRUE;
 		m_nState = nrsHandshake2;
 	}
 	else if ( strLine.GetLength() > 21 && strLine.Left( 21 ) == _T("SHAREAZABETA CONNECT/") && ! m_bInitiated )
 	{
-		m_bShake06 = TRUE;
+		//m_bShake06 = TRUE;
 		m_nState = nrsHandshake2;
 	}
 	else
 	{
-		Close( IDS_HANDSHAKE_FAIL, TRUE );
+		Close( IDS_HANDSHAKE_FAIL ); //, TRUE );
 		return FALSE;
 	}
 	
@@ -774,7 +774,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		else
 		{
 			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );
-			SendPublicHeaders();
+			SendPublicHeaders( PROTOCOL_G2 );
 			SendPrivateHeaders();
 			SendHostHeaders();
 
@@ -946,7 +946,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		else
 		{
 			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );
-			SendPublicHeaders();
+			SendPublicHeaders( PROTOCOL_G1 );
 			SendPrivateHeaders();
 			SendHostHeaders();
 

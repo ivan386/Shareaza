@@ -68,7 +68,7 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 
 	// Set handshake values to defaults
 	m_bAutomatic	= FALSE;		// Automatic setting used to maintain the connection
-	m_bShake06		= TRUE;			// Expect the remote computer to be using the current Gnutella 0.6 protocol
+	//m_bShake06		= TRUE;			// Expect the remote computer to be using the current Gnutella 0.6 protocol
 	m_bShareaza		= FALSE;		// Expect the remote computer to not be running Shareaza
 	m_nNodeType		= ntNode;		// This connection is just to a node to start out, later it might be a hub or a leaf
 	m_bQueryRouting	= FALSE;		// Don't start query routing or pong caching yet

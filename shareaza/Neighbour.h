@@ -71,7 +71,7 @@ public:
 // Attributes : Capabilities
 public:
 	BOOL		m_bAutomatic;
-	BOOL		m_bShake06;
+	//BOOL		m_bShake06;
 	BOOL		m_bShareaza;
 	NrsNode		m_nNodeType;
 	BOOL		m_bQueryRouting;

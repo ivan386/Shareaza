@@ -50,7 +50,7 @@ protected:
 public:
 	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPost, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE);
 	virtual void	AttachTo(CConnection* pConnection);
-	virtual void	Close(UINT nError = IDS_CONNECTION_CLOSED, BOOL bRetry04 = FALSE);
+	virtual void	Close(UINT nError = IDS_CONNECTION_CLOSED ); //, BOOL bRetry04 = FALSE);
 protected:
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
@@ -62,7 +62,7 @@ protected:
 	virtual BOOL	OnHeadersCompleteG2();
 protected:
 	void	SendMinimalHeaders();
-	void	SendPublicHeaders();
+	void	SendPublicHeaders(PROTOCOLID nProtocol = PROTOCOL_NULL);
 	void	SendPrivateHeaders();
 	void	SendHostHeaders(LPCTSTR pszMessage = NULL);
 	BOOL	ReadResponse();

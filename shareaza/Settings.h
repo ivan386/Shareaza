@@ -231,8 +231,8 @@ public:
 		DWORD		ClientMode;					//Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
-		BOOL		Handshake04;
-		BOOL		Handshake06;
+		//BOOL		Handshake04;
+		//BOOL		Handshake06;
 		int			NumHubs;
 		int			NumLeafs;
 		int			NumPeers;
