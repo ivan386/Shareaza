@@ -875,7 +875,11 @@ void CRemote::PageDownloads()
 					continue;
 				}
 			}
-			
+			// roo_koo_too improvement
+			else if ( str == _T("more_sources"))
+			{ 
+				pDownload->FindMoreSources();
+			}
 			str.Format( _T("%i"), pDownload );
 		}
 		
@@ -967,16 +971,19 @@ void CRemote::PageDownloads()
 			else if ( pDownload->m_bVerify == TS_FALSE )
 				LoadString( str, IDS_STATUS_UNVERIFIED );
 		}
+		// roo_koo_too source count fix
 		else if ( pDownload->GetSourceCount() == 1 )
 		{
-			LoadSourcesString( str, 1 );
-			str.Format( _T("(1 %s)"), str );
+			CString strSC;
+			LoadSourcesString( strSC, 1 );
+			str.Format( _T("(1 %s)"), strSC );
 		}
 		else if ( pDownload->GetSourceCount() > 1 )
 		{
 			int nSources = pDownload->GetSourceCount();
-			LoadSourcesString( str, nSources );
-			str.Format( _T("(%i %s)"), nSources, str );
+			CString strSC;
+			LoadSourcesString( strSC, nSources );
+			str.Format( _T("(%i %s)"), nSources, strSC );
 		}
 		else
 			LoadString( str, IDS_STATUS_NOSOURCES );
