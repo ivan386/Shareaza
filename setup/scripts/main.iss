@@ -25,6 +25,7 @@ VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=admin
 ShowLanguageDialog=auto
+LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\uninstall.ico
 UninstallDisplayName={cm:NameAndVersion,Shareaza,{#version}}
 UninstallFilesDir={app}\Uninstall
