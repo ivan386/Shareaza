@@ -8,6 +8,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -25,6 +26,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Libro: Todos mis libros</title>
                <title language="fr">Livres:Mes livres</title>
                <title language="hu">Könyv: saját könyvek</title>
+               <title language="it">Libro:Libri</title>
                <title language="lt">Knyga:Mano knygos</title>
                <title language="nl">Boek:Mijn Boeken</title>
                <title language="no">Bok: mine bøker</title>
@@ -44,6 +46,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -62,6 +65,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Bienvenido a Mis Libros!</title>
                <title language="fr">Bienvenue dans Mes livres!</title>
                <title language="hu">Üdvözöllek a Saját könyvekben!</title>
+               <title language="it">Benvenuto nei Libri!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano knygose“!</title>
                <title language="nl">Welkom bij Mijn Boeken!</title>
                <title language="no">Velkommen til mine bøker</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>
                <subtitle language="hu">Ez a mappa a könyveket tartalmazza.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutti i tuoi libri.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine bøker</subtitle>

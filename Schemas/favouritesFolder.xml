@@ -8,6 +8,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -25,6 +26,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Favoritos: Favoritos</title>
                <title language="fr">Favoris:Favoris</title>
                <title language="hu">Kedvencek: kedvencek</title>
+               <title language="it">Preferiti:Preferiti</title>
                <title language="lt">Mėgiamybės:Mėgiamybės</title>
                <title language="nl">Favorieten:Favorieten</title>
                <title language="no">Favoritter: favoritter</title>
@@ -44,6 +46,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -58,6 +61,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -73,6 +77,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Mis Archivos Favoritos</title>
                <title language="fr">Mes fichiers favoris</title>
                <title language="hu">Kedvenc fájlok</title>
+               <title language="it">I miei file preferiti</title>
                <title language="lt">Mano mėgiamos bylos</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
                <title language="no">Mine favoritt filer</title>
@@ -85,6 +90,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
                <subtitle language="hu">Ez a mappa a kedvenc fájljaidat tartalmazza, amit a Shareaza ajánlani fog a fájllistádat lekérőknek.</subtitle>
+               <subtitle language="it">Questa cartella contiene i file preferiti che Shareaza raccomanderà agli utenti che esamineranno la tua collezione.</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias&#160;„Shareaza“&#160;rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
                <subtitle language="no">Denne mappen inneholder dine favoritter som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>

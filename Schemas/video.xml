@@ -8,6 +8,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -24,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Video</title>
                <title language="fr">Vidéo</title>
                <title language="hu">Videó</title>
+               <title language="it">Video</title>
                <title language="lt">Vaizdo įrašai</title>
                <title language="nl">Video</title>
                <title language="no">Video</title>
@@ -40,6 +42,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -55,6 +58,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
                        <title language="hu">Típus</title>
+                       <title language="it">Tipo</title>
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
@@ -70,6 +74,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Series</title>
                        <title language="fr">Séries</title>
                        <title language="hu">Sorozat</title>
+                       <title language="it">Serie</title>
                        <title language="lt">Serialas</title>
                        <title language="nl">Serie</title>
                        <title language="no">Serie</title>
@@ -85,6 +90,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Género</title>
                        <title language="fr">Genre</title>
                        <title language="hu">Műfaj</title>
+                       <title language="it">Genere</title>
                        <title language="lt">Žanras/Stilius</title>
                        <title language="nl">Genre</title>
                        <title language="no">Sjanger</title>
@@ -100,6 +106,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Número de Episodio</title>
                        <title language="fr">Numéro d'épisode</title>
                        <title language="hu">Epizód</title>
+                       <title language="it">Numero episodio</title>
                        <title language="lt">Serijos numeris</title>
                        <title language="nl">Episode Nummer</title>
                        <title language="no">Episode nummer</title>
@@ -115,6 +122,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Temporada/Series</title>
                        <title language="fr">Saison/Séries</title>
                        <title language="hu">Szezon/Sorozat</title>
+                       <title language="it">Stagione/Serie</title>
                        <title language="lt">Sezonas/Serialas</title>
                        <title language="nl">Seizoen/Serie</title>
                        <title language="no">Sesong/serie</title>
@@ -129,6 +137,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Fecha Original al aire</title>
                        <title language="fr">Date de sortie</title>
                        <title language="hu">Első kiadás</title>
+                       <title language="it">Data della prima trasmissione</title>
                        <title language="lt">Pasirodė eteryje</title>
                        <title language="nl">Datum Originele Uitzending</title>
                        <title language="no">Første gang vist</title>
@@ -143,6 +152,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Sipnosis</title>
                        <title language="fr">Synopsis (Résumé)</title>
                        <title language="hu">Ismertető</title>
+                       <title language="it">Sommario</title>
                        <title language="lt">Trumpa apžvalga</title>
                        <title language="nl">Synopsis</title>
                        <title language="no">Sammendrag</title>
@@ -157,6 +167,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -171,6 +182,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
                        <title language="hu">Nyelv</title>
+                       <title language="it">Lingua</title>
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
@@ -185,6 +197,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Fuente</title>
                        <title language="fr">Source</title>
                        <title language="hu">Forrás</title>
+                       <title language="it">Fonte</title>
                        <title language="lt">Šaltinis</title>
                        <title language="nl">Bron</title>
                        <title language="no">Kilde</title>
@@ -199,6 +212,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Director</title>
                        <title language="fr">Réalisateur</title>
                        <title language="hu">Rendező</title>
+                       <title language="it">Regista</title>
                        <title language="lt">Režisierius</title>
                        <title language="nl">Regisseur</title>
                        <title language="no">Direktør</title>
@@ -213,6 +227,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Productor</title>
                        <title language="fr">Producteur</title>
                        <title language="hu">Producer</title>
+                       <title language="it">Produttore</title>
                        <title language="lt">Prodiuseris</title>
                        <title language="nl">Producent</title>
                        <title language="no">Produsent</title>
@@ -227,6 +242,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Studio</title>
                        <title language="fr">Studio</title>
                        <title language="hu">Stúdió</title>
+                       <title language="it">Studio</title>
                        <title language="lt">Studija</title>
                        <title language="nl">Studio</title>
                        <title language="no">Studio</title>
@@ -242,6 +258,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Actores</title>
                        <title language="fr">Acteurs</title>
                        <title language="hu">Szereplők</title>
+                       <title language="it">Attori</title>
                        <title language="lt">Aktoriai</title>
                        <title language="nl">Acteurs</title>
                        <title language="no">Skuespillere</title>
@@ -256,6 +273,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">IMDB Link</title>
                        <title language="fr">Lien IMDB</title>
                        <title language="hu">IMDB link</title>
+                       <title language="it">Link IMDB</title>
                        <title language="lt">IMDB nuoroda</title>
                        <title language="nl">Link naar IMDB</title>
                        <title language="no">IMDB link</title>
@@ -270,6 +288,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Duración</title>
                        <title language="fr">Durée</title>
                        <title language="hu">Időtartam</title>
+                       <title language="it">Durata</title>
                        <title language="lt">Trukmė</title>
                        <title language="nl">Tijdsduur</title>
                        <title language="no">Lengde</title>
@@ -286,6 +305,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Ancho</title>
                        <title language="fr">Largeur</title>
                        <title language="hu">Szélesség</title>
+                       <title language="it">Larghezza</title>
                        <title language="lt">Plotis</title>
                        <title language="nl">Breedte</title>
                        <title language="no">Bredde</title>
@@ -301,6 +321,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Altura</title>
                        <title language="fr">Hauteur</title>
                        <title language="hu">Magasság</title>
+                       <title language="it">Altezza</title>
                        <title language="lt">Aukštis</title>
                        <title language="nl">Hoogte</title>
                        <title language="no">Høyde</title>
@@ -315,6 +336,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Codec</title>
                        <title language="fr">Codec</title>
                        <title language="hu">Kodek</title>
+                       <title language="it">Codec</title>
                        <title language="lt">Kodekas</title>
                        <title language="nl">Codec</title>
                        <title language="no">Codec</title>
@@ -329,6 +351,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Año</title>
                        <title language="fr">Année</title>
                        <title language="hu">Év</title>
+                       <title language="it">Anno</title>
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
@@ -343,6 +366,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Artista</title>
                        <title language="fr">Artiste</title>
                        <title language="hu">Előadó</title>
+                       <title language="it">Artista</title>
                        <title language="lt">Atlikėjas/Menininkas</title>
                        <title language="nl">Artiest</title>
                        <title language="no">Artist</title>
@@ -357,6 +381,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Subtitulos</title>
                        <title language="fr">Sous-titres</title>
                        <title language="hu">Feliratok</title>
+                       <title language="it">Sottotitoli</title>
                        <title language="lt">Subtitrai</title>
                        <title language="nl">Ondertiteling</title>
                        <title language="no">Teksting</title>
@@ -371,6 +396,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Rating</title>
                        <title language="fr">Estimation</title>
                        <title language="hu">Jegy</title>
+                       <title language="it">Valutazione</title>
                        <title language="lt">Vertinimas</title>
                        <title language="nl">Beoordeling</title>
                        <title language="no">Vurdering</title>
@@ -385,6 +411,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Número de Parte</title>
                        <title language="fr">Partie numéro</title>
                        <title language="hu">Rész</title>
+                       <title language="it">Numero parte</title>
                        <title language="lt">Dalies numeris</title>
                        <title language="nl">Deel Nummer</title>
                        <title language="no">Del nummer</title>
@@ -399,6 +426,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Parte de Cuenta</title>
                        <title language="fr">Nombre de partie</title>
                        <title language="hu">Összes rész</title>
+                       <title language="it">Parti totali</title>
                        <title language="lt">Dalių skaičius</title>
                        <title language="nl">Aantal Delen</title>
                        <title language="no">Side tall</title>
@@ -413,6 +441,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Standard</title>
                        <title language="fr">Standard</title>
                        <title language="hu">Standard</title>
+                       <title language="it">Standard</title>
                        <title language="lt">Standartas</title>
                        <title language="nl">Standaard</title>
                        <title language="no">Standard</title>
@@ -427,6 +456,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Calidad</title>
                        <title language="fr">Qualité</title>
                        <title language="hu">Minőség</title>
+                       <title language="it">Qualità</title>
                        <title language="lt">Kokybė</title>
                        <title language="nl">Kwaliteit</title>
                        <title language="no">Kvalitet</title>
@@ -441,6 +471,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
                        <title language="hu">Megjegyzés</title>
+                       <title language="it">Note di qualità</title>
                        <title language="lt">Apie kokybę</title>
                        <title language="nl">Kwaliteitsaantekeningen</title>
                        <title language="no">Kvalitetsnotat</title>
@@ -455,6 +486,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Fecha de Lanzamiento en P2P</title>
                        <title language="fr">Date de release P2P</title>
                        <title language="hu">P2P kiadási dátum</title>
+                       <title language="it">Data di rilascio P2P</title>
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P Vrijgave</title>
                        <title language="no">P2P release dato</title>
@@ -469,6 +501,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
                        <title language="hu">Árusító</title>
+                       <title language="it">Distributore</title>
                        <title language="lt">Distributorius</title>
                        <title language="nl">Verspreider</title>
                        <title language="no">Distributør</title>
@@ -483,6 +516,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
                        <title language="hu">Árusító linkje</title>
+                       <title language="it">Link del distributore</title>
                        <title language="lt">Distrib. nuoroda</title>
                        <title language="nl">Link naar Verspreider</title>
                        <title language="no">Distributør link</title>
@@ -497,6 +531,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Release Group</title>
                        <title language="fr">Groupe de release</title>
                        <title language="hu">Kiadó csapat</title>
+                       <title language="it">Gruppo di rilascio</title>
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Vrijgave Groep</title>
                        <title language="no">Release gruppe</title>
@@ -511,6 +546,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
                        <title language="hu">Kiadó csapat linkje</title>
+                       <title language="it">Link gruppo di rilascio</title>
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link Vrijgave Groep</title>
                        <title language="no">Release gruppe link</title>
@@ -525,6 +561,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
                        <title language="hu">Kulcsszavak</title>
+                       <title language="it">Parole chiave</title>
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
@@ -539,6 +576,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="hu">Link</title>
+                       <title language="it">Link</title>
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>

@@ -8,6 +8,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -25,6 +26,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Música: Por Género</title>
                <title language="fr">Musique:Par genre</title>
                <title language="hu">Zene: műfaj szerint</title>
+               <title language="it">Musica:Per genere</title>
                <title language="lt">Muzika:Pagal stilių</title>
                <title language="nl">Muziek:Per Genre</title>
                <title language="no">Musikk: per sjanger</title>
@@ -44,6 +46,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -62,6 +65,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Música por Género</title>
                <title language="fr">Musique par genre</title>
                <title language="hu">Zene műfaj szerint</title>
+               <title language="it">Musica per genere</title>
                <title language="lt">Muzika pagal stilių</title>
                <title language="nl">Muziek Per Genre</title>
                <title language="no">Musikk per sjanger</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="es">Esta carpeta contiene una lista de géneros musicales encontrados en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient la liste des genres musicaux trouvés dans votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa a zenei műfajokat tartalmazza.</subtitle>
+               <subtitle language="it">Questa cartella contiene la lista dei generi musicali trovati nella tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met muziekgenres die in je bibliotheek zijn gevonden.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste med musikk sjangrer som fin i mine filer</subtitle>

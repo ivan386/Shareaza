@@ -8,6 +8,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -25,6 +26,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Música: Por Album</title>
                <title language="fr">Musique:Par Album</title>
                <title language="hu">Zene: album szerint</title>
+               <title language="it">Musica:Per album</title>
                <title language="lt">Muzika:Pagal albumus</title>
                <title language="nl">Muziek:Per Album</title>
                <title language="no">Musikk: per album</title>
@@ -44,6 +46,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -62,6 +65,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="es">Música por Album</title>
                <title language="fr">Musique par album</title>
                <title language="hu">Zene album szerint</title>
+               <title language="it">Musica per album</title>
                <title language="lt">Muzika pagal albumus</title>
                <title language="nl">Muziek Per Album</title>
                <title language="no">Musikk per album</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="es">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient tous les albums musicaux de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa az albumokat tartalmazza.</subtitle>
+               <subtitle language="it">Questa cartella contiene la lista degli album che hai nella tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met albums die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste av alle mine album</subtitle>
