@@ -567,7 +567,10 @@ void CUploadsWnd::OnUploadsAutoClear()
 void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( ! m_bSelFile );
+	//pCmdUI->Enable( ! m_bSelFile );
+
+	//Sometimes locks up... disable for now
+	pCmdUI->Enable( FALSE );
 }
 
 void CUploadsWnd::OnEditQueue() 
@@ -583,7 +586,9 @@ void CUploadsWnd::OnEditQueue()
 			pLock.Unlock();
 
 			CQueuePropertiesDlg dlg( pQueue, FALSE, this );
-			dlg.DoModal();
+
+			//dlg.DoModal();  //Note: the CSkinDialog::OnOK() at the end will sometimes lock 
+			// up Raza? Needs to be fixed
 			
 			UploadQueues.Save();
 
