@@ -26,6 +26,7 @@
 #include "DiscoveryServices.h"
 #include "WizardNetworksPage.h"
 #include "DlgDonkeyImport.h"
+#include "Skin.h"
 #include <shlobj.h>
 
 #ifdef _DEBUG
@@ -75,6 +76,8 @@ void CWizardNetworksPage::DoDataExchange(CDataExchange* pDX)
 BOOL CWizardNetworksPage::OnInitDialog() 
 {
 	CWizardPage::OnInitDialog();
+
+	Skin.Apply( _T("CWizardProfilePage"), this );
 	
 	m_bG2Enable = Settings.Gnutella2.EnableToday;
 	m_bG1Enable = Settings.Gnutella1.EnableToday;
