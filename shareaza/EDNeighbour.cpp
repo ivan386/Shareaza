@@ -631,7 +631,7 @@ void CEDNeighbour::SendSharedFiles()
 		{
 			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( nCount < 100 ) || ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
 			{
-				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, FALSE ) ) // Check if a queue exists
+				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
 					// Initialise variables
 					DWORD nTags;

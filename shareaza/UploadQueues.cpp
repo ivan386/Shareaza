@@ -330,20 +330,29 @@ DWORD CUploadQueues::GetDonkeyBandwidth()
 	return nBandwidth;
 }
 
-BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bNow)
+BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bCanQueue )
 { 	// Can the specified file be uploaded with the current queue setup?
 
-	if ( pFile->m_nSize == 0 ) return FALSE;			//Don't bother with 0 byte files
+	// Don't bother with 0 byte files
+	if ( pFile->m_nSize == 0 ) return FALSE;
+
+	// Detect Ghosts
+	if ( pFile->IsGhost() ) return FALSE;
+
+	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
+	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
+		nProtocol = PROTOCOL_HTTP;		
 
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	for ( POSITION pos = GetIterator() ; pos ; )		//Check each queue
+	//Check each queue
+	for ( POSITION pos = GetIterator() ; pos ; )		
 	{
 		CUploadQueue* pQueue = GetNext( pos );
 		
 		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
-			if ( ( ! bNow ) || ( pQueue->GetQueueRemaining() > 0 ) ) 
+			if ( ( ! bCanQueue ) || ( pQueue->GetQueueRemaining() > 0 ) ) 
 			{	// And we don't care if there is space now, or the queue isn't full)
 				return TRUE; // Then this file can be uploaded
 			}
@@ -351,6 +360,39 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bN
 	}
 
 	return FALSE;	//This file is not uploadable with the current queue setup
+}
+
+int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile )
+{ 	// if the specified file was requested now, what queue position would it be in?
+	// 0x7FFF (max int) indicates the file cannot be downloaded
+
+
+	// Don't bother with 0 byte files
+	if ( pFile->m_nSize == 0 ) return 0x7FFF;
+
+	// Detect Ghosts
+	if ( pFile->IsGhost() ) return 0x7FFF;
+
+	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
+	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
+		nProtocol = PROTOCOL_HTTP;		
+
+	CSingleLock pLock( &m_pSection, TRUE );
+	
+	//Check each queue
+	for ( POSITION pos = GetIterator() ; pos ; )		
+	{
+		CUploadQueue* pQueue = GetNext( pos );
+		
+		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
+		{	// If this queue will accept this file
+
+			if ( pQueue->GetQueueRemaining() > 0 )
+				return pQueue->GetQueuedCount();
+		}
+	}
+
+	return 0x7FFF;	//This file is not uploadable with the current queue setup
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -543,6 +543,15 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		return TRUE;
 	}
+
+	if ( ! UploadQueues.CanUpload( PROTOCOL_HTTP, pFile ) )
+	{
+		// File is not uploadable. (No queue, is a ghost, etc)
+		Library.Unlock();
+		SendResponse( IDR_HTML_FILENOTFOUND );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		return TRUE;
+	}
 	
 	m_bTigerTree	= m_bTiger;
 	m_bMetadata		= ( pFile->m_pMetadata != NULL && ( pFile->m_bMetadataAuto == FALSE || pFile->m_nVirtualSize > 0 ) );
