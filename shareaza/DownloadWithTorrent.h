@@ -72,7 +72,9 @@ public:
 	void			OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason = NULL);
 	virtual BOOL	FindMoreSources();
 	BOOL			SeedTorrent(LPCTSTR pszTarget);
+	void			CloseTorrent();
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
+	float			GetRatio() const;
 public:
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*				CreateBitfieldPacket();

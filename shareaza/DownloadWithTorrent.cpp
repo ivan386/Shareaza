@@ -486,3 +486,24 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	
 	return TRUE;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent Close
+
+void CDownloadWithTorrent::CloseTorrent()
+{
+	if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
+	m_bTorrentRequested		= FALSE;
+	m_bTorrentStarted		= FALSE;
+	CloseTorrentUploads();
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent stats
+
+float CDownloadWithTorrent::GetRatio() const
+{
+	if ( m_nTorrentUploaded == 0 || GetVolumeComplete() == 0 ) return 0;
+	return (float)m_nTorrentUploaded / (float)GetVolumeComplete();
+}
