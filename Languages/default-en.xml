@@ -4060,7 +4060,7 @@
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 		<control caption="Please select the method of re-encoding"/>
-		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese/>
+		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
 	</dialog>
 </dialogs>
 
