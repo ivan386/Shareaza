@@ -277,14 +277,6 @@ FF::SimpleFragmentList CDownloadWithFile::GetPossibleFragments(
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile select a fragment for a transfer
 
-inline DWORD CalcChunkSize(QWORD nSize)
-{
-    if( nSize <= 268435456 ) return 1024 * 1024; // try to keep chunk size reasonably large
-    DWORD nChunk = DWORD( ( nSize - 1 ) / 256 ), nTemp; // default treeheight of 9
-    while( nTemp = nChunk & ( nChunk - 1 ) ) nChunk = nTemp;
-    return nChunk * 2;
-}
-
 BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 {
 	if ( ! PrepareFile() ) return NULL;
@@ -302,13 +294,13 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 	
 	if ( !oPossible.empty() )
 	{
-        // This is not optimal,
-        // we assume the remote host only advertises aligned verified blocks
-        FF::SimpleFragment oSelection( selectBlock( oPossible,
-            CalcChunkSize( m_nSize ), static_cast< unsigned char* >( NULL ) ) );
+         FF::SimpleFragmentList::ConstIterator pRandom
+             = oPossible.begin()->begin() == 0
+                 ? oPossible.begin()
+                 : randomFragment( oPossible );
 
-		pTransfer->m_nOffset = oSelection.begin();
-		pTransfer->m_nLength = oSelection.length();
+        pTransfer->m_nOffset = pRandom->begin();
+        pTransfer->m_nLength = pRandom->length();
 		
 		return TRUE;
 	}
