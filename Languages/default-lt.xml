@@ -1754,11 +1754,6 @@ right quote	&#147;
 		<text>Įjunkite nuotolinio „Shareaza“ programos valdymo, naudojantis naršykle, galimybę.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Planuotojas</link>
-		<gap size="4"/>
-		<text></text>
-		<newline gap="10"/>
-
 	</document>
 
 	<!-- Browse User Profile -->
