@@ -727,6 +727,8 @@ void CNetwork::OnQueryHits(CQueryHit* pHits)
 			CChildWnd* pMonitorWnd		= NULL;
 			CRuntimeClass* pMonitorType	= RUNTIME_CLASS(CHitMonitorWnd);
 
+			BOOL bHit = FALSE;
+
 			while ( pChildWnd = pWindows->Find( NULL, pChildWnd ) )
 			{
 				if ( pChildWnd->GetRuntimeClass() == pMonitorType )
@@ -735,9 +737,11 @@ void CNetwork::OnQueryHits(CQueryHit* pHits)
 				}
 				else
 				{
-					if ( pChildWnd->OnQueryHits( pHits ) ) return;
+					if ( pChildWnd->OnQueryHits( pHits ) ) bHit = TRUE;;
 				}
 			}
+
+			if ( bHit ) return;
 
 			if ( pMonitorWnd != NULL )
 			{
