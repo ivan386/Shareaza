@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Body element, don't touch -->
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<!-- Manifest -->
+<manifest	name="BlueStreak (11)"
+		author="RocketX"
+		description="My Personal Design for all you Shareaza Fans! (Font Size 11)"
+		link="http://www.shareaza.com/"
+		version="1.1"
+		type="Skin"
+		/>
+
+<fonts>
+    <font name="System.Plain"  face="Verdana" size="11" weight="normal"/>
+    <font name="System.Bold"   face="Verdana" size="11" weight="bold"/>
+    <font name="Panel.Caption" face="Verdana" size="11" weight="bold"/>
+</fonts>
+
+<!-- Colour scheme -->
+<colourScheme>
+	<colour name="System.Base.Window"           value="F7F7F7"/>
+	<colour name="System.Base.Midtone"          value="EEEEEE"/>
+	<colour name="System.Base.Highlight"        value="B6C6DE"/>
+	<colour name="System.Back.Normal"           value="F7F7F7"/>
+	<colour name="System.Back.Selected"         value="AFC1DC"/>
+	<colour name="System.Back.Checked"          value="CDD8E9"/>
+	<colour name="System.Back.Checked.Selected" value="CDD8E9"/>
+	<colour name="System.Margin"                value="FFFFFF"/>
+	<colour name="System.Disabled"              value="909090"/>
+	<colour name="System.Border"                value="7A98C5"/>
+	<colour name="System.Shadow"                value="336699"/>
+	<colour name="System.Text"                  value="000000"/>
+	<colour name="System.Text.Selected"         value="000000"/>
+	<colour name="Panel.Caption.Back"           value="8DAFCB"/>
+	<colour name="Panel.Caption.Text"           value="FFFFFF"/>
+	<colour name="Dialog.Back"                  value="EEEEEE"/>
+	<colour name="TaskPanel.Back"               value="8DAFCB"/>
+	<colour name="TaskBox.Caption.Back"         value="FFFFFF"/>
+	<colour name="TaskBox.Caption.Text"         value="6282B7"/>
+	<colour name="TaskBox.Primary.Back"         value="6282B7"/>
+	<colour name="TaskBox.Primary.Text"         value="FFFFFF"/>
+	<colour name="TaskBox.Caption.Hover"        value="000000"/>
+	<colour name="TaskBox.Client"               value="F7F7F7"/>
+</colourScheme>
+
+<menus> 
+	<menu name="CMainWnd.Tray">
+		<item id="ID_TAB_HOME" text="_Home"/>
+		<item id="ID_TAB_LIBRARY" text="_Library"/>
+		<item id="ID_TAB_NETWORK" text="_Network"/>
+		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
+		<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
+		<separator/>
+		<item id="ID_TAB_CONNECT" text="_Connect"/>
+		<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
+		<item id="ID_NETWORK_SEARCH" text="New _Search..."/>
+		<separator/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
+		<item id="ID_NETWORK_EXIT" text="E_xit"/>
+	</menu>
+</menus>
+
+<toolbars>
+	<!-- Monitor window -->
+	<toolbar name="CMonitorWnd">
+		<button id="ID_TRAY_OPEN"/>
+	</toolbar>
+</toolbars>
+
+<!-- Command bar watermarks -->
+<watermarks>
+	<watermark target="CCoolMenu" path="MenuWatermark.bmp"/>
+</watermarks>
+
+<!-- Window skins -->
+<windowSkins>
+
+	<!-- Main window -->
+	<windowSkin>
+	
+		<target window="CMainWnd"/>
+		<image path="BlueStreak.bmp"/>
+		<maximiseCrop rect="0,0,0,0"/>
+		
+		<parts>
+			<part name="TopLeft"     rect="0,0,132,39"/>
+			<part name="TopLeftIA"   rect="0,63,132,39"/>
+			<part name="Top"         rect="132,0,75,39" mode="stretch"/>
+			<part name="TopRight"    rect="207,0,88,39"/>
+			<part name="Left"        rect="0,39,11,4"/>
+			<part name="Right"       rect="283,39,12,4"/>
+			<part name="BottomLeft"  rect="0,119,11,12"/>
+			<part name="Bottom"      rect="22,119,53,12" mode="stretch"/>
+			<part name="BottomRight" rect="283,119,12,12"/>
+			
+			<part name="MinimiseHover" rect="206,42,17,17"/>
+			<part name="MinimiseDown"  rect="241,42,17,17"/>
+			<part name="MaximiseHover" rect="172,42,17,17"/>
+			<part name="MaximiseDown"  rect="189,42,17,17"/>
+			<part name="CloseHover"    rect="222,41,19,19"/>
+			<part name="CloseDown"     rect="259,41,19,19"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"   rect="10,10,18,16"/>
+			<anchor name="Minimise" rect="-70,10,17,17"/>
+			<anchor name="Maximise" rect="-49,10,17,17"/>
+			<anchor name="Close"    rect="-29,9,19,19"/>
+		</anchors>
+		
+		<region>
+			<shape type="rectangle" rect="0,35,-1,-1"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="35,35" combine="or"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+		</region>
+		
+	</windowSkin>
+
+	<!-- Compact resizable windows -->
+	<windowSkin>
+	
+		<target window="CChildWnd"/>
+		<target window="CDownloadMonitorDlg"/>
+		<image path="BlueStreak.bmp"/>
+		
+		<parts>
+			<part name="TopLeft"     rect="0,133,38,30"/>
+			<part name="TopLeftIA"   rect="0,133,38,30"/>
+			<part name="Top"         rect="137,133,52,30" mode="stretch"/>
+			<part name="TopRight"    rect="212,133,83,30"/>
+			<part name="Left"        rect="0,173,11,30"/>
+			<part name="Right"       rect="283,165,12,54"/>
+			<part name="BottomLeft"  rect="0,220,11,13"/>
+			<part name="Bottom"      rect="22,220,25,13" mode="stretch"/>
+			<part name="BottomRight" rect="283,220,12,13"/>
+			
+
+			<part name="MinimiseDown" rect="206,42,17,17"/>
+			<part name="MinimiseHover"  rect="241,42,17,17"/>
+			<part name="MaximiseDown" rect="172,42,17,17"/>
+			<part name="MaximiseHover"  rect="189,42,17,17"/>
+			<part name="CloseDown"    rect="222,41,19,19"/>
+			<part name="CloseHover"     rect="259,41,19,19"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Icon"     rect="11,8,16,16"/>
+			<anchor name="System"   rect="11,8,16,16"/>
+			<anchor name="Minimise" rect="-61,4,14,16"/>
+			<anchor name="Maximise" rect="-42,4,14,16"/>
+			<anchor name="Close"    rect="-24,3,14,16"/>
+		</anchors>
+		
+		<region>
+			<shape type="rectangle" rect="0,10,-1,-1"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="or"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+		</region>
+
+		<caption rect="40,4,-64,16" colour="000000" inactiveColour="000000" align="left"/>
+		
+	</windowSkin>
+
+	<!-- Dialogs and property sheets -->
+	<windowSkin>
+	
+		<target window="CDialog"/>
+		<target window="CSettingsSheet"/>
+		<image path="BlueStreak.bmp" type="skin"/>
+				
+		<parts>
+			<part name="TopLeft"     rect="0,133,38,30"/>
+			<part name="TopLeftIA"   rect="0,133,38,30"/>
+			<part name="Top"         rect="137,133,52,30" mode="stretch"/>
+			<part name="TopRight"    rect="200,163,83,30"/>
+			<part name="Left"        rect="0,173,11,30"/>
+			<part name="Right"       rect="283,165,12,54"/>
+			<part name="BottomLeft"  rect="0,220,11,13"/>
+			<part name="Bottom"      rect="22,220,25,13" mode="stretch"/>
+			<part name="BottomRight" rect="283,220,12,13"/>
+			
+			<part name="CloseDown"    rect="222,41,19,19"/>
+			<part name="CloseHover"   rect="259,41,19,19"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Icon"     rect="11,8,16,16"/>
+			<anchor name="System"   rect="11,8,16,16"/>
+			<anchor name="Close"    rect="-24,3,14,16"/>
+		</anchors>
+
+		<region>
+			<shape type="rectangle" rect="0,10,-1,-1"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="or"/>
+			<shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+		</region>
+		
+		<caption rect="40,4,-64,16" colour="000000" inactiveColour="000000"/>
+		
+	</windowSkin>	
+</windowSkins>
+</skin>
+
