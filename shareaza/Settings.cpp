@@ -502,7 +502,6 @@ void CSettings::SmartUpgrade()
 	{
 		//Gnutella.HubForce	= FALSE;
 		
-		Gnutella1.TranslateTTL			= 3;
 		Gnutella1.RequeryDelay			= 45*60;
 		
 		Gnutella2.NumPeers				= 4;
@@ -511,11 +510,9 @@ void CSettings::SmartUpgrade()
 		Gnutella2.UdpOutExpire			= 26000;
 		
 		Library.TigerHeight		= 9;
-		Library.SourceExpire	= 86400;
 		Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza");
 		
 		Downloads.MaxFiles				= max( Downloads.MaxFiles, 8 );
-		Downloads.MaxTransfers			= max( Downloads.MaxTransfers, 32 );
 		Downloads.MaxFileTransfers		= max( Downloads.MaxFileTransfers, 16 );
 		Downloads.AutoExpand			= FALSE;
 		
