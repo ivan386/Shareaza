@@ -305,13 +305,13 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	if ( m_bED2K )
 	{
 		if( m_bWantDN && Settings.eDonkey.MagnetSearch )
-		{			//We need the size- do a search by magnet (hash)
+		{			// We need the size- do a search by magnet (hash)
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 			pPacket->WriteByte( 1 );
 			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ), bUTF8 );
 		}
 		else
-		{			//Don't need the size- Find more sources
+		{			// Don't need the size- Find more sources
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
 			pPacket->Write( &m_pED2K, sizeof(MD4) );
 		}
@@ -332,13 +332,15 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			pPacket->WriteByte( 0 );		// Boolean AND (Min/Max)
 			pPacket->WriteByte( 0 );
 			
-			pPacket->WriteByte( 3 );		// Size limit
+			// Size limit (min)
+			pPacket->WriteByte( 3 );		
 			pPacket->WriteLongLE( (DWORD)m_nMinSize );
 			pPacket->WriteByte( 1 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );
 			
-			pPacket->WriteByte( 3 );		// Size limit
+			// Size limit (max)
+			pPacket->WriteByte( 3 );		
 			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, 0xFFFFFFFF ) );
 			pPacket->WriteByte( 2 );
 			pPacket->WriteShortLE( 1 );
@@ -347,19 +349,22 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 		
 
 		if ( ( m_pSchema == NULL ) || ( ! m_pSchema->m_sDonkeyType.GetLength() ) )
-		{	//ed2k search without file type
-			pPacket->WriteByte( 1 );		// Name
+		{	// ed2k search without file type
+			// Name / Key Words
+			pPacket->WriteByte( 1 );		
 			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 		}
 		else
-		{	//ed2k search including file type
+		{	// ed2k search including file type
 			pPacket->WriteByte( 0 );		// Boolean AND (name/type)
 			pPacket->WriteByte( 0 );
 
-			pPacket->WriteByte( 1 );		//name
+			// Name / Key Words
+			pPacket->WriteByte( 1 );		
 			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 
-			pPacket->WriteByte( 2 );		//metadata (type)
+			// Metadata (file type)
+			pPacket->WriteByte( 2 );		
 			pPacket->WriteEDString( m_pSchema->m_sDonkeyType, bUTF8 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILETYPE );

@@ -186,8 +186,6 @@ BOOL CEDNeighbour::OnConnected()
 CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | /*ED2K_SERVER_TCP_NEWTAGS |*/ ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
 
 
-
-
 /*
 #ifdef _UNICODE
 	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
@@ -536,7 +534,7 @@ void CEDNeighbour::SendSharedFiles()
 	
 	int nCount = 0, nLimit = Settings.eDonkey.MaxShareCount;
 	
-	pPacket->WriteLongLE( nCount );
+	pPacket->WriteLongLE( nCount );			//Write number of files. (update this later)
 	
 	CSingleLock pLock1( &Library.m_pSection );
 	CSingleLock pLock2( &Transfers.m_pSection );
@@ -673,15 +671,15 @@ void CEDNeighbour::SendSharedFiles()
 					pPacket->WriteLongLE( nTags );
 	
 					// Send the file name to the ed2k server
-					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ) );
+					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
 					// Send the file size to the ed2k server
-					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pPacket );
+					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
 					// Send the file type to the ed2k server
-					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ) );
+					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
 					// Send the bitrate to the ed2k server
 					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket );
 					// Send the codec to the ed2k server
-					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ) );
+					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
 
 					// Increment count of files sent
 					nCount++;

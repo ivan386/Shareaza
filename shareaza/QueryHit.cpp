@@ -1056,11 +1056,11 @@ theApp.Message( MSG_SYSTEM,_T("Bitrate - new"));
 			strCodec = pTag.m_sValue;
 theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 
-		}/*
-		//Note: Ignore these keys for now. They seem to have a lot of bad values....
+		}
+		//Note: Maybe ignore these keys for now? They seem to have a lot of bad values....
 		else if ( pTag.m_nKey == 0&& pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("length")  )
 		{	//Length- old style (As a string- x:x:x, x:x or x)
-			strLength = pTag.m_sValue 
+			strLength = pTag.m_sValue;
 		}
 		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey == _T("bitrate") ) )
 		{	//Bitrate- old style			
@@ -1069,7 +1069,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("codec") ) )
 		{	//Codec - old style
 			strCodec = pTag.m_sValue;
-		}*/
+		}
 		else	//*** Debug check. Remove this when it's working
 		{
 			CString s;
@@ -1106,7 +1106,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 		if ( strType == _T(".mp3") ||  strType == _T(".ogg") ||  strType == _T(".wav") ||  strType == _T(".mid") ||
 			 strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") || strType == _T(".ra"))
 		{	// Audio
-			m_sSchemaURI = CSchema::uriVideo;
+			m_sSchemaURI = CSchema::uriAudio;
 
 			// Add metadata
 			if ( strLength.GetLength() )
@@ -1116,7 +1116,6 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 			}
 			if ( strBitrate.GetLength() )
 			{
-				m_sSchemaURI = CSchema::uriVideo;
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
 				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
 			}/*
@@ -1140,13 +1139,11 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 			}/*
 			if ( strBitrate.GetLength() )
 			{
-				m_sSchemaURI = CSchema::uriVideo;
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
 				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
 			}*/
 			if ( strCodec.GetLength() )
 			{
-				m_sSchemaURI = CSchema::uriVideo;
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
 				m_pXML->AddAttribute( _T("codec"), strCodec );
 			}

@@ -253,7 +253,7 @@ public:
 // Operations
 public:
 	void	Clear();
-	void	Write(CEDPacket* pPacket, BOOL bUTF8 = FALSE);
+	void	Write(CEDPacket* pPacket, BOOL bUTF8 = FALSE, BOOL bSmallTag = FALSE);
 	BOOL	Read(CEDPacket* pPacket, BOOL bUTF8 = FALSE);
 	BOOL	Read(CFile* pFile);
 	
@@ -265,6 +265,7 @@ public:
 	}
 };
 
+// Standard tags
 #define ED2K_TAG_NULL				0x00
 #define ED2K_TAG_HASH				0x01
 #define ED2K_TAG_STRING				0x02
@@ -273,6 +274,15 @@ public:
 #define ED2K_TAG_BOOL				0x05
 #define ED2K_TAG_BOOL_ARRAY			0x06
 #define ED2K_TAG_BLOB				0x07
+// New tags (See ED2K_SERVER_TCP_NEWTAGS)
+#define ED2K_TAG_UINT16				0x08
+#define ED2K_TAG_UINT8				0x09
+#define ED2K_TAG_UNUSED				0x0A // 8 bit size, then value
+#define ED2K_TAG_SHORTSTRING		0x10 //String <=16 bytes, using tag ID for length
+
+// 0x10 to 0x20 are reserved for short strings
+#define ED2K_TAG_STRING1			0x10
+#define ED2K_TAG_STRING16			0x20
 
 #define ED2K_ST_SERVERNAME			0x01
 #define ED2K_ST_DESCRIPTION			0x0B
