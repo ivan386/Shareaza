@@ -3524,7 +3524,7 @@
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/><control/>
 		<control caption="Network _Protocol:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (?uto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Suppress Ultrapeer"/>
 		<control caption="Connect"/>
 		<control caption="Cancel"/>
