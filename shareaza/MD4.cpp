@@ -44,7 +44,7 @@ static unsigned char MD4_PADDING[64] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-extern "C" MD4_Add_p5(CMD4*, LPCVOID pData, DWORD nLength);
+extern "C" void MD4_Add_p5(CMD4*, LPCVOID pData, DWORD nLength);
 
 // MD4 initialization. Begins an MD4 operation, writing a new context
 

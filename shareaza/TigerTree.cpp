@@ -45,10 +45,11 @@ void (*pTiger)(WORD64*, WORD64*);
 
 inline int GetCPUIDFlags()
 {
-	_asm{
-		mov	eax, 1
+	_asm
+    {
+		mov     eax, 1
 		cpuid
-		mov eax, edx
+		mov     eax, edx
 	}
 }
 

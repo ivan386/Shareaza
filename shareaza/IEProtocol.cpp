@@ -78,7 +78,7 @@ BOOL CIEProtocol::Create()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( m_pSession != NULL ) return TRUE;
+	if ( m_pSession ) return TRUE;
 	
 	CComPtr<IInternetSession> pSession;
 	
@@ -114,7 +114,7 @@ void CIEProtocol::Close()
 		m_nRequests = 0;
 	}
 	
-	if ( m_pSession != NULL )
+	if ( m_pSession )
 	{
 		for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 		{
@@ -215,7 +215,7 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 	CSingleLock pLock( &m_pSection, TRUE );
 	CString strMimeType;
 	
-	if ( m_pSink != NULL ) return E_UNEXPECTED;
+	if ( m_pSink ) return E_UNEXPECTED;
 	
 	HRESULT hr = m_pProtocol->OnRequest( pszURL, m_pBuffer, &strMimeType,
 					( dwFlags & PI_PARSE_URL ) != 0 );

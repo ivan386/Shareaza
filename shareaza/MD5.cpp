@@ -45,7 +45,7 @@ static unsigned char MD5_PADDING[64] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-extern "C" MD5_Add_p5(CMD5*, LPCVOID pData, DWORD nLength);
+extern "C" void MD5_Add_p5(CMD5*, LPCVOID pData, DWORD nLength);
 
 //////////////////////////////////////////////////////////////////////
 // CMD5 reset m_nState

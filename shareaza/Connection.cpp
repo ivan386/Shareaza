@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/02/21 19:38:28 $"
-//	Revision:		"$Revision: 1.11 $"
+//	Date:			"$Date: 2005/02/22 21:01:59 $"
+//	Revision:		"$Revision: 1.12 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -707,11 +707,11 @@ _ignoreOut:inc	ecx
 		xor		edx, edx
 		mov		ecx, METER_PERIOD / 1000
 		div		ecx
-		mov		[ebx + CConnection::m_mInput.nMeasure], eax
+		mov		[ ebx ]CConnection.m_mInput.nMeasure, eax
 		xor		edx, edx
 		mov		eax, esi
 		div		ecx
-		mov		[ebx + CConnection::m_mOutput.nMeasure], eax
+		mov		[ ebx ]CConnection.m_mOutput.nMeasure, eax
 	}
 }
 

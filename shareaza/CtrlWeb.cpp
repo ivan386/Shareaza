@@ -99,7 +99,7 @@ void CWebCtrl::EnableCoolMenu(BOOL bEnable)
 void CWebCtrl::EnableSandbox(BOOL bSandbox)
 {
 	m_bSandbox = bSandbox;
-	if ( m_pBrowser != NULL ) m_pBrowser->put_Offline( m_bSandbox ? VARIANT_TRUE : VARIANT_FALSE );
+	if ( m_pBrowser ) m_pBrowser->put_Offline( m_bSandbox ? VARIANT_TRUE : VARIANT_FALSE );
 }
 
 void CWebCtrl::SetExternal(IDispatch* pDispatch)
@@ -146,7 +146,7 @@ int CWebCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		
 		if ( pUnknown != NULL &&
 			 SUCCEEDED( pUnknown->QueryInterface( IID_IWebBrowser2, (void**)&m_pBrowser ) ) &&
-			 m_pBrowser != NULL )
+			 m_pBrowser )
 		{
 			if ( m_bSandbox ) m_pBrowser->put_Offline( VARIANT_TRUE );
 		}
@@ -172,10 +172,10 @@ void CWebCtrl::OnDestroy()
 
 BOOL CWebCtrl::PreTranslateMessage(MSG* pMsg)
 {
-	if ( m_pBrowser != NULL )
+	if ( m_pBrowser )
 	{
 		CComQIPtr<IOleInPlaceActiveObject> pInPlace = m_pBrowser;
-		if ( pInPlace != NULL )
+		if ( pInPlace )
 			return pInPlace->TranslateAccelerator( pMsg ) == S_OK;
 	}
 	
