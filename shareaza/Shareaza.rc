@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,5
- PRODUCTVERSION 2,0,0,5
+ FILEVERSION 2,0,0,6
+ PRODUCTVERSION 2,0,0,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 5"
+            VALUE "FileVersion", "2, 0, 0, 6"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 5"
+            VALUE "ProductVersion", "2, 0, 0, 6"
         END
     END
     BLOCK "VarFileInfo"
@@ -212,6 +212,7 @@ BEGIN
     BEGIN
         MENUITEM "&New Search...\tCtrl+S",      ID_NETWORK_SEARCH
         MENUITEM "&Download URL...\tCtrl+D",    ID_TOOLS_DOWNLOAD
+        MENUITEM "Seed Torrent...",             ID_TOOLS_SEEDTORRENT
         MENUITEM SEPARATOR
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
@@ -2041,50 +2042,55 @@ BEGIN
     RTEXT           "Opaque",IDC_STATIC,70,135,45,10
 END
 
-IDD_SETTINGS_LIBRARY DIALOG  0, 0, 282, 220
+IDD_SETTINGS_LIBRARY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Library"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,5,5,135,110,WS_GROUP
+    GROUPBOX        "&Options:",IDC_STATIC,5,5,135,99,WS_GROUP
     CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,17,115,12
     CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,31,115,12
     CONTROL         "Maintain alternate source mesh",IDC_SOURCE_MESH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,115,12
     CONTROL         "Filter objects by extension",IDC_SCHEMA_TYPES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,59,115,12
     CONTROL         "Preserve hash integrity",IDC_HASH_INTEGRITY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,80,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,73,115,12
     CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,95,115,12
-    GROUPBOX        "&Recent Files:",IDC_STATIC,5,135,135,80,WS_GROUP
-    LTEXT           "Remember:",IDC_STATIC,15,152,40,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_RECENT_TOTAL,65,152,35,12,ES_AUTOHSCROLL | ES_NUMBER
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,87,115,12
+    GROUPBOX        "&Recent Files:",IDC_STATIC,5,106,135,70,WS_GROUP
+    LTEXT           "Remember:",IDC_STATIC,15,118,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_RECENT_TOTAL,65,118,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_TOTAL_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,152,8,12
-    LTEXT           "files",IDC_STATIC,105,152,25,12,SS_CENTERIMAGE
-    LTEXT           "For up to:",IDC_STATIC,15,172,40,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_RECENT_DAYS,65,172,35,12,ES_AUTOHSCROLL | ES_NUMBER
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,118,8,12
+    LTEXT           "files",IDC_STATIC,105,118,25,12,SS_CENTERIMAGE
+    LTEXT           "For up to:",IDC_STATIC,15,138,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_RECENT_DAYS,65,138,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_DAYS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,172,8,12
-    LTEXT           "days",IDC_STATIC,105,172,25,12,SS_CENTERIMAGE
-    PUSHBUTTON      "Clear History Now",IDC_RECENT_CLEAR,34,192,75,15
-    GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,100,WS_GROUP
-    COMBOBOX        IDC_SAFE_TYPES,160,20,60,80,CBS_SIMPLE | CBS_AUTOHSCROLL | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,138,8,12
+    LTEXT           "days",IDC_STATIC,105,138,25,12,SS_CENTERIMAGE
+    PUSHBUTTON      "Clear History Now",IDC_RECENT_CLEAR,34,156,75,15
+    GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,84,WS_GROUP
+    COMBOBOX        IDC_SAFE_TYPES,160,18,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | 
                     CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_TABSTOP
-    PUSHBUTTON      "&Add",IDC_SAFE_ADD,225,20,40,15
-    PUSHBUTTON      "&Remove",IDC_SAFE_REMOVE,225,40,40,15
-    GROUPBOX        "&Never Share:",IDC_STATIC,150,115,125,100,WS_GROUP
-    COMBOBOX        IDC_PRIVATE_TYPES,160,131,60,80,CBS_SIMPLE | 
+    PUSHBUTTON      "&Add",IDC_SAFE_ADD,225,18,40,15
+    PUSHBUTTON      "&Remove",IDC_SAFE_REMOVE,225,38,40,15
+    GROUPBOX        "&Never Share:",IDC_STATIC,150,92,125,84,WS_GROUP
+    COMBOBOX        IDC_PRIVATE_TYPES,160,106,60,63,CBS_SIMPLE | 
                     CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Add",IDC_PRIVATE_ADD,225,131,40,15
-    PUSHBUTTON      "&Remove",IDC_PRIVATE_REMOVE,225,150,40,15
+    PUSHBUTTON      "&Add",IDC_PRIVATE_ADD,225,106,40,15
+    PUSHBUTTON      "&Remove",IDC_PRIVATE_REMOVE,225,125,40,15
+    GROUPBOX        "Store &Collections Here:",IDC_STATIC,5,178,270,35,
+                    WS_GROUP
+    EDITTEXT        IDC_COLLECTIONS_FOLDER,15,192,225,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "",IDC_COLLECTIONS_BROWSE,245,188,23,20
 END
 
 IDD_FILE_METADATA DIALOG  0, 0, 246, 218
@@ -4642,7 +4648,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_SEARCH_PANEL_START  "Start Search"
-    IDS_SEARCH_PANEL_AGAIN  "Search Again"
+    IDS_SEARCH_PANEL_MORE   "Search More"
     IDS_SEARCH_PANEL_STOP   "Stop"
     IDS_SEARCH_PANEL_AFT    "Any File Type"
     IDS_SEARCH_PANEL_INPUT_1 "Type your search here:"
@@ -5174,7 +5180,9 @@ BEGIN
     ID_MEDIA_MUTE           "Mute audio playback"
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
+    ID_TOOLS_MERCORA        "Start P2P Radio"
     ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
+    ID_TOOLS_SEEDTORRENT    "Seed a torrent"
 END
 
 STRINGTABLE 
