@@ -3076,7 +3076,7 @@
 		<control/><control/>
 		<control caption="Приветствие:"/>
 		<control/><control/>
-		<control caption="Принимать входящие соединения"/>
+		<control caption="Могу принимать вход. соединения"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Загрузки">
