@@ -1128,7 +1128,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
 
 		// If we have not sent comments yet, and this client supports comments
-		if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) )
+		if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) && ( m_bEmule ) )
 		{ 
 			// If there's comments in the library
 			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )

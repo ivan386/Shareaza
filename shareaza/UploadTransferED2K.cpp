@@ -86,7 +86,7 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( pMD4, TRUE, TRUE ) )
 	{
 		// If we have not sent comments yet, and this client supports comments
-		if ( ( m_pClient ) && ( ! m_pClient->m_bCommentSent ) && ( m_pClient->m_bEmComments > 0 ) )
+		if ( ( m_pClient ) && ( ! m_pClient->m_bCommentSent ) && ( m_pClient->m_bEmComments > 0 ) && ( m_pClient->m_bEmule ) )
 		{ 
 			// If there's comments in the library
 			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
