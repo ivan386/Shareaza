@@ -122,15 +122,6 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	m_bInRandom = ( m_nInPort == 0 );
 
-	DWORD nSpeeds[] = { 28, 33, 56, 64, 128, 350, 576, 768, 1544, 3072, 45000, 100000, 155000, 0 };
-
-	for ( int nSpeed = 0 ; nSpeeds[ nSpeed ] ; nSpeed++ )
-	{
-		CString str = FormatSpeed( nSpeeds[ nSpeed ] );
-		m_wndInSpeed.AddString( str );
-		m_wndOutSpeed.AddString( str );
-	}
-
 	m_wndTimeoutConnection.SetRange( 1, 480 );
 	m_wndTimeoutHandshake.SetRange( 1, 480 );
 
@@ -262,6 +253,17 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Update speed units
 		m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
 		m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
+		
+		// Dropdown
+		m_wndInSpeed.ResetContent();
+		m_wndOutSpeed.ResetContent();
+		DWORD nSpeeds[] = { 28, 33, 56, 64, 128, 350, 576, 768, 1544, 3072, 45000, 100000, 155000, 0 };
+		for ( int nSpeed = 0 ; nSpeeds[ nSpeed ] ; nSpeed++ )
+		{
+			CString str = FormatSpeed( nSpeeds[ nSpeed ] );
+			m_wndInSpeed.AddString( str );
+			m_wndOutSpeed.AddString( str );
+		}
 
 		UpdateData( FALSE );
 	}
