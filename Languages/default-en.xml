@@ -4138,5 +4138,9 @@
 		<column from="URL" to=""/>
 		<column from="Expires" to=""/>
 	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to=""/>
+		<column from="Size" to=""/>
+	</list>
 </listColumns>
 </skin>
