@@ -12,10 +12,10 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="dabserver@mail.ru"
-		version="2.1.0.14"
+		version="2.1.0.17"
 		type="Language"
 		language="ru"
-		prompt="&#160;&#1065;&#1077;&#1083;&#1082;&#1085;&#1080;&#1090;&#1077;&#160;&#1079;&#1076;&#1077;&#1089;&#1100;&#160;&#1076;&#1083;&#1103;&#160;&#1089;&#1084;&#1077;&#1085;&#1099;&#160;&#1103;&#1079;&#1099;&#1082;&#1072;&#160;&#1085;&#1072;&#160;&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;&#160;(&#1086;&#1090;&#160;dAbserver)"
+		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
 />
 
 <!-- Toolbar Definitions -->
@@ -1560,7 +1560,7 @@
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Перейти в хранилище</link>
 			<group id="1">
 				<newline gap="8"/>
-				<text>Shareaza просматривает и обрабатывает</text>
+				<text>Shareaza просматривает и обрабатывает </text>
 				<text id="LibraryHashRemaining" format="b">%lu</text>
 				<text>файла(ов).</text>
 				<newline gap="8"/>
