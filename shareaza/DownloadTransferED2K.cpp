@@ -399,6 +399,7 @@ BOOL CDownloadTransferED2K::OnQueueRank(CEDPacket* pPacket)
 	}
 	else
 	{
+		theApp.Message( MSG_ERROR, _T("**** Possible queue ranking packet error") );  //******************************* (Temp debug check)
 		m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
 		Close( TS_UNKNOWN );
 	}

@@ -286,8 +286,12 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 		
 		if ( ! AddSourceInternal( pSource ) ) return NULL;
 	}
-	
-	if ( pSource->m_pTransfer != NULL ) return NULL;
+		
+	if ( pSource->m_pTransfer != NULL ) 
+	{
+		theApp.Message( MSG_ERROR, _T("**** possibly unable to create m_pDownloadTransfer") );  //******************************* (Temp debug check)
+		return NULL;
+	}
 	
 	pSource->m_pTransfer = new CDownloadTransferBT( pSource, pClient );
 	
