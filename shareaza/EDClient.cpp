@@ -579,6 +579,7 @@ void CEDClient::SendHello(BYTE nType)
 		else
 			strNick = _T("www.shareaza.com");
 	}
+	strNick.Left( 255 );
 	
 	CEDTag( ED2K_CT_NAME, strNick ).Write( pPacket );
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );

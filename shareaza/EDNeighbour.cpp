@@ -174,7 +174,7 @@ BOOL CEDNeighbour::OnConnected()
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	pPacket->WriteLongLE( 4 );
 	
-	CEDTag( ED2K_CT_NAME, MyProfile.GetNick() ).Write( pPacket );
+	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 	CEDTag( ED2K_CT_COMPRESSION, 1 ).Write( pPacket );
