@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Arabian Schemas File translated by lazorde
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -18,6 +19,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Skin</title>
                <title language="af">Omslag</title>
+               <title language="ar">المظهر</title>
                <title language="chs">皮肤</title>
                <title language="de">Skin</title>
                <title language="es">Skin</title>
@@ -26,13 +28,14 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Apvalkalas</title>
                <title language="nl">Skin</title>
                <title language="no">Skin</title>
-               <title language="ru">&#160;Шкypкa</title>
+               <title language="ru">&#160;Шкурка</title>
        </titles>
        <members>
                <member name="name" search="generic">
                        <display defaultColumn="true" columnAlign="left"/>
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
+                       <title language="ar">الاسم</title>
                        <title language="chs">名称</title>
                        <title language="de">Name</title>
                        <title language="es">Nombre</title>
@@ -41,11 +44,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Naam</title>
                        <title language="no">Navn</title>
-                       <title language="ru">&#160;Haзвaниe</title>
+                       <title language="ru">&#160;Название</title>
                </member>
                <member name="author" search="generic">
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
+                       <title language="ar">الكاتب</title>
                        <title language="chs">作者</title>
                        <title language="de">Autor</title>
                        <title language="es">Autor</title>
@@ -54,11 +58,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Autorius</title>
                        <title language="nl">Auteur</title>
                        <title language="no">Forfatter</title>
-                       <title language="ru">&#160;Aвтop</title>
+                       <title language="ru">&#160;Автор</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
+                       <title language="ar">الرابط</title>
                        <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
@@ -67,11 +72,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
-                       <title language="ru">&#160;Ccылкa</title>
+                       <title language="ru">&#160;Ссылка</title>
                </member>
                <member name="email">
                        <title language="en">Email</title>
                        <title language="af">E-pos</title>
+                       <title language="ar">البريد الالكتروني</title>
                        <title language="chs">电子邮件</title>
                        <title language="de">E-Mail</title>
                        <title language="es">E-Mail</title>
@@ -80,11 +86,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">El. paštas</title>
                        <title language="nl">E-mail</title>
                        <title language="no">E-post</title>
-                       <title language="ru">E-mail</title>
+                       <title language="ru">&#160;E-mail</title>
                </member>
                <member name="version">
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
+                       <title language="ar">الاصدار</title>
                        <title language="chs">版本</title>
                        <title language="de">Version</title>
                        <title language="es">Versión</title>
@@ -93,12 +100,13 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
-                       <title language="ru">&#160;Bepcия</title>
+                       <title language="ru">&#160;Версия</title>
                </member>
                <member name="type">
                        <display defaultColumn="true" columnAlign="center"/>
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
+                       <title language="ar">النوع</title>
                        <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
@@ -107,11 +115,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
-                       <title language="ru">&#160;Tип</title>
+                       <title language="ru">&#160;Тип</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
+                       <title language="ar">اللغة</title>
                        <title language="chs">语言</title>
                        <title language="de">Sprache</title>
                        <title language="es">Lenguaje</title>
@@ -125,6 +134,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <member name="description">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
+                       <title language="ar">نبذه تعريفية</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
@@ -133,11 +143,12 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
-                       <title language="ru">&#160;Oпиcaниe</title>
+                       <title language="ru">&#160;Описание</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
+                       <title language="ar">التعليقات</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
@@ -146,7 +157,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="ru">&#160;Кoмeнтapии</title>
+                       <title language="ru">&#160;Коментарии</title>
                </member>
        </members>
        <typeFilter>

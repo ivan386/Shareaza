@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Arabian Schemas File translated by lazorde
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Music:By Album</title>
                <title language="af">Musiek:Volgens Album</title>
+               <title language="ar">الاغاني : بالالبوم</title>
                <title language="chs">音乐: 按专辑</title>
                <title language="de">Musik:Nach Album</title>
                <title language="es">Música: Por Album</title>
@@ -27,7 +29,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Muzika:Pagal albumus</title>
                <title language="nl">Muziek:Per Album</title>
                <title language="no">Musikk: per album</title>
-               <title language="ru">&#160;Мyзыкa:&#160;Пo альбoмaм</title>
+               <title language="ru">&#160;Музыка:&#160;По альбомам</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -37,6 +39,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ar">المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -45,7 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Haзвaниe</title>
+                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <contains>
@@ -54,6 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">Music By Album</title>
                <title language="af">Musiek Volgens Album</title>
+               <title language="ar">اغاني الالبوم</title>
                <title language="chs">音乐-按-专辑</title>
                <title language="de">Musik nach Album</title>
                <title language="es">Música por Album</title>
@@ -62,9 +66,10 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Muzika pagal albumus</title>
                <title language="nl">Muziek Per Album</title>
                <title language="no">Musikk per album</title>
-               <title language="ru">&#160;Мyзыкa пo альбoмaм</title>
+               <title language="ru">&#160;Музыка по альбомам</title>
                <subtitle language="en">This folder contains a list of albums you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
+               <subtitle language="ar">هذا المجلد يحتوي على اخر الالبوم في المكتبة.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您库中的专辑。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Alben in ihrere Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
@@ -73,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met albums die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste av alle mine album</subtitle>
-               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт cпиcoк мyзыкaльныx альбoмoв нaйдeнныx в фaйлax&#160;Baшeгo хpaнилищa.</subtitle>
+               <subtitle language="ru">&#160;Эта папка отображает список музыкальных альбомов найденных в файлах&#160;Вашего хранилища.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

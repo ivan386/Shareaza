@@ -2,6 +2,7 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Arabian Schemas File translated by lazorde
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Video:Films</title>
                <title language="af">Video:Films</title>
+               <title language="ar">فيديو : افلام</title>
                <title language="chs">视频: 电影</title>
                <title language="de">Video:Filme</title>
                <title language="es">Vvideo: Filmes</title>
@@ -27,7 +29,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Video:Filmai</title>
                <title language="nl">Video:Films</title>
                <title language="no">Video: filmer</title>
-               <title language="ru">&#160;Bидeo:&#160;Фильмы</title>
+               <title language="ru">&#160;Видео:&#160;Фильмы</title>
        </titles>
        <images>
                <icon path="videoFolder.ico"/>
@@ -37,6 +39,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
+                       <title language="ar">المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -45,7 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Haзвaниe</title>
+                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <contains>
@@ -54,6 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">Films</title>
                <title language="af">Films</title>
+               <title language="ar">افلام</title>
                <title language="chs">电影</title>
                <title language="de">Filme</title>
                <title language="es">Filmes</title>
@@ -65,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="ru">&#160;Фильмы</title>
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
+               <subtitle language="ar">يحتوي هذا المجلد على قائمة الافلام الموجوده في المكتبة.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您收藏中的电影。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Filme in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
@@ -73,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos filmų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst van films die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine filmer</subtitle>
-               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт cпиcoк фильмoв в&#160;Baшeм хpaнилищe.</subtitle>
+               <subtitle language="ru">&#160;Эта папка отображает список фильмов в&#160;Вашем хранилище.</subtitle>
        </headerContent>
 
 </schemaDescriptor>
