@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Norwegian Skin File -->
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as    -->
@@ -691,13 +691,13 @@
                <separator/>
                <item id="ID_MEDIA_PLAY" text="Spill av media"/>
                <item id="ID_MEDIA_PAUSE" text="Sett media på pause"/>
-               <item id="ID_MEDIA_STOP" text="Stopp Media"/>
+               <item id="ID_MEDIA_STOP" text="Stopp media"/>
                <separator/>
                <item id="ID_MEDIA_PREVIOUS" text="Tilbake"/>
                <item id="ID_MEDIA_NEXT" text="Neste"/>
                <separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
-		<item id="ID_NETWORK_EXIT" text="E_xit"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter _overføringer"/>
+		<item id="ID_NETWORK_EXIT" text="_Avslutt"/>
 	</menu>
 	<!--  REMOTE MENU -->
   <menu name="CRemoteWnd">
@@ -2323,7 +2323,7 @@
        <tip id="ID_WINDOW_REMOTE" message="Vis eller skjul Shareazas fjernkontroll."/>
        <tip id="ID_UPLOADS_FILTER_TORRENT" message="Vis BitTorrent opplastninger."/>
        <tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
-       <tip id="ID_HELP_FIREWALLS" message="F hjelp til  sette opp din router eller brannmur."/>
+       <tip id="ID_HELP_FIREWALLS" message="Få hjelp til å sette opp din ruter eller brannmur."/>
        <tip id="ID_WINDOW_CASCADE" message="Maksimer alle vindu."/>
        <tip id="ID_WINDOW_TILE_HORZ" message="Still opp vinduene side ved side vannrett"/>
        <tip id="ID_WINDOW_TILE_VERT" message="Still opp vinduene side ved side Loddrett."/>
@@ -2441,8 +2441,8 @@
        <string id="8239" value="Ferdig"/>
        <string id="8240" value="Shareaza flytter filen."/>
        <string id="8241" value="Shareaza sjekker om det finnes feil på filen: "/>
-          <string id="8242" value="%s av %s (%.2f%%)"/>
-          <string id="8243" value="Lastet opp:"/>
+       <string id="8242" value="%s av %s (%.2f%%)"/>
+       <string id="8243" value="Lastet opp:"/>
        <string id="8288" value="Utforsker mine filer."/>
        <string id="8289" value="Utforsker"/>
        <string id="8290" value="Utforske innholdet i %i mapper"/>
@@ -2493,7 +2493,7 @@
        <string id="16083" value="Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \n\nHub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\n\nEr du helt sikker på at du vil gjøre dette?"/>
        <string id="16084" value="Å skru av Gnutella-1 protokollen kan gi dårligere søkeresultat, hvis du er hub kan dette også påvirke andre på nettverket. Er du sikker på at du vil gjøre dette?"/>
        <string id="16085" value="Gnutella2 er hovednettverket til Shareaza. Hvis du skrur det av kan det være at du får både lavere antall søkeresultat og lavere kvalitet på filene. Er du sikker på at du vil gjøre dette?"/>
-       <string id="16087" value="Din utgende bndbresse er for lav for  kunne bruke dette nettverket"/>
+       <string id="16087" value="Din utgående båndbredde er for lav for  kunne bruke dette nettverket"/>
        <string id="16128" value="Godta innkommende koblinger fra %s port %i."/>
        <string id="16129" value="Starter en kobling til nabo på %s port %i..."/>
        <string id="16130" value="Klarte ikke å starte kobling til nabo med %s."/>
@@ -2651,7 +2651,7 @@
        <string id="16362" value="eDonkey2000 opplastinger bør ikke avbrytes. Er du sikker på at du vil avbryte denne opplastingen?"/>
 	   <string id="16363" value="Torrent opplastninger"/>
 	   <string id="16364" value="Ferdige opplastninger"/>
-       <string id="16365" value="Er du sikker p at du vil avbryte alle nedlastningene i denne gruppen?"/>
+       <string id="16365" value="Er du sikker på at du vil avbryte alle nedlastingene i denne gruppen?"/>
        <string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
        <string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
        <string id="16386" value="Endrer metadata til %i filer."/>
@@ -2737,7 +2737,7 @@
        <string id="16805" value="Du har ikke angitt hvor du er fra i brukerprofilen din.\n\nDet er en god ide å angi hvor du er fra slik at andre kan se hvor de er koblet til.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
        <string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-ruter eller brannmur.\n\nVennligst sett opp nettverket til å forwarde TCP port %i til din lokale PC."/>
        <string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per sekund, eller &quot;123 KB/s&quot; for kilobytes per sekund."/>
-	   <string id="16808" value="Du har ikke valgt alder og kjønn.  Er du sikker på at du vil fortsette?"/>
+	   <string id="16808" value="Du har ikke valgt alder og kjønn. Er du sikker på at du vil fortsette?"/>
        <string id="16809" value="Avslutt"/>
        <string id="16864" value="Oppdaterer vert-oppdagelsestjeneste..."/>
        <string id="16865" value="Oppdaterer oppdagelsestjeneste &quot;%s&quot;..."/>
@@ -2864,9 +2864,9 @@
        <string id="18508" value="Lukker nedlastingskilde %s for &quot;%s&quot; fordi kø posisjonen %i er for høy."/>
        <string id="18509" value="Du kan ikke gå ut i fra at denne filen er ferdig og reverifisere den fordi du har ennå ingen partielle verifikasjons data, slik som tiger-tree innhold, eDonkey hashset eller BitTorrent hashset. Uten verifikasjons-data kan ikke filen reverifiseres."/>
        <string id="18510" value="Er du sikker på at du vil gå ut i fra at denne filen er ferdig og reverifisere den? Hele filen vil betraktes, Shareaza vil godta deler som blit verifiserte og laste ned nye deler for de som feilet verifiseringen."/>
-	   <string id="19000" value="Fjern konsoll er AV."/>
+	   <string id="19000" value="Fjernkonsoll er AV."/>
 	   <string id="19001" value="Du må velge et brukernavn og et passord."/>
-	   <string id="19002" value="Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."/>
+	   <string id="19002" value="Klarte ikke å motta tilkoblinger, URL ikke tilgjengelig."/>
 	   <string id="20000" value="URN ikke tilgjengelig"/>
        <string id="20100" value="Kobler til"/>
        <string id="20101" value="Anmoder"/>
