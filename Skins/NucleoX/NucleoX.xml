@@ -308,12 +308,13 @@
 	<!-- Navigation Bar -->
 	<windowSkin>
 		<image type="image" path="NavBarImage.bmp"/>
+		<image type="watermark" path="NavBarWater.bmp"/>
 		<target window="CMainTabBarCtrl.Basic"/>
 		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,92,27"/>
-			<part name="_ID_TAB_HOME.Hover"		rect="0,27,92,27"/>
-			<part name="_ID_TAB_HOME.Down"		rect="0,54,92,27"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,81,92,27"/>
+			<part name="_ID_TAB_HOME.Up"			rect="15,0,77,27"/>
+			<part name="_ID_TAB_HOME.Hover"		rect="15,27,77,27"/>
+			<part name="_ID_TAB_HOME.Down"		rect="15,54,77,27"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="15,81,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Up"		rect="92,0,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Hover"		rect="92,27,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Down"		rect="92,54,77,27"/>
@@ -333,7 +334,7 @@
 		</parts>
 		<anchors>
 			<anchor name="Background"			rect="0,0,418,32"/>
-			<anchor name="_ID_TAB_HOME"			rect="0,0,92,27"/>
+			<anchor name="_ID_TAB_HOME"			rect="15,0,92,27"/>
 			<anchor name="_ID_TAB_LIBRARY"		rect="93,0,77,27"/>
 			<anchor name="_ID_TAB_MEDIA"			rect="171,0,77,27"/>
 			<anchor name="_ID_TAB_SEARCH"			rect="249,0,77,27"/>
@@ -344,12 +345,13 @@
 
 	<windowSkin>
 		<image type="image" path="NavBarImage.bmp"/>
+		<image type="watermark" path="NavBarWater.bmp"/>
 		<target window="CMainTabBarCtrl"/>
 		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,92,27"/>
-			<part name="_ID_TAB_HOME.Hover"		rect="0,27,92,27"/>
-			<part name="_ID_TAB_HOME.Down"		rect="0,54,92,27"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,81,92,27"/>
+			<part name="_ID_TAB_HOME.Up"			rect="15,0,77,27"/>
+			<part name="_ID_TAB_HOME.Hover"		rect="15,27,77,27"/>
+			<part name="_ID_TAB_HOME.Down"		rect="15,54,77,27"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="15,81,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Up"		rect="92,0,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Hover"		rect="92,27,77,27"/>
 			<part name="_ID_TAB_LIBRARY.Down"		rect="92,54,77,27"/>
@@ -373,7 +375,7 @@
 		</parts>
 		<anchors>
 			<anchor name="Background"			rect="0,0,495,32"/>
-			<anchor name="_ID_TAB_HOME"			rect="0,0,92,27"/>
+			<anchor name="_ID_TAB_HOME"			rect="15,0,92,27"/>
 			<anchor name="_ID_TAB_LIBRARY"		rect="93,0,77,27"/>
 			<anchor name="_ID_TAB_MEDIA"			rect="171,0,77,27"/>
 			<anchor name="_ID_TAB_SEARCH"			rect="249,0,77,27"/>
