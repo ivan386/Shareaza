@@ -11,14 +11,14 @@
 ; $jrsoftware: issrc/Files/Default.isl,v 1.53 2004/02/25 01:55:24 jr Exp $
 
 [LangOptions]
-LanguageName=Chinese (PRC)
+LanguageName=Chinese Simplified(PRC)
 LanguageID=$0804
 LanguageCodePage=936
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 DialogFontName=宋体
 DialogFontSize=9
-;WelcomeFontName=Verdana
+;WelcomeFontName=宋体
 ;WelcomeFontSize=12
 TitleFontName=宋体_gb2312
 ;TitleFontSize=29
@@ -66,7 +66,7 @@ ExitSetupTitle=退出安装
 ExitSetupMessage=安装尚未完成。如果现在退出，此软件将不被安装。%n%n您可以稍后再运行安装程序来完成安装过程。%n%n是否退出安装？
 AboutSetupMenuItem=关于安装(&A)...
 AboutSetupTitle=关于安装
-AboutSetupMessage=%1 版本 %2%n%3%n%n%1 主页：%n%4
+AboutSetupMessage=%1 版本 %2%n%3%n%n%1 主页:%n%4
 AboutSetupNote=
 
 ; *** Buttons
@@ -86,7 +86,7 @@ ButtonNewFolder=新建文件夹(&M)
 
 ; *** "Select Language" dialog messages
 SelectLanguageTitle=选择安装语言
-SelectLanguageLabel=选择在安装过程中所使用的语言：
+SelectLanguageLabel=选择在安装过程中所使用的语言:
 
 ; *** Common wizard text
 ClickNext=请单击“下一步”继续，或“取消”退出安装。
@@ -124,8 +124,8 @@ InfoAfterClickLabel=准备好后，请单击“下一步”。
 ; *** "User Information" wizard page
 WizardUserInfo=用户信息
 UserInfoDesc=请输入您的信息。
-UserInfoName=用户名称(&U)：
-UserInfoOrg=公司(&O)：
+UserInfoName=用户名称(&U):
+UserInfoOrg=公司(&O):
 UserInfoSerial=序列号(&S)
 UserInfoNameRequired=您必须输入一个名字。
 
@@ -136,17 +136,17 @@ SelectDirLabel3=安装程序将安装 [name] 至下列文件夹。
 SelectDirBrowseLabel=继续安装，请单击“下一步”。如果您希望选择其他文件夹，请单击“浏览”。
 DiskSpaceMBLabel=安装本软件至少需要 [mb] MB 磁盘空间。
 ToUNCPathname=安装程序无法将程序安装到一个 UNC 路径名。如果你确实需要将程序安装到网络上，必须先映射一个网络驱动器。
-InvalidPath=您必须输入一个包含驱动器号的完整路径；例如：%n%nC:\APP%n%n或一个 UNC 路径形式:%n%n\\server\share
+InvalidPath=您必须输入一个包含驱动器号的完整路径；例如:%n%nC:\APP%n%n或一个 UNC 路径形式:%n%n\\server\share
 InvalidDrive=您所选择的驱动器或 UNC 共享不存在，或是不可存取的。请另外选择。
 DiskSpaceWarningTitle=磁盘可用空间不足
 DiskSpaceWarning=安装程序至少需要 %1 KB 的剩余磁盘空间，但是您选择的驱动器只有 %2 KB 可用。%n%n无论如何您都要继续安装吗？
 DirNameTooLong=文件夹名或路径过长。
 InvalidDirName=此文件夹名无效。
-BadDirName32=文件夹名不能包含下列任何一个字符：%n%n%1
+BadDirName32=文件夹名不能包含下列任何一个字符:%n%n%1
 DirExistsTitle=文件夹已经存在
-DirExists=文件夹：%n%n%1%n%n已经存在。 您无论如何都要安装到此文件夹吗？
+DirExists=文件夹:%n%n%1%n%n已经存在。 您无论如何都要安装到此文件夹吗？
 DirDoesntExistTitle=文件夹不存在
-DirDoesntExist=文件夹：%n%n%1%n%n不存在。是否创建新文件夹？
+DirDoesntExist=文件夹:%n%n%1%n%n不存在。是否创建新文件夹？
 
 ; *** "Select Components" wizard page
 WizardSelectComponents=选择组件
@@ -157,7 +157,7 @@ FullInstallation=完全安装
 CompactInstallation=典型安装
 CustomInstallation=自定义安装
 NoUninstallWarningTitle=组件已存在
-NoUninstallWarning=安装程序检测到下列组件已经存在于您的计算机中：%n%n%1%n%n清除这些组件会导致其不能被卸载。%n%n您无论如何都要继续安装吗？
+NoUninstallWarning=安装程序检测到下列组件已经存在于您的计算机中:%n%n%1%n%n清除这些组件会导致其不能被卸载。%n%n您无论如何都要继续安装吗？
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=当前选项至少需要 [mb] MB 剩余磁盘空间。
@@ -176,7 +176,7 @@ NoIconsCheck=不创建任何图标(&D)
 MustEnterGroupName=您必须输入一个文件夹名。
 GroupNameTooLong=文件夹名或路径过长。
 InvalidGroupName=此文件夹名无效。
-BadGroupName=文件夹名不能包含下列的任何一个字符：%n%n%1
+BadGroupName=文件夹名不能包含下列的任何一个字符:%n%n%1
 NoProgramGroupCheck2=不创建开始菜单文件夹(&D)
 
 ; *** "Ready to Install" wizard page
@@ -184,12 +184,12 @@ WizardReady=准备安装
 ReadyLabel1=安装程序已准备好安装 [name] 到您的计算机中。
 ReadyLabel2a=单击“安装”按钮开始安装，或单击“上一步”返回更改刚才的设置。
 ReadyLabel2b=单击“安装”按钮开始安装。
-ReadyMemoUserInfo=用户信息：
-ReadyMemoDir=目标位置：
-ReadyMemoType=安装类型：
-ReadyMemoComponents=选择组件：
-ReadyMemoGroup=开始菜单文件夹：
-ReadyMemoTasks=附加任务：
+ReadyMemoUserInfo=用户信息:
+ReadyMemoDir=目标位置:
+ReadyMemoType=安装类型:
+ReadyMemoComponents=选择组件:
+ReadyMemoGroup=开始菜单文件夹:
+ReadyMemoTasks=附加任务:
 
 ; *** "Preparing to Install" wizard page
 WizardPreparing=准备安装
@@ -219,7 +219,7 @@ RunEntryShellExec=查看 %1
 ; *** "Setup Needs the Next Disk" stuff
 ChangeDiskTitle=需要下一张磁盘
 SelectDiskLabel2=请插入磁盘 %1 并单击“确定”。%n%n除了下面所示，如果安装文件也能在其他文件夹中找到，请输入其正确路径或单击“浏览”进行选择。
-PathLabel=路径(&P)：
+PathLabel=路径(&P):
 FileNotInDir2=文件“%1” 不能在“%2” 中找到。请插入正确的磁盘或选择另外的文件夹。
 SelectDirectoryLabel=请指定下一张磁盘的位置。
 
@@ -239,16 +239,16 @@ StatusRunProgram=正在结束安装...
 StatusRollback=正在收回改变...
 
 ; *** Misc. errors
-ErrorInternal2=内部错误： %1
+ErrorInternal2=内部错误: %1
 ErrorFunctionFailedNoCode=%1 失败
 ErrorFunctionFailed=%1 失败；代码 %2
 ErrorFunctionFailedWithMessage=%1 失败；代码 %2.%n%3
-ErrorExecutingProgram=不能运行文件：%n%1
+ErrorExecutingProgram=不能运行文件:%n%1
 
 ; *** Registry errors
-ErrorRegOpenKey=打开注册表主键出错：%n%1\%2
-ErrorRegCreateKey=创建注册表主键出错：%n%1\%2
-ErrorRegWriteKey=写入注册表主键出错：%n%1\%2
+ErrorRegOpenKey=打开注册表主键出错:%n%1\%2
+ErrorRegCreateKey=创建注册表主键出错:%n%1\%2
+ErrorRegWriteKey=写入注册表主键出错:%n%1\%2
 
 ; *** INI errors
 ErrorIniEntry=创建文件 “%1” INI 条目时出错。
@@ -259,19 +259,19 @@ FileAbortRetryIgnore2=单击“重试”按钮重试，“忽略”无条件继续(不建议)，或“中止
 SourceIsCorrupted=源文件受损
 SourceDoesntExist=源文件 “%1” 不存在
 ExistingFileReadOnly=已存在的文件被标记为只读。%n%n单击“重试”解除其只读属性并重试，“忽略”跳过此文件，“中止”取消安装。
-ErrorReadingExistingDest=正尝试读取已有文件时出错：
+ErrorReadingExistingDest=正尝试读取已有文件时出错:
 FileExists=文件已经存在。%n%n你是否希望安装程序覆盖它？
 ExistingFileNewer=正要安装的文件比现有文件更旧。建议保留已有文件。%n%n你是否希望保留它？
-ErrorChangingAttr=正尝试改变已有文件属性时出错：
-ErrorCreatingTemp=正尝试在目的目录中创建文件时出错：
-ErrorReadingSource=正尝试读取源文件时出错：
-ErrorCopying=正尝试复制文件时出错：
-ErrorReplacingExistingFile=正尝试替换已有文件时出错：
-ErrorRestartReplace=重新启动替换失败：
-ErrorRenamingTemp=正尝试在目的目录中文件重命名时出错：
-ErrorRegisterServer=不能注册 DLL/OCX： %1
+ErrorChangingAttr=正尝试改变已有文件属性时出错:
+ErrorCreatingTemp=正尝试在目的目录中创建文件时出错:
+ErrorReadingSource=正尝试读取源文件时出错:
+ErrorCopying=正尝试复制文件时出错:
+ErrorReplacingExistingFile=正尝试替换已有文件时出错:
+ErrorRestartReplace=重新启动替换失败:
+ErrorRenamingTemp=正尝试在目的目录中文件重命名时出错:
+ErrorRegisterServer=不能注册 DLL/OCX: %1
 ErrorRegisterServerMissingExport=DllRegisterServer 出口没有发现
-ErrorRegisterTypeLib=不能注册类库： %1
+ErrorRegisterTypeLib=不能注册类库: %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme=正尝试打开自述文件时出错。
@@ -293,7 +293,22 @@ UninstallDataCorrupted=“%1” 文件受损。不能卸载
 ; *** Uninstallation phase messages
 ConfirmDeleteSharedFileTitle=删除共享文件吗？
 ConfirmDeleteSharedFile2=系统显示下列共享文件可能已不再被任何程序使用。是否移除这些共享文件？%n%n如果某个程序仍然用到这些文件而他们却已被删除，该程序可能不能正常运行。如果你不能确定，最好选择“否”。将这些文件保留在系统中不会产生什么危害。
-SharedFileNameLabel=文件名：
-SharedFileLocationLabel=位置：
+SharedFileNameLabel=文件名:
+SharedFileLocationLabel=位置:
 WizardUninstalling=卸载状态
 StatusUninstalling=正在卸载 %1...
+
+; The custom messages below aren't used by Setup itself, but if you make
+; use of them in your scripts, you'll want to translate them.
+
+[CustomMessages]
+
+NameAndVersion=%1 版本 %2
+AdditionalIcons=额外图标:
+CreateDesktopIcon=显示桌面图标(&D)
+CreateQuickLaunchIcon=显示快速启动栏图标(&Q)
+ProgramOnTheWeb=%1 于网页
+UninstallProgram=卸载 %1
+LaunchProgram=启动 %1
+AssocFileExtension=将 %1 关联到 %2 文件的扩展名(&A)
+AssocingFileExtension=正在将 %1 关联到 %2 文件的扩展名...
