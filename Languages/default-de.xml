@@ -3589,8 +3589,8 @@ Other:
 			<text group="21" align="middle">Nicht verbunden</text>
 			<text group="22" align="middle">Verbinden...</text>
 			<text group="23" align="middle">Verbunden</text>
-			<text group="24" align="middle" id="G2Hubs">%i hubs</text>
-			<text group="25" align="middle" id="G2Leaves">%i leaves</text>
+			<text group="24" align="middle" id="G2Hubs">%i Hubs</text>
+			<text group="25" align="middle" id="G2Leaves">%i Leaves</text>
 			<newline group="20" gap="2" />
 			<icon group="30" command="ID_NETWORK_ED2K" />
 			<gap group="30" size="4" />
