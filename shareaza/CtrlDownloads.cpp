@@ -1329,8 +1329,12 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		if ( nTime == 0xFFFFFFFF )
 			LoadString( strText, IDS_STATUS_ACTIVE );
 		else
-			strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
-			//strText.Format( _T("%i"),  nTime);
+		{
+			if ( nTime > 86400 )
+				strText.Format( _T("%i:%.2i:%.2i:%.2i"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
+			else
+				strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
+		}
 	}
 	else if ( ! pDownload->IsTrying() )
 		LoadString( strText, IDS_STATUS_QUEUED );

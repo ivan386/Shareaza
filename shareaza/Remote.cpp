@@ -939,7 +939,12 @@ void CRemote::PageDownloads()
 			if ( tNow == 0xFFFFFFFF )
 				LoadString( str, IDS_STATUS_ACTIVE );
 			else
-				str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow % 3600 ) / 60, tNow % 60 );
+			{
+				if ( tNow > 86400 )
+					str.Format( _T("%i:%.2i:%.2i:%.2i"), tNow / 86400, ( tNow / 3600 ) % 24, ( tNow / 60 ) % 60, tNow % 60 );
+				else
+					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
+			}
 		}
 		else if ( pDownload->GetSourceCount() > 0 )
 			LoadString( str, IDS_STATUS_PENDING );
@@ -1278,7 +1283,10 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 		case nrsConnected:
 			{
 				DWORD tNow = ( GetTickCount() - pNeighbour->m_tConnected ) / 1000;
-				str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow % 3600 ) / 60, tNow % 60 );
+				if ( tNow > 86400 )
+					str.Format( _T("%i:%.2i:%.2i:%.2i"), tNow / 86400, ( tNow / 3600 ) % 24, ( tNow / 60 ) % 60, tNow % 60 );
+				else
+					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
 			}
 			break;
 		default:
