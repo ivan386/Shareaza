@@ -355,9 +355,6 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		break;
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
-
-theApp.Message( MSG_ERROR, _T("UDP search result/sources received") );
-
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
 		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, Settings.eDonkey.DefaultServerFlags ) )
 		{
