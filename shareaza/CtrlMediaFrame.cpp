@@ -297,8 +297,16 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 	{
 		ModifyStyle( WS_CHILD, 0 );
 		SetParent( NULL );
-		SetWindowPos( &wndTopMost, 0, 0, GetSystemMetrics( SM_CXSCREEN ),
-			GetSystemMetrics( SM_CYSCREEN ), SWP_FRAMECHANGED|SWP_SHOWWINDOW );
+		
+		MONITORINFO oMonitor;
+		ZeroMemory( &oMonitor, sizeof(oMonitor) );
+		oMonitor.cbSize = sizeof(oMonitor);
+		GetMonitorInfo( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+		
+		SetWindowPos( &wndTopMost, oMonitor.rcWork.left, oMonitor.rcWork.top,
+			oMonitor.rcWork.right - oMonitor.rcWork.left,
+			oMonitor.rcWork.bottom - oMonitor.rcWork.top, SWP_FRAMECHANGED|SWP_SHOWWINDOW );
+		
 		SetTimer( 2, 50, NULL );
 	}
 	else

@@ -245,32 +245,24 @@ HBRUSH CSkinDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-#define SNAP_PIXELS 6
+#define SNAP_SIZE 6
 
 void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
 	CDialog::OnWindowPosChanging( lpwndpos );
 	
-	CRect rcWork;
-	SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
+	MONITORINFO oMonitor;
+	ZeroMemory( &oMonitor, sizeof(oMonitor) );
+	oMonitor.cbSize = sizeof(oMonitor);
 	
-	if ( abs( lpwndpos->x ) <= ( rcWork.left + SNAP_PIXELS ) )
-	{
-		lpwndpos->x = rcWork.left;
-	}
-	else if (	( lpwndpos->x + lpwndpos->cx ) >= ( rcWork.right - SNAP_PIXELS ) &&
-				( lpwndpos->x + lpwndpos->cx ) <= ( rcWork.right + SNAP_PIXELS ) )
-	{
-		lpwndpos->x = rcWork.right - lpwndpos->cx;
-	}
+	GetMonitorInfo( MonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
 	
-	if ( abs( lpwndpos->y ) <= ( rcWork.top+SNAP_PIXELS ) )
-	{
-		lpwndpos->y = rcWork.top;
-	}
-	else if (	( lpwndpos->y + lpwndpos->cy ) >= ( rcWork.bottom - SNAP_PIXELS ) &&
-				( lpwndpos->y + lpwndpos->cy ) <= ( rcWork.bottom + SNAP_PIXELS ) )
-	{
-		lpwndpos->y = rcWork.bottom-lpwndpos->cy;
-	}
+	if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.left;
+	if ( abs( lpwndpos->y - oMonitor.rcWork.top ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.top;
+	if ( abs( lpwndpos->x + lpwndpos->cx - oMonitor.rcWork.right ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
+	if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
 }
