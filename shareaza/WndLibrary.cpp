@@ -128,7 +128,7 @@ void CLibraryWnd::OnTimer(UINT nIDEvent)
 {
 	DWORD tNow = GetTickCount();
 
-	if ( IsPartiallyVisible() )
+	if ( nIDEvent == 1 )
 	{
 		CWaitCursor pCursor;
 		m_wndFrame.Update( FALSE );
