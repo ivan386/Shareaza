@@ -82,12 +82,12 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_bTorrentInterface = Settings.BitTorrent.AdvancedInterface;
 	m_bEndGame			= Settings.BitTorrent.Endgame;
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;
-	
 	m_sTracker			= Settings.BitTorrent.DefaultTracker;
 	m_sTorrentPath		= Settings.Downloads.TorrentPath;
 
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
 
+	m_wndLinksSpin.SetRange( 0, 80 );
 	UpdateData( FALSE );
 
 	return TRUE;

@@ -2975,14 +2975,14 @@ BEGIN
     LTEXT           "BitTorrent clients per torrent.",IDC_STATIC,150,103,100,
                     12,SS_CENTERIMAGE
     GROUPBOX        "&Interface:",IDC_STATIC,6,7,270,34
-    CONTROL         "Enable BitTorrent extra interface elements",
+    CONTROL         "Display additional BitTorrent interface elements",
                     IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
                     WS_GROUP | WS_TABSTOP,16,19,250,15
     GROUPBOX        "&EndGame:",IDC_STATIC,6,48,270,34
-    CONTROL         "Enable BitTorrent endgame mode when finishing files",
+    CONTROL         "Enable EndGame mode when completing torrents",
                     IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
                     WS_TABSTOP,16,60,250,15
-    GROUPBOX        "&Default Tracker",IDC_STATIC,5,130,270,34,WS_GROUP
+    GROUPBOX        "&Torrent Creation:",IDC_STATIC,5,130,270,34,WS_GROUP
     RTEXT           "Tracker:",IDC_STATIC,15,143,47,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,72,143,194,12,ES_AUTOHSCROLL
 END
@@ -5262,6 +5262,13 @@ BEGIN
                             "You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."
     IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 
                             "Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOTE_DISABLED     "Remote access is disabled."
+    IDS_REMOTE_ENABLED      "You must chose a username and password."
+    IDS_REMOTE_UNAVAILABLE  "Unable to accept connections, URL unavailable."
 END
 
 #endif    // English (Australia) resources
