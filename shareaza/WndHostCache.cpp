@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -170,6 +170,8 @@ void CHostCacheWnd::Update(BOOL bForce)
 	
 	for ( CHostCacheHost* pHost = pCache->GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
+		// cancel update if mouse moves ouside window or user right-clicks
+		// do not break if different cache window button pressed
 		if ( !m_bAllowUpdates && !bForce ) break;
 		if ( m_nMode == PROTOCOL_NULL )
 		{
@@ -295,6 +297,7 @@ void CHostCacheWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 
 void CHostCacheWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
+	// do not update the list while user navigates through context menu
 	m_bAllowUpdates = FALSE;
 	TrackPopupMenu( _T("CHostCacheWnd"), point, ID_HOSTCACHE_CONNECT );
 	m_bAllowUpdates = TRUE;
@@ -302,6 +305,7 @@ void CHostCacheWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CHostCacheWnd::OnNcMouseMove(UINT nHitTest, CPoint point) 
 {
+	// do not update for at least 5 sec while mouse is moving ouside host cache window
 	m_bAllowUpdates = FALSE;
 }
 
@@ -506,6 +510,7 @@ BOOL CHostCacheWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_TIMER ) 
 	{
+		// switch updates when window is inactive
 		m_bAllowUpdates = IsActive();
 	}
 	else if ( pMsg->message == WM_KEYDOWN )
