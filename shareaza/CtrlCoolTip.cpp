@@ -66,7 +66,7 @@ CCoolTipCtrl::CCoolTipCtrl()
 	m_bTimer	= FALSE;
 	m_bVisible	= FALSE;
 	m_tOpen		= 0;
-	/*
+
 	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
@@ -78,24 +78,6 @@ CCoolTipCtrl::CCoolTipCtrl()
 	}
 
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
-	*/
-	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
-	{
-		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
-		m_hUser32, "SetLayeredWindowAttributes" );
-
-		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
-		m_hUser32, "GetMonitorInfoA" );
-
-		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress(
-		m_hUser32, "MonitorFromRect" );
-	}
-	else
-	{
-		m_pfnSetLayeredWindowAttributes = NULL;
-		m_pfnGetMonitorInfoA = NULL;
-		m_pfnMonitorFromRect = NULL;
-	}
 
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
 }
@@ -219,11 +201,11 @@ void CCoolTipCtrl::ShowImpl()
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		hMonitor = m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
 		//hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 		if (NULL != hMonitor)
 		{
-			if ( m_pfnGetMonitorInfoA(hMonitor, &mi) )
+			if ( GetMonitorInfoA(hMonitor, &mi) )
 				rcMonitor = mi.rcWork;
 			else
 				hMonitor = NULL; // Fall back to GetSystemMetrics
