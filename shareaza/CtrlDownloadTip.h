@@ -59,7 +59,8 @@ protected:
 	CStringArray	m_pHeaderValue;
 	int				m_nHeaderWidth;
 	int				m_nStatWidth;
-	BOOL			m_bDrawGraph;
+	BOOL			m_bDrawGraph;		//Draw the download graph?
+	BOOL			m_bDrawError;		//Display the tracker error?
 	
 // Operations
 protected:

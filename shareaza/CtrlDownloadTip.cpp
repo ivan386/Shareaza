@@ -162,6 +162,14 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	m_sz.cy += 36;
 	m_sz.cy += TIP_RULE;
 	
+	if ( pDownload->m_bTorrentTrackerError && ( pDownload->m_sTorrentTrackerError ) )
+	{
+		m_bDrawError = TRUE;
+		m_sz.cy += TIP_TEXTHEIGHT;
+		m_sz.cy += TIP_RULE;
+	}
+	else
+		m_bDrawError = FALSE;
 
 	if ( pDownload->IsSeeding() )
 	{
@@ -182,13 +190,13 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		AddSize( pDC, m_sURL );
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
-	
+
 	if ( ! pDownload->IsSeeding() )
 	{
 		m_sz.cy += 2;
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
-
+	
 	if ( pDownload->IsCompleted() )
 		m_bDrawGraph = FALSE;
 	else
@@ -327,18 +335,23 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		LoadString( strFormat, IDS_DLM_UPLOADED );
 		strTorrentUpload.Format( strFormat,
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
-			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
+			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
 			pDownload->GetRatio() * 100.0f );
 	}
 	else
 	{
 		LoadString( strFormat, IDS_DLM_UPLOADED );
 		strTorrentUpload.Format( strFormat, _T("0"),
-			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ), 0.0f );
+			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0f );
 	}
 	
-
 	//Draw the pop-up box
+	if ( m_bDrawError )
+	{	//Tracker error
+		DrawText( pDC, &pt, pDownload->m_sTorrentTrackerError, 3 );
+		pt.y += TIP_TEXTHEIGHT;
+		DrawRule( pDC, &pt );
+	}
 	if ( ! pDownload->IsSeeding() )
 	{	//Not applicable for seeding torrents.
 		LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
@@ -374,7 +387,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, m_sURL );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	
+
 	if ( ! pDownload->IsSeeding() )
 	{	//Not applicable for seeding torrents.
 		pt.y += 2;
