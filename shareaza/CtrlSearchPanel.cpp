@@ -184,7 +184,7 @@ void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWOR
 	CString strCaption;
 
 	if(bStarted) //ToDo: Maybe disable button while searching?
-		LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_AGAIN );
+		LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_MORE );
 	else
 		LoadString( strCaption, IDS_SEARCH_PANEL_START ); 
 		
