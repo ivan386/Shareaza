@@ -219,11 +219,24 @@ BOOL CRelatedSearch::RunSearchForSeries()
 CString CRelatedSearch::Tokenise(LPCTSTR psz)
 {
 	int nChars = 0;
-	CString str;
-	
+	CString str, strTemp(psz);
+
+	// remove diacritics; supported for NT systems only
+	if ( theApp.m_bNT ) 
+	{
+		int nSource = FoldString( MAP_COMPOSITE, psz, -1, NULL, 0 ); //_tcslen( psz );
+		FoldString( MAP_COMPOSITE, psz, -1, strTemp.GetBuffer( nSource ), nSource );
+		strTemp.ReleaseBuffer( nSource );
+		psz = strTemp.GetBuffer( nSource );
+	}
+
+	int nLastPoint = strTemp.ReverseFind( '.' );
+	if ( nLastPoint > 0 ) 
+		nLastPoint = strTemp.GetLength() - nLastPoint - 1;
+
 	for ( ; *psz ; psz++ )
 	{
-		if ( *psz == '.' )
+		if ( *psz == '.' && _tcslen( psz ) == nLastPoint )
 		{
 			break;
 		}
@@ -232,12 +245,12 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 			str += *psz;
 			nChars ++;
 		}
-		else if ( nChars > 1 )
+		else if ( nChars > 1 && ( _istpunct( *psz ) || _istspace( *psz ) ) )
 		{
 			str += ' ';
 			nChars = 0;
 		}
-		else if ( nChars == 1 )
+		else if ( nChars == 1 && ( _istpunct( *psz ) || _istspace( *psz ) ) )
 		{
 			str = str.Left( str.GetLength() - 1 );
 			nChars = 0;
