@@ -41,17 +41,6 @@ Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.
 ; Lithuanian
 Source: "setup\readme\lithuanian.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt
 
-; Always install user's local language
-; English is always installed and specified in main script
-; Dutch:
-Source: "Languages\default-nl.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl
-Source: "Languages\default-nl.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl
-Source: "Languages\NavbarAlpha-nl.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension  skipifsourcedoesntexist; Languages: nl
-; Lithuanian:
-Source: "Languages\default-lt.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt
-Source: "Languages\default-lt.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt
-Source: "Languages\NavbarAlpha-lt.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension  skipifsourcedoesntexist; Languages: lt
-
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
 ; Avoid customizing the ISL files since they will change with each version of Inno Setup.
