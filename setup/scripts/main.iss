@@ -280,25 +280,19 @@ var
   Wnd: HWND;
   Shutdownmessage: string;
 begin
-  if CurPageID = wpWelcome then begin
+  Result := True;
+  if (CurPageID = wpWelcome) then begin
     Wnd := FindWindowByClassName('ShareazaMainWnd');
     if Wnd <> 0 then begin
       Shutdownmessage := ExpandConstant('{cm:dialog_shutdown,Shareaza}');
-      if MsgBox(Shutdownmessage, mbConfirmation, MB_YESNO) = IDYES then begin
+      if MsgBox(Shutdownmessage, mbConfirmation, MB_OKCANCEL) = IDOK then begin
         SendMessage(Wnd, WM_CLOSE, 0, 0);
         while Wnd <> 0 do begin
           Sleep(100);
           Wnd := FindWindowByClassName('ShareazaMainWnd');
         end;
-        Result := True;
-      end else begin
-        Result := False;
-      end;
-    end else begin
-      Result := True;
+      end else Result := False;
     end;
-  end else begin
-    Result := True;
   end;
 end;
         
