@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,87
- PRODUCTVERSION 2,1,0,87
+ FILEVERSION 2,1,0,88
+ PRODUCTVERSION 2,1,0,88
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 87"
+            VALUE "FileVersion", "2, 1, 0, 88"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 87"
+            VALUE "ProductVersion", "2, 1, 0, 88"
         END
     END
     BLOCK "VarFileInfo"
@@ -3000,8 +3000,8 @@ BEGIN
                     SS_CENTERIMAGE
     CONTROL         " Clear downloaded torrents",IDC_TORRENT_AUTOCLEAR,
                     "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,80,
-                    117,11,WS_EX_TRANSPARENT
-    LTEXT           "When the share ratio reaches ",IDC_STATIC,116,80,116,11,
+                    108,11,WS_EX_TRANSPARENT
+    LTEXT           "When the share ratio reaches ",IDC_STATIC,125,80,107,11,
                     SS_CENTERIMAGE,WS_EX_TRANSPARENT | WS_EX_RIGHT
     EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,234,80,30,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
