@@ -561,7 +561,7 @@ void CLocalSearch::AddHit(CDownload* pDownload, int nIndex)
 			strURL.Format( _T("btc://%s:%i/%s/%s/"),
 				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 				htons( Network.m_pHost.sin_port ),
-				(LPCTSTR)CSHA::HashToString( BTClients.GetGUID() ),
+				(LPCTSTR)CSHA::HashToString( &pDownload->m_pPeerID ),//(LPCTSTR)CSHA::HashToString( BTClients.GetGUID() ),
 				(LPCTSTR)CSHA::HashToString( &pDownload->m_pBTH ) );
 			nGroup += pPacket->GetStringLen( strURL );
 		}
