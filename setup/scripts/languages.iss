@@ -1,3 +1,6 @@
+; This sub-script defines all languages to be compiled
+; WARNING: Do not change this file's encoding
+
 [Languages]
 ; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license and readme files
 ; Note: first language specified is default > English
