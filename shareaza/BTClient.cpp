@@ -373,7 +373,7 @@ BOOL CBTClient::OnHandshake1()
 
 		// Check we don't have too many active torrent connections 
 		// (Prevent routers overloading for very popular torrents)
-		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections + 10 ) ) 
+		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections + ( Settings.BitTorrent.DownloadConnections * 0.2 ) ) ) 
 		{
 			theApp.Message( MSG_ERROR, _T("Could not accept BitTorrent coupling from %s, maximum connections reached"), (LPCTSTR)m_sAddress );
 			Close();
