@@ -164,7 +164,7 @@ protected:
 public:
 	void			SetSearchFocus();
 	void			ShowSearch(CManagedSearch* pSearch);
-	void			ShowStatus(BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves);
+	void			ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves);
 	void			OnSchemaChange();
 	void			ExecuteSearch();
 	CManagedSearch*	GetSearch();

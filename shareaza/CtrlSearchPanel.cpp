@@ -179,17 +179,21 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 	}
 }
 
-void CSearchPanel::ShowStatus(BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves)
+void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves)
 {
 	CString strCaption;
-	
-	LoadString( strCaption, bSearching ? IDS_SEARCH_PANEL_AGAIN : IDS_SEARCH_PANEL_START );
+
+	if(bStarted) //ToDo: Maybe disable button while searching?
+		LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_AGAIN );
+	else
+		LoadString( strCaption, IDS_SEARCH_PANEL_START ); 
+		
 	m_boxSearch.m_wndStart.SetText( strCaption );
 	
-	LoadString( strCaption, bSearching ? IDS_SEARCH_PANEL_STOP : IDS_SEARCH_PANEL_CLEAR );
+	LoadString( strCaption, bStarted ? IDS_SEARCH_PANEL_STOP : IDS_SEARCH_PANEL_CLEAR );
 	m_boxSearch.m_wndStop.SetText( strCaption );
 	
-	m_boxResults.Update( bSearching, nFiles, nHits, nHubs, nLeaves );
+	m_boxResults.Update( bStarted, nFiles, nHits, nHubs, nLeaves );
 }
 
 void CSearchPanel::OnSchemaChange()
