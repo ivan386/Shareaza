@@ -1559,7 +1559,7 @@ right quote	&#147;
 			<text>Viso bylų: </text>
 			<text id="LibraryFiles" format="b">%lu</text>
 			<text>, </text>
-			<text id="LibraryVolume" format="b"> %s</text>
+			<text id="LibraryVolume" format="b">%s</text>
 			<newline gap="0"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Eiti į savo kolekciją</link>
 			<group id="1">
