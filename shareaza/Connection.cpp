@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/04/06 16:25:09 $"
-//	Revision:		"$Revision: 1.22 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/04/06 18:28:09 $"
+//	Revision:		"$Revision: 1.23 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -779,13 +779,10 @@ BOOL CConnection::ReadHeaders()
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
-			if ( strValue.GetLength() > 0 )
-			{
 				// Give OnHeaderLine this last header, and its value
 				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
 			}
 		}
-	}
 
 	// Send the contents of the output buffer to the remote computer
 	OnWrite();
@@ -885,7 +882,7 @@ BOOL CConnection::IsAgentBlocked()
 	if ( m_sUserAgent == _T("Fake Shareaza") ) return TRUE; // Block "Fake Shareaza"
 
 	// The remote computer didn't send a "User-Agent" header, or the sent blank text
-	if ( m_sUserAgent.Trim().IsEmpty() )
+	if ( m_sUserAgent.IsEmpty() )									// Blank user agent
 	{
 		// If settings say we should block that, return true
 		if ( Settings.Gnutella.BlockBlankClients ) return TRUE;
