@@ -1907,6 +1907,8 @@ __State                 textequ     <[esp+40]>
                         paddq       mmx_c, qword ptr [reg_temp5+m_nState2]
                         movq        qword ptr [reg_temp5+m_nState2], mmx_c
 
+                        emms
+
                         popa
                         ret
 
