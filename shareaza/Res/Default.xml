@@ -1926,7 +1926,20 @@
 		<newline gap="8"/>
 		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
 		<newline gap="8"/>
-		<text>You should always attempt to keep a reasonable amount of disk space free. 				Programs can become unstable if the drives become full, and temporary files may be 				lost. You should run a disk clean-up, delete unwanted files, or un-install software 				you no longer need.</text>
+		<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+		can become unstable if the drives become full, and temporary files may be lost. You should 
+		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+	</document>
+	
+	<document name="GeneralHelp.XPsp2">
+		<text format="b">Windows XP Service Pack 2 detected</text>
+		<newline gap="8"/>
+		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
+		that applications can attempt at once.</text>
+		<newline gap="8"/>
+		<text>Shareaza has limited network connections and set appropriate default values to 
+		ensure proper operation, however performance may be reduced. Please visit the Shareaza 
+		forums for further imformation, and up to date news.</text>
 	</document>
 
 	
