@@ -17,15 +17,20 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <object type="folder" availability="system"/>
        <titles>
                <title language="en">Document:All Documents</title>
+               <title language="af">Document:All Documents</title>
+               <title language="ar">Document:All Documents</title>
                <title language="chs">&#160;文档:所有文档</title>
                <title language="de">Dokumente:Alle Dokumente</title>
                <title language="es">Documento:Todos Los Documentos</title>
+               <title language="fr">Document:All Documents</title>
                <title language="hu">Dokumentum: Minden dokumentum</title>
                <title language="it">Documento:Tutti i documenti</title>
                <title language="lt">Dokumentas:Visi documentai</title>
                <title language="nl">Documenten:Alle Documenten</title>
                <title language="no">Dokument: Alle dokumenter</title>
+               <title language="br">Document:All Documents</title>
                <title language="ru">&#160;Документ:&#160;Все документы</title>
+               <title language="sv">Document:All Documents</title>
        </titles>
        <images>
                <icon path="documentFolder.ico"/>
