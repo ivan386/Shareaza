@@ -70,8 +70,8 @@ public:
 	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength) { return FALSE; }
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
-protected:
 	void	SetState(int nState);
+protected:
 	void	ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
 
 };

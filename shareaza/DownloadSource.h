@@ -77,6 +77,7 @@ public:
 	FILETIME			m_tLastSeen;
 	int					m_nGnutella;
 public:
+	DWORD				m_nSortOrder;
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;

@@ -198,16 +198,40 @@ void CDownloadTransfer::SetState(int nState)
 {
 	if ( m_pDownload != NULL )
 	{
-		if ( nState == dtsDownloading && m_nState != dtsDownloading )
-		{
-			m_pDownload->SortSource( m_pSource, TRUE );
+		if ( Settings.Downloads.SortSources )
+		{	//Proper sort
+
+			static BYTE StateSortOrder[13]={ 12 ,10 ,9 ,4 ,0 ,8 ,1 ,2 ,3 ,11 ,7 ,5 ,6};
+				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing, 
+				//dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued, dtsTorrent
+
+			//Assemble the sort order DWORD
+			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 12 ) ];	//Sort by state first
+			m_pSource->m_nSortOrder <<=  8;	
+
+			if ( m_nProtocol != PROTOCOL_HTTP )								//Then protocol
+				m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );		
+			m_pSource->m_nSortOrder <<=  16;
+
+			if ( nState == dtsQueued )										//Then queue postion
+				m_pSource->m_nSortOrder += ( min( m_nQueuePos, 10000 ) & 0xFFFF );
+
+			//Do the sort
+			m_pDownload->SortSource( m_pSource );
 		}
-		else if ( nState != dtsDownloading && m_nState == dtsDownloading )
-		{
-			m_pDownload->SortSource( m_pSource, FALSE );
+		else
+		{	//Simple sort.
+			if ( nState == dtsDownloading && m_nState != dtsDownloading )
+			{	 //Downloading sources go to the top
+				m_pDownload->SortSource( m_pSource, TRUE );
+			}
+			else if ( nState != dtsDownloading && m_nState == dtsDownloading )
+			{	//Sources that have stopped downloading go to the bottom.
+				m_pDownload->SortSource( m_pSource, FALSE );
+			}
 		}
 	}
-	
+
 	m_nState = nState;
 }
 

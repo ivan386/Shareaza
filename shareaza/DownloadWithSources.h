@@ -67,6 +67,7 @@ protected:
 	BOOL		AddSourceInternal(CDownloadSource* pSource);
 	void		RemoveSource(CDownloadSource* pSource, BOOL bBan);
 	void		SortSource(CDownloadSource* pSource, BOOL bTop);
+	void		SortSource(CDownloadSource* pSource);
 protected:
 	void		RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
 	int			GetSourceColour();

@@ -83,6 +83,7 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_bReadContent	= FALSE;
 	m_nGnutella		= 0;
 	
+	m_nSortOrder	= 0xFFFFFFFF;
 	m_nColour		= -1;
 	m_tAttempt		= 0;
 	m_nFailures		= 0;
@@ -430,6 +431,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive)
 {
 	if ( m_pTransfer != NULL )
 	{
+		m_pTransfer->SetState(dtsNull);
 		m_pTransfer->m_pSource = NULL;
 		m_pTransfer = NULL;
 	}

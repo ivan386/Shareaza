@@ -385,7 +385,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	
 	m_nSourceCount ++;
 	
-	if ( pSource->m_nProtocol == PROTOCOL_ED2K )
+	//if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 	{
 		pSource->m_pPrev = m_pSourceLast;
 		pSource->m_pNext = NULL;
@@ -399,7 +399,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		{
 			m_pSourceFirst = m_pSourceLast = pSource;
 		}
-	}
+	}/*
 	else
 	{
 		pSource->m_pPrev = NULL;
@@ -414,7 +414,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		{
 			m_pSourceFirst = m_pSourceLast = pSource;
 		}
-	}
+	}*/
 	
 	SetModified();
 	
@@ -565,6 +565,64 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource, BOOL bTop)
 		{
 			m_pSourceFirst = m_pSourceLast = pSource;
 		}
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithSources sort a source by state (Downloading, etc...)
+
+void CDownloadWithSources::SortSource(CDownloadSource* pSource)
+{
+	ASSERT( m_nSourceCount > 0 );
+
+
+	//Remove source from current position.
+	if ( pSource->m_pPrev != NULL )
+		pSource->m_pPrev->m_pNext = pSource->m_pNext;
+	else
+		m_pSourceFirst = pSource->m_pNext;
+	
+	if ( pSource->m_pNext != NULL )
+		pSource->m_pNext->m_pPrev = pSource->m_pPrev;
+	else
+		m_pSourceLast = pSource->m_pPrev;
+	
+
+
+	if ( ( m_pSourceFirst == NULL ) || ( m_pSourceLast == NULL ) )
+	{	//Only one source
+		m_pSourceFirst = m_pSourceLast = pSource;
+		pSource->m_pNext = pSource->m_pPrev = NULL;
+	}
+	else
+	{	//Sort sources
+		CDownloadSource* pCompare = m_pSourceFirst;
+
+		while ( pCompare->m_nSortOrder < pSource->m_nSortOrder )
+		{
+			if ( pCompare->m_pNext != NULL )
+				pCompare = pCompare->m_pNext;
+			else
+				break;
+
+		}
+
+		if ( pCompare->m_pNext == NULL )
+		{
+			m_pSourceLast = pSource;
+		}
+
+		if ( pCompare->m_pPrev == NULL )
+			m_pSourceFirst = pSource;
+		else
+			pCompare->m_pPrev->m_pNext = pSource;
+
+
+		pSource->m_pNext = pCompare;
+		pSource->m_pPrev = pCompare->m_pPrev;
+		pCompare->m_pPrev= pSource;
+
 	}
 }
 
