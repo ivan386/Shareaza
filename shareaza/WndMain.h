@@ -216,6 +216,7 @@ protected:
 	afx_msg void OnHelpWarnings();
 	afx_msg void OnHelpPromote();
 	afx_msg void OnHelpFirewalls();
+	afx_msg void OnHelpSecurity();
 	afx_msg void OnUpdateNetworkG2(CCmdUI* pCmdUI);
 	afx_msg void OnNetworkG2();
 	afx_msg void OnUpdateNetworkG1(CCmdUI* pCmdUI);

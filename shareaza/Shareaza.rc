@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,1
- PRODUCTVERSION 2,1,0,1
+ FILEVERSION 2,1,0,2
+ PRODUCTVERSION 2,1,0,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 1"
+            VALUE "FileVersion", "2, 1, 0, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 1"
+            VALUE "ProductVersion", "2, 1, 0, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -239,7 +239,8 @@ BEGIN
     BEGIN
         MENUITEM "Shareaza Users &Guide",       ID_HELP_FAQ
         MENUITEM "Shareaza &Forums",            ID_HELP_FORUMS
-        MENUITEM "Router Help",                 ID_HELP_FIREWALLS
+        MENUITEM "Router Help",                 33117
+        MENUITEM "Security Help",               ID_HELP_SECURITY
         MENUITEM SEPARATOR
         POPUP "&Websites"
         BEGIN
@@ -5287,6 +5288,7 @@ BEGIN
     ID_TOOLS_MERCORA        "Start P2P Radio"
     ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
+    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
 END
 
 STRINGTABLE 

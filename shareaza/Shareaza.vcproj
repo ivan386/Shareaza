@@ -11975,6 +11975,9 @@
 				RelativePath="GraphLine.h">
 			</File>
 			<File
+				RelativePath=".\GUID.h">
+			</File>
+			<File
 				RelativePath="Handshake.h">
 			</File>
 			<File

@@ -1498,6 +1498,7 @@
 #define ID_TOOLS_MERCORA                33116
 #define ID_HELP_FIREWALLS               33117
 #define ID_TOOLS_SEEDTORRENT            33118
+#define ID_HELP_SECURITY				33119
 
 // Next default values for new objects
 // 

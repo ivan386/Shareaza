@@ -324,6 +324,7 @@
 	<command code="33116" id="ID_TOOLS_MERCORA"/>
 	<command code="33117" id="ID_HELP_FIREWALLS"/>
 	<command code="33118" id="ID_TOOLS_SEEDTORRENT"/>
+	<command code="33119" id="ID_HELP_SECURITY"/>
 	<command code="57650" id="ID_WINDOW_CASCADE"/>
 	<command code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<command code="57652" id="ID_WINDOW_TILE_VERT"/>

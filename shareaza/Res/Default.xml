@@ -436,6 +436,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
+			<item id="ID_HELP_SECURITY" text="Se_curity Help"/>
 			<separator/>
 			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -521,6 +522,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
+			<item id="ID_HELP_SECURITY" text="Se_curity Help"/>
 			<separator/>
 			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -600,6 +602,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
+			<item id="ID_HELP_SECURITY" text="Se_curity Help"/>
 			<separator/>
 			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>

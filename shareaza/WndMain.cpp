@@ -224,6 +224,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_WARNINGS, OnHelpWarnings)
 	ON_COMMAND(ID_HELP_PROMOTE, OnHelpPromote)
 	ON_COMMAND(ID_HELP_FIREWALLS, OnHelpFirewalls)
+	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_G2, OnUpdateNetworkG2)
 	ON_COMMAND(ID_NETWORK_G2, OnNetworkG2)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_G1, OnUpdateNetworkG1)
@@ -2123,6 +2124,12 @@ void CMainWnd::OnHelpPromote()
 void CMainWnd::OnHelpFirewalls()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/routers/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpSecurity()
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/securityhelp/"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
