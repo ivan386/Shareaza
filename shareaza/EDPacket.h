@@ -236,7 +236,8 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 // Server UDP flags
 #define	ED2K_SERVER_UDP_GETSOURCES	0x00000001
 #define	ED2K_SERVER_UDP_GETFILES	0x00000002
-//#define	ED2K_SERVER_UDP_GETSOURCES2	0x00000020
+#define	ED2K_SERVER_UDP_UNICODE		0x00000010
+#define	ED2K_SERVER_UDP_GETSOURCES2	0x00000020
 
 
 class CEDTag
@@ -350,7 +351,7 @@ public:
 #define ED2K_MAXFILESINPACKET		0x20
 
 // Client ID
-#define ED2K_COMPATIBLECLIENT_ID	0x44 // Temp change to test stuff... should be 4
+#define ED2K_COMPATIBLECLIENT_ID	0x4
 
 // Shareaza's advertised capabilities / feature versions
 #define ED2K_VERSION_UDP			0x02

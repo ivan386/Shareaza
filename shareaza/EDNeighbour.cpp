@@ -478,14 +478,17 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		pHost->m_nUserLimit		= m_nUserLimit;
 		pHost->m_nTCPFlags		= m_nFlags;
 
-		// If a server has support for GetSources2, we can assume some UDP flags
-		if ( m_nFlags & ED2K_SERVER_TCP_GETSOURCES2 )
+		// We can assume some UDP flags based on TCP flags
+		if ( m_nFlags & ED2K_SERVER_TCP_DEFLATE )
 		{
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES;
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETFILES;
-			pHost->m_nUDPFlags |= ED2K_SERVER_TCP_UNICODE;
-			pHost->m_nUDPFlags |= ED2K_SERVER_TCP_GETSOURCES2;
 		}
+		if ( m_nFlags & ED2K_SERVER_TCP_UNICODE )
+			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_UNICODE;
+		if ( m_nFlags & ED2K_SERVER_TCP_GETSOURCES2 )
+			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES2;
+
 	}
 	
 	theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
