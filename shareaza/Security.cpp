@@ -1255,26 +1255,31 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 
 CMessageFilter::CMessageFilter()
 {
+	m_pszED2KSpam = NULL;
 	m_pszFilteredPhrases = NULL;
 }
 
 CMessageFilter::~CMessageFilter()
 {
+	if ( m_pszED2KSpam ) delete [] m_pszED2KSpam;
+	m_pszED2KSpam = NULL;
+
 	if ( m_pszFilteredPhrases ) delete [] m_pszFilteredPhrases;
 	m_pszFilteredPhrases = NULL;
+	
 }
 
 void CMessageFilter::Load()
 {
 	CFile pFile;
 	CString strFile = Settings.General.Path + _T("\\Data\\MessageFilter.dat");
-	CString strFilteredPhrases;
+	CString strFilteredPhrases, strED2KSpamPhrases;
 
 	// Delete current filter (if present)
 	if ( m_pszFilteredPhrases ) delete [] m_pszFilteredPhrases;
 	m_pszFilteredPhrases = NULL;
 
-	// Load the adult filter from disk
+	// Load the message filter from disk
 	if (  pFile.Open( strFile, CFile::modeRead ) ) 
 	{
 		try
@@ -1286,6 +1291,7 @@ void CMessageFilter::Load()
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 			pFile.Close();
 
+			pBuffer.ReadLine( strED2KSpamPhrases );
 			pBuffer.ReadLine( strFilteredPhrases );
 		}
 		catch ( CException* pException )
@@ -1296,8 +1302,56 @@ void CMessageFilter::Load()
 	}
 
 	// Insert some defaults if there was a read error
+
+	if ( strED2KSpamPhrases.IsEmpty() )
+		strED2KSpamPhrases = _T("Your client is connecting too fast|Join the L33cher Team|PeerFactor|Your client is making too many connections|AUTOMATED MESSAGE:");
+
 	if ( strFilteredPhrases.IsEmpty() )
-		strFilteredPhrases = _T("client is connecting too fast");
+		strFilteredPhrases = _T("");
+
+
+	// Load the ED2K spam into the filter
+	if ( strED2KSpamPhrases.GetLength() > 3 )
+	{
+		LPCTSTR pszPtr = strED2KSpamPhrases;
+		int nWordLen = 3;
+		CStringList pWords;
+			
+        int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
+		{
+			if ( *pszPtr == '|' )
+			{
+				if ( nStart < nPos )
+				{
+					pWords.AddTail( strED2KSpamPhrases.Mid( nStart, nPos - nStart ) );
+					nWordLen += ( nPos - nStart ) + 1;
+				}
+				nStart = nPos + 1;	
+			}
+		}
+			
+		if ( nStart < nPos )
+		{
+			pWords.AddTail( strED2KSpamPhrases.Mid( nStart, nPos - nStart ) );
+			nWordLen += ( nPos - nStart ) + 1;
+		}
+			
+		m_pszED2KSpam = new TCHAR[ nWordLen ];
+		LPTSTR pszFilter = m_pszED2KSpam;
+			
+		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+		{
+			CString strWord = pWords.GetNext( pos );
+			CharLower( strWord.GetBuffer() );
+			strWord.ReleaseBuffer();
+			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+			pszFilter += strWord.GetLength() + 1;
+		}
+			
+		*pszFilter++ = 0;
+		*pszFilter++ = 0;
+	}
 
 	// Load the blocked strings into the filter
 	if ( strFilteredPhrases.GetLength() > 3 )
@@ -1343,18 +1397,19 @@ void CMessageFilter::Load()
 	}
 }
 
-BOOL CMessageFilter::IsBlockedED2K( LPCTSTR pszText )
+BOOL CMessageFilter::IsED2KSpam( LPCTSTR pszText )
 {
-#define NUM_STRINGS 5
-
-	LPCTSTR ED2KBlock[NUM_STRINGS] = {_T("Your client is connecting too fast"), _T("Join the L33cher Team"), _T("PeerFactor"), _T("Your client is making too many connections"), _T("AUTOMATED MESSAGE") };
-
 	if ( Settings.Community.ChatFilterED2K && pszText )
 	{
-		// Check for filtered (client generated) phrases
-		for ( int nLoop = 0 ; nLoop < NUM_STRINGS ; nLoop++ )
-		{
-			if ( _tcsistr( pszText, ED2KBlock[nLoop] ) != NULL ) return TRUE;
+		// Check for Ed2K spam phrases
+		if ( m_pszED2KSpam )
+		{	
+			LPCTSTR pszWord;
+			for ( pszWord = m_pszED2KSpam ; *pszWord ; )
+			{
+				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;
+				pszWord += _tcslen( pszWord ) + 1;
+			}
 		}
 	}
 	
@@ -1366,11 +1421,10 @@ BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
 {
 	if ( Settings.Community.ChatFilter && pszText )
 	{
-		LPCTSTR pszWord;
-
 		// Check for filtered (spam) phrases
 		if ( m_pszFilteredPhrases )
 		{	
+			LPCTSTR pszWord;
 			for ( pszWord = m_pszFilteredPhrases ; *pszWord ; )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;

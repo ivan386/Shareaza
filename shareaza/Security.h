@@ -151,12 +151,13 @@ public:
 	
 // Attributes
 private:
+	LPTSTR		m_pszED2KSpam;				// Known ED2K spam phrases
 	LPTSTR		m_pszFilteredPhrases;		// Known spam phrases
 	
 // Operations
 public:
 	void		Load();
-	BOOL		IsBlockedED2K( LPCTSTR );	// ED2K message spam filter (ED2K only, always on)
+	BOOL		IsED2KSpam( LPCTSTR );		// ED2K message spam filter (ED2K only, always on)
 	BOOL		IsFiltered( LPCTSTR );		// Chat message spam filter
 };
 
