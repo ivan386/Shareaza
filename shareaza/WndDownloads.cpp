@@ -470,8 +470,8 @@ void CDownloadsWnd::OnUpdateDownloadsResume(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelPaused || ! m_bSelTrying );
-	pCmdUI->Enable( m_bSelPaused || ! m_bSelTrying  );
+		pcCmdUI->Show( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying ) );
+	pCmdUI->Enable( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying ) );
 }
 
 void CDownloadsWnd::OnDownloadsResume() 
