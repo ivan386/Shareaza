@@ -20,7 +20,7 @@ right quote	&#147;
 		author="Rolandas Rudomanskis"
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
-		email="rolandas(at)ife-baltic(DOT)lt"
+		email="rrol2002(at)hotmail.com"
 		version="2.1.0.4"
 		type="Language"
 		language="lt"
@@ -2015,7 +2015,7 @@ right quote	&#147;
 		o toks turinys yra uždraustas nuostatose. Jums reikėtų perfrazuoti savo paiešką
 		arba atjungti filtrą.</text>
 		<newline gap="8"/>
-		<text>Tam, kad atjungtumėte filtrą, nueikite Įrankiai > Nuostatos > Bendra ir atžymėkite turinio suaugusiems filtravimą.</text>
+		<text>Tam, kad atjungtumėte filtrą, nueikite Įrankiai &gt; Nuostatos &gt; Bendra ir atžymėkite turinio suaugusiems filtravimą.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2297,11 +2297,11 @@ right quote	&#147;
 	<tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Atverti naują grafiko langą..."/>
-	<tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Susijungti su pasirinktu šaltiniu(-ais) ir pamėginti parsisiųsti bylą."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Atjungti pasirinktą atsisiuntimo srautą(-us)."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Atsijungti nuo ir užmiršti pasirinktą atsisiuntimo šaltinį(-ius)."/>
+	<tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatiškai šalinti užbaigtas bylas iš išsiunčiamų bylų sąrašo."/>
 	<tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Pašalinti iš išsiunčiamų bylų sąrašo pasirinktą bylą(-as)."/>
