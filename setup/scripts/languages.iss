@@ -196,7 +196,7 @@ br.tasks_multisetup=Ativar suporte para vários usuários
 br.run_skinexe=Instalando as Peles...
 br.reg_incomingchat=Nova mensagem no chat
 br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
-br.icons_license=Licensa
+br.icons_license=Licença
 br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 ; French
