@@ -362,6 +362,9 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		break;
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
+
+theApp.Message( MSG_ERROR, _T("UDP search result/sources received") );
+
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
 		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, Settings.eDonkey.DefaultServerFlags ) )
 		{
@@ -518,10 +521,12 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 			theApp.Message( MSG_DEFAULT, strT );*/
 
 			// Check if this server could be asked for stats
-			if ( ( tSecs > pHost->m_tStats + 7*(24*60*60)  ) &&	// We have not checked this host in a week
-				 ( pHost->CanQuery( tSecs ) ) &&				// AND it hasn't been searched recently
-				 ( ( pHost->m_nUDPFlags == 0 ) ||				// AND  - it has no flags set OR
-				   ( m_bAllServersDone ) ) )					//		- we have checked all servers
+			
+			if ( ( pHost->CanQuery( tSecs ) ) &&												// If it hasn't been searched recently	
+				 ( ( tSecs > pHost->m_tStats + Settings.eDonkey.StatsServerThrottle  ) ||		// AND we have not checked this host in a week OR
+				   ( ( pHost->m_nFailures > 0 ) && ( tSecs > pHost->m_tStats + 8*60*60  ) ) ) &&	// -last check failed, have not checked in 8 hours
+				 ( ( pHost->m_nUDPFlags == 0 ) ||												// AND it has no flags set OR
+				   ( m_bAllServersDone ) ) )														// -we have checked all servers		
 			{
 				// Send a request for stats to this server
 				if ( pHost->m_sName.GetLength() )
@@ -534,7 +539,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				m_tLastServerStats = tNow;
 				m_pLastServer = pHost->m_pAddress;
 				return;
-			}	
+			}
 		}
 		// We have checked all known servers, we may go back and re-query any that didn't respond.
 		m_bAllServersDone = TRUE;
