@@ -219,8 +219,8 @@ void CCoolTipCtrl::ShowImpl()
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		//hMonitor = m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
-		hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
+		hMonitor = m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		//hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 		if (NULL != hMonitor)
 		{
 			if ( m_pfnGetMonitorInfoA(hMonitor, &mi) )
