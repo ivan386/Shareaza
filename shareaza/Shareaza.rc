@@ -2925,10 +2925,10 @@ BEGIN
     EDITTEXT        IDC_URN_ED2K,60,126,192,12,ES_AUTOHSCROLL
     GROUPBOX        "&Actions:",IDC_STATIC,6,156,258,60,WS_GROUP
     LTEXT           "Forget current verification status and reverify",
-                    IDC_FORGET_VERIFY,18,174,192,8
+                    IDC_FORGET_VERIFY,18,174,236,8
     LTEXT           "Assume file is 100% complete and reverify",
-                    IDC_COMPLETE_AND_VERIFY,18,186,192,8
-    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,18,198,192,
+                    IDC_COMPLETE_AND_VERIFY,18,186,236,8
+    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,18,198,236,
                     8
     GROUPBOX        "Data &Eraser:",IDC_STATIC,6,222,258,42,WS_GROUP
     LTEXT           "Erase bytes:",IDC_STATIC,18,241,48,12,SS_CENTERIMAGE
@@ -5261,7 +5261,7 @@ BEGIN
     IDS_BT_SEED_ALREADY     "The torrent ""%s"" is already on your download list, and cannot be seeded."
     IDS_BT_SEED_PARSE_ERROR "Error loading the torrent file ""%s"".  This may not be a valid torrent."
     IDS_BT_SEED_CREATE_FAIL "Unable to create BitTorrent share file ""%s""."
-    IDS_BT_SEED_SOURCE_LOST "This torrent includes the file ""%s"", but Shareaza cannot find this file in your library.  If possible, move the file to the same folder as the torrent and try again."
+    IDS_BT_SEED_SOURCE_LOST "This torrent includes the file ""%s"", but Shareaza cannot find this file in your library.  If possible, move the file to a shared folder and try again."
     IDS_BT_SEED_SOURCE_SIZE "This torrent includes the file ""%s"" which should be %s, however your version of the file is %s."
     IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
     IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
