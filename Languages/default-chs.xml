@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.111"
+		version="2.1.0.118"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -2022,6 +2022,17 @@
 		<text>儿童使用 Internet (包括 P2P 文件共享) 必须总是位于父母的监视之下进行。</text>
 	</document>
 
+	<document name="GeneralHelp.BadTorrentEncoding"> 
+		<text format="b">此 Torrent 文件可能存在编码错误</text> 
+		<newline gap="8"/> 
+		<text>系统在解码此 Torrent 文件中的文字时报告存在翻译错误。原因可能
+		是此 Torrent 文件已损坏，或可能是没有被正确编码。尽管文件的名称可能
+		无法正确显示，但文件仍可以正常下载。</text> 
+		<newline gap="8"/> 
+		<text>大多数 Torrent 制作程序允许您修复此 Torrent，以便保证其在所有的
+		BitTorrent 客户端中正常工作。如果您希望获得额外的帮助，请访问 Shareaza 论坛。</text> 
+	</document> 
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch">
@@ -2035,6 +2046,16 @@
 		<text>许多网络中客户端都将会忽略搜索，例如，所有的 MP3 文件，
 		因为这样定义地太过宽泛而产生过多的结果。</text>
 	</document>
+
+	<document name="SearchHelp.BadSearch2"> 
+		<text format="b">请重新措词</text> 
+		<newline gap="8"/> 
+		<text>此搜索格式不正确，可能无法正常工作。
+		所有的搜索启动需要达到最小字母、字符数的要求。</text> 
+		<newline gap="8"/> 
+		<text>虽然可以搜索通常文件的扩展名和数字，但在创建搜索时，
+		您必须同时输入其他项目进行配合。</text> 
+	</document> 
 
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">这一搜索不能启动</text>
@@ -3017,7 +3038,7 @@
 	<string id="20213" value="一般"/>
 	<string id="20214" value="较好"/>
 	<string id="20215" value="很好"/>
-	<string id="20216" value="优秀"/>
+	<string id="20216" value="极棒"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
