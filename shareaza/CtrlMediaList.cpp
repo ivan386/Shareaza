@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -587,6 +587,7 @@ void CMediaListCtrl::OnMediaAdd()
 		strFilter, this );
 
 	TCHAR szFiles[81920];
+	ZeroMemory( szFiles, 81920 );
 	dlg.m_ofn.lpstrFile	= szFiles;
 	dlg.m_ofn.nMaxFile	= 81920;
 
