@@ -1,12 +1,18 @@
 ; WARNING: Compile repair.iss first!
 
+; Version branding: Change this key on each release
+#define version "2.0.0.5"
+
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
 AppId=Shareaza
-AppMutex=Shareaza
+AppMutex=Shareaza,Global\Shareaza
 AppName=Shareaza
 AppPublisher=Shareaza Development Team
 AppReadmeFile={app}\Uninstall\readme.txt
+AppVersion={#version}
+AppVerName=Shareaza {#version}
+VersionInfoVersion={#version}
 DefaultDirName={pf}\Shareaza
 DirExistsWarning=no
 DefaultGroupName=Shareaza
@@ -106,8 +112,8 @@ Source: "{app}\*.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovere
 Source: "{app}\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 
 ; Copy installer into download and uninstall dir
-Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: currentuser
-Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: allusers
+Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: currentuser
+Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: allusers
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles
 
 [Icons]
@@ -204,5 +210,3 @@ Type: files; Name: "{app}\Data\*.xml"
 #include "languages.iss"
 ; Pull in Shareaza settings to write to registry
 #include "settings.iss"
-; Pull in version-specific keys
-#include "version.iss"
