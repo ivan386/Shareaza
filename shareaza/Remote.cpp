@@ -1370,7 +1370,7 @@ void CRemote::PageBanner(CString& strPath)
 		m_pResponse.EnsureBuffer( nSize );
 		CopyMemory( m_pResponse.m_pBuffer, pSource, nSize );
 		m_pResponse.m_nLength = nSize;
-		m_sHeader = _T("Content-Type: image/png\r\n");
+		m_sHeader = _T("Cache-Control: max-age=259200\r\nContent-Type: image/png\r\n");
 	}
 }
 
