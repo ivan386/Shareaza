@@ -1,9 +1,9 @@
 ; *** Inno Setup version 4.2.5+ Afrikaans messages ***
 ;
 ; Translated by Johann van der Walt (Thesage)
-; johannw @ imaginet.co.za
+; jvdwalt AT tuks DOT co DOT za
 ;
-; $jrsoftware: issrc/Files/Languages/Afrikaans.isl,v 1.00 2004/06/19 19:57:28 jr Exp $
+; $jrsoftware: issrc/Files/Languages/Afrikaans.isl,v 1.01 2004/09/15 19:57:28 jr Exp $
 
 [LangOptions]
 LanguageName=Afrikaans
@@ -300,8 +300,8 @@ StatusUninstalling=Deïnstalleer %1...
 
 NameAndVersion=%1 weergawe %2
 AdditionalIcons=Addisionele ikone:
-CreateDesktopIcon=Skep 'n &werkskerm ikoon
-CreateQuickLaunchIcon=Skep 'n &Quick Launch ikoon
+CreateDesktopIcon=Vertoon 'n &werkskerm ikoon
+CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
 ProgramOnTheWeb=%1 op die Web
 UninstallProgram=Deïnstalleer %1
 LaunchProgram=Loop %1
