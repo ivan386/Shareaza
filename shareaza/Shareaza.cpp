@@ -467,6 +467,9 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 		{	
 			pFile.Close();				// Close the file and start a new one
 			if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
+			// Unicode marker
+			WORD nByteOrder = 0xFEFF;
+			pFile.Write( &nByteOrder, 2 );
 		}
 		else
 		{
@@ -477,10 +480,9 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 	{
 		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
 
-#ifdef _UNICODE
+		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
 		pFile.Write( &nByteOrder, 2 );
-#endif
 	}
 	
 	if ( Settings.General.ShowTimestamp )
