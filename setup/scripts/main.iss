@@ -138,8 +138,7 @@ BeveledLabel=Shareaza Development Team
 ; Run the skin installer at end of installation
 Filename: "{app}\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"
 ; Run Shareaza at end of installation
-Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent nowait; Check: not RunRestart
-Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall nowait; Check: RunRestart
+Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent nowait
 
 [UninstallRun]
 ; Run the skin installer at start of uninstallation and make sure it only runs once
@@ -245,12 +244,6 @@ const
   KeyName = 'UninstallString';
 var
   Installed: Boolean;
-  Restart: Boolean;
-
-Function RunRestart(): boolean;
-Begin
-    Result := Restart;
-End;
 
 Function InnoSetupUsed(): boolean;
 Begin
@@ -269,7 +262,6 @@ Begin
   if CurStep = ssInstall then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
   if Wnd <> 0 then
-    Restart := True;
     SendMessage(Wnd, WM_CLOSE, 0, 0);
   while Wnd <> 0 do
       begin
@@ -288,7 +280,6 @@ Function ShouldSkipPage(PageID: Integer): Boolean;
 Begin
   Result := False;
   if PageID = wpSelectDir then Result := Installed;
-  if PageID = wpFinished then result := Restart;
 End;
 
 Procedure DeleteMultiDataDir();
