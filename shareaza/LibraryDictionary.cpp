@@ -223,20 +223,30 @@ BOOL CLibraryDictionary::BuildHashTable()
 		CString strWord;
 		
 		m_pWords.GetNextAssoc( pos, strWord, (void*&)pWord );
-		m_pTable->AddString( strWord );
+		
+		CLibraryFile* pFileTemp = *(pWord->m_pList); 
+		// Check if the file is shared
+		if ( pFileTemp->IsShared() )
+		{
+			m_pTable->AddString( strWord );
+		}
 	}
 	
 	for ( pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
-		
-		if ( pFile->m_bSHA1 )
-		{
-			m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
-		}
-		if ( pFile->m_bED2K )
-		{
-			m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+
+		// Check if the file is shared
+		if (pFile->IsShared())
+		{		
+			if ( pFile->m_bSHA1 )
+			{
+				m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+			}
+			if ( pFile->m_bED2K )
+			{
+				m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+			}
 		}
 	}
 	
@@ -287,7 +297,8 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 {
 	BuildHashTable();
 	
-	if ( ! m_pTable->Check( pSearch ) ) return NULL;
+	// Only check the hash when a search comes from other client. 
+	if ( ! bLocal && ! m_pTable->Check( pSearch ) ) return NULL;
 	
 	DWORD nCookie = m_nSearchCookie++;
 	
