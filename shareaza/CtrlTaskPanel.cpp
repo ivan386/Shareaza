@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,6 +90,7 @@ BOOL CTaskPanel::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT 
 
 CTaskBox* CTaskPanel::AddBox(CTaskBox* pBox, POSITION posBefore)
 {
+	ASSERT ( pBox != NULL );
 	if ( posBefore )
 	{
 		m_pBoxes.InsertBefore( posBefore, pBox );
@@ -249,6 +250,9 @@ void CTaskPanel::Layout(CRect& rcClient)
 			}
 		}
 	}
+
+	// Prevent stretch boxes from having negative height
+	nStretch = max( nStretch, CAPTION_HEIGHT * 2 );
 	
 	for ( POSITION pos = GetBoxIterator() ; pos ; )
 	{
