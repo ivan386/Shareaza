@@ -45,30 +45,21 @@ protected:
 	CDiscoveryService*	m_pWebCache;
 	int					m_nWebCache;
 	CDiscoveryService*	m_pSubmit;
-	DWORD				m_tQueried;
-	DWORD				m_tUpdated;
-	DWORD				m_tExecute;
+	DWORD				m_tQueried;					// Time a webcache was last queried
+	PROTOCOLID			m_nLastQueryProtocol;		// Protocol that was queried most recently
+	DWORD				m_tUpdated;					// Time a webcache was last updated
+	PROTOCOLID			m_nLastUpdateProtocol;		// Protocol that had a service update most recently
+	DWORD				m_tExecute;					// Time the Execute() function was last run
 	BOOL				m_bFirstTime;
-	BOOL				m_bForG2;
-	int					m_nCacheType;
-
-	enum
-	{
-		wcNull, wcForG2, wcForG1, wcForBoth
-	};
-	enum
-	{
-		NullOnly, G2Only, G1Only
-	};
-
 
 // Operations
 public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
-	int					GetCount(int nType = 0, int nOnlyNet = 0) const;
-	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, int nCacheType = wcForBoth);
+	int					GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
+	BOOL				EnoughServices() const;
+	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
 	void				Remove(CDiscoveryService* pService);
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
@@ -87,7 +78,9 @@ protected:
 	void				AddDefaults();
 	int					ExecuteBootstraps(int nCount);
 	int					ExecuteWebCache();
-	CDiscoveryService*	GetRandomWebCache(BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
+	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
+	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
+	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
 	BOOL				RequestWebCache(CDiscoveryService* pService, int nMode);
 	void				StopWebRequest();
 protected:
