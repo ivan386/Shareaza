@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">General:All Files</title>
                <title language="af">Algemeen:Alle Lêers</title>
                <title language="ar">&#160;عام&#160;:&#160;جميع&#160;الملفات</title>
-               <title language="cn">&#160;总体:&#160;全部文件</title>
+               <title language="chs">&#160;总体:&#160;全部文件</title>
                <title language="de">Allgemein:Alle Dateien</title>
                <title language="es">General: Todos los archivos</title>
                <title language="fr">Général:Tous les fichiers</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="cn">&#160;标题</title>
+                       <title language="chs">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -61,7 +61,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">All Files</title>
                <title language="af">Alle Lêers</title>
                <title language="ar">&#160;جميع&#160;الملفات</title>
-               <title language="cn">&#160;所有文件</title>
+               <title language="chs">&#160;所有文件</title>
                <title language="de">Alle Dateien</title>
                <title language="es">Todos los archivos</title>
                <title language="fr">Tous les fichiers</title>
@@ -75,7 +75,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;الملفات&#160;في&#160;مكتبتك.</subtitle>
-               <subtitle language="cn">&#160;这个文件夹包含收藏中所有文件。</subtitle>
+               <subtitle language="chs">&#160;这个文件夹包含收藏中所有文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>

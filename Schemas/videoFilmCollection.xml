@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Video:Films</title>
                <title language="af">Video:Films</title>
                <title language="ar">&#160;فيديو&#160;:&#160;افلام</title>
-               <title language="cn">&#160;视频:&#160;电影</title>
+               <title language="chs">&#160;视频:&#160;电影</title>
                <title language="de">Video:Filme</title>
                <title language="es">Vvideo: Filmes</title>
                <title language="fr">Vidéo:Films</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="cn">&#160;标题</title>
+                       <title language="chs">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -64,7 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Films</title>
                <title language="af">Films</title>
                <title language="ar">&#160;افلام</title>
-               <title language="cn">&#160;电影</title>
+               <title language="chs">&#160;电影</title>
                <title language="de">Filme</title>
                <title language="es">Filmes</title>
                <title language="fr">Films</title>
@@ -78,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
                <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;على&#160;قائمة&#160;الافلام&#160;الموجوده&#160;في&#160;المكتبة.</subtitle>
-               <subtitle language="cn">&#160;这个文件夹中的清单包含您收藏中的电影。</subtitle>
+               <subtitle language="chs">&#160;这个文件夹中的清单包含您收藏中的电影。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Filme in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les films de votre bibliothèque.</subtitle>

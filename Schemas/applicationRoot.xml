@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Application:My Applications</title>
                <title language="af">Program:My Programme</title>
                <title language="ar">&#160;البرامج&#160;:&#160;برامجي&#160;الخاصة</title>
-               <title language="cn">&#160;应用程序:&#160;我的应用程序</title>
+               <title language="chs">&#160;应用程序:&#160;我的应用程序</title>
                <title language="de">Anwendung:Eigene Anwendungen</title>
                <title language="es">Aplicación: Todas mis aplicaciones</title>
                <title language="fr">Application:Mes applications</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="cn">&#160;标题</title>
+                       <title language="chs">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -64,7 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Welcome to My Applications!</title>
                <title language="af">Welkom by My Programme!</title>
                <title language="ar">&#160;مرحبا&#160;بك&#160;في&#160;البرامج!</title>
-               <title language="cn">&#160;欢迎来到我的应用程序！</title>
+               <title language="chs">&#160;欢迎来到我的应用程序！</title>
                <title language="de">Willkommen bei Eigene Anwendungen!</title>
                <title language="es">Bienvenido a Mis Aplicaciones!</title>
                <title language="fr">Bienvenue dans Mes applications!</title>
@@ -78,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;ملفات&#160;البرامج.</subtitle>
-               <subtitle language="cn">&#160;这些文件夹包含所有您的应用程序。</subtitle>
+               <subtitle language="chs">&#160;这些文件夹包含所有您的应用程序。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Anwendungen.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>

@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Video Series</title>
                <title language="af">Video Reeks</title>
                <title language="ar">&#160;سلسلة&#160;فيديو</title>
-               <title language="cn">&#160;视频系列</title>
+               <title language="chs">&#160;视频系列</title>
                <title language="de">Fernsehserien</title>
                <title language="es">Video Series</title>
                <title language="fr">Séries</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
                        <title language="ar">&#160;الاسم</title>
-                       <title language="cn">&#160;名称</title>
+                       <title language="chs">&#160;名称</title>
                        <title language="de">Name</title>
                        <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
@@ -61,7 +61,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Series</title>
                        <title language="af">Reeks</title>
                        <title language="ar">&#160;السلسلة</title>
-                       <title language="cn">&#160;序列</title>
+                       <title language="chs">&#160;序列</title>
                        <title language="de">Serie</title>
                        <title language="es">Series</title>
                        <title language="fr">Séries</title>
@@ -77,7 +77,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Producer</title>
                        <title language="af">Vervaardiger</title>
                        <title language="ar">&#160;المنتج</title>
-                       <title language="cn">&#160;生产商</title>
+                       <title language="chs">&#160;生产商</title>
                        <title language="de">Produzent</title>
                        <title language="es">Productor</title>
                        <title language="fr">Producteur</title>
@@ -93,7 +93,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Subtitles</title>
                        <title language="af">Onderskrifte</title>
                        <title language="ar">&#160;العناوين&#160;الثانوية</title>
-                       <title language="cn">&#160;副标题</title>
+                       <title language="chs">&#160;副标题</title>
                        <title language="de">Untertitel</title>
                        <title language="es">Subtitulos</title>
                        <title language="fr">Sous-titres</title>
@@ -110,7 +110,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
                        <title language="ar">&#160;النوع</title>
-                       <title language="cn">&#160;类型</title>
+                       <title language="chs">&#160;类型</title>
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
@@ -126,7 +126,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
                        <title language="ar">&#160;التقدير</title>
-                       <title language="cn">&#160;分级</title>
+                       <title language="chs">&#160;分级</title>
                        <title language="de">FSK</title>
                        <title language="es">Rating</title>
                        <title language="fr">Estimation</title>
@@ -142,7 +142,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Source</title>
                        <title language="af">Bron</title>
                        <title language="ar">&#160;المصدر</title>
-                       <title language="cn">&#160;源</title>
+                       <title language="chs">&#160;源</title>
                        <title language="de">Source</title>
                        <title language="es">Fuente</title>
                        <title language="fr">Source</title>
@@ -158,7 +158,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Synopsis</title>
                        <title language="af">Oorsig</title>
                        <title language="ar">&#160;الخلاصة</title>
-                       <title language="cn">&#160;大纲</title>
+                       <title language="chs">&#160;大纲</title>
                        <title language="de">Zusammenfassung</title>
                        <title language="es">Sipnosis</title>
                        <title language="fr">Synopsis (Résumé)</title>
@@ -174,7 +174,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Studio</title>
                        <title language="af">Studio</title>
                        <title language="ar">&#160;استديو</title>
-                       <title language="cn">&#160;工作室</title>
+                       <title language="chs">&#160;工作室</title>
                        <title language="de">Studio</title>
                        <title language="es">Studio</title>
                        <title language="fr">Studio</title>
@@ -190,7 +190,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Actors</title>
                        <title language="af">Akteurs</title>
                        <title language="ar">&#160;الممثلون</title>
-                       <title language="cn">&#160;演员</title>
+                       <title language="chs">&#160;演员</title>
                        <title language="de">Schauspieler</title>
                        <title language="es">Actores</title>
                        <title language="fr">Acteurs</title>
@@ -206,7 +206,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
                        <title language="ar">&#160;الموزّع</title>
-                       <title language="cn">&#160;发行商</title>
+                       <title language="chs">&#160;发行商</title>
                        <title language="de">Herausgeber</title>
                        <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
@@ -222,7 +222,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ar">&#160;رابط&#160;الموزع</title>
-                       <title language="cn">&#160;发行商链接</title>
+                       <title language="chs">&#160;发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
                        <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
@@ -238,7 +238,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Quality Notes</title>
                        <title language="af">Kwaliteit Notas</title>
                        <title language="ar">&#160;ملاحظة&#160;الجودة</title>
-                       <title language="cn">&#160;质量说明项</title>
+                       <title language="chs">&#160;质量说明项</title>
                        <title language="de">Qualitätshinweise</title>
                        <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
@@ -254,7 +254,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Release Group</title>
                        <title language="af">Uitgewers Groep</title>
                        <title language="ar">&#160;اصدار&#160;المجموعات</title>
-                       <title language="cn">&#160;发行组织</title>
+                       <title language="chs">&#160;发行组织</title>
                        <title language="de">Release Group</title>
                        <title language="es">Release Group</title>
                        <title language="fr">Groupe de release</title>
@@ -270,7 +270,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Release Group Link</title>
                        <title language="af">Uitgewers Skakel</title>
                        <title language="ar">&#160;رابط&#160;اصدار&#160;المجموعات</title>
-                       <title language="cn">&#160;发行组织链接</title>
+                       <title language="chs">&#160;发行组织链接</title>
                        <title language="de">Release Group Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
@@ -286,7 +286,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
                        <title language="ar">&#160;كلمات&#160;البحث</title>
-                       <title language="cn">&#160;关键字</title>
+                       <title language="chs">&#160;关键字</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
@@ -302,7 +302,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="ar">&#160;الرابط</title>
-                       <title language="cn">&#160;链接</title>
+                       <title language="chs">&#160;链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
@@ -318,7 +318,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ar">&#160;الالوان</title>
-                       <title language="cn">&#160;收藏者</title>
+                       <title language="chs">&#160;收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -334,7 +334,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="ar">&#160;التعليقات</title>
-                       <title language="cn">&#160;注释</title>
+                       <title language="chs">&#160;注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
@@ -372,7 +372,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains episodes of {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat episodes van {name} .</subtitle>
                <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;على&#160;&#160;{name}.</subtitle>
-               <subtitle language="cn">&#160;这个文件夹包含以下情节&#160;{name}。</subtitle>
+               <subtitle language="chs">&#160;这个文件夹包含以下情节&#160;{name}。</subtitle>
                <subtitle language="de">Dieser Ordner enthält {name} Folgen.</subtitle>
                <subtitle language="es">Esta carpeta contiene episodios de {name}.</subtitle>
                <subtitle language="fr">Ce dossier contient les épisodes de {name}.</subtitle>

@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Document:Presentation</title>
                <title language="af">Dokument:Aanbieding</title>
                <title language="ar">&#160;المستندات&#160;:&#160;التقديم</title>
-               <title language="cn">&#160;文档:&#160;介绍</title>
+               <title language="chs">&#160;文档:&#160;介绍</title>
                <title language="de">Dokument:Präsentation</title>
                <title language="es">Documento: Presentación</title>
                <title language="fr">Document:Présentation</title>
@@ -41,7 +41,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="cn">&#160;标题</title>
+                       <title language="chs">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -58,7 +58,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
                        <title language="ar">&#160;الكاتب</title>
-                       <title language="cn">&#160;作者</title>
+                       <title language="chs">&#160;作者</title>
                        <title language="de">Autor</title>
                        <title language="es">Autor</title>
                        <title language="fr">Auteur</title>
@@ -74,7 +74,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Subject</title>
                        <title language="af">Onderwerp</title>
                        <title language="ar">&#160;الموضوع</title>
-                       <title language="cn">&#160;主题</title>
+                       <title language="chs">&#160;主题</title>
                        <title language="de">Thema</title>
                        <title language="es">Sujeto</title>
                        <title language="fr">Sujet</title>
@@ -91,7 +91,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
                        <title language="ar">&#160;كلمات&#160;البحث</title>
-                       <title language="cn">&#160;关键字</title>
+                       <title language="chs">&#160;关键字</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
@@ -108,7 +108,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Abstract</title>
                        <title language="af">Abstrak</title>
                        <title language="ar">&#160;الملخّص</title>
-                       <title language="cn">&#160;摘要</title>
+                       <title language="chs">&#160;摘要</title>
                        <title language="de">Zusammenfassung</title>
                        <title language="es">Abstracto</title>
                        <title language="fr">Abstrait</title>
@@ -124,7 +124,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Initials</title>
                        <title language="af">Voorletters</title>
                        <title language="ar">&#160;حروف&#160;الاسم&#160;الأولى</title>
-                       <title language="cn">&#160;首字</title>
+                       <title language="chs">&#160;首字</title>
                        <title language="de">Initialen</title>
                        <title language="es">Iniciales</title>
                        <title language="fr">Initiales</title>
@@ -140,7 +140,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Copyright</title>
                        <title language="af">Kopiereg</title>
                        <title language="ar">&#160;حقوق&#160;النسخ</title>
-                       <title language="cn">&#160;版权</title>
+                       <title language="chs">&#160;版权</title>
                        <title language="de">Copyright</title>
                        <title language="es">Copyright</title>
                        <title language="fr">Copyright</title>
@@ -157,7 +157,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
                        <title language="ar">&#160;الاصدار</title>
-                       <title language="cn">&#160;版本</title>
+                       <title language="chs">&#160;版本</title>
                        <title language="de">Version</title>
                        <title language="es">Versión</title>
                        <title language="fr">Version</title>
@@ -173,7 +173,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Revision</title>
                        <title language="af">Hersiening</title>
                        <title language="ar">&#160;التنقيح</title>
-                       <title language="cn">&#160;修订版</title>
+                       <title language="chs">&#160;修订版</title>
                        <title language="de">Revision</title>
                        <title language="es">Revision</title>
                        <title language="fr">Révision</title>
@@ -190,7 +190,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Format</title>
                        <title language="af">Formaat</title>
                        <title language="ar">&#160;الصيغة</title>
-                       <title language="cn">&#160;格式</title>
+                       <title language="chs">&#160;格式</title>
                        <title language="de">Format</title>
                        <title language="es">Formato</title>
                        <title language="fr">Format</title>
@@ -206,7 +206,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Format Version</title>
                        <title language="af">Formaat Weerg.</title>
                        <title language="ar">&#160;اصدار&#160;الصيغة</title>
-                       <title language="cn">&#160;格式版本</title>
+                       <title language="chs">&#160;格式版本</title>
                        <title language="de">Formatversion</title>
                        <title language="es">Versión del Formato</title>
                        <title language="fr">Version du format</title>
@@ -222,7 +222,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Slides</title>
                        <title language="af">Skyfies</title>
                        <title language="ar">&#160;الشرائح</title>
-                       <title language="cn">&#160;拖动</title>
+                       <title language="chs">&#160;拖动</title>
                        <title language="de">Folien</title>
                        <title language="es">Slides</title>
                        <title language="fr">Feuilles</title>
@@ -239,7 +239,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="ar">&#160;الرابط</title>
-                       <title language="cn">&#160;链接</title>
+                       <title language="chs">&#160;链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
@@ -256,7 +256,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="ar">&#160;التعليقات</title>
-                       <title language="cn">&#160;注释</title>
+                       <title language="chs">&#160;注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
