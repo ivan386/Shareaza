@@ -124,7 +124,7 @@ BOOL CDiscoveryServices::EnoughServices() const
 			if ( pService->m_bGnutella1 ) nG1Count++;
 			if ( pService->m_bGnutella2 ) nG2Count++;
 		}
-		else
+		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
 			nServerMetCount ++;
 		}
