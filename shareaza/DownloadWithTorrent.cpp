@@ -36,6 +36,7 @@
 #include "FragmentedFile.h"
 #include "Buffer.h"
 #include "SHA.h"
+#include "LibraryFolders.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -132,7 +133,9 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	SetModified();
 	
 	CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+	LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	pTorrent->SaveTorrentFile( Settings.Downloads.TorrentPath );
+	Settings.BitTorrent.AdvancedInterface = TRUE;
 	
 	return TRUE;
 }
