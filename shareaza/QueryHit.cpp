@@ -1008,24 +1008,24 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		CEDTag pTag;
 		if ( ! pTag.Read( pPacket ) ) 
 		{
-			theApp.Message( MSG_SYSTEM, _T("****ed2k search result packet read error")); //debug check
+			theApp.Message( MSG_ERROR, _T("ED2K search result packet read error") ); //debug check
 			return FALSE;
 		}
 	
-		if ( pTag.m_nKey == ED2K_FT_FILENAME ) //&& pTag.m_nType == ED2K_TAG_STRING )
+		if ( pTag.m_nKey == ED2K_FT_FILENAME )
 		{
 			m_sName = pTag.m_sValue;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_FILESIZE )//&& pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_FILESIZE )
 		{
 			m_bSize = TRUE;
 			m_nSize = pTag.m_nValue;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )//&& pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )
 		{
 			//theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
 		}
-		else if ( pTag.m_nKey == ED2K_FT_SOURCES ) //&& pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_SOURCES )
 		{
 			m_nSources = pTag.m_nValue;
 			if ( m_nSources == 0 )
@@ -1033,7 +1033,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			else
 				m_nSources--;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES ) //&& pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES )
 		{
 			if ( ! pTag.m_nValue ) //If there are no complete sources
 			{
@@ -1046,15 +1046,15 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports complete sources present.") );
 			}
 		}
-		else if ( pTag.m_nKey == ED2K_FT_LENGTH )//&& pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_LENGTH )
 		{	//Length- new style (DWORD)
 			nLength = pTag.m_nValue;	
 		}
-		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )//&& pTag.m_nType == ED2K_TAG_INT ) )
+		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )
 		{	//Bitrate- new style
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
-		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC ) ) //&& pTag.m_nType == ED2K_TAG_STRING ) )
+		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC ) )
 		{	//Codec - new style
 			strCodec = pTag.m_sValue;
 		}

@@ -72,7 +72,7 @@ BOOL CScheduler::Load()
 
 	pFile.Close();
 
-	m_nCurrentHour = 0xFF;	//Reset the current hour so the scheduler updates now.
+	m_nCurrentHour = 0xFF;	// Reset the current hour so the scheduler updates now.
 	return TRUE;
 }
 
@@ -88,7 +88,7 @@ void CScheduler::Save()
 		ar.Close();
 	}
 	
-	m_nCurrentHour = 0xFF;	//Reset the current hour so the scheduler updates now.
+	m_nCurrentHour = 0xFF;	// Reset the current hour so the scheduler updates now.
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -121,7 +121,7 @@ void CScheduler::Serialize(CArchive& ar)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CScheduler set
+// CScheduler Update
 void CScheduler::Update()
 {
 	int nDay, nHour;
@@ -130,23 +130,23 @@ void CScheduler::Update()
 	{
 		DWORD tTicks = GetTickCount();
 
-		if ( tTicks - m_tLastCheck < 15000 ) return; //Only run this once every 15 seconds since the CTime functions can be slow
+		if ( tTicks - m_tLastCheck < 20000 ) return; // Only run this once every 20 seconds since the CTime functions can be slow
 		m_tLastCheck = tTicks;
 
-		//Get the current time
+		// Get the current time
 		CTime tTime = CTime::GetCurrentTime();
 
-		//Get current Day/Hour and check they are valid
+		// Get current Day/Hour and check they are valid
 		nDay = tTime.GetDayOfWeek() - 1;
 		nHour = tTime.GetHour();
 		if ( ( nDay >= 7 ) || ( nDay < 0 ) || ( nHour >= 24 ) || ( nHour < 0 ) )
 		{
-			//Really Really Strange Error That Should Never Happen. 
+			// Really Really Strange Error That Should Never Happen. 
 			theApp.Message( MSG_ERROR, _T("Scheduler recieved invalid time") );
 			return;
 		}
 
-		//If the hour has changed, set the current status
+		// If the hour has changed, set the current status
 		if ( m_nCurrentHour != nHour )
 		{
 			SetVariables( m_pSchedule[nDay][nHour] );
@@ -156,13 +156,13 @@ void CScheduler::Update()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CScheduler set
+// CScheduler set variables
 void CScheduler::SetVariables(BYTE nCurrentSettings)
 {
 	switch ( nCurrentSettings )
 	{
 	case SCHEDULE_OFF:
-		theApp.Message( MSG_DEFAULT, _T("Scheduler: Shutting down") );
+		theApp.Message( MSG_DEBUG, _T("Scheduler: Shutting down") );
 		Settings.Live.BandwidthScale = 0;
 		Settings.Gnutella2.EnableToday	= FALSE;
 		Settings.Gnutella1.EnableToday	= FALSE;
@@ -170,7 +170,7 @@ void CScheduler::SetVariables(BYTE nCurrentSettings)
 		if ( Network.IsConnected() ) Network.Disconnect();
 		break;
 	case SCHEDULE_LIMITED_SPEED:
-		theApp.Message( MSG_DEFAULT, _T("Scheduler: Limited speed") );
+		theApp.Message( MSG_DEBUG, _T("Scheduler: Limited speed") );
 		Settings.Live.BandwidthScale = Settings.Scheduler.LimitedBandwidth;
 		Settings.Gnutella2.EnableToday	= TRUE;
 		Settings.Gnutella1.EnableToday	= Settings.Scheduler.LimitedNetworks ? FALSE :Settings.Gnutella1.EnableAlways;
@@ -178,7 +178,7 @@ void CScheduler::SetVariables(BYTE nCurrentSettings)
 		if ( ! Network.IsConnected() ) Network.Connect( TRUE );
 		break;
 	case SCHEDULE_FULL_SPEED:
-		theApp.Message( MSG_DEFAULT, _T("Scheduler: Full Speed") );
+		theApp.Message( MSG_DEBUG, _T("Scheduler: Full Speed") );
 		Settings.Live.BandwidthScale = 100;
 		Settings.Gnutella2.EnableToday	= TRUE;
 		Settings.Gnutella1.EnableToday	= Settings.Gnutella1.EnableAlways;

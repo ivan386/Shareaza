@@ -440,23 +440,10 @@ BOOL CEDClient::OnRead()
 
 BOOL CEDClient::OnLoggedIn()
 {
-theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnLoggedIn") ); //*********************
 	m_bLogin = TRUE;
-
-if ( m_bEmRequest )
-	theApp.Message( MSG_DEFAULT, _T("m_bEmRequest TRUE") );
-if ( m_pDownload && m_pDownload->m_pClient->m_bEmRequest )
-	theApp.Message( MSG_DEFAULT, _T("m_pDownload->m_pClient->m_bEmRequest TRUE") );
 
 	EDClients.Merge( this );
 
-theApp.Message( MSG_DEFAULT, _T("Merged") );
-if ( m_bEmRequest )
-	theApp.Message( MSG_DEFAULT, _T("m_bEmRequest TRUE") );
-if (  m_pDownload && m_pDownload->m_pClient->m_bEmRequest )
-	theApp.Message( MSG_DEFAULT, _T("m_pDownload->m_pClient->m_bEmRequest TRUE") );
-
-	
 	if ( m_pDownload != NULL )
 	{
 		m_pDownload->OnConnected();
@@ -568,8 +555,6 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 
 void CEDClient::SendHello(BYTE nType)
 {
-theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendHello") ); //*********************
-
 	CEDPacket* pPacket = CEDPacket::New( nType );
 	
 	if ( nType == ED2K_C2C_HELLO ) pPacket->WriteByte( 0x10 );
@@ -647,7 +632,6 @@ theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendHello") ); //***********
 
 BOOL CEDClient::OnHello(CEDPacket* pPacket)
 {
-theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnHello") ); //*********************
 	if ( m_bLogin ) return TRUE;
 	
 	if ( pPacket->GetRemaining() < sizeof(GUID) + 6 + 4 + 6 )
@@ -767,8 +751,6 @@ theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnHello") ); //*************
 
 void CEDClient::SendEmuleInfo(BYTE nType)
 {
-theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendEmuleInfo") ); //*********************
-
 	CEDPacket* pPacket = CEDPacket::New( nType, ED2K_PROTOCOL_EMULE );
 	
 	pPacket->WriteByte( 0x40 );		// eMule version
@@ -790,8 +772,6 @@ theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendEmuleInfo") ); //*******
 
 BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 {
-theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnEmuleInfo") ); //*********************
-
 	if ( pPacket->GetRemaining() < 5 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );

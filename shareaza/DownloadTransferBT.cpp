@@ -432,7 +432,7 @@ BOOL CDownloadTransferBT::SendRequests()
 			// Then activate endgame (if it's enabled)
 			m_pDownload->m_bTorrentEndgame = Settings.BitTorrent.Endgame;
 			// Debug message
-			//theApp.Message( MSG_DEBUG, _T("Torrent EndGame Activated") );
+			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated") );
 		}
 	}
 	pPossible->DeleteChain();

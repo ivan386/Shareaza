@@ -538,7 +538,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	}
 	else
 	{
-		theApp.Message( MSG_SYSTEM,_T("Unrecognised ed2k packet"));
+		theApp.Message( MSG_DEBUG, _T("Unrecognised ed2k packet") );
 	}
 	
 	return TRUE;

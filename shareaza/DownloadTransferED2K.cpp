@@ -401,11 +401,11 @@ BOOL CDownloadTransferED2K::OnQueueRank(CEDPacket* pPacket)
 	else
 	{
 		  
-		//******************************* (Temp debug check)
-		theApp.Message( MSG_ERROR, _T("**** Possible queue ranking packet error") );  
-		theApp.Message( MSG_ERROR, m_sAddress );
-		theApp.Message( MSG_ERROR, m_sUserAgent );
-		//
+//******************************* (Temp debug check)
+theApp.Message( MSG_ERROR, _T("**** Possible queue ranking packet error") );  
+theApp.Message( MSG_ERROR, m_sAddress );
+theApp.Message( MSG_ERROR, m_sUserAgent );
+//
 
 		m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
 		Close( TS_UNKNOWN );
@@ -665,10 +665,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 )
 	{
 		m_pClient->WritePartStatus( pPacket, m_pDownload );
-		theApp.Message( MSG_ERROR, _T("**** WritePartStatus() called") );
 	}
-	else
-		theApp.Message( MSG_ERROR, _T("---- WritePartStatus() NOT called") );
 	/*
 	//We don't have any need to do this- it's not very useful (or accurate). Raza only offers extended request V1
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 2 ) 

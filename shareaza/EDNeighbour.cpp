@@ -368,8 +368,8 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 
 	CString strServerFlags;
-	strServerFlags.Format( _T("Server Flags: Zlib: %d New Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
-	theApp.Message( MSG_DEFAULT, strServerFlags );
+	strServerFlags.Format( _T("Server Flags: Zlib: %d Short Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
+	theApp.Message( MSG_DEBUG, strServerFlags );
 	
 	
 	return TRUE;
@@ -516,7 +516,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 		{	// This will be remembered by the neighbour, and if the search continues, more results can be requested.
 			m_pMoreResultsGUID = pGUID;
 			pGUID = NULL;
-			//theApp.Message( MSG_DEBUG, _T("Additional results packet recieved.") );
+			theApp.Message( MSG_DEBUG, _T("Additional results packet recieved.") );
 		}
 	}
 	
