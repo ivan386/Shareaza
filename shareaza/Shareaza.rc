@@ -1047,12 +1047,12 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,156,90,10
     DEFPUSHBUTTON   "Filter",IDOK,110,237,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
-    COMBOBOX        IDC_FILTERS,14,192,134,37,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    COMBOBOX        IDC_FILTERS,14,192,124,37,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "Set as default",IDC_SET_DEFAULT_FILTER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,211,56,10
-    PUSHBUTTON      "&Save as",IDC_SAVE_FILTER,156,191,50,14
-    PUSHBUTTON      "&Delete",IDC_DELETE_FILTER,156,209,50,14
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,211,124,10
+    PUSHBUTTON      "&Save as",IDC_SAVE_FILTER,145,191,61,14
+    PUSHBUTTON      "&Delete",IDC_DELETE_FILTER,145,209,61,14
     GROUPBOX        "Filters:",IDC_STATIC,5,179,210,52
 END
 
@@ -5391,7 +5391,6 @@ BEGIN
                             "Create a .torrent for this file to upload to a website."
 END
 
-
 STRINGTABLE 
 BEGIN
     IDS_ED2K_SERVER_CONNECTING 
@@ -5641,7 +5640,6 @@ BEGIN
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
-
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
