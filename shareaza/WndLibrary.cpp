@@ -160,6 +160,96 @@ HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
 BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 {
 	CAlbumFolder* pFolder = NULL;
+	CString strFormat, strMessage;
+	CCollectionFile pCollection;
+	
+	if ( pCollection.Open( pszPath ) )
+	{	//The specified collection is valid
+
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE, FALSE, TRUE ) )
+		{	//Collection IS already in the library, reset and view it
+
+			//Re-mount the collection
+			LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+			//Display the collection
+			pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+			Library.Unlock();
+		}
+		else
+		{	//Collection IS NOT already in the library.
+			
+			//Create and share the collection folder
+			CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
+
+			//Add collection to the library
+			CString strSource( pszPath ), strTarget;
+			
+			int nName = strSource.ReverseFind( '\\' );
+			if ( nName >= 0 )
+			{
+				strTarget = Settings.Downloads.CollectionPath + strSource.Mid( nName );
+				LibraryBuilder.RequestPriority( strTarget );
+			}
+			
+			if ( strTarget.GetLength() > 0 && CopyFile( strSource, strTarget, TRUE ) )
+			{	//Collection was copied into the collection folder
+				LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
+				strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
+				AfxMessageBox( strMessage, MB_ICONINFORMATION );		
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
+				{
+					pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+					Library.Unlock();
+				}
+			}
+			else	
+			{	//Was not able to copy collection to the collection folder
+
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
+				{	//Collection was already there. (Same name- assumed the same. ToDo: Check SHA1 or similar)
+					//Re-mount the collection
+					LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+					//Display the collection
+					pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+					Library.Unlock();
+				}
+				else		
+				{	//Unknown reason- Display an error message
+					LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
+					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
+					AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+				}
+			}
+		}
+	}
+	else
+	{	//User clicked on an invalid collection
+		LoadString( strFormat, IDS_LIBRARY_COLLECTION_INVALID );
+		strMessage.Format( strFormat, pszPath );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+	}
+	
+	if ( pFolder != NULL ) Display( pFolder );
+	return ( pFolder != NULL );
+}
+
+
+/*
+/////////////////////////////////////////////////////////////////////////////
+// CLibraryWnd events
+
+HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
+{
+	if ( m_wndFrame.m_hWnd == NULL ) return S_FALSE;
+	CLibraryList* pList = m_wndFrame.GetViewSelection();
+	*ppView = (IGenericView*)pList->GetInterface( IID_IGenericView, TRUE );
+	return S_OK;
+}
+
+BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
+{
+	CAlbumFolder* pFolder = NULL;
 	
 	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE, FALSE, TRUE ) )
 	{
@@ -212,3 +302,4 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 	if ( pFolder != NULL ) Display( pFolder );
 	return ( pFolder != NULL );
 }
+*/
