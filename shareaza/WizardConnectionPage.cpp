@@ -270,6 +270,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 16;
 		Settings.Downloads.MaxConnectingSources	= 40;
 		Settings.Downloads.MaxFileSearches		= 8;
+		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
 	{	//Fast broadband
@@ -302,6 +303,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 1;
+		Settings.Downloads.SourcesWanted		= 200; //Don't bother requesting so many
 	}
 	
 	UploadQueues.CreateDefault();
