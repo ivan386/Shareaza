@@ -42,8 +42,9 @@ public:
 public:
 	CEDClient*		m_pClient;
 	BOOL			m_bHashset;
-	DWORD			m_tRequest;
-	DWORD			m_tRanking;
+	DWORD			m_tRequest;				//When request was last sent
+	DWORD			m_tSources;				//When source request was last sent
+	DWORD			m_tRanking;				//When queue ranking was last recieved
 	BYTE*			m_pAvailable;
 	CFileFragment*	m_pRequested;
 	int				m_nRequested;

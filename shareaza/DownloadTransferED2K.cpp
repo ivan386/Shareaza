@@ -55,6 +55,7 @@ CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource) : CDownlo
 	m_pClient		= NULL;
 	m_bHashset		= FALSE;
 	m_tRequest		= 0;
+	m_tSources		= 0;
 	m_tRanking		= 0;
 	m_pAvailable	= NULL;
 	m_pRequested	= NULL;
@@ -630,6 +631,7 @@ void CDownloadTransferED2K::Send(CEDPacket* pPacket, BOOL bRelease)
 BOOL CDownloadTransferED2K::SendPrimaryRequest()
 {
 	ASSERT( m_pClient != NULL );
+	DWORD tNow = GetTickCount();
 	
 	/*
 	if ( m_pDownload->GetVolumeRemaining() == 0 )
@@ -640,21 +642,28 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	}
 	*/
 	
-	SetState( dtsRequesting );
-	m_tRequest	= GetTickCount();
+	SetState( dtsRequesting );	//This source is current requesting
+	m_tRequest	= tNow;			//Set the 'last requested' time
 	ClearRequests();
 	
+	//Send ed2k file request
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 ) m_pClient->WritePartStatus( pPacket, m_pDownload );
 	Send( pPacket );
 	
+	//Send ed2k status request
 	pPacket = CEDPacket::New( ED2K_C2C_FILESTATUSREQUEST );
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	Send( pPacket );
 	
-	if ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted && m_pClient->m_bEmule && Network.IsListening() )
+	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&//We want more sources
+		 ( tNow > m_tSources ) && ( tNow - m_tSources > 15 * 60 * 1000 ) &&		//We have not asked for at least 15 minutes
+		 ( m_pClient->m_bEmule ) && ( Network.IsListening() ) )					//Remote client is eMule compatible and we are accepting packets
 	{
+		//Set 'last asked for sources' time
+		m_tSources = tNow;
+		//Send ed2k request for sources packet
 		pPacket = CEDPacket::New( ED2K_C2C_REQUESTSOURCES, ED2K_PROTOCOL_EMULE );
 		pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 		Send( pPacket );
