@@ -994,5 +994,20 @@ void  CSecureRule::MaskFix()
 		return;
 	}
 
-	nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match	
+	nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match
+
+	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
+	{
+		BYTE nNetByte = 0;
+		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
+		{
+			nNetByte <<= 1;
+			if( nNetwork & 0x80000000 )
+			{
+				nNetByte |= 1;
+			}
+			nNetwork <<= 1;
+		}
+		m_nIP[ nByte ] = nNetByte;
+	}
 }
