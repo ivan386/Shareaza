@@ -16,7 +16,7 @@
                        description="Shareaza Default Hungarian Skin File"
                        link="http://www.shareaza.com/"
                        email="yuri1 (at) freemail (dot) hu"
-                       version="2.0.2.11"
+                       version="2.0.2.16"
                        type="Language"
                        language="hu"
                        prompt="Kattints ide a magyar nyelvhez."
@@ -2024,8 +2024,8 @@
 <commandTips>
        <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
        <tip id="ID_NETWORK_EXIT" message="Kilépés a Shareazából."/>
-       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz"/>
-       <tip id="ID_NETWORK_DISCONNECT" message="Lekapcsolódik a hálózatról"/>
+       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz."/>
+       <tip id="ID_NETWORK_DISCONNECT" message="Lekapcsolódik a hálózatról."/>
        <tip id="ID_TOOLS_SETTINGS" message="A Shareaza beállításai..."/>
        <tip id="ID_VIEW_SYSTEM" message="A RENDSZER ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_NEIGHBOURS" message="A SZOMSZÉDOK ablak elrejtése, mutatása."/>
@@ -2033,8 +2033,8 @@
        <tip id="ID_VIEW_LIBRARY" message="A KÖNYVTÁR ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_DOWNLOADS" message="A LETÖLTÉSEK ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_UPLOADS" message="A FELTÖLTÉSEK ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_HOSTS" message="A KISZOLGÁLÓK LISTÁJA ablak elrejtése, mutatása.."/>
-       <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása.."/>
+       <tip id="ID_VIEW_HOSTS" message="A KISZOLGÁLÓK LISTÁJA ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása."/>
        <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
        <tip id="ID_SYSTEM_CLEAR" message="A log törlése."/>
        <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak"/>
@@ -2088,13 +2088,12 @@
        <tip id="ID_HELP_WEB_2" message="Ellátogat a P2PForums.com-ra."/>
        <tip id="ID_HELP_WEB_3" message="Ellátogat a Slyck.com-ra."/>
        <tip id="ID_HELP_FAQ" message="A Shareaza használati utasításához vezet el."/>
-       <tip id="ID_SEARCH_CHAT" message="Egy chatszobát nyit a kiválasztott felhasználóval.."/>
+       <tip id="ID_SEARCH_CHAT" message="Egy chatszobát nyit a kiválasztott felhasználóval."/>
        <tip id="ID_TRAFFIC_GRID" message="Rácsvolnalak megjelenítése."/>
        <tip id="ID_TRAFFIC_AXIS" message="A függőleges tengelyt jeleníti meg."/>
        <tip id="ID_TRAFFIC_LEGEND" message="Jelmagyarázat megjelenítése."/>
        <tip id="ID_TRAFFIC_SETUP" message="A grafikon elemeinek beállítása..."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Grafikon törlése."/>
-       <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése"/>
        <tip id="ID_TOOLS_WIZARD" message="Shareaza Gyors beállítások megnyitása..."/>
        <tip id="ID_CHILD_RESTORE" message="A kiválasztott ablak megnyitása."/>
        <tip id="ID_CHILD_CLOSE" message="A kiválasztott ablak bezárása."/>
@@ -2124,7 +2123,7 @@
        <tip id="ID_SECURITY_POLICY_DENY" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol tiltva van."/>
        <tip id="ID_LIBRARY_REFRESH" message="A könyvtár frissítése."/>
        <tip id="ID_LIBRARY_MOVE" message="A kiválasztott fájlok mozgatása egy másik mappába..."/>
-       <tip id="ID_LIBRARY_COPY" message="A kiválasztott fájlok másolása egy másik mappába.."/>
+       <tip id="ID_LIBRARY_COPY" message="A kiválasztott fájlok másolása egy másik mappába..."/>
        <tip id="ID_LIBRARY_DELETE" message="Azonnal törli a fájl(ok)at."/>
        <tip id="ID_LIBRARY_ENQUEUE" message="A kiválasztott fájl(ok) hozzáadása a lejátszólistához."/>
        <tip id="ID_DOWNLOADS_ENQUEUE" message="A kiválasztott letöltés(ek) hozzáadása a lejátszólistához."/>
@@ -2139,7 +2138,7 @@
        <tip id="ID_VIEW_TABBED" message="Shareaza használata az összetett nézetben."/>
        <tip id="ID_VIEW_WINDOWED" message="A Shareaza használata az ablakos nézetben."/>
        <tip id="ID_LIBRARY_URL" message="URL másolása."/>
-       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERKERESŐ ablak elrejtése, mutatása.."/>
+       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERKERESŐ ablak elrejtése, mutatása."/>
        <tip id="ID_DISCOVERY_EDIT" message="A kiválasztott szolgáltatás tulajdonságai."/>
        <tip id="ID_DISCOVERY_QUERY" message="A kiválasztott szolgáltatás lekérdezése."/>
        <tip id="ID_DISCOVERY_REMOVE" message="A kiválasztott szolgáltatás eltávolítása."/>
@@ -2192,13 +2191,13 @@
        <tip id="ID_NEIGHBOURS_SETTINGS" message="Hálózati beállítások..."/>
        <tip id="ID_LIBRARY_TREE_PHYSICAL" message="Valós mappák mutatása."/>
        <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Könyvtár rendezése."/>
-       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Megosztod-e vagy nem?."/>
+       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Megosztod?"/>
        <tip id="ID_LIBRARY_VIEW" message="Könytárnézet kiválasztása..."/>
-       <tip id="ID_LIBRARY_VIEW_DETAIL" message="Fájl neve, részletek, metadata" tip="Nézetek"/>
-       <tip id="ID_LIBRARY_VIEW_HOME" message="Könyvtár kezdőlapja" tip="Kezdőlap"/>
-       <tip id="ID_LIBRARY_VIEW_LIST" message="Fájlok vízszintes sorokban való mutatása" tip="Listanézet"/>
-       <tip id="ID_LIBRARY_VIEW_ICON" message="Fájlok ikonnézetben" tip="Ikonnézet"/>
-       <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Kis képek szerinti nézet" tip="Miniatűrök"/>
+       <tip id="ID_LIBRARY_VIEW_DETAIL" message="Fájl neve, részletek, metadata." tip="Nézetek"/>
+       <tip id="ID_LIBRARY_VIEW_HOME" message="Könyvtár kezdőlapja." tip="Kezdőlap"/>
+       <tip id="ID_LIBRARY_VIEW_LIST" message="Fájlok vízszintes sorokban való mutatása." tip="Listanézet"/>
+       <tip id="ID_LIBRARY_VIEW_ICON" message="Fájlok ikonnézetben." tip="Ikonnézet"/>
+       <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Kis képek szerinti nézet." tip="Miniatűrök"/>
        <tip id="ID_LIBRARY_PARENT" message="Egy szinttel feljebb."/>
        <tip id="ID_LIBRARY_PANEL" message="Részletek elrejtése, mutatása."/>
        <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Tulajdonságok szerkesztése..."/>
@@ -2263,7 +2262,7 @@
        <tip id="ID_VIEW_HELP" message="A SÚGÓ ablak elrejtése, mutatása."/>
        <tip id="ID_TAB_HELP" message="Shareaza segítség."/>
        <tip id="ID_DOWNLOADS_COPY" message="URL másolása."/>
-       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Albumnézet mutatása" tip="Albumnézet"/>
+       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Albumnézet mutatása." tip="Albumnézet"/>
        <tip id="ID_SEARCH_DETAILS" message="Részletes adatok a kiválasztott fájlról."/>
        <tip id="ID_UPLOADS_FILTER_ALL" message="Minden feltöltés mutatása."/>
        <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Aktív feltöltések mutatása."/>
@@ -2309,10 +2308,10 @@
        <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
        <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
        <tip id="ID_LIBRARY_SEED_TORRENT" message="A kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
-       <tip id="ID_TOOLS_SEEDTORRENT" message=" kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése."/>
        <tip id="ID_DOWNLOADS_EDIT" message="A fejlett letöltésszerkesztő mutatása..."/>
-       <tip id="ID_MEDIA_MUTE" message="Némítás"/>
-       <tip id="ID_WINDOW_REMOTE" message="A Shareaza távirányítójának mutatása"/>
+       <tip id="ID_MEDIA_MUTE" message="Némítás."/>
+       <tip id="ID_WINDOW_REMOTE" message="A Shareaza távirányítójának mutatása."/>
        <tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent feltöltések mutatása."/>
        <tip id="ID_TOOLS_MERCORA" message="P2P Rádió indítása"/>
        <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
@@ -2403,7 +2402,7 @@
        <string id="8158" value="Töröl"/>
        <string id="8159" value="Fejlett..."/>
        <string id="8160" value="Kapcsolat létrehozása..."/>
-       <string id="8161" value="Push request elküldve, kapcsolódásra várok..."/>
+       <string id="8161" value="Kapcsolatkérés, kapcsolódásra várok..."/>
        <string id="8162" value="Kapcsolódva, fájllista lekérése..."/>
        <string id="8163" value="Fájllista letöltése (%2.f%%)..."/>
        <string id="8164" value="Nem lehetett kapcsolatot létesíteni a fájllista letöltéséhez."/>
@@ -2417,7 +2416,7 @@
        <string id="8208" value="%i fájl hashelése:"/>
        <string id="8224" value="Letöltés folyamatban:"/>
        <string id="8225" value="Letöltés szüneteltetve:"/>
-       <string id="8226" value="Shareaza has completed downloading:"/>
+       <string id="8226" value="Letöltés befejezve:"/>
        <string id="8227" value="%i óra %i perc"/>
        <string id="8228" value="%i perc %i másodperc"/>
        <string id="8229" value="%i másodperc"/>
@@ -2443,7 +2442,7 @@
        <string id="8293" value="Nincs fájl kiválasztva"/>
        <string id="8294" value="Mostanában hozzáadva"/>
        <string id="8295" value="Osztályozd"/>
-       <string id="8304" value="N/A"/>
+       <string id="8304" value="Nincs adat"/>
        <string id="8305" value="%i/%i"/>
        <string id="8306" value="Hely"/>
        <string id="8307" value="Típus"/>
@@ -2466,7 +2465,7 @@
        <string id="8325" value="Aktív"/>
        <string id="8326" value="Következő a sorban"/>
        <string id="16064" value="Shareaza hálózati mag indítása..."/>
-       <string id="16065" value="Nem tudok akcsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
+       <string id="16065" value="Nem tudok kacsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
        <string id="16066" value="Shareaza hálózati mag leállítása..."/>
        <string id="16067" value="Lekapcsolódott a hálózatról."/>
        <string id="16068" value="Bejövő TCP kapcsolat elfogadása: %s port %i."/>
@@ -2527,7 +2526,7 @@
        <string id="16200" value="%s érvénytelen címmel rendelkező pong csomagot küldött tovább, ignorálás."/>
        <string id="16201" value="Hibásan formázott lekérdezéscsomag: %s, ignorálás."/>
        <string id="16202" value="Hibásan formázott találati query csomag: %s, ignorálás."/>
-       <string id="16203" value="%s egy érvénytelen hosszúságú push csomagot küldött tovább, ignorálás."/>
+       <string id="16203" value="%s egy érvénytelen hosszúságú csomagot küldött tovább, ignorálás."/>
        <string id="16208" value="Nem várt query routing: %s."/>
        <string id="16209" value="%s érvénytelen query routing table-t küldött, kapcsolat megszakítása."/>
        <string id="16210" value="%s query routing table frissítve (%i bit = %lu[%i], %i%% full)."/>
@@ -2639,7 +2638,7 @@
        <string id="16358" value="Feltöltési kapcsolat megszakadt, régi hely a sorban megtartása: %s."/>
        <string id="16359" value="Offline várakozási sor lejárt %s, eltávolít."/>
        <string id="16360" value="Feltöltés megtagadása: &quot;%s&quot; ide: %s (%s), az egész feltöltési sor tele van."/>
-       <string id="16361" value="Refusing upload to %s (%s), network disabled."/>
+       <string id="16361" value="Feltöltés megtagadása %s (%s), hálózat kikapcsolva."/>
        <string id="16362" value="Az eDonkey2000 feltöltéseket nem tanácsos megszakítani. Biztos megszakítod?"/>
        <string id="16363" value="Torrent feltöltések"/>
        <string id="16364" value="Kész feltöltések"/>
@@ -2734,8 +2733,8 @@
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
-       <string id="16867" value="Fürkésző szolgáltatás &quot;%s&quot; hibázott, hibák száma: %i."/>
-       <string id="16868" value="Fürkésző szolgáltatás &quot;%s&quot; %i alkalommal hibázott, eltávolítás."/>
+       <string id="16867" value="Szerverkereső szolgáltatás &quot;%s&quot; hibázott, hibák száma: %i."/>
+       <string id="16868" value="Szerverkereső szolgáltatás &quot;%s&quot; %i alkalommal hibázott, eltávolítás."/>
        <string id="16870" value="GWebCache frissítés elküldése &quot;%s&quot;..."/>
        <string id="16871" value="GWebCache &quot;%s&quot; elküldése egy másik GWebCache-re..."/>
        <string id="16928" value="Kapcsolódás fájllista miatt: %s..."/>
@@ -2802,7 +2801,7 @@
        <string id="17233" value="Időtúllépés az eDonkey2000 klines viszontválaszánál: %s."/>
        <string id="17234" value=" eDonkey2000 klines link megtagadása, mert az eDonkey2000 ki van kapcsolva: %s."/>
        <string id="17248" value="Félkész eDonkey2000 letöltések importálása..."/>
-       <string id="17249" value="Fladat kész, %i félkész letöltés importálva."/>
+       <string id="17249" value="Feladat kész, %i félkész letöltés importálva."/>
        <string id="17250" value="Mappa beolvasása: &quot;%s&quot;..."/>
        <string id="17251" value="  Nem lehetett a fájlt importálni."/>
        <string id="17252" value=" Félkész fájlt találtam: &quot;%s&quot;, importálás..."/>
@@ -2888,7 +2887,7 @@
        <string id="20125" value="Ellenőrizve"/>
        <string id="20126" value="Ellenőrizetlen"/>
        <string id="20127" value="forrás"/>
-       <string id="20128" value="forrás"/> <!-- numbers 21, 31, ... -->
+       <string id="20128" value="forrás"/> <!-- numbers 21, 31, ...  -->
        <string id="20129" value="forrás"/> <!-- tens -->
        <string id="20130" value="forrás"/> <!-- from 11 to 19 -->
        <string id="20131" value="forrás"/> <!-- from 2 to 4 -->
