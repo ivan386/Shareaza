@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(CSchedulerSettingsPage, CSettingsPage)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDBLCLK()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -158,6 +159,9 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 		if ( ( m_nHoverDay != 0xFF ) || ( m_nHoverHour != 0xFF ) )
 		{
 			m_nHoverDay = m_nHoverHour = 0xFF;
+			m_nDownHour = m_nHoverHour	= 0xFF;
+
+			ReleaseCapture();
 			Invalidate();
 		}
 	}
@@ -184,8 +188,23 @@ void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
 	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
 
-	m_nDownDay = m_nHoverDay	= 0xFF;
-	m_nDownHour = m_nHoverHour	= 0xFF;
+	m_nDownDay	= 0xFF;
+	m_nDownHour	= 0xFF;
+
+	ReleaseCapture();
+	Invalidate();
+	UpdateWindow();
+}
+
+void CSchedulerSettingsPage::OnLButtonDblClk(UINT nFlags, CPoint point) 
+{
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+
+	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
+	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
+
+	m_nDownDay	= 0xFF;
+	m_nDownHour = 0xFF;
 
 	ReleaseCapture();
 	Invalidate();

@@ -36,7 +36,7 @@ CScheduler Schedule;
 
 CScheduler::CScheduler()
 {
-	ZeroMemory( m_pSchedule , 7 * 24 );
+	FillMemory( m_pSchedule , 7 * 24, SCHEDULE_FULL_SPEED );
 	m_nCurrentHour = 0xFF;
 	m_tLastCheck = 0;
 }
