@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Italian Skin File -->
 
@@ -206,12 +206,12 @@
 	<toolbar name="CLibraryHeaderBar.Physical">
 		<button id="ID_LIBRARY_VIEW" text="Visualizza"/>
 		<button id="ID_LIBRARY_PANEL" text="Mostra dettagli"/>
-		<button id="ID_LIBRARY_PARENT"/>
+		<button id="ID_LIBRARY_PARENT" text="Su"/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Virtual">
 		<button id="ID_LIBRARY_VIEW" text="Visualizza"/>
 		<button id="ID_LIBRARY_PANEL" text="Mostra dettagli"/>
-		<button id="ID_LIBRARY_PARENT"/>
+		<button id="ID_LIBRARY_PARENT" text="Su"/>
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
 	<toolbar name="CLibraryHomeView.Physical">
@@ -1869,7 +1869,7 @@
 	<document name="DownloadHelp.Completed">
 		<text format="b">Questo download è stato completato</text>
 		<newline gap="8"/>
-		<text>Shareaza ha finito di scaricare questo file e ha verificato se
+		<text>Shareaza ha finito di scaricare questo file e ha verificato che
 		è corretto al 100%.  Il file è stato spostato nella tua cartella di download.</text>
 	</document>
 
@@ -1877,7 +1877,7 @@
 		<text format="b">Questo download è stato spostato</text>
 		<newline gap="8"/>
 		<text>Shareaza ha finito di scaricare questo file e ha verificato
-		 l'integrità.  E' stato correntemente spostato e/o decompresso nella tua cartella di download.</text>
+		 l'integrità.  È stato correntemente spostato e/o decompresso nella tua cartella di download.</text>
 	</document>
 
 	<document name="DownloadHelp.Paused">
@@ -1933,7 +1933,7 @@
 		tuttavia puoi velocizzare il processo usando il comando </text>
 		<text format="b">Trova più fonti </text><text>.</text>
 		<newline gap="8"/>
-		<text>Sfortunatamente nella maggior parte dei casi non possono esserci utenti in linea che hanno il
+		<text>Sfortunatamente in molti casi potrebbero non esserci utenti in linea che hanno il
 		file in questione.  L'unica cosa da fare è attendere che
 		qualcuno si connetta a Shareaza, oppure annulla il download e prova a trovare dei file simili che sono
 		ampiamente disponibili.</text>
@@ -1942,7 +1942,7 @@
 	<document name="DownloadHelp.Creating">
 		<text format="b">Questo download è in stato di creazione</text>
 		<newline gap="8"/>
-		<text>Shareaza sta pre-distribuendo un file nel quale conservare questo download, per
+		<text>Shareaza sta pre-allocando un file nel quale conservare questo download, per
 		salvarlo in futuro.</text>
 	</document>
 
@@ -1961,15 +1961,15 @@
 		<newline gap="8"/>
 		<text>L'ammontare di spazio libero su uno o più dischi utilizzati da Shareaza è basso.</text>
 		<newline gap="8"/>
-		<text>E' consigliabile mantenere sempre un ragionevole ammontare di spazio libero disponibile sul disco. I programmi
+		<text>È consigliabile mantenere sempre un ragionevole ammontare di spazio libero disponibile sul disco. I programmi
 		possono diventare instabili se i dischi sono pieni, e i file temporanei potrebbero andar perduti. Dovresti far
 		girare un pulitore per dischi fissi, cancellare file indesiderati, o disinstallare software non più necessario.</text>
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
-	 	 <text format="b">E' stato rilevato Windows XP Service Pack 2</text>
+	 	 <text format="b">È stato rilevato Windows XP Service Pack 2</text>
 	       <newline gap="8"/>
-		 <text>Shareaza ha rilevato Windows XP Service Pack 2. Questo fa si che riduca che il numero di connessioni
+		 <text>Shareaza ha rilevato Windows XP Service Pack 2. Questo fa si che riduca il numero di connessioni
 		 che l'applicazione riesce a gestire nello stesso momento.</text>
 		 <newline gap="8"/>
 		 <text>Shareaza ha limitate connessioni di rete e seleziona gli appropriati valori di default
@@ -1988,7 +1988,7 @@
              solo termini negativi, e si dovrebbero evitare ricerche generalizzate.</text>
              <newline gap="8"/>
              <text>La maggior parte dei client nella rete ignora una ricerca
-             di tutti i file MP3, ad esempio, è non  è abbastanza
+             di tutti i file MP3, ad esempio, in quanto non  è abbastanza
              specifica e potrebbe generare troppi risultati.</text>
       </document>
 
@@ -2366,7 +2366,7 @@
 	<string id="8071" value="Connesso"/>
 	<string id="8072" value="Disconnetti"/>
 	<string id="8096" value="Quest'area mostra ulteriori informazioni sui file selezionati."/>
-	<string id="8097" value="E' disponibile una sola fonte (%s).  "/>
+	<string id="8097" value="È disponibile una sola fonte (%s).  "/>
 	<string id="8098" value="Sono disponibili %i fonti (%s).  "/>
 	<string id="8099" value="C'è una revisione."/>
 	<string id="8100" value="Ci sono %i revisioni."/>
@@ -2382,11 +2382,11 @@
 	<string id="8132" value="Alcuni risultati sono disponibili, ma sono stati filtrati."/>
 	<string id="8133" value="Shareaza sta cercando nella rete..."/>
 	<string id="8134" value="Stai per iniziare una nuova ricerca. Desideri azzerare i risultati della ricerca precedente?"/>
-	<string id="8141" value="Show the Search Panel"/>
-	<string id="8142" value="Hide the Search Panel"/>
-	<string id="8143" value="Searching..."/>
+	<string id="8141" value="Mostra il Pannello Ricerche"/>
+	<string id="8142" value="Nascondi il Pannello Ricerche"/>
+	<string id="8143" value="Sto cercando..."/>
 	<string id="8144" value="Cerca"/>
-	<string id="8145" value="Search More"/>
+	<string id="8145" value="Cerca ancora"/>
 	<string id="8146" value="Stop"/>
 	<string id="8147" value="Qualsiasi tipo di file"/>
 	<string id="8148" value="Inserisci qui la tua ricerca:"/>
@@ -2483,7 +2483,7 @@
 	<string id="16081" value="Invio richiesta per &quot;%s&quot; a %s."/>
 	<string id="16083" value="Forzare il tuo PC in modalità hub potrebbe aver riflessi negativi sulla rete.  Generalmente è meglio permettere a Shareaza di decidere se deve essere utilizzata la modalità hub.\n\nLa modalità hub non permette migliori risultati nella ricerca, o genera migliori risultati per l'utente. Desideri continuare?"/>
 	<string id="16084" value="Disabilitando il supporto per il protocollo Gnutella-1 potrebbe limitare i risultati nelle tue ricerche, inoltre il tuo comportamento come hub potrebbe impattarsi anche sui risultati di altri utenti. Desideri continuare?"/>
-	<string id="16085" value="Gnutella2 è la rete principale di Shareaza. Disabilitare il supporto per questa puo' limitare enormemente sia il numero che la qualità delle tue ricerche. Desideri continuare?"/>
+	<string id="16085" value="Gnutella2 è la rete principale di Shareaza. Disabilitare il supporto per questa può limitare enormemente sia il numero che la qualità delle tue ricerche. Desideri continuare?"/>
 	<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
 	<string id="16128" value="Connessione in entrata da %s porta %i accettata."/>
 	<string id="16129" value="Avvio di una connessione con %s porta %i in corso..."/>
@@ -2724,8 +2724,8 @@
 	<string id="16801" value="Non hai ancora indicato se la tua connessione Internet è protetta da un firewall. Scegli l'opzione firewall prima di continuare."/>
 	<string id="16802" value="Non hai indicato nessuna cartella da condividere. Desideri continuare?"/>
 	<string id="16803" value="La cartella che vuoi condividere è già condivisa come parte di un'altra cartella condivisa:\n\n%s"/>
-	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente.\n\nE' consigliato inserire un nickname in modo che gli altri utenti sanno con chi sono connessi.\n\nDesideri continuare senza un nickname?"/>
-	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nE' consigliato inserire una località in modo che gli altri utenti sanno dove sei.\n\nDesideri continuare senza inserire una località?"/>
+	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente.\n\nÈ consigliato inserire un nickname in modo che gli altri utenti sanno con chi sono connessi.\n\nDesideri continuare senza un nickname?"/>
+	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nÈ consigliato inserire una località in modo che gli altri utenti sanno dove sei.\n\nDesideri continuare senza inserire una località?"/>
 	<string id="16806" value="Hai indicato che vuoi impostare il port-forwarding sul tuo router NAT o firewall.\n\nConfigura la tua rete per impostare il forward alla porta TCP  %i al tuo PC."/>
 	<string id="16807" value="Inserisci il limite di banda che desideri impostare (per esempio &quot;123 kb/s&quot; per kilobit al secondo, oppure &quot;123 KB/s&quot; per kilobyte al secondo)."/>
 	<string id="16808" value="Non hai selezionato la tua età e il tuo sesso. Continuare comunque?"/>
@@ -2839,7 +2839,7 @@
 	<string id="17495" value="Questo torrent include il file &quot;%s&quot; che deve essere %s, mentre la versione del tuo file è %s."/>
 	<string id="17496" value="Si è verificato un errore durante la copia da &quot;%s&quot; a un file condiviso su BitTorrent."/>
 	<string id="17497" value="Si è verificato un errore sconosciuto durante il tentativo di aggiungere &quot;%s&quot;."/>
-	<string id="17498" value="E' stato rivelato un errore nel file &quot;%s&quot;."/>
+	<string id="17498" value="È stato rivelato un errore nel file &quot;%s&quot;."/>
 	<string id="18496" value="Hai modificato il nome del file.  Desideri rinominare questo download?"/>
 	<string id="18497" value="Hai inserito un valore SHA1 non valido.  Controlla e riprova di nuovo."/>
 	<string id="18498" value="Hai inserito un valore tiger-tree root non valido.  Controlla e riprova di nuovo."/>
@@ -2871,27 +2871,27 @@
 	<string id="20109" value="Accodato"/>
 	<string id="20110" value="Sconosciuto"/>
 	<string id="20111" value="Completato"/>
-	<string id="20112" value="Ricerca"/>
-	<string id="20113" value="Sposta"/>
+	<string id="20112" value="Seeding"/>
+	<string id="20113" value="Spostamento"/>
 	<string id="20114" value="In Pausa"/>
 	<string id="20115" value="Errore File"/>
 	<string id="20116" value="Impossissibile spostare"/>
 	<string id="20117" value="Verifica"/>
 	<string id="20118" value="Attivo"/>
 	<string id="20119" value="In sospeso"/>
-	<string id="20120" value="Ricerco"/>
-	<string id="20121" value="Creo"/>
+	<string id="20120" value="Ricerca"/>
+	<string id="20121" value="Creazione"/>
 	<string id="20122" value="Torrent"/>
-	<string id="20123" value="Tracker Down"/>
-	<string id="20124" value="(Nessun Sorgente)"/>
+	<string id="20123" value="Tracker Scollegato"/>
+	<string id="20124" value="(Nessuna Fonte)"/>
 	<string id="20125" value="Verificato"/>
 	<string id="20126" value="Non Verificato"/>
-	<string id="20127" value="sorgente"/>
-	<string id="20128" value="sorgenti"/> <!-- numbers 21, 31, ... -->
-	<string id="20129" value="sorgenti"/> <!-- tens -->
-	<string id="20130" value="sorgenti"/> <!-- from 11 to 19 -->
-	<string id="20131" value="sorgenti"/> <!-- from 2 to 4 -->
-	<string id="20132" value="sorgenti"/> <!-- from 5 to 9 -->
+	<string id="20127" value="fonte"/>
+	<string id="20128" value="fonti"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="fonti"/> <!-- tens -->
+	<string id="20130" value="fonti"/> <!-- from 11 to 19 -->
+	<string id="20131" value="fonti"/> <!-- from 2 to 4 -->
+	<string id="20132" value="fonti"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3719,7 +3719,7 @@
 		<control caption="Sai che Shareaza è un prodotto gratuito al 100% ?"/>
 		<control caption="Shareaza NON contiene nessun &quot;spyware&quot;, &quot;adware&quot; o altro software aggiuntivo. NON mostra mai messaggi pubblicitari o &quot;popup&quot;.{n}{n}Se dovessi vedere messaggi pubblicitari o &quot;popup&quot; mentre usi Shareaza, sicuramente NON provengono da questo programma."/>
 		<control caption="Sfortunatamente molti software contengono adware o spyware, di modo che l'utente diventa sospettoso e desidera verificare se il suo PC contiene software aggiuntivi con un programma di rimozione."/>
-		<control caption="Non dovete pagare nulla per scaricare Shareaza.  Shareaza puo' essere scaricato da www.shareaza.com.  Se pagate a qualcuno per Shareaza, potete richiedere un pieno rimborso di quanto pagato."/>
+		<control caption="Non dovete pagare nulla per scaricare Shareaza.  Shareaza può essere scaricato da www.shareaza.com.  Se pagate a qualcuno per Shareaza, potete richiedere un pieno rimborso di quanto pagato."/>
 		<control caption="Shareaza rispetta i suoi utenti!"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="Chiudi"/>
