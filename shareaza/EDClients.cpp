@@ -252,12 +252,15 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 
 void CEDClients::OnRun()
 {
-	m_tLastRun = GetTickCount();
+	// Delay to keep ed2k transfers under 10 KB/s per source
+	DWORD tNow = GetTickCount();
+	if ( tNow - m_tLastRun < 1000 ) return;
+	m_tLastRun = tNow;
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
 	{
 		CEDClient* pNext = pClient->m_pEdNext;
-		pClient->OnRunEx( m_tLastRun );
+		pClient->OnRunEx( tNow );
 		pClient = pNext;
 	}
 }
