@@ -218,23 +218,30 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
-	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	
 	if ( m_sSHA1.GetLength() )
 	{
+		if( pDownload->m_bSHA1Trusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sED2K.GetLength() )
 	{
+		if( pDownload->m_bED2KTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sBTH.GetLength() )
 	{
+		if( pDownload->m_bBTHTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
 	}
+
+	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	
 	DrawRule( pDC, &pt );
 	
