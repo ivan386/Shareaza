@@ -198,6 +198,8 @@ void CHostCacheWnd::Update()
 	
 	pLiveList.Apply( &m_wndList, TRUE );
 	m_wndList.ShowWindow( SW_SHOW );
+
+	tLastUpdate = GetTickCount();				// Update timer
 }
 
 CHostCacheHost* CHostCacheWnd::GetItem(int nItem)
@@ -231,8 +233,10 @@ void CHostCacheWnd::OnTimer(UINT nIDEvent)
 {
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
 	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
-	
-	if ( pCache->m_nCookie != m_nCookie ) Update();
+	DWORD tTicks = GetTickCount();
+
+	// Wait 5 seconds before refreshing
+	if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 5000 ) ) Update();
 }
 
 void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)

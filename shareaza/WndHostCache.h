@@ -46,6 +46,7 @@ protected:
 	CLiveListSizer	m_pSizer;
 	CImageList		m_gdiImageList;
 	DWORD			m_nCookie;
+	DWORD			tLastUpdate;
 
 // Operations
 public:
