@@ -144,12 +144,12 @@ void CTransfers::Add(CTransfer* pTransfer)
 
 void CTransfers::Remove(CTransfer* pTransfer)
 {
-	CTransfers::Lock oLock;
 	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
 	
 	if ( pTransfer->m_hSocket != INVALID_SOCKET )
 		WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, 0 );
 	
+	CTransfers::Lock oLock;
 	if ( POSITION pos = m_pList.Find( pTransfer ) )
 		m_pList.RemoveAt( pos );
 }
