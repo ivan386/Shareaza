@@ -126,7 +126,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( m_bBTH )
 	{
 		if ( nTransfers > Settings.BitTorrent.DownloadConnections ) return FALSE;
-		if ( ( m_pTransferFirst == NULL ) &&  ( Downloads.GetActiveTorrentCount() > Settings.BitTorrent.DownloadTorrents ) ) return FALSE;
+		if ( ( m_pTransferFirst == NULL ) &&  ( Downloads.GetActiveTorrentCount() >= Settings.BitTorrent.DownloadTorrents ) ) return FALSE;
 	}
 	
 	if ( nTransfers < Settings.Downloads.MaxFileTransfers &&

@@ -125,39 +125,40 @@ DWORD CDownloadTransfer::GetMeasuredSpeed()
 
 CString CDownloadTransfer::GetStateText(BOOL bLong)
 {
-	CString str;
+	CString str, strQ;
 	
 	switch ( m_nState )
 	{
 	case dtsConnecting:
-		str = _T("Connecting");
+		LoadString( str, IDS_STATUS_CONNECTING );
 		break;
 	case dtsRequesting:
-		str = _T("Requesting");
+		LoadString( str, IDS_STATUS_REQUESTING );
 		break;
 	case dtsHeaders:
 	case dtsFlushing:
-		str = _T("Response");
+		LoadString( str, IDS_STATUS_RESPONSE );
 		break;
 	case dtsDownloading:
-		str = _T("Downloading");
+		LoadString( str, IDS_STATUS_DOWNLOADING );
 		break;
 	case dtsTiger:
-		str = _T("TigerTree");
+		LoadString( str, IDS_STATUS_TIGERTREE );
 		break;
 	case dtsHashset:
-		str = _T("Hashset");
+		LoadString( str, IDS_STATUS_HASHSET );
 		break;
 	case dtsMetadata:
-		str = _T("Metadata");
+		LoadString( str, IDS_STATUS_METADATA );
 		break;
 	case dtsBusy:
-		str = _T("Busy");
+		LoadString( str, IDS_STATUS_BUSY );
 		break;
 	case dtsEnqueue:
-		str = _T("Enqueue");
+		LoadString( str, IDS_STATUS_ENQUEUE );
 		break;
 	case dtsQueued:
+		LoadString( strQ, IDS_STATUS_QUEUED );
 		if ( ! bLong )
 		{
 			str.Format( m_nQueueLen ? _T("Q %i of %i") : _T("Q #%i"),
@@ -165,17 +166,17 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		}
 		else if ( m_sQueueName.GetLength() )
 		{
-			str.Format( _T("Queued: %s: %i of %i"),
+			str.Format( _T("%s: %s: %i of %i"), strQ,
 				(LPCTSTR)m_sQueueName, m_nQueuePos, m_nQueueLen );
 		}
 		else
 		{
-			str.Format( _T("Queued: %i of %i"),
+			str.Format( _T("%s: %i of %i"), strQ,
 				m_nQueuePos, m_nQueueLen );
 		}
 		break;
 	default:
-		str = _T("Unknown");
+		LoadString( str, IDS_STATUS_UNKNOWN );
 		break;
 	}
 	
