@@ -4107,7 +4107,7 @@
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Файл"/>
-		<column from="Type" to="Тип"/>
+		<column from="Type" to="Расширение"/>
 		<column from="Size" to="Размер"/>
 		<column from="Rating" to="Оценка"/>
 		<column from="Host/Count" to="Кол-во хостов"/>
