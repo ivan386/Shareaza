@@ -271,7 +271,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxConnectingSources	= 40;
 		Settings.Downloads.MaxFileSearches		= 6;
 	}
-	if ( nSpeed > 768 && theApp.m_bNT )
+	else if ( nSpeed > 768 && theApp.m_bNT )
 	{	//Fast broadband
 		Settings.Downloads.MaxFiles				= 26;
 		Settings.Downloads.MaxTransfers			= 96;
@@ -279,7 +279,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxConnectingSources	= 28;
 		Settings.Downloads.MaxFileSearches		= 5;
 	}
-	if ( nSpeed > 256 && theApp.m_bNT )
+	else if ( nSpeed > 256 && theApp.m_bNT )
 	{	//Slower broadband
 		Settings.Downloads.MaxFiles				= 20;
 		Settings.Downloads.MaxTransfers			= 64;
