@@ -285,6 +285,7 @@
 #define IDC_FILTER_REJECT               1096
 #define IDC_PROMPT_URLS                 1096
 #define IDC_FILTER_LOCAL                1097
+#define IDC_PROMPT_URLS2                1097
 #define IDC_FILTER_BOGUS                1098
 #define IDC_MIN_SIZE                    1099
 #define IDC_MAX_SIZE                    1100
@@ -297,6 +298,7 @@
 #define IDC_PROGRESS                    1104
 #define IDC_PROGRESS_FILE               1105
 #define IDC_DOWNLOAD_GRAPH              1105
+#define IDC_HIDE_SEARCH                 1106
 #define IDC_IP_1                        1108
 #define IDC_IP_2                        1109
 #define IDC_IP_3                        1110

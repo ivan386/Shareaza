@@ -49,6 +49,7 @@ public:
 		BOOL		RatesInBytes;
 		DWORD		RatesUnit;
 		BOOL		AlwaysOpenURLs;
+		BOOL		HideSearchBar;
 		CString		UserAgent;
 		CString		Language;
 	} General;

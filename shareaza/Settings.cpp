@@ -55,6 +55,7 @@ void CSettings::Setup()
 	Add( _T("Settings.RatesInBytes"), &General.RatesInBytes, FALSE );
 	Add( _T("Settings.RatesUnit"), &General.RatesUnit, 0 );
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
+	Add( _T("Settings.HideSearchBar"), &General.HideSearchBar, TRUE );
 	Add( _T("Settings.UserAgent"), &General.UserAgent, _T(".") );
 	Add( _T("Settings.Language"), &General.Language, _T("en") );
 	

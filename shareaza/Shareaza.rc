@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,21
- PRODUCTVERSION 2,0,0,21
+ FILEVERSION 2,0,0,23
+ PRODUCTVERSION 2,0,0,23
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 21"
+            VALUE "FileVersion", "2, 0, 0, 23"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 21"
+            VALUE "ProductVersion", "2, 0, 0, 23"
         END
     END
     BLOCK "VarFileInfo"
@@ -1276,12 +1276,12 @@ BEGIN
                     WS_TABSTOP,15,186,245,15
 END
 
-IDD_SETTINGS_GENERAL DIALOG  0, 0, 282, 220
+IDD_SETTINGS_GENERAL DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,150,WS_GROUP
+    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,160,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
                     140,10
@@ -1295,13 +1295,13 @@ BEGIN
                     15,65,140,10
     CONTROL         "Switch to Transfers view on download",
                     IDC_SWITCH_TO_TRANSFERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,81,140,10
+                    WS_TABSTOP,15,80,140,10
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,95,140,10
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,110,140,10
-    LTEXT           "Show rates in:",IDC_STATIC,15,126,50,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,70,126,80,55,CBS_DROPDOWNLIST | 
+    LTEXT           "Show rates in:",IDC_STATIC,15,142,50,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_RATES_IN_BYTES,70,142,80,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
@@ -1324,6 +1324,8 @@ BEGIN
                     SS_CENTERIMAGE
     COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,140,10
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 292, 148

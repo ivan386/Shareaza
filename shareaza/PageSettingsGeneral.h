@@ -49,6 +49,7 @@ public:
 	BOOL	m_bExpandDownloads;
 	BOOL	m_bStartup;
 	BOOL	m_bPromptURLs;
+	BOOL	m_bHideSearch;
 	CSpinButtonCtrl	m_wndTipSpin;
 	CListCtrl	m_wndTips;
 	CSliderCtrl	m_wndTipAlpha;
