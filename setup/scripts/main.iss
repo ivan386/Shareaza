@@ -14,7 +14,6 @@ DefaultDirName={reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}
 DirExistsWarning=no
 DefaultGroupName=Shareaza
 AllowNoIcons=yes
-DisableReadyPage=yes
 OutputDir=setup\builds
 OutputBaseFilename=Shareaza_{#version}
 SolidCompression=yes
