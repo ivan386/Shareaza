@@ -2008,6 +2008,7 @@ CString CLibraryBuilderInternals::ReadLine(HANDLE hFile)
 	TCHAR cChar;
 	CString str;
 	
+	ZeroMemory( &cChar, sizeof(cChar) );
 	for ( nLength = 0 ; ReadFile( hFile, &cChar, 1, &nRead, NULL ) && nRead == 1 && nLength++ < 4096 ; )
 	{
 		if ( cChar == '\r' ) break;
@@ -2026,6 +2027,7 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile)
 	TCHAR cChar;
 	CString str;
 	
+	ZeroMemory( &cChar, sizeof(cChar) );
 	for ( nLength = 0 ; ReadFile( hFile, &cChar, 1, &nRead, NULL ) && nRead == 1 && nLength++ < 4096 ; )
 	{
 		if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
