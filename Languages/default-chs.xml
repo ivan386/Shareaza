@@ -20,9 +20,9 @@
 <manifest	name="Chinese (Simplified)"
 		author="STC"
 		description="Shareaza Chinese(Simplified) Skin File"
-		link="http://www.cq-keda.com/shareaza"
+		link="http://shareaza.czp-kd.com/"
 		email="shareaza(AT)163(DOT)com"
-		version="2.1.0.42"
+		version="2.1.0.70"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -85,7 +85,7 @@
 		<button id="ID_SEARCH_PANEL" text="显示搜索"/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -96,7 +96,7 @@
 		<button id="ID_SEARCH_PANEL" text="显示搜索"/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -105,12 +105,12 @@
 		<button id="ID_BROWSE_LAUNCH" text="浏览用户"/>
 		<separator/>
 		<button id="ID_SEARCH_SEARCH" text="重新搜索..."/>
-		<button id="ID_SEARCH_STOP" text="停止"/>
+		<button id="ID_SEARCH_STOP" text="停止搜索"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="显示搜索"/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -129,7 +129,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -142,7 +142,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -223,7 +223,7 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="共享文件..."/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -231,7 +231,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="创建专辑..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="删除专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -239,7 +239,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="创建专辑..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="删除专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -247,7 +247,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="打开或播放"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="加入播放列表"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -261,7 +261,7 @@
 		<button id="ID_LIBRARY_COPY" text="复制"/>
 		<button id="ID_LIBRARY_DELETE" text="删除"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -270,7 +270,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="加入播放列表"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放专辑"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -281,16 +281,16 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="属性"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放全部专辑"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放整个专辑"/>
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="下载所有文件"/>
 		<rightAlign/>
-		<label text="查找:" tip="输入要搜索的文字。"/>
+		<label text="查找:" tip="输入要搜索的文字"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
 	</toolbar>
@@ -300,15 +300,15 @@
 		<button id="ID_MEDIA_PAUSE" text="暂停" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
-		<label text="导航:" tip="查询在媒体文件中的位置。"/>
+		<label text="搜索:" tip="查询在媒体文件中的位置"/>
 		<control id="117" width="190" height="22"/>
-		<label text="音量:" tip="调节音量。"/>
+		<label text="音量:" tip="调节音量"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="打开文件"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_PREVIOUS" text="前一个"/>
-		<button id="ID_MEDIA_NEXT" text="后一个"/>
+		<button id="ID_MEDIA_PREVIOUS" text="上一个"/>
+		<button id="ID_MEDIA_NEXT" text="下一个"/>
 		<separator/>
 		<button id="ID_MEDIA_PLAYLIST" text="播放列表"/>
 	</toolbar>
@@ -317,11 +317,11 @@
 		<button id="ID_MEDIA_PAUSE" text="暂停" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="停止"/>
 		<separator/>
-		<label text="导航:" tip="查找在媒体文件中的位置。"/>
+		<label text="搜索:" tip="查找在媒体文件中的位置"/>
 		<control id="117" width="190" height="22"/>
-		<label text="速度:" tip="调整媒体文件的播放速度。"/>
+		<label text="速度:" tip="调整媒体文件的播放速度"/>
 		<control id="118" width="40" height="22"/>
-		<label text="音量:" tip="调节音量。"/>
+		<label text="音量:" tip="调节音量"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="打开"/>
@@ -375,7 +375,7 @@
 		<button id="ID_HITMONITOR_PAUSE" text="暂停"/>
 		<button id="ID_SEARCH_CLEAR" text="清除"/>
 		<rightAlign/>
-		<label text="过滤:" tip="键入需要过滤的文字。"/>
+		<label text="过滤:" tip="键入需要过滤的文字"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
@@ -390,7 +390,7 @@
 		<button id="ID_HOSTCACHE_DISCONNECT" text="断开"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="移除"/>
 		<rightAlign/>
-		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 簇"/>
+		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 群"/>
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 缓存"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 缓存"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey 缓存"/>
@@ -435,12 +435,13 @@
 			<item id="ID_TAB_SEARCH" text="搜索(_S)"/>
 			<item id="ID_TAB_TRANSFERS" text="下载(_D)"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
-			<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
-			<separator/>
 			<menu text="高级(_A)">
-				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)" shortcut="F7"/>
-				<item id="ID_VIEW_UPLOADS" text="上传(_U)" shortcut="F8"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)"/>
+				<item id="ID_VIEW_UPLOADS" text="上传(_U)"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
+				<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
+				<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="普通模式(_N)"/>
@@ -545,8 +546,8 @@
 			<item id="ID_WINDOW_REMOTE" text="显示遥控器(_R)"/>
 		</menu>
 		<menu text="帮助(_H)">
-			<item id="ID_HELP_FAQ" text="指南(_G)"/>
-			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
+			<item id="ID_HELP_FAQ" text="Shareaza 用户指南(_G)"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
 			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
 			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 			<separator/>
@@ -615,8 +616,8 @@
 		</menu>
 		<menu text="窗口(_W)">
 			<item id="ID_WINDOW_CASCADE" text="全屏(_F)"/>
-			<item id="ID_WINDOW_TILE_HORZ" text="水平拉伸(_H)"/>
-			<item id="ID_WINDOW_TILE_VERT" text="垂直拉伸(_V)"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="横向平铺(_H)"/>
+			<item id="ID_WINDOW_TILE_VERT" text="纵向平铺(_V)"/>
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="显示导航栏(_N)"/>
 			<item id="ID_WINDOW_TOOLBAR" text="显示工具栏(_T)"/>
@@ -625,8 +626,8 @@
 			<item id="ID_WINDOW_REMOTE" text="显示遥控器(_R)"/>
 		</menu>
 		<menu text="帮助(_H)">
-			<item id="ID_HELP_FAQ" text="指南(_G)"/>
-			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
+			<item id="ID_HELP_FAQ" text="Shareaza 用户指南(_G)"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
 			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
 			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 			<separator/>
@@ -694,17 +695,17 @@
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
-		<item id="ID_TRAY_OPEN" text="打开程序(_O)"/>
+		<item id="ID_TRAY_OPEN" text="恢复窗口(_O)"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="新建搜索(_W)"/>
-		<item id="ID_TOOLS_DOWNLOAD" text="下载文件(_D)"/>
+		<item id="ID_NETWORK_SEARCH" text="新建搜索(_W)..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="下载文件(_D)..."/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="播放媒体(_P)"/>
 		<item id="ID_MEDIA_PAUSE" text="暂停媒体(_U)"/>
 		<item id="ID_MEDIA_STOP" text="停止媒体(_S)"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="上个轨段(_R)"/>
-		<item id="ID_MEDIA_NEXT" text="下个轨段(_N)"/>
+		<item id="ID_MEDIA_PREVIOUS" text="上一曲目(_R)"/>
+		<item id="ID_MEDIA_NEXT" text="下一曲目(_N)"/>
 		<separator/>
 		<item id="ID_NETWORK_AUTO_CLOSE" text="传送后退出(_T)"/>
 		<item id="ID_NETWORK_EXIT" text="退出(_X)"/>
@@ -720,8 +721,8 @@
 		<item id="ID_MEDIA_PAUSE" text="暂停媒体(_U)"/>
 		<item id="ID_MEDIA_STOP" text="停止媒体(_S)"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="上个轨段(_R)"/>
-		<item id="ID_MEDIA_NEXT" text="下个轨段(_N)"/>
+		<item id="ID_MEDIA_PREVIOUS" text="上一曲目(_R)"/>
+		<item id="ID_MEDIA_NEXT" text="下一曲目(_N)"/>
 		<separator/>
 		<item id="ID_NETWORK_AUTO_CLOSE" text="传送后退出(_T)"/>
 		<item id="ID_NETWORK_EXIT" text="退出(_X)"/>
@@ -767,7 +768,7 @@
 		<item id="ID_HOSTCACHE_REMOVE" text="移除主机(_S)"/>
 		<separator/>
 		<menu text="过滤器(_F)">
-			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 簇(_U)"/>
+			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 群(_U)"/>
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella2 缓存(_2)"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella1 缓存(_1)"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey 服务器(_E)"/>
@@ -786,14 +787,13 @@
 		<menu text="搜索(_S)">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_SEARCH_COPY" text="复制 URI(_U)..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J)"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -809,13 +809,12 @@
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J)"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -833,14 +832,13 @@
 		<menu text="搜索(_S)">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页文件信息(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_SEARCH_COPY" text="复制 URI(_U)..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -853,13 +851,12 @@
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -879,13 +876,12 @@
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="过滤结果(_F)..."/>
@@ -905,15 +901,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="取消(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="查找更多资源(_F)"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="加入播放列表(_Y)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="续传(_R)"/>
@@ -934,11 +930,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="上移(_U)"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="下移(_D)"/>
-			<item id="ID_DOWNLOADS_BOOST" text="提升速度(_B)"/>
+			<item id="ID_DOWNLOADS_BOOST" text="忽略带宽限制(_I)"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/>
-		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -956,9 +949,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="删除文件(_D)"/>
-		<separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开或播放(_O)"/>
@@ -966,17 +956,25 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="复制 URI(_U)"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="删除文件(_D)"/>
 		<item id="ID_DOWNLOADS_RATE" text="文件评级(_R)..."/>
-		<separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
+	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开(_O)"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息(_I)"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做种(_S)"/>
+	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_O)"/>
 	</menu>
 	<menu name="CDownloadTabBar">
-		<item id="ID_DOWNLOAD_GROUP_RESUME" text="续传全部(_R)"/>
-		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="暂停全部(_A)"/>
-		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="清除全部(_C)"/>
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="全部续传(_R)"/>
+		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="全部暂停(_A)"/>
+		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="全部清除(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOAD_GROUP_NEW" text="新建群组(_N)..."/>
 		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="移除群组(_G)"/>
@@ -988,7 +986,7 @@
 	<menu name="CDownloadsWnd.Filter">
 		<item id="ID_DOWNLOADS_FILTER_ALL" text="显示全部(_A)"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="显示激活的(_C)"/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="显示活动的(_C)"/>
 		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="显示挂起的(_E)"/>
 		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="显示无资源的(_N)"/>
 		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="显示暂停的(_P)"/>
@@ -997,28 +995,37 @@
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="显示群组(_G)"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="浏览用户(_B)"/>
 		<item id="ID_UPLOADS_CHAT" text="与用户聊天(_C)"/>
-		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_U)"/>
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="立即开始(_S)"/>
 		<item id="ID_UPLOADS_CLEAR" text="清除(_C)"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="浏览用户(_B)"/>
 		<item id="ID_UPLOADS_CHAT" text="与用户聊天(_C)"/>
 		<item id="ID_SECURITY_BAN" text="禁止用户(_A)"/>
-		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_U)"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue.Basic">
+		<item id="ID_UPLOADS_HELP" text="帮助(_H)..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_O)"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue">
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="队列设置(_Q)"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_O)"/>
+	</menu>
+	<menu name="CUploadsWnd.Nothing">
+		<item id="ID_UPLOADS_HELP" text="帮助(_H)..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_O)"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="显示全部"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="显示激活的"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="显示活动的"/>
 		<item id="ID_UPLOADS_FILTER_QUEUED" text="显示队列的"/>
 		<item id="ID_UPLOADS_FILTER_TORRENT" text="显示 BitTorrent"/>
 		<item id="ID_UPLOADS_FILTER_HISTORY" text="显示历史"/>
@@ -1054,7 +1061,7 @@
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="删除(_D)"/>
 		<separator/>
 		<item id="ID_LIBRARY_REBUILD" text="重建(_R)"/>
-		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="导出收集(_R)..."/>
+		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="导出收集(_E)..."/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_NEW" text="新建文件夹(_N)..."/>
 		<separator/>
@@ -1080,16 +1087,15 @@
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载 Metadata(_D)"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="复制 URI(_U)"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J"/>-->
+			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="组类(_R)">
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
@@ -1105,22 +1111,21 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="共享(_S)"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="复制 URI(_U)"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="删除(_D)"/>
 		<separator/>
 		<menu text="搜索(_E)">
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
 			<separator/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J)"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
 		</menu>
 		<menu text="组类(_R)">
@@ -1129,7 +1134,7 @@
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="列设置(_C)..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="属性(_P)"/>
 	</menu>
@@ -1146,16 +1151,15 @@
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="复制 URI(_U)"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J)"/>-->
+			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="组类(_R)">
 			<item id="ID_LIBRARY_RENAME" text="重命名(_R)"/>
@@ -1173,23 +1177,22 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="共享(_S)"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="复制 URI(_U)"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="删除(_D)"/>
-`		<separator/>
+		<separator/>
 		<menu text="搜索(_E)">
 			<item id="ID_SEARCH_FOR_THIS" text="此文件"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="相似文件"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="音乐由相同艺术家"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="音乐在相同的专辑"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="情节在相同的系列"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="同一艺术家的音乐"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="同一专辑的音乐"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="同一系列的情节"/>
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="查看 Jigle 查询(_J)"/>-->
 		</menu>
 		<menu text="组类(_R)">
 			<item id="ID_LIBRARY_UNLINK" text="移除文件(_F)..."/>
@@ -1199,7 +1202,7 @@
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="列设置(_C)..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="属性(_P)"/>
 	</menu>
@@ -1212,19 +1215,57 @@
 		<item id="ID_MEDIA_OPEN" text="打开媒体文件(_O)..."/>
 		<separator/>
 		<menu text="播放列表">
-			<item id="ID_MEDIA_PREVIOUS" text="前(_V)"/>
-			<item id="ID_MEDIA_NEXT" text="后(_N)"/>
+			<item id="ID_MEDIA_PREVIOUS" text="上一个(_V)"/>
+			<item id="ID_MEDIA_NEXT" text="下一个(_N)"/>
 			<item id="ID_MEDIA_RANDOM" text="随机(_R)"/>
 			<item id="ID_MEDIA_REPEAT" text="重复(_E)"/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_P)"/>
 		</menu>
-		<menu text="视频尺寸(_Z)">
-			<item id="ID_MEDIA_SIZE_ONE" text="原始尺寸(_O)"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="双倍尺寸(_D)"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="三倍尺寸(_T)"/>
+		<menu text="视频大小(_Z)">
+			<item id="ID_MEDIA_SIZE_ONE" text="原始大小(_O)"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="双倍大小(_D)"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="三倍大小(_T)"/>
 			<item id="ID_MEDIA_SIZE_FILL" text="最大化(_L)"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="适配窗口(_W)"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="适合窗口(_W)"/>
+			<separator/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="默认比例(_A)"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 电视比例(_4)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 电影比例(_1)"/>
+			<separator/>
+			<item id="ID_MEDIA_FULLSCREEN" text="全屏(_F)"/>
+		</menu>
+		<menu text="设置">
+			<item id="ID_MEDIA_VIS" text="选择可视化效果(_V)..."/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_P)"/>
+			<item id="ID_MEDIA_STATUS" text="显示状态条(_S)"/>
+			<separator/>
+			<item id="ID_MEDIA_SETTINGS" text="媒体设置(_M)..."/>
+		</menu>
+	</menu>
+	<menu name="CMediaFrame">
+		<item id="ID_MEDIA_PLAY" text="播放(_P)"/>
+		<item id="ID_MEDIA_PAUSE" text="暂停(_U)"/>
+		<item id="ID_MEDIA_STOP" text="停止(_S)"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="打开媒体文件(_O)..."/>
+		<item id="ID_MEDIA_CLOSE" text="关闭文件(_C)"/>
+		<separator/>
+		<menu text="播放列表">
+			<item id="ID_MEDIA_PREVIOUS" text="上一个(_V)"/>
+			<item id="ID_MEDIA_NEXT" text="下一个(_N)"/>
+			<item id="ID_MEDIA_RANDOM" text="随机(_R)"/>
+			<item id="ID_MEDIA_REPEAT" text="重复(_E)"/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_P)"/>
+		</menu>
+		<menu text="视频大小(_Z)">
+			<item id="ID_MEDIA_SIZE_ONE" text="原始大小(_O)"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="双倍大小(_D)"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="三倍大小(_T)"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="最大化(_L)"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="适合窗口(_W)"/>
 			<separator/>
 			<item id="ID_MEDIA_ASPECT_DEFAULT" text="默认比例(_A)"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 电视比例(_4)"/>
@@ -1241,50 +1282,12 @@
 			<item id="ID_MEDIA_SETTINGS" text="媒体设置(_M)..."/>
 		</menu>
 	</menu>
-	<menu name="CMediaFrame">
-		<item id="ID_MEDIA_PLAY" text="播放(_P)"/>
-		<item id="ID_MEDIA_PAUSE" text="暂停(_U)"/>
-		<item id="ID_MEDIA_STOP" text="停止(_S)"/>
-		<separator/>
-		<item id="ID_MEDIA_OPEN" text="打开媒体文件(_O)..."/>
-		<item id="ID_MEDIA_CLOSE" text="关闭文件(_C)"/>
-		<separator/>
-		<menu text="播放列表">
-			<item id="ID_MEDIA_PREVIOUS" text="前(_V)"/>
-			<item id="ID_MEDIA_NEXT" text="后(_N)"/>
-			<item id="ID_MEDIA_RANDOM" text="随机(_R)"/>
-			<item id="ID_MEDIA_REPEAT" text="重复(_E)"/>
-			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_P)"/>
-		</menu>
-		<menu text="视频尺寸(_Z)">
-			<item id="ID_MEDIA_SIZE_ONE" text="原始尺寸(_O)"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="双倍尺寸(_D)"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="三倍尺寸(_T)"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="最大化(_L)"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="适配窗口(_W)"/>
-			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="默认比例(_A)"/>
-			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 电视比例(_4)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 电影比例(_1)"/>
-			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="全屏(_F)"/>
-		</menu>
-		<menu text="设置">
-			<item id="ID_MEDIA_VIS" text="选择视觉效果(_V)..."/>
-			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="显示播放列表(_P)"/>
-			<item id="ID_MEDIA_STATUS" text="显示状态条(_S)..."/>
-			<separator/>
-			<item id="ID_MEDIA_SETTINGS" text="媒体设置(_M)..."/>
-		</menu>
-	</menu>
 	<menu name="CMediaFrame.Zoom">
-		<item id="ID_MEDIA_SIZE_ONE" text="原始尺寸(_O)"/>
-		<item id="ID_MEDIA_SIZE_TWO" text="双倍尺寸(_D)"/>
-		<item id="ID_MEDIA_SIZE_THREE" text="三倍尺寸(_T)"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="原始大小(_O)"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="双倍大小(_D)"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="三倍大小(_T)"/>
 		<item id="ID_MEDIA_SIZE_FILL" text="最大化(_L)"/>
-		<item id="ID_MEDIA_SIZE_DISTORT" text="适配窗口(_W)"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="适合窗口(_W)"/>
 		<separator/>
 		<item id="ID_MEDIA_ASPECT_DEFAULT" text="默认比例(_A)"/>
 		<item id="ID_MEDIA_ASPECT_4_3" text="4:3 电视比例(_4)"/>
@@ -1340,9 +1343,9 @@
 			<item id="ID_NETWORK_G1" text="Gnutella1(_1)"/>
 		</menu>
 		<menu text="监视器(_M)">
-			<item id="ID_NEIGHBOURS_VIEW_ALL" text="查看全部通讯(_A)"/>
-			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="查看传入通讯(_I)"/>
-			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="查看传出通讯(_O)"/>
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="查看全部通讯量(_A)"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="查看传入通讯量(_I)"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="查看传出通讯量(_O)"/>
 		</menu>
 	</menu>
 	<!-- SEARCH MONITOR WINDOW -->
@@ -1392,9 +1395,9 @@
 		<separator/>
 		<item id="ID_DISCOVERY_BROWSE" text="浏览统计信息(_S)"/>
 		<separator/>
-		<item id="ID_DISCOVERY_GNUTELLA" text="显示 Bootstraps(_B)"/>
-		<item id="ID_DISCOVERY_WEBCACHE" text="显示 GWebCaches(_G)"/>
-		<item id="ID_DISCOVERY_SERVERMET" text="显示 Server.met's(_V)"/>
+		<item id="ID_DISCOVERY_GNUTELLA" text="显示引导程序(_B)"/>
+		<item id="ID_DISCOVERY_WEBCACHE" text="显示 G 网缓存(_G)"/>
+		<item id="ID_DISCOVERY_SERVERMET" text="显示 eDonkey 服务器(_V)"/>
 		<separator/>
 		<item id="ID_DISCOVERY_ADD" text="添加服务(_A)..."/>
 		<separator/>
@@ -1598,8 +1601,8 @@
 		<text group="21" align="middle">断开连接</text>
 		<text group="22" align="middle">连接中...</text>
 		<text group="23" align="middle">已连接</text>
-		<text group="24" align="middle" id="G2Hubs">%i 个 Hub</text>
-		<text group="25" align="middle" id="G2Leaves">%i 个 Leaf</text>
+		<text group="24" align="middle" id="G2Hubs">%i 个集端</text>
+		<text group="25" align="middle" id="G2Leaves">%i 个子端</text>
 		<newline group="20" gap="2"/>
 
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1635,7 +1638,7 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="UploadsNone" format="b">没有激活的上传</text>
+			<text id="UploadsNone" format="b">没有活动的上传</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 个激活上传</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i 个激活上传</link>
 
@@ -1684,10 +1687,12 @@
 			部分的设置与用户的经验存在密切关系。
 		</text>
 		<newline gap="16" margin="16"/>
+
 		<link target="raza:page:CGeneralSettingsPage" format="b">常规:</link>
 		<gap size="4"/>
 		<text>普通用户界面，工具提示，最小化习惯，数字格式，弹出提示等。</text>
 		<newline gap="10"/>
+
 		<link target="raza:page:CLibrarySettingsPage" format="b">收藏:</link>
 		<gap size="4"/>
 		<text>描述和管理收藏的文件，查看文件。</text>
@@ -1717,6 +1722,7 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
+
 		<text format="b">欢迎来到设置管理器</text>
 		<newline gap="16"/>
 
@@ -1728,14 +1734,17 @@
 			部分的设置决定 Shareaza 如何与其他 P2P 网络交换信息。
 		</text>
 		<newline gap="16" margin="16"/>
+
 		<link target="raza:page:CConnectionSettingsPage" format="b">连接:</link>
 		<gap size="4"/>
 		<text>互联网连接的速度和兼容性。</text>
 		<newline gap="10"/>
+
 		<link target="raza:page:CDownloadsSettingsPage" format="b">下载:</link>
 		<gap size="4"/>
 		<text>下载吞吐量，策略，认证，超时，管理。</text>
 		<newline gap="10"/>
+
 		<link target="raza:page:CUploadsSettingsPage" format="b">上传:</link>
 		<gap size="4"/>
 		<text>上传兼容性，队列，禁止用户，超时和特殊请求。</text>
@@ -1861,10 +1870,13 @@
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">请选择一个下载</text>
+		<text format="b">下载区域</text>
 		<newline gap="8"/>
-		<text>您可以使用这一命令获得关于下载的帮助信息。简单地选择一个下载并
-		重新选择这一命令。</text>
+		<text>这里显示当前下载的文件。您可以通过
+		左侧的 + 号来展开文件以查看单个资源。</text>
+		<newline gap="8"/>
+		<text>您同样可以使用这一命令获得某一特定下载的帮助信息。
+		只需简单地选择一个下载并重新选择这一命令。</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
@@ -1893,7 +1905,7 @@
 		<newline gap="8"/>
 		<text>Shareaza 已经自动暂停了此下载因为硬盘可能已满，或者这一
 		下载文件不能写入。如果您希望继续下载，
-		请腾出一些硬盘空间或单击确定未完成文件的文件夹可以访问，
+		请释放一些硬盘空间或单击确定未完成文件的文件夹可以访问，
 		然后进行续传。</text>
 	</document>
 
@@ -1952,10 +1964,20 @@
 	</document>
 
 	<document name="DownloadHelp.Tracker">
-		<text format="b">BitTorrent 跟踪器故障</text>
+		<text format="b">BitTorrent Tracker 故障</text>
 		<newline gap="8"/>
-		<text>BitTorrent 关于此下载的跟踪器服务似乎出现故障或无法正常工作。
+		<text>BitTorrent 关于此下载的 Tracker 似乎出现故障或无法正常工作。
 		Shareaza 无法连接它以获得对等下载者的列表。</text>
+	</document>
+
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">上传区域</text>
+		<newline gap="8"/>
+		<text>这里显示队列和上传。您可以通过
+		左侧的 + 号来展开每个队列，并通过窗口工具栏右侧的按钮
+		来过滤显示的内容。</text>
 	</document>
 
 	<!-- General help documents -->
@@ -1978,7 +2000,7 @@
 		 <newline gap="8"/>
 		 <text>Shareaza 已经限制了网络连接并设置了合适的默认值
 		以保证适当的操作，但是性能可能会降低。请访问 Shareaza 
-		论坛以获取更多信息，并跟进新闻。</text>
+		论坛以获取更多信息，以及最近新闻。</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
@@ -2034,7 +2056,7 @@
 		<text>的子目录中。请共享这些文件夹。</text>
 		<newline gap="8"/>
 		<text>Shareaza 的“incomplete”文件夹同样不应该在收藏夹中共享，
-		因为试图 Hash 下载项可能会影响到软件的运行。</text>
+		因为试图对下载项执行 Hash 可能会影响到软件的运行。</text>
 	</document>
 
 </documents>
@@ -2058,24 +2080,24 @@
 	<tip id="ID_CHAT_SEND_FILE" message="发送文件给用户..."/>
 	<tip id="ID_CHAT_TIMESTAMP" message="显示收到消息的时间。"/>
 	<tip id="ID_CHAT_UNDERLINE" message="应用下划线格式 (Ctrl+U)"/>
-	<tip id="ID_CHILD_CLOSE" message="关闭激活的窗口。"/>
-	<tip id="ID_CHILD_MAXIMISE" message="增大使之适配窗口。"/>
+	<tip id="ID_CHILD_CLOSE" message="关闭活动的窗口。"/>
+	<tip id="ID_CHILD_MAXIMISE" message="最大化活动窗口。"/>
 	<tip id="ID_CHILD_MINIMISE" message="最小化选定的窗口到标签栏。"/>
 	<tip id="ID_CHILD_RESTORE" message="打开选定的窗口。"/>
 	<tip id="ID_DISCOVERY_ADD" message="添加新的探索服务..."/>
-	<tip id="ID_DISCOVERY_ADVERTISE" message="在 GWebCache 网路上进行随机广告。"/>
-	<tip id="ID_DISCOVERY_BROWSE" message="浏览 GWebCache 网络上的统计数据。"/>
+	<tip id="ID_DISCOVERY_ADVERTISE" message="通告选择的 G网缓存 服务至一个已存在的随机 G网缓存。"/>
+	<tip id="ID_DISCOVERY_BROWSE" message="浏览 G网缓存 服务网络上的统计数据。"/>
 	<tip id="ID_DISCOVERY_EDIT" message="查看选定探索服务的属性。"/>
-	<tip id="ID_DISCOVERY_GNUTELLA" message="显示 bootstrap 服务于探索服务窗口。"/>
+	<tip id="ID_DISCOVERY_GNUTELLA" message="显示引导服务于探索服务窗口。"/>
 	<tip id="ID_DISCOVERY_QUERY" message="马上查询选定的探索服务。"/>
 	<tip id="ID_DISCOVERY_REMOVE" message="移除选定的探索服务。"/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="在探索窗口中显示 Server.met 服务。"/>
-	<tip id="ID_DISCOVERY_WEBCACHE" message="显示 GWebCache 服务于探索服务窗口。"/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="在探索窗口中显示 eDonkey2000 服务器服务。"/>
+	<tip id="ID_DISCOVERY_WEBCACHE" message="显示 G网缓存 服务于探索服务窗口。"/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="取消和移除此群组中的下载。"/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="创建新的下载组..."/>
 	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="暂停此群组中的所有下载。"/>
 	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="编辑选定下载群组的属性。"/>
-	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="移除选定的下载群组..."/>
+	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="移除选定的下载群组。"/>
 	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="续传此群组中的所有下载。"/>
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="显示或隐藏下载群组栏。"/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="自动清除已经完成的下载。"/>
@@ -2093,13 +2115,13 @@
 	<tip id="ID_DOWNLOADS_FILTER_ALL" message="显示所有下载。"/>
 	<tip id="ID_DOWNLOADS_FILTER_MENU" message="选择在此视图中要显示或隐藏的下载类型。"/>
 	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="显示暂停的下载。"/>
-	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="显示队列中的下载。"/>
+	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="显示队列中等待的下载。"/>
 	<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="显示等待资源的下载。"/>
 	<tip id="ID_DOWNLOADS_HELP" message="查看此下载的帮助信息..."/>
 	<tip id="ID_DOWNLOADS_LAUNCH" message="在此预览选定的文件。"/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="打开或播放选定的文件。"/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="智能预览选定的下载。"/>
-	<tip id="ID_DOWNLOADS_MONITOR" message="打开此下载的监视器窗口。"/>
+	<tip id="ID_DOWNLOADS_MONITOR" message="打开此下载的监视器窗口..."/>
 	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="降低选定下载的优先级。"/>
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="提升选定下载的优先级。"/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="暂停选定的下载。"/>
@@ -2112,7 +2134,7 @@
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="查看选定 BitTorrent 下载的信息..."/>
 	<tip id="ID_DOWNLOADS_URL" message="添加一个 URL 资源到选定的下载..."/>
 	<tip id="ID_HELP_ABOUT" message="显示 Shareaza 关于对话框..."/>
-	<tip id="ID_HELP_FAQ" message="访问 指南。"/>
+	<tip id="ID_HELP_FAQ" message="访问 Shareaza 用户指南。"/>
 	<tip id="ID_HELP_FIREWALLS" message="获取配置您的路由器或防火墙的帮助。"/>
 	<tip id="ID_HELP_FORUMS" message="访问 Shareaza 论坛。"/>
 	<tip id="ID_HELP_HOMEPAGE" message="访问 Shareaza 网站。"/>
@@ -2123,14 +2145,14 @@
 	<tip id="ID_HELP_WEB_4" message="访问 NapJunk.net"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="清除监视器缓存。"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="暂停命中监视器。"/>
-	<tip id="ID_HITMONITOR_SEARCH" message="在网络上搜索选定的术语。"/>
+	<tip id="ID_HITMONITOR_SEARCH" message="在网络上搜索选定的条件。"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="连接到选定的主机。"/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="断开选定邻居的连接。"/>
 	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="显示 eDonkey2000 服务器。"/>
 	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="下载 eDonkey2000 &quot;server.met&quot; 文件..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="显示 Gnutella1 缓存中的主机。"/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="显示 Gnutella2 缓存缓存中的主机。"/>
-	<tip id="ID_HOSTCACHE_G2_HORIZON" message="显示 Gnutella2 同级 Hub。"/>
+	<tip id="ID_HOSTCACHE_G2_HORIZON" message="显示 Gnutella2 同级集端。"/>
 	<tip id="ID_HOSTCACHE_IMPORT" message="导入知名的主机，比如 &quot;server.met&quot; 文件..."/>
 	<tip id="ID_HOSTCACHE_PRIORITY" message="尝试在其它服务之前连接到该服务器。"/>
 	<tip id="ID_HOSTCACHE_REMOVE" message="移除主机缓存中选定的主机。"/>
@@ -2138,9 +2160,9 @@
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="删除选定的专辑文件夹。"/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="打开选定的专辑文件夹。"/>
 	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="查看或编辑选定专辑文件夹的属性..."/>
-	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="从 Bitzi(TM) 下载选定文件的 Metadata..."/>
+	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="从 Bitzi(TM) 下载选定文件的元数据..."/>
 	<tip id="ID_LIBRARY_BITZI_WEB" message="查看选定文件在网络上的 Bitzi(TM)。"/>
-	<tip id="ID_LIBRARY_COLUMNS" message="选择显示 Metadata 列设置..."/>
+	<tip id="ID_LIBRARY_COLUMNS" message="选择显示元数据列设置..."/>
 	<tip id="ID_LIBRARY_COPY" message="将选定的文件复制到收藏中其它的文件夹..."/>
 	<tip id="ID_LIBRARY_CREATETORRENT" message="为此文件创建一个 .torrent 文件以上传至网页。"/>
 	<tip id="ID_LIBRARY_DELETE" message="永久删除选定的文件。"/>
@@ -2151,18 +2173,17 @@
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="添加选定专辑文件夹中所有文件到播放列表。"/>
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="将选定的专辑文件夹作为一个收集文件导出..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="查看和编辑选定文件夹中所有文件的属性..."/>
-	<tip id="ID_LIBRARY_FOLDER_METADATA" message="对专辑文件夹内所有文件应用 Metadata。"/>
-	<tip id="ID_LIBRARY_FOLDER_NEW" message="在此创建新的专辑文件夹。"/>
+	<tip id="ID_LIBRARY_FOLDER_METADATA" message="对专辑文件夹内所有文件应用元数据。"/>
+	<tip id="ID_LIBRARY_FOLDER_NEW" message="在此创建新的专辑文件夹..."/>
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="查看或编辑选定专辑文件夹的属性..."/>
-	<tip id="ID_LIBRARY_FOLDERS" message="管理您收藏中的物理文件夹。"/>
+	<tip id="ID_LIBRARY_FOLDERS" message="管理您收藏中的物理文件夹。..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="加快文件扫描速度和 Hash 速度。"/>
-	<!--<tip id="ID_LIBRARY_JIGLE" message="查询选定文件在网络上 Jigle 数据库的信息。"/>-->
 	<tip id="ID_LIBRARY_LAUNCH" message="打开或播放选定的文件。"/>
 	<tip id="ID_LIBRARY_MOVE" message="将选定的文件移动到收藏中其它的文件夹..."/>
 	<tip id="ID_LIBRARY_PANEL" message="显示或隐藏收藏的详情面板。"/>
 	<tip id="ID_LIBRARY_PARENT" message="上移至父级文件夹。"/>
-	<tip id="ID_LIBRARY_PROPERTIES" message="查看和编辑选定文件的属性。"/>
-	<tip id="ID_LIBRARY_REBUILD" message="重建 Metadata 和 Hash 选定文件夹或文件。"/>
+	<tip id="ID_LIBRARY_PROPERTIES" message="查看和编辑选定文件的属性..."/>
+	<tip id="ID_LIBRARY_REBUILD" message="重建元数据和 Hash 选定文件夹或文件。"/>
 	<tip id="ID_LIBRARY_REFRESH" message="刷新收藏视图。"/>
 	<tip id="ID_LIBRARY_REMOVE" message="移除选定的文件夹。"/>
 	<tip id="ID_LIBRARY_RENAME" message="就地更名选定的文件。"/>
@@ -2180,27 +2201,27 @@
 	<tip id="ID_LIBRARY_VIEW" message="显示收藏视图..."/>
 	<tip id="ID_LIBRARY_VIEW_ALBUM" message="显示专辑视图" tip="专辑视图"/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="显示丰富收集视图" tip="收集视图"/>
-	<tip id="ID_LIBRARY_VIEW_DETAIL" message="显示文件名，详情和 Metadata" tip="详情视图"/>
+	<tip id="ID_LIBRARY_VIEW_DETAIL" message="显示文件名，详情和元数据" tip="详情视图"/>
 	<tip id="ID_LIBRARY_VIEW_HOME" message="收藏首页视图" tip="首页视图"/>
-	<tip id="ID_LIBRARY_VIEW_ICON" message="以图标方式显示文件。" tip="图标视图"/>
-	<tip id="ID_LIBRARY_VIEW_LIST" message="以水平列表方式显示文件。" tip="列表视图"/>
-	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="以预览方式显示文件。" tip="预览视图"/>
-	<tip id="ID_LIBRARY_VIEW_TILE" message="显示专辑文件夹列表。" tip="平铺视图"/>
-	<tip id="ID_MEDIA_ADD" message="添加媒体文件到播放列表。"/>
+	<tip id="ID_LIBRARY_VIEW_ICON" message="以图标方式显示文件" tip="图标视图"/>
+	<tip id="ID_LIBRARY_VIEW_LIST" message="以水平列表方式显示文件" tip="列表视图"/>
+	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="以缩图方式显示文件" tip="缩图视图"/>
+	<tip id="ID_LIBRARY_VIEW_TILE" message="显示专辑文件夹列表" tip="平铺视图"/>
+	<tip id="ID_MEDIA_ADD" message="添加媒体文件到播放列表..."/>
 	<tip id="ID_MEDIA_ADD_FOLDER" message="添加媒体文件夹到播放列表..."/>
-	<tip id="ID_MEDIA_ASPECT_16_9" message="锁定视频为 16:9 电电比例。"/>
+	<tip id="ID_MEDIA_ASPECT_16_9" message="锁定视频为 16:9 电影比例。"/>
 	<tip id="ID_MEDIA_ASPECT_4_3" message="锁定视频为 4:3 电视比例。"/>
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="使用视频的默认比例。"/>
 	<tip id="ID_MEDIA_CLEAR" message="清空播放列表。"/>
 	<tip id="ID_MEDIA_CLOSE" message="关闭当前媒体文件以便释放内存。"/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="全屏模式。"/>
 	<tip id="ID_MEDIA_MUTE" message="音频播放静音"/>
-	<tip id="ID_MEDIA_NEXT" message="跳到播放列表中的后个文件。"/>
-	<tip id="ID_MEDIA_OPEN" message="打开和播放媒体文件或播放列表。"/>
-	<tip id="ID_MEDIA_PAUSE" message="暂停回放媒体文件。"/>
-	<tip id="ID_MEDIA_PLAY" message="开始播放当前媒体文件。"/>
+	<tip id="ID_MEDIA_NEXT" message="跳到播放列表中的后个文件" tip="下一个文件"/>
+	<tip id="ID_MEDIA_OPEN" message="打开和播放媒体文件或播放列表..."/>
+	<tip id="ID_MEDIA_PAUSE" message="暂停回放媒体文件" tip="暂停"/>
+	<tip id="ID_MEDIA_PLAY" message="开始播放当前媒体文件" tip="播放"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="显示或隐藏播放列表编辑器。"/>
-	<tip id="ID_MEDIA_PREVIOUS" message="跳回播放列表中的前个文件。"/>
+	<tip id="ID_MEDIA_PREVIOUS" message="跳回播放列表中的前个文件" tip="上一个文件"/>
 	<tip id="ID_MEDIA_RANDOM" message="当前播放列表使用随机模式。"/>
 	<tip id="ID_MEDIA_REMOVE" message="从播放列表中移除选定的媒体文件。"/>
 	<tip id="ID_MEDIA_REPEAT" message="重复当前媒体文件。"/>
@@ -2208,14 +2229,14 @@
 	<tip id="ID_MEDIA_SELECT" message="选定和播放选定的文件。"/>
 	<tip id="ID_MEDIA_SETTINGS" message="显示媒体设置页面..."/>
 	<tip id="ID_MEDIA_SIZE_DISTORT" message="拉伸视频适配窗口，可能会发生扭曲。"/>
-	<tip id="ID_MEDIA_SIZE_FILL" message="选择文件的默认尺寸放大后进行播放。"/>
-	<tip id="ID_MEDIA_SIZE_ONE" message="以原始尺寸显示视频。"/>
-	<tip id="ID_MEDIA_SIZE_THREE" message="以三倍尺寸显示视频。"/>
-	<tip id="ID_MEDIA_SIZE_TWO" message="以双倍尺寸显示视频。"/>
+	<tip id="ID_MEDIA_SIZE_FILL" message="选择文件的默认大小放大后进行播放。"/>
+	<tip id="ID_MEDIA_SIZE_ONE" message="以原始大小显示视频。"/>
+	<tip id="ID_MEDIA_SIZE_THREE" message="以三倍大小显示视频。"/>
+	<tip id="ID_MEDIA_SIZE_TWO" message="以双倍大小显示视频。"/>
 	<tip id="ID_MEDIA_STATUS" message="显示或隐藏媒体状态栏。"/>
-	<tip id="ID_MEDIA_STOP" message="停止播放媒体文件。"/>
-	<tip id="ID_MEDIA_VIS" message="选择音频可视化效果。"/>
-	<tip id="ID_MEDIA_ZOOM" message="调整视频缩放和尺寸比例。"/>
+	<tip id="ID_MEDIA_STOP" message="停止播放媒体文件。" tip="停止"/>
+	<tip id="ID_MEDIA_VIS" message="选择音频可视化效果插件..."/>
+	<tip id="ID_MEDIA_ZOOM" message="调整视频缩放和尺寸比例设置。"/>
 	<tip id="ID_MONITOR_CLOSE" message="关闭监视器窗口。"/>
 	<tip id="ID_NEIGHBOURS_CHAT" message="与选定的用户进行聊天。"/>
 	<tip id="ID_NEIGHBOURS_COPY" message="复制 URI 以便进入选定的主机。"/>
@@ -2233,20 +2254,20 @@
 	<tip id="ID_NETWORK_EXIT" message="退出 Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="连接到原始的 Gnutella 网络。"/>
 	<tip id="ID_NETWORK_G2" message="连接到 Gnutella2 网络(强力推荐)。"/>
-	<tip id="ID_NETWORK_SEARCH" message="在网络上进行新的搜索。"/>
+	<tip id="ID_NETWORK_SEARCH" message="在网络上进行新的搜索..."/>
 	<tip id="ID_SEARCH_CHAT" message="与选定的用户进行聊天。"/>
 	<tip id="ID_SEARCH_CLEAR" message="清除搜索结果。"/>
-	<tip id="ID_SEARCH_COLUMNS" message="选择显示 Metadata 列设置..."/>
+	<tip id="ID_SEARCH_COLUMNS" message="选择显示元数据列设置..."/>
 	<tip id="ID_SEARCH_COPY" message="复制选定文件的 URI。"/>
 	<tip id="ID_SEARCH_DETAILS" message="显示选定文件的详细信息。"/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="下载选定的文件。"/>
 	<tip id="ID_SEARCH_DOWNLOADNOW" message="优先下载选定的文件。"/>
 	<tip id="ID_SEARCH_FILTER" message="过滤某种词组或情况..."/>
-	<tip id="ID_SEARCH_FILTER_RAW" message="以特定的文字或情况过滤结果。"/>
+	<tip id="ID_SEARCH_FILTER_RAW" message="以特定的文字或情况过滤结果..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="从结果中移除过滤器。"/>
-	<tip id="ID_SEARCH_FOR_ALBUM" message="搜索选定文件同专辑的音乐文件。"/>
-	<tip id="ID_SEARCH_FOR_ARTIST" message="搜索选定文件其艺术家的音乐文件。"/>
-	<tip id="ID_SEARCH_FOR_SERIES" message="搜索选定文件同系列的视频文件。"/>
+	<tip id="ID_SEARCH_FOR_ALBUM" message="搜索选定文件同一专辑的音乐。"/>
+	<tip id="ID_SEARCH_FOR_ARTIST" message="搜索选定文件同一艺术家的音乐。"/>
+	<tip id="ID_SEARCH_FOR_SERIES" message="搜索选定文件同一系列的视频文件。"/>
 	<tip id="ID_SEARCH_FOR_SIMILAR" message="搜索选定文件的其它相似副本。"/>
 	<tip id="ID_SEARCH_FOR_THIS" message="搜索选定文件的其它副本。"/>
 	<tip id="ID_SEARCH_PANEL" message="显示快速搜索栏在搜索窗口的左边。"/>
@@ -2282,15 +2303,15 @@
 	<tip id="ID_TOOLS_PROFILE" message="编辑您的个人资料..."/>
 	<tip id="ID_TOOLS_RESKIN" message="重新载入当前选定的皮肤。"/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="在 BitTorrent 中将选定的 Torrent 做种。"/>
-	<tip id="ID_TOOLS_SETTINGS" message="设置 Shareaza 。"/>
+	<tip id="ID_TOOLS_SETTINGS" message="设置 Shareaza..."/>
 	<tip id="ID_TOOLS_SKIN" message="为 Shareaza 选择不同的皮肤..."/>
-	<tip id="ID_TOOLS_WIZARD" message="打开 Shareaza 快速启动..."/>
+	<tip id="ID_TOOLS_WIZARD" message="打开 Shareaza 快速启动向导..."/>
 	<tip id="ID_TRAFFIC_AXIS" message="显示垂直轴线"/>
 	<tip id="ID_TRAFFIC_CLEAR" message="清除通讯的图表。"/>
 	<tip id="ID_TRAFFIC_GRID" message="显示网格。"/>
 	<tip id="ID_TRAFFIC_LEGEND" message="显示图例。"/>
 	<tip id="ID_TRAFFIC_SETUP" message="选择和配置图表..."/>
-	<tip id="ID_TRAFFIC_WINDOW" message="打开图表窗口..."/>
+	<tip id="ID_TRAFFIC_WINDOW" message="打开一个新的图表窗口..."/>
 	<tip id="ID_TRANSFERS_CHAT" message="与选定的用户进行聊天。"/>
 	<tip id="ID_TRANSFERS_CONNECT" message="进入选定的下载并且尝试下载。"/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="断开选定的下载传输。"/>
@@ -2364,22 +2385,22 @@
 	<string id="8002" value="文件属性"/>
 	<string id="8003" value="编辑个人资料"/>
 	<string id="8004" value="!欢迎使用 Shareaza (version) !\n.\nShareaza 是完全免费的软件。\n请遵照知识产权法负责使用。\n."/>
-	<string id="8005" value=" (传送后关闭)"/>
+	<string id="8005" value="(传送后关闭)"/>
 	<string id="8006" value="您还未连接。请单击连接按钮开始。"/>
 	<string id="8007" value="没有活动的搜索。请单击搜索开始。"/>
 	<string id="8008" value="Shareaza 已经完成下载新的 Shareaza 版本 (%s)。您要立即升级吗？\n\n如果您选择是，Shareaza 将暂时关闭并安装升级程序。"/>
 	<string id="8009" value="您确定要删除 &quot;%s&quot; 皮肤吗？ 此操作不可逆。"/>
 	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 www.shareaza.com 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
-	<string id="8060" value="Hub/Ultrapeer 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
-	<string id="8061" value="Ultrapeer 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
-	<string id="8062" value="Hub 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
+	<string id="8060" value="集端/超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
+	<string id="8061" value="超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
+	<string id="8062" value="集端模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8063" value="已连接。%s 于本地收藏夹。"/>
 	<string id="8064" value="连接到 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8065" value="连接网络..."/>
 	<string id="8066" value="尚未连接网络。"/>
-	<string id="8067" value="%s入 : %s出 [下:%i / 上:%i]"/>
-	<string id="8068" value="[H:%i] %s 入 : %s 出 [下:%i/上:%i]"/>
+	<string id="8067" value="%s传入 : %s传出 [下载:%i/上传:%i]"/>
+	<string id="8068" value="[活动:%i] %s 传入 : %s 传出 [下载:%i/上传:%i]"/>
 	<string id="8069" value="连接"/>
 	<string id="8070" value="连接中..."/>
 	<string id="8071" value="连接完毕"/>
@@ -2414,7 +2435,7 @@
 	<string id="8149" value="查找此类型的文件:"/>
 	<string id="8150" value="正在搜索:"/>
 	<string id="8151" value="成功找到:"/>
-	<string id="8152" value="%lu 个 Hub，%lu 个 Leaf"/>
+	<string id="8152" value="%lu 个集端，%lu 个子端"/>
 	<string id="8153" value="当前未进行搜索"/>
 	<string id="8154" value="没有找到文件"/>
 	<string id="8155" value="%lu 个文件在 %lu 个命中|%lu 个文件在 %lu 个命中|%lu 个文件在 %lu 个命中"/>
@@ -2423,7 +2444,7 @@
 	<string id="8158" value="清除"/>
 	<string id="8159" value="高级..."/>
 	<string id="8160" value="正在建立到主机的连接..."/>
-	<string id="8161" value="发送 push 请求，等待连接..."/>
+	<string id="8161" value="发送获取请求，等待连接..."/>
 	<string id="8162" value="连接完毕，请求浏览..."/>
 	<string id="8163" value="正在下载浏览回应 (%2.f%%)..."/>
 	<string id="8164" value="未能连接到主机以浏览用户。"/>
@@ -2454,14 +2475,14 @@
 	<string id="8241" value="Shareaza 正在检测下载的错误:"/>
 	<string id="8243" value="已上传数量:"/>
 	<string id="8288" value="正在浏览您的 Shareaza 收藏"/>
-	<string id="8289" value="浏览 "/>
+	<string id="8289" value="浏览"/>
 	<string id="8290" value="正在浏览 %i 个文件夹的内容"/>
 	<string id="8291" value="多重文件夹"/>
 	<string id="8292" value="已选定 %i 个文件"/>
 	<string id="8293" value="没有文件被选定"/>
 	<string id="8294" value="最近添加文件"/>
 	<string id="8295" value="为此文件评级"/>
-	<string id="8304" value="N/A"/>
+	<string id="8304" value="不可用"/>
 	<string id="8306" value="地址"/>
 	<string id="8307" value="类型"/>
 	<string id="8308" value="大小"/>
@@ -2469,9 +2490,9 @@
 	<string id="8310" value="%i 个上传通道，%i 个在队列中等待"/>
 	<string id="8311" value="您的收藏中已经存在此文件。"/>
 	<string id="8312" value="您的下载列表中已经存在此文件。"/>
-	<string id="8313" value="此文件可能是垃圾。"/>   
+	<string id="8313" value="此文件可能是广告。"/>
 	<string id="8314" value="您以前已经下载过并删除了这一文件。"/>
-	<string id="8315" value="黑名单: "/>
+	<string id="8315" value="黑名单:"/>
 	<string id="8316" value="命中"/>
 	<string id="8317" value="上传"/>
 	<string id="8318" value="%lu 今天，%lu 总计"/>
@@ -2486,6 +2507,12 @@
 	<string id="8328" value="大小总计:"/>
 	<string id="8329" value="于您的收藏"/>
 	<string id="8330" value="文件夹"/>
+	<string id="8331" value="此来源正忙"/>
+	<string id="8332" value="此来源有防火墙"/>
+	<string id="8333" value="此来源可能不稳定"/>
+	<string id="8334" value="此文件来源正忙"/>
+	<string id="8335" value="此文件来源有防火墙"/>
+	<string id="8336" value="此文件来源可能不稳定"/>
 	<string id="16064" value="启动 Shareaza 网络内核..."/>
 	<string id="16065" value="不能绑定正进入连接的主机 %s 的 %i 端口。不支持进入的连接。"/>
 	<string id="16066" value="关闭 Shareaza 网络内核..."/>
@@ -2503,8 +2530,8 @@
 	<string id="16078" value="添加安全策略屏蔽 %s 主机。"/>
 	<string id="16079" value="您确定要断开连接吗？"/>
 	<string id="16081" value="为 &quot;%s&quot; 发送查询到 %s。"/>
-	<string id="16083" value="强制您的电脑进入 Hub 模式可能会对机器性能以及 P2P 网络产生负面效用。总体来说更好的方法是让 Shareaza 决定是否使用结端模式。\n\nHub 模式并不会对您产生更好的搜索效果，或是任何其他的优越性。\n\n尽管存在这些缺点，您还是想这样做吗？"/>
-	<string id="16084" value="禁用 Gnutella1 协议可能会限制您的搜索结果，并且如果您作为 Hub 它可能还会影响到其他用户的结果。您确定要这样做吗？"/>
+	<string id="16083" value="强制您的电脑进入集端模式可能会对机器性能以及 P2P 网络产生负面效用。总体来说更好的方法是让 Shareaza 决定是否使用结端模式。\n\nHub 模式并不会对您产生更好的搜索效果，或是任何其他的优越性。\n\n尽管存在这些缺点，您还是想这样做吗？"/>
+	<string id="16084" value="禁用 Gnutella1 协议可能会限制您的搜索结果，并且如果您作为集端它可能还会影响到其他用户的结果。您确定要这样做吗？"/>
 	<string id="16085" value="Gnutella2 是 Shareaza 的首要网络。停止支持它可能会严重影响您搜索结果的数量和质量。您确定要这样做吗？"/>
 	<string id="16087" value="您的传出带宽太低而无法启用这一网络"/>
 	<string id="16128" value="接受来自 %s 主机 %i 端口的进入连接。"/>
@@ -2515,12 +2542,12 @@
 	<string id="16133" value="正建立到邻居中 %s 主机的连接，握手中..."/>
 	<string id="16134" value="已关闭的到邻居中 %s 主机的连接。"/>
 	<string id="16135" value="不能初始化到邻居中 %s 主机的连接(被拒绝)。"/>
-	<string id="16136" value="邻居中 %s 主机已经意外的掉线。"/>
+	<string id="16136" value="邻居中 %s 主机已经意外的断开。"/>
 	<string id="16137" value="拒绝双重连接 %s 主机。"/>
 	<string id="16138" value="已经连接到 %s 主机，因此不会再建立第二个连接。"/>
 	<string id="16139" value="邻居 %s 主机关闭了连接。(%i : %s)"/>
 	<string id="16140" value="邻居 %s 主机现在速度缓慢。"/>
-	<string id="16141" value="关闭到邻居 %s 主机的连接，因为它不是 Hub。"/>
+	<string id="16141" value="关闭到邻居 %s 主机的连接，因为它不是集端。"/>
 	<string id="16144" value="和 %s 主机的握手超时。"/>
 	<string id="16145" value="已和 Gnutella 中的 %s 主机成功建立连接 (G%i.%i : %s)。"/>
 	<string id="16146" value="因为传输中的错误数据导致和 %s 主机的握手失败。"/>
@@ -2528,13 +2555,13 @@
 	<string id="16148" value="到 %s 主机的连接被拒绝。"/>
 	<string id="16149" value="Gnutella 0.6 握手失败，尝试使用 0.4。"/>
 	<string id="16150" value="关闭到 %s 主机的剩余连接。"/>
-	<string id="16151" value="拒绝来自 %s 主机的连接，因为这是一个屏蔽的 Leaf 节点。"/>
-	<string id="16152" value="Hub 网络的 %s 主机不认可我们为 Hub，正在关闭连接。"/>
-	<string id="16153" value="到邻居 %s 主机的连接失败使得退回到屏蔽 Leaf 模式。"/>
-	<string id="16154" value="Hub 连接建立完毕，关闭点对点连接。"/>
-	<string id="16155" value="作为 Hub 为 Leaf %s 主机提供服务。"/>
-	<string id="16156" value="邻居 %s 主机将成为 Hub，正在关闭连接。"/>
-	<string id="16157" value="邻居 %s 主机不是 Hub，正在关闭连接。"/>
+	<string id="16151" value="拒绝来自 %s 主机的连接，因为这是一个屏蔽的子端节点。"/>
+	<string id="16152" value="集端网络的 %s 主机不认可我们为集端，正在关闭连接。"/>
+	<string id="16153" value="到邻居 %s 主机的连接失败使得退回到屏蔽子端模式。"/>
+	<string id="16154" value="集端连接建立完毕，关闭点对点连接。"/>
+	<string id="16155" value="作为集端为子端 %s 主机提供服务。"/>
+	<string id="16156" value="邻居 %s 主机将成为集端，正在关闭连接。"/>
+	<string id="16157" value="邻居 %s 主机不是集端，正在关闭连接。"/>
 	<string id="16158" value="和 Gnutella2 的邻居 %s 主机成功的建立连接 (%s)。"/>
 	<string id="16159" value="正在关闭到非 Gnutella2 邻居 %s 主机的连接。"/>
 	<string id="16192" value="邻居 %s 主机发来的数据包超过尺寸，断开连接。"/>
@@ -2543,12 +2570,12 @@
 	<string id="16195" value="邻居 %s 主机发来的 ping 数据包尺寸不匹配，忽略数据包。"/>
 	<string id="16196" value="邻居 %s 主机发来的 pong 数据包尺寸不匹配，忽略数据包。"/>
 	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
-	<string id="16198" value="Leaf 邻居 %s 主机发来质询，断开连接。"/>
+	<string id="16198" value="子端邻居 %s 主机发来质询，断开连接。"/>
 	<string id="16199" value="邻居 %s 主机发来未被识别的数据包 (0x%.2x)，忽略数据包。"/>
 	<string id="16200" value="邻居 %s 主机发来非法的 pong 地址，忽略数据包。"/>
 	<string id="16201" value="接收到来自 %s 主机的混乱格式的质询，忽略数据包。"/>
 	<string id="16202" value="接收到来自 %s 主机混乱格式的命中数据包，忽略数据包。"/>
-	<string id="16203" value="邻居 %s 主机发来非法的 push 数据包，忽略数据包。"/>
+	<string id="16203" value="邻居 %s 主机发来非法的获取数据包，忽略数据包。"/>
 	<string id="16208" value="从邻居 %s 主机接收到非正常的查询路由表。"/>
 	<string id="16209" value="邻居 %s 主机发送了非法查询路由表，正在断开连接。 "/>
 	<string id="16210" value="邻居主机 %s 更新了它的查询路由表 (%i bit = %lu[%i]， %i%% 满额)。"/>
@@ -2587,7 +2614,7 @@
 	<string id="16285" value="接收到来自 %s 不必要的进入连接。"/>
 	<string id="16286" value="%s 主机正发送下载 &quot;%s&quot;，接受。"/>
 	<string id="16287" value="不能获取到 &quot;%s&quot; 更多的下载资源，因为现在没有网络连接。"/>
-	<string id="16288" value="在 %i 个连接中为下载 &quot;%s&quot; 查询更多资源... "/>
+	<string id="16288" value="在 %i 个连接中为下载 &quot;%s&quot; 查询更多资源..."/>
 	<string id="16289" value="发送请求下载 &quot;%s&quot;..."/>
 	<string id="16290" value="下载主机 %s 相应了不同的，但是有用的范围 (%I64i-%I64i)，属于 &quot;%s&quot;。"/>
 	<string id="16291" value="移动 &quot;%s&quot; 到 &quot;%s&quot;，下载完毕。"/>
@@ -2608,7 +2635,7 @@
 	<string id="16306" value="已经为 &quot;%s&quot;接收 tiger-tree 卷，%i 等级，最小可验证区块 %s。"/>
 	<string id="16307" value="正在关闭到 %s 的下载连接，不再请求。"/>
 	<string id="16308" value="下载主机 %s 发送未经同意的数据，关闭连接。"/>
-	<string id="16309" value="为 &quot;%s&quot; 从 %s 请求 Metadata..."/>
+	<string id="16309" value="为 &quot;%s&quot; 从 %s 请求元数据..."/>
 	<string id="16310" value="正在从 %s (%s) 接收 tiger-tree 数据..."/>
 	<string id="16311" value="为 &quot;%s&quot; 从 %s 请求 eDonkey2000 Hashset..."/>
 	<string id="16312" value="已经从 %s 接收了一个无效的 eDonkey2000 Hashset，丢失资源。"/>
@@ -2627,7 +2654,7 @@
 	<string id="16325" value="上传主机 %s 请求了未知的或是不可行的目标 &quot;%s&quot;。"/>
 	<string id="16326" value="上传主机 %s 使用不同的 SHA1 请求了 &quot;%s&quot;。"/>
 	<string id="16327" value="拒绝上传 &quot;%s&quot; 到 %s 主机 (%s)，繁忙并且对方不支持队列。"/>
-	<string id="16328" value="到 %s 主机的外送连接已经建立，握手中... "/>
+	<string id="16328" value="到 %s 主机的外送连接已经建立，握手中..."/>
 	<string id="16329" value="不能打开 &quot;%s&quot; 以便上传到 %s 主机，磁盘/文件错误。"/>
 	<string id="16330" value="正在上传范围 %I64i-%I64i，其属于 &quot;%s&quot;，至 %s 主机 (%s)。"/>
 	<string id="16331" value="完成对 %s 主机的 &quot;%s&quot; 的部分上传。"/>
@@ -2647,9 +2674,9 @@
 	<string id="16345" value="停止上传 &quot;%s&quot; 到 %s ，因为文件已被删除。"/>
 	<string id="16346" value="上传文件范围 %I64i-%I64i，其属于未完成文件 &quot;%s&quot;，至 %s 主机 (%s)。"/>
 	<string id="16347" value="队列上传 %s 被频繁请求，关闭连接。"/>
-	<string id="16348" value="拒绝到 %s 的外送请求，因为已经有太多上传连接。"/>
+	<string id="16348" value="拒绝到 %s 的获取请求，因为已经有太多上传连接。"/>
 	<string id="16349" value="上传 &quot;%s&quot; 的 tiger-tree 到 %s。"/>
-	<string id="16350" value="上传 &quot;%s&quot; 的 Metadata 到 %s。"/>
+	<string id="16350" value="上传 &quot;%s&quot; 的元数据到 %s。"/>
 	<string id="16351" value="拒绝上传 &quot;%s&quot; 到 %s (%s)，存在过多的并发用户连接。"/>
 	<string id="16352" value="正在上传 &quot;%s&quot; 的预览到 %s。"/>
 	<string id="16353" value="拒绝上传 &quot;%s&quot; 文件的预览到 %s，因为已经存在过多预览连接。"/>
@@ -2668,7 +2695,7 @@
 	<string id="16366" value="队列"/>
 	<string id="16367" value="eDonkey 内核"/>
 	<string id="16368" value="eDonkey 部分"/>
-	<string id="16369" value="eDonkey 向导"/>
+	<string id="16369" value="eDonkey 保护"/>
 	<string id="16370" value="小型文件"/>
 	<string id="16371" value="中型文件"/>
 	<string id="16372" value="大型文件"/>
@@ -2676,8 +2703,9 @@
 	<string id="16374" value="新建队列"/>
 	<string id="16375" value="部分"/>
 	<string id="16376" value="完成文件"/>
+	<string id="16377" value="HTTP 保护"/>
 	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
-	<string id="16385" value="您将修改 %i 文件的 Metadata，确定要继续吗？"/>
+	<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
 	<string id="16386" value="正在修改 %i 的 Metadata。"/>
 	<string id="16387" value="文件 &quot;%s&quot; 未被 Hash。请等待文件被 Hash，稍后再试。"/>
 	<string id="16388" value="识别和共享选定文件的功能由 Bitzi.com 提供。\n\n为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\n\n您确定继续吗？"/>
@@ -2767,15 +2795,15 @@
 	<string id="16811" value="自动"/>
 	<string id="16864" value="正在查询主机探索服务..."/>
 	<string id="16865" value="正在查询探索服务 &quot;%s&quot;..."/>
-	<string id="16866" value="GWebCache 交易成功 (&quot;%s&quot;)。"/>
+	<string id="16866" value="G网缓存处理成功 (&quot;%s&quot;)。"/>
 	<string id="16867" value="探索服务 &quot;%s&quot; 失败，失败计数 %i。"/>
 	<string id="16868" value="探索服务 &quot;%s&quot; 已经失败 %i 次，正在移除。"/>
-	<string id="16870" value="正在发送 GWebCache 升级到 &quot;%s&quot; 服务..."/>
-	<string id="16871" value="正在提交 GWebCache &quot;%s&quot; 到随机的 GWebCache..."/>
+	<string id="16870" value="正在发送G网缓存升级到 &quot;%s&quot; 服务..."/>
+	<string id="16871" value="正在提交G网缓存 &quot;%s&quot; 到随机的G网缓存..."/>
 	<string id="16928" value="初始化连接到 %s 以浏览用户..."/>
 	<string id="16929" value="未能初始化连接到 %s 以浏览用户。"/>
-	<string id="16930" value="发送 push 请求到 %s 以浏览用户。"/>
-	<string id="16931" value="未能发送 push 请求到 %s 以浏览用户。"/>
+	<string id="16930" value="发送获取请求到 %s 以浏览用户。"/>
+	<string id="16931" value="未能发送获取请求到 %s 以浏览用户。"/>
 	<string id="16932" value="发送浏览用户请求到 %s..."/>
 	<string id="16933" value="浏览主机 %s 回应以无效的 HTTP 应答。"/>
 	<string id="16934" value="浏览主机 %s 回应以代码 %s (%s)。"/>
@@ -2798,8 +2826,8 @@
 	<string id="16999" value="播 放 列 表"/>
 	<string id="17024" value="初始化连接到 %s..."/>
 	<string id="17025" value="未能创建到 %s 的连接。"/>
-	<string id="17026" value="向  %s 请求 push 连接..."/>
-	<string id="17027" value="接受来自 %s 的 push 连接，握手中..."/>
+	<string id="17026" value="向  %s 请求获取连接..."/>
+	<string id="17027" value="接受来自 %s 的获取连接，握手中..."/>
 	<string id="17028" value="连接已建立，握手中..."/>
 	<string id="17029" value="握手失败，主机可能不支持聊天。"/>
 	<string id="17030" value="握手完成，聊天协议版本 %s。"/>
@@ -2811,17 +2839,17 @@
 	<string id="17036" value="%s 已离开: %s"/>
 	<string id="17037" value="聊天连接已丢失。"/>
 	<string id="17038" value="连接关闭。"/>
-	<string id="17039" value="未能从 %s 请求一个 push 连接，无可用路由。"/>
+	<string id="17039" value="未能从 %s 请求一个获取连接，无可用路由。"/>
 	<string id="17040" value="不能发送消息，您还未建立连接。Shareaza 正在试图连接..."/>
 	<string id="17041" value="不能发送消息，尚未建立连接。"/>
 	<string id="17042" value="您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\n\n您要立即填写个人资料吗？"/>
 	<string id="17043" value="确定 %s 主机的上传优先级。"/>
-	<string id="17100" value="Gnutella: peer 对 peer 连接"/>
-	<string id="17101" value="Gnutella: Leaf 对 Ultrapeer 连接"/>
-	<string id="17102" value="Gnutella: Ultrapeer 对 Leaf 连接"/>
-	<string id="17103" value="Gnutella 2: Hub 对 Hub 连接"/>
-	<string id="17104" value="Gnutella 2: Leaf 对 Hub 连接"/>
-	<string id="17105" value="Gnutella 2: Hub 对 Leaf 连接"/>
+	<string id="17100" value="Gnutella:对等对对等连接"/>
+	<string id="17101" value="Gnutella:子端对超对等连接"/>
+	<string id="17102" value="Gnutella:超对等对子端连接"/>
+	<string id="17103" value="Gnutella 2:集端对集端连接"/>
+	<string id="17104" value="Gnutella 2:子端对集端连接"/>
+	<string id="17105" value="Gnutella 2:集端对子端连接"/>
 	<string id="17106" value="eDonkey 服务器连接 (LOWID: %lu)"/>
 	<string id="17107" value="eDonkey2000 服务器连接"/>
 	<string id="17108" value="握手"/>
@@ -2838,12 +2866,12 @@
 	<string id="17119" value="已拒绝"/>
 	<string id="17120" value="关闭中"/>
 	<string id="17121" value="未知"/>
-	<string id="17122" value="G1 Peer"/>
-	<string id="17123" value="G1 Ultrapeer"/>
-	<string id="17124" value="G1 Leaf"/>
-	<string id="17125" value="G2 Peer"/>
-	<string id="17126" value="G2 Hub"/>
-	<string id="17127" value="G2 Leaf"/>
+	<string id="17122" value="G1 对等"/>
+	<string id="17123" value="G1 超对等"/>
+	<string id="17124" value="G1 子端"/>
+	<string id="17125" value="G2 对等"/>
+	<string id="17126" value="G2 集端"/>
+	<string id="17127" value="G2 子端"/>
 	<string id="17128" value="eDonkey2000 服务器"/>
 	<string id="17129" value="eDonkey2000 (LowID)"/>
 	<string id="17130" value="eDonkey2000 (HighID)"/>
@@ -2856,8 +2884,8 @@
 	<string id="17222" value="eDonkey2000 服务器 %s 将其更名为 &quot;%s&quot;。"/>
 	<string id="17223" value="eDonkey2000 服务器 %s 已拒绝此连接。"/>
 	<string id="17224" value="和 eDonkey2000 客户 %s 的握手发生错误。"/>
-	<string id="17225" value="连接到 %s 的 eDonkey2000 客户端已丢失。"/>
-	<string id="17226" value="从 %s (id=%x) 接收到畸形的 eDonkey2000 数据包。"/>
+	<string id="17225" value="连接到 %s 的 eDonkey2000 客户端已关闭。"/>
+	<string id="17226" value="从 %s (id=%x) 接收到畸形的 eDonkey2000 数据包"/>
 	<string id="17227" value="从 %s 的传入连接是一个 eDonkey2000 客户端链接。"/>
 	<string id="17228" value="为 &quot;%s&quot; 发送 eDonkey2000 Hashset 到 %s..."/>
 	<string id="17229" value="连接到 %s 的 eDonkey2000 客户端处于空闲状态，已关闭。"/>
@@ -2869,34 +2897,34 @@
 	<string id="17248" value="开始 eDonkey2000 局部下载导入进程..."/>
 	<string id="17249" value="处理完毕，%i 个局部下载导入成功。"/>
 	<string id="17250" value="扫描文件夹: &quot;%s&quot;..."/>
-	<string id="17251" value="  未能导入文件。"/>
-	<string id="17252" value=" 找到局部文件 &quot;%s&quot;，正在导入..."/>
-	<string id="17253" value="  未能打开 part 文件 &quot;%s&quot;。"/>
-	<string id="17254" value="  找到下载 &quot;%s&quot;，大小 %s。"/>
-	<string id="17255" value="  下载数据文件比 .part 文件更新，正在中断。"/>
-	<string id="17256" value="  复制 &quot;%s&quot; 到 &quot;%s&quot;..."/>
-	<string id="17257" value="  完成复制文件。"/>
-	<string id="17258" value="  已创建 Shareaza 局部下载，%s 剩余。"/>
-	<string id="17259" value="  此文件已经处于 Shareaza 下载列表中。"/>
-	<string id="17260" value="  磁盘空间不足无法复制下载文件。"/>
-	<string id="17472" value="来自 %s 的传入连接是一个 BitTorrent 连合，正在协商..."/>
+	<string id="17251" value="未能导入文件。"/>
+	<string id="17252" value="找到局部文件 &quot;%s&quot;，正在导入..."/>
+	<string id="17253" value="未能打开 part 文件 &quot;%s&quot;。"/>
+	<string id="17254" value="找到下载 &quot;%s&quot;，大小 %s。"/>
+	<string id="17255" value="下载数据文件比 .part 文件更新，正在中断。"/>
+	<string id="17256" value="复制 &quot;%s&quot; 到 &quot;%s&quot;..."/>
+	<string id="17257" value="完成复制文件。"/>
+	<string id="17258" value="已创建 Shareaza 局部下载，%s 剩余。"/>
+	<string id="17259" value="此文件已经处于 Shareaza 下载列表中。"/>
+	<string id="17260" value="磁盘空间不足无法复制下载文件。"/>
+	<string id="17472" value="来自 %s 的传入连接是一个 BitTorrent 联结，正在协商..."/>
 	<string id="17473" value="连接到 BitTorrent 客户端 %s 超时。"/>
 	<string id="17474" value="与 BitTorrent 客户端 %s 握手超时。"/>
-	<string id="17475" value="关闭与 %s 的 BitTorrent 连合因为缺少通讯。"/>
-	<string id="17476" value="与 %s 的 BitTorrent 连合失败因为远程客户端具有不同的 GUID。"/>
-	<string id="17477" value="与 %s 的 BitTorrent 连合回应以错误的文件。"/>
-	<string id="17478" value="与 %s 的 BitTorrent 连合请求了错误的文件。"/>
-	<string id="17479" value="与 %s 的 BitTorrent 连合已为 &quot;%s&quot; 建立。"/>
-	<string id="17480" value="与 %s 的 BitTorrent 连合已丢失。"/>
+	<string id="17475" value="关闭与 %s 的 BitTorrent 联结因为缺少通讯。"/>
+	<string id="17476" value="与 %s 的 BitTorrent 联结失败因为远程客户端具有不同的 GUID。"/>
+	<string id="17477" value="与 %s 的 BitTorrent 联结回应以错误的文件。"/>
+	<string id="17478" value="与 %s 的 BitTorrent 联结请求了错误的文件。"/>
+	<string id="17479" value="与 %s 的 BitTorrent 联结已为 &quot;%s&quot; 建立。"/>
+	<string id="17480" value="与 %s 的 BitTorrent 联结已丢失。"/>
 	<string id="17481" value="已接收 BitTorrent 描述符文件: &quot;%s&quot;"/>
 	<string id="17482" value="未能分析 BitTorrent 预取文件 &quot;%s&quot;。"/>
 	<string id="17483" value="BitTorrent 跟踪器回应错误 &quot;%s&quot; : &quot;%s&quot;。"/>
 	<string id="17484" value="错误分析 BitTorrent 跟踪器回应。"/>
 	<string id="17485" value="为 &quot;%s&quot; 接收 BitTorrent 跟踪器回应，%i 个新资源。"/>
-	<string id="17486" value="与 %s 开始 BitTorrent 客户端连合..."/>
-	<string id="17487" value="与 %s 建立 BitTorrent 连合，握手中..."/>
+	<string id="17486" value="与 %s 开始 BitTorrent 客户端联结..."/>
+	<string id="17487" value="与 %s 建立 BitTorrent 联结，握手中..."/>
 	<string id="17488" value="您已经更改此 Torrent 的跟踪器的链接。您确定您希望保存这一更改吗？\n\n一个无效的跟踪器链接可能会妨碍进一步下载。"/>
-	<string id="17489" value="BitTorrent 与 %s 的连合是扩展的协议，识别为 &quot;%s&quot;。"/>
+	<string id="17489" value="BitTorrent 与 %s 的联结是扩展的协议，识别为 &quot;%s&quot;。"/>
 	<string id="17490" value="接收到 %i 个新的 BitTorrent 资源从 %s。"/>
 	<string id="17491" value="此 torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
 	<string id="17492" value="载入 torrent 文件 &quot;%s&quot; 错误。这可能不是一个有效的 torrent。"/>
@@ -2932,7 +2960,7 @@
 	<string id="20103" value="下载中"/>
 	<string id="20104" value="TigerTree"/>
 	<string id="20105" value="Hashset"/>
-	<string id="20106" value="Metadata"/>
+	<string id="20106" value="元数据"/>
 	<string id="20107" value="繁忙"/>
 	<string id="20108" value="列队"/>
 	<string id="20109" value="已列队"/>
@@ -2984,7 +3012,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="常规">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="常规">
 		<control caption="用户界面(_U):"/>
 		<control caption="Shareaza 启动后自动连接"/>
 		<control caption="系统启动后运行 Shareaza"/>
@@ -2994,7 +3022,7 @@
 		<control caption="默认展开新的下载"/>
 		<control caption="打开 URL 前显示提示"/>
 		<control caption="速率显示单位:"/>
-		<control/>
+		<control caption="比特/秒|字节/秒|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="工具提示(_T):"/>
 		<control/>
 		<control caption="迟延(ms):"/>
@@ -3003,18 +3031,20 @@
 		<control/>
 		<control caption="系统托盘(_T):"/>
 		<control caption="点击关闭时:"/>
-		<control/>
+		<control caption="询问我|立即关闭|最小化到系统托盘|传输完毕后关闭"/>
 		<control caption="点击最小化时:"/>
-		<control/>
+		<control caption="标准|最小化到系统托盘"/>
 		<control caption="在启动搜索时隐藏侧边栏"/>
 		<control caption="过滤搜索中的成人内容"/>
+		<control caption="自动清除下载窗口"/>
+		<control caption="自动清除上传窗口"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
 		<control caption="选项(_O):"/>
 		<control caption="记住文件夹视图"/>
 		<control caption="监视收藏文件夹"/>
-		<control/>
+		<control caption="快速 Hash(占用更多 CPU 资源)"/>
 		<control caption="按扩展名过滤目标"/>
 		<control/>
 		<control caption="允许他人浏览共享"/>
@@ -3046,7 +3076,7 @@
 		<control/>
 		<control caption="添加(_A)"/>
 		<control caption="移除(_R)"/>
-		<control caption="音频可视化插件(_V):"/>
+		<control caption="可视化音频插件(_V):"/>
 		<control caption="选择插件(_S)..."/>
 		<control caption="媒体服务插件(_P):"/>
 		<control/>
@@ -3127,9 +3157,9 @@
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="上传">
 		<control caption="选项(_O):"/>
 		<control caption="共享新的部分下载文件"/>
-		<control caption="Hub 模式下限制共享"/>
+		<control caption="集端模式下限制共享"/>
 		<control caption="共享预览文件"/>
-		<control caption="创建动态预览"/>
+		<control caption="去除标记元数据"/>
 		<control caption="对每个用户进行限制:"/>
 		<control/><control/>
 		<control caption="用户代理过滤(_U):"/>
@@ -3205,30 +3235,30 @@
 		<control caption="(G2 推荐)"/>
 		<control caption="今天连接到 Gnutella2"/>
 		<control caption="模式:"/>
-		<control caption="最优|Leaf|Hub"/>
+		<control caption="最优|子端|集端"/>
 		<control caption="G2 连接(_2):"/>
-		<control caption="Leaf 到 Hub:"/>
+		<control caption="子端到集端:"/>
 		<control/><control/>
-		<control caption="Hub 到 Leaf:"/>
+		<control caption="集端到子端:"/>
 		<control/><control/>
-		<control caption="Hub 到 Hub:"/>
+		<control caption="集端到集端:"/>
 		<control/><control/>
 		<control caption="Gnutella1 网络:"/>
 		<control caption="总是连接到 Gnutella1"/>
 		<control caption="今天连接到 Gnutella1"/>
 		<control caption="模式:"/>
-		<control caption="最优|Leaf|Ultrapeer"/>
+		<control caption="最优|子端|超对等"/>
 		<control caption="G1 连接(_1):"/>
-		<control caption="Leaf 到 Ultrapeer:"/>
+		<control caption="子端到超对等:"/>
 		<control/><control/>
-		<control caption="Ultrapeer 到 Leaf:"/>
+		<control caption="超对等到子端:"/>
 		<control/><control/>
-		<control caption="Peer 到 Peer:"/>
+		<control caption="点对点:"/>
 		<control/><control/>
 		<control caption="链接压缩方式(_L):"/>
-		<control caption="Hub 到 Leaf"/>
-		<control caption="Leaf 到 Hub"/>
-		<control caption="Hub 到 Hub"/>
+		<control caption="集端到子端"/>
+		<control caption="子端到集端"/>
+		<control caption="集端到集端"/>
 	</dialog>
 
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
@@ -3297,7 +3327,7 @@
 		<control caption="描述:"/>
 		<control/>
 		<control caption="安装(_S)..."/>
-		<control caption="获取更多..."/>
+		<control caption="获取更多"/>
 	</dialog>
 
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="高级">
@@ -3337,7 +3367,7 @@
 		<control/>
 		<control caption="此队列的上传带宽:"/>
 		<control/><control/>
-		<control caption="N 秒后轮换:"/>
+		<control caption="N 秒后轮询:"/>
 		<control/><control/>
 		<control caption="确定"/>
 		<control caption="取消"/>
@@ -3441,16 +3471,6 @@
 		<control caption="尽情使用 Shareaza 吧！"/>
 	</dialog>
 
-	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="扫描文件夹...">
-		<control/>
-		<control caption="..."/>
-		<control caption="文件:"/>
-		<control caption="0"/>
-		<control caption="卷集:"/>
-		<control caption="0"/>
-		<control caption="关闭"/>
-	</dialog>
-	
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="编辑个人资料">
 		<control/>
 		<control caption="确定"/>
@@ -3554,8 +3574,8 @@
 		<control caption="初始化新的连接到主机或服务器:|浏览该用户:"/>
 		<control/><control/>
 		<control caption="网络协议(_P):"/>
-		<control/>
-		<control caption="抑制 Ultrapeer(_S)"/>
+		<control caption="Gnutella1 (自动)|Gnutella2 (自动)|eDonkey2000"/>
+		<control caption="抑制超对等(_S)"/>
 		<control caption="连接"/>
 		<control caption="取消"/>
 	</dialog>
@@ -3580,8 +3600,8 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
-		<control caption="( 排除文字的方式为“－文字”)"/>
-		<control caption="以及大小(_S):"/>
+		<control caption="( 您也可以通过 - 来排除字词 )"/>
+		<control caption="以及大小(KB)(_S):"/>
 		<control caption="最小:"/>
 		<control/>
 		<control caption="最大:"/>
@@ -3591,7 +3611,7 @@
 		<control caption="个资源。"/>
 		<control caption="隐藏(_H):"/>
 		<control caption="繁忙主机"/>
-		<control caption="有 防火墙/push 的主机"/>
+		<control caption="有 防火墙/推送 的主机"/>
 		<control caption="不稳定主机"/>
 		<control caption="无匹配文件"/>
 		<control caption="已存在文件"/>
@@ -3642,7 +3662,7 @@
 		<control/><control/><control/>
 	</dialog>
 
-	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
+	<dialog name="CFileMetadataPage" cookie="CoEd" caption="元数据">
 		<control/><control/>
 	</dialog>
 
@@ -3788,7 +3808,7 @@
 		<control caption="您已经选择 %lu 个文件作为 Shareaza 支持的 URI 导出。请为这些 URI 选择格式，并单击保存:"/>
 		<control/>
 		<control caption="插入标记:"/>
-		<control/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|文件名|文件名 (URI)|基础文件名|文件扩展名|文件大小|文件大小 (字节)|文件夹路径|本地主机|本地端口"/>
 		<control caption="选择预设:"/>
 		<control/>
 		<control caption="取消"/>
@@ -3812,9 +3832,9 @@
 		<control caption="您点击的 Shareaza URI 将会添加以下探索服务到探索服务缓存。"/>
 	</dialog>
 
-	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="下载 Metadata...">
+	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="下载元数据...">
 		<control/>
-		<control caption="Shareaza 正从 Bitzi(TM) 尝试下载 Metadata..."/>
+		<control caption="Shareaza 正从 Bitzi(TM) 尝试下载元数据..."/>
 		<control/>
 		<control caption="取消"/>
 		<control/>
@@ -3823,7 +3843,7 @@
 
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="智能下载预览...">
 		<control/>
-		<control caption="Shareaza 正在创建下载的预览："/>
+		<control caption="Shareaza 正在创建下载的预览:"/>
 		<control/><control/>
 		<control caption="(复制下载区块到新的预览文件)"/>
 		<control caption="取消"/>
@@ -3864,7 +3884,7 @@
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="关闭按钮">
 		<control/>
-		<control caption="这是您第一次点击 Shareaza 的关闭按钮。请选择以后点击关闭按钮时要完成的操作。"/>
+		<control caption="这是您第一次点击 Shareaza 的关闭按钮。请选择以后点击关闭按钮时要完成的操作:"/>
 		<control caption="最小化到系统托盘"/>
 		<control caption="立即关闭 Shareaza"/>
 		<control caption="传送完成后关闭 Shareaza"/>
@@ -3944,7 +3964,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent Tracker 查看器">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent 高级信息">
 		<control caption="Torrent 信息(_I):"/>
 		<control caption="名称:"/>
 		<control/>
@@ -3960,6 +3980,9 @@
 		<control caption="刷新(_R)"/>
 		<control/>
 		<control caption="关闭"/>
+		<control caption="需要时|当比率大于 100%|从不"/>
+		<control caption="启动新的下载传输:"/>
+		<control caption="传送:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下载组属性">
@@ -3975,9 +3998,9 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="选择视觉效果">
+	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="选择可视化效果">
 		<control/>
-		<control caption="从此列表中选择一个音频的视觉效果:"/>
+		<control caption="从此列表中选择一个音频可视化效果:"/>
 		<control/>
 		<control caption="页脚显示|完全显示|放大显示|中等显示|缩小显示"/>
 		<control caption="设置(_S)..."/>
@@ -4033,7 +4056,7 @@
 		<column from="Bandwidth" to="带宽"/>
 		<column from="Total" to="全部"/>
 		<column from="Flow" to="流量"/>
-		<column from="Leaves" to="Leaf"/>
+		<column from="Leaves" to="子端"/>
 		<column from="Mode" to="模式"/>
 		<column from="Client" to="客户端"/>
 		<column from="Name" to="名称"/>
@@ -4107,6 +4130,10 @@
 	<list name="CFileSourcesPageList">
 		<column from="URL" to="链接"/>
 		<column from="Expires" to="过期"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to="文件名"/>
+		<column from="Size" to="大小"/>
 	</list>
 </listColumns>
 </skin>
