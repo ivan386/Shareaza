@@ -295,7 +295,7 @@ public:
 		DWORD		NumServers;
 		int			MaxLinks;
 		int			MaxResults;
-		int			MaxShareCount;				// Hard limit on file list sent to server
+		DWORD		MaxShareCount;				// Hard limit on file list sent to server
 		BOOL		ServerWalk;					// Enable global UDP walk of servers
 		DWORD		StatsGlobalThrottle;		// Global throttle for server UDP stats requests
 		DWORD		QueryGlobalThrottle;		// Global throttle for all ed2k searches (TCP, UDP, manual and auto)
