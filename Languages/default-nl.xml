@@ -18,7 +18,7 @@
 			author="thurstydog"
 			description="Shareaza Dutch Skin File"
 			link="http://www.shareaza.com/"
-			version="2.1.0.0.1"
+			version="2.1.0.0.2"
 			type="Language"
 			language="nl"
 			prompt="Klik hier om Nederlands als taal te selecteren."
@@ -2092,7 +2092,6 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Toon legenda."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Selecteer en configureer elementen voor de grafiek..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="De data van de grafiek wissen."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Een torrent uitzaaien."/>
 	<tip id="ID_TOOLS_WIZARD" message="Open de Shareaza SnelStart Assistent..."/>
 	<tip id="ID_CHILD_RESTORE" message="Open het geselecteerde venster."/>
 	<tip id="ID_CHILD_CLOSE" message="Het actieve venster afsluiten."/>
@@ -2307,7 +2306,7 @@
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Exporteer de geselecteerde albummap naar een collectie bestand..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exporteer de geselecteerde albummap naar een collectie bestand..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="De geselecteerde Torrent uitzaaien op BitTorrent."/>
-    <tip id="ID_TOOLS_SEEDTORRENT" message="Zaai de geselecteerde Torrent uit op BitTorrent."/>
+    <tip id="ID_TOOLS_SEEDTORRENT" message="De geselecteerde Torrent uitzaaien op BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Toon het Uitgebreid Aanpassen venster..."/>
 	<tip id="ID_MEDIA_MUTE" message="De audio weergave afzwakken"/>
 	<tip id="ID_WINDOW_REMOTE" message="Toon of verberg de Shareaza Afstandsbediening"/>
@@ -2431,7 +2430,9 @@
 	<string id="8239" value="Voltooid"/>
 	<string id="8240" value="Shareaza verplaatst de download:"/>
 	<string id="8241" value="Shareaza is de download aan het controleren op fouten:"/>
-	<string id="8288" value="Bezig Met Verkennen Van Jouw Shareaza Bibliotheek"/>
+    <string id="8242" value="%s van %s (%.2f%%)"/>
+    <string id="8243" value="Hoeveelheid ge&#252;pload:"/>
+	<string id="8288" value="Bezig Met verkennen Van Jouw Shareaza Bibliotheek"/>
 	<string id="8289" value="Bezig met verkennen van "/>
 	<string id="8290" value="Bezig met verkennen van de inhoud van %i mappen"/>
 	<string id="8291" value="Meerdere mappen"/>
@@ -2611,7 +2612,7 @@
 	<string id="16334" value="Verouderde pushaanvraag van %s heeft een onbekend bestand aangevraagd, wordt toch verbonden..."/>
 	<string id="16335" value="Upload van &quot;%s&quot; naar %s is verwijderd."/>
 	<string id="16336" value="Uploadgastheer %s staat op de verbanlijst van de gebruikersagent, aanvraag wordt afgewezen."/>
-	<string id="16337" value="Upload headers van &quot;%s&quot; worden verzonden naar gastheer %s (%s)."/>
+	<string id="16337" value="Uploadheaders van &quot;%s&quot; worden verzonden naar gastheer %s (%s)."/>
 	<string id="16338" value="Uploadgastheer %s heeft een onbeschikbaar bereik aangevraagd van bestand &quot;%s&quot;."/>
 	<string id="16339" value="Standaard HTML antwoord wordt verzonden naar uploadbron %s (%s)."/>
 	<string id="16340" value="Aanvraag van %s om de gebruiker te bekijken is afgewezen."/>
@@ -2858,13 +2859,13 @@
 	<string id="20000" value="Geen URN beschikbaar"/>
 	<string id="20100" value="Verbindt..."/>
 	<string id="20101" value="Vraagt Aan..."/>
-	<string id="20102" value="Antwoord"/>
+	<string id="20102" value="Antwoordt..."/>
 	<string id="20103" value="Downloadt..."/>
 	<string id="20104" value="TigerTree"/>
 	<string id="20105" value="Hashset"/>
 	<string id="20106" value="Metadata"/>
 	<string id="20107" value="Bezet"/>
-	<string id="20108" value="Komt In de wachtrij"/>
+	<string id="20108" value="In De Wachtrij"/>
 	<string id="20109" value="Wachtrij"/>
 	<string id="20110" value="Onbekend"/>
 	<string id="20111" value="Voltooid"/>
