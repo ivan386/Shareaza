@@ -105,10 +105,11 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndType.SetItemData( 5, 768);
 	m_wndType.SetItemData( 6, 1536 );
 	m_wndType.SetItemData( 7, 1544 );
-	m_wndType.SetItemData( 8, 45000 );
-	m_wndType.SetItemData( 9, 100000 );
-	m_wndType.SetItemData(10, 155000 );
-	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); Cable Modem/SDSL; T3; LAN; OC3;
+	m_wndType.SetItemData( 8, 1544 );
+	m_wndType.SetItemData( 9, 45000 );
+	m_wndType.SetItemData(10, 100000 );
+	m_wndType.SetItemData(11, 155000 );
+	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); Cable Modem/SDSL; T1; T3; LAN; OC3;
 	
 	CString strSpeed;
 	strSpeed.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
@@ -141,7 +142,7 @@ void CWizardConnectionPage::OnSelChangeConnectionGroup()
 	m_wndSpeed.SetCurSel( -1 );
 	m_wndSpeed.EnableWindow( FALSE );
 	m_wndType.EnableWindow( TRUE );
-	m_wndType.SetCurSel( nGroup == 1 ? 1 : 6 );
+	m_wndType.SetCurSel( nGroup == 1 ? 1 : 8 );
 }
 
 void CWizardConnectionPage::OnSelChangeConnectionType() 
@@ -248,13 +249,15 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Connection.InSpeed		= nSpeed;
 	//Settings.Connection.OutSpeed	= nSpeed == 56 ? 32 : nSpeed;
 	if( nSpeed <= 56 )
-		Settings.Connection.OutSpeed = 32;			//Dial up modem
+		Settings.Connection.OutSpeed = 32;			// Dial up modem
+	else if( nSpeed <= 128 )
+		Settings.Connection.OutSpeed = nSpeed;		// ISDN
 	else if( nSpeed <= 700 )
-		Settings.Connection.OutSpeed = nSpeed / 4;	//4:1 ADSL
+		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL (4:1)
 	else if( nSpeed <= 1536 )
-		Settings.Connection.OutSpeed = nSpeed / 6;	//6:1 ADSL
+		Settings.Connection.OutSpeed = nSpeed / 6;	// ADSL (6:1)
 	else
-		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, etc
+		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, and the big boys.
 
 
 	

@@ -236,9 +236,9 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 		{
 			if ( pQptr->m_bEnable )
 			{
-				if ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+				if ( ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 ) && ( Settings.Connection.RequireForTransfers ) )
 				{
-					if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
+					if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) ) 
 						continue;
 				}
 			}
@@ -501,13 +501,13 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
 	}
-	else if ( Settings.Connection.OutSpeed > 120 )  // 120 Kb/s (Good Broadband)
+	else if ( Settings.Connection.OutSpeed > 130 )  // >128 Kb/s (Good Broadband)
 	{
 		pQueue						= Create( _T("eDonkey Core") );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 2000;
-		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
@@ -516,7 +516,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
-		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
@@ -548,7 +548,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
 	}
-	else if ( Settings.Connection.OutSpeed > 40 ) // >40 Kb/s (Slow Broadband)
+	else if ( Settings.Connection.OutSpeed > 40 ) // >40 Kb/s (Slow Broadband/ISDN)
 	{
 		pQueue						= Create( _T("eDonkey Core") );
 		pQueue->m_nBandwidthPoints	= 20;
@@ -561,7 +561,7 @@ void CUploadQueues::CreateDefault()
 		
 		pQueue						= Create( _T("Partial Files") );
 		pQueue->m_nBandwidthPoints	= 20;
-		// pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
@@ -570,13 +570,13 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nRotateTime		= 20*60;
 		
 		pQueue						= Create( _T("Complete Files") );
-		pQueue->m_nBandwidthPoints	= 10;
+		pQueue->m_nBandwidthPoints	= 15;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
-		pQueue->m_nRotateTime		= 30*60;
+		pQueue->m_nRotateTime		= 20*60;
 	}
 	else  // <40 Kb/s (Dial up modem)
 	{
