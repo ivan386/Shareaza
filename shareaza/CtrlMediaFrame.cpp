@@ -298,15 +298,22 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		ModifyStyle( WS_CHILD, 0 );
 		SetParent( NULL );
 		
-		MONITORINFO oMonitor;
-		ZeroMemory( &oMonitor, sizeof(oMonitor) );
-		oMonitor.cbSize = sizeof(oMonitor);
-		GetMonitorInfo( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
-		
-		SetWindowPos( &wndTopMost, oMonitor.rcMonitor.left, oMonitor.rcMonitor.top,
-			oMonitor.rcMonitor.right - oMonitor.rcMonitor.left,
-			oMonitor.rcMonitor.bottom - oMonitor.rcMonitor.top, SWP_FRAMECHANGED|SWP_SHOWWINDOW );
-		
+		if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
+		{
+			MONITORINFO oMonitor;
+			ZeroMemory( &oMonitor, sizeof(oMonitor) );
+			oMonitor.cbSize = sizeof(oMonitor);
+			theApp.m_pfnGetMonitorInfoA( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+			
+			SetWindowPos( &wndTopMost, oMonitor.rcMonitor.left, oMonitor.rcMonitor.top,
+				oMonitor.rcMonitor.right - oMonitor.rcMonitor.left,
+				oMonitor.rcMonitor.bottom - oMonitor.rcMonitor.top, SWP_FRAMECHANGED|SWP_SHOWWINDOW );
+		}
+		else
+		{
+			SetWindowPos( &wndTopMost, 0, 0, GetSystemMetrics( SM_CXSCREEN ), GetSystemMetrics( SM_CYSCREEN ), SWP_FRAMECHANGED|SWP_SHOWWINDOW ); 
+		}
+			
 		SetTimer( 2, 50, NULL );
 	}
 	else

@@ -486,12 +486,20 @@ void CSkinWindow::OnNcCalcSize(CWnd* pWnd, BOOL bCalcValidRects, NCCALCSIZE_PARA
 
 void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
-	MONITORINFO oMonitor;
-	ZeroMemory( &oMonitor, sizeof(oMonitor) );
-	oMonitor.cbSize = sizeof(oMonitor);
-	GetMonitorInfo( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
-	
-	CRect rcWork( &oMonitor.rcWork );
+	CRect rcWork;
+	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
+	{
+		MONITORINFO oMonitor;
+		ZeroMemory( &oMonitor, sizeof(oMonitor) );
+		oMonitor.cbSize = sizeof(oMonitor);
+		theApp.m_pfnGetMonitorInfoA( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+		
+		rcWork = oMonitor.rcWork;
+	}
+	else
+	{
+		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
+	}
 	rcWork.OffsetRect( -rcWork.left, -rcWork.top );
 	
 	CRect rcAdjusted( &rcWork );
