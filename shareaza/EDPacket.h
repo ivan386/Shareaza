@@ -296,8 +296,10 @@ public:
 #define ED2K_CT_NAME				0x01
 #define	ED2K_CT_PORT				0x0F
 #define ED2K_CT_VERSION				0x11
-#define ED2K_CT_FLAGS				0x20	//Tell server about compression, new tags, unicode
-#define	ED2K_CT_SOFTWAREVERSION		0xFB	//Version of the program.
+#define ED2K_CT_FLAGS				0x20	// Tell server about compression, new tags, unicode
+#define	ED2K_CT_FEATUREVERSIONS		0xFA	// Tells extended features (like emule info)
+#define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
+#define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
 
 #define ED2K_FT_FILENAME			0x01
 #define ED2K_FT_FILESIZE			0x02
@@ -329,4 +331,12 @@ public:
 #define ED2K_ET_EXTENDEDREQUEST		0x25
 #define ED2K_ET_COMPATIBLECLIENT	0x26
 
-#define SHAREAZA_COMPATIBLECLIENT_ID 14 //Temp change to test stuff... should be 4
+
+//Shareaza's advertised capabilities / feature versions
+#define ED2K_VERSION_UDP			0x02
+#define ED2K_VERSION_COMPRESSION	0x01
+#define ED2K_VERSION_SOURCEEXCHANGE	0x02
+#define ED2K_VERSION_EXTENDEDREQUEST 0x01
+
+#define ED2K_COMPATIBLECLIENT_ID	0x14 // Temp change to test stuff... should be 4
+

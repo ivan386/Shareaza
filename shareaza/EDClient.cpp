@@ -440,6 +440,7 @@ BOOL CEDClient::OnRead()
 
 BOOL CEDClient::OnLoggedIn()
 {
+theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnLoggedIn") ); //*********************
 	m_bLogin = TRUE;
 
 if ( m_bEmRequest )
@@ -567,7 +568,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 
 void CEDClient::SendHello(BYTE nType)
 {
-
+theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendHello") ); //*********************
 
 	CEDPacket* pPacket = CEDPacket::New( nType );
 	
@@ -583,7 +584,7 @@ void CEDClient::SendHello(BYTE nType)
 	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	
-	pPacket->WriteLongLE( 2 );	// Number of Tags
+	pPacket->WriteLongLE( 5 );	// Number of Tags
 	
 	// 1 - Nickname
 	CString strNick = MyProfile.GetNick();
@@ -602,21 +603,32 @@ void CEDClient::SendHello(BYTE nType)
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 
-//Note: Including this stops the remote client sendinf the eMuleInfo packet...	
-/*
-	// 3 - Software Version. Note we're missing the last version number. Since 8 bits are used 
-	// to send compatible client ID, there are only 24 bits available...
-	DWORD nRazaVersion =  ( ( ( SHAREAZA_COMPATIBLECLIENT_ID & 0xFF ) <<24 ) + 
-							( ( theApp.m_nVersion[1] & 0xFF ) <<16 ) + 
-							( ( theApp.m_nVersion[2] & 0xFF ) <<8 ) +
-							( ( theApp.m_nVersion[3] & 0xFF )  ) );
+	// 3 - Software Version. Note we're likely to corrupt the beta number, since 
+	//		there's only 3 bits available, but it's the least important anyway.
+	//		Note: Including this stops the remote client sending the eMuleInfo packet...	
+	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
+							( ( theApp.m_nVersion[1] & 0x7F ) << 17 ) | 
+							( ( theApp.m_nVersion[2] & 0x7F ) << 10 ) |
+							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
+							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
-	CEDTag( ED2K_CT_SOFTWAREVERSION, nRazaVersion ).Write( pPacket );
-*/
+	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
+
+	// 4 - Feature Versions. 
+	nVersion = ( ( ED2K_VERSION_UDP << 24) |
+				 ( ED2K_VERSION_COMPRESSION << 20) |
+				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |
+				 ( ED2K_VERSION_EXTENDEDREQUEST << 8) );
+
+	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
+
+	// 5 - UDP Port
+	CEDTag( ED2K_CT_UDPPORTS, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
+
 
 //Note: This isn't needed
 /*
-	// 4 - Port
+	// 6 - Port
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port )  ).Write( pPacket );
 */	
 	if ( pServer != NULL )
@@ -635,6 +647,7 @@ void CEDClient::SendHello(BYTE nType)
 
 BOOL CEDClient::OnHello(CEDPacket* pPacket)
 {
+theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnHello") ); //*********************
 	if ( m_bLogin ) return TRUE;
 	
 	if ( pPacket->GetRemaining() < sizeof(GUID) + 6 + 4 + 6 )
@@ -675,24 +688,41 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			Close();
 			return FALSE;
 		}
-		
-		if ( pTag.m_nKey == ED2K_CT_NAME && pTag.m_nType == ED2K_TAG_STRING )
+		switch ( pTag.m_nKey )
 		{
-			m_sNick = pTag.m_sValue;
+		case ED2K_CT_NAME:
+			if ( pTag.m_nType == ED2K_TAG_STRING ) m_sNick = pTag.m_sValue;
+			break;
+		case ED2K_CT_PORT:
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_pHost.sin_port = htons( (WORD)pTag.m_nValue );
+			break;
+		case ED2K_CT_VERSION:
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_nVersion = pTag.m_nValue;
+			break;
+		case ED2K_CT_UDPPORTS:
+			if ( pTag.m_nType == ED2K_TAG_INT )	m_nUDP = (WORD)(pTag.m_nValue & 0x0000FFFF);
+			break;
+		case ED2K_CT_FEATUREVERSIONS:
+			if ( pTag.m_nType == ED2K_TAG_INT ) 
+			{
+				m_bEmule = TRUE;
+				m_bEmDeflate	= (pTag.m_nValue >> 20) & 0x0F;
+				m_bEmSources	= (pTag.m_nValue >> 12) & 0x0F;
+				m_bEmRequest	= (pTag.m_nValue >> 8 ) & 0x0F;
+				m_bEmComments	= (pTag.m_nValue >> 4 ) & 0x0F;
+			}
+			break;
+		case ED2K_CT_SOFTWAREVERSION:
+			if ( pTag.m_nType == ED2K_TAG_INT ) 
+			{
+				m_bEmule = TRUE;
+				m_nSoftwareVersion = pTag.m_nValue & 0x00FFFFFF;
+				m_nEmCompatible = pTag.m_nValue >> 24;
+			}
+			break;
+		default:
+			theApp.Message( MSG_DEBUG, _T("Unrecognised packet in CEDClient::OnHello") );
 		}
-		else if ( pTag.m_nKey == ED2K_CT_PORT && pTag.m_nType == ED2K_TAG_INT )
-		{
-			m_pHost.sin_port = htons( (WORD)pTag.m_nValue );
-		}
-		else if ( pTag.m_nKey == ED2K_CT_VERSION && pTag.m_nType == ED2K_TAG_INT )
-		{
-			m_nVersion = pTag.m_nValue;
-		}
-		else if ( pTag.m_nKey == ED2K_CT_SOFTWAREVERSION && pTag.m_nType == ED2K_TAG_INT )
-		{
-			m_nSoftwareVersion = pTag.m_nValue;
-		}
-
 	}
 	
 	if ( pPacket->GetRemaining() < 6 )
@@ -702,25 +732,27 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		return FALSE;
 	}
 	
+	// Read their server IP / port
 	m_pServer.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 	m_pServer.sin_port = htons( pPacket->ReadShortLE() );
 	
+	// If we are learning new servers
 	if ( Settings.eDonkey.LearnNewServers && ! Network.IsFirewalledAddress( &m_pServer.sin_addr ) )
-	{
+	{	// Add their server
 		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ) );
 	}
-	
-theApp.Message( MSG_DEFAULT, _T("DeriveVersion() in CEDClient::OnHello") );
-theApp.Message( MSG_DEFAULT, m_sUserAgent );
 
+	// Get client name/version
 	DeriveVersion();
-
-theApp.Message( MSG_DEFAULT, m_sUserAgent );			//*******************************
-theApp.Message( MSG_DEFAULT, m_sNick );
 	
+	// If this was a hello
 	if ( pPacket->m_nType == ED2K_C2C_HELLO )
 	{
-		if ( m_bEmule ) SendEmuleInfo( ED2K_C2C_EMULEINFO );
+		// If it's an eMule compatible client that has not already sent us extended details
+		if ( ( m_bEmule ) && ( ! m_nSoftwareVersion ) ) 
+			SendEmuleInfo( ED2K_C2C_EMULEINFO );	// Send extended hello
+
+		// Send hello answer
 		SendHello( ED2K_C2C_HELLOANSWER );
 	}
 	
@@ -735,19 +767,22 @@ theApp.Message( MSG_DEFAULT, m_sNick );
 
 void CEDClient::SendEmuleInfo(BYTE nType)
 {
+theApp.Message( MSG_DEFAULT, _T("Running CEDClient::SendEmuleInfo") ); //*********************
+
 	CEDPacket* pPacket = CEDPacket::New( nType, ED2K_PROTOCOL_EMULE );
-	
-	// BYTE nVersion = ( theApp.m_nVersion[0] << 4 ) + ( theApp.m_nVersion[1] & 7 );
 	
 	pPacket->WriteByte( 0x40 );		// eMule version
 	pPacket->WriteByte( 0x01 );		// eMule protocol
 	
-	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 6 : 5 );	// Tags
-	CEDTag( ED2K_ET_COMPATIBLECLIENT, SHAREAZA_COMPATIBLECLIENT_ID ).Write( pPacket );
-	CEDTag( ED2K_ET_COMPRESSION, 1 ).Write( pPacket );
-	CEDTag( ED2K_ET_SOURCEEXCHANGE, 2 ).Write( pPacket );
-	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, 1 ).Write( pPacket ); //Extended request version 1
-	CEDTag( ED2K_ET_UDPVER, 2 ).Write( pPacket );
+	// Write number of tags
+	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 6 : 5 );
+
+	// Write tags
+	CEDTag( ED2K_ET_COMPATIBLECLIENT, ED2K_COMPATIBLECLIENT_ID ).Write( pPacket );
+	CEDTag( ED2K_ET_COMPRESSION, ED2K_VERSION_COMPRESSION ).Write( pPacket );
+	CEDTag( ED2K_ET_SOURCEEXCHANGE, ED2K_VERSION_SOURCEEXCHANGE ).Write( pPacket );
+	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, ED2K_VERSION_EXTENDEDREQUEST ).Write( pPacket ); //Extended request version 1
+	CEDTag( ED2K_ET_UDPVER, ED2K_VERSION_UDP ).Write( pPacket );
 	CEDTag( ED2K_ET_UDPPORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 //	CEDTag( ED2K_ET_COMMENTS, 1 ).Write( pPacket );	
 	Send( pPacket );
@@ -755,6 +790,8 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 
 BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 {
+theApp.Message( MSG_DEFAULT, _T("Running CEDClient::OnEmuleInfo") ); //*********************
+
 	if ( pPacket->GetRemaining() < 5 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );
@@ -767,15 +804,18 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	
 	if ( nProtocol != 1 ) return TRUE;
 	
+	// Have to assume capabilities for these versions
 	if ( m_nEmVersion > 0x22 && m_nEmVersion < 0x25 ) m_bEmSources = 1;
 	if ( m_nEmVersion == 0x24 ) m_bEmComments = 1;
 	
+	// Read number of tags
 	DWORD nCount = pPacket->ReadLongLE();
 	
 	while ( nCount-- > 0 && pPacket->GetRemaining() > 0 )
 	{
 		CEDTag pTag;
 		
+		// Read tag
 		if ( ! pTag.Read( pPacket ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );
@@ -809,15 +849,12 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	}
 	
 	m_bEmule = TRUE;
+
+	// Send answer if required
 	if ( pPacket->m_nType == ED2K_C2C_EMULEINFO ) SendEmuleInfo( ED2K_C2C_EMULEINFOANSWER );
-	
-theApp.Message( MSG_DEFAULT, _T("DeriveVersion() in CEDClient::OnEmuleInfo") );
-theApp.Message( MSG_DEFAULT, m_sUserAgent );
 
+	// Get client name/version
 	DeriveVersion();
-
-theApp.Message( MSG_DEFAULT, m_sUserAgent );				//*******************************
-theApp.Message( MSG_DEFAULT, m_sNick );
 	
 	return TRUE;
 }
@@ -827,6 +864,71 @@ theApp.Message( MSG_DEFAULT, m_sNick );
 
 void CEDClient::DeriveVersion()
 {
+	//Newer clients send the 24 bit software version
+	if ( m_nSoftwareVersion )
+	{
+		if ( m_nEmCompatible == 14 )  m_nEmCompatible = 4; //Temp ****************
+
+		// It's eMule compatible
+		m_bEmule = TRUE;
+
+		// Determine client from the compatible client byte
+		switch ( m_nEmCompatible )
+		{
+		case 0:
+			m_sUserAgent.Format( _T("eMule %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+/*
+			//This code displays the eMule build number- not currently used
+			m_sUserAgent.Format( _T("eMule %i.%i%c (%i)"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a', ( ( m_nSoftwareVersion ) & 0x7F ) );
+*/
+			break;
+		case 1:
+			m_sUserAgent.Format( _T("cDonkey %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
+		case 2:
+			m_sUserAgent.Format( _T("aMule %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
+		case 3:
+			m_sUserAgent.Format( _T("xMule %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
+		case 4:
+			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
+				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) &0x03 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+			
+			//Client allows G2 chat, etc
+			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+		case 10:
+			m_sUserAgent.Format( _T("MlDonkey") );
+			break;
+		case 20:
+			m_sUserAgent.Format( _T("Lphant %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
+		default:
+			m_sUserAgent.Format( _T("eMule/c %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
+		}
+		return;
+	}
+
+
+	//Older style IDs
 	if ( m_pGUID.n[5] == 13 && m_pGUID.n[14] == 110 )
 	{
 		m_bEmule = TRUE;
@@ -848,6 +950,7 @@ void CEDClient::DeriveVersion()
 		else
 			m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion);
 	}
+
 	
 	if ( m_bEmule && m_nEmVersion > 0 )
 	{
@@ -866,18 +969,7 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 4:
-			if ( m_nSoftwareVersion )
-			{
-				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.0"), 
-					( ( m_nSoftwareVersion >> 16 ) &0xFF ), ( ( m_nSoftwareVersion >> 8  ) &0xFF ), 
-					( ( m_nSoftwareVersion ) &0xFF ) );
-				//Note- we're missing the last number, since there are only 24 bits available.
-			}
-			else
-			{
-				m_sUserAgent.Format( _T("Shareaza") );
-			}
-			
+			m_sUserAgent.Format( _T("Shareaza") );
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 			break;
@@ -887,7 +979,6 @@ void CEDClient::DeriveVersion()
 		case 20:
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
-
 		default:
 			m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;

@@ -1048,7 +1048,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH )//&& pTag.m_nType == ED2K_TAG_INT )
 		{	//Length- new style (DWORD)
-			nLength = pTag.m_nValue;				
+			nLength = pTag.m_nValue;	
 		}
 		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )//&& pTag.m_nType == ED2K_TAG_INT ) )
 		{	//Bitrate- new style
@@ -1152,7 +1152,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			// Add metadata
 			if ( nLength > 0 )
 			{
-				strLength.Format( _T("%lu.%lu"), nLength / 60, ( ( nLength % 60 ) * 10 / 60 ) );
+				double nMins = (double)nLength / (double)60;	
+				strLength.Format( _T("%.3f"), nMins );
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
 				m_pXML->AddAttribute( _T("minutes"), strLength );
 			}/*
