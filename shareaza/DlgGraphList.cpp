@@ -215,10 +215,12 @@ void CGraphListDlg::OnGraphRemove()
 
 void CGraphListDlg::SetModified()
 {
+	CString sText;
 	if ( m_wndCancel.IsWindowEnabled() )
 	{
 		m_wndCancel.EnableWindow( FALSE );
-		m_wndOK.SetWindowText( _T("Close") );
+		LoadString( sText, IDS_GENERAL_CLOSE );
+		m_wndOK.SetWindowText( sText );
 	}
 }
 

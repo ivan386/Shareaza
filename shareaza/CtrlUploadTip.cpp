@@ -158,6 +158,8 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)
 {
+	CString strText;
+
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 	
@@ -197,7 +199,7 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	
 	if ( pFile != pUpload->m_pBaseFile || pUpload->m_nState == upsNull )
 	{
-		strStatus = _T("Inactive");
+		LoadString( strStatus, IDS_TIP_INACTIVE );
 	}
 	else if ( nQueue == 0 )
 	{
@@ -220,18 +222,21 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	}
 	else
 	{
-		strStatus = _T("Active");
+		LoadString( strStatus, IDS_TIP_ACTIVE );
 	}
 	
-	DrawText( pDC, &pt, _T("Status:") );
+	LoadString( strText, IDS_TIP_STATUS );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, strStatus, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 	
-	DrawText( pDC, &pt, _T("Speed:") );
+	LoadString( strText, IDS_TIP_SPEED );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, strSpeed, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 	
-	DrawText( pDC, &pt, _T("User Agent:") );
+	LoadString( strText, IDS_TIP_USERAGENT );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, pUpload->m_sUserAgent, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 	

@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,24
- PRODUCTVERSION 2,0,0,24
+ FILEVERSION 2,0,0,25
+ PRODUCTVERSION 2,0,0,25
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 24"
+            VALUE "FileVersion", "2, 0, 0, 25"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 24"
+            VALUE "ProductVersion", "2, 0, 0, 25"
         END
     END
     BLOCK "VarFileInfo"
@@ -5312,6 +5312,16 @@ STRINGTABLE
 BEGIN
     IDS_BITZI_CLOSE         "&Close"
     IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TIP_STATUS          "Status:"
+    IDS_TIP_SPEED           "Speed:"
+    IDS_TIP_URL             "URL:"
+    IDS_TIP_USERAGENT       "User Agent:"
+    IDS_TIP_INACTIVE        "Inactive"
+    IDS_TIP_ACTIVE          "Active"
 END
 
 #endif    // English (Australia) resources

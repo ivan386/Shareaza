@@ -742,6 +742,12 @@
 #define IDS_TIP_BOGUS                   8313
 #define IDS_TIP_EXISTS_DELETED          8314
 #define IDS_TIP_EXISTS_BLACKLISTED      8315
+#define IDS_TIP_STATUS     		8320
+#define IDS_TIP_SPEED     		8321
+#define IDS_TIP_URL     		8322
+#define IDS_TIP_USERAGENT     		8323
+#define IDS_TIP_INACTIVE     		8324
+#define IDS_TIP_ACTIVE     		8325
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003

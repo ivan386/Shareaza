@@ -480,7 +480,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 
 	DrawRule( pDC, &pt );
 
-	CString strStatus, strSpeed;
+	CString strStatus, strSpeed, strText;
 
 	if ( pSource->m_pTransfer != NULL )
 	{
@@ -502,23 +502,28 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	}
 	else
 	{
-		strStatus = _T("Inactive");
+		LoadString( strStatus, IDS_TIP_INACTIVE );
+		//strStatus = _T("Inactive");
 		strSpeed = _T("N/A");
 	}
 	
-	DrawText( pDC, &pt, _T("Status:") );
+	LoadString( strText, IDS_TIP_STATUS );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, strStatus, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
-	DrawText( pDC, &pt, _T("Speed:") );
+	LoadString( strText, IDS_TIP_SPEED );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, strSpeed, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
-	DrawText( pDC, &pt, _T("URL:") );
+	LoadString( strText, IDS_TIP_URL );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, m_sURL, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 	
-	DrawText( pDC, &pt, _T("User Agent:") );
+	LoadString( strText, IDS_TIP_USERAGENT );
+	DrawText( pDC, &pt, strText );
 	DrawText( pDC, &pt, pSource->m_sServer, 80 );
 	pt.y += TIP_TEXTHEIGHT;
 

@@ -239,7 +239,10 @@ void CFileCopyDlg::StopOperation()
 
 	m_hThread = NULL;
 
-	m_wndCancel.SetWindowText( _T("&Close") );
+	//m_wndCancel.SetWindowText( _T("&Close") );
+	CString sText;
+	LoadString ( sText, IDS_GENERAL_CLOSE );
+	m_wndCancel.SetWindowText( sText );
 	m_wndProgress.EnableWindow( FALSE );
 }
 
