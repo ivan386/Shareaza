@@ -417,12 +417,14 @@ BOOL CQuerySearch::WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP )
 {
 	ASSERT ( pPacket != NULL );
 	ASSERT ( pPacket->m_nType == bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
+
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
 	int nFiles = 1; // There's one hash in the packet to begin with
 	DWORD tNow = GetTickCount();
 
-	CSingleLock pLock( &Transfers.m_pSection );
-	pLock.Lock();
-
+// ***Debug
 theApp.Message( MSG_ERROR, _T("Adding additional hashes to GetSources2 packet") );
 
 	// Run through all active downloads
