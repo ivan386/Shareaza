@@ -2796,6 +2796,26 @@
 	<string id="17041" value="Не могу послать сообщение, соединение пока не установлено."/>
 	<string id="17042" value="Вы ещё не заполнили своего профиля пользователя.  Вы должны его заполнить, прежде чем беседовать с другими пользователями.\n\nХотите ли заполнить свой профиль сейчас?"/>
 	<string id="17043" value="Предоставлен приоритет загрузки для хоста %s."/>
+	<string id="17100" value="Gnutella: Связь участник к участнику"/>
+	<string id="17101" value="Gnutella: Связь ветвь к ведущему"/>
+	<string id="17102" value="Gnutella: Связь ведущий к ветви"/>
+	<string id="17103" value="Gnutella II: Связь узел к узлу"/>
+	<string id="17104" value="Gnutella II: Связь ветвь к узлу"/>
+	<string id="17105" value="Gnutella II: Связь узел к ветви"/>
+	<string id="17106" value="Связь с eDonkey сервером (LOWID: %lu)"/>
+	<string id="17107" value="Связь с eDonkey2000 сервером"/>
+	<string id="17108" value="Подтверждение"/>
+	<string id="17109" value="Входящий"/>
+	<string id="17110" value="Выходящий"/>
+	<string id="17111" value="Текущий:"/>
+	<string id="17112" value="Всего:"/>
+	<string id="17113" value="Сжатие:"/>
+	<string id="17114" value="Соотношение:"/>
+	<string id="17115" value="Дефляция"/>
+	<string id="17116" value="Отсутсвует"/>
+	<string id="17117" value="Соединение"/>
+	<string id="17118" value="Подтверждение"/>
+	<string id="17119" value="Отказ"/>
 	<string id="17120" value="Разъединяется"/>
 	<string id="17121" value="Неизвестно"/>
 	<string id="17122" value="G1 участник"/>
