@@ -24,38 +24,55 @@
 
 #pragma once
 
+// CHandshake inherits from CConnection
 #include "Connection.h"
 
+// OnRead needs the eDonkey2000 packet formats to see if the very first bytes the remote computer sent are one
 class CEDPacket;
 
-
+// Inherit from CConnection to get a socket and methods to send data through it
+// CHandshake adds methods to figure out what network the other computer is on, and authenticate GIV and PUSH requests
 class CHandshake : public CConnection
 {
+
 // Construction
 public:
-	CHandshake();
-	CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);
-	CHandshake(CHandshake* pCopy);
-	virtual ~CHandshake();
-	
+
+	// New
+	CHandshake();									// Make a new object with null and default values
+	CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);	// Make a new one with this socket and IP address
+	CHandshake(CHandshake* pCopy);					// Make a new object that is a copy of this given one
+
+	// Delete
+	virtual ~CHandshake(); // The CConnection destructor handles putting things away
+
 // Attributes
 public:
-	BOOL			m_bPushing;
-	DWORD			m_nIndex;
+
+	// Member variables for push operations and the Gnutella index (do)
+	BOOL	m_bPushing;	// True if we connected to the remote computer as part of a push
+	DWORD	m_nIndex;	// (do)
 	
 // Operations
 public:
+
+	// Push open a connection to the remote computer with the given IP address
 	virtual BOOL	Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex);
+
 protected:
-	virtual BOOL	OnRun();
-	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
-	virtual BOOL	OnRead();
+
+	// Send a push request, and look at the very start of the handshake
+	virtual BOOL	OnRun();				// Make sure the connection hasn't been going on for too long
+	virtual BOOL	OnConnected();			// Send GIV to the other computer
+	virtual void	OnDropped(BOOL bError);	// Record our push didn't work
+	virtual BOOL	OnRead();				// Figure out the remote computer's network from the first 7 bytes it tells us
+
 protected:
-	BOOL	OnAcceptGive();
-	BOOL	OnAcceptPush();
-	BOOL	OnPush(GGUID* pGUID);
-	
+
+	// Receive push requests
+	BOOL	OnAcceptGive();			// The remote computer said GIV, see if we were expecting it
+	BOOL	OnAcceptPush();			// The remote computer said PUSH, see if we were expecting it
+	BOOL	OnPush(GGUID* pGUID);	// See if a child window recognizes the guid
 };
 
 #endif // !defined(AFX_HANDSHAKE_H__FC762B48_46E6_4BB1_8B25_BC783DA966A4__INCLUDED_)

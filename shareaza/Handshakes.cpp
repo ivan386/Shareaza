@@ -38,24 +38,31 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// When the program runs, it makes a single global CHandshakes object with this line of code
 CHandshakes Handshakes;
-
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes construction
 
+// Make the CHandshakes object
 CHandshakes::CHandshakes()
 {
-	m_nStableCount	= 0;
-	m_tStableTime	= 0;
-	m_hSocket		= INVALID_SOCKET;
-	m_hThread		= NULL;
+	// Zero counts
+	m_nStableCount	= 0; // We haven't listened for and accepted any connections yet
+	m_tStableTime	= 0; // No time recorded yet
+
+	// Null values for the socket and thread handles
+	m_hSocket = INVALID_SOCKET;
+	m_hThread = NULL;
 }
 
+// Delete the CHandshakes object
 CHandshakes::~CHandshakes()
 {
+	// Have the Disconnect method put everything away
 	Disconnect();
-	
+
+	// Make sure it set the socket to invalid, and the thread to null
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	ASSERT( m_hThread == NULL );
 }
@@ -63,135 +70,194 @@ CHandshakes::~CHandshakes()
 //////////////////////////////////////////////////////////////////////
 // CHandshakes listen
 
+// Use the socket in the CHandshakes object to listen for remote computers who want to connect to us
+// Returns true if we're listening, false if it didn't work
 BOOL CHandshakes::Listen()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
-	
-	m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
-	
-	SOCKADDR_IN saListen = Network.m_pHost;
-	if ( ! Settings.Connection.InBind ) saListen.sin_addr.S_un.S_addr = 0;
-	
-	BOOL bBound = FALSE;
-	
+	// Make sure only one thread can execute the code of this method at a time
+	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
+
+	// Setup m_hSocket as a new TCP socket
+	if ( m_hSocket != INVALID_SOCKET ) return FALSE; // Make sure the socket hasn't been created yet
+	m_hSocket = socket(	// Create a socket
+		PF_INET,		// Specify the Internet address family
+		SOCK_STREAM,	// Use TCP and not UDP
+		IPPROTO_TCP );
+	if ( m_hSocket == INVALID_SOCKET ) return FALSE; // Now, make sure it has been created
+
+	// Get our computer's Internet IP address and port number from the network object
+	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
+
+	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
+	if ( ! Settings.Connection.InBind ) saListen.sin_addr.S_un.S_addr = 0; // S_addr is the IP address formatted as a single u_long
+
+	// Loop to try 5 times
+	BOOL bBound = FALSE; // We're not bound to this socket yet
 	for ( int nAttempt = 0 ; nAttempt < 5 ; nAttempt++ )
 	{
-		bBound = bind( m_hSocket, (SOCKADDR*)&saListen, sizeof(saListen) ) == 0;
-		if ( bBound ) break;
-		
-		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN,
-			(LPCTSTR)CString( inet_ntoa( saListen.sin_addr ) ),
-			htons( saListen.sin_port ) );
-		
+		// Bind our IP address to the socket, Windows Firewall may pop a message to the user when a program calls bind
+		bBound = bind(				// Call bind to associate our local address wiht this socket
+			m_hSocket,				// The socket in this CHandshakes object
+			(SOCKADDR*)&saListen,	// Our Internet IP address, the one we want to listen on, and how big it is
+			sizeof(saListen)
+			) == 0;					// If bind succeeds, it returns 0, and bBound becomes true
+		if ( bBound ) break;		// We're done trying to bind, leave the loop
+
+		// Record that we weren't able to listen on this port
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saListen.sin_addr ) ), htons( saListen.sin_port ) );
+
+		// If this is not our first attempt
 		if ( nAttempt )
 		{
+			// Choose a port number randomly, and store it it Network and saListen
 			int nPort = Network.RandomPort();
 			Network.m_pHost.sin_port = saListen.sin_port = htons( nPort );
-			//if ( Settings.Connection.InPort != 6346 ) Settings.Connection.InPort = nPort;
-			//Don't reset the port- users with port forwarding have problems.
 		}
-		else
+		else // This is still our first time here in this loop
 		{
+			// Zero the 4 numbers of the IP address (do) Why would we want to call bind with a zeroed address?
 			saListen.sin_addr.S_un.S_addr = 0;
 		}
 	}
-	
+
+	// If our record of our IP address on the Internet in the network object is zeroed
 	if ( Network.m_pHost.sin_addr.S_un.S_addr == 0 )
 	{
-		int nSockLen = sizeof(SOCKADDR_IN);
-		getsockname( m_hSocket, (SOCKADDR*)&Network.m_pHost, &nSockLen );
+		// Ask the socket what it thinks our IP address on this end is
+		int nSockLen = sizeof(SOCKADDR_IN);	// The number of bytes an MFC SOCKADDR_IN structure takes
+		getsockname(						// Retrieves the local name for a socket
+			m_hSocket,						// The socket
+			(SOCKADDR*)&Network.m_pHost,	// Have getsockname write the answer right into Network.m_pHost
+			&nSockLen );					// Tell getsockname how much space it has to write there
 	}
-	
+
+	// If we were able to bind the socket to our local address
 	if ( bBound )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_NETWORK_LISTENING_TCP,
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-			htons( Network.m_pHost.sin_port ) );
+		// Report that we are now listening on our IP address
+		theApp.Message( MSG_DEFAULT, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ), htons( Network.m_pHost.sin_port ) );
 	}
-	
-	WSAEventSelect( m_hSocket, m_pWakeup, FD_ACCEPT );
-	listen( m_hSocket, 256 );
-	
-	m_hThread = AfxBeginThread( ThreadStart, this )->m_hThread;
-	
+
+	// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
+	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
+		m_hSocket,		// Our listening socket
+		m_pWakeup,		// Our event, a CEvent object member variable
+		FD_ACCEPT );	// The network event to trigger this is us accepting a remote computer's connection
+
+	// Have the socket wait, listening for remote computer on the Internet to connect to it
+	listen(			// Place a socket in a state in which it is listening for an incoming connection
+		m_hSocket,	// Our socket
+		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
+
+	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
+	m_hThread =			// Save the new thread handle
+		AfxBeginThread(	// Create a new thread
+		ThreadStart,	// Have it start running the ThreadStart method
+		this			// ThreadStart gets one parameter passed to it, a pointer to this CHandshakes object
+		)->m_hThread;	// AfxBeginThread returns a pointer to the new thread object, copy the thread handle from within it
+
+	// Report success
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes disconnect
 
+// Closes the socket and kills the thread
 void CHandshakes::Disconnect()
 {
+	// If the socket in this CHandshakes object is valid
 	if ( m_hSocket != INVALID_SOCKET )
 	{
+		// Close it and set it invalid
 		closesocket( m_hSocket );
 		m_hSocket = INVALID_SOCKET;
 	}
-	
+
+	// If this CHandshakes object has a thread handle
 	if ( m_hThread != NULL )
 	{
+		// Set the state of the wakeup event to signaled, releasing any threads that are waiting on it
 		m_pWakeup.SetEvent();
-		
+
+		// Loop 10 times
 		for ( int nAttempt = 10 ; nAttempt > 0 ; nAttempt-- )
 		{
+			// Stay in the loop while the thread is still active
 			DWORD nCode;
-			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
-			if ( nCode != STILL_ACTIVE ) break;
+			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;	// If the call fails, leave the loop
+			if ( nCode != STILL_ACTIVE ) break;						// If the thread is not still active, leave the loop
+
+			// Have this thread pause on this line of code and do nothing for a tenth of a second
 			Sleep( 100 );
 		}
-		
+
+		// If we waited a whole second and checked 10 times for the thread to close but always it was still active
 		if ( nAttempt == 0 )
 		{
+			// Terminate it manually
 			TerminateThread( m_hThread, 0 );
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CHandshakes thread.") );
+
+			// Wait a tenth of a second
 			Sleep( 100 );
 		}
-		
+
+		// The thread is gone now, set the handle to null
 		m_hThread = NULL;
 	}
-	
-	CSingleLock pLock( &m_pSection, TRUE );
-	
-	m_nStableCount	= 0;
+
+	// Make sure only one thread can execute the remaining code of this method at a time
+	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
+
+	// Zero the statistics about how many connections we've received
+	m_nStableCount	= 0; // Reset our count of how many connections we've accepted
 	m_tStableTime	= 0;
-	
-	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );
-	m_pList.RemoveAll();
+
+	// Delete all the handshake objects in the list, and the list itself
+	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );	// Delete each handshake object
+	m_pList.RemoveAll();												// Remove all the pointers
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes push connection
 
+// Takes an IP address and port number, and the Gnutella index (do)
+// Connects to the remote computer, and makes a CHandshake object about it in m_pList
+// Returns true if the connection is made, false if we couldn't connect
 BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 {
+	// Get exclusive access to the transfers part of the program
 	CSingleLock pLock1( &Transfers.m_pSection );
-	
-	if ( pLock1.Lock( 250 ) )
+	if ( pLock1.Lock( 250 ) ) // If we're waiting more than a quarter second, just give up
 	{
+		// If we can't allow any more uploads to this address
 		if ( ! Uploads.AllowMoreTo( pAddress ) )
 		{
+			// Report that we're too busy to do the push, and leave now
 			CString strAddress = inet_ntoa( *pAddress );
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)strAddress );
 			return FALSE;
 		}
-		
+
+		// We're done, unlock exclusive access to the next thread that wants in can get in
 		pLock1.Unlock();
 	}
-	
+
+	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock2( &m_pSection, TRUE );
-	
+
+	// Make a new CHandshake object, and open a connection to the computer at pAddress and pPort
 	CHandshake* pHandshake = new CHandshake();
-	
 	if ( pHandshake->Push( pAddress, nPort, nIndex ) )
 	{
+		// Add the new CHandshake object to the end of the m_pList list
 		m_pList.AddTail( pHandshake );
 		return TRUE;
 	}
-	else
+	else // We couldn't connect to that IP address and port number
 	{
+		// Delete the handshake object we just made, and report failure
 		delete pHandshake;
 		return FALSE;
 	}
@@ -200,34 +266,55 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 //////////////////////////////////////////////////////////////////////
 // CHandshakes connection test
 
+// Takes an IP address
+// Searches the list of handshake objects to see if we are connected to it
+// Returns true if its in the list, false if we couldn't find it
 BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress)
 {
+	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
+	// Loop for each CHandshake object in the m_pList of them
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
+		// Get the handshake object here in the list, and move the position iterator to the next one
 		CHandshake* pHandshake = GetNext( pos );
+
+		// If the IP address in the list handshake object matches the one given this method, we've found it
 		if ( pHandshake->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) return TRUE;
 	}
-	
+
+	// We didn't find it
 	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes list modification
 
+// Takes pOld, a pointer to a handshake object in the list, and pNew, a pointer to one to replace it
+// Replaces the old pointer with the new one in the list, and deletes the object at the end of the old pointer
 void CHandshakes::Substitute(CHandshake* pOld, CHandshake* pNew)
 {
+	// Find the position of the pointer to the old handshake object in the m_pList list
 	POSITION pos = m_pList.Find( pOld );
-	ASSERT( pos != NULL );
+	ASSERT( pos != NULL ); // Make sure we found something
+
+	// Set the new pointer at this position, overwriting the old pointer there
 	m_pList.SetAt( pos, pNew );
+
+	// Delete the old handshake object, since the list doesn't have a pointer to it anymore
 	delete pOld;
 }
 
+// Takes a pointer to a handshake object in the list
+// Removes the pointer from the list and deletes the object
 void CHandshakes::Remove(CHandshake* pHandshake)
 {
+	// Find the position of the handshake pointer in the m_pList list
 	POSITION pos = m_pList.Find( pHandshake );
-	ASSERT( pos != NULL );
+	ASSERT( pos != NULL ); // Make sure we found it
+
+	// Remove its pointer from the list, and delete the object
 	m_pList.RemoveAt( pos );
 	delete pHandshake;
 }
@@ -235,38 +322,68 @@ void CHandshakes::Remove(CHandshake* pHandshake)
 //////////////////////////////////////////////////////////////////////
 // CHandshakes thread run
 
+// Before it exits, the Listen method creates a new thread to run on this method
+// It passes pParam, which is actually a pointer to the CHandshakes object
+// This method runs the thread, it is the start, middle, and end of the thread
+// The return value of this method is the thread's exit value
 UINT CHandshakes::ThreadStart(LPVOID pParam)
 {
+	// Cast the parameter back into what it was, a pointer to this CHandhshakes object, and call the OnRun method
 	((CHandshakes*)pParam)->OnRun();
-	return 0;
+
+	// When OnRun is done, this thread's work is complete, have it exit with the default return code 0
+	return 0; // This is the end of the thread
 }
 
+// The thread runs this method
+// Accept incoming connections from remote computers and figure out what they want
 void CHandshakes::OnRun()
 {
+	// Loop while the socket is valid
 	while ( m_hSocket != INVALID_SOCKET )
 	{
-		WaitForSingleObject( m_pWakeup, 1000 );
+		// Wait for a computer to call us, which fires the wakeup event
+		WaitForSingleObject( m_pWakeup, 1000 ); // Give up after a second
+
+		// Accept the connection from the remote computer, making a new CHandshake object for it in the list
 		while ( AcceptConnection() );
+
+		// Send and receive data with each remote computer in the list
 		RunHandshakes();
+
+		// Loop to accept some more connections from computers that have called our listening socket
 		while ( AcceptConnection() );
+
+		// If we've listened for and accepted at least one connection, update the discovery services
 		RunStableUpdate();
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes run the handshake
-	
+
+// Send and receive data with each remote computer in the list
 void CHandshakes::RunHandshakes()
 {
+	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
+	// Loop through each CHandshake object in the m_pList list of pointers to them
 	for ( POSITION posNext = GetIterator() ; posNext ; )
 	{
-		POSITION posThis = posNext;		
-		CHandshake* pHandshake = GetNext( posNext );
-		
-		if ( ! pHandshake->DoRun() && m_pList.GetAt( posThis ) == pHandshake )
+		// Loop on one handshake object in the list
+		POSITION posThis = posNext;						// Save the current position, as GetNext will move it to the next one
+		CHandshake* pHandshake = GetNext( posNext );	// Get the pointer at this position, and move posNext forward
+
+		// Send and receive data write with the remote computer, deleting the handshake object if we loose the connection
+		if (
+			// Read and write data through the socket
+			! pHandshake->DoRun() // If we've lost the connection, DoRun will return false, and we'll go to the next line
+
+			// If the position and pointer still match
+			&& m_pList.GetAt( posThis ) == pHandshake ) // (do) How could this not be so?
 		{
+			// Delete the handshake object and remove it from the list
 			delete pHandshake;
 			m_pList.RemoveAt( posThis );
 		}
@@ -276,62 +393,90 @@ void CHandshakes::RunHandshakes()
 //////////////////////////////////////////////////////////////////////
 // CHandshakes accept a connection
 
+// We're listening on m_hSocket, a remote computer calls us, this method accepts the connection, making a new CHandshake object in the list for it
+// Returns true or false if we accepted the connection
 BOOL CHandshakes::AcceptConnection()
 {
-	/*
-	WSANETWORKEVENTS pEvents;
-	WSAEnumNetworkEvents( m_hSocket, NULL, &pEvents );
-	if ( ( pEvents.lNetworkEvents & FD_ACCEPT ) == 0 ) return FALSE;
-	*/
-	
+	// Local variables to receive the IP address and port number of the remote computer
 	SOCKADDR_IN pHost;
 	int nHost = sizeof(pHost);
-	
-	SOCKET hSocket = WSAAccept( m_hSocket, (SOCKADDR*)&pHost, &nHost, AcceptCheck, (DWORD)this );
-	if ( hSocket == INVALID_SOCKET ) return FALSE;
-	
-	InterlockedIncrement( (PLONG)&m_nStableCount );
-	
+
+	// Accept the connection in a new socket, hSocket
+	SOCKET hSocket =		// Make a new local socket here
+		WSAAccept(			// Conditionally accepts an incoming connection from a remote computer
+		m_hSocket,			// The socket listening for connections
+		(SOCKADDR*)&pHost,	// Have WSAAccept tell us what it thinks the IP address and port number of the remote computer is
+		&nHost,				// The number of bytes it has to write there
+		AcceptCheck,		// Call this function, and it will tell you if we wish to accept this connection or not
+		(DWORD)this );		// Give the AcceptCheck function a pointer to this CHandshakes object as its parameter
+	if ( hSocket == INVALID_SOCKET ) return FALSE; // AcceptCheck refused the connection, or it didn't work, leave now
+
+	// We've listened for and accepted one more stable connection
+	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
+
+	// If the remote computer's IP address is on the list of government and corporate ranges to be silent with
 	if ( Security.IsDenied( &pHost.sin_addr ) )
 	{
+		// Close the socket we just accepted the connection with
 		closesocket( hSocket );
+
+		// Report that this connection was denied for security reasons
 		CString strHost = inet_ntoa( pHost.sin_addr );
 		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)strHost );
 	}
-	else
+	else // The IP address is not on that watch list
 	{
+		// Make a new handshake object with the received socket and IP address, and add it to the list
 		CreateHandshake( hSocket, &pHost );
 	}
-	
+
+	// Report success
 	return TRUE;
 }
 
+// Takes a local socket we just made accepting a connection, and the IP address and port number of the remote computer
+// Makes a new handshake object with the socket, and adds it to the list
 void CHandshakes::CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 {
+	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE );
-	
-	WSAEventSelect( hSocket, m_pWakeup, FD_READ|FD_WRITE|FD_CLOSE );
+
+	// Setup the socket so when there is data to read or write, or it closes, the m_pWakeup event happens
+	WSAEventSelect(							// Associate the m_pWakeup event with the FD_READ, FD_WRITE, and FD_CLOSE events
+		hSocket,							// The local socket we just made when accepting a new connection
+		m_pWakeup,							// The handshakes object's wakeup event
+		FD_READ | FD_WRITE | FD_CLOSE );	// Make the event happen when the socket is ready to read, write, or has closed
+
+	// Make a new handshake object with the received socket and IP address, and add it to the list
 	m_pList.AddTail( new CHandshake( hSocket, pHost ) );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes inbound connection security check callback
 
+// This is the WSAAccept condition function, that's why it has so many weird parameters
+// Makes sure we know the remote IP address, and it's not on the security watch list
+// Returns CF_ACCEPT or CF_REJECT to tell WSAAccept what to do
 int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, OUT LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD dwCallbackData)
 {
-	if ( lpCallerId == NULL ) return CF_REJECT;
-	if ( lpCallerId->len < sizeof(SOCKADDR_IN) ) return CF_REJECT;
-	
+	// If the address of the remote computer is unknown or too short, reject the connection
+	if ( lpCallerId == NULL )                    return CF_REJECT; // WSAAccept didn't get the remote computer's IP and port
+	if ( lpCallerId->len < sizeof(SOCKADDR_IN) ) return CF_REJECT; // The IP and port aren't long enough
+
+	// Copy out the IP address and port number of the remote computer
 	SOCKADDR_IN* pHost = (SOCKADDR_IN*)lpCallerId->buf;
 	
+	// If the remote computer's IP address is on the list of government and corporate ranges to be silent with
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{
+		// Record we are rejecting this connection because it is on the watch list, and tell WSAAccept to not connect
 		CString strHost = inet_ntoa( pHost->sin_addr );
 		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)strHost );
 		return CF_REJECT;
 	}
-	else
+	else // The IP address is not on that watch list
 	{
+		// Tell WSAAccept we should try to accept this connection
 		return CF_ACCEPT;
 	}
 }
@@ -339,11 +484,16 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCall
 //////////////////////////////////////////////////////////////////////
 // CHandshakes update stable state
 
+// If we've accepted at least one connection, update the discover services (do)
 void CHandshakes::RunStableUpdate()
 {
+	// If we've listened for and accepted at least one stable connection
 	if ( m_nStableCount > 0 )
 	{
-		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL );
+		// If there isn't a record of when yet, set it to an empty CTime value
+		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL ); // (do) If 0 set to 0? Why?
+
+		// Update the discover services (do)
 		DiscoveryServices.Update();
 	}
 }

@@ -26,63 +26,93 @@
 
 class CHandshake;
 
-
 class CHandshakes  
 {
+
 // Construction
 public:
+
+	// Make the CHandshakes object, and later, delete it
 	CHandshakes();
 	virtual ~CHandshakes();
-	
+
 // Attributes
 public:
-	DWORD		m_nStableCount;
-	DWORD		m_tStableTime;
+
+	// How many connections our listening socket has received, and how long they've been connected
+	DWORD m_nStableCount; // The number of connections our listening socket has received
+	DWORD m_tStableTime;  // The time at least one has been connected (do)
+
 protected:
-	CCriticalSection	m_pSection;
-	CEvent				m_pWakeup;
-	SOCKET				m_hSocket;
-	HANDLE				m_hThread;
-	CPtrList			m_pList;
-	
+
+	// The listening socket
+	SOCKET m_hSocket; // Our one listening socket
+	HANDLE m_hThread; // This thread waits for remote computers to call the listening socket
+	CEvent m_pWakeup; // Fire this event when a remote computer calls our listening socket
+
+	// The list of CHandshake objects
+	CPtrList			m_pList;	// The list of pointers to CHandshake objects
+	CCriticalSection	m_pSection;	// Use to make sure only one thread accesses the list at a time
+
 // Operations
 public:
-	BOOL		Listen();
-	void		Disconnect();
-	BOOL		PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);
-	BOOL		IsConnectedTo(IN_ADDR* pAddress);
+
+	// Start and stop listening on the socket
+	BOOL Listen();		// Listen on the socket
+	void Disconnect();	// Stop listening
+
+	// Connect to an IP, and determine if we are connected to one
+	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);	// Connect to the given IP
+	BOOL IsConnectedTo(IN_ADDR* pAddress);							// Looks for the IP in the handshake objects list
+
 protected:
-	void		Substitute(CHandshake* pOld, CHandshake* pNew);
-	void		Remove(CHandshake* pHandshake);
+
+	// Replace and remove CHandshake objects in the m_pList of them
+	void Substitute(CHandshake* pOld, CHandshake* pNew);	// Replace an old CHandshake object in the list with a new one
+	void Remove(CHandshake* pHandshake);					// Remove a CHandshake object from the list
+
 protected:
-	static UINT	ThreadStart(LPVOID pParam);
-	void		OnRun();
-	void		RunHandshakes();
-	BOOL		AcceptConnection();
-	void		CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);
-	void		RunStableUpdate();
+
+	// Loop to listen for connections and accept them
+	static UINT	ThreadStart(LPVOID pParam);	// The thread that waits while the socket listens starts here
+	void		OnRun();					// Accept incoming connections from remote computers
+	void		RunHandshakes();			// Send and receive data with each remote computer in the list
+	BOOL		AcceptConnection();			// Accept a connection, making a new CHandshake object in the list for it
+	void		CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost); // Make the new CHandshake object for the new connection
+	void		RunStableUpdate();			// Update the discovery services (do)
+
+	// Tell WSAAccept if we want to accept a connection from a computer that just called us
 	static int	CALLBACK AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, OUT LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD dwCallbackData);
-	
-// Inlines
+
+// Short methods defined inline here in the .h file
 public:
+
+	// Returns an iterator at the start of the list of handshake objects
 	inline POSITION GetIterator() const
 	{
+		// Returns a MFC POSITION iterator, or null if the list is empty
 		return m_pList.GetHeadPosition();
 	}
 
+	// Given a position in the handshake list, returns the next handshake object
 	inline CHandshake* GetNext(POSITION& pos) const
 	{
-		return (CHandshake*)m_pList.GetNext( pos );
+		// Returns the CHandshake object at the current position, and then moves the position iterator to the next one
+		return (CHandshake*)m_pList.GetNext( pos ); // Does two things
 	}
 
+	// True if the socket is valid, false if its closed
 	inline BOOL IsListening() const
 	{
+		// If the socket is not invalid, it is connected to the remote computer
 		return m_hSocket != INVALID_SOCKET;
 	}
-	
+
+	// Get complete access to CHandhsake member variables and methods (do)
 	friend class CHandshake;
 };
 
-extern CHandshakes Handshakes;
+// When the program runs, it makes a single global CHandshakes object
+extern CHandshakes Handshakes; // Access Handshakes externally here in Handshakes.h, even though it is defined in Handshakes.cpp
 
 #endif // !defined(AFX_HANDSHAKES_H__2314A7BE_5C51_4F8E_A4C6_6059A7621AE0__INCLUDED_)
