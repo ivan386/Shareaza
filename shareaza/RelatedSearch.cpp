@@ -245,14 +245,12 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 			str += *psz;
 			nChars ++;
 		}
-		else if ( nChars > 1 && !( *psz >= 0x02B0 && *psz <= 0x02FF ) &&
-				  !( *psz >= 0x0300 && *psz <= 0x036F ) )
+		else if ( nChars > 1 && !( *psz >= 0x02B0 && *psz <= 0x036F ) )
 		{
 			str += ' ';
 			nChars = 0;
 		}
-		else if ( nChars == 1 && !( *psz >= 0x02B0 && *psz <= 0x02FF ) &&
-				  !( *psz >= 0x0300 && *psz <= 0x036F ) )
+		else if ( nChars == 1 && !( *psz >= 0x02B0 && *psz <= 0x036F ) )
 		{
 			str = str.Left( str.GetLength() - 1 );
 			nChars = 0;
