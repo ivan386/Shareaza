@@ -31,6 +31,8 @@
 #include "ShareazaURL.h"
 #include "HttpRequest.h"
 #include "DlgTorrentSeed.h"
+#include "WndMain.h"
+#include "WndDownloads.h"
 
 IMPLEMENT_DYNAMIC(CTorrentSeedDlg, CSkinDialog)
 
@@ -89,7 +91,46 @@ void CTorrentSeedDlg::OnDownload()
 	if ( pTorrent->LoadTorrentFile( m_sTorrent ) )
 	{
 		CShareazaURL* pURL = new CShareazaURL( pTorrent );
-		if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
+		//if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
+		CLibraryFile* pFile;
+			
+		if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1, TRUE ) ) ) ||
+				 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K, TRUE ) ) ) )
+		{
+			CString strFormat, strMessage;
+			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
+			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
+			Library.Unlock();
+				
+			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
+			{
+				EndDialog( IDOK );
+				return;
+			}
+		}
+			
+		CDownload* pDownload = Downloads.Add( pURL );
+			
+		if ( pDownload == NULL ) 			
+		{
+			EndDialog( IDOK );
+			return;
+		}
+			
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
+		{		
+			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+		}
+
+		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+				
+		if ( Settings.Downloads.ShowMonitorURLs )
+		{
+			CSingleLock pLock( &Transfers.m_pSection, TRUE );
+			if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pLock );
+		}
+
 		EndDialog( IDOK );
 		return;
 	}
@@ -257,7 +298,7 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 	CString strPath = m_sTorrent;
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
-	
+
 	if ( pFile->m_bSHA1 )
 	{
 		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( &pFile->m_pSHA1, TRUE, FALSE, TRUE ) )
@@ -267,15 +308,23 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 			if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
 		}
 	}
-	
+
+	strFile = Settings.Downloads.CompletePath + "\\" + pFile->m_sPath;
+	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+
 	strFile = strPath + pFile->m_sPath;
 	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
 	
+	//Try removing the outer directory in case of multi-file torrent oddities
 	LPCTSTR pszName = _tcsrchr( pFile->m_sPath, '\\' );
 	if ( pszName == NULL ) pszName = pFile->m_sPath; else pszName ++;
+
+	strFile = Settings.Downloads.CompletePath + "\\" + pszName;
+	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
+
 	strFile = strPath + pszName;
 	if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
-	
+
 	strFile.Empty();
 	return strFile;
 }
