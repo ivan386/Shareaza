@@ -26,7 +26,6 @@
 #include "DlgHelp.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include "XML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
