@@ -22,6 +22,7 @@ Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; Licens
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
 
 [Files]
+#ifndef debug
 ; Install default remote
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
 ; Install localized remote
@@ -124,6 +125,7 @@ Source: "setup\filter\greek.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 ; Chinese Simp
 Source: "setup\filter\chinese-simpl.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
+#endif
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
