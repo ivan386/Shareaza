@@ -94,11 +94,7 @@ void CDownload::Pause()
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	
-	if ( m_bBTH ) CloseTorrent();
-	m_tBegan = 0;
-	CloseTransfers();
-	CloseFile();
-	SetModified();
+	StopTrying();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -109,8 +105,8 @@ void CDownload::Resume()
 	if ( m_bComplete ) return;
 	if ( ! m_bPaused ) 
 	{
+		if ( ( m_tBegan == 0 ) && ( GetSourceCount() < 2 ) ) FindMoreSources();
 		SetStartTimer();
-		if ( GetSourceCount() < 2 ) FindMoreSources();
 		return;
 	}
 	
