@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 21 Julie 2004 vir Shareaza 2.0.0.13 -->
+<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 7 Augustus 2004 vir Shareaza 2.0.0.33 -->
 
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
@@ -9,9 +9,9 @@
 <manifest	name="Afrikaans"
 		author="Johann van der Walt - Thesage"
 		description="Shareaza Afrikaanse Omslaglêer"
-		link="http://www.shareaza.com/"
+		link="http://www.freewebs.com/afrshareaza"
 		email="johannw AT imaginet.co.za"
-		version="2.0.0.13"
+		version="2.0.0.33"
 		type="Language"
 		language="af"
 		prompt="Kliek hier om Afrikaans as jou taal te kies."
@@ -294,7 +294,7 @@
 		<label text="Volume:" tip="Verstel die volume"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
-		<button id="ID_MEDIA_OPEN" text="Open lêer"/>
+		<button id="ID_MEDIA_OPEN" text="Open Lêer"/>
 		<rightAlign/>
 		<button id="ID_MEDIA_PREVIOUS" text="Vorige"/>
 		<button id="ID_MEDIA_NEXT" text="Volgende"/>
@@ -460,7 +460,7 @@
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Aangaande Shareaza..."/>
+			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -516,7 +516,7 @@
 		<menu text="_Opsies">
 			<item id="ID_LIBRARY_FOLDERS" text="Deel _Lêers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Laai Lêer/Torrent Af..."/>
-			<item id="ID_TOOLS_SEEDTORRENT" text="Saai Torrent..."/>
+			<!--<item id="ID_TOOLS_SEEDTORRENT" text="Saai Torrent..."/>-->
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Kies 'n O_mslag..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Verander jou _Taal..."/>
@@ -524,7 +524,7 @@
 			<item id="ID_TOOLS_PROFILE" text="Verander jou _Profiel..."/>
 			<item id="ID_TOOLS_WIZARD" text="SnelBegin _Assistent..."/>
 			<separator/>
-			<item id="ID_TOOLS_MERCORA" text="P2P Radio..."/>
+			<!--<item id="ID_TOOLS_MERCORA" text="P2P Radio..."/>-->
 			<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..."/>
 		</menu>
 		<menu text="_Venster">
@@ -547,7 +547,7 @@
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Aangaande Shareaza..."/>
+			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -626,7 +626,7 @@
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Aangaande Shareaza..."/>
+			<item id="ID_HELP_ABOUT" text="_Oor Shareaza..."/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -785,6 +785,7 @@
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Laai Af"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Laai Nou Af"/>
 		<item id="ID_SEARCH_COPY" text="Kopieer _URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Vertoon Gebruikersinligting"/>
@@ -824,7 +825,6 @@
 		</menu>
 		<menu text="_Weblêer Inligting">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-			<separator/>
 			<item id="ID_SEARCH_COPY" text="Kopieer _URI..."/>
 		</menu>
 	</menu>
@@ -1071,7 +1071,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Kopieer _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganiseer"> 
 			<item id="ID_LIBRARY_RENAME" text="_Hernoem Lêer"/>
@@ -1087,7 +1087,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Gedeel"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Kopieer _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Skrap"/>
 		<separator/>
 		<menu text="S_oek Vir">
@@ -1133,10 +1133,9 @@
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Kopieer _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganiseer">
 			<item id="ID_LIBRARY_RENAME" text="_Hernoem Lêer"/>
@@ -1154,7 +1153,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Gedeel"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Kopieer _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Skrap"/>
 `		<separator/>
 		<menu text="S_oek Vir">
@@ -1167,8 +1166,9 @@
 		</menu>
 		<menu text="_Web Dienste">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 		</menu>
 		<menu text="O_rganiseer">
 			<item id="ID_LIBRARY_UNLINK" text="Skrap _Lêers"/>
@@ -1461,7 +1461,7 @@
                 en nie inkomende konneksies van die Internet kan ontvang nie. &#160;</text>
                 <text colour="FF0000" format="b">Dit mag swak aflaaiprestasie veroorsaak.</text>
                 <newline gap="6"/>
-                <link target="raza:command:ID_HELP_FIREWALLS">Kliek hier om uit te vind hoe om jou roeteerder of netskans in te stel</link>
+                <link target="raza:command:ID_HELP_FIREWALLS">Kliek hier om uit te vind hoe om jou roeteerder of netskans reg in te stel</link>
                 <newline gap="18" indent="0"/>
             </group>
         
@@ -1623,6 +1623,22 @@
 		</para>
 	</document>
 	
+	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="TorrentsNone" format="b">Geen saaiende torrents nie</text>
+			<text id="TorrentsOne" format="b">1 saaiende torrent</text>
+			<text id="TorrentsMany" format="b">%i saaiende torrents</text>
+			<newline gap="4"/>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Saai 'n torrent</link>
+		</para>
+
+	</document>
+
 	<!-- Settings Pages -->
 
 	<document name="CGeneralSettingsGroup" title="Algemeen" leftMargin="8" topMargin="8">
@@ -1862,7 +1878,7 @@
 		<text>Shareaza het hierdie aflaai outomaties gevries, omdat die hardeskyf
 		skynbaar vol is, of die aflaailêer nie na geskryf kan word nie.  As jy
 		verder wil aflaai, maak asseblief van die skyfspasie skoon en/of maak seker dat
-		die Onvoltooi-gids toeganklik is en hervat dan die aflaai.</text>
+		die 'incomplete'-gids toeganklik is en hervat dan die aflaai.</text>
 	</document>
 	
 	<document name="DownloadHelp.Verifying">
@@ -1979,7 +1995,7 @@
 </document>
 </documents>
 
-<!-- English Navigation Bar -->
+<!-- English Navigation Bar
 <windowSkins>
 	<windowSkin>
 		<image type="image" language="en" res="241"/>
@@ -2056,7 +2072,7 @@
 			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
 		</parts>
 	</windowSkin>
-</windowSkins>
+</windowSkins> -->
 
 <!-- Afrikaans Navigation Bar - Use this to enable the custom ShareazaOS Navigation Bar
 <windowSkins>
@@ -2164,6 +2180,7 @@
 	<tip id="ID_NETWORK_CONNECT_TO" message="Konnekteer met die hand aan 'n gasheer..."/>
 	<tip id="ID_NETWORK_SEARCH" message="Begin 'n nuwe soektog op die netwerk..."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Laai die geselekteerde lêer(s) af."/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="Laai die geselekteerde lêer(s) af met hoë prioriteit."/>
 	<tip id="ID_SEARCH_SEARCH" message="Deursoek die netwerk weer..."/>
 	<tip id="ID_SEARCH_FILTER" message="Filtreer die soekresultate met sekere woorde en kondisies..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Verwyder filtrasie van die uitslae."/>
@@ -2209,6 +2226,7 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Vertoon Verklarings."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Selekteer en verstel items op die grafiek..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Verwyder die dataverkeer-grafiek."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai 'n torrent"/>
 	<tip id="ID_TOOLS_WIZARD" message="Open die Shareaza SnelBegin Assistent..."/>
 	<tip id="ID_CHILD_RESTORE" message="Open die geselekteerde venster."/>
 	<tip id="ID_CHILD_CLOSE" message="Sluit die geselekteerde venster."/>
@@ -2414,6 +2432,7 @@
 	<tip id="ID_UPLOADS_FILTER_MENU" message="Selekteer oplaaie wat in hierdie aansig vertoon moet word."/>
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Kanselleer die geselekteerde aflaai(e)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Verwyder die geselekteerde lêers van die lys."/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="Skep 'n .torrent vir hierdie lêer vir oplaai na 'n webblad."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Vertoon of verwyder die navigasiebalk."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Gradeer die geselekteerde aflaai."/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Vertoon die ryk versamelings-aansig" tip="Collection View"/>
@@ -2421,15 +2440,16 @@
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids as 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids na 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
+    	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Vertoon die gevorderde aflaaiverstellings-koppelvlak..."/>
 	<tip id="ID_MEDIA_MUTE" message="Maak die volume stil"/>
 	<tip id="ID_WINDOW_REMOTE" message="Vertoon of verwyder die Shareaza Afstandbeheer"/>
 	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Vertoon BitTorrent oplaaie."/>
+	<tip id="ID_TOOLS_MERCORA" message="Begin P2P Radio"/>
 	<tip id="ID_HELP_FIREWALLS" message="Verkry hulp met die opstelling van jou roeteerder of netskans."/>
 	<tip id="ID_WINDOW_CASCADE" message="Vergroot alle aktiewe vensters om die skerm te vul."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Rangskik die oop vensters as horisontale, nie-oorvleuelende teëls."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Rangskik die oop vensters as vertikale, nie-oorvleuelende teëls."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai 'n torrent"/>
 </commandTips>
 
 <!-- Localised Strings -->
@@ -2466,6 +2486,8 @@
 	<string id="8009" value="Is jy seker jy wil die &quot;%s&quot; omslag skrap?  Dit kan nie herroep word nie."/>
 	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode is beëindig. Laai asseblief die volle, offisiële weergawe af vanaf www.shareaza.com."/>
 	<string id="8011" value="Om die aansig te verander mag sommige van die oop vensters dalk gesluit word.  Wil jy nou verander?"/>
+	<string id="8062" value="Hub modus met %lu kliënt(e).  %s in lokale biblioteek."/>
+    	<string id="8063" value="Gekonnekteer. %s in lokale biblioteek."/>
 	<string id="8064" value="Gekonnekteer aan %lu gashere.  %s in lokale biblioteek."/>
 	<string id="8065" value="Besig om aan die netwerk te konnekteer..."/>
 	<string id="8066" value="Nie gekonnekteer aan die netwerk nie."/>
@@ -2492,6 +2514,8 @@
 	<string id="8132" value="Sommige resultate is gevind, maar is uitgefiltreer."/>
 	<string id="8133" value="Shareaza is aktief besig om die netwerk deur te soek..."/>
 	<string id="8134" value="Jy is op pad om 'n nuwe soektog te begin.  Wil jy die resultate van jou vorige soektog verwyder?"/>
+	<string id="8141" value="Vertoon die Soekpaneel"/>
+    	<string id="8142" value="Steek die Soekpaneel weg"/>
 	<string id="8143" value="&#160;&#160;Besig ..."/>
 	<string id="8144" value="Begin Soek"/>
 	<string id="8145" value="Soek Meer"/>
@@ -2539,7 +2563,7 @@
 	<string id="8238" value="Bronne:"/>
 	<string id="8239" value="Voltooi"/>
 	<string id="8240" value="Shareaza verskuif die lêer:"/>
-	<string id="8241" value="Shareaza kontrolleer die aflaai vir foute:"/>
+	<string id="8241" value="Shareaza kontroleer die aflaai vir foute:"/>
 	<string id="8288" value="Besig om deur jou Shareaza Biblioteek te blaai"/>
 	<string id="8289" value="Blaai deur&#160;"/>
 	<string id="8290" value="Besig om deur die inhoud van %i gidse te blaai"/>
@@ -2560,6 +2584,16 @@
 	<string id="8313" value="Hierdie lêer blyk gemorspos te wees."/>
 	<string id="8314" value="Jy het voorheen hierdie lêer afgelaai en geskrap."/>
 	<string id="8315" value="Op die swartlys:"/>
+    	<string id="8316" value="Treflaaie"/>
+    	<string id="8317" value="Oplaaie"/>
+    	<string id="8318" value="%lu vandag, %lu in totaal"/>
+    	<string id="8320" value="Status:"/>
+    	<string id="8321" value="Spoed:"/>
+    	<string id="8322" value="URL:"/>
+    	<string id="8323" value="Gebruikersagent:"/>
+    	<string id="8324" value="Nie Aktief"/>
+   	<string id="8325" value="Aktief"/>
+   	<string id="8326" value="Volgende in Lyn"/>
 	<string id="16064" value="Shareaza netwerkkern word geïnisieer..."/>
 	<string id="16065" value="Kan nie na %s poort %i koppel vir inkomende konneksies nie.  Inkomende konneksies sal nie ondersteun word nie."/>
 	<string id="16066" value="Shareaza netwerkkern word gesluit..."/>
@@ -2762,6 +2796,8 @@
 	<string id="16405" value="Wil jy hierdie lêer aflaai?\r\n\r\n&quot;%s&quot;\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16406" value="Wil jy alle lêers in hierdie versameling aflaai?\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16407" value="Wil jy hierdie versameling verhoed om jou te vra om enigeiets anders af te laai?"/>
+    	<string id="16408" value="Kopieer &amp;URI"/>
+    	<string id="16409" value="Voer &amp;URI's Uit..."/>
 	<string id="16448" value="Gekonnekteer aan %s, besig om blad te skud..."/>
 	<string id="16449" value="Nou besig om met %s (%s) te gesels."/>
 	<string id="16450" value="Konneksie aan %s gesluit."/>
@@ -2799,6 +2835,20 @@
 	<string id="16769" value="Kan nie URL gebruik nie: Shareaza verstaan nie hierdie URL nie."/>
 	<string id="16770" value="Kan nie URL-aksie venster vertoon nie, want Shareaza is beset."/>
 	<string id="16771" value="Jy het alreeds die lêer &quot;%s&quot; in jou biblioteek.  Wil jy dit in elk geval aflaai?"/>
+	<string id="16772" value="Gasheer:"/>
+	<string id="16773" value="Poort:"/>
+	<string id="16774" value="&amp;Konnekteer"/>
+	<string id="16775" value="&amp;Blaai Deur"/>
+    	<string id="16776" value="Voeg By"/>
+    	<string id="16777" value="Lêernaam:"/>
+    	<string id="16778" value="URL:"/>
+    	<string id="16779" value="Tipe:"/>
+    	<string id="16780" value="Nie Gespesifiseer"/>
+    	<string id="16781" value="Stuur versoek..."/>
+    	<string id="16782" value="Sukses!"/>
+    	<string id="16783" value="Voltooi, kliek Maak Toe"/>
+    	<string id="16784" value="&amp;Maak Toe"/>
+    	<string id="16785" value="(Geen Visualisering)"/>
 	<string id="16800" value="Jy het nog nie 'n konneksie-spoed gespesifiseer nie.  Voor jy aangaan, selekteer asseblief jou internet konneksietipe, of sleutel 'n konneksiespoed in."/>
 	<string id="16801" value="Kies asseblief die tipe internet konneksie wat jy gebruik, voor jy aangaan."/>
 	<string id="16802" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
@@ -2808,6 +2858,7 @@
 	<string id="16806" value="Jy het aangedui dat jy poort-aanstuur wil opstel op jou NAT roeteerder of netskans.\n\nStel asseblief jou netwerk om TCP poort %i aan te stuur na jou lokale rekenaar."/>
 	<string id="16807" value="Tik asseblief die bandwydte limiet wat jy wil hê, in die vorm &quot;123 kb/s&quot; vir kilobits per sekonde, of &quot;123 KB/s&quot; vir kilobytes per sekonde."/>
 	<string id="16808" value="Jy het nie jou ouderdom en geslag geselekteer nie. Is jy seker jy wil voortgaan sonder om dit te doen?"/>
+    	<string id="16809" value="Maak &amp;Toe"/>
 	<string id="16864" value="Navraag word gedoen by gasheer-ontdekkingsdiens..."/>
 	<string id="16865" value="Navraag word gedoen by gasheer-ontdekkingsdiens &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaksie suksesvol (&quot;%s&quot;)."/>
@@ -2919,9 +2970,9 @@
 	<string id="17497" value="'n Onbekende probleem het plaasgevind in die saaiproses van &quot;%s&quot;."/>
 	<string id="17498" value="'n Fout is opgespoor in die lêer &quot;%s&quot;."/>
 	<string id="18496" value="Jy het verandering in die naam-veld gemaak. Is jy seker jy wil die aflaai hernoem?"/>
-	<string id="18497" value="Jy het 'n SHA1-waarde ingetik, maar dit is foutief. Kontrolleer dit asseblief en probeer weer."/>
-	<string id="18498" value="Jy het 'n wortel tiger-tree waarde ingetik, maar dit is foutief. Kontrolleer dit asseblief en probeer weer."/>
-	<string id="18499" value="Jy het 'n eDonkey2000 hash-waarde ingetik, maar dit is foutief. Kontrolleer dit asseblief en probeer weer."/>
+	<string id="18497" value="Jy het 'n SHA1-waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
+	<string id="18498" value="Jy het 'n wortel tiger-tree waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
+	<string id="18499" value="Jy het 'n eDonkey2000 hash-waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
 	<string id="18500" value="Jy het 'n SHA1-hashwaarde verskaf wat verskil van die huidige een vir hierdie aflaai. Is jy seker jy wil die SHA1-hash verander?"/>
 	<string id="18501" value="Jy het 'n tiger-tree hashwaarde verskaf wat verskil van die huidige een vir hierdie aflaai. Is jy seker jy wil die tiger-tree wortel-hash verander?"/>
 	<string id="18502" value="Jy het 'n eDonkey2000 hashwaarde verskaf wat verskil van die huidige een vir hierdie aflaai. Is jy seker jy wil die eDonkey2000 hash verander?"/>
@@ -2931,12 +2982,41 @@
 	<string id="18506" value="Kon nie die gespesifiseerde deel van die aflaai skrap nie, aangesien geen data binne die grense beskikbaar is nie."/>
 	<string id="18507" value="%I64i grepe van die aflaai geskrap."/>
 	<string id="18508" value="Verwyder aflaaibron %s vir &quot;%s&quot; omdat waglysposisie %i te hoog is."/>
-	<string id="18509" value="Jy kan nie aaneem hierdie aflaai is voltooi en dit herkontrolleer nie, aangesien jy nog geen kontrole-data, soos 'n tiger-tree waarde, eDonkey hashset of BitTorrent hashset het nie. Sonder kontrole-data kan die aflaai nie herkontrolleer word nie."/>
-	<string id="18510" value="Is jy seker jy wil aanneem dat hierdie aflaai voltooi is en dit herkontrolleer? Die totale lêer sal oorweeg word, en Shareaza sal net dele aanvaar wat die kontrole deurkom, en die res weer aflaai."/>
+	<string id="18509" value="Jy kan nie aaneem hierdie aflaai is voltooi en dit herkontroleer nie, aangesien jy nog geen kontrole-data, soos 'n tiger-tree waarde, eDonkey hashset of BitTorrent hashset het nie. Sonder kontrole-data kan die aflaai nie herkontroleer word nie."/>
+	<string id="18510" value="Is jy seker jy wil aanneem dat hierdie aflaai voltooi is en dit herkontroleer? Die totale lêer sal oorweeg word, en Shareaza sal net dele aanvaar wat die kontrole deurkom, en die res weer aflaai."/>
 	<string id="19000" value="Web toegang is afgeskakel."/>
 	<string id="19001" value="Jy moet 'n gebruikersnaam en wagwoord kies."/>
 	<string id="19002" value="Kan nie konneksies ontvang nie, URL nie beskikbaar."/>
 	<string id="20000" value="Geen URN beskikbaar"/>
+	<string id="20100" value="Konnekteer Nou"/>
+	<string id="20101" value="Stuur Versoek"/>
+	<string id="20102" value="Antwoord"/>
+	<string id="20103" value="Laai Af"/>
+	<string id="20104" value="TigerTree"/>
+	<string id="20105" value="Hashset"/>
+	<string id="20106" value="Metadata"/>
+	<string id="20107" value="Beset"/>
+	<string id="20108" value="Waglys"/>
+	<string id="20109" value="Op Waglys"/>
+	<string id="20110" value="Nie Bekend"/>
+	<string id="20111" value="Voltooi"/>
+	<string id="20112" value="Saai"/>
+	<string id="20113" value="Skuif Lêer"/>
+	<string id="20114" value="Gevries"/>
+	<string id="20115" value="Lêer Probleem"/>
+	<string id="20116" value="Kan nie Skuif"/>
+	<string id="20117" value="Kontroleer"/>
+	<string id="20118" value="Aktief"/>
+	<string id="20119" value="Wag"/>
+	<string id="20120" value="Soek Bronne"/>
+	<string id="20121" value="Skep Lêer"/>
+	<string id="20122" value="Torrent"/>
+	<string id="20123" value="Verwyser Af"/>
+	<string id="20124" value="(Geen Bronne)"/>
+	<string id="20125" value="Gekontroleer"/>
+	<string id="20126" value="Nie Gekontroleer"/>
+	<string id="20127" value="bron"/>
+	<string id="20128" value="bronne"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2951,7 +3031,7 @@
 	
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Algemeen"/>
 	
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Algemeen">
 		<control caption="_Gebruikerskoppelvlak:"/>
 		<control caption="Konnekteer outomaties as begin"/>
 		<control caption="Begin Shareaza as Windows begin"/>
@@ -2973,15 +3053,16 @@
 		<control/>
 		<control caption="As ek Minimeer kliek:"/>
 		<control/>
+        	<control caption="Steek sybalk weg as soektog begin"/>
 	</dialog>
 	
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Biblioteek">>
 		<control caption="_Verstellings:"/>
 		<control caption="Onthou gidsaansigte"/>
 		<control caption="Hou biblioteekgidse dop"/>
-		<control caption="Hou alternatiewe bronnetwerk"/>
+        	<control/>
 		<control caption="Filtreer objekte vlgs. uitbreiding"/>
-		<control caption="Beskerm hash-integriteit"/>
+        	<control/>
 		<control caption="Gedeelde lêers toeganklik"/>
 		<control caption="_Onlangse Lêers:"/>
 		<control caption="Onthou:"/>
@@ -2989,7 +3070,7 @@
 		<control caption="lêers"/>
 		<control caption="Vir:"/>
 		<control/><control/>
-		<control caption="dae."/>
+		<control caption="dae"/>
 		<control caption="Maak nou skoon"/>
 		<control caption="_Veilig om oop te maak:"/>
 		<control/>
@@ -3120,7 +3201,7 @@
 		<control caption="Shareaza Web Toegang laat jou toe om Shareaza op jou rekenaar aan te los en dit vanaf 'n afgeleë plek te beheer deur middel van 'n web blaaier. Jy sal inkomende konneksies moet kan ontvang om hierdie funksie te gebruik ('n korrek opgestelde roeteerder, ens)."/>
 		<control caption="_Aanskakel:"/>
 		<control caption="_Skakel Shareaza Web Toegang aan:"/>
-		<control caption="URL"/>
+	    	<control/>
 		<control caption="_Identifikasie:"/>
 		<control caption="Kies Gebruikersnaam:"/>
 		<control/>
@@ -3194,7 +3275,24 @@
 		<control caption="Laai eDonkey2000 bedienerlys van die web af:"/>
 		<control caption="Laai Af..."/>
 	</dialog>
-	
+
+	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
+	        <control caption="_Stoor Torrents Hier:"/>
+	        <control/><control/>
+	        <control caption="_Aflaai Koppellings:"/>
+	        <control/><control/>
+	        <control caption="Kliënt koppellings"/>
+	        <control caption="_Koppelvlak:"/>
+	        <control caption="Vertoon ekstra BitTorrent koppelvlak-elemente"/>
+	        <control caption="_EndGame:"/>
+	        <control caption="Skakel BitTorrent 'Endgame'-modus aan wanneer torrent-lêers voltooi word"/>
+	        <control caption="_Torrent Skepper"/>
+	        <control caption="Verwyser:"/>
+	        <control/><control/><control/><control/><control/>
+	        <control caption="Torrents maksimum op 'n slag"/>
+	        <control caption="_Default Verwyser:"/>
+	</dialog>	
+
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolle">
 		<control caption="Shareaza Algemene Argitektuur Protokolverkenner:"/>
 		<control/>
@@ -3268,10 +3366,10 @@
 		<control caption="Kanselleer"/>
 	</dialog>
 
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt">
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Welkom by Shareaza">
 		<control caption="Welkom by Shareaza!"/>
 		<control caption="As jy nog nie voorheen Shareaza gebruik het nie, kan hierdie SnelBegin Assistent jou help om jou kopie in te stel in 'n paar eenvoudige stappe."/>
-		<control caption="As jy 'n meer gevorderde gebruiker is, kan jy toegang tot die volle spektrum van Shareaza se verstellings via die Opsies kieslys verkry. Kliek Exit om die assistent op enige stadium te verlaat."/>
+		<control caption="As jy 'n meer gevorderde gebruiker is, kan jy toegang tot die volle spektrum van Shareaza se verstellings via die Opsies kieslys verkry. Kliek 'Maak Toe' om die assistent op enige stadium te verlaat."/>
 		<control caption="Hierdie assistent sal jou help om:"/>
 		<control/>
 		<control caption="Inligting oor jou internet konneksie te verskaf"/>
@@ -3283,7 +3381,7 @@
 		<control caption="Shareaza te begin gebruik."/>
 	</dialog>
 	
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt">
+	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Welkom by Shareaza [2 van 7]">
 		<control caption="Shareaza ondersteun twee verskillende gebruikerskoppelvlakke, sodat jy een kan kies wat die mees gerieflikste vir jou is."/>
 		<control caption="Selekteer asseblief een van die twee gebruikerskoppelvlakke:"/>
 		<control caption="Normale Modus"/>
@@ -3292,7 +3390,7 @@
 		<control caption="Kragmodus bied gevorderde gebruikers verskeie ekstra opdragte, vensters, ens."/>
 	</dialog>
 	
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza [3 van 7]">
 		<control caption="Vir optimale werksverrigting, benodig Shareaza inligting oor jou internet konneksie."/>
 		<control/>
 		<control caption="Word jou netwerk of kampus beskerm deur 'n netskans of NAT roeteerder?"/>
@@ -3305,7 +3403,7 @@
 		<control/>
 	</dialog>
 	
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welkom by Shareaza [4 van 7]">
 		<control caption="P2P netwerke is net so goed soos die mense wat hulle gebruik.  Al die inhoud beskikbaar vir aflaai word gedeel deur 'n ander gebruiker."/>
 		<control caption="Dit is nie noodsaaklik om inhoud te deel om Shareaza te gebruik nie, alhoewel sommige sagteware verskillend optree teenoor gebruikers wat niks deel nie."/>
 		<control caption="Dui asseblief aan watter gidse, indien enige, jy wil deel.  Kliek eenvoudig op die Voeg By knoppie om 'n gids by te voeg."/>
@@ -3325,7 +3423,7 @@
 		<control caption="Maak Toe"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welkom by Shareaza [5 van 7]">
 		<control caption="Shareaza is 'n baie vriendeliker plek as elkeen 'n paar basiese inligting oor homself invul."/>
 		<control caption="My bynaam is:"/>
 		<control/>
@@ -3335,7 +3433,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welkom by Shareaza [6 van 7]">
 		<control caption="Shareaza is 'n algemeendoelige lêerdelingsprogram wat toegang tot verskeie P2P netwerke gelyktydig bied.  Op hierdie bladsy kan jy kies aan watter P2P netwerke jy wil koppel. Let wel dat jy altyd later ander netwerke kan selekteer."/>
 		<control caption="Koppel aan Gnutella2 (Sterk Aanbeveel)"/>
 		<control caption="Die Gnutella2 Netwerk is Shareaza se primêre netwerk en bied meer funksies en beter werkverrigting as enige ander P2P netwerk.  Word sterk aanbeveel."/>
@@ -3354,7 +3452,7 @@
 		<control caption="Maak Toe"/>
 	</dialog>
 	
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welkom by Shareaza [7 van 7]">
 		<control caption="Dis dit!  Shareaza is ingestel om met jou rekenaar te werk."/>
 		<control caption="As jy ooit nodig het om jou verstellings te verander, kan jy hierdie SnelBegin Assistent weer hardloop deur dit te selekteer vanaf die Opsies kieslys."/>
 		<control caption="Nadat jy hierdie assistent toegemaak het deur Finish te kliek, kan jy aan die netwerke konnekteer wat jy selekteer het en begin soek en inhoud aflaai."/>
@@ -3737,7 +3835,7 @@
 		<control/>
 		<control caption="Shareaza is besig om 'n voorskou te skep van die aflaai:"/>
 		<control/><control/>
-		<control caption="(Afgelaaide dele word na 'n nuwe voorskoulêer gekopieer)"/>
+		<control caption="(Kopieer afgelaaide dele na 'n nuwe voorskoulêer)"/>
 		<control caption="Kanselleer"/>
 	</dialog>
 	
@@ -3763,7 +3861,7 @@
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBu" caption="Aflaai van bestaande lêer">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Aflaai van bestaande lêer">
 		<control/><control/><control/><control/>
 		<control caption="Jy het hierdie lêer alreeds in jou biblioteek.  Wat wil jy graag doen?"/>
 		<control caption="Wys my die lêer in my biblioteek"/>
@@ -3833,8 +3931,8 @@
 		<control caption="ED2K:"/>
 		<control/>
 		<control caption="_Aksies:"/>
-		<control caption="Vergeet huidige foutkontrole status (en herkontrolleer)"/>
-		<control caption="Neem aan lêer is 100% volledig en herkontrolleer"/>
+		<control caption="Vergeet huidige foutkontrole status (en herkontroleer)"/>
+		<control caption="Neem aan lêer is 100% volledig en herkontroleer"/>
 		<control caption="Vergeet alle bekende bronne"/>
 		<control caption="Data _Verwyderaar:"/>
 		<control caption="Skrap grepe:"/>
@@ -3905,36 +4003,18 @@
 		<control caption="Ignoreer nuwe weergawes"/>
 		<control caption="Kanselleer"/>
 	</dialog>
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-	         <control caption="_Stoor Torrents Hier:"/>
-	         <control/><control/>
-	         <control caption="_Aflaai Koppellings:"/>
-	         <control/><control/>
-	         <control caption="Kliënt koppellings in totaal"/>
-	         <control caption="_Koppelvlak:"/>
-	         <control caption="Vertoon ekstra BitTorrent koppelvlak-elemente"/>
-	         <control caption="_EndGame:"/>
-	         <control caption="Skakel BitTorrent endgame-modus aan wanneer torrent-lêers voltooi word"/>
-	         <control caption="_Torrent Skepper"/>
-	         <control caption="Verwyser:"/>
-	         <control/><control/><control/><control/><control/>
-	         <control caption="Torrents maksimum op 'n slag"/>
-	         <control caption="_Verstek Verwyser:"/>
-	</dialog>
+
 </dialogs>
 
 <listColumns>
-	<list name="CNeighboursWnd">
-		<column from="Address" to="Adres"/>
-		<column from="Port" to="Poort"/>
-		<column from="Time" to="Tyd"/>
-		<column from="Packets" to="Pakkies"/>
-		<column from="Bandwidth" to="Bandwydte"/>
-		<column from="Total" to="Totaal"/>
-		<column from="Leaves" to="Kliënte"/>
-		<column from="Mode" to="Tipe"/>
-		<column from="Client" to="Program"/>
-		<column from="Name" to="Naam"/>
+	<list name="CLibraryWnd">
+		<column from="File" to="Lêer"/>
+		<column from="Type" to="Tipe"/>
+		<column from="Size" to="Grootte"/>
+		<column from="Folder" to="Gids"/>
+		<column from="Hits" to="Treflaaie"/>
+		<column from="Uploads" to="Oplaaie"/>
+	    	<column from="Modified" to="Verander"/>
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Lêernaam"/>
@@ -3943,16 +4023,71 @@
 		<column from="Speed" to="Spoed"/>
 		<column from="Status" to="Status"/>
 		<column from="Client" to="Kliënt"/>
-		<column from="Order" to="Volgorde"/>
+        	<column from="Downloaded" to="Afgelaai"/>
+	    	<column from="Complete" to="Voltooi"/>
 	</list>
 	<list name="CUploadCtrl">
-		<column from="Uploaded File" to="Lêernaam"/>
 		<column from="Remote User" to="Gebruiker"/>
+		<column from="Uploaded File" to="Lêernaam"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Progress" to="Vordering"/>
 		<column from="Queue" to="Waglys"/>
 		<column from="Speed" to="Spoed"/>
 		<column from="Client" to="Kliënt"/>
+	</list>
+	<list name="CNeighboursWnd">
+		<column from="Address" to="Adres"/>
+		<column from="Port" to="Poort"/>
+		<column from="Time" to="Tyd"/>
+		<column from="Packets" to="Pakkies"/>
+		<column from="Bandwidth" to="Bandwydte"/>
+		<column from="Total" to="Totaal"/>
+        	<column from="Flow" to="Vloei"/>
+		<column from="Leaves" to="Kliënte"/>
+		<column from="Mode" to="Tipe"/>
+		<column from="Client" to="Program"/>
+		<column from="Name" to="Naam"/>
+	</list>
+	<list name="CSecurityWnd">
+		<column from="Address / Content" to="Adres / Inhoud"/>
+		<column from="Action" to="Aksie"/>
+		<column from="Expires" to="Verval"/>
+        	<column from="Precedence" to="Volgorde"/>
+		<column from="Hits" to="Treflaaie"/>
+		<column from="Comment" to="Kommentaar"/>
+	</list>
+	<list name="CHostCacheWnd">
+		<column from="Address" to="Adres"/>
+		<column from="Port" to="Poort"/>
+		<column from="Client" to="Kliënt"/>
+		<column from="Last Seen" to="Laaste Gesien"/>
+		<column from="Name" to="Naam"/>
+		<column from="Description" to="Beskrywing"/>
+		<column from="CurUsers" to="Huidiglik"/>
+		<column from="MaxUsers" to="Maksimum"/>
+	</list>
+	<list name="CDiscoveryWnd">
+		<column from="Address" to="Adres"/>
+		<column from="Type" to="Tipe"/>
+		<column from="Last Access" to="Laaste Kontaktyd"/>
+		<column from="Hosts" to="Gashere"/>
+		<column from="Accesses" to="Hoeveelheid Kontakte"/>
+		<column from="Updates" to="Opdaterings"/>
+		<column from="Failures" to="Mislukkings"/>
+	</list>
+	<list name="CPacketWnd">
+		<column from="Address" to="Adres"/>
+		<column from="Protocol" to="Protokol"/>
+		<column from="Type" to="Tipe"/>
+        	<column from="T/H" to="T/H"/>
+        	<column from="Hex" to="Hex"/>
+        	<column from="ASCII" to="ASCII"/>
+        	<column from="G1-ID" to="G1-ID"/>
+	</list>
+	<list name="CSearchMonitorWnd">
+		<column from="Search" to="Soek"/>
+        	<column from="URN" to="URN"/>
+		<column from="Schema" to="Skema"/>
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Lêer"/>
@@ -3966,50 +4101,6 @@
 		<column from="Time" to="Tyd"/>
 		<column from="Bitrate" to="Bistempo"/>
 	</list>
-	<list name="CLibraryWnd">
-		<column from="File" to="Lêer"/>
-		<column from="Type" to="Tipe"/>
-		<column from="Size" to="Grootte"/>
-		<column from="Folder" to="Gids"/>
-		<column from="Hits" to="Treflaaie"/>
-		<column from="Uploads" to="Oplaaie"/>
-		<column from="Modified" to="Verander"/>
-	</list>
-	<list name="CSecurityWnd">
-		<column from="Address / Content" to="Adres / Inhoud"/>
-		<column from="Action" to="Aksie"/>
-		<column from="Expires" to="Verval"/>
-		<column from="Hits" to="Treflaaie"/>
-		<column from="Comment" to="Kommentaar"/>
-	</list>
-	<list name="CDiscoveryWnd">
-		<column from="Address" to="Adres"/>
-		<column from="Type" to="Tipe"/>
-		<column from="Last Access" to="Laaste Kontaktyd"/>
-		<column from="Accesses" to="Hoeveelheid Kontakte"/>
-		<column from="Hosts" to="Gashere"/>
-		<column from="Updates" to="Opdaterings"/>
-		<column from="Failures" to="Mislukkings"/>
-	</list>
-	<list name="CHostCacheWnd">
-		<column from="Address" to="Adres"/>
-		<column from="Port" to="Poort"/>
-		<column from="Client" to="Kliënt"/>
-		<column from="Last Seen" to="Laaste Gesien"/>
-		<column from="Name" to="Naam"/>
-		<column from="Description" to="Beskrywing"/>
-		<column from="CurUsers" to="Huidiglik"/>
-		<column from="MaxUsers" to="Maksimum"/>
-	</list>
-	<list name="CPacketWnd">
-		<column from="Address" to="Adres"/>
-		<column from="Protocol" to="Protokol"/>
-		<column from="Type" to="Tipe"/>
-	</list>
-	<list name="CSearchMonitorWnd">
-		<column from="Search" to="Soek"/>
-		<column from="Schema" to="Skema"/>
-	</list>
     	<list name="CUploadQueueList">
         	<column from="Name" to="Naam"/>
         	<column from="Criteria" to="Kriteria"/>
@@ -4018,5 +4109,4 @@
         	<column from="Order" to="Volgorde"/>
     	</list>
 </listColumns>
-
 </skin>
