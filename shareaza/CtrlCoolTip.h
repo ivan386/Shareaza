@@ -51,6 +51,8 @@ protected:
 protected:
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
+	BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
+	HMONITOR (WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	
 // Operations
 public:

@@ -66,7 +66,7 @@ CCoolTipCtrl::CCoolTipCtrl()
 	m_bTimer	= FALSE;
 	m_bVisible	= FALSE;
 	m_tOpen		= 0;
-	
+	/*
 	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
@@ -75,6 +75,26 @@ CCoolTipCtrl::CCoolTipCtrl()
 	else
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
+	}
+
+	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
+	*/
+	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
+	{
+		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
+		m_hUser32, "SetLayeredWindowAttributes" );
+
+		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
+		m_hUser32, "GetMonitorInfoA" );
+
+		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress(
+		m_hUser32, "MonitorFromRect" );
+	}
+	else
+	{
+		m_pfnSetLayeredWindowAttributes = NULL;
+		m_pfnGetMonitorInfoA = NULL;
+		m_pfnMonitorFromRect = NULL;
 	}
 
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
@@ -161,6 +181,7 @@ void CCoolTipCtrl::Hide()
 
 void CCoolTipCtrl::ShowImpl()
 {
+	/*
 	if ( m_bVisible ) return;
 	
 	m_sz.cx = m_sz.cy = 0;
@@ -180,6 +201,54 @@ void CCoolTipCtrl::ShowImpl()
 	{
 		rc.OffsetRect( 0, - ( m_sz.cy + TIP_MARGIN * 2 + TIP_OFFSET_Y + 4 ) );
 	}
+	*/
+	if ( m_bVisible ) return;
+
+	m_sz.cx = m_sz.cy = 0;
+
+	if ( ! OnPrepare() ) return;
+
+	HMONITOR hMonitor = NULL;
+	MONITORINFO mi = {0};
+	CRect rcMonitor( 0, 0, 0, 0 );
+	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
+	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
+	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
+
+	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	{
+		mi.cbSize = sizeof(MONITORINFO);
+
+		//hMonitor = m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
+		if (NULL != hMonitor)
+		{
+			if ( m_pfnGetMonitorInfoA(hMonitor, &mi) )
+				rcMonitor = mi.rcWork;
+			else
+				hMonitor = NULL; // Fall back to GetSystemMetrics
+		}
+
+	}
+
+	if ( NULL == hMonitor )
+	{
+		// Unimon system or something is wrong with multimon
+
+		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );
+		rcMonitor.bottom = GetSystemMetrics( SM_CYSCREEN );
+	}
+
+	if ( rc.right >= rcMonitor.right)
+	{
+		rc.OffsetRect( rcMonitor.right - rc.right - 4, 0 );
+	}
+
+	if ( rc.bottom >= rcMonitor.bottom )
+	{
+		rc.OffsetRect( 0, - ( m_sz.cy + TIP_MARGIN * 2 + TIP_OFFSET_Y + 4 ) );
+	}
+
 	
 	m_bVisible = TRUE;
 	
