@@ -337,7 +337,7 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 			{	
 				// We should use a 'short' string tag
 				// Correct the packet type
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ED2K_TAG_SHORTSTRING + nLength ) ;	
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ( ED2K_TAG_SHORTSTRING - 1 ) + nLength ) ;	
 
 				// Write the string
 				if ( bUnicode ) pPacket->WriteStringUTF8( m_sValue, FALSE );

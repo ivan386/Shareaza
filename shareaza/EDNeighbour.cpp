@@ -546,7 +546,7 @@ void CEDNeighbour::SendSharedFiles()
 	
 	CSingleLock pLock1( &Library.m_pSection );
 	CSingleLock pLock2( &Transfers.m_pSection );
-/*
+
 	//Send files on download list to ed2k server (partials)
 	pLock2.Lock();
 	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
@@ -594,7 +594,7 @@ void CEDNeighbour::SendSharedFiles()
 		}
 	}
 	pLock2.Unlock();
-*/	
+	
 	//Send files in library to ed2k server (Complete files)
 	pLock1.Lock();
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
@@ -640,7 +640,7 @@ void CEDNeighbour::SendSharedFiles()
 
 					// First, figure out what tags should be sent.
 					nTags = 2; // File name and size are always present
-/*
+
 					if ( pFile->m_pSchema != NULL )	// We need a schema to have extended details
 					{
 						// Do we have a file type?
@@ -673,8 +673,9 @@ void CEDNeighbour::SendSharedFiles()
 								}
 							}
 						}
+
 					}
-*/
+
 					// Set the number of tags present
 					pPacket->WriteLongLE( nTags );
 	
@@ -685,7 +686,7 @@ void CEDNeighbour::SendSharedFiles()
 					// Send the file type to the ed2k server
 					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nFlags );
 					// Send the bitrate to the ed2k server
-					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket );
+					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket, m_nFlags );
 					// Send the codec to the ed2k server
 					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, m_nFlags );
 
