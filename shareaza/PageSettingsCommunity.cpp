@@ -62,6 +62,9 @@ void CCommunitySettingsPage::DoDataExchange(CDataExchange* pDX)
 	CSettingsPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CCommunitySettingsPage)
 	DDX_Check(pDX, IDC_CHAT_ENABLE, m_bChatEnable);
+	DDX_Check(pDX, IDC_CHAT_ALLNETWORKS, m_bChatAllNetworks);
+	DDX_Check(pDX, IDC_CHAT_FILTER, m_bChatFilter);
+	DDX_Check(pDX, IDC_CHAT_CENSOR, m_bChatCensor);
 	//}}AFX_DATA_MAP
 }
 
@@ -92,7 +95,6 @@ void CCommunitySettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Community.ChatEnable		= m_bChatEnable;
 	Settings.Community.ChatEnable		= m_bChatEnable;
 	Settings.Community.ChatAllNetworks	= m_bChatAllNetworks;
 	Settings.Community.ChatFilter		= m_bChatFilter;
