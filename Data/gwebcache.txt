@@ -1,60 +1,52 @@
-http://www.emule-server.de/server.met/min/server.met
-http://www.de-site.de/ed2k/koeln.met
-http://www.edonkey2000.com/server.met
-http://www.emule-inside.net/server.met
-http://web2k2.vivelared.com/server.met
-http://bazooka.stealthspy.net/g2/bazooka.php
-http://bazooka1.servehttp.com/g2/bazooka.php
-http://bobsmith.is-a-geek.org/index.cgi
-http://diabolo.mine.nu/g2/bazooka.php
-http://g2.djdan.pointclark.net/g2/bazooka.php
-http://g2.instantnetworks.net/g2/bazooka.php
-http://g2.kuwaitcontact.com/bazooka.php
-http://g2cache.theg2.net/gwcache/lynnx.asp
-http://groovy.syxy.com/g2/bazooka.php
-http://gwc1.mager.org:8081/GWebCache/index.jsp
-http://gwc1.nouiz.org/index.jsp
-http://jason.ionichost.com/gwebcache/gcache.php
-http://kccricket.net:9080/GWebCache/index.jsp
-http://members.lycos.co.uk/aceamerica/g2/bazooka.php
-http://members.lycos.co.uk/kevinfarrugia/g2/bazooka.php
-http://members.lycos.nl/fcemoerbeke/g2/bazooka.php
-http://mitglied.lycos.de/monster954/gwebcache/gcache.php
-http://mitglied.lycos.de/warylogman/g2/bazooka.php
-http://terrorist.host.sk/gnutella-cache/gwcii.php
-http://www.beathell.com/g2/bazooka.php
-http://www.empireniteclub.com/g2/bazooka.php
-http://www.goeg.dk/Bazooka/g2/bazooka.php
-http://www.kuwaitcontact.com/g2/bazooka.php
-http://www.rodage.net/gnetcache/gcache.php
-http://www.sharehub.sytes.net/g2/bazooka.php
-http://www.tomjleeds.com/g2/bazooka.php
-http://warezbrasil.redservicio.com/g2/bazooka.php
-http://gwebcache.wiretapped.us/
-http://loot.alumnigroup.org/
-http://gcache.cloppy.net/
-http://g2.tjtech.org/g2/index.php
-http://intense.homelinux.coww.xolox.nl/gwebcache/
-http://gwebcache1.limewire.com/gwebcache/cgi-bin/perlgcache.cgi
-http://multiisocom.com/GWebCache/gcache.php
-http://gwebcache.bearshare.net/gcache.php
-http://g2.cyrax.myftp.org/g2/bazooka.php
-http://www.pione.net/g2/bazooka.php
-http://glad04.no-ip.com/g2/bazooka.php
-http://bobsmith-gwc.kicks-ass.org/
-http://gwebcache.squinky.gotdns.com/perlgcache.cgi
-http://www.easwww.xolox.nl/gwebcache/
+D http://www.emule-server.de/server.met/min/server.met
+D http://www.de-site.de/ed2k/koeln.met
+D http://www.edonkey2000.com/server.met
+D http://www.emule-inside.net/server.met
+D http://web2k2.vivelared.com/server.met
+2 http://bazooka.stealthspy.net/g2/bazooka.php
+2 http://bazooka1.serveM http.com/g2/bazooka.php
+M http://bobsmith.is-a-geek.org/index.cgi
+2 http://diabolo.mine.nu/g2/bazooka.php
+2 http://g2.djdan.pointclark.net/g2/bazooka.php
+2 http://g2.instantnetworks.net/g2/bazooka.php
+2 http://g2.kuwaitcontact.com/bazooka.php
+M http://g2cache.theg2.net/gwcache/lynnx.asp
+2 http://groovy.syxy.com/g2/bazooka.php
+1 http://gwc1.nouiz.org/index.jsp
+1 http://jason.ionichost.com/gwebcache/gcache.php
+1 http://kccricket.net:9080/GWebCache/index.jsp
+2 http://members.lycos.co.uk/aceamerica/g2/bazooka.php
+2 http://members.lycos.co.uk/kevinfarrugia/g2/bazooka.php
+2 http://members.lycos.nl/fcemoerbeke/g2/bazooka.php
+2 http://mitglied.lycos.de/warylogman/g2/bazooka.php
+M http://terrorist.host.sk/gnutella-cache/gwcii.php
+2 http://www.beathell.com/g2/bazooka.php
+2 http://www.empireniteclub.com/g2/bazooka.php
+2 http://www.goeg.dk/Bazooka/g2/bazooka.php
+2 http://www.kuwaitcontact.com/g2/bazooka.php
+1 http://www.rodage.net/gnetcache/gcache.php
+2 http://www.sharehub.sytes.net/g2/bazooka.php
+2 http://www.tomjleeds.com/g2/bazooka.php
+2 http://warezbrasil.redservicio.com/g2/bazooka.php
+M http://gwebcache.wiretapped.us/
+1 http://loot.alumnigroup.org/
+1 http://gcache.cloppy.net/
+M http://gwebcache1.limewire.com/gwebcache/cgi-bin/perlgcache.cgi
+1 http://gwebcache.bearshare.net/gcache.php
+2 http://g2.cyrax.myftp.org/g2/bazooka.php
+2 http://www.pione.net/g2/bazooka.php
+M http://bobsmith-gwc.kicks-ass.org/
+M http://gwebcache.squinky.gotdns.com/perlgcache.cgi
 #
 # Keep these comments at the end
-# Last updated September 16, 2004
+# Last updated September 25, 2004
 #
-# Do not link to the root directory of a site like http://site.com
-# Instead link to the full path of the file
-# Such as http://site.com/index.php or http://site.com/index.cgi
+# Be sure to have at least one link to a .met file and four gwebcache
+# links or else they'll keep getting added every time they're removed
 #
-# Be sure to have at least one link to a .met file
-# And four gwebcache links or else they'll keep getting added
-# Every time they're removed
+# A letter and space must precede each link to indicate the type of service
+# D = eDonkey server.met file, M = multinetwork gwebcache,
+# 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache
 #
 # If you make changes to this file that cause problems for you
 # Then just delete the file and Shareaza will use internal defaults
