@@ -269,7 +269,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 128;
 		Settings.Downloads.MaxFileTransfers		= 16;
 		Settings.Downloads.MaxConnectingSources	= 40;
-		Settings.Downloads.MaxFileSearches		= 6;
+		Settings.Downloads.MaxFileSearches		= 8;
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
 	{	//Fast broadband
@@ -277,7 +277,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 96;
 		Settings.Downloads.MaxFileTransfers		= 10;
 		Settings.Downloads.MaxConnectingSources	= 28;
-		Settings.Downloads.MaxFileSearches		= 5;
+		Settings.Downloads.MaxFileSearches		= 6;
 	}
 	else if ( nSpeed > 256 && theApp.m_bNT )
 	{	//Slower broadband
@@ -309,7 +309,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( theApp.m_bLimitedConnections ) 
 	{	//Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
-		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 800 );
+		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 1000 );
 		Settings.Gnutella.ConnectFactor			= min( Settings.Gnutella.ConnectFactor, 3 );
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;
