@@ -2147,6 +2147,7 @@
 	<tip id="ID_DOWNLOADS_SOURCES" message="Search for more sources for the selected download(s)."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Add a source URL to the selected download..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download"/>
 	<tip id="ID_HELP_ABOUT" message="Display the Shareaza about dialog..."/>
 	<tip id="ID_HELP_FAQ" message="Visit the Shareaza Users Guide."/>
 	<tip id="ID_HELP_FIREWALLS" message="Get help configuring your router or firewall."/>
