@@ -790,9 +790,12 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 	
     FF::SimpleFragmentList oPossible( m_pDownload->GetEmptyFragmentList() );
 	
-	for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
+	if ( ! m_pDownload->m_bTorrentEndgame )
 	{
-		pTransfer->SubtractRequested( oPossible );
+		for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
+		{
+			pTransfer->SubtractRequested( oPossible );
+		}
 	}
 	
 	while ( m_oRequested.size() < (int)Settings.eDonkey.RequestPipe )
@@ -830,7 +833,15 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			break;
 		}
 	}
-	
+
+	if ( oPossible.empty() && !m_pDownload->m_bTorrentEndgame )
+	{
+		if ( m_pDownload->GetProgress() > 0.95 )
+		{
+			m_pDownload->m_bTorrentEndgame = Settings.BitTorrent.Endgame;
+		}
+	}
+
 	if ( !m_oRequested.empty() ) return TRUE;
 	
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
