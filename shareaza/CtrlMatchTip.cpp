@@ -546,7 +546,7 @@ void CMatchTipCtrl::LoadFromHit()
 	else if ( m_pFile->m_bDownload || m_pHit->m_bDownload )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DOWNLOAD );
-		m_crStatus = RGB( 0, 128, 0 );
+		m_crStatus = RGB( 0, 0, 160 );
 	}
 	else if ( m_pHit->m_bBogus )
 	{
