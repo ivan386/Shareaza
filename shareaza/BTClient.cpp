@@ -189,7 +189,7 @@ BOOL CBTClient::OnRun()
 			DWORD dwZero = 0;
 			m_pOutput->Add( &dwZero, 4 );
 			OnWrite();
-			m_mOutput.tLast = tOutput;
+			m_mOutput.tLast = tNow;
 		}
 		
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
