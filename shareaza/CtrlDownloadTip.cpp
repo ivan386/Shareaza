@@ -227,6 +227,13 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
+	if ( m_sTiger.GetLength() )
+	{
+		if( pDownload->m_oTiger.IsTrusted() ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else pDC->SelectObject( &CoolInterface.m_fntItalic );
+		DrawText( pDC, &pt, m_sTiger );
+		pt.y += TIP_TEXTHEIGHT;
+	}
 	if ( m_sED2K.GetLength() )
 	{
 		if( pDownload->m_oED2K.IsTrusted() ) pDC->SelectObject( &CoolInterface.m_fntNormal );
@@ -420,18 +427,17 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) m_sSize = _T("?");
 	
 	m_sSHA1.Empty();
+	m_sTiger.Empty();
 	m_sED2K.Empty();
 	m_sBTH.Empty();
 	m_sURL.Empty();
 	
-	if ( pDownload->m_oSHA1.IsValid() )
-	{
-		m_sSHA1 = _T("sha1:") + pDownload->m_oSHA1.ToString();
-	}
-	if ( pDownload->m_oED2K.IsValid() )
-	{
-		m_sED2K = _T("ed2k:") + pDownload->m_oED2K.ToString();
-	}
+	if ( pDownload->m_oSHA1.IsValid() ) m_sSHA1 = _T("sha1:") + pDownload->m_oSHA1.ToString();
+
+	if ( pDownload->m_oTiger.IsValid() ) m_sTiger = _T("tree:tiger/:") + pDownload->m_oTiger.ToString();
+
+	if ( pDownload->m_oED2K.IsValid() ) m_sED2K = _T("ed2k:") + pDownload->m_oED2K.ToString();
+
 	if ( pDownload->m_oBTH.IsValid() )
 	{
 		m_sBTH = _T("btih:") + pDownload->m_oBTH.ToString();

@@ -45,6 +45,7 @@ public:
 	CString		m_sPath;
 public:
 	CManagedSHA1	m_oSHA1;
+	CManagedTiger	m_oTiger;
 	CManagedED2K	m_oED2K;
 	CManagedBTH		m_oBTH;
 	CManagedBTH		m_oBTC;

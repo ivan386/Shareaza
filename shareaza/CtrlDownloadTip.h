@@ -45,6 +45,7 @@ public:
 protected:
 	CString			m_sName;
 	CString			m_sSHA1;
+	CString			m_sTiger;
 	CString			m_sED2K;
 	CString			m_sBTH;
 	CString			m_sURL;
