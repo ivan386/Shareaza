@@ -206,8 +206,6 @@ void CSettings::Setup()
 	
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
-	//Add( _T("Gnutella1.Handshake04"), &Gnutella1.Handshake04, TRUE );
-	//Add( _T("Gnutella1.Handshake06"), &Gnutella1.Handshake06, TRUE );
 	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 2 );
 	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 0 );
 	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 0 );

@@ -236,8 +236,6 @@ public:
 		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
-		//BOOL		Handshake04;
-		//BOOL		Handshake06;
 		int			NumHubs;					// Number of ultrapeers a leaf has
 		int			NumLeafs;					// Number of leafs an ultrapeer has
 		int			NumPeers;					// Number of peers an ultrapeer has
