@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="dabserver@mail.ru"
-		version="2.1.0.18"
+		version="2.1.0.25"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -1424,16 +1424,16 @@
 
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У С Т А Н О В И Т Е &#160; С О Е Д И Н Е Н И Е</heading>
+			<heading align="middle">У С Т А Н О В И Т Е  &#160; С О Е Д И Н Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
-			<text>Добро пожаловать в Shareaza!  В настоящее время Вы не соединены ни с одной пиринговой сетью.  </text>
+			<text>Добро пожаловать в Shareaza! &#160;В настоящее время Вы не соединены ни с одной пиринговой сетью. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь для старта!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
 		<group id="2">
 			<icon res="134" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">П О И С К &#160; S H A R E A Z A</heading>
+			<heading align="middle">П О И С К  &#160; S H A R E A Z A</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
@@ -1441,7 +1441,7 @@
 
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У В Е Д О М Л Е Н И Е &#160; О Б &#160; О Б Н О В Л Е Н И И</heading>
+			<heading align="middle">У В Е Д О М Л Е Н И Е  &#160; О Б  &#160; О Б Н О В Л Е Н И И</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Upgrade"/>
 			<newline gap="6"/>
@@ -1451,7 +1451,7 @@
 
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е &#160; - &#160; В Ы &#160; З А &#160; Б Р А Н Д М А У Э Р О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; -  &#160; В Ы  &#160; З А  &#160; Б Р А Н Д М А У Э Р О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать соединения из Интернета. &#160;</text>
@@ -1466,13 +1466,13 @@
 		</group>
 
 		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">П О С Л У Ш А Й Т Е &#160; Н О В У Ю &#160; М У З Ы К У</heading>
+		<heading align="middle" colour="6060FF">П О С Л У Ш А Й Т Е  &#160; Н О В У Ю  &#160; М У З Ы К У</heading>
 		<newline gap="8" indent="42"/>
 		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
 		<newline gap="18" indent="0"/>
 
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">H A C T P O Й T E &#160; S H A R E A Z A</heading>
+		<heading align="middle">H A C T P O Й T E  &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
@@ -1508,17 +1508,17 @@
 		<icon res="186" width="32" height="32" target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"/>
 		<gap size="8"/>
 		<link target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html" format="bu" align="middle">Cтрaничкa пeрeвoдa</link>
-		<text align="middle">&#160;- Cтрaничка этoгo руccкoгo пeрeвoдa oт &#160;</text><heading align="middle">dАbserver</heading>
+		<text align="middle">&#160;- Cтрaничка этoгo руccкoгo пeрeвoдa oт  </text><heading align="middle">dАbserver</heading>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Ы &#160; Р А З Р Е Ш И Л И &#160; У Д А Л Е Н Н Ы Й &#160; Д О С Т У П</heading>
+			<heading align="middle">В Ы  &#160; Р А З Р Е Ш И Л И  &#160; У Д А Л Е Н Н Ы Й  &#160; Д О С Т У П</heading>
 			<newline gap="8" indent="42"/>
 			<text>Открыт удаленный доступ к Shareaza, используйте обозреватель и адрес:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
-			<text> &#160;- или -&#160;</text>
+			<text>&#160; - или -&#160;</text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
@@ -2400,6 +2400,8 @@
 	<string id="8132" value="Некоторые результаты доступны, но были отфильтрованы."/>
 	<string id="8133" value="Shareaza активно ищет файлы в сети ..."/>
 	<string id="8134" value="Вы собираетесь начать новый поиск. Хотите ли Вы очистить результаты предыдущего поиска?"/>
+	<string id="8135" value="Нет мета данных"/>
+	<string id="8136" value="Поиск текста"/>
 	<string id="8141" value="Показывать панель поиска"/>
 	<string id="8142" value="Скрыть панель поиска"/>
 	<string id="8143" value="Идет поиск..."/>
@@ -2659,9 +2661,19 @@
 	<string id="16360" value="Отказываю выгрузить «%s» на %s (%s), все соответствующие очереди переполнены."/>
 	<string id="16361" value="Отказываю выгрузить на %s (%s), сеть блокирована."/>
 	<string id="16362" value="eDonkey2000 загрузок отменять не рекомендуем.  Уверены, что хотите отменить эту загрузку?"/>
-	<string id="16363" value="Загузки Torrent"/>
-	<string id="16364" value="Законченные загрузки"/>
+	<string id="16363" value="Выгрузки Torrent"/>
+	<string id="16364" value="Законченные выгрузки"/>
 	<string id="16365" value="Вы уверенны что хотите отменить каждую загрузку в этой группе?"/>
+	<string id="16366" value="Очередь"/>
+	<string id="16367" value="Ядро eDonkey"/>
+	<string id="16368" value="Частичные eDonkey"/>
+	<string id="16369" value="Охраняющяя eDonkey"/>
+	<string id="16370" value="Маленькие файлы"/>
+	<string id="16371" value="Средние файлы"/>
+	<string id="16372" value="Большие файлы"/>
+	<string id="16373" value="Частичные файлы"/>
+	<string id="16374" value="Новая очередь"/>
+	<string id="16375" value="Частичные"/>
 	<string id="16384" value="Уверены, что хотите открыть файл «%s» ?\n\nНекоторые файлы могут причинить вред для вашего компьютера.  Удостоверьтесь, что это за файл прежде чем открывать его."/>
 	<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
 	<string id="16386" value="Правка мета данных %i файлов."/>
@@ -2730,7 +2742,7 @@
 	<string id="16774" value="&amp;Соединиться"/>
 	<string id="16775" value="&amp;Просматривать"/>
 	<string id="16776" value="Добавить"/>
-	<string id="16777" value="Имя&#160;файла:"/>
+	<string id="16777" value="Имя файла:"/>
 	<string id="16778" value="Ссылка:"/>
 	<string id="16779" value="Тип:"/>
 	<string id="16780" value="Не указано"/>
@@ -2772,16 +2784,16 @@
 	<string id="16940" value="Соединение с %s для просмотра пользователя оборвалось."/>
 	<string id="16941" value="Закрываю соединение обзора пользователя с %s из-за нехватки трафика."/>
 	<string id="16942" value="Закрываю соединение обзора пользователя с %s."/>
-	<string id="16943" value="&#160;Просмотр %s"/>
-	<string id="16944" value="&#160;Найдено %i разделяемых файлов в хранилище у %s."/>
+	<string id="16943" value=" Просмотр %s"/>
+	<string id="16944" value=" Найдено %i разделяемых файлов в хранилище у %s."/>
 	<string id="16992" value="Shareaza не смогла создать экземпляр модуля MediaServices.  Переустановите Shareaza программу и удостоверьтесь, что у Вас установлены все необходимые медиа кодеки драйвера вывода данных."/>
 	<string id="16993" value="Все медиа файлы|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Списки воспроизв.|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Аудио файлы|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Видео файлы|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD аудио трэки|*.cda|MIDI файлы|*.mid;*.rmi;*.midi|Все файлы|*.*||"/>
 	<string id="16994" value="Не могу загрузить медиа файл «%s»"/>
 	<string id="16995" value="Файл может быть поврежден, или Вы не имеете подходящих кодеков для его воспроизведения."/>
 	<string id="16996" value="Часть этого файла не может быть воспроизведена, воможно Вам нужно загрузить дополнительные кодеки."/>
 	<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
-	<string id="16998" value="М &#160; &#160; Е &#160; &#160; Д &#160; &#160; И &#160; &#160; А &#160; &#160; &#160; &#160; &#160; С &#160; &#160; И &#160; &#160; С &#160; &#160; Т &#160; &#160; Е &#160; &#160; М &#160; &#160; А &#160; &#160; &#160; &#160; &#160; S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A"/>
-	<string id="16999" value="С П И С. &#160; В О С П Р О И З В Е Д Е Н И Я"/>
+	<string id="16998" value="М  &#160;  &#160; Е  &#160;  &#160; Д  &#160;  &#160; И  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; С  &#160;  &#160; И  &#160;  &#160; С  &#160;  &#160; Т  &#160;  &#160; Е  &#160;  &#160; М  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; S  &#160;  &#160; H  &#160;  &#160; A  &#160;  &#160; R  &#160;  &#160; E  &#160;  &#160; A  &#160;  &#160; Z  &#160;  &#160; A"/>
+	<string id="16999" value="С П И С.  &#160; В О С П Р О И З В Е Д Е Н И Я"/>
 	<string id="17024" value="Инициализация соединения с %s..."/>
 	<string id="17025" value="Невозможно установить связь с %s."/>
 	<string id="17026" value="Запрашивается соединение активной доставки через брандмауэр у %s..."/>
@@ -2945,6 +2957,10 @@
 	<string id="20130" value="источников"/><!-- from 11 to 19 -->
 	<string id="20131" value="источника"/><!-- from 2 to 4 -->
 	<string id="20132" value="источников"/><!-- from 5 to 9 -->
+	<string id="20133" value="Не интересует"/>
+	<string id="20134" value="Перегружен"/>
+	<string id="20135" value="Следующий"/>
+	<string id="20136" value="Оч."/>
 	<string id="20200" value="Воскресенье"/>
 	<string id="20201" value="Понедельник"/>
 	<string id="20202" value="Вторник"/>
@@ -3164,7 +3180,7 @@
 		<control caption="% полосы пропуск. при лимите"/>
 		<control/>
 		<control caption="Справка"/>
-		<control caption="Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.&#13;&#10;&#13;&#10;Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"/>
+		<control caption="Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.{n}{n}Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
@@ -3183,30 +3199,30 @@
 		<control caption="Настроить Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Сеть Gnutella2 (рекомендуется):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Сеть Gnutella2:"/>
+		<control caption="(G2 рекомендуется)"/>
 		<control caption="Соединиться с G2 сегодня"/>
+		<control caption="Режим:"/>
+		<control caption="Оптимальный|Ветвь|Узел"/>
+		<control caption="G_2 соединения:"/>
+		<control caption="Узлов к ветви:"/>
+		<control/><control/>
+		<control caption="Ветвей к узлу:"/>
+		<control/><control/>
+		<control caption="Узлов к узлу:"/>
+		<control/><control/>
 		<control caption="Сеть Gnutella1:"/>
-		<control caption="Соединиться с G1 сегодня"/>
 		<control caption="Всегда соединяться с G1"/>
-		<control caption="_Выборка узлов:"/>
-		<control caption="Позволить стать узлом"/>
-		<control caption="Принудительно стать узлом"/>
-		<control caption="Позволить стать ветвью"/>
-		<control caption="Соединяться только с узлом"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Узлов к ветви:"/>
+		<control caption="Соединиться с G1 сегодня"/>
+		<control caption="Режим:"/>
+		<control caption="Оптимальный|Ветвь|Ведущий"/>
+		<control caption="G_1 соединения:"/>
+		<control caption="Ведущих к ветви:"/>
 		<control/><control/>
-		<control caption="Ветвей к узлу:"/>
+		<control caption="Ветвей к ведущему:"/>
 		<control/><control/>
-		<control caption="Узлов к узлу:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Узлов к ветви:"/>
-		<control/><control/>
-		<control caption="Ветвей к узлу:"/>
-		<control/><control/>
-		<control caption="Узлов к узлу:"/>
+		<control caption="Партнеров к партнеру:"/>
 		<control/><control/>
 		<control caption="_Компрессия в каналах связи:"/>
 		<control caption="Узел к ветви"/>
@@ -3234,21 +3250,23 @@
 		<control caption="Загрузить..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="_Держать торренты в папке:"/>
-		<control/><control/>
-		<control caption="_Соединений для загрузки:"/>
-		<control/><control/>
-		<control caption="Клиентских соединений"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
 		<control caption="_Интерфейс:"/>
 		<control caption="Показывать дополнительные элементы BitTorrent интерфейса"/>
+		<control caption="_Соединений для загрузки:"/>
+		<control/><control/>
+		<control caption="_Торрентов одновременно"/>
+		<control/><control/>
+		<control caption="Клиентских соединений"/>
 		<control caption="_ЕndGame (ускорение):"/>
 		<control caption="Переходить в режим EndGame при завершении торрентов"/>
+		<control caption="_Держать торренты в папке:"/>
+		<control/><control/>
 		<control caption="_Программа для создания торрентов"/>
-		<control caption="Трекер:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="_Торрентов одновременно"/>
+		<control/><control/>
 		<control caption="Т_рекер по умолчанию:"/>
+		<control caption="Трекер:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Протоколы">
@@ -3290,7 +3308,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Параметры очереди выгрузок">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Параметры очереди выгрузок">
 		<control caption="_Название:"/>
 		<control/>
 		<control caption="_Критерии:"/>
@@ -3322,6 +3340,7 @@
 		<control/><control/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
+		<control caption="Вознаградить загрузчиков"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
@@ -3950,7 +3969,7 @@
 		<control/>
 		<control caption="Выберите аудио визуализацию из списка:"/>
 		<control/>
-		<control caption="Footer экран|Полный экран|Большой экран|Средний экран|Малый экран"/>
+		<control caption="Внизу изображения|Полный экран|Большой экран|Средний экран|Маленький экран"/>
 		<control caption="_Установки..."/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
@@ -3970,7 +3989,7 @@
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Файл"/>
-		<column from="Type" to="Тип"/>
+		<column from="Type" to="Расширение"/>
 		<column from="Size" to="Размер"/>
 		<column from="Folder" to="Папка"/>
 		<column from="Hits" to="Обращений"/>
@@ -3994,6 +4013,7 @@
 		<column from="Progress" to="Прогресс"/>
 		<column from="Speed" to="Скорость"/>
 		<column from="Client" to="Клиент"/>
+		<column from="Rating" to="Рейтинг"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Адрес"/>
@@ -4065,6 +4085,18 @@
 		<column from="Bandwidth" to="Полоса пропускания"/>
 		<column from="Transfers" to="Загрузок"/>
 		<column from="Order" to="Порядок"/>
+	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to="Установка"/>
+		<column from="Value" to="Значение"/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to="Название"/>
+		<column from="URL" to="Ссылка"/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to="Ссылка"/>
+		<column from="Expires" to="Истекает"/>
 	</list>
 </listColumns>
 </skin>
