@@ -12,15 +12,15 @@
 
 <!-- Manifest -->
 <manifest
- name="Magyar"
- author="Yuri"
- description="Shareaza Default Hungarian Skin File"
- link="http://totenkopf.uw.hu"
- email="yuri1(AT)freemail(DOT)hu"
- version="2.1.0.18"
- type="Language"
- language="hu"
- prompt="Kattints ide a magyar nyelvhez."
+name="Magyar"
+author="Yuri"
+description="Shareaza Default Hungarian Skin File"
+link="http://totenkopf.uw.hu"
+email="yuri1(AT)freemail(DOT)hu"
+version="2.1.0.25"
+type="Language"
+language="hu"
+prompt="Kattints ide a magyar nyelvhez."
  />
 
 <!-- Toolbar Definitions -->
@@ -2675,6 +2675,7 @@
        <string id="16373" value="Félkész fájlok"/>
        <string id="16374" value="Új sor"/>
        <string id="16375" value="Félkész"/>
+       <string id="16376" value="Kész fájlok"/>
        <string id="16384" value="Biztos, hogy futtatni akarod: &quot;%s&quot; ?\n\nNéhány fájl káros a számítógépnek. Ha nem bízol meg a fájlban, inkább futtass le egy vírusellenőrzét."/>
        <string id="16385" value="%i fájl metadatáját akarod módosítani. Biztos ezt akarod?"/>
        <string id="16386" value="Metadata szerkesztése %i fájlnak."/>
@@ -3199,17 +3200,12 @@
                <control caption="Részletes beállítás"/>
        </dialog>
 
-       <dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-               <control caption="Gnutella2 hálózat (ajánlott):"/>
+       <dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+               <control caption="Gnutella2 hálózat:"/>
+               <control caption="(G2 ajánlott)"/>
                <control caption="Kapcsolódás a G2-höz"/>
-               <control caption="Gnutella1 hálózat:"/>
-               <control caption="Egyszer kapcsolódjon a G1-hez"/>
-               <control caption="Mindig kapcsolódjon a G1-hez"/>
-               <control caption="Hálózatfajták:"/>
-               <control caption="Ez a csomópont lehet Hub"/>
-               <control caption="Mindig legyen Hub"/>
-               <control caption="Ez a csomópont lehet Leaf"/>
-               <control caption="Csak Hubok kapcsolódhatnak"/>
+               <control caption="Mód:"/>
+               <control caption="Optimális|Leaf|Hub"/>
                <control caption="G2 kapcsolódások száma:"/>
                <control caption="Leaf a Hubhoz:"/>
                <control/><control/>
@@ -3217,12 +3213,17 @@
                <control/><control/>
                <control caption="Hub a Hubhoz:"/>
                <control/><control/>
+               <control caption="Gnutella1 hálózat:"/>
+               <control caption="Mindig kapcsolódjon a g1-hez"/>
+               <control caption="Egyszer kapcsolódjon a G1-hez"/>
+               <control caption="Mód:"/>
+               <control caption="Optimális|Leaf|Ultrapeer"/>
                <control caption="G1 kapcsolódások száma:"/>
-               <control caption="Leaf a Hubhoz:"/>
+               <control caption="Leaf az Ultrapeerhez:"/>
                <control/><control/>
-               <control caption="Hub a Leafhez:"/>
+               <control caption="Ultrapeer a Leafhez:"/>
                <control/><control/>
-               <control caption="Hub a Hubhoz:"/>
+               <control caption="Peer a Peerhez:"/>
                <control/><control/>
                <control caption="Forgalom tömörítése:"/>
                <control caption="Hub a Leafhez"/>
@@ -3250,21 +3251,23 @@
                <control caption="Letöltés..."/>
        </dialog>
 
-       <dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-         <control caption="Torrent fájlok mappája:"/>
-         <control/><control/>
-         <control caption="Letöltési kapcsolatok:"/>
-         <control/><control/>
-         <control caption="kliens kapcsolódhat hozzám egyszerre "/>
-         <control caption="Felhasználói felület:"/>
-         <control caption="További BitTorrent felhasználói elemek"/>
-         <control caption="EndGame:"/>
-         <control caption="Letöltés végének gyorsítása (EndGame mód)"/>
-         <control caption="Torrentkészítő program útvonala:"/>
-         <control caption="Tracker:"/>
-         <control/><control/><control/><control/><control/>
-         <control caption="torrent letöltése egyszerre"/>
-         <control caption="Alapértelmezett Tracker:"/>
+       <dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+               <control caption="Felhasználói felület:"/>
+               <control caption="További BitTorrent felhasználói elemek megjelenítése"/>
+               <control caption="Letöltési kapcsolatok:"/>
+               <control/><control/>
+               <control caption="torrent letöltése egyszerre"/>
+               <control/><control/>
+               <control caption="kliens kapcsolódhat hozzám egyszerre"/>
+               <control caption="EndGame:"/>
+               <control caption="A letöltés végének gyorsítása (EndGame mód)"/>
+               <control caption="Torrentfájlok mappája:"/>
+               <control/><control/>
+               <control caption="Torrentkészítő program útvonala:"/>
+               <control/><control/>
+               <control caption="Alapértelmezett Tracker:"/>
+               <control caption="Tracker:"/>
+               <control/>
 </dialog>
 
        <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokollok">
@@ -3306,7 +3309,7 @@
                <control/>
        </dialog>
 
-       <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Feltöltési sor beállításai">
+       <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Feltöltési sor beállításai">
                <control caption="Név:"/>
                <control/>
                <control caption="Feltételek:"/>
@@ -3338,6 +3341,7 @@
                <control/><control/>
                <control caption="OK"/>
                <control caption="Mégse"/>
+               <control caption="Feltöltők jutalmazása"/>
        </dialog>
 
        <dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Köszöntelek a Shareazában [1/7]">
@@ -3861,7 +3865,7 @@
        <dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met letöltése">
                <control/>
                <control caption="eDonkey2000 server.met fájl letöltése a netről."/>
-               <control/>
+                      <control/><control/>
                <control caption="OK"/>
                <control caption="Mégse"/>
        </dialog>
@@ -4009,6 +4013,7 @@
         <column from="Progress" to="Állapot"/>
         <column from="Speed" to="Sebesség"/>
         <column from="Client" to="Kliensprogram"/>
+               <column from="Rating" to="Osztályozás"/>
     </list>
     <list name="CNeighboursWnd">
         <column from="Address" to="Cím"/>
@@ -4080,6 +4085,18 @@
         <column from="Bandwidth" to="Sávszél"/>
         <column from="Transfers" to="Forgalom"/>
         <column from="Order" to="Sorrend"/>
+       </list>
+       <list name="CAdvancedSettingsList">
+               <column from="Setting" to="Beállítás"/>
+               <column from="Value" to="Érték"/>
+       </list>
+       <list name="CFavouritesProfileList">
+               <column from="Name" to="Név"/>
+               <column from="URL" to=""/>
+       </list>
+       <list name="CFileSourcesPageList">
+               <column from="URL" to=""/>
+               <column from="Expires" to="Lejárat"/>
     </list>
 </listColumns>
 </skin>
