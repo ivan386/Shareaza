@@ -1515,7 +1515,12 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bExclud
 	
 	for ( ; ; pszScan++ )
 	{
+
+#ifdef UNICODE
+		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
+#else
 		if ( *pszScan != NULL && (unsigned char)*pszScan > 32 ) continue;
+#endif
 		
 		if ( pszWord < pszScan )
 		{
