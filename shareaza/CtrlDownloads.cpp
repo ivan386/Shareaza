@@ -67,7 +67,7 @@ END_MESSAGE_MAP()
 #define DOWNLOAD_COLUMN_SPEED		3
 #define DOWNLOAD_COLUMN_STATUS		4
 #define DOWNLOAD_COLUMN_CLIENT		5
-#define DOWNLOAD_COLUMN_TIME		6
+#define DOWNLOAD_COLUMN_DOWNLOADED	6
 #define DOWNLOAD_COLUMN_PERCENTAGE  7
 
 
@@ -123,7 +123,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( DOWNLOAD_COLUMN_SPEED, _T("Speed"), LVCFMT_CENTER, 80 );
 	InsertColumn( DOWNLOAD_COLUMN_STATUS, _T("Status"), LVCFMT_CENTER, 80 );
 	InsertColumn( DOWNLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 80 );
-	InsertColumn( DOWNLOAD_COLUMN_TIME, _T("Time"), LVCFMT_CENTER, 0 );
+	InsertColumn( DOWNLOAD_COLUMN_DOWNLOADED, _T("Downloaded"), LVCFMT_CENTER, 0 );
 	InsertColumn( DOWNLOAD_COLUMN_PERCENTAGE, _T("Complete"), LVCFMT_CENTER, 0 );
 	
 	Skin.Translate( _T("CDownloadCtrl"), &m_wndHeader );
@@ -965,14 +965,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			else
 				strText = _T("(No sources)");
 			break;
-		case DOWNLOAD_COLUMN_TIME:
-			if( pDownload->IsTrying() )
-			{
-				DWORD tTimer = ( ( GetTickCount() - pDownload->GetStartTimer() ) / 1000 );
-				strText.Format( _T("%02i:%02i:%02i"), tTimer / 3600, ( tTimer % 3600 ) / 60 , tTimer % 60 );
-			}
-			else
-				strText.Format( _T(" - ") );
+		case DOWNLOAD_COLUMN_DOWNLOADED:
+			strText = Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE );
 			break;
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
@@ -1138,8 +1132,9 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_CLIENT:
 			strText = pSource->m_sServer;
 			break;
-		case DOWNLOAD_COLUMN_TIME:
-				strText.Format( _T(" ") );
+		case DOWNLOAD_COLUMN_DOWNLOADED:
+			if ( pSource->m_pTransfer != NULL )
+				strText = Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded, FALSE );
 			break;
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) && ( pSource->m_pTransfer ) )
