@@ -141,7 +141,7 @@ BeveledLabel=Shareaza Development Team
 ; Run the skin installer at end of installation
 Filename: "{app}\Skins\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"
 ; Run Shareaza at end of installation
-Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent
+Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent nowait
 
 [UninstallRun]
 ; Run the skin installer at start of uninstallation and make sure it only runs once
