@@ -358,6 +358,12 @@ void CLibraryFolders::CreateAlbumTree()
 		CAlbumFolder* pCollections	= m_pAlbumRoot->AddFolder( CSchema::uriCollectionsFolder );
 	}
 	
+	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriDocumentRoot ) == NULL )
+	{
+		CAlbumFolder* pDocumentRoot		= m_pAlbumRoot->AddFolder( CSchema::uriDocumentRoot );
+		CAlbumFolder* pDocumentAll		= pDocumentRoot->AddFolder( CSchema::uriDocumentAll );
+	}
+
 	if ( m_pAlbumRoot->GetFolderCount() != nCount )
 	{
 		for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )

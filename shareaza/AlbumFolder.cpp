@@ -893,6 +893,20 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		AddFile( pFile );
 		return TRUE;
 	}
+	else if ( m_sSchemaURI == CSchema::uriDocumentRoot )
+	{
+		if ( ! pFile->IsSchemaURI( CSchema::uriDocument ) && 
+			 ! pFile->IsSchemaURI( CSchema::uriSpreadsheet ) &&
+			 ! pFile->IsSchemaURI( CSchema::uriPresentation ) ) return FALSE;
+	}
+	else if ( m_sSchemaURI == CSchema::uriDocumentAll )
+	{
+		if ( ! pFile->IsSchemaURI( CSchema::uriDocument ) && 
+			 ! pFile->IsSchemaURI( CSchema::uriSpreadsheet ) &&
+			 ! pFile->IsSchemaURI( CSchema::uriPresentation ) ) return FALSE;
+		AddFile( pFile );
+		return TRUE;
+	}
 	
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
