@@ -282,7 +282,7 @@ gr.reg_apptitle=Shareaza Ultimate File Sharing
 gr.icons_license=Άδεια
 gr.icons_uninstall=Απεγκατάσταση
 gr.icons_downloads=Κατέβασμα
-gr.dialog_shutdown=Θέλετε να τερματίσετε την λειτουργία του %1?
+gr.dialog_shutdown=Το %1 ακόμα τρέχει. Θέλετε να τερματίσετε την λειτουργεία του %1 για να συνεχιστεί η εγκατάσταση?
 ; Hungarian
 hu.components_plugins=Plugins
 hu.components_skins=Skins
