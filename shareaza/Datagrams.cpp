@@ -1294,7 +1294,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	CString vendorCode;
 	CString currentVersion;
 	
-	if ( bWantNames ) strNick = MyProfile.GetNick().Left(255); //trim if over 255 characters
+	if ( bWantNames ) strNick = MyProfile.GetNick().Left( 255 ); //trim if over 255 characters
 
 	if ( bWantGPS ) nGPS = MyProfile.GetPackedGPS();
 
@@ -1313,7 +1313,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 	
 	pPacket->WritePacket( "HS", 2 );
-	pPacket->WriteShortBE( Neighbours.GetCount( -1, -1, ntLeaf ) );
+	pPacket->WriteShortBE( Neighbours.GetCount( PROTOCOL_G2, -1, ntLeaf ) );
 	
 	if ( strNick.GetLength() )
 	{
@@ -1350,7 +1350,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		{
 			if ( CGProfile* pProfile = ((CG2Neighbour*)pNeighbour)->m_pProfile )
 			{
-				if ( bWantNames ) strNick = pProfile->GetNick().Left(255); //Trim if over 255 characters
+				if ( bWantNames ) strNick = pProfile->GetNick().Left( 255 ); //Trim if over 255 characters
 
 				if ( bWantGPS ) nGPS = pProfile->GetPackedGPS();
 				
