@@ -2236,7 +2236,7 @@ BEGIN
                     WS_TABSTOP
     LTEXT           "Age:",IDC_STATIC,15,105,35,12,SS_CENTERIMAGE
     CONTROL         "Allow others to browse my user profile",IDC_BROWSE_USER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,140,140,12
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,140,260,12
 END
 
 IDD_PROFILE_FAVOURITES DIALOG  0, 0, 282, 159
