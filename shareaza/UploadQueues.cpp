@@ -455,6 +455,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
 		pQueue						= Create( strQueueName );
@@ -465,6 +466,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
@@ -475,15 +477,17 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
-		//pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRewardUploaders	= FALSE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
 		pQueue						= Create( strQueueName );
@@ -494,6 +498,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRewardUploaders	= FALSE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
@@ -505,6 +510,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
+		pQueue->m_bRewardUploaders	= FALSE;
 	}
 	else if ( Settings.Connection.OutSpeed > 200 )  // >200 Kb/s (Good Broadband)
 	{
@@ -517,6 +523,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
@@ -527,6 +534,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
@@ -536,6 +544,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRewardUploaders	= FALSE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
 		pQueue						= Create( strQueueName );
@@ -546,6 +555,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRewardUploaders	= FALSE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
@@ -557,6 +567,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
+		pQueue->m_bRewardUploaders	= FALSE;
 	}
 	else if ( Settings.Connection.OutSpeed > 120 )  // >120 Kb/s (Average Broadband)
 	{
@@ -569,6 +580,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
@@ -579,6 +591,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 	
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
@@ -588,6 +601,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
+		pQueue->m_bRewardUploaders	= FALSE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
@@ -599,6 +613,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
+		pQueue->m_bRewardUploaders	= FALSE;
 	}
 	else if ( Settings.Connection.OutSpeed > 40 ) // >40 Kb/s (Slow Broadband/ISDN)
 	{
@@ -611,6 +626,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
@@ -622,6 +638,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_COMPLETE );
 		pQueue						= Create( strQueueName );
@@ -632,6 +649,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
+		pQueue->m_bRewardUploaders	= FALSE;
 	}
 	else  // <40 Kb/s (Dial up modem)
 	{
@@ -644,6 +662,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 2;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
+		pQueue->m_bRewardUploaders	= TRUE;
 		
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_QUEUE );
 		pQueue						= Create( strQueueName );
@@ -654,6 +673,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMaxTransfers		= 2;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
+		pQueue->m_bRewardUploaders	= FALSE;
 	}
 	
 	Save();
