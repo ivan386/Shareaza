@@ -72,7 +72,7 @@ CG1Packet* CG1Packet::New(int nType, DWORD nTTL, GGUID* pGUID)
 	}
 	else
 	{
-		Network.CreateID( &pPacket->m_pGUID );
+		Network.CreateID( &pPacket->m_pGUID, 0, 0 );
 	}
 	
 	return pPacket;

@@ -129,7 +129,7 @@ int CLocalSearch::Execute(int nMaximum)
 	}
 	else
 	{
-		Network.CreateID( &m_pGUID );
+		Network.CreateID( &m_pGUID, 0, 0 );
 	}
 	
 	int nCount = ExecuteSharedFiles( nMaximum );

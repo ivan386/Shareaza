@@ -305,9 +305,14 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 //////////////////////////////////////////////////////////////////////
 // CNetwork GGUID generation
 
-void CNetwork::CreateID(GGUID* pID)
+void CNetwork::CreateID(GGUID* pID, int nNeedTransfers, int nNeedSearchManager)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	// this function must not throw or we have a problem here
+	for ( int i = 0; i < nNeedSearchManager; ++i ) SearchManager.m_pSection.Unlock();
+	for ( int i = 0; i < nNeedTransfers; ++i ) Transfers.m_pSection.Unlock();
+
+	static CSyncObject* pLocks[] = { &Transfers.m_pSection, &m_pSection, &SearchManager.m_pSection };
+	CMultiLock oLock( pLocks, sizeof( pLocks ) / sizeof( CSyncObject* ), TRUE );
 	
 	*pID = MyProfile.GUID;
 	
@@ -316,6 +321,9 @@ void CNetwork::CreateID(GGUID* pID)
 	pNum[1] += ( m_nSequence++ );
 	pNum[2] += rand() * rand();
 	pNum[3] += rand() * rand();
+
+	for ( int i = 0; i < nNeedTransfers; ++i ) Transfers.m_pSection.Lock();
+	for ( int i = 0; i < nNeedSearchManager; ++i ) SearchManager.m_pSection.Lock();
 }
 
 //////////////////////////////////////////////////////////////////////

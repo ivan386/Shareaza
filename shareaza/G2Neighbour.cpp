@@ -775,7 +775,7 @@ void CG2Neighbour::SendHAW()
 	WORD nLeafs = 0;
 	GGUID pGUID;
 	
-	Network.CreateID( &pGUID );
+	Network.CreateID( &pGUID, 0, 0 );
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{

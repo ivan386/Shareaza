@@ -86,7 +86,7 @@ void CNeighboursWithG1::OnG1Ping()
 		DWORD dwNow = GetTickCount();
 		GGUID pGUID;
 		
-		Network.CreateID( &pGUID );
+		Network.CreateID( &pGUID, 0, 0 );
 		
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
