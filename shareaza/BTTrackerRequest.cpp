@@ -46,7 +46,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest construction
 
-CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL bProcess)
+CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL bProcess, WORD nNumWant)
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->m_pTorrent.IsAvailable() );
@@ -66,16 +66,28 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 		(QWORD)pDownload->GetVolumeRemaining() );
 	
 	if ( Network.m_pHost.sin_addr.S_un.S_addr != 0 )
-	{
+	{	//If the IP is valid, add it.
 		strURL += _T("&ip=");
 		strURL += inet_ntoa( Network.m_pHost.sin_addr );
+		//Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
 	}
 	
 	if ( pszVerb != NULL )
-	{
+	{	//If an event was specified, add it.
 		strURL += _T("&event=");
 		strURL += pszVerb;
+		//Valid events: started, completed, stopped
 	}
+
+	if ( nNumWant < 250 )
+	{	//If a (valid) number of peers was specified, request that many.
+		CString strNumWant;
+		strNumWant.Format( _T("&numwant=%i"), nNumWant );
+		strURL += strNumWant;
+		//Note: If this is omitted, trackers usually respond with 50, which is a good default.
+		//Generally, it's not worth the bandwidth to send this. However, if we have plenty of 
+		//sources, then ask for a lower number. (Say, 5 just to ensure some sources are fresh)
+	}	
 	
 	m_pRequest.SetURL( strURL );
 	m_pRequest.AddHeader( _T("Accept"), _T("application/x-bittorrent") );
@@ -97,28 +109,30 @@ CBTTrackerRequest::~CBTTrackerRequest()
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest actions
 
-void CBTTrackerRequest::SendStarted(CDownloadBase* pDownload)
+void CBTTrackerRequest::SendStarted(CDownloadBase* pDownload, WORD nNumWant)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("started") );
+	new CBTTrackerRequest( (CDownload*)pDownload, _T("started"), TRUE, nNumWant );
 }
 
-void CBTTrackerRequest::SendUpdate(CDownloadBase* pDownload)
+void CBTTrackerRequest::SendUpdate(CDownloadBase* pDownload, WORD nNumWant)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload );
+	new CBTTrackerRequest( (CDownload*)pDownload, NULL , TRUE, nNumWant );
 }
 
+//ToDo: Confirm trackers don't send peers in response to a completed or stopped event. 
+//If they do, we can tell them not to. (change 0xFFFF to 0, below)
 void CBTTrackerRequest::SendCompleted(CDownloadBase* pDownload)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("completed") );
+	new CBTTrackerRequest( (CDownload*)pDownload, _T("completed"), TRUE, 0xFFFF );
 }
 
 void CBTTrackerRequest::SendStopped(CDownloadBase* pDownload)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("stopped"), FALSE );
+	new CBTTrackerRequest( (CDownload*)pDownload, _T("stopped"), FALSE, 0xFFFF );
 }
 
 /////////////////////////////////////////////////////////////////////////////

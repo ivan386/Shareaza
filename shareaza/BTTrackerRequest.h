@@ -35,7 +35,7 @@ class CBTTrackerRequest : public CWinThread
 {
 // Construction
 public:
-	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb = NULL, BOOL bProcess = TRUE);
+	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb = NULL, BOOL bProcess = TRUE, WORD nNumWant = 0xFFFF);
 	virtual ~CBTTrackerRequest();
 
 // Attributes
@@ -46,8 +46,8 @@ public:
 
 // Operations
 public:
-	static void		SendStarted(CDownloadBase* pDownload);
-	static void		SendUpdate(CDownloadBase* pDownload);
+	static void		SendStarted(CDownloadBase* pDownload, WORD nNumWant = 0xFFFF);
+	static void		SendUpdate(CDownloadBase* pDownload, WORD nNumWant = 0xFFFF);
 	static void		SendCompleted(CDownloadBase* pDownload);
 	static void		SendStopped(CDownloadBase* pDownload);
 	static CString	Escape(SHA1* pSHA1);
