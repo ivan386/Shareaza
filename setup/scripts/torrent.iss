@@ -1,20 +1,20 @@
 #define version GetFileVersion("..\builds\TorrentWizard.exe")
 
 [Setup]
-AppName=Torrent Wizard
-AppVerName=Torrent Wizard {#version}
-AppPublisher=TorrentAid
+AppName=TorrentAid
+AppVerName=TorrentAid {#version}
+AppPublisher=Shareaza Development Team
 DefaultDirName={reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: App Path|{reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}}
 DisableDirPage=yes
-DefaultGroupName=Torrent Wizard
+DefaultGroupName=TorrentAid
 DisableProgramGroupPage=yes
 Compression=lzma/ultra
 InternalCompressLevel=Ultra
 SolidCompression=yes
-OutputBaseFilename=Torrent Wizard {#version}
+OutputBaseFilename=TorrentAid_{#version}
 OutputDir=setup\builds
-VersionInfoCompany=TorrentAid
-VersionInfoDescription=Torrent Wizard
+VersionInfoCompany=Shareaza Development Team
+VersionInfoDescription=TorrentAid
 VersionInfoVersion={#version}
 AppId=TorrentAid
 AppVersion={#version}
@@ -25,7 +25,7 @@ PrivilegesRequired=admin
 LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\TorrentWizard.exe
-UninstallDisplayName={cm:NameAndVersion,Torrent Wizard,{#version}}
+UninstallDisplayName={cm:NameAndVersion,TorrentAid,{#version}}
 UninstallFilesDir={app}\Uninstall
 LicenseFile=setup\license\default.rtf
 
@@ -41,7 +41,7 @@ AppUpdatesURL=http://www.torrentaid.com/download.htm
 Source: "setup\builds\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 [Icons]
-Name: "{userprograms}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Torrent Wizard"
+Name: "{userprograms}\TorrentAid"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "TorrentAid"
 
 [Registry]
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue
