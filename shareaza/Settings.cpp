@@ -353,6 +353,7 @@ void CSettings::Setup()
 
 	Add( _T("Scheduler.Enable"), &Scheduler.Enable, FALSE );
 	Add( _T("Scheduler.LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50 );
+	Add( _T("Scheduler.LimitedNetworks"), &Scheduler.LimitedNetworks, TRUE );
 	Add( _T("Scheduler.AllowHub"), &Scheduler.AllowHub, TRUE );
 }
 

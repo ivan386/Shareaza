@@ -643,7 +643,9 @@
 #define IDC_SCHEDULER_ENABLE            1400
 #define IDC_SCHEDULER_LIMITED           1401
 #define IDC_SCHEDULER_LIMITED_SPIN      1402
-#define IDC_SCHEDULER_ALLOWHUB			1403
+#define IDC_SCHEDULER_LIMITED_NETWORKS  1403
+#define IDC_SCHEDULER_ALLOWHUB          1404
+#define IDC_SCHEDULER_DISPLAY			1405
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -1513,7 +1515,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33120
-#define _APS_NEXT_CONTROL_VALUE         1383
+#define _APS_NEXT_CONTROL_VALUE         1384
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

@@ -43,6 +43,8 @@ public:
 	BOOL	m_bSchedulerEnable;
 	CSpinButtonCtrl	m_wndLimitedSpin;
 	int		m_nLimited;
+	BOOL	m_bLimitedNetworks;
+	CStatic	m_wndDisplay;
 	//}}AFX_DATA
 
 // Painting Data

@@ -173,8 +173,8 @@ void CScheduler::SetVariables(BYTE nCurrentSettings)
 		theApp.Message( MSG_DEFAULT, _T("Scheduler: Limited speed") );
 		Settings.Live.BandwidthScale = Settings.Scheduler.LimitedBandwidth;
 		Settings.Gnutella2.EnableToday	= TRUE;
-		Settings.Gnutella1.EnableToday	= FALSE;
-		Settings.eDonkey.EnableToday	= FALSE;
+		Settings.Gnutella1.EnableToday	= Settings.Scheduler.LimitedNetworks ? FALSE :Settings.Gnutella1.EnableAlways;
+		Settings.eDonkey.EnableToday	= Settings.Scheduler.LimitedNetworks ? FALSE :Settings.eDonkey.EnableAlways;
 		if ( ! Network.IsConnected() ) Network.Connect( TRUE );
 		break;
 	case SCHEDULE_FULL_SPEED:

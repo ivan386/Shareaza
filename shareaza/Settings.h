@@ -407,6 +407,7 @@ public:
 	{
 		BOOL		Enable;						//Enable the scheduler
 		DWORD		LimitedBandwidth;			//% of bandwidth to use in limited mode
+		BOOL		LimitedNetworks;			//Only connect to G2/BT when limited
 		BOOL		AllowHub;					//Allow hub mode while scheduler is active
 	} Scheduler;
 	
