@@ -94,6 +94,7 @@ void CDownload::Pause()
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	
+	if ( m_bBTH ) CloseTorrent();
 	m_tBegan = 0;
 	CloseTransfers();
 	CloseFile();
@@ -294,8 +295,7 @@ void CDownload::OnRun()
 					if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )	//If we are at max torrents
 					{
 						m_tBegan = 0; //Give up on this one for now, try again later
-						if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
-						CloseTorrentUploads();
+						CloseTorrent();
 					}
 				}
 				else			//Regular download
