@@ -323,6 +323,20 @@ BOOL CSearchPanel::PreTranslateMessage(MSG* pMsg)
 	return CTaskPanel::PreTranslateMessage( pMsg );
 }
 
+void CSearchPanel::Enable()
+{
+	m_boxSearch.m_wndSearch.EnableWindow( TRUE );
+	m_boxSearch.m_wndSchemas.EnableWindow( TRUE );
+	m_boxSearch.m_wndNetworks.EnableWindow( TRUE );
+}
+
+void CSearchPanel::Disable()
+{
+	m_boxSearch.m_wndSearch.EnableWindow( FALSE );
+	m_boxSearch.m_wndSchemas.EnableWindow( FALSE );
+	m_boxSearch.m_wndNetworks.EnableWindow( FALSE );
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchInputBox construction

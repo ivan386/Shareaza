@@ -169,6 +169,8 @@ public:
 	void			ExecuteSearch();
 	CManagedSearch*	GetSearch();
 	void			OnSkinChange();
+	void			Disable();
+	void			Enable();
 	
 // Overrides
 public:
