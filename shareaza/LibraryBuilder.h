@@ -71,7 +71,7 @@ protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		HashFile(HANDLE hFile, BOOL bPriority, SHA1* pSHA1);
-	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
+	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	BOOL		SubmitCorrupted();
 	BOOL		DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	BOOL		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);

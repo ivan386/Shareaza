@@ -159,11 +159,10 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals submit metadata (threaded)
 
-BOOL CLibraryBuilderInternals::SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement*& pXML)
+BOOL CLibraryBuilderInternals::SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML)
 {
 	// Ignoring return value from submission
 	m_pBuilder->SubmitMetadata( pszSchemaURI, pXML );
-	if ( !pXML ) delete pXML;
 	return TRUE;
 }
 

@@ -73,6 +73,7 @@ CLibraryBuilder::~CLibraryBuilder()
 	
 	delete m_pPlugins;
 	delete m_pInternals;
+	if ( m_pBuffer ) delete [] m_pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -437,7 +438,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML)
+BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
 	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
 	
