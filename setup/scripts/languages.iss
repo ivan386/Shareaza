@@ -17,6 +17,7 @@ Name: "br"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-braz.isl"; 
 Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
 Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"; LicenseFile: "setup/license/russian.rtf"
+Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
 
 [Files]
 ; Install default remote
@@ -46,6 +47,8 @@ Source: "Remote-localized\french\*"; DestDir: "{app}\Remote"; Flags: ignoreversi
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
 ; Russian
 Source: "Remote-localized\Russian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Components: language
+; Greek
+Source: "Remote-localized\greek\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -74,6 +77,8 @@ Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\spanish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
 ; Russian
 Source: "setup\license\russian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Components: language
+; Greek
+Source: "setup\license\greek.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -246,4 +251,18 @@ ru.reg_apptitle=Shareaza - οπξγπΰμμΰ δλÿ ξαμενΰ τΰιλΰμθ
 ru.icons_license=Λθφενηθÿ
 ru.icons_uninstall=Δεθνρςΰλλÿφθÿ
 ru.icons_downloads=Ηΰγπσηκθ
+; Greek
+gr.components_plugins=Plugins
+gr.components_skins=Skins
+gr.components_languages=Γλώσσες
+gr.tasks_allusers=Όλοι οι χρήστες
+gr.tasks_selectusers=Εγκατάσταση %1 για:
+gr.tasks_currentuser=%1 μόνο
+gr.tasks_multisetup=Ενεργοποίηση της βοήθειας πολλαπλών χρηστών
+gr.run_skinexe=Running Εγκατάσταση του skin...
+gr.reg_incomingchat=Νέο μήνυμα chat
+gr.reg_apptitle=Shareaza Ultimate File Sharing
+gr.icons_license=Άδεια
+gr.icons_uninstall=Απεγκατάσταση
+gr.icons_downloads=Κατέβασμα
 
