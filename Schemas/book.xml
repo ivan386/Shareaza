@@ -456,12 +456,15 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="fb2"/>
                <type extension="htm"/>
                <type extension="html"/>
+               <type extension="kml"/>
                <type extension="lit"/>
                <type extension="pdb"/>
                <type extension="pdf"/>
+               <type extension="prc"/>
                <type extension="ps"/>
                <type extension="rb"/>
                <type extension="rtf"/>
+               <type extension="tcr"/>
                <type extension="txt"/>
                <type extension="wpd"/>
                <type extension="wri"/>
