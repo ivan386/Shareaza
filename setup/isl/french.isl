@@ -300,8 +300,8 @@ StatusUninstalling=Désinstallation de %1...
 
 NameAndVersion=%1 version %2
 AdditionalIcons=Icônes supplémentaires :
-CreateDesktopIcon=Créer une icône sur le &Bureau
-CreateQuickLaunchIcon=Créer une icône dans la barre de &Lancement rapide
+CreateDesktopIcon=Afficher un raccourci sur le &Bureau
+CreateQuickLaunchIcon=Afficher un raccouri dans la barre de &Lancement rapide
 ProgramOnTheWeb=Page d'accueil de %1
 UninstallProgram=Désinstallation de %1
 LaunchProgram=Exécuter %1
