@@ -90,7 +90,8 @@ BOOL CHandshakes::Listen()
 		{
 			int nPort = Network.RandomPort();
 			Network.m_pHost.sin_port = saListen.sin_port = htons( nPort );
-			if ( Settings.Connection.InPort != 6346 ) Settings.Connection.InPort = nPort;
+			//if ( Settings.Connection.InPort != 6346 ) Settings.Connection.InPort = nPort;
+			//Don't reset the port- users with port forwarding have problems.
 		}
 		else
 		{
