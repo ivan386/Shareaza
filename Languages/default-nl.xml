@@ -2884,7 +2884,11 @@
 	<string id="20125" value="Gecontroleerd"/>
 	<string id="20126" value="Niet Gecontroleerd"/>
 	<string id="20127" value="bron"/>
-	<string id="20128" value="bronnen"/>
+	<string id="20128" value="bronnen"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="bronnen"/> <!-- tens -->
+	<string id="20130" value="bronnen"/> <!-- from 11 to 19 -->
+	<string id="20131" value="bronnen"/> <!-- from 2 to 4 -->
+	<string id="20132" value="bronnen"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

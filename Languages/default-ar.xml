@@ -2883,7 +2883,11 @@
 	<string id="20125" value="محقق"/>
 	<string id="20126" value="غير محقق"/>
 	<string id="20127" value="مصدر"/>
-	<string id="20128" value="المصادر"/>
+	<string id="20128" value="المصادر"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="المصادر"/> <!-- tens -->
+	<string id="20130" value="المصادر"/> <!-- from 11 to 19 -->
+	<string id="20131" value="المصادر"/> <!-- from 2 to 4 -->
+	<string id="20132" value="المصادر"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

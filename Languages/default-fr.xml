@@ -2866,7 +2866,11 @@ Other:
 <string id="20125" value="Vérifié"/>
 <string id="20126" value="Non vérifié"/>
 <string id="20127" value="source"/>
-<string id="20128" value="sources"/>
+<string id="20128" value="sources"/> <!-- numbers 21, 31, ... -->
+<string id="20129" value="sources"/> <!-- tens -->
+<string id="20130" value="sources"/> <!-- from 11 to 19 -->
+<string id="20131" value="sources"/> <!-- from 2 to 4 -->
+<string id="20132" value="sources"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

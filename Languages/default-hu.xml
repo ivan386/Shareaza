@@ -2888,7 +2888,11 @@
        <string id="20125" value="Ellenőrizve"/>
        <string id="20126" value="Ellenőrizetlen"/>
        <string id="20127" value="forrás"/>
-       <string id="20128" value="forrás"/>
+       <string id="20128" value="forrás"/> <!-- numbers 21, 31, ... -->
+       <string id="20129" value="forrás"/> <!-- tens -->
+       <string id="20130" value="forrás"/> <!-- from 11 to 19 -->
+       <string id="20131" value="forrás"/> <!-- from 2 to 4 -->
+       <string id="20132" value="forrás"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

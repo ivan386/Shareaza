@@ -1859,7 +1859,7 @@
 
 		<link target="raza:page:CRemoteSettingsPage" format="b">Acesso Remoto:</link>
 		<gap size="4"/>
-		<text>Configure a habilidade de usar o Shareaza através de um navegador de internet.</text>
+		<text>Configure a habilidade de usar o Shareaza atravs de um navegador de internet.</text>
 		<newline gap="10"/>
 		
 		
@@ -2066,9 +2066,9 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 Detectado</text>
 		<newline gap="8"/>
-		<text>Shareaza detectou o Windows XP Service Pack 2. Ele restringe o número de conexões que um programa pode fazer ao mesmo tempo .</text>
+		<text>Shareaza detectou o Windows XP Service Pack 2. Ele restringe o nmero de conexes que um programa pode fazer ao mesmo tempo .</text>
 		<newline gap="8"/>
-		<text>Shareaza limitou as conexões e configurou valores padrões para garantir o funcionamento normal, entretando a performance pode ser reduzida. Por favor visite os fóruns do Shareaza para maiores informações.</text>
+		<text>Shareaza limitou as conexes e configurou valores padres para garantir o funcionamento normal, entretando a performance pode ser reduzida. Por favor visite os fruns do Shareaza para maiores informaes.</text>
 	</document>
 
 
@@ -2991,10 +2991,14 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 	<string id="20125" value="Verificado"/>
 	<string id="20126" value="NÃ£o Verificado"/>
 	<string id="20127" value="Fonte"/>
-	<string id="20128" value="Fontes"/>
+	<string id="20128" value="Fontes"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="Fontes"/> <!-- tens -->
+	<string id="20130" value="Fontes"/> <!-- from 11 to 19 -->
+	<string id="20131" value="Fontes"/> <!-- from 2 to 4 -->
+	<string id="20132" value="Fontes"/> <!-- from 5 to 9 -->
 	<string id="8242" value="%s de %s (%.2f%%)"/>
 	<string id="8243" value="Volume enviado:"/>
-	<string id="16087" value="Sua banda de uplaod é muito baixa para ativar essa rede"/>
+	<string id="16087" value="Sua banda de uplaod  muito baixa para ativar essa rede"/>
 
 </strings>
 
@@ -3844,7 +3848,7 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 		<control caption="NÃ£o baixar este arquivo"/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
-		<control caption="Você já baixou e deletou esse arquivo antes. O que gostaria de fazer?"/>
+		<control caption="Voc j baixou e deletou esse arquivo antes. O que gostaria de fazer?"/>
 	</dialog>
 	
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="BotÃ£o de Fechar">

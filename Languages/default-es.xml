@@ -2813,7 +2813,11 @@
 	<string id="20125" value="Verificado"/>
 	<string id="20126" value="No Verificado"/>
 	<string id="20127" value="fuente"/>
-	<string id="20128" value="fuentes"/>
+	<string id="20128" value="fuentes"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="fuentes"/> <!-- tens -->
+	<string id="20130" value="fuentes"/> <!-- from 11 to 19 -->
+	<string id="20131" value="fuentes"/> <!-- from 2 to 4 -->
+	<string id="20132" value="fuentes"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

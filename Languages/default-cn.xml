@@ -2856,7 +2856,11 @@
 	<string id="20125" value="已校验"/>
 	<string id="20126" value="未校验"/>
 	<string id="20127" value="个资源"/>
-	<string id="20128" value="个资源"/>
+	<string id="20128" value="个资源"/> <!-- numbers 21, 31, ... -->
+	<string id="20129" value="个资源"/> <!-- tens -->
+	<string id="20130" value="个资源"/> <!-- from 11 to 19 -->
+	<string id="20131" value="个资源"/> <!-- from 2 to 4 -->
+	<string id="20132" value="个资源"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

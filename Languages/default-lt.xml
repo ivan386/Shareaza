@@ -2888,8 +2888,8 @@ right quote    &#147;
        <string id="20124" value="(Nėra šaltinių)"/>
        <string id="20125" value="Patikrinta"/>
        <string id="20126" value="Nepatikrinta"/>
-       <string id="20127" value="šaltinis"/> <!-- 1 source -->
-       <string id="20128" value="šaltinis"/> <!-- more than one source; or numbers 21, 31, ... when used with optional strings bellow -->
+       <string id="20127" value="šaltinis"/>
+       <string id="20128" value="šaltinis"/> <!-- numbers 21, 31, ... -->
        <string id="20129" value="šaltinių"/> <!-- tens -->
        <string id="20130" value="šaltinių"/> <!-- from 11 to 19 -->
        <string id="20131" value="šaltiniai"/> <!-- from 2 to 4 -->

@@ -2887,8 +2887,7 @@
 	<string id="20125" value="Verified"/>
 	<string id="20126" value="Unverified"/>
 	<string id="20127" value="source"/>
-	<!-- Noun case agreement with numbers (strings 20129-20132) are optional  -->
-	<string id="20128" value="sources"/> <!-- more than one source; or numbers 21, 31, ... when used with optional strings -->
+	<string id="20128" value="sources"/> <!-- numbers 21, 31, ... -->
 	<string id="20129" value="sources"/> <!-- tens -->
 	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
 	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
