@@ -550,12 +550,24 @@ BOOL CEDTag::Read(CFile* pFile)
 	if ( m_nType == ED2K_TAG_STRING )
 	{
 		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) ) return FALSE;
+
 		LPSTR psz = new CHAR[ nLen + 1 ];
-		
+
 		if ( pFile->Read( psz, nLen ) == nLen )
 		{
+
+#ifdef _UNICODE
+			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
+			MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
+			m_sValue.ReleaseBuffer( nWide );
+#else
+			CopyMemory( m_sValue.GetBuffer( nLen ), psz, nLen );
+			m_sValue.ReleaseBuffer( nLen );
+#endif
+
+/*
 			psz[ nLen ] = 0;
-			m_sValue = psz;
+			m_sValue = psz;*/
 			delete [] psz;
 		}
 		else
