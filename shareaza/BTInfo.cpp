@@ -368,7 +368,9 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( pPath->GetCount() > 32 ) return FALSE;
 			
 			// Hack to prefix all
-			m_pFiles[ nFile ].m_sPath = m_sName;
+
+			//m_pFiles[ nFile ].m_sPath = m_sName;
+			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );
 			
 			for ( int nPath = 0 ; nPath < pPath->GetCount() ; nPath++ )
 			{
