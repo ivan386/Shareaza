@@ -39,8 +39,10 @@ public:
 // Attributes
 protected:
 	CManagedSearch*	m_pSearch;
-	DWORD			m_tSearchTime;
-	DWORD			m_tSearchCheck;
+	DWORD			m_tSearchTime;		// Timer for manual search
+	DWORD			m_tSearchCheck;		// Limit auto searches
+public:
+	DWORD			m_tLastED2KGlobal;	// Time the last ed2k UDP GetSources was done on this download
 	
 // Operations
 public:
