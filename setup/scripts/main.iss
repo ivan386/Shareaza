@@ -92,7 +92,7 @@ Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ign
 Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml"
 
 ; Copy skins back from {userappdata}\Shareaza\Skins
-Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteMultiSkinDir
+Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteFolder('{userappdata}\Shareaza\Skins')
 
 ; Switch user data between locations
 Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\Shareaza,UserPath|{userappdata}\Shareaza}}\Data\Library1.dat"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: multiuser
@@ -308,12 +308,20 @@ Begin
   if PageID = wpSelectDir then Result := Installed;
 End;
 
-Procedure DeleteMultiSkinDir();
+Procedure DeleteFolder(Param: String);
 var
-  MultiSkinDir: string;
+  Foldername: string;
 Begin
-  MultiSkinDir := ExpandConstant('{userappdata}\Shareaza\Skins');
-  DelTree(MultiSkinDir, True, True, True);
+  Foldername := ExpandConstant(Param);
+  DelTree(Foldername, True, True, True);
+End;
+
+Procedure DeleteFile(Param: String);
+var
+  Filename: string;
+Begin
+  Filename := ExpandConstant(Param);
+  DelayDeleteFile(Filename,3);
 End;
 
 Procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
