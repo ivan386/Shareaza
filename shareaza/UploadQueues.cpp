@@ -470,7 +470,7 @@ void CUploadQueues::CreateDefault()
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
 		pQueue						= Create( strQueueName );
-		pQueue->m_nBandwidthPoints	= 30;
+		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nCapacity			= 2000;
@@ -537,17 +537,29 @@ void CUploadQueues::CreateDefault()
 	}
 	else if ( Settings.Connection.OutSpeed > 200 )  // >200 Kb/s (Good Broadband)
 	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nCapacity			= 2000;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
+		pQueue->m_nBandwidthPoints	= 10;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nCapacity			= 2000;
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
@@ -594,13 +606,25 @@ void CUploadQueues::CreateDefault()
 	}
 	else if ( Settings.Connection.OutSpeed > 120 )  // >120 Kb/s (Average Broadband)
 	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nCapacity			= 2000;
-		pQueue->m_nMinTransfers		= 2;
-		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 4;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 10*60;
+		pQueue->m_bRewardUploaders	= TRUE;
+
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
+		pQueue->m_nBandwidthPoints	= 10;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nCapacity			= 1000;
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		pQueue->m_bRewardUploaders	= TRUE;
@@ -611,7 +635,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nMinTransfers		= 2;
-		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
@@ -680,6 +704,7 @@ void CUploadQueues::CreateDefault()
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_bPartial			= TRUE;
 		pQueue->m_nCapacity			= 500;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 2;
@@ -724,12 +749,15 @@ void CUploadQueues::Validate()
 			pQueue->m_nBandwidthPoints	= 30;
 			pQueue->m_nCapacity			= 2000;
 			pQueue->m_nRotateTime		= 10*60;
+			pQueue->m_bRewardUploaders	= TRUE;
 		}
 		else
 		{
 			pQueue->m_nBandwidthPoints	= 20;
 			pQueue->m_nCapacity			= 500;
 			pQueue->m_nRotateTime		= 30*60;
+			pQueue->m_bPartial			= TRUE;
+			pQueue->m_bRewardUploaders	= TRUE;
 		}
 	}
 }
