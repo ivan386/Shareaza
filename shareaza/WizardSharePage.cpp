@@ -177,26 +177,20 @@ void CWizardSharePage::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult
 
 void CWizardSharePage::OnShareAdd() 
 {
-	TCHAR szPath[MAX_PATH], szWindowsPath[MAX_PATH], szProgramsPath[MAX_PATH];
+	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
-    HRESULT hr;
-		
+
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-	
+
 	pPath = SHBrowseForFolder( &pBI );
 
 	if ( pPath == NULL ) return;
-
-	hr = SHGetFolderPath(NULL, CSIDL_WINDOWS, NULL, NULL, szWindowsPath);
-    if ( FAILED( hr ) ) return;
-	hr = SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL, NULL, szProgramsPath);
-    if ( FAILED( hr ) ) return;
 
 	SHGetPathFromIDList( pPath, szPath );
 	SHGetMalloc( &pMalloc );
@@ -204,18 +198,56 @@ void CWizardSharePage::OnShareAdd()
 
 	CString strPathLC( szPath );
 	CharLower( strPathLC.GetBuffer() );
-	CString strWindowsLC( szWindowsPath );
-	CharLower( strWindowsLC.GetBuffer() );
-	CString strProgramsLC( szProgramsPath );
-	CharLower( strProgramsLC.GetBuffer() );
+	strPathLC.ReleaseBuffer();
 
+	//Get system paths (to compare)
+	CString strWindowsLC, strProgramsLC;
+	PTSTR pszWindowsPath, pszProgramsPath;
+
+	pszWindowsPath = strWindowsLC.GetBuffer( MAX_PATH + 1 );
+	pszProgramsPath = strProgramsLC.GetBuffer( MAX_PATH + 1 );
+
+	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
+	{
+#ifdef _UNICODE
+		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
+		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
+#else
+		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPSTR);
+		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathA" );
+#endif
+		if ( pfnSHGetFolderPath != NULL )
+		{
+			(*pfnSHGetFolderPath)(NULL, CSIDL_WINDOWS, NULL, NULL, pszWindowsPath);
+			(*pfnSHGetFolderPath)(NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath);
+		}
+		FreeLibrary( hShell );
+	}
+	CharLower( pszWindowsPath );
+	CharLower( pszProgramsPath );
+
+	strWindowsLC.ReleaseBuffer();
+	strProgramsLC.ReleaseBuffer();
+
+	if ( strWindowsLC.IsEmpty() ) strWindowsLC = _T("c:\\windows");
+	if ( strProgramsLC.IsEmpty() ) strProgramsLC = _T("c:\\program files");
+
+
+	//Get various shareaza paths (to compare)
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
-	CString strGeneralPathLC = Settings.General.Path;
-	CString strUserPathLC = Settings.General.UserPath;
 	CharLower( strIncompletePathLC.GetBuffer() );
-	CharLower( strGeneralPathLC.GetBuffer() );
-	CharLower( strUserPathLC.GetBuffer() );
+	strIncompletePathLC.ReleaseBuffer();
 
+	CString strGeneralPathLC = Settings.General.Path;
+	CharLower( strGeneralPathLC.GetBuffer() );
+	strGeneralPathLC.ReleaseBuffer();
+
+	CString strUserPathLC = Settings.General.UserPath;
+	CharLower( strUserPathLC.GetBuffer() );
+	strUserPathLC.ReleaseBuffer();
+
+
+	//Check shared path isn't invalid
 	if ( strPathLC == _T( "" ) ||
 		 strPathLC == strWindowsLC.Left( 3 ) ||
 		 strPathLC == strProgramsLC ||
@@ -230,10 +262,12 @@ void CWizardSharePage::OnShareAdd()
 		return;
 	}
 
+	//Check shared path isn't already shared
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
 		CharLower( strOldLC.GetBuffer() );
+		strOldLC.ReleaseBuffer();
 		
 		if ( strPathLC == strOldLC )
 		{
