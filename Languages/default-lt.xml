@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.18"
+		version="2.1.0.25"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -1418,10 +1418,6 @@ right quote	&#147;
 		<item id="ID_CHAT_TIMESTAMP" text="Rodyti _laiką"/>
 		<item id="ID_CHAT_CLEAR" text="_Valyti langą"/>
 	</menu>
-	<!-- SEARCH RESULTS HEADER MENU -->
-	<menu name="CBaseMatchWnd">
-		<item id="ID_SEARCH_COLUMNS" text="_Schemos..."/>
-	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -2417,6 +2413,8 @@ right quote	&#147;
 	<string id="8132" value="Radinių yra, bet jie buvo nufiltruoti."/>
 	<string id="8133" value="„Shareaza“ aktyviai ieško tinkle..."/>
 	<string id="8134" value="Jūs ketinate pradėti naują paiešką. Ar norite išvalyti ankstesnės paieškos radinius?"/>
+	<string id="8135" value="Nėra meta duomenų"/>
+	<string id="8136" value="Grynojo teksto paieška"/>
 	<string id="8141" value="Rodyti paieškos skydelį"/>
 	<string id="8142" value="Paslėpti paieškos skydelį"/>
 	<string id="8143" value="Ieškoma..."/>
@@ -2679,6 +2677,16 @@ right quote	&#147;
 	<string id="16363" value="Torrent išsiuntimai"/>
 	<string id="16364" value="Baigta siųsti"/>
 	<string id="16365" value="Ar tikrai norite nutraukti visus atsisiuntimus šioje grupėje?"/>
+	<string id="16366" value="Eilė"/>
+	<string id="16367" value="eDonkey branduolys"/>
+	<string id="16368" value="eDonkey daliniai"/>
+	<string id="16369" value="eDonkey saugančioji"/>
+	<string id="16370" value="Mažos bylos"/>
+	<string id="16371" value="Vidutinės bylos"/>
+	<string id="16372" value="Didelės bylos"/>
+	<string id="16373" value="Dalinės bylos"/>
+	<string id="16374" value="Nauja eilė"/>
+	<string id="16375" value="Daliniai"/>
 	<string id="16384" value="Ar tikrai norite vykdyti bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
 	<string id="16385" value="Jūs ruošiatės pakeisti %i bylų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 	<string id="16386" value="Taisomi %i bylų(-os) meta duomenys."/>
@@ -2914,7 +2922,7 @@ right quote	&#147;
 	<string id="18498" value="Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18499" value="Jūs įrašėte eDonkey2000 maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18500" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
-	<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti šakinę dryžinę maišą?"/>
+	<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"/>
 	<string id="18502" value="Jūs pateikėte eDonkey2000 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiai parsisiunčiamai bylai. Ar tikrai įsitikinę, kad norite pakeisti eDonkey2000 maišą?"/>
 	<string id="18503" value="Ar tikrai norite, kad būtų užmiršta esamos patikros būklė? Visi parsisiųsti duomenys bus laikomi nepatikimais, o talpykla su maišų medžiais ir rinkiniais bus išvalyta."/>
 	<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtai bylai?"/>
@@ -2962,6 +2970,10 @@ right quote	&#147;
 	<string id="20130" value="šaltinių"/>  <!-- from 11 to 19 -->
 	<string id="20131" value="šaltiniai"/> <!-- from 2 to 4 -->
 	<string id="20132" value="šaltiniai"/> <!-- from 5 to 9 -->
+	<string id="20133" value="Nedomina"/>
+	<string id="20134" value="Apkrautas"/>
+	<string id="20135" value="Sekantis"/>
+	<string id="20136" value="Eil."/>
 	<string id="20200" value="Sekmadienis"/>
 	<string id="20201" value="Pirmadienis"/>
 	<string id="20202" value="Antradienis"/>
@@ -3200,30 +3212,30 @@ right quote	&#147;
 		<control caption="Konfigūruoti Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2 tinklas (rekomenduojama):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2 tinklas:"/>
+		<control caption="(G2 rekomenduojamas)"/>
 		<control caption="Jungtis prie Gnutella2 šiandien"/>
+		<control caption="Veiksena:"/>
+		<control caption="Optimali|Atšaka|Mazgas"/>
+		<control caption="G_2 susijungimai:"/>
+		<control caption="Mazgų į atšaką:"/>
+		<control/><control/>
+		<control caption="Atšakų į mazgą:"/>
+		<control/><control/>
+		<control caption="Mazgų į mazgą:"/>
+		<control/><control/>
 		<control caption="Gnutella1 tinklas:"/>
-		<control caption="Jungtis prie Gnutella1 šiandien"/>
 		<control caption="Visada jungtis prie Gnutella1"/>
-		<control caption="_Mazgų išrinkimai:"/>
-		<control caption="Leisti tapti mazgu"/>
-		<control caption="Dirbtinai tapti mazgu"/>
-		<control caption="Leisti tapti atšaka"/>
-		<control caption="Priimti tik ryšius su mazgais"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Mazgų į atšaką:"/>
+		<control caption="Jungtis prie Gnutella1 šiandien"/>
+		<control caption="Veiksena:"/>
+		<control caption="Optimali|Atšaka|Vedantysis"/>
+		<control caption="G_1 susijungimai:"/>
+		<control caption="Vedančiųjų į atšaką:"/>
 		<control/><control/>
-		<control caption="Atšakų į mazgą:"/>
+		<control caption="Atšakų į vedantįjį:"/>
 		<control/><control/>
-		<control caption="Mazgų į mazgą:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Mazgų į atšaką:"/>
-		<control/><control/>
-		<control caption="Atšakų į mazgą:"/>
-		<control/><control/>
-		<control caption="Mazgų į mazgą:"/>
+		<control caption="Petnerių į partnerį:"/>
 		<control/><control/>
 		<control caption="_Duomenų suspaudimas jungtyse:"/>
 		<control caption="Mazgo į atšaką"/>
@@ -3251,21 +3263,23 @@ right quote	&#147;
 		<control caption="Parsisiųsti..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="_Laikyti torrent bylas čia:"/>
-		<control/><control/>
-		<control caption="_Atsisiuntimų susijungimai:"/>
-		<control/><control/>
-		<control caption="Klientų susijungimų"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
 		<control caption="_Sąsaja:"/>
 		<control caption="Rodyti papildomus BitTorrent sąsajos elementus"/>
+		<control caption="_Atsisiuntimų susijungimai:"/>
+		<control/><control/>
+		<control caption="Torrent bylų per kartą"/>
+		<control/><control/>
+		<control caption="Klientų susijungimų"/>
 		<control caption="_EndGame (paspartinimas):"/>
 		<control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis bylas"/>
+		<control caption="_Laikyti torrent bylas čia:"/>
+		<control/><control/>
 		<control caption="_Torrent bylų kūrimo programa"/>
-		<control caption="Seklys:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="Torrent bylų per kartą"/>
+		<control/><control/>
 		<control caption="_Numatytasis seklys:"/>
+		<control caption="Seklys:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolai">
@@ -3307,7 +3321,7 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Išsiuntimų eilės ypatybės">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Išsiuntimų eilės ypatybės">
 		<control caption="_Pavadinimas:"/>
 		<control/>
 		<control caption="Į_rašo kriterijai:"/>
@@ -3339,6 +3353,7 @@ right quote	&#147;
 		<control/><control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
+		<control caption="Atlyginti siuntėjus"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
@@ -3967,7 +3982,7 @@ right quote	&#147;
 		<control/>
 		<control caption="Pasirinkite muzikos vaizdo papildinį iš sąrašo:"/>
 		<control/>
-		<control caption="Footer ekranas|Pilnas ekranas|Didelis ekranas|Vidutinis ekranas|Mažas ekranas"/>
+		<control caption="Vaizdo apačioje|Pilnas ekranas|Didelis ekranas|Vidutinis ekranas|Mažas ekranas"/>
 		<control caption="_Derinimas..."/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
@@ -4011,6 +4026,7 @@ right quote	&#147;
 		<column from="Progress" to="Eiga"/>
 		<column from="Speed" to="Sparta"/>
 		<column from="Client" to="Klientas"/>
+		<column from="Rating" to="Reitingas"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresas"/>
@@ -4079,6 +4095,18 @@ right quote	&#147;
 		<column from="Bandwidth" to="Greitaveika"/>
 		<column from="Transfers" to="Siuntimai"/>
 		<column from="Order" to="Eilė"/>
+	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to="Nuostata"/>
+		<column from="Value" to="Reikšmė"/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to="Pavadinimas"/>
+		<column from="URL" to="Nuoroda"/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to="Nuoroda"/>
+		<column from="Expires" to="Nustoja galioti"/>
 	</list>
 </listColumns>
 </skin>
