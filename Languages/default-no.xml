@@ -2943,7 +2943,7 @@
        <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mine filer">
                <control caption="_Egenskaper:"/>
                <control caption="Husk mappevisning"/>
-               <control caption="Vern mine filer"/>
+               <control caption="Overvåk mapper"/>
                <control/>
                <control caption="Filtrer ut fra type"/>
                <control/>
