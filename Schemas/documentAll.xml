@@ -11,6 +11,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by Rolandas Rudomanskis
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/documentAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -31,7 +32,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="no">Dokument: Alle dokumenter</title>
                <title language="br">Document:All Documents</title>
                <title language="ru">&#160;Документ:&#160;Все документы</title>
-               <title language="sv">Document:All Documents</title>
+               <title language="sv">Dokument: Alla dokument</title>
        </titles>
        <images>
                <icon path="documentFolder.ico"/>
@@ -73,6 +74,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="nl">Alle documenten</title>
                <title language="no">Alle dokumenter</title>
                <title language="ru">&#160;Все документы</title>
+               <title language="sv">Alla dokument</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="chs">此文件夹包含了您收藏夹中的每个文档。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
@@ -84,6 +86,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla dokument i biblioteket.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

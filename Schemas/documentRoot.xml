@@ -11,6 +11,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by Rolandas Rudomanskis
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/documentRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -31,7 +32,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="no">Dokument: Mine dokumenter</title>
                <title language="br">Document:My Documents</title>
                <title language="ru">&#160;Документ:&#160;Мои документы</title>
-               <title language="sv">Document:My Documents</title>
+               <title language="sv">Dokument: Mina dokument</title>
        </titles>
        <images>
                <icon path="documentFolder.ico"/>
@@ -71,6 +72,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="nl">Welkom in Mijn Documenten!</title>
                <title language="no">Velkommen til Mine dokumenter!</title>
                <title language="ru">&#160;Добро пожаловать в&#160;Ваши документы!</title>
+               <title language="sv">Välkommen till Mina dokument!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
                <subtitle language="chs">这些文件夹包含了您所有的文档。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
@@ -82,6 +84,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <subtitle language="nl">In deze mappen bevinden zich al je documenten.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine dokumenter</subtitle>
                <subtitle language="ru">&#160;Эти папки отображают все&#160;Ваши документы.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla dina dokument.</subtitle>
        </headerContent>
 
 </schemaDescriptor>
