@@ -52,6 +52,7 @@
       <watermark target="CHomeLibraryBox.Caption" path="sos_box.bmp"/>
       <watermark target="CHomeConnectionBox.Caption" path="sos_box.bmp"/>
       <watermark target="CHomeUploadsBox.Caption" path="sos_box.bmp"/>
+      <watermark target="CHomeTorrentsBox.Caption" path="sos_box.bmp"/>
       <watermark target="CSearchInputBox.Caption" path="sos_box.bmp"/>      <!-- search -->
       <watermark target="CSearchResultsBox.Caption" path="sos_box.bmp"/>      <!-- results -->
       <watermark target="CSearchSchemaBox.Caption" path="sos_box.bmp"/>      <!-- application -->
@@ -321,7 +322,7 @@
           <part name="_ID_TAB_TRANSFERS.Up"		rect="392,0,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="392,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="392,0,114,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"rect="392,28,114,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="392,28,114,29"/>
         </parts>
       </windowSkin>
   <windowSkin> 
@@ -362,7 +363,7 @@
           <part name="_ID_TAB_TRANSFERS.Up"		rect="392,0,113,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="392,28,113,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="392,0,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"rect="392,28,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="392,28,113,29"/>
 		  
           <part name="_ID_TAB_NETWORK.Up"		rect="505,0,98,29"/>
           <part name="_ID_TAB_NETWORK.Hover"	rect="505,28,98,29"/>
