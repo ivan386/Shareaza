@@ -30,7 +30,7 @@ Other:
 			description="Shareaza French Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.3.0"
+			version="2.0.3.8"
 			type="Language"
 			language="fr"
 			prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -1751,11 +1751,11 @@ Other:
 		<gap size="4"/>
 		<text>Capacité des envois, mise en queue, bannissement, timeouts et requêtes spéciales.</text>
 		<newline gap="10"/>
-
-		<link target="raza:page:CNetworksSettingsPage" format="b">Réseaux:</link>
-		<gap size="4"/>
-		<text>Sélectionner et configurer les réseaux p2p (peer-to-peer) auxquels vous voulez que Shareaza se connecte.</text>
-		<newline gap="10"/>
+		
+        <link target="raza:page:CRemoteSettingsPage" format="b">Accès à distance:</link>
+        <gap size="4"/>
+        <text>Configurer le contrôle à distance de Shareaza à partir d'un navigateur web.</text>
+        <newline gap="10"/>		
 
 	</document>
 
