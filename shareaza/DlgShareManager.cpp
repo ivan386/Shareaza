@@ -30,6 +30,7 @@
 #include "DlgFolderScan.h"
 #include "LiveList.h"
 #include "Skin.h"
+#include "DlgHelp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -131,6 +132,22 @@ void CShareManagerDlg::OnShareAdd()
 	CString strPathLC( szPath );
 	strPathLC.MakeLower();
 
+	CString strIncompletePathLC=Settings.Downloads.IncompletePath;
+	strIncompletePathLC.MakeLower();
+
+	if ( strPathLC == _T( "" ) ||
+		 strPathLC == _T( "c:\\" ) ||
+		 strPathLC == _T( "c:\\windows" ) ||
+		 strPathLC == _T( "c:\\windowsnt" ) ||
+		 strPathLC == _T( "c:\\program files" ) ||
+		 strPathLC == _T( "c:\\program files\\shareaza" ) ||
+		 strPathLC == _T( "c:\\program files\\shareaza\\incomplete") ||
+		 strPathLC == strIncompletePathLC )
+	{
+		CHelpDlg::Show( _T("ShareHelp.BadShare") );
+		return;
+	}
+
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
@@ -159,6 +176,7 @@ void CShareManagerDlg::OnShareAdd()
 		Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
 		strMessage.Format( strFormat, (LPCTSTR)strOldLC );
 		AfxMessageBox( strMessage, MB_ICONINFORMATION );
+		//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
 		return;
 	}
 	
