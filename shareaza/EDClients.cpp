@@ -355,8 +355,20 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		break;
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
+		// Correct port value. (UDP port is TCP port + 4)
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
-		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, Settings.eDonkey.DefaultServerFlags ) )
+
+		// Check server details in host cache
+		CHostCacheHost *pServer;
+		DWORD nServerFlags = Settings.eDonkey.DefaultServerFlags;
+		pServer = HostCache.eDonkey.Find( &pHost->sin_addr );
+		if ( pServer && pServer->m_nUDPFlags )
+		{
+			nServerFlags = pServer->m_nUDPFlags;
+		}
+
+		// Decode packet and create hits
+		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, nServerFlags ) )
 		{
 			Downloads.OnQueryHits( pHits );
 			
