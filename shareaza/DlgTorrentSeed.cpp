@@ -104,12 +104,16 @@ void CTorrentSeedDlg::OnDownload()
 				
 			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
 			{
+				delete pURL;
 				EndDialog( IDOK );
 				return;
 			}
 		}
 			
 		CDownload* pDownload = Downloads.Add( pURL );
+
+		// Downloads.Add() took a copy of the CBTInfo, so we need to delete the original
+		delete pURL;
 			
 		if ( pDownload == NULL ) 			
 		{
