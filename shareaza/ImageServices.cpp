@@ -332,7 +332,7 @@ IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID
 	}
 	else
 	{
-		CLSID pCLSID;
+		CLSID pCLSID = { 0 };
 		
 		pService = LoadService( strType, &pCLSID );
 		m_pService.SetAt( strType, pService );
