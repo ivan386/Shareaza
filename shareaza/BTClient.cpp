@@ -103,7 +103,7 @@ void CBTClient::AttachTo(CConnection* pConnection)
 {
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	CTransfer::AttachTo( pConnection );
-	theApp.Message( MSG_DEFAULT, IDS_BT_ACCEPTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 	
 	if ( bPart2 )
 	{
-		m_pOutput->Add( BTClients.GetGUID(), sizeof(SHA1) );
+		m_pOutput->Add( &m_pDownload->m_pPeerID, sizeof(SHA1) );//m_pOutput->Add( BTClients.GetGUID(), sizeof(SHA1) );
 	}
 	
 	OnWrite();
@@ -417,6 +417,7 @@ BOOL CBTClient::OnHandshake2()
 	
 	m_bOnline = TRUE;
 	
+	m_sUserAgent = _T("BitTorrent");
 	DetermineUserAgent();
 	
 	if ( ! m_bInitiated ) SendHandshake( FALSE, TRUE );
@@ -461,6 +462,18 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("XanTorrent");
 		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'B' )
+		{
+			m_sUserAgent = _T("BitBuddy");
+		}
+		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
+		{
+			m_sUserAgent = _T("TorrentDOTnet");
+		}
+		else //Unknown client using this naming.
+		{
+			m_sUserAgent.Format( _T("%c%c"), m_pGUID.b[1], m_pGUID.b[2] );
+		}
 		
 		strVer.Format( _T(" %i.%i.%i.%i"),
 			( m_pGUID.b[3] - '0' ), ( m_pGUID.b[4] - '0' ),
@@ -480,6 +493,11 @@ void CBTClient::DetermineUserAgent()
 		case 'T':
 			m_sUserAgent = _T("BitTornado");
 			break;
+		case 'A':
+			m_sUserAgent = _T("ABC");
+			break;
+		default: //Unknown client using this naming.
+			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
 		}
 		
 		strVer.Format( _T(" %i%i%i"),
