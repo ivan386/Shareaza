@@ -129,7 +129,6 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	m_nMode = Settings.Gnutella.HostCacheView;
 
-	
 	CWaitCursor pCursor;
 	Update();
 		
@@ -243,7 +242,12 @@ void CHostCacheWnd::OnTimer(UINT nIDEvent)
 
 //**********Problem here
 	if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
-			ASSERT(FALSE);
+	{
+		CString str;
+		str.Format(_T("m_nMode: %i  nEffective: %i Settings.Gnutella.HostCacheView: %i"), m_nMode, nEffective, Settings.Gnutella.HostCacheView);
+		MessageBox(str,NULL, MB_OK);
+		ASSERT(FALSE);
+	}
 //(Temp check)
 
 	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
