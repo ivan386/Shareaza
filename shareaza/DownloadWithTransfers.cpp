@@ -120,6 +120,11 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		if ( tNow <= Downloads.m_tLastConnect ) return FALSE;
 		if ( tNow - Downloads.m_tLastConnect <= Settings.Downloads.ConnectThrottle ) return FALSE;
 	}
+
+	if ( Downloads.GetConnectingTransferCount() >= Settings.Downloads.MaxConnectingSources )
+	{
+		return FALSE;
+	}
 	
 	int nTransfers = GetTransferCount( dtsDownloading );
 
