@@ -168,8 +168,8 @@ void CURLActionDlg::Update()
 	if ( pURL->m_nAction == CShareazaURL::uriHost ||
 		 pURL->m_nAction == CShareazaURL::uriDonkeyServer )
 	{
-		m_sNameTitle.LoadString( IDS_URL_HOST );
-		m_sHashTitle.LoadString( IDS_URL_PORT );
+		LoadString(m_sNameTitle, IDS_URL_HOST );
+		LoadString(m_sHashTitle, IDS_URL_PORT );
 
 		m_sNameValue = pURL->m_sName;
 		m_sHashValue.Format( _T("%lu"), pURL->m_nPort );
@@ -177,13 +177,13 @@ void CURLActionDlg::Update()
 		m_wndMessage2.ShowWindow( SW_SHOW );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
 
-		strMessage.LoadString( IDS_URL_CONNECT );
+		LoadString(strMessage, IDS_URL_CONNECT );
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
 		
 		if ( pURL->m_nAction == CShareazaURL::uriHost )
 		{
-			strMessage.LoadString( IDS_URL_BROWSE );
+			LoadString(strMessage, IDS_URL_BROWSE );
 			m_wndSearch.SetWindowText( strMessage );
 		}
 		else
@@ -191,8 +191,8 @@ void CURLActionDlg::Update()
 	}
 	else if ( pURL->m_nAction == CShareazaURL::uriBrowse )
 	{
-		m_sNameTitle.LoadString( IDS_URL_HOST );
-		m_sHashTitle.LoadString( IDS_URL_PORT );
+		LoadString(m_sNameTitle, IDS_URL_HOST );
+		LoadString(m_sHashTitle, IDS_URL_PORT );
 
 		m_sNameValue = pURL->m_sName;
 		m_sHashValue.Format( _T("%lu"), pURL->m_nPort );
@@ -200,10 +200,10 @@ void CURLActionDlg::Update()
 		m_wndMessage3.ShowWindow( SW_SHOW );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
 
-		strMessage.LoadString( IDS_URL_BROWSE );
+		LoadString(strMessage, IDS_URL_BROWSE );
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
-		strMessage.LoadString( IDS_URL_CONNECT );
+		LoadString(strMessage, IDS_URL_CONNECT );
 		m_wndSearch.SetWindowText( strMessage );
 	}
 	else if ( pURL->m_nAction == CShareazaURL::uriDiscovery )

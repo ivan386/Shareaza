@@ -107,7 +107,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 	}
 	else
 	{
-		m_sSHA1.LoadString( IDS_GENERAL_NOURNAVAILABLE );
+		LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
 	}
 	
 	if ( pFile->m_bTiger )

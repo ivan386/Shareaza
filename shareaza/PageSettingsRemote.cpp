@@ -114,18 +114,18 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 		}
 		else
 		{
-			strURL.LoadString( IDS_REMOTE_UNAVAILABLE );
+			LoadString(strURL, IDS_REMOTE_UNAVAILABLE );
 			m_wndURL.EnableWindow( FALSE );
 		}
 	}
 	else if ( m_bEnable )
 	{
-		strURL.LoadString( IDS_REMOTE_ENABLED );
+		LoadString(strURL, IDS_REMOTE_ENABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	else
 	{
-		strURL.LoadString( IDS_REMOTE_DISABLED );
+		LoadString(strURL, IDS_REMOTE_DISABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	
