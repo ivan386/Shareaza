@@ -360,7 +360,7 @@ CSettings::CSettings()
 
 	General.UserPath = General.Path;
 	
-	Live.BandwidthScale		= 90;
+	Live.BandwidthScale		= 100;
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
