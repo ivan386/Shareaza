@@ -222,10 +222,14 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	m_pPeerID.n[ 0 ] = '-';
 	m_pPeerID.n[ 1 ] = 'S';
 	m_pPeerID.n[ 2 ] = 'Z';
-	m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + ( ( theApp.m_nVersion[0] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + ( ( theApp.m_nVersion[1] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + ( ( theApp.m_nVersion[2] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + ( ( theApp.m_nVersion[3] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + '0';
+	m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + '0';
+	m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + '0';
+	m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + '0';
+	//m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + ( ( theApp.m_nVersion[0] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	//m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + ( ( theApp.m_nVersion[1] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	//m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + ( ( theApp.m_nVersion[2] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	//m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + ( ( theApp.m_nVersion[3] < 9 ) ? '0' :  ( 'A' - 10 ) );
 	m_pPeerID.n[ 7 ] = '-';
 
 	//Random characters for ID
