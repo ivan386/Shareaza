@@ -1,0 +1,22 @@
+﻿<%? !queue_expanded %>
+					<h4><a class="emblink" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> aktiva / <%= queue_queued %> kölagda, med <%= queue_bandwidth %>)</small>
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="emblink" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> aktiva / <%= queue_queued %> kölagda, med <%= queue_bandwidth %>)</small>
+<%?%>
+					</h4>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Fil</td>
+							<td class="viewheader">Användare</td>
+							<td class="viewheader" align="center">Storlek</td>
+							<td class="viewheader" align="center">Hastighet</td>
+							<td class="viewheader">Användarprogram</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>
