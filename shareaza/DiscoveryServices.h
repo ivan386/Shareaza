@@ -57,6 +57,7 @@ public:
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
 	int					GetCount(int nType = 0) const;
+	int					GetGnutella2Count() const;
 	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, BOOL bG2 = FALSE);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
 	void				Remove(CDiscoveryService* pService);

@@ -95,6 +95,21 @@ int CDiscoveryServices::GetCount(int nType) const
 	return nCount;
 }
 
+int CDiscoveryServices::GetGnutella2Count() const
+{
+	int nCount = 0;
+	CDiscoveryService *pDiscovery;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		pDiscovery = GetNext( pos );
+		if ( ( pDiscovery->m_nType == CDiscoveryService::dsWebCache ) && ( pDiscovery->m_bGnutella2  ) ) 
+			nCount++;
+	}
+
+	return nCount;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices list modification
 
@@ -167,11 +182,13 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService)
 		nCount[ pService->m_nType ] ++;
 	}
 	
-	if ( nCount[ CDiscoveryService::dsWebCache ] < 3 ||
-		 nCount[ CDiscoveryService::dsServerMet ] == 0 )
+	if ( ( nCount[ CDiscoveryService::dsWebCache ] < 4 ) ||
+		 ( nCount[ CDiscoveryService::dsServerMet ] < 1 ) ||
+		 ( GetGnutella2Count() < 3 ) )
 	{
 		AddDefaults();
 	}
+		
 }
 
 CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
@@ -238,7 +255,7 @@ BOOL CDiscoveryServices::Load()
 	
 	pFile.Close();
 	
-	if ( GetCount() == 0 )
+	if ( ( GetCount() < 4 ) || ( GetGnutella2Count() < 3 ) )
 	{
 		AddDefaults();
 		Save();
@@ -484,10 +501,24 @@ void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* pAddress)
 int CDiscoveryServices::ExecuteWebCache()
 {
 	m_bForG2 = Neighbours.NeedMoreHubs( TS_TRUE );
-	
+
 	CDiscoveryService* pService = GetRandomWebCache( FALSE );
-	if ( pService == NULL ) return 0;
-	
+	if ( pService == NULL ) 
+	{
+		/*
+		//This would be a way to ensure the user always has G2 services available-
+		//However re-adding services in a section that's contantly run is risky.
+		//See if the other changes fix the problem first.
+		if ( GetGnutella2Count() < 3 )
+		{
+			theApp.Message( MSG_DEBUG, _T("Re-setting Discovery services") );
+			AddDefaults();
+		}
+		*/
+		
+		return 0;
+	}
+
 	return RequestWebCache( pService, wcmHosts ) ? 1 : 0;
 }
 
