@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,4,1
- PRODUCTVERSION 2,0,4,1
+ FILEVERSION 2,0,5,0
+ PRODUCTVERSION 2,0,5,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 4, 1"
+            VALUE "FileVersion", "2, 0, 5, 0"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 4, 1"
+            VALUE "ProductVersion", "2, 0, 5, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -5187,7 +5187,7 @@ BEGIN
                             "Timed out handshaking with BitTorrent client %s."
     IDS_BT_CLIENT_LOST      "Closing BitTorrent coupling with %s due to lack of traffic."
     IDS_BT_CLIENT_WRONG_GUID 
-                            "BitTorrent coupling with %s failed because the remote client has a different GUID."
+                            "BitTorrent coupling with %s failed because the remote client has a different Peer ID."
     IDS_BT_CLIENT_WRONG_FILE 
                             "BitTorrent coupling with %s responded with the wrong file."
     IDS_BT_CLIENT_UNKNOWN_FILE 
