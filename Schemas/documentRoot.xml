@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza Hungarian Schemas File translated by Yuri
@@ -16,6 +17,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <object type="folder" availability="system"/>
        <titles>
                <title language="en">Document:My Documents</title>
+               <title language="chs">&#160;文档:我的文档</title>
                <title language="de">Dokumente:Meine Dokumente</title>
                <title language="es">Documento:Mis Documentos</title>
                <title language="hu">Dokumentum: saját okumentumok</title>
@@ -53,6 +55,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        </contains>
        <headerContent version="1.0">
                <title language="en">Welcome to My Documents!</title>
+               <title language="chs">欢迎来到我的文档！</title>
                <title language="de">Willkommen zu Meine Dokumente!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="hu">Üdvözöllek a Saját okumentumokban!</title>
@@ -62,6 +65,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="no">Velkommen til Mine dokumenter!</title>
                <title language="ru">&#160;Добро пожаловать в&#160;Ваши документы!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
+               <subtitle language="chs">这些文件夹包含了您所有的文档。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="hu">Ez a mappa tartalmazza a dokumentumaidat.</subtitle>

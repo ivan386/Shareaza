@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza Hungarian Schemas File translated by Yuri
@@ -16,6 +17,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <object type="folder" availability="system"/>
        <titles>
                <title language="en">Document:All Documents</title>
+               <title language="chs">&#160;文档:所有文档</title>
                <title language="de">Dokumente:Alle Dokumente</title>
                <title language="es">Documento:Todos Los Documentos</title>
                <title language="hu">Dokumentum: Minden dokumentum</title>
@@ -55,6 +57,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        </contains>
        <headerContent version="1.0">
                <title language="en">All Documents</title>
+               <title language="chs">所有文档</title>
                <title language="de">Alle Dokumente</title>
                <title language="es">Todos Los Documentos</title>
                <title language="hu">Minden dokumentum</title>
@@ -64,6 +67,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="no">Alle dokumenter</title>
                <title language="ru">&#160;Все документы</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
+               <subtitle language="chs">此文件夹包含了您收藏夹中的每个文档。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
                <subtitle language="hu">Ez a mappa az összes dokumentumodat tartalmazza.</subtitle>
