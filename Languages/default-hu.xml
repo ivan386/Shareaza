@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.70"
+version="2.1.0.87"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -3285,23 +3285,25 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Letöltés..."/>
        </dialog>
 
-       <dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
-               <control caption="Felhasználói felület:"/>
-               <control caption="További BitTorrent felhasználói elemek megjelenítése"/>
-               <control caption="Letöltési kapcsolatok:"/>
-               <control/><control/>
-               <control caption="torrent letöltése egyszerre"/>
-               <control/><control/>
-               <control caption="kliens kapcsolódhat hozzám egyszerre"/>
-               <control caption="EndGame:"/>
-               <control caption="A letöltés végének gyorsítása (EndGame mód)"/>
-               <control caption="Torrentfájlok mappája:"/>
-               <control/><control/>
-               <control caption="Torrentkészítő program útvonala:"/>
-               <control/><control/>
-               <control caption="Alapértelmezett Tracker:"/>
-               <control caption="Tracker:"/>
-               <control/>
+<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+       <control caption="Felhasználói felület:"/>
+       <control caption="Továbi BitTorrent elemek megjelenítése"/>
+       <control caption="Letöltési kapcsolatok:"/>
+       <control/><control/>
+       <control caption="torrent letöltése egyszerre"/>
+       <control/><control/>
+       <control caption="kliens kapcsolódhat hozzám egyszerre"/>
+       <control caption="Letöltött torrentek törlése"/>
+       <control caption="Megosztási arány: "/>
+       <control/><control/>
+       <control caption="EndGame:"/>
+       <control caption="A letöltés végének gyorsítása (EndGame mód)"/>
+       <control caption="Torrentfájlok mappája:"/>
+       <control/><control/>
+       <control caption="Torrentkészítő program útvonala:"/>
+       <control/><control/>
+       <control caption="Alapértelm. tracker: "/>
+       <control/><control/>
 </dialog>
 
        <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokollok">
