@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.60"
+		version="2.1.0.70"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -926,9 +926,6 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
 		</menu>
-		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/>
-		<separator/> -->
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -946,9 +943,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
@@ -960,14 +954,16 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Clear"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
+	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Resume All"/>
@@ -993,23 +989,32 @@
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Show _Groups"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
-		<!-- <separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Start Now"/>
 		<item id="ID_UPLOADS_CLEAR" text="_Clear"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
 		<item id="ID_SECURITY_BAN" text="B_an User"/>
-		<!-- <separator/>
+	</menu>
+	<menu name="CUploadsWnd.Queue.Basic">
+		<item id="ID_UPLOADS_HELP" text="_Help..."/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue">
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
+	</menu>
+	<menu name="CUploadsWnd.Nothing">
+		<item id="ID_UPLOADS_HELP" text="_Help..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Show All"/>
@@ -1861,10 +1866,13 @@
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">Please Select a Download</text>
+		<text format="b">Downloads Area</text>
 		<newline gap="8"/>
-		<text>You can use this command to get help information on a download.  Simply
-		select a download and choose this command again.</text>
+		<text>This is where files currently being downloaded are displayed. You can view
+		individual sources by expanding each file with the small + on the left.</text>
+		<newline gap="8"/>
+		<text>You can also use this command to get help information on a specific download.
+		Simply select a download and choose this command again.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
@@ -1965,6 +1973,16 @@
 		<text>The BitTorrent tracker server for this download appears to be
 		down or malfunctioning.  Shareaza is unable to contact it to receive
 		a list of downloader peers.</text>
+	</document>
+
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">Uploads Area</text>
+		<newline gap="8"/>
+		<text>This is where queues and uploads are displayed. You can expand each queue
+		with the small + on the left, and filter what is displayed with the button on the
+		right on the window toolbar.</text>
 	</document>
 
 	<!-- General help documents -->
