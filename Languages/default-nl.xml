@@ -1742,9 +1742,9 @@
 		<text>Upload-produktiviteit, wachtrijen, verbannen, pauzes en speciale verzoeken.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CNetworksSettingsPage" format="b">Netwerken:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Web Interface:</link>
 		<gap size="4"/>
-		<text>Selecteer en configureer de P2P netwerken waarmee je Shareaza wilt laten verbinden.</text>
+		<text>Mogelijk maken om Shareaza op je pc te laten draaien, en het op afstand te bedienen via een browser.</text>
 		<newline gap="10"/>
 
 	</document>
