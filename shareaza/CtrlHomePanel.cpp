@@ -1336,6 +1336,10 @@ void CHomeTorrentsBox::Update()
 		if ( m_pdTorrentsNone ) m_pdTorrentsNone->Show( TRUE );
 	}
 
+	// Seed torrent
+	m_pDocument->ShowGroup( 1, FALSE );
+	m_pDocument->ShowGroup( 2, TRUE );
+
 	// Re-seed last torrent option
 	if ( m_pdReseedTorrent )
 	{
@@ -1353,6 +1357,9 @@ void CHomeTorrentsBox::Update()
 			str.Format( m_sReseedTorrent, LibraryHistory.LastSeededTorrent.m_sName );
 			m_pdReseedTorrent->SetText( str );
 			m_pdReseedTorrent->Show( TRUE );
+			// Change 'seed' to 'seed another'
+			m_pDocument->ShowGroup( 1, TRUE );
+			m_pDocument->ShowGroup( 2, FALSE );
 		}
 	}
 	

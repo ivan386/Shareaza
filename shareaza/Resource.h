@@ -1607,6 +1607,7 @@
 #define ID_TOOLS_SEEDTORRENT            33118
 #define ID_HELP_SECURITY                33119
 #define ID_HELP_FORUMS                  33120
+#define ID_TOOLS_RESEEDTORRENT          33121
 
 // Next default values for new objects
 // 

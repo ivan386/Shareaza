@@ -201,6 +201,7 @@ protected:
 	afx_msg void OnToolsLanguage();
 	afx_msg void OnToolsMercora();
 	afx_msg void OnToolsSeedTorrent();
+	afx_msg void OnToolsReseedTorrent();
 	afx_msg void OnUpdateViewMedia(CCmdUI* pCmdUI);
 	afx_msg void OnViewMedia();
 	afx_msg void OnUpdateTabMedia(CCmdUI* pCmdUI);

@@ -46,6 +46,7 @@
 #include "SkinWindow.h"
 #include "Scheduler.h"
 #include "DlgHelp.h"
+#include "LibraryHistory.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -211,6 +212,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TOOLS_LANGUAGE, OnToolsLanguage)
 	ON_COMMAND(ID_TOOLS_MERCORA, OnToolsMercora)
 	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
+	ON_COMMAND(ID_TOOLS_RESEEDTORRENT, OnToolsReseedTorrent)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_MEDIA, OnUpdateViewMedia)
 	ON_COMMAND(ID_VIEW_MEDIA, OnViewMedia)
 	ON_UPDATE_COMMAND_UI(ID_TAB_MEDIA, OnUpdateTabMedia)
@@ -1989,6 +1991,12 @@ void CMainWnd::OnToolsSeedTorrent()
 	if ( dlgFile.DoModal() != IDOK ) return;
 	
 	CTorrentSeedDlg dlgSeed( dlgFile.GetPathName() );
+	dlgSeed.DoModal();
+}
+
+void CMainWnd::OnToolsReseedTorrent()
+{
+	CTorrentSeedDlg dlgSeed( LibraryHistory.LastSeededTorrent.m_sPath );
 	dlgSeed.DoModal();
 }
 

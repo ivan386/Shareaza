@@ -323,6 +323,7 @@
 	<command code="33118" id="ID_TOOLS_SEEDTORRENT"/>
 	<command code="33119" id="ID_HELP_SECURITY"/>
 	<command code="33120" id="ID_HELP_FORUMS"/>
+	<command code="33121" id="ID_TOOLS_RESEEDTORRENT"/>
 	<command code="57650" id="ID_WINDOW_CASCADE"/>
 	<command code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<command code="57652" id="ID_WINDOW_TILE_VERT"/>
