@@ -756,12 +756,24 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	// Read their server IP / port
 	m_pServer.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 	m_pServer.sin_port = htons( pPacket->ReadShortLE() );
-	
+
 	// If we are learning new servers
 	if ( Settings.eDonkey.LearnNewServers && ! Network.IsFirewalledAddress( &m_pServer.sin_addr ) )
 	{	// Add their server
 		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ) );
 	}
+
+	// Some clients append additional "stuff" at the end.
+	if ( pPacket->GetRemaining() >= 4 )
+	{
+		// We can use it to ID clients
+		if ( pPacket->ReadLongLE() == 0x4B444C4D )
+		{
+			// MLDonkey
+			m_nEmCompatible = 10;
+		}
+	}
+	
 
 	// Get client name/version
 	DeriveVersion();
