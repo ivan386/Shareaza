@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/02/20 11:59:50 $"
-//	Revision:		"$Revision: 1.10 $"
+//	Date:			"$Date: 2005/02/21 19:38:28 $"
+//	Revision:		"$Revision: 1.11 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -416,9 +416,9 @@ BOOL CConnection::OnRead()
 			mov		ebx, -METER_LENGTH
 			mov		edx, tCutoff
 			xor		eax, eax
-_loop:		cmp		edx, [ecx + CConnection::m_mInput.pTimes + ebx*4 + METER_LENGTH*4]
+_loop:		cmp		edx, [ ecx + ebx * 4 ]CConnection.m_mInput.pTimes + METER_LENGTH * 4
 			jnbe	_ignore
-			add		eax, [ecx + CConnection::m_mInput.pHistory + ebx*4 + METER_LENGTH*4]
+			add		eax, [ ecx + ebx * 4 ]CConnection.m_mInput.pHistory + METER_LENGTH * 4
 _ignore:	inc		ebx
 			jnz		_loop
 			mov		nLimit, eax
@@ -549,9 +549,9 @@ BOOL CConnection::OnWrite()
 			mov		ebx, -METER_LENGTH
 			mov		edx, tCutoff
 			xor		eax, eax
-_loop:		cmp		edx, [ecx + CConnection::m_mOutput.pTimes + ebx*4 + METER_LENGTH*4]
+_loop:		cmp		edx, [ ecx + ebx * 4 ]CConnection.m_mOutput.pTimes + METER_LENGTH * 4
 			jnbe	_ignore
-			add		eax, [ecx + CConnection::m_mOutput.pHistory + ebx*4 + METER_LENGTH*4]
+			add		eax, [ ecx + ebx * 4 ]CConnection.m_mOutput.pHistory + METER_LENGTH * 4
 _ignore:	inc		ebx
 			jnz		_loop
 			mov		nUsed, eax
@@ -696,12 +696,12 @@ void CConnection::Measure()
 		xor		eax, eax
 		xor		esi, esi
 		mov		ecx, -METER_LENGTH
-_loop:	cmp		edx, [ebx + CConnection::m_mInput.pTimes+ecx*4+METER_LENGTH*4]
+_loop:	cmp		edx, [ ebx + ecx * 4 ]CConnection.m_mInput.pTimes + METER_LENGTH * 4
 		jnbe	_ignoreIn
-		add		eax, [ebx + CConnection::m_mInput.pHistory+ecx*4+METER_LENGTH*4]
-_ignoreIn:cmp	edx, [ebx + CConnection::m_mOutput.pTimes+ecx*4+METER_LENGTH*4]
+		add		eax, [ ebx + ecx * 4 ]CConnection.m_mInput.pHistory + METER_LENGTH * 4
+_ignoreIn:cmp	edx, [ ebx + ecx * 4 ]CConnection.m_mOutput.pTimes + METER_LENGTH * 4
 		jnbe	_ignoreOut
-		add		esi, [ebx + CConnection::m_mOutput.pHistory+ecx*4+METER_LENGTH*4]
+		add		esi, [ ebx + ecx * 4 ]CConnection.m_mOutput.pHistory + METER_LENGTH * 4
 _ignoreOut:inc	ecx
 		jnz		_loop
 		xor		edx, edx
