@@ -517,7 +517,19 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 
 void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( GetSelectedCount() > 0 );
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	int nSelected = GetSelectedCount();
+
+	StartSelectedFileLoop();
+
+	// count selected mp3's only
+	while ( m_posSel )
+	{
+		CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) );
+		if ( pFile->m_sName.Right(3).MakeLower() != _T("mp3") ) nSelected--;
+	}
+	pLock.Unlock();
+	pCmdUI->Enable( nSelected > 0 );
 }
 
 void CLibraryFileView::OnLibraryRebuildAnsi() 
@@ -526,8 +538,9 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 	
 	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 1 );
 	StartSelectedFileLoop();
+	// rebuild only mp3's
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
-			pFile->Rebuild();
+		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") ) pFile->Rebuild();
 		pLock.Unlock();
 }
 
