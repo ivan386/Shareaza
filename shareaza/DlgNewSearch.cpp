@@ -89,9 +89,11 @@ BOOL CNewSearchDlg::OnInitDialog()
 	SelectCaption( this, m_bLocal ? 2 : ( m_bAgain ? 1 : 0 ) );
 
 	CRect rc;
+	CString strText;
 	m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rc, this, IDC_METADATA );
 	
-	m_wndSchemas.m_sNoSchemaText = _T("Plain Text Search");
+	LoadString( strText, IDS_SEARCH_PLAIN_TEXT );
+	m_wndSchemas.m_sNoSchemaText = strText;
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	
 	if ( m_pSearch != NULL )

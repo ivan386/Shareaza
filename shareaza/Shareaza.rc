@@ -4724,6 +4724,8 @@ BEGIN
     IDS_SEARCH_ACTIVE       "Shareaza is actively searching the network..."
     IDS_SEARCH_CLEAR_PREVIOUS 
                             "You are about to start a new search.  Would you like to clear the results of your previous search?"
+    IDS_SEARCH_NO_METADATA  "No Metadata"
+    IDS_SEARCH_PLAIN_TEXT   "Plain Text Search"
     IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
     IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
     IDS_SEARCH_PANEL_SEARCHING "Searching..."

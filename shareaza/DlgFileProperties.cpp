@@ -162,7 +162,7 @@ void CFilePropertiesDlg::Update()
 	int nPeriod = strExt.ReverseFind( '.' );
 	if ( nPeriod > 0 ) strExt = strExt.Mid( nPeriod );
 	
-	CString strMIME;
+	CString strMIME, strText;
 	HICON hIcon;
 
 	if ( ShellIcons.Lookup( strExt, NULL, &hIcon, &m_sType, &strMIME ) ) m_wndIcon.SetIcon( hIcon );
@@ -170,7 +170,8 @@ void CFilePropertiesDlg::Update()
 
 	UpdateData( FALSE );
 
-	m_wndSchemas.m_sNoSchemaText = _T("No Metadata");
+	LoadString ( strText, IDS_SEARCH_NO_METADATA );
+	m_wndSchemas.m_sNoSchemaText = strText;
 	m_wndSchemas.Load( pFile->m_pSchema ? (LPCTSTR)pFile->m_pSchema->m_sURI : NULL );
 	
 	OnSelChangeSchemas();

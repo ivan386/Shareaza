@@ -76,6 +76,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 	CLibraryList* pFiles = GetList();
 	
 	CRect rcClient, rcCombo;
+	CString strText;
 	GetClientRect( &rcClient );
 	
 	m_wndSchemas.GetWindowRect( &rcCombo );
@@ -84,7 +85,8 @@ BOOL CFileMetadataPage::OnInitDialog()
 	rcCombo.bottom = rcClient.bottom - 8;
 	
 	m_wndData.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rcCombo, this, IDC_METADATA );
-	m_wndSchemas.m_sNoSchemaText = _T("No Metadata");
+	LoadString ( strText, IDS_SEARCH_NO_METADATA );
+	m_wndSchemas.m_sNoSchemaText = strText;
 	
 	BOOL bCollection = FALSE;
 	CSchema* pSchema = NULL;

@@ -686,6 +686,8 @@
 #define IDS_SEARCH_FILTERED             8132
 #define IDS_SEARCH_ACTIVE               8133
 #define IDS_SEARCH_CLEAR_PREVIOUS       8134
+#define IDS_SEARCH_NO_METADATA          8135
+#define IDS_SEARCH_PLAIN_TEXT           8136
 #define IDS_SEARCH_PANEL_SHOW           8141
 #define IDS_SEARCH_PANEL_HIDE           8142
 #define IDS_SEARCH_PANEL_SEARCHING      8143
