@@ -677,7 +677,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	BOOL bSelected	= pHit ? pHit->m_bSelected : pFile->m_bSelected;
 	BOOL bGrayed	= FALSE;
 	COLORREF crWnd	= CoolInterface.m_crWindow;
-	COLORREF crText	= CoolInterface.m_crText;
+	COLORREF crText	= bSelected ? CoolInterface.m_crHighlight : CoolInterface.m_crText ;
 	COLORREF crBack	= crWnd;
 	
 	if ( pFile->m_bCollection )
@@ -687,11 +687,11 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	
 	if ( pFile->m_bExisting == 1 )
 	{
-		crText = RGB( 0, 127, 0 );
+		crText = pHit ? RGB( 0, 64, 0 ) : RGB( 0, 127, 0 );
 	}
 	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) )
 	{
-		crText = RGB( 0, 0, 160 );
+		crText = pHit ? RGB( 0, 0, 100 ) : RGB( 0, 0, 160 );
 	}
 
 	if ( bSelected )
@@ -704,10 +704,6 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	{
 		crText = GetSysColor( COLOR_3DSHADOW );
 		bGrayed = TRUE;
-	}
-	else if ( pHit )
-	{
-		crText = CoolInterface.m_crHighlight;
 	}
 	
 	dc.SetBkMode( OPAQUE );
