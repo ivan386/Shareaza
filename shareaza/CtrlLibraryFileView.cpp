@@ -1,8 +1,8 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/03/11 01:00:54 $"
-//	Revision:		"$Revision: 1.12 $"
+//	Date:			"$Date: 2005/03/11 01:12:59 $"
+//	Revision:		"$Revision: 1.13 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -547,8 +547,8 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
 	{
-		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") ) 
-			dlg.AddFile( pFile );
+		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") &&
+			 pFile->m_bMetadataAuto ) dlg.AddFile( pFile );
 	}
 
 		pLock.Unlock();
