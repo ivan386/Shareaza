@@ -105,6 +105,9 @@ public:
 	DWORD		m_nUserLimit;
 	CString		m_sName;
 	CString		m_sDescription;
+	DWORD		m_nFileLimit;
+	DWORD		m_nTCPFlags;
+	DWORD		m_nUDPFlags;
 
 // Attributes: Contact Times
 public:

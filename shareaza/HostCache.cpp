@@ -113,7 +113,7 @@ BOOL CHostCache::Save()
 
 void CHostCache::Serialize(CArchive& ar)
 {
-	int nVersion = 9;
+	int nVersion = 10;
 	
 	if ( ar.IsStoring() )
 	{
@@ -639,6 +639,14 @@ int CHostCacheList::ImportMET(CFile* pFile)
 			{
 				pServer->m_nUserLimit = pTag.m_nValue;
 			}
+			else if ( pTag.Check( ED2K_ST_MAXFILES, ED2K_TAG_INT ) )
+			{
+				pServer->m_nFileLimit = pTag.m_nValue;
+			}
+			else if ( pTag.Check( ED2K_ST_UDPFLAGS, ED2K_TAG_INT ) )
+			{
+				pServer->m_nUDPFlags = pTag.m_nValue;
+			}
 		}
 		
 		nServers++;
@@ -690,6 +698,9 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			ar << m_nUserCount;
 			ar << m_nUserLimit;
 			ar << m_bPriority;
+			ar << m_nFileLimit;
+			ar << m_nTCPFlags;
+			ar << m_nUDPFlags;
 		}
 		
 		ar << m_nKeyValue;
@@ -727,6 +738,12 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 				ar >> m_nUserCount;
 				if ( nVersion >= 8 ) ar >> m_nUserLimit;
 				if ( nVersion >= 9 ) ar >> m_bPriority;
+				if ( nVersion >= 10 )
+				{
+					ar >> m_nFileLimit;
+					ar >> m_nTCPFlags;
+					ar >> m_nUDPFlags;
+				}
 			}
 		}
 		
