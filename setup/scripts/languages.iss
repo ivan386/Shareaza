@@ -3,6 +3,7 @@
 ; Note: first language specified is default > English
 Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseFile: "setup/license/default.rtf"; InfoBeforeFile: "setup/readme/default.txt"
 Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"; InfoBeforeFile: "setup/readme/dutch.txt"
+Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"; InfoBeforeFile: "setup/readme/lithuanian.txt"
 
 [Files]
 ; Install localized remote
@@ -12,18 +13,25 @@ Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwriter
 ; Dutch:
 Source: "Remote-localized\dutch\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
 Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: mainfiles; Languages: nl
+; Lithuanian
+Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: lt
+Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: mainfiles; Languages: lt
 
 ; Install localized license
 ; English
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: en
 ; Dutch
 Source: "setup\license\dutch.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
+; Lithuanian
+Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: lt
 
 ; Install localized readme
 ; English
 Source: "setup\readme\default.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: en
 ; Dutch
 Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
+; Lithuanian
+Source: "setup\readme\lithuanian.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: lt
 
 ; Always install user's local language
 ; English is always installed and specified in main script
@@ -31,10 +39,14 @@ Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.
 Source: "Languages\default-nl.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: mainfiles; Languages: nl
 Source: "Languages\default-nl.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: nl
 Source: "Languages\NavbarAlpha-nl.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension  skipifsourcedoesntexist; Components: mainfiles; Languages: nl
+; Lithuanian:
+Source: "Languages\default-lt.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: mainfiles; Languages: lt
+Source: "Languages\default-lt.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles; Languages: lt
+Source: "Languages\NavbarAlpha-lt.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension  skipifsourcedoesntexist; Components: mainfiles; Languages: lt
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
-; DO NOT customize the ISL files since they will change with each version of Inno Setup.
+; Avoid customizing the ISL files since they will change with each version of Inno Setup.
 ; English:
 components_mainfiles=Main files
 components_plugins=Plugins
@@ -61,7 +73,15 @@ nl.reg_incomingchat=Nieuw chat bericht
 nl.reg_apptitle=Shareaza Ultimate File Sharing
 icons_license=Gebruiksovereenkomst
 icons_uninstall=Verwijderen
-
-
-
-
+; Lithuanian:
+lt.components_mainfiles=Pagrindines bylos
+lt.components_plugins=Papildiniai
+lt.components_skins=Apvalkalai
+lt.components_languages=Kalbos
+lt.tasks_allusers=Visiems vartotojams
+lt.tasks_selectusers=Idiegti „%1“ šiems vartotojams:
+lt.tasks_currentuser=Tik vartotojui %1
+lt.run_skinexe=Vykdoma apvalkalo saranka...
+lt.reg_incomingchat=Gaunama žinute pokalbiui
+lt.icons_license=Licencine sutartis
+lt.icons_uninstall=Pašalinti
