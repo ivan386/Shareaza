@@ -31,6 +31,7 @@
 #include "LiveList.h"
 #include "Skin.h"
 #include "DlgHelp.h"
+#include <shlobj.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -110,10 +111,11 @@ void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult
 
 void CShareManagerDlg::OnShareAdd() 
 {
-	TCHAR szPath[MAX_PATH];
+	TCHAR szPath[MAX_PATH], szWindowsPath[MAX_PATH], szProgramsPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
+    HRESULT hr;
 		
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
@@ -125,24 +127,33 @@ void CShareManagerDlg::OnShareAdd()
 
 	if ( pPath == NULL ) return;
 
+	hr = SHGetFolderPath(NULL, CSIDL_WINDOWS, NULL, NULL, szWindowsPath);
+    if ( FAILED( hr ) ) return;
+	hr = SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES, NULL, NULL, szProgramsPath);
+    if ( FAILED( hr ) ) return;
+
 	SHGetPathFromIDList( pPath, szPath );
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 
 	CString strPathLC( szPath );
-	strPathLC = CharLower( strPathLC.GetBuffer() );
+	CharLower( strPathLC.GetBuffer() );
+	CString strWindowsLC( szWindowsPath );
+	CharLower( strWindowsLC.GetBuffer() );
+	CString strProgramsLC( szProgramsPath );
+	CharLower( strProgramsLC.GetBuffer() );
 
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
 	CString strGeneralPathLC = Settings.General.Path;
 	CString strUserPathLC = Settings.General.UserPath;
-	strIncompletePathLC = CharLower( strIncompletePathLC.GetBuffer() );
-	strGeneralPathLC = CharLower( strGeneralPathLC.GetBuffer() );
+	CharLower( strIncompletePathLC.GetBuffer() );
+	CharLower( strGeneralPathLC.GetBuffer() );
+	CharLower( strUserPathLC.GetBuffer() );
 
 	if ( strPathLC == _T( "" ) ||
-		 strPathLC == _T( "c:\\" ) ||
-		 strPathLC == _T( "c:\\windows" ) ||
-		 strPathLC == _T( "c:\\windowsnt" ) ||
-		 strPathLC == _T( "c:\\program files" ) ||
+		 strPathLC == strWindowsLC.Left( 3 ) ||
+		 strPathLC == strProgramsLC ||
+		 strPathLC == strWindowsLC ||
 		 strPathLC == strGeneralPathLC ||
 		 strPathLC == strGeneralPathLC + _T("\\data") ||
 		 strPathLC == strUserPathLC ||
@@ -156,7 +167,7 @@ void CShareManagerDlg::OnShareAdd()
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
-		strOldLC = CharLower( strOldLC.GetBuffer() );
+		CharLower( strOldLC.GetBuffer() );
 		
 		if ( strPathLC == strOldLC )
 		{
