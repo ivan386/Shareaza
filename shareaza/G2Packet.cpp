@@ -290,7 +290,7 @@ BOOL CG2Packet::SkipCompound(DWORD& nLength, DWORD nRemaining)
 //////////////////////////////////////////////////////////////////////
 // CG2Packet read a TO block
 
-BOOL CG2Packet::GetTo(GGUID* pGUID)
+BOOL CG2Packet::GetTo(CGUID* pGUID)
 {
 	if ( m_bCompound == FALSE ) return FALSE;
 	if ( GetRemaining() < 4 + 16 ) return FALSE;

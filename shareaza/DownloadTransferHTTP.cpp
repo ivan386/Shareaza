@@ -243,13 +243,13 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP subtract pending requests
 
-BOOL CDownloadTransferHTTP::SubtractRequested(CFileFragment** ppFragments)
+BOOL CDownloadTransferHTTP::SubtractRequested(CFileFragmentList& Fragments)
 {
 	if ( m_nOffset < SIZE_UNKNOWN && m_nLength < SIZE_UNKNOWN )
 	{
 		if ( m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
-			CFileFragment::Subtract( ppFragments, m_nOffset, m_nLength );
+			Fragments.Subtract( m_nOffset, m_nOffset + m_nLength );
 			return TRUE;
 		}
 	}
@@ -364,7 +364,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh && ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		CString strURN = CSHA::HashToString( &m_pDownload->m_pSHA1, TRUE );
+		CString strURN = m_pDownload->m_oSHA1.ToURN();
 		
 		m_pOutput->Print( "X-Content-URN: " );
 		m_pOutput->Print( strURN + _T("\r\n") );
@@ -702,10 +702,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			strURNs		= strURNs.Mid( nPos + 1 );
 			strValue.TrimLeft();
 			
-			SHA1 pSHA1;
-			if ( CSHA::HashFromURN( strValue, &pSHA1 ) )
+			CHashSHA1 oSHA1;
+			if ( oSHA1.FromURN( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pSHA1 ) )
+				if ( m_pSource->CheckHash( oSHA1 ) )
 				{
 					m_bHashMatch = TRUE;
 				}
@@ -720,10 +720,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			
 			// TODO: Remove " ! m_bHashMatch "
 			
-			TIGEROOT pTiger;
-			if ( ! m_bHashMatch && CTigerNode::HashFromURN( strValue, &pTiger ) )
+			CHashTiger oTiger;
+			if ( ! m_bHashMatch && oTiger.FromURN( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pTiger ) )
+				if ( m_pSource->CheckHash( oTiger ) )
 				{
 					m_bHashMatch = TRUE;
 				}
@@ -736,10 +736,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				}
 			}
 			
-			MD4 pED2K;
-			if ( CED2K::HashFromURN( strValue, &pED2K ) )
+			CHashED2K oED2K;
+			if ( oED2K.FromURN( strValue ) )
 			{
-				if ( m_pSource->CheckHash( &pED2K ) )
+				if ( m_pSource->CheckHash( oED2K ) )
 				{
 					m_bHashMatch = TRUE;
 				}

@@ -175,7 +175,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	{
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
-	else if ( pDownload->m_bBTH )
+	else if ( pDownload->m_oBTH.IsValid() )
 	{
 		m_sz.cy += TIP_TEXTHEIGHT * 5;
 	}
@@ -221,21 +221,21 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	
 	if ( m_sSHA1.GetLength() )
 	{
-		if( pDownload->m_bSHA1Trusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		if( pDownload->m_oSHA1.IsTrusted() ) pDC->SelectObject( &CoolInterface.m_fntNormal );
 		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sED2K.GetLength() )
 	{
-		if( pDownload->m_bED2KTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		if( pDownload->m_oED2K.IsTrusted() ) pDC->SelectObject( &CoolInterface.m_fntNormal );
 		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sBTH.GetLength() )
 	{
-		if( pDownload->m_bBTHTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
+		if( pDownload->m_oBTH.IsTrusted() ) pDC->SelectObject( &CoolInterface.m_fntNormal );
 		else pDC->SelectObject( &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
@@ -374,7 +374,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		DrawText( pDC, &pt, strVolume, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	if ( pDownload->m_bBTH )
+	if ( pDownload->m_oBTH.IsValid() )
 	{	//Only torrents have the uploaded count
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
@@ -426,17 +426,17 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sBTH.Empty();
 	m_sURL.Empty();
 	
-	if ( pDownload->m_bSHA1 )
+	if ( pDownload->m_oSHA1.IsValid() )
 	{
-		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pDownload->m_pSHA1 );
+		m_sSHA1 = _T("sha1:") + pDownload->m_oSHA1.ToString();
 	}
-	if ( pDownload->m_bED2K )
+	if ( pDownload->m_oED2K.IsValid() )
 	{
-		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pDownload->m_pED2K );
+		m_sED2K = _T("ed2k:") + pDownload->m_oED2K.ToString();
 	}
-	if ( pDownload->m_bBTH )
+	if ( pDownload->m_oBTH.IsValid() )
 	{
-		m_sBTH = _T("btih:") + CSHA::HashToString( &pDownload->m_pBTH );
+		m_sBTH = _T("btih:") + pDownload->m_oBTH.ToString();
 		m_sURL = pDownload->m_pTorrent.m_sTracker;
 	}
 	

@@ -82,7 +82,7 @@ void CChatCore::OnAccept(CConnection* pConnection)
 	pSession->AttachTo( pConnection );
 }
 
-BOOL CChatCore::OnPush(GGUID* pGUID, CConnection* pConnection)
+BOOL CChatCore::OnPush(CGUID* pGUID, CConnection* pConnection)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;

@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CLibraryBuilder;
 
 
@@ -54,7 +56,7 @@ public:
 // Operations
 public:
 	void		LoadSettings();
-	BOOL		ExtractMetadata( CString& strPath, HANDLE hFile, SHA1* pSHA1);
+	BOOL		ExtractMetadata( CString& strPath, HANDLE hFile, const CHashSHA1 &oSHA1);
 protected:
 	BOOL		SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		SubmitCorrupted();
@@ -85,7 +87,7 @@ protected:		// General Media
 	BOOL		ReadPDF( HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile);
 	CString		ReadLineReverse(HANDLE hFile);
-	BOOL		ReadCollection( HANDLE hFile, SHA1* pSHA1);
+	BOOL		ReadCollection( HANDLE hFile, const CHashSHA1 &oSHA1);
 
 };
 

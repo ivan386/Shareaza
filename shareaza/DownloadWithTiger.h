@@ -24,9 +24,13 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "FileFragment.h"
 #include "DownloadWithTorrent.h"
 #include "TigerTree.h"
 #include "ED2K.h"
+#include "MD5.h"
+#include "SHA.h"
 
 
 class CDownloadWithTiger : public CDownloadWithTorrent
@@ -38,29 +42,40 @@ public:
 
 // Attributes
 private:
-	CTigerTree	m_pTigerTree;
-	BYTE*		m_pTigerBlock;
+	CTigerTree	m_oTigerTree;
 	DWORD		m_nTigerBlock;
 	DWORD		m_nTigerSize;
-	DWORD		m_nTigerSuccess;
+
+	DWORD	    *m_pTigerVerificationQueue;
+	BYTE		*m_pTigerVerificationCandidates;
+	DWORD		m_nTigerVerificationStart;
+	DWORD		m_nTigerVerificationEnd;
 private:
-	CED2K		m_pHashset;
-	BYTE*		m_pHashsetBlock;
+	CED2K		m_oHashset;
 	DWORD		m_nHashsetBlock;
-	DWORD		m_nHashsetSuccess;
+
+	DWORD	   *m_pHashsetVerificationQueue;
+	BYTE	   *m_pHashsetVerificationCandidates;
+	DWORD		m_nHashsetVerificationStart;
+	DWORD		m_nHashsetVerificationEnd;
 private:
 	DWORD		m_nVerifyCookie;
-	int			m_nVerifyHash;
+	HASHID		m_nVerifyHash;
 	DWORD		m_nVerifyBlock;
 	QWORD		m_nVerifyOffset;
 	QWORD		m_nVerifyLength;
 	DWORD		m_tVerifyLast;
 
+	BOOL		m_bVerifySpeculative;
+
+	CMD5		m_oTestMD5;
+	CSHA1		m_oTestSHA1;
+
 // Operations
 public:
 	DWORD		GetValidationCookie() const;
-	QWORD		GetVerifyLength(int nHash = HASH_NULL) const;
-	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash = HASH_NULL) const;
+	QWORD		GetVerifyLength(HASHID nHash = HASH_NULL) const;
+	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, DWORD& nVerifyState) const;
 	BOOL		IsFullyVerified();
 public:
 	BOOL		NeedTigerTree() const;
@@ -73,17 +88,22 @@ protected:
 	BOOL	ValidationCanFinish() const;
 	void	RunValidation(BOOL bSeeding);
 private:
-	BOOL	FindNewValidationBlock(int nHash);
+	void		BeginSHA1Test();
+	void		BeginMD5Test();
+	BOOL		FinishSHA1Test();
+	BOOL		FinishMD5Test();
 	void	ContinueValidation();
 	void	FinishValidation();
-	void	SubtractHelper(CFileFragment** ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
+	void	AddVerificationBlocks(const QWORD nOffset, const QWORD nNext);
 public:
 	virtual CString	GetAvailableRanges() const;
 	virtual void	ResetVerification();
-	virtual void	ClearVerification();
+	void			ClearTiger();
+	void			ClearHashset();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 	
 	friend class CEDClient;
+	friend class CDownloadWithFile;
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTIGER_H__8F105434_164D_4F58_BAA4_8DB2B29CA259__INCLUDED_)

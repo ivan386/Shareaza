@@ -114,9 +114,9 @@ BOOL CNewSearchDlg::OnInitDialog()
 	
 	OnCloseUpSchemas();
 	
-	if ( m_pSearch->m_bSHA1 )
+	if ( m_pSearch->m_oSHA1.IsValid() )
 	{
-		m_wndSearch.SetWindowText( CSHA::HashToString( &m_pSearch->m_pSHA1, TRUE ) );
+		m_wndSearch.SetWindowText( m_pSearch->m_oSHA1.ToURN() );
 		m_wndSchema.ShowWindow( SW_HIDE );
 	}
 	else
@@ -199,14 +199,14 @@ void CNewSearchDlg::OnChangeSearch()
 	CString strSearch;
 	m_wndSearch.GetWindowText( strSearch );
 	
-	BOOL bHash = FALSE;
-	TIGEROOT pTiger;
-	SHA1 pSHA1;
-	MD4 pED2K;
+	BOOL bHash = FALSE;;
+	CHashTiger oTiger;
+	CHashSHA1 oSHA1;
+	CHashED2K oED2K;
 	
-	bHash |= CSHA::HashFromURN( strSearch, &pSHA1 );
-	bHash |= CTigerNode::HashFromURN( strSearch, &pTiger );
-	bHash |= CED2K::HashFromURN( strSearch, &pED2K );
+	bHash |= oSHA1.FromURN( strSearch );
+	bHash |= oTiger.FromURN( strSearch );
+	bHash |= oED2K.FromURN( strSearch );
 	
 	if ( m_wndSchema.IsWindowVisible() == bHash )
 	{
@@ -231,11 +231,11 @@ void CNewSearchDlg::OnOK()
 	
 	m_wndSearch.GetWindowText( m_pSearch->m_sSearch );
 	
-	m_pSearch->m_bSHA1	= CSHA::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pSHA1 );
-	m_pSearch->m_bTiger	= CTigerNode::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pTiger );
-	m_pSearch->m_bED2K	= CED2K::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pED2K );
+	m_pSearch->m_oSHA1.FromURN( m_pSearch->m_sSearch );
+	m_pSearch->m_oTiger.FromURN( m_pSearch->m_sSearch );
+	m_pSearch->m_oED2K.FromURN( m_pSearch->m_sSearch );
 	
-	if ( m_pSearch->m_bSHA1 || m_pSearch->m_bTiger || m_pSearch->m_bED2K )
+	if ( m_pSearch->m_oSHA1.IsValid() || m_pSearch->m_oTiger.IsValid() || m_pSearch->m_oED2K.IsValid() )
 	{
 		m_pSearch->m_sSearch.Empty();
 	}
@@ -247,7 +247,7 @@ void CNewSearchDlg::OnOK()
 	m_pSearch->m_pSchema	= NULL;
 	m_pSearch->m_pXML		= NULL;
 	
-	if ( pSchema != NULL && ! m_pSearch->m_bSHA1 )
+	if ( pSchema != NULL && ! m_pSearch->m_oSHA1.IsValid() )
 	{
 		m_pSearch->m_pSchema	= pSchema;
 		m_pSearch->m_pXML		= pSchema->Instantiate();
@@ -268,8 +268,8 @@ void CNewSearchDlg::OnOK()
 	
 	m_pSearch->BuildWordList();
 	
-	if ( m_pSearch->m_nWords == 0 && ! m_pSearch->m_bSHA1 &&
-		 ! m_pSearch->m_bTiger && ! m_pSearch->m_bED2K )
+	if ( m_pSearch->m_nWords == 0 && ! m_pSearch->m_oSHA1.IsValid() &&
+		! m_pSearch->m_oTiger.IsValid() && ! m_pSearch->m_oED2K.IsValid() )
 	{
 		m_wndSearch.SetFocus();
 		return;

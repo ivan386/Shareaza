@@ -34,7 +34,7 @@ public:
 public:
 	struct sGeneral
 	{
-		CString		Path;						//Installlation path for Shareaza
+		CString		Path;						//Installation path for Shareaza
 		CString		UserPath;					//Path for user data. (May be the same as above for single user installs)
 		BOOL		Debug;
 		BOOL		DebugLog;
@@ -95,6 +95,11 @@ public:
 		CString		BitziWebSubmit;
 		CString		BitziXML;
 		BOOL		BitziOkay;
+
+		DWORD		BufferSize;		// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
+									// if buffer allocation fails hashing will run with Parallel = 1
+		DWORD		Parallel;					// how many files to hash parallel: 1..6; 0 for autoselect
+		int			LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 	} Library;
 
 	struct sSearch

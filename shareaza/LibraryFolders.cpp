@@ -259,15 +259,15 @@ CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszM
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders virtual album collection search
 
-CAlbumFolder* CLibraryFolders::GetCollection(SHA1* pSHA1)
+CAlbumFolder* CLibraryFolders::GetCollection(const CHashSHA1 &oSHA1)
 {
-	return GetAlbumRoot()->FindCollection( pSHA1 );
+	return GetAlbumRoot()->FindCollection( oSHA1 );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders mount a collection
 
-BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
+BOOL CLibraryFolders::MountCollection(const CHashSHA1 &oSHA1, CCollectionFile* pCollection)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	BOOL bSuccess = FALSE;
@@ -276,14 +276,14 @@ BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 	
 	if ( pCollection->GetThisURI().GetLength() )
 	{
-		bSuccess |= GetAlbumRoot()->MountCollection( pSHA1, pCollection );
+		bSuccess |= GetAlbumRoot()->MountCollection( oSHA1, pCollection );
 	}
 	
 	if ( pCollection->GetParentURI().GetLength() )
 	{
 		if ( CAlbumFolder* pFolder = GetAlbumTarget( pCollection->GetParentURI(), NULL, NULL ) )
 		{
-			bSuccess |= pFolder->MountCollection( pSHA1, pCollection, TRUE );
+			bSuccess |= pFolder->MountCollection( oSHA1, pCollection, TRUE );
 		}
 	}
 	

@@ -20,7 +20,6 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
 #include "FileFragment.h"
 
 #ifdef _DEBUG
@@ -29,394 +28,1189 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CFileFragmentPool	FileFragmentPool;
-
+CFileFragmentPool FileFragmentPool;
 
 //////////////////////////////////////////////////////////////////////
-// CFileFragment serialize
+// CFileFragmentList constructor
 
-void CFileFragment::Serialize(CArchive& ar, BOOL bInt64)
+CFileFragmentList::CFileFragmentList()
 {
-	if ( ar.IsStoring() )
+	m_pLastFree = m_pFirstFree = m_pLast = m_pFirst = NULL;
+	m_nSize = m_nFree = m_nCount = 0;
+}
+
+CFileFragmentList::~CFileFragmentList()
+{
+	Flush();
+}
+
+inline void CFileFragmentList::New(const QWORD nOffset, const QWORD nNext, CFileFragment* pNext, CFileFragment* pPrevious)
+{
+	ASSERT( ValidateThis() );
+	CFileFragment* pFragment;
+	if ( !m_nFree )
 	{
-		ar << m_nOffset;
-		ar << m_nLength;
+		FileFragmentPool.Request( 64, m_pFirstFree, m_pLastFree );
+		m_nFree = 64;
 	}
-	else if ( bInt64 )
+	m_nFree--;
+	pFragment = m_pFirstFree;
+	m_pFirstFree = m_pFirstFree->m_pNext;
+	pFragment->m_nOffset = nOffset;
+	pFragment->m_nNext = nNext;
+	pFragment->m_pNext = pNext;
+	pFragment->m_pPrevious = pPrevious;
+	m_nCount++;
+	if ( pNext ) pNext->m_pPrevious = pFragment; else m_pLast = pFragment;
+	if ( pPrevious ) pPrevious->m_pNext = pFragment; else m_pFirst = pFragment;
+	m_nSize += ( nNext - nOffset );
+	ASSERT( ValidateThis() );
+}
+
+inline void CFileFragmentList::NewHead(const QWORD nOffset, const QWORD nNext)
+{
+	ASSERT( ValidateThis() );
+	if ( !m_nFree )
 	{
-		ar >> m_nOffset;
-		ar >> m_nLength;
+		FileFragmentPool.Request( 64, m_pFirstFree, m_pLastFree );
+		m_nFree = 64;
+	}
+	m_nFree--;
+	if ( m_pFirst )
+	{
+		m_pFirst->m_pPrevious = m_pFirstFree;
+		m_pFirstFree = m_pFirstFree->m_pNext;
+		m_pFirst->m_pPrevious->m_pNext = m_pFirst;
+		m_pFirst = m_pFirst->m_pPrevious;
 	}
 	else
 	{
-		DWORD nInt32;
-		ar >> nInt32; m_nOffset = nInt32;
-		ar >> nInt32; m_nLength = nInt32;
+		m_pLast = m_pFirst = m_pFirstFree;
+		m_pFirstFree = m_pFirstFree->m_pNext;
+		m_pFirst->m_pNext = NULL;
 	}
+	m_pFirst->m_nOffset = nOffset;
+	m_pFirst->m_nNext = nNext;
+	m_pFirst->m_pPrevious = NULL;
+	m_nCount++;
+	m_nSize += ( nNext - nOffset );
+	ASSERT( ValidateThis() );
+}
+
+inline void CFileFragmentList::NewTail(const QWORD nOffset, const QWORD nNext)
+{
+	ASSERT( ValidateThis() );
+	if ( !m_nFree )
+	{
+		FileFragmentPool.Request( 64, m_pFirstFree, m_pLastFree );
+		m_nFree = 64;
+	}
+	m_nFree--;
+	m_pFirstFree->m_pPrevious = m_pLast;
+	if ( m_pLast )
+	{
+		m_pLast->m_pNext = m_pFirstFree;
+		m_pLast = m_pFirstFree;
+	}
+	else
+	{
+		m_pLast = m_pFirst = m_pFirstFree;
+	}
+	m_pLast = m_pFirstFree;
+	m_pFirstFree = m_pFirstFree->m_pNext;
+	m_pLast->m_nOffset = nOffset;
+	m_pLast->m_nNext = nNext;
+	m_pLast->m_pNext = NULL;
+	m_nCount++;
+	m_nSize += ( nNext - nOffset );
+	ASSERT( ValidateThis() );
 }
 
 //////////////////////////////////////////////////////////////////////
-// CFileFragment copy fragments
+// CFileFragment Delete
 
-CFileFragment* CFileFragment::CreateCopy()
+void CFileFragmentList::Delete()
 {
-	CFileFragment* pFirst = NULL;
-	CFileFragment* pLast = NULL;
-	
-	for ( CFileFragment* pFragment = this ; pFragment ; pFragment = pFragment->m_pNext )
+	ASSERT( ValidateThis() );
+	if ( m_pFirst )
 	{
-		CFileFragment* pCopy = New( pLast, NULL, pFragment->m_nOffset, pFragment->m_nLength );
-		if ( ! pFirst ) pFirst = pCopy;
-		if ( pLast ) pLast->m_pNext = pCopy;
-		pLast = pCopy;
+		m_pLast->m_pNext = m_pFirstFree;
+		m_pFirstFree = m_pFirst;
+		if ( !m_nFree ) m_pLastFree = m_pLast;
+		m_nFree += m_nCount;
+		m_pLast = m_pFirst = NULL;
+		m_nSize = m_nCount = 0;
 	}
-	
-	return pFirst;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CFileFragment invert fragments
-
-CFileFragment* CFileFragment::CreateInverse(QWORD nSize)
+void CFileFragmentList::Flush()
 {
-	CFileFragment* pFirst	= NULL;
-	CFileFragment* pLast	= NULL;
-	QWORD nLast = 0;
-	
-	for ( CFileFragment* pFragment = this ; pFragment ; pFragment = pFragment->m_pNext )
+	ASSERT( ValidateThis() );
+	if ( m_pFirst )
 	{
-		if ( pFragment->m_nOffset > nLast )
+		m_pLast->m_pNext = m_pFirstFree;
+		m_pFirstFree = m_pFirst;
+		if ( !m_nFree ) m_pLastFree = m_pLast;
+		m_nFree += m_nCount;
+		m_pLast = m_pFirst = NULL;
+		m_nSize = m_nCount = 0;
+	}
+	if ( m_nFree ) FileFragmentPool.Release( m_nFree, m_pFirstFree, m_pLastFree );
+	m_pLastFree = m_pFirstFree = NULL;
+	m_nFree = 0;
+}
+void CFileFragmentList::Delete( CFileFragment* pFragment )
+{
+	ASSERT( ValidateThis() );
+	ASSERT( pFragment != NULL );
+	ASSERT( BelongsToList( pFragment ) );
+	if ( pFragment->m_pPrevious )
+	{
+		if ( pFragment->m_pNext )
 		{
-			CFileFragment* pCopy = New( pLast, NULL, nLast, pFragment->m_nOffset - nLast );
-			if ( ! pFirst ) pFirst = pCopy;
-			if ( pLast ) pLast->m_pNext = pCopy;
-			pLast = pCopy;
+			pFragment->m_pNext->m_pPrevious = pFragment->m_pPrevious;
+			pFragment->m_pPrevious->m_pNext = pFragment->m_pNext;
 		}
-		
-		nLast = pFragment->m_nOffset + pFragment->m_nLength;
-	}
-	
-	if ( nSize > nLast )
-	{
-		CFileFragment* pCopy = New( pLast, NULL, nLast, nSize - nLast );
-		if ( ! pFirst ) pFirst = pCopy;
-		if ( pLast ) pLast->m_pNext = pCopy;
-		pLast = pCopy;
-	}
-	
-	return pFirst;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CFragmentedFile and fragments
-
-CFileFragment* CFileFragment::CreateAnd(CFileFragment* pAvailable)
-{
-	CFileFragment* pFirst	= NULL;
-	CFileFragment* pLast	= NULL;
-	
-	for ( CFileFragment* pFragment = this ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		for ( CFileFragment* pOther = pAvailable ; pOther ; pOther = pOther->m_pNext )
+		else
 		{
-			QWORD nOffset, nLength;
-			
-			if ( pOther->m_nOffset <= pFragment->m_nOffset &&
-				 pOther->m_nOffset + pOther->m_nLength >= pFragment->m_nOffset + pFragment->m_nLength )
-			{
-				nOffset = pFragment->m_nOffset;
-				nLength = pFragment->m_nLength;
-			}
-			else if (	pOther->m_nOffset > pFragment->m_nOffset &&
-						pOther->m_nOffset + pOther->m_nLength < pFragment->m_nOffset + pFragment->m_nLength )
-			{
-				nOffset = pOther->m_nOffset;
-				nLength = pOther->m_nLength;
-			}
-			else if (	pOther->m_nOffset + pOther->m_nLength > pFragment->m_nOffset &&
-						pOther->m_nOffset + pOther->m_nLength < pFragment->m_nOffset + pFragment->m_nLength )
-			{
-				nOffset = pFragment->m_nOffset;
-				nLength = pOther->m_nLength - ( pFragment->m_nOffset - pOther->m_nOffset );
-			}
-			else if (	pOther->m_nOffset > pFragment->m_nOffset &&
-						pOther->m_nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-			{
-				nOffset = pOther->m_nOffset;
-				nLength = pFragment->m_nOffset + pFragment->m_nLength - pOther->m_nOffset;
-			}
-			else
-			{
-				continue;
-			}
-			
-			CFileFragment* pCopy = New( pLast, NULL, nOffset, nLength );
-			if ( pFirst == NULL ) pFirst = pCopy;
-			if ( pLast != NULL ) pLast->m_pNext = pCopy;
-			pLast = pCopy;
+			m_pLast = pFragment->m_pPrevious;
+			m_pLast->m_pNext = NULL;
 		}
 	}
-	
-	return pFirst;
+	else
+	{
+		if ( pFragment->m_pNext )
+		{
+			m_pFirst = pFragment->m_pNext;
+			m_pFirst->m_pPrevious = NULL;
+		}
+		else
+		{
+			m_pLast = m_pFirst = NULL;
+		}
+	}
+	m_nCount--;
+	pFragment->m_pNext = m_pFirstFree;
+	m_pFirstFree = pFragment;
+	if ( !m_nFree ) m_pLastFree = pFragment;
+	m_nFree++;
+	m_nSize -= pFragment->Length();
+    ASSERT( ValidateThis() );
 }
 
-//////////////////////////////////////////////////////////////////////
-// CFileFragment count the fragments in the list
-
-int CFileFragment::GetCount()
+CFileFragment* CFileFragmentList::DeleteAndGetNext( CFileFragment* pFragment )
 {
-	int nCount = 0;
-	for ( CFileFragment* pCount = this ; pCount ; pCount = pCount->m_pNext ) nCount++;
-	return nCount;
+	ASSERT( pFragment != NULL );
+	CFileFragment* pNext = pFragment->m_pNext;
+	Delete( pFragment );
+	return pNext;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CFileFragment find random fragment
 
-CFileFragment* CFileFragment::GetRandom(BOOL bPreferZero)
+CFileFragment* CFileFragmentList::GetRandom(const BOOL bPreferZero) const
 {
-	if ( this == NULL ) return NULL;
-	
-	int nCount = 0;
-	
-	for ( CFileFragment* pCount = this ; pCount ; pCount = pCount->m_pNext )
+	ASSERT( ValidateThisWithSize() );
+	CFileFragment* pFragment = m_pFirst;
+	if ( m_pFirst )
 	{
-		if ( bPreferZero && pCount->m_nOffset == 0 ) return pCount;
-		nCount++;
+		if ( ( ! bPreferZero ) || ( m_pFirst->m_nOffset != 0 ) )
+		{
+			QWORD nCount = rand() % m_nCount;
+			while ( nCount-- ) pFragment = pFragment->m_pNext;
+		}
 	}
-	
-	ASSERT( nCount > 0 );
-	
-	nCount = rand() % nCount;
-	
-	for ( pCount = this ; pCount ; pCount = pCount->m_pNext )
-	{
-		if ( nCount-- == 0 ) return pCount;
-	}
-	
-	return NULL;
+	return pFragment;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CFileFragment find largest fragment
 
-CFileFragment* CFileFragment::GetLargest(CPtrList* pExcept, BOOL bZeroIsLargest)
+CFileFragment* CFileFragmentList::GetLargest(const CPtrList* pExcept, const BOOL bZeroIsLargest) const
 {
-	if ( this == NULL ) return NULL;
-	
-	if ( bZeroIsLargest && m_nOffset == 0 )
+	ASSERT( ValidateThisWithSize() );
+	CFileFragment *pFragment, *pLargest;
+	QWORD nLargest = 0;
+	if ( ( pLargest = pFragment = m_pFirst ) &&
+		( !bZeroIsLargest || m_pFirst->m_nOffset || !pExcept || !pExcept->Find( (LPVOID)m_pFirst ) ) ) do
 	{
-		if ( ! pExcept || pExcept->Find( (LPVOID)this ) == NULL ) return this;
-	}
-	
-	CFileFragment* pLargest = NULL;
-	
-	for ( CFileFragment* pFragment = this ; pFragment ; )
-	{
-		if ( ! pLargest || pFragment->m_nLength > pLargest->m_nLength )
+		if ( ( pFragment->Length() > nLargest ) && ( !pExcept || !pExcept->Find( pFragment ) ) )
 		{
-			if ( ! pExcept || pExcept->Find( pFragment ) == NULL ) pLargest = pFragment;
+			pLargest = pFragment;
+			nLargest = pFragment->Length();
 		}
-
-		pFragment = pFragment->m_pNext;
 	}
-	
+	while ( pFragment = pFragment->m_pNext );
 	return pLargest;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CFileFragment serialize
+
+void CFileFragmentList::Serialize(CArchive& ar, const int nVersion, const BOOL bUseArchiveCount)
+{
+	ASSERT( ValidateThisWithSize() );
+	QWORD nOffset, nLength, nNext, nCount64;
+	DWORD nInt32, nCount32;
+	CFileFragment* pFragment;
+	if ( nVersion >= 32 )
+	{
+		if ( ar.IsLoading() )
+		{
+			Delete();
+			ar >> nCount32;
+			while ( nCount32-- )
+			{
+				ar >> nOffset;
+				ar >> nNext;
+				Add( nOffset, nNext );
+			}
+		}
+		else
+		{
+			nCount32 = GetCount();
+			ar << nCount32;
+			if ( pFragment = GetFirst() ) do
+			{
+				ar << pFragment->Offset();
+				ar << pFragment->Next();
+			}
+			while ( pFragment = pFragment->GetNext() );
+		}
+		return;
+	}
+	if ( bUseArchiveCount )
+	{
+		if ( ar.IsLoading() )
+		{
+			Delete();
+			if ( nVersion >= 29 )
+			{
+				nCount64 = ar.ReadCount();
+				while ( nCount64-- )
+				{
+					ar >> nOffset;
+					ar >> nLength;
+					Add( nOffset, nOffset + nLength );
+				}
+			}
+			else if ( nVersion >= 20 )
+			{
+				nCount64 = ar.ReadCount();
+				while ( nCount64-- )
+				{
+					ar >> nInt32; nOffset = nInt32;
+					ar >> nInt32; nLength = nInt32;
+					Add( nOffset, nOffset + nLength );
+				}
+			}
+			else if ( nVersion >= 5 )
+			{
+				while ( ar.ReadCount() )
+				{
+					ar >> nInt32; nOffset = nInt32;
+					ar >> nInt32; nLength = nInt32;
+					Add( nOffset, nOffset + nLength );
+				}
+			}
+		}
+		else
+		{
+			nCount32 = (DWORD)m_nCount;
+			ar.WriteCount( nCount32 );
+			pFragment = m_pFirst;
+			while ( ( pFragment ) && ( nCount32-- ) )
+			{
+				ar << pFragment->Offset();
+				ar << pFragment->Length();
+				pFragment = pFragment->m_pNext;
+			}
+		}
+	}
+	else
+	{
+		if ( ar.IsLoading() )
+		{
+			ar >> nCount32;
+			while ( nCount32-- )
+			{
+				ar >> nOffset;
+				ar >> nLength;
+				Add( nOffset, nOffset + nLength );
+			}
+		}
+		else
+		{
+			nCount32 = (DWORD)m_nCount;
+			ar << nCount32;
+			pFragment = m_pFirst;
+			while ( ( pFragment ) && ( nCount32-- ) )
+			{
+				ar << pFragment->m_nOffset;
+				ar << pFragment->Length();
+				pFragment = pFragment->m_pNext;
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CFileFragmentList add fragment
+
+QWORD CFileFragmentList::Add(QWORD nOffset, QWORD nNext)
+{
+	ASSERT( ValidateThisWithSize() );
+	QWORD nOldSize = m_nSize;
+	CFileFragment *pFragment, *pNext;
+	if ( nNext > nOffset )
+	{
+		if ( m_pFirst == NULL ) NewHead( nOffset, nNext );
+		else
+		{	// test Tail
+			if ( m_pLast->m_nOffset <= nOffset )
+			{
+				if ( m_pLast->m_nNext >= nOffset )
+				{
+					if ( m_pLast->m_nNext < nNext )
+					{
+						m_nSize += ( nNext - m_pLast->m_nNext );
+						m_pLast->m_nNext = nNext;
+					}
+				}
+				else NewTail( nOffset, nNext );
+			}
+			else
+			{	// walk list
+				pFragment = m_pFirst;
+				while ( pFragment->m_nNext < nOffset ) pFragment = pFragment->m_pNext;
+				if ( nNext < pFragment->m_nOffset ) New( nOffset, nNext, pFragment, pFragment->m_pPrevious );
+				else
+				{
+					if ( nOffset < pFragment->m_nOffset )
+					{
+						m_nSize += ( pFragment->m_nOffset - nOffset );
+						pFragment->m_nOffset = nOffset;
+					}
+					if ( nNext > pFragment->m_nNext )
+					{
+						m_nSize += ( nNext - pFragment->m_nNext );
+						pFragment->m_nNext = nNext;
+						while ( ( pNext = pFragment->m_pNext ) && ( pFragment->m_nNext >= pNext->m_nOffset ) )
+						{
+							if ( pNext->m_nNext > pFragment->m_nNext )
+							{
+								m_nSize += ( pNext->m_nNext - pFragment->m_nNext );
+								pFragment->m_nNext = pNext->m_nNext;
+							}
+							Delete( pNext );
+						}
+					}
+				}
+			}
+		}
+	}
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( m_nSize >= nOldSize );
+	return m_nSize - nOldSize;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CFileFragment copy fragments
+
+void CFileFragmentList::GetCopy(const CFileFragmentList &SourceList)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList.ValidateThisWithSize() );
+	Delete();
+	CFileFragment *pFragment;
+	if ( pFragment = SourceList.m_pFirst )
+	{
+		if ( pFragment ) do
+		{
+			NewTail( pFragment->m_nOffset, pFragment->m_nNext );
+		}
+		while ( pFragment = pFragment->m_pNext );
+	}
+	ASSERT( ValidateThisWithSize() );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CFileFragment invert fragments
+
+void CFileFragmentList::GetInverse(const CFileFragmentList& SourceList, const QWORD nSize)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList.ValidateThisWithSize() );
+	Delete();
+	ASSERT( SourceList.GetEnd() <= nSize );
+	CFileFragment *pFragment;
+	QWORD nLast = 0;
+	if ( pFragment = SourceList.m_pFirst ) do
+	{
+		if ( nLast < pFragment->m_nOffset ) NewTail( nLast, pFragment->m_nOffset );
+		nLast = pFragment->m_nNext;
+	}
+	while ( pFragment = pFragment->m_pNext );
+	if ( nLast < nSize ) NewTail( nLast, nSize );
+	ASSERT( ValidateThisWithSize() );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CFragmentedFile and fragments
+
+void CFileFragmentList::GetAnd(const CFileFragmentList& SourceList1, const CFileFragmentList& SourceList2)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList1.ValidateThisWithSize() );
+	ASSERT( SourceList2.ValidateThisWithSize() );
+	Delete();
+	CFileFragment *pFragment1, *pFragment2;
+	if ( SourceList1.m_nCount >= SourceList2.m_nCount )
+	{
+		if ( ! ( pFragment1 = SourceList1.GetFirst() ) || ( ! ( pFragment2 = SourceList2.GetFirst() ) ) ) return;
+	}
+	else
+	{
+		if ( ! ( pFragment1 = SourceList2.GetFirst() ) || ( ! ( pFragment2 = SourceList1.GetFirst() ) ) ) return;
+	}
+	while ( TRUE )
+	{
+		if ( pFragment1->m_nNext <= pFragment2->m_nOffset )
+		{
+			if ( pFragment1 = pFragment1->m_pNext ) continue;
+			return;
+		}
+		else if ( pFragment2->m_nNext <= pFragment1->m_nOffset )
+		{
+			if ( pFragment2 = pFragment2->m_pNext ) continue;
+			return;
+		}
+		else if ( pFragment2->m_nNext >= pFragment1->m_nNext )
+		{
+			if ( pFragment2->m_nOffset <= pFragment1->m_nOffset )
+			{
+				NewTail( pFragment1->m_nOffset, pFragment1->m_nNext );
+				if ( pFragment1 = pFragment1->m_pNext ) continue;
+				return;
+			}
+			else
+			{
+				NewTail( pFragment2->m_nOffset, pFragment1->m_nNext );
+				if ( pFragment1 = pFragment1->m_pNext ) continue;
+				return;
+			}
+		}
+		else
+		{
+			if ( pFragment2->m_nOffset <= pFragment1->m_nOffset )
+			{
+				NewTail( pFragment1->m_nOffset, pFragment2->m_nNext );
+				if ( pFragment2 = pFragment2->m_pNext ) continue;
+				return;
+			}
+			else
+			{
+				NewTail( pFragment2->m_nOffset, pFragment2->m_nNext);
+				if ( pFragment2 = pFragment2->m_pNext ) continue;
+				return;
+			}
+		}
+	}
+	ASSERT( FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CFileFragment subtract fragments
 
-QWORD CFileFragment::Subtract(CFileFragment** ppFragments, CFileFragment* pSubtract)
+QWORD CFileFragmentList::Subtract(const QWORD nOffset, const QWORD nNext)
 {
-	QWORD nCount = 0;
-	
-	for ( ; pSubtract ; pSubtract = pSubtract->m_pNext )
+	ASSERT( ValidateThisWithSize() );
+	QWORD nOldSize = m_nSize;
+	CFileFragment* pFragment = m_pFirst;
+	while ( pFragment )
 	{
-		if ( ppFragments == NULL || *ppFragments == NULL ) break;
-		nCount += Subtract( ppFragments, pSubtract->m_nOffset, pSubtract->m_nLength );
-	}
-	
-	return nCount;
-}
-
-QWORD CFileFragment::Subtract(CFileFragment** ppFragments, QWORD nOffset, QWORD nLength)
-{
-	if ( ppFragments == NULL || *ppFragments == NULL ) return 0;
-	
-	QWORD nCount = 0;
-	
-	for ( CFileFragment* pFragment = *ppFragments ; pFragment ; )
-	{
-		CFileFragment* pNext = pFragment->m_pNext;
-		
-		if ( nOffset <= pFragment->m_nOffset &&
-			 nOffset + nLength >= pFragment->m_nOffset + pFragment->m_nLength )
+		if ( nOffset >= pFragment->m_nNext )
 		{
-			if ( pFragment->m_pPrevious )
-				pFragment->m_pPrevious->m_pNext = pNext;
+			pFragment = pFragment->m_pNext;
+		}
+		else if ( nNext <= pFragment->m_nOffset ) return nOldSize - m_nSize;
+		else if ( nOffset <= pFragment->m_nOffset )
+		{
+			if ( nNext >= pFragment->m_nNext )
+			{
+				pFragment = DeleteAndGetNext( pFragment );
+			}
 			else
-				*ppFragments = pNext;
-			
-			if ( pNext )
-				pNext->m_pPrevious = pFragment->m_pPrevious;
-		//	else
-		//		m_pLast = pFragment->m_pPrevious;
-			
-			nCount += pFragment->m_nLength;
-			
-			pFragment->DeleteThis();
+			{
+				m_nSize -= ( nNext - pFragment->m_nOffset );
+				pFragment->m_nOffset = nNext;
+				return nOldSize - m_nSize;
+			}
 		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
+		else
 		{
-			CFileFragment* pNew = New( pFragment, pNext );
-			pNew->m_nOffset	= nOffset + nLength;
-			pNew->m_nLength	= pFragment->m_nOffset + pFragment->m_nLength - pNew->m_nOffset;
-			
-			pFragment->m_nLength	= nOffset - pFragment->m_nOffset;
-			pFragment->m_pNext		= pNew;
-			nCount					+= nLength;
-			
-			if ( pNext )
-				pNext->m_pPrevious = pNew;
-		//	else
-		//		m_pLast = pNew;
-			
-			break;
+			if	( nNext >= pFragment->m_nNext )
+			{
+				m_nSize -= ( pFragment->m_nNext - nOffset );
+				pFragment->m_nNext = nOffset;
+				pFragment = pFragment->m_pNext;
+			}
+			else
+			{
+				m_nSize -= ( pFragment->m_nNext - nOffset );
+				New( nNext, pFragment->m_nNext, pFragment->m_pNext, pFragment );
+				pFragment->m_nNext = nOffset;
+				return nOldSize - m_nSize;
+			}
 		}
-		else if (	nOffset + nLength > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			QWORD nFragment	= nLength - ( pFragment->m_nOffset - nOffset );
-			
-			pFragment->m_nOffset	+= nFragment;
-			pFragment->m_nLength	-= nFragment;
-			nCount					+= nFragment;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			QWORD nFragment	= pFragment->m_nOffset + pFragment->m_nLength - nOffset;
-			
-			pFragment->m_nLength	-= nFragment;
-			nCount					+= nFragment;
-		}
-		
-		pFragment = pNext;
 	}
-	
+	ASSERT( ValidateThisWithSize() );
+	return nOldSize - m_nSize;
+}
+
+QWORD CFileFragmentList::Subtract(const CFileFragmentList& SubtractList)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SubtractList.ValidateThisWithSize() );
+	QWORD nOldSize = m_nSize;
+	CFileFragment* thisIterator = m_pFirst;
+	CFileFragment* subtractIterator = SubtractList.m_pFirst;
+	while ( subtractIterator && thisIterator )
+	{
+		if ( thisIterator->m_nNext <= subtractIterator->m_nOffset )
+		{
+			thisIterator = thisIterator->m_pNext;
+		}
+		else if ( subtractIterator->m_nNext <= thisIterator->m_nOffset )
+		{
+			subtractIterator = subtractIterator->m_pNext;
+		}
+		else if ( subtractIterator->m_nOffset <= thisIterator->m_nOffset )
+		{
+			if ( subtractIterator->m_nNext >= thisIterator->m_nNext )
+			{
+				thisIterator = DeleteAndGetNext( thisIterator );
+			}
+			else
+			{
+				m_nSize -= ( subtractIterator->m_nNext - thisIterator->m_nOffset );
+				thisIterator->m_nOffset = subtractIterator->m_nNext;
+				subtractIterator = subtractIterator->m_pNext;
+			}
+		}
+		else
+		{
+			if	( subtractIterator->m_nNext >= thisIterator->m_nNext )
+			{
+				m_nSize -= ( thisIterator->m_nNext - subtractIterator->m_nOffset );
+				thisIterator->m_nNext = subtractIterator->m_nOffset;
+				thisIterator = thisIterator->m_pNext;
+			}
+			else
+			{
+				m_nSize -= ( thisIterator->m_nNext - subtractIterator->m_nOffset );
+				New( subtractIterator->m_nNext, thisIterator->m_nNext, thisIterator->m_pNext, thisIterator );
+				thisIterator->m_nNext = subtractIterator->m_nOffset;
+				subtractIterator = subtractIterator->m_pNext;
+			}
+		}
+	}
+	ASSERT( ValidateThisWithSize() );
+	return nOldSize - m_nSize;
+}
+QWORD CFileFragmentList::Subtract(const CFileFragmentQueue& SubtractQueue)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SubtractQueue.ValidateThis() );
+	QWORD nCount = 0;
+	CFileFragment* pFragment;
+	if ( pFragment = SubtractQueue.GetFirst() ) do
+	{
+		nCount += Subtract( pFragment->m_nOffset, pFragment->m_nNext );
+	}
+	while ( pFragment = pFragment->GetNext() );
 	return nCount;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CFileFragment add and merge a fragment
-
-void CFileFragment::AddMerge(CFileFragment** ppFragments, QWORD nOffset, QWORD nLength)
+void CFileFragmentList::Extract(CFileFragmentList& SourceList, const QWORD nOffset, const QWORD nNext)
 {
-	if ( ppFragments == NULL || nLength == 0 ) return;
-	
-	for ( CFileFragment* pFragment = *ppFragments ; pFragment ; pFragment = pFragment->m_pNext )
+	ASSERT( nNext > nOffset );
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList.ValidateThisWithSize() );
+	Delete();
+	CFileFragment* pFragment = SourceList.m_pFirst;
+	while ( pFragment )
 	{
-		if ( pFragment->m_nOffset + pFragment->m_nLength == nOffset )
+		if ( nOffset >= pFragment->m_nNext )
 		{
-			pFragment->m_nLength += nLength;
-			break;
+			pFragment = pFragment->m_pNext;
 		}
-		else if ( nOffset + nLength == pFragment->m_nOffset )
+		else if ( nNext <= pFragment->m_nOffset )
 		{
-			pFragment->m_nOffset -= nLength;
-			pFragment->m_nLength += nLength;
-			break;
+			ASSERT( ValidateThis() );
+			return;
+		}
+		else
+		{
+			if ( nOffset <= pFragment->m_nOffset )
+			{
+				if ( nNext >= pFragment->m_nNext )
+				{
+					Add( pFragment->m_nOffset, pFragment->m_nNext );
+					pFragment = SourceList.DeleteAndGetNext( pFragment );
+				}
+				else
+				{
+					Add( pFragment->m_nOffset, nNext );
+					SourceList.m_nSize -= ( nNext - pFragment->m_nOffset );
+					pFragment->m_nOffset = nNext;
+					ASSERT( ValidateThis() );
+					return;
+				}
+			}
+			else
+			{
+				if	( nNext >= pFragment->m_nNext )
+				{
+					Add( nOffset, pFragment->m_nNext );
+					SourceList.m_nSize -= ( pFragment->m_nNext - nOffset );
+					pFragment->m_nNext = nOffset;
+					pFragment = pFragment->m_pNext;
+				}
+				else
+				{
+					Add( nOffset, nNext );
+					SourceList.m_nSize -= ( pFragment->m_nNext - nOffset );
+					SourceList.New( nNext, pFragment->m_nNext, pFragment->m_pNext, pFragment );
+					pFragment->m_nNext = nOffset;
+					ASSERT( ValidateThis() );
+					return;
+				}
+			}
 		}
 	}
-	
-	if ( pFragment == NULL )
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList.ValidateThisWithSize() );
+}
+
+void CFileFragmentList::Extract(CFileFragmentQueue& SourceQueue, const QWORD nOffset, const QWORD nNext)
+{
+	ASSERT( ValidateThisWithSize() );
+	Delete();
+	ASSERT( SourceQueue.ValidateThis() );
+	CFileFragment *pNext, *pFragment = SourceQueue.GetFirst();
+	if ( pFragment ) do
 	{
-		CFileFragment* pFragment = New( NULL, *ppFragments, nOffset, nLength );
-		if ( *ppFragments != NULL ) (*ppFragments)->m_pPrevious = pFragment;
-		*ppFragments = pFragment;
+		pNext = pFragment->m_pNext;
+		if ( ( nOffset <= pFragment->m_nOffset ) && ( nNext >= pFragment->m_nNext ) )
+		{
+			Add( pFragment->m_nOffset, pFragment->m_nNext );
+			SourceQueue.Delete( pFragment );
+		}
+	}
+	while ( pFragment = pNext );
+	ASSERT( ValidateThisWithSize() );
+}
+
+ //////////////////////////////////////////////////////////////////////
+// CFileFragment Merge fragment lists
+
+void CFileFragmentList::Merge(const CFileFragmentList& MergeList)
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( MergeList.ValidateThisWithSize() );
+	if ( MergeList.m_pFirst == NULL ) return;
+	if ( m_pFirst == NULL )
+	{
+		GetCopy( MergeList );
 		return;
 	}
-	
-	for ( CFileFragment* pOther = *ppFragments ; pOther ; pOther = pOther->m_pNext )
+	CFileFragment* addIterator = MergeList.m_pFirst;
+	CFileFragment* thisIterator = m_pFirst;
+	CFileFragment *pNext;
+	while ( addIterator && thisIterator )
 	{
-		if ( pFragment == pOther )
+		if ( thisIterator->m_nNext < addIterator->m_nOffset )
 		{
-			continue;
+			thisIterator = thisIterator->m_pNext;
 		}
-		else if ( pFragment->m_nOffset + pFragment->m_nLength == pOther->m_nOffset )
+		else if ( addIterator->m_nNext < thisIterator->m_nOffset )
 		{
-			pFragment->m_nLength += pOther->m_nLength;
-		}
-		else if ( pOther->m_nOffset + pOther->m_nLength == pFragment->m_nOffset )
-		{
-			pFragment->m_nOffset -= pOther->m_nLength;
-			pFragment->m_nLength += pOther->m_nLength;
+			New( addIterator->m_nOffset, addIterator->m_nNext, thisIterator, thisIterator->m_pPrevious );
+			addIterator = addIterator->m_pNext;
 		}
 		else
 		{
-			continue;
+			if ( addIterator->m_nOffset < thisIterator->m_nOffset )
+			{
+				m_nSize += ( thisIterator->m_nOffset - addIterator->m_nOffset );
+				thisIterator->m_nOffset = addIterator->m_nOffset;
+			}
+			if ( addIterator->m_nNext > thisIterator->m_nNext )
+			{
+				m_nSize += ( addIterator->m_nNext - thisIterator->m_nNext );
+				thisIterator->m_nNext = addIterator->m_nNext;
+				while ( ( pNext = thisIterator->m_pNext) && ( thisIterator->m_nNext >= pNext->m_nOffset ) )
+				{
+					if ( pNext->m_nNext > thisIterator->m_nNext )
+					{
+						m_nSize += ( pNext->m_nNext - thisIterator->m_nNext );
+						thisIterator->m_nNext = pNext->m_nNext;
+					}
+					Delete( pNext );
+				}
+			}
+			addIterator = addIterator->m_pNext;
 		}
-		
-		if ( pOther->m_pPrevious )
-			pOther->m_pPrevious->m_pNext = pOther->m_pNext;
-		else
-			*ppFragments = pOther->m_pNext;
-
-		if ( pOther->m_pNext )
-			pOther->m_pNext->m_pPrevious = pOther->m_pPrevious;
-		
-		pOther->DeleteThis();
-		break;
 	}
+	while ( addIterator )
+	{
+		Add( addIterator->m_nOffset, addIterator->m_nNext );
+		addIterator = addIterator->m_pNext;
+	}
+	ASSERT( ValidateThisWithSize() );
 }
-	
+
+BOOL CFileFragmentList::ContainsRange(QWORD nOffset, QWORD nNext) const
+{
+	ASSERT( ValidateThisWithSize() );
+	CFileFragment* pFragment = m_pFirst;
+	while ( pFragment && ( pFragment->m_nOffset < nNext ) )
+	{
+		if ( ( pFragment->m_nNext >= nNext ) && ( pFragment->m_nOffset <= nOffset ) ) return TRUE;
+		pFragment = pFragment->m_pNext;
+	}
+	return FALSE;
+}
+BOOL CFileFragmentList::OverlapsRange(QWORD nOffset, QWORD nNext) const
+{
+	ASSERT( ValidateThisWithSize() );
+	CFileFragment* pFragment = m_pFirst;
+	while ( pFragment && ( pFragment->m_nOffset < nNext ) )
+	{
+		if ( pFragment->m_nNext > nOffset ) return TRUE;
+		pFragment = pFragment->m_pNext;
+	}
+	return FALSE;
+}
+QWORD CFileFragmentList::GetRangeOverlap(const QWORD nOffset, const QWORD nNext) const
+{
+	ASSERT( ValidateThisWithSize() );
+	QWORD nCount = 0;
+	CFileFragment* pFragment = m_pFirst;
+	while ( pFragment && ( pFragment->m_nOffset < nNext ) )
+	{
+		if ( pFragment->m_nNext > nOffset )
+		{
+			if ( pFragment->m_nNext < nNext )
+			{
+				if ( pFragment->m_nOffset <= nOffset )
+				{
+					nCount += ( pFragment->m_nNext - nOffset );
+				}
+				else
+				{
+					nCount += pFragment->Length();
+				}
+			}
+			else
+			{
+				if ( pFragment->m_nOffset <= nOffset )
+				{
+					return nCount + ( nNext - nOffset );
+				}
+				else
+				{
+					return nCount + ( nNext - pFragment->m_nOffset );
+				}
+			}
+		}
+		pFragment = pFragment->m_pNext;
+	}
+	return nCount;
+}
+
+CFileFragment* CFileFragmentList::FindNextFragment(const QWORD nOffset) const
+{
+	ASSERT( ValidateThisWithSize() );
+	CFileFragment *pFragment;
+	if ( pFragment = m_pFirst ) do
+	{
+	}
+	while ( ( pFragment->Offset() < nOffset ) && ( pFragment = pFragment->GetNext() ) );
+	return pFragment;
+}
+
+BOOL CFileFragmentList::LessOrEqualMatch(const CFileFragmentList& SourceList, const QWORD nOffset, const QWORD nNext) const
+{
+	ASSERT( ValidateThisWithSize() );
+	ASSERT( SourceList.ValidateThisWithSize() );
+	CFileFragment *pThisFragment, *pSourceFragment;
+	if ( pSourceFragment = SourceList.GetFirst() ) do
+	{
+	}
+	while ( ( pSourceFragment->Next() <= nOffset ) && ( pSourceFragment = pSourceFragment->GetNext() ) );
+	if ( pThisFragment = GetFirst() ) do
+	{
+	}
+	while ( ( pThisFragment->Next() <= nOffset ) && ( pThisFragment = pThisFragment->GetNext() ) );
+	while ( pThisFragment && pSourceFragment )
+	{
+		if ( pThisFragment->Offset() >= nNext ) return TRUE;
+		else if ( pSourceFragment->Offset() >= nNext ) return FALSE;
+		else if ( pSourceFragment->Next() <= pThisFragment->Offset() )
+		{
+			pSourceFragment = pSourceFragment->GetNext();
+		}
+		else if ( pThisFragment->Offset() <= nOffset )
+		{
+			if ( pSourceFragment->Offset() > nOffset ) return FALSE;
+			else if ( pThisFragment->Next() > pSourceFragment->Next() ) return FALSE;
+			else if ( pThisFragment->Next() >= nNext ) return pSourceFragment->Next() >= nNext;
+			else
+			{
+				pThisFragment = pThisFragment->GetNext();
+			}
+		}
+		else
+		{
+			if ( pThisFragment->Offset() < pSourceFragment->Offset() ) return FALSE;
+			else if ( pThisFragment->Next() > pSourceFragment->Next() ) return FALSE;
+			else if ( pThisFragment->Next() >= nNext ) return pSourceFragment->Next() >= nNext;
+			else
+			{
+				pThisFragment = pThisFragment->GetNext();
+			}
+		}
+	}
+	if ( !pThisFragment ) return TRUE;
+	do
+	{
+	}
+	while ( pThisFragment->Next() <= nOffset && ( pThisFragment = pThisFragment->GetNext() ) );
+	return ( !pThisFragment || pThisFragment->Offset() >= nNext );
+}
+
+#ifdef _DEBUG
+BOOL CFileFragmentList::BelongsToList(const CFileFragment* pFragment) const
+{
+	if ( CFileFragment* pIterator = m_pFirst ) do
+	{
+		if ( pIterator == pFragment ) return TRUE;
+	}
+	while ( pIterator = pIterator->m_pNext );
+	return FALSE;
+}
+
+BOOL CFileFragmentList::ValidateThis() const
+{
+	ASSERT( this != NULL );
+	QWORD nCount = 0;
+	if ( ! m_pFirst )
+	{
+		if ( m_pLast || m_nCount ) return FALSE;
+	}
+	else
+	{
+		if ( !m_pLast || !m_nCount ) return FALSE;
+		if ( m_pFirst->m_pPrevious != NULL ) return FALSE;
+	}
+	if ( m_pLast && m_pLast->m_pNext != NULL ) return FALSE;
+	CFileFragment* pFragment = m_pFirst;
+	CFileFragment *pLast = NULL;
+	while ( pFragment )
+	{
+		nCount++;
+		if ( pFragment->m_pNext )
+		{
+			if ( pFragment->m_pNext->m_pPrevious != pFragment ) return FALSE;
+		}
+		if ( pFragment->m_nNext <= pFragment->m_nOffset ) return FALSE;
+		pLast = pFragment;
+		pFragment = pFragment->m_pNext;
+	}
+	return ( ( nCount == m_nCount ) && ( m_pLast == pLast ) );
+}
+
+BOOL CFileFragmentList::ValidateThisWithSize() const
+{
+	ASSERT( this != NULL );
+	QWORD nCount = 0;
+	QWORD nSize = 0;
+	if ( ! m_pFirst )
+	{
+		if ( m_pLast || m_nCount ) return FALSE;
+	}
+	else
+	{
+		if ( !m_pLast || !m_nCount ) return FALSE;
+		if ( m_pFirst->m_pPrevious != NULL ) return FALSE;
+	}
+	if ( m_pLast && m_pLast->m_pNext != NULL ) return FALSE;
+	CFileFragment* pFragment = m_pFirst;
+	CFileFragment *pLast = NULL;
+	while ( pFragment )
+	{
+		nCount++;
+		if ( pFragment->m_pNext )
+		{
+			if ( pFragment->m_pNext->m_pPrevious != pFragment ) return FALSE;
+		}
+		if ( pFragment->m_nNext <= pFragment->m_nOffset ) return FALSE;
+		pLast = pFragment;
+		nSize += pFragment->Length();
+		pFragment = pFragment->m_pNext;
+	}
+	return ( ( nCount == m_nCount ) && ( m_pLast == pLast ) && ( nSize == m_nSize ) );
+}
+#endif
+
+CFileFragmentQueue::CFileFragmentQueue()
+{
+	m_pLastFree = m_pFirstFree = m_pLast = m_pFirst = NULL;
+	m_nFree = m_nCount = 0;
+}
+
+CFileFragmentQueue::~CFileFragmentQueue()
+{
+	Delete();
+	if ( m_nFree ) FileFragmentPool.Release( m_nFree, m_pFirstFree, m_pLastFree );
+}
+
+inline void CFileFragmentQueue::New( const QWORD nOffset, const QWORD nNext )
+{
+	ASSERT( ValidateThis() );
+	CFileFragment* pFragment;
+	if ( !m_nFree )
+	{
+		FileFragmentPool.Request( 8, m_pFirstFree, m_pLastFree );
+		m_nFree = 8;
+	}
+	m_nFree--;
+	pFragment = m_pFirstFree;
+	m_pFirstFree = m_pFirstFree->m_pNext;
+	pFragment->m_nOffset = nOffset;
+	pFragment->m_nNext = nNext;
+	pFragment->m_pNext = NULL;
+	pFragment->m_pPrevious = m_pLast;
+	if ( m_pLast ) m_pLast->m_pNext = pFragment; else m_pFirst = pFragment;
+	m_pLast = pFragment;
+	m_nCount++;
+	ASSERT( ValidateThis() );
+}
 
 //////////////////////////////////////////////////////////////////////
-// CFileFragmentPool construction
+// CFileFragment Delete
+
+void CFileFragmentQueue::Delete()
+{
+	ASSERT( ValidateThis() );
+	if ( m_pFirst )
+	{
+		m_pLast->m_pNext = m_pFirstFree;
+		m_pFirstFree = m_pFirst;
+		if ( !m_nFree ) m_pLastFree = m_pLast;
+		m_nFree += m_nCount;
+		m_pLast = m_pFirst = NULL;
+		m_nCount = 0;
+	}
+}
+
+void CFileFragmentQueue::Delete( CFileFragment* pFragment )
+{
+	ASSERT( ValidateThis() );
+	ASSERT( pFragment != NULL );
+	ASSERT( BelongsToQueue( pFragment ) );
+	if ( pFragment->m_pPrevious )
+	{
+		if ( pFragment->m_pNext )
+		{
+			pFragment->m_pNext->m_pPrevious = pFragment->m_pPrevious;
+			pFragment->m_pPrevious->m_pNext = pFragment->m_pNext;
+		}
+		else
+		{
+			m_pLast = pFragment->m_pPrevious;
+			m_pLast->m_pNext = NULL;
+		}
+	}
+	else
+	{
+		if ( pFragment->m_pNext )
+		{
+			m_pFirst = pFragment->m_pNext;
+			m_pFirst->m_pPrevious = NULL;
+		}
+		else
+		{
+			m_pLast = m_pFirst = NULL;
+		}
+	}
+	m_nCount--;
+	pFragment->m_pNext = m_pFirstFree;
+	m_pFirstFree = pFragment;
+	if ( !m_nFree ) m_pLastFree = pFragment;
+	m_nFree++;
+    ASSERT( ValidateThis() );
+}
+
+CFileFragment* CFileFragmentQueue::DeleteAndGetNext( CFileFragment* pFragment )
+{
+	ASSERT( pFragment != NULL );
+	CFileFragment* pNext = pFragment->m_pNext;
+	Delete( pFragment );
+	return pNext;
+}
+
+void CFileFragmentQueue::Add(const QWORD nOffset, const QWORD nNext)
+{
+	ASSERT( ValidateThis() );
+	if ( nNext > nOffset ) New( nOffset, nNext );
+}
+
+void CFileFragmentQueue::Subtract(const QWORD nOffset, const QWORD nNext)
+{
+	CFileFragment *pNext, *pFragment;
+	if ( pFragment = m_pFirst ) do
+	{
+		pNext = pFragment->m_pNext;
+		if ( ( nOffset < pFragment->m_nNext ) && ( nNext > pFragment->m_nOffset ) ) Delete( pFragment );
+	}
+	while ( pFragment = pNext );
+}
+
+void CFileFragmentQueue::Subtract(const CFileFragmentList& SubtractList)
+{
+	ASSERT( ValidateThis() );
+	ASSERT( SubtractList.ValidateThis() );
+	CFileFragment *pFragment;
+	if ( pFragment = SubtractList.GetFirst() ) do
+	{
+		Subtract( pFragment->m_nOffset, pFragment->m_nNext );
+	}
+	while ( pFragment = pFragment->GetNext() );
+}
+
+BOOL CFileFragmentQueue::ContainsRange(const QWORD nOffset, const QWORD nNext) const
+{
+	ASSERT( nNext > nOffset );
+	ASSERT( ValidateThis() );
+	CFileFragment *pFragment;
+	if ( pFragment = m_pFirst ) do
+	{
+		if ( ( pFragment->m_nOffset <= nOffset ) && ( pFragment->m_nNext >= nNext ) ) return TRUE;
+	}
+	while ( pFragment = pFragment->m_pNext );
+	return FALSE;
+}
+
+#ifdef _DEBUG
+BOOL CFileFragmentQueue::BelongsToQueue(const CFileFragment* pFragment) const
+{
+	if ( CFileFragment* pIterator = m_pFirst ) do
+	{
+		if ( pIterator == pFragment ) return TRUE;
+	}
+	while ( pIterator = pIterator->m_pNext );
+	return FALSE;
+}
+
+BOOL CFileFragmentQueue::ValidateThis() const
+{
+	ASSERT( this != NULL );
+	QWORD nCount = 0;
+	if ( ! m_pFirst )
+	{
+		if ( m_pLast || m_nCount ) return FALSE;
+	}
+	else
+	{
+		if ( !m_pLast || !m_nCount ) return FALSE;
+		if ( m_pFirst->m_pPrevious != NULL ) return FALSE;
+	}
+	if ( m_pLast && m_pLast->m_pNext != NULL ) return FALSE;
+	CFileFragment* pFragment = m_pFirst;
+	CFileFragment *pLast = NULL;
+	while ( pFragment )
+	{
+		nCount++;
+		if ( pFragment->m_pNext )
+		{
+			if ( pFragment->m_pNext->m_pPrevious != pFragment ) return FALSE;
+		}
+		pLast = pFragment;
+		pFragment = pFragment->m_pNext;
+	}
+	return ( ( nCount == m_nCount ) && ( m_pLast == pLast ) );
+}
+#endif
 
 CFileFragmentPool::CFileFragmentPool()
 {
-	m_pFree = NULL;
-	m_nFree = 0;
+	m_oSection.Lock();
+    m_pAvailable = m_pLastPool = m_pFirstPool = NULL;
+	m_nTotal = m_nAvailable = 0;
+	Expand( 32768 );					// start out with 32768 fragments == 768KB
+	m_oSection.Unlock();
 }
 
 CFileFragmentPool::~CFileFragmentPool()
 {
-	Clear();
+	CFileFragment* pFragmentPool, *pNextPool;
+	if ( pFragmentPool = m_pFirstPool ) do
+	{
+		pNextPool = pFragmentPool[0].m_pNext;
+		delete [] pFragmentPool;
+	}
+	while ( pFragmentPool = pNextPool );
+    m_pAvailable = m_pLastPool = m_pFirstPool = NULL;
+	m_nTotal = m_nAvailable = 0;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CFileFragmentPool clear
-
-void CFileFragmentPool::Clear()
+void CFileFragmentPool::Request( const DWORD nNeed, CFileFragment* &pFirst, CFileFragment* &pLast )
 {
-	for ( POSITION pos = m_pPools.GetHeadPosition() ; pos ; )
-	{
-		CFileFragment* pPool = (CFileFragment*)m_pPools.GetNext( pos );
-		delete [] pPool;
-	}
-	
-	m_pPools.RemoveAll();
-	m_pFree = NULL;
-	m_nFree = 0;
+	ASSERT( nNeed > 0 );
+	CFileFragment* pFragment;
+	DWORD nCount = nNeed;
+	m_oSection.Lock();
+	if ( nNeed > m_nAvailable ) Expand( m_nTotal );
+	pFragment = pFirst = m_pAvailable;
+	while ( --nCount ) pFragment = pFragment->m_pNext;
+	m_pAvailable = pFragment->m_pNext;
+	m_nAvailable -= nNeed;
+	m_oSection.Unlock();
+	pLast = pFragment;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CFileFragmentPool new pool setup
-
-void CFileFragmentPool::NewPool()
+void CFileFragmentPool::Release( const DWORD nReleased, CFileFragment *pFirst, CFileFragment *pLast )
 {
-	int nSize = 2048;
-	
-	CFileFragment* pPool = new CFileFragment[ nSize ];
-	m_pPools.AddTail( pPool );
-	
-	while ( nSize-- > 0 )
+	ASSERT( nReleased > 0 );
+	m_oSection.Lock();
+	pLast->m_pNext = m_pAvailable;
+	m_pAvailable = pFirst;
+	m_nAvailable += nReleased;
+	m_oSection.Unlock();
+}
+
+void CFileFragmentPool::Expand( const DWORD nNeed )
+{	// already in Critical Section
+	if ( m_pLastPool )
 	{
-		pPool->m_pNext = m_pFree;
-		m_pFree = pPool++;
-		m_nFree++;
+		m_pLastPool[ 0 ].m_pNext = new CFileFragment[ nNeed + 1 ];
+		m_pLastPool = m_pLastPool[ 0 ].m_pNext;
 	}
+	else
+	{
+		m_pFirstPool = m_pLastPool = new CFileFragment[ nNeed + 1 ];
+	}
+	m_pLastPool[ 0 ].m_pNext = NULL;
+	for ( DWORD i = 1 ; i < nNeed ; i++ )
+	{
+		m_pLastPool[ i ].m_pNext = &m_pLastPool[ i + 1 ];
+	}
+	m_pLastPool[ i ].m_pNext = m_pAvailable;
+	m_pAvailable = &m_pLastPool[ 1 ];
+	m_nAvailable += nNeed;
+	m_nTotal += nNeed;
 }

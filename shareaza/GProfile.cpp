@@ -88,7 +88,7 @@ void CGProfile::Create()
 	CoCreateGuid( (::GUID*)&GUID );
 	srand( GetTickCount() );
 	
-	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) GUID.n[ nByte ] += rand();
+	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) GUID.m_b[ nByte ] += rand();
 
 	wchar_t szGUID[39];
 	szGUID[ StringFromGUID2( *(::GUID*)&GUID, szGUID, 39 ) - 2 ] = 0;

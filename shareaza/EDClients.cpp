@@ -130,7 +130,7 @@ BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 //////////////////////////////////////////////////////////////////////
 // CEDClients connection setup
 
-CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID)
+CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, CGUID* pGUID)
 {
 	if ( pGUID != NULL )
 	{
@@ -175,7 +175,7 @@ CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress)
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, GGUID* pGUID)
+CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, CGUID* pGUID)
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
@@ -190,7 +190,7 @@ CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, GGUID* pGUID)
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByGUID(GGUID* pGUID)
+CEDClient* CEDClients::GetByGUID(CGUID* pGUID)
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
@@ -253,7 +253,7 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 void CEDClients::OnRun()
 {
 	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastRun < 1000 ) return;
+//	if ( tNow - m_tLastRun < 1000 ) return;
 	m_tLastRun = tNow;
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )

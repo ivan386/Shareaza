@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CZIPFile;
 class CXMLElement;
 class CLibraryFile;
@@ -46,14 +48,10 @@ public:
 	// Attributes
 	public:
 		CCollectionFile*	m_pParent;
-		BOOL				m_bSHA1;
-		SHA1				m_pSHA1;
-		BOOL				m_bMD5;
-		MD5					m_pMD5;
-		BOOL				m_bTiger;
-		TIGEROOT			m_pTiger;
-		BOOL				m_bED2K;
-		MD4					m_pED2K;
+		CManagedSHA1		m_oSHA1;
+		CManagedMD5			m_oMD5;
+		CManagedTiger		m_oTiger;
+		CManagedED2K		m_oED2K;
 	public:
 		CString				m_sName;
 		QWORD				m_nSize;

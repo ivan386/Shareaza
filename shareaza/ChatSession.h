@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "Connection.h"
 
 class CG2Packet;
@@ -42,7 +43,7 @@ public:
 // Attributes
 public:
 	BOOL		m_bGUID;
-	GGUID		m_pGUID;
+	CGUID		m_pGUID;
 public:
 	int			m_nState;
 	BOOL		m_bG2;
@@ -58,12 +59,12 @@ public:
 	
 // Operations
 public:
-	void			Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
+	void			Setup(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
 	virtual void	AttachTo(CConnection* pConnection);
 	BOOL			SendPush(BOOL bAutomatic);
-	BOOL			OnPush(GGUID* pGUID, CConnection* pConnection);
+	BOOL			OnPush(CGUID* pGUID, CConnection* pConnection);
 	virtual void	Close();
 public:
 	void		Print(LPCTSTR pszString);

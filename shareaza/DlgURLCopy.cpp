@@ -56,7 +56,10 @@ CURLCopyDlg::CURLCopyDlg(CWnd* pParent) : CSkinDialog(CURLCopyDlg::IDD, pParent)
 	m_sMagnet = _T("");
 	m_sED2K = _T("");
 	//}}AFX_DATA_INIT
-	m_bSHA1 = m_bTiger = m_bED2K = m_bSize = FALSE;
+	m_oSHA1.Clear();
+	m_oTiger.Clear();
+	m_oED2K.Clear();
+	m_bSize = FALSE;
 }
 
 void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
@@ -80,7 +83,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 	
 	SkinMe( NULL, IDI_WEB_URL );
 
-	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_bSHA1 && m_sHost.IsEmpty() )
+	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_oSHA1.IsValid() && m_sHost.IsEmpty() )
 		? SW_SHOW : SW_HIDE );
 	
 	OnIncludeSelf();
@@ -92,19 +95,19 @@ void CURLCopyDlg::OnIncludeSelf()
 {
 	CString strURN;
 	
-	if ( m_bTiger && m_bSHA1 )
+	if ( m_oTiger.IsValid() && m_oSHA1.IsValid() )
 	{
 		strURN	= _T("urn:bitprint:")
-				+ CSHA::HashToString( &m_pSHA1 ) + '.'
-				+ CTigerNode::HashToString( &m_pTiger );
+			+ m_oSHA1.ToString() + '.'
+			+ m_oTiger.ToString();
 	}
-	else if ( m_bSHA1 )
+	else if ( m_oSHA1.IsValid() )
 	{
-		strURN = CSHA::HashToString( &m_pSHA1, TRUE );
+		strURN = m_oSHA1.ToURN();
 	}
-	else if ( m_bED2K )
+	else if ( m_oED2K.IsValid() )
 	{
-		strURN = CED2K::HashToString( &m_pED2K, TRUE );
+		strURN = m_oED2K.ToURN();
 	}
 	
 	m_sMagnet = _T("magnet:?");
@@ -140,12 +143,12 @@ void CURLCopyDlg::OnIncludeSelf()
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
 	}
 	
-	if ( m_bED2K && m_bSize && m_sName.GetLength() )
+	if ( m_oED2K.IsValid() && m_bSize && m_sName.GetLength() )
 	{
 		m_sED2K.Format( _T("ed2k://|file|%s|%I64i|%s|/"),
 			(LPCTSTR)CConnection::URLEncode( m_sName ),
 			m_nSize,
-			(LPCTSTR)CED2K::HashToString( &m_pED2K ) );
+			(LPCTSTR)m_oED2K.ToString() );
 	}
 	
 	UpdateData( FALSE );

@@ -55,10 +55,8 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	Clear();
 	m_nAction	= uriDownload;
 	m_pTorrent	= pTorrent;
-	m_bBTH		= TRUE;
-	m_pBTH		= pTorrent->m_pInfoSHA1;
-	m_bSHA1		= pTorrent->m_bDataSHA1;
-	m_pSHA1		= pTorrent->m_pDataSHA1;
+	m_oBTH		= pTorrent->m_oInfoBTH;
+	m_oSHA1		= pTorrent->m_oDataBTH;
 	m_sName		= pTorrent->m_sName;
 	m_bSize		= TRUE;
 	m_nSize		= pTorrent->m_nTotalSize;
@@ -75,11 +73,11 @@ CShareazaURL::~CShareazaURL()
 void CShareazaURL::Clear()
 {
 	m_nAction	= uriNull;
-	m_bSHA1		= FALSE;
-	m_bTiger	= FALSE;
-	m_bMD5		= FALSE;
-	m_bED2K		= FALSE;
-	m_bBTH		= FALSE;
+	m_oSHA1.Clear();
+	m_oTiger.Clear();
+	m_oMD5.Clear();
+	m_oED2K.Clear();
+	m_oBTH.Clear();
 	m_bSize		= FALSE;
 	m_nPort		= GNUTELLA_DEFAULT_PORT;
 	
@@ -142,7 +140,10 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL)
 BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 {
 	CString strURL( pszURL );
-	
+	CHashSHA1 oSHA1;
+	CHashTiger oTiger;
+	CHashMD5 oMD5;
+	CHashED2K oED2K;
 	for ( strURL += '&' ; strURL.GetLength() ; )
 	{
 		CString strPart = strURL.SpanExcluding( _T("&") );
@@ -172,10 +173,10 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					_tcsnicmp( strValue, _T("md5:"), 4 ) == 0 ||
 					_tcsnicmp( strValue, _T("ed2k:"), 5 ) == 0 )
 			{
-				m_bSHA1		|= CSHA::HashFromURN( strValue, &m_pSHA1 );
-				m_bTiger	|= CTigerNode::HashFromURN( strValue, &m_pTiger );
-				m_bMD5		|= CMD5::HashFromURN( strValue, &m_pMD5 );
-				m_bED2K		|= CED2K::HashFromURN( strValue, &m_pED2K );
+				if ( oSHA1.FromURN( strValue ) ) m_oSHA1 = oSHA1;
+				if ( oTiger.FromURN( strValue ) ) m_oTiger = oTiger;
+				if ( oMD5.FromURN( strValue ) ) m_oMD5 = oMD5;
+				if ( oED2K.FromURN( strValue ) ) m_oED2K = oED2K;
 			}
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
@@ -208,11 +209,11 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		else if ( _tcsicmp( strKey, _T("kt") ) == 0 )
 		{
 			m_sName = strValue;
-			m_bSHA1 = FALSE;
+			m_oSHA1.Clear();
 		}
 	}
 	
-	if ( m_bSHA1 || m_bTiger || m_bMD5 || m_bED2K || m_sURL.GetLength() )
+	if ( m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oMD5.IsValid() || m_oED2K.IsValid() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -299,7 +300,10 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse)
 BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 {
 	CString strURL( pszURL );
-	
+	CHashSHA1 oSHA1;
+	CHashTiger oTiger;
+	CHashMD5 oMD5;
+	CHashED2K oED2K;
 	for ( strURL += '/' ; strURL.GetLength() ; )
 	{
 		CString strPart = strURL.SpanExcluding( _T("/|") );
@@ -319,10 +323,10 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 				_tcsnicmp( strPart, _T("md5:"), 4 ) == 0 ||
 				_tcsnicmp( strPart, _T("ed2k:"), 5 ) == 0 )
 		{
-			m_bSHA1		|= CSHA::HashFromURN( strPart, &m_pSHA1 );
-			m_bTiger	|= CTigerNode::HashFromURN( strPart, &m_pTiger );
-			m_bMD5		|= CMD5::HashFromURN( strPart, &m_pMD5 );
-			m_bED2K		|= CED2K::HashFromURN( strPart, &m_pED2K );
+			if ( oSHA1.FromURN( strPart ) ) m_oSHA1 = oSHA1;
+			if ( oTiger.FromURN( strPart ) ) m_oTiger = oTiger;
+			if ( oMD5.FromURN( strPart ) ) m_oMD5 = oMD5;
+			if ( oED2K.FromURN( strPart ) ) m_oED2K = oED2K;
 		}
 		else if ( _tcsnicmp( strPart, _T("source:"), 7 ) == 0 )
 		{
@@ -360,7 +364,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 	}
 	
-	if ( m_bSHA1 || m_bTiger || m_bMD5 || m_bED2K || m_sURL.GetLength() )
+	if ( m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oMD5.IsValid() || m_oED2K.IsValid() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -427,7 +431,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 	
-	m_bED2K = CED2K::HashFromString( strPart, &m_pED2K );
+	m_oED2K.FromString( strPart );
 	
 	m_nAction = uriDownload;
 	
@@ -505,7 +509,7 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 	m_bSize = TRUE;
 	
 	strPart = strURL.SpanExcluding( _T(" |/") );
-	m_bSHA1 = CSHA::HashFromString( strPart, &m_pSHA1 );
+	m_oSHA1.FromString( strPart );
 	
 	m_nAction = uriDownload;
 	
@@ -564,16 +568,14 @@ CQuerySearch* CShareazaURL::ToQuery()
 		pSearch->m_sSearch = m_sName;
 	}
 	
-	if ( m_bSHA1 )
+	if ( m_oSHA1.IsValid() )
 	{
-		pSearch->m_bSHA1 = TRUE;
-		pSearch->m_pSHA1 = m_pSHA1;
+		pSearch->m_oSHA1 = m_oSHA1;
 	}
 	
-	if ( m_bED2K )
+	if ( m_oED2K.IsValid() )
 	{
-		pSearch->m_bED2K = TRUE;
-		pSearch->m_pED2K = m_pED2K;
+		pSearch->m_oED2K = m_oED2K;
 	}
 	
 	return pSearch;

@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CLibraryFolder;
 class CSharedSource;
 class CSchema;
@@ -62,14 +64,10 @@ public:
 	QWORD			m_nVirtualBase;
 	QWORD			m_nVirtualSize;
 public:
-	BOOL			m_bSHA1;
-	SHA1			m_pSHA1;
-	BOOL			m_bTiger;
-	TIGEROOT		m_pTiger;
-	BOOL			m_bMD5;
-	MD5				m_pMD5;
-	BOOL			m_bED2K;
-	MD4				m_pED2K;
+	CManagedSHA1	m_oSHA1;
+	CManagedTiger	m_oTiger;
+	CManagedMD5		m_oMD5;
+	CManagedED2K	m_oED2K;
 	TRISTATE		m_bVerify;
 public:
 	CSchema*		m_pSchema;
@@ -121,7 +119,7 @@ protected:
 	BOOL			LoadMetadata(HANDLE hFile);
 	void			OnDelete();
 	void			Ghost();
-	BOOL			OnVerifyDownload(const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources);
+	BOOL			OnVerifyDownload(const CManagedSHA1 &oSHA1, const CManagedED2K &oED2K, LPCTSTR pszSources);
 	
 // Inlines
 public:

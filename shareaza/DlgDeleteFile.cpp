@@ -158,32 +158,25 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 
 void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 {
-	if ( ! pDownload->m_bSHA1 && ! pDownload->m_bTiger && ! pDownload->m_bED2K ) return;
+	if ( ! pDownload->m_oSHA1.IsValid() && ! pDownload->m_oTiger.IsValid() && ! pDownload->m_oED2K.IsValid() ) return;
 	if ( m_sComments.IsEmpty() ) return;
 	
 	if ( ! Library.Lock( 500 ) ) return;
 	
 	CLibraryFile* pFile = NULL;
 	
-	if ( pFile == NULL && pDownload->m_bSHA1 )
-		pFile = LibraryMaps.LookupFileBySHA1( &pDownload->m_pSHA1 );
-	if ( pFile == NULL && pDownload->m_bTiger )
-		pFile = LibraryMaps.LookupFileByTiger( &pDownload->m_pTiger );
-	if ( pFile == NULL && pDownload->m_bED2K )
-		pFile = LibraryMaps.LookupFileByED2K( &pDownload->m_pED2K );
+	if ( pFile == NULL && pDownload->m_oSHA1.IsValid() ) pFile = LibraryMaps.LookupFileBySHA1( pDownload->m_oSHA1 );
+	if ( pFile == NULL && pDownload->m_oTiger.IsValid() ) pFile = LibraryMaps.LookupFileByTiger( pDownload->m_oTiger );
+	if ( pFile == NULL && pDownload->m_oED2K.IsValid() ) pFile = LibraryMaps.LookupFileByED2K( pDownload->m_oED2K );
 	
 	if ( pFile == NULL )
 	{
 		pFile = new CLibraryFile( NULL, pDownload->m_sRemoteName );
 		pFile->m_nSize		= pDownload->m_nSize;
-		pFile->m_bSHA1		= pDownload->m_bSHA1;
-		pFile->m_pSHA1		= pDownload->m_pSHA1;
-		pFile->m_bTiger		= pDownload->m_bTiger;
-		pFile->m_pTiger		= pDownload->m_pTiger;
-		pFile->m_bMD5		= pDownload->m_bMD5;
-		pFile->m_pMD5		= pDownload->m_pMD5;
-		pFile->m_bED2K		= pDownload->m_bED2K;
-		pFile->m_pED2K		= pDownload->m_pED2K;
+		pFile->m_oSHA1		= pDownload->m_oSHA1;
+		pFile->m_oTiger		= pDownload->m_oTiger;
+		pFile->m_oMD5		= pDownload->m_oMD5;
+		pFile->m_oED2K		= pDownload->m_oED2K;
 		pFile->m_bShared	= bShare ? TS_TRUE : TS_FALSE;
 		pFile->Ghost();
 	}

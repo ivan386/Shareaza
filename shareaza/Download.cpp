@@ -126,7 +126,7 @@ void CDownload::Resume()
 	m_tReceived	= GetTickCount();
 	m_bTorrentTrackerError = FALSE;
 
-	if( m_bBTH )
+	if( m_oBTH.IsValid() )
 	{
 		if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) 
 			SetStartTimer();
@@ -215,7 +215,7 @@ void CDownload::StopTrying()
 	if ( m_bComplete ) return;
 	m_tBegan = 0;
 
-	if ( m_bBTH ) CloseTorrent();
+	if ( m_oBTH.IsValid() ) CloseTorrent();
 	CloseTransfers();
 	CloseFile();
 	StopSearch();
@@ -282,7 +282,7 @@ BOOL CDownload::IsShared() const
 #ifdef _DEBUG
 	return m_bShared;
 #else
-	return m_bShared || m_bBTH || Settings.eDonkey.EnableToday;
+	return m_bShared || m_oBTH.IsValid() || Settings.eDonkey.EnableToday;
 #endif
 }
 
@@ -308,7 +308,7 @@ void CDownload::OnRun()
 				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
 				{	//And have had no new data for 5-14 hours	
 
-					if( m_bBTH )	//If it's a torrent
+					if( m_oBTH.IsValid() )	//If it's a torrent
 					{
 						if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
@@ -356,7 +356,7 @@ void CDownload::OnRun()
 		}
 		else if ( ! m_bComplete )
 		{	//If this download isn't trying to download, see if it can try
-			if( m_bBTH )
+			if( m_oBTH.IsValid() )
 			{	//Torrents only try when 'ready to go'. (Reduce tracker load)
 				if( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
 					SetStartTimer();
@@ -466,21 +466,20 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	
 	::DeleteFile( strLocalName + _T(".sd") );
 	
-	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
+	if ( m_nTorrentBlock > 0 && m_oVerified.GetSize() == m_nSize )
 	{
 		CBTTrackerRequest::SendCompleted( this );
 	}
 	
 	LibraryBuilder.RequestPriority( m_sLocalName );
 	
-	if ( m_bSHA1 || m_bED2K )
+	if ( m_oSHA1.IsValid() || m_oED2K.IsValid() )
 	{
-		LibraryHistory.Add( m_sLocalName, m_bSHA1 ? &m_pSHA1 : NULL,
-			m_bED2K ? &m_pED2K : NULL, GetSourceURLs( NULL, 0, FALSE, NULL ) );
+		LibraryHistory.Add( m_sLocalName, m_oSHA1, m_oED2K, GetSourceURLs( NULL, 0, FALSE, NULL ) );
 	}
 	else
 	{
-		LibraryHistory.Add( m_sLocalName, NULL, NULL, NULL );
+		LibraryHistory.Add( m_sLocalName, m_oSHA1, m_oED2K, NULL );
 	}
 	
 	ClearSources();
@@ -600,7 +599,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	31
+#define DOWNLOAD_SER_VERSION	32
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {
@@ -664,10 +663,8 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
 	ar >> nSize;
 	m_nSize = nSize;
 	
-	ar >> m_bSHA1;
-	if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
+	m_oSHA1.SerializeLoad( ar, nVersion );
 	
-	ar >> m_bPaused;
 	ar >> m_bExpanded;
 	if ( nVersion >= 6 ) ar >> m_bBoosted;
 	

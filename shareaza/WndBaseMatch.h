@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "Hashes.h"
 #include "WndPanel.h"
 #include "CtrlMatch.h"
 
@@ -57,7 +58,7 @@ protected:
 	
 // Operations
 protected:
-	int	CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT* pTiger, BOOL bED2K, MD4* pED2K);
+	int	CheckExisting(const CManagedSHA1 &oSHA1, const CManagedTiger &oTiger, const CManagedED2K &oED2K);
 
 // Overrides
 public:

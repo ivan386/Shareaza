@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "GUID.h"
+
 class CQuerySearch;
 class CNeighbour;
 class CLibraryFile;
@@ -53,7 +55,7 @@ protected:
 	SOCKADDR_IN*	m_pEndpoint;
 	CBuffer*		m_pBuffer;
 	DWORD			m_nTTL;
-	GGUID			m_pGUID;
+	CGUID			m_pGUID;
 	PROTOCOLID		m_nProtocol;
 	BOOL			m_bWrapped;
 protected:

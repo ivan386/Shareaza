@@ -86,11 +86,9 @@ void CUpgradeDlg::OnOK()
 	CShareazaURL pURL;
 	
 	pURL.m_nAction		= CShareazaURL::uriDownload;
-	pURL.m_bSHA1		= TRUE;
+	pURL.m_oSHA1.FromString( VersionChecker.m_sUpgradeHash );
 	pURL.m_sName		= VersionChecker.m_sUpgradeFile;
 	pURL.m_sURL			= VersionChecker.m_sUpgradeSources;
-	
-	CSHA::HashFromString( VersionChecker.m_sUpgradeHash, &pURL.m_pSHA1 );
 	
 	Downloads.Add( &pURL );
 	

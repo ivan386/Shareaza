@@ -94,6 +94,9 @@ void CSettings::Setup()
 	Add( _T("Library.BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza") );
 	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1)") );
 	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
+	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
+	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
+	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 5 );
 	
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
 	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
@@ -291,7 +294,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
 	Add( _T("Downloads.SearchPeriod"), &Downloads.SearchPeriod, 120000 );
 	Add( _T("Downloads.StarveTimeout"), &Downloads.StarveTimeout, 2700 );
-	Add( _T("Downloads.StarveGiveUp"), &Downloads.StarveGiveUp, 5 );
+	Add( _T("Downloads.StarveGiveUp"), &Downloads.StarveGiveUp, 3 );
 	Add( _T("Downloads.RetryDelay"), &Downloads.RetryDelay, 10*60000 );
 	Add( _T("Downloads.PushTimeout"), &Downloads.PushTimeout, 45000 );
 	Add( _T("Downloads.StaggardStart"), &Downloads.StaggardStart, FALSE );

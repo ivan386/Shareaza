@@ -24,128 +24,266 @@
 
 #pragma once
 
-class CFileFragmentPool;
+#include "stdafx.h"
 
+class CFileFragmentList;
+class CFileFragmentQueue;
+class CFileFragmentPool;
 
 class CFileFragment
 {
-// Construction
 protected:
-	CFileFragment() {};
-	~CFileFragment() {};
-
-// Attributes
-public:
-	CFileFragment*	m_pPrevious;
-	CFileFragment*	m_pNext;
-public:
 	QWORD			m_nOffset;
-	QWORD			m_nLength;
-	
-// Operations
+	QWORD			m_nNext;
+	CFileFragment*	m_pNext;
+	CFileFragment*	m_pPrevious;
 public:
-	void			Serialize(CArchive& ar, BOOL bInt64 = TRUE);
-public:
-	CFileFragment*	CreateCopy();
-	CFileFragment*	CreateInverse(QWORD nSize);
-	CFileFragment*	CreateAnd(CFileFragment* pAvailable);
-	int				GetCount();
-	CFileFragment*	GetRandom(BOOL bPreferZero = FALSE);
-	CFileFragment*	GetLargest(CPtrList* pExcept = NULL, BOOL bZeroIsLargest = TRUE);
-	static QWORD	Subtract(CFileFragment** ppFragments, CFileFragment* pSubtract);
-	static QWORD	Subtract(CFileFragment** ppFragments, QWORD nOffset, QWORD nLength);
-	static void		AddMerge(CFileFragment** ppFragments, QWORD nOffset, QWORD nLength);
-	
-// Inlines
-public:
-	static inline	CFileFragment* New(CFileFragment* pPrevious = NULL, CFileFragment* pNext = NULL, QWORD nOffset = 0, QWORD nLength = 0);
-	inline void		DeleteThis();
-	inline void		DeleteChain();
-	
-	friend class CFileFragmentPool;
+	inline	QWORD			Offset() const;
+	inline	QWORD			Next() const;
+	inline	QWORD			Length() const;
+	inline	CFileFragment*	GetNext() const;
+	inline	CFileFragment*	GetPrevious() const;
+
+	friend CFileFragmentList;
+	friend CFileFragmentQueue;
+	friend CFileFragmentPool;
 };
 
+class CFileFragmentList
+{
+private:
+		CFileFragment*	m_pFirst;
+		CFileFragment*	m_pLast;
+		CFileFragment*	m_pFirstFree;
+		CFileFragment*	m_pLastFree;
+		DWORD			m_nCount;					// # of fragments
+		DWORD			m_nFree;
+		QWORD			m_nSize;
+public:
+		CFileFragmentList();
+		~CFileFragmentList();
+private:
+inline	void			New(const QWORD nOffset, const QWORD nNext, CFileFragment* pNext, CFileFragment* pPrevious);
+inline	void			NewHead(const QWORD nOffset, const QWORD nNext);
+inline	void			NewTail(const QWORD nOffset, const QWORD nNext);
+public:
+		void			Delete();
+		void			Flush();
+		void			Delete( CFileFragment* pFragment );
+private:
+		CFileFragment*	DeleteAndGetNext( CFileFragment* pFragment );
+public:
+inline	CFileFragment*	GetFirst() const;
+inline	CFileFragment*	GetLast() const;
+inline	QWORD			GetEnd() const;
+inline	DWORD			GetCount() const;
+inline	QWORD			GetSize() const;
+		CFileFragment*	GetRandom(const BOOL bPreferZero = FALSE) const;
+		CFileFragment*	GetLargest(const CPtrList* pExcept = NULL, const BOOL bZeroIsLargest = TRUE) const;
+		void			Serialize(CArchive& ar, const int nVersion, const BOOL bUseArchiveCount = FALSE);
+		QWORD			Add(const QWORD nOffset, const QWORD nNext);
+		void			GetCopy(const CFileFragmentList& SourceList);
+		void			GetInverse(const CFileFragmentList& SourceList, const QWORD nSize);
+		void			GetAnd(const CFileFragmentList& SourceList1, const CFileFragmentList& SourceList2);
+		QWORD			Subtract(const QWORD nOffset, const QWORD nNext);
+		QWORD			Subtract(const CFileFragmentList& SubtractList);
+		QWORD			Subtract(const CFileFragmentQueue& SubtractQueue);
+		void			Extract(CFileFragmentList& SourceList, const QWORD nOffset, const QWORD nNext);
+		void			Extract(CFileFragmentQueue& SourceQueue, const QWORD nOffset, const QWORD nNext);
+		void			Merge(const CFileFragmentList& MergeList);
+inline	void			Move(CFileFragmentList& SourceList);
+inline	BOOL			IsEmpty() const;
+		BOOL			ContainsRange(const QWORD nOffset, const QWORD nNext) const;
+		BOOL			OverlapsRange(const QWORD nOffset, const QWORD nNext) const;
+		QWORD			GetRangeOverlap(const QWORD nOffset, const QWORD nNext) const;
+		CFileFragment*	FindNextFragment(const QWORD nOffset) const;
+		BOOL			LessOrEqualMatch(const CFileFragmentList& SourceList, const QWORD nOffset, const QWORD nNext) const;
+#ifdef _DEBUG
+		BOOL			BelongsToList(const CFileFragment* pFragment) const;
+		BOOL			ValidateThis() const;
+		BOOL			ValidateThisWithSize() const;
+#endif
+};
+
+class CFileFragmentQueue
+{
+private:
+		CFileFragment*	m_pFirst;
+		CFileFragment*	m_pLast;
+		CFileFragment*	m_pFirstFree;
+		CFileFragment*	m_pLastFree;
+		DWORD			m_nCount;					// # of fragments
+		DWORD			m_nFree;
+public:
+		CFileFragmentQueue();
+		~CFileFragmentQueue();
+private:
+inline	void			New( const QWORD nOffset, const QWORD nNext );
+public:
+		void			Delete();
+		void			Delete( CFileFragment* pFragment );
+		CFileFragment*	DeleteAndGetNext( CFileFragment* pFragment );
+inline	CFileFragment*	GetFirst() const;
+inline	BOOL			GetFirst( QWORD &nOffset, QWORD &nLength );
+inline	DWORD			GetCount() const;
+		void			Add(const QWORD nOffset, const QWORD nNext);
+		void			Subtract(const QWORD nOffset, const QWORD nNext);
+		void			Subtract(const CFileFragmentList& SubtractList);
+inline	void			Move(CFileFragmentQueue& SourceQueue);
+inline	BOOL			IsEmpty() const;
+		BOOL			ContainsRange(const QWORD nOffset, const QWORD nNext) const;
+#ifdef _DEBUG
+		BOOL			BelongsToQueue(const CFileFragment* pFragment) const;
+		BOOL			ValidateThis() const;
+#endif
+};
 
 class CFileFragmentPool
 {
-// Construction
+private:
+		CFileFragment*	m_pFirstPool;
+		CFileFragment*	m_pLastPool;
+		CFileFragment*	m_pAvailable;
+		CCriticalSection m_oSection;
+		DWORD			m_nAvailable;
+		DWORD			m_nTotal;
 public:
-	CFileFragmentPool();
-	~CFileFragmentPool();
-
-// Attributes
-protected:
-	CFileFragment*	m_pFree;
-	DWORD			m_nFree;
-protected:
-	CCriticalSection	m_pSection;
-	CPtrList			m_pPools;
-
-// Operations
-protected:
-	void	Clear();
-	void	NewPool();
-
-// Primary Inline Operations
-public:
-	inline CFileFragment* New(CFileFragment* pPrevious = NULL, CFileFragment* pNext = NULL, QWORD nOffset = 0, QWORD nLength = 0)
-	{
-		m_pSection.Lock();
-		
-		if ( m_nFree == 0 ) NewPool();
-		ASSERT( m_nFree > 0 );
-		
-		CFileFragment* pFragment = m_pFree;
-		m_pFree = m_pFree->m_pNext;
-		m_nFree --;
-		
-		m_pSection.Unlock();
-		
-		pFragment->m_pPrevious	= pPrevious;
-		pFragment->m_pNext		= pNext;
-		pFragment->m_nOffset	= nOffset;
-		pFragment->m_nLength	= nLength;
-		
-		return pFragment;
-	}
-	
-	inline void Delete(CFileFragment* pFragment)
-	{
-		m_pSection.Lock();
-		pFragment->m_pPrevious = NULL;
-		pFragment->m_pNext = m_pFree;
-		m_pFree = pFragment;
-		m_nFree ++;
-		m_pSection.Unlock();
-	}
-
+		CFileFragmentPool();
+		~CFileFragmentPool();
+		void			Request( const DWORD nNeed, CFileFragment* &pFirst, CFileFragment* &pLast );
+		void			Release( const DWORD nReleased, CFileFragment* pFirst, CFileFragment* pLast );
+private:
+		void			Expand( const DWORD nNeed );
 };
 
 extern CFileFragmentPool FileFragmentPool;
 
-inline CFileFragment* CFileFragment::New(CFileFragment* pPrevious, CFileFragment* pNext, QWORD nOffset, QWORD nLength)
+inline QWORD CFileFragment::Offset() const
 {
-	return FileFragmentPool.New( pPrevious, pNext, nOffset, nLength );
+	ASSERT( this != NULL );
+	return m_nOffset;
 }
 
-inline void CFileFragment::DeleteThis()
+inline QWORD CFileFragment::Next() const
 {
-	if ( this == NULL ) return;
-	FileFragmentPool.Delete( this );
+	ASSERT( this != NULL );
+	return m_nNext;
 }
 
-inline void CFileFragment::DeleteChain()
+inline QWORD CFileFragment::Length() const
 {
-	if ( this == NULL ) return;
-	
-	for ( CFileFragment* pFragment = m_pNext ; pFragment ; )
+	ASSERT( this != NULL );
+	return m_nNext - m_nOffset;
+}
+
+inline CFileFragment* CFileFragment::GetNext() const
+{
+	ASSERT( this != NULL );
+	return m_pNext;
+}
+
+inline CFileFragment* CFileFragment::GetPrevious() const
+{
+	ASSERT( this != NULL );
+	return m_pPrevious;
+}
+
+inline CFileFragment* CFileFragmentList::GetFirst() const
+{
+	ASSERT( this != NULL );
+	return m_pFirst;
+}
+
+inline CFileFragment* CFileFragmentList::GetLast() const
+{
+	ASSERT( this != NULL );
+	return m_pLast;
+}
+
+inline QWORD CFileFragmentList::GetEnd() const
+{
+	ASSERT( ValidateThisWithSize() );
+	if ( m_pLast ) return m_pLast->m_nNext; else return 0;
+}
+
+inline DWORD CFileFragmentList::GetCount() const
+{
+	ASSERT( ValidateThisWithSize() );
+	return m_nCount;
+}
+
+inline QWORD CFileFragmentList::GetSize() const
+{
+	ASSERT( ValidateThisWithSize() );
+	return m_nSize;
+}
+
+inline void CFileFragmentList::Move(CFileFragmentList& SourceList)
+{
+	ASSERT( ValidateThis() );
+	ASSERT( SourceList.ValidateThis() );
+	Delete();
+	m_pFirst = SourceList.m_pFirst;
+	m_pLast = SourceList.m_pLast;
+	m_nCount = SourceList.m_nCount;
+	m_nSize = SourceList.m_nSize;
+	SourceList.m_pLast = SourceList.m_pFirst = NULL;
+	SourceList.m_nSize = SourceList.m_nCount = 0;
+	ASSERT( ValidateThis() );
+	ASSERT( SourceList.ValidateThis() );
+}
+
+inline BOOL CFileFragmentList::IsEmpty() const
+{
+	ASSERT( ValidateThis() );
+	return ( ! m_pFirst );
+}
+
+inline CFileFragment* CFileFragmentQueue::GetFirst() const
+{
+	ASSERT( this != NULL );
+	return m_pFirst;
+}
+
+inline BOOL CFileFragmentQueue::GetFirst( QWORD &nOffset, QWORD &nLength )
+{
+	if ( m_pFirst )
 	{
-		CFileFragment* pNext = pFragment->m_pNext;
-		FileFragmentPool.Delete( pFragment );
-		pFragment = pNext;
+		nOffset = m_pFirst->m_nOffset;
+		nLength = m_pFirst->Length();
+		Delete( m_pFirst );
+		return TRUE;
 	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+inline DWORD CFileFragmentQueue::GetCount() const
+{
+	ASSERT( this != NULL );
+	return m_nCount;
+}
+
+inline void CFileFragmentQueue::Move(CFileFragmentQueue& SourceQueue)
+{
+	ASSERT( ValidateThis() );
+	ASSERT( SourceQueue.ValidateThis() );
+	Delete();
+	m_pFirst = SourceQueue.m_pFirst;
+	m_pLast = SourceQueue.m_pLast;
+	m_nCount = SourceQueue.m_nCount;
+	SourceQueue.m_pLast = SourceQueue.m_pFirst = NULL;
+	SourceQueue.m_nCount = 0;
+	ASSERT( ValidateThis() );
+	ASSERT( SourceQueue.ValidateThis() );
+}
 	
-	FileFragmentPool.Delete( this );
+inline BOOL CFileFragmentQueue::IsEmpty() const
+{
+	ASSERT( ValidateThis() );
+	return ( !m_pFirst );
 }
 
 #endif // !defined(AFX_FILEFRAGMENT_H__4AF38CF1_81D5_4D59_95D4_E08B8CB3749E__INCLUDED_)

@@ -24,6 +24,9 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "FileFragment.h"
+
 class CDownloadTask;
 
 
@@ -42,24 +45,17 @@ public:
 	CString		m_sLocalName;
 	QWORD		m_nSize;
 public:
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bSHA1Trusted;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bTigerTrusted;
-	BOOL		m_bMD5;
-	MD5			m_pMD5;
-	BOOL		m_bMD5Trusted;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
-	BOOL		m_bED2KTrusted;
-	BOOL		m_bBTH;
-	SHA1		m_pBTH;
-	BOOL		m_bBTHTrusted;
+	CExtendedSHA1	m_oSHA1;
+	CExtendedTiger	m_oTiger;
+	CExtendedMD5	m_oMD5;
+	CExtendedED2K	m_oED2K;
+	CExtendedBTH	m_oBTH;
 protected:
 	CDownloadTask*	m_pTask;
-	
+public:
+	CFileFragmentList m_oVerified;
+	CFileFragmentList m_oInvalid;
+		
 // Operations
 public:
 	virtual void	Pause() = 0;

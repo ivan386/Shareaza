@@ -24,11 +24,12 @@
 
 #pragma once
 
+#include "GUID.h"
+
 class CHostCacheHost;
 class CNeighbour;
 class CG1Packet;
 class CVendor;
-
 
 class CHostCacheList
 {
@@ -126,7 +127,7 @@ public:
 public:
 	void		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL);
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
-	CG1Packet*	ToG1Ping(int nTTL = 0, GGUID* pGUID = NULL);
+	CG1Packet*	ToG1Ping(int nTTL = 0, CGUID* pGUID = NULL);
 	CString		ToString() const;
 	BOOL		CanConnect(DWORD tNow = 0) const;
 	BOOL		CanQuote(DWORD tNow = 0) const;

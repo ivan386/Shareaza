@@ -28,8 +28,6 @@
 
 class CEDClient;
 class CEDPacket;
-class CFileFragment;
-
 
 class CDownloadTransferED2K : public CDownloadTransfer  
 {
@@ -44,9 +42,8 @@ public:
 	BOOL			m_bHashset;
 	DWORD			m_tRequest;
 	DWORD			m_tRanking;
-	BYTE*			m_pAvailable;
-	CFileFragment*	m_pRequested;
-	int				m_nRequested;
+	CFileFragmentQueue m_oRequested;
+	CFileFragmentList m_oPossible;
 	BOOL			m_bUDP;
 protected:
 	LPVOID			m_pInflatePtr;
@@ -63,7 +60,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(CFileFragment** ppFragments);
+	virtual BOOL	SubtractRequested(CFileFragmentList& Fragments);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped(BOOL bError);
@@ -86,7 +83,9 @@ protected:
 	BOOL	SendSecondaryRequest();
 	BOOL	SendFragmentRequests();
 	void	ClearRequests();
-	BOOL	SelectFragment(CFileFragment* pPossible, QWORD* pnOffset, QWORD* pnLength);
+private:
+	BOOL	SelectFragment(CFileFragmentList& oPossible, QWORD& nOffset, QWORD& nLength);
+protected:
 	BOOL	RunQueued(DWORD tNow);
 
 };

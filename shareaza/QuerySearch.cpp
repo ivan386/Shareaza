@@ -60,10 +60,10 @@ CQuerySearch::CQuerySearch(BOOL bGUID)
 	m_nMinSize	= 0x0000000000000000;
 	m_nMaxSize	= 0xFFFFFFFFFFFFFFFF;
 	
-	m_bSHA1		= FALSE;
-	m_bTiger	= FALSE;
-	m_bED2K		= FALSE;
-	m_bBTH		= FALSE;
+	ASSERT( ! m_oSHA1.IsValid() );
+	ASSERT( ! m_oTiger.IsValid() );
+	ASSERT( ! m_oED2K.IsValid() );
+	ASSERT( ! m_oBTH.IsValid() );
 	
 	m_bWantURL	= TRUE;
 	m_bWantDN	= TRUE;
@@ -91,14 +91,10 @@ CQuerySearch::CQuerySearch(CQuerySearch* pCopy)
 	m_nMinSize	= pCopy->m_nMinSize;
 	m_nMaxSize	= pCopy->m_nMaxSize;
 	
-	m_bSHA1 = pCopy->m_bSHA1;
-	if ( m_bSHA1 ) m_pSHA1 = pCopy->m_pSHA1;
-	m_bTiger = pCopy->m_bTiger;
-	if ( m_bTiger ) m_pTiger = pCopy->m_pTiger;
-	m_bED2K = pCopy->m_bED2K;
-	if ( m_bED2K ) m_pED2K = pCopy->m_pED2K;
-	m_bBTH = pCopy->m_bBTH;
-	if ( m_bBTH ) m_pBTH = pCopy->m_pBTH;
+	m_oSHA1 = pCopy->m_oSHA1;
+	m_oTiger = pCopy->m_oTiger;
+	m_oED2K = pCopy->m_oED2K;
+	m_oBTH = pCopy->m_oBTH;
 	
 	m_bWantURL	= pCopy->m_bWantURL;
 	m_bWantDN	= pCopy->m_bWantDN;
@@ -154,17 +150,17 @@ CG1Packet* CQuerySearch::ToG1Packet()
 		pPacket->WriteByte( 0 );
 	}
 	
-	if ( m_bSHA1 )
+	if ( m_oSHA1.IsValid() )
 	{
-		strExtra = CSHA::HashToString( &m_pSHA1, TRUE );
+		strExtra = m_oSHA1.ToURN();
 	}
-	else if ( m_bTiger )
+	else if ( m_oTiger.IsValid() )
 	{
-		strExtra = CTigerNode::HashToString( &m_pTiger, TRUE );
+		strExtra = m_oTiger.ToURN();
 	}
-	else if ( m_bED2K )
+	else if ( m_oED2K.IsValid() )
 	{
-		strExtra = CED2K::HashToString( &m_pED2K, TRUE );
+		strExtra = m_oED2K.ToString();
 	}
 	else
 	{
@@ -197,37 +193,37 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		if ( nKey ) pPacket->WriteLongBE( nKey );
 	}
 	
-	if ( m_bTiger && m_bSHA1 )
+	if ( m_oTiger.IsValid() && m_oSHA1.IsValid() )
 	{
-		pPacket->WritePacket( "URN", sizeof(SHA1) + sizeof(TIGEROOT) + 3 );
+		pPacket->WritePacket( "URN", SHA1_HASH_SIZE + TIGER_HASH_SIZE + 3 );
 		pPacket->WriteString( "bp" );
-		pPacket->Write( &m_pSHA1, sizeof(SHA1) );
-		pPacket->Write( &m_pTiger, sizeof(TIGEROOT) );
+		pPacket->Write( m_oSHA1 );
+		pPacket->Write( m_oTiger );
 	}
-	else if ( m_bSHA1 )
+	else if ( m_oSHA1.IsValid() )
 	{
-		pPacket->WritePacket( "URN", sizeof(SHA1) + 5 );
+		pPacket->WritePacket( "URN", SHA1_HASH_SIZE + 5 );
 		pPacket->WriteString( "sha1" );
-		pPacket->Write( &m_pSHA1, sizeof(SHA1) );
+		pPacket->Write( m_oSHA1 );
 	}
-	else if ( m_bTiger )
+	else if ( m_oTiger.IsValid() )
 	{
-		pPacket->WritePacket( "URN", sizeof(TIGEROOT) + 4 );
+		pPacket->WritePacket( "URN", TIGER_HASH_SIZE + 4 );
 		pPacket->WriteString( "ttr" );
-		pPacket->Write( &m_pTiger, sizeof(TIGEROOT) );
+		pPacket->Write( m_oTiger );
 	}
-	else if ( m_bED2K )
+	else if ( m_oED2K.IsValid() )
 	{
-		pPacket->WritePacket( "URN", sizeof(MD4) + 5 );
+		pPacket->WritePacket( "URN", ED2K_HASH_SIZE + 5 );
 		pPacket->WriteString( "ed2k" );
-		pPacket->Write( &m_pED2K, sizeof(MD4) );
+		pPacket->Write( m_oED2K );
 	}
 	
-	if ( m_bBTH )
+	if ( m_oBTH.IsValid() )
 	{
-		pPacket->WritePacket( "URN", sizeof(SHA1) + 5 );
+		pPacket->WritePacket( "URN", BT_HASH_SIZE + 5 );
 		pPacket->WriteString( "btih" );
-		pPacket->Write( &m_pBTH, sizeof(SHA1) );
+		pPacket->Write( m_oBTH );
 	}
 	
 	if ( m_sSearch.GetLength() )
@@ -286,7 +282,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 	if ( m_bAndG1 ) pPacket->WritePacket( "G1", 0 );
 	
 	pPacket->WriteByte( 0 );
-	pPacket->Write( &m_pGUID, sizeof(GGUID) );
+	pPacket->Write( &m_pGUID, GUID_SIZE );
 	
 	return pPacket;
 }
@@ -300,21 +296,21 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
 	
-	if ( m_bED2K )
+	if ( m_oED2K.IsValid() )
 	{
 		if( m_bWantDN && Settings.eDonkey.MagnetSearch )
 		{			//We need the size- do a search by magnet (hash)
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 			pPacket->WriteByte( 1 );
-			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ));
+			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + m_oED2K.ToString() );
 		}
 		else
 		{			//Don't need the size- Find more sources
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
-			pPacket->Write( &m_pED2K, sizeof(MD4) );
+			pPacket->Write( m_oED2K );
 		}
 	}
-	else if ( m_bBTH )
+	else if ( m_oBTH.IsValid() )
 	{
 		// BitTorrent searches prohibited unless they are GETSOURCES above
 	}
@@ -401,7 +397,9 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 {
 	CString strData;
-	
+	CHashSHA1 oSHA1;
+	CHashTiger oTiger;
+	CHashED2K oED2K;
 	m_bWantCOM = m_bWantPFS = FALSE;
 	
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
@@ -453,22 +451,20 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 			{
 				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
 				{
-					CopyMemory( &m_pSHA1, &pItem->m_pBuffer[1], 20 );
-					m_bSHA1 = TRUE;
+					m_oSHA1 = *(CHashSHA1*)pItem->m_pBuffer[ 1 ];
 				}
 				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
 				{
-					CopyMemory( &m_pTiger, &pItem->m_pBuffer[21], 24 );
-					m_bTiger = TRUE;
+					m_oTiger = *(CHashTiger*)pItem->m_pBuffer[ 21 ];
 				}
 			}
 			else if ( CGGEPItem* pItem = pGGEP.Find( _T("u") ) )
 			{
 				strData = pItem->ToString();
 
-				m_bSHA1		|= CSHA::HashFromURN( strData, &m_pSHA1 );
-				m_bTiger	|= CTigerNode::HashFromURN( strData, &m_pTiger );
-				m_bED2K		|= CED2K::HashFromURN( strData, &m_pED2K );
+				if ( oSHA1.FromURN( strData ) ) m_oSHA1 = oSHA1;
+				if ( oTiger.FromURN( strData ) ) m_oTiger = oTiger;
+				if ( oED2K.FromURN( strData ) ) m_oED2K = oED2K;
 			}
 			
 			break;
@@ -481,9 +477,9 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 		
 		if ( nLength >= 4 && _tcsncmp( pszData, _T("urn:"), 4 ) == 0 )
 		{
-			m_bSHA1		|= CSHA::HashFromURN( pszData, &m_pSHA1 );
-			m_bTiger	|= CTigerNode::HashFromURN( pszData, &m_pTiger );
-			m_bED2K		|= CED2K::HashFromURN( pszData, &m_pED2K );
+			if ( oSHA1.FromURN( pszData ) ) m_oSHA1 = oSHA1;
+			if ( oTiger.FromURN( pszData ) ) m_oTiger = oTiger;
+			if ( oED2K.FromURN( pszData ) ) m_oED2K = oED2K;
 		}
 		else if ( nLength > 5 && _tcsncmp( pszData, _T("<?xml"), 5 ) == 0 )
 		{
@@ -571,30 +567,24 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 			
 			if ( nLength >= 20 && strURN == _T("sha1") )
 			{
-				m_bSHA1 = TRUE;
-				pPacket->Read( &m_pSHA1, sizeof(SHA1) );
+				pPacket->Read( m_oSHA1 );
 			}
 			else if ( nLength >= 44 && ( strURN == _T("bp") || strURN == _T("bitprint") ) )
 			{
-				m_bSHA1 = TRUE;
-				pPacket->Read( &m_pSHA1, sizeof(SHA1) );
-				m_bTiger = TRUE;
-				pPacket->Read( &m_pTiger, sizeof(TIGEROOT) );
+				pPacket->Read( m_oSHA1 );
+				pPacket->Read( m_oTiger );
 			}
 			else if ( nLength >= 24 && ( strURN == _T("ttr") || strURN == _T("tree:tiger/") ) )
 			{
-				m_bTiger = TRUE;
-				pPacket->Read( &m_pTiger, sizeof(TIGEROOT) );
+				pPacket->Read( m_oTiger );
 			}
 			else if ( nLength >= 16 && strURN == _T("ed2k") )
 			{
-				m_bED2K = TRUE;
-				pPacket->Read( &m_pED2K, sizeof(MD4) );
+				pPacket->Read( m_oED2K );
 			}
 			else if ( nLength >= 20 && strURN == _T("btih") )
 			{
-				m_bBTH = TRUE;
-				pPacket->Read( &m_pBTH, sizeof(SHA1) );
+				pPacket->Read( m_oBTH );
 			}
 		}
 		else if ( strcmp( szType, "DN" ) == 0 )
@@ -647,7 +637,7 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 	
 	if ( pPacket->GetRemaining() < 16 ) return FALSE;
 	
-	pPacket->Read( &m_pGUID, sizeof(GGUID) );
+	pPacket->Read( &m_pGUID, GUID_SIZE );
 	
 	return CheckValid();
 }
@@ -688,7 +678,7 @@ BOOL CQuerySearch::CheckValid()
 		}
 	}
 	
-	return m_nWords || m_bSHA1 || m_bTiger || m_bED2K || m_bBTH;
+	return m_nWords || m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oED2K.IsValid() || m_oBTH.IsValid();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -696,54 +686,40 @@ BOOL CQuerySearch::CheckValid()
 
 BOOL CQuerySearch::GetHashFromXML()
 {
-	if ( ! m_pXML || m_bSHA1 ) return FALSE;
+	if ( ! m_pXML || m_oSHA1.IsValid() ) return FALSE;
 	
 	if ( CXMLElement* pBody = m_pXML->GetFirstElement() )
 	{
 		CString strHash	= pBody->GetAttributeValue( _T("SHA1"), NULL );
-		m_bSHA1			= CSHA::HashFromString( strHash, &m_pSHA1 );
-		
-		if ( m_bSHA1 )
+
+		if ( m_oSHA1.FromString( strHash ) )
 		{
 			CXMLAttribute* pAttribute = pBody->GetAttribute( _T("SHA1") );
 			if ( pAttribute ) pAttribute->Delete();
 		}
 	}
 	
-	return m_bSHA1;
+	return m_oSHA1.IsValid();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch matching
 
-BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, SHA1* pSHA1, TIGEROOT* pTiger, MD4* pED2K)
+BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const CManagedSHA1 &oSHA1, const CManagedTiger &oTiger, const CManagedED2K &oED2K)
 {
 	if ( nSize < m_nMinSize || nSize > m_nMaxSize ) return FALSE;
-	
-	if ( m_bSHA1 )
-	{
-		return pSHA1 != NULL && ( m_pSHA1 == *pSHA1 );
-	}
-	else if ( m_bTiger )
-	{
-		return pTiger != NULL && ( m_pTiger == *pTiger );
-	}
-	else if ( m_bED2K )
-	{
-		return pED2K != NULL && ( memcmp( &m_pED2K, pED2K, sizeof(MD4) ) == 0 );
-	}
-	
+	if ( m_oSHA1.IsValid() ) return m_oSHA1 == oSHA1;
+	else if ( m_oTiger.IsValid() ) return m_oTiger == oTiger;
+	else if ( m_oED2K.IsValid() ) return m_oED2K == oED2K;
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
 	{
 		TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
 		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
-		
 		if ( m_sSearch.GetLength() > 0 )
 		{
 			if ( MatchMetadataShallow( pszSchemaURI, pXML ) ) return TRUE;
 		}
 	}
-	
 	return m_sSearch.GetLength() && WordMatch( pszFilename, m_sSearch );
 }
 
@@ -1055,18 +1031,14 @@ void CQuerySearch::Serialize(CArchive& ar)
 	{
 		ar << nVersion;
 		
-		ar.Write( &m_pGUID, sizeof(GGUID) );
+		ar.Write( &m_pGUID, GUID_SIZE );
 		
 		ar << m_sSearch;
 		
-		ar << m_bSHA1;
-		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
-		ar << m_bTiger;
-		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
-		ar << m_bED2K;
-		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
-		ar << m_bBTH;
-		if ( m_bBTH ) ar.Write( &m_pBTH, sizeof(SHA1) );
+		m_oSHA1.SerializeStore( ar, nVersion );
+		m_oTiger.SerializeStore( ar, nVersion );
+		m_oED2K.SerializeStore( ar, nVersion );
+		m_oBTH.SerializeStore( ar, nVersion );
 		
 		if ( m_pSchema != NULL && m_pXML != NULL )
 		{
@@ -1089,18 +1061,14 @@ void CQuerySearch::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 4 ) AfxThrowUserException();
 		
-		ar.Read( &m_pGUID, sizeof(GGUID) );
+		ar.Read( &m_pGUID, GUID_SIZE );
 		
 		ar >> m_sSearch;
 		
-		ar >> m_bSHA1;
-		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
-		ar >> m_bTiger;
-		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
-		ar >> m_bED2K;
-		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
-		if ( nVersion >= 6 ) ar >> m_bBTH;
-		if ( m_bBTH ) ar.Read( &m_pBTH, sizeof(SHA1) );
+		m_oSHA1.SerializeLoad( ar, nVersion );
+		m_oTiger.SerializeLoad( ar, nVersion );
+		m_oED2K.SerializeLoad( ar, nVersion );
+		if ( nVersion >= 6 ) m_oBTH.SerializeLoad( ar, nVersion );
 		
 		ar >> strURI;
 		

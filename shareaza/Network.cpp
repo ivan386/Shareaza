@@ -301,7 +301,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 //////////////////////////////////////////////////////////////////////
 // CNetwork GGUID generation
 
-void CNetwork::CreateID(GGUID* pID)
+void CNetwork::CreateID(CGUID* pID)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
@@ -489,7 +489,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 //////////////////////////////////////////////////////////////////////
 // CNetwork get node route
 
-BOOL CNetwork::GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
+BOOL CNetwork::GetNodeRoute(CGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
 {
 	if ( *pGUID == MyProfile.GUID ) return FALSE;
 	
@@ -515,7 +515,7 @@ BOOL CNetwork::GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN*
 
 BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 {
-	GGUID pGUID;
+	CGUID pGUID;
 	
 	if ( ! pPacket->GetTo( &pGUID ) || pGUID == MyProfile.GUID ) return FALSE;
 	
@@ -552,14 +552,14 @@ BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNetwork send a push request
 
-BOOL CNetwork::SendPush(GGUID* pGUID, DWORD nIndex)
+BOOL CNetwork::SendPush(CGUID* pGUID, DWORD nIndex)
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return TRUE;
 
 	if ( ! IsListening() ) return FALSE;
 	
-	GGUID pGUID2 = *pGUID;
+	CGUID pGUID2 = *pGUID;
 	SOCKADDR_IN pEndpoint;
 	CNeighbour* pOrigin;
 	int nCount = 0;
@@ -599,7 +599,7 @@ BOOL CNetwork::SendPush(GGUID* pGUID, DWORD nIndex)
 			}
 		}
 		
-		pGUID2.n[15] ++;
+		pGUID2.m_b[15] ++;
 		nCount++;
 	}
 	

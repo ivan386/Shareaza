@@ -44,17 +44,14 @@ CDownloadBase::CDownloadBase()
 {
 	m_nCookie		= 1;
 	m_nSize			= SIZE_UNKNOWN;
-	m_bSHA1			= FALSE;
-	m_bSHA1Trusted	= FALSE;
-	m_bTiger		= FALSE;
-	m_bTigerTrusted	= FALSE;
-	m_bMD5			= FALSE;
-	m_bMD5Trusted	= FALSE;
-	m_bED2K			= FALSE;
-	m_bED2KTrusted	= FALSE;
-	m_bBTH			= FALSE;
-	m_bBTHTrusted	= FALSE;
+	ASSERT( ! m_oSHA1.IsValid() );
+	ASSERT( ! m_oTiger.IsValid() );
+	ASSERT( ! m_oMD5.IsValid() );
+	ASSERT( ! m_oED2K.IsValid() );
+	ASSERT( ! m_oBTH.IsValid() );
 	m_pTask			= NULL;
+	ASSERT( m_oVerified.IsEmpty() );
+	ASSERT( m_oInvalid.IsEmpty() );
 }
 
 CDownloadBase::~CDownloadBase()
@@ -76,10 +73,10 @@ void CDownloadBase::GenerateLocalName()
 {
 	if ( m_sLocalName.GetLength() > 0 ) return;
 	
-	if ( m_bSHA1 ) m_sLocalName += CSHA::HashToString( &m_pSHA1 );
-	else if ( m_bTiger ) m_sLocalName += CTigerNode::HashToString( &m_pTiger );
-	else if ( m_bED2K ) m_sLocalName += CED2K::HashToString( &m_pED2K );
-	else if ( m_bBTH ) m_sLocalName += CSHA::HashToString( &m_pBTH );
+	if ( m_oSHA1.IsValid() ) m_sLocalName += m_oSHA1.ToString();
+	else if ( m_oTiger.IsValid() ) m_sLocalName += m_oTiger.ToString();
+	else if ( m_oED2K.IsValid() ) m_sLocalName += m_oED2K.ToString();
+	else if ( m_oBTH.IsValid() ) m_sLocalName += m_oBTH.ToString();
 	
 	if ( m_sRemoteName.GetLength() > 0 )
 	{
@@ -104,24 +101,19 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		ar << m_sRemoteName;
 		ar << m_nSize;
 		
-		ar << m_bSHA1;
-		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
-		ar << m_bSHA1Trusted;
+		m_oSHA1.SerializeStore( ar, nVersion );
 
-		ar << m_bTiger;
-		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
-		ar << m_bTigerTrusted;
+		m_oTiger.SerializeStore( ar, nVersion );
 
-		ar << m_bMD5;
-		if ( m_bMD5 ) ar.Write( &m_pMD5, sizeof(MD5) );
-		ar << m_bMD5Trusted;
+		m_oMD5.SerializeStore( ar, nVersion );
 
-		ar << m_bED2K;
-		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
-		ar << m_bED2KTrusted;
+		m_oED2K.SerializeStore( ar, nVersion );
 	}
 	else
 	{
+		m_oVerified.Delete();
+		m_oInvalid.Delete();
+
 		ar >> m_sRemoteName;
 		
 		if ( nVersion >= 29 )
@@ -135,27 +127,12 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 			m_nSize = nSize;
 		}
 		
-		ar >> m_bSHA1;
-		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
-		if ( nVersion >= 31 ) ar >> m_bSHA1Trusted;
-		else m_bSHA1Trusted = m_bSHA1;
-		if ( ( m_bSHA1 ) && ( CSHA::IsNull( &m_pSHA1 ) ) ) m_bSHA1Trusted = m_bSHA1 = FALSE;
+		m_oSHA1.SerializeLoad( ar, nVersion );
 
-		ar >> m_bTiger;
-		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
-		if ( nVersion >= 31 ) ar >> m_bTigerTrusted;
-		else m_bTigerTrusted = m_bTiger;
-		if ( ( m_bTiger ) && ( CTigerNode::IsNull( &m_pTiger ) ) ) m_bTigerTrusted = m_bTiger = FALSE;
+		m_oTiger.SerializeLoad( ar, nVersion );
 
-		if ( nVersion >= 22 ) ar >> m_bMD5;
-		if ( m_bMD5 ) ar.Read( &m_pMD5, sizeof(MD5) );
-		if ( nVersion >= 31 ) ar >> m_bMD5Trusted;
-		else m_bMD5Trusted = m_bMD5;
+		if ( nVersion >= 22 ) m_oMD5.SerializeLoad( ar, nVersion );
 
-		if ( nVersion >= 13 ) ar >> m_bED2K;
-		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
-		if ( nVersion >= 31 ) ar >> m_bED2KTrusted;
-		else m_bED2KTrusted = m_bED2K;
-
+		if ( nVersion >= 13 ) m_oED2K.SerializeLoad( ar, nVersion );
 	}
 }

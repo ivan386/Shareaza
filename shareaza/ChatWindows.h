@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "GUID.h"
+
 class CChatFrame;
 class CPrivateChatFrame;
 
@@ -46,10 +48,10 @@ public:
 	int			GetCount() const;
 	void		Close();
 public:
-	CPrivateChatFrame*	FindPrivate(GGUID* pGUID);
+	CPrivateChatFrame*	FindPrivate(CGUID* pGUID);
 	CPrivateChatFrame*	FindPrivate(IN_ADDR* pAddress);
-	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE);
-	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE);
+	CPrivateChatFrame*	OpenPrivate(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE);
+	CPrivateChatFrame*	OpenPrivate(CGUID* pGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE);
 protected:
 	void	Add(CChatFrame* pFrame);
 	void	Remove(CChatFrame* pFrame);

@@ -56,10 +56,10 @@ void CSourceURL::Clear()
 	m_pServerAddress.S_un.S_addr = 0;
 	m_nServerPort = 0;
 	m_sPath.Empty();
-	m_bSHA1	= FALSE;
-	m_bED2K	= FALSE;
-	m_bBTH	= FALSE;
-	m_bBTC	= FALSE;
+	m_oSHA1.Clear();
+	m_oED2K.Clear();
+	m_oBTH.Clear();
+	m_oBTC.Clear();
 	m_bSize	= FALSE;
 }
 
@@ -109,11 +109,11 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	
 	if ( _tcsnicmp( m_sPath, _T("/uri-res/N2R?urn:sha1:"), 22 ) == 0 )
 	{
-		m_bSHA1 = CSHA::HashFromURN( m_sPath.Mid( 13 ), &m_pSHA1 );
+		m_oSHA1.FromURN( m_sPath.Mid( 13 ) );
 	}
 	else if ( _tcsnicmp( m_sPath, _T("/uri-res/N2R?urn:bitprint:"), 26 ) == 0 )
 	{
-		m_bSHA1 = CSHA::HashFromURN( m_sPath.Mid( 13 ), &m_pSHA1 );
+		m_oSHA1.FromURN( m_sPath.Mid( 13 ) );
 	}
 	
 	SOCKADDR_IN saHost;
@@ -159,8 +159,7 @@ BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	CString strHash	= strURL.Left( 32 );
 	strURL			= strURL.Mid( 33 );
 	
-	m_bED2K = CED2K::HashFromString( strHash, &m_pED2K );
-	if ( ! m_bED2K ) return FALSE;
+	if ( ! m_oED2K.FromString( strHash ) ) return FALSE;
 	
 	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
 	if ( ! m_bSize ) return FALSE;
@@ -213,19 +212,18 @@ BOOL CSourceURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	strURL		= strURL.Mid( nSlash + 1 );
 	
 	nSlash = strURL.Find( '/' );
-	m_bBTC = FALSE;
+	m_oBTC.Clear();
 	
 	if ( nSlash == 32 )
 	{
 		CString strGUID	= strURL.Left( 32 );
-		m_bBTC = CSHA::HashFromString( strGUID, &m_pBTC );
+		m_oBTC.FromString( strGUID );
 	}
 	else if ( nSlash < 0 ) return FALSE;
 	
 	strURL = strURL.Mid( nSlash + 1 );
 	
-	m_bBTH = CSHA::HashFromString( strURL, &m_pBTH );
-	if ( ! m_bBTH ) return FALSE;
+	if ( ! m_oBTH.FromString( strURL ) ) return FALSE;
 	
 	SOCKADDR_IN saHost;
 	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );

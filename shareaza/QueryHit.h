@@ -24,6 +24,9 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "GUID.h"
+
 class CVendor;
 class CMatchFile;
 class CXMLElement;
@@ -37,16 +40,16 @@ class CQueryHit
 {
 // Construction
 public:
-	CQueryHit(PROTOCOLID nProtocol, GGUID* pSearchID = NULL);
+	CQueryHit(PROTOCOLID nProtocol, CGUID* pSearchID = NULL);
 	virtual ~CQueryHit();
 	
 // Attributes
 public:
 	CQueryHit*	m_pNext;
-	GGUID		m_pSearchID;
+	CGUID		m_pSearchID;
 public:
 	PROTOCOLID	m_nProtocol;
-	GGUID		m_pClientID;
+	CGUID		m_pClientID;
 	IN_ADDR		m_pAddress;
 	WORD		m_nPort;
 	DWORD		m_nSpeed;
@@ -61,14 +64,10 @@ public:
 	CString		m_sNick;
 public:
 	int			m_nGroup;
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
-	BOOL		m_bBTH;
-	SHA1		m_pBTH;
+	CManagedSHA1	m_oSHA1;
+	CManagedTiger	m_oTiger;
+	CManagedED2K	m_oED2K;
+	CManagedBTH		m_oBTH;
 	CString		m_sURL;
 	CString		m_sName;
 	DWORD		m_nIndex;
@@ -101,7 +100,7 @@ protected:
 public:
 	static CQueryHit*	FromPacket(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromPacket(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID* pSearchID = NULL);
+	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, CGUID* pSearchID = NULL);
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -115,7 +114,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 protected:
 	void		ReadG1Packet(CG1Packet* pPacket);
-	void		ParseAttributes(GGUID* pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
+	void		ParseAttributes(CGUID* pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);

@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "Connection.h"
 
 class CBuffer;
@@ -65,7 +66,7 @@ public:
 	NrsState	m_nState;
 	CVendor*	m_pVendor;
 	BOOL		m_bGUID;
-	GGUID		m_pGUID;
+	CGUID		m_pGUID;
 	CGProfile*	m_pProfile;
 // Attributes : Capabilities
 public:

@@ -124,7 +124,7 @@ void CIEProtocol::Close()
 		m_pSession = NULL;
 	}
 	
-	SetCollection( NULL, NULL );
+	SetEmptyCollection();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -415,11 +415,11 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 	if ( _tcslen( pszURL ) < 32 + 1 ) return INET_E_INVALID_URL;
 	if ( pszURL[32] != '/' ) return INET_E_INVALID_URL;
 	
-	SHA1 pSHA1;
-	if ( ! CSHA::HashFromString( pszURL, &pSHA1 ) ) return INET_E_INVALID_URL;
+	CHashSHA1 oSHA1;
+	if ( ! oSHA1.FromString( pszURL ) ) return INET_E_INVALID_URL;
 	
 	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() ) return INET_E_OBJECT_NOT_FOUND;
-	if ( m_pCollSHA1 != pSHA1 ) return INET_E_OBJECT_NOT_FOUND;
+	if ( ! ( m_oCollSHA1 == oSHA1 ) ) return INET_E_OBJECT_NOT_FOUND;
 	
 	CString strPath( pszURL + 32 );
 	strPath = CConnection::URLDecode( strPath );
@@ -442,7 +442,17 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol collection
 
-BOOL CIEProtocol::SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex)
+void CIEProtocol::SetEmptyCollection()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	if ( m_pCollZIP )
+	{
+		delete m_pCollZIP;
+		m_pCollZIP = NULL;
+	}
+}
+
+BOOL CIEProtocol::SetCollection(const CHashSHA1 &oSHA1, const LPCTSTR pszPath, CString &sIndex)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
@@ -452,16 +462,14 @@ BOOL CIEProtocol::SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex)
 		m_pCollZIP = NULL;
 	}
 	
-	if ( pSHA1 == NULL || pszPath == NULL ) return TRUE;
-	
 	m_pCollZIP	= new CZIPFile();
-	m_pCollSHA1	= *pSHA1;
+	m_oCollSHA1	= oSHA1;
 	
 	if ( m_pCollZIP->Open( pszPath ) )
 	{
 		if ( CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE ) )
 		{
-			if ( psIndex != NULL ) *psIndex = pFile->m_sName;
+			sIndex = pFile->m_sName;
 		}
 		
 		return TRUE;

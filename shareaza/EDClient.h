@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "Transfer.h"
 
 class CEDPacket;
@@ -46,7 +47,7 @@ public:
 	CEDClient*	m_pEdNext;
 public:
 	BOOL		m_bGUID;
-	GGUID		m_pGUID;
+	CGUID		m_pGUID;
 	DWORD		m_nClientID;
 	WORD		m_nUDP;
 	SOCKADDR_IN	m_pServer;
@@ -62,8 +63,7 @@ public:
 	int			m_nEmCompatible;
 public:
 	BOOL		m_bLogin;
-	BOOL		m_bUpMD4;
-	MD4			m_pUpMD4;
+	CManagedED2K	m_oUpED2K;
 	QWORD		m_nUpSize;
 public:
 	CDownloadTransferED2K*	m_pDownload;
@@ -73,7 +73,7 @@ public:
 	
 // Operations
 public:
-	BOOL	ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID);
+	BOOL	ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, CGUID* pGUID);
 	BOOL	Equals(CEDClient* pClient);
 	BOOL	Connect();
 	void	Remove();

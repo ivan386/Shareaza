@@ -69,7 +69,7 @@ CLibraryHeaderBar::~CLibraryHeaderBar()
 void CLibraryHeaderBar::Update(CLibraryView* pView)
 {
 	CString strTitle;
-	int nImage;
+	int nImage = SHI_FOLDER_CLOSED;
 	
 	if ( pView != NULL ) pView->GetHeaderContent( nImage, strTitle );
 	

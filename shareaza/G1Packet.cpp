@@ -55,7 +55,7 @@ CG1Packet::~CG1Packet()
 //////////////////////////////////////////////////////////////////////
 // CG1Packet new
 
-CG1Packet* CG1Packet::New(int nType, DWORD nTTL, GGUID* pGUID)
+CG1Packet* CG1Packet::New(int nType, DWORD nTTL, CGUID* pGUID)
 {
 	CG1Packet* pPacket = (CG1Packet*)POOL.New();
 	
@@ -136,18 +136,18 @@ void CG1Packet::CacheHash()
 	m_nHash |= 1;
 }
 
-BOOL CG1Packet::GetRazaHash(SHA1* pHash, DWORD nLength) const
+BOOL CG1Packet::GetRazaHash(CHashSHA1 &oHash, DWORD nLength) const
 {
 	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
 	if ( (DWORD)m_nLength < nLength ) return FALSE;
 
-	CSHA pSHA;
+	CSHA1 oSHA;
 
-	pSHA.Add( &m_pGUID, sizeof(m_pGUID) );
-	pSHA.Add( &m_nType, sizeof(m_nType) );
-	pSHA.Add( m_pBuffer, nLength );
-	pSHA.Finish();
-	pSHA.GetHash( pHash );
+	oSHA.Add( &m_pGUID.m_b, GUID_SIZE );
+	oSHA.Add( &m_nType, sizeof(m_nType) );
+	oSHA.Add( m_pBuffer, nLength );
+	oSHA.Finish();
+	oHash = oSHA;
 
 	return TRUE;
 }
@@ -169,10 +169,10 @@ CString CG1Packet::GetGUID() const
 {
 	CString strOut;
 	strOut.Format( _T("%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X"),
-		m_pGUID.n[0],  m_pGUID.n[1],  m_pGUID.n[2],  m_pGUID.n[3],
-		m_pGUID.n[4],  m_pGUID.n[5],  m_pGUID.n[6],  m_pGUID.n[7],
-		m_pGUID.n[8],  m_pGUID.n[9],  m_pGUID.n[10], m_pGUID.n[11],
-		m_pGUID.n[12], m_pGUID.n[13], m_pGUID.n[14], m_pGUID.n[15] );
+		m_pGUID.m_b[0],  m_pGUID.m_b[1],  m_pGUID.m_b[2],  m_pGUID.m_b[3],
+		m_pGUID.m_b[4],  m_pGUID.m_b[5],  m_pGUID.m_b[6],  m_pGUID.m_b[7],
+		m_pGUID.m_b[8],  m_pGUID.m_b[9],  m_pGUID.m_b[10], m_pGUID.m_b[11],
+		m_pGUID.m_b[12], m_pGUID.m_b[13], m_pGUID.m_b[14], m_pGUID.m_b[15] );
 	return strOut;
 }
 

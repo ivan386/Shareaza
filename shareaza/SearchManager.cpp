@@ -87,7 +87,7 @@ int CSearchManager::GetCount() const
 	return m_pList.GetCount();
 }
 
-CManagedSearch* CSearchManager::Find(GGUID* pGUID)
+CManagedSearch* CSearchManager::Find(CGUID* pGUID)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -146,7 +146,7 @@ void CSearchManager::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CSearchManager query acknowledgement
 
-BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* ppGUID)
+BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, CGUID* ppGUID)
 {
 	if ( ! pPacket->m_bCompound ) return FALSE;
 	
@@ -232,8 +232,8 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* p
 	
 	if ( pPacket->GetRemaining() < 16 ) return FALSE;
 	
-	GGUID pGUID;
-	pPacket->Read( &pGUID, sizeof(GGUID) );
+	CGUID pGUID;
+	pPacket->Read( &pGUID, GUID_SIZE );
 	if ( ppGUID ) *ppGUID = pGUID;
 	
 	CSingleLock pLock( &m_pSection );
@@ -286,7 +286,7 @@ BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
 //////////////////////////////////////////////////////////////////////
 // CSearchManager query status request
 
-WORD CSearchManager::OnQueryStatusRequest(GGUID* pGUID)
+WORD CSearchManager::OnQueryStatusRequest(CGUID* pGUID)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return 0xFFFF;

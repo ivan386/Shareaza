@@ -43,12 +43,12 @@ public:
 	void			CloseDonkeys();
 	void			SendDonkeyDownload(CDownload* pDownload);
 	BOOL			PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD nServerPort);
-	BOOL			FindDonkeySources(MD4* pED2K, IN_ADDR* pServerAddress, WORD nServerPort);
+	BOOL			FindDonkeySources(const CHashED2K &oED2K, IN_ADDR* pServerAddress, WORD nServerPort);
 
 // Attributes
 protected:
 	DWORD			m_tEDSources[256];
-	MD4				m_pEDSources[256];
+	CHashED2K		m_pEDSources[256];
 	
 };
 

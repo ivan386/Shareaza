@@ -124,43 +124,43 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 	GetNext( pos, &pFile, &pHit );
 	if ( pVar == NULL ) return;
 	
-	TIGEROOT* pTiger = NULL;
-	SHA1* pSHA1 = NULL;
-	MD4* pED2K = NULL;
+	CManagedTiger *pTiger;
+	CManagedSHA1 *pSHA1;
+	CManagedED2K *pED2K;
 	
 	if ( pFile != NULL )
 	{
-		pTiger = pFile->m_bTiger ? &pFile->m_pTiger : NULL;
-		pSHA1 = pFile->m_bSHA1 ? &pFile->m_pSHA1 : NULL;
-		pED2K = pFile->m_bED2K ? &pFile->m_pED2K : NULL;
+		pTiger = &pFile->m_oTiger;
+		pSHA1 = &pFile->m_oSHA1;
+		pED2K = &pFile->m_oED2K;
 	}
 	else
 	{
-		pTiger = pHit->m_bTiger ? &pHit->m_pTiger : NULL;
-		pSHA1 = pHit->m_bSHA1 ? &pHit->m_pSHA1 : NULL;
-		pED2K = pHit->m_bED2K ? &pHit->m_pED2K : NULL;
+		pTiger = &pHit->m_oTiger;
+		pSHA1 = &pHit->m_oSHA1;
+		pED2K = &pHit->m_oED2K;
 	}
 	
 	CString strURN;
 	VariantClear( pVar );
 	
-	if ( pSHA1 != NULL && pTiger != NULL )
+	if ( pSHA1->IsValid() && pTiger->IsValid() )
 	{
 		strURN	= _T("urn:bitprint:")
-				+ CSHA::HashToString( pSHA1 ) + '.'
-				+ CTigerNode::HashToString( pTiger );
+			+ pSHA1->ToString() + '.'
+			+ pTiger->ToString();
 	}
-	else if ( pSHA1 != NULL )
+	else if ( pSHA1->IsValid() )
 	{
-		strURN = CSHA::HashToString( pSHA1, TRUE );
+		strURN = pSHA1->ToURN();
 	}
-	else if ( pTiger != NULL )
+	else if ( pTiger->IsValid() )
 	{
-		strURN = CTigerNode::HashToString( pTiger, TRUE );
+		strURN = pTiger->ToURN();
 	}
-	else if ( pED2K != NULL )
+	else if ( pED2K->IsValid() )
 	{
-		strURN = CED2K::HashToString( pED2K, TRUE );
+		strURN = pED2K->ToURN();
 	}
 	else
 	{

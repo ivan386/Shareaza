@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "NeighboursWithG1.h"
 
 class CG2Neighbour;
@@ -44,8 +45,8 @@ public:
 public:
 	virtual void	Connect();
 public:
-	CG2Packet*		CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept = NULL);
-	CG2Neighbour*	GetRandomHub(CG2Neighbour* pExcept = NULL, GGUID* pGUID = NULL);
+	CG2Packet*		CreateQueryWeb(CGUID* pGUID, CNeighbour* pExcept = NULL);
+	CG2Neighbour*	GetRandomHub(CG2Neighbour* pExcept = NULL, CGUID* pGUID = NULL);
 
 };
 

@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "Hashes.h"
 #include "Transfer.h"
 
 class CUploadQueue;
@@ -52,12 +53,9 @@ public:
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 public:
-	BOOL			m_bSHA1;		// Hash of requested file
-	SHA1			m_pSHA1;		// ..
-	BOOL			m_bTiger;		// ..
-	TIGEROOT		m_pTiger;		// ..
-	BOOL			m_bED2K;		// ..
-	MD4				m_pED2K;		// ..
+	CManagedSHA1	m_oSHA1;		// Hash of requested file
+	CManagedTiger	m_oTiger;		// ..
+	CManagedED2K	m_oED2K;		// ..
 	CString			m_sFileName;	// Name of requested file
 	CString			m_sFilePath;	// Path of requested file
 	QWORD			m_nFileBase;	// Base offset in requested file

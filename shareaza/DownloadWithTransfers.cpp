@@ -71,8 +71,8 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
 		{
 			if ( pTransfer->m_nProtocol == PROTOCOL_ED2K && nState != dtsCountNotConnecting )
 			{
-				CDownloadTransferED2K* pED2K = (CDownloadTransferED2K*)pTransfer;
-				if ( pED2K->m_pClient == NULL || pED2K->m_pClient->m_bConnected == FALSE ) continue;
+				if ( ((CDownloadTransferED2K*)pTransfer)->m_pClient == NULL
+					|| ((CDownloadTransferED2K*)pTransfer)->m_pClient->m_bConnected == FALSE ) continue;
 			}
 			
 			if ( nState == dtsCountAll )
@@ -135,7 +135,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	
 	int nTransfers = GetTransferCount( dtsDownloading );
 
-	if ( m_bBTH )
+	if ( m_oBTH.IsValid() )
 	{
 		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;
 	}
@@ -319,7 +319,7 @@ DWORD CDownloadWithTransfers::GetMeasuredSpeed() const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers push handler
 
-BOOL CDownloadWithTransfers::OnAcceptPush(GGUID* pClientID, CConnection* pConnection)
+BOOL CDownloadWithTransfers::OnAcceptPush(CGUID* pClientID, CConnection* pConnection)
 {
 	CDownload* pDownload = (CDownload*)this;
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;

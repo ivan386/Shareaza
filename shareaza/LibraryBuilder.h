@@ -29,6 +29,11 @@ class CXMLElement;
 class CLibraryBuilderInternals;
 class CLibraryBuilderPlugins;
 
+#include "SHA.h"
+#include "TigerTree.h"
+#include "MD5.h"
+#include "ED2K.h"
+#include "asm\common.inc"
 
 class CLibraryBuilder  
 {
@@ -41,15 +46,16 @@ public:
 protected:
 	CCriticalSection	m_pSection;
 	CPtrList			m_pFiles;
-	CStringList			m_pPriority;
+//	CStringList			m_pPriority;	// not used anymore
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
 	BOOL				m_bPriority;
-	DWORD				m_nHashSleep;
+//	DWORD				m_nHashSleep;
 	DWORD				m_nIndex;
 	CString				m_sPath;
 	DWORD				m_tActive;
 	BYTE*				m_pBuffer;
+	BOOL				m_bRetired;
 protected:
 	CLibraryBuilderInternals*	m_pInternals;
 	CLibraryBuilderPlugins*		m_pPlugins;
@@ -70,7 +76,7 @@ public:
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-	BOOL		HashFile(HANDLE hFile, BOOL bPriority, SHA1* pSHA1);
+	void		HashFile(BOOL bForceHash);
 	BOOL		SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		SubmitCorrupted();
 	BOOL		DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
@@ -79,9 +85,59 @@ protected:
 	
 	friend class CLibraryBuilderInternals;
 	friend class CLibraryBuilderPlugins;
-
+protected:
+	struct
+	{
+		HANDLE hFile;
+		DWORD m_nIndex;
+		CString	m_sPath;
+		DWORD nSizeHigh;
+		DWORD nSizeLow;
+		QWORD nFileSize;
+		QWORD nFileBase;
+		DWORD nStoredBytes;
+		QWORD nCount;											// Filelength-Countdown
+		BOOL bVirtual;
+		CTigerTree* pTiger;
+		CED2K* pED2K;
+		CSHA1* pSHA1;
+		CMD5* pMD5;
+		BYTE* m_pBuffer;										// BasePointer
+		BYTE* m_pBufferIndex;
+	} m_qStack[MAX_PARALLEL], m_qStackN, m_qStackO;
+			DWORD	m_nStackTop;
+			BOOL	m_bSuspend, m_bSuspended;
+			BOOL	m_bTerminate;
+			BOOL	m_bListChanged;
+	static	DWORD	m_nStackSize;
+	static	DWORD	m_nMaxBlock;
+	static	void	Init();
+			void	DoHash1(), DoHash2(), DoHash3(), DoHash4(), DoHash5(), DoHash6();
+	typedef	void	(CLibraryBuilder::*tpDoHash)();
+	const static tpDoHash pDoHash[MAX_PARALLEL];
+	inline	void	RequestSuspendBuilder();
+	inline	void	ContinueBuilder();
+	inline	void	RequestTerminateBuilder();
+	inline	void	SignalListChanged();
 };
 
 extern CLibraryBuilder LibraryBuilder;
+
+inline void CLibraryBuilder::RequestSuspendBuilder()
+{
+	m_bSuspend = TRUE;
+}
+inline void CLibraryBuilder::ContinueBuilder()
+{
+	m_bSuspend = FALSE;
+}
+inline void	CLibraryBuilder::RequestTerminateBuilder()
+{
+	m_bTerminate = TRUE;
+}
+inline void	CLibraryBuilder::SignalListChanged()
+{
+	m_bListChanged = TRUE;
+}
 
 #endif // !defined(AFX_LIBRARYBUILDER_H__B2779061_437E_4C10_AC9F_1E2AC7885C40__INCLUDED_)

@@ -34,236 +34,93 @@
  stored in memory. It runs at 22 cycles per byte on a Pentium P4 processor
 */
 
-/* Modified by Camper using extern methods     6.7.2004 */
+//
+// SHA.cpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 #include "StdAfx.h"
 #include "SHA.h"
-
-// This detects ICL and makes necessary changes for proper compilation
-#if __INTEL_COMPILER > 0
-#define asm_m_nCount CSHA.m_nCount
-#else
-#define asm_m_nCount m_nCount
-#endif
-
-extern "C" void SHA_Add_p5(CSHA *, LPCVOID pData, DWORD nLength);
-static unsigned char SHA_PADDING[64] = {
-	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
-
-CSHA::CSHA()
-{
-	Reset();
-}
-
-CSHA::~CSHA()
-{
-}
-
-void CSHA::Reset()
-{
-    m_nCount[0] = m_nCount[1] = 0;
-    m_nHash[0] = 0x67452301;
-    m_nHash[1] = 0xefcdab89;
-    m_nHash[2] = 0x98badcfe;
-    m_nHash[3] = 0x10325476;
-    m_nHash[4] = 0xc3d2e1f0;
-}
-
-void CSHA::GetHash(SHA1* pHash)
-{
-    /* extract the hash value as bytes in case the hash buffer is   */
-    /* misaligned for 32-bit words                                  */
-    for(int i = 0; i < SHA1_DIGEST_SIZE; ++i)
-        pHash->b[i] = (unsigned char)(m_nHash[i >> 2] >> 8 * (~i & 3));
-}
-
-void CSHA::Add(LPCVOID pData, DWORD nLength)
-{
-	SHA_Add_p5(this, pData, nLength);
-}
+#include "asm/common.inc"
 
 
-void CSHA::Finish()
-{
-	unsigned int bits[2], index = 0;
-	// Save number of bits
-	_asm
+extern "C" void __stdcall SHA_Add1_p5(CSHA1* pSHA, LPCVOID pData);
+extern "C" void __stdcall SHA_Add1_MMX(CSHA1* pSHA, LPCVOID pData);
+extern "C" void __stdcall SHA_Add1_SSE2(CSHA1* pSHA, LPCVOID pData);
+extern "C" void __stdcall SHA_Add2_p5(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2);
+extern "C" void __stdcall SHA_Add2_MMX(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2);
+extern "C" void __stdcall SHA_Add2_SSE2(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2);
+extern "C" void __stdcall SHA_Add3_p5(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3);
+extern "C" void __stdcall SHA_Add3_MMX(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3);
+extern "C" void __stdcall SHA_Add3_SSE2(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3);
+extern "C" void __stdcall SHA_Add4_p5(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4);
+extern "C" void __stdcall SHA_Add4_MMX(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4);
+extern "C" void __stdcall SHA_Add4_SSE2(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4);
+extern "C" void __stdcall SHA_Add5_p5(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5);
+extern "C" void __stdcall SHA_Add5_MMX(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5);
+extern "C" void __stdcall SHA_Add5_SSE2(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5);
+extern "C" void __stdcall SHA_Add6_p5(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5, CSHA1* pSHA6, LPCVOID pData6);
+extern "C" void __stdcall SHA_Add6_MMX(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5, CSHA1* pSHA6, LPCVOID pData6);
+extern "C" void __stdcall SHA_Add6_SSE2(CSHA1* pSHA1, LPCVOID pData1, CSHA1* pSHA2, LPCVOID pData2, CSHA1* pSHA3, LPCVOID pData3, CSHA1* pSHA4, LPCVOID pData4, CSHA1* pSHA5, LPCVOID pData5, CSHA1* pSHA6, LPCVOID pData6);
+
+BYTE CSHA1::SHA_PADDING[64] =
 	{
-		mov		ecx, this
-		mov		eax, [ecx+asm_m_nCount]
-		mov		edx, [ecx+asm_m_nCount+4]
-		shld	edx, eax, 3
-		shl		eax, 3
-		bswap	edx
-		bswap	eax
-		mov		bits, edx
-		mov		bits+4, eax
-	}
-	// Pad out to 56 mod 64.
-	index = (unsigned int)(m_nCount[0] & 0x3f);
-	SHA_Add_p5(this, SHA_PADDING, (index < 56) ? (56 - index) : (120 - index) );
-	// Append length (before padding)
-	SHA_Add_p5(this, bits, 8 );
-}
+		0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	};
 
-//////////////////////////////////////////////////////////////////////
-// CSHA get hash string (Base64)
+CSHA1::tpAdd1 CSHA1::pAdd1 = &SHA_Add1_p5;
+CSHA1::tpAdd2 CSHA1::pAdd2 = &SHA_Add2_p5;
+CSHA1::tpAdd3 CSHA1::pAdd3 = &SHA_Add3_p5;
+CSHA1::tpAdd4 CSHA1::pAdd4 = &SHA_Add4_p5;
+CSHA1::tpAdd5 CSHA1::pAdd5 = &SHA_Add5_p5;
+CSHA1::tpAdd6 CSHA1::pAdd6 = &SHA_Add6_p5;
 
-CString CSHA::GetHashString(BOOL bURN)
+void CSHA1::Init()
 {
-	SHA1 pHash;
-	GetHash( &pHash );
-	return HashToString( &pHash, bURN );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSHA convert hash to string (Base64)
-
-CString CSHA::HashToString(const SHA1* pHashIn, BOOL bURN)
-{
-	static LPCTSTR pszBase64 = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567");
-
-	CString strHash;
-	LPTSTR pszHash = strHash.GetBuffer( bURN ? 9 + 32 : 32 );
-
-	if ( bURN )
+	if ( SupportsSSE2() )
 	{
-		*pszHash++ = 'u'; *pszHash++ = 'r'; *pszHash++ = 'n'; *pszHash++ = ':';
-		*pszHash++ = 's'; *pszHash++ = 'h'; *pszHash++ = 'a'; *pszHash++ = '1'; *pszHash++ = ':';
+		pAdd1 = &SHA_Add1_SSE2;
+		pAdd2 = &SHA_Add2_SSE2;
+		pAdd3 = &SHA_Add3_SSE2;
+		pAdd4 = &SHA_Add4_SSE2;
+		pAdd5 = &SHA_Add5_SSE2;
+		pAdd6 = &SHA_Add6_SSE2;
 	}
-
-	LPBYTE pHash = (LPBYTE)pHashIn;
-	int nShift = 7;
-
-	for ( int nChar = 32 ; nChar ; nChar-- )
+	else if ( SupportsMMX() )
 	{
-		BYTE nBits = 0;
-
-		for ( int nBit = 0 ; nBit < 5 ; nBit++ )
-		{
-			if ( nBit ) nBits <<= 1;
-			nBits |= ( *pHash >> nShift ) & 1;
-
-			if ( ! nShift-- )
-			{
-				nShift = 7;
-				pHash++;
-			}
-		}
-
-		*pszHash++ = pszBase64[ nBits ];
+		pAdd1 = &SHA_Add1_MMX;
+		pAdd2 = &SHA_Add2_MMX;
+		pAdd3 = &SHA_Add3_MMX;
+		pAdd4 = &SHA_Add4_MMX;
+		pAdd5 = &SHA_Add5_MMX;
+		pAdd6 = &SHA_Add6_MMX;
 	}
-
-	strHash.ReleaseBuffer( bURN ? 9 + 32 : 32 );
-
-	return strHash;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSHA convert hash to string (hex)
-
-CString CSHA::HashToHexString(const SHA1* pHashIn, BOOL bURN)
-{
-	static LPCTSTR pszHex = _T("0123456789ABCDEF");
-
-	LPBYTE pHash = (LPBYTE)pHashIn;
-	CString strHash;
-	LPTSTR pszHash = strHash.GetBuffer( 40 );
-
-	for ( int nByte = 0 ; nByte < 20 ; nByte++, pHash++ )
+	else
 	{
-		*pszHash++ = pszHex[ *pHash >> 4 ];
-		*pszHash++ = pszHex[ *pHash & 15 ];
+		pAdd1 = &SHA_Add1_p5;
+		pAdd2 = &SHA_Add2_p5;
+		pAdd3 = &SHA_Add3_p5;
+		pAdd4 = &SHA_Add4_p5;
+		pAdd5 = &SHA_Add5_p5;
+		pAdd6 = &SHA_Add6_p5;
 	}
-
-	strHash.ReleaseBuffer( 40 );
-
-	if ( bURN ) strHash = _T("urn:sha1:") + strHash;
-
-	return strHash;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSHA parse hash from string (Base64)
-
-BOOL CSHA::HashFromString(LPCTSTR pszHash, SHA1* pHashIn)
-{
-	if ( ! pszHash || _tcslen( pszHash ) < 32 ) return FALSE;  //Invalid hash
-
-	if ( _tcsnicmp(pszHash, _T("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"), 32 ) == 0 ) return FALSE; //Bad hash
-
-	SHA1 Hash;
-	LPBYTE pHash = (LPBYTE)&Hash;
-	DWORD nBits	= 0;
-	int nCount	= 0;
-
-	for ( int nChars = 32 ; nChars-- ; pszHash++ )
-	{
-		if ( *pszHash >= 'A' && *pszHash <= 'Z' )
-			nBits |= ( *pszHash - 'A' );
-		else if ( *pszHash >= 'a' && *pszHash <= 'z' )
-			nBits |= ( *pszHash - 'a' );
-		else if ( *pszHash >= '2' && *pszHash <= '7' )
-			nBits |= ( *pszHash - '2' + 26 );
-		else
-			return FALSE;
-		
-		nCount += 5;
-
-		if ( nCount >= 8 )
-		{
-			*pHash++ = (BYTE)( nBits >> ( nCount - 8 ) );
-			nCount -= 8;
-		}
-
-		nBits <<= 5;
-	}
-
-	*pHashIn = Hash;
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSHA parse hash from URN
-
-BOOL CSHA::HashFromURN(LPCTSTR pszHash, SHA1* pHashIn)
-{
-	if ( pszHash == NULL ) return FALSE;
-	int nLen = _tcslen( pszHash );
-
-	if ( nLen >= 41 && _tcsnicmp( pszHash, _T("urn:sha1:"), 9 ) == 0 )
-	{
-		return HashFromString( pszHash + 9, pHashIn );
-	}
-	else if ( nLen >= 37 && _tcsnicmp( pszHash, _T("sha1:"), 5 ) == 0 )
-	{
-		return HashFromString( pszHash + 5, pHashIn );
-	}
-	else if ( nLen >= 85 && _tcsnicmp( pszHash, _T("urn:bitprint:"), 13 ) == 0 )
-	{
-		// 13 + 32 + 1 + 39
-		return HashFromString( pszHash + 13, pHashIn );
-	}
-	else if ( nLen >= 81 && _tcsnicmp( pszHash, _T("bitprint:"), 9 ) == 0 )
-	{
-		return HashFromString( pszHash + 9, pHashIn );
-	}
-
-	return FALSE;
-}
-
-
-BOOL CSHA::IsNull(SHA1* pHash)
-{
-	SHA1 Blank;
-
-	ZeroMemory( &Blank, sizeof(SHA1) );
-
-	if ( *pHash == Blank ) return TRUE;
-
-	return FALSE;
 }

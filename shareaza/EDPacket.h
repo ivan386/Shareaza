@@ -21,7 +21,9 @@
 
 #pragma once
 
+#include "Hashes.h"
 #include "Packet.h"
+#include "ED2K.h"
 
 #pragma pack(1)
 
@@ -43,7 +45,7 @@ typedef struct
 	BYTE	nProtocol;
 	DWORD	nLength;
 	BYTE	nType;
-	MD4		pMD4;
+	CHashED2K m_oED2K;
 	DWORD	nOffset1;
 	DWORD	nOffset2;
 } ED2K_PART_HEADER;
@@ -144,6 +146,21 @@ public:
 	inline virtual void Delete()
 	{
 		POOL.Delete( this );
+	}
+
+	inline void WriteHashset(const CED2K &oED2K)
+	{
+		DWORD nOutput;
+		if ( m_nLength + ( nOutput = oED2K.GetHashsetSize() ) > m_nBuffer )
+		{
+			LPBYTE pNew = new BYTE[ m_nBuffer += max( nOutput, PACKET_GROW ) ];
+			CopyMemory( pNew, m_pBuffer, m_nLength );
+			if ( m_pBuffer ) delete [] m_pBuffer;
+			m_pBuffer = pNew;
+		}
+		LPBYTE pBuffer = m_pBuffer + m_nLength;
+		m_nLength += nOutput;
+		oED2K.ToBytes( pBuffer, nOutput );
 	}
 	
 	friend class CEDPacket::CEDPacketPool;

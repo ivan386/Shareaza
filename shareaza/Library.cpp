@@ -125,20 +125,20 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileAdd( pFile );
 	
-	if ( pFile->m_bSHA1 )
+	if ( pFile->m_oSHA1.IsValid() )
 	{
 		LibraryDictionary.Add( pFile );
 	}
 	
 	if ( pFile->IsAvailable() )
 	{
-		if ( pFile->m_bSHA1 || pFile->m_bTiger || pFile->m_bMD5 || pFile->m_bED2K )
+		if ( pFile->m_oSHA1.IsValid() || pFile->m_oTiger.IsValid() || pFile->m_oMD5.IsValid() || pFile->m_oED2K.IsValid() )
 		{
 			LibraryHistory.Submit( pFile );
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
 		
-		if ( ! pFile->m_bSHA1 || ! pFile->m_bTiger || ! pFile->m_bMD5 || ! pFile->m_bED2K )
+		if ( ! pFile->m_oSHA1.IsValid() || ! pFile->m_oTiger.IsValid() || ! pFile->m_oMD5.IsValid() || ! pFile->m_oED2K.IsValid() )
 		{
 			LibraryBuilder.Add( pFile );
 		}

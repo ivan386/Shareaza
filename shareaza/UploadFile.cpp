@@ -36,17 +36,17 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadFile construction
 
-CUploadFile::CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
+CUploadFile::CUploadFile(CUploadTransfer* pUpload, const CManagedSHA1 &oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
 {
 	m_pAddress	= pUpload->m_pHost.sin_addr;
 	m_sName		= pszName;
 	m_sPath		= pszPath;
 	m_nSize		= nSize;
 	
-	if ( m_bSHA1 = ( pSHA1 != NULL ) ) m_pSHA1 = *pSHA1;
+	m_oSHA1 = oSHA1;
 	
 	m_nRequests		= 0;
-	m_pFragments	= NULL;
+	ASSERT( m_pFragments.IsEmpty() );
 	
 	m_bSelected		= FALSE;
 	
@@ -55,7 +55,7 @@ CUploadFile::CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName,
 
 CUploadFile::~CUploadFile()
 {
-	m_pFragments->DeleteChain();
+	m_pFragments.Delete();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -103,11 +103,11 @@ void CUploadFile::Remove()
 
 void CUploadFile::AddFragment(QWORD nOffset, QWORD nLength)
 {
-	if ( m_pFragments == NULL )
+	if ( m_pFragments.IsEmpty() )
 	{
 		Statistics.Current.Uploads.Files++;
 	}
-	
-	CFileFragment::AddMerge( &m_pFragments, nOffset, nLength );
+
+	m_pFragments.Add( nOffset, nOffset + nLength );
 }
 

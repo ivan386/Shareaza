@@ -264,7 +264,7 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 	}
 	
 	m_nAverageRate[ m_nAveragePos ] = 0;
-	nAverage = nAverage / ULA_SLOTS * 9 / 8;
+/*	nAverage = nAverage / ULA_SLOTS * 9 / 8;
 	nAverage = max( nAverage, Settings.Uploads.ClampdownFloor );
 	
 	if ( nAverage < m_nBandwidth * ( 100 - Settings.Uploads.ClampdownFactor ) / 100 )
@@ -277,7 +277,7 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 			(LPCTSTR)m_sAddress,
 			(LPCTSTR)Settings.SmartVolume( nOld * 8, FALSE, TRUE ),
 			(LPCTSTR)Settings.SmartVolume( m_nBandwidth * 8, FALSE, TRUE ) );
-	}
+	}*/
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -317,14 +317,19 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 
 void CUploadTransfer::ClearHashes()
 {
-	m_bSHA1 = m_bTiger = m_bED2K = FALSE;
+	m_oSHA1.Clear();
+	m_oTiger.Clear();
+	m_oED2K.Clear();
 }
 
 BOOL CUploadTransfer::HashesFromURN(LPCTSTR pszURN)
 {
-	m_bSHA1		|= CSHA::HashFromURN( pszURN, &m_pSHA1 );
-	m_bTiger	|= CTigerNode::HashFromURN( pszURN, &m_pTiger );
-	m_bED2K		|= CED2K::HashFromURN( pszURN, &m_pED2K );
+	CHashSHA1 oSHA1;
+	CHashTiger oTiger;
+	CHashED2K oED2K;
+	if ( oSHA1.FromURN( pszURN ) ) m_oSHA1 = oSHA1;
+	if ( oTiger.FromURN( pszURN ) ) m_oTiger = oTiger;
+	if ( oED2K.FromURN( pszURN ) ) m_oED2K = oED2K;
 	return TRUE;
 }
 
@@ -354,9 +359,8 @@ BOOL CUploadTransfer::RequestComplete(CLibraryFile* pFile)
 {
 	ASSERT( pFile != NULL );
 	
-	if ( m_bSHA1 && pFile->m_bSHA1 && m_pSHA1 != pFile->m_pSHA1 ) return FALSE;
-	if ( m_bTiger && pFile->m_bTiger && m_pTiger != pFile->m_pTiger ) return FALSE;
-	if ( m_bED2K && pFile->m_bED2K && m_pED2K != pFile->m_pED2K ) return FALSE;
+	if ( ( m_oSHA1 != pFile->m_oSHA1 ) || ( m_oTiger != pFile->m_oTiger )
+		|| ( m_oED2K != pFile->m_oED2K ) ) return FALSE;
 	
 	m_sFileName	= pFile->m_sName;
 	m_sFilePath	= pFile->GetPath();
@@ -365,9 +369,9 @@ BOOL CUploadTransfer::RequestComplete(CLibraryFile* pFile)
 	m_sFileTags	= pFile->m_sShareTags;
 	m_bFilePartial = FALSE;
 	
-	if ( m_bSHA1 = pFile->m_bSHA1 ) m_pSHA1 = pFile->m_pSHA1;
-	if ( m_bTiger = pFile->m_bTiger ) m_pTiger = pFile->m_pTiger;
-	if ( m_bED2K = pFile->m_bED2K ) m_pED2K = pFile->m_pED2K;
+	m_oSHA1 = pFile->m_oSHA1;
+	m_oTiger = pFile->m_oTiger;
+	m_oED2K = pFile->m_oED2K;
 	
 	return TRUE;
 }
@@ -376,9 +380,8 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 {
 	ASSERT( pFile != NULL );
 	
-	if ( m_bSHA1 && pFile->m_bSHA1 && m_pSHA1 != pFile->m_pSHA1 ) return FALSE;
-	if ( m_bTiger && pFile->m_bTiger && m_pTiger != pFile->m_pTiger ) return FALSE;
-	if ( m_bED2K && pFile->m_bED2K && m_pED2K != pFile->m_pED2K ) return FALSE;
+	if ( ( m_oSHA1 != pFile->m_oSHA1 ) || ( m_oTiger != pFile->m_oTiger )
+		|| ( m_oED2K != pFile->m_oED2K ) ) return FALSE;
 	
 	m_sFileName	= pFile->m_sRemoteName;
 	m_sFilePath	= pFile->m_sLocalName;
@@ -387,34 +390,31 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	m_bFilePartial = TRUE;
 	m_sFileTags.Empty();
 	
-	if ( m_bSHA1 && ! pFile->m_bSHA1 )
+	if ( m_oSHA1.IsValid() && ! pFile->m_oSHA1.IsValid() )
 	{
-		pFile->m_bSHA1 = TRUE;
-		pFile->m_pSHA1 = m_pSHA1;
+		pFile->m_oSHA1 = m_oSHA1;
 	}
-	else if ( m_bSHA1 = pFile->m_bSHA1 )
+	else
 	{
-		m_pSHA1 = pFile->m_pSHA1;
-	}
-	
-	if ( m_bTiger && ! pFile->m_bTiger )
-	{
-		pFile->m_bTiger = TRUE;
-		pFile->m_pTiger = m_pTiger;
-	}
-	else if ( m_bTiger = pFile->m_bTiger )
-	{
-		m_pTiger = pFile->m_pTiger;
+		m_oSHA1 = pFile->m_oSHA1;
 	}
 	
-	if ( m_bED2K && ! pFile->m_bED2K )
+	if ( m_oTiger.IsValid() && ! pFile->m_oTiger.IsValid() )
 	{
-		pFile->m_bED2K = TRUE;
-		pFile->m_pED2K = m_pED2K;
+		pFile->m_oTiger = m_oTiger;
 	}
-	else if ( m_bED2K = pFile->m_bED2K )
+	else
 	{
-		m_pED2K = pFile->m_pED2K;
+		m_oTiger = pFile->m_oTiger;
+	}
+	
+	if ( m_oED2K.IsValid() && ! pFile->m_oED2K.IsValid() )
+	{
+		pFile->m_oED2K = m_oED2K;
+	}
+	else
+	{
+		m_oED2K = pFile->m_oED2K;
 	}
 	
 	return TRUE;
@@ -433,8 +433,7 @@ void CUploadTransfer::StartSending(int nState)
 
 void CUploadTransfer::AllocateBaseFile()
 {
-	m_pBaseFile =	UploadFiles.GetFile( this, m_bSHA1 ? &m_pSHA1 : NULL,
-					m_sFileName, m_sFilePath, m_nFileSize );
+	m_pBaseFile = UploadFiles.GetFile( this, m_oSHA1, m_sFileName, m_sFilePath, m_nFileSize );
 }
 
 void CUploadTransfer::CloseFile()

@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "Hashes.h"
 #include "HttpRequest.h"
 
 class CDownload;
@@ -50,7 +51,8 @@ public:
 	static void		SendUpdate(CDownloadBase* pDownload);
 	static void		SendCompleted(CDownloadBase* pDownload);
 	static void		SendStopped(CDownloadBase* pDownload);
-	static CString	Escape(SHA1* pSHA1);
+	static CString	Escape(const CHashBT &oBTH);
+	static CString	Escape(const CGUIDBT &oGUIDBT);
 protected:
 	void	Process(BOOL bRequest);
 	BOOL	Process(CBENode* pRoot);

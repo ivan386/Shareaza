@@ -21,140 +21,94 @@ without express or implied warranty of any kind.
 
 These notices must be retained in any copies of any part of this
 documentation and/or software.
- */
+*/
+
+//
+// MD5.cpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 #include "StdAfx.h"
-//#include "Shareaza.h"
 #include "MD5.h"
+#include "asm/common.inc"
 
-//////////////////////////////////////////////////////////////////////
-// CMD5 construction
+extern "C" void __stdcall MD5_Add1_p5	(CMD5* pMD5, LPCVOID pData);
+extern "C" void __stdcall MD5_Add1_MMX	(CMD5* pMD5, LPCVOID pData);
+extern "C" void __stdcall MD5_Add1_SSE2	(CMD5* pMD5, LPCVOID pData);
+extern "C" void __stdcall MD5_Add2_p5	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2);
+extern "C" void __stdcall MD5_Add2_MMX	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2);
+extern "C" void __stdcall MD5_Add2_SSE2	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2);
+extern "C" void __stdcall MD5_Add3_p5	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3);
+extern "C" void __stdcall MD5_Add3_MMX	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3);
+extern "C" void __stdcall MD5_Add3_SSE2	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3);
+extern "C" void __stdcall MD5_Add4_p5	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4);
+extern "C" void __stdcall MD5_Add4_MMX	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4);
+extern "C" void __stdcall MD5_Add4_SSE2	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4);
+extern "C" void __stdcall MD5_Add5_p5	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5);
+extern "C" void __stdcall MD5_Add5_MMX	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5);
+extern "C" void __stdcall MD5_Add5_SSE2	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5);
+extern "C" void __stdcall MD5_Add6_p5	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5, CMD5* pMD56, LPCVOID pData6);
+extern "C" void __stdcall MD5_Add6_MMX	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5, CMD5* pMD56, LPCVOID pData6);
+extern "C" void __stdcall MD5_Add6_SSE2	(CMD5* pMD51, LPCVOID pData1, CMD5* pMD52, LPCVOID pData2, CMD5* pMD53, LPCVOID pData3, CMD5* pMD54, LPCVOID pData4, CMD5* pMD55, LPCVOID pData5, CMD5* pMD56, LPCVOID pData6);
 
-CMD5::CMD5()
+BYTE CMD5::MD5_PADDING[64] =
 {
-	Reset();
-}
-
-CMD5::~CMD5()
-{
-}
-
-static unsigned char MD5_PADDING[64] = {
-  0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-extern "C" MD5_Add_p5(CMD5*, LPCVOID pData, DWORD nLength);
+CMD5::tpAdd1 CMD5::pAdd1 = &MD5_Add1_p5;
+CMD5::tpAdd2 CMD5::pAdd2 = &MD5_Add2_p5;
+CMD5::tpAdd3 CMD5::pAdd3 = &MD5_Add3_p5;
+CMD5::tpAdd4 CMD5::pAdd4 = &MD5_Add4_p5;
+CMD5::tpAdd5 CMD5::pAdd5 = &MD5_Add5_p5;
+CMD5::tpAdd6 CMD5::pAdd6 = &MD5_Add6_p5;
 
-//////////////////////////////////////////////////////////////////////
-// CMD5 reset m_nState
-
-void CMD5::Reset()
+void CMD5::Init()
 {
-	m_nCount[0] = m_nCount[1] = 0;
-	/* Load magic initialization constants. */
-	m_nState[0] = 0x67452301;
-	m_nState[1] = 0xefcdab89;
-	m_nState[2] = 0x98badcfe;
-	m_nState[3] = 0x10325476;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 add data
-
-void CMD5::Add(LPCVOID pData, DWORD nLength)
-{
-	MD5_Add_p5(this, pData, nLength);
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 finish hash operation
-
-void CMD5::Finish()
-{
-	unsigned int bits[2], index = 0;
-	// Save number of bits
-	bits[1] = ( m_nCount[1] << 3 ) + ( m_nCount[0] >> 29);
-	bits[0] = m_nCount[0] << 3;
-	// Pad out to 56 mod 64.
-	index = (unsigned int)(m_nCount[0] & 0x3f);
-	MD5_Add_p5(this, MD5_PADDING, (index < 56) ? (56 - index) : (120 - index) );
-	// Append length (before padding)
-	MD5_Add_p5(this, bits, 8 );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 get hash bytes
-
-void CMD5::GetHash(MD5* pHash)
-{
-	/* Store m_nState in digest */
-	memcpy(pHash, m_nState, 16);
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 convert hash to string
-
-CString CMD5::HashToString(const MD5* pHash, BOOL bURN)
-{
-	CString str;
-	
-	str.Format( bURN ?
-		_T("md5:%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x") :
-		_T("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"),
-		pHash->n[0], pHash->n[1], pHash->n[2], pHash->n[3],
-		pHash->n[4], pHash->n[5], pHash->n[6], pHash->n[7],
-		pHash->n[8], pHash->n[9], pHash->n[10], pHash->n[11],
-		pHash->n[12], pHash->n[13], pHash->n[14], pHash->n[15] );
-	
-	return str;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 parse from string
-
-BOOL CMD5::HashFromString(LPCTSTR pszHash, MD5* pMD5)
-{
-	if ( _tcslen( pszHash ) < 32 ) return FALSE;
-	
-	BYTE* pOut = (BYTE*)pMD5;
-	
-	for ( int nPos = 16 ; nPos ; nPos--, pOut++ )
+	if ( SupportsSSE2() )
 	{
-		if ( *pszHash >= '0' && *pszHash <= '9' )
-			*pOut = ( *pszHash - '0' ) << 4;
-		else if ( *pszHash >= 'A' && *pszHash <= 'F' )
-			*pOut = ( *pszHash - 'A' + 10 ) << 4;
-		else if ( *pszHash >= 'a' && *pszHash <= 'f' )
-			*pOut = ( *pszHash - 'a' + 10 ) << 4;
-		pszHash++;
-		if ( *pszHash >= '0' && *pszHash <= '9' )
-			*pOut |= ( *pszHash - '0' );
-		else if ( *pszHash >= 'A' && *pszHash <= 'F' )
-			*pOut |= ( *pszHash - 'A' + 10 );
-		else if ( *pszHash >= 'a' && *pszHash <= 'f' )
-			*pOut |= ( *pszHash - 'a' + 10 );
-		pszHash++;
+		pAdd1 = &MD5_Add1_SSE2;
+		pAdd2 = &MD5_Add2_SSE2;
+		pAdd3 = &MD5_Add3_SSE2;
+		pAdd4 = &MD5_Add4_SSE2;
+		pAdd5 = &MD5_Add5_SSE2;
+		pAdd6 = &MD5_Add6_SSE2;
 	}
-	
-	return TRUE;
-}
-
-BOOL CMD5::HashFromURN(LPCTSTR pszHash, MD5* pMD5)
-{
-	if ( pszHash == NULL ) return FALSE;
-	
-	int nLen = _tcslen( pszHash );
-	
-	if ( nLen >= 8 + 32 && _tcsnicmp( pszHash, _T("urn:md5:"), 8 ) == 0 )
+	else if ( SupportsMMX() )
 	{
-		return HashFromString( pszHash + 8, pMD5 );
+		pAdd1 = &MD5_Add1_MMX;
+		pAdd2 = &MD5_Add2_MMX;
+		pAdd3 = &MD5_Add3_MMX;
+		pAdd4 = &MD5_Add4_MMX;
+		pAdd5 = &MD5_Add5_MMX;
+		pAdd6 = &MD5_Add6_MMX;
 	}
-	else if ( nLen >= 4 + 32 && _tcsnicmp( pszHash, _T("md5:"), 4 ) == 0 )
+	else
 	{
-		return HashFromString( pszHash + 4, pMD5 );
+		pAdd1 = &MD5_Add1_p5;
+		pAdd2 = &MD5_Add2_p5;
+		pAdd3 = &MD5_Add3_p5;
+		pAdd4 = &MD5_Add4_p5;
+		pAdd5 = &MD5_Add5_p5;
+		pAdd6 = &MD5_Add6_p5;
 	}
-	
-	return FALSE;
 }

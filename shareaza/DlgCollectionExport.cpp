@@ -152,32 +152,22 @@ CXMLElement* CCollectionExportDlg::CreateXML()
 		
 		CXMLElement* pFileRoot = pContents->AddElement( _T("file") );
 		
-		if ( pFile->m_bSHA1 && pFile->m_bTiger )
+		if ( pFile->m_oSHA1.IsValid() && pFile->m_oTiger.IsValid() )
 		{
 			pFileRoot->AddElement( _T("id") )->SetValue(
-				_T("urn:bitprint:") + CSHA::HashToString( &pFile->m_pSHA1 ) + '.' +
-				CTigerNode::HashToString( &pFile->m_pTiger ) );
+				_T("urn:bitprint:") + pFile->m_oSHA1.ToString() + '.' +
+				pFile->m_oTiger.ToString() );
 		}
-		else if ( pFile->m_bSHA1 )
+		else if ( pFile->m_oSHA1.IsValid() )
 		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+			pFileRoot->AddElement( _T("id") )->SetValue( pFile->m_oSHA1.ToURN() );
 		}
-		else if ( pFile->m_bTiger )
+		else if ( pFile->m_oTiger.IsValid() )
 		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				CTigerNode::HashToString( &pFile->m_pTiger, TRUE ) );
+			pFileRoot->AddElement( _T("id") )->SetValue( pFile->m_oTiger.ToURN() );
 		}
-		if ( pFile->m_bMD5 )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				CMD5::HashToString( &pFile->m_pMD5, TRUE ) );
-		}
-		if ( pFile->m_bED2K )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
-		}
+		if ( pFile->m_oMD5.IsValid() ) pFileRoot->AddElement( _T("id") )->SetValue( pFile->m_oMD5.ToURN() );
+		if ( pFile->m_oED2K.IsValid() ) pFileRoot->AddElement( _T("id") )->SetValue( pFile->m_oED2K.ToURN() );
 		
 		CXMLElement* pDescription = pFileRoot->AddElement( _T("description") );
 		pDescription->AddElement( _T("name") )->SetValue( pFile->m_sName );

@@ -74,7 +74,7 @@ BOOL CAlbumTipCtrl::OnPrepare()
 	
 	m_nIcon32 = SHI_FOLDER_OPEN;
 	m_nIcon48 = SHI_FOLDER_OPEN;
-	m_bCollection = pFolder->m_bCollSHA1;
+	m_bCollection = pFolder->m_oCollSHA1.IsValid();
 	
 	// Metadata
 	

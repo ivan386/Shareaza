@@ -47,6 +47,10 @@
 #include "Emoticons.h"
 #include "ShellIcons.h"
 #include "Skin.h"
+#include "MD4.h"
+#include "MD5.h"
+#include "SHA.h"
+#include "TigerTree.h"
 
 #include "WndMain.h"
 #include "WndSystem.h"
@@ -66,7 +70,6 @@ BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
 END_MESSAGE_MAP()
 
 CShareazaApp theApp;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
@@ -125,6 +128,10 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
+		CMD4::Init();
+		CMD5::Init();
+		CSHA1::Init();
+		CTigerTree::Init();
 	dlgSplash->Step( _T("P2P URIs") );
 		CShareazaURL::Register();
 	dlgSplash->Step( _T("Shell Icons") );
@@ -817,3 +824,62 @@ void CShareazaApp::DebugState(BOOL bState)
 	dc.FillSolidRect( &rc, bState ? RGB( 255, 0, 0 ) : RGB( 255, 255, 255 ) );
 	ReleaseDC( 0, dc.Detach() );
 }
+
+
+class A
+{
+public:
+	int   irgendwasA;
+};
+
+class B
+{
+public:
+	int   irgendwasB;
+	void  TuWas();
+};
+
+A theA;
+
+void B::TuWas()
+{
+	__asm
+	{
+	   mov   eax, this
+	   mov   ebx, [ eax + irgendwasB ]				// klappt mit MS VC++
+	   mov	 ebx, [ eax + B::irgendwasB ]			// geht auch und besser lesbar
+													// (es könnte ja noch mehr irgendwasB in anderen
+													// namespaces geben)
+/* Intel C+ streikt mit beiden anweisungen, für ihn geht:
+       mov   abx, [ eax + B.irgendwasB ]
+   das klappt aber nicht mit MS VC++; also kann man folgendes tun: */
+#if INTEL_COMPILER > 0
+#define asm_B_irgendwasB B.irgendwasB
+#else
+#define asm_B_irgendwasB B::irgendwasB
+#endif
+       mov   ebx, [ eax + asm_B_irgendwasB ]
+// das ist nicht unbedingt bequem, aber sicher
+
+// aber:
+	   mov   eax, offset theA
+	   mov   ebx, [ eax + A::irgendwasA ]		    // mit MS VC++
+
+// aber NICHT - mit Intel C++
+//     mov   ebx, [ eax + A.irgendwasA ]
+// offenbar kann diese Notation nur verwendet werden, wenn irgendwasA
+// sowieso schon im scope der funtion liegt
+	}
+}
+ /* man kann höchtens noch - in der declaration, einfügen:
+
+class A
+{
+	int   irgendwasA;
+#define asm_A_irgendwasA 0
+};
+
+der große nachteil ist, dass man die offsets hier genau kennen muss, falls A
+eine abgeleitet klasse ist, verändert sich der offset nat. auch, wenn die basisklasse
+verändert wird - das ist kaum praktikabel wenn mehrere entwickler beteiligt sind
+*/

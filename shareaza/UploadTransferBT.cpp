@@ -60,8 +60,8 @@ CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload) :
 	m_bChoked			= TRUE;
 	m_nRandomUnchoke	= 0;
 	
-	m_pRequested		= NULL;
-	m_pServed			= NULL;
+	ASSERT( m_pRequested.IsEmpty() );
+	ASSERT( m_pServed.IsEmpty() );
 	
 	RequestPartial( m_pDownload );
 	m_pDownload->AddUpload( this );
@@ -71,8 +71,8 @@ CUploadTransferBT::~CUploadTransferBT()
 {
 	ASSERT( m_pClient == NULL );
 	ASSERT( m_pDownload == NULL );
-	ASSERT( m_pRequested == NULL );
-	ASSERT( m_pServed == NULL );
+	ASSERT( m_pRequested.IsEmpty() );
+	ASSERT( m_pServed.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -83,10 +83,8 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	if ( m_bChoked == bChoke ) return;
 	m_bChoked = bChoke;
 	
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
-	m_pServed->DeleteChain();
-	m_pServed = NULL;
+	m_pRequested.Delete();
+	m_pServed.Delete();
 	
 	if ( bChoke ) m_nState = upsReady;
 	
@@ -113,10 +111,8 @@ void CUploadTransferBT::Close(BOOL bMessage)
 	if ( m_pDownload != NULL ) m_pDownload->RemoveUpload( this );
 	m_pDownload = NULL;
 	
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
-	m_pServed->DeleteChain();
-	m_pServed = NULL;
+	m_pRequested.Delete();
+	m_pServed.Delete();
 	
 	CUploadTransfer::Close( bMessage );
 }
@@ -155,8 +151,7 @@ BOOL CUploadTransferBT::OnRun()
 BOOL CUploadTransferBT::OnInterested(CBTPacket* pPacket)
 {
 	if ( m_bInterested ) return TRUE;
-	m_bInterested = TRUE;
-	return TRUE;
+	return m_bInterested = TRUE;
 }
 
 BOOL CUploadTransferBT::OnUninterested(CBTPacket* pPacket)
@@ -196,15 +191,9 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		Close();
 		return FALSE;
 	}
-	
-	for ( CFileFragment* pFragment = m_pRequested ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset == nOffset && pFragment->m_nLength == nLength ) return TRUE;
-	}
-	
-	CFileFragment* pNew = CFileFragment::New( NULL, m_pRequested, nOffset, nLength );
-	if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = pNew;
-	m_pRequested = pNew;
+
+	if ( m_pRequested.ContainsRange( nOffset, nOffset + nLength ) ) return TRUE;
+	m_pRequested.Add( nOffset, nOffset + nLength );
 	
 	if ( m_nState == upsReady )
 	{
@@ -227,7 +216,7 @@ BOOL CUploadTransferBT::OnCancel(CBTPacket* pPacket)
 	
 	nOffset += nIndex * m_pDownload->m_pTorrent.m_nBlockSize;
 	
-	CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
+	m_pRequested.Subtract( nOffset, nOffset + nLength );
 	
 	return TRUE;
 }
@@ -262,31 +251,19 @@ BOOL CUploadTransferBT::ServeRequests()
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->m_pOutput->m_nLength > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
 	
-	while ( m_pRequested != NULL && m_nLength == SIZE_UNKNOWN )
+	if ( m_pRequested.GetFirst( m_nOffset, m_nLength ) )
 	{
-		CFileFragment* pFragment = m_pRequested;
-		m_pRequested = pFragment->m_pNext;
-		if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = NULL;
-		
-		for ( CFileFragment* pOld = m_pServed ; pOld ; pOld = pOld->m_pNext )
+		if ( m_pDownload && m_pDownload->m_pFile && ! m_pDownload->m_bSeeding )
 		{
-			if ( pOld->m_nOffset == pFragment->m_nOffset && pOld->m_nLength == pFragment->m_nLength ) break;
+			while ( ! ( m_pDownload->m_oVerified.ContainsRange( m_nOffset, m_nOffset + m_nLength ) ) )
+			{
+				if ( ! m_pRequested.GetFirst( m_nOffset, m_nLength ) )
+				{
+					SetChoke( TRUE );
+				}
+			}
 		}
-		
-		if ( pOld == NULL &&
-			 pFragment->m_nOffset < m_nFileSize &&
-			 pFragment->m_nOffset + pFragment->m_nLength <= m_nFileSize )
-		{
-			m_nOffset	= pFragment->m_nOffset;
-			m_nLength	= pFragment->m_nLength;
-			m_nPosition	= 0;
-		}
-		
-		pFragment->DeleteThis();
-	}
-	
-	if ( m_nLength < SIZE_UNKNOWN )
-	{
+		m_nPosition = 0;
 		if ( ! OpenFile() ) return FALSE;
 		
 		theApp.Message( MSG_DEBUG, IDS_UPLOAD_CONTENT,
@@ -300,12 +277,10 @@ BOOL CUploadTransferBT::ServeRequests()
 		
 		if ( ! m_pDiskFile->Read( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
 
-		pHeader->nLength	= SWAP_LONG( 1 + 8 + (DWORD)m_nLength );
+		pHeader->nLength	= _byteswap_ulong( 1 + 8 + (DWORD)m_nLength );
 		pHeader->nType		= BT_PACKET_PIECE;
-		pHeader->nPiece		= (DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize );
-		pHeader->nOffset	= (DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize );
-		pHeader->nPiece		= SWAP_LONG( pHeader->nPiece );
-		pHeader->nOffset	= SWAP_LONG( pHeader->nOffset );
+		pHeader->nPiece		= _byteswap_ulong( (DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize ) );
+		pHeader->nOffset	= _byteswap_ulong( (DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize ) );
 		
 		pBuffer->m_nLength += sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength;
 		m_pClient->Send( NULL );
@@ -313,9 +288,9 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_nPosition += m_nLength;
 		m_nUploaded += m_nLength;
 		m_pDownload->m_nTorrentUploaded += m_nLength;
-		Statistics.Current.Uploads.Volume += ( m_nLength / 1024 );
+		Statistics.Current.Uploads.Volume += m_nLength;
 		
-		m_pServed = CFileFragment::New( NULL, m_pServed, m_nOffset, m_nLength );
+		m_pServed.Add( m_nOffset, m_nOffset + m_nLength );
 		m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 		
 		m_nState	= upsUploading;

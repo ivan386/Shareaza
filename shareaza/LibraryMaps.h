@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CLibrary;
 class CLibraryFile;
 class CQuerySearch;
@@ -60,9 +62,9 @@ public:
 	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileBySHA1(const SHA1* pSHA1, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByTiger(const TIGEROOT* pTiger, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByED2K(const MD4* pED2K, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileBySHA1(const CHashSHA1 &oSHA1, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByTiger(const CHashTiger &oTiger, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByED2K(const CHashED2K &oED2K, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 protected:
 	void			Clear();
 	DWORD			AllocateIndex();

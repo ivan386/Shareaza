@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CQuerySearch;
 class CBTInfo;
 
@@ -40,16 +42,11 @@ public:
 public:
 	int			m_nAction;
 public:
-	BOOL		m_bSHA1;
-	SHA1		m_pSHA1;
-	BOOL		m_bTiger;
-	TIGEROOT	m_pTiger;
-	BOOL		m_bMD5;
-	MD5			m_pMD5;
-	BOOL		m_bED2K;
-	MD4			m_pED2K;
-	BOOL		m_bBTH;
-	SHA1		m_pBTH;
+	CManagedSHA1	m_oSHA1;
+	CManagedTiger	m_oTiger;
+	CManagedMD5		m_oMD5;
+	CManagedED2K	m_oED2K;
+	CManagedBTH		m_oBTH;
 public:
 	CString		m_sName;
 	BOOL		m_bSize;

@@ -82,7 +82,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 	if ( nRead != sizeof(pBIH) ) return E_FAIL;
 	
 	if ( pBFH.bfType != 'MB' ) return E_FAIL;
-	if ( pBIH.biBitCount != 8 && pBIH.biBitCount != 24 ) return E_FAIL;
+	if ( pBIH.biBitCount < 8 || ( ( 32 % pBIH.biBitCount ) && pBIH.biBitCount != 24 )  ) return E_FAIL;
 	
 	nWidth	= (int)pBIH.biWidth;
 	nHeight	= (int)pBIH.biHeight;
@@ -136,48 +136,110 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 		}
 
 
-		if ( pBIH.biBitCount == 24 )
+		if ( pBIH.biBitCount == 32 )		//Same as RGB888 (but ignore alpha-channel (Highest order byte)
 		{
-			__asm {
-			mov eax, nOutPitch
-			mov edi, pData
-			mul nY
-			add edi, eax
-			mov esi, pRowBuf
-			mov ecx, nWidth
-			loop1: mov ax, [esi]
-			mov bl, [esi+2]
-			mov [edi+1], ah
-			mov [edi+2], al
-			mov [edi], bl
-			add esi, 3
-			add edi, 3
-			dec ecx
-			jnz loop1
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pRowBuf
+				mov		ecx, nWidth
+				lea		esi, [ esi + ecx*4 ]
+				lea		edi, [ edi - 3 ]
+				neg		ecx
+loop32:			add		edi, 3
+				mov		al, [ esi + ecx*4 ]
+				mov		ah, [ esi + ecx*4 + 1 ]
+				mov		bl, [ esi + ecx*4 + 2 ]
+				inc		ecx
+				mov		[ edi ], bl
+				mov		[ edi + 1 ], ah
+				mov		[ edi + 2 ], al
+				jnz		loop32
 			}
 		}
-		else 
+		else if ( pBIH.biBitCount == 24 )
 		{
-			__asm {
-			mov eax, nOutPitch
-			mul nY
-			mov edi, pData
-			add edi, eax
-			mov esi, pRowBuf
-			mov edx, nWidth
-			xor eax, eax
-			_loop: mov al, [esi]
-			inc esi
-			mov ebx, [pPalette+eax*4]
-			bswap ebx
-			mov [edi], bh
-			shr ebx, 16
-			mov [edi+1], bx
-			add edi, 3
-			dec edx
-			jnz _loop
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pRowBuf
+				mov		ecx, nWidth
+				lea		ecx, [ ecx + ecx*2 ]
+				lea		esi, [ esi + ecx - 3]
+				lea		edi, [ edi + ecx - 3]
+				neg		ecx
+loop24:			add		ecx, 3
+				mov		al, [ esi + ecx ]
+				mov		ah, [ esi + ecx + 1 ]
+				mov		bl, [ esi + ecx + 2 ]
+				mov		[ edi + ecx ], bl
+				mov		[ edi + ecx + 1 ], ah
+				mov		[ edi + ecx + 2 ], al
+				jnz		loop24
 			}
 		}
+		else if ( pBIH.biBitCount == 16 )  //RGB555
+		{
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pRowBuf
+				mov		ecx, nWidth
+				lea		esi, [ esi + ecx*2 ]
+				lea		edi, [ edi - 3 ]
+				neg		ecx
+loop16:			add		edi, 3
+				mov		ax, [ esi + ecx*2 ]
+				mov		bx, ax
+				mov		dx, ax
+				add		ax, ax					// red
+				shl		bx, 6					// green
+				shl		dx, 11					// blue
+				and		ah, 0xf8
+				and		bh, 0xf8
+				and		dh, 0xf8
+				inc		ecx
+				mov		[ edi ], ah
+				mov		[ edi + 1 ], bh
+				mov		[ edi + 2 ], dh
+				jnz		loop16
+			}
+		}
+		else if ( pBIH.biBitCount == 8 )
+		{
+			__asm
+			{
+				mov		eax, nOutPitch
+				mul		nY
+				mov		edi, pData
+				add		edi, eax
+				mov		esi, pRowBuf
+				mov		ecx, nWidth
+				lea		ecx, [ ecx + ecx*2 ]
+				lea		edi, [ edi + ecx ]
+				neg		ecx
+				xor		eax, eax
+loop8:			mov		al, [ esi ]
+				inc		esi
+				mov		ebx, [ pPalette + eax*4 ]
+				bswap	ebx
+				mov		[ edi + ecx ], bh
+				shr		ebx, 16
+				mov		[ edi + ecx + 1], bx
+				add		ecx, 3
+				jnz		loop8
+			}
+		}
+		else ASSERT( FALSE );			// unsupported
 	}
 	SafeArrayUnaccessData( *ppImage );
 
@@ -210,7 +272,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 	pSource += sizeof(pBIH);
 	nMemory -= sizeof(pBIH);
 	
-	if ( pBFH.bfType != 'MB' || ( pBIH.biBitCount != 8 && pBIH.biBitCount != 24 ) )
+	if ( pBFH.bfType != 'MB' || pBIH.biBitCount < 8 || ( ( 32 % pBIH.biBitCount ) && pBIH.biBitCount != 24 ) )
 	{
 		SafeArrayUnaccessData( pMemory );
 		return E_FAIL;
@@ -280,46 +342,110 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 		pSource += nInPitch;
 		nMemory -= nInPitch;
 
-		if ( pBIH.biBitCount == 24 )
-		__asm {
-			mov eax, nOutPitch
-			mov edi, pData
-			mul nY
-			add edi, eax
-			mov esi, pSource
-			mov ecx, nWidth
-			loop1: mov ax, [esi]
-			mov bl, [esi+2]
-			mov [edi+1], ah
-			mov [edi+2], al
-			mov [edi], bl
-			add esi, 3
-			add edi, 3
-			dec ecx
-			jnz loop1
-		}
-		else 
+		if ( pBIH.biBitCount == 32 )		//Same as RGB888 (but ignore alpha-channel (Highest order byte)
 		{
-		__asm {
-			mov eax, nOutPitch
-			mul nY
-			mov edi, pData
-			add edi, eax
-			mov esi, pSource
-			mov edx, nWidth
-			xor eax, eax
-			_loop: mov al, [esi]
-			inc esi
-			mov ebx, [pPalette+eax*4]
-			bswap ebx
-			mov [edi], bh
-			shr ebx, 16
-			mov [edi+1], bx
-			add edi, 3
-			dec edx
-			jnz _loop
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pSource
+				mov		ecx, nWidth
+				lea		esi, [ esi + ecx*4 ]
+				lea		edi, [ edi - 3 ]
+				neg		ecx
+loop32:			add		edi, 3
+				mov		al, [ esi + ecx*4 ]
+				mov		ah, [ esi + ecx*4 + 1 ]
+				mov		bl, [ esi + ecx*4 + 2 ]
+				inc		ecx
+				mov		[ edi ], bl
+				mov		[ edi + 1 ], ah
+				mov		[ edi + 2 ], al
+				jnz		loop32
+			}
 		}
+		else if ( pBIH.biBitCount == 24 )
+		{
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pSource
+				mov		ecx, nWidth
+				lea		ecx, [ ecx + ecx*2 ]
+				lea		esi, [ esi + ecx - 3]
+				lea		edi, [ edi + ecx - 3]
+				neg		ecx
+loop24:			add		ecx, 3
+				mov		al, [ esi + ecx ]
+				mov		ah, [ esi + ecx + 1 ]
+				mov		bl, [ esi + ecx + 2 ]
+				mov		[ edi + ecx ], bl
+				mov		[ edi + ecx + 1 ], ah
+				mov		[ edi + ecx + 2 ], al
+				jnz		loop24
+			}
 		}
+		else if ( pBIH.biBitCount == 16 )  //RGB555
+		{
+			__asm
+			{
+				mov		eax, nOutPitch
+				mov		edi, pData
+				mul		nY
+				add		edi, eax
+				mov		esi, pSource
+				mov		ecx, nWidth
+				lea		esi, [ esi + ecx*2 ]
+				lea		edi, [ edi - 3 ]
+				neg		ecx
+loop16:			add		edi, 3
+				mov		ax, [ esi + ecx*2 ]
+				mov		bx, ax
+				mov		dx, ax
+				add		ax, ax					// red
+				shl		bx, 6					// green
+				shl		dx, 11					// blue
+				and		ah, 0xf8
+				and		bh, 0xf8
+				and		dh, 0xf8
+				inc		ecx
+				mov		[ edi ], ah
+				mov		[ edi + 1 ], bh
+				mov		[ edi + 2 ], dh
+				jnz		loop16
+			}
+		}
+		else if ( pBIH.biBitCount == 8 )
+		{
+			__asm
+			{
+				mov		eax, nOutPitch
+				mul		nY
+				mov		edi, pData
+				add		edi, eax
+				mov		esi, pSource
+				mov		ecx, nWidth
+				lea		ecx, [ ecx + ecx*2 ]
+				lea		edi, [ edi + ecx ]
+				neg		ecx
+				xor		eax, eax
+loop8:			mov		al, [ esi ]
+				inc		esi
+				mov		ebx, [ pPalette + eax*4 ]
+				bswap	ebx
+				mov		[ edi + ecx ], bh
+				shr		ebx, 16
+				mov		[ edi + ecx + 1], bx
+				add		ecx, 3
+				jnz		loop8
+			}
+		}
+		else ASSERT( FALSE );			// unsupported
 	}
 	SafeArrayUnaccessData( *ppImage );
 	SafeArrayUnaccessData( pMemory );

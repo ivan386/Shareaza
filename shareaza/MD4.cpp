@@ -25,66 +25,93 @@
 	documentation and/or software.  
 */
 
+//
+// MD4.cpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
 #include "StdAfx.h"
-//#include "Shareaza.h"
 #include "MD4.h"
+#include "asm/common.inc"
 
-CMD4::CMD4()
+
+extern "C" void __stdcall MD4_Add1_p5	(CMD4* pMD4, LPCVOID pData);
+extern "C" void __stdcall MD4_Add1_MMX	(CMD4* pMD4, LPCVOID pData);
+extern "C" void __stdcall MD4_Add1_SSE2	(CMD4* pMD4, LPCVOID pData);
+extern "C" void __stdcall MD4_Add2_p5	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2);
+extern "C" void __stdcall MD4_Add2_MMX	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2);
+extern "C" void __stdcall MD4_Add2_SSE2	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2);
+extern "C" void __stdcall MD4_Add3_p5	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3);
+extern "C" void __stdcall MD4_Add3_MMX	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3);
+extern "C" void __stdcall MD4_Add3_SSE2	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3);
+extern "C" void __stdcall MD4_Add4_p5	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4);
+extern "C" void __stdcall MD4_Add4_MMX	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4);
+extern "C" void __stdcall MD4_Add4_SSE2	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4);
+extern "C" void __stdcall MD4_Add5_p5	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5);
+extern "C" void __stdcall MD4_Add5_MMX	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5);
+extern "C" void __stdcall MD4_Add5_SSE2	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5);
+extern "C" void __stdcall MD4_Add6_p5	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5, CMD4* pMD46, LPCVOID pData6);
+extern "C" void __stdcall MD4_Add6_MMX	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5, CMD4* pMD46, LPCVOID pData6);
+extern "C" void __stdcall MD4_Add6_SSE2	(CMD4* pMD41, LPCVOID pData1, CMD4* pMD42, LPCVOID pData2, CMD4* pMD43, LPCVOID pData3, CMD4* pMD44, LPCVOID pData4, CMD4* pMD45, LPCVOID pData5, CMD4* pMD46, LPCVOID pData6);
+
+BYTE CMD4::MD4_PADDING[64] =
 {
-	Reset();
-}
-
-CMD4::~CMD4()
-{
-}
-
-static unsigned char MD4_PADDING[64] = {
-	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-extern "C" MD4_Add_p5(CMD4*, LPCVOID pData, DWORD nLength);
+CMD4::tpAdd1 CMD4::pAdd1 = &MD4_Add1_p5;
+CMD4::tpAdd2 CMD4::pAdd2 = &MD4_Add2_p5;
+CMD4::tpAdd3 CMD4::pAdd3 = &MD4_Add3_p5;
+CMD4::tpAdd4 CMD4::pAdd4 = &MD4_Add4_p5;
+CMD4::tpAdd5 CMD4::pAdd5 = &MD4_Add5_p5;
+CMD4::tpAdd6 CMD4::pAdd6 = &MD4_Add6_p5;
 
-// MD4 initialization. Begins an MD4 operation, writing a new context
-
-void CMD4::Reset()
+void CMD4::Init()
 {
-	// Clear counts
-	m_nCount[0] = m_nCount[1] = 0;
-	// Load magic initialization constants
-	m_nState[0] = 0x67452301;
-	m_nState[1] = 0xefcdab89;
-	m_nState[2] = 0x98badcfe;
-	m_nState[3] = 0x10325476;
-}
-
-// Fetch hash
-void CMD4::GetHash(MD4* pHash)
-{
-	memcpy(pHash->b, m_nState, 16);
-}
-
-// MD4 block update operation. Continues an MD4 message-digest
-//     operation, processing another message block, and updating the
-//     context
-void CMD4::Add(LPCVOID pData, DWORD nLength)
-{
-	MD4_Add_p5(this, pData, nLength);
-}
-
-// MD4 finalization. Ends an MD4 message-digest operation, writing the
-//     the message digest and zeroizing the context.
-
-void CMD4::Finish()
-{
-	unsigned int bits[2], index = 0;
-	// Save number of bits
-	bits[1] = ( m_nCount[1] << 3 ) + ( m_nCount[0] >> 29);
-	bits[0] = m_nCount[0] << 3;
-	// Pad out to 56 mod 64.
-	index = (unsigned int)(m_nCount[0] & 0x3f);
-	MD4_Add_p5(this, MD4_PADDING, (index < 56) ? (56 - index) : (120 - index) );
-	// Append length (before padding)
-	MD4_Add_p5(this, bits, 8 );
+	if ( SupportsSSE2() )
+	{
+		pAdd1 = &MD4_Add1_SSE2;
+		pAdd2 = &MD4_Add2_SSE2;
+		pAdd3 = &MD4_Add3_SSE2;
+		pAdd4 = &MD4_Add4_SSE2;
+		pAdd5 = &MD4_Add5_SSE2;
+		pAdd6 = &MD4_Add6_SSE2;
+	}
+	else if ( SupportsMMX() )
+	{
+		pAdd1 = &MD4_Add1_MMX;
+		pAdd2 = &MD4_Add2_MMX;
+		pAdd3 = &MD4_Add3_MMX;
+		pAdd4 = &MD4_Add4_MMX;
+		pAdd5 = &MD4_Add5_MMX;
+		pAdd6 = &MD4_Add6_MMX;
+	}
+	else
+	{
+		pAdd1 = &MD4_Add1_p5;
+		pAdd2 = &MD4_Add2_p5;
+		pAdd3 = &MD4_Add3_p5;
+		pAdd4 = &MD4_Add4_p5;
+		pAdd5 = &MD4_Add5_p5;
+		pAdd6 = &MD4_Add6_p5;
+	}
 }

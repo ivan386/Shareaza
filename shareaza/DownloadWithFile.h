@@ -25,9 +25,9 @@
 #pragma once
 
 #include "DownloadWithTransfers.h"
+#include "FileFragment.h"
 
 class CFragmentedFile;
-class CFileFragment;
 
 
 class CDownloadWithFile : public CDownloadWithTransfers
@@ -51,8 +51,7 @@ public:
 	DWORD			GetTimeRemaining() const;
 	CString			GetDisplayName() const;
 public:
-	CFileFragment*	GetFirstEmptyFragment() const;
-	CFileFragment*	GetPossibleFragments(CFileFragment* pAvailable, QWORD* pnLargestOffset = NULL, QWORD* pnLargestLength = NULL);
+	void			GetPossibleFragments(CFileFragmentList& Possible, CFileFragmentList& Available, QWORD& nLargestOffset, QWORD& nLargestLength);
 	BOOL			GetFragment(CDownloadTransfer* pTransfer);
 	BOOL			IsPositionEmpty(QWORD nOffset);
 	BOOL			IsRangeUseful(QWORD nOffset, QWORD nLength);

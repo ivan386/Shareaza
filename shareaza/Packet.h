@@ -24,13 +24,15 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 //
 // Tools
 //
 
-#define SWAP_SHORT(x) ( ( ( (x) & 0xFF00 ) >> 8 ) + ( ( (x) & 0x00FF ) << 8 ) )
-#define SWAP_LONG(x) ( ( ( (x) & 0xFF000000 ) >> 24 ) + ( ( (x) & 0x00FF0000 ) >> 8 ) + ( ( (x) & 0x0000FF00 ) << 8 ) + ( ( (x) & 0x000000FF ) << 24 ) )
-#define SWAP_64(x) ( ( SWAP_LONG( (x) & 0xFFFFFFFF ) << 32 ) | SWAP_LONG( (x) >> 32 ) )
+//#define SWAP_SHORT(x) ( ( ( (x) & 0xFF00 ) >> 8 ) + ( ( (x) & 0x00FF ) << 8 ) )
+//#define SWAP_LONG(x) ( ( ( (x) & 0xFF000000 ) >> 24 ) + ( ( (x) & 0x00FF0000 ) >> 8 ) + ( ( (x) & 0x0000FF00 ) << 8 ) + ( ( (x) & 0x000000FF ) << 24 ) )
+//#define SWAP_64(x) ( ( SWAP_LONG( (x) & 0xFFFFFFFF ) << 32 ) | SWAP_LONG( (x) >> 32 ) )
 
 #define PACKET_GROW			128
 #define PACKET_BUF_SCHAR	127
@@ -91,7 +93,7 @@ public:
 	virtual void	Debug(LPCTSTR pszReason) const;
 	void			SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) const;
 public:
-	virtual BOOL	GetRazaHash(SHA1* pHash, DWORD nLength = 0xFFFFFFFF) const;
+	virtual BOOL	GetRazaHash(CHashSHA1 &oHash, DWORD nLength = 0xFFFFFFFF) const;
 	void			RazaSign();
 	BOOL			RazaVerify() const;
 
@@ -109,7 +111,7 @@ public:
 		CopyMemory( pData, m_pBuffer + m_nPosition, nLength );
 		m_nPosition += nLength;
 	}
-	
+
 	inline BYTE ReadByte()
 	{
 		if ( m_nPosition >= m_nLength ) AfxThrowUserException();
@@ -135,7 +137,7 @@ public:
 		if ( m_nPosition + 2 > m_nLength ) AfxThrowUserException();
 		WORD nValue = *(WORD*)( m_pBuffer + m_nPosition );
 		m_nPosition += 2;
-		return m_bBigEndian ? SWAP_SHORT( nValue ) : nValue;
+		return m_bBigEndian ? _byteswap_ushort( nValue ) : nValue;
 	}
 	
 	inline DWORD ReadLongLE()
@@ -151,7 +153,7 @@ public:
 		if ( m_nPosition + 4 > m_nLength ) AfxThrowUserException();
 		DWORD nValue = *(DWORD*)( m_pBuffer + m_nPosition );
 		m_nPosition += 4;
-		return m_bBigEndian ? SWAP_LONG( nValue ) : nValue;
+		return m_bBigEndian ? _byteswap_ulong( nValue ) : nValue;
 	}
 	
 	inline QWORD ReadInt64()
@@ -159,7 +161,7 @@ public:
 		if ( m_nPosition + 8 > m_nLength ) AfxThrowUserException();
 		QWORD nValue = *(QWORD*)( m_pBuffer + m_nPosition );
 		m_nPosition += 8;
-		return m_bBigEndian ? SWAP_64( nValue ) : nValue;
+		return m_bBigEndian ? _byteswap_uint64( nValue ) : nValue;
 	}
 	
 	inline void Ensure(int nLength)
@@ -174,12 +176,11 @@ public:
 		}
 	}
 	
-	inline void Write(LPCVOID pData, int nLength)
+	inline void Write(const LPCVOID pData, int nLength)
 	{
 		if ( m_nLength + nLength > m_nBuffer )
 		{
-			m_nBuffer += max( nLength, PACKET_GROW );
-			LPBYTE pNew = new BYTE[ m_nBuffer ];
+			LPBYTE pNew = new BYTE[ m_nBuffer += max( nLength, PACKET_GROW ) ];
 			CopyMemory( pNew, m_pBuffer, m_nLength );
 			if ( m_pBuffer ) delete [] m_pBuffer;
 			m_pBuffer = pNew;
@@ -189,47 +190,81 @@ public:
 		m_nLength += nLength;
 	}
 	
-	inline void WriteByte(BYTE nValue)
+	inline void WriteByte(const BYTE nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
 		m_pBuffer[ m_nLength++ ] = nValue;
 	}
 	
-	inline void WriteShortLE(WORD nValue)
+	inline void WriteShortLE(const WORD nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
 		*(WORD*)( m_pBuffer + m_nLength ) = nValue;
 		m_nLength += sizeof(nValue);
 	}
 	
-	inline void WriteShortBE(WORD nValue)
+	inline void WriteShortBE(const WORD nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
-		*(WORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_SHORT( nValue ) : nValue;
+		*(WORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? _byteswap_ushort( nValue ) : nValue;
 		m_nLength += sizeof(nValue);
 	}
 	
-	inline void WriteLongLE(DWORD nValue)
+	inline void WriteLongLE(const DWORD nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
 		*(DWORD*)( m_pBuffer + m_nLength ) = nValue;
 		m_nLength += sizeof(nValue);
 	}
 	
-	inline void WriteLongBE(DWORD nValue)
+	inline void WriteLongBE(const DWORD nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
-		*(DWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_LONG( nValue ) : nValue;
+		*(DWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? _byteswap_ulong( nValue ) : nValue;
 		m_nLength += sizeof(nValue);
 	}
 	
-	inline void WriteInt64(QWORD nValue)
+	inline void WriteInt64(const QWORD nValue)
 	{
 		if ( m_nLength + sizeof(nValue) > m_nBuffer ) Ensure( sizeof(nValue) );
-		*(QWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? SWAP_64( nValue ) : nValue;
+		*(QWORD*)( m_pBuffer + m_nLength ) = m_bBigEndian ? _byteswap_uint64( nValue ) : nValue;
 		m_nLength += sizeof(nValue);
 	}
-	
+	// Read a Hash from Packet
+	template < int nHashSize > inline void Read(CHash < nHashSize > &oHash)
+	{
+		Read( &oHash.m_b, sizeof oHash.m_b );
+	}
+	// Write a Hash to the Packet
+	template < int nHashSize > inline void Write(const CHash < nHashSize > &oHash)
+	{
+		Write( &oHash.m_b, sizeof oHash.m_b );
+	}
+	// Read a Managed Hash from Packet and set Valid
+	template < class Hash > inline void Read(CManagedHash < Hash > &oHash)
+	{
+		Read( &oHash.m_b, sizeof oHash.m_b );
+		oHash.SetValid();
+	}
+	// Write a Managed Hash to Packet
+	template < class Hash > inline void Write(const CManagedHash < Hash > &oHash)
+	{
+		ASSERT( oHash.IsValid() );
+		Write( &oHash.m_b, sizeof oHash.m_b );
+	}
+	// Read an Extended Hash from Packet and set Valid
+	template < class Hash > inline void Read(CExtendedHash < Hash > &oHash)
+	{
+		Read( &oHash.m_b, sizeof oHash.m_b );
+		oHash.SetValid();
+	}
+	// Write an Extended Hash to Packet
+	template < class Hash > inline void Write(const CExtendedHash < Hash > &oHash)
+	{
+		ASSERT( oHash.IsValid() );
+		Write( &oHash.m_b, sizeof oHash.m_b );
+	}
+
 // Inline Allocation
 public:
 	

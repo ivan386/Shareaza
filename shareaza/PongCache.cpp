@@ -153,7 +153,7 @@ CPongItem::~CPongItem()
 //////////////////////////////////////////////////////////////////////
 // CPongItem packet conversion
 
-CG1Packet* CPongItem::ToPacket(int nTTL, GGUID* pGUID)
+CG1Packet* CPongItem::ToPacket(int nTTL, CGUID* pGUID)
 {
 	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, pGUID );
 

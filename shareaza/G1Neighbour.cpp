@@ -282,7 +282,7 @@ BOOL CG1Neighbour::OnPacket(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CG1Neighbour PING packet handlers
 
-BOOL CG1Neighbour::SendPing(DWORD dwNow, GGUID* pGUID)
+BOOL CG1Neighbour::SendPing(DWORD dwNow, CGUID* pGUID)
 {
 	if ( m_nNodeType == ntLeaf && pGUID != NULL ) return FALSE;
 
@@ -779,7 +779,7 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		return TRUE;
 	}
 	
-	GGUID pClientID;
+	CGUID pClientID;
 	pPacket->Read( &pClientID, 16 );
 	DWORD nFileIndex	= pPacket->ReadLongLE();
 	DWORD nAddress		= pPacket->ReadLongLE();
@@ -846,7 +846,7 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 	return TRUE;
 }
 
-void CG1Neighbour::SendG2Push(GGUID* pGUID, CPacket* pPacket)
+void CG1Neighbour::SendG2Push(CGUID* pGUID, CPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 6 ) return;
 	

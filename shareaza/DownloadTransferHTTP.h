@@ -64,7 +64,7 @@ public:
 	virtual void	Close(TRISTATE bKeepSource);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
-	virtual BOOL	SubtractRequested(CFileFragment** ppFragments);
+	virtual BOOL	SubtractRequested(CFileFragmentList& Fragments);
 	virtual BOOL	OnRun();
 protected:
 	BOOL			StartNextFragment();

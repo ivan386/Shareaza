@@ -471,7 +471,7 @@ void CNeighboursWnd::OnBrowseLaunch()
 		{
 			SOCKADDR_IN pAddress = pNeighbour->m_pHost;
 			BOOL bGUID = pNeighbour->m_bGUID;
-			GGUID pGUID = pNeighbour->m_pGUID;
+			CGUID pGUID = pNeighbour->m_pGUID;
 			
 			pLock.Unlock();
 			

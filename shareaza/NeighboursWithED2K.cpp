@@ -40,7 +40,7 @@ static char THIS_FILE[]=__FILE__;
 
 CNeighboursWithED2K::CNeighboursWithED2K()
 {
-	ZeroMemory( m_pEDSources, sizeof(MD4)   * 256 );
+	ZeroMemory( m_pEDSources, 256 * ED2K_HASH_SIZE );
 	ZeroMemory( m_tEDSources, sizeof(DWORD) * 256 );
 }
 
@@ -132,7 +132,7 @@ BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, W
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithED2K quick source lookup
 
-BOOL CNeighboursWithED2K::FindDonkeySources(MD4* pED2K, IN_ADDR* pServerAddress, WORD nServerPort)
+BOOL CNeighboursWithED2K::FindDonkeySources(const CHashED2K &oED2K, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	if ( ! Network.IsListening() ) return FALSE;
 	
@@ -142,20 +142,20 @@ BOOL CNeighboursWithED2K::FindDonkeySources(MD4* pED2K, IN_ADDR* pServerAddress,
 	if ( nHash < 0 ) nHash = 0;
 	else if ( nHash > 255 ) nHash = 255;
 	
-	if ( m_pEDSources[ nHash ] == *pED2K )
+	if ( m_pEDSources[ nHash ] == oED2K )
 	{
 		if ( tNow - m_tEDSources[ nHash ] < 3600000 ) return FALSE;
 	}
 	else
 	{
 		if ( tNow - m_tEDSources[ nHash ] < 15000 ) return FALSE;
-		m_pEDSources[ nHash ] = *pED2K;
+		m_pEDSources[ nHash ] = oED2K;
 	}
 	
 	m_tEDSources[ nHash ] = tNow;
 	
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_GETSOURCES );
-	pPacket->Write( pED2K, sizeof(MD4) );
+	pPacket->Write( oED2K );
 	Datagrams.Send( pServerAddress, nServerPort + 4, pPacket );
 	
 	return TRUE;

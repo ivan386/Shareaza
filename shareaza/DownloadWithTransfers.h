@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "DownloadWithSources.h"
 
 class CDownloadTransfer;
@@ -54,7 +55,7 @@ public:
 public:
 	DWORD		GetAverageSpeed() const;
 	DWORD		GetMeasuredSpeed() const;
-	BOOL		OnAcceptPush(GGUID* pClientID, CConnection* pConnection);
+	BOOL		OnAcceptPush(CGUID* pClientID, CConnection* pConnection);
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
 protected:
 	void		AddTransfer(CDownloadTransfer* pTransfer);

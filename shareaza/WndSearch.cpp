@@ -439,7 +439,7 @@ void CSearchWnd::OnUpdateSearchSearch(CCmdUI* pCmdUI)
 	// pCmdUI->Enable( Network.IsWellConnected() );
 	//pCmdUI->Enable( TRUE );
 
-	if( ( m_bPaused ) || ( m_bWaitMore ) )
+	if( (m_bPaused) || ( m_bWaitMore ) )
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );
@@ -562,7 +562,7 @@ void CSearchWnd::OnSearchClear()
 	m_nMaxResults		= 0;
 	m_nMaxED2KResults	= 0;
 	m_nMaxQueryCount	= 0;
-
+	
 	OnSearchStop();
 }
 
@@ -672,7 +672,7 @@ void CSearchWnd::ExecuteSearch()
 
 			pManaged->Stop();
 			pManaged->Start();
-
+		
 			m_nMaxResults		= m_pMatches->m_nGnutellaHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
 			m_nMaxED2KResults	= m_pMatches->m_nED2KHits + (DWORD)min( 201, Settings.eDonkey.MaxResults );
 			m_nMaxQueryCount	= pManaged->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
@@ -717,9 +717,9 @@ void CSearchWnd::UpdateMessages(BOOL bActive)
 		{
 			strCaption += pSearch->m_pSchema->GetIndexedWords( pSearch->m_pXML->GetFirstElement() );
 		}
-		else if ( pSearch->m_bSHA1 ) 
+		else if ( pSearch->m_oSHA1.IsValid() ) 
 		{
-			strCaption += CSHA::HashToString( &pSearch->m_pSHA1, TRUE );
+			strCaption += pSearch->m_oSHA1.ToURN();
 		}
 		
 		if ( pSearch->m_pSchema )
@@ -807,7 +807,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 		
 		if ( pManaged->m_bReceive &&
 			 (	pManaged->m_pSearch->m_pGUID == pHits->m_pSearchID ||
-				( bNull = ( pHits->m_pSearchID == (GGUID&)GUID_NULL ) ) ) )
+				( bNull = ( pHits->m_pSearchID == (CGUID&)GUID_NULL ) ) ) )
 		{
 			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
 			m_bUpdate = TRUE;

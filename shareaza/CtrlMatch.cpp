@@ -869,14 +869,14 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), 
 							ppHit->m_nSources - 1 );*/
 						_stprintf( szBuffer, _T("(%s)+%lu"),
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), ppHit->m_nSources - 1 );
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.m_d[0] ) ), ppHit->m_nSources - 1 );
 
 					}
 					else
 					{
 						/*_stprintf( szBuffer, _T("%lu@%s"), ppHit->m_pClientID.w[2], 
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );*/
-						_stprintf( szBuffer, _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );
+						_stprintf( szBuffer, _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.m_d[0] ) ) );
 					}
 					pszText = szBuffer;
 					

@@ -46,7 +46,7 @@ protected:
 	DWORD		m_tClusterSent;
 protected:
 	BYTE		m_nPongNeeded[PONG_NEEDED_BUFFER];
-	GGUID		m_pLastPingID;
+	CGUID		m_pLastPingID;
 	BYTE		m_nLastPingHops;
 	BYTE		m_nHopsFlow;
 protected:
@@ -55,10 +55,10 @@ protected:
 // Operations
 public:
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	BOOL			SendPing(DWORD dwNow = 0, GGUID* pGUID = NULL);
+	BOOL			SendPing(DWORD dwNow = 0, CGUID* pGUID = NULL);
 	void			OnNewPong(CPongItem* pPong);
 	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
-	void			SendG2Push(GGUID* pGUID, CPacket* pPacket);
+	void			SendG2Push(CGUID* pGUID, CPacket* pPacket);
 protected:
 	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();

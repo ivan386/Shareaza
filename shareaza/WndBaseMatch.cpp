@@ -261,7 +261,7 @@ void CBaseMatchWnd::OnSearchDownload()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_bSHA1, &pFile->m_pSHA1, pFile->m_bTiger, &pFile->m_pTiger, pFile->m_bED2K, &pFile->m_pED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -279,7 +279,7 @@ void CBaseMatchWnd::OnSearchDownload()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_bSHA1, &pHit->m_pSHA1, pHit->m_bTiger, &pHit->m_pTiger, pHit->m_bED2K, &pHit->m_pED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -337,7 +337,7 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pFile->m_bSHA1, &pFile->m_pSHA1, pFile->m_bTiger, &pFile->m_pTiger, pFile->m_bED2K, &pFile->m_pED2K ) )
+		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K ) )
 		{
 		case 1:
 			pFiles.AddTail( pFile );
@@ -355,7 +355,7 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		
 		pSingleLock.Unlock();
 		
-		switch ( CheckExisting( pHit->m_bSHA1, &pHit->m_pSHA1, pHit->m_bTiger, &pHit->m_pTiger, pHit->m_bED2K, &pHit->m_pED2K ) )
+		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
 		{
 		case 1:
 			pHits.AddTail( pHit );
@@ -396,19 +396,16 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	}
 }
 
-int CBaseMatchWnd::CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT* pTiger, BOOL bED2K, MD4* pED2K)
+int CBaseMatchWnd::CheckExisting(const CManagedSHA1 &oSHA1, const CManagedTiger &oTiger, const CManagedED2K &oED2K)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return 1;
 	
 	CLibraryFile* pFile = NULL;
 	
-	if ( pFile == NULL && bSHA1 )
-		pFile = LibraryMaps.LookupFileBySHA1( pSHA1 );
-	if ( pFile == NULL && bTiger )
-		pFile = LibraryMaps.LookupFileByTiger( pTiger );
-	if ( pFile == NULL && bED2K )
-		pFile = LibraryMaps.LookupFileByED2K( pED2K );
+	if ( pFile == NULL && oSHA1.IsValid() ) pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+	if ( pFile == NULL && oTiger.IsValid() ) pFile = LibraryMaps.LookupFileByTiger( oTiger );
+	if ( pFile == NULL && oED2K.IsValid() ) pFile = LibraryMaps.LookupFileByED2K( oED2K );
 	
 	if ( pFile == NULL ) return 1;
 	
@@ -450,12 +447,9 @@ void CBaseMatchWnd::OnSearchCopy()
 		dlg.m_sName = pFile->m_pHits->m_sName;
 		dlg.m_bSize	= TRUE;
 		dlg.m_nSize	= pFile->m_nSize;
-		dlg.m_bSHA1 = pFile->m_bSHA1;
-		if ( pFile->m_bSHA1 ) dlg.m_pSHA1 = pFile->m_pSHA1;
-		dlg.m_bTiger = pFile->m_bTiger;
-		if ( pFile->m_bTiger ) dlg.m_pTiger = pFile->m_pTiger;
-		dlg.m_bED2K = pFile->m_bED2K;
-		if ( pFile->m_bED2K ) dlg.m_pED2K = pFile->m_pED2K;
+		dlg.m_oSHA1 = pFile->m_oSHA1;
+		dlg.m_oTiger = pFile->m_oTiger;
+		dlg.m_oED2K = pFile->m_oED2K;
 
 		if ( pFile->GetFilteredCount() == 1 )
 			dlg.m_sHost = pFile->m_pHits->m_sURL;
@@ -466,12 +460,9 @@ void CBaseMatchWnd::OnSearchCopy()
 		dlg.m_sName = pHit->m_sName;
 		dlg.m_bSize = TRUE;
 		dlg.m_nSize = pHit->m_nSize;
-		dlg.m_bSHA1 = pHit->m_bSHA1;
-		if ( pHit->m_bSHA1 ) dlg.m_pSHA1 = pHit->m_pSHA1;
-		dlg.m_bTiger = pHit->m_bTiger;
-		if ( pHit->m_bTiger ) dlg.m_pTiger = pHit->m_pTiger;
-		dlg.m_bED2K = pHit->m_bED2K;
-		if ( pHit->m_bED2K ) dlg.m_pED2K = pHit->m_pED2K;
+		dlg.m_oSHA1 = pHit->m_oSHA1;
+		dlg.m_oTiger = pHit->m_oTiger;
+		dlg.m_oED2K = pHit->m_oED2K;
 	}
 
 	pLock.Unlock();
@@ -565,11 +556,11 @@ void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 	}
 	else if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		pCmdUI->Enable( pFile->m_bSHA1 );
+		pCmdUI->Enable( pFile->m_oSHA1.IsValid() );
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		pCmdUI->Enable( pHit->m_bSHA1 );
+		pCmdUI->Enable( pHit->m_oSHA1.IsValid() );
 	}
 }
 
@@ -590,13 +581,11 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 
 	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		if ( pFile->m_bSHA1 )
-			strSHA1 = CSHA::HashToString( &pFile->m_pSHA1 );
+		strSHA1 = pFile->m_oSHA1.ToString();
 	}
 	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		if ( pHit->m_bSHA1 )
-			strSHA1 = CSHA::HashToString( &pHit->m_pSHA1 );
+		strSHA1 = pHit->m_oSHA1.ToString();
 	}
 
 	if ( strSHA1.IsEmpty() ) return;

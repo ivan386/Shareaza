@@ -24,13 +24,15 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "GUID.h"
 #include "Packet.h"
 
 #pragma pack(1)
 
 typedef struct
 {
-	GGUID	m_pGUID;
+	CGUID	m_pGUID;
 	BYTE	m_nType;
 	BYTE	m_nTTL;
 	BYTE	m_nHops;
@@ -47,7 +49,7 @@ protected:
 	
 // Attributes
 public:
-	GGUID	m_pGUID;
+	CGUID	m_pGUID;
 	BYTE	m_nType;
 	BYTE	m_nTTL;
 	BYTE	m_nHops;
@@ -58,7 +60,7 @@ public:
 public:
 	BOOL			Hop();
 	void			CacheHash();
-	virtual BOOL	GetRazaHash(SHA1* pHash, DWORD nLength = 0) const;
+	virtual BOOL	GetRazaHash(CHashSHA1 &oHash, DWORD nLength = 0) const;
 	virtual LPCTSTR	GetType() const;
 	CString			GetGUID() const;
 	virtual void	ToBuffer(CBuffer* pBuffer) const;
@@ -82,7 +84,7 @@ protected:
 
 // Construction
 public:
-	static CG1Packet* New(int nType = 0, DWORD nTTL = 0, GGUID* pGUID = NULL);
+	static CG1Packet* New(int nType = 0, DWORD nTTL = 0, CGUID* pGUID = NULL);
 	
 	inline static CG1Packet* New(GNUTELLAPACKET* pSource)
 	{

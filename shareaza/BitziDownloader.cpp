@@ -240,7 +240,7 @@ BOOL CBitziDownloader::BuildRequest()
 	m_sFileName = pFile->m_sName;
 	m_sFileHash.Empty();
 
-	if ( pFile->m_bSHA1 ) m_sFileHash = CSHA::HashToString( &pFile->m_pSHA1 );
+	if ( pFile->m_oSHA1.IsValid() ) m_sFileHash = pFile->m_oSHA1.ToString();
 
 	Library.Unlock();
 
@@ -333,7 +333,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 	m_sResponse.Empty();
 
 	LPTSTR pszResponse = m_sResponse.GetBuffer( nResponse );
-	for ( nStatusCode = 0 ; nStatusCode < nResponse ; nStatusCode++ )
+	for ( nStatusCode = 0 ; nStatusCode < nResponse ; ++nStatusCode )
 		pszResponse[ nStatusCode ] = (TCHAR)pResponse[ nStatusCode ];
 	m_sResponse.ReleaseBuffer( nResponse );
 

@@ -101,10 +101,10 @@ void CRemoteSettingsPage::OnNewPassword()
 	}
 	else
 	{
-		CSHA pSHA1;
-		pSHA1.Add( (LPCTSTR)m_sPassword, m_sPassword.GetLength() * sizeof(TCHAR) );
-		pSHA1.Finish();
-		Settings.Remote.Password = pSHA1.GetHashString( FALSE );
+		CSHA1 oSHA1;
+		oSHA1.Add( (LPCTSTR)m_sPassword, m_sPassword.GetLength() * sizeof(TCHAR) );
+		oSHA1.Finish();
+		Settings.Remote.Password = oSHA1.ToString();
 	}
 	
 	OnBnClickedRemoteEnable();

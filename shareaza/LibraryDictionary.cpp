@@ -70,15 +70,15 @@ void CLibraryDictionary::Add(CLibraryFile* pFile)
 {
 	ProcessFile( pFile, TRUE );
 	
-	if ( ( pFile->m_bSHA1 || pFile->m_bED2K ) && ! BuildHashTable() )
+	if ( ( pFile->m_oSHA1.IsValid() || pFile->m_oED2K.IsValid() ) && ! BuildHashTable() )
 	{
-		if ( pFile->m_bSHA1 )
+		if ( pFile->m_oSHA1.IsValid() )
 		{
-			m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+			m_pTable->AddString( pFile->m_oSHA1.ToURN() );
 		}
-		if ( pFile->m_bED2K )
+		if ( pFile->m_oED2K.IsValid() )
 		{
-			m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+			m_pTable->AddString( pFile->m_oED2K.ToURN() );
 		}
 	}
 }
@@ -90,7 +90,7 @@ void CLibraryDictionary::Remove(CLibraryFile* pFile)
 	// TODO: Always invalidate the table when removing a hashed
 	// file... is this wise???  It will happen all the time.
 	
-	if ( pFile->m_bSHA1 || pFile->m_bED2K ) m_bTable = FALSE;
+	if ( pFile->m_oSHA1.IsValid() || pFile->m_oED2K.IsValid() ) m_bTable = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -229,13 +229,13 @@ BOOL CLibraryDictionary::BuildHashTable()
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 		
-		if ( pFile->m_bSHA1 )
+		if ( pFile->m_oSHA1.IsValid() )
 		{
-			m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+			m_pTable->AddString( pFile->m_oSHA1.ToURN() );
 		}
-		if ( pFile->m_bED2K )
+		if ( pFile->m_oED2K.IsValid() )
 		{
-			m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+			m_pTable->AddString( pFile->m_oED2K.ToURN() );
 		}
 	}
 	
@@ -347,10 +347,7 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 		{
 			if ( pSearch->Match( pHit->GetSearchName(), pHit->m_nSize,
 					pHit->m_pSchema ? (LPCTSTR)pHit->m_pSchema->m_sURI : NULL,
-					pHit->m_pMetadata,
-					pHit->m_bSHA1 ? &pHit->m_pSHA1 : NULL,
-					pHit->m_bTiger ? &pHit->m_pTiger : NULL,
-					pHit->m_bED2K ? &pHit->m_pED2K : NULL ) )
+					pHit->m_pMetadata, pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K ) )
 			{
 				if ( ! pHits ) pHits = new CPtrList();
 				pHits->AddTail( pHit );

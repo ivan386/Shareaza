@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "WndBaseMatch.h"
 #include "CtrlBrowseHeader.h"
 #include "CtrlBrowseProfile.h"
@@ -34,8 +35,8 @@ class CBrowseHostWnd : public CBaseMatchWnd
 {
 // Construction
 public:
-	CBrowseHostWnd(SOCKADDR_IN* pHost, GGUID* pClientID = NULL);
-	CBrowseHostWnd(IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, GGUID* pClientID = NULL);
+	CBrowseHostWnd(SOCKADDR_IN* pHost, CGUID* pClientID = NULL);
+	CBrowseHostWnd(IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, CGUID* pClientID = NULL);
 	virtual ~CBrowseHostWnd();
 	
 	DECLARE_DYNCREATE(CBrowseHostWnd)
@@ -56,7 +57,7 @@ public:
 	virtual void	OnHeadPacket(CG2Packet* pPacket);
 	virtual void	OnPhysicalTree(CG2Packet* pPacket);
 	virtual void	OnVirtualTree(CG2Packet* pPacket);
-	virtual BOOL	OnPush(GGUID* pClientID, CConnection* pConnection);
+	virtual BOOL	OnPush(CGUID* pClientID, CConnection* pConnection);
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 
 // Implementation

@@ -24,28 +24,29 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "FileFragment.h"
+
 class CUploadTransfer;
-class CFileFragment;
 
 
 class CUploadFile
 {
 // Construction
 public:
-	CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
+	CUploadFile(CUploadTransfer* pUpload, const CManagedSHA1 &oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
 	virtual ~CUploadFile();
 	
 // Attributes
 public:
 	IN_ADDR			m_pAddress;
-	BOOL			m_bSHA1;
-	SHA1			m_pSHA1;
+	CManagedSHA1	m_oSHA1;
 	CString			m_sName;
 	CString			m_sPath;
 	QWORD			m_nSize;
 public:
 	DWORD			m_nRequests;
-	CFileFragment*	m_pFragments;
+	CFileFragmentList m_pFragments;
 public:
 	BOOL			m_bSelected;
 protected:

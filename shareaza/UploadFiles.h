@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CUploadFile;
 class CUploadTransfer;
 
@@ -42,7 +44,7 @@ protected:
 // Operations
 public:
 	void			Clear();
-	CUploadFile*	GetFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
+	CUploadFile*	GetFile(CUploadTransfer* pUpload, const CManagedSHA1 &oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
 	void			Remove(CUploadTransfer* pTransfer);
 	
 // List Access

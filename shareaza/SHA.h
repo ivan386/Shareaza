@@ -24,47 +24,115 @@
 
 #pragma once
 
-class CSHA  
+#include "Hashes.h"
+
+class CSHA1 : public CHashSHA1
 {
-// Construction
+private:
+	QWORD	m_nCount;					// with alignment -> offset = 24 not 20
+	DWORD	m_nBuffer[16];
 public:
-	CSHA();
-	~CSHA();
-	
-// Attributes
- public:
-	DWORD	m_nCount[2];
-	DWORD	m_nHash[5];
-	DWORD	m_nBuffer[16];						// if you change this modify the offsets sha_asm.asm accordingly
-	
-// Operations
+	inline	CSHA1();
+	inline	~CSHA1();
+	inline	void	Reset();
+	inline	void	Add(LPCVOID pData, DWORD nLength);
+	inline	void	Finish();
+private:
+	typedef	void	(__stdcall *tpAdd1)	(CSHA1*, LPCVOID pData);
+	typedef	void	(__stdcall *tpAdd2)	(CSHA1*, LPCVOID pData1, CSHA1*, LPCVOID pData2);
+	typedef	void	(__stdcall *tpAdd3)	(CSHA1*, LPCVOID pData1, CSHA1*, LPCVOID pData2, CSHA1*, LPCVOID pData3);
+	typedef	void	(__stdcall *tpAdd4)	(CSHA1*, LPCVOID pData1, CSHA1*, LPCVOID pData2, CSHA1*, LPCVOID pData3, CSHA1*, LPCVOID pData4);
+	typedef	void	(__stdcall *tpAdd5)	(CSHA1*, LPCVOID pData1, CSHA1*, LPCVOID pData2, CSHA1*, LPCVOID pData3, CSHA1*, LPCVOID pData4, CSHA1*, LPCVOID pData5);
+	typedef	void	(__stdcall *tpAdd6)	(CSHA1*, LPCVOID pData1, CSHA1*, LPCVOID pData2, CSHA1*, LPCVOID pData3, CSHA1*, LPCVOID pData4, CSHA1*, LPCVOID pData5, CSHA1*, LPCVOID pData6);
+	static	BYTE	SHA_PADDING[64];
 public:
-	void			Reset();
-	void			Add(LPCVOID pData, DWORD nLength);
-	void			Finish();
-	void			GetHash(SHA1* pHash);
-	CString			GetHashString(BOOL bURN = FALSE);
-public:
-	static CString	HashToString(const SHA1* pHash, BOOL bURN = FALSE);
-	static CString	HashToHexString(const SHA1* pHash, BOOL bURN = FALSE);
-	static BOOL		HashFromString(LPCTSTR pszHash, SHA1* pHash);
-	static BOOL		HashFromURN(LPCTSTR pszHash, SHA1* pHash);
-	static BOOL		IsNull(SHA1* pHash);
-protected:
-//	void			Compile();			we don't need this anymore
+	static	tpAdd1	pAdd1;
+	static	tpAdd2	pAdd2;
+	static	tpAdd3	pAdd3;
+	static	tpAdd4	pAdd4;
+	static	tpAdd5	pAdd5;
+	static	tpAdd6	pAdd6;
+	static	void	Init();
 };
 
-#define SHA1_BLOCK_SIZE		64
-#define SHA1_DIGEST_SIZE	20
+typedef CSHA1 CBTH;
 
-inline bool operator==(const SHA1& sha1a, const SHA1& sha1b)
+// This detects ICL and makes necessary changes for proper compilation
+#if __INTEL_COMPILER > 0
+#define asm_CSHA1_m_oHash	CSHA1.m_b
+#define asm_CSHA1_m_nCount	CSHA1.m_nCount
+#else
+#define asm_CSHA1_m_oHash	CSHA1::m_b
+#define asm_CSHA1_m_nCount	CSHA1::m_nCount
+#endif
+
+inline CSHA1::CSHA1()
 {
-    return memcmp( &sha1a, &sha1b, 20 ) == 0;
+	Reset();
 }
 
-inline bool operator!=(const SHA1& sha1a, const SHA1& sha1b)
+inline CSHA1::~CSHA1()
 {
-    return memcmp( &sha1a, &sha1b, 20 ) != 0;
+}
+
+inline void CSHA1::Reset()
+{
+    m_d[ 0 ] = 0x67452301;
+    m_d[ 1 ] = 0xefcdab89;
+    m_d[ 2 ] = 0x98badcfe;
+    m_d[ 3 ] = 0x10325476;
+    m_d[ 4 ] = 0xc3d2e1f0;
+	m_nCount = 0;
+}
+
+extern "C" void __stdcall SHA_Add_p5(CSHA1* pSHA, LPCVOID pData, DWORD nLength);
+
+inline void CSHA1::Add(LPCVOID pData, DWORD nLength)
+{
+	SHA_Add_p5( this, pData, nLength );
+}
+
+inline void CSHA1::Finish()
+{
+	DWORD index = (DWORD)m_nCount & 0x3f;
+	// unsigned int index = (unsigned int)(m_nCount[0] & 0x3f),
+	QWORD nBits;
+	// Save number of bits
+	_asm
+	{
+		mov		ecx, this
+		mov		eax, [ ecx + asm_CSHA1_m_nCount ]
+		mov		edx, [ ecx + asm_CSHA1_m_nCount + 4 ]
+		shld	edx, eax, 3
+		shl		eax, 3
+		bswap	edx
+		bswap	eax
+		mov		dword ptr [ nBits ], edx
+		mov		dword ptr [ nBits + 4 ], eax
+	}
+	SHA_Add_p5(this, SHA_PADDING, (index < 56) ? (56 - index) : (120 - index) );
+	// Append length (before padding)
+	SHA_Add_p5(this, &nBits, 8 );
+	// Swap bytes in each dword since SHA is big endian
+	__asm
+	{
+		mov		ecx, this
+		mov		eax, [ ecx + asm_CSHA1_m_oHash + 0 * 4 ]
+		mov		ebx, [ ecx + asm_CSHA1_m_oHash + 1 * 4 ]
+		mov		edx, [ ecx + asm_CSHA1_m_oHash + 2 * 4 ]
+		mov		esi, [ ecx + asm_CSHA1_m_oHash + 3 * 4 ]
+		mov		edi, [ ecx + asm_CSHA1_m_oHash + 4 * 4 ]
+		bswap	eax
+		bswap	ebx
+		bswap	edx
+		bswap	esi
+		bswap	edi
+		mov		[ ecx + asm_CSHA1_m_oHash + 0 * 4 ], eax
+		mov		[ ecx + asm_CSHA1_m_oHash + 1 * 4 ], ebx
+		mov		[ ecx + asm_CSHA1_m_oHash + 2 * 4 ], edx
+		mov		[ ecx + asm_CSHA1_m_oHash + 3 * 4 ], esi
+		mov		[ ecx + asm_CSHA1_m_oHash + 4 * 4 ], edi
+	}
 }
 
 #endif // !defined(AFX_SHA_H__9CC84DD7_E62A_410F_BFE4_B6190C509ACE__INCLUDED_)

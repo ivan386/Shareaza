@@ -24,10 +24,13 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "GUID.h"
+#include "FileFragment.h"
+
 class CDownload;
 class CDownloadTransfer;
 class CQueryHit;
-class CFileFragment;
 class CEDClient;
 
 
@@ -37,8 +40,8 @@ class CDownloadSource
 public:
 	CDownloadSource(CDownload* pDownload);
 	CDownloadSource(CDownload* pDownload, CQueryHit* pHit);
-	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID = NULL);
-	CDownloadSource(CDownload* pDownload, SHA1* pGUID, IN_ADDR* pAddress, WORD nPort);
+	CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, CGUID* pGUID = NULL);
+	CDownloadSource(CDownload* pDownload, const CGUIDBT* pGUIDBT, IN_ADDR* pAddress, WORD nPort);
 	CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL);
 	virtual ~CDownloadSource();
 private:
@@ -55,7 +58,7 @@ public:
 	CString				m_sURL;
 	PROTOCOLID			m_nProtocol;
 	BOOL				m_bGUID;
-	GGUID				m_pGUID;
+	CGUID				m_oGUID;
 	IN_ADDR				m_pAddress;
 	WORD				m_nPort;
 	IN_ADDR				m_pServerAddress;
@@ -81,8 +84,8 @@ public:
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;
-	CFileFragment*		m_pAvailable;
-	CFileFragment*		m_pPastFragment;
+	CFileFragmentList	m_oAvailable;
+	CFileFragmentList	m_oPastFragment;
 
 // Operations
 public:
@@ -97,12 +100,12 @@ public:
 	void		SetValid();
 	void		SetLastSeen();
 	void		SetGnutella(int nGnutella);
-	BOOL		CheckHash(const SHA1* pSHA1);
-	BOOL		CheckHash(const TIGEROOT* pTiger);
-	BOOL		CheckHash(const MD4* pED2K);
+	BOOL		CheckHash(const CHashSHA1 &oSHA1);
+	BOOL		CheckHash(const CHashTiger &oTiger);
+	BOOL		CheckHash(const CHashED2K &oED2K);
 public:
 	BOOL		PushRequest();
-	BOOL		CheckPush(GGUID* pClientID);
+	BOOL		CheckPush(CGUID* pClientID);
 	BOOL		CheckDonkey(CEDClient* pClient);
 public:
 	void		AddFragment(QWORD nOffset, QWORD nLength, BOOL bMerge = FALSE);
@@ -117,7 +120,7 @@ public:
 public:
 	inline BOOL CDownloadSource::Equals(CDownloadSource* pSource) const
 	{
-		if ( m_bGUID && pSource->m_bGUID ) return m_pGUID == pSource->m_pGUID;
+		if ( m_bGUID && pSource->m_bGUID ) return m_oGUID == pSource->m_oGUID;
 		
 		if ( m_nServerPort != pSource->m_nServerPort )
 		{

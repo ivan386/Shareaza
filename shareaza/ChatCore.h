@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "GUID.h"
+
 class CConnection;
 class CChatSession;
 
@@ -52,7 +54,7 @@ public:
 	BOOL			Check(CChatSession* pSession) const;
 	void			Close();
 	void			OnAccept(CConnection* pConnection);
-	BOOL			OnPush(GGUID* pGUID, CConnection* pConnection);
+	BOOL			OnPush(CGUID* pGUID, CConnection* pConnection);
 	void			StopThread();
 protected:
 	void			Add(CChatSession* pSession);

@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CBuffer;
 class CIEProtocolRequest;
 
@@ -40,7 +42,8 @@ public:
 public:
 	BOOL		Create();
 	void		Close();
-	BOOL		SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
+	BOOL		SetCollection(const CHashSHA1 &oSHA1, const LPCTSTR pszPath, CString &sIndex);
+	void		SetEmptyCollection();
 	
 // Attributes
 protected:
@@ -49,7 +52,7 @@ protected:
 	CEvent*						m_pShutdown;
 	LONG						m_nRequests;
 protected:
-	SHA1						m_pCollSHA1;
+	CHashSHA1					m_oCollSHA1;
 	CZIPFile*					m_pCollZIP;
 public:
 	static CLSID				clsidProtocol;

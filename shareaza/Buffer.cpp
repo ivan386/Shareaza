@@ -136,6 +136,8 @@ void CBuffer::Print(LPCWSTR pszText, UINT nCodePage)
 
 DWORD CBuffer::AddBuffer(CBuffer* pBuffer, DWORD nLength)
 {
+	ASSERT( this != pBuffer );
+	ASSERT( m_pBuffer != pBuffer->m_pBuffer );
 	nLength = nLength < 0xFFFFFFFF ? ( min( pBuffer->m_nLength, nLength ) ) : pBuffer->m_nLength;
 	Add( pBuffer->m_pBuffer, nLength );
 	pBuffer->Remove( nLength );
@@ -400,7 +402,7 @@ void CBuffer::ReverseBuffer(const void* pInput, void* pOutput, DWORD nLength)
 	while ( nLength > 4 )
 	{
 		nTemp = *--pInputWords;
-		*pOutputWords++ = SWAP_LONG( nTemp );
+		*pOutputWords++ = _byteswap_ulong( nTemp );
 		nLength -= 4;
 	}
 	

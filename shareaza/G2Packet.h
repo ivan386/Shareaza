@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "Packet.h"
 
 class CG1Packet;
@@ -52,7 +53,7 @@ public:
 	BOOL	ReadPacket(LPSTR pszType, DWORD& nLength, BOOL* pbCompound = NULL);
 	BOOL	SkipCompound();
 	BOOL	SkipCompound(DWORD& nLength, DWORD nRemaining = 0);
-	BOOL	GetTo(GGUID* pGUID);
+	BOOL	GetTo(CGUID* pGUID);
 	BOOL	SeekToWrapped();
 public:
 	virtual void	Reset();

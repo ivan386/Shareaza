@@ -39,12 +39,12 @@ static char THIS_FILE[]=__FILE__;
 
 CBTInfo::CBTInfo()
 {
-	m_bValid		= FALSE;
-	m_bDataSHA1		= FALSE;
+	ASSERT( ! m_oInfoBTH.IsValid() );
+	ASSERT( ! m_oDataBTH.IsValid() );
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
-	m_pBlockSHA1	= NULL;
+	m_pBlockBTH		= NULL;
 	m_nFiles		= 0;
 	m_pFiles		= NULL;
 }
@@ -57,7 +57,7 @@ CBTInfo::~CBTInfo()
 CBTInfo::CBTFile::CBTFile()
 {
 	m_nSize = 0;
-	m_bSHA1 = FALSE;
+	ASSERT( ! m_oBTH.IsValid() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -65,14 +65,14 @@ CBTInfo::CBTFile::CBTFile()
 
 void CBTInfo::Clear()
 {
-	if ( m_pBlockSHA1 != NULL ) delete [] m_pBlockSHA1;
+	if ( m_pBlockBTH != NULL ) delete [] m_pBlockBTH;
 	if ( m_pFiles != NULL ) delete [] m_pFiles;
 	
-	m_bValid		= FALSE;
+	m_oInfoBTH.Clear();
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
-	m_pBlockSHA1	= NULL;
+	m_pBlockBTH		= NULL;
 	m_nFiles		= 0;
 	m_pFiles		= NULL;
 }
@@ -85,10 +85,8 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	ASSERT( pSource != NULL );
 	Clear();
 	
-	m_bValid		= pSource->m_bValid;
-	m_pInfoSHA1		= pSource->m_pInfoSHA1;
-	m_bDataSHA1		= pSource->m_bDataSHA1;
-	m_pDataSHA1		= pSource->m_pDataSHA1;
+	m_oInfoBTH		= pSource->m_oInfoBTH;
+	m_oDataBTH		= pSource->m_oDataBTH;
 	m_nTotalSize	= pSource->m_nTotalSize;
 	m_nBlockSize	= pSource->m_nBlockSize;
 	m_nBlockCount	= pSource->m_nBlockCount;
@@ -96,17 +94,21 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_sTracker		= pSource->m_sTracker;
 	m_nFiles		= pSource->m_nFiles;
 	
-	if ( pSource->m_pBlockSHA1 != NULL )
+	if ( pSource->m_pBlockBTH != NULL )
 	{
-		m_pBlockSHA1 = new SHA1[ m_nBlockCount ];
-		CopyMemory( m_pBlockSHA1, pSource->m_pBlockSHA1,
-			sizeof(SHA1) * (DWORD)m_nBlockCount );
+		m_pBlockBTH = new CHashBT[ m_nBlockCount ];
+		DWORD nBlock = 0;
+		if ( m_nBlockCount ) do
+		{
+			m_pBlockBTH[ nBlock ] = pSource->m_pBlockBTH[ nBlock ];
+		}
+		while ( ++nBlock < m_nBlockCount );
 	}
 	
 	if ( pSource->m_pFiles != NULL )
 	{
 		m_pFiles = new CBTFile[ m_nFiles ];
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		for ( int nFile = 0 ; nFile < m_nFiles ; ++nFile )
 			m_pFiles[ nFile ].Copy( &pSource->m_pFiles[ nFile ] );
 	}
 }
@@ -117,25 +119,28 @@ void CBTInfo::Copy(CBTInfo* pSource)
 void CBTInfo::Serialize(CArchive& ar)
 {
 	int nVersion = 2;
-	
+	DWORD nBlock = 0;
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
 		
-		ar << m_bValid;
-		if ( ! m_bValid ) return;
-		
-		ar.Write( &m_pInfoSHA1, sizeof(SHA1) );
+		m_oInfoBTH.SerializeStore( ar, nVersion );
+
+		if ( ! m_oInfoBTH.IsValid() ) return;
 		
 		ar << m_nTotalSize;
 		ar << m_nBlockSize;
 		ar << m_nBlockCount;
-		ar.Write( m_pBlockSHA1, m_nBlockCount * sizeof(SHA1) );
+		do
+		{
+			m_pBlockBTH[ nBlock ].SerializeStore( ar, nVersion );
+		}
+		while ( ++nBlock < m_nBlockCount );
 		
 		ar << m_sName;
 		
 		ar.WriteCount( m_nFiles );
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		for ( int nFile = 0 ; nFile < m_nFiles ; ++nFile )
 			m_pFiles[ nFile ].Serialize( ar, nVersion );
 		
 		ar << m_sTracker;
@@ -144,11 +149,10 @@ void CBTInfo::Serialize(CArchive& ar)
 	{
 		ar >> nVersion;
 		if ( nVersion < 1 ) AfxThrowUserException();
+
+		m_oInfoBTH.SerializeLoad( ar, nVersion );
 		
-		ar >> m_bValid;
-		if ( ! m_bValid ) return;
-		
-		ar.Read( &m_pInfoSHA1, sizeof(SHA1) );
+		if ( ! m_oInfoBTH.IsValid() ) return;
 		
 		if ( nVersion >= 2 )
 		{
@@ -164,8 +168,12 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar >> m_nBlockSize;
 		ar >> m_nBlockCount;
 		
-		m_pBlockSHA1 = new SHA1[ (DWORD)m_nBlockCount ];
-		ar.Read( m_pBlockSHA1, (DWORD)m_nBlockCount * sizeof(SHA1) );
+		m_pBlockBTH = new CHashBT[ (DWORD)m_nBlockCount ];
+		do
+		{
+			m_pBlockBTH[ nBlock ].SerializeLoad( ar, nVersion );
+		}
+		while ( ++nBlock < m_nBlockCount );
 		
 		ar >> m_sName;
 		
@@ -185,8 +193,7 @@ void CBTInfo::CBTFile::Copy(CBTFile* pSource)
 {
 	m_sPath = pSource->m_sPath;
 	m_nSize = pSource->m_nSize;
-	m_bSHA1 = pSource->m_bSHA1;
-	m_pSHA1 = pSource->m_pSHA1;
+	m_oBTH  = pSource->m_oBTH;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -198,8 +205,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 	{
 		ar << m_nSize;
 		ar << m_sPath;
-		ar << m_bSHA1;
-		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
+		m_oBTH.SerializeStore( ar, nVersion );
 	}
 	else
 	{
@@ -215,8 +221,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 		}
 		
 		ar >> m_sPath;
-		ar >> m_bSHA1;
-		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
+		m_oBTH.SerializeLoad( ar, nVersion );
 	}
 }
 
@@ -313,23 +318,23 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	CBENode* pHash = pInfo->GetNode( "pieces" );
 	if ( ! pHash->IsType( CBENode::beString ) ) return FALSE;
-	if ( pHash->m_nValue % sizeof(SHA1) ) return FALSE;
-	m_nBlockCount = (DWORD)( pHash->m_nValue / sizeof(SHA1) );
+	if ( pHash->m_nValue % BT_HASH_SIZE ) return FALSE;
+	m_nBlockCount = (DWORD)( pHash->m_nValue / BT_HASH_SIZE );
 	if ( ! m_nBlockCount || m_nBlockCount > 209716 ) return FALSE;
 	
-	m_pBlockSHA1 = new SHA1[ m_nBlockCount ];
+	m_pBlockBTH = new CHashBT[ m_nBlockCount ];
 	
-	for ( DWORD nBlock = 0 ; nBlock < m_nBlockCount ; nBlock++ )
+	DWORD nBlock = 0;
+	if ( m_nBlockCount ) do
 	{
-		SHA1* pSource = (SHA1*)pHash->m_pValue;
-		CopyMemory( m_pBlockSHA1 + nBlock, pSource + nBlock, sizeof(SHA1) );
+		m_pBlockBTH[ nBlock ] = *(CHashBT*)( (LPBYTE)pHash->m_pValue + BT_HASH_SIZE * nBlock );
 	}
+	while ( ++nBlock < m_nBlockCount );
 	
-	if ( CBENode* pSHA1 = pInfo->GetNode( "sha1" ) )
+	if ( CBENode* pBTH = pInfo->GetNode( "sha1" ) )
 	{
-		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != sizeof(SHA1) ) return FALSE;
-		m_bDataSHA1 = TRUE;
-		CopyMemory( &m_pDataSHA1, pSHA1->m_pValue, sizeof(SHA1) );
+		if ( ! pBTH->IsType( CBENode::beString ) || pBTH->m_nValue != BT_HASH_SIZE ) return FALSE;
+		m_oDataBTH = *(CHashBT*)pBTH->m_pValue;
 	}
 	
 	if ( CBENode* pLength = pInfo->GetNode( "length" ) )
@@ -342,8 +347,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_pFiles = new CBTFile[ m_nFiles ];
 		m_pFiles[0].m_sPath = m_sName;
 		m_pFiles[0].m_nSize = m_nTotalSize;
-		m_pFiles[0].m_bSHA1 = m_bDataSHA1;
-		m_pFiles[0].m_pSHA1 = m_pDataSHA1;
+		m_pFiles[0].m_oBTH  = m_oDataBTH;
 	}
 	else if ( CBENode* pFiles = pInfo->GetNode( "files" ) )
 	{
@@ -381,11 +385,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_pFiles[ nFile ].m_sPath += CDownloadTask::SafeFilename( pPart->GetString() );
 			}
 			
-			if ( CBENode* pSHA1 = pFile->GetNode( "sha1" ) )
+			if ( CBENode* pBTH = pFile->GetNode( "sha1" ) )
 			{
-				if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != sizeof(SHA1) ) return FALSE;
-				m_pFiles[ nFile ].m_bSHA1 = TRUE;
-				CopyMemory( &m_pFiles[ nFile ].m_pSHA1, pSHA1->m_pValue, sizeof(SHA1) );
+				if ( ! pBTH->IsType( CBENode::beString ) || pBTH->m_nValue != BT_HASH_SIZE ) return FALSE;
+				m_pFiles[ nFile ].m_oBTH = *(CHashBT*)pBTH->m_pValue;
 			}
 			
 			m_nTotalSize += m_pFiles[ nFile ].m_nSize;
@@ -401,8 +404,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	if ( ! CheckFiles() ) return FALSE;
 	
-	pInfo->GetSHA1( &m_pInfoSHA1 );
-	m_bValid = TRUE;
+	m_oInfoBTH = pInfo->GetBTH();
 	
 	return TRUE;
 }
@@ -435,9 +437,9 @@ BOOL CBTInfo::CheckFiles()
 void CBTInfo::BeginBlockTest()
 {
 	ASSERT( IsAvailable() );
-	ASSERT( m_pBlockSHA1 != NULL );
+	ASSERT( m_pBlockBTH != NULL );
 	
-	m_pTestSHA1.Reset();
+	m_oTestBTH.Reset();
 	m_nTestByte = 0;
 }
 
@@ -446,23 +448,21 @@ void CBTInfo::AddToTest(LPCVOID pInput, DWORD nLength)
 	if ( nLength == 0 ) return;
 	
 	ASSERT( IsAvailable() );
-	ASSERT( m_pBlockSHA1 != NULL );
+	ASSERT( m_pBlockBTH != NULL );
 	ASSERT( m_nTestByte + nLength <= m_nBlockSize );
 	
-	m_pTestSHA1.Add( pInput, nLength );
+	m_oTestBTH.Add( pInput, nLength );
 	m_nTestByte += nLength;
 }
 
 BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 {
 	ASSERT( IsAvailable() );
-	ASSERT( m_pBlockSHA1 != NULL );
+	ASSERT( m_pBlockBTH != NULL );
 	
 	if ( nBlock >= m_nBlockCount ) return FALSE;
 	
-	SHA1 pSHA1;
-	m_pTestSHA1.Finish();
-	m_pTestSHA1.GetHash( &pSHA1 );
+	m_oTestBTH.Finish();
 	
-	return pSHA1 == m_pBlockSHA1[ nBlock ];
+	return m_pBlockBTH[ nBlock ] == m_oTestBTH;
 }

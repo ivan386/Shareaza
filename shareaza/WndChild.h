@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "GUID.h"
 #include "CtrlCoolBar.h"
 #include "LiveListSizer.h"
 
@@ -74,7 +75,7 @@ public:
 	virtual void	OnSkinChange();
 	virtual void	OnQuerySearch(CQuerySearch* pSearch);
 	virtual BOOL	OnQueryHits(CQueryHit* pHits);
-	virtual BOOL	OnPush(GGUID* pClientID, CConnection* pConnection);
+	virtual BOOL	OnPush(CGUID* pClientID, CConnection* pConnection);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
 	virtual BOOL	OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop);
 

@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "GUID.h"
+
 class CConnection;
 class CEDClient;
 class CEDPacket;
@@ -50,10 +52,10 @@ protected:
 public:
 	void			Clear();
 	BOOL			PushTo(DWORD nClientID, WORD nClientPort);
-	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, GGUID* pGUID = NULL);
+	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, CGUID* pGUID = NULL);
 	CEDClient*		GetByIP(IN_ADDR* pAddress);
-	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer = NULL, GGUID* pGUID = NULL);
-	CEDClient*		GetByGUID(GGUID* pHash);
+	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer = NULL, CGUID* pGUID = NULL);
+	CEDClient*		GetByGUID(CGUID* pHash);
 	BOOL			Merge(CEDClient* pClient);
 	BOOL			IsFull(CEDClient* pCheckThis = NULL);
 public:

@@ -169,7 +169,7 @@ BOOL CManagedSearch::Execute()
 	}
 	else
 	{
-		if ( tTicks - m_tExecute < 180 ) return FALSE;
+		if ( tTicks - m_tExecute < 200 ) return FALSE;
 		m_tExecute = tTicks;
 	}
 	

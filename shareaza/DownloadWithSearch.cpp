@@ -133,7 +133,7 @@ void CDownloadWithSearch::StartAutomaticSearch()
 BOOL CDownloadWithSearch::CanSearch() const
 {
 	return m_pFile != NULL &&
-		( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH );
+		( m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oED2K.IsValid() || m_oBTH.IsValid() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -150,30 +150,26 @@ void CDownloadWithSearch::PrepareSearch()
 		pSearch->BuildWordList();
 	}
 	
-	if ( m_bSHA1 )
+	if ( m_oSHA1.IsValid() )
 	{
-		pSearch->m_bSHA1 = TRUE;
-		pSearch->m_pSHA1 = m_pSHA1;
+		pSearch->m_oSHA1 = m_oSHA1;
 	}
-	if ( m_bTiger )
+	if ( m_oTiger.IsValid() )
 	{
-		pSearch->m_bTiger = TRUE;
-		pSearch->m_pTiger = m_pTiger;
+		pSearch->m_oTiger = m_oTiger;
 	}
-	if ( m_bED2K )
+	if ( m_oED2K.IsValid() )
 	{
-		pSearch->m_bED2K = TRUE;
-		pSearch->m_pED2K = m_pED2K;
+		pSearch->m_oED2K = m_oED2K;
 		m_pSearch->m_bAllowED2K = TRUE;
 	}
 	else
 	{
 		m_pSearch->m_bAllowED2K = FALSE;
 	}
-	if ( m_bBTH )
+	if ( m_oBTH.IsValid() )
 	{
-		pSearch->m_bBTH = TRUE;
-		pSearch->m_pBTH = m_pBTH;
+		pSearch->m_oBTH = m_oBTH;
 	}
 	
 	pSearch->m_bWantURL	= TRUE;

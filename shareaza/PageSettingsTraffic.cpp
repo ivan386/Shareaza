@@ -97,7 +97,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.RequireForTransfers, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
-	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 300 );
+	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 2000 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
@@ -141,7 +141,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.RequeryDelay, 60, 45, 8*60, _T(" m") );
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
-	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 250, 10000 );
+	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
 	
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
@@ -229,6 +229,9 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );
 	AddSetting( &Settings.Library.QueryRouteSize, 1, 8, 24 );
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
+	AddSetting( &Settings.Library.BufferSize, 1, 0, 2048, _T(" MB") );
+	AddSetting( &Settings.Library.Parallel, 1, 0, 6 );
+	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s") );
 	
 	AddSetting( &Settings.Bandwidth.Request, 128, 0, 8192, _T(" Kb/s") );
 	AddSetting( &Settings.Bandwidth.HubIn, 128, 0, 8192, _T(" Kb/s") );

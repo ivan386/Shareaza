@@ -516,7 +516,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 		}
 		else if ( strcmp( szType, "GU" ) == 0 && nLength >= 16 )
 		{
-			pPacket->Read( &m_pGUID, sizeof(GGUID) );
+			pPacket->Read( &m_pGUID, GUID_SIZE );
 			m_bGUID = TRUE;
 		}
 		else if ( strcmp( szType, "V" ) == 0 && nLength >= 4 )
@@ -752,7 +752,7 @@ void CG2Neighbour::SendHAW()
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_HAW, TRUE );
 	
 	WORD nLeafs = 0;
-	GGUID pGUID;
+	CGUID pGUID;
 	
 	Network.CreateID( &pGUID );
 	
@@ -780,7 +780,7 @@ void CG2Neighbour::SendHAW()
 	
 	pPacket->WriteByte( 100 );
 	pPacket->WriteByte( 0 );
-	pPacket->Write( &pGUID, sizeof(GGUID) );
+	pPacket->Write( &pGUID, GUID_SIZE );
 	
 	Send( pPacket, TRUE, TRUE );
 	
@@ -826,8 +826,8 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	BYTE nTTL	= pPacket->ReadByte();
 	BYTE nHops	= pPacket->ReadByte();
 
-	GGUID pGUID;
-	pPacket->Read( &pGUID, sizeof(GGUID) );
+	CGUID pGUID;
+	pPacket->Read( &pGUID, GUID_SIZE );
 
 	HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendor );
 

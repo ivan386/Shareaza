@@ -874,7 +874,7 @@ BOOL CLibraryTileItem::Update()
 	m_sTitle		= m_pFolder->m_sName;
 	m_nIcon32		= m_pFolder->m_pSchema ? m_pFolder->m_pSchema->m_nIcon32 : -1;
 	m_nIcon48		= m_pFolder->m_pSchema ? m_pFolder->m_pSchema->m_nIcon48 : -1;
-	m_bCollection	= m_pFolder->m_bCollSHA1;
+	m_bCollection	= m_pFolder->m_oCollSHA1.IsValid();
 	
 	CSchema* pSchema = m_pFolder->m_pSchema;
 	

@@ -152,20 +152,20 @@ void CQueryHashMaster::Build()
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
 			
-			if ( pDownload->m_bSHA1 )
+			if ( pDownload->m_oSHA1.IsValid() )
 			{
-				AddString( CSHA::HashToString( &pDownload->m_pSHA1, TRUE ) );
+				AddString( pDownload->m_oSHA1.ToURN() );
 			}
 			
-			if ( pDownload->m_bED2K )
+			if ( pDownload->m_oED2K.IsValid() )
 			{
-				AddString( CED2K::HashToString( &pDownload->m_pED2K, TRUE ) );
+				AddString( pDownload->m_oED2K.ToURN() );
 			}
 			
-			if ( pDownload->m_bBTH )
+			if ( pDownload->m_oBTH.IsValid() )
 			{
 				AddString( _T("BTIH") );
-				AddString( _T("urn:btih:") + CSHA::HashToString( &pDownload->m_pBTH, FALSE ) );
+				AddString( _T("urn:btih:") + pDownload->m_oBTH.ToURN() );
 			}
 		}
 		

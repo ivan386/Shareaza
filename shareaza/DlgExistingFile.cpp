@@ -59,18 +59,18 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDi
 	
 	m_sName = pFile->m_sName;
 	
-	if ( pFile->m_bSHA1 && pFile->m_bTiger )
+	if ( pFile->m_oSHA1.IsValid() && pFile->m_oTiger.IsValid() )
 	{
-		m_sURN	= _T("bitprint:") + CSHA::HashToString( &pFile->m_pSHA1 )
-				+ '.' + CTigerNode::HashToString( &pFile->m_pTiger );
+		m_sURN	= _T("bitprint:") + pFile->m_oSHA1.ToString()
+			+ '.' + pFile->m_oTiger.ToString();
 	}
-	else if ( pFile->m_bSHA1 )
+	else if ( pFile->m_oSHA1.IsValid() )
 	{
-		m_sURN = CSHA::HashToString( &pFile->m_pSHA1, TRUE );
+		m_sURN = pFile->m_oSHA1.ToURN();
 	}
-	else if ( pFile->m_bTiger )
+	else if ( pFile->m_oTiger.IsValid() )
 	{
-		m_sURN = CTigerNode::HashToString( &pFile->m_pTiger, TRUE );
+		m_sURN = pFile->m_oTiger.ToURN();
 	}
 	
 	m_bAvailable	= pFile->IsAvailable();

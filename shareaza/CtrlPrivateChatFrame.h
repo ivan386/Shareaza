@@ -45,7 +45,7 @@ public:
 
 // Operations
 public:
-	void	Initiate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
+	void	Initiate(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL	Accept(CChatSession* pSession);
 public:
 	virtual void	OnLocalMessage(BOOL bAction, LPCTSTR pszText);

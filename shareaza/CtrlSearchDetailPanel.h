@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "GUID.h"
 #include "MetaPanel.h"
 #include "RichDocument.h"
 #include "RichViewCtrl.h"
@@ -56,21 +58,21 @@ protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer);
-	void		OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage);
-	BOOL		CachePreviewImage(SHA1* pSHA1, LPBYTE pBuffer, DWORD nBuffer);
+	void		OnPreviewLoaded(const CHashSHA1 &oSHA1, CImageFile* pImage);
+	BOOL		CachePreviewImage(const CHashSHA1 &oSHA1, LPBYTE pBuffer, DWORD nBuffer);
 	
 // Item
 protected:
 	class Review
 	{
 	public:
-		Review(GGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
+		Review(CGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments);
 		virtual ~Review();
 		void			Layout(CSearchDetailPanel* pParent, CRect* pRect);
 		void			Reposition(int nScroll);
 		void			Paint(CDC* pDC, int nScroll);
 	public:
-		GGUID			m_pGUID;
+		CGUID			m_pGUID;
 		CString			m_sNick;
 		int				m_nRating;
 		CRichDocument	m_pComments;
@@ -82,9 +84,10 @@ protected:
 // Attributes
 protected:
 	CMatchList*			m_pMatches;
-	BOOL				m_bValid;
+//	BOOL				m_bValid;
 	CMatchFile*			m_pFile;
-	SHA1				m_pSHA1;
+//	SHA1				m_pSHA1;
+	CManagedSHA1		m_oSHA1;
 	CString				m_sName;
 	CString				m_sStatus;
 	CRect				m_rcStatus;

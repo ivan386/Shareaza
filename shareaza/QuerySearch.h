@@ -24,6 +24,9 @@
 
 #pragma once
 
+#include "Hashes.h"
+#include "GUID.h"
+
 class CPacket;
 class CSchema;
 class CXMLElement;
@@ -43,7 +46,7 @@ public:
 	
 // Attributes
 public:
-	GGUID			m_pGUID;
+	CGUID			m_pGUID;
 public:
 	CString			m_sSearch;
 	CSchema*		m_pSchema;
@@ -51,14 +54,10 @@ public:
 	QWORD			m_nMinSize;
 	QWORD			m_nMaxSize;
 public:
-	BOOL			m_bSHA1;
-	SHA1			m_pSHA1;
-	BOOL			m_bTiger;
-	TIGEROOT		m_pTiger;
-	BOOL			m_bED2K;
-	MD4				m_pED2K;
-	BOOL			m_bBTH;
-	SHA1			m_pBTH;
+	CManagedSHA1	m_oSHA1;
+	CManagedTiger	m_oTiger;
+	CManagedED2K	m_oED2K;
+	CManagedBTH		m_oBTH;
 public:
 	BOOL			m_bWantURL;
 	BOOL			m_bWantDN;
@@ -89,7 +88,7 @@ protected:
 // Operations
 public:
 	BOOL		GetHashFromXML();
-	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, SHA1* pSHA1 = NULL, TIGEROOT* pTiger = NULL, MD4* pED2K = NULL);
+	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const CManagedSHA1 &oSHA1, const CManagedTiger &oTiger, const CManagedED2K &oED2K);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	void		BuildWordList();

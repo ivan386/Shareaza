@@ -210,22 +210,22 @@ void CDownloadTransfer::SetState(int nState)
 
 
 			//Assemble the sort order DWORD
-			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 13 ) ];		//Get state sort order
+			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 13 ) ];          //Get state sort order
 
 			if ( m_pSource->m_nSortOrder >= 13 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
 				m_pDownload->SortSource( m_pSource, FALSE );
-				m_pSource->m_nSortOrder = 0xFFFFFFFF;
+				m_pSource->m_nSortOrder = -1;
 			}
 			else
 			{	//All other sources should be properly sorted
 
-				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )	//Torrent states
-				{	//Choked torrents after queued, requesting = requesting, uninterested near end
+				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
+				{       //Choked torrents after queued, requesting = requesting, uninterested near end
 					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
-					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11;
-					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7;
-					else m_pSource->m_nSortOrder = 10;
+					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11; 
+					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7; 
+					else m_pSource->m_nSortOrder = 10; 
 				}
 				m_pSource->m_nSortOrder <<=  8;									//Sort by state
 

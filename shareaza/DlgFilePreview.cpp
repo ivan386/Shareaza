@@ -122,20 +122,18 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 			if ( GetFileAttributes( m_sTargetName ) == 0xFFFFFFFF ) break;
 		}
 	}
-	
-	if ( CFileFragment* pFragment = m_pDownload->GetFirstEmptyFragment() )
+	CFileFragment* pFragment = m_pDownload->m_pFile->m_oFree.GetFirst();
+	if ( pFragment )
 	{
 		QWORD nLast = 0;
-		
-		for ( ; pFragment ; pFragment = pFragment->m_pNext )
+		for ( ; pFragment ; pFragment = pFragment->GetNext() )
 		{
-			if ( pFragment->m_nOffset > nLast )
+			if ( pFragment->Offset() > nLast )
 			{
 				m_pRanges.Add( (DWORD)nLast );
-				m_pRanges.Add( (DWORD)( pFragment->m_nOffset - nLast ) );
+				m_pRanges.Add( (DWORD)( pFragment->Offset() - nLast ) );
 			}
-			
-			nLast = pFragment->m_nOffset + pFragment->m_nLength;
+			nLast = pFragment->Next();
 		}
 		
 		if ( m_pDownload->m_nSize > nLast )

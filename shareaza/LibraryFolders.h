@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "Hashes.h"
+
 class CLibraryFolder;
 class CAlbumFolder;
 class CLibraryFile;
@@ -61,8 +63,8 @@ public:
 	CAlbumFolder*	GetAlbumRoot();
 	BOOL			CheckAlbum(CAlbumFolder* pFolder) const;
 	CAlbumFolder*	GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const;
-	CAlbumFolder*	GetCollection(SHA1* pSHA1);
-	BOOL			MountCollection(SHA1* pSHA1, CCollectionFile* pCollection);
+	CAlbumFolder*	GetCollection(const CHashSHA1 &oSHA1);
+	BOOL			MountCollection(const CHashSHA1 &oSHA1, CCollectionFile* pCollection);
 protected:
 	void			CreateAlbumTree();
 	void			OnFileDelete(CLibraryFile* pFile);
