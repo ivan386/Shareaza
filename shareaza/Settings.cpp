@@ -254,6 +254,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.QueryLimit"), &Gnutella2.QueryLimit, 2400 );
 	
 	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
+	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, TRUE );
 	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
 	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 128 );
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
@@ -263,7 +264,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
-	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 30*60*1000 );
+	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000 );
 	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );

@@ -292,6 +292,7 @@ public:
 	{
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
+		BOOL		FastConnect;
 		DWORD		NumServers;
 		int			MaxLinks;
 		int			MaxResults;
