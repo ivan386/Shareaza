@@ -183,11 +183,25 @@ void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWOR
 {
 	CString strCaption;
 
-	if(bStarted) //ToDo: Maybe disable button while searching?
-		LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_MORE );
+	if ( bStarted )
+	{
+		//LoadString( strCaption,  bSearching? IDS_SEARCH_PANEL_SEARCHING : IDS_SEARCH_PANEL_MORE );
+		if ( bSearching )
+		{
+			LoadString( strCaption, IDS_SEARCH_PANEL_SEARCHING );
+			m_boxSearch.m_wndStart.EnableWindow( FALSE );
+		}
+		else
+		{
+			LoadString( strCaption, IDS_SEARCH_PANEL_MORE );
+			m_boxSearch.m_wndStart.EnableWindow( TRUE );
+		}
+	}
 	else
+	{
 		LoadString( strCaption, IDS_SEARCH_PANEL_START ); 
-		
+		m_boxSearch.m_wndStart.EnableWindow( TRUE );
+	}
 	m_boxSearch.m_wndStart.SetText( strCaption );
 	
 	LoadString( strCaption, bStarted ? IDS_SEARCH_PANEL_STOP : IDS_SEARCH_PANEL_CLEAR );
