@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -485,14 +485,14 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCall
 //////////////////////////////////////////////////////////////////////
 // CHandshakes update stable state
 
-// If we've accepted at least one connection, update the discover services (do)
+// If we've accepted at least one connection, update the discovery services (do)
 void CHandshakes::RunStableUpdate()
 {
 	// If we've listened for and accepted at least one stable connection
 	if ( m_nStableCount > 0 )
 	{
-		// If there isn't a record of when yet, set it to an empty CTime value
-		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL ); // (do) If 0 set to 0? Why?
+		// If there isn't a record of when we first connected yet, set it to the current time.
+		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL );
 
 		// Update the discover services (do)
 		DiscoveryServices.Update();
