@@ -2488,6 +2488,11 @@ right quote	&#147;
 	<string id="8328" value="Bendra apimtis:"/>
 	<string id="8329" value="visos kolekcijos"/>
 	<string id="8330" value="aplankas"/>
+	<string id="9000" value="Bendra"/>
+	<string id="9001" value="Meta duomenys"/>
+	<string id="9002" value="Mano apžvalga"/>
+	<string id="9003" value="Bendrinimas"/>
+	<string id="9004" value="Šaltiniai"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
 	<string id="16066" value="Stabdomas „Shareaza“ tinklo branduolys..."/>
