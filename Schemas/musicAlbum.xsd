@@ -200,7 +200,7 @@
 			</simpleType>
 		</attribute>
 		<attribute name="collector" type="string"/>
-		<attribute name="quailitynotes" type="string"/>
+		<attribute name="qualitynotes" type="string"/>
 		<attribute name="distributer" type="string"/>
 		<attribute name="distributerLink" type="uriReference"/>
 		<attribute name="releasegroup" type="string"/>
