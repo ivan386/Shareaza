@@ -189,7 +189,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
 				OutputFile=".\Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -277,7 +277,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
 				OutputFile=".\Release/Shareaza.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
