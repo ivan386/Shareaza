@@ -128,6 +128,7 @@ public:
 	static CString	HashToString(const TIGEROOT* pTiger, BOOL bURN = FALSE);
 	static BOOL		HashFromString(LPCTSTR pszHash, TIGEROOT* pTiger);
 	static BOOL		HashFromURN(LPCTSTR pszHash, TIGEROOT* pTiger);
+	static BOOL		IsNull(TIGEROOT* pTiger);
 
 };
 

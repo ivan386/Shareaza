@@ -646,7 +646,9 @@ CString CTigerNode::HashToString(const TIGEROOT* pInHash, BOOL bURN)
 
 BOOL CTigerNode::HashFromString(LPCTSTR pszHash, TIGEROOT* pTiger)
 {
-	if ( ! pszHash || _tcslen( pszHash ) < 39 ) return FALSE;
+	if ( ! pszHash || _tcslen( pszHash ) < 39 ) return FALSE; //Invalid hash
+	
+	if ( _tcsnicmp(pszHash, _T("BVBCHUUIDO4TRQL3C2QL3RIA3KB3TDWJDZ7AHCQ"), 39 ) == 0 ) return FALSE; //Bad hash
 
 	LPBYTE pHash = (LPBYTE)pTiger;
 	DWORD nBits	= 0;
@@ -708,6 +710,13 @@ BOOL CTigerNode::HashFromURN(LPCTSTR pszHash, TIGEROOT* pTiger)
 		return HashFromString( pszHash + 42, pTiger );
 	}
 	
+	return FALSE;
+}
+
+BOOL CTigerNode::IsNull(TIGEROOT* pTiger)
+{
+	if ( _tcsnicmp( HashToString(pTiger) , _T("BVBCHUUIDO4TRQL3C2QL3RIA3KB3TDWJDZ7AHCQ"), 39 ) == 0 ) return TRUE; //Bad hash
+
 	return FALSE;
 }
 
