@@ -465,7 +465,10 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			break;
 */
 		default:
-			theApp.Message( MSG_DEBUG, LPCTSTR( CString( _T("Unrecognised tag in ED2K server Ident") ) + m_sAddress ) );
+			CString str;
+			str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDNeighbour::OnServerIdent"),
+				LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
+			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 

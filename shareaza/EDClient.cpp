@@ -575,6 +575,11 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_MESSAGE:
 			return OnMessage( pPacket );
 
+		default:
+			CString str;
+			str.Format( _T("Unrecognised packet - IP: %s - edonkey - type: 0x%x - in CEDClient::OnPacket"),
+				LPCTSTR( m_sAddress ), int( pPacket->m_nType ) );
+			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 	else if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EMULE )
@@ -601,8 +606,11 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_ANSWERSOURCES:
 			return OnSourceAnswer( pPacket );
 	
-
-
+		default:
+			CString str;
+			str.Format( _T("Unrecognised packet - IP: %s - emule - type: 0x%x - in CEDClient::OnPacket"),
+				LPCTSTR( m_sAddress ), int( pPacket->m_nType ) );
+			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 	
@@ -799,7 +807,10 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			}
 			else
 			{
-				theApp.Message( MSG_DEBUG, LPCTSTR( CString( _T("Unrecognised packet in CEDClient::OnHello") ) + m_sAddress ) );
+				CString str;
+				str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDClient::OnHello"),
+					LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
+				theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 			}
 		}
 	}
@@ -940,6 +951,11 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			if ( m_nEmCompatible == ED2K_CLIENT_UNKNOWN )
 				m_nEmCompatible = ED2K_CLIENT_MOD;
 			break;
+		default:
+			CString str;
+			str.Format( _T("Unrecognised packet - IP: %s - opcode: 0x%x - in CEDClient::OnEmuleInfo"),
+				LPCTSTR( m_sAddress ), int( pTag.m_nKey ) );
+			theApp.Message( MSG_DEBUG, LPCTSTR( str ) );
 		}
 	}
 	
