@@ -257,7 +257,7 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Dropdown
 		m_wndInSpeed.ResetContent();
 		m_wndOutSpeed.ResetContent();
-		DWORD nSpeeds[] = { 28, 33, 56, 64, 128, 350, 576, 768, 1544, 3072, 45000, 100000, 155000, 0 };
+		const DWORD nSpeeds[] = { 28, 33, 56, 64, 128, 350, 576, 768, 1544, 3072, 45000, 100000, 155000, 0 };
 		for ( int nSpeed = 0 ; nSpeeds[ nSpeed ] ; nSpeed++ )
 		{
 			CString str = FormatSpeed( nSpeeds[ nSpeed ] );
