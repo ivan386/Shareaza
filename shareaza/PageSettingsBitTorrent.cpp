@@ -134,33 +134,7 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 
 void CBitTorrentSettingsPage::OnMakerBrowse() 
 {
-	/*
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	LPMALLOC pMalloc;
-	BROWSEINFO pBI;
-		
-	ZeroMemory( &pBI, sizeof(pBI) );
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select .torrent creator:");
-	pBI.ulFlags			= BIF_BROWSEINCLUDEFILES | BIF_NONEWFOLDERBUTTON;
-	
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	SHGetMalloc( &pMalloc );
-	pMalloc->Free( pPath );
-	pMalloc->Release();
-	
-	UpdateData( TRUE );
-	m_sMakerPath = szPath;
-	UpdateData( FALSE );
-	*/
-
-	CFileDialog dlg( TRUE, _T("Select .torrent creator:"), _T("TorrentWizard.exe") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
+	CFileDialog dlg( TRUE, _T("exe"), _T("TorrentWizard.exe") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
 		_T("Executable Files|*.exe;*.com|All Files|*.*||"), this );
 	
 	if ( dlg.DoModal() != IDOK ) return;
@@ -168,8 +142,6 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 	UpdateData( TRUE );
 	m_sMakerPath = dlg.GetPathName();
 	UpdateData( FALSE );
-	
-
 }
 
 void CBitTorrentSettingsPage::OnOK() 
