@@ -465,8 +465,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			break;
 */
 		default:
-			theApp.Message( MSG_ERROR, _T("Unrecognised tag in ED2K server Ident") );
-			//****************Debug only
+			theApp.Message( MSG_DEBUG, _T("Unrecognised tag in ED2K server Ident") );
 		}
 	}
 
@@ -588,11 +587,12 @@ void CEDNeighbour::SendSharedFiles()
 	
 	pPacket->WriteLongLE( nCount );			//Write number of files. (update this later)
 	
-	CSingleLock pLock1( &Library.m_pSection );
-	CSingleLock pLock2( &Transfers.m_pSection );
+	
+	CSingleLock pTransfersLock( &Transfers.m_pSection );
+	CSingleLock pLibraryLock( &Library.m_pSection );
 
 	//Send files on download list to ed2k server (partials)
-	pLock2.Lock();
+	pTransfersLock.Lock();
 	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nCount < m_nFileLimit ) ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
@@ -643,10 +643,10 @@ void CEDNeighbour::SendSharedFiles()
 			nCount++;
 		}
 	}
-	pLock2.Unlock();
+	pTransfersLock.Unlock();
 	
 	//Send files in library to ed2k server (Complete files)
-	pLock1.Lock();
+	pLibraryLock.Lock();
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nCount < m_nFileLimit ) ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
@@ -765,7 +765,7 @@ void CEDNeighbour::SendSharedFiles()
 			}
 		}
 	}
-	pLock1.Unlock();
+	pLibraryLock.Unlock();
 
 	*(DWORD*)pPacket->m_pBuffer = nCount;	// Correct the number of files sent
 	
