@@ -90,6 +90,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
 	AddSetting( &Settings.General.HashIntegrity, 1, 0, 1 );
 	
+	AddSetting( &Settings.Connection.IgnoreOwnIP, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
 	AddSetting( &Settings.Connection.TimeoutTraffic, 1000, 10, 60*60, _T(" s") );
 	// AddSetting( &Settings.Connection.AsyncIO, 1, 0, 1 );

@@ -156,6 +156,7 @@ public:
 		DWORD		InSpeed;
 		DWORD		OutSpeed;
 		BOOL		IgnoreLocalIP;
+		BOOL		IgnoreOwnIP;
 		DWORD		TimeoutConnect;
 		DWORD		TimeoutHandshake;
 		DWORD		TimeoutTraffic;

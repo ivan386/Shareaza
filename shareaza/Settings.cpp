@@ -143,6 +143,7 @@ void CSettings::Setup()
 	Add( _T("Connection.InSpeed"), &Connection.InSpeed, 56 );
 	Add( _T("Connection.OutSpeed"), &Connection.OutSpeed, 56 );
 	Add( _T("Connection.IgnoreLocalIP"), &Connection.IgnoreLocalIP, TRUE );
+	Add( _T("Connection.IgnoreOwnIP"), &Connection.IgnoreOwnIP, TRUE );
 	Add( _T("Connection.TimeoutConnect"), &Connection.TimeoutConnect, 16000 );
 	Add( _T("Connection.TimeoutHandshake"), &Connection.TimeoutHandshake, 45000 );
 	Add( _T("Connection.TimeoutTraffic"), &Connection.TimeoutTraffic, 140000 );
