@@ -946,7 +946,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 // CSecureRule Netmask Fix
 void  CSecureRule::MaskFix()
 {
-	DWORD pNetwork = 0 , pOldMask  = 0 , pNewMask = 0;
+	DWORD nNetwork = 0 , nOldMask  = 0 , nNewMask = 0;
 
 	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the byte arrays to dwords
 	{
@@ -956,17 +956,17 @@ void  CSecureRule::MaskFix()
 		nMaskByte = m_nMask[ nByte ];
 		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
 		{
-			pNetwork <<= 1;
+			nNetwork <<= 1;
 			if( nNetByte & 0x80 )
 			{
-				pNetwork |= 1;
+				nNetwork |= 1;
 			}
 			nNetByte <<= 1;
 
-			pOldMask <<= 1;
+			nOldMask <<= 1;
 			if( nMaskByte & 0x80 )
 			{
-				pOldMask |= 1;
+				nOldMask |= 1;
 			}
 			nMaskByte <<= 1;
 		}
@@ -974,19 +974,19 @@ void  CSecureRule::MaskFix()
 
 	for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
 	{
-		if( pOldMask & 0x80000000 )					// check the high bit
+		if( nOldMask & 0x80000000 )					// check the high bit
 		{
-			pNewMask >>= 1;							// shift mask down
-			pNewMask |= 0x80000000;					// put the bit on
+			nNewMask >>= 1;							// shift mask down
+			nNewMask |= 0x80000000;					// put the bit on
 		}
 		else
 		{
 			break;									// found a 0 so ignore the rest
 		}
-		pOldMask <<= 1;
+		nOldMask <<= 1;
 	}
 
-	pNetwork &= pNewMask;		// do the & now so we don't have to each time there's a match	
+	nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match	
 
 	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
 	{
@@ -995,18 +995,18 @@ void  CSecureRule::MaskFix()
 		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
 		{
 			nNetByte <<= 1;
-			if( pNetwork & 0x80000000 )
+			if( nNetwork & 0x80000000 )
 			{
 				nNetByte |= 1;
 			}
-			pNetwork <<= 1;
+			nNetwork <<= 1;
 
 			nMaskByte <<= 1;
-			if( pNewMask & 0x80000000 )
+			if( nNewMask & 0x80000000 )
 			{
 				nMaskByte |= 1;
 			}
-			pNewMask <<= 1;
+			nNewMask <<= 1;
 		}
 		m_nIP[ nByte ] = nNetByte;
 		m_nMask[ nByte ] = nMaskByte;
