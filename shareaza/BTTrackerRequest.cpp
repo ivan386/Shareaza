@@ -50,6 +50,10 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->m_pTorrent.IsAvailable() );
+
+CString strTemp = _T("*** Tracker Request:");
+strTemp = strTemp + pszVerb;
+theApp.Message( MSG_ERROR, strTemp );  
 	
 	m_bAutoDelete	= TRUE;
 	m_pDownload		= pDownload;
@@ -220,15 +224,9 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	
 	if ( pRoot->IsType( CBENode::beDict ) )
 	{
-		if ( Process( pRoot ) )
-		{
-			if ( ! m_pDownload->m_bTorrentTrackerError )
-				m_pDownload->OnTrackerEvent( TRUE );
-		}
-		else
-		{
+		if ( ! Process( pRoot ) )
+		{	//There was an error
 			theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
-			m_pDownload->OnTrackerEvent( FALSE );
 		}
 	}
 	else if ( pRoot->IsType( CBENode::beString ) )
@@ -249,17 +247,23 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 
 BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 {
+	CString strError;
 	if ( CBENode* pError = pRoot->GetNode( "failure reason" ) )
 	{
-		CString str = pError->GetString();
+		strError = pError->GetString();
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
-			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)str );
-		m_pDownload->OnTrackerEvent( FALSE, str );
-		return TRUE;
+			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)strError );
+		m_pDownload->OnTrackerEvent( FALSE, strError );
+		return FALSE;
 	}
 	
 	CBENode* pInterval = pRoot->GetNode( "interval" );
-	if ( ! pInterval->IsType( CBENode::beInt ) ) return FALSE;
+	if ( ! pInterval->IsType( CBENode::beInt ) ) 
+	{
+		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
+		m_pDownload->OnTrackerEvent( FALSE, strError );
+		return FALSE;
+	}
 	int nInterval = (int)(DWORD)pInterval->GetInt();
 
 	nInterval = max( nInterval, 60*2 );
@@ -319,7 +323,10 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			}
 		}
 	}
-	
+
+	//Okay, clear any errors and continue
+	m_pDownload->OnTrackerEvent( TRUE );
+
 	theApp.Message( MSG_DEFAULT, IDS_BT_TRACK_SUCCESS,
 		(LPCTSTR)m_pDownload->GetDisplayName(), nCount );
 	
