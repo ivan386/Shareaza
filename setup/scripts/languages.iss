@@ -53,7 +53,7 @@ nl.tasks_currentuser=Aleen %1
 nl.run_skinexe=Skin installatie uitvoeren...
 nl.reg_incomingchat=Nieuw chat bericht
 nl.reg_apptitle=Shareaza Ultimate File Sharing
-icons_license=Licentie
+icons_license=Gebruiksovereenkomst
 icons_uninstall=Verwijderen
 
 
