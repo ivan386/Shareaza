@@ -24,7 +24,6 @@
 
 #pragma once
 
-
 class CSHA  
 {
 // Construction
@@ -33,10 +32,10 @@ public:
 	~CSHA();
 	
 // Attributes
-public:
+ public:
 	DWORD	m_nCount[2];
 	DWORD	m_nHash[5];
-	DWORD	m_nBuffer[16];
+	DWORD	m_nBuffer[16];						// if you change this modify the offsets sha_asm.asm accordingly
 	
 // Operations
 public:
@@ -51,7 +50,7 @@ public:
 	static BOOL		HashFromString(LPCTSTR pszHash, SHA1* pHash);
 	static BOOL		HashFromURN(LPCTSTR pszHash, SHA1* pHash);
 protected:
-	void			Compile();
+//	void			Compile();			we don't need this anymore
 };
 
 #define SHA1_BLOCK_SIZE		64

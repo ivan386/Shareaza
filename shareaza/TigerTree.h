@@ -36,6 +36,8 @@ public:
 	CTigerTree();
 	~CTigerTree();
 	
+	void (*pTiger)(WORD64*, WORD64*);
+
 // Operations
 public:
 	void	SetupAndAllocate(DWORD nHeight, QWORD nLength);
@@ -91,8 +93,7 @@ protected:
 	inline void	Collapse();
 	inline void BlocksToNode();
 	inline void	Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* pInput1 = NULL, WORD64* pInput2 = NULL);
-	inline void	Tiger(const WORD64* str, WORD64* state);
-
+//	inline void	Tiger(WORD64* str, WORD64* state);
 };
 
 

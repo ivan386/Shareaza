@@ -20,7 +20,7 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
+// #include "Shareaza.h"
 #include "TigerTree.h"
 #include "TigerBoxes.h"
 
@@ -39,6 +39,19 @@ static char THIS_FILE[]=__FILE__;
 
 //////////////////////////////////////////////////////////////////////
 // CTigerTree construction
+extern "C" void TigerTree_Tiger_p5(WORD64* str, WORD64* state);
+extern "C" void TigerTree_Tiger_MMX(WORD64* str, WORD64* state);
+extern "C" void TigerTree_Tiger_SSE2(WORD64* str, WORD64* state);
+void (*pTiger)(WORD64*, WORD64*);
+
+inline int GetCPUIDFlags()
+{
+	_asm{
+		mov	eax, 1
+		cpuid
+		mov eax, edx
+	}
+}
 
 CTigerTree::CTigerTree()
 {
@@ -48,6 +61,10 @@ CTigerTree::CTigerTree()
 
 	m_pStackBase	= NULL;
 	m_pStackTop		= NULL;
+
+	pTiger = &TigerTree_Tiger_p5;
+//	if (GetCPUIDFlags() & 0x00800000) pTiger = &TigerTree_Tiger_MMX;
+	if (GetCPUIDFlags() & 0x04000000) pTiger = &TigerTree_Tiger_SSE2;
 }
 
 CTigerTree::~CTigerTree()
@@ -719,13 +736,13 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 		{
 			pTemp[0] = 0x00;
 			CopyMemory( pTemp + 1, pInput, 63 );
-			Tiger( (const WORD64*)pTemp, pOutput );
+			pTiger( (WORD64*)pTemp, pOutput );
 			
 			const WORD64* pWords = (const WORD64*)( (const BYTE*)pInput + 63 );
 			
 			for ( i = nInput - 63 ; i >= 64 ; i -= 64 )
 			{
-				Tiger( pWords, pOutput );
+				pTiger( (WORD64*) pWords, pOutput );
 				pWords += 8;
 			}
 			
@@ -737,7 +754,7 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 		
 		for ( i = nInput ; i >= 64 ; i -= 64 )
 		{
-			Tiger( pWords, pOutput );
+			pTiger( pWords, pOutput );
 			pWords += 8;
 		}
 		
@@ -770,7 +787,7 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 	if ( j > 56 )
 	{
 		for ( ; j < 64 ; j++ ) pTemp[j] = 0;
-		Tiger( ((WORD64*)pTemp), pOutput );
+		pTiger( ((WORD64*)pTemp), pOutput );
 		j = 0;
 	}
 	
@@ -778,7 +795,7 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 	
 	((WORD64*)(&(pTemp[56])))[0] = ((WORD64)nInput) << 3;
 	
-	Tiger( ((WORD64*)pTemp), pOutput );
+	pTiger( ((WORD64*)pTemp), pOutput );
 }
 
 #define PASSES 3
@@ -846,9 +863,10 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 	tmpa=a; a=c; c=b; b=tmpa;} \
       feedforward
 
-void CTigerTree::Tiger(const WORD64* str, WORD64* state)
-{
-	register WORD64 x0, x1, x2, x3, x4, x5, x6, x7;
+//void CTigerTree::Tiger(WORD64* str, WORD64* state)
+//{
+//	TigerTree_Tiger_p5(str,state);
+/*	register WORD64 x0, x1, x2, x3, x4, x5, x6, x7;
 	register WORD64 a, b, c, tmpa;
 	WORD64 aa, bb, cc;
 	// register DWORD i;
@@ -865,8 +883,8 @@ void CTigerTree::Tiger(const WORD64* str, WORD64* state)
 
 	state[0] = a;
 	state[1] = b;
-	state[2] = c;
-}
+	state[2] = c; */
+//}
 
 //////////////////////////////////////////////////////////////////////
 // CTigerTree collapse stack

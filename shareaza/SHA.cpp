@@ -34,10 +34,24 @@
  stored in memory. It runs at 22 cycles per byte on a Pentium P4 processor
 */
 
+/* Modified by Camper using extern methods     6.7.2004 */
+
 #include "StdAfx.h"
-#include "Shareaza.h"
 #include "SHA.h"
 
+// This detects ICL and makes necessary changes for proper compilation
+#if __INTEL_COMPILER > 0
+#define asm_m_nCount CSHA.m_nCount
+#else
+#define asm_m_nCount m_nCount
+#endif
+
+extern "C" void SHA_Add_p5(CSHA *, LPCVOID pData, DWORD nLength);
+static unsigned char SHA_PADDING[64] = {
+	0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 
 CSHA::CSHA()
 {
@@ -46,89 +60,6 @@ CSHA::CSHA()
 
 CSHA::~CSHA()
 {
-}
-
-/*
-    To obtain the highest speed on processors with 32-bit words, this code 
-    needs to determine the order in which bytes are packed into such words.
-    The following block of code is an attempt to capture the most obvious 
-    ways in which various environemnts specify their endian definitions. 
-    It may well fail, in which case the definitions will need to be set by 
-    editing at the points marked **** EDIT HERE IF NECESSARY **** below.
-*/
-#define SHA_LITTLE_ENDIAN   1234 /* byte 0 is least significant (i386) */
-#define SHA_BIG_ENDIAN      4321 /* byte 0 is most significant (mc68k) */
-#define PLATFORM_BYTE_ORDER	SHA_LITTLE_ENDIAN
-
-#define rotl32(x,n) (((x) << n) | ((x) >> (32 - n)))
-
-#if (PLATFORM_BYTE_ORDER == SHA_BIG_ENDIAN)
-#define swap_b32(x) (x)
-#elif defined(bswap_32)
-#define swap_b32(x) bswap_32(x)
-#else
-#define swap_b32(x) ((rotl32((x), 8) & 0x00ff00ff) | (rotl32((x), 24) & 0xff00ff00))
-#endif
-
-#define SHA1_MASK   (SHA1_BLOCK_SIZE - 1)
-
-/* reverse byte order in 32-bit words   */
-
-#define ch(x,y,z)       (((x) & (y)) ^ (~(x) & (z)))
-#define parity(x,y,z)   ((x) ^ (y) ^ (z))
-#define maj(x,y,z)      (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
-
-/* A normal version as set out in the FIPS. This version uses   */
-/* partial loop unrolling and is optimised for the Pentium 4    */
-
-#define rnd(f,k)    \
-    t = a; a = rotl32(a,5) + f(b,c,d) + e + k + w[i]; \
-    e = d; d = c; c = rotl32(b, 30); b = t
-
-void CSHA::Compile()
-{
-	DWORD    w[80], i, a, b, c, d, e, t;
-
-    /* note that words are compiled from the buffer into 32-bit */
-    /* words in big-endian order so an order reversal is needed */
-    /* here on little endian machines                           */
-    for(i = 0; i < SHA1_BLOCK_SIZE / 4; ++i)
-        w[i] = swap_b32(m_nBuffer[i]);
-
-    for(i = SHA1_BLOCK_SIZE / 4; i < 80; ++i)
-        w[i] = rotl32(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
-
-    a = m_nHash[0];
-    b = m_nHash[1];
-    c = m_nHash[2];
-    d = m_nHash[3];
-    e = m_nHash[4];
-
-    for(i = 0; i < 20; ++i)
-    {
-        rnd(ch, 0x5a827999);    
-    }
-
-    for(i = 20; i < 40; ++i)
-    {
-        rnd(parity, 0x6ed9eba1);
-    }
-
-    for(i = 40; i < 60; ++i)
-    {
-        rnd(maj, 0x8f1bbcdc);
-    }
-
-    for(i = 60; i < 80; ++i)
-    {
-        rnd(parity, 0xca62c1d6);
-    }
-
-    m_nHash[0] += a; 
-    m_nHash[1] += b; 
-    m_nHash[2] += c; 
-    m_nHash[3] += d; 
-    m_nHash[4] += e;
 }
 
 void CSHA::Reset()
@@ -149,78 +80,34 @@ void CSHA::GetHash(SHA1* pHash)
         pHash->b[i] = (unsigned char)(m_nHash[i >> 2] >> 8 * (~i & 3));
 }
 
-/* SHA1 hash data in an array of bytes into hash buffer and call the        */
-/* hash_compile function as required.                                       */
-
 void CSHA::Add(LPCVOID pData, DWORD nLength)
 {
-	const unsigned char* data = (const unsigned char*)pData;
-	unsigned int len = nLength;
-	
-	DWORD pos = (DWORD)(m_nCount[0] & SHA1_MASK), 
-             space = SHA1_BLOCK_SIZE - pos;
-    const unsigned char *sp = data;
-
-    if((m_nCount[0] += len) < len)
-        ++(m_nCount[1]);
-
-    while(len >= space)     /* tranfer whole blocks while possible  */
-    {
-        memcpy(((unsigned char*)m_nBuffer) + pos, sp, space);
-        sp += space; len -= space; space = SHA1_BLOCK_SIZE; pos = 0; 
-        Compile();
-    }
-
-    memcpy(((unsigned char*)m_nBuffer) + pos, sp, len);
+	SHA_Add_p5(this, pData, nLength);
 }
 
-/* SHA1 final padding and digest calculation  */
-
-#if (PLATFORM_BYTE_ORDER == SHA_LITTLE_ENDIAN)
-static DWORD  mask[4] = 
-	{   0x00000000, 0x000000ff, 0x0000ffff, 0x00ffffff };
-static DWORD  bits[4] = 
-	{   0x00000080, 0x00008000, 0x00800000, 0x80000000 };
-#else
-static DWORD  mask[4] = 
-	{   0x00000000, 0xff000000, 0xffff0000, 0xffffff00 };
-static DWORD  bits[4] = 
-	{   0x80000000, 0x00800000, 0x00008000, 0x00000080 };
-#endif
 
 void CSHA::Finish()
 {
-	DWORD    i = (DWORD)(m_nCount[0] & SHA1_MASK);
-
-    /* mask out the rest of any partial 32-bit word and then set    */
-    /* the next byte to 0x80. On big-endian machines any bytes in   */
-    /* the buffer will be at the top end of 32 bit words, on little */
-    /* endian machines they will be at the bottom. Hence the AND    */
-    /* and OR masks above are reversed for little endian systems    */
-	/* Note that we can always add the first padding byte at this	*/
-	/* because the buffer always contains at least one empty slot	*/ 
-    m_nBuffer[i >> 2] = (m_nBuffer[i >> 2] & mask[i & 3]) | bits[i & 3];
-
-    /* we need 9 or more empty positions, one for the padding byte  */
-    /* (above) and eight for the length count.  If there is not     */
-    /* enough space pad and empty the buffer                        */
-    if(i > SHA1_BLOCK_SIZE - 9)
-    {
-        if(i < 60) m_nBuffer[15] = 0;
-        Compile();
-        i = 0;
-    }
-    else    /* compute a word index for the empty buffer positions  */
-        i = (i >> 2) + 1;
-
-    while(i < 14) /* and zero pad all but last two positions      */ 
-        m_nBuffer[i++] = 0;
-    
-    /* assemble the eight byte counter in in big-endian format		*/
-    m_nBuffer[14] = swap_b32((m_nCount[1] << 3) | (m_nCount[0] >> 29));
-    m_nBuffer[15] = swap_b32(m_nCount[0] << 3);
-
-    Compile();
+	unsigned int bits[2], index = 0;
+	byte bit[8];
+	// Save number of bits
+	_asm
+	{
+		mov		ecx, this
+		mov		eax, [ecx+asm_m_nCount]
+		mov		edx, [ecx+asm_m_nCount+4]
+		shld	edx, eax, 3
+		shl		eax, 3
+		bswap	edx
+		bswap	eax
+		mov		bits, edx
+		mov		bits+4, eax
+	}
+	// Pad out to 56 mod 64.
+	index = (unsigned int)(m_nCount[0] & 0x3f);
+	SHA_Add_p5(this, SHA_PADDING, (index < 56) ? (56 - index) : (120 - index) );
+	// Append length (before padding)
+	SHA_Add_p5(this, bits, 8 );
 }
 
 //////////////////////////////////////////////////////////////////////
