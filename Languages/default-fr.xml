@@ -2372,8 +2372,8 @@ Other:
 	<string id="8009" value="Êtes-vous certain de vouloir supprimer la skin &quot;%s&quot; ?  Ceci n'est pas réversible."/>
 	<string id="8010" value="Ceci est une pré-release de Shareaza, et la période de beta test est terminée.  Merci de télécharger la version complète, officielle à partir de www.shareaza.com."/>
 	<string id="8011" value="Changer la vue fermera toutes les fenêtres actuellement ouvertes.  Voulez-vous changer la vue maintenant?"/>
-
-
+	<string id="8060" value="En mode Hub/Ultrapeer avec %lu voisin(s). %s dans votre bibliothèque locale."/>
+    <string id="8061" value="En mode Ultrapeer avec %lu voisin(s). %s dans votre bibliothèque locale."/>
 	<string id="8062" value="En mode Hub avec %lu voisin(s). %s dans votre bibliothèque locale."/>
 	<string id="8063" value="Connecté. %s dans la bibliothèque locale."/>
 	<string id="8064" value="Connecté à %lu voisin(s).  %s dans votre bibliothèque locale."/>
@@ -3965,7 +3965,7 @@ Other:
 		<control caption="_Rafraîchir"/>
 		<control/>
 		<control caption="Fermer"/>
-		<control caption="Selon le besoin|Si le ratio dépasse de 100%|Seulement si requis|Jamais"/>
+		<control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/>
   	    <control caption="Commencer les transferts du nouveau téléchargement:"/>
   	    <control caption="Transfers:"/>
 	</dialog>
