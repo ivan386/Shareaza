@@ -878,7 +878,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 		<separator/>
-		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
@@ -905,10 +905,7 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит пропускной способности"/>
 		</menu>
-		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
-		<separator/> -->
-		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Доступ"/>
@@ -925,9 +922,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
@@ -939,14 +933,16 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Прекратить распространение"/>
+	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Авто очистка"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Возобновить все"/>
@@ -972,23 +968,32 @@
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Показывать _группы"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
-		<!-- <separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>	-->
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Начать сейчас"/>
-		<item id="ID_UPLOADS_CLEAR" text="У_брать"/>
+		<item id="ID_UPLOADS_CLEAR" text="_Убрать"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
-		<!-- <separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>	-->
+	</menu>
+	<menu name="CUploadsWnd.Queue.Basic">
+		<item id="ID_UPLOADS_HELP" text="_Справка..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue">
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Настройка очереди"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
+	</menu>
+	<menu name="CUploadsWnd.Nothing">
+		<item id="ID_UPLOADS_HELP" text="_Справка..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Показывать все"/>
@@ -1862,9 +1867,12 @@
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">Выберите загрузку</text>
+		<text format="b">Область загрузок</text>
 		<newline gap="8"/>
-		<text>Вы можете использовать эту команду для получения помощи по загрузке.  Просто
+		<text>Здесь показываются в данный момент загружаемые файлы. Вы можете просмотреть 
+		отдельные источники, развернув дерево каждого файла (нажав на значок „+“ слева).</text>
+		<newline gap="8"/>
+		<text>Вы можете использовать эту команду также для получения помощи по загрузке.  Просто
 		выделите загрузку и выберите эту команду снова.</text>
 	</document>
 
@@ -1886,7 +1894,7 @@
 		<text format="b">Эта загрузка в паузе</text>
 		<newline gap="8"/>
 		<text>Вы приостановили загрузку.  Если вы хотите возобновить загрузку, Вы можете
-		щелкнуть комманду </text><text format="b">Продолжить загрузку.</text>
+		щелкнуть комманду </text><text format="b">Возобновить.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1964,6 +1972,16 @@
 		<text>BitTorrent трекер сервер для этой загрузки похоже недоступен или
 		работает со сбоями.  Shareaza не может соединиться с ним для получения
 		листа частей загрузки.</text>
+	</document>
+
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">Область выгрузок</text>
+		<newline gap="8"/>
+		<text>Здесь показываются очереди и выгрузки. Вы можете развернуть дерево каждой очереди, 
+		нажав на значок „+“ слева, и можете фильтровать список, используя кнопку справа в 
+		панели инструментов.</text>
 	</document>
 
 	<!-- General help documents -->
@@ -3329,7 +3347,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Параметры очереди выгрузок">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Настройка очереди выгрузок">
 		<control caption="_Название:"/>
 		<control/>
 		<control caption="_Критерии:"/>
@@ -3694,13 +3712,13 @@
 		<control caption="Вы выбрали %i файл(а/ов) для перемещения в папку:"/>
 	</dialog>
 
-	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Параметры папки хранилища">
+	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Настройка папки хранилища">
 		<control caption="Название папки:"/>
 		<control/>
 		<control caption="Тип папки:"/>
 		<control/>
 		<control caption="Все"/>
-		<control caption="Копировать эти параметры всем файлам в папке"/>
+		<control caption="Копировать эти данные всем файлам в папке"/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -4121,6 +4139,10 @@
 	<list name="CFileSourcesPageList">
 		<column from="URL" to="Ссылка"/>
 		<column from="Expires" to="Истекает"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to="Имя файла"/>
+		<column from="Size" to="Размер"/>
 	</list>
 </listColumns>
 </skin>
