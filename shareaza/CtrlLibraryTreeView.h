@@ -50,7 +50,7 @@ public:
 	void	Update(DWORD nSelectCookie);
 	BOOL	SelectFolder(LPVOID pSearch);
 	BOOL	DropShowTarget(CLibraryList* pList, const CPoint& point);
-	BOOL	DropObjects(CLibraryList* pList, BOOL bCopy);
+	BOOL	DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock& oLock);
 protected:
 	void	PostUpdate();
 	void	UpdatePhysical(DWORD nSelectCookie);

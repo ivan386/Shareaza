@@ -961,7 +961,7 @@ void CLibraryFrame::CancelDrag()
 	delete m_pDragList;
 	m_pDragList = NULL;
 	
-	m_wndTree.DropObjects( NULL, FALSE );
+	m_wndTree.DropObjects( NULL, FALSE, CSingleLock( &Library.m_pSection ) ); // no lock, just serves as a dummy
 }
 
 void CLibraryFrame::OnMouseMove(UINT nFlags, CPoint point) 
@@ -1000,8 +1000,8 @@ void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	
 	{
-		CQuickLock oLock( Library.m_pSection );
-		m_wndTree.DropObjects( m_pDragList, bCopy );
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		m_wndTree.DropObjects( m_pDragList, bCopy, oLock );
 		Library.Update();
 	}
 	

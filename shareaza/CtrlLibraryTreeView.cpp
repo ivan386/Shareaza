@@ -450,7 +450,7 @@ BOOL CLibraryTreeView::DropShowTarget(CLibraryList* pList, const CPoint& point)
 	return ( m_pDropItem != NULL );
 }
 
-BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy)
+BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock& oLock)
 {
 	if ( m_pDropItem == NULL ) return FALSE;
 	
@@ -477,7 +477,16 @@ BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy)
 		dlg.m_sTarget = m_pDropItem->m_pPhysical->m_sPath;
 		m_pDropItem = NULL;
 
-		dlg.DoModal();
+		if ( oLock.IsLocked() )
+		{
+			oLock.Unlock();
+			dlg.DoModal();
+			oLock.Lock();
+		}
+		else
+		{
+			dlg.DoModal();
+		}
 	}
 	else if ( m_pDropItem->m_pVirtual != NULL )
 	{
