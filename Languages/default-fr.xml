@@ -2885,13 +2885,13 @@ Other:
 	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
 	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
 	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
-	<string id="20200" value="Sunday"/>
-	<string id="20201" value="Monday"/>
-	<string id="20202" value="Tuesday"/>
-	<string id="20203" value="Wednesday"/>
-	<string id="20204" value="Thursday"/>
-	<string id="20205" value="Friday"/>
-	<string id="20206" value="Saturday"/>
+	<string id="20200" value="Dimanche"/>
+	<string id="20201" value="Lundi"/>
+	<string id="20202" value="Mardi"/>
+	<string id="20203" value="Mercredi"/>
+	<string id="20204" value="Jeudi"/>
+	<string id="20205" value="Vendredi"/>
+	<string id="20206" value="Samedi"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3085,23 +3085,23 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Programmateur">
 		<control caption="_Options:"/>
-		<control caption="_Enable Scheduler"/>
+		<control caption="_Activer le programmateur"/>
 		<control/><control/>
-		<control caption="_Restrict networks when limited"/>
-		<control caption="Key:"/>
-		<control caption="Sun"/>
-		<control caption="Mon"/>
-		<control caption="Tue"/>
-		<control caption="Wed"/>
-		<control caption="Thu"/>
-		<control caption="Fri"/>
-		<control caption="Sat"/>
-		<control caption="Do not connect"/>
-		<control caption="Limited connection"/>
-		<control caption="Connect at full speed"/>
-		<control caption="% of _bandwith under limit"/>
+		<control caption="_Restreindre les réseaux lorsque limitée"/>
+		<control caption="Clé:"/>
+		<control caption="Dim"/>
+		<control caption="Lun"/>
+		<control caption="Mar"/>
+		<control caption="Mer"/>
+		<control caption="Jeu"/>
+		<control caption="Ven"/>
+		<control caption="Sam"/>
+		<control caption="Ne pas se connecter"/>
+		<control caption="Connection limitée"/>
+		<control caption="Se connecter à pleine vitesse"/>
+		<control caption="% de _bande passante lorsque limitée"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
