@@ -326,7 +326,7 @@ void CLibrary::Save()
 //////////////////////////////////////////////////////////////////////
 // CLibrary serialize
 
-#define LIBRARY_SER_VERSION	22
+#define LIBRARY_SER_VERSION	23
 
 void CLibrary::Serialize(CArchive& ar)
 {

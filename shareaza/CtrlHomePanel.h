@@ -230,6 +230,8 @@ protected:
 	CRichElement*	m_pdTorrentsOne;
 	CRichElement*	m_pdTorrentsMany;
 	CString			m_sTorrentsMany;
+	CRichElement*	m_pdReseedTorrent;
+	CString			m_sReseedTorrent;
 	
 // Operations
 public:

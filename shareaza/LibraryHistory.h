@@ -38,6 +38,16 @@ public:
 // Attributes
 protected:
 	CPtrList	m_pList;
+
+public:
+	struct sLastSeededTorrent
+	{
+		DWORD			m_tLastSeeded;
+		CString			m_sName;
+		CString			m_sPath;
+		SHA1			m_pBTH;
+	} LastSeededTorrent;
+
 	
 // Operations
 public:

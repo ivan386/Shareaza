@@ -34,6 +34,8 @@
 #include "WndMain.h"
 #include "WndDownloads.h"
 
+#include "LibraryHistory.h"
+
 IMPLEMENT_DYNAMIC(CTorrentSeedDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CTorrentSeedDlg, CSkinDialog)
@@ -156,6 +158,13 @@ void CTorrentSeedDlg::OnSeed()
 	{
 		if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
 		{
+			// Update the last seeded torrent
+			LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
+			LibraryHistory.LastSeededTorrent.m_tLastSeeded = time( NULL );
+			LibraryHistory.LastSeededTorrent.m_sName = m_pInfo.m_sName.Left( 40 );
+			LibraryHistory.LastSeededTorrent.m_pBTH = m_pInfo.m_pInfoSHA1;
+
+			// Start the torrent seed process
 			m_hThread = AfxBeginThread( ThreadStart, this,
 				THREAD_PRIORITY_NORMAL )->m_hThread;
 		}

@@ -1619,6 +1619,8 @@
 			<text id="TorrentsOne" format="b">1 seeding torrent</text>
 			<text id="TorrentsMany" format="b">%i seeding torrents</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Re-seed %s</link>
+			<newline gap="4"/>
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
 		</para>
 

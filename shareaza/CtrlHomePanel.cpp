@@ -1276,7 +1276,7 @@ void CHomeTorrentsBox::Setup()
 {
 	if ( m_pDocument ) delete m_pDocument;
 	m_pDocument = NULL;
-	m_pdTorrentsNone = m_pdTorrentsOne = m_pdTorrentsMany = NULL;
+	m_pdTorrentsNone = m_pdTorrentsOne = m_pdTorrentsMany = m_pdReseedTorrent = NULL;
 	
 	SetCaptionmark( Skin.GetWatermark( _T("CHomeTorrentsBox.Caption") ) );
 	
@@ -1295,7 +1295,10 @@ void CHomeTorrentsBox::Setup()
 	pMap.Lookup( _T("TorrentsMany"), (void*&)m_pdTorrentsMany );
 	
 	if ( m_pdTorrentsMany ) m_sTorrentsMany = m_pdTorrentsMany->m_sText;
-	
+
+	pMap.Lookup( _T("ReseedTorrent"), (void*&)m_pdReseedTorrent );
+	if ( m_pdReseedTorrent ) m_sReseedTorrent = m_pdReseedTorrent->m_sText;
+
 	GetView().SetDocument( m_pDocument );
 	Update();
 }
@@ -1304,14 +1307,15 @@ void CHomeTorrentsBox::Update()
 {
 	if ( m_pDocument == NULL ) return;
 	
-	CString str;
 	
+	// Torrent Count
 	int nCount = Downloads.GetSeedCount();
 	
 	if ( nCount > 1 )
 	{
 		if ( m_pdTorrentsMany )
 		{
+			CString str;
 			str.Format( m_sTorrentsMany, nCount );
 			m_pdTorrentsMany->SetText( str );
 			m_pdTorrentsMany->Show( TRUE );
@@ -1330,6 +1334,26 @@ void CHomeTorrentsBox::Update()
 		if ( m_pdTorrentsMany ) m_pdTorrentsMany->Show( FALSE );
 		if ( m_pdTorrentsOne ) m_pdTorrentsOne->Show( FALSE );
 		if ( m_pdTorrentsNone ) m_pdTorrentsNone->Show( TRUE );
+	}
+
+	// Re-seed last torrent option
+	if ( m_pdReseedTorrent )
+	{
+		if ( ( LibraryHistory.LastSeededTorrent.m_sName.IsEmpty() ) ||
+			 ( LibraryHistory.LastSeededTorrent.m_sPath.IsEmpty() ) ||
+			 ( Downloads.FindByBTH( &LibraryHistory.LastSeededTorrent.m_pBTH ) != NULL ) )
+		{
+			// No 'Last seeded' torrent, or it's already seeding
+			m_pdReseedTorrent->Show( FALSE );
+		}
+		else
+		{
+			// We could re-seed this torrent...
+			CString str;
+			str.Format( m_sReseedTorrent, LibraryHistory.LastSeededTorrent.m_sName );
+			m_pdReseedTorrent->SetText( str );
+			m_pdReseedTorrent->Show( TRUE );
+		}
 	}
 	
 	CRichTaskBox::Update();

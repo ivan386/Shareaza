@@ -40,6 +40,9 @@ CLibraryHistory LibraryHistory;
 
 CLibraryHistory::CLibraryHistory()
 {
+	LastSeededTorrent.m_sName.Empty();
+	LastSeededTorrent.m_sPath.Empty();
+	LastSeededTorrent.m_tLastSeeded = 0;
 }
 
 CLibraryHistory::~CLibraryHistory()
@@ -229,6 +232,14 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 			CLibraryRecent* pRecent = GetNext( pos );
 			if ( pRecent->m_pFile != NULL ) pRecent->Serialize( ar, nVersion );
 		}
+
+		ar << LastSeededTorrent.m_sPath;
+		if ( LastSeededTorrent.m_sPath.GetLength() )
+		{
+			ar << LastSeededTorrent.m_sName;
+			ar << LastSeededTorrent.m_tLastSeeded;
+			ar.Write( &LastSeededTorrent.m_pBTH, sizeof(SHA1) );
+		}
 	}
 	else
 	{
@@ -246,6 +257,17 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 			else
 			{
 				delete pRecent;
+			}
+		}
+
+		if ( nVersion > 22 )
+		{
+			ar >> LastSeededTorrent.m_sPath;
+			if ( LastSeededTorrent.m_sPath.GetLength() )
+			{
+				ar >> LastSeededTorrent.m_sName;
+				ar >> LastSeededTorrent.m_tLastSeeded;
+				ar.Read( &LastSeededTorrent.m_pBTH, sizeof(SHA1) );
 			}
 		}
 	}
