@@ -366,7 +366,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
 
 	//Check/Reject if source is the local IP/port
-	if ( Network.m_pHost.sin_port == pSource->m_nPort )
+	if ( Settings.Connection.InPort == pSource->m_nPort )
 	{
 		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
 		{	
