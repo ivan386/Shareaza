@@ -891,6 +891,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
@@ -1094,6 +1095,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
@@ -1161,6 +1163,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
