@@ -496,12 +496,12 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
-		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
 	}
-	else if ( Settings.Connection.OutSpeed > 130 )  // >128 Kb/s (Good Broadband)
+	else if ( Settings.Connection.OutSpeed > 200 )  // >200 Kb/s (Good Broadband)
 	{
 		pQueue						= Create( _T("eDonkey Core") );
 		pQueue->m_nBandwidthPoints	= 30;
@@ -525,7 +525,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
-		pQueue->m_nCapacity			= 10;
+		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
@@ -534,7 +534,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 1  * 1024 * 1024 + 1;
 		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
-		pQueue->m_nCapacity			= 10;
+		pQueue->m_nCapacity			= 8;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
@@ -544,6 +544,44 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_nCapacity			= 10;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 60*60;
+	}
+	else if ( Settings.Connection.OutSpeed > 120 )  // >120 Kb/s (Average Broadband)
+	{
+		pQueue						= Create( _T("eDonkey Core") );
+		pQueue->m_nBandwidthPoints	= 30;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		pQueue->m_nCapacity			= 2000;
+		pQueue->m_nMinTransfers		= 2;
+		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 10*60;
+		
+		pQueue						= Create( _T("Partial Files") );
+		pQueue->m_nBandwidthPoints	= 50;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_bPartial			= TRUE;
+		pQueue->m_nMinTransfers		= 2;
+		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 5*60;
+	
+		pQueue						= Create( _T("Small Files") );
+		pQueue->m_nBandwidthPoints	= 10;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
+		pQueue->m_nCapacity			= 10;
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 4;
+		
+		pQueue						= Create( _T("Large Files") );
+		pQueue->m_nBandwidthPoints	= 10;
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nMinSize			= 10 * 1024 * 1024;
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
