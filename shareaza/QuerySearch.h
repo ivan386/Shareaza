@@ -88,7 +88,6 @@ protected:
 
 // Operations
 public:
-	BOOL		GetHashFromXML();
 	BOOL		Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, SHA1* pSHA1 = NULL, TIGEROOT* pTiger = NULL, MD4* pED2K = NULL);
 	TRISTATE	MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	BOOL		MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML);

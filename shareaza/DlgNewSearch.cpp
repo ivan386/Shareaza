@@ -233,15 +233,6 @@ void CNewSearchDlg::OnOK()
 	
 	m_wndSearch.GetWindowText( m_pSearch->m_sSearch );
 	
-	m_pSearch->m_bSHA1	= CSHA::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pSHA1 );
-	m_pSearch->m_bTiger	= CTigerNode::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pTiger );
-	m_pSearch->m_bED2K	= CED2K::HashFromURN( m_pSearch->m_sSearch, &m_pSearch->m_pED2K );
-	
-	if ( m_pSearch->m_bSHA1 || m_pSearch->m_bTiger || m_pSearch->m_bED2K )
-	{
-		m_pSearch->m_sSearch.Empty();
-	}
-	
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 	
 	if ( m_pSearch->m_pXML != NULL ) delete m_pSearch->m_pXML;
@@ -249,14 +240,12 @@ void CNewSearchDlg::OnOK()
 	m_pSearch->m_pSchema	= NULL;
 	m_pSearch->m_pXML		= NULL;
 	
-	if ( pSchema != NULL && ! m_pSearch->m_bSHA1 )
+	if ( pSchema != NULL )
 	{
 		m_pSearch->m_pSchema	= pSchema;
 		m_pSearch->m_pXML		= pSchema->Instantiate();
 		
 		m_wndSchema.UpdateData( m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
-		
-		m_pSearch->GetHashFromXML();
 		
 		Settings.Search.LastSchemaURI = pSchema->m_sURI;
 	}
@@ -265,13 +254,7 @@ void CNewSearchDlg::OnOK()
 		Settings.Search.LastSchemaURI.Empty();
 	}
 	
-	m_pSearch->m_sSearch.TrimLeft();
-	m_pSearch->m_sSearch.TrimRight();
-	
-	m_pSearch->BuildWordList();
-	
-	if ( m_pSearch->m_nWords == 0 && ! m_pSearch->m_bSHA1 &&
-		 ! m_pSearch->m_bTiger && ! m_pSearch->m_bED2K )
+	if ( ! m_pSearch->CheckValid() )
 	{
 		m_wndSearch.SetFocus();
 		return;

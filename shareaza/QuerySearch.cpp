@@ -831,27 +831,6 @@ BOOL CQuerySearch::CheckValid()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CQuerySearch schema SHA1 to raw SHA1
-
-BOOL CQuerySearch::GetHashFromXML()
-{
-	if ( ! m_pXML || m_bSHA1 ) return FALSE;
-	
-	if ( CXMLElement* pBody = m_pXML->GetFirstElement() )
-	{
-		CString strHash	= pBody->GetAttributeValue( _T("SHA1"), NULL );
-
-		if ( CSHA::HashFromString( strHash, &m_pSHA1 ) )
-		{
-			CXMLAttribute* pAttribute = pBody->GetAttribute( _T("SHA1") );
-			if ( pAttribute ) pAttribute->Delete();
-		}
-	}
-	
-	return m_bSHA1;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CQuerySearch matching
 
 BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, SHA1* pSHA1, TIGEROOT* pTiger, MD4* pED2K)
@@ -1059,10 +1038,56 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 void CQuerySearch::BuildWordList()
 {
 	m_nWords = 0;
-
+	
+	m_sSearch.Trim();
 	CharLower( m_sSearch.GetBuffer() );
 	m_sSearch.ReleaseBuffer();
-
+	
+	BOOL bHash = FALSE;
+	
+	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
+	{
+		int nURN = m_sSearch.Find( _T("urn:") );
+		
+		if ( nURN > 0 )
+		{
+			m_sSearch = m_sSearch.Mid( nURN );
+			bHash = TRUE;
+		}
+	}
+	
+	if ( bHash || 0 == _tcsncmp( m_sSearch, _T("urn:"), 4 ) )
+	{
+		if ( ! m_bSHA1 )
+		{
+			if ( CSHA::HashFromURN( m_sSearch, &m_pSHA1 ) )
+			{
+				m_bSHA1 = TRUE;
+				bHash = TRUE;
+			}
+		}
+		
+		if ( ! m_bTiger )
+		{
+			if ( CTigerNode::HashFromURN( m_sSearch, &m_pTiger ) )
+			{
+				m_bTiger = TRUE;
+				bHash = TRUE;
+			}
+		}
+		
+		if ( ! m_bED2K )
+		{
+			if ( CED2K::HashFromURN( m_sSearch, &m_pED2K ) )
+			{
+				m_bED2K = TRUE;
+				bHash = TRUE;
+			}
+		}
+		
+		if ( bHash ) m_sSearch.Empty();
+	}
+	
 	AddStringToWordList( m_sSearch );
 	
 	if ( m_pXML == NULL ) return;
@@ -1269,8 +1294,12 @@ void CQuerySearch::Serialize(CArchive& ar)
 
 CSearchWnd* CQuerySearch::OpenWindow()
 {
-	if ( this == NULL ) return NULL;
-	BuildWordList();
-	if ( ! CheckValid() ) return NULL;
-	return new CSearchWnd( this );
+	if ( this != NULL && CheckValid() )
+	{
+		return new CSearchWnd( this );
+	}
+	else
+	{
+		return NULL;
+	}
 }

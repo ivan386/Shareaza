@@ -232,8 +232,6 @@ CManagedSearch* CSearchPanel::GetSearch()
 	CManagedSearch* pSearch = new CManagedSearch();
 	
 	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
-	pSearch->m_pSearch->m_sSearch.TrimLeft();
-	pSearch->m_pSearch->m_sSearch.TrimRight();
 	
 	if ( m_boxSearch.m_wndNetworks.m_hWnd != NULL )
 	{
@@ -270,8 +268,6 @@ CManagedSearch* CSearchPanel::GetSearch()
 		m_boxSchema.m_wndSchema.UpdateData(
 			pSearch->m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
 		
-		pSearch->m_pSearch->GetHashFromXML();
-		
 		Settings.Search.LastSchemaURI = pSchema->m_sURI;
 	}
 	else
@@ -281,7 +277,7 @@ CManagedSearch* CSearchPanel::GetSearch()
 	
 	pSearch->m_pSearch->BuildWordList();
 	
-	if ( pSearch->m_pSearch->m_nWords == 0 )
+	if ( ! pSearch->m_pSearch->CheckValid() )
 	{
 		delete pSearch;
 		return NULL;

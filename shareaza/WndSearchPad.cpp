@@ -242,8 +242,6 @@ CQuerySearch* CSearchPadWnd::GetSearch()
 		m_wndData.UpdateData(
 			pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
 		
-		pSearch->GetHashFromXML();
-		
 		Settings.Search.LastSchemaURI = pSchema->m_sURI;
 	}
 	else
@@ -251,9 +249,7 @@ CQuerySearch* CSearchPadWnd::GetSearch()
 		Settings.Search.LastSchemaURI.Empty();
 	}
 	
-	pSearch->BuildWordList();
-	
-	if ( pSearch->m_nWords == 0 )
+	if ( ! pSearch->CheckValid() )
 	{
 		delete pSearch;
 		return NULL;
