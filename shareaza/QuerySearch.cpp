@@ -1040,8 +1040,7 @@ void CQuerySearch::BuildWordList()
 	m_nWords = 0;
 	
 	m_sSearch.Trim();
-	CharLower( m_sSearch.GetBuffer() );
-	m_sSearch.ReleaseBuffer();
+	ToLower( m_sSearch );
 	
 	BOOL bHash = FALSE;
 	
