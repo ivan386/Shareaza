@@ -2483,11 +2483,6 @@
 	<string id="8328" value="Общий размер:"/>
 	<string id="8329" value="Вашего хранилища"/>
 	<string id="8330" value="папка"/>
-	<string id="9000" value="Основное"/>
-	<string id="9001" value="Мета данные"/>
-	<string id="9002" value="Мой обзор"/>
-	<string id="9003" value="Разделение"/>
-	<string id="9004" value="Источники"/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
 	<string id="16066" value="Закрытие ядра сети Shareaza..."/>

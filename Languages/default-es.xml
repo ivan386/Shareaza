@@ -2478,11 +2478,6 @@
 	<string id="8328" value="Volumen total:"/>
 	<string id="8329" value="de tu librería"/>
 	<string id="8330" value="Carpeta"/>
-	<string id="9000" value="General"/>
-	<string id="9001" value="Metadata"/>
-	<string id="9002" value="Mi revisión"/>
-	<string id="9003" value="Compartiendo"/>
-	<string id="9004" value="Fuentes"/>
 	<string id="16064" value="Iniciando el nucleo de la red..."/>
 	<string id="16065" value="Imposible asociar %s con el puerto %i para conexiones entrantes.  Conexiones entrantes no van a ser soportadas."/>
 	<string id="16066" value="Cerrando el nucleo de la red..."/>
