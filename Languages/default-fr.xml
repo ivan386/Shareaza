@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.15"
+		version="2.1.0.18"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -1786,11 +1786,11 @@ Other:
 			<newline gap="8" indent="0"/>
 			<text format="b">Renseignements démographiques</text>
 			<newline gap="2" indent="8"/>
-			<text id="GenderMale">Homme</text>
-			<text id="GenderFemale">Femme</text>
+			<text id="GenderMale">Masculin</text>
+			<text id="GenderFemale">Féminin</text>
 			<text>, </text>
 			<text id="Age"/>
-			<text> ans</text>
+			<text>&#160;ans</text>
 		</group>
 
 		<group id="4">
@@ -2377,6 +2377,8 @@ Other:
 	<string id="8132" value="Quelques résultats sont disponibles, mais ils ont été filtrés."/>
 	<string id="8133" value="Shareaza recherche activement le réseau..."/>
 	<string id="8134" value="Vous êtes sur le point de commencer une nouvelle recherche.  Voulez-vous nettoyer les résultats de votre précédente recherche?"/>
+    <string id="8135" value="Pas de métadonnée"/> 
+    <string id="8136" value="Recherche texte plat"/> 
 	<string id="8141" value="Afficher le panneau de recharche"/>
 	<string id="8142" value="Masquer le panneau de recherche"/>
 	<string id="8143" value="Recherche..."/>
@@ -2639,6 +2641,16 @@ Other:
 	<string id="16363" value="Envois torrent"/>
 	<string id="16364" value="Envois complétés"/>
 	<string id="16365" value="Êtes-vous certain de vouloir annuler tous les téléchargements dans ce groupe?"/>
+	<string id="16366" value="Queue"/> 
+    <string id="16367" value="eDonkey Core"/> 
+    <string id="16368" value="eDonkey Partiels"/> 
+    <string id="16369" value="eDonkey Garde"/> 
+    <string id="16370" value="Fichiers petits"/> 
+    <string id="16371" value="Fichiers moyens"/> 
+    <string id="16372" value="Fichiers larges"/> 
+    <string id="16373" value="Fichiers partiels"/> 
+    <string id="16374" value="Nouvelle queue"/> 
+    <string id="16375" value="Partiel"/> 
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnêes de %i fichiers, voulez-vous continuer?"/>
 	<string id="16386" value="Edition des métadonnêes de %i fichiers."/>
@@ -2726,6 +2738,8 @@ Other:
 	<string id="16807" value="Merci de taper la limite de bande passante que vous voulez appliquer sous la forme &quot;123 kb/s&quot; pour kilobits par seconde, ou &quot;123 KB/s&quot; pour kilobytes par seconde."/>
 	<string id="16808" value="Vous n'avez pas sélectionné votre genre ou votre âge.  Êtes-vous certain de vouloir continuer sans le faire?"/>
 	<string id="16809" value="&amp;Quitter"/>
+	<string id="16810" value="ans"/> 
+    <string id="16811" value="Automatique"/> 
 	<string id="16864" value="Interroge l'hôte du service Discovery..."/>
 	<string id="16865" value="Interroge le service Discovery &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
@@ -2920,6 +2934,10 @@ Other:
 	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
 	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
 	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
+    <string id="20133" value="Non intéressé"/> 
+    <string id="20134" value="Obstrué"/> 
+    <string id="20135" value="Suivant"/> 
+    <string id="20136" value="Q"/> 
 	<string id="20200" value="Dimanche"/>
 	<string id="20201" value="Lundi"/>
 	<string id="20202" value="Mardi"/>
@@ -2951,7 +2969,7 @@ Other:
 		<control caption="Développer les nouv. téléchargements"/>
 		<control caption="Prévenir avant d'ouvrir les URLs"/>
 		<control caption="Vitesses en:"/>
-		<control/>
+		<control caption="bits/seconde|bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Infobulles:"/>
 		<control/>
 		<control caption="Delai (ms):"/>
@@ -2960,9 +2978,9 @@ Other:
 		<control/>
 		<control caption="_Icône système:"/>
 		<control caption="Qd je clique sur Fermer:"/>
-		<control/>
+		<control caption="Me demander|Fermer immédiatement|Minimiser dans la barre des tâches|Fermer à la fin des transferts"/>
 		<control caption="Qd je clique sur Minimiser:"/>
-		<control/>
+		<control caption="Normal|Minimiser dans la barre des tâches"/>
 		<control caption="Masquer auto. le panneau de recherche"/>
 		<control caption="Filtrer le contenu adulte des recherches"/>
 	</dialog>
@@ -3038,7 +3056,7 @@ Other:
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Connexion">
 		<control caption="Adresse _entrante:"/>
 		<control caption="Adresse:"/>
-		<control/>
+		<control caption="Automatique"/>
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Aléatoire"/>
@@ -3047,7 +3065,7 @@ Other:
 		<control caption="Rester sur cette adresse"/>
 		<control caption="Adresse sortante:"/>
 		<control caption="Adresse:"/>
-		<control/>
+		<control caption="Automatique"/>
 		<control caption="Vitesse:"/>
 		<control/>
 		<control caption="O_ptions:"/>
@@ -3098,7 +3116,7 @@ Other:
 		<control caption="Limite:"/>
 		<control/>
 		<control caption="Mode:"/>
-		<control/>
+		<control caption="Maximum|Moyen"/>
 		<control caption="_Files d'attentes:"/>
 		<control/>
 		<control caption="_Nouveau"/>
@@ -3325,13 +3343,13 @@ Other:
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza vous souhaite la bienvenue [3 de 7]">
 		<control caption="Pour des performances optimales, Shareaza doit en connaitre un peu plus sur votre connexion à internet."/>
-		<control/>
+		<control caption="&#160;( merci de sélectionner )| J'utilise Internet depuis ma maison| J'utilise Internet depuis la LAN d'une université| J'utilise Internet depuis la LAN d'un bureau| J'utilise Internet depuis un hôtel ou un aéroport"/>
 		<control caption="Votre réseau est-il protégé par un firewall (pare-feu) ou un routeur NAT ?"/>
-		<control/>
+		<control caption="&#160;Non, Je PEUX accepter toutes les connexions entrantes| Oui, donc je ne PEUX PAS accepter de connexions entrantes depuis Internet| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall (pare-feu)"/>
 		<control caption="Votre connexion personnelle est-elle protégée par un firewall (pare-feu) ou un routeur NAT ?"/>
-		<control/>
+		<control caption="&#160;Non, j'ai un ACCES COMPLET à Internet| Oui, mais je vais configurer le port de Shareaza| Oui, donc je ne PEUX PAS accepter de connexions entrantes depuis Internet| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall (pare-feu)"/>
 		<control caption="Si vous connaissez la vitesse de votre connexion Internet, sélectionnez la meilleure option ci-dessous:"/>
-		<control/>
+		<control caption="| Modem Dial up| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Modem Cable/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="OU, choisissez:"/>
 		<control/>
 	</dialog>
@@ -3357,11 +3375,12 @@ Other:
 	</dialog>
 
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareaza vous souhaite la bienvenue [5 de 7]">
-		<control caption="Shareaza est un endroit beaucoup plus amical quand chacun écrit quelques détails basiques à propos d'eux-mêmes."/>
-		<control caption="J'utilise le surnom:"/>
+		<control caption="Shareaza est beaucoup plus amical quand chacun écrit quelques informations basiques à propos d'eux-mêmes."/>
+		<control caption="J'utilise le nom:"/>
 		<control/>
-		<control caption="je suis:"/>
-		<control/><control/>
+		<control caption="et Je suis:"/>
+		<control caption="&#160;(choisir)"/> 
+        <control caption="&#160;(choisir)| un garçon| une fille| un homme| une femme"/> 
 		<control caption="résidant:"/>
 		<control/><control/>
 	</dialog>
@@ -3410,7 +3429,7 @@ Other:
 		<control caption="Nom réel:"/>
 		<control/><control/>
 		<control caption="Attributs physiques:"/>
-		<control/>
+		<control caption="|Masculin|Féminin"/>
 		<control caption="Genre:"/>
 		<control/>
 		<control caption="Age:"/>
@@ -3498,7 +3517,7 @@ Other:
 		<control caption="Débute une nouvelle connexion à l'hôte ou au serveur:|Parcourir cet hôte:"/>
 		<control/><control/>
 		<control caption="_Protocole réseau:"/>
-		<control/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Supprimer ultrapeer"/>
 		<control caption="Se connecter"/>
 		<control caption="Annuler"/>
@@ -3593,7 +3612,7 @@ Other:
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Ma description">
 		<control caption="Mon évaluation"/>
 		<control caption="J'évalue ce fichier:"/>
-		<control/>
+		<control caption="(Pas d'évaluation)|Faux/Corrompu/Trompeur|Pauvre|Moyen|Bon|Très bon|Excellent"/>
 		<control caption="Ma description et mes commentaires"/>
 		<control/><control/>
 	</dialog>
@@ -3682,7 +3701,7 @@ Other:
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Régle de sécurité">
 		<control caption="_Règle:"/>
 		<control caption="Type:"/>
-		<control/>
+		<control caption="Adresse (IP) réseau|Filtre de contenu"/>
 		<control caption="Commentaire:"/>
 		<control/>
 		<control caption="Adresse _réseau:"/>
@@ -3696,9 +3715,10 @@ Other:
 		<control caption="Tous les mots"/>
 		<control caption="_Options:"/>
 		<control caption="Action:"/>
-		<control/>
+		<control caption="Aucune|Accepter|Refuser"/>
 		<control caption="Expire:"/>
-		<control/><control/>
+		<control caption="Jamais (Indéfini)|A la fin de la session|Après:"/> 
+        <control/>
 		<control caption="d"/>
 		<control/>
 		<control caption="h"/>
@@ -3731,7 +3751,7 @@ Other:
 		<control caption="Vous avez sélectionné %lu fichiers à exporter en tant qu'URI Shareaza. Sélectionnez le format des URIs, puis cliquez sur Sauvegarder:"/>
 		<control/>
 		<control caption="&quot;token&quot;:"/>
-		<control/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nom de fichier|Nom de fichier (URI)|Nom de fichier Base|Extension du fichier|Taille du fichier|Taille du fichier (bytes)|Chemin du dossier|Hôte local|Port local"/>
 		<control caption="Présélection:"/>
 		<control/>
 		<control caption="Annuler"/>
@@ -3922,7 +3942,8 @@ Other:
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Sélectionner la visualisation">
 		<control/>
 		<control caption="Sélectionner une visualisation audio dans la liste:"/>
-		<control/><control/>
+		<control/> 
+        <control caption="Affichage en bas|Affichage taille complète|Affichage large|Affichage moyen|Affichage petit"/> 
 		<control caption="Configurer..."/>
 		<control caption="OK"/>
 		<control caption="Annuler"/>
