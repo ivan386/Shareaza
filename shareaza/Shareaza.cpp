@@ -293,6 +293,19 @@ void CShareazaApp::InitResources()
 	//Win 95/98/Me/NT (<5) do not support some functions
 	m_dwWindowsVersion = pVersion.dwMajorVersion; 
 
+	//Win2000 = 0 WinXP = 1
+	m_dwWindowsVersionMinor = pVersion.dwMinorVersion; 
+
+	m_bLimitedConnections = FALSE;
+	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
+	{	//Windows XP - Test for SP2
+
+		if( _tcsnicmp( pVersion.szCSDVersion, _T("Service Pack 2"), 15 ) == 0 )
+		{	//XP SP2 - Limit the networking.
+			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
+			m_bLimitedConnections = TRUE;
+		}
+	}
 
 	//Get pointers to some functions that don't exist under 95/NT
 	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )

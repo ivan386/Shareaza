@@ -46,7 +46,9 @@ public:
 	CWnd*				m_pSafeWnd;
 	BOOL				m_bLive;
 	BOOL				m_bNT;
+	BOOL				m_bLimitedConnections;
 	DWORD				m_dwWindowsVersion;
+	DWORD				m_dwWindowsVersionMinor;
 
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
