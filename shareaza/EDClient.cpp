@@ -1347,7 +1347,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 
 
 	// Check the message is not spam
-	if ( MessageFilter.IsBlockedED2K( sMessage ) ) 	
+	if ( MessageFilter.IsED2KSpam( sMessage ) ) 	
 	{
 		// Block L33cher mods
 		if ( m_pDownload == NULL ) Security.SessionBan( &m_pHost.sin_addr, FALSE );
