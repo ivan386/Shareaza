@@ -154,19 +154,27 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 		m_sTitle.SetAt( 0, toupper( m_sTitle.GetAt( 0 ) ) );
 	}
 
-	//Bit of a hack - Should probably save this info as part of schema somehow
-	if ( m_sTitle == _T("Audio") )
-		m_sDonkeyType = _T("Audio");
-	else if ( m_sTitle == _T("Video") )
-		m_sDonkeyType = _T("Video");
-	else if ( m_sTitle == _T("Image") )
-		m_sDonkeyType = _T("Image");
-	else if ( m_sTitle == _T("Application") )
-		m_sDonkeyType = _T("Pro");
-	else if ( m_sTitle == _T("Book") )
-		m_sDonkeyType = _T("Doc");
-	else if ( m_sTitle.Left( 8 )  == _T("Document") )
-		m_sDonkeyType = _T("Doc");
+	if( m_nType == stFile )
+	{
+		//Bit of a hack - Should probably save this info as part of schema. Do that in 2.1
+		if ( m_sURI == _T("http://www.limewire.com/schemas/audio.xsd") )
+			m_sDonkeyType = _T("Audio");
+		else if ( m_sURI == _T("http://www.limewire.com/schemas/video.xsd") )
+			m_sDonkeyType = _T("Video");
+		else if ( m_sURI == _T("http://www.shareaza.com/schemas/image.xsd") )
+			m_sDonkeyType = _T("Image");
+		else if ( m_sURI == _T("http://www.shareaza.com/schemas/application.xsd") )
+			m_sDonkeyType = _T("Pro");
+		else if ( m_sURI == _T("http://www.limewire.com/schemas/book.xsd") )
+			m_sDonkeyType = _T("Doc");
+		else if ( m_sURI == _T("http://www.shareaza.com/schemas/presentation.xsd") )
+			m_sDonkeyType = _T("Doc");
+		else if ( m_sURI == _T("http://www.shareaza.com/schemas/spreadsheet.xsd") )
+			m_sDonkeyType = _T("Doc");
+		else if ( m_sURI == _T("http://www.shareaza.com/schemas/wordProcessing.xsd") )
+			m_sDonkeyType = _T("Doc");
+
+	}
 
 	return TRUE;
 }
@@ -356,7 +364,11 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		else if ( pElement->IsNamed( _T("viewContent") ) )
 		{
 			LoadDescriptorViewContent( pElement );
-		}
+		}/* // ToDo: Add this to schemas
+		else if ( pElement->IsNamed( _T("donkeyType") ) )
+		{
+			LoadDescriptorDonkeyType( pElement );
+		}*/
 	}
 
 	delete pRoot;
