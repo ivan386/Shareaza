@@ -900,18 +900,70 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					if ( ppHit->m_nSources )
 					{
-						_stprintf( szBuffer, _T("(%lu sources)"), ppHit->m_nSources );
-						pszText = szBuffer;
+					int nLastTwoDigits = pFile->m_nSources % 100;
+					CString strSource;
+					CString strText;
+					if ((nLastTwoDigits > 10) && (nLastTwoDigits < 20))
+					{
+						LoadString( strSource, IDS_STATUS_SOURCES11TO19 );
+					}
+					else
+						switch (nLastTwoDigits % 10)
+						{
+							case 0: 
+								LoadString( strSource, IDS_STATUS_SOURCESTENS );
+								break;
+							case 1:
+								LoadString( strSource, IDS_STATUS_SOURCES );
+								break;
+							case 2:
+							case 3:
+							case 4:
+								LoadString( strSource, IDS_STATUS_SOURCES2TO4);
+								break;
+							default:
+								LoadString( strSource,  IDS_STATUS_SOURCES5TO9);
+								break;
+						}
+						strText.Format( _T("(%lu %s)"), pFile->m_nSources, strSource );
+						_stprintf( szBuffer, strText, pFile->m_nSources );
 					}
 					else
 					{
+						// Not used?
 						pszText = _T("(Firewalled)");
 					}
 				}
 			}
 			else
 			{
-				_stprintf( szBuffer, _T("(%lu sources)"), pFile->m_nSources );
+			int nLastTwoDigits = pFile->m_nSources % 100;
+			CString strSource;
+			CString strText;
+			if ((nLastTwoDigits > 10) && (nLastTwoDigits < 20))
+			{
+				LoadString( strSource, IDS_STATUS_SOURCES11TO19 );
+			}
+			else
+				switch (nLastTwoDigits % 10)
+				{
+					case 0: 
+						LoadString( strSource, IDS_STATUS_SOURCESTENS );
+						break;
+					case 1:
+						LoadString( strSource, IDS_STATUS_SOURCES );
+						break;
+					case 2:
+					case 3:
+					case 4:
+						LoadString( strSource, IDS_STATUS_SOURCES2TO4);
+						break;
+					default:
+						LoadString( strSource,  IDS_STATUS_SOURCES5TO9);
+						break;
+				}
+				strText.Format( _T("(%lu %s)"), pFile->m_nSources, strSource );
+				_stprintf( szBuffer, strText, pFile->m_nSources );
 				pszText = szBuffer;
 			}
 			break;
