@@ -810,6 +810,8 @@ void CEDClient::DeriveVersion()
 			break;
 		case 4:
 			m_sUserAgent.Format( _T("Shareaza"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 			break;
 		default:
 			m_sUserAgent.Format( _T("eMule/c v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );

@@ -76,8 +76,9 @@ public:
 	BOOL				m_bReadContent;
 	FILETIME			m_tLastSeen;
 	int					m_nGnutella;
+	BOOL				m_bClientExtended;		// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 public:
-	DWORD				m_nSortOrder;
+	DWORD				m_nSortOrder;			//How should this source be sorted in the list?
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;

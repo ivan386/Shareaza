@@ -477,7 +477,7 @@ void CBTClient::DetermineUserAgent()
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )	//ToDo: Make certain SZ isn't used before 2.2 final
 		{
 			m_sUserAgent = _T("RAZA");
-			//if ( m_pGUID.b[3] > '1' ) m_bExtended = TRUE;
+			if ( m_pGUID.b[3] > '1' ) m_bExtended = TRUE;
 		}
 		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
 		{
@@ -547,11 +547,17 @@ void CBTClient::DetermineUserAgent()
 	{
 		m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
 		if ( m_pDownloadTransfer->m_pSource != NULL )
+		{
 			m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
+			m_pDownloadTransfer->m_pSource->m_bClientExtended = ( m_bExtended && ! m_pDownloadTransfer->m_pSource->m_bPushOnly);
+		}
 	}
 	
 	if ( m_pUpload != NULL )
+	{
 		m_pUpload->m_sUserAgent = m_sUserAgent;
+		m_pUpload->m_bClientExtended = m_bExtended;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -669,10 +675,17 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 		{
 			m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
 			if ( m_pDownloadTransfer->m_pSource != NULL )
+			{
 				m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
+				m_pDownloadTransfer->m_pSource->m_bClientExtended = TRUE;
+			}
 		}
 		
-		if ( m_pUpload != NULL ) m_pUpload->m_sUserAgent = m_sUserAgent;
+		if ( m_pUpload != NULL ) 
+		{
+			m_pUpload->m_sUserAgent = m_sUserAgent;
+			m_pUpload->m_bClientExtended = TRUE;
+		}
 	}
 	
 	CBENode* pNick = pRoot->GetNode( "nickname" );

@@ -82,6 +82,7 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_bCloseConn	= FALSE;
 	m_bReadContent	= FALSE;
 	m_nGnutella		= 0;
+	m_bClientExtended=FALSE;
 	
 	m_nSortOrder	= 0xFFFFFFFF;
 	m_nColour		= -1;
@@ -126,6 +127,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 	{
 		m_bGUID = TRUE;
 		m_pGUID = pHit->m_pClientID;
+		m_bClientExtended = TRUE;
 	}
 	else if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
@@ -327,6 +329,13 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 			if ( m_pPastFragment != NULL ) m_pPastFragment->m_pPrevious = pNew;
 			m_pPastFragment = pNew;
 		}
+
+		// Should probably save this instead...
+		if ( _tcsncmp( m_sServer, _T("Shareaza"), 8 ) == 0 )
+			m_bClientExtended = TRUE;
+		if ( _tcsncmp( m_sServer, _T("RAZA"), 4 ) == 0 )
+			m_bClientExtended = TRUE;
+		//
 	}
 	else
 	{
