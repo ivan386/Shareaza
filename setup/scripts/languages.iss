@@ -171,7 +171,7 @@ nl.icons_license=Gebruiksovereenkomst
 nl.icons_uninstall=Verwijderen
 nl.icons_downloads=Downloads
 nl.dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installatie verder kan gaan?
-nl.dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de Windows Firewall.%nZet Shareaza alstublieft zelf in de lijst met uitzonderingen.
+nl.dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de Windows Firewall.%nVoeg Shareaza alstublieft manueel toe aan de uitzonderingenlijst.
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -369,7 +369,7 @@ gr.icons_license=Άδεια
 gr.icons_uninstall=Απεγκατάσταση
 gr.icons_downloads=Κατέβασμα
 gr.dialog_shutdown=Το %1 ακόμα τρέχει. Θέλετε να τερματίσετε την λειτουργεία του %1 για να συνεχιστεί η εγκατάσταση?
-gr.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+gr.dialog_firewall=Η εγκατάσταση του προγράμματος απέτυχε να προσθέσει το Shareaza στο Windows Firewall. % Παρακαλώ προσθέστε το Shareaza στην exception λίστα χειροκίνητα
 ; Hungarian
 hu.components_plugins=Pluginek
 hu.components_skins=Kinιzetek
