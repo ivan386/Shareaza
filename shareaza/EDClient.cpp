@@ -1045,14 +1045,14 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	
 	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE ) )
 	{
-		pReply->WriteEDString( pFile->m_sName );
+		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
 		Library.Unlock();
 		Send( pReply );
 		return TRUE;
 	}
 	else if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
 	{
-		pReply->WriteEDString( pDownload->m_sRemoteName );
+		pReply->WriteEDString( pDownload->m_sRemoteName, m_bEmUnicode );
 		Send( pReply );
 		return TRUE;
 	}

@@ -76,6 +76,33 @@ void CEDPacket::WriteEDString(LPCTSTR psz, DWORD ServerFlags)
 	ASSERT( nLen <= 0xFFFF );
 }
 
+CString CEDPacket::ReadEDString(BOOL bUnicode)
+{
+	int nLen = ReadShortLE();
+	if ( bUnicode )
+		return ReadStringUTF8( nLen );
+	else
+		return ReadString( nLen );
+}
+
+void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUnicode)
+{
+	int nLen;
+	if ( bUnicode )
+	{
+		nLen = GetStringLenUTF8( psz );
+		WriteShortLE( nLen );
+		WriteStringUTF8( psz, FALSE );
+	}
+	else
+	{
+		nLen = GetStringLen( psz );
+		WriteShortLE( nLen );
+		WriteString( psz, FALSE );
+	}
+	ASSERT( nLen <= 0xFFFF );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CEDPacket buffers
 
