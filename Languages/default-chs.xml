@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://shareaza.czp-kd.com/"
 		email="shareaza(AT)163(DOT)com"
-		version="2.1.0.70"
+		version="2.1.0.87"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -101,11 +101,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="更多..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_DOWNLOAD" text="下载"/>
-		<button id="ID_BROWSE_LAUNCH" text="浏览用户"/>
-		<separator/>
 		<button id="ID_SEARCH_SEARCH" text="重新搜索..."/>
 		<button id="ID_SEARCH_STOP" text="停止搜索"/>
+		<separator/>
+		<button id="ID_SEARCH_DOWNLOAD" text="下载"/>
+		<button id="ID_BROWSE_LAUNCH" text="浏览用户"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="显示搜索"/>
 		<button id="ID_SEARCH_DETAILS" text="详细信息"/>
@@ -1093,7 +1093,7 @@
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载 Metadata(_D)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
@@ -1124,7 +1124,7 @@
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取元数据(_A)"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
 		</menu>
@@ -1157,7 +1157,7 @@
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取元数据(_A)"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
@@ -1190,7 +1190,7 @@
 		</menu>
 		<menu text="网页服务(_W)">
 			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取 Metadata(_A)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="获取元数据(_A)"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="创建 .torrent 文件"/>
 		</menu>
@@ -1359,7 +1359,7 @@
 	<menu name="CTrafficWnd">
 		<item id="ID_TRAFFIC_SETUP" text="选择图表(_S)..."/>
 		<separator/>
-		<item id="ID_TRAFFIC_GRID" text="网格(_G)"/>
+		<item id="ID_TRAFFIC_GRID" text="网格线(_G)"/>
 		<item id="ID_TRAFFIC_AXIS" text="轴线(_A)"/>
 		<item id="ID_TRAFFIC_LEGEND" text="图例(_L)"/>
 		<separator/>
@@ -1456,7 +1456,7 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">准 备 &#160; 连 接</heading>
 			<newline gap="8" indent="42"/>
-			<text>欢迎来到 Shareaza ！&#160;您现在没有连接到任何 P2P 网络。 &#160;</text>
+			<text>欢迎来到 Shareaza！ &#160;您现在没有连接到任何 P2P 网络。 &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">点击这里开始！</link>
 			<newline gap="18" indent="0"/>
 		</group>
@@ -2308,7 +2308,7 @@
 	<tip id="ID_TOOLS_WIZARD" message="打开 Shareaza 快速启动向导..."/>
 	<tip id="ID_TRAFFIC_AXIS" message="显示垂直轴线"/>
 	<tip id="ID_TRAFFIC_CLEAR" message="清除通讯的图表。"/>
-	<tip id="ID_TRAFFIC_GRID" message="显示网格。"/>
+	<tip id="ID_TRAFFIC_GRID" message="显示网格线。"/>
 	<tip id="ID_TRAFFIC_LEGEND" message="显示图例。"/>
 	<tip id="ID_TRAFFIC_SETUP" message="选择和配置图表..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="打开一个新的图表窗口..."/>
@@ -2422,7 +2422,7 @@
 	<string id="8132" value="某些结果可用，但已被过滤。"/>
 	<string id="8133" value="Shareaza 正积极地搜索网络..."/>
 	<string id="8134" value="立即开始新的搜索。确定要清除之前的搜索吗？"/>
-	<string id="8135" value="无 Metadata"/>
+	<string id="8135" value="无元数据"/>
 	<string id="8136" value="纯文字搜索"/>
 	<string id="8141" value="显示搜索面板"/>
 	<string id="8142" value="隐藏搜索面板"/>
@@ -2706,7 +2706,7 @@
 	<string id="16377" value="HTTP 保护"/>
 	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 	<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
-	<string id="16386" value="正在修改 %i 的 Metadata。"/>
+	<string id="16386" value="正在修改 %i 的元数据。"/>
 	<string id="16387" value="文件 &quot;%s&quot; 未被 Hash。请等待文件被 Hash，稍后再试。"/>
 	<string id="16388" value="识别和共享选定文件的功能由 Bitzi.com 提供。\n\n为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\n\n您确定继续吗？"/>
 	<string id="16389" value="确定要永久删除选定的 %i 文件吗？ \n\n如果您确定，文件将会被移动到 &quot;回收站&quot;。"/>
@@ -2788,7 +2788,7 @@
 	<string id="16804" value="您尚未在您的配置文件中输入屏幕名称。\n\n输入一个自定的屏幕名称是非常有益的，它可以使其他用户看见它们与谁连接。\n\n您确定要继续而不带有屏幕名称吗？"/>
 	<string id="16805" value="您尚未在您的配置文件中输入您的地址。\n\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。\n\n您确定要继续而不输入您的地址吗？"/>
 	<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口转发。\n\n请配置您的网络到转发 TCP 端口 %i 到您的本地计算机。"/>   
-	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千 bit 每秒，或 &quot;123 KB/s&quot; 千 byte 每秒。"/>
+	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千比特每秒，或 &quot;123 KB/s&quot; 千字节每秒。"/>
 	<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
 	<string id="16809" value="退出(_X)"/>
 	<string id="16810" value="岁"/>
@@ -2844,13 +2844,13 @@
 	<string id="17041" value="不能发送消息，尚未建立连接。"/>
 	<string id="17042" value="您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\n\n您要立即填写个人资料吗？"/>
 	<string id="17043" value="确定 %s 主机的上传优先级。"/>
-	<string id="17100" value="Gnutella:对等对对等连接"/>
-	<string id="17101" value="Gnutella:子端对超对等连接"/>
-	<string id="17102" value="Gnutella:超对等对子端连接"/>
+	<string id="17100" value="Gnutella:点对点连接"/>
+	<string id="17101" value="Gnutella:子端到超对等连接"/>
+	<string id="17102" value="Gnutella:超对等到子端连接"/>
 	<string id="17103" value="Gnutella 2:集端对集端连接"/>
-	<string id="17104" value="Gnutella 2:子端对集端连接"/>
-	<string id="17105" value="Gnutella 2:集端对子端连接"/>
-	<string id="17106" value="eDonkey 服务器连接 (LOWID: %lu)"/>
+	<string id="17104" value="Gnutella 2:子端到集端连接"/>
+	<string id="17105" value="Gnutella 2:集端到子端连接"/>
+	<string id="17106" value="eDonkey 服务器连接(LOWID: %lu)"/>
 	<string id="17107" value="eDonkey2000 服务器连接"/>
 	<string id="17108" value="握手"/>
 	<string id="17109" value="传入"/>
@@ -2918,12 +2918,12 @@
 	<string id="17480" value="与 %s 的 BitTorrent 联结已丢失。"/>
 	<string id="17481" value="已接收 BitTorrent 描述符文件: &quot;%s&quot;"/>
 	<string id="17482" value="未能分析 BitTorrent 预取文件 &quot;%s&quot;。"/>
-	<string id="17483" value="BitTorrent 跟踪器回应错误 &quot;%s&quot; : &quot;%s&quot;。"/>
-	<string id="17484" value="错误分析 BitTorrent 跟踪器回应。"/>
-	<string id="17485" value="为 &quot;%s&quot; 接收 BitTorrent 跟踪器回应，%i 个新资源。"/>
+	<string id="17483" value="BitTorrent Tracker 回应错误 &quot;%s&quot; : &quot;%s&quot;。"/>
+	<string id="17484" value="错误分析 BitTorrent Tracker 回应。"/>
+	<string id="17485" value="为 &quot;%s&quot; 接收 BitTorrent Tracker 回应，%i 个新资源。"/>
 	<string id="17486" value="与 %s 开始 BitTorrent 客户端联结..."/>
 	<string id="17487" value="与 %s 建立 BitTorrent 联结，握手中..."/>
-	<string id="17488" value="您已经更改此 Torrent 的跟踪器的链接。您确定您希望保存这一更改吗？\n\n一个无效的跟踪器链接可能会妨碍进一步下载。"/>
+	<string id="17488" value="您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存这一更改吗？\n\n一个无效的 Tracker 链接可能会妨碍进一步下载。"/>
 	<string id="17489" value="BitTorrent 与 %s 的联结是扩展的协议，识别为 &quot;%s&quot;。"/>
 	<string id="17490" value="接收到 %i 个新的 BitTorrent 资源从 %s。"/>
 	<string id="17491" value="此 torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
@@ -3022,7 +3022,7 @@
 		<control caption="默认展开新的下载"/>
 		<control caption="打开 URL 前显示提示"/>
 		<control caption="速率显示单位:"/>
-		<control caption="比特/秒|字节/秒|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+		<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="工具提示(_T):"/>
 		<control/>
 		<control caption="迟延(ms):"/>
@@ -3281,7 +3281,7 @@
 		<control caption="下载..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="界面(_I):"/>
 		<control caption="显示 BitTorrent 额外的界面元素"/>
 		<control caption="下载连接(_D):"/>
@@ -3289,6 +3289,9 @@
 		<control caption="个 Torrents 一次"/>
 		<control/><control/>
 		<control caption="个客户端连接"/>
+		<control caption="清除已下载的 Torrent"/>
+		<control caption="当分享率达到"/>
+		<control/><control/>
 		<control caption="最终阶段(_E):"/>
 		<control caption="在完成 Torrent 时启用最终阶段模式"/>
 		<control caption="在这里保存 Torrent(_S):"/>
@@ -3296,8 +3299,7 @@
 		<control caption="Torrent 制作工具(_T)"/>
 		<control/><control/>
 		<control caption="默认 Tracker(_D):"/>
-		<control caption="Tracker:"/>
-		<control/>
+	<control/><control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="协议">
@@ -3721,7 +3723,7 @@
 		<control caption="编辑(_E)"/>
 		<control caption="移除(_R)"/>
 		<control caption="显示(_S):"/>
-		<control caption="网格"/>
+		<control caption="网格线"/>
 		<control caption="垂直轴线"/>
 		<control caption="图例"/>
 		<control caption="采样频率(_F):"/>
