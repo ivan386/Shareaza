@@ -128,7 +128,7 @@ DWORD CDownloadTransfer::GetMeasuredSpeed()
 
 CString CDownloadTransfer::GetStateText(BOOL bLong)
 {
-	CString str, strQ, strOf;
+	CString str, strQ, strQueued, strOf;
 	
 	switch ( m_nState )
 	{
@@ -161,22 +161,22 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		LoadString( str, IDS_STATUS_ENQUEUE );
 		break;
 	case dtsQueued:
-		LoadString( strQ, IDS_STATUS_QUEUED );
+		LoadString( strQ, IDS_STATUS_Q );
+		LoadString( strQueued, IDS_STATUS_QUEUED );
 		LoadString( strOf, IDS_GENERAL_OF );
 		if ( ! bLong )
 		{
-			LoadString( str, IDS_STATUS_Q );
 			str.Format( m_nQueueLen ? _T("%s %i %s %i") : _T("%s #%i"),
-				str, m_nQueuePos, strOf, m_nQueueLen );
+				strQ, m_nQueuePos, strOf, m_nQueueLen );
 		}
 		else if ( m_sQueueName.GetLength() )
 		{
-			str.Format( _T("%s: %s: %i %s %i"), strQ,
+			str.Format( _T("%s: %s: %i %s %i"), strQueued,
 				(LPCTSTR)m_sQueueName, m_nQueuePos, strOf, m_nQueueLen );
 		}
 		else
 		{
-			str.Format( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i"), strQ, 
+			str.Format( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i"), strQueued, 
 				m_nQueuePos, strOf, m_nQueueLen );
 		}
 		break;
