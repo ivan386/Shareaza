@@ -1,7 +1,7 @@
 //
 // WndSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,7 @@ protected:
 	CSearchDetailPanel	m_wndDetails;
 	BOOL				m_bDetails;
 	int					m_nDetails;
+	int					m_nLastSearchHelp;
 public:
 	CPtrList			m_pSearches;
 	DWORD				m_tSearch;
@@ -69,6 +70,7 @@ public:
 	virtual void	OnSkinChange();
 	virtual BOOL	OnQueryHits(CQueryHit* pHits);
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
+	virtual void	UpdateMessages(BOOL bActive, CManagedSearch* pManaged);
 
 // Implementation
 protected:

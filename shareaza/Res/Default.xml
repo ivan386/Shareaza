@@ -2005,13 +2005,13 @@
 		still download properly, although some file names could be incorrect.</text>
 		<newline gap="8"/>
 		<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums if 
-		you require additional help.</text>
+		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums 
+		if you require additional help.</text>
 	</document>
 
 	<!-- Search help documents -->
 	
-	<document name="SearchHelp.BadSearch">
+	<document name="SearchHelp.BadSearch1">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
 		<text>This search is poorly formatted, and may not function correctly. 
@@ -2020,17 +2020,34 @@
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
 		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
-		because it is not specific enough and would generate too many results.</text>
+		because it is not specific enough, and would generate too many results.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
-		<text>This search is poorly formatted, and may not function correctly. All searches need
+		<text>This search does not contain enough terms to function properly. All searches need
 		a minimum number of valid, alphabetic characters to be able to start.</text>
 		<newline gap="8"/>
-		<text>While common file extentions and numbers can be searched for, you must enter other terms
-		as well when creating the search.</text>
+		<text>While common file extentions (and numbers) can be searched for, you must enter
+		other terms as well when creating the search. Punctuation and wildcards are not used 
+		in searches, just the text you enter.</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search seems to contain only common file extentions, or no searchable
+		words.</text>
+		<newline gap="8"/>
+		<text>If you are having trouble creating searches, keep in mind that it's quite similar
+		to a web search. Specific terms or phrases are best- Unique names, titles and
+		keywords.</text>
+		<newline gap="8"/>
+		<text>General terms cannot be searched for efficiently and may result in poor
+		search performance, as well as high bandwidth use during searches.</text>
+		<newline gap="8"/>
+		<text>Further help is available on the Shareaza web site.</text>
 	</document>
 	
 	<document name="SearchHelp.AdultSearch">
@@ -2040,7 +2057,8 @@
 		content, and this has been turned off in the settings. You should either re-phrase the 
 		search, or disable the filter.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult 		content filter.</text>
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
+		adult content filter.</text>
 	</document>
 
 	<!-- Share help documents -->

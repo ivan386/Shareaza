@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,7 +92,7 @@ CSearchWnd::CSearchWnd(CQuerySearch* pSearch)
 	{
 		m_pSearches.AddTail( new CManagedSearch( pSearch ) );
 	}
-	
+
 	Create( IDR_SEARCHFRAME );
 }
 
@@ -138,6 +138,8 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_bPanel			= Settings.Search.SearchPanel;
 	m_bDetails			= Settings.Search.DetailPanelVisible;
 	m_nDetails			= Settings.Search.DetailPanelSize;
+	m_nLastSearchHelp	= 0;
+
 	m_bPaused			= TRUE;
 	m_bSetFocus			= TRUE;
 	m_bWaitMore			= FALSE;
@@ -504,9 +506,22 @@ void CSearchWnd::OnSearchSearch()
 		pSearch = m_wndPanel.GetSearch();
 		if ( pSearch == NULL ) //Invalid search, open help window
 		{				
-			//ToDo: If there was a previous search by hash, it was lost and won't re-search
-			//Maybe add a search by hash schema?
-			CHelpDlg::Show( _T("SearchHelp.BadSearch") );
+			// ToDo: If there was a previous search by hash, it was lost and won't re-search
+			// Maybe add a search by hash schema?
+
+			// Increment counter
+			m_nLastSearchHelp++;
+			// Open help window
+			switch ( m_nLastSearchHelp )
+			{
+			case 1:  CHelpDlg::Show( _T("SearchHelp.BadSearch1") );
+				break;
+			case 2:  CHelpDlg::Show( _T("SearchHelp.BadSearch2") );
+				break;
+			default: CHelpDlg::Show( _T("SearchHelp.BadSearch3") );
+					 m_nLastSearchHelp = 0;
+			}
+
 			return;
 		}
 		
@@ -696,8 +711,19 @@ void CSearchWnd::ExecuteSearch()
 		}
 		else
 		{
-			//Bad search, open help window
-			CHelpDlg::Show( _T("SearchHelp.BadSearch") );
+			// Increment counter
+			m_nLastSearchHelp++;
+			// Open help window
+			switch ( m_nLastSearchHelp )
+			{
+			case 1:  CHelpDlg::Show( _T("SearchHelp.BadSearch1") );
+				break;
+			case 2:  CHelpDlg::Show( _T("SearchHelp.BadSearch2") );
+				break;
+			default: CHelpDlg::Show( _T("SearchHelp.BadSearch3") );
+					 m_nLastSearchHelp = 0;
+			}
+
 		}
 	}
 	
@@ -707,6 +733,12 @@ void CSearchWnd::ExecuteSearch()
 void CSearchWnd::UpdateMessages(BOOL bActive)
 {
 	CManagedSearch* pManaged	= GetLastManager();
+	UpdateMessages(bActive, pManaged);
+
+}
+
+void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
+{
 	CQuerySearch* pSearch		= pManaged ? pManaged->m_pSearch : NULL;
 	
 	CString strCaption;
@@ -846,18 +878,31 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 
 void CSearchWnd::OnTimer(UINT nIDEvent) 
 {
-	POSITION pos = m_pSearches.GetTailPosition();
-	if( pos )
+	CManagedSearch* pManaged = NULL;
+	CSingleLock pLock( &m_pMatches->m_pSection );
+
+	if ( pLock.Lock( 100 ) )
 	{
-		CManagedSearch* pManaged = (CManagedSearch*)m_pSearches.GetPrev(pos);
-		if( ( pManaged->m_bActive ) && (pManaged->m_nQueryCount > m_nMaxQueryCount) )
+		if ( m_pSearches.GetCount() ) pManaged = (CManagedSearch*)m_pSearches.GetTail();
+
+		if( pManaged )
 		{
-			m_bWaitMore = TRUE;
-			pManaged->m_bActive = FALSE;
-			theApp.Message( MSG_DEBUG, _T("Search Reached Maximum Duration") );
-			m_bUpdate = TRUE;
+			if( ( pManaged->m_bActive ) && (pManaged->m_nQueryCount > m_nMaxQueryCount) )
+			{
+				m_bWaitMore = TRUE;
+				pManaged->m_bActive = FALSE;
+				theApp.Message( MSG_DEBUG, _T("Search Reached Maximum Duration") );
+				m_bUpdate = TRUE;
+			}
+			// We need to keep the lock for now- release after we update the progress panel
+		}
+		else
+		{
+			// We don't need to hold the lock
+			pLock.Unlock();
 		}
 	}
+
 
 	if ( nIDEvent == 1 )
 	{
@@ -868,15 +913,18 @@ void CSearchWnd::OnTimer(UINT nIDEvent)
 			m_bSetFocus = FALSE;
 		}
 		
-		if ( CManagedSearch* pManaged = GetLastManager() )
+		if ( pManaged )
 		{
 			if ( m_nCacheHubs   != pManaged->m_nHubs ||
 				 m_nCacheLeaves != pManaged->m_nLeaves )
 			{
-				UpdateMessages();
+				UpdateMessages(TRUE, pManaged);
 			}
 		}
 	}
+
+	// Unlock if we were locked
+	if ( pManaged ) pLock.Unlock();
 	
 	CBaseMatchWnd::OnTimer( nIDEvent );
 	
