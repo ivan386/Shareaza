@@ -36,7 +36,6 @@ Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "Com
 Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "IncompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|}"; Flags: createkeyifdoesntexist
 Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "TorrentPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|}"; Flags: createkeyifdoesntexist
 Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "CollectionPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|}"; Flags: createkeyifdoesntexist
-Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "DataPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza,Path|{app}}"; Flags: createkeyifdoesntexist
 
 [Registry]
 ; Delete all settings before starting reparation
