@@ -246,12 +246,15 @@ void CHomeSearchCtrl::OnCloseUpText()
 
 void CHomeSearchCtrl::OnSearchCreate()
 {
-	CString strText, strURI, strEntry;
+	CString strText, strURI, strEntry, strClear;
 	
 	m_wndText.GetWindowText( strText );
 	strText.TrimLeft();
 	strText.TrimRight();
 	if ( strText.IsEmpty() ) return;
+
+	LoadString( strClear, IDS_SEARCH_PAD_CLEAR_HISTORY );
+	if ( _tcscmp ( strClear , strText ) == 0 ) return;
 	
 	CSchema* pSchema = m_wndSchema.GetSelected();
 	if ( pSchema != NULL ) strURI = pSchema->m_sURI;
