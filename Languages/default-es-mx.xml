@@ -5,14 +5,14 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
        <!-- Manifest -->
        <manifest       name="Español"
-                       author="dague12 y help"
-                       description="Traducción de Shareaza al Español/Castellano"
+                       author="help"
+                       description="Traducción de Shareaza al Español México"
                        link="http://www.shareaza.com/"
-                       email="dague12@yahoo.com"
-                       version="2.0.0.13"
+                       email="lccolunga@hotmail.com"
+                       version="2.0.0.20"
                        type="Language"
-                       language="es"
-                       prompt="Seleccione aquí para usar Shareaza en Español/Castellano."
+                       language="es-mx"
+                       prompt="Seleccione aquí para usar Shareaza en Español"
        />
        <!-- Toolbar Definitions -->
        <toolbars>
