@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.0.38"
+                        version="2.0.2.5"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -1015,7 +1015,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_UPLOADS_FILTER_ACTIVE" text="Rodyti _aktyvius"/>
                <item id="ID_UPLOADS_FILTER_QUEUED" text="Rodyti _esančius eilėje"/>
-		       <item id="ID_UPLOADS_FILTER_TORRENT" text="Rodyti BitTorrent"/>
+                      <item id="ID_UPLOADS_FILTER_TORRENT" text="Rodyti BitTorrent"/>
                <item id="ID_UPLOADS_FILTER_HISTORY" text="Rodyti ž_urnalą"/>
        </menu>
        <!-- LIBRARY FRAME -->
@@ -1081,9 +1081,9 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-			     <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
+                            <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
                        <separator/>
-			     <item id="ID_LIBRARY_URL" text=""/>
+                            <item id="ID_LIBRARY_URL" text=""/>
 
                </menu>
                <menu text="_Organizuoti">
@@ -1112,7 +1112,7 @@ right quote    &#147;
                        <item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
                </menu>
                <menu text="P_aslaugos internete">
-			     <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+                            <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
                        <separator/>
 
@@ -1640,21 +1640,21 @@ right quote    &#147;
                        <text id="UploadedOne">Jūs išsiuntėte 1 bylą (%s).</text>
                        <text id="UploadedMany">Jūs išsiuntėte %i bylų(-as) (%s).</text>
                </para>
-	</document>
+       </document>
 
-	<document name="CHomeTorrentsBox" title="Torrent bylos" leftMargin="6" topMargin="6">
-		<styles>
-			<style name="default">
-				<font face="Verdana" size="9"/>
-			</style>
-		</styles>
-		<para align="center">
-			<text id="TorrentsNone" format="b">Torrent neskleidžiami</text>
-			<text id="TorrentsOne" format="b">Skleidžiama 1 byla</text>
-			<text id="TorrentsMany" format="b">Skleidžiamos %i bylos(-ų)</text>
-			<newline gap="4"/>
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Skleisti torrent</link>
-		</para>
+       <document name="CHomeTorrentsBox" title="Torrent bylos" leftMargin="6" topMargin="6">
+               <styles>
+                       <style name="default">
+                               <font face="Verdana" size="9"/>
+                       </style>
+               </styles>
+               <para align="center">
+                       <text id="TorrentsNone" format="b">Torrent neskleidžiami</text>
+                       <text id="TorrentsOne" format="b">Skleidžiama 1 byla</text>
+                       <text id="TorrentsMany" format="b">Skleidžiamos %i bylos(-ų)</text>
+                       <newline gap="4"/>
+                       <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Skleisti torrent</link>
+               </para>
 
        </document>
 
@@ -1901,6 +1901,17 @@ right quote    &#147;
                siuntimą.</text>
        </document>
 
+     <document name="GeneralHelp.XPsp2">
+                  <text format="b">Aptiktas Windows XP Service Pack 2</text>
+                   <newline gap="8"/>
+                   <text>„Shareaza“ aptiko Windows XP Service Pack 2. Šioje versijoje yra nustatytas susijungimų apribojimas
+                   visoms programoms.</text>
+                   <newline gap="8"/>
+                   <text>„Shareaza“ sumažino tinklo susijungimų skaičių ir nustatė tam tikras numatytąsias reikšmes,
+                   kad užtikrintų deramą veikimą, tačiau našumas gali sumažėti. Aplankykite „Shareaza“ forumus,
+                   jei reikalinga papildoma informacija ir norite sužinoti paskutines naujienas.</text>
+         </document>
+
        <document name="DownloadHelp.Verifying">
                <text format="b">Parsisiųstos bylos patikra</text>
                <newline gap="8"/>
@@ -1957,18 +1968,18 @@ right quote    &#147;
                partnerių sąrašo.</text>
        </document>
 
-	<!-- General help documents -->
-	
-	<document name="GeneralHelp.DiskSpace">
-		<text format="b">Diske trūksta vietos</text>
-		<newline gap="8"/>
-		<text>Viename ar keliuose diskiniuose kaupikliuose, kuriuos naudoja „Shareaza“, trūksta laisvos vietos.</text>
-		<newline gap="8"/>
-		<text>Jūs turėtumėte prižiūrėti, kad diskuose būtų pakankamai laisvos vietos. 
-		Jei diskiniai kaupikliai užsipildys, programos gali imti dirbti nestabiliai, o laikinosios bylos gali būti 
-		prarastos. Jums reikėtų atlikti disko valymą, ištrinti nereikalingas bylas ar pašalinti programinę 
-		įrangą, kuri jums daugiau nereikalinga.</text>
-	</document>
+       <!-- General help documents -->
+
+       <document name="GeneralHelp.DiskSpace">
+               <text format="b">Diske trūksta vietos</text>
+               <newline gap="8"/>
+               <text>Viename ar keliuose diskiniuose kaupikliuose, kuriuos naudoja „Shareaza“, trūksta laisvos vietos.</text>
+               <newline gap="8"/>
+               <text>Jūs turėtumėte prižiūrėti, kad diskuose būtų pakankamai laisvos vietos.
+               Jei diskiniai kaupikliai užsipildys, programos gali imti dirbti nestabiliai, o laikinosios bylos gali būti
+               prarastos. Jums reikėtų atlikti disko valymą, ištrinti nereikalingas bylas ar pašalinti programinę
+               įrangą, kuri jums daugiau nereikalinga.</text>
+       </document>
 
        <!-- Search help documents -->
 
@@ -1980,35 +1991,35 @@ right quote    &#147;
                (bylos plėtinys). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai
                (su minusu priekyje), taip pat jūs turėtumėte vengti per daug ilgų bendrinių užklausų.</text>
                <newline gap="8"/>
-               <text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą, 
+               <text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą,
                nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
        </document>
 
-	<!-- Share help documents -->
-	
-	<document name="ShareHelp.AlreadyShared">
-		<text format="b">Jau yra bendrintas</text>
-		<newline gap="8"/>
-		<text>Aplankas, kurį Jūs pasirinkote, jau yra bendrintas kaip dalis kito bendrinto ištekliaus.</text>
-		<newline gap="8"/>
-		<text>„%s“</text>
-	</document>
+       <!-- Share help documents -->
 
-	<document name="ShareHelp.BadShare">
-		<text format="b">Šio aplanko nereikėtų bendrinti</text>
-		<newline gap="8"/>
-		<text>Šis aplankas yra sisteminis ar turi savyje tokį aplanką. Bendrinti šį aplanką 
-		nepatariama, nes bylos, esančios jame, daugumai žmonių bus nenaudingos.</text>
-		<newline gap="8"/>
-		<text>Tokie aplankai, kaip „Windows“ katalogas, „Program Files“ ir panašūs aplankai, 
-		paprastai neturi tinkamų bendrinimui bylų. Tik šių aplankų </text><text format="i"> poaplankiuose </text><text> 
-		yra dominančių bylų. Taigi, bendrinkite poaplankius.</text>
-		<newline gap="8"/>
-		<text>„Shareaza“ programos „incomplete“ aplanko irgi nereikėtų bendrinti savo 
-		kolekcijoje, nes bandymai skaičiuoti parsisiunčiamų bylų maišas gali pakenkti 
-		našumui.</text>
-	</document>
-	
+       <document name="ShareHelp.AlreadyShared">
+               <text format="b">Jau yra bendrintas</text>
+               <newline gap="8"/>
+               <text>Aplankas, kurį Jūs pasirinkote, jau yra bendrintas kaip dalis kito bendrinto ištekliaus.</text>
+               <newline gap="8"/>
+               <text>„%s“</text>
+       </document>
+
+       <document name="ShareHelp.BadShare">
+               <text format="b">Šio aplanko nereikėtų bendrinti</text>
+               <newline gap="8"/>
+               <text>Šis aplankas yra sisteminis ar turi savyje tokį aplanką. Bendrinti šį aplanką
+               nepatariama, nes bylos, esančios jame, daugumai žmonių bus nenaudingos.</text>
+               <newline gap="8"/>
+               <text>Tokie aplankai, kaip „Windows“ katalogas, „Program Files“ ir panašūs aplankai,
+               paprastai neturi tinkamų bendrinimui bylų. Tik šių aplankų </text><text format="i"> poaplankiuose </text><text>
+               yra dominančių bylų. Taigi, bendrinkite poaplankius.</text>
+               <newline gap="8"/>
+               <text>„Shareaza“ programos „incomplete“ aplanko irgi nereikėtų bendrinti savo
+               kolekcijoje, nes bandymai skaičiuoti parsisiunčiamų bylų maišas gali pakenkti
+               našumui.</text>
+       </document>
+
 </documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -2292,7 +2303,7 @@ right quote    &#147;
        <tip id="ID_UPLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo išsiunčiamas bylas rodyti, o kurių nerodyti."/>
        <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigtos siųstis bylos(-ų) parsisiuntimą."/>
        <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą bylą(-as) iš sąrašo."/>
-	   <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
+          <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
        <tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
        <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
        <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
@@ -2394,7 +2405,7 @@ right quote    &#147;
        <string id="8158" value="Valyti"/>
        <string id="8159" value="Išsamiau..."/>
        <string id="8160" value="Užmezgamas ryšys su adresatu..."/>
-       <string id="8161" value="Nusiųsta raginančiojo (push) susijungimo užklausa, laukiama ryšio..."/>
+       <string id="8161" value="Nusiųsta įstūmiančiojo susijungimo užklausa, laukiama ryšio..."/>
        <string id="8162" value="Prisijungta, prašoma peržiūros..."/>
        <string id="8163" value="Gaunamas peržiūros atsakymas (%2.f%%)..."/>
        <string id="8164" value="Neįmanoma susisiekti su adresatu vartotojo duomenims peržiūrėti."/>
@@ -2474,6 +2485,7 @@ right quote    &#147;
        <string id="16083" value="Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\n\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\n\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"/>
        <string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų vartotojų paiešką. Ar tikrai norite tęsti?"/>
        <string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
+       <string id="16087" value="Jūsų išeinanti greitaveika yra per maža šio tinklo įgalinimui"/>
        <string id="16128" value="Priimtas įeinantis susijungimas su %s per %i prievadą."/>
        <string id="16129" value="Užmezgamas ryšys su kaimynu %s per %i prievadą..."/>
        <string id="16130" value="Neįmanoma užmegzti ryšio su kaimynu %s."/>
@@ -2515,11 +2527,11 @@ right quote    &#147;
        <string id="16200" value="Kaimynas adresu %s persiuntė pong paketą su netesingais adreso duomenimis, ignoruojama."/>
        <string id="16201" value="Gautas neteisingo formato užklausos paketas iš %s, ignoruojama."/>
        <string id="16202" value="Gautas neteisingo formato užklausos kreipinio paketas iš %s, ignoruojama."/>
-       <string id="16203" value="Kaimynas adresu %s persiuntė neteisingo dydžio raginamąjį (push) paketą, ignoruojama."/>
+       <string id="16203" value="Kaimynas adresu %s persiuntė neteisingo dydžio įstūmiantįjį paketą, ignoruojama."/>
        <string id="16208" value="Gaunamas netikėtas užklausos maršruto lentelės atnaujinimas iš kaimyno %s."/>
        <string id="16209" value="Kaimynas adresu %s atsiuntė neteisingą užklausos maršruto lentelės atnaujinimą, ryšys nutraukiamas."/>
        <string id="16210" value="Kaimynas adresu %s atnaujino savo užklausos maršruto lentelę (%i bitų = %lu[%i], %i%% užimtumas)."/>
-       <string id="16211" value="Kaimynas adresu %s persiuntė raginačio (push) susijungimo užklausą adresatui už užkardos, ignoruojama."/>
+       <string id="16211" value="Kaimynas adresu %s persiuntė įstūmiančiojo susijungimo užklausą adresatui už užkardos, ignoruojama."/>
        <string id="16212" value="Kaimynas adresu %s persiuntė pernelyg išplėstą paketą, kuris nėra užkoduotas pagal GGEP protokolą."/>
        <string id="16213" value="Siunčiama užklausos maršruto lentelė kaimynui %s (%i bitų = %lu[%i], %i%% užimtumas)"/>
        <string id="16256" value="Adresatas „%s“ įtrauktas į parsisiuntimo eilę su %i šaltinių(-iais)."/>
@@ -2550,12 +2562,12 @@ right quote    &#147;
        <string id="16281" value="Ar tikrai norite ištrinti bylą „%s“?\n\nJei bylą pašalinsite iš atsisiuntimų lango bylų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."/>
        <string id="16282" value="Ar tikrai norite vykdyti atsisiųstą bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
        <string id="16283" value="Byla „%s“ jau yra atsisiunčiamų bylų sąraše, pridedama kaip šaltinis."/>
-       <string id="16284" value="Gauta klaidinga raginančiojo (push) susijungimo užklausa iš %s, nutraukiamas ryšys."/>
-       <string id="16285" value="Gauta nereikalinga raginančiojo (push) susijungimo užklausa iš %s."/>
-       <string id="16286" value="Adresatas %s ragina parsisiųsti „%s“, priimama."/>
+       <string id="16284" value="Gauta klaidinga įstūmiančiojo susijungimo užklausa iš %s, nutraukiamas ryšys."/>
+       <string id="16285" value="Gauta nereikalinga įstūmiančiojo susijungimo užklausa iš %s."/>
+       <string id="16286" value="Adresatas %s įstūminėja bylą „%s“, priimama."/>
        <string id="16287" value="Neįmanoma gauti daugiau šaltinių bylos „%s“ parsisiuntimui, nes nėra ryšio su tinklu."/>
        <string id="16288" value="Siunčiama užklausa bylos „%s“ parsisiuntimo šaltinių papildymui %i ryšiais(-iu)..."/>
-       <string id="16289" value="Siunčiama raginančio (push) parsisiuntimo užklausa bylai „%s“ parsisiųsti..."/>
+       <string id="16289" value="Siunčiama įstūmiančiojo parsisiuntimo užklausa bylai „%s“ parsisiųsti..."/>
        <string id="16290" value="Adresatas %s atsiuntė kitą, bet naudingą atkarpą (%lu-%lu), priklausiančią bylai „%s“."/>
        <string id="16291" value="Byla „%s“ perkelta į „%s“, parsisiuntimas baigtas."/>
        <string id="16292" value="Neįmanoma perkelti bylos „%s“ į „%s“. Patikrinkite, ar nebaigtos bylos kas nors nenaudoja arba ar aplankas egzistuoja ir į jį galima rašyti."/>
@@ -2587,20 +2599,20 @@ right quote    &#147;
        <string id="16318" value="Nepakanka vietos diske bylai „%s“ parsisiųsti (%s)."/>
        <string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas bylos „%s“ dalis (%lu-%lu)."/>
        <string id="16320" value="Adresatas %s, kuriam išsiunčiama byla, atsiuntė neteisingą HTTP užklausą."/>
-       <string id="16321" value="Užmezgamas raginatysis (push) ryšys su %s. %s"/>
-       <string id="16322" value="Neįmanoma susisiekti su adresatu %s raginančiajam (push) ryšiui užmegzti."/>
+       <string id="16321" value="Užmezgamas įstūmiantysis ryšys su %s. %s"/>
+       <string id="16322" value="Neįmanoma susisiekti su adresatu %s įstūmiančiajam ryšiui užmegzti."/>
        <string id="16323" value="Išsiuntimo ryšys su %s buvo nutrauktas."/>
        <string id="16324" value="Užklausos bylos išsiuntimui iš adresato %s laiko limitas baigėsi."/>
        <string id="16325" value="Adresatas %s užklausė išsiųsti nežinomą arba nesamą objektą „%s“."/>
        <string id="16326" value="Adresatas %s užklausė išsiųsti „%s“ su skirtingu SHA1."/>
        <string id="16327" value="Atsakyta išsiųsti „%s“ adresatui %s (%s), užimtas, o klientas nepalaiko eilių."/>
-       <string id="16328" value="Raginantysis (push) ryšys su %s užmegztas, laukiama pasisveikinimo..."/>
+       <string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama pasisveikinimo..."/>
        <string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/bylos klaida."/>
        <string id="16330" value="Išsiunčiama atkarpa %lu-%lu, priklausanti bylai „%s“, adresatui %s (%s)."/>
        <string id="16331" value="Baigta siųsti bylos „%s“ dalis adresatui %s."/>
        <string id="16332" value="Įeinantis ryšys su %s yra HTTP išsiuntimo užklausa."/>
        <string id="16333" value="Per daug užimtas išsiųsti bylą „%s“ adresatui %s, pastatyta į eilę Nr. %i iš %i vietų („%s“)."/>
-       <string id="16334" value="Pasenusi raginančiojo (push) ryšio užklausa iš adresato %s nežinomai bylai išsiųsti, leidžiama jungtis..."/>
+       <string id="16334" value="Pasenusi įstūmiančiojo ryšio užklausa iš adresato %s nežinomai bylai išsiųsti, leidžiama jungtis..."/>
        <string id="16335" value="Byla „%s“, skirta adresatui %s, pašalinta iš išsiutimų sąrašo."/>
        <string id="16336" value="Adresatas %s yra blokuojamų vartotojo agentų sąraše, užklausa neleidžiama."/>
        <string id="16337" value="Išsiunčiamos bylos „%s“ antraštės adresatui %s (%s)."/>
@@ -2614,7 +2626,7 @@ right quote    &#147;
        <string id="16345" value="Bylos „%s“ išsiuntimas adresatui %s sustabdytas, nes byla buvo ištrinta."/>
        <string id="16346" value="Išsiunčiamas atkarpos %lu-%lu turinys, priklausantis dalinei bylai „%s“ adresatui %s (%s)."/>
        <string id="16347" value="Išsiuntimų eilėje laukiantis adresatas %s siunčia pakartotinas užklausas per dažnai, ryšys nutraukiamas."/>
-       <string id="16348" value="Adresatui %s atsakyta sukurti raginantįjį (push) išsiuntimo ryšį, nes jo susijungimų skaičius per didelis."/>
+       <string id="16348" value="Adresatui %s atsakyta sukurti įstūmiančiojo išsiuntimo ryšį, nes jo susijungimų skaičius per didelis."/>
        <string id="16349" value="Išsiunčiami bylos „%s“ dryžinės (tiger-tree) maišos duomenys adresatui %s."/>
        <string id="16350" value="Išsiunčiami bylos „%s“ meta duomenys adresatui %s."/>
        <string id="16351" value="Atsakyta išsiųsti bylą „%s“ adresatui %s (%s), per daug adresato susijungimų vienu metu."/>
@@ -2728,8 +2740,8 @@ right quote    &#147;
        <string id="16871" value="Siunčiama GWebCache „%s“ atsitiktinai parinktai GWebCache..."/>
        <string id="16928" value="Užmezgamas ryšys su %s vartotojo duomenims gauti..."/>
        <string id="16929" value="Neįmanoma užmegzti ryšio su %s vartotojo duomenims gauti."/>
-       <string id="16930" value="Nusiųsta raginančiojo (push) susijungimo užklausa adresatui %s vartotojo duomenims gauti."/>
-       <string id="16931" value="Neįmanoma nusiųsti raginančiojo (push) susijungimo užklausos adresatui %s vartotojo duomenims gauti."/>
+       <string id="16930" value="Nusiųsta įstūmiančiojo susijungimo užklausa adresatui %s vartotojo duomenims gauti."/>
+       <string id="16931" value="Neįmanoma nusiųsti įstūmiančiojo susijungimo užklausos adresatui %s vartotojo duomenims gauti."/>
        <string id="16932" value="Adresatui %s nusiųsta užklausa peržiūrėti vartotojo duomenis..."/>
        <string id="16933" value="Nusiuntus peržiūros užklausą, adresatas %s grąžino neteisingą HTTP atsakymą."/>
        <string id="16934" value="Nusiuntus peržiūros užklausą, adresatas %s atsiuntė atsakymą, kurio kodas - %s (%s)."/>
@@ -2752,8 +2764,8 @@ right quote    &#147;
        <string id="16999" value="G R O J A R A Š T I S"/>
        <string id="17024" value="Užmezgamas ryšys su %s..."/>
        <string id="17025" value="Neįmanoma užmegzti ryšio su %s."/>
-       <string id="17026" value="Prašoma užmegzti raginantį (push) ryšį per užkardą su adresatu %s..."/>
-       <string id="17027" value="Priimtas raginantysis (push) ryšys su %s, sveikinamasi..."/>
+       <string id="17026" value="Prašoma užmegzti įstūmiantįjį ryšį per užkardą su adresatu %s..."/>
+       <string id="17027" value="Priimtas įstumiantysis ryšys su %s, sveikinamasi..."/>
        <string id="17028" value="Ryšys užmegztas, sveikinamasi..."/>
        <string id="17029" value="Sveikinimosi procedūra buvo nesėkminga, adresatas galbūt nepalaiko pokalbių."/>
        <string id="17030" value="Sveikinimasis baigtas, pokalbių protokolo versija %s."/>
@@ -2765,7 +2777,7 @@ right quote    &#147;
        <string id="17036" value="%s nėra vietoje: %s"/>
        <string id="17037" value="Pokalbio ryšys nutrūko."/>
        <string id="17038" value="Ryšys nutrauktas."/>
-       <string id="17039" value="Neįmanoma užklausti raginančiojo (push) ryšio su %s, nėra prieinamo maršruto."/>
+       <string id="17039" value="Neįmanoma užklausti įstūmiančiojo ryšio su %s, nėra prieinamo maršruto."/>
        <string id="17040" value="Neįmanoma nusiųsti žinutės, Jūs nesate prisijungę. „Shareaza“ mėgina užmegzti ryšį..."/>
        <string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
        <string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
