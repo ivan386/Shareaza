@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Russian Schemas File translated by Rolandas Rudomanskis
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/documentAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Document:All Documents</title>
+               <title language="lt">Dokumentas:Visi documentai</title>
+               <title language="ru">&#160;Документ:&#160;Все документы</title>
+       </titles>
+       <images>
+               <icon path="documentFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+       </members>
+       <contains>
+               <object type="file" location="http://www.shareaza.com/schemas/wordProcessing.xsd"/>
+               <object type="file" location="http://www.shareaza.com/schemas/spreadsheet.xsd"/>
+               <object type="file" location="http://www.shareaza.com/schemas/presentation.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">All Documents</title>
+               <title language="lt">Visi dokumentai</title>
+               <title language="ru">&#160;Все документы</title>
+               <subtitle language="en">This folder contains every document in your library.</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
+               <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryDetailView"/>
+
+</schemaDescriptor>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Russian Schemas File translated by Rolandas Rudomanskis
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/documentRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Document:My Documents</title>
+               <title language="lt">Dokumentas:Mano dokumentai</title>
+               <title language="ru">&#160;Документ:&#160;Мои документы</title>
+       </titles>
+       <images>
+               <icon path="documentFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/documentAll.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Documents!</title>
+               <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
+               <title language="ru">&#160;Добро пожаловать в&#160;Ваши документы!</title>
+               <subtitle language="en">These folders contain all of your documents.</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
+               <subtitle language="ru">&#160;Эти папки отображают все&#160;Ваши документы.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>
