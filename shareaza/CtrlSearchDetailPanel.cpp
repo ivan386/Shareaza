@@ -101,7 +101,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	CancelPreview();
 	ClearReviews();
 	
-	if ( pFile == NULL )
+	if ( pFile == NULL || ( pFile->m_pBest == NULL ) )
 	{
 		if ( m_bValid )
 		{
