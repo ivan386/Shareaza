@@ -1,0 +1,42 @@
+HKCR
+{
+	Shareaza.GIFReader.1 = s 'GIFReader ImageService'
+	{
+		CLSID = s '{DD99484A-33B7-46C2-8387-2FBED7A25A54}'
+	}
+	Shareaza.GIFReader = s 'GIFReader ImageService'
+	{
+		CurVer = s 'Shareaza.GIFReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DD99484A-33B7-46C2-8387-2FBED7A25A54} = s 'GIFReader ImageService'
+		{
+			ProgID = s 'Shareaza.GIFReader.1'
+			VersionIndependentProgID = s 'Shareaza.GIFReader'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		Shareaza
+		{
+			Shareaza
+			{
+				Plugins
+				{
+					ImageService
+					{
+						ForceRemove val '.gif' = s '{DD99484A-33B7-46C2-8387-2FBED7A25A54}'
+					}
+				}
+			}
+		}
+	}
+}
