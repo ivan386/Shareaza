@@ -360,12 +360,15 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	// Default Size
 	int iXSize, iYSize;
+	/*
+	//Creates problems in dualview mode
 	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
 	{	// Multi Monitor
 		iXSize = GetSystemMetrics( SM_CXVIRTUALSCREEN );
 		iYSize = GetSystemMetrics( SM_CYVIRTUALSCREEN );
 	}
-	else
+	else	
+	*/
 	{	// Single Monitor
 		iXSize = GetSystemMetrics( SM_CXSCREEN );
 		iYSize = GetSystemMetrics( SM_CYSCREEN );
@@ -375,11 +378,6 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 						iYSize * 1 / 10,
 						iXSize  * 8 / 10,
 						iYSize * 8 / 10, 0 );
-	/*
-	SetWindowPos( NULL,	GetSystemMetrics( SM_CXSCREEN ) * 1 / 10,
-						GetSystemMetrics( SM_CYSCREEN ) * 1 / 10,
-						GetSystemMetrics( SM_CXSCREEN ) * 8 / 10,
-						GetSystemMetrics( SM_CYSCREEN ) * 8 / 10, 0 );*/
 	
 	// Plugins
 	
