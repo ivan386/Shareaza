@@ -302,19 +302,22 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 
 	LoadString( str, IDS_NEIGHBOUR_COMPRESSION );
 	DrawText( pDC, &pt, str );
-	LoadString( str, nCompIn >= 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
+	LoadString( str, nCompIn > 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
 	DrawText( pDC, &pt, str, 128 );
-	LoadString( str, nCompOut >= 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
+	LoadString( str, nCompOut > 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
-	LoadString( str, IDS_NEIGHBOUR_RATIO );
-	DrawText( pDC, &pt, str, 8 );
-	if ( nCompIn >= 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0f ); else str.Empty();
-	DrawText( pDC, &pt, str, 128 );
-	if ( nCompOut >= 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0f ); else str.Empty();
-	DrawText( pDC, &pt, str, 128 + 80 );
-	pt.y += TIP_TEXTHEIGHT;
+	if ( nCompIn > 0 || nCompOut > 0 )
+	{
+		LoadString( str, IDS_NEIGHBOUR_RATIO );
+		DrawText( pDC, &pt, str, 8 );
+		if ( nCompIn > 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0f ); else str.Empty();
+		DrawText( pDC, &pt, str, 128 );
+		if ( nCompOut > 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0f ); else str.Empty();
+		DrawText( pDC, &pt, str, 128 + 80 );
+		pt.y += TIP_TEXTHEIGHT;
+	}
 
 	pt.y += TIP_TEXTHEIGHT;
 
