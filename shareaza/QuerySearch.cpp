@@ -334,7 +334,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			// For newer servers, send the file size if it's valid (and not over 4GB)
 			if ( ( bGetS2 ) && ( m_nMinSize == m_nMaxSize ) && ( m_nMaxSize < 0xFFFFFFFF ) )
 			{
-				theApp.Message( MSG_ERROR, ( _T("Creating multi-hash capapbe GetSources2 for: ") + CED2K::HashToString( &m_pED2K ) ) );
+				theApp.Message( MSG_ERROR, ( _T("Creating multi-hash capable GetSources2 for: ") + CED2K::HashToString( &m_pED2K ) ) );
 
 				// Newer server, send size as well as hash
 				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
