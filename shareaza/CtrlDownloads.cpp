@@ -44,6 +44,8 @@ BEGIN_MESSAGE_MAP(CDownloadsCtrl, CWnd)
 	ON_WM_VSCROLL()
 	ON_WM_HSCROLL()
 	ON_WM_MOUSEWHEEL()
+	ON_NOTIFY(HDN_ITEMCLICKA, AFX_IDW_PANE_FIRST, OnSortPanelItems)
+	ON_NOTIFY(HDN_ITEMCLICKW, AFX_IDW_PANE_FIRST, OnSortPanelItems)
 	ON_NOTIFY(HDN_ITEMCHANGEDW, AFX_IDW_PANE_FIRST, OnChangeHeader)
 	ON_NOTIFY(HDN_ITEMCHANGEDA, AFX_IDW_PANE_FIRST, OnChangeHeader)
 	ON_NOTIFY(HDN_ENDDRAG, AFX_IDW_PANE_FIRST, OnChangeHeader)
@@ -69,7 +71,7 @@ END_MESSAGE_MAP()
 #define DOWNLOAD_COLUMN_CLIENT		5
 #define DOWNLOAD_COLUMN_DOWNLOADED	6
 #define DOWNLOAD_COLUMN_PERCENTAGE  7
-
+#define COLUMNS_TO_SORT				DOWNLOAD_COLUMN_PERCENTAGE - DOWNLOAD_COLUMN_TITLE
 
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl construction
@@ -112,7 +114,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	CRect rect( 0, 0, 0, 0 );
-	m_wndHeader.Create( WS_CHILD|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
+	m_wndHeader.Create( WS_CHILD|HDS_BUTTONS|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
 	m_wndHeader.SetFont( &theApp.m_gdiFont );
 	
 	m_wndTip.Create( this, &Settings.Interface.TipDownloads );
@@ -142,11 +144,16 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pDeselect1		= NULL;
 	m_pDeselect2		= NULL;
 	
+	m_pbSortAscending	= new BOOL[COLUMNS_TO_SORT + 1];
+	for (int i=DOWNLOAD_COLUMN_TITLE; i <= DOWNLOAD_COLUMN_PERCENTAGE; i++)
+		m_pbSortAscending[i]=TRUE;
+
 	return 0;
 }
 
 void CDownloadsCtrl::OnDestroy()
 {
+	delete[] m_pbSortAscending;
 	SaveColumnState();
 	CWnd::OnDestroy();
 }
@@ -909,6 +916,9 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 			
 		case DOWNLOAD_COLUMN_STATUS:
+			strText = GetDownloadStatus( pDownload );
+
+			/*
 			if ( pDownload->IsCompleted() )
 				if ( pDownload->IsSeeding() )
 					LoadString( strText, IDS_STATUS_SEEDING );
@@ -956,6 +966,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 			else
 				LoadString( strText, IDS_STATUS_NOSOURCES );
+			*/
 			break;
 			
 		case DOWNLOAD_COLUMN_CLIENT:
@@ -1316,6 +1327,201 @@ BOOL CDownloadsCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void CDownloadsCtrl::OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
 	Update();
+}
+
+CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
+{
+	CString strText;
+	int nSources = pDownload->GetSourceCount();
+
+	if ( pDownload->IsCompleted() )
+		if( pDownload->IsSeeding() )
+			LoadString( strText, IDS_STATUS_SEEDING );
+		else
+			LoadString( strText, IDS_STATUS_COMPLETED );
+	else if ( pDownload->IsMoving() )
+		LoadString( strText, IDS_STATUS_MOVING );
+	else if ( pDownload->IsPaused() )
+	{
+		if ( pDownload->m_bDiskFull )
+			if( pDownload->IsCompleted() )
+				LoadString( strText, IDS_STATUS_CANTMOVE );
+			else
+				LoadString( strText, IDS_STATUS_FILEERROR );
+		else
+			LoadString( strText, IDS_STATUS_PAUSED );
+	}
+	else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
+		LoadString( strText, IDS_STATUS_VERIFYING );
+	else if ( pDownload->IsDownloading() )
+	{
+		DWORD nTime = pDownload->GetTimeRemaining();
+	
+		if ( nTime == 0xFFFFFFFF )
+			LoadString( strText, IDS_STATUS_ACTIVE );
+		else
+			strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
+			//strText.Format( _T("%i"),  nTime);
+			
+	}
+	else if ( nSources > 0 )
+		LoadString( strText, IDS_STATUS_PENDING );
+	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
+		LoadString( strText, IDS_STATUS_SEARCHING );
+	else if ( pDownload->m_bBTH )
+	{
+		if ( pDownload->IsTasking() )
+			LoadString( strText, IDS_STATUS_CREATING );
+		else if ( pDownload->m_bTorrentTrackerError )
+			LoadString( strText, IDS_STATUS_TRACKERDOWN );
+		else
+			LoadString( strText, IDS_STATUS_TORRENT );
+	}
+	else
+		LoadString( strText, IDS_STATUS_NOSOURCES );
+
+	return strText;
+}
+
+int CDownloadsCtrl::GetClientStatus(CDownload *pDownload)
+{
+	int nSources = pDownload->GetSourceCount();
+			
+	if ( pDownload->IsCompleted() )
+		return -1;
+	else if ( nSources >= 1 )
+		return nSources;
+	else
+		return nSources;
+
+	return nSources;
+}
+
+void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
+{
+	POSITION pos;
+	int nTransfers, j, pass;
+	CDownload *x, *y;
+	BOOL bSwitch=TRUE,  bSort, bOK;
+	CString s, t;	
+
+	bSort=m_pbSortAscending[nColumn];
+	//for (j=DOWNLOAD_COLUMN_TITLE; j <= DOWNLOAD_COLUMN_PERCENTAGE; j++)
+	//	m_pbSortAscending[j]=FALSE;
+	m_pbSortAscending[nColumn]= !bSort;
+
+	nTransfers = Downloads.GetCount();
+	for (pass=0; (pass < nTransfers-1) && (bSwitch == TRUE); pass++)
+	{
+		bSwitch=FALSE;
+		pos=Downloads.GetIterator();
+		for (j=0 ; (j < nTransfers-pass-1) && (pos != NULL) ; j++ )
+		{
+			x = Downloads.GetNext( pos );
+			y = Downloads.GetNext( pos );
+			s = x->GetDisplayName();
+			t = y->GetDisplayName();
+			bOK = FALSE;
+			if ( m_pbSortAscending[nColumn] == FALSE ) 
+			{
+				switch ( nColumn )
+				{
+					case DOWNLOAD_COLUMN_TITLE:
+						if ( x->GetDisplayName().CompareNoCase( y->GetDisplayName() ) > 0 )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_SIZE:
+						if ( x->m_nSize > y->m_nSize )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_PROGRESS:
+						if ( x->GetProgress() > y->GetProgress() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_SPEED:
+						if ( x->GetMeasuredSpeed() > y->GetMeasuredSpeed() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_STATUS:
+						if ( GetDownloadStatus( x ).CompareNoCase(GetDownloadStatus(y)) > 0 )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_CLIENT:
+						if ( GetClientStatus( x ) > GetClientStatus(y) )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_DOWNLOADED:
+						if ( x->GetVolumeComplete() > y->GetVolumeComplete() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_PERCENTAGE:
+						if ( ((double)(x->GetVolumeComplete() ) / (double)(x->m_nSize)) > ((double)(y->GetVolumeComplete() ) / (double)(y->m_nSize)) )
+							bOK = TRUE;
+						break;
+				}
+				if (bOK)
+				{
+					bSwitch = TRUE;
+					Downloads.Swap( y, x );
+				}
+			}
+			else 
+			{
+				switch ( nColumn )
+				{
+					case DOWNLOAD_COLUMN_TITLE:
+						if ( x->GetDisplayName().CompareNoCase(y->GetDisplayName()) < 0 )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_SIZE:
+						if ( x->m_nSize < y->m_nSize )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_PROGRESS:
+						if ( x->GetProgress() < y->GetProgress() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_SPEED:
+						if ( x->GetMeasuredSpeed() < y->GetMeasuredSpeed() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_STATUS:
+						if ( GetDownloadStatus(x).CompareNoCase( GetDownloadStatus(y) ) < 0 )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_CLIENT:
+						if ( GetClientStatus(x) < GetClientStatus(y) )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_DOWNLOADED:
+						if ( x->GetVolumeComplete() < y->GetVolumeComplete() )
+							bOK = TRUE;
+						break;
+					case DOWNLOAD_COLUMN_PERCENTAGE:
+						if ( ((double)(x->GetVolumeComplete() ) / (double)(x->m_nSize)) < ((double)(y->GetVolumeComplete() ) / (double)(y->m_nSize)) )
+							bOK = TRUE;
+						break;
+
+				}
+				if (bOK)
+				{
+					bSwitch = TRUE;
+					Downloads.Swap( x, y );
+				}
+			}
+
+			if ( pos != NULL )
+				Downloads.GetPrevious( pos );
+		}
+	}
+}
+
+void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult)
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	NMLISTVIEW *pLV = (NMLISTVIEW *) pNotifyStruct;
+	BubbleSortDownloads( pLV->iItem );
+	Invalidate();
 }
 
 void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

@@ -629,6 +629,23 @@ BOOL CDownloads::Move(CDownload* pDownload, int nDelta)
 	return TRUE;
 }
 
+BOOL CDownloads::Swap(CDownload* p1, CDownload*p2)
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	POSITION pos1 = m_pList.Find( p1 );
+	if (pos1 == NULL) return FALSE;
+	
+	POSITION pos2 = m_pList.Find( p2 );	
+	if (pos2 == NULL) return FALSE;
+	
+	m_pList.InsertAfter(pos2, p1 );
+	m_pList.RemoveAt( pos2);	
+	m_pList.InsertAfter(pos1, p2 );
+	m_pList.RemoveAt( pos1 );	
+	return TRUE;
+}
+
 BOOL CDownloads::Reorder(CDownload* pDownload, CDownload* pBefore)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );

@@ -48,12 +48,15 @@ protected:
 	void		SaveColumnState();
 	BOOL		LoadColumnState();
 	void		SelectTo(int nIndex);
+	void		BubbleSortDownloads(int nColumn);
     void		DeselectAll(CDownload* pExcept1 = NULL, CDownloadSource* pExcept2 = NULL);
 	int			GetSelectedCount();
 	BOOL		HitTest(const CPoint& point, CDownload** ppDownload, CDownloadSource** ppSource, int* pnIndex, RECT* prcItem);
 	BOOL		GetAt(int nSelect, CDownload** ppDownload, CDownloadSource** ppSource);
 	BOOL		GetRect(CDownload* pSelect, RECT* prcItem);
 	void		MoveSelected(int nDelta);
+	CString		GetDownloadStatus(CDownload *pDownload);
+	int			GetClientStatus(CDownload *pDownload);
 	void		PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop);
 	void		PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus);
 	void		OnBeginDrag(CPoint ptAction);
@@ -77,6 +80,7 @@ protected:
 	CPoint				m_ptDrag;
 	CDownload*			m_pDeselect1;
 	CDownloadSource*	m_pDeselect2;
+	BOOL*				m_pbSortAscending;
 
 // Implementation
 protected:
@@ -90,6 +94,7 @@ public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);

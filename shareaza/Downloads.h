@@ -78,6 +78,7 @@ public:
 	BOOL		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
+	BOOL		Swap(CDownload* p1, CDownload* p2);
 	CDownload*	FindByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindBySHA1(const SHA1* pHash, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindByTiger(const TIGEROOT* pHash, BOOL bSharedOnly = FALSE) const;
