@@ -4,7 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
@@ -174,10 +174,10 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Length</title>
                        <title language="af">Lengte</title>
                        <title language="de">Länge</title>
-                       <title language="es-mx">Duración</title>
+                       <title language="es-mx">Longitud</title>
                        <title language="fr">Longueur</title>
                        <title language="hu">Hossz</title>
-                       <title language="lt">Trukmė</title>
+                       <title language="lt">Ilgis</title>
                        <title language="nl">Lengte</title>
                        <title language="no">Lengde</title>
                </member>

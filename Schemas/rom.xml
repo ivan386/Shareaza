@@ -5,7 +5,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
@@ -73,6 +73,17 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
+               </member>
+               <member name="type">
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="de">Art</title>
+                       <title language="es-mx">Arte</title>
+                       <title language="fr">Type</title>
+                       <title language="hu">Típus</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
