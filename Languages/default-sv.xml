@@ -3359,11 +3359,11 @@
 			<control caption="För att uppnå bästa prestanda måste Shareaza veta lite om din Internetanslutning." />
 			<control caption="&#160;(välj)| Jag använder Internet hemma| Jag använder Internet i skolan| Jag använder Internet på kontoret| Jag använder Internet på ett hotell eller en flygplats" />
 			<control caption="Är ditt nätverk skyddat av en brandvägg eller NAT-router?" />
-			<control caption="Nej, jag har FULL ÅTKOMST till Internet| Ja, så jag kan INTE ta emot inkommande anslutningar från Internet| Jag vet inte, AUTODETEKTERA min brandväggsstatus" />
+			<control caption="&#160;Nej, jag har FULL ÅTKOMST till Internet| Ja, så jag kan INTE ta emot inkommande anslutningar från Internet| Jag vet inte, AUTODETEKTERA min brandväggsstatus" />
 			<control caption="Har du en brandvägg eller NAT-router i din Internetanslutning hemma?" />
-			<control caption="Nej, jag har FULL ÅTKOMST till Internet| Ja, men jag kommer att ställa in porteftersändning för Shareaza| Ja, så jag kan INTE ta emot inkommande anslutningar från Internet| Jag vet inte, AUTODETEKTERA min brandväggsstatus" />
+			<control caption="&#160;Nej, jag har FULL ÅTKOMST till Internet| Ja, men jag kommer att ställa in porteftersändning för Shareaza| Ja, så jag kan INTE ta emot inkommande anslutningar från Internet| Jag vet inte, AUTODETEKTERA min brandväggsstatus" />
 			<control caption="Om du vet hur snabb din Internetanslutning är kan du välja det bästa valet nedan:" />
-			<control caption=" Uppringt modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kabelmodem/SDSL| T1| T3| LAN| OC3" />
+			<control caption="| Uppringt modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kabelmodem/SDSL| T1| T3| LAN| OC3" />
 			<control caption="ELLER välj:" />
 			<control />
 		</dialog>
