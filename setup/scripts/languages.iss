@@ -207,7 +207,7 @@ de.icons_license=Lizenz
 de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
 de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren?
-de.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+de.dialog_firewall=Setup konnte Shareaza nicht zur Windows Firewall hinzufügen.%nBitte tragen Sie Shareaza manuell in die Ausnahmenliste ein.
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Peles
@@ -297,7 +297,7 @@ br.icons_license=Licença
 br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 br.dialog_shutdown=Você deseja fechar o %1?
-br.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza à lista.
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
@@ -315,7 +315,7 @@ fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
 fr.dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre?
-fr.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+fr.dialog_firewall=L'installation n'a pas pu ajouter Shareaza au Pare-feu Windows.%nVeuillez ajouter Shareaza manuellement à la liste des exceptions.
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -387,7 +387,7 @@ hu.icons_license=Licensz
 hu.icons_uninstall=Törlés
 hu.icons_downloads=Letöltések
 hu.dialog_shutdown=A %1 jelenleg fut. Be akarod zárni a programot, hogy a telepítés folytatódhasson?
-hu.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+hu.dialog_firewall=A telepíto nem tudta hozzáadni a Shareazát a Windows tuzfal kivételeihez.%nManuálisan kell hozzáadni a kivételekhez.
 ; Chinese Simp
 chs.components_plugins=²å¼þ
 chs.components_skins=Æ¤·ô
@@ -405,7 +405,7 @@ chs.icons_license=Ðí¿É
 chs.icons_uninstall=Ð¶ÔØ
 chs.icons_downloads=ÏÂÔØ
 chs.dialog_shutdown=%1 ÕýÔÚÔËÐÐ¡£ÄúÏ£Íû¹Ø±Õ %1 ÒÔ±ã¼ÌÐø°²×°Âð£¿
-chs.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+chs.dialog_firewall=°²×°Ìí¼Ó Shareaza µ½ Windows ·À»ðÇ½Ê§°Ü¡£%nÇë½« Shareaza ÊÖ¶¯Ìí¼ÓÖÁ³ýÍâÁÐ±í¡£
 ; Swedish
 sv.components_skins=Skinn
 sv.components_languages=Språk
