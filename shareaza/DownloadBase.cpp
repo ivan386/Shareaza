@@ -138,17 +138,22 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bSHA1;
 		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
 		if ( nVersion >= 31 ) ar >> m_bSHA1Trusted;
+		else m_bSHA1Trusted = m_bSHA1;
 
 		ar >> m_bTiger;
 		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
 		if ( nVersion >= 31 ) ar >> m_bTigerTrusted;
+		else m_bTigerTrusted = m_bTiger;
 
 		if ( nVersion >= 22 ) ar >> m_bMD5;
 		if ( m_bMD5 ) ar.Read( &m_pMD5, sizeof(MD5) );
 		if ( nVersion >= 31 ) ar >> m_bMD5Trusted;
+		else m_bMD5Trusted = m_bMD5;
 
 		if ( nVersion >= 13 ) ar >> m_bED2K;
 		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
 		if ( nVersion >= 31 ) ar >> m_bED2KTrusted;
+		else m_bED2KTrusted = m_bED2K;
+
 	}
 }
