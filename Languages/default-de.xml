@@ -2671,8 +2671,8 @@ Other:
 			<control />
 			<control />
 			<control caption="Gnutella1 Netzwerk:" />
-			<control caption="Heute zu Gnutella1 verbinden" />
 			<control caption="Immer zu Gnutella1 verbinden" />
+			<control caption="Heute zu Gnutella1 verbinden" />
 			<control caption="Modus:" />
 			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control caption="G_1 Verbindungen:" />
