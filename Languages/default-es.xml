@@ -1310,7 +1310,7 @@
 	<menu name="CNeighboursWnd">
 		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
 		<item id="ID_NEIGHBOURS_CHAT" text="_Chatear con Usuario"/>
-		<item id="ID_SECURITY_BAN" text="B_loquear Userio"/>
+		<item id="ID_SECURITY_BAN" text="B_loquear Usuario"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Desconectar"/>
 		<separator/>
@@ -2458,7 +2458,7 @@
 	<string id="8290" value="Explorando los contenidos de las carpetas %i "/>
 	<string id="8291" value="Carpetas Multiples"/>
 	<string id="8292" value="%i archivos seleccionados"/>
-	<string id="8293" value="No hay archuvis seleccionados"/>
+	<string id="8293" value="No hay archivos seleccionados"/>
 	<string id="8294" value="Adicciones Recientes"/>
 	<string id="8295" value="Dar rating a archivo"/>
 	<string id="8304" value="N/A"/>
@@ -2998,7 +2998,7 @@
 		<control caption="Poner en negrita los últimos resultados"/>
 		<control caption="Expandir multiples fuentes"/>
 		<control caption="Cambiar a transferencias al descargar"/>
-		<control caption="Expandir nuevas transferencias"/>
+		<control caption="Expanidir nuevas transferencias"/>
 		<control caption="Mostrar confirmación antes de abrir URLs"/>
 		<control caption="Mostrar tasa de transferencia en:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
