@@ -1750,6 +1750,11 @@
 		<text>Включите поддержку удаленного доступа, чтобы контроллировать Shareaza при помощи веб браузера.</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Планировщик</link>
+		<gap size="4"/>
+		<text></text>
+		<newline gap="10"/>
+
 	</document>
 
 	<!-- Browse User Profile -->
@@ -2908,6 +2913,13 @@
 	<string id="20130" value="источников"/><!-- from 11 to 19 -->
 	<string id="20131" value="источника"/><!-- from 2 to 4 -->
 	<string id="20132" value="источников"/><!-- from 5 to 9 -->
+	<string id="20200" value="Воскресенье"/>
+	<string id="20201" value="Понедельник"/>
+	<string id="20202" value="Вторник"/>
+	<string id="20203" value="Среда"/>
+	<string id="20204" value="Четверг"/>
+	<string id="20205" value="Пятница"/>
+	<string id="20206" value="Суббота"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3099,6 +3111,25 @@
 		<control/>
 		<control caption="Введите пароль:"/>
 		<control/>
+	</dialog>
+
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Планировщик">
+		<control caption="_Опции:"/>
+		<control caption="_Включить планировщик"/>
+		<control/><control/>
+		<control caption="_Лимитировать сети тоже"/>
+		<control caption="Ключ:"/>
+		<control caption="Вос"/>
+		<control caption="Пон"/>
+		<control caption="Вто"/>
+		<control caption="Сре"/>
+		<control caption="Чет"/>
+		<control caption="Пят"/>
+		<control caption="Суб"/>
+		<control caption="Не соединяться"/>
+		<control caption="Лимитированное соединение"/>
+		<control caption="Соедин. с полной скоростью"/>
+		<control caption="% полосы пропуск. при лимите"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
