@@ -204,6 +204,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.VerifyFiles, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.VerifyTiger, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.Metadata, 1, 0, 1 );
+	AddSetting( &Settings.Downloads.SortColumns, 1, 0, 1 );
+	AddSetting( &Settings.Downloads.SortSources, 1, 0, 1 );
 	
 	AddSetting( &Settings.Uploads.FreeBandwidthValue, 128, 0, 4096, _T(" Kb/s") );
 	AddSetting( &Settings.Uploads.FreeBandwidthFactor, 1, 0, 100, _T("%") );

@@ -358,6 +358,8 @@ public:
 		DWORD		ClearDelay;
 		DWORD		FilterMask;
 		BOOL		ShowMonitorURLs;
+		BOOL		SortColumns;
+		BOOL		SortSources;
 	} Downloads;
 	
 	struct sUploads
