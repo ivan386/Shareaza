@@ -96,6 +96,7 @@ public:
 	afx_msg void OnChangeHeader(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnEnterKey();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);

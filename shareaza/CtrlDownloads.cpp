@@ -1558,9 +1558,38 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_DELETE:
 		GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_CLEAR );
 		return;
+	case VK_RETURN:			// If the enter key is pressed activate the function relevant to the current focus
+		OnEnterKey();		// Run the function that does the actions on the download window when enter key is pressed
+		return;
 	}
 	
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
+}
+
+void CDownloadsCtrl::OnEnterKey()
+{
+		CDownloadSource* pSource;
+		CDownload* pDownload;
+
+		GetAt( m_nFocus, &pDownload, &pSource );								// Get the data for the current focus
+		if ( pDownload != NULL )												// If the selected object is a download...
+		{
+			if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )						// And the control key is pressed...
+			{
+				GetOwner()->PostMessage( WM_TIMER, 5 );
+				GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_LAUNCH );		// Launch the current file
+			}
+			else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )					// Or the shift key is pressed...
+			{
+				GetOwner()->PostMessage( WM_TIMER, 5 );
+				GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_ENQUEUE );	// Add the current file to playlist
+			}
+		}
+		else if ( pSource != NULL )												// If the selected object is a download source...
+		{
+			GetOwner()->PostMessage( WM_TIMER, 5 );
+			GetOwner()->PostMessage( WM_COMMAND, ID_TRANSFERS_CONNECT );		// Connect to the source
+		}
 }
 
 void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
