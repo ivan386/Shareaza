@@ -9,7 +9,7 @@
 import "oaidl.idl";
 import "ocidl.idl";
 
-cpp_quote("#include \"ShareazaOM.h\"")
+cpp_quote("#include <ShareazaOM.h>")
 
 [
 	uuid(2696CE9F-423F-4901-A109-0C85E6430266),
