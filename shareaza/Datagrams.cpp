@@ -1259,6 +1259,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	BOOL bWantNames		= FALSE;
 	BOOL bWantGPS		= FALSE;
 	BOOL bWantREXT		= FALSE;
+	BOOL bIsHub			= ( ! Neighbours.IsG2Leaf() ) && ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
 	
 	CHAR szType[9];
 	DWORD nLength;
@@ -1304,9 +1305,13 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		currentVersion = "Shareaza " + theApp.m_sVersion;
 	}
 	
-	pPacket->WritePacket( "SELF", 16 + ( strNick.GetLength() ? pPacket->GetStringLen( strNick ) + 6 : 0 ) + 
+	pPacket->WritePacket( 
+		"SELF", 
+		16 + ( strNick.GetLength() ? pPacket->GetStringLen( strNick ) + 6 : 0 ) + 
 			( nGPS ? 5 + 4 : 0 ) + (vendorCode.GetLength() ? pPacket->GetStringLen( vendorCode ) + 3 : 0 ) + 
-			(currentVersion.GetLength() ? pPacket->GetStringLen( currentVersion ) + 4 : 0 ), TRUE );
+		(currentVersion.GetLength() ? pPacket->GetStringLen( currentVersion ) + 4 : 0 ) +
+		(bIsHub ? 5 : 6), 
+		TRUE );
 	
 	pPacket->WritePacket( "NA", 6 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
@@ -1329,6 +1334,15 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	{
 		pPacket->WritePacket( "CV", pPacket->GetStringLen( currentVersion) );
 		pPacket->WriteString( currentVersion, FALSE );
+	}
+	
+	if ( bIsHub )
+	{
+		pPacket->WritePacket( "HUB", 0 );
+	}
+	else
+	{
+		pPacket->WritePacket( "LEAF", 0 );
 	}
 	
 	if ( nGPS )
