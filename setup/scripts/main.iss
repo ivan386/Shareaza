@@ -72,6 +72,7 @@ Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly r
 
 ; Main files
 Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -274,7 +275,6 @@ Name: "{userappdata}\Shareaza\Data"; Flags: uninsalwaysuninstall; Tasks: multius
 [InstallDelete]
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\zlib1.dll"
-Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\LICENSE.txt"
 Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
