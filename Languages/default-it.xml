@@ -16,7 +16,7 @@
 			description="Shareaza Default Italian Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.1.0.97"
+			version="2.1.0.102"
 			type="Language"
 			language="it"
 			prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -1001,11 +1001,6 @@
 		<item id="ID_UPLOADS_CHAT" text="Chat"/>
 		<item id="ID_SECURITY_BAN" text="Blocca utente"/>
          </menu>
-	<menu name="CUploadsWnd.Queue.Basic"> 
-		<item id="ID_UPLOADS_HELP" text="Aiuto..."/> 
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Rimuovi Completati"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Auto-Rimuovi Completati"/>
-	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="Preferenze Coda"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Rimuovi Completati"/>
@@ -1120,13 +1115,15 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Visualizza la ricerca su Bitzi"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Acquisisci metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crea File .torrent"/>
 		</menu>
 		<menu text="Organizza">
 			<item id="ID_LIBRARY_RENAME" text="Rinomina file"/>
 			<item id="ID_LIBRARY_MOVE" text="Sposta i file..."/>
 			<item id="ID_LIBRARY_COPY" text="Copia i file..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Ricostruzione Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Modifica colonne..."/>
 		<separator/>
@@ -1195,6 +1192,8 @@
 			<item id="ID_LIBRARY_MOVE" text="Sposta i file..."/>
 			<item id="ID_LIBRARY_COPY" text="Copia i file..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Ricostruzione Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Modifica colonne..."/>
 		<separator/>
@@ -1655,7 +1654,14 @@
 			<text id="TorrentsOne" format="b">1 file torrent</text>
 			<text id="TorrentsMany" format="b">%i file torrent</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Ricerca torrent %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Cerca un altro torrent</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Cerca un torrent</link>
+			</group>
 		</para>
 
 	</document>
@@ -1871,8 +1877,6 @@
 		<text>Questa è la cartella ove vengo visualizzati i file da scaricare. Puoi visualizzare
 		i sorgenti da cui scaricare espandendo ogni file col piccolo + sulla sinistra.</text> 
 		<newline gap="8"/> 
-
-		
 		<text>Puoi usare questo comando per ottenere informazioni di supporto su un download.  Devi
 		semplicemente selezionare un download e scegliere nuovamente questo comando.</text>
 	</document>
@@ -2065,8 +2069,7 @@
 	        cartelle. Condividi allora queste ultime.</text>
 	       <newline gap="8"/>
 	       <text>Anche la cartella di Shareaza 'incompleti' non dovrebbe essere condivisa,
-             poichè effettuare l'hash durante lo scaricamento potrebbe impattare negativamente nelle  
-		prestazioni.</text>
+             poichè effettuare l'hash durante lo scaricamento potrebbe impattare negativamente nelle prestazioni.</text>
 	</document>
 
 </documents>
@@ -2174,7 +2177,7 @@
 	<tip id="ID_LIBRARY_BITZI_WEB" message="Visualizza la ricerca dei file selezionati su Bitzi(TM)."/>
 	<tip id="ID_LIBRARY_COLUMNS" message="Seleziona le colonne metadata da mostrare..."/>
 	<tip id="ID_LIBRARY_COPY" message="Copia i file selezionati in un'altra cartella della libreria..."/>
-	<tip id="ID_LIBRARY_CREATETORRENT" message="Create a .torrent for this file to upload to a website."/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="Crea un .torrent per questo file da uplodare in un sito web."/>
 	<tip id="ID_LIBRARY_DELETE" message="Elimina permanentemente i file selezionati."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Aggiungi i file selezionati alla playlist."/>
 	<tip id="ID_LIBRARY_EXPLORE" message="Apri le cartelle selezionate."/>
@@ -2194,6 +2197,8 @@
 	<tip id="ID_LIBRARY_PARENT" message="Livello superiore."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Visualizza e modifica le proprietà dei file selezionati..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Ricostruisci i metadata e hash per la cartella o per il file selezionato."/>
+	<!-- Add the following line if you need it -->
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Ricostruisci i metadata usando la tua lingua."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Aggiorna la visualizzazzione della libreria."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Rimuovi le cartelle in condivisione selezionate."/>
 	<tip id="ID_LIBRARY_RENAME" message="Rinomina i file selezionati."/>
@@ -2271,7 +2276,7 @@
 	<tip id="ID_SEARCH_COPY" message="Copia l'URI del file selezionato."/>
 	<tip id="ID_SEARCH_DETAILS" message="Mostra informazioni dettagliate sul file selezionato."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Scarica i file selezionati."/>
-	<tip id="ID_SEARCH_DOWNLOADNOW" message="Download the selected file(s) with priority."/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="Scarica il(i) file selezionato(i) con priorità."/>
 	<tip id="ID_SEARCH_FILTER" message="Filtra i risultati di ricerca in base a certe parole e condizioni..."/>
 	<tip id="ID_SEARCH_FILTER_RAW" message="Filtra i risultati della ricerca secondo certe parole e condizioni..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Rimuovi il filtro dai risultati."/>
@@ -2312,7 +2317,7 @@
 	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Modifica il tuo profilo utente..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Ricarica e applica la skin correntemente selezionata."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Cerca i Torrent selezionati su BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Configura le opzioni Shareaza..."/>
 	<tip id="ID_TOOLS_SKIN" message="Scegli una skin diversa da utilizzare con Shareaza..."/>
 	<tip id="ID_TOOLS_WIZARD" message="Esegui la configurazione guidata di Shareaza..."/>
@@ -2390,6 +2395,7 @@
 	<string id="WINDOW_MEDIA" value="Media Player"/>
 	<string id="WINDOW_SEARCHPAD" value="Ricerca"/>
 	<string id="WINDOW_HELP" value="Aiuto di Shareaza"/>
+	<string id="7000" value="Sei sicuro di voler cancellare questo filtro ?"/>
 	<string id="8000" value="Opzioni di Shareaza"/>
 	<string id="8001" value="Benvenuto su Shareaza"/>
 	<string id="8002" value="Proprietà file"/>
@@ -2404,8 +2410,8 @@
 	<string id="8011" value="Cambiando la visualizzazione qualsiasi finestra aperta si chiuderà. Desideri cambiare ora?"/>
 	<string id="8060" value="Modalità Hub/Ultrapeer con %lu vicino(i).  %s nella libreria locale."/>
 	<string id="8061" value="Modalità Ultrapeer con %lu vicino(i).  %s nella libreria locale."/>
-	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
-	<string id="8063" value="Connected. %s in local library."/>
+	<string id="8062" value="Modalità Hub con %lu vicino(i).  %s nella tua libreria locale."/>
+	<string id="8063" value="Connesso. %s nella tua libreria locale."/>
 	<string id="8064" value="Connesso con %lu host. %s nella libreria locale."/>
 	<string id="8065" value="Connessione alla rete in corso..."/>
 	<string id="8066" value="Non connesso alla rete."/>
@@ -2543,7 +2549,7 @@
 	<string id="16083" value="Forzare il tuo PC in modalità hub potrebbe aver riflessi negativi sulla rete.  Generalmente è meglio permettere a Shareaza di decidere se deve essere utilizzata la modalità hub.\n\nLa modalità hub non permette migliori risultati nella ricerca, o genera migliori risultati per l'utente. Desideri continuare?"/>
 	<string id="16084" value="Disabilitando il supporto per il protocollo Gnutella-1 potrebbe limitare i risultati nelle tue ricerche, inoltre il tuo comportamento come hub potrebbe impattarsi anche sui risultati di altri utenti. Desideri continuare?"/>
 	<string id="16085" value="Gnutella2 è la rete principale di Shareaza. Disabilitare il supporto per questa può limitare enormemente sia il numero che la qualità delle tue ricerche. Desideri continuare?"/>
-	<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
+	<string id="16087" value="La tua banda in uscita è troppo bassa per abilitare questa rete"/>
 	<string id="16128" value="Connessione in entrata da %s porta %i accettata."/>
 	<string id="16129" value="Avvio di una connessione con %s porta %i in corso..."/>
 	<string id="16130" value="Impossibile avviare una connessione con %s."/>
@@ -2739,7 +2745,7 @@
 	<string id="16406" value="Desideri scaricare tutti i file in questa collezione?\n\n\n\nScegli Annulla per non mostrare ulteriori richieste."/>
 	<string id="16407" value="Desideri che questo file collezione non ti venga proposto ancora per il download?"/>
 	<string id="16408" value="Copia &amp;URI"/>
-	<string id="16409" value="Export &amp;URIs..."/>
+	<string id="16409" value="Esporta &amp;URIs..."/>
 	<string id="16448" value="Connesso a %s, negoziazione in corso..."/>
 	<string id="16449" value="Conversazione con %s (%s)."/>
 	<string id="16450" value="Connessione con %s chiusa."/>
@@ -2800,9 +2806,9 @@
 	<string id="16806" value="Hai indicato che vuoi impostare il port-forwarding sul tuo router NAT o firewall.\n\nConfigura la tua rete per impostare il forward alla porta TCP  %i al tuo PC."/>
 	<string id="16807" value="Inserisci il limite di banda che desideri impostare (per esempio &quot;123 kb/s&quot; per kilobit al secondo, oppure &quot;123 KB/s&quot; per kilobyte al secondo)."/>
 	<string id="16808" value="Non hai selezionato la tua età e il tuo sesso. Continuare comunque?"/>
-	<string id="16809" value="E&amp;xit"/>
+	<string id="16809" value="E&amp;sci"/>
 	<string id="16810" value="vecchio"/>
-	<string id="16811" value="Automatic"/>
+	<string id="16811" value="Automatico"/>
 	<string id="16864" value="Servizi di ricerca di richiesta host..."/>
 	<string id="16865" value="Servizi di ricerca di richiesta  &quot;%s&quot;..."/>
 	<string id="16866" value="Transazione GWebCache eseguita con successo (&quot;%s&quot;)."/>
@@ -2976,7 +2982,7 @@
 	<string id="20109" value="Accodato"/>
 	<string id="20110" value="Sconosciuto"/>
 	<string id="20111" value="Completato"/>
-	<string id="20112" value="Seeding"/>
+	<string id="20112" value="Ricerca"/>
 	<string id="20113" value="Spostamento"/>
 	<string id="20114" value="In Pausa"/>
 	<string id="20115" value="Errore File"/>
@@ -3022,7 +3028,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generale"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Generale">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Generale">
 		<control caption="Interfaccia utente:"/>
 		<control caption="Connetti all'avvio di Shareaza"/>
 		<control caption="Esegui Shareaza all'avvio di Windows"/>
@@ -3092,7 +3098,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Comunità">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Comunità">
 		<control caption="Il mio profilo:"/>
 		<control caption="Puoi usare il profilo utente di Gnutella per condividere informazioni su di te, i tuoi interessi, file preferiti e siti web preferiti con altri."/>
 		<control caption="Modifica profilo"/>
@@ -3243,7 +3249,7 @@
 		<control caption="Connetti a Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Rete Gnutella2 (consigliata):"/>
 		<control caption="Connetti a Gnutella2 oggi"/>
 		<control caption="Rete Gnutella1:"/>
@@ -3294,9 +3300,9 @@
 		<control caption="Scarica..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="_Salva Torrents Qui:"/>
-					<control caption="Display additional BitTorrent interface elements"/>
+					<control caption="Mostra elementi addizionali per interfaccia BitTorrent"/>
 	<control caption="_Download Connections:"/>
 		<control/><control/>
 		<control caption="_Scarica Connessioni:"/>
@@ -3354,7 +3360,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Proprietà coda in upload">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Proprietà coda in upload">
 		<control caption="Nome:"/>
 		<control/>
 		<control caption="Criterio di entrata:"/>
@@ -3386,6 +3392,7 @@
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
+		<control caption="Ricompenda gli uploader"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Benvenuto su Shareaza">
@@ -3611,7 +3618,7 @@
 		<control caption="Annulla"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Opzioni filtro">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Opzioni filtro">
 		<control caption="Mostra solo i risultati che includono le parole:"/>
 		<control/>
 		<control caption="(puoi anche escludere parole con -parola)"/>
@@ -3632,9 +3639,21 @@
 		<control caption="Risulati errati"/>
 		<control caption="Filtra"/>
 		<control caption="Annulla"/>
+		<control/>
+		<control caption="Configura come default"/>
+		<control caption="Salva come"/>
+		<control caption="Cancella"/>
+		<control caption="Filtri:"/>
 	</dialog>
 
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servizio di ricerca">
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salva il filtro come">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Annulla"/>
+		<control caption="Salva il filtro attuale come"/>
+	</dialog>
+
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servizio di Ricerca">
 		<control caption="Indirizzo servizio:"/>
 		<control/>
 		<control caption="Tipo servizio di ricerca:"/>
@@ -3978,7 +3997,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="Visualizzatore Tracker di BitTorrent">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Visualizzatore Tracker di BitTorrent">
 		<control caption="Informazioni torrent:"/>
 		<control caption="Nome:"/>
 		<control/>
@@ -4146,8 +4165,6 @@
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Nome File"/>
 		<column from="Size" to="Dimensione"/>
-
-
 	</list>
 </listColumns>
 </skin>
