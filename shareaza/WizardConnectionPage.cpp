@@ -232,7 +232,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( nSpeed >= 100 && theApp.m_bNT )
 	{
 		Settings.Downloads.MaxFiles			= 32;
-		Settings.Downloads.MaxTransfers		= 256;
+		Settings.Downloads.MaxTransfers		= 128;
 		Settings.Downloads.MaxFileTransfers	= 8;
 	}
 	else
