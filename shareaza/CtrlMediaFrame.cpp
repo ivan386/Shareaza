@@ -495,7 +495,9 @@ void CMediaFrame::PaintSplash(CDC& dc, CRect& rcBar)
 	
 	CRect rcText( m_rcVideo.left, pt.y + pInfo.bmHeight, m_rcVideo.right, pt.y + pInfo.bmHeight + 32 );
 	
-	CString strText = _T("S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M");
+	CString strText;
+	LoadString( strText, IDS_MEDIA_TITLE );
+
 	pt.x = ( m_rcVideo.left + m_rcVideo.right ) / 2 - dc.GetTextExtent( strText ).cx / 2;
 	pt.y = rcText.top + 8;
 	
@@ -510,7 +512,7 @@ void CMediaFrame::PaintSplash(CDC& dc, CRect& rcBar)
 void CMediaFrame::PaintListHeader(CDC& dc, CRect& rcBar)
 {
 	CPoint pt = rcBar.CenterPoint();
-	CString strText = _T("P L A Y L I S T");
+	LoadString( strText, IDS_MEDIA_PLAYLIST );
 	CSize szText = dc.GetTextExtent( strText );
 	pt.x -= szText.cx / 2; pt.y -= szText.cy / 2;
 	dc.SetBkMode( OPAQUE );
