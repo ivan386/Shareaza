@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.21"
+		version="2.1.0.25"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -3285,7 +3285,7 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Propriétés des queues d'attentes d'envois">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propriétés des queues d'attentes d'envois">
 		<control caption="_Nom:"/>
 		<control/>
 		<control caption="Critère d'_entrée:"/>
@@ -3317,6 +3317,7 @@ Other:
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Annuler"/>
+		<control caption="Récompenser les envoyeurs"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Shareaza vous souhaite la bienvenue">
@@ -3989,6 +3990,7 @@ Other:
 		<column from="Progress" to="Progression"/>
 		<column from="Speed" to="Vitesse"/>
 		<column from="Client" to=""/>
+		<column from="Rating" to="Evaluation"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresse"/>
