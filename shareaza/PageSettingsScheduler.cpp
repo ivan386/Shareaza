@@ -89,6 +89,9 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	
 	
 	m_bSchedulerEnable = Settings.Scheduler.Enable;
+
+	m_nDownDay = m_nHoverDay = 0xFF;
+	m_nDownHour = m_nHoverHour = 0xFF;
 	
 	UpdateData( FALSE );
 
@@ -127,20 +130,13 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else 
 	{
-		if ( m_nHoverDay )
+		if ( ( m_nHoverDay != 0xFF ) || ( m_nHoverHour != 0xFF ) )
 		{
-			m_nHoverDay = 0;
-			Invalidate();
-		}
-		if ( m_nHoverHour )
-		{
-			m_nHoverHour = 0;
+			m_nHoverDay = m_nHoverHour = 0xFF;
 			Invalidate();
 		}
 	}
 
-	//m_bKeyMode = FALSE;
-	
 	//CSettingsPage::OnMouseMove( nFlags, point );
 }
 
@@ -157,12 +153,13 @@ void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( m_nDownDay != m_nHoverDay ) return;
 	if ( m_nDownHour != m_nHoverHour ) return;
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
 
 	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
 	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
 
-	m_nDownDay = m_nHoverDay = 0;
-	m_nDownHour = m_nHoverHour = 0;
+	m_nDownDay = m_nHoverDay = 0xFF;
+	m_nDownHour = m_nHoverHour = 0xFF;
 
 	ReleaseCapture();
 	Invalidate();
@@ -209,13 +206,13 @@ void CSchedulerSettingsPage::OnPaint()
 
 	//Draw the schedule time slices for the 'key'
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_OFF, dc.GetSafeHdc(),
-					40 ,  200 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 ,  180 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_LIMITED_SPEED, dc.GetSafeHdc(),
-					40 , 220 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , 200 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_FULL_SPEED  , dc.GetSafeHdc(),
-					40 , 240 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , 220 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	//CSettingsPage::OnPaint();
 	
