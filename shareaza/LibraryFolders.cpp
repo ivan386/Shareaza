@@ -141,6 +141,21 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 	return pFolder;
 }
 
+CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
+{
+	CLibraryFolder* pFolder = AddFolder( pszPath );
+
+	if( pFolder )
+	{
+		if( bShared )
+			pFolder->m_bShared = TS_TRUE;
+		else
+			pFolder->m_bShared = TS_FALSE;
+	}
+
+	return pFolder;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders remove a root physical folder
 

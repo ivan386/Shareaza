@@ -52,6 +52,7 @@ public:
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 public:
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath);
+	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
 	CLibraryFolder*	IsFolderShared(LPCTSTR pszPath);
 	
