@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/01/08 05:19:19 $"
-//	Revision:		"$Revision: 1.9 $"
+//	Date:			"$Date: 2005/01/08 14:18:14 $"
+//	Revision:		"$Revision: 1.10 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -59,17 +59,22 @@ static char THIS_FILE[]=__FILE__;
 
 CChatSession::CChatSession(CChatFrame* pFrame)
 {
-	m_bGUID		= FALSE;
+	m_bGUID			= FALSE;
 	
-	m_nState	= cssNull;
-	m_nProtocol = PROTOCOL_NULL;
-	m_bOld		= FALSE;
-	m_bMustPush	= FALSE;
-	m_tPushed	= 0;
-	m_pProfile	= NULL;
+	m_nState		= cssNull;
+	m_nProtocol		= PROTOCOL_NULL;
+	m_bOld			= FALSE;
+	m_bMustPush		= FALSE;
+	m_tPushed		= 0;
+	m_pProfile		= NULL;
 	
 	m_pWndPrivate	= NULL;
 	m_pWndPublic	= NULL;
+
+	m_bUnicode		= FALSE;
+	m_nClientID		= 0;
+	m_pServer.sin_addr.S_un.S_addr	= 0;
+	m_pServer.sin_port				= 0;
 	
 	if ( pFrame != NULL )
 	{
@@ -1209,7 +1214,10 @@ void CChatSession::OnOpenWindow()
 
 	if ( ( m_pWndPrivate == NULL ) && ( m_nProtocol == PROTOCOL_ED2K ) )
 	{
-		m_pWndPrivate = ChatWindows.FindED2KFrame( &m_pHost.sin_addr );
+		if ( m_bMustPush )
+			m_pWndPrivate = ChatWindows.FindED2KFrame( m_nClientID, &m_pServer );
+		else
+			m_pWndPrivate = ChatWindows.FindED2KFrame( &m_pHost );
 	}
 	
 	if ( m_pWndPrivate == NULL )

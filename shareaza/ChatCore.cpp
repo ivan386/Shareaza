@@ -107,10 +107,14 @@ BOOL CChatCore::OnPush(GGUID* pGUID, CConnection* pConnection)
 
 void CChatCore::OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket)
 {
+	ASSERT ( pClient != NULL );
+	// Note: Null packet is valid- in that case we have no pending message, but want to open
+	// a chat window.
+
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return;
 	
-	CChatSession* pSession = FindSession(pClient);
+	CChatSession* pSession = FindSession( pClient );
 
 	pSession->OnED2KMessage( pPacket );
 }
@@ -137,13 +141,18 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 			pSession->m_sUserNick	= pClient->m_sNick;
 			pSession->m_sUserAgent	= pClient->m_sUserAgent;
 			pSession->m_bUnicode	= pClient->m_bEmUnicode;
+			pSession->m_nClientID	= pClient->m_nClientID;
+			pSession->m_pServer		= pClient->m_pServer;
+
+			pSession->m_bMustPush	= ( ( pClient->m_nClientID > 0 ) && ( pClient->m_nClientID < 16777216 ) );
+
 			return pSession;
 		}
 	}
 
 	pSession = new CChatSession();
 
-	Add( pSession );
+	pSession->m_nProtocol	= PROTOCOL_ED2K;
 	pSession->m_hSocket		= INVALID_SOCKET;			// Should always remain invalid- has no real connection
 	pSession->m_nState		= cssActive;
 	pSession->m_bConnected	= TRUE;
@@ -157,12 +166,17 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 	pSession->m_sUserNick	= pClient->m_sNick;
 	pSession->m_sUserAgent	= pClient->m_sUserAgent;
 	pSession->m_bUnicode	= pClient->m_bEmUnicode;
-	pSession->m_nProtocol	= PROTOCOL_ED2K;
+	pSession->m_nClientID	= pClient->m_nClientID;
+	pSession->m_pServer		= pClient->m_pServer;
+
+	pSession->m_bMustPush	= ( ( pClient->m_nClientID > 0 ) && ( pClient->m_nClientID < 16777216 ) );
 
 	// Make new input and output buffer objects
 	DWORD nLimit = 0;
 	pSession->m_pInput		= new CBuffer( &nLimit );
 	pSession->m_pOutput		= new CBuffer( &nLimit );
+
+	Add( pSession );
 
 	return pSession;
 }

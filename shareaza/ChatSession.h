@@ -43,18 +43,20 @@ public:
 	
 // Attributes
 public:
-	BOOL		m_bGUID;
-	GGUID		m_pGUID;
+	BOOL			m_bGUID;
+	GGUID			m_pGUID;
 public:
-	int			m_nState;
-	PROTOCOLID	m_nProtocol;
-	BOOL		m_bUnicode;		// ED2K Client in UTF-8 format
-	BOOL		m_bOld;
-	BOOL		m_bMustPush;
-	DWORD		m_tPushed;
-	CString		m_sUserAgent;
-	CString		m_sUserNick;
-	CGProfile*	m_pProfile;
+	int				m_nState;
+	PROTOCOLID		m_nProtocol;
+	BOOL			m_bOld;
+	BOOL			m_bMustPush;
+	DWORD			m_tPushed;
+	CString			m_sUserAgent;
+	CString			m_sUserNick;
+	CGProfile*		m_pProfile;
+	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format
+	DWORD			m_nClientID;	// ED2K Client ID (if appropriate)
+	SOCKADDR_IN		m_pServer;		// ED2K server (If appropriate)
 public:
 	CPrivateChatFrame*	m_pWndPrivate;
 	CWnd*				m_pWndPublic;

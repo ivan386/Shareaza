@@ -48,9 +48,10 @@ public:
 public:
 	CPrivateChatFrame*	FindPrivate(GGUID* pGUID);
 	CPrivateChatFrame*	FindPrivate(IN_ADDR* pAddress);
-	CPrivateChatFrame*  FindED2KFrame(IN_ADDR* pAddress);
-	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_G2);
-	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_G2);
+	CPrivateChatFrame*  FindED2KFrame(SOCKADDR_IN* pAddress);
+	CPrivateChatFrame*  FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pServerAddress);
+	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, SOCKADDR_IN* pServer = NULL );
+	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, IN_ADDR* pServerAddress = NULL, WORD nServerPort = 0 );
 protected:
 	void	Add(CChatFrame* pFrame);
 	void	Remove(CChatFrame* pFrame);
