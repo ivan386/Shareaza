@@ -146,7 +146,7 @@ void CFilePropertiesDlg::Update()
 	}
 	else
 	{
-		m_sSHA1 = _T("No URN available");
+		m_sSHA1.LoadString( IDS_GENERAL_NOURNAVAILABLE );
 	}
 
 	if ( pFile->m_bTiger )
