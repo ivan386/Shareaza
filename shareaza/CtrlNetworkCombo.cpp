@@ -131,10 +131,21 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
-	dc.FillSolidRect( &rcItem,
-		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+
+	/*dc.FillSolidRect( &rcItem, GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
+			? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
+	if ( IsWindowEnabled() )
+	{
+		if ( lpDrawItemStruct->itemState & ODS_SELECTED )
+			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+		else
+			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+	}
+	else
+		dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
+
 	dc.SetBkMode( TRANSPARENT );
+	
 	
 	int nImage = (int)lpDrawItemStruct->itemData;
 	if ( nImage ) nImage ++;

@@ -228,9 +228,18 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	if ( pSchema != NULL )
 	{
-		dc.FillSolidRect( &rcItem,
-			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-			? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+		/*dc.FillSolidRect( &rcItem,
+			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED ) ? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
+		if ( IsWindowEnabled() )
+		{
+			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
+				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+			else 
+				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+		}
+		else 
+			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
+
 		dc.SetBkMode( TRANSPARENT );
 		
 		ShellIcons.Draw( &dc, pSchema->m_nIcon16, 16, pt.x, pt.y, CLR_NONE, 
@@ -267,9 +276,17 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 	else if ( lpDrawItemStruct->itemID == 0 )
 	{
-		dc.FillSolidRect( &rcItem,
-			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
-			? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
+		/*dc.FillSolidRect( &rcItem,
+			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED ) ? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
+		if ( IsWindowEnabled() )
+		{
+			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
+				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_HIGHLIGHT ) );
+			else 
+				dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW));
+		}
+		else 
+			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
 		dc.SetBkMode( TRANSPARENT );
 		
 		ShellIcons.Draw( &dc, SHI_SEARCH, 16, pt.x, pt.y, CLR_NONE, 
