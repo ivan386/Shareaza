@@ -1376,7 +1376,7 @@
 #define ID_NETWORK_G2                   33080
 #define ID_NETWORK_G1                   33081
 #define ID_NETWORK_ED2K                 33082
-#define ID_LIBRARY_JIGLE                33083
+//#define ID_LIBRARY_JIGLE                33083
 #define ID_HOSTCACHE_PRIORITY           33084
 #define ID_VIEW_BASIC                   33085
 #define ID_LIBRARY_SEARCH_QUICK         33086

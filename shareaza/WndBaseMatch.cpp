@@ -104,8 +104,8 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_COMMAND(ID_SEARCH_FOR_ALBUM, OnSearchForAlbum)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FOR_SERIES, OnUpdateSearchForSeries)
 	ON_COMMAND(ID_SEARCH_FOR_SERIES, OnSearchForSeries)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_JIGLE, OnUpdateLibraryJigle)
-	ON_COMMAND(ID_LIBRARY_JIGLE, OnLibraryJigle)
+	//ON_UPDATE_COMMAND_UI(ID_LIBRARY_JIGLE, OnUpdateLibraryJigle)
+	//ON_COMMAND(ID_LIBRARY_JIGLE, OnLibraryJigle)
 	//}}AFX_MSG_MAP
 	ON_EN_KILLFOCUS(IDC_FILTER_BOX, OnKillFocusFilter)
 	ON_BN_CLICKED(AFX_IDW_TOOLBAR, OnToolbarReturn)
@@ -528,6 +528,7 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }
 
+/*
 void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
 {
 	if ( m_pMatches->GetSelectedCount() != 1 )
@@ -567,6 +568,7 @@ void CBaseMatchWnd::OnLibraryJigle()
 	strURL.Format( _T("http://jigle.com/search?p=ed2k%%3A%s&v=1"), (LPCTSTR)strED2K );
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }
+*/
 
 void CBaseMatchWnd::OnUpdateSearchForThis(CCmdUI* pCmdUI) 
 {

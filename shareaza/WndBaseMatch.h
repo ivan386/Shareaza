@@ -111,8 +111,8 @@ protected:
 	afx_msg void OnSearchForAlbum();
 	afx_msg void OnUpdateSearchForSeries(CCmdUI* pCmdUI);
 	afx_msg void OnSearchForSeries();
-	afx_msg void OnUpdateLibraryJigle(CCmdUI* pCmdUI);
-	afx_msg void OnLibraryJigle();
+	//afx_msg void OnUpdateLibraryJigle(CCmdUI* pCmdUI);
+	//afx_msg void OnLibraryJigle();
 	//}}AFX_MSG
 	afx_msg void OnKillFocusFilter();
 	afx_msg void OnToolbarReturn();

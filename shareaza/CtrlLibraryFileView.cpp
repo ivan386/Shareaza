@@ -95,8 +95,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_SEARCH_FOR_ALBUM, OnSearchForAlbum)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_FOR_SERIES, OnUpdateSearchForSeries)
 	ON_COMMAND(ID_SEARCH_FOR_SERIES, OnSearchForSeries)
-	ON_UPDATE_COMMAND_UI(ID_LIBRARY_JIGLE, OnUpdateLibraryJigle)
-	ON_COMMAND(ID_LIBRARY_JIGLE, OnLibraryJigle)
+	//ON_UPDATE_COMMAND_UI(ID_LIBRARY_JIGLE, OnUpdateLibraryJigle)
+	//ON_COMMAND(ID_LIBRARY_JIGLE, OnLibraryJigle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -484,6 +484,7 @@ void CLibraryFileView::OnLibraryBitziWeb()
 	}
 }
 
+/*
 void CLibraryFileView::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
 {
 	pCmdUI->Enable( GetSelectedCount() == 1 );
@@ -507,6 +508,7 @@ void CLibraryFileView::OnLibraryJigle()
 		}
 	}
 }
+*/
 
 void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI) 
 {
