@@ -3961,8 +3961,8 @@
 		<control caption="_Actualizar"/>
 		<control/>
 		<control caption="Cerrar"/>
-		<control caption="Como sea necesario|Cuando el ratio esta más bajo de 100%|Nunca"/>
-        <control caption="Empezar nuevas transferencias de descarga:"/>
+		<control caption="Como sea necesario|Cuando el ratio es más bajo de 100%|Nunca"/>
+        <control caption="Empezar nuevas transferencias:"/>
         <control caption="Transferencias:"/>
 	</dialog>
 
