@@ -61,6 +61,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 	m_nTask		= nTask;
 	m_pDownload	= pDownload;
 	m_bSuccess	= FALSE;
+	m_nTorrentFile = 0;
 	m_nSize		= pDownload->m_nSize;
 	m_sName		= pDownload->m_sRemoteName;
 	m_sFilename	= pDownload->m_sLocalName;
@@ -339,45 +340,56 @@ void CDownloadTask::RunCopyTorrent()
 	
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
 		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL );
+		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 
+	m_bSuccess = FALSE;
+
 	// Check for space before copying torrent
-	if ( ! Downloads.IsSpaceAvailable( (QWORD)m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) )
-	{
-		m_bSuccess = FALSE;
-		return;
-	}
+	if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) ) return;
 	
 	QWORD nOffset = 0;
 	
-	for ( int nFile = 0 ; nFile < m_pTorrent.m_nFiles ; nFile++ )
+	for ( ; m_nTorrentFile < m_pTorrent.m_nFiles ; ++m_nTorrentFile )
 	{
-		CBTInfo::CBTFile* pFile = &m_pTorrent.m_pFiles[ nFile ];
+		const CBTInfo::CBTFile& rFile = m_pTorrent.m_pFiles[ m_nTorrentFile ];
 		
 		DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
 		DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
 		SetFilePointer( hSource, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
-		nOffset += pFile->m_nSize;
+		nOffset += rFile.m_nSize;
 		
 		CString strPath;
-		strPath.Format( _T("%s\\%s"), (LPCTSTR)m_sPath, (LPCTSTR)pFile->m_sPath );
-		CreatePathForFile( m_sPath, pFile->m_sPath );
+		strPath.Format( _T("%s\\%s"), (LPCTSTR)m_sPath, (LPCTSTR)rFile.m_sPath );
+		CreatePathForFile( m_sPath, rFile.m_sPath );
 		
 		theApp.Message( MSG_DEBUG, _T("Extracting %s..."), (LPCTSTR)strPath );
 		
-		m_bSuccess |= CopyFile( hSource, strPath, pFile->m_nSize );
+		if ( !CopyFile( hSource, strPath, rFile.m_nSize ) )
+		{
+			// try to copy in place
+			strPath.Format( _T("%s\\%s"), LPCTSTR( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ) ),
+				LPCTSTR( rFile.m_sPath ) );
+			theApp.Message( MSG_DEBUG, _T("Extraction failed, trying %s..."), LPCTSTR( strPath ) );
+			CreatePathForFile( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ), rFile.m_sPath );
+
+			if ( !CopyFile( hSource, strPath, rFile.m_nSize ) )
+			{
+				CloseHandle( hSource );
+				return; // try again later ( m_bSuccess is still FALSE )
+			}
+		}
 		
 		if ( m_pEvent != NULL )
 		{
 			CloseHandle( hSource );
-			m_bSuccess = FALSE;
 			return;
 		}
 	}
 	
 	CloseHandle( hSource );
+	m_bSuccess = TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

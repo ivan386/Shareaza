@@ -43,6 +43,8 @@ public:
 	int			m_nTask;
 	CDownload*	m_pDownload;
 	BOOL		m_bSuccess;
+private:
+	int			m_nTorrentFile;
 public:
 	QWORD		m_nSize;
 	CString		m_sName;
