@@ -2797,6 +2797,26 @@
 	<string id="17041" value="Cannot send message, a connection has not been established yet."/>
 	<string id="17042" value="You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 	<string id="17043" value="Granted upload priority to host %s."/>
+	<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
+	<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
+	<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
+	<string id="17103" value="Gnutella II: Hub-to-Hub Connection"/>
+	<string id="17104" value="Gnutella II: Leaf-to-Hub Connection"/>
+	<string id="17105" value="Gnutella II: Hub-to-Leaf Connection"/>
+	<string id="17106" value="eDonkey Server Connection (LOWID: %lu)"/>
+	<string id="17107" value="eDonkey2000 Server Connection"/>
+	<string id="17108" value="Handshake"/>
+	<string id="17109" value="Inbound"/>
+	<string id="17110" value="Outbound"/>
+	<string id="17111" value="Current:"/>
+	<string id="17112" value="Total:"/>
+	<string id="17113" value="Compression:"/>
+	<string id="17114" value="Ratio:"/>
+	<string id="17115" value="Deflate"/>
+	<string id="17116" value="None"/>
+	<string id="17117" value="Connecting"/>
+	<string id="17118" value="Handshaking"/>
+	<string id="17119" value="Rejected"/>
 	<string id="17120" value="Closing"/>
 	<string id="17121" value="Unknown"/>
 	<string id="17122" value="G1 Peer"/>
