@@ -652,8 +652,8 @@ void CEDClient::SendHello(BYTE nType)
 	//		but it's the least important anyway.
 	//		Note: Including this stops the remote client sending the eMuleInfo packet.
 	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
-							( ( theApp.m_nVersion[1] & 0x7F ) << 17 ) | 
-							( ( theApp.m_nVersion[2] & 0x7F ) << 10 ) |
+							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) | 
+							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
 							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
@@ -1438,6 +1438,9 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 	
 	if ( CDownload* pDownload = Downloads.FindByED2K( &pHash ))
 	{
+		// Don't bother adding sources if this download has finished
+		if ( pDownload->IsMoving() ) return TRUE;
+
 		while ( nCount-- > 0 )
 		{
 			GGUID pGUID;
