@@ -172,7 +172,7 @@ BOOL CRemote::OnHeadersComplete()
 		int nBytes = WideCharToMultiByte( CP_UTF8, 0, m_sResponse, m_sResponse.GetLength(), NULL, 0, NULL, NULL );
 		strLength.Format( _T("Content-Length: %i\r\n"), nBytes );
 		m_pOutput->Print( "HTTP/1.1 200 OK\r\n" );
-		m_pOutput->Print( "Content-Type: text/html; charset=\"unicode-1-1-utf-8\"\r\n" );
+		m_pOutput->Print( "Content-Type: text/html; charset=\"utf-8\"\r\n" );
 		m_pOutput->Print( strLength );
 		if ( ! m_sHeader.IsEmpty() ) m_pOutput->Print( m_sHeader );
 		m_pOutput->Print( "\r\n" );
