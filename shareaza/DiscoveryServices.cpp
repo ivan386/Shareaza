@@ -231,8 +231,8 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 		if ( m_pList.Find( pService ) == NULL )
 		{
 			// It's a new service, but we don't want more. We should delete it.
-			delete pService;
 			theApp.Message( MSG_DEBUG, _T("Maximum discovery service count reached- %s not added"), pService->m_sAddress );
+			delete pService;
 			return NULL;
 		}
 		else
