@@ -6,11 +6,11 @@
 
 <!-- Manifest -->
 <manifest	name="Hebrew"
-		author="Your name or nick here"
+		author="David Aravon"
 		description="Shareaza Default Hebrew Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.97"
+		version="2.1.0.104"
 		type="Language"
 		language="heb"
 		prompt="Click here to select English as your natural language."
@@ -995,11 +995,6 @@
 		<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
 		<item id="ID_SECURITY_BAN" text="B_an User"/>
 	</menu>
-	<menu name="CUploadsWnd.Queue.Basic">
-		<item id="ID_UPLOADS_HELP" text="_Help..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
-	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
@@ -1121,6 +1116,8 @@
 			<item id="ID_LIBRARY_MOVE" text="העבר קבצים"/>
 			<item id="ID_LIBRARY_COPY" text="העתק קבצים"/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="בחר עמודות"/>
 		<separator/>
@@ -1189,6 +1186,8 @@
 			<item id="ID_LIBRARY_MOVE" text="העבר קבצים"/>
 			<item id="ID_LIBRARY_COPY" text="העתק קבצים"/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="בחר עמודות"/>
 		<separator/>
@@ -1649,7 +1648,14 @@
 			<text id="TorrentsOne" format="b">1 seeding torrent</text>
 			<text id="TorrentsMany" format="b">%i seeding torrents</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
+			</group>
 		</para>
 
 	</document>
@@ -2180,6 +2186,8 @@
 	<tip id="ID_LIBRARY_PARENT" message="Move up to the parent folder."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="View and edit the properties of the selected files..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
+	<!-- Add the following line if you need it -->
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using your native language."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Refresh the library view."/>
 	<tip id="ID_LIBRARY_REMOVE" message="מחק את התקיות המשותפות הנבחרות"/>
 	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
