@@ -3,13 +3,10 @@
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
-/* @(#) $Id: zconf.h,v 1.2 2004/10/08 13:44:56 spooky23 Exp $ */
+/* @(#) $Id: zconf.h,v 1.3 2004/10/09 11:16:45 spooky23 Exp $ */
 
 #ifndef ZCONF_H
 #define ZCONF_H
-
-/* Custom Settings */
-#define ZLIB_WINAPI
 
 /*
  * If you *really* need a unique prefix for all types and library functions,
