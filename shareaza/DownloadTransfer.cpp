@@ -33,6 +33,7 @@
 #include "ED2K.h"
 #include "SourceURL.h"
 #include "XML.h"
+#include "DownloadTransferBT.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -201,23 +202,39 @@ void CDownloadTransfer::SetState(int nState)
 		if ( Settings.Downloads.SortSources )
 		{	//Proper sort
 
-			static BYTE StateSortOrder[13]={ 12 ,10 ,9 ,4 ,0 ,8 ,1 ,2 ,3 ,11 ,7 ,5 ,6};
+			static BYTE StateSortOrder[13]={ 13 ,11 ,10 ,4 ,0 ,5 ,1 ,2 ,3 ,12 ,9 ,6 ,8};
 				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing, 
 				//dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued, dtsTorrent
 
+
 			//Assemble the sort order DWORD
-			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 12 ) ];	//Sort by state first
-			m_pSource->m_nSortOrder <<=  8;	
+			m_pSource->m_nSortOrder = StateSortOrder[ min( nState, 13 ) ];		//Sort by state
 
-			if ( m_nProtocol != PROTOCOL_HTTP )								//Then protocol
-				m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );		
-			m_pSource->m_nSortOrder <<=  16;
+			if ( m_pSource->m_nSortOrder >= 13 )
+			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
+				m_pDownload->SortSource( m_pSource, FALSE );
+				m_pSource->m_nSortOrder = 0xFFFF;
+			}
+			else
+			{	//All other sources should be properly sorted
 
-			if ( nState == dtsQueued )										//Then queue postion
-				m_pSource->m_nSortOrder += ( min( m_nQueuePos, 10000 ) & 0xFFFF );
+				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )	//Sort by state first
+				{	//Choked torrents go in front of uninterested ones
+					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
+					if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7;
+				}
+				m_pSource->m_nSortOrder <<=  8;	
 
-			//Do the sort
-			m_pDownload->SortSource( m_pSource );
+				if ( m_nProtocol != PROTOCOL_HTTP )								//Then protocol
+					m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );		
+				m_pSource->m_nSortOrder <<=  16;
+
+				if ( nState == dtsQueued )										//Then queue postion
+					m_pSource->m_nSortOrder += ( min( m_nQueuePos, 10000 ) & 0xFFFF );
+
+				//Do the sort
+				m_pDownload->SortSource( m_pSource );
+			}
 		}
 		else
 		{	//Simple sort.

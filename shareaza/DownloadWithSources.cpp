@@ -576,8 +576,7 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 {
 	ASSERT( m_nSourceCount > 0 );
 
-
-	//Remove source from current position.
+	//Remove source from current position. (It's unsorted, and would interfere with sort)
 	if ( pSource->m_pPrev != NULL )
 		pSource->m_pPrev->m_pNext = pSource->m_pNext;
 	else
@@ -599,29 +598,29 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 	{	//Sort sources
 		CDownloadSource* pCompare = m_pSourceFirst;
 
-		while ( pCompare->m_nSortOrder < pSource->m_nSortOrder )
-		{
-			if ( pCompare->m_pNext != NULL )
-				pCompare = pCompare->m_pNext;
-			else
-				break;
+		while ( ( pCompare != NULL ) && (pCompare->m_nSortOrder < pSource->m_nSortOrder) )
+			pCompare = pCompare->m_pNext; //Run through the sources to the correct position
 
-		}
+		
 
-		if ( pCompare->m_pNext == NULL )
-		{
+		if ( pCompare == NULL )
+		{	//Source is last on list
+			m_pSourceLast->m_pNext = pSource;
+			pSource->m_pPrev = m_pSourceLast;
+			pSource->m_pNext = NULL;
 			m_pSourceLast = pSource;
 		}
-
-		if ( pCompare->m_pPrev == NULL )
-			m_pSourceFirst = pSource;
 		else
-			pCompare->m_pPrev->m_pNext = pSource;
+		{	//Insert source in front of current compare source
+			if ( pCompare->m_pPrev == NULL )
+				m_pSourceFirst = pSource;
+			else
+				pCompare->m_pPrev->m_pNext = pSource;
 
-
-		pSource->m_pNext = pCompare;
-		pSource->m_pPrev = pCompare->m_pPrev;
-		pCompare->m_pPrev= pSource;
+			pSource->m_pNext = pCompare;
+			pSource->m_pPrev = pCompare->m_pPrev;
+			pCompare->m_pPrev= pSource;
+		}
 
 	}
 }
