@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,55
- PRODUCTVERSION 2,1,0,55
+ FILEVERSION 2,1,0,56
+ PRODUCTVERSION 2,1,0,56
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 55"
+            VALUE "FileVersion", "2, 1, 0, 56"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 55"
+            VALUE "ProductVersion", "2, 1, 0, 56"
         END
     END
     BLOCK "VarFileInfo"
@@ -5062,6 +5062,16 @@ BEGIN
     IDS_TIP_TOTAL_VOLUME    "Total Volume:"
     IDS_TIP_LIBRARY_PERCENT "of your library"
     IDS_TIP_FOLDER          "Folder"
+    IDS_TIP_SOURCE_BUSY     "This source is currently busy"
+    IDS_TIP_SOURCE_FIREWALLED "This source is firewalled"
+    IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
+    IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
+    IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
 END
 
 STRINGTABLE 
