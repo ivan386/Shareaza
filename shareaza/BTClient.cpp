@@ -331,6 +331,12 @@ BOOL CBTClient::OnHandshake1()
 			Close();
 			return FALSE;
 		}
+		else if ( ! m_pDownload->IsTrying() )
+		{
+			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested an inactive Torrent") );
+			Close();
+			return FALSE;
+		}
 	}
 	else
 	{
@@ -341,8 +347,14 @@ BOOL CBTClient::OnHandshake1()
 		
 		if ( m_pDownload == NULL )
 		{
-			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+		else if ( ! m_pDownload->IsTrying() )
+		{
+			m_pDownload = NULL;
+			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested inactive Torrent") );
 			Close();
 			return FALSE;
 		}
