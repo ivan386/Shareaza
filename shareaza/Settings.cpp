@@ -502,7 +502,7 @@ void CSettings::Load()
 	// Set client links
 	Gnutella1.NumHubs			= min( Gnutella1.NumHubs, 2 );
 	Gnutella2.NumHubs			= min( Gnutella2.NumHubs, 3 );
-	Gnutella2.NumLeafs			= max( Gnutella2.NumLeafs, 1024 );
+	Gnutella2.NumLeafs			= min( Gnutella2.NumLeafs, 1024 );
 
 	//Temporary- until G1 ultrapeer has been updated
 	Gnutella1.ClientMode		= MODE_LEAF; 
