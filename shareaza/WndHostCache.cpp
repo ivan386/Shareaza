@@ -79,7 +79,6 @@ END_MESSAGE_MAP()
 CHostCacheWnd::CHostCacheWnd()
 {
 	Create( IDR_HOSTCACHEFRAME );
-	m_nMode = 0;
 }
 
 CHostCacheWnd::~CHostCacheWnd()
@@ -91,6 +90,11 @@ CHostCacheWnd::~CHostCacheWnd()
 
 int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
+	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView > PROTOCOL_ED2K )
+		Settings.Gnutella.HostCacheView = PROTOCOL_G2;
+
+	m_nMode = Settings.Gnutella.HostCacheView;
+
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
@@ -119,16 +123,9 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 5, _T("Description"), LVCFMT_LEFT, 130, 4 );
 	m_wndList.InsertColumn( 6, _T("CurUsers"), LVCFMT_CENTER, 60, 5 );
 	m_wndList.InsertColumn( 7, _T("MaxUsers"), LVCFMT_CENTER, 60, 6 );
-	
+
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	LoadState( _T("CHostCacheWnd"), TRUE );
-	
-	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView > PROTOCOL_ED2K )
-	{
-		ASSERT(FALSE); //Temp check
-		Settings.Gnutella.HostCacheView = PROTOCOL_G2;
-	}
-	m_nMode = Settings.Gnutella.HostCacheView;
 
 	CWaitCursor pCursor;
 	Update();
@@ -246,15 +243,8 @@ void CHostCacheWnd::OnTimer(UINT nIDEvent)
 {
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
 
-//**********Problem here
 	if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
-	{
-		CString str;
-		str.Format(_T("m_nMode: %i  nEffective: %i Settings.Gnutella.HostCacheView: %i"), m_nMode, nEffective, Settings.Gnutella.HostCacheView);
-		MessageBox(str,NULL, MB_OK);
-		ASSERT(FALSE);
-	}
-//(Temp check)
+		nEffective = PROTOCOL_G2;
 
 	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
 	DWORD tTicks = GetTickCount();
