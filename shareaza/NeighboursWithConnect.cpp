@@ -882,7 +882,7 @@ void CNeighboursWithConnect::Maintain()
 			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
 			
 			int nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
-			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : 2;
+			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : Settings.eDonkey.FastConnect + 1;
 			//Prevent XP sp2 from maxing out half open connections
 			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) ); 
 			
