@@ -138,7 +138,7 @@ BOOL CUploadQueue::CanAccept(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize,
 	if ( m_nProtocols != 0 &&
 		 ( m_nProtocols & ( 1 << nProtocol ) ) == 0 ) return FALSE;
 	
-	if ( m_bPartial && ! bPartial ) return FALSE;
+	if ( m_bPartial ^ bPartial ) return FALSE;
 	
 	if ( m_sShareTag.GetLength() > 0 )
 	{
