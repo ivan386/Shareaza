@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Gauche
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
@@ -19,7 +21,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <object type="folder" availability="system"/>
        <titles>
                <title language="en">Document:All Documents</title>
-               <title language="af">Document:All Documents</title>
+               <title language="af">Dokument:Alle Dokumente</title>
                <title language="ar">Document:All Documents</title>
                <title language="chs">&#160;文档:所有文档</title>
                <title language="de">Dokumente:Alle Dokumente</title>
@@ -30,7 +32,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="lt">Dokumentas:Visi documentai</title>
                <title language="nl">Documenten:Alle Documenten</title>
                <title language="no">Dokument: Alle dokumenter</title>
-               <title language="br">Document:All Documents</title>
+               <title language="br">Documento:Todos os Documentos</title>
                <title language="ru">&#160;Документ:&#160;Все документы</title>
                <title language="sv">Dokument: Alla dokument</title>
        </titles>
@@ -64,6 +66,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        </contains>
        <headerContent version="1.0">
                <title language="en">All Documents</title>
+               <title language="af">Alle Dokumente</title>
                <title language="chs">所有文档</title>
                <title language="de">Alle Dokumente</title>
                <title language="es">Todos Los Documentos</title>
@@ -73,9 +76,11 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="lt">Visi dokumentai</title>
                <title language="nl">Alle documenten</title>
                <title language="no">Alle dokumenter</title>
+               <title language="br">Todos os Documentos</title>
                <title language="ru">&#160;Все документы</title>
                <title language="sv">Alla dokument</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat alle dokumente in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含了您收藏夹中的每个文档。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
@@ -85,6 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt</subtitle>
+               <subtitle language="br">Esta pasta contém todos os documentos da sua biblioteca.</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
                <subtitle language="sv">Denna mapp innehåller alla dokument i biblioteket.</subtitle>
        </headerContent>
