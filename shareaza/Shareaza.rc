@@ -3112,7 +3112,7 @@ END
 IDD_CODEPAGES DIALOGEX 0, 0, 186, 70
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
     WS_SYSMENU
-CAPTION "Localise Metadata"
+CAPTION "Metadata Localisation"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,39,49,50,14
@@ -5706,7 +5706,7 @@ BEGIN
     ID_LIBRARY_EXPORT_COLLECTION 
                             "Export the selected album folder to a collection file..."
     ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
-    ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using your native language."
+    ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using other language."
     ID_DOWNLOADS_EDIT       "Show the advanced edit download interface..."
     ID_MEDIA_MUTE           "Mute audio playback"
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
