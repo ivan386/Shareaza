@@ -300,13 +300,13 @@ void CDownload::OnRun()
 	if( IsTrying() )
 	{	//This download is trying to download
 
+		DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + 3;
 		//'Dead download' check- if download appears dead, give up and allow another to start.
-		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( 3 * 60 * 60 * 1000 ) )	
-		{	//If it's not complete and we've had no new data for 3 hours	
+		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 )  )	
+		{	//If it's not complete, and have had no new data for 3-12 hours	
 
-			DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + 3;
-			if ( ( tNow - GetStartTimer() ) > ( tHoursToTry * 60 * 60 * 1000 ) )
-			{	//And we've been trying for several hours, or have no sources
+			if ( ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 ) )
+			{	//And we've been trying for at least 3 hours
 
 				if( m_bBTH )	//If it's a torrent
 				{
