@@ -208,6 +208,11 @@ void CURLExportDlg::OnSave()
 			Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
 			Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
 		}
+		else
+		{
+			Replace( strLine, _T("[FileBase]"), pFile->m_sName );
+			Replace( strLine, _T("[FileExt]"), "" );
+		}
 		
 		if ( Network.IsListening() )
 		{
@@ -280,6 +285,11 @@ void CURLExportDlg::OnCopy()
 		{
 			Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
 			Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+		}
+		else
+		{
+			Replace( strLine, _T("[FileBase]"), pFile->m_sName );
+			Replace( strLine, _T("[FileExt]"), "" );
 		}
 		
 		if ( Network.IsListening() )
