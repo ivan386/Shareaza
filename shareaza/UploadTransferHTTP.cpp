@@ -846,8 +846,9 @@ void CUploadTransferHTTP::SendFileHeaders()
 	{
 		strHeader	= _T("X-Thex-URI: /gnutella/thex/v1?")
 			+ m_oTiger.ToURN()
-			+ _T("&depth=9&ed2k=0\r\n");
-		m_pOutput->Print( strHeader );
+			+ _T("&depth=9&ed2k=0;")
+			+ m_oTiger.ToString()
+			+ _T("\r\n");
 	}
 	
 	if ( m_bMetadata )
