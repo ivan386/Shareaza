@@ -29,8 +29,8 @@ Other:
 			author="Antoine Martin-Lalande (Sensi)"
 			description="Shareaza French Skin File"
 			link="http://www.shareaza.com/"
-			email="contact@shareaza.com"
-			version="2.0.5.0"
+			email="shareaza.francais<at>laposte.net"
+			version="2.1.0.1"
 			type="Language"
 			language="fr"
 			prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -470,6 +470,7 @@ Other:
 			<item id="ID_HELP_FAQ" text="_Guide utilisateurs Shareaza"/>
 			<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
             <item id="ID_HELP_FIREWALLS" text="Aide _routeur"/>
+			<item id="ID_HELP_SECURITY" text="Aide sur la sé_curité"/>
 			<separator/>
 			<menu text="Sites _Web">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -555,6 +556,7 @@ Other:
 			<item id="ID_HELP_FAQ" text="_Guide utilisateurs Shareaza"/>
 			<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 			<item id="ID_HELP_FIREWALLS" text="Aide _routeur"/>
+			<item id="ID_HELP_SECURITY" text="Aide sur la sé_curité"/>
 			<separator/>
 			<menu text="Sites _Web">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -634,6 +636,7 @@ Other:
 			<item id="ID_HELP_FAQ" text="_Guide utilisateurs Shareaza"/>
 			<item id="ID_HELP_FORUMS" text="_Forums Shareaza"/>
 			<item id="ID_HELP_FIREWALLS" text="Aide _routeur"/>
+			<item id="ID_HELP_SECURITY" text="Aide sur la sé_curité"/>
 			<separator/>
 			<menu text="Sites _Web">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -2403,7 +2406,6 @@ Other:
 	<string id="8231" value="Aucune source"/>
 	<string id="8232" value="Ouvrir"/>
 	<string id="8233" value="Prévisualiser"/>
-	<string id="8234" value="%s de %s (%.2f%%)"/>
 	<string id="8235" value="Vitesse totale:"/>
 	<string id="8236" value="Temps restant estimé:"/>
 	<string id="8237" value="Volume téléchargé:"/>
@@ -2411,7 +2413,6 @@ Other:
 	<string id="8239" value="Complété"/>
 	<string id="8240" value="Shareaza déplace le téléchargement:"/>
 	<string id="8241" value="Shareaza vérifie le téléchargement:"/>
-	<string id="8242" value="%s de %s (%.2f%%)"/>
     <string id="8243" value="Ratio d'Envoi:"/>
 	<string id="8288" value="Explorer votre bibliothèque Shareaza"/>
 	<string id="8289" value="Explorer "/>
@@ -2422,7 +2423,6 @@ Other:
 	<string id="8294" value="Additions Récentes"/>
 	<string id="8295" value="Évaluez ce fichier"/>
 	<string id="8304" value="N/A"/>
-	<string id="8305" value="%i de %i"/>
 	<string id="8306" value="Emplacement"/>
 	<string id="8307" value="Type"/>
 	<string id="8308" value="Taille"/>
@@ -2838,35 +2838,36 @@ Other:
     <string id="19001" value="Vous devez choisir un nom d'utilisateur et un mot de passe."/> 
     <string id="19002" value="Incapable d'accepter des connexions, URL indisponible."/> 
     <string id="20000" value="Pas d'URN disponible"/>
-<string id="20100" value="Se connecte"/>
-<string id="20101" value="Requière"/>
-<string id="20102" value="Réponse"/>
-<string id="20103" value="Télécharge"/>
-<string id="20104" value="TigerTree"/>
-<string id="20105" value="Hashset"/>
-<string id="20106" value="Métadonnée"/>
-<string id="20107" value="Occupé"/>
-<string id="20108" value="En queue"/>
-<string id="20109" value="Mis en queue"/>
-<string id="20110" value="Inconnu"/>
-<string id="20111" value="Complété"/>
-<string id="20112" value="Seeding"/>
-<string id="20113" value="Déplace"/>
-<string id="20114" value="En pause"/>
-<string id="20115" value="Erreur de fichier"/>
-<string id="20116" value="Ne peut pas déplacer"/>
-<string id="20117" value="Vérifie"/>
-<string id="20118" value="Actif"/>
-<string id="20119" value="En suspens"/>
-<string id="20120" value="Recherche"/>
-<string id="20121" value="Crée"/>
-<string id="20122" value="Torrent"/>
-<string id="20123" value="Tracker hors ligne"/>
-<string id="20124" value="(Pas de source)"/>
-<string id="20125" value="Vérifié"/>
-<string id="20126" value="Non vérifié"/>
-<string id="20127" value="source"/>
-<string id="20128" value="sources"/>
+	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
+    <string id="20100" value="Se connecte"/>
+    <string id="20101" value="Requière"/>
+    <string id="20102" value="Réponse"/>
+    <string id="20103" value="Télécharge"/>
+    <string id="20104" value="TigerTree"/>
+    <string id="20105" value="Hashset"/>
+    <string id="20106" value="Métadonnée"/>
+    <string id="20107" value="Occupé"/>
+    <string id="20108" value="En queue"/>
+    <string id="20109" value="Mis en queue"/>
+    <string id="20110" value="Inconnu"/>
+    <string id="20111" value="Complété"/>
+    <string id="20112" value="Seeding"/>
+    <string id="20113" value="Déplace"/>
+    <string id="20114" value="En pause"/>
+    <string id="20115" value="Erreur de fichier"/>
+    <string id="20116" value="Ne peut pas déplacer"/>
+    <string id="20117" value="Vérifie"/>
+    <string id="20118" value="Actif"/>
+    <string id="20119" value="En suspens"/>
+    <string id="20120" value="Recherche"/>
+    <string id="20121" value="Crée"/>
+    <string id="20122" value="Torrent"/>
+    <string id="20123" value="Tracker hors ligne"/>
+    <string id="20124" value="(Pas de source)"/>
+    <string id="20125" value="Vérifié"/>
+    <string id="20126" value="Non vérifié"/>
+    <string id="20127" value="source"/>
+    <string id="20128" value="sources"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
