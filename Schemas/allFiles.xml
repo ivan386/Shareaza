@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">General:All Files</title>
                <title language="af">Algemeen:Alle Lêers</title>
                <title language="de">Allgemein:Alle Dateien</title>
-               <title language="es-ve">General: Todos los archivos</title>
+               <title language="es-mx">General: Todos los archivos</title>
+               <title language="fr">Général:Tous les fichiers</title>
+               <title language="hu">Általános: minden fájl</title>
                <title language="lt">Bendra:Visos bylos</title>
                <title language="nl">Algemeen:Alle Bestanden</title>
                <title language="no">Generelt: alle filer</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -40,14 +46,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">All Files</title>
                <title language="af">Alle Lêers</title>
                <title language="de">Alle Dateien</title>
-               <title language="es-ve">Todos los archivos</title>
+               <title language="es-mx">Todos los archivos</title>
+               <title language="fr">Tous les fichiers</title>
+               <title language="hu">Minden fájl</title>
                <title language="lt">Visos bylos</title>
                <title language="nl">Alle Bestanden</title>
                <title language="no">Alle filer</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk bestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle filene i mine filer</subtitle>

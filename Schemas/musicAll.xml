@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music:All Music</title>
                <title language="af">Musiek:Alle Musiek</title>
                <title language="de">Musik:Alle Musik</title>
-               <title language="es-ve">Música: Toda la Música</title>
+               <title language="es-mx">Música: Toda la Música</title>
+               <title language="fr">Musique:Toutes les musiques</title>
+               <title language="hu">Zene: minden zene</title>
                <title language="lt">Muzika:Visa muzika</title>
                <title language="nl">Muziek:Alle Muziek</title>
                <title language="no">Musikk: all musikk</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">All Music</title>
                <title language="af">Alle Musiek</title>
                <title language="de">Alle Musik</title>
-               <title language="es-ve">Toda la música</title>
+               <title language="es-mx">Toda la música</title>
+               <title language="fr">Toutes les musiques</title>
+               <title language="hu">Minden zene</title>
                <title language="lt">Visa muzika</title>
                <title language="nl">Alle Muziek</title>
                <title language="no">All musikk</title>
                <subtitle language="en">This folder contains every music file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle musieklêers in jou biblioteek.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musikdateien in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene toda la música de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene toda la música de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa minden zenei fájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos muzikinės bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk muziekbestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle musikkfilene i mine filer</subtitle>

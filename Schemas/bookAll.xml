@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Book:All Books</title>
                <title language="af">Boek:Alle Boeke</title>
                <title language="de">Buch:Alle Bücher</title>
-               <title language="es-ve">Libro: Todos los libros</title>
+               <title language="es-mx">Libro: Todos los libros</title>
+               <title language="fr">Livre:Tous les livres</title>
+               <title language="hu">Könyv: minden könyv</title>
                <title language="lt">Knyga:Visos knygos</title>
                <title language="nl">Boek:Alle Boeken</title>
                <title language="no">Bok: alle bøker</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">All Books</title>
                <title language="af">Alle Boeke</title>
                <title language="de">Alle Bücher</title>
-               <title language="es-ve">Todos los libros</title>
+               <title language="es-mx">Todos los libros</title>
+               <title language="fr">Tous les livres</title>
+               <title language="hu">Minden könyv</title>
                <title language="lt">Visos knygos</title>
                <title language="nl">Alle Boeken</title>
                <title language="no">Alle bøker</title>
                <subtitle language="en">This folder contains every book in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle boeke in jou biblioteek.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bücher in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les livres de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa minden könyvfájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos knygos.</subtitle>
                <subtitle language="nl">Deze map bevat alle boeken uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle bøkene i mine filer</subtitle>

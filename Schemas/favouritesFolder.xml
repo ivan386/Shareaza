@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Favourites:Favourites</title>
                <title language="af">Gunstelinge:Gunstelinge</title>
                <title language="de">Favoriten:Favoriten</title>
-               <title language="es-ve">Favoritos: Favoritos</title>
+               <title language="es-mx">Favoritos: Favoritos</title>
+               <title language="fr">Favoris:Favoris</title>
+               <title language="hu">Kedvencek: kedvencek</title>
                <title language="lt">Mėgiamybės:Mėgiamybės</title>
                <title language="nl">Favorieten:Favorieten</title>
                <title language="no">Favoritter: favoritter</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -39,7 +45,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-ve">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -49,14 +57,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">My Favourite Files</title>
                <title language="af">My Gunsteling Lêers</title>
                <title language="de">Favoriten</title>
-               <title language="es-ve">Mis Archivos Favoritos</title>
+               <title language="es-mx">Mis Archivos Favoritos</title>
+               <title language="fr">Mes fichiers favoris</title>
+               <title language="hu">Kedvenc fájlok</title>
                <title language="lt">Mano mėgiamos bylos</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
                <title language="no">Mine favoritt filer</title>
                <subtitle language="en">This folder contains favourite files which Shareaza will recommend to other users who browse your collection.</subtitle>
                <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
+               <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
+               <subtitle language="hu">Ez a mappa a kedvenc fájljaidat tartalmazza, amit a Shareaza ajánlani fog a fájllistádat lekérőknek.</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias&#160;„Shareaza“&#160;rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
                <subtitle language="no">Denne mappen inneholder dine favoritter som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>

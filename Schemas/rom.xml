@@ -5,6 +5,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -17,7 +19,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">ROM Image</title>
                <title language="af">ROM / CD Afdruk</title>
                <title language="de">ROM Image</title>
-               <title language="es-ve">ROM Image</title>
+               <title language="es-mx">ROM Image</title>
+               <title language="fr">Image ROM</title>
+               <title language="hu">ROM kép</title>
                <title language="lt">ROM atvaizdis</title>
                <title language="nl">ROM Afbeelding</title>
                <title language="no">ROM image</title>
@@ -28,7 +32,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -38,7 +44,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Company</title>
                        <title language="af">Maatskappy</title>
                        <title language="de">Firma</title>
-                       <title language="es-ve">Compañia</title>
+                       <title language="es-mx">Compañia</title>
+                       <title language="fr">Compagnie</title>
+                       <title language="hu">Cég</title>
                        <title language="lt">Kompanija</title>
                        <title language="nl">Bedrijf</title>
                        <title language="no">Firma</title>
@@ -48,7 +56,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">System</title>
                        <title language="af">Stelsel</title>
                        <title language="de">System</title>
-                       <title language="es-ve">Sistema</title>
+                       <title language="es-mx">Sistema</title>
+                       <title language="fr">Système</title>
+                       <title language="hu">Rendszer</title>
                        <title language="lt">Sistema</title>
                        <title language="nl">Systeem</title>
                        <title language="no">System</title>
@@ -57,7 +67,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
                        <title language="de">Jahr</title>
-                       <title language="es-ve">Año</title>
+                       <title language="es-mx">Año</title>
+                       <title language="fr">Année</title>
+                       <title language="hu">Év</title>
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
@@ -66,7 +78,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
                        <title language="de">Sprache</title>
-                       <title language="es-ve">Lenguaje</title>
+                       <title language="es-mx">Lenguaje</title>
+                       <title language="fr">Langue</title>
+                       <title language="hu">Nyelv</title>
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
@@ -75,7 +89,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
                        <title language="de">FSK</title>
-                       <title language="es-ve">Rating</title>
+                       <title language="es-mx">Rating</title>
+                       <title language="fr">Estimation</title>
+                       <title language="hu">Jegy</title>
                        <title language="lt">Vertinimas</title>
                        <title language="nl">Beoordeling</title>
                        <title language="no">Vurdering</title>
@@ -84,7 +100,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Price</title>
                        <title language="af">Prys</title>
                        <title language="de">Preis</title>
-                       <title language="es-ve">Precio</title>
+                       <title language="es-mx">Precio</title>
+                       <title language="fr">Prix</title>
+                       <title language="hu">Ár</title>
                        <title language="lt">Kaina</title>
                        <title language="nl">Prijs</title>
                        <title language="no">Pris</title>
@@ -93,7 +111,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="de">Link</title>
-                       <title language="es-ve">Link</title>
+                       <title language="es-mx">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="hu">Link</title>
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
@@ -102,7 +122,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-ve">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>

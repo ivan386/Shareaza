@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Video:Music Videos</title>
                <title language="af">Video:Musiek Video's</title>
                <title language="de">Video:Musikvideos</title>
-               <title language="es-ve">Video: Videos de Música</title>
+               <title language="es-mx">Video: Videos de Música</title>
+               <title language="fr">Vidéo:Clips vidéos</title>
+               <title language="hu">Videó: klipek</title>
                <title language="lt">Video:Muzikiniai klipai</title>
                <title language="nl">Video:Muziek Video's</title>
                <title language="no">Video: musikk video</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music Videos</title>
                <title language="af">Musiek Video's</title>
                <title language="de">Musikvideos</title>
-               <title language="es-ve">Videos de Música</title>
+               <title language="es-mx">Videos de Música</title>
+               <title language="fr">Clips vidéos</title>
+               <title language="hu">Zene viedó</title>
                <title language="lt">Muzikiniai klipai</title>
                <title language="nl">Muziek Video's</title>
                <title language="no">Musikk video</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
                <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene videos de música</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene videos de música</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa zenei fájlokat tartalmaz.</subtitle>
                <subtitle language="lt">Šiame kataloge yra muzikiniai klipai.</subtitle>
                <subtitle language="nl">Deze map bevat alle muziekvideo's uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder musikk videoer</subtitle>

@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">General:My Shareaza Library</title>
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
-               <title language="es-ve">General: Mi Librería Shareaza de Archivos</title>
+               <title language="es-mx">General: Mi Librería Shareaza de Archivos</title>
+               <title language="fr">Général:Ma bibliothèque Shareaza</title>
+               <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
                <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
                <title language="no">Generelt: mine filer</title>
@@ -27,7 +31,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -36,7 +42,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Owner</title>
                        <title language="af">Eienaar</title>
                        <title language="de">Besitzer</title>
-                       <title language="es-ve">Dueño</title>
+                       <title language="es-mx">Dueño</title>
+                       <title language="fr">Propriétaire</title>
+                       <title language="hu">Tulajdonos</title>
                        <title language="lt">Savininkas</title>
                        <title language="nl">Eigenaar</title>
                        <title language="no">Eier</title>
@@ -45,7 +53,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-ve">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
@@ -58,14 +68,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Welcome to Your Library!</title>
                <title language="af">Welkom by Jou Biblioteek!</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
-               <title language="es-ve">Bienvenido a Mi Librería!</title>
+               <title language="es-mx">Bienvenido a Mi Librería!</title>
+               <title language="fr">Bienvenue dans votre bibliothèque!</title>
+               <title language="hu">Üdvözöllek a Saját könyvtárban!</title>
                <title language="lt">Sveiki apsilankę&#160;savo kolekcijoje!</title>
                <title language="nl">Welkom in Jouw Bibliotheek!</title>
                <title language="no">Velkommen til mine filer</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
-               <subtitle language="es-ve">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
+               <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
+               <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
+               <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}. </subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>

@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Video:My Video</title>
                <title language="af">Video:My Video</title>
                <title language="de">Video:Eigene Videos</title>
-               <title language="es-ve">Video:Mis Videos</title>
+               <title language="es-mx">Video:Mis Videos</title>
+               <title language="fr">Vidéo:Mes vidéos</title>
+               <title language="hu">Videó: saját videó</title>
                <title language="lt">Video:Mano vaizdo įrašai</title>
                <title language="nl">Video:Mijn Video's</title>
                <title language="no">Video: mine videoer</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -45,14 +51,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Welcome to My Video!</title>
                <title language="af">Welkom by My Video's!</title>
                <title language="de">Willkommen bei Eigene Videos!</title>
-               <title language="es-ve">Bienvenido a Mis Videos!</title>
+               <title language="es-mx">Bienvenido a Mis Videos!</title>
+               <title language="fr">Bienvenue dans Mes vidéos!</title>
+               <title language="hu">Üdvözöllek a Saját videókban!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano vaizdo įrašuose“!</title>
                <title language="nl">Welkom bij Mijn Video's!</title>
                <title language="no">Velkommen til mine videoer</title>
                <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
-               <subtitle language="es-ve">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéos.  Ouvrez un sous-dossier pour continuer.</subtitle>
+               <subtitle language="hu">Ez a mappa az összes videót tartalmazza, filmekre, TV műsorokra és klipekre bontva.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų kolekcijos vaizdo bylos, suskirstytos į filmus, TV pasirodymus ir muzikinius klipus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle video-bestanden uit je bibliotheek, verdeeld onder films, TV-shows en muziekvideo's.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine videofiler, delt inn i film, Tv-show, og musikk video. Åpne en mappe for å forsette.</subtitle>

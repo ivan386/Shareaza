@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music:By Genre</title>
                <title language="af">Musiek:Volgens Genre</title>
                <title language="de">Musik:Nach Genre</title>
-               <title language="es-ve">Música: Por Género</title>
+               <title language="es-mx">Música: Por Género</title>
+               <title language="fr">Musique:Par genre</title>
+               <title language="hu">Zene: műfaj szerint</title>
                <title language="lt">Muzika:Pagal stilių</title>
                <title language="nl">Muziek:Per Genre</title>
                <title language="no">Musikk: per sjanger</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music By Genre</title>
                <title language="af">Musiek Volgens Genre</title>
                <title language="de">Musik nach Genre</title>
-               <title language="es-ve">Música por Género</title>
+               <title language="es-mx">Música por Género</title>
+               <title language="fr">Musique par genre</title>
+               <title language="hu">Zene műfaj szerint</title>
                <title language="lt">Muzika pagal stilių</title>
                <title language="nl">Muziek Per Genre</title>
                <title language="no">Musikk per sjanger</title>
                <subtitle language="en">This folder contains a list of musical genres found in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die musiek genres wat jy in jou biblioteek het.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Musikgenres in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene una lista de géneros musicales encontrados en tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene una lista de géneros musicales encontrados en tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient la liste des genres musicaux trouvés dans votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa a zenei műfajokat tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met muziekgenres die in je bibliotheek zijn gevonden.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste med musikk sjangrer som fin i mine filer</subtitle>

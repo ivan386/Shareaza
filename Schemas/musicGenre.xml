@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music Genre</title>
                <title language="af">Musiek Genre</title>
                <title language="de">Musikgenre</title>
-               <title language="es-ve">Género de Música</title>
+               <title language="es-mx">Género de Música</title>
+               <title language="fr">Genre musical</title>
+               <title language="hu">Zene műfaj</title>
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
                <title language="no">Musikk sjanger</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -39,7 +45,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-ve">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
@@ -48,7 +56,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="de">Sammler</title>
-                       <title language="es-ve">Colector</title>
+                       <title language="es-mx">Colector</title>
+                       <title language="fr">Collecteur</title>
+                       <title language="hu">Gyűjtő</title>
                        <title language="lt">Kolekcionierius</title>
                        <title language="nl">Samensteller</title>
                        <title language="no">Samler</title>
@@ -57,7 +67,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-ve">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
@@ -75,14 +87,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">{name} Music</title>
                <title language="af">{name} Musiek</title>
                <title language="de">{name} Musik</title>
-               <title language="es-ve">{name} Música</title>
+               <title language="es-mx">{name} Música</title>
+               <title language="fr">Musique {name}</title>
+               <title language="hu">{name} Zene</title>
                <title language="lt">{name} muzika</title>
                <title language="nl">{name} Muziek</title>
                <title language="no">{name} Musikk</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene musica que es del Género {name}</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene musica que es del Género {name}</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa a(z) {name} műfaj zenéit tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name} sjangeren.</subtitle>

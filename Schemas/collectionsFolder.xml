@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
               <title language="en">Collections:My Collections</title>
               <title language="af">Versamelings:My Versamelings</title>
               <title language="de">Kollektionen:Eigene Kollektionen</title>
-              <title language="es-ve">Colecciones: Mis Colecciones</title>
+              <title language="es-mx">Colecciones: Mis Colecciones</title>
+              <title language="fr">Collections:Mes collections</title>
+              <title language="hu">Gyűjtemény: saját gyűjtemény</title>
               <title language="lt">Rinkiniai:Mano rinkiniai</title>
               <title language="nl">Verzameling:Mijn Verzamelingen</title>
               <title language="no">Samlinger: mine samlinger</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -40,14 +46,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">My Collections</title>
                <title language="af">My Versamelings</title>
                <title language="de">Eigene Kollektionen</title>
-               <title language="es-ve">Mis Colecciones</title>
+               <title language="es-mx">Mis Colecciones</title>
+               <title language="fr">Mes collections</title>
+               <title language="hu">Saját gyűjtemény</title>
                <title language="lt">Mano rinkiniai</title>
                <title language="nl">Mijn Verzamelingen</title>
                <title language="no">Mine samlinger</title>
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa gyűjteményfájlokati tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat alle Rich File Collections uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholde hvilken som helst filsamling i mine filer.</subtitle>

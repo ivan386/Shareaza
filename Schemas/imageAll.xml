@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Image:All Images</title>
                <title language="af">Prent:Alle Prente</title>
                <title language="de">Bild:Alle Bilder</title>
-               <title language="es-ve">Imagen: Todas las Imágenes</title>
+               <title language="es-mx">Imagen: Todas las Imágenes</title>
+               <title language="fr">Image:Toutes les images</title>
+               <title language="hu">Kép: minden kép</title>
                <title language="lt">Paveikslėlis:Visi paveikslėliai</title>
                <title language="nl">Afbeelding:Alle Afbeeldingen</title>
                <title language="no">Bilde: alle bilder</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">All Images</title>
                <title language="af">Alle Prente</title>
                <title language="de">Alle Bilder</title>
-               <title language="es-ve">Todas las imágenes</title>
+               <title language="es-mx">Todas las imágenes</title>
+               <title language="fr">Toutes les images</title>
+               <title language="hu">Minden kép</title>
                <title language="lt">Visi paveikslėliai</title>
                <title language="nl">Alle Afbeeldingen</title>
                <title language="no">Alle bilder</title>
                <subtitle language="en">This folder contains every image file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle prentlêers in jou biblioteek.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bilder in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa minden képfájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos paveikslėlių bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elke afbeelding uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle bildene i mine filer</subtitle>

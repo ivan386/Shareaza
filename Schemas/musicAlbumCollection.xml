@@ -4,6 +4,8 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Sensi (Antoine Martin-Lalande)
+Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
@@ -16,7 +18,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music:By Album</title>
                <title language="af">Musiek:Volgens Album</title>
                <title language="de">Musik:Nach Album</title>
-               <title language="es-ve">Música: Por Album</title>
+               <title language="es-mx">Música: Por Album</title>
+               <title language="fr">Musique:Par Album</title>
+               <title language="hu">Zene: album szerint</title>
                <title language="lt">Muzika:Pagal albumus</title>
                <title language="nl">Muziek:Per Album</title>
                <title language="no">Musikk: per album</title>
@@ -30,7 +34,9 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="de">Titel</title>
-                       <title language="es-ve">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
@@ -43,14 +49,18 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="en">Music By Album</title>
                <title language="af">Musiek Volgens Album</title>
                <title language="de">Musik nach Album</title>
-               <title language="es-ve">Música por Album</title>
+               <title language="es-mx">Música por Album</title>
+               <title language="fr">Musique par album</title>
+               <title language="hu">Zene album szerint</title>
                <title language="lt">Muzika pagal albumus</title>
                <title language="nl">Muziek Per Album</title>
                <title language="no">Musikk per album</title>
                <subtitle language="en">This folder contains a list of albums you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Alben in ihrere Bibliothek.</subtitle>
-               <subtitle language="es-ve">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les albums musicaux de votre bibliothèque.</subtitle>
+               <subtitle language="hu">Ez a mappa az albumokat tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met albums die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste av alle mine album</subtitle>
