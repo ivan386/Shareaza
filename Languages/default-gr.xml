@@ -22,7 +22,7 @@
        <toolbar name="CMainWnd.Basic">
                <button id="ID_NETWORK_CONNECT" text="Σύνδεση"/>
                <separator/>
-               <button id="ID_TAB_HOME" text="Σπίτι"/>
+               <button id="ID_TAB_HOME" text="Αρχική Σελίδα"/>
                <button id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
                <button id="ID_TAB_MEDIA" text="Μέσο αναπαραγωγής"/>
                <button id="ID_TAB_SEARCH" text="Έρευνα"/>
@@ -31,7 +31,7 @@
        <toolbar name="CMainWnd.Tabbed">
                <button id="ID_TAB_CONNECT" text="Σύνδεση"/>
                <separator/>
-               <button id="ID_TAB_HOME" text="Σπίτι"/>
+               <button id="ID_TAB_HOME" text="Αρχική Σελίδα"/>
                <button id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
                <button id="ID_TAB_MEDIA" text="Μέσο αναπαραγωγής"/>
                <button id="ID_TAB_SEARCH" text="Ερευνα"/>
@@ -417,7 +417,7 @@
                        <item id="ID_NETWORK_EXIT" text="Έξοδος"/>
                </menu>
                <menu text="_Επιλογές">
-                       <item id="ID_TAB_HOME" text="_Σπίτι"/>
+                       <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                        <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                        <item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
                        <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -480,7 +480,7 @@
                        <item id="ID_NETWORK_EXIT" text="Έξοδος"/>
                </menu>
                <menu text="_Επισκόπηση">
-                       <item id="ID_TAB_HOME" text="_Σπίτι"/>
+                       <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                        <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                        <item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
                        <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -628,7 +628,7 @@
        </menu>
        <!-- VIEW POPUP -->
        <menu name="CMainWnd.View.Basic">
-               <item id="ID_TAB_HOME" text="_Σπίτι"/>
+               <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                <item id="ID_TAB_MEDIA" text="_Μέσο μετάδοσης"/>
                <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -642,7 +642,7 @@
                </menu>
        </menu>
        <menu name="CMainWnd.View.Tabbed">
-               <item id="ID_TAB_HOME" text="_Σπίτι"/>
+               <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                <item id="ID_TAB_MEDIA" text="_Μέσο μετάδοσης"/>
                <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -696,7 +696,7 @@
        </menu>
        <!-- HOME MENU -->
        <menu name="CHomeWnd.Basic">
-               <item id="ID_TAB_HOME" text="_Σπίτι"/>
+               <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                <item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
                <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -710,7 +710,7 @@
                </menu>
        </menu>
        <menu name="CHomeWnd.Tabbed">
-               <item id="ID_TAB_HOME" text="_Σπίτι"/>
+               <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                <item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
                <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
@@ -2114,7 +2114,7 @@
        <tip id="ID_TAB_LIBRARY" message="Δες και διαχειρίσου τα τοπικά αρχεία της Βιβλιοθήκης."/>
        <tip id="ID_TAB_TRANSFERS" message="Έλενξε τα αρχεία που ανεβάζεις και κατεβάζεις."/>
        <tip id="ID_TAB_CONNECT" message="Συνδέσου ή αποσυνδέσου απο το δίκτυο."/>
-       <tip id="ID_VIEW_TABBED" message="Χρησιμοποίησε το Shareaza σε power Tabbed mode (Σπίτι, Βιβλιοθήκη, Media, Μεταφορές, Δίκτυο)."/>
+       <tip id="ID_VIEW_TABBED" message="Χρησιμοποίησε το Shareaza σε power Tabbed mode (Αρχική Σελίδα, Βιβλιοθήκη, Media, Μεταφορές, Δίκτυο)."/>
        <tip id="ID_VIEW_WINDOWED" message="Χρησιμοποίησε το Shareaza σε power Windowed mode."/>
        <tip id="ID_LIBRARY_URL" message="Αντέγραψε το URI απο το αρχείο."/>
        <tip id="ID_VIEW_DISCOVERY" message="Εμφάνισε ή κρύψε το DISCOVERY SERVICES παράθυρο."/>
@@ -2317,7 +2317,7 @@
        <string id="WINDOW_SECURITY" value="Ασφάλεια"/>
        <string id="WINDOW_DISCOVERY" value="Ανακαλύψιμες υπηρεσίες"/>
        <string id="WINDOW_BROWSEHOST" value="Έρευνα"/>
-       <string id="WINDOW_HOME" value="Το σπίτι του Shareaza"/>
+       <string id="WINDOW_HOME" value="Η αρχική σελίδα του Shareaza"/>
        <string id="WINDOW_MEDIA" value="Media Player"/>
        <string id="WINDOW_SEARCHPAD" value="Έρευνα"/>
        <string id="WINDOW_HELP" value="Η βοήθεια του Shareaza"/>
