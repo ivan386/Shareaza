@@ -768,8 +768,6 @@ BOOL CQuerySearch::CheckValid()
 	// Searches by hash are okay
 	if ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) return TRUE;
 
-
-
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
 	{
@@ -820,13 +818,13 @@ BOOL CQuerySearch::CheckValid()
 	if ( ( nValidWords == 0 ) || ( nValidCharacters == 0) ) return FALSE;
 
 	// Check we have a reasonable amount of characters to search on
-	if ( ( m_pSchema == NULL ) && ( nValidWords > 1 ) )
+	if ( ( m_pSchema == NULL ) || ( nValidWords > 1 ) )
 	{
-		if ( nValidCharacters < 5 ) return FALSE;
+		if ( nValidCharacters < 4 ) return FALSE;
 	}
 	else
 	{
-		if ( nValidCharacters < 4 ) return FALSE;
+		if ( nValidCharacters < 3 ) return FALSE;
 	}
 
 	return TRUE;
