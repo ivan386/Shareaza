@@ -28,6 +28,7 @@
 #include "CollectionFile.h"
 #include "SharedFile.h"
 #include "WndLibrary.h"
+#include "SharedFolder.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -162,27 +163,31 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 	CAlbumFolder* pFolder = NULL;
 	CString strFormat, strMessage;
 	CCollectionFile pCollection;
+	CLibraryFolder* pLibFolder;
 	
 	if ( pCollection.Open( pszPath ) )
 	{	//The specified collection is valid
 
+		//Create the collection folder (in case it doesn't exist)
+		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		//Add the collection folder to the library (in case it isn't there)
+		pLibFolder = LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
+		//Force a scan of it (in case watch library folders is disabled)
+		pLibFolder =  LibraryFolders.GetFolder( Settings.Downloads.CollectionPath );
+		if( pLibFolder != NULL ) pLibFolder->Scan();
+
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE, FALSE, TRUE ) )
-		{	//Collection IS already in the library, reset and view it
+		{	//Collection IS already in the library
 
 			//Re-mount the collection
 			LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-			//Display the collection
 			pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 			Library.Unlock();
 		}
 		else
-		{	//Collection IS NOT already in the library.
+		{	//Collection is not already in the main library 
 
-			//Create and share the collection folder
-			CreateDirectory( Settings.Downloads.CollectionPath, NULL );
-			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
-
-			//Add collection to the library
+			//Check the collection folder
 			CString strSource( pszPath ), strTarget;
 			
 			int nName = strSource.ReverseFind( '\\' );
@@ -191,43 +196,69 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 				strTarget = Settings.Downloads.CollectionPath + strSource.Mid( nName );
 				LibraryBuilder.RequestPriority( strTarget );
 			}
-			
-			if ( strTarget.GetLength() > 0 && CopyFile( strSource, strTarget, TRUE ) )
-			{	//Collection was copied into the collection folder
-				LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
-				strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
-				AfxMessageBox( strMessage, MB_ICONINFORMATION );		
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
-				{
-					pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-					Library.Unlock();
-				}
+
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
+			{	//Collection is already in the collection folder
+
+				//Re-mount the collection
+				LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+				pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+				Library.Unlock();
 			}
-			else	
-			{	//Was not able to copy collection to the collection folder
+			else
+			{	//Collection is not already in collection folder
 
-				if( GetLastError() == ERROR_FILE_EXISTS )
-				{	//File of this name already exists
+				if ( strTarget.GetLength() > 0 && CopyFile( strSource, strTarget, TRUE ) )
+				{	//Collection was copied into the collection folder
 
-					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
-					{	//Collection was already there. (Same name- assumed the same. ToDo: Check SHA1 or similar)
-						//Re-mount the collection
-						LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-						//Display the collection
+					//Force a scan of collection folder (in case watch library folders is disabled)
+					if( pLibFolder != NULL ) pLibFolder->Scan();
+
+					LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
+					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
+					AfxMessageBox( strMessage, MB_ICONINFORMATION );		
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
+					{
 						pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 						Library.Unlock();
 					}
-					else
-					{	//File of this name exists in the folder, but does not appear in the 
-						//library. Most likely cause- Still adding the directory. Do nothing.
-
-					}
 				}
-				else		
-				{	//Unknown reason- Display an error message
-					LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
-					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
-					AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+				else	
+				{	//Was not able to copy collection to the collection folder
+					if( GetLastError() == ERROR_FILE_EXISTS )
+					{	//File of this name already exists
+
+						//We cannot copy the collection because it's already there.
+						//But it doesn't appear in the library. 
+
+						//The greatest probablility is that the file is there, but hasn't
+						//been added yet. The best bet is to pretend everything is okay
+						//Because the delay it takes the user to respond will fix everything.
+						LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
+						strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
+						AfxMessageBox( strMessage , MB_ICONINFORMATION );
+
+						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
+						{	//Collection was already there.
+							//Re-mount the collection
+							LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+							pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+							Library.Unlock();
+						}
+						else
+						{	//File of this name exists in the folder, but does not appear in the 
+							//library. Most likely cause- Corrupt file in collection folder.
+							LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
+							strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
+							AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+						}
+					}
+					else		
+					{	//Unknown reason- Display an error message
+						LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
+						strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
+						AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+					}
 				}
 			}
 		}
@@ -239,7 +270,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 	}
 	
-	if ( pFolder != NULL ) Display( pFolder );
+	if ( pFolder != NULL ) Display( pFolder ); //Display the collection
 	return ( pFolder != NULL );
 }
 
