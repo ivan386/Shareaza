@@ -197,9 +197,9 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA
 	ASSERT( pszURL != NULL );
 	m_sURL = pszURL;
 	
-	ResolveURL();
+	if ( ! ResolveURL() ) return;
 	
-	m_bSHA1			= bSHA1;
+	//m_bSHA1			= bSHA1; //Done in ResolveURL now
 	m_bHashAuth		= bHashAuth;
 	
 	if ( pLastSeen != NULL )
@@ -222,7 +222,10 @@ BOOL CDownloadSource::ResolveURL()
 		theApp.Message( MSG_ERROR, _T("Unable to parse URL: %s"), (LPCTSTR)m_sURL );
 		return FALSE;
 	}
-	
+
+	m_bSHA1		|= pURL.m_bSHA1;
+	m_bED2K		|= pURL.m_bED2K;
+
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
 	m_nPort		= pURL.m_nPort;
