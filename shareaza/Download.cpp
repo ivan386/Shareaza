@@ -110,6 +110,7 @@ void CDownload::Resume()
 	if ( ! m_bPaused ) 
 	{
 		SetStartTimer();
+		if ( GetSourceCount() < 2 ) FindMoreSources();
 		return;
 	}
 	
@@ -210,6 +211,20 @@ BOOL CDownload::Rename(LPCTSTR pszName)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownload control : Stop trying
+
+void CDownload::StopTrying()
+{
+	if ( m_bComplete || m_bPaused ) return;
+	m_tBegan = 0;
+
+	if ( m_bBTH ) CloseTorrent();
+	CloseTransfers();
+	CloseFile();
+	SetModified();
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownload control : SetStartTimer
 
 void CDownload::SetStartTimer()
@@ -285,26 +300,31 @@ void CDownload::OnRun()
 	if( IsTrying() )
 	{	//This download is trying to download
 
-		//** 'Dead download' check- if it appears dead, give up and allow another to start.
-		if ( (!IsCompleted()) && ( ( GetTickCount() - GetStartTimer() ) > ( 8 * 60 * 60 * 1000 ) ) )//If we've been searching for 6 hours
-		{												
-			if ( ( GetTickCount() - m_tReceived ) > ( 5 * 60 * 60 * 1000 ) )	//And had no new data for 5
-			{											
+		//'Dead download' check- if download appears dead, give up and allow another to start.
+		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( 3 * 60 * 60 * 1000 ) )	
+		{	//If it's not complete and we've had no new data for 3 hours	
+
+			if ( ( ( tNow - GetStartTimer() ) > ( 6 * 60 * 60 * 1000 ) ) || ( GetSourceCount() == 0 ) )			
+			{	//And we've been trying for 6 hours, or have no sources
+
 				if( m_bBTH )	//If it's a torrent
 				{
-					if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )	//If we are at max torrents
-					{
-						m_tBegan = 0; //Give up on this one for now, try again later
-						CloseTorrent();
+					if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
+					{	//If there are other torrents that could start
+						StopTrying();		//Give up for now, try again later
+						return;
 					}
 				}
-				else			//Regular download
+				else		//It's a regular download
 				{
-					m_tBegan = 0;	//Give up for now, try again later
+					if( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+					{	//If there are other downloads that could try
+						StopTrying();		//Give up for now, try again later
+						return;
+					}
 				}
-			}		
-		} 
-		//** End of 'dead download' check
+			}
+		}	//End of 'dead download' check
 
 		if ( RunTorrent( tNow ) )
 		{
@@ -346,7 +366,7 @@ void CDownload::OnRun()
 		else
 		{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
 			//has sources and is ready to go.	
-			if( Downloads.GetTryingCount( FALSE ) < Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches )
+			if( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 				SetStartTimer();
 		}
 	}

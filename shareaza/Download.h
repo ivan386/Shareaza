@@ -60,6 +60,7 @@ public:
 	virtual void	Boost();
 	virtual void	Share(BOOL bShared);
 	virtual BOOL	Rename(LPCTSTR pszName);
+	virtual void	StopTrying();
 	virtual void	SetStartTimer();
 	virtual DWORD	GetStartTimer() const;
 public:
