@@ -16,7 +16,7 @@
 		description="Shareaza Default Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.97"
+		version="2.1.0.101"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -1654,6 +1654,8 @@
 			<text id="TorrentsNone" format="b">Sprer ingen torrent'er</text>
 			<text id="TorrentsOne" format="b">Sprer 1 torrent</text>
 			<text id="TorrentsMany" format="b">Sprer %i torrent'er</text>
+			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed %s igjen</link>
 			<newline gap="4"/>
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Spre en torrent</link>
 		</para>
@@ -3637,6 +3639,13 @@
 		<control caption="Lagre som"/>
 		<control caption="Slett"/>
 		<control caption="Filtere:"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Lagre filter som">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Lagre nåværende filter som"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Oppdagelsestjeneste">
