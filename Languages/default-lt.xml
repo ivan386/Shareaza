@@ -116,10 +116,10 @@ right quote    &#147;
        <toolbar name="CBrowseHeaderCtrl">
             <button id="ID_BROWSE_PROFILE" text="Profilis"/>
             <button id="ID_BROWSE_FILES" text="Bendrintos bylos"/>
-	   </toolbar>
-	   <toolbar name="CBrowseTree.Top">
-		    <button id="ID_LIBRARY_TREE_PHYSICAL" text="Aplankai"/>
-		    <button id="ID_LIBRARY_TREE_VIRTUAL" text="Katalogai"/>
+          </toolbar>
+          <toolbar name="CBrowseTree.Top">
+                   <button id="ID_LIBRARY_TREE_PHYSICAL" text="Aplankai"/>
+                   <button id="ID_LIBRARY_TREE_VIRTUAL" text="Katalogai"/>
        </toolbar>
        <toolbar name="CBrowseHostWnd.Basic">
                <button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti bylą"/>
@@ -1389,23 +1389,23 @@ right quote    &#147;
                <item id="ID_CHAT_TIMESTAMP" text="Rodyti _laiką"/>
                <item id="ID_CHAT_CLEAR" text="_Valyti langą"/>
        </menu>
-       <!--  Shareaza Remote --> 
+       <!--  Shareaza Remote -->
        <menu name="CRemoteWnd">
-               <item id="ID_TRAY_OPEN" text="_Atverti Shareaza" /> 
-               <separator/> 
-               <item id="ID_NETWORK_SEARCH" text="Nauja pai_eška..." /> 
-               <item id="ID_TOOLS_DOWNLOAD" text="Atsisiųsti bylą..." /> 
-               <separator/> 
-               <item id="ID_MEDIA_PLAY" text="_Groti bylą" /> 
-               <item id="ID_MEDIA_PAUSE" text="_Pristabdyti" /> 
-               <item id="ID_MEDIA_STOP" text="_Stabdyti" /> 
-               <separator/> 
-               <item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis" /> 
-               <item id="ID_MEDIA_NEXT" text="Toles_nis takelis" /> 
-               <separator/> 
-               <item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus" /> 
-               <item id="ID_NETWORK_EXIT" text="Išeiti" /> 
-      </menu>       
+               <item id="ID_TRAY_OPEN" text="_Atverti Shareaza" />
+               <separator/>
+               <item id="ID_NETWORK_SEARCH" text="Nauja pai_eška..." />
+               <item id="ID_TOOLS_DOWNLOAD" text="Atsisiųsti bylą..." />
+               <separator/>
+               <item id="ID_MEDIA_PLAY" text="_Groti bylą" />
+               <item id="ID_MEDIA_PAUSE" text="_Pristabdyti" />
+               <item id="ID_MEDIA_STOP" text="_Stabdyti" />
+               <separator/>
+               <item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis" />
+               <item id="ID_MEDIA_NEXT" text="Toles_nis takelis" />
+               <separator/>
+               <item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus" />
+               <item id="ID_NETWORK_EXIT" text="Išeiti" />
+      </menu>
 </menus>
 
        <!-- Watermarks -->
@@ -1934,18 +1934,18 @@ right quote    &#147;
                partnerių sąrašo.</text>
        </document>
 
-	<!-- Search help documents -->
-	
-	<document name="SearchHelp.BadSearch">
-		<text format="b">Perfrazuokite ieškinį</text>
-		<newline gap="8"/>
-		<text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai. 
-		Ieškiniuose turėtų būti keli žodžiai, jei tai įmanoma, ir turėtų būti nurodyta schema 
-		(bylos tipas). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai 
-		(su minusu priekyje), taip pat jūs turėtumėte vengti per daug ilgų bendrinių užklausų.</text>
-		<newline gap="8"/>
-		<text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą, nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
-	</document>
+       <!-- Search help documents -->
+
+       <document name="SearchHelp.BadSearch">
+               <text format="b">Perfrazuokite ieškinį</text>
+               <newline gap="8"/>
+               <text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai.
+               Ieškiniuose turėtų būti keli žodžiai, jei tai įmanoma, ir turėtų būti nurodyta schema
+               (bylos tipas). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai
+               (su minusu priekyje), taip pat jūs turėtumėte vengti per daug ilgų bendrinių užklausų.</text>
+               <newline gap="8"/>
+               <text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą, nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
+       </document>
 </documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -3703,15 +3703,15 @@ right quote    &#147;
             <control caption="_Derinimas..."/>
             <control caption="Gerai"/>
             <control caption="Atšaukti"/>
-	</dialog>
+       </dialog>
 
-	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Įspėjimas apie atnaujinimą">
-		<control/>
-		<control caption="Pasirodė nauja „Shareaza“ versija. Ar norite atnaujinti?"/>
-		<control caption="Jei pasirinksite „Atnaujinti dabar“, „Shareaza“ pridės atnaujinimą prie atsisiuntimų ir pradės jį siųsti."/>
-		<control caption="_Atnaujinti dabar"/>
-		<control caption="  Netikrinti naujesnių versijų"/>
-		<control caption="Neatnaujinti"/>
+       <dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Įspėjimas apie atnaujinimą">
+               <control/>
+               <control caption="Pasirodė nauja „Shareaza“ versija. Ar norite atnaujinti?"/>
+               <control caption="Jei pasirinksite „Atnaujinti dabar“, „Shareaza“ pridės atnaujinimą prie atsisiuntimų ir pradės jį siųsti."/>
+               <control caption="_Atnaujinti dabar"/>
+               <control caption="  Netikrinti naujesnių versijų"/>
+               <control caption="Neatnaujinti"/>
     </dialog>
 </dialogs>
 
@@ -3733,14 +3733,12 @@ right quote    &#147;
         <column from="Speed" to="Sparta"/>
         <column from="Status" to="Būklė"/>
         <column from="Client" to="Klientas"/>
-        <column from="Order" to="Eilės Nr."/>
     </list>
     <list name="CUploadCtrl">
         <column from="Remote User" to="Nutolęs vartotojas"/>
         <column from="Uploaded File" to="Išsiunčiama byla"/>
         <column from="Size" to="Dydis"/>
         <column from="Progress" to="Eiga"/>
-        <column from="Queue" to="Eilė"/>
         <column from="Speed" to="Sparta"/>
         <column from="Client" to="Klientas"/>
     </list>
@@ -3761,6 +3759,7 @@ right quote    &#147;
         <column from="Address / Content" to="Adresas ar turinys"/>
         <column from="Action" to="Veiksmas"/>
         <column from="Expires" to="Nustoja galioti"/>
+        <column from="Precedence" to="Pirmumas"/>
         <column from="Hits" to="Kreipinių"/>
         <column from="Comment" to="Komentaras"/>
     </list>
@@ -3768,14 +3767,11 @@ right quote    &#147;
         <column from="Address" to="Adresas"/>
         <column from="Port" to="Prievadas"/>
         <column from="Client" to="Klientas"/>
+        <column from="Last Seen" to="Kada matytas"/>
         <column from="Name" to="Pavadinimas"/>
         <column from="Description" to="Aprašas"/>
-        <column from="Last Seen" to="Kada matytas"/>
-        <column from="Hops" to="Šuolių"/>
-        <column from="Files" to="Bylų"/>
         <column from="CurUsers" to="Vartotojų skč."/>
         <column from="MaxUsers" to="Maks. vartotojų"/>
-        <column from="Volume" to="Tomas"/>
     </list>
     <list name="CDiscoveryWnd">
         <column from="Address" to="Adresas"/>
@@ -3806,10 +3802,6 @@ right quote    &#147;
         <column from="Speed" to="Sparta"/>
         <column from="Client" to="Klientas"/>
         <column from="Status" to="Būklė"/>
-        <column from="Title" to="Antraštė"/>
-        <column from="Author" to="Autorius"/>
-        <column from="Time" to="Trukmė"/>
-        <column from="Bitrate" to="Bitratas"/>
     </list>
     <list name="CUploadQueueList">
         <column from="Name" to="Pavadinimas"/>
