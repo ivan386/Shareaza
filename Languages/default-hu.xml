@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.102"
+version="2.1.0.114"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -219,32 +219,32 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_LIBRARY_FOLDERS" text="Fájlok megosztása..."/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryHomeView.Virtual">
                <button id="ID_LIBRARY_FOLDER_NEW" text="Album létrehozása..."/>
                <button id="ID_LIBRARY_ALBUM_DELETE" text="Album törlése"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryTileView.Virtual">
                <button id="ID_LIBRARY_FOLDER_NEW" text="Album létrehozása..."/>
                <button id="ID_LIBRARY_ALBUM_DELETE" text="Album törlése"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryFileView.Physical.Basic">
                <button id="ID_LIBRARY_LAUNCH" text="Megnyitás-Lejátszás"/>
                <button id="ID_LIBRARY_ENQUEUE" text="Listához ad"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryFileView.Physical">
                <button id="ID_LIBRARY_LAUNCH" text="Megnyitás-Lejátszás"/>
@@ -257,8 +257,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_LIBRARY_DELETE" text="Törlés"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryFileView.Virtual.Basic">
                <button id="ID_LIBRARY_LAUNCH" text="Megnyitás-Lejátszás"/>
@@ -266,8 +266,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album lejátszása"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryFileView.Virtual">
                <button id="ID_LIBRARY_LAUNCH" text="Megnyitás-Lejátszás"/>
@@ -277,8 +277,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_LIBRARY_PROPERTIES" text="Tulajdonságok"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <toolbar name="CLibraryCollectionView.Virtual">
                <button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Teljes album lejátszása"/>
@@ -286,8 +286,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Minden fájl letöltése"/>
                <rightAlign/>
                <label text="Keres:" tip="Írd be a keresendő szavakat"/>
-               <control id="108" width="100"/>
-               <button id="ID_LIBRARY_SEARCH_QUICK" text="Ker."/>
+               <control id="108" width="120"/>
+               <button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
        </toolbar>
        <!-- MEDIA WINDOW -->
        <toolbar name="CMediaFrame.Basic">
@@ -821,6 +821,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <!-- BROWSE HOST WINDOW -->
        <menu name="CBrowseHostWnd.Basic">
                <item id="ID_SEARCH_DOWNLOAD" text="Letöltés"/>
+               <item id="ID_SEARCH_DOWNLOADNOW" text="Letöltés most"/>
                <separator/>
                <item id="ID_SEARCH_CHAT" text="Chat"/>
                <separator/>
@@ -838,6 +839,7 @@ prompt="Kattints ide a magyar nyelvhez."
        </menu>
        <menu name="CBrowseHostWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="Letöltés"/>
+               <item id="ID_SEARCH_DOWNLOADNOW" text="Letöltés most"/>
                <item id="ID_SEARCH_COPY" text="URL másolása"/>
                <separator/>
                <item id="ID_SEARCH_CHAT" text="Chat"/>
@@ -890,6 +892,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <!-- DOWNLOADS WINDOW -->
        <menu name="CDownloadsWnd.Download.Basic">
                <item id="ID_DOWNLOADS_LAUNCH" text="Előnézet"/>
+               <item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Vélemények"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="Folytat"/>
                <item id="ID_DOWNLOADS_PAUSE" text="Szünet"/>
@@ -902,6 +905,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <menu name="CDownloadsWnd.Download">
                <item id="ID_DOWNLOADS_LAUNCH" text="Előnézet"/>
                <item id="ID_DOWNLOADS_ENQUEUE" text="Listához ad"/>
+               <item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Vélemények"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="Folytat"/>
                <item id="ID_DOWNLOADS_PAUSE" text="Szünet"/>
@@ -1088,6 +1092,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_LIBRARY_MOVE" text="Fájl mozgatása"/>
                        <item id="ID_LIBRARY_COPY" text="Fájlok másolása"/>
                </menu>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata javítása"/>
                <separator/>
                <item id="ID_LIBRARY_PROPERTIES" text="Tulajdonságok"/>
        </menu>
@@ -1119,6 +1124,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_LIBRARY_MOVE" text="Fájl mozgatása"/>
                        <item id="ID_LIBRARY_COPY" text="Fájlok másolása"/>
                </menu>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata javítása"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Oszlopok kiválasztása"/>
                <separator/>
@@ -1154,6 +1160,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_LIBRARY_MOVE" text="Fájl mozgatása"/>
                        <item id="ID_LIBRARY_COPY" text="Fájlok másolása"/>
                </menu>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata javítása"/>
                <separator/>
                <item id="ID_LIBRARY_PROPERTIES" text="Tulajdonságok"/>
        </menu>
@@ -1187,6 +1194,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_LIBRARY_MOVE" text="Fájl mozgatása"/>
                        <item id="ID_LIBRARY_COPY" text="Fájlok másolása"/>
                </menu>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata javítása"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Oszlopok kiválasztása"/>
                <separator/>
@@ -1358,7 +1366,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_SECURITY_ADD" text="Szabály hozzáadása..."/>
                <separator/>
                <item id="ID_SECURITY_REMOVE" text="Eltávolít"/>
-               <item id="ID_SECURITY_RESET" text="Reset"/>
+               <item id="ID_SECURITY_RESET" text="Nullázás"/>
                <separator/>
                <item id="ID_SECURITY_MOVE_UP" text="Fel"/>
                <item id="ID_SECURITY_MOVE_DOWN" text="Le"/>
@@ -1584,7 +1592,7 @@ prompt="Kattints ide a magyar nyelvhez."
 
                <icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
                <text group="20" align="middle" format="b">Gnutella2: </text>
-               <text group="21" align="middle">Lekapcsolódva</text>
+               <text group="21" align="middle">Nincs kapcsolat</text>
                <text group="22" align="middle">Kapcsolódás...</text>
                <text group="23" align="middle">Kapcsolódva</text>
                <text group="24" align="middle" id="G2Hubs">%i hub</text>
@@ -1593,14 +1601,14 @@ prompt="Kattints ide a magyar nyelvhez."
 
                <icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
                <text group="30" align="middle" format="b">eDonkey: </text>
-               <text group="31" align="middle">Lekapcsolódva</text>
+               <text group="31" align="middle">Nincs kapcsolat</text>
                <text group="32" align="middle">Kapcsolódás...</text>
                <text group="33" align="middle">Kapcsolódva</text>
                <newline group="30" gap="2"/>
 
                <icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
                <text group="10" align="middle" format="b">Gnutella1: </text>
-               <text group="11" align="middle">Lekapcsolódva</text>
+               <text group="11" align="middle">Nincs kapcsolat</text>
                <text group="12" align="middle">Kapcsolódás...</text>
                <text group="13" align="middle">Kapcsolódva</text>
                <newline group="10" gap="2"/>
@@ -1649,12 +1657,12 @@ prompt="Kattints ide a magyar nyelvhez."
                        <newline gap="4"/>
                        <link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újraterjeszt: %s</link>
                        <newline gap="4"/>
-			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újabb torrent terjesztése</link>
-			</group>
-			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Torrent terjesztése</link>
-			</group>
+                       <group id="1">
+                       <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újabb torrent terjesztése</link>
+                       </group>
+                       <group id="2">
+                       <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Torrent terjesztése</link>
+                       </group>
                </para>
 
        </document>
@@ -1932,7 +1940,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <text format="b">A letöltés függőben van</text>
                <newline gap="8"/>
                <text>A fájl feltöltésre vár.
-               A Shareaza készen áll a letöltésre, de még senki nem küldi a fájl adatit.
+               A Shareaza készen áll a letöltésre, de még senki nem küld adatokat.
                Valószínűleg másoknál sorbanállsz ezért a fájlért. A letöltés bármelyik percben elkezdődhet.
                Lehetőséged van megnézni, hogy hányadik vagy a sorban.
                Ha magad is megosztasz fájlokat, nagyobb eséllyel kerülhetsz sorra,
@@ -2017,8 +2025,20 @@ prompt="Kattints ide a magyar nyelvhez."
                <text>Ez nem egy 100%-os megoldás, mint ahogy más automata szűrők sem azok.
                Ezt arra tervezték, hogy kiszűrje a nem kívánt találatokat, nem arra, hogy 100%-os védelmet nyújtson.</text>
                <newline gap="8"/>
-               <text>A gyermekek internethasználatát (a fájlmegoszó programokat)csak szülői felügyelet mellett szabad engedni.</text>
+               <text>A gyermekek internethasználatát (a fájlmegoszó programokat) csak szülői felügyelet mellett szabad engedni.</text>
        </document>
+
+     <document name="GeneralHelp.BadTorrentEncoding">
+                   <text format="b">Ennek a torrentnek valószínűleg kódolási hibája van</text>
+                   <newline gap="8"/>
+                   <text>Fordítási hiba jelentkezett a Windowsban, amikor ezt a torrentfájlt dekódolni akarta.
+                   Lehet, hogy a torrent hibás vagy csak rosszul lett kódolva. Valószínűleg működni fog bár lehet, hogy
+                   néhány fájl neve helytelenül fog megjelenni.</text>
+                   <newline gap="8"/>
+                   <text>A legtöbb torrentkészítő program ki tuja javítani ezt a hibát, így
+                   bármelyik BitTorrent programmal működni fog. Ha segítség kell, látogasd meg a
+                   Shareaza fórumait.</text>
+           </document>
 
        <!-- Search help documents -->
 
@@ -2034,6 +2054,16 @@ prompt="Kattints ide a magyar nyelvhez."
         való rákeresést, mert nem elég sajátos és ezért
         túl sok találatot eredményezne.</text>
 </document>
+
+<document name="SearchHelp.BadSearch2">
+                   <text format="b">Gyenge keresés</text>
+                   <newline gap="8"/>
+                   <text>Ez a keresés gyengén lett kivitelezve és nem működik megfelelően. Minden kereséshez
+                   egy minimális betűszámból álló kifejezést kell használni a keresés elindításához.</text>
+                   <newline gap="8"/>
+                   <text>Számok és kiterjesztések után is lehet keresni, de ezekhez még egyébb kifejezéseket is
+                   hozzá kell venni a keresés előtt.</text>
+           </document>
 
        <document name="SearchHelp.AdultSearch">
                <text format="b">Ezt a keresést nem lehet elkezdeni</text>
@@ -2144,6 +2174,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_DOWNLOADS_SOURCES" message="Több forrást keres a kiválasztott letöltés(ek)hez."/>
        <tip id="ID_DOWNLOADS_TORRENT_INFO" message="A BitTorrent adatainak mutatása..."/>
        <tip id="ID_DOWNLOADS_URL" message="URL hozzáadása a letöltéshez..."/>
+       <tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Vélemények megtekintése a kiválasztott letöltésről"/>
        <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
        <tip id="ID_HELP_FAQ" message="A Shareaza használati utasításához vezet el."/>
        <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
@@ -2195,6 +2226,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_LIBRARY_PARENT" message="Egy szinttel feljebb."/>
        <tip id="ID_LIBRARY_PROPERTIES" message="Megjeleníti a fájl tulajdonságait..."/>
        <tip id="ID_LIBRARY_REBUILD" message="Új metadata és hash értékek megadása."/>
+       <tip id="ID_LIBRARY_REBUILD_ANSI" message="Metadata kijavítása egy másik kódtáblára."/>
        <tip id="ID_LIBRARY_REFRESH" message="A könyvtár frissítése."/>
        <tip id="ID_LIBRARY_REMOVE" message="Eltávolítja a kiválasztott mappákat."/>
        <tip id="ID_LIBRARY_RENAME" message="A fájl átnevezése."/>
@@ -3010,6 +3042,14 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="20204" value="Csütörtök"/>
        <string id="20205" value="Péntek"/>
        <string id="20206" value="Szombat"/>
+       <string id="20210" value="(Nincs értékelve)"/>
+       <string id="20211" value="Hamis / Hibás / Félrevezető"/>
+       <string id="20212" value="Gyenge"/>
+       <string id="20213" value="Átlagos"/>
+       <string id="20214" value="Jó"/>
+       <string id="20215" value="Remek"/>
+       <string id="20216" value="Kiváló"/>
+
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3113,8 +3153,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="eDonkey2000 ( ed2k: )"/>
                <control caption="Piolet ( mp2p: )"/>
                <control caption="BitTorrent ( .torrent )"/>
-               <control caption="Letöltőmenedzser:"/>
-               <control caption="Használd a Shareazát, mint letöltőmenedzsert:"/>
+               <control caption="Letöltésmenedzser:"/>
+               <control caption="Használd a Shareazát, mint letöltésmenedzsert:"/>
                <control/>
                <control caption="Hozzáad"/>
                <control caption="Eltávolít"/>
@@ -3507,7 +3547,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Nem:"/>
                <control/>
                <control caption="Kor:"/>
-               <control caption="Mások is láthassák a profilomat"/>
+               <control caption="Mások is megnézhetik a profilomat"/>
        </dialog>
 
        <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kapcsolat">
@@ -3646,7 +3686,7 @@ prompt="Kattints ide a magyar nyelvhez."
               <control/>
               <control caption="OK"/>
               <control caption="Mégse"/>
-   	      <control caption="Jelenlegi szűrő mentése másként"/>
+             <control caption="Jelenlegi szűrő mentése másként"/>
        </dialog>
 
        <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Szerverkereső szolgáltatás hozzáadása">
@@ -3801,7 +3841,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="logikai VAGY"/>
                <control caption="Beállítások:"/>
                <control caption="Feladat:"/>
-               <control caption=" |Elfogad|Tiltás"/>
+               <control caption="Semmi|Elfogad|Blokkol"/>
                <control caption="Lejárat:"/>
                <control caption="Soha|A periódus végéig|Eddig érvényes:"/>
                <control/>
@@ -4045,6 +4085,19 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Ne keress új verzió után"/>
                <control caption="Ne frissítsen"/>
        </dialog>
+
+       <dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Vélemények letöltése">
+               <control/>
+               <control caption="OK"/>
+               <control/><control/>
+       </dialog>
+
+       <dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata javítása">
+               <control caption="OK"/>
+               <control caption="Mégse"/>
+               <control caption="Válaszd ki az új nyelvi kódlapot:"/>
+               <control caption="Arab|Balti|Közép-európai|Egyszerűsített kínai|Hagyományos kínai|Cirill|Görög|Héber|Japán|Koreai|Thai|Török|Vietnámi"/>
+       </dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4160,9 +4213,15 @@ prompt="Kattints ide a magyar nyelvhez."
          <column from="URL" to=""/>
          <column from="Expires" to="Lejárat"/>
        </list>
-       <list name="CTorrentTrackerList">
-               <column from="Filename" to="Fájlnév"/>
-               <column from="Size" to="Méret"/>
-</list>
+    <list name="CTorrentTrackerList">
+         <column from="Filename" to="Fájlnév"/>
+         <column from="Size" to="Méret"/>
+    </list>
+    <list name="CReviewList">
+         <column from="User" to="Felhasználó"/>
+         <column from="Rating" to="Osztályzat"/>
+         <column from="Comments" to="Vélemény"/>
+         <column from="Order" to="Sorszám"/>
+    </list>
 </listColumns>
 </skin>
