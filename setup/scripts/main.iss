@@ -178,6 +178,12 @@ Type: files; Name: "{app}\Plugins\DivFix.dll"
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
 
+; Clean up icons if user changes tasks
+Type: files; Name: "{userdesktop}\Shareaza.lnk"
+Type: files; Name: "{commondesktop}\Shareaza.lnk"
+Type: filesandordirs; Name: "{userprograms}\{groupname}"
+Type: filesandordirs; Name: "{commonprograms}\{groupname}"
+
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Plugins"
