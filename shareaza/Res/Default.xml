@@ -1062,6 +1062,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
@@ -1093,7 +1094,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -1129,6 +1130,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
@@ -1162,7 +1164,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
