@@ -783,6 +783,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
@@ -800,6 +801,7 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
