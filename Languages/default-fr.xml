@@ -2360,6 +2360,7 @@ Other:
 	<string id="WINDOW_MEDIA" value="Lecteur Multimédia"/>
 	<string id="WINDOW_SEARCHPAD" value="Rechercher"/>
 	<string id="WINDOW_HELP" value="Aide Shareaza"/>
+	<string id="7000" value="Êtes vous sûr de vouloir effacer ce filtre ?"/>
 	<string id="8000" value="Réglages Shareaza"/>
 	<string id="8001" value="Shareaza vous souhaite la bienvenue!"/>
 	<string id="8002" value="Propriétés du fichier"/>
@@ -3582,11 +3583,11 @@ Other:
 		<control caption="Annuler"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filter Matches">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Assortiments du filtre">
 		<control caption="Montrer seulement les résultats qui contiennent les mots:"/>
 		<control/>
 		<control caption="vous pouvez exclure des mots avec -mot"/>
-		<control caption="Et qui ont une taille de (Ko):"/>
+		<control caption="Et qui ont une taille de:"/>
 		<control caption="Minimum:"/>
 		<control/>
 		<control caption="Maximum:"/>
@@ -3603,6 +3604,11 @@ Other:
 		<control caption="Faux résultats"/>
 		<control caption="Filtrer"/>
 		<control caption="Annuler"/>
+        <control/>
+        <control caption="Régler par défaut"/>
+        <control caption="_Sauvegarder sous"/>
+        <control caption="_Effacer"/>
+        <control caption="Filtres:"/>		
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Service Discovery">
