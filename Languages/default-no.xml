@@ -1780,7 +1780,7 @@
 			<text id="GenderMale">Mann</text>
 			<text id="GenderFemale">Kvinne</text>
 			<text>, </text>
-			<text id="Alder"/>
+			<text id="Age"/>
 		</group>
 
 		<group id="4">
