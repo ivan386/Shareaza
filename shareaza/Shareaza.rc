@@ -5011,6 +5011,10 @@ BEGIN
     IDS_TIP_HITS            "Hits"
     IDS_TIP_UPLOADS         "Uploads"
     IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
+    IDS_TIP_TOTAL_FILES     "Total Files:"
+    IDS_TIP_TOTAL_VOLUME    "Total Volume:"
+    IDS_TIP_LIBRARY_PERCENT "of your library"
+    IDS_TIP_FOLDER          "Folder"
 END
 
 STRINGTABLE 

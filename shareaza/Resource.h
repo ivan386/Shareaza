@@ -765,6 +765,10 @@
 #define IDS_TIP_INACTIVE                8324
 #define IDS_TIP_ACTIVE                  8325
 #define IDS_TIP_NEXT                    8326
+#define IDS_TIP_TOTAL_FILES             8327
+#define IDS_TIP_TOTAL_VOLUME            8328
+#define IDS_TIP_LIBRARY_PERCENT         8329
+#define IDS_TIP_FOLDER                  8330
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003

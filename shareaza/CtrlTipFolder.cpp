@@ -72,10 +72,12 @@ BOOL CFolderTipCtrl::OnPrepare()
 	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, TRUE );
 	
 	QWORD nTotal;
+	CString strText;
 	LibraryMaps.GetStatistics( NULL, &nTotal );
 	
-	m_sPercentage.Format( _T("%.2f%% of your library"),
-		(double)pFolder->m_nVolume / (double)nTotal * 100.0f );
+	LoadString( strText, IDS_TIP_LIBRARY_PERCENT );
+	m_sPercentage.Format( _T("%.2f%% %s"),
+		(double)pFolder->m_nVolume / (double)nTotal * 100.0f, strText );
 	
 	CalcSizeHelper();
 	
@@ -118,10 +120,13 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 	
 	ShellIcons.Draw( pDC, SHI_FOLDER_OPEN, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
 	
-	DrawText( pDC, &pt, _T("Total Files:"), 40 );
+	CString strText;
+	LoadString( strText, IDS_TIP_TOTAL_FILES );
+	DrawText( pDC, &pt, strText, 40 );
 	DrawText( pDC, &pt, m_sFiles, 120 );
 	pt.y += TIP_TEXTHEIGHT;
-	DrawText( pDC, &pt, _T("Total Volume:"), 40 );
+	LoadString( strText, IDS_TIP_TOTAL_VOLUME );
+	DrawText( pDC, &pt, strText, 40 );
 	DrawText( pDC, &pt, m_sVolume, 120 );
 	pt.y += TIP_TEXTHEIGHT;
 	DrawText( pDC, &pt, m_sPercentage, 40 );
