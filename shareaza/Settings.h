@@ -35,6 +35,7 @@ public:
 	struct sGeneral
 	{
 		CString		Path;
+		CString		UserPath;
 		BOOL		Debug;
 		BOOL		DebugLog;
 		BOOL		UpdateCheck;
