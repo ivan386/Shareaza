@@ -438,7 +438,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		if ( pFolder->m_nScanCookie != nScanCookie )
 		{
 			CString strNameLC( pFolder->m_sName );
-			CharLower( m_sNameLC.GetBuffer() );
+			CharLower( strNameLC.GetBuffer() );
 			
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
