@@ -364,11 +364,12 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 
 BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
-
+		
 	//Check/Reject if source is the local IP/port
-	if ( Settings.Connection.InPort == pSource->m_nPort )
+	if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
 	{
-		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
+		if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
+			|| ( Settings.Connection.IgnoreOwnIP ) )
 		{	
 			delete pSource;
 			return FALSE;
