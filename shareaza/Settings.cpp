@@ -251,6 +251,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
 	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, TRUE );
+	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, FALSE );
 	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
 	
 	Add( _T("BitTorrent.DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000 );
@@ -266,6 +267,7 @@ void CSettings::Setup()
 	
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.Path + _T("\\Incomplete") );
 	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.Path + _T("\\Downloads") );
+	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.Path + _T("\\Torrents") );
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
 	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );

@@ -290,6 +290,7 @@ public:
 		DWORD		ReAskTime;
 		DWORD		DequeueTime;
 		BOOL		ExtendedRequest;
+		BOOL		MagnetSearch;
 		BOOL		TagNames;
 	} eDonkey;
 	
@@ -311,6 +312,7 @@ public:
 	{
 		CString		IncompletePath;
 		CString		CompletePath;
+		CString		TorrentPath;
 		DWORD		BufferSize;
 		DWORD		SparseThreshold;
 		INT			MaxFiles;

@@ -151,6 +151,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.DequeueTime, 60, 2, 512, _T(" m") );
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
 	
 	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );
