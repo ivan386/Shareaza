@@ -378,8 +378,6 @@ BOOL CBTClient::OnHandshake1()
 	
 	// If we didn't start the connection, then send a handshake
 	if ( ! m_bInitiated ) SendHandshake( TRUE, TRUE );
-	//if ( ! m_bInitiated ) SendHandshake( TRUE, FALSE ); //We send both parts here now
-	
 	m_bShake = TRUE;
 	
 	return TRUE;
@@ -446,9 +444,6 @@ BOOL CBTClient::OnHandshake2()
 	m_bOnline = TRUE;
 	
 	DetermineUserAgent();
-	
-	//This is done in Handshake1 now (Due to glitches in other clients)
-	//if ( ! m_bInitiated ) SendHandshake( FALSE, TRUE );
 	
 	return OnOnline();
 }

@@ -388,66 +388,6 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 		}
 	}
 }
-/*
-void CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
-{
-	pPacket->WriteByte( m_nType );
-	
-	if ( int nKeyLen = m_sKey.GetLength() )
-	{
-		pPacket->WriteEDString( m_sKey, bUTF8 );
-	}
-	else
-	{
-		pPacket->WriteShortLE( 1 );
-		pPacket->WriteByte( m_nKey );
-	}
-
-	if ( m_nType == ED2K_TAG_STRING )
-	{
-		// Write the string
-		pPacket->WriteEDString( m_sValue, bUTF8 );
-	}
-	else if ( m_nType == ED2K_TAG_INT )
-	{
-		// Write a DWORD
-		pPacket->WriteLongLE( m_nValue );
-	}
-	else if ( m_nType == ED2K_TAG_UINT16 )
-	{
-		// Write a word
-		pPacket->WriteShortLE( (WORD)m_nValue );
-	}
-	else if ( m_nType == ED2K_TAG_UINT8 )
-	{
-		// Write a byte
-		pPacket->WriteByte( (BYTE)m_nValue );
-	}
-	else if ( ( m_nType >= ED2K_TAG_SHORTSTRING ) && ( m_nType <= ED2K_TAG_SHORTSTRING +15 ) )
-	{
-		int nLength; 
-		if ( bUTF8 )
-			nLength = pPacket->GetStringLenUTF8( m_sValue );
-		else
-			nLength = pPacket->GetStringLen( m_sValue );
-
-		if ( bSmallTag && ( nLength <= 16 ) )	
-		{	// We should use a 'short' string tag
-
-			// Correct the packet type
-			*(BYTE*)pPacket->m_pBuffer = ED2K_TAG_SHORTSTRING + nLength;	
-
-			// Write the string
-			if ( bUTF8 ) pPacket->WriteStringUTF8( m_sValue, FALSE );
-			else pPacket->WriteString( m_sValue, FALSE );
-		}
-		else					
-		{	// We should use a normal string tag
-			// Write the string
-			pPacket->WriteEDString( m_sValue, bUTF8 );
-		}
-	}
-}*/
 
 //////////////////////////////////////////////////////////////////////
 // CEDTag read from packet
@@ -522,7 +462,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 		m_nValue = pPacket->ReadByte();
 	}
 	else if ( ( m_nType >= ED2K_TAG_SHORTSTRING ) && ( m_nType <= ED2K_TAG_SHORTSTRING + 15 ) )
-	{													// Short strings
+	{													// Short strings (New tag)
 		nLen = ( m_nType - (ED2K_TAG_SHORTSTRING - 1) );//Calculate length of short string
 		if ( pPacket->GetRemaining() < nLen ) return FALSE;
 
