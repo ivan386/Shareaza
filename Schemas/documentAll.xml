@@ -4,6 +4,7 @@
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -22,7 +23,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="chs">&#160;文档:所有文档</title>
                <title language="de">Dokumente:Alle Dokumente</title>
                <title language="es">Documento:Todos Los Documentos</title>
-               <title language="fr">Document:All Documents</title>
+               <title language="fr">Document:Tous les Documents</title>
                <title language="hu">Dokumentum: Minden dokumentum</title>
                <title language="it">Documento:Tutti i documenti</title>
                <title language="lt">Dokumentas:Visi documentai</title>
@@ -65,6 +66,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="chs">所有文档</title>
                <title language="de">Alle Dokumente</title>
                <title language="es">Todos Los Documentos</title>
+               <title language="fr">Tous les Documents</title>
                <title language="hu">Minden dokumentum</title>
                <title language="it">Tutti i documenti</title>
                <title language="lt">Visi dokumentai</title>
@@ -75,6 +77,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <subtitle language="chs">此文件夹包含了您收藏夹中的每个文档。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tout document dans votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa az összes dokumentumodat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i documenti della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
