@@ -390,7 +390,7 @@ void CDownloadsWnd::Prepare()
 	if ( tNow - m_tSel < 250 ) return;
 	m_tSel = tNow;
 	
-	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelPaused = FALSE;
+	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
 	m_bSelNotMoving = m_bSelBoostable = m_bSelSHA1orED2K = FALSE;
@@ -419,6 +419,8 @@ void CDownloadsWnd::Prepare()
 				m_bSelSHA1orED2K = TRUE;
 			if ( pDownload->m_pTorrent.IsAvailable() )
 				m_bSelTorrent = TRUE;
+			if ( pDownload->IsTrying() )
+				m_bSelTrying = TRUE;
 			if ( pDownload->IsPaused() )
 				m_bSelPaused = TRUE;
 			else if ( ! pDownload->IsMoving() )
@@ -468,8 +470,8 @@ void CDownloadsWnd::OnUpdateDownloadsResume(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelPaused );
-	pCmdUI->Enable( m_bSelPaused );
+		pcCmdUI->Show( m_bSelPaused || ! m_bSelTrying );
+	pCmdUI->Enable( m_bSelPaused || ! m_bSelTrying  );
 }
 
 void CDownloadsWnd::OnDownloadsResume() 

@@ -61,6 +61,7 @@ protected:
 	BOOL			m_bSelAny;
 	BOOL			m_bSelDownload;
 	BOOL			m_bSelSource;
+	BOOL			m_bSelTrying;
 	BOOL			m_bSelPaused;
 	BOOL			m_bSelNotPausedOrMoving;
 	BOOL			m_bSelNoPreview;
