@@ -21,7 +21,7 @@ Other:
 			description="Shareaza 2.0 German Skin File"
 			link="http://www.shareaza.com/"
 			email="jann_roeder@arcor.de"
-			version="2.0.2.3"
+			version="2.0.2.2"
 			type="Language"
 			language="de"
 			prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -2031,6 +2031,20 @@ Other:
 	<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
 	<string id="16770" value="Der URL Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
 	<string id="16771" value="Sie haben die Datei &quot;%s&quot; bereits in ihrer Bibliothek. Wollen Sie sie trotzdem herunterladen?"/>
+	<string id="16772" value="Host:"/>
+	<string id="16773" value="Port:"/>
+	<string id="16774" value="&amp;Verbinden"/>
+	<string id="16775" value="&amp;Durchsuchen"/>
+    <string id="16776" value="Hinzu"/>
+    <string id="16777" value="Dateiname:"/>
+    <string id="16778" value="URL:"/>
+    <string id="16779" value="Typ:"/>
+    <string id="16780" value="Unspecified"/>
+    <string id="16781" value="Anfordern..."/>
+    <string id="16782" value="Erfolg!"/>
+    <string id="16783" value="Fertig, Schließen klicken"/>
+    <string id="16784" value="&amp;Schließen"/>
+    <string id="16785" value="(Keine Visualisierung)"/>
 	<string id="16800" value="Sie haben ihre Verbindungsgeschwindigkeit noch nicht angegeben. Bevor Sie fortfahren stellen Sie bitte ihre Verbindungsart oder Geschwindigkeit ein."/>
 	<string id="16801" value="Sie haben noch nicht angegeben, ob Sie eine Firewall benutzen. Bitte wählen Sie eine Firewalloption bevor Sie fortfahren."/>
 	<string id="16802" value="Sie haben keine Ordner freigegeben.  Sind Sie sicher?"/>
@@ -2039,7 +2053,8 @@ Other:
 	<string id="16805" value="Sie haben in ihrem Profil keinen Standort angegeben.\n\nEs wird empfohlen einen Standort anzugeben, damit andere Benutzer sehen können woher Sie kommen.\n\nSind Sie sicher, dass Sie ohne einen Standort anzugeben fortfahren möchten?"/>
 	<string id="16806" value="Sie haben angegeben, dass Sie in ihrem NAT Router / Firewall port-forwarding benutzen möchten.\n\nBitte konfigurieren Sie ihr Netzwerk um port %i an ihren PC weiterzuleiten."/>
 	<string id="16807" value="Bitte geben sie das gewünschte Bandbreitenlimit ein. &quot;123 kb/s&quot; für Kilobits pro Sekunde, oder &quot;123 KB/s&quot; für Kilobytes pro Sekunde."/>
-	<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht festgelegt. Sind Sie sicher, dass sie fortfahren möchten?"/>
+	<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht angegeben. Sind Sie sicher, dass sie fortfahren möchten?"/>
+	<string id="16809" value="E&amp;xit"/>
 	<string id="16864" value="Service Provider abfragen..."/>
 	<string id="16865" value="Service Provider &quot;%s&quot; abfragen..."/>
 	<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)."/>
@@ -2078,6 +2093,8 @@ Other:
 	<string id="16941" value="&quot;Durchsuchen&quot; Verbindung zu %s mangels Aktivität beendet."/>
 	<string id="16942" value="&quot;Durchsuchen&quot; Verbindung zu %s wird beendet."/>
 	<string id="16943" value="%s durchsuchen"/>
+	<string id="8141" value="Suchleiste einblenden"/>
+    <string id="8142" value="Suchleiste ausblenden"/>
 	<string id="8143" value="Suchen..."/>
 	<string id="8144" value="Jetzt suchen"/>
 	<string id="8145" value="Weitersuchen"/>
@@ -2142,6 +2159,13 @@ Other:
 	<string id="8313" value="Diese Datei scheint SPAM zu sein."/>
 	<string id="8314" value="Sie haben diese Datei schon einmal heruntergeladen und gelöscht."/>
 	<string id="8315" value="Blacklisted: "/>
+	<string id="8320" value="Status:"/>
+    <string id="8321" value="Geschw.:"/>
+    <string id="8322" value="URL:"/>
+    <string id="8323" value="User Agent:"/>
+    <string id="8324" value="Inaktiv"/>
+    <string id="8325" value="Aktive"/>
+    <string id="8326" value="Next in Line"/>
 	<string id="16304" value="Die TTH Daten des Hosts sind verfälscht oder inkonsistent, ignoriert."/>
 	<string id="16305" value="Die TTH Daten des Hosts entsprechen nicht dem erwarteten Root-Wert."/>
 	<string id="16306" value="TTH Daten für &quot;%s&quot; empfangen, %i Level, kleinstes verifizierbarer Teil ist %s."/>
@@ -2191,6 +2215,8 @@ Other:
 	<string id="16405" value="Möchten Sie diese Datei herunterladen?\r\n\r\n&quot;%s&quot;\r\n\r\nKlicken Sie Abbrechen um nicht mehr gefragt zu werden."/>
 	<string id="16406" value="Möchten Sie alle Dateien aus dieser Kollektion herunterladen?\r\n\r\nKlicken Sie Abbrechen um nicht mehr gefragt zu werden."/>
 	<string id="16407" value="Möchte Sie von dieser Kollektion nicht gefragt werden etwas herunterzuladen?"/>
+	<string id="16408" value="&amp;URI kopieren"/>
+    <string id="16409" value="&amp;URIs exportieren..."/>
 	<string id="8208" value="Shareaza hasht %i Datei(en):"/>
 	<string id="8096" value="Keine Datei markiert"/>
 	<string id="8097" value="Eine Quelle verfügbar (%s).  "/>
@@ -2296,6 +2322,35 @@ Other:
 	<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
   	<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
   	<string id="20000" value="Keine URN verfügbar."/>
+	<string id="20100" value="Verbinden"/>
+	<string id="20101" value="Anfordern"/>
+	<string id="20102" value="Antwort"/>
+	<string id="20103" value="Herunterladen"/>
+	<string id="20104" value="TigerTree"/>
+	<string id="20105" value="Hashset"/>
+	<string id="20106" value="Metadaten"/>
+	<string id="20107" value="Beschäftigt"/>
+	<string id="20108" value="Einreihen"/>
+	<string id="20109" value="In Warteschlange"/>
+	<string id="20110" value="Unbekannt"/>
+	<string id="20111" value="Fertig"/>
+	<string id="20112" value="Seeden"/>
+	<string id="20113" value="Verschieben"/>
+	<string id="20114" value="Pause"/>
+	<string id="20115" value="Dateifehler"/>
+	<string id="20116" value="Can't Move"/>
+	<string id="20117" value="Verifizieren"/>
+	<string id="20118" value="Aktiv"/>
+	<string id="20119" value="Warten"/>
+	<string id="20120" value="Suchen"/>
+	<string id="20121" value="Erstellen"/>
+	<string id="20122" value="Torrent"/>
+	<string id="20123" value="Tracker Down"/>
+	<string id="20124" value="(Keien Quellen)"/>
+	<string id="20125" value="Verifiziert"/>
+	<string id="20126" value="nicht verifiziert"/>
+	<string id="20127" value="Quelle"/>
+	<string id="20128" value="Quellen"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2310,7 +2365,7 @@ Other:
 	
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein"/>
 	
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Allgemein">
 		<control caption="_Benutzeroberfläche:"/>
 		<control caption="Bei Programmstart verbinden"/>
 		<control caption="Shareaza mit Windows starten"/>
@@ -2332,6 +2387,7 @@ Other:
 		<control/>
 		<control caption="Bei Klick auf [-]:"/>
 		<control/>
+		 <control caption="Suchleiste automatisch ausblenden"/>
 	</dialog>
 	
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothek">
