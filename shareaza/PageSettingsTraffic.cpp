@@ -97,7 +97,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.RequireForTransfers, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
-	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 2000 );
+	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 300 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
