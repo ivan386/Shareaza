@@ -886,7 +886,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pDownload->m_nSize < SIZE_UNKNOWN )
 				strText = Settings.SmartVolume( pDownload->m_nSize, FALSE );
-			else;
+			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
 			break;
 			
