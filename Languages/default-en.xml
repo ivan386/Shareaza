@@ -4081,5 +4081,17 @@
 		<column from="Transfers" to=""/>
 		<column from="Order" to=""/>
 	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to=""/>
+		<column from="Value" to=""/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to=""/>
+		<column from="URL" to=""/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to=""/>
+		<column from="Expires" to=""/>
+	</list>
 </listColumns>
 </skin>
