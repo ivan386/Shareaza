@@ -801,7 +801,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_UNKNOWN3:
 			break;
 		default:
-			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) )
+			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) == 0 )
 			{
 				// No idea what this means. Probably from the eDonkey client.
 			}
