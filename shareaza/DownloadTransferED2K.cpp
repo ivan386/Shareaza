@@ -586,7 +586,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 				
 				BOOL bUseful = m_pDownload->SubmitData( nOffset, pBuffer, nLength );
 				
-                m_oRequested.erase( FF::SimpleFragment( nOffset, nLength ) );
+                m_oRequested.erase( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 				
 				m_pSource->AddFragment( nOffset, nLength,
 					( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
