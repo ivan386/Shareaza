@@ -127,7 +127,7 @@ lt.reg_apptitle=Shareaza Ч geriausia programa bylш mainams
 lt.icons_license=Licencinл sutartis
 lt.icons_uninstall=Paрalinti
 lt.icons_downloads=Atsisiuntimai
-lt.dialog_shutdown=Do you wish to shut down %1?
+lt.dialog_shutdown=Ar norite nutraukti Д%1У darbа?
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -277,5 +277,5 @@ gr.reg_apptitle=Shareaza Ultimate File Sharing
 gr.icons_license=Ґдейб
 gr.icons_uninstall=Ѕрегкбф№уфбуз
 gr.icons_downloads= бфЁвбумб
-gr.dialog_shutdown=Do you wish to shut down %1?
+gr.dialog_shutdown=’отите ли завершить работу %1?
 
