@@ -43,6 +43,7 @@ CDownloadWithSearch::CDownloadWithSearch()
 	m_tSearchTime		= 0;
 	m_tSearchCheck		= 0;
 	m_tLastED2KGlobal	= 0;
+	m_tLastED2KLocal	= 0;
 }
 
 CDownloadWithSearch::~CDownloadWithSearch()

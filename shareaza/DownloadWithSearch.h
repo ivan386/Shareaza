@@ -43,6 +43,7 @@ protected:
 	DWORD			m_tSearchCheck;		// Limit auto searches
 public:
 	DWORD			m_tLastED2KGlobal;	// Time the last ed2k UDP GetSources was done on this download
+	DWORD			m_tLastED2KLocal;	// Time the last ed2k TCP GetSources was done on this download
 	
 // Operations
 public:
