@@ -787,14 +787,14 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <item id="ID_SEARCH_COPY" text="Kopijuoti _URI..."/>
+                       <item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą..."/>
 
                </menu>
        </menu>
        <menu name="CSearchWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
                <item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti dabar"/>
-               <item id="ID_SEARCH_COPY" text="Kopijuoti _URI"/>
+               <item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
                <separator/>
                <item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
                <item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
@@ -834,13 +834,13 @@ right quote    &#147;
                </menu>
                <menu text="_Bylos aprašas internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <item id="ID_SEARCH_COPY" text="Kopijuoti _URI..."/>
+                       <item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą..."/>
 
                </menu>
        </menu>
        <menu name="CBrowseHostWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
-               <item id="ID_SEARCH_COPY" text="Kopijuoti _URI"/>
+               <item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
                <separator/>
                <item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
                <separator/>
@@ -865,7 +865,7 @@ right quote    &#147;
        <!-- HIT MONITOR WINDOW -->
        <menu name="CHitMonitorWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
-               <item id="ID_SEARCH_COPY" text="Kopijuoti _URI"/>
+               <item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
                <separator/>
                <item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
                <item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
@@ -920,7 +920,7 @@ right quote    &#147;
                <menu text="K_ita">
                        <item id="ID_DOWNLOADS_SHARE" text="_Bendrinti bylą"/>
                        <separator/>
-                       <item id="ID_DOWNLOADS_COPY" text="_Kopijuoti URI"/>
+                       <item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
                        <item id="ID_DOWNLOADS_URL" text="_Pridėti šaltinį..."/>
                        <separator/>
                    <item id="ID_DOWNLOADS_MONITOR" text="_Monitoriaus langas"/>
@@ -960,7 +960,7 @@ right quote    &#147;
                <item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Val_yti"/>
                <separator/>
-               <item id="ID_DOWNLOADS_COPY" text="_Kopijuoti URI"/>
+               <item id="ID_DOWNLOADS_COPY" text="Kopijuoti nuorodą"/>
                <separator/>
                <item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
                <item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
@@ -1314,7 +1314,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_NEIGHBOURS_DISCONNECT" text="_Atsijungti"/>
                <separator/>
-               <item id="ID_NEIGHBOURS_COPY" text="Kopijuoti _URI"/>
+               <item id="ID_NEIGHBOURS_COPY" text="Kopijuoti _nuorodą"/>
        </menu>
        <menu name="CNeighboursWnd">
                <item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
@@ -1323,7 +1323,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_NEIGHBOURS_DISCONNECT" text="_Atsijungti"/>
                <separator/>
-               <item id="ID_NEIGHBOURS_COPY" text="Kopijuoti _URI"/>
+               <item id="ID_NEIGHBOURS_COPY" text="Kopijuoti _nuorodą"/>
                <separator/>
                <menu text="_Tinklai">
                        <item id="ID_NETWORK_CONNECT" text="Jun_gtis"/>
@@ -2669,15 +2669,15 @@ right quote    &#147;
        <string id="16405" value="Ar norite parsisiųsti šią bylą?\n\n„%s“\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
        <string id="16406" value="Ar norite parsisiųsti visas bylas iš šio rinkinio?\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
        <string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
-       <string id="16408" value="Kopijuoti &amp;URI"/>
-       <string id="16409" value="Eksportuoti &amp;URIs..."/>
+       <string id="16408" value="Kopijuoti &amp;nuorodą"/>
+       <string id="16409" value="Eksportuoti &amp;nuorodas..."/>
        <string id="16448" value="Susijungta su %s, patvirtinama..."/>
        <string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
        <string id="16450" value="Ryšys su %s nutrauktas."/>
        <string id="16451" value="Ryšys su %s prarastas."/>
        <string id="16452" value="Neatpažinta komanda „%s“."/>
        <string id="16453" value="Jungiamasi su adresatu %s pokalbiui..."/>
-       <string id="16454" value="Priimama įeinanti užklausa pokalbiui iš %s, patvirtinimas ryšys..."/>
+       <string id="16454" value="Priimama įeinanti užklausa pokalbiui iš %s, patvirtinamas ryšys..."/>
        <string id="16455" value="%s dabar žinomas(-a) kaip %s."/>
        <string id="16456" value="Neįmanoma susisiekti su adresatu %s."/>
        <string id="16457" value="Ryšio užmegzti nepavyko dėl klaidų perdavimo linijoje."/>
@@ -2831,7 +2831,7 @@ right quote    &#147;
        <string id="17485" value="Gautas BitTorrent seklio atsakymas apie bylą „%s“, %i nauji šaltiniai(-ų)."/>
        <string id="17486" value="Užmezgamas ryšys su BitTorrent klientu %s..."/>
        <string id="17487" value="Užmegztas ryšys su BitTorrent klientu %s, patvirtinama..."/>
-       <string id="17488" value="Jūs pakeitėte šios torrent bylos seklio URL. Ar tikrai norite palikti šį pakeitimą?\n\nNeteisingas seklio URL gali neleisti toliau vykdyti parsisiuntimo."/>
+       <string id="17488" value="Jūs pakeitėte šios torrent bylos seklio nuorodą. Ar tikrai norite palikti šį pakeitimą?\n\nNeteisinga seklio nuoroda gali neleisti toliau vykdyti parsisiuntimo."/>
        <string id="17489" value="BitTorrent ryšiui su adresatu %s naudojamas išplėstinis protokolas, identifikuotas kaip &quot;%s&quot;."/>
        <string id="17490" value="Gauta %i naujų(-i) BitTorrent šaltinių(-iai) iš adresato %s."/>
        <string id="17491" value="Torrent byla „%s“ jau yra parsisiunčiamų bylų sąraše ir pradėti ją skleisti negalima."/>
@@ -2859,7 +2859,7 @@ right quote    &#147;
        <string id="18510" value="Ar tikrai norite nustatyti, kad šios bylos parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrima visa byla, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
        <string id="19000" value="Nuotolinė prieiga neįgalinta."/>
        <string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
-       <string id="19002" value="Neįmanoma priimti susijungimų, URL nepasiekiamas."/>
+       <string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
        <string id="20000" value="Nėra universalių šaltinių vardų."/>
        <string id="20100" value="Jungiamasi"/>
        <string id="20101" value="Užklausiama"/>
@@ -2916,7 +2916,7 @@ right quote    &#147;
                <control caption="Visada išskleisti šaltinių medį"/>
                <control caption="Eiti prie siuntimų pridėjus naują bylą"/>
                <control caption="Visada išskleisti naujų bylų šaltinių medį"/>
-               <control caption="Klausti prieš pridedant URL adresus"/>
+               <control caption="Klausti prieš pridedant nuorodas"/>
                <control caption="Spartą rodyti:"/>
                <control/>
                <control caption="_Užuominos:"/>
@@ -3414,7 +3414,7 @@ right quote    &#147;
                <control caption="_Taisyti:"/>
                <control caption="Pavad.:"/>
                <control/>
-               <control caption="URL:"/>
+               <control caption="Nuoroda:"/>
                <control/>
                <control caption="Nauja"/>
                <control caption="Šalinti"/>
@@ -3450,7 +3450,7 @@ right quote    &#147;
 
        <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Parsisiųsti bylą ar Torrent">
                <control/><control/>
-               <control caption="Su „Shareaza“ parsisiųsti bylas lengva. Tiesiog įrašykite arba įterpkite nukopijuotą bylos URL ar URI į langelį apačioje ir paspauskite „Parsisiųsti“."/>
+               <control caption="Su „Shareaza“ parsisiųsti bylas lengva. Tiesiog įrašykite arba įterpkite nukopijuotą bylos nuorodą į langelį apačioje ir paspauskite „Parsisiųsti“."/>
                <control/>
                <control caption="_Parsisiųsti"/>
                <control caption="_Atšaukti"/>
@@ -3662,17 +3662,17 @@ right quote    &#147;
                <control caption="Atšaukti"/>
        </dialog>
 
-       <dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI kopijavimas">
+       <dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Nuorodos kopijavimas">
                <control/>
-               <control caption="Jūs galite nukopijuoti pasirinktos bylos URI skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš URI nuorodų žemiau:"/>
+               <control caption="Jūs galite nukopijuoti pasirinktos bylos nuorodą skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš žemiau pateiktų nuorodų:"/>
                <control/><control/><control/>
-               <control caption="Įtraukti _save kaip pastovų URL šaltinį"/>
+               <control caption="Įtraukti _save kaip pastovų nuorodos šaltinį"/>
                <control caption="Atšaukti"/>
        </dialog>
 
-       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URI adresų eksportavimas">
+       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Nuorodų eksportavimas">
                <control/>
-               <control caption="Jūs pasirinkote %lu bylą(-ų,-as) „Shareaza“-įgalintų URI nuorodų ekspotavimui. Pasirinkite URI formatą ir paspauskite „Išsaugoti“:"/>
+               <control caption="Jūs pasirinkote %lu bylą(-ų,-as) su „Shareaza“ susietų nuorodų ekspotavimui. Pasirinkite nuorodos formatą ir paspauskite „Išsaugoti“:"/>
                <control/>
                <control caption="Įterpti ženklą:"/>
                <control/>
@@ -3684,11 +3684,11 @@ right quote    &#147;
                <control caption="Atšaukti"/>
        </dialog>
 
-       <dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="„Shareaza“ URI tvarkytuvė">
+       <dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="„Shareaza“ nuorodų tvarkytuvė">
                <control/>
-               <control caption="Jūs paspaudėte „Shareaza“-įgalintą URI, kuris nurodo į šią bylą tinkle:"/>
-               <control caption="Jūs paspaudėte „Shareaza“-įgalintą URL, kuris sujungs Jus su šiuo kompiuteriu ar serveriu:"/>
-               <control caption="Jūs paspaudėte „Shareaza“-įgalintą URI, kuris leis peržiūrėti bylas, esančias šiame kompiuteryje:"/>
+               <control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri nukreipia į šią bylą tinkle:"/>
+               <control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri sujungs Jus su šiuo kompiuteriu ar serveriu:"/>
+               <control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri leis peržiūrėti bylas, esančias šiame kompiuteryje:"/>
                <control/><control/><control/><control/>
                <control caption="Pasirinkite, kokį veiksmą „Shareaza“ turėtų atlikti:"/>
                <control caption="Parsi_siųsti dabar"/>
@@ -3696,7 +3696,7 @@ right quote    &#147;
                <control caption="_Atšaukti"/>
                <control caption="_Prisiminti pasirinkimą sekantį kartą"/>
                <control caption="Stebėti parsisiuntimą _monitoriuje"/>
-               <control caption="Jūs paspaudėte „Shareaza“-įgalintą URI, kuris pridės šią paslaugų radimo tarnybą į Jūsų tarnybų talpyklą."/>
+               <control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri pridės šią paslaugų radimo tarnybą į Jūsų tarnybų talpyklą."/>
        </dialog>
 
        <dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Parsiunčiami meta duomenys...">
