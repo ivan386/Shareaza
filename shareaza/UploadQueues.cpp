@@ -402,6 +402,8 @@ BOOL CUploadQueues::Load()
 	}
 	
 	if ( GetCount() == 0 ) CreateDefault();
+
+	Validate();
 	
 	return TRUE;
 }
