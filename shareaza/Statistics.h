@@ -40,6 +40,7 @@ public:
 		{
 			QWORD	Connected;
 			QWORD	Hub;
+			QWORD	Ultrapeer;
 		} Timer;
 
 		struct

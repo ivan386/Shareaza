@@ -65,7 +65,8 @@ void CStatistics::Update()
 		if ( Network.IsWellConnected() )
 		{
 			Current.Timer.Connected ++;
-			if ( Neighbours.IsHub() ) Current.Timer.Hub ++;
+			if ( Neighbours.IsG2Hub() ) Current.Timer.Hub ++;
+			if ( Neighbours.IsG1Ultrapeer() ) Current.Timer.Ultrapeer ++;
 		}
 		
 		m_tSeconds = tNow;
