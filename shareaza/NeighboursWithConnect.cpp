@@ -130,18 +130,29 @@ CNeighbour* CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 // CNeighboursWithConnect
 
 void CNeighboursWithConnect::PeerPrune(PROTOCOLID nProtocol)
-{	//This function trims PEERS after you get a HUB. (eg: You have been demoted to a leaf for this protocol)
+{	// This function trims PEERS after you get a HUB. (eg: You have been demoted to a leaf for this protocol)
 	BOOL bNeedMore = NeedMoreHubs( nProtocol );
-	
-	for ( POSITION pos = GetIterator() ; pos ; )				//Loop through all neighbours
+	BOOL bNeedMoreAnyProtocol = NeedMoreHubs( PROTOCOL_NULL );
+
+	for ( POSITION pos = GetIterator() ; pos ; )				// Loop through all neighbours
 	{	
 		CNeighbour* pNeighbour = GetNext( pos );
-		if ( pNeighbour->m_nProtocol == nProtocol )				//If we're pruning this protocol
+		if ( pNeighbour->m_nProtocol == nProtocol )				// If we're pruning this protocol
 		{	
-			if ( pNeighbour->m_nNodeType != ntHub )				//And it's not a hub
+			if ( pNeighbour->m_nNodeType != ntHub )				// And it's not a hub
 			{	
 				if ( ! bNeedMore || pNeighbour->m_nState == nrsConnected )	// And either we don't need any more hubs, OR it's finished connecting (so we know it won't be a hub)
-					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );		//Then drop it
+					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );		// Then drop it
+			}
+		}
+		else if ( pNeighbour->m_nProtocol == PROTOCOL_NULL )	// Else if this neighbour doesn't have a protocol
+		{	// If a neighbour protocol is unknown, it must be a G1 or G2 client in the 
+			// middle of connecting. (It hasn't finished the handshake yet.)
+			if ( pNeighbour->m_bInitiated ) // If we initiated the connection
+			{	// If it's a connection we initiated, we know it's not a leaf trying to contact us
+				// Therefore, it is probably a hub connection attempt.
+				if ( ! bNeedMoreAnyProtocol )	//If we don't need more hubs (on any protocol)
+					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );		// Then drop it
 			}
 		}
 	}
