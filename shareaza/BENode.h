@@ -84,7 +84,9 @@ public:
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
 		int nSource = str.GetLength();
-		int nLength = MultiByteToWideChar( CP_UTF8, MB_ERR_INVALID_CHARS, (LPCSTR)m_pValue, nSource, NULL, 0 );
+		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
+
+		int nLength = MultiByteToWideChar( CP_UTF8, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
 		if ( GetLastError() != ERROR_NO_UNICODE_TRANSLATION )
 			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
 		else
