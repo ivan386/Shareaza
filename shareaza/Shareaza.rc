@@ -4713,7 +4713,7 @@ STRINGTABLE
 BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
-    ID_WINDOW_TILE_VERT     "Create a .torrent for this file to upload to a website"
+    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
 
 STRINGTABLE 
