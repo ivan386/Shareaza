@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.114"
+		version="2.1.0.120"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2000,6 +2000,26 @@
 		запустить очистку диска, удалить ненужные файлы или деинсталлировать ПО, которого вам больше не понадобится.</text>
 	</document>
 
+	<document name="GeneralHelp.DiskWriteFail">
+		<text format="b">Ошибка записи в нужную папку</text>
+		<newline gap="8"/>
+		<text>В диск или папку, которую использует Shareaza, невозможно записывать.</text>
+		<newline gap="8"/>
+		<text>Сетевой диск отключен или Вы не имеете прав записи в выбранную папку.
+		Проверьте папки и их права или выберите другую папку для незаконченных файлов.</text>
+	</document>
+
+	<document name="GeneralHelp.ConnectionFail">
+		<text format="b">Связь с интернетом оборвалась</text>
+		<newline gap="8"/>
+		<text>Windows сообщили, что связь с интернетом отсутсвует.</text>
+		<newline gap="8"/>
+		<text>Наверное, Ваш модем или маршрутизатор отключился, и доступ к инернету закрылся.
+		Вам необходимо соединиться вручную или выключить и включить оборудование заново.</text>
+		<newline gap="8"/>
+		<text>Shareaza перестала пробовать подключяться, чтобы сохранить кэш хостов.</text>
+	</document>
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Обнаружен Windows XP Service Pack 2</text>
 		<newline gap="8"/>
@@ -2034,10 +2054,10 @@
 
 	<!-- Search help documents -->
 
-	<document name="SearchHelp.BadSearch">
-		<text format="b">Перефразируйте Ваш поиск</text>
+	<document name="SearchHelp.BadSearch1">
+		<text format="b">Перефразируйте Ваш запрос</text>
 		<newline gap="8"/>
-		<text>Ваш поиск плохо сформатирован, и он может работать неправильно.
+		<text>Ваш запрос плохо сформатирован, и он может работать неправильно.
 		Для поиска Вы должны использовать несколько слов, если это возможно, и указывать схему
 		(тип файла). Кроме того, во фразах не должны быть только цифры или отрицания (с минусом перед словами),
 		а также Вы должны избегать очень неконкретных запросов.</text>
@@ -2047,13 +2067,28 @@
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
-		<text format="b">Перефразируйте Ваш поиск</text>
+		<text format="b">Перефразируйте Ваш запрос</text>
 		<newline gap="8"/>
-		<text>Ваш поиск плохо сформатирован, и он может работать неправильно. Для того, чтобы смогли начать поиск,
+		<text>Ваш запрос плохо сформатирован, и он может работать неправильно. Для того, чтобы смогли начать поиск,
 		 Вы должны использовать минимальное число правильных букв/знаков.</text>
 		<newline gap="8"/>
 		<text>Если в Вашем запросе имеются тип файла или цифры, Вы толжны указать дополнительные условия тоже.
 		</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">Перефразируйте Ваш запрос</text>
+		<newline gap="8"/>
+		<text>В этом запросе, кажется, отсутствуют слова или он имеет только общеизвестные типы файлов.</text>
+		<newline gap="8"/>
+		<text>Если Вы сталкиваетесь с трудностями формулируя запросы, имейте ввиду, что они похожы на запросы в 
+		интернетных поисковиках.
+		Лучше всего использовать специфичные термины и фразы: уникальные названия, имена и ключевые слова.</text>
+		<newline gap="8"/>
+		<text>Поиск общих терминов бывает неэффективным и плохим, и это может вызвать большой поток данных 
+		во время поиска.</text>
+		<newline gap="8"/>
+		<text>Подробную информацию Вы найдете на сайте Shareaza.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
@@ -2416,6 +2451,9 @@
 	<string id="WINDOW_SEARCHPAD" value="Поиск"/>
 	<string id="WINDOW_HELP" value="Shareaza помощь"/>
 	<string id="7000" value="Вы уверены, что хотите удалить этот фильтр?"/>
+	<string id="7001" value="&amp;Схемы"/>
+	<string id="7002" value="Разные значения"/>
+	<string id="7003" value="Разные"/>
 	<string id="8000" value="Установки Shareaza"/>
 	<string id="8001" value="Добро пожаловать в Shareaza"/>
 	<string id="8002" value="Свойства файла"/>
@@ -2478,7 +2516,7 @@
 	<string id="8156" value="Поиск"/>
 	<string id="8157" value="Результаты"/>
 	<string id="8158" value="Очис."/>
-	<string id="8159" value="Опытным..."/>
+	<string id="8159" value="Подробнее"/>
 	<string id="8160" value="Установление соединения с хостом..."/>
 	<string id="8161" value="Послан запрос на активную доставку, жду соединения..."/>
 	<string id="8162" value="Соединено, посылается запрос на просмотр..."/>
@@ -2491,6 +2529,8 @@
 	<string id="8177" value="Введите ключевые слова для поиска:"/>
 	<string id="8178" value="Какого типа файл?"/>
 	<string id="8179" value="(Очистить историю поисков)"/>
+	<string id="8180" value="Размер файла должен быть"/>
+	<string id="8181" value="&#160;до"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza создает хешы для %i файла(ов):"/>
 	<string id="8224" value="Shareaza загружает:"/>
 	<string id="8225" value="Загрузка приостановлена:"/>
@@ -3995,7 +4035,7 @@
 		<control caption="_URNs:"/>
 		<control caption="SHA1:"/>
 		<control/>
-		<control caption="Tiger-Root:"/>
+		<control caption="Tiger-root:"/>
 		<control/>
 		<control caption="ED2K:"/>
 		<control/>
