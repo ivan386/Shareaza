@@ -9,7 +9,7 @@
 ; two periods being displayed).
 ;
 ; $jrsoftware: issrc/Files/Default.isl,v 1.58 2004/04/07 20:17:13 jr Exp $
-; Italian.isl revisione 19 - 2004/09/15
+; Italian.isl revisione 22 - 2004/09/18
 ;
 ; Tradotto da ale5000 - ale5000@tiscali.it - http://digilander.libero.it/kazaaita/
 ; Segnalatemi via e-mail eventuali errori o suggerimenti
@@ -51,13 +51,13 @@ LdrCannotExecTemp=Impossibile eseguire i file nella cartella temporanea. Install
 LastErrorMessage=%1.%n%nErrore %2: %3
 SetupFileMissing=File %1 non trovato nella cartella di installazione. Correggere il problema o richiedere una nuova copia del software.
 SetupFileCorrupt=I file di installazione sono danneggiati. Richiedere una nuova copia del software.
-SetupFileCorruptOrWrongVer=I file di installazione sono danneggiati, oppure sono incompatibili con questa versione del programma. Correggere il problema o richiedere una nuova copia del software.
+SetupFileCorruptOrWrongVer=I file di installazione sono danneggiati, oppure sono incompatibili con questa versione del programma di installazione. Correggere il problema o richiedere una nuova copia del software.
 NotOnThisPlatform=Questo programma non è compatibile con %1.
-OnlyOnThisPlatform=Questo programma richiede per funzionare %1.
+OnlyOnThisPlatform=Questo programma richiede %1.
 WinVersionTooLowError=Questo programma richiede %1 versione %2 o successiva.
 WinVersionTooHighError=Questo programma non può essere installato su %1 versione %2 o successiva.
-AdminPrivilegesRequired=Per installare questo programma si deve accedere al sistema come amministratore.
-PowerUserPrivilegesRequired=Devi essere connesso come Amministratore per poter installare questo programma.
+AdminPrivilegesRequired=Devi essere connesso come amministratore per installare questo programma.
+PowerUserPrivilegesRequired=Devi essere connesso come amministratore o come membro del gruppo Power Users per poter installare questo programma.
 SetupAppRunningError=%1 è attualmente in esecuzione.%n%nChiudere adesso tutte le istanze del programma e poi premere OK, oppure premere Annulla per uscire.
 UninstallAppRunningError=%1 è attualmente in esecuzione.%n%nChiudere adesso tutte le istanze del programma e poi premere OK, oppure premere Annulla per uscire.
 
@@ -70,7 +70,7 @@ ExitSetupTitle=Uscita dall'installazione
 ExitSetupMessage=L'installazione non è completa. Uscendo dall'installazione in questo momento, il programma non sarà installato.%n%nÈ possibile eseguire l'installazione in un secondo tempo.%n%nUscire dall'installazione?
 AboutSetupMenuItem=&Informazioni sull'installazione...
 AboutSetupTitle=Informazioni sull'installazione
-AboutSetupMessage=%1 versione %2%n%3%n%n%1 home page:%n%4
+AboutSetupMessage=%1 versione %2%n%3%n%n%1 Home page:%n%4
 AboutSetupNote=
 
 ; *** Buttons
@@ -96,7 +96,7 @@ SelectLanguageLabel=Selezionare la lingua da utilizzare durante l'installazione:
 ClickNext=Premere Avanti per continuare, o Annulla per uscire.
 BeveledLabel=
 BrowseDialogTitle=Sfoglia per cartelle
-BrowseDialogLabel=Selezionare la cartella in questa lista, poi premere OK.
+BrowseDialogLabel=Selezionare una cartella dalla lista, poi premere OK.
 NewFolderName=Nuova cartella
 
 ; *** "Welcome" wizard page
@@ -106,14 +106,14 @@ WelcomeLabel2=[name/ver] sarà installato sul computer.%n%nSi consiglia di chiude
 ; *** "Password" wizard page
 WizardPassword=Password
 PasswordLabel1=Questa installazione è protetta da password.
-PasswordLabel3=Inserire la password, poi premere Avanti per continuare. Le password distinguono maiuscole/minuscole.
+PasswordLabel3=Inserire la password, poi premere Avanti per continuare. Le password distinguono tra maiuscole e minuscole.
 PasswordEditLabel=&Password:
 IncorrectPassword=La password inserita non è corretta, riprovare.
 
 ; *** "License Agreement" wizard page
-WizardLicense=Contratto di Licenza
-LicenseLabel=Leggere con attenzione le informazioni che seguono prima di procedere.
-LicenseLabel3=Leggere il seguente contratto di licenza. È necessario accettare tutti i termini di questo accordo per procedere con l'installazione.
+WizardLicense=Contratto di licenza
+LicenseLabel=Leggere con attenzione le importanti informazioni che seguono prima di procedere.
+LicenseLabel3=Leggere il seguente contratto di licenza. È necessario accettare tutti i termini del contratto per procedere con l'installazione.
 LicenseAccepted=&Accetto i termini del contratto di licenza 
 LicenseNotAccepted=&Non accetto i termini del contratto di licenza
 
@@ -131,19 +131,19 @@ UserInfoDesc=Inserire le seguenti informazioni.
 UserInfoName=&Nome:
 UserInfoOrg=&Società:
 UserInfoSerial=&Numero di serie:
-UserInfoNameRequired=E' necessario inserire un nome.
+UserInfoNameRequired=È necessario inserire un nome.
 
 ; *** "Select Destination Location" wizard page
 WizardSelectDir=Selezione della cartella di destinazione
 SelectDirDesc=Dove vuoi installare [name]?
 SelectDirLabel3=[name] sarà installato nella seguente cartella.
 SelectDirBrowseLabel=Per continuare, premere Avanti. Per selezionare un'altra cartella, premere Sfoglia.
-DiskSpaceMBLabel=Il programma richiede almeno [mb] MB di spazio sul disco.
+DiskSpaceMBLabel=Sono richiesti almeno [mb] MB di spazio sul disco.
 ToUNCPathname=Non è possiblie installare su un percorso UNC. Se stai installando attraverso una rete, devi connettere la risorsa come una unità di rete.
-InvalidPath=Devi inserire un percorso completo di lettera di unità; per esempio:%n%nC:\APP%n%no un percorso UNC nella forma:%n%n\\server\share
-InvalidDrive=L'unità o lo share UNC selezionato non esiste o non è accessibile. Selezionarne un'altro.
+InvalidPath=Devi inserire un percorso completo di lettera di unità; per esempio:%n%nC:\APP%n%no un percorso UNC nella forma:%n%n\\server\condivisione
+InvalidDrive=L'unità o il percorso UNC selezionato non esiste o non è accessibile. Selezionarne un'altro.
 DiskSpaceWarningTitle=Spazio su disco insufficiente
-DiskSpaceWarning=L'installazione richiede almeno %1 KB di spazio libero per installare, ma l'unità selezionata ha solo %2 KB disponibili.%n%nVuoi continuare comunque?
+DiskSpaceWarning=L'installazione richiede almeno %1 KB di spazio libero per eseguire l'installazione, ma l'unità selezionata ha solo %2 KB disponibili.%n%nVuoi continuare comunque?
 DirNameTooLong=Il nome della cartella o il percorso sono troppo lunghi.
 InvalidDirName=Il nome della cartella non è valido.
 BadDirName32=Il nome della cartella non può includere nessuno dei caratteri seguenti:%n%n%1
@@ -161,15 +161,15 @@ FullInstallation=Installazione completa
 CompactInstallation=Installazione compatta
 CustomInstallation=Installazione personalizzata
 NoUninstallWarningTitle=Componente esistente
-NoUninstallWarning=L'installazione ha rilevato che i seguenti componenti sono già installati sul computer:%n%n%1%n%nDeselezionando questi componenti non verranno disinstallati.%n%nVuoi continuare comunque?
+NoUninstallWarning=I seguenti componenti sono già installati sul computer:%n%n%1%n%nDeselezionando questi componenti non verranno disinstallati.%n%nVuoi continuare comunque?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=La selezione corrente richiede almeno [mb] MB di spazio su disco.
 
 ; *** "Select Additional Tasks" wizard page
 WizardSelectTasks=Selezione processi addizionali
-SelectTasksDesc=Quali processi addizionali vuoi avviare?
-SelectTasksLabel2=Selezionare i processi addizionali da eseguire installando [name], poi premere Avanti.
+SelectTasksDesc=Quali processi aggiuntivi vuoi avviare?
+SelectTasksLabel2=Selezionare i processi aggiuntivi che verranno eseguiti durante l'installazione di [name], poi premere Avanti.
 
 ; *** "Select Start Menu Folder" wizard page
 WizardSelectProgramGroup=Selezione della cartella nel Menu Avvio/Start
@@ -185,7 +185,7 @@ NoProgramGroupCheck2=&Non creare una cartella nel Menu Avvio/Start
 
 ; *** "Ready to Install" wizard page
 WizardReady=Pronto per l'installazione
-ReadyLabel1=Il programma è pronto per iniziare l'installazione di [name] sul computer.
+ReadyLabel1=Il programma di installazione è pronto per iniziare l'installazione di [name] sul computer.
 ReadyLabel2a=Premere Installa per continuare con l'installazione, o premere Indietro per rivedere o modificare le impostazioni.
 ReadyLabel2b=Premere Installa per procedere con l'installazione.
 ReadyMemoUserInfo=Informazioni utente:
@@ -206,12 +206,12 @@ WizardInstalling=Installazione in corso
 InstallingLabel=Attendere il completamento dell'installazione di [name] sul computer.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Completamento dell'installazione guidata di [name]
+FinishedHeadingLabel=Completamento dell'installazione di [name]
 FinishedLabelNoIcons=L'installazione di [name] è stata completata con successo.
 FinishedLabel=L'installazione di [name] è stata completata con successo. L'applicazione può essere eseguita selezionando le icone installate.
 ClickFinish=Premere Fine per uscire dall'installazione.
-FinishedRestartLabel=Per completare l'installazione di [name], bisogna riavviare il computer. Vuoi riavviare ora?
-FinishedRestartMessage=Per completare l'installazione di [name], bisogna riavviare il computer.%n%nVuoi riavviare ora?
+FinishedRestartLabel=Per completare l'installazione di [name], è necessario riavviare il computer. Vuoi riavviare ora?
+FinishedRestartMessage=Per completare l'installazione di [name], è necessario riavviare il computer.%n%nVuoi riavviare ora?
 ShowReadmeCheck=Si, desidero vedere il file LEGGIMI adesso
 YesRadio=&Si, riavvia il computer adesso
 NoRadio=&No, riavvia il computer più tardi
@@ -224,7 +224,7 @@ RunEntryShellExec=Visualizza %1
 ChangeDiskTitle=L'installazione necessita del disco successivo
 SelectDiskLabel2=Inserire il disco %1 e premere OK.%n%nSe i file su questo disco possono essere trovati in una cartella diversa da quella visualizzata sotto, inserire il percorso corretto o premere Sfoglia.
 PathLabel=&Percorso:
-FileNotInDir2=Il file "%1" non può essere individuato  in "%2". Inserire il disco corretto o selezionare un'altra cartella.
+FileNotInDir2=Il file "%1" non è stato trovato in "%2". Inserire il disco corretto o selezionare un'altra cartella.
 SelectDirectoryLabel=Specificare il percorso del prossimo disco.
 
 ; *** Installation phase messages
@@ -236,8 +236,8 @@ StatusCreateDirs=Creazione cartelle...
 StatusExtractFiles=Estrazione files...
 StatusCreateIcons=Creazione icone...
 StatusCreateIniEntries=Creazione voci del file INI...
-StatusCreateRegistryEntries=Creazione voci di Registro...
-StatusRegisterFiles=Registrazione files...
+StatusCreateRegistryEntries=Creazione voci di registro...
+StatusRegisterFiles=Registrazione file...
 StatusSavingUninstall=Salvataggio delle informazioni di disinstallazione...
 StatusRunProgram=Termine dell'installazione...
 StatusRollback=Recupero delle modifiche...
@@ -250,9 +250,9 @@ ErrorFunctionFailedWithMessage=%1 fallito; codice %2.%n%3
 ErrorExecutingProgram=Impossibile eseguire il file:%n%1
 
 ; *** Registry errors
-ErrorRegOpenKey=Errore di apertura della chiave di Registro:%n%1\%2
-ErrorRegCreateKey=Errore di creazione della chiave di Registro:%n%1\%2
-ErrorRegWriteKey=Errore di scrittura della chiave di Registro:%n%1\%2
+ErrorRegOpenKey=Errore di apertura della chiave di registro:%n%1\%2
+ErrorRegCreateKey=Errore di creazione della chiave di registro:%n%1\%2
+ErrorRegWriteKey=Errore di scrittura della chiave di registro:%n%1\%2
 
 ; *** INI errors
 ErrorIniEntry=Errore nella creazione delle voci INI nel file "%1".
@@ -279,20 +279,20 @@ ErrorRegisterTypeLib=Impossibile registrare il tipo di Libreria: %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme=Si è verificato un errore durante l'apertura del file LEGGIMI.
-ErrorRestartingComputer=L'installazione non è riuscita a riavviare il computer. Riavviare manualmente.
+ErrorRestartingComputer=Impossibile riavviare il computer. Riavviare manualmente.
 
 ; *** Uninstaller messages
 UninstallNotFound=Il file "%1" non esiste. Impossibile disinstallare.
 UninstallOpenError=Il file "%1" non può essere aperto. Impossibile disinstallare
-UninstallUnsupportedVer=Il file log di disinstallazione "%1" è in un formato non riconosciuto da questa versione del programma. Impossibile disinstallare
+UninstallUnsupportedVer=Il file log di disinstallazione "%1" è in un formato non riconosciuto da questa versione del programma di disinstallazione. Impossibile disinstallare
 UninstallUnknownEntry=Trovata una voce sconosciuta (%1) nel file di log della disinstallazione
 ConfirmUninstall=Sei sicuro di voler rimuovere completamente %1 e tutti i suoi componenti?
 OnlyAdminCanUninstall=Questa applicazione può essere disinstallata solo da un utente con privilegi di Amministratore.
 UninstallStatusLabel=Attendere fino a che %1 è stato rimosso dal computer.
 UninstalledAll=%1 è stato rimosso con successo dal computer.
-UninstalledMost=%1 disinstallazione completata.%n%nAlcuni elementi non possono essere rimossi. Dovranno essere rimossi manualmente.
+UninstalledMost=Disinstallazione di %1 completata.%n%nAlcuni elementi non possono essere rimossi. Dovranno essere rimossi manualmente.
 UninstalledAndNeedsRestart=Per completare la disinstallazione di %1, è necessario riavviare il sistema.%n%nVuoi riavviare adesso?
-UninstallDataCorrupted="%1" file è danneggiato. Impossibile disinstallare
+UninstallDataCorrupted=Il file "%1" è danneggiato. Impossibile disinstallare
 
 ; *** Uninstallation phase messages
 ConfirmDeleteSharedFileTitle=Rimuovere il file condiviso?
