@@ -67,7 +67,7 @@ void CSettings::Setup()
 	Add( _T("Interface.TipUploads"), &Interface.TipUploads, TRUE );
 	Add( _T("Interface.TipNeighbours"), &Interface.TipNeighbours, TRUE );
 	Add( _T("Interface.TipMedia"), &Interface.TipMedia, TRUE );
-	//Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
+	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
 	
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
 	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
@@ -365,8 +365,6 @@ CSettings::CSettings()
 	Live.FirstRun			= FALSE;
 
 	Setup();
-
-	Interface.LowResMode	= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
 }
 
 CSettings::~CSettings()
@@ -442,6 +440,8 @@ void CSettings::Load()
 	
 	CreateDirectory( General.Path + _T("\\Data"), NULL );
 	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
+
+	Interface.LowResMode	= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
 }
 
 void CSettings::Save(BOOL bShutdown)
