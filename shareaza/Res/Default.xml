@@ -1985,6 +1985,17 @@
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
+
+	<document name="GeneralHelp.ConnectionFail">
+		<text format="b">Internet Connection Has Been Lost</text>
+		<newline gap="8"/>
+		<text>Windows reports that there is no internet connection is available.</text>
+		<newline gap="8"/>
+		<text>It is likely that a modem or router has dropped, meaning the internet cannot
+		be accessed. You may need to manually re-connect or reset your connection.</text>
+		<newline gap="8"/>
+		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
+	</document>
 	
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 detected</text>
