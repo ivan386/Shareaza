@@ -305,7 +305,7 @@ BOOL CLibraryFolders::MountCollection(SHA1* pSHA1, CCollectionFile* pCollection)
 
 void CLibraryFolders::CreateAlbumTree()
 {
-	int nCount = m_pAlbumRoot->GetFolderCount();
+	int nCount = GetAlbumRoot()->GetFolderCount();
 	
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
 	{
