@@ -892,9 +892,11 @@ void CRemote::PageDownloads()
 		
 		if ( pGroup == NULL ) continue;
 		
+		CString strStatus1, strStatus2;
 		Add( _T("download_id"), str );
 		Add( _T("download_filename"), pDownload->GetDisplayName() );
-		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? _T("Unknown") : Settings.SmartVolume( pDownload->m_nSize, FALSE ) );
+		LoadString( strStatus1, IDS_STATUS_UNKNOWN );
+		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? strStatus1 : Settings.SmartVolume( pDownload->m_nSize, FALSE ) );
 		float nProgress = ( pDownload->IsCompleted() || pDownload->IsMoving() ) ? 1.0f : pDownload->GetProgress();
 		str.Format( _T("%i"), (int)( 100.0f * nProgress ) );
 		Add( _T("download_percent"), str );
@@ -908,60 +910,73 @@ void CRemote::PageDownloads()
 		}
 		if ( pDownload->IsCompleted() )
 		{
-			str = pDownload->IsSeeding() ? _T("Seeding") : _T("Completed");
+			LoadString( strStatus1, IDS_STATUS_SEEDING );
+			LoadString( strStatus2, IDS_STATUS_COMPLETED );
+			str = pDownload->IsSeeding() ? strStatus1 : strStatus2;
 			Add( _T("download_is_complete"), _T("true") );
 		}
 		else if ( pDownload->IsMoving() )
 		{
-			str = _T("Moving");
+			LoadString( str, IDS_STATUS_MOVING );
 		}
 		else if ( pDownload->IsPaused() )
 		{
 			Add( _T("download_is_paused"), _T("true") );
 			if ( pDownload->m_bDiskFull )
-				str = ( pDownload->IsCompleted() ) ? _T("Can't Move") : _T("File Error");
+			{
+				LoadString( strStatus1, IDS_STATUS_CANTMOVE );
+				LoadString( strStatus2, IDS_STATUS_FILEERROR );
+				str = ( pDownload->IsCompleted() ) ? strStatus1 : strStatus2;
+			}
 			else
-				str = _T("Paused");
+				LoadString( str, IDS_STATUS_PAUSED );
 		}
 		else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
-			str = _T("Verifying");
+			LoadString( str, IDS_STATUS_VERIFYING );
 		else if ( pDownload->IsDownloading() )
 		{
 			DWORD tNow = pDownload->GetTimeRemaining();
 			if ( tNow == 0xFFFFFFFF )
-				str = _T("Active");
+				LoadString( str, IDS_STATUS_ACTIVE );
 			else
 				str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow % 3600 ) / 60, tNow % 60 );
 		}
 		else if ( pDownload->GetSourceCount() > 0 )
-			str = _T("Pending");
+			LoadString( str, IDS_STATUS_PENDING );
 		else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-			str = _T("Searching");
+			LoadString( str, IDS_STATUS_SEARCHING );
 		else if ( pDownload->m_oBTH.IsValid() )
 		{
 			if ( pDownload->IsTasking() )
-				str = _T("Creating");
+				LoadString( str, IDS_STATUS_CREATING );
 			else if ( pDownload->m_bTorrentTrackerError )
-				str = _T("Tracker Down");
+				LoadString( str, IDS_STATUS_TRACKERDOWN );
 			else
-				str = _T("Torrent");
+				LoadString( str, IDS_STATUS_TORRENT );
 		}
 		else
-			str = _T("No Sources");
+			LoadString( str, IDS_STATUS_NOSOURCES );
 		Add( _T("download_status"), str );
 		if ( pDownload->IsCompleted() )
 		{
 			if ( pDownload->m_bVerify == TS_TRUE )
-				str = _T("Verified");
+				LoadString( str, IDS_STATUS_VERIFIED );
 			else if ( pDownload->m_bVerify == TS_FALSE )
-				str = _T("Unverified");
+				LoadString( str, IDS_STATUS_UNVERIFIED );
 		}
 		else if ( pDownload->GetSourceCount() == 1 )
-			str = _T("(1 source)");
+		{
+			LoadSourcesString( str, 1 );
+			str.Format( _T("(1 %s)"), str );
+		}
 		else if ( pDownload->GetSourceCount() > 1 )
-			str.Format( _T("(%i sources)"), pDownload->GetSourceCount() );
+		{
+			int nSources = pDownload->GetSourceCount();
+			LoadSourcesString( str, nSources );
+			str.Format( _T("(%i %s)"), nSources, str );
+		}
 		else
-			str = _T("(No sources)");
+			LoadString( str, IDS_STATUS_NOSOURCES );
 		Add( _T("download_sources"), str );
 		Output( _T("downloadsDownload") );
 		
@@ -1126,25 +1141,28 @@ void CRemote::PageUploads()
 				
 				if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
 				{
-					str = _T("Complete");
+					LoadString( str, IDS_STATUS_COMPLETED );
 				}
 				else if ( pTransfer->m_nProtocol == PROTOCOL_BT )
 				{
 					CUploadTransferBT* pBT = (CUploadTransferBT*)pTransfer;
 					
 					if ( ! pBT->m_bInterested )
-						str = _T("Uninterested");
+						LoadString( str, IDS_STATUS_UNINTERESTED );
 					else if ( pBT->m_bChoked )
-						str = _T("Choked");
+						LoadString( str, IDS_STATUS_CHOKED );
 					else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
 						str = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 				}
 				else if ( nPosition > 0 )
-					str.Format( _T("Q %i"), nPosition );
+				{
+					LoadString( str, IDS_STATUS_Q );
+					str.Format( _T("%s %i"), str, nPosition );
+				}
 				else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
 					str = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 				else
-					str = _T("Next");
+					LoadString( str, IDS_STATUS_NEXT );
 				Add( _T("file_speed"), str );
 				Add( _T("file_status"), str );
 				
@@ -1244,18 +1262,18 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 		switch ( pNeighbour->m_nState )
 		{
 		case nrsConnecting:
-			str = _T("Connecting");
+			LoadString( str, IDS_NEIGHBOUR_CONNECTING );
 			break;
 		case nrsHandshake1:
 		case nrsHandshake2:
 		case nrsHandshake3:
-			str = _T("Handshaking");
+			LoadString( str, IDS_NEIGHBOUR_HANDSHAKING );
 			break;
 		case nrsRejected:
-			str = _T("Rejected");
+			LoadString( str, IDS_NEIGHBOUR_REJECTED );
 			break;
 		case nrsClosing:
-			str = _T("Closing");
+			LoadString( str, IDS_NEIGHBOUR_CLOSING );
 			break;
 		case nrsConnected:
 			{
@@ -1264,7 +1282,7 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 			}
 			break;
 		default:
-			str = _T("Unknown");
+			LoadString( str, IDS_NEIGHBOUR_UNKNOWN );
 			break;
 		}
 		Add( _T("row_time"), str );
@@ -1276,13 +1294,13 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 			switch ( pNeighbour->m_nNodeType )
 			{
 			case ntNode:
-				str = _T("G1 Peer");
+				LoadString( str, IDS_NEIGHBOUR_G1PEER );
 				break;
 			case ntHub:
-				str = _T("G1 Ultrapeer");
+				LoadString( str, IDS_NEIGHBOUR_G1ULTRA );
 				break;
 			case ntLeaf:
-				str = _T("G1 Leaf");
+				LoadString( str, IDS_NEIGHBOUR_G1LEAF );
 				break;
 			}
 			
@@ -1296,13 +1314,13 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 			switch ( pNeighbour->m_nNodeType )
 			{
 			case ntNode:
-				str = _T("G2 Peer");
+				LoadString( str, IDS_NEIGHBOUR_G2PEER );
 				break;
 			case ntHub:
-				str = _T("G2 Hub");
+				LoadString( str, IDS_NEIGHBOUR_G2HUB );
 				break;
 			case ntLeaf:
-				str = _T("G2 Leaf");
+				LoadString( str, IDS_NEIGHBOUR_G2LEAF );
 				break;
 			}
 			
@@ -1341,7 +1359,10 @@ void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
 				}
 				
 				Add( _T("row_leaves"), str );
-				Add( _T("row_mode"), CEDPacket::IsLowID( pED2K->m_nClientID ) ? _T("eDonkey2000 (LowID)") : _T("eDonkey (HighID)") );
+				CString strText1, strText2;
+				LoadString( strText1, IDS_NEIGHBOUR_ED2K_LOWID );
+				LoadString( strText2, IDS_NEIGHBOUR_ED2K_HIGHID );
+				Add( _T("row_mode"), CEDPacket::IsLowID( pED2K->m_nClientID ) ? strText1 : strText2 );
 			}
 			else
 			{
