@@ -284,7 +284,7 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 				 tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
 			{
 				// We might want to clear this download
-				if ( pDownload->m_pTorrent.IsAvailable() == FALSE )	//If it's a torrent
+				if ( pDownload->m_pTorrent.IsAvailable() == TRUE )	//If it's a torrent
 				{	
 					// Check the torrent clear settings
 					if ( Settings.BitTorrent.AutoClear )
