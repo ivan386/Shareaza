@@ -42,7 +42,9 @@ public:
 	DWORD		m_nClientID;
 	DWORD		m_nUserCount;
 	DWORD		m_nUserLimit;
-	DWORD		m_nFlags;
+	DWORD		m_nFileLimit;
+	DWORD		m_nTCPFlags;
+	DWORD		m_nUDPFlags;
 	CString		m_sServerName;
 	CPtrList	m_pQueries;
 	
