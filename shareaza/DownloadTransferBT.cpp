@@ -427,7 +427,6 @@ BOOL CDownloadTransferBT::SendRequests()
 	}
 	if ( pPossible == NULL && m_pDownload->m_bTorrentEndgame == FALSE )	// If there are no more possible chunks to request
 	{
-		theApp.Message( MSG_DEFAULT, _T("Want to activate EndGame...") );
 		if ( m_pDownload->GetProgress() > 0.95 ) // and the torrent is at least 95% complete
 		{
 			// Then activate endgame (if it's enabled)

@@ -49,11 +49,7 @@ END_MESSAGE_MAP()
 CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL bProcess, WORD nNumWant)
 {
 	ASSERT( pDownload != NULL );
-	ASSERT( pDownload->m_pTorrent.IsAvailable() );
-
-CString strTemp = _T("*** Tracker Request:");
-strTemp = strTemp + pszVerb;
-theApp.Message( MSG_ERROR, strTemp );  
+	ASSERT( pDownload->m_pTorrent.IsAvailable() ); 
 	
 	m_bAutoDelete	= TRUE;
 	m_pDownload		= pDownload;
@@ -182,9 +178,7 @@ BOOL CBTTrackerRequest::InitInstance()
 }
 
 int CBTTrackerRequest::Run() 
-{
-	theApp.Message( MSG_DEBUG, _T("CBTTrackerRequest::Run(): %s"), (LPCTSTR)m_pRequest.GetURL() );
-	
+{	
 	if ( m_bProcess )
 	{
 		Process( m_pRequest.Execute( FALSE ) );
@@ -200,8 +194,6 @@ int CBTTrackerRequest::Run()
 void CBTTrackerRequest::Process(BOOL bRequest)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
-
-	theApp.Message( MSG_ERROR, _T("*** Processing BT tracker response") );
 	
 	if ( ! pLock.Lock( 250 ) ) return;
 	if ( ! Downloads.Check( m_pDownload ) ) return;
@@ -226,12 +218,10 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	
 	if ( pRoot->IsType( CBENode::beDict ) )
 	{
-theApp.Message( MSG_ERROR, _T("** BE Dictionary") );
 		Process( pRoot );
 	}
 	else if ( pRoot->IsType( CBENode::beString ) )
 	{
-theApp.Message( MSG_ERROR, _T("** BE String") );
 		CString str = pRoot->GetString();
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)str );
@@ -239,7 +229,6 @@ theApp.Message( MSG_ERROR, _T("** BE String") );
 	}
 	else
 	{
-theApp.Message( MSG_ERROR, _T("** BE Unrecognised") );
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
 		m_pDownload->OnTrackerEvent( FALSE );
 	}
@@ -268,15 +257,8 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 	int nInterval = (int)(DWORD)pInterval->GetInt();
 
-CString str;
-str.Format( _T("Interval: %d"), nInterval );
-theApp.Message( MSG_ERROR, str );
-
 	nInterval = max( nInterval, 60*2 );
 	nInterval = min( nInterval, 60*60 );
-
-str.Format( _T("Interval: %d"), nInterval );
-theApp.Message( MSG_ERROR, str );
 	
 	m_pDownload->m_tTorrentTracker = GetTickCount() + 1000 * nInterval;
 	m_pDownload->m_bTorrentStarted = TRUE;
@@ -286,7 +268,6 @@ theApp.Message( MSG_ERROR, str );
 	
 	if ( pPeers->IsType( CBENode::beList ) && ! m_pDownload->IsMoving() )
 	{
-theApp.Message( MSG_ERROR, _T("Peer list beList") );
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
 			CBENode* pPeer = pPeers->GetNode( nPeer );
@@ -320,7 +301,6 @@ theApp.Message( MSG_ERROR, _T("Peer list beList") );
 	}
 	else if ( pPeers->IsType( CBENode::beString ) && ! m_pDownload->IsMoving() )
 	{
-theApp.Message( MSG_ERROR, _T("Peer list beString") );
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
 			BYTE* pPointer = (BYTE*)pPeers->m_pValue;

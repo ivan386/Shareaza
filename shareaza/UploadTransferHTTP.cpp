@@ -662,7 +662,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 			// If the queue can't accept this file
 			if( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) )
 			{	// This is probably a partial that has completed
-				theApp.Message( MSG_DEFAULT, _T("File queue error- Partial may have recently completed") );
+				theApp.Message( MSG_DEBUG, _T("File queue error- Partial may have recently completed") );
 
 				// Might as well allow the upload... so don't do anything.
 				//ASSERT( FALSE );
