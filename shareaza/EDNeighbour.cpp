@@ -192,18 +192,18 @@ BOOL CEDNeighbour::OnConnected()
 	// Tags sent to the server
 
 	// User name
-	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
+	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, 0 );
 	// Version ('ed2k version')
-	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
+	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket, 0 );
 	// Port
-	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
+	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
 	// Software Version ('eMule Version').	
-	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
+	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
 #ifdef _UNICODE
-	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket, 0 );
 #else
-	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS ).Write( pPacket );
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS ).Write( pPacket, 0 );
 #endif
 
 	m_nState = nrsHandshake1;
@@ -312,7 +312,7 @@ BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 ) return TRUE;
 	
-	CString	strMessage = pPacket->ReadEDString( ( m_nTCPFlags & ED2K_SERVER_TCP_UNICODE ) );
+	CString	strMessage = pPacket->ReadEDString( m_nTCPFlags );
 	
 	while ( strMessage.GetLength() > 0 )
 	{
@@ -626,9 +626,9 @@ void CEDNeighbour::SendSharedFiles()
 			pPacket->WriteLongLE( 2 ); //Number of Tags
 
 			//Send the file name to the ed2k server
-			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
+			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket, m_nTCPFlags );
 			//Send the file size to the ed2k server
-			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
+			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 			//Send the file type to the ed2k server
 			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket ); // We don't know it for certain with
 			// incomplete files. Might be okay to assume from the extention, since they are usually correct.
@@ -809,9 +809,9 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	pPacket->WriteLongLE( 2 ); // Number of Tags
 
 	// Send the file name to the ed2k server
-	CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket, ( m_nTCPFlags & ED2K_SERVER_TCP_UNICODE ) );
+	CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket, m_nTCPFlags );
 	// Send the file size to the ed2k server
-	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
+	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 
 	// Compress if the server supports it
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();
