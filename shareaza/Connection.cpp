@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/04/03 18:13:31 $"
-//	Revision:		"$Revision: 1.19 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/04/03 22:01:36 $"
+//	Revision:		"$Revision: 1.20 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -871,7 +871,7 @@ BOOL CConnection::IsAgentBlocked()
 	// Eliminate some obvious block and don't block cases
 	if ( m_sUserAgent == _T("Fake Shareaza") )		return TRUE;	// Block "Fake Shareaza"
 
-	if ( m_sUserAgent.IsEmpty() )									// Blank user agent
+	if ( m_sUserAgent.Trim().IsEmpty() )									// Blank user agent
 	{
 		if ( Settings.Gnutella.BlockBlankClients )
 			return TRUE;
