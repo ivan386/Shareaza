@@ -146,11 +146,13 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.RequeryDelay, 60, 45, 8*60, _T(" m") );
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
 	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
-	
 	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
+	AddSetting( &Settings.eDonkey.StatsGlobalThrottle, 60*1000, 30, 120, _T(" m") );
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
+	AddSetting( &Settings.eDonkey.StatsServerThrottle, 24*60*60, 7, 28, _T(" d") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 300, _T(" m") );
-	AddSetting( &Settings.eDonkey.QueryFileThrottle, 60*1000, 30, 60, _T(" m") );
+	AddSetting( &Settings.eDonkey.QueryFileThrottle, 60*1000, 30, 120, _T(" m") );
+	AddSetting( &Settings.eDonkey.GetSourcesThrottle, 60*60*1000, 1, 24, _T(" h") );
 	AddSetting( &Settings.eDonkey.QueueRankThrottle, 1000, 60, 600, _T(" s") );
 	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 500, 5000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );

@@ -259,9 +259,12 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
 	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
+	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 14*24*60*60 );
+	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
 	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 30*60*1000 );
+	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
@@ -572,10 +575,8 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 24 )
 	{
 		General.CloseMode			= 0;
-		Connection.TimeoutHandshake	= max( Connection.TimeoutHandshake, 40000 );
 		Connection.TimeoutConnect	= 16000;
 		Connection.TimeoutHandshake	= 45000;
-		Connection.TimeoutTraffic	= 140000;
 		Downloads.RetryDelay		= 10*60000;
 		Uploads.FilterMask			= 0xFFFFFFFD;
 	}
