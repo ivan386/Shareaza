@@ -2998,7 +2998,7 @@
 		<control caption="Poner en negrita los últimos resultados"/>
 		<control caption="Expandir multiples fuentes"/>
 		<control caption="Cambiar a transferencias al descargar"/>
-		<control caption="Expanidir nuevas transferencias"/>
+		<control caption="Expandir nuevas transferencias"/>
 		<control caption="Mostrar confirmación antes de abrir URLs"/>
 		<control caption="Mostrar tasa de transferencia en:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
