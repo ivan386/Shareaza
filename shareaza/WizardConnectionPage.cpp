@@ -261,7 +261,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, and the big boys.
 
 	//Set upload limit to 90% of capacity, trimmed to the nearest KB.
-	Settings.Bandwidth.Uploads = Settings.Connection.OutSpeed * 0.9;
+	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * 0.9 );
 	Settings.Bandwidth.Uploads >>= 3;
 	Settings.Bandwidth.Uploads *= 1024;
 	
