@@ -63,7 +63,7 @@ CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPag
 	m_nRecentTotal = 0;
 	m_bStoreViews = FALSE;
 	m_bSchemaTypes = FALSE;
-	m_bHighPriorityHash = FALSE;
+	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
 	m_bBrowseFiles = FALSE;
 	m_sCollectionPath = _T("");
 	//}}AFX_DATA_INIT
