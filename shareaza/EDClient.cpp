@@ -41,7 +41,7 @@
 #include "UploadTransferED2K.h"
 #include "SourceURL.h"
 
-#include "ChatWindows.h"
+#include "ChatCore.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -887,8 +887,6 @@ void CEDClient::DeriveVersion()
 	//Newer clients send the 24 bit software version
 	if ( m_nSoftwareVersion )
 	{
-		if ( m_nEmCompatible == 14 )  m_nEmCompatible = 4; //Temp ****************
-
 		// It's eMule compatible
 		m_bEmule = TRUE;
 
@@ -1198,7 +1196,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	}
 
 	//Read message length
-	nMessageLength = pPacket->ReadLongLE();
+	nMessageLength = pPacket->ReadShortLE();
 
 	//Validate message length
 	if ( ( nMessageLength < 1 ) || ( nMessageLength > 500 ) || ( nMessageLength != pPacket->GetRemaining() ) )
@@ -1206,7 +1204,6 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		theApp.Message( MSG_ERROR, _T("Invalid message packet recieved from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
-
 
 	//Read in message
 	//if ( m_bEmUnicode )
@@ -1216,20 +1213,15 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 
 	// Check if chat is enabled
 	if ( Settings.Community.ChatEnable )
-	{	// Chat is enabled- we should open a chat window
-/*
-		CPrivateChatFrame* pChatWindow;
-	
-		pChatWindow = ChatWindows.OpenPrivate( &m_pGUID, &m_pHost, CEDPacket::IsLowID( m_nClientID ) );
-*/
-		theApp.Message( MSG_DEFAULT, _T("Message from %s recieved, opening chat window."), (LPCTSTR)m_sAddress );
+	{	// Chat is enabled- we should accept/open a chat window
 
-		theApp.Message( MSG_DEFAULT, sMessage ); //***temp- open chat window instead
+		//ChatCore.OnAccept( this );
+
+		theApp.Message( MSG_DEFAULT, sMessage ); //*** temp
 	}
 	else
-	{	// Disabled- don't open a chat window
-		theApp.Message( MSG_DEFAULT, _T("Message from %s:"), (LPCTSTR)m_sAddress );
-		theApp.Message( MSG_DEFAULT, sMessage );
+	{	// Disabled- don't open a chat window. Display in system window
+		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
 
 	return TRUE;
