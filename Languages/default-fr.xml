@@ -1988,7 +1988,7 @@ Other:
 	<document name="ShareHelp.BadShare">
 	<text format="b">Ce dossier ne devrait pas être partagé</text>
 	<newline gap="8"/>
-	<text>Ce dossier est (ou contient) un dossier système. Partager ce dossier n'est pas recommendé, car la plupart de ces fichiers ne sont d'aucune utilité pour les autres.</text>
+	<text>Ce dossier est (ou contient) un dossier système. Partager ce dossier n'est pas recommandé, car la plupart de ces fichiers ne sont d'aucune utilité pour les autres.</text>
 	<newline gap="8"/>
 	<text>Des dossiers comme le dossier &quot;Windows&quot;, &quot;Program Files&quot;, et autres dossiers similaires ne contiennent généralement pas de fichiers appropriés au partage. les fichiers intéressants doivent plutôt être dans des sous-dossiers localisés </text><text format="i"> à l'intérieur de </text><text> ces dossiers. Merci de partagé plutôt ceux-la.</text>
 	<newline gap="8"/>
@@ -2950,7 +2950,7 @@ Other:
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Communauté">
 		<control caption="Mon _Profil:"/>
-		<control caption="Utiliser votre Profil Utilisateur Gnutella afin de vous faire connaître des autres utilisateurs, partager vos centres d'intérêt, vos fichiers recommendés, etc."/>
+		<control caption="Utiliser votre Profil Utilisateur Gnutella afin de vous faire connaître des autres utilisateurs, partager vos centres d'intérêt, vos fichiers recommandés, etc."/>
 		<control caption="Editer Mon Profil"/>
 		<control caption="_Chat:"/>
 		<control caption="Activer le Chat avec les clients P2P compatibles"/>
@@ -2991,10 +2991,10 @@ Other:
 		<control/>
 		<control caption="O_ptions:"/>
 		<control caption="Ignorer les IP privées/locales"/>
-		<control caption="_Timeouts:"/>
+		<control caption="_Délai avant expiration:"/>
 		<control caption="Connection:"/>
 		<control/><control/>
-		<control caption="Poignée de main (handshake):"/>
+		<control caption="Handshake:"/>
 		<control/><control/>
 		<control caption="Accepter les connections entrantes"/>
 	</dialog>
@@ -3062,7 +3062,7 @@ Other:
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
 		<control caption="Shareaza est un client P2P multi-réseaux. Il peut se connecter à plusieurs réseaux en même temps. Sur cette page, vous pouvez sélectionner à quels réseaux vous souhaitez vous connecter, puis paramétrer des réglages spécifiques à chacun."/>
 		<control caption="Réseau Gnutella2:"/>
-		<control caption="Le réseau Gnutella2 est le réseau de prédilection de Shareaza, et est le plus performant des réseaux P2P. Hautement recommendé."/>
+		<control caption="Le réseau Gnutella2 est le réseau de prédilection de Shareaza, et est le plus performant des réseaux P2P. Hautement recommandé."/>
 		<control caption="Se connecter à Gnutella2 (G2)"/>
 		<control caption="Configurer Gnutella2"/>
 		<control caption="Réseau eDonkey2000:"/>
@@ -3076,7 +3076,7 @@ Other:
 	</dialog>
 
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Réseau Gnutella2 (recommendé):"/>
+		<control caption="Réseau Gnutella2 (recommandé):"/>
 		<control caption="Se connecter à Gnutella2 aujourd'hui"/>
 		<control caption="Réseau Gnutella1:"/>
 		<control caption="Connection à Gnutella1 aujourd'hui"/>
@@ -3286,7 +3286,7 @@ Other:
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareaza vous souhaite la bienvenue  [6 de 7]">
 		<control caption="Shareaza est une application d'échange de fichier à usage universel qui peut accéder à de nombreux réseaux P2P simultanément.  Choisissez ci-dessous à quels réseaux se connecter, vous pourrez en sélectionner de différents à tout moment."/>
 		<control caption="Connection à Gnutella2"/>
-		<control caption="Le réseau Gnutella2 est le réseau de prédilection de Shareaza, il est le plus performant des réseaux P2P. Hautement recommendé."/>
+		<control caption="Le réseau Gnutella2 est le réseau de prédilection de Shareaza, il est le plus performant des réseaux P2P. Hautement recommandé."/>
 		<control caption="Connection à eDonkey2000"/>
 		<control caption="Le réseau eDonkey2000 est un réseau populaire basé sur des serveurs. Il est moins performant que Gnutella2 mais possède plus de contenu."/>
 		<control caption="Connection à Gnutella1"/>
@@ -3395,7 +3395,7 @@ Other:
 
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Files">
 		<control caption="_Fichiers favoris:"/>
-		<control caption="Les fichiers favoris sont recommendés aux utilisateurs qui parcourent votre profil. Ajoutez des favoris au dossier &quot;Favoris&quot; de votre bibliothèque."/>
+		<control caption="Les fichiers favoris sont recommandés aux utilisateurs qui parcourent votre profil. Ajoutez des favoris au dossier &quot;Favoris&quot; de votre bibliothèque."/>
 		<control/>
 	</dialog>
 
