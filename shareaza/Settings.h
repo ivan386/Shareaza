@@ -34,13 +34,13 @@ public:
 public:
 	struct sGeneral
 	{
-		CString		Path;						//Installation path for Shareaza
-		CString		UserPath;					//Path for user data. (May be the same as above for single user installs)
+		CString		Path;						// Installation path for Shareaza
+		CString		UserPath;					// Path for user data. (May be the same as above for single user installs)
 		BOOL		Debug;
 		BOOL		DebugLog;
-		DWORD		MaxDebugLogSize;			//Max size of the log file
+		DWORD		MaxDebugLogSize;			// Max size of the log file
 		BOOL		UpdateCheck;
-		DWORD		DiskSpaceWarning;			//Value at which to warn the user about low disk space
+		DWORD		DiskSpaceWarning;			// Value at which to warn the user about low disk space
 		INT			GUIMode;
 		BOOL		CloseMode;
 		BOOL		TrayMinimise;
@@ -96,7 +96,7 @@ public:
 		CString		BitziWebSubmit;
 		CString		BitziXML;
 		BOOL		BitziOkay;
-		BOOL		HighPriorityHash;			//Use high priority hashing by default
+		BOOL		HighPriorityHash;			// Use high priority hashing
 
 		//Not used at the moment
 		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
@@ -164,15 +164,15 @@ public:
 		BOOL		InBind;
 		DWORD		InSpeed;
 		DWORD		OutSpeed;
-		BOOL		IgnoreLocalIP;				//Ingnore all 'local' (LAN) IPs
-		BOOL		IgnoreOwnIP;				//Do not accept any ports on your external IP as a source
+		BOOL		IgnoreLocalIP;				// Ingnore all 'local' (LAN) IPs
+		BOOL		IgnoreOwnIP;				// Do not accept any ports on your external IP as a source
 		DWORD		TimeoutConnect;
 		DWORD		TimeoutHandshake;
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
-		BOOL		RequireForTransfers;		//Only upload/download to connected networks
+		BOOL		RequireForTransfers;		// Only upload/download to connected networks
 		BOOL		AsyncIO;
-		DWORD		ConnectThrottle;			//Delay between connection attempts. (Neighbour connections)
+		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
 	} Connection;
 
 	struct sBandwidth
@@ -208,7 +208,7 @@ public:
 		DWORD		BootstrapCount;
 		CString		G2DAddress;
 		DWORD		G2DRetryAfter;
-		int		CacheCount;			//Limits ability to learn new caches
+		int			CacheCount;					// Limit ability to learn new caches
 	} Discovery;
 	
 	struct sGnutella
@@ -229,7 +229,7 @@ public:
 	
 	struct sGnutella1
 	{
-		DWORD		ClientMode;					//Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
+		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		//BOOL		Handshake04;
@@ -258,7 +258,7 @@ public:
 
 	struct sGnutella2
 	{
-		DWORD		ClientMode;					//Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_HUB
+		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_HUB
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		int			NumHubs;
@@ -303,16 +303,16 @@ public:
 		DWORD		DequeueTime;
 		BOOL		ExtendedRequest;
 		BOOL		MagnetSearch;
-		DWORD		MinServerFileSize;			//Minimum size a file in the library must be in order to be included in the server file list. (In KB)
+		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;
 	} eDonkey;
 	
 	struct sBitTorrent
 	{
-		BOOL		AdvancedInterface;			//Display BT 'extras' (Seed Torrent box, etc)
-		CString		TorrentCreatorPath;			//Location of the program used to create .torrent files
+		BOOL		AdvancedInterface;			// Display BT 'extras' (Seed Torrent box, etc)
+		CString		TorrentCreatorPath;			// Location of the program used to create .torrent files
 		CString		DefaultTracker;
-		DWORD		DefaultTrackerPeriod;		//Delay between tracker contact attempts if one is not specified by tracker
+		DWORD		DefaultTrackerPeriod;		// Delay between tracker contact attempts if one is not specified by tracker
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
 		DWORD		RequestPipe;
@@ -321,63 +321,64 @@ public:
 		DWORD		RandomPeriod;
 		DWORD		SourceExchangePeriod;
 		int			UploadCount;
-		int			DownloadConnections;		//Number active torrent connections allowed
-		int			DownloadTorrents;			//Number of torrents to download at once
-		BOOL		Endgame;					//Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
-		DWORD		BandwidthPercentage;		//Percentage of bandwidth to use when BT active.
+		int			DownloadConnections;		// Number active torrent connections allowed
+		int			DownloadTorrents;			// Number of torrents to download at once
+		BOOL		Endgame;					// Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
+		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
+		BOOL		TrackerKey;					// Send a key (random value) to trackers
 	} BitTorrent;
 
 	struct sDownloads
 	{
-		CString		IncompletePath;				//Where incomplete downloads are stored
-		CString		CompletePath;				//Where downloads are moved when they complete
-		CString		TorrentPath;				//Where .torrent files are stored
-		CString		CollectionPath;				//Where .collection and .co files are stored
+		CString		IncompletePath;				// Where incomplete downloads are stored
+		CString		CompletePath;				// Where downloads are moved when they complete
+		CString		TorrentPath;				// Where .torrent files are stored
+		CString		CollectionPath;				// Where .collection and .co files are stored
 		DWORD		BufferSize;
-		DWORD		SparseThreshold;			//NTFS 'sparse files' are not used on files below this size. (0 = Disable)
-		INT			MaxFiles;					//How many files download at once
-		INT			MaxTransfers;				//How many total tranfers take place
-		INT			MaxFileTransfers;			//How mnay transfers are allowed per file
-		INT			MaxFileSearches;			//Number number of files over the download limit that prepare to start. (Search, etc)
-		INT			MaxConnectingSources;		//The maximum number of sources that can be in the 'connecting' state. (Important for XPsp2)
-		INT			MinSources;					//The minimum number of sources a download has before Shareaza regards it as having a problem
-		DWORD		ConnectThrottle;			//Delay between download attempts. (Very important for routers)
-		INT			QueueLimit;					//Longest queue to wait in. (0 to disable. This should be >800 or 0 to get good performance from ed2k)
+		DWORD		SparseThreshold;			// NTFS 'sparse files' are not used on files below this size. (0 = Disable)
+		INT			MaxFiles;					// How many files download at once
+		INT			MaxTransfers;				// How many total tranfers take place
+		INT			MaxFileTransfers;			// How mnay transfers are allowed per file
+		INT			MaxFileSearches;			// Number number of files over the download limit that prepare to start. (Search, etc)
+		INT			MaxConnectingSources;		// The maximum number of sources that can be in the 'connecting' state. (Important for XPsp2)
+		INT			MinSources;					// The minimum number of sources a download has before Shareaza regards it as having a problem
+		DWORD		ConnectThrottle;			// Delay between download attempts. (Very important for routers)
+		INT			QueueLimit;					// Longest queue to wait in. (0 to disable. This should be >800 or 0 to get good performance from ed2k)
 		DWORD		SearchPeriod;
 		DWORD		StarveTimeout;
-		DWORD		StarveGiveUp;				//How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
+		DWORD		StarveGiveUp;				// How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
 		BOOL		StaggardStart;
-		BOOL		AllowBackwards;				//Permit download to run in reverse when appropriate
+		BOOL		AllowBackwards;				// Permit download to run in reverse when appropriate
 		DWORD		ChunkSize;
 		DWORD		ChunkStrap;
 		BOOL		Metadata;
 		BOOL		VerifyFiles;
 		BOOL		VerifyTiger;
 		BOOL		VerifyED2K;
-		BOOL		NeverDrop;					//Do not drop bad sources (may pollute source list with many dead sources)
+		BOOL		NeverDrop;					// Do not drop bad sources (may pollute source list with many dead sources)
 		BOOL		RequestHash;
 		BOOL		RequestHTTP11;
 		BOOL		RequestURLENC;
 		DWORD		SaveInterval;
 		BOOL		FlushSD;
 		BOOL		ShowSources;
-		BOOL		ShowPercent;				//Display small green % complete bar on progress graphic
+		BOOL		ShowPercent;				// Display small green % complete bar on progress graphic
 		BOOL		ShowGroups;
 		BOOL		AutoExpand;
 		BOOL		AutoClear;
 		DWORD		ClearDelay;
 		DWORD		FilterMask;
 		BOOL		ShowMonitorURLs;
-		BOOL		SortColumns;				//Allow user to sort downloads by clicking column headers
-		BOOL		SortSources;				//Automatically sort sources (Status, protocol, queue)
-		int			SourcesWanted;				//Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
+		BOOL		SortColumns;				// Allow user to sort downloads by clicking column headers
+		BOOL		SortSources;				// Automatically sort sources (Status, protocol, queue)
+		int			SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 	} Downloads;
 	
 	struct sUploads
 	{
-		int			MaxPerHost;					//Max simultaneous uploads to one remote client
+		int			MaxPerHost;					// Max simultaneous uploads to one remote client
 		DWORD		FreeBandwidthValue;
 		DWORD		FreeBandwidthFactor;
 		DWORD		ClampdownFactor;
@@ -394,13 +395,13 @@ public:
 		BOOL		DynamicPreviews;
 		DWORD		PreviewQuality;
 		DWORD		PreviewTransfers;
-		BOOL		AllowBackwards;				//Allow data to be sent from end of range to begining where supported
+		BOOL		AllowBackwards;				// Allow data to be sent from end of range to begining where supported
 		BOOL		HubUnshare;
 		CString		BlockAgents;
-		BOOL		AutoClear;					//Automatically clear completed uploads ('Completed' queue)
-		DWORD		ClearDelay;					//Delay between auto-clears
+		BOOL		AutoClear;					// Automatically clear completed uploads ('Completed' queue)
+		DWORD		ClearDelay;					// Delay between auto-clears
 		DWORD		FilterMask;
-		int 		RewardQueuePercentage;		//The percentage of each reward queue reserved for uploaders
+		int 		RewardQueuePercentage;		// The percentage of each reward queue reserved for uploaders
 	} Uploads;
 	
 	struct sRemote
@@ -412,17 +413,17 @@ public:
 
 	struct sScheduler
 	{
-		BOOL		Enable;						//Enable the scheduler
-		DWORD		LimitedBandwidth;			//% of bandwidth to use in limited mode
-		BOOL		LimitedNetworks;			//Only connect to G2/BT when limited
-		BOOL		AllowHub;					//Allow hub mode while scheduler is active
+		BOOL		Enable;						// Enable the scheduler
+		DWORD		LimitedBandwidth;			// % of bandwidth to use in limited mode
+		BOOL		LimitedNetworks;			// Only connect to G2/BT when limited
+		BOOL		AllowHub;					// Allow hub mode while scheduler is active
 	} Scheduler;
 	
 	struct sLive
 	{
-		BOOL		DiskWarning;				//Has the user been warned of low disk space?
-		BOOL		AdultWarning;				//Has the user been warned about the adult filter?
-		DWORD		BandwidthScale;				//Monitor slider settings
+		BOOL		DiskWarning;				// Has the user been warned of low disk space?
+		BOOL		AdultWarning;				// Has the user been warned about the adult filter?
+		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
 		BOOL		FirstRun;

@@ -56,31 +56,35 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	m_bProcess		= bProcess;
 	
 	CString strURL;
+	// Create the basic URL
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
 		(LPCTSTR)pDownload->m_pTorrent.m_sTracker,
 		(LPCTSTR)Escape( &pDownload->m_pBTH ),
-		(LPCTSTR)Escape( &m_pDownload->m_pPeerID ),//(LPCTSTR)Escape( BTClients.GetGUID() ),
+		(LPCTSTR)Escape( &m_pDownload->m_pPeerID ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		(QWORD)pDownload->m_nTorrentUploaded,
 		(QWORD)pDownload->m_nTorrentDownloaded,
 		(QWORD)pDownload->GetVolumeRemaining() );
 	
+	//If the IP is valid, add it.
 	if ( Network.m_pHost.sin_addr.S_un.S_addr != 0 )
-	{	//If the IP is valid, add it.
+	{	
 		strURL += _T("&ip=");
 		strURL += inet_ntoa( Network.m_pHost.sin_addr );
 		//Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
 	}
 	
+	//If an event was specified, add it.
 	if ( pszVerb != NULL )
-	{	//If an event was specified, add it.
+	{	
 		strURL += _T("&event=");
 		strURL += pszVerb;
 		//Valid events: started, completed, stopped
 	}
 
-	if ( nNumWant < 250 )
-	{	//If a (valid) number of peers was specified, request that many.
+	//If a (valid) number of peers was specified, request that many.
+	if ( nNumWant < 300 )
+	{	
 		CString strNumWant;
 		strNumWant.Format( _T("&numwant=%i"), nNumWant );
 		strURL += strNumWant;
@@ -88,9 +92,18 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 		//Generally, it's not worth the bandwidth to send this. However, if we have plenty of 
 		//sources, then ask for a lower number. (Say, 5 just to ensure some sources are fresh)
 	}	
+
+	//If a key is valid and keys active, use it.
+	if ( ( pDownload->m_sKey.GetLength() > 4 ) && ( Settings.BitTorrent.TrackerKey ) )
+	{	
+		ASSERT ( pDownload->m_sKey.GetLength() < 20 );		//Key too long
+
+		strURL += _T("&key=");
+		strURL += pDownload->m_sKey;
+	}	
 	
 	m_pRequest.SetURL( strURL );
-	m_pRequest.AddHeader( _T("Accept"), _T("application/x-bittorrent") );
+	//m_pRequest.AddHeader( _T("Accept"), _T("application/x-bittorrent") ); // This causes problems with some trackers
 	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("gzip") );
 	
 	CString strUserAgent = Settings.SmartAgent( Settings.General.UserAgent );
@@ -118,7 +131,7 @@ void CBTTrackerRequest::SendStarted(CDownloadBase* pDownload, WORD nNumWant)
 void CBTTrackerRequest::SendUpdate(CDownloadBase* pDownload, WORD nNumWant)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, NULL , TRUE, nNumWant );
+	new CBTTrackerRequest( (CDownload*)pDownload,  NULL , TRUE, nNumWant );
 }
 
 //ToDo: Confirm trackers don't send peers in response to a completed or stopped event. 

@@ -69,6 +69,14 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	m_tTorrentSources		= 0;
 	ZeroMemory(m_pPeerID.n, 20);
 
+	// Generate random Key value
+	m_sKey = _T("");
+	srand( GetTickCount() );
+	for ( int nChar = 1 ; nChar < 6 ; nChar++ ) 
+	{
+		m_sKey += GenerateCharacter();
+	}
+
 	m_nStartTorrentDownloads= dtAlways;
 }
 
@@ -180,7 +188,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			m_bTorrentStarted	= FALSE;
 			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
 			
-			CBTTrackerRequest::SendStarted( this );
+			CBTTrackerRequest::SendStarted( this, 0 );
 		}
 	}
 	else if ( ! bLive && m_bTorrentRequested )
@@ -505,7 +513,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 		{
 			m_tTorrentTracker = GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 			m_tTorrentSources = GetTickCount();
-			CBTTrackerRequest::SendUpdate( this );
+			CBTTrackerRequest::SendUpdate( this, 100 );
 			return TRUE;
 		}
 	}
@@ -518,7 +526,6 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 
 BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 {
-	
 	CDownload* pDownload = reinterpret_cast<CDownload*>(this);
 	
 	if ( IsMoving() || IsCompleted() ) return FALSE;
@@ -550,10 +557,10 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sLocalName = pszTarget;
 	SetModified();
 	
-	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); //Give tracker 30 seconds to respond
+	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); //Give tracker 30 seconds to respond before re-trying
 	m_bTorrentRequested	= TRUE;
 	m_bTorrentStarted	= FALSE;
-	CBTTrackerRequest::SendStarted( this );	
+	CBTTrackerRequest::SendStarted( this, 0 );	
 	
 	return TRUE;
 }

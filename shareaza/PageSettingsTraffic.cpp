@@ -170,6 +170,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.BitTorrent.RandomPeriod, 1000, 1, 60*5, _T(" s") );
 	AddSetting( &Settings.BitTorrent.SourceExchangePeriod, 1, 1, 60*5, _T(" m") );
 	AddSetting( &Settings.BitTorrent.UploadCount, 1, 2, 16 );
+	AddSetting( &Settings.BitTorrent.TrackerKey, 1, 0, 1 );
 	
 	AddSetting( &Settings.Discovery.AccessThrottle, 60, 1, 180, _T(" m") );
 	AddSetting( &Settings.Discovery.Lowpoint, 1, 1, 512 );

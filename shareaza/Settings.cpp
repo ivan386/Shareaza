@@ -283,6 +283,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
 	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
+	Add( _T("BitTorrent.TrackerKey"), &BitTorrent.TrackerKey, TRUE );
 	
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.UserPath + _T("\\Incomplete") );
 	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.UserPath + _T("\\Downloads") );
@@ -374,12 +375,13 @@ CSettings::CSettings()
 	TCHAR szPath[128];
 	GetModuleFileName( NULL, szPath, 128 );
 	
+	// Set default program and user paths
 	General.Path = szPath;
 	if ( General.Path.ReverseFind( '\\' ) >= 0 )
 		General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
-
 	General.UserPath = General.Path;
 	
+	// Reset 'live' values.
 	Live.BandwidthScale		= 100;
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
@@ -387,9 +389,10 @@ CSettings::CSettings()
 	Live.DiskWarning		= FALSE;
 	Live.AdultWarning		= FALSE;
 
+	// Add all settings
 	Setup();
 
-	//Enforce a few sensible values (in case of registry fiddling)
+	// Enforce a few sensible values (in case of registry fiddling)
 	Downloads.SearchPeriod = min( Downloads.SearchPeriod, 5*60 );
 	Downloads.StarveTimeout = max( Downloads.StarveTimeout, 45*60 );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
@@ -397,8 +400,8 @@ CSettings::CSettings()
 	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
 	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 
-
-	Gnutella1.ClientMode = MODE_LEAF; //Temp- until hub fixed
+	//Temporary- until G1 ultrapeer has been updated
+	Gnutella1.ClientMode = MODE_LEAF; 
 }
 
 CSettings::~CSettings()

@@ -52,6 +52,7 @@ public:
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
 	SHA1		m_pPeerID;
+	CString		m_sKey;
 	int			m_nStartTorrentDownloads;
 protected:
 	BYTE*		m_pTorrentBlock;
@@ -86,6 +87,16 @@ protected:
 	BOOL			RunTorrent(DWORD tNow);
 	void			OnFinishedTorrentBlock(DWORD nBlock);
 	void			CloseTorrentUploads();
+
+	inline TCHAR GenerateCharacter() const
+	{
+		switch (rand() % 3)
+		{
+		case 0 : return( 'a' + ( rand() % 26 ) );
+		case 1 : return( 'A' + ( rand() % 26 ) );
+		default: return( '0' + ( rand() % 10 ) );
+		}
+	}
 	
 	friend class CDownloadTransferBT;
 };
