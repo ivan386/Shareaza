@@ -231,7 +231,7 @@ void CSchedulerSettingsPage::OnPaint()
 	mdc.CreateCompatibleDC( &dc );
 
 	CBitmap* pOldBmp = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( rc.left, rc.top, 386, HEADING_HEIGHT, &mdc, 0, 0, SRCCOPY );
+	dc.BitBlt( rc.left, rc.top, 385, HEADING_HEIGHT, &mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBmp );
 	mdc.DeleteDC();
 	rc.top += HEADING_HEIGHT;
