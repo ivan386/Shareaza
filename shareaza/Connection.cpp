@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2004/11/24 07:27:30 $"
-//	Revision:		"$Revision: 1.7 $"
+//	Date:			"$Date: 2004/12/18 14:44:06 $"
+//	Revision:		"$Revision: 1.8 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -374,7 +374,7 @@ BOOL CConnection::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CConnection read event handler
 
-// Call to read data waiting in the socket into the input buffer
+// Read data waiting in the socket into the input buffer
 BOOL CConnection::OnRead()
 {
 	// Make sure the socket is valid
