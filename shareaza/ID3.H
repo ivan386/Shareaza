@@ -149,10 +149,10 @@ LPCTSTR CLibraryBuilderInternals::pszID3Genre[] =
 	_T("New Wave"), _T("Psychadelic"), _T("Rave"), _T("Showtunes"), _T("Trailer"),
 	_T("Lo-Fi"), _T("Tribal"), _T("Acid Punk"), _T("Acid Jazz"), _T("Polka"), _T("Retro"),
 	_T("Musical"), _T("Rock & Roll"), _T("Hard Rock"), _T("Folk"), _T("Folk/Rock"),
-	_T("National Folk"), _T("Swing"), _T("Bebob"), _T("Latin"), _T("Revival"),
+	_T("National Folk"), _T("Swing"), _T("Easy Listening"), _T("Bebob"), _T("Latin"), _T("Revival"),
 	_T("Celtic"), _T("Bluegrass"), _T("Avantgarde"), _T("Gothic Rock"),
 	_T("Progressive Rock"), _T("Psychedelic Rock"), _T("Symphonic Rock"),
-	_T("Slow Rock"), _T("Big Band"), _T("Chorus"), _T("Easy Listening")
+	_T("Slow Rock"), _T("Big Band"), _T("Chorus"), _T("Easy Listening"),
 	_T("Acoustic"), _T("Humour"), _T("Speech"), _T("Chanson"), _T("Opera"),
 	_T("Chamber Music"), _T("Sonata"), _T("Symphony"), _T("Booty Bass"),
 	_T("Primus"), _T("Porn Groove"), _T("Satire"), _T("Slow Jam"), _T("Club"),

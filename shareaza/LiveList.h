@@ -46,7 +46,7 @@ protected:
 public:
 	CLiveItem*	Add(DWORD nParam);
 	CLiveItem*	Add(LPVOID pParam);
-	BOOL		Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
+	void		Apply(CListCtrl* pCtrl, BOOL bSort = FALSE);
 protected:
 	void		Clear();
 

@@ -214,10 +214,7 @@ void CSecurityWnd::Update(int nColumn)
 		SetWindowLong( m_wndList.GetSafeHwnd(), GWL_USERDATA, 0 - nColumn - 1 );
 	}
 
-	if ( pLiveList.Apply( &m_wndList ) )
-	{
-		CLiveList::Sort( &m_wndList, -1 );
-	}
+	pLiveList.Apply( &m_wndList );
 }
 
 CSecureRule* CSecurityWnd::GetItem(int nItem)
