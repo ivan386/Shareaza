@@ -1,4 +1,6 @@
 200 OK
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Shareaza Node Information</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -43,31 +45,13 @@ a:active {
 }
 .text1 {color: #333333}
 .text2 {font-size: 12px; font-weight: bold; color: #333333; }
-.text3 {font-size: 12px}
-.text4 {color: #000000; font-size: 14px; }
+.text3 {color: #000000; font-size: 14px; }
+.text4 {color: #000000; font-size: 11px; }
 .blacktext {color: #000000}
-.tableborder1 {
-	border-width: 1px;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-width: 1px;
-	border-color: #CCCCCC;
-}
-.tableborder2 {
-	border-width: 1px;
-	border-right-style: solid;
-	border-width: 1px;
-	border-color: #CCCCCC;
-}
-.tableborder3 {
-	border-width: 1px;
-	border-bottom-style: solid;
-	border-color: #CCCCCC;
-}
 </style>
 </head>
 <body>
-<table width="100%"  border="0" cellpadding="0" cellspacing="0" background="http://www.shareaza.com/nodeinfo/headerbg.png" class="headerborder">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="headerborder" background="http://www.shareaza.com/nodeinfo/headerbg.png">
   <tr>
     <td><img src="http://www.shareaza.com/nodeinfo/header.png" width="624" height="172" /></td>
   </tr>
@@ -75,9 +59,9 @@ a:active {
 <div align="center"><br />
   <table width="800" border="0" cellspacing="4" cellpadding="6">
     <tr align="center" bgcolor="#999999">
-      <td colspan="2" bgcolor="#C5C5C5" class="blacktext">This node is powered by <a href="http://www.shareaza.com/download/" target="_top"><strong>Shareaza <% Version %></strong></a></td>
+      <td colspan="2" bgcolor="#CCCCCC" class="solidborder blacktext">This node is powered by <a href="http://www.shareaza.com/download/" target="_top"><strong>Shareaza <% Version %></strong></a></td>
     </tr>
-    <tr class="tableborder2">
+    <tr>
       <td width="50%" align="center" valign="top" class="solidborder"><a href="gnutella:browse:<% ListenIP %>"><strong>Browse Node</strong></a> In Shareaza</td>
       <td width="50%" align="center" valign="top" class="solidborder"><a href="/remote/" target="_top"><strong>Remotely Access </strong></a>this node</td>
     </tr>
@@ -91,7 +75,7 @@ a:active {
                   <td width="100" align="center" valign="top" class="text2">Uptime</td>
                   <td width="100" align="center" valign="top" class="text2">Mode</td>
                   <td width="170" align="center" valign="top" class="text2">User Agent</td>
-		  <td width="80" align="center" valign="top" class="text2">&nbsp;</td>
+				  <td width="80" align="center" valign="top" class="text2">&nbsp;</td>
                 </tr>
             </table></td>
           </tr>
@@ -99,17 +83,9 @@ a:active {
           <table width="630" border="0" cellpadding="0" cellspacing="0" class="solidborder">
             <tr>
               <td>
-		<table width="630" border="0" cellpadding="8" cellspacing="0" bgcolor="#F7F7F7">
-
-                <tr>
-                  <td width="170" align="center" valign="top" class="text2"></td>
-                  <td width="100" align="center" valign="top" class="text2"></td>
-                  <td width="100" align="center" valign="top" class="text2"></td>
-                  <td width="170" align="center" valign="top" class="text2"></td>
-		  <td width="80"  align="center" valign="top" class="text2"></td>
-                </tr>
-<% Neighbours %>
-                </table>
+		<table width="630" border="0" cellpadding="8" cellspacing="4" bgcolor="#F7F7F7" class="text4">
+			<% Neighbours %>
+         </table>
 	    </td>
             </tr>
         </table></td>
@@ -122,14 +98,14 @@ a:active {
     </tr>
     <tr>
       <td rowspan="2" align="left" valign="top" style="width: 35px"><img src="http://www.shareaza.com/nodeinfo/ico_raza.jpg" alt="raza" width="31" height="35" /></td>
-      <td valign="top" class="text4">Shareaza is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. Shareaza is 
-	  <strong>FREE</strong> and contains <strong>NO</strong> Spyware or third-party products.</td>
+      <td valign="top" class="text3">Shareaza is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. Shareaza is 
+	  <strong>FREE</strong> and contains <strong>NO</strong> spyware or third-party products.</td>
     </tr>
     <tr>
       <td valign="top">
 	  <ul>
           <li class="text1"><a href="http://www.shareaza.com/" target="_top">Visit the Shareaza Homepage</a> </li>
-          <li class="text1"><a href="http://www.shareaza.com/download/" target="_top">Check out the latest Shareaza Release</a></a></li>
+          <li class="text1"><a href="http://www.shareaza.com/download/" target="_top">Check out the latest Shareaza Release</a></li>
       </ul>	 </td>
     </tr>
   </table>
