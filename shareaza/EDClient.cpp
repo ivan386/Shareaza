@@ -144,7 +144,7 @@ BOOL CEDClient::Equals(CEDClient* pClient)
 {
 	ASSERT( this != NULL );
 	ASSERT( pClient != NULL );
-	
+
 	if ( m_bGUID && pClient->m_bGUID ) return m_pGUID == pClient->m_pGUID;
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) &&
@@ -221,6 +221,8 @@ void CEDClient::Merge(CEDClient* pClient)
 		m_pUpload->m_pClient = this;
 		pClient->m_pUpload = NULL;
 	}
+
+	m_bOpenChat = pClient->m_bOpenChat;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -332,7 +334,7 @@ void CEDClient::DetachUpload()
 BOOL CEDClient::OnRun()
 {
 	// CTransfer::OnRun();
-	
+
 	DWORD tNow = GetTickCount();
 	
 	if ( ! m_bConnected )
@@ -390,6 +392,15 @@ void CEDClient::OnRunEx(DWORD tNow)
 	}
 	else if ( m_hSocket == INVALID_SOCKET )
 	{
+		// This client has no valid connections and should probably be removed. 
+
+		if ( m_bOpenChat )
+		{
+			// We might be waiting for a push reply- give it a little time
+			DWORD tNow = GetTickCount();
+			if ( tNow - m_tConnected < Settings.Connection.TimeoutHandshake  ) return;
+		}
+
 		Remove();
 	}
 }

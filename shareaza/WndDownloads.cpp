@@ -1269,7 +1269,7 @@ void CDownloadsWnd::OnTransfersChat()
 		{
 			if ( pSource->m_bSelected ) 
 			{
-				ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol );
+				ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
 /*
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) //HTTP chat
 					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol );
