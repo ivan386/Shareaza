@@ -422,7 +422,9 @@ BOOL CDiscoveryServices::Update()
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
 	if ( Network.GetStableTime() < 7200 ) return FALSE;				// Up for two hours
-	if ( ! Neighbours.IsHub() ) return FALSE;						// Must be a hub now
+//ToDo: ***** Need to add G1 stuff
+	if ( ! Neighbours.IsG2Hub() ) return FALSE;						// Must be a hub now 
+//
 	if ( Neighbours.GetCount( -1, -1, ntNode ) < 4 ) return FALSE;	// Must have 4 peers
 	
 	CDiscoveryService* pService = GetRandomWebCache( TRUE, NULL, TRUE );

@@ -386,7 +386,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		return TRUE;
 	}
 	
-	if ( bIsKeepAlive || ( Network.IsListening() && ! Neighbours.IsLeaf() ) )
+	if ( bIsKeepAlive || ( Network.IsListening() && ! Neighbours.IsG1Leaf() ) )
 	{
 		CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, m_nLastPingHops, &m_pLastPingID );
 		

@@ -149,27 +149,27 @@ void CNeighboursWithConnect::PeerPrune()
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithConnect hub states
 
-BOOL CNeighboursWithConnect::IsLeaf()
+BOOL CNeighboursWithConnect::IsG2Leaf()
 {
-	return Network.m_bEnabled && GetCount( -2, nrsConnected, ntHub ) > 0;
+	//return Network.m_bEnabled && GetCount( -2, nrsConnected, ntHub ) > 0;
+	return Network.m_bEnabled && GetCount( PROTOCOL_G2, nrsConnected, ntHub ) > 0;
 }
 
-BOOL CNeighboursWithConnect::IsHub()
+BOOL CNeighboursWithConnect::IsG2Hub()
 {
-	return Network.m_bEnabled && GetCount( -2, nrsConnected, ntLeaf ) > 0;
+	//return Network.m_bEnabled && GetCount( -2, nrsConnected, ntLeaf ) > 0;
+	return Network.m_bEnabled && GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) > 0;
 }
 
-BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
+BOOL CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 {	//Determine if this client can be a G2 hub
 	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsHubCapable():") );
 
-/*
 	if ( ! Settings.Gnutella2.EnableToday )
 	{	// Can't be a G2 hub if you don't connect to G2
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: G2 not enabled") );
 		return FALSE;
 	}
-*/
 	
 	if ( ! theApp.m_bNT )
 	{	//Win95, Win98 and WinMe cannot support enough connections to make a good hub
@@ -194,7 +194,7 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 	}
 	*/
 	
-	if ( IsLeaf() )
+	if ( IsG2Leaf() )
 	{
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: leaf") );
 		return FALSE;
@@ -267,8 +267,17 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 	return TRUE;
 }
 
-//*** NOTE: This function is not used yet.
-DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug) 
+BOOL CNeighboursWithConnect::IsG1Leaf()
+{
+	return Network.m_bEnabled && GetCount( PROTOCOL_G1, nrsConnected, ntHub ) > 0;
+}
+
+BOOL CNeighboursWithConnect::IsG1Ultrapeer()
+{
+	return Network.m_bEnabled && GetCount( PROTOCOL_G1, nrsConnected, ntLeaf ) > 0;
+}
+
+DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug) 
 {	//Check if this node can be a G1 Ultrapeer
 
 	DWORD nRating = 0; //Zero means this node can not be an ultrapeer.
@@ -298,7 +307,7 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 		return FALSE;
 	}
 
-	if ( IsLeaf() )
+	if ( IsG1Leaf() )
 	{
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: leaf") );
 		return FALSE;
@@ -348,7 +357,13 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 		
 		if ( Settings.Gnutella1.NumPeers < 4 )
 		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G1 peer2peer") );
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G1 peer to peer") );
+			return FALSE;
+		}
+
+		if ( Settings.Gnutella1.NumLeafs < 5 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 5x G1 ultrapeer to leaf") );
 			return FALSE;
 		}
 		
@@ -393,7 +408,7 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 		nRating++;	// More than 1Mb inbound
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s in") );
 	}
-	if ( Settings.Connection.OutSpeed < 1000 )
+	if ( Settings.Connection.OutSpeed > 1000 )
 	{
 		nRating++;	// More than 1Mb outbound
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s out") );
@@ -417,7 +432,7 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 	}
 
 	//Check how long the node has been up
-	if ( Network.GetStableTime() < 28800 )
+	if ( Network.GetStableTime() > 28800 )
 	{
 		nRating++;	// 8 hours uptime is pretty good.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
@@ -463,13 +478,15 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(TRISTATE bG2)
 	switch ( bG2 )
 	{
 	case TS_UNKNOWN:
-		return ( nConnected[1] + nConnected[2] ) < ( IsLeaf() ? Settings.Gnutella1.NumHubs + Settings.Gnutella2.NumHubs : Settings.Gnutella1.NumPeers + Settings.Gnutella2.NumPeers );
+		//return ( nConnected[1] + nConnected[2] ) < ( IsLeaf() ? Settings.Gnutella1.NumHubs + Settings.Gnutella2.NumHubs : Settings.Gnutella1.NumPeers + Settings.Gnutella2.NumPeers );
+		return ( ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ) ||
+				 ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ) );
 	case TS_FALSE:
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
-		return ( nConnected[1] ) < ( IsLeaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers );
+		return ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers );
 	case TS_TRUE:
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
-		return ( nConnected[2] ) < ( IsLeaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers );
+		return ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers );
 	default:
 		return FALSE;
 	}
@@ -561,7 +578,7 @@ void CNeighboursWithConnect::Maintain()
 	int nCount[4][3], nLimit[4][3];
 	DWORD tTimer = GetTickCount();
 	DWORD tNow = time( NULL );
-	BOOL bIsLeaf = IsLeaf();
+	BOOL bIsG1Leaf = IsG1Leaf(), bIsG2Leaf = IsG2Leaf();
 	
 	if ( Settings.Downloads.ConnectThrottle != 0 )
 	{
@@ -578,7 +595,11 @@ void CNeighboursWithConnect::Maintain()
 		
 		if ( pNeighbour->m_nState == nrsConnected )
 		{
-			if ( bIsLeaf && pNeighbour->m_nNodeType != ntHub )
+			if ( pNeighbour->m_nNodeType != ntHub && bIsG2Leaf && pNeighbour->m_nProtocol == PROTOCOL_G2 )
+			{
+				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
+			}
+			else if ( pNeighbour->m_nNodeType != ntHub && bIsG1Leaf && pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
 				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
 			}
@@ -600,16 +621,23 @@ void CNeighboursWithConnect::Maintain()
 		}
 	}
 	
-	if ( bIsLeaf )
+	if ( bIsG1Leaf )
 	{
 		nLimit[ PROTOCOL_G1 ][ ntHub ]	= min( Settings.Gnutella1.NumHubs, 2 );
-		nLimit[ PROTOCOL_G2 ][ ntHub ]	= min( Settings.Gnutella2.NumHubs, 3 );
 	}
 	else
 	{
 		nLimit[ PROTOCOL_G1 ][ ntHub ]	= max( Settings.Gnutella1.NumPeers, Settings.Gnutella1.NumHubs );
-		nLimit[ PROTOCOL_G2 ][ ntHub ]	= max( Settings.Gnutella2.NumPeers, Settings.Gnutella2.NumHubs );
 		nLimit[ PROTOCOL_G1 ][ ntLeaf ]	= Settings.Gnutella1.NumLeafs;
+	}
+
+	if ( bIsG2Leaf )
+	{
+		nLimit[ PROTOCOL_G2 ][ ntHub ]	= min( Settings.Gnutella2.NumHubs, 3 );
+	}
+	else
+	{
+		nLimit[ PROTOCOL_G2 ][ ntHub ]	= max( Settings.Gnutella2.NumPeers, Settings.Gnutella2.NumHubs );
 		nLimit[ PROTOCOL_G2 ][ ntLeaf ]	= Settings.Gnutella2.NumLeafs;
 	}
 	

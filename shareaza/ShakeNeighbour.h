@@ -58,6 +58,8 @@ protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
+	virtual BOOL	OnHeadersCompleteG1();
+	virtual BOOL	OnHeadersCompleteG2();
 protected:
 	void	SendMinimalHeaders();
 	void	SendPublicHeaders();

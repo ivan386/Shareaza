@@ -41,13 +41,18 @@ public:
 	CNeighbour*		ConnectTo(IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE);
 	CNeighbour*		OnAccept(CConnection* pConnection);
 public:
-	BOOL	IsLeaf();
-	BOOL	IsHub();
-	BOOL	IsHubCapable(BOOL bDebug = FALSE);
-	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);
-	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);
-	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);
-	DWORD	IsUltrapeerCapable(BOOL bDebug = FALSE);	//Check if this node can be a G1 Ultrapeer (unused at present)
+	//G2
+	BOOL	IsG2Leaf();									//Check if this node is a G2 Leaf
+	BOOL	IsG2Hub();									//Check if this node is a G2 Hub
+	BOOL	IsG2HubCapable(BOOL bDebug = FALSE);		//Check if this node can be a G2 Hub
+	//Either
+	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more hubs for the specified protocol
+	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more leaves for the specified protocol
+	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);		//Unused?
+	//G1
+	BOOL	IsG1Leaf();									//Check if this node is a G1 Leaf
+	BOOL	IsG1Ultrapeer();							//Check if this node is a G1 Ultrapeer
+	DWORD	IsG1UltrapeerCapable(BOOL bDebug = FALSE);	//Check if this node can be a G1 Ultrapeer
 public:
 	virtual void	OnRun();
 protected:

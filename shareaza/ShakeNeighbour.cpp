@@ -51,7 +51,8 @@ CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL )
 	
 	m_bDeflateSend		= FALSE;
 	m_bDeflateAccept	= FALSE;
-	m_bCanDeflate		= Neighbours.IsLeaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) : ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Hub );
+	//ToDo: Check this - G1 setting?
+	m_bCanDeflate		= Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) : ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Hub );
 	
 	m_bUltraPeerSet		= TS_UNKNOWN;
 	m_bUltraPeerNeeded	= TS_UNKNOWN;
@@ -306,16 +307,6 @@ void CShakeNeighbour::SendPublicHeaders()
 		m_pOutput->Print( "Pong-Caching: 0.1\r\n" );
 		if ( Settings.Gnutella1.VendorMsg ) m_pOutput->Print( "Vendor-Message: 0.1\r\n" );
 		m_pOutput->Print( "X-Query-Routing: 0.1\r\n" );
-		
-		if ( Settings.Gnutella1.NumLeafs == 0 )
-		{
-			/*
-			m_pOutput->Print( "X-Degree: 15\r\n" );
-			m_pOutput->Print( "X-Ultrapeer-Query-Routing: 0.1\r\n" );
-			m_pOutput->Print( "X-Max-TTL: 4\r\n" );
-			m_pOutput->Print( "X-Dynamic-Querying: 0.1\r\n" );
-			*/
-		}
 	}
 	
 	if ( m_bInitiated && m_bUltraPeerSet == TS_FALSE )
@@ -324,24 +315,27 @@ void CShakeNeighbour::SendPublicHeaders()
 	}
 	else
 	{
-		if ( Neighbours.IsHub() || Neighbours.IsHubCapable() )
+		if ( 1 )	//Add proper G2 detection here
 		{
-			m_pOutput->Print( "X-Ultrapeer: True\r\n" );
-			
-			/*
-			if ( Neighbours.IsHubLoaded( TS_TRUE ) )	// TS_TRUE ?
+			if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 			{
-				m_pOutput->Print( "X-Ultrapeer-Loaded: True\r\n" );
+				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
 			}
-			else
+			else if ( Settings.Gnutella2.ClientMode != MODE_HUB ) //( Settings.Gnutella.LeafEnable )
 			{
-				m_pOutput->Print( "X-Ultrapeer-Loaded: False\r\n" );
+				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 			}
-			*/
 		}
-		else if ( Settings.Gnutella2.ClientMode != MODE_HUB ) //( Settings.Gnutella.LeafEnable )
+		else
 		{
-			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+			if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+			{
+				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
+			}
+			else if ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER )
+			{
+				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+			}
 		}
 	}
 }
@@ -459,7 +453,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	}
 	else if ( strLine == _T("GNUTELLA CONNECT/0.4") && ! m_bInitiated )
 	{
-		if ( Neighbours.IsLeaf() )
+		if ( Neighbours.IsG1Leaf() )
 		{
 			DelayClose( IDS_HANDSHAKE_IAMLEAF );
 			return FALSE;
@@ -617,6 +611,17 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CShakeNeighbour::OnHeadersComplete()
 {
+	if ( ! m_bG2Accept || ( m_bInitiated && ! m_bG2Send ) )
+		return OnHeadersCompleteG1();
+	else
+		return OnHeadersCompleteG2();
+}
+
+BOOL CShakeNeighbour::OnHeadersCompleteG2()
+{
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G2") ); //****temp
+/*
+//Shouldn't be needed any more
 	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected )
 	{
 		if ( ! m_bG2Accept || ( m_bInitiated && ! m_bG2Send ) )
@@ -629,6 +634,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			return FALSE;
 		}
 	}
+*/
 	
 	if ( m_nState == nrsRejected )
 	{
@@ -638,7 +644,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	else if ( m_nState == nrsHandshake3 )
 	{
 		if ( m_bUltraPeerSet == TS_FALSE && m_nNodeType == ntNode &&
-			 ( Neighbours.IsHub() || Neighbours.IsHubCapable() ) )
+			 ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
 		{
 			theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
 			m_nNodeType = ntLeaf;
@@ -651,7 +657,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	{
 		BOOL bFallback = FALSE;
 
-		if ( Neighbours.IsHub() || Neighbours.IsHubCapable() )
+		if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			if ( m_bUltraPeerSet == TS_FALSE )
 			{
@@ -713,13 +719,13 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	}
 	else
 	{
-		if ( Neighbours.IsLeaf() )
+		if ( Neighbours.IsG2Leaf() )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Shielded leaf node") );
 			DelayClose( IDS_HANDSHAKE_IAMLEAF );
 			return FALSE;
 		}
-		else if ( Neighbours.IsHub() || Neighbours.IsHubCapable() )
+		else if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			if ( m_bUltraPeerSet == TS_FALSE )
 			{
@@ -735,9 +741,9 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			m_nNodeType = ntHub;
 		}
 		
-		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( m_bG2Accept ? TS_TRUE : TS_FALSE ) &&
-			 ! Neighbours.NeedMoreLeafs( m_bG2Accept ? TS_TRUE : TS_FALSE ) ) ||
-			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( m_bG2Accept ? TS_TRUE : TS_FALSE ) ) )
+		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( TS_TRUE ) &&
+			 ! Neighbours.NeedMoreLeafs( TS_TRUE ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( TS_TRUE ) ) )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") );
 			DelayClose( IDS_HANDSHAKE_SURPLUS );
@@ -764,7 +770,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			SendHostHeaders();
 
 			if ( m_nNodeType != ntLeaf &&
-				 Neighbours.NeedMoreHubs( m_bG2Accept ? TS_TRUE : TS_FALSE ) )
+				 Neighbours.NeedMoreHubs( TS_TRUE ) )
 			{
 				if ( Settings.Gnutella2.ClientMode != MODE_LEAF )
 				{
@@ -787,6 +793,174 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	return TRUE;
 }
 
+BOOL CShakeNeighbour::OnHeadersCompleteG1()
+{
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G1") ); //****temp
+
+	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected )
+	{
+		m_pOutput->Print( "GNUTELLA/0.6 503 G2 Required\r\n" );
+		SendMinimalHeaders();
+		m_pOutput->Print( "\r\n" );
+		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		DelayClose( IDS_HANDSHAKE_NOTG2 );
+		return FALSE;
+	}
+	
+	if ( m_nState == nrsRejected )
+	{
+		Close( 0 );
+		return FALSE;
+	}
+	else if ( m_nState == nrsHandshake3 )
+	{
+		if ( m_bUltraPeerSet == TS_FALSE && m_nNodeType == ntNode &&
+			 ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) )
+		{
+			theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
+			m_nNodeType = ntLeaf;
+		}
+		
+		OnHandshakeComplete();
+		return FALSE;
+	}
+	else if ( m_bInitiated )
+	{
+		BOOL bFallback = FALSE;
+
+		if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+		{
+			if ( m_bUltraPeerSet == TS_FALSE )
+			{
+				m_nNodeType = ntLeaf;
+			}
+			else if (	m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_TRUE )
+			{
+				m_nNodeType = ntNode;
+			}
+			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_FALSE )
+			{
+				if ( Neighbours.GetCount( PROTOCOL_G1, nrsConnected, ntLeaf ) > 0 )
+				{
+					SendHostHeaders( _T("GNUTELLA/0.6 503 I have leaves") );
+					DelayClose( IDS_HANDSHAKE_CANTBEPEER );
+					return FALSE;
+				}
+
+				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
+				{
+					SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
+					DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
+					return FALSE;
+				}
+
+				m_nNodeType = ntHub;
+				bFallback = TRUE;
+			}
+		}
+		else if ( m_bUltraPeerSet == TS_TRUE )
+		{
+			if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
+			{
+				SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
+				DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
+				return FALSE;
+			}
+
+			m_nNodeType = ntHub;
+		}
+		else if ( m_bUltraPeerSet != TS_TRUE )
+		{
+			if ( Settings.Gnutella1.ClientMode == MODE_LEAF )
+			{
+				SendHostHeaders( _T("GNUTELLA/0.6 503 Need an Ultrapeer") );
+				DelayClose( IDS_HANDSHAKE_NEEDAPEER );
+				return FALSE;
+			}
+		}
+
+		m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );
+		SendPrivateHeaders();
+		if ( bFallback ) m_pOutput->Print( "X-Ultrapeer: False\r\n" );
+		m_pOutput->Print( "\r\n" );
+
+		OnHandshakeComplete();
+		return FALSE;
+	}
+	else
+	{
+		if ( Neighbours.IsG1Leaf() )
+		{
+			SendHostHeaders( _T("GNUTELLA/0.6 503 Shielded leaf node") );
+			DelayClose( IDS_HANDSHAKE_IAMLEAF );
+			return FALSE;
+		}
+		else if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+		{
+			if ( m_bUltraPeerSet == TS_FALSE )
+			{
+				m_nNodeType = ntLeaf;
+			}
+			else if ( m_bUltraPeerSet == TS_TRUE )
+			{
+				m_nNodeType = ntNode;
+			}
+		}
+		else if ( m_bUltraPeerSet == TS_TRUE && ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER ) )
+		{
+			m_nNodeType = ntHub;
+		}
+		
+		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( TS_FALSE ) &&
+			 ! Neighbours.NeedMoreLeafs( TS_FALSE ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( TS_FALSE ) ) )
+		{
+			SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") );
+			DelayClose( IDS_HANDSHAKE_SURPLUS );
+			return FALSE;
+		}
+		else if ( ( m_nNodeType == ntHub && ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ) ) ||
+				  ( m_nNodeType == ntLeaf && ( Settings.Gnutella1.ClientMode == MODE_LEAF ) ) )
+		{
+			SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
+			DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
+			return FALSE;
+		}
+		else if ( m_nNodeType != ntHub && ( Settings.Gnutella1.ClientMode == MODE_LEAF ) )
+		{
+			SendHostHeaders( _T("GNUTELLA/0.6 503 Need an Ultrapeer") );
+			DelayClose( IDS_HANDSHAKE_NEEDAPEER );
+			return FALSE;
+		}
+		else
+		{
+			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );
+			SendPublicHeaders();
+			SendPrivateHeaders();
+			SendHostHeaders();
+
+			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( TS_FALSE ) )
+			{
+				if ( Settings.Gnutella1.ClientMode != MODE_LEAF )
+				{
+					m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
+				}
+			}
+			else
+			{
+				if ( Settings.Gnutella1.ClientMode != MODE_ULTRAPEER )
+				{
+					m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
+				}
+			}
+
+			m_pOutput->Print( "\r\n" );
+			m_nState = nrsHandshake1;
+		}
+	}
+
+	return TRUE;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CShakeNeighbour handshake completed

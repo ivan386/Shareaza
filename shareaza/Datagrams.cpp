@@ -1096,7 +1096,7 @@ BOOL CDatagrams::OnHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	if ( ! Neighbours.IsHub() ) return FALSE;
+	if ( ! Neighbours.IsG2Hub() ) return FALSE;
 	
 	DWORD nRequestedAddress = pHost->sin_addr.S_un.S_addr;
 	WORD nRequestedPort = ntohs( pHost->sin_port );

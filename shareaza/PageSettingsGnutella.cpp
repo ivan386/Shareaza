@@ -127,12 +127,6 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_wndG1ClientMode.SetItemData( 1, MODE_LEAF );
 	m_wndG1ClientMode.SetItemData( 2, MODE_ULTRAPEER );
 
-	//***
-	//G1 UPeer mode is not active yet. Remove this section when it is.
-	Settings.Gnutella1.ClientMode = MODE_AUTO;
-	m_wndG1ClientMode.EnableWindow( FALSE ); 
-	//***
-
 	m_wndG1ClientMode.SetCurSel( Settings.Gnutella1.ClientMode );
 
 	m_wndG2ClientMode.SetItemData( 0, MODE_AUTO );
@@ -245,34 +239,6 @@ void CGnutellaSettingsPage::OnOK()
 
 	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position
 	if ( Settings.Gnutella2.ClientMode > MODE_HUB ) Settings.Gnutella2.ClientMode = MODE_AUTO;
-
-
-/*
-	//***
-	//Tempary code- the 'gnutella' setting should be removed and use the seperate G1/G2 modes instead.
-	switch (Settings.Gnutella2.ClientMode)
-	{
-	case MODE_AUTO:
-		Settings.Gnutella.HubEnable			= TRUE;
-		Settings.Gnutella.HubForce			= FALSE;
-		Settings.Gnutella.LeafEnable		= TRUE;
-		Settings.Gnutella.LeafForce			= FALSE;
-		break;
-	case MODE_LEAF:
-		Settings.Gnutella.HubEnable			= FALSE;
-		Settings.Gnutella.HubForce			= FALSE;
-		Settings.Gnutella.LeafEnable		= TRUE;
-		Settings.Gnutella.LeafForce			= TRUE;
-		break;
-	case MODE_HUB:
-		Settings.Gnutella.HubEnable			= TRUE;
-		Settings.Gnutella.HubForce			= TRUE;
-		Settings.Gnutella.LeafEnable		= FALSE;
-		Settings.Gnutella.LeafForce			= FALSE;
-		break;
-	}
-	//***
-*/
 
 	CSettingsPage::OnOK();
 }

@@ -480,7 +480,7 @@ void CG2Neighbour::SendLNI()
 	pPacket->WriteLongBE( (DWORD)nMyFiles );
 	pPacket->WriteLongBE( (DWORD)nMyVolume );
 
-	if ( ! Neighbours.IsLeaf() )
+	if ( ! Neighbours.IsG2Leaf() )
 	{
 		pPacket->WritePacket( "HS", 4 );
 		pPacket->WriteShortBE( nLeafs );
@@ -747,7 +747,7 @@ void CG2Neighbour::SendHAW()
 {
 	m_tLastHAW = GetTickCount();
 	
-	if ( m_nNodeType == ntLeaf || Neighbours.IsLeaf() ) return;
+	if ( m_nNodeType == ntLeaf || Neighbours.IsG2Leaf() ) return;
 	
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_HAW, TRUE );
 	
