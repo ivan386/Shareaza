@@ -57,7 +57,7 @@ public:
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CDownload* pFile);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags = NULL);
 public:
-	int		GetTotalBandwidthPoints();
+	int		GetTotalBandwidthPoints( BOOL ActiveOnly = FALSE );
 	int		GetQueueCapacity();
 	int		GetQueuedCount();
 	int		GetQueueRemaining();

@@ -223,14 +223,24 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, 
 //////////////////////////////////////////////////////////////////////
 // CUploadQueues counting
 
-int CUploadQueues::GetTotalBandwidthPoints()
+int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
+	CUploadQueue *pQptr;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		nCount += GetNext( pos )->m_nBandwidthPoints;
+		pQptr=GetNext( pos );
+		if ( ( pQptr->m_bEnable ) || ( !ActiveOnly ) )
+		{
+			if ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+				if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
+					continue;	
+		}
+		else
+			continue;
+		nCount += pQptr->m_nBandwidthPoints;
 	}
 	
 	return nCount;

@@ -171,18 +171,37 @@ void CUploadsSettingsPage::UpdateQueues()
 	
 	for ( POSITION pos = UploadQueues.GetIterator() ; pos ; nIndex++ )
 	{
+		BOOL bDonkeyOnlyDisabled = FALSE;
+
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
 		CLiveItem* pItem = pQueues.Add( pQueue );
+
+		if ( ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+		{
+			bDonkeyOnlyDisabled = !( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday );
+		}
 		
-		DWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints() );
+		if( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
+		{
+			DWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
+			pItem->Set( 2, Settings.SmartVolume( nBandwidth * 8, FALSE, TRUE ) + '+' );
+			pItem->Format( 3, _T("%i-%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
+
+			pItem->m_nImage = CoolInterface.ImageForID( ID_VIEW_UPLOADS );
+		}
+		else
+		{
+			pItem->Set( 2, _T("- ") );
+			pItem->Format( 3, _T("-"));
+
+			pItem->m_nImage = CoolInterface.ImageForID( ID_SYSTEM_CLEAR );
+		}
 		
 		pItem->Set( 0, pQueue->m_sName );
 		pItem->Set( 1, pQueue->GetCriteriaString() );
-		pItem->Set( 2, Settings.SmartVolume( nBandwidth * 8, FALSE, TRUE ) + '+' );
-		pItem->Format( 3, _T("%i-%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
-		pItem->Format( 4, _T("%i"), nIndex );
 		
-		pItem->m_nImage = CoolInterface.ImageForID( ID_VIEW_UPLOADS );
+		pItem->Format( 4, _T("%i"), nIndex );
+		 
 	}
 	
 	pLock.Unlock();
