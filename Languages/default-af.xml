@@ -90,11 +90,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_SEARCH" text="Soek Weer..."/>
-		<button id="ID_SEARCH_STOP" text="Stop"/>
-		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Laai Af"/>
 		<button id="ID_BROWSE_LAUNCH" text="Vertoon Gebruikersinligting"/>
+		<separator/>
+		<button id="ID_SEARCH_SEARCH" text="Soek Weer..."/>
+		<button id="ID_SEARCH_STOP" text="Stop"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Soekpaneel"/>
 		<button id="ID_SEARCH_DETAILS" text="Inligtingspaneel"/>
@@ -1155,7 +1155,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Skrap"/>
-`		<separator/>
+		<separator/>
 		<menu text="S_oek Vir">
 			<item id="ID_SEARCH_FOR_THIS" text="Hierdie Lêer"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Soortgelyke Lêers"/>
@@ -2005,163 +2005,6 @@
 </document>
 </documents>
 
-<!-- English Navigation Bar
-<windowSkins>
-	<windowSkin>
-		<image type="image" language="en" res="241"/>
-		<image type="alpha" language="en" res="246"/>
-		<target window="CMainTabBarCtrl.Basic"/>
-		<anchors>
-			<anchor name="Background"				rect="0,0,470,44"/>
-			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
-			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
-			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
-		</parts>
-	</windowSkin>
-	<windowSkin>
-		<image type="image" language="en" res="241"/>
-		<image type="alpha" language="en" res="246"/>
-		<target window="CMainTabBarCtrl"/>
-		<anchors>
-			<anchor name="Background"				rect="0,0,574,44"/>
-			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
-			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
-			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-			<anchor name="_ID_TAB_NETWORK"			rect="464,1,102,38"/>
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
-			<part name="_ID_TAB_NETWORK.Up"			rect="450,0,108,38"/>
-			<part name="_ID_TAB_NETWORK.Checked"	rect="450,38,102,38"/>
-			<part name="_ID_TAB_NETWORK.Hover"		rect="450,38,102,38"/>
-			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
-		</parts>
-	</windowSkin>
-</windowSkins> -->
-
-<!-- Afrikaans Navigation Bar - Use this to enable the custom ShareazaOS Navigation Bar
-<windowSkins>
-	<windowSkin>
-		<image type="image" language="af" path="NavbarImage-af.bmp"/>
-		<image type="watermark" language="af" path="NavbarWater-af.bmp"/>
-		<target window="CMainTabBarCtrl.Basic"/>
-		<anchors>
-			<anchor name="Background"			rect="0,0,524,38"/>
-			<anchor name="_ID_TAB_HOME"			rect="15,2,103,29"/> 
-			<anchor name="_ID_TAB_LIBRARY"			rect="117,2,120,29"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="236,2,82,29"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="317,2,73,29"/> 
-			<anchor name="_ID_TAB_TRANSFERS"		rect="389,2,128,29"/> 
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="1,0"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="1,28"/> 
-			<part name="_ID_TAB_HOME.Hover"			rect="1,28"/>
-			<part name="_ID_TAB_HOME.Down"			rect="1,0"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="103,0"/>
-			<part name="_ID_TAB_LIBRARY.Checked"		rect="103,28"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="103,28"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="103,0"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="222,0"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="222,28"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="222,28"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="222,0"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="303,0"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="303,28"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="303,28"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="303,0"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="375,0"/> 
-			<part name="_ID_TAB_TRANSFERS.Checked"		rect="375,28"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"		rect="375,28"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="375,0"/>
-		</parts>
-	</windowSkin>
-	<windowSkin>
-		<image type="image" language="af" path="NavbarImage-af.bmp"/>
-		<image type="watermark" language="af" path="NavbarWater-af.bmp"/>
-		<target window="CMainTabBarCtrl"/>
-		<anchors>
-			<anchor name="Background"			rect="0,0,626,38"/>
-			<anchor name="_ID_TAB_HOME"			rect="15,2,103,29"/> 
-			<anchor name="_ID_TAB_LIBRARY"			rect="117,2,120,29"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="236,2,82,29"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="317,2,73,29"/> 
-			<anchor name="_ID_TAB_TRANSFERS"		rect="389,2,128,29"/> 
-			<anchor name="_ID_TAB_NETWORK"			rect="516,2,103,29"/>
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="1,0"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="1,28"/> 
-			<part name="_ID_TAB_HOME.Hover"			rect="1,28"/>
-			<part name="_ID_TAB_HOME.Down"			rect="1,0"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="103,0"/>
-			<part name="_ID_TAB_LIBRARY.Checked"		rect="103,28"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="103,28"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="103,0"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="222,0"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="222,28"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="222,28"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="222,0"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="303,0"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="303,28"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="303,28"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="303,0"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="375,0"/> 
-			<part name="_ID_TAB_TRANSFERS.Checked"		rect="375,28"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"		rect="375,28"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="375,0"/>
-			<part name="_ID_TAB_NETWORK.Up"			rect="502,0"/> 
-			<part name="_ID_TAB_NETWORK.Checked"		rect="502,28"/> 
-			<part name="_ID_TAB_NETWORK.Hover"		rect="502,28"/> 
-			<part name="_ID_TAB_NETWORK.Down"		rect="502,0"/> 
-		</parts>
-	</windowSkin>
-</windowSkins> -->
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_HELP_ABOUT" message="Vertoon inligting oor Shareaza..."/>
@@ -2424,6 +2267,7 @@
 	<tip id="ID_NETWORK_G2" message="Konnekteer aan die Gnutella2 netwerk (word sterk aanbeveel)."/>
 	<tip id="ID_NETWORK_G1" message="Konnekteer aan die oorspronklike Gnutella netwerk."/>
 	<tip id="ID_NETWORK_ED2K" message="Konnekteer aan die eDonkey2000 netwerk."/>
+
 	<tip id="ID_HOSTCACHE_PRIORITY" message="Probeer aan hierdie bediener konnekteer voor ander bedieners."/>
 	<tip id="ID_VIEW_BASIC" message="Gebruik Shareaza in Normale modus."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Deursoek jou lêerbiblioteek..."/>
@@ -2449,7 +2293,7 @@
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids as 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids na 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
-    	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
+    <tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Vertoon die gevorderde aflaaiverstellings-koppelvlak..."/>
 	<tip id="ID_MEDIA_MUTE" message="Maak die volume stil"/>
 	<tip id="ID_WINDOW_REMOTE" message="Vertoon of verwyder die Shareaza Afstandbeheer"/>
@@ -2496,7 +2340,7 @@
 	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode is beëindig. Laai asseblief die volle, offisiële weergawe af vanaf www.shareaza.com."/>
 	<string id="8011" value="Om die aansig te verander mag sommige van die oop vensters dalk gesluit word.  Wil jy nou verander?"/>
 	<string id="8062" value="Hub modus met %lu kliënt(e).  %s in lokale biblioteek."/>
-    	<string id="8063" value="Gekonnekteer. %s in lokale biblioteek."/>
+    <string id="8063" value="Gekonnekteer. %s in lokale biblioteek."/>
 	<string id="8064" value="Gekonnekteer aan %lu gashere.  %s in lokale biblioteek."/>
 	<string id="8065" value="Besig om aan die netwerk te konnekteer..."/>
 	<string id="8066" value="Nie gekonnekteer aan die netwerk nie."/>
@@ -2573,6 +2417,8 @@
 	<string id="8239" value="Voltooi"/>
 	<string id="8240" value="Shareaza verskuif die lêer:"/>
 	<string id="8241" value="Shareaza kontroleer die aflaai vir foute:"/>
+    <string id="8242" value="%s of %s (%.2f%%)"/>
+    <string id="8243" value="Volume uploaded:"/>
 	<string id="8288" value="Besig om deur jou Shareaza Biblioteek te blaai"/>
 	<string id="8289" value="Blaai deur&#160;"/>
 	<string id="8290" value="Besig om deur die inhoud van %i gidse te blaai"/>
@@ -2593,14 +2439,14 @@
 	<string id="8313" value="Hierdie lêer blyk gemorspos te wees."/>
 	<string id="8314" value="Jy het voorheen hierdie lêer afgelaai en geskrap."/>
 	<string id="8315" value="Op die swartlys:"/>
-    	<string id="8316" value="Treflaaie"/>
-    	<string id="8317" value="Oplaaie"/>
-    	<string id="8318" value="%lu vandag, %lu in totaal"/>
-    	<string id="8320" value="Status:"/>
-    	<string id="8321" value="Spoed:"/>
-    	<string id="8322" value="URL:"/>
-    	<string id="8323" value="Gebruikersagent:"/>
-    	<string id="8324" value="Nie Aktief"/>
+    <string id="8316" value="Treflaaie"/>
+    <string id="8317" value="Oplaaie"/>
+    <string id="8318" value="%lu vandag, %lu in totaal"/>
+    <string id="8320" value="Status:"/>
+    <string id="8321" value="Spoed:"/>
+    <string id="8322" value="URL:"/>
+    <string id="8323" value="Gebruikersagent:"/>
+    <string id="8324" value="Nie Aktief"/>
    	<string id="8325" value="Aktief"/>
    	<string id="8326" value="Volgende in Lyn"/>
 	<string id="16064" value="Shareaza netwerkkern word geïnisieer..."/>
@@ -2806,8 +2652,8 @@
 	<string id="16405" value="Wil jy hierdie lêer aflaai?\r\n\r\n&quot;%s&quot;\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16406" value="Wil jy alle lêers in hierdie versameling aflaai?\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16407" value="Wil jy hierdie versameling verhoed om jou te vra om enigeiets anders af te laai?"/>
-    	<string id="16408" value="Kopieer &amp;URI"/>
-    	<string id="16409" value="Voer &amp;URI's Uit..."/>
+    <string id="16408" value="Kopieer &amp;URI"/>
+    <string id="16409" value="Voer &amp;URI's Uit..."/>
 	<string id="16448" value="Gekonnekteer aan %s, besig om blad te skud..."/>
 	<string id="16449" value="Nou besig om met %s (%s) te gesels."/>
 	<string id="16450" value="Konneksie aan %s gesluit."/>
@@ -2849,16 +2695,16 @@
 	<string id="16773" value="Poort:"/>
 	<string id="16774" value="&amp;Konnekteer"/>
 	<string id="16775" value="&amp;Blaai Deur"/>
-    	<string id="16776" value="Voeg By"/>
-    	<string id="16777" value="Lêernaam:"/>
-    	<string id="16778" value="URL:"/>
-    	<string id="16779" value="Tipe:"/>
-    	<string id="16780" value="Nie Gespesifiseer"/>
-    	<string id="16781" value="Stuur versoek..."/>
-    	<string id="16782" value="Sukses!"/>
-    	<string id="16783" value="Voltooi, kliek Maak Toe"/>
-    	<string id="16784" value="&amp;Maak Toe"/>
-    	<string id="16785" value="(Geen Visualisering)"/>
+    <string id="16776" value="Voeg By"/>
+    <string id="16777" value="Lêernaam:"/>
+    <string id="16778" value="URL:"/>
+    <string id="16779" value="Tipe:"/>
+    <string id="16780" value="Nie Gespesifiseer"/>
+    <string id="16781" value="Stuur versoek..."/>
+    <string id="16782" value="Sukses!"/>
+    <string id="16783" value="Voltooi, kliek Maak Toe"/>
+    <string id="16784" value="&amp;Maak Toe"/>
+    <string id="16785" value="(Geen Visualisering)"/>
 	<string id="16800" value="Jy het nog nie 'n konneksie-spoed gespesifiseer nie.  Voor jy aangaan, selekteer asseblief jou internet konneksietipe, of sleutel 'n konneksiespoed in."/>
 	<string id="16801" value="Kies asseblief die tipe internet konneksie wat jy gebruik, voor jy aangaan."/>
 	<string id="16802" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
@@ -2868,7 +2714,7 @@
 	<string id="16806" value="Jy het aangedui dat jy poort-aanstuur wil opstel op jou NAT roeteerder of netskans.\n\nStel asseblief jou netwerk om TCP poort %i aan te stuur na jou lokale rekenaar."/>
 	<string id="16807" value="Tik asseblief die bandwydte limiet wat jy wil hê, in die vorm &quot;123 kb/s&quot; vir kilobits per sekonde, of &quot;123 KB/s&quot; vir kilobytes per sekonde."/>
 	<string id="16808" value="Jy het nie jou ouderdom en geslag geselekteer nie. Is jy seker jy wil voortgaan sonder om dit te doen?"/>
-    	<string id="16809" value="Maak &amp;Toe"/>
+    <string id="16809" value="Maak &amp;Toe"/>
 	<string id="16864" value="Navraag word gedoen by gasheer-ontdekkingsdiens..."/>
 	<string id="16865" value="Navraag word gedoen by gasheer-ontdekkingsdiens &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaksie suksesvol (&quot;%s&quot;)."/>
@@ -3027,10 +2873,10 @@
 	<string id="20126" value="Nie Gekontroleer"/>
 	<string id="20127" value="bron"/>
 	<string id="20128" value="bronne"/> <!-- numbers 21, 31, ... --> 
-        <string id="20129" value="bronne"/> <!-- tens --> 
-        <string id="20130" value="bronne"/> <!-- from 11 to 19 --> 
-        <string id="20131" value="bronne"/> <!-- from 2 to 4 --> 
-        <string id="20132" value="bronne"/> <!-- from 5 to 9 --> 
+    <string id="20129" value="bronne"/> <!-- tens --> 
+    <string id="20130" value="bronne"/> <!-- from 11 to 19 --> 
+    <string id="20131" value="bronne"/> <!-- from 2 to 4 --> 
+    <string id="20132" value="bronne"/> <!-- from 5 to 9 --> 
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3215,7 +3061,7 @@
 		<control caption="Shareaza Web Toegang laat jou toe om Shareaza op jou rekenaar aan te los en dit vanaf 'n afgeleë plek te beheer deur middel van 'n web blaaier. Jy sal inkomende konneksies moet kan ontvang om hierdie funksie te gebruik ('n korrek opgestelde roeteerder, ens)."/>
 		<control caption="_Aanskakel:"/>
 		<control caption="_Skakel Shareaza Web Toegang aan:"/>
-	    	<control/>
+	    <control/>
 		<control caption="_Identifikasie:"/>
 		<control caption="Kies Gebruikersnaam:"/>
 		<control/>
@@ -4028,7 +3874,7 @@
 		<column from="Folder" to="Gids"/>
 		<column from="Hits" to="Treflaaie"/>
 		<column from="Uploads" to="Oplaaie"/>
-	    	<column from="Modified" to="Verander"/>
+	    <column from="Modified" to="Verander"/>
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Lêernaam"/>
@@ -4037,15 +3883,14 @@
 		<column from="Speed" to="Spoed"/>
 		<column from="Status" to="Status"/>
 		<column from="Client" to="Kliënt"/>
-        	<column from="Downloaded" to="Afgelaai"/>
-	    	<column from="Complete" to="Voltooi"/>
+        <column from="Downloaded" to="Afgelaai"/>
+	    <column from="Complete" to="Voltooi"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Gebruiker"/>
 		<column from="Uploaded File" to="Lêernaam"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Progress" to="Vordering"/>
-		<column from="Queue" to="Waglys"/>
 		<column from="Speed" to="Spoed"/>
 		<column from="Client" to="Kliënt"/>
 	</list>
@@ -4056,7 +3901,7 @@
 		<column from="Packets" to="Pakkies"/>
 		<column from="Bandwidth" to="Bandwydte"/>
 		<column from="Total" to="Totaal"/>
-        	<column from="Flow" to="Vloei"/>
+        <column from="Flow" to="Vloei"/>
 		<column from="Leaves" to="Kliënte"/>
 		<column from="Mode" to="Tipe"/>
 		<column from="Client" to="Program"/>
@@ -4066,7 +3911,7 @@
 		<column from="Address / Content" to="Adres / Inhoud"/>
 		<column from="Action" to="Aksie"/>
 		<column from="Expires" to="Verval"/>
-        	<column from="Precedence" to="Volgorde"/>
+        <column from="Precedence" to="Volgorde"/>
 		<column from="Hits" to="Treflaaie"/>
 		<column from="Comment" to="Kommentaar"/>
 	</list>
@@ -4093,14 +3938,14 @@
 		<column from="Address" to="Adres"/>
 		<column from="Protocol" to="Protokol"/>
 		<column from="Type" to="Tipe"/>
-        	<column from="T/H" to="T/H"/>
-        	<column from="Hex" to="Hex"/>
-        	<column from="ASCII" to="ASCII"/>
-        	<column from="G1-ID" to="G1-ID"/>
+        <column from="T/H" to="T/H"/>
+        <column from="Hex" to="Hex"/>
+        <column from="ASCII" to="ASCII"/>
+        <column from="G1-ID" to="G1-ID"/>
 	</list>
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="Soek"/>
-        	<column from="URN" to="URN"/>
+        <column from="URN" to="URN"/>
 		<column from="Schema" to="Skema"/>
 	</list>
 	<list name="CMatchCtrl">
@@ -4108,12 +3953,10 @@
 		<column from="Type" to="Tipe"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Rating" to="Gradering"/>
+		<column from="Status" to="Status"/>
 		<column from="Host/Count" to="Gasheer/Aantal"/>
 		<column from="Speed" to="Spoed"/>
 		<column from="Client" to="Program"/>
-		<column from="Status" to="Status"/>
-		<column from="Time" to="Tyd"/>
-		<column from="Bitrate" to="Bistempo"/>
 	</list>
     	<list name="CUploadQueueList">
         	<column from="Name" to="Naam"/>
