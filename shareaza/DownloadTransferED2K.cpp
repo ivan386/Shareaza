@@ -177,6 +177,14 @@ BOOL CDownloadTransferED2K::OnRunEx(DWORD tNow)
 {
 	switch ( m_nState )
 	{
+	case dtsConnecting:
+		if ( tNow > m_tConnected && tNow - m_tConnected > Settings.Connection.TimeoutConnect * 2 )
+		{
+			theApp.Message( MSG_ERROR, IDS_CONNECTION_TIMEOUT_CONNECT, (LPCTSTR)m_sAddress );
+			Close( TS_TRUE );
+			return FALSE;
+		}
+		break;
 	case dtsRequesting:
 	case dtsEnqueue:
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutHandshake * 2 )
