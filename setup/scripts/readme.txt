@@ -5,6 +5,8 @@ http://files.jrsoftware.org/ispack/
 
 Minimum version needed is 5.0.4.
 
+To compile a debug build without any files uncomment "#define debug" in main.iss.
+
 Compile procedure for Shareaza:
 1)	Place Shareaza.exe in \setup\builds\
 2)	Place skin.exe in \setup\builds\
