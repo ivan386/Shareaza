@@ -265,21 +265,25 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 5 ) m_tSel = 0;
 	
+	// If this is a clear event, and some kind of auto-clear is active
 	if ( nIDEvent == 4 && ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear ) )
 	{
+		// Lock transfers section
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
 
 		DWORD tNow = GetTickCount();
 		
+		// Loop through all downloads
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
 			
-			if ( pDownload->IsCompleted() &&
-				 pDownload->IsPreviewVisible() == FALSE &&
+			if ( pDownload->IsCompleted() &&					// If the download has completed
+				 pDownload->IsPreviewVisible() == FALSE &&		// And isn't previewing
 				 tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
 			{
+				// We might want to clear this download
 				if ( pDownload->m_pTorrent.IsAvailable() == FALSE )	//If it's a torrent
 				{	
 					// Check the torrent clear settings
