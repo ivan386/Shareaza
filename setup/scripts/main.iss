@@ -49,6 +49,7 @@ Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: 
 [Tasks]
 Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
+Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 
 [Files]
 ; Install unicows.dll on Win 9X
@@ -122,6 +123,7 @@ Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ig
 ; Shareaza icons
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
 Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: quicklaunch
 
 ; Other icons in user language
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
