@@ -121,7 +121,7 @@ void CDonkeySettingsPage::OnEnableToday()
 {
 	UpdateData( TRUE );
 
-	if ( (m_bEnableToday) && ( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) )
+	if ( (m_bEnableToday) && !( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_BANDWIDTH_LOW );
