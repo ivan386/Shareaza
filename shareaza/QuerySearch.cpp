@@ -924,7 +924,8 @@ void CQuerySearch::BuildWordList()
 {
 	m_nWords = 0;
 
-	m_sSearch = CharLower( m_sSearch.GetBuffer() );
+	CharLower( m_sSearch.GetBuffer() );
+	m_sSearch.ReleaseBuffer();
 
 	AddStringToWordList( m_sSearch );
 	
@@ -942,7 +943,8 @@ void CQuerySearch::BuildWordList()
 				{
 					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 					{
-						pAttribute->m_sValue = CharLower( pAttribute->m_sValue.GetBuffer() );
+						CharLower( pAttribute->m_sValue.GetBuffer() );
+						pAttribute->m_sValue.ReleaseBuffer();
 						AddStringToWordList( pAttribute->m_sValue );
 					}
 				}
@@ -953,7 +955,8 @@ void CQuerySearch::BuildWordList()
 			for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
 			{
 				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
-				pAttribute->m_sValue = CharLower( pAttribute->m_sValue.GetBuffer() );
+				CharLower( pAttribute->m_sValue.GetBuffer() );
+				pAttribute->m_sValue.ReleaseBuffer();
 				AddStringToWordList( pAttribute->m_sValue );
 			}
 		}

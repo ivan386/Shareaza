@@ -178,7 +178,8 @@ BOOL CSchemaMember::LoadSchema(CXMLElement* pRoot, CXMLElement* pElement)
 	m_sTitle.SetAt( 0, toupper( m_sTitle.GetAt( 0 ) ) );
 
 	m_sType = pElement->GetAttributeValue( _T("type"), _T("") );
-	m_sType = CharLower( m_sType.GetBuffer() );// Lowercase'd
+	CharLower( m_sType.GetBuffer() );// Lowercase'd
+	m_sType.ReleaseBuffer();
 
 	m_bNumeric = ( m_sType == _T("short") || m_sType == _T("int") || m_sType == _T("decimal") );
 	
@@ -210,7 +211,8 @@ BOOL CSchemaMember::LoadType(CXMLElement* pType)
 		 strName.CompareNoCase( _T("complexType") ) ) return FALSE;
 
 	m_sType = pType->GetAttributeValue( _T("base"), _T("") );
-	m_sType = CharLower( m_sType.GetBuffer() );
+	CharLower( m_sType.GetBuffer() );
+	m_sType.ReleaseBuffer();
 	m_bNumeric = ( m_sType == _T("short") || m_sType == _T("int") || m_sType == _T("decimal") );
 	
 	for ( POSITION pos = pType->GetElementIterator() ; pos ; )

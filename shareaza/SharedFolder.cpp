@@ -100,7 +100,7 @@ CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 	CLibraryFolder* pOutput = NULL;
 	CString strName( pszName );
 	CharLower( strName.GetBuffer() );
-	strName.ReleaseBuffer()
+	strName.ReleaseBuffer();
 	return ( m_pFolders.Lookup( strName, (CObject*&)pOutput ) ) ? pOutput : NULL;
 }
 
@@ -155,7 +155,7 @@ CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 	CLibraryFile* pOutput = NULL;
 	CString strName( pszName );
 	CharLower( strName.GetBuffer() );
-	strName.ReleaseBuffer()
+	strName.ReleaseBuffer();
 	return ( m_pFiles.Lookup( strName, (CObject*&)pOutput ) ) ? pOutput : NULL;
 }
 
@@ -442,7 +442,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		{
 			CString strNameLC( pFolder->m_sName );
 			CharLower( strNameLC.GetBuffer() );
-			strNameLC.ReleaseBuffer()
+			strNameLC.ReleaseBuffer();
 			
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
@@ -465,7 +465,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		{
 			CString strNameLC( pFile->m_sName );
 			CharLower( strNameLC.GetBuffer() );
-			strNameLC.ReleaseBuffer()
+			strNameLC.ReleaseBuffer();
 			
 			m_nFiles	--;
 			m_nVolume	-= pFile->m_nSize / 1024;
