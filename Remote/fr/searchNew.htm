@@ -1,0 +1,34 @@
+<td class="tabsel">Nouvelle recherche</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Pour commencer une nouvelle recherche, tapez des mots-cl&eacute;s ci-dessous puis cliquez sur <b>Rechercher</b>. Si vous voulez restreindre votre recherche &agrave; un type de fichier en particulier, 
+			s&eacute;lectionnez-le dans la liste.
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Recherche:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Type de fichier:</td>
+					<td>
+						<select name="schema">
+							<option value="">Tous les types</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Rechercher">
+					</td>
+				</tr>
+			</table>
+		</form>
