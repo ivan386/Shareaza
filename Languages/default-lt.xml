@@ -2487,7 +2487,7 @@ right quote    &#147;
        <string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų vartotojų paiešką. Ar tikrai norite tęsti?"/>
        <string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
        <string id="16087" value="Jūsų išeinanti greitaveika yra per maža šio tinklo įgalinimui"/>
-       <string id="16128" value="Priimtas įeinantis susijungimas su %s iš %i prievado."/>
+       <string id="16128" value="Priimtas įeinantis susijungimas su %s per %i prievadą."/>
        <string id="16129" value="Užmezgamas ryšys su kaimynu %s iš %i prievado..."/>
        <string id="16130" value="Neįmanoma užmegzti ryšio su kaimynu %s."/>
        <string id="16131" value="Baigėsi laiko limitas ryšiui su %s užmegzti."/>
