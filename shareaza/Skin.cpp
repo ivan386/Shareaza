@@ -1052,13 +1052,18 @@ CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	BOOL bPanel = FALSE;
 	
+	ASSERT(pWnd != NULL);
+
 	if ( pWnd->IsKindOf( RUNTIME_CLASS(CChildWnd) ) )
 	{
 		CChildWnd* pChild = (CChildWnd*)pWnd;
 		bPanel = pChild->m_bPanelMode;
 	}
-	
+	#ifdef _AFXDLL
+	for ( CRuntimeClass* pClass = pWnd->GetRuntimeClass() ; pClass && pClass->m_pfnGetBaseClass ; pClass = pClass->m_pfnGetBaseClass() )
+	#else
 	for ( CRuntimeClass* pClass = pWnd->GetRuntimeClass() ; pClass ; pClass = pClass->m_pBaseClass )
+	#endif
 	{
 		if ( bPanel )
 		{
