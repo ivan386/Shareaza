@@ -337,9 +337,18 @@ BOOL CUploadTransferED2K::OnRequestParts(CEDPacket* pPacket)
 	
 	for ( int nRequest = 0 ; nRequest < 3 ; nRequest++ )
 	{
-		if ( nOffset[0][nRequest] < nOffset[1][nRequest] )
+		if ( ( nOffset[0][nRequest] < nOffset[1][nRequest] ) && ( nOffset[1][nRequest] <= m_nFileSize ) )
 		{
 			AddRequest( nOffset[0][nRequest], nOffset[1][nRequest] - nOffset[0][nRequest] );
+		}
+		else
+		{
+			// Invalid request- had an impossible range.
+			theApp.Message( MSG_ERROR, _T("Invalid file range(s) in request from %s"), (LPCTSTR)m_sAddress );
+			// They probably have an incorrent hash associated with a file. Calling close now
+			// will send "file not found" to stop them re-asking, then close the connection.
+			Close();
+			return FALSE;
 		}
 	}
 	
@@ -431,7 +440,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 			return FALSE;
 		}
 	}
-	
 	return TRUE;
 }
 
