@@ -2903,7 +2903,7 @@ Other:
 			<control caption="Geschlecht:" />
 			<control />
 			<control caption="Alter:" />
-			<control caption="Anderen erlauben mein Profil anzuzeigen." />
+			<control caption="Anderen erlauben mein Profil anzuzeigen" />
 		</dialog>
 		<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kontakt">
 			<control caption="_Email Adressen:" />
