@@ -246,7 +246,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
 	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
-	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000 );
+	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 60 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );

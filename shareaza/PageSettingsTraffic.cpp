@@ -143,7 +143,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
 	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 250, 10000 );
 	
-	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 500, 20000, _T(" ms") );
+	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
 	AddSetting( &Settings.eDonkey.RequestPipe, 1, 1, 10 );
 	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
