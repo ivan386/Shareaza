@@ -4084,6 +4084,9 @@
 				RelativePath=".\Remote.cpp">
 			</File>
 			<File
+				RelativePath=".\ResultFilters.cpp">
+			</File>
+			<File
 				RelativePath="RichDocument.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -8847,6 +8850,9 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\DlgSaveFilterAs.cpp">
+				</File>
+				<File
 					RelativePath="DlgSecureRule.cpp">
 					<FileConfiguration
 						Name="ASCII Release|Win32">
@@ -12174,6 +12180,9 @@
 				RelativePath="Resource.h">
 			</File>
 			<File
+				RelativePath=".\ResultFilters.h">
+			</File>
+			<File
 				RelativePath="RichDocument.h">
 			</File>
 			<File
@@ -12703,6 +12712,9 @@
 				</File>
 				<File
 					RelativePath="DlgQueueProperties.h">
+				</File>
+				<File
+					RelativePath=".\DlgSaveFilterAs.h">
 				</File>
 				<File
 					RelativePath="DlgSecureRule.h">

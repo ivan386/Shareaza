@@ -1011,22 +1011,22 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,60,40,50,14
 END
 
-IDD_FILTER_SEARCH DIALOGEX 0, 0, 222, 199
+IDD_FILTER_SEARCH DIALOGEX 0, 0, 222, 257
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Filter Matches"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Only show matches which include the &words:",IDC_STATIC,
                     5,5,210,45,WS_GROUP
-    EDITTEXT        IDC_FILTER,15,20,190,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FILTER,14,20,190,12,ES_AUTOHSCROLL
     CTEXT           "( you can also exclude words with -word )",IDC_STATIC,
-                    15,35,190,10
+                    14,35,190,10
     GROUPBOX        "And are of &size:",IDC_STATIC,5,55,210,50
-    LTEXT           "Minimum:",IDC_STATIC,15,68,35,12,SS_CENTERIMAGE
+    LTEXT           "Minimum:",IDC_STATIC,14,68,35,12,SS_CENTERIMAGE
     EDITTEXT        IDC_MIN_SIZE,55,68,45,12,ES_AUTOHSCROLL
     LTEXT           "Maximum:",IDC_STATIC,120,68,35,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_MAX_SIZE,160,68,45,12,ES_AUTOHSCROLL
-    LTEXT           "With at least:",IDC_STATIC,15,85,50,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MAX_SIZE,159,68,45,12,ES_AUTOHSCROLL
+    LTEXT           "With at least:",IDC_STATIC,14,85,50,12,SS_CENTERIMAGE
     EDITTEXT        IDC_SOURCES,70,85,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_SOURCES_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
@@ -1034,19 +1034,26 @@ BEGIN
     LTEXT           "sources.",IDC_STATIC,115,85,30,12,SS_CENTERIMAGE
     GROUPBOX        "&Hide:",IDC_STATIC,5,110,210,65,WS_GROUP
     CONTROL         "Busy hosts",IDC_FILTER_BUSY,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,126,90,10
+                    WS_TABSTOP,14,126,90,10
     CONTROL         "Firewalled/push hosts",IDC_FILTER_PUSH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,140,90,11
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,140,90,11
     CONTROL         "Unstable hosts",IDC_FILTER_UNSTABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,156,90,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,156,90,10
     CONTROL         "Non-matching files",IDC_FILTER_REJECT,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,126,90,10
     CONTROL         "Files you have already",IDC_FILTER_LOCAL,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,140,90,11
     CONTROL         "Bogus results",IDC_FILTER_BOGUS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,156,90,10
-    DEFPUSHBUTTON   "Filter",IDOK,110,180,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,165,180,50,14
+    DEFPUSHBUTTON   "Filter",IDOK,110,237,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
+    COMBOBOX        IDC_FILTERS,14,192,134,37,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "Set as default",IDC_SET_DEFAULT_FILTER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,211,56,10
+    PUSHBUTTON      "&Save as",IDC_SAVE_FILTER,156,191,50,14
+    PUSHBUTTON      "&Delete",IDC_DELETE_FILTER,156,209,50,14
+    GROUPBOX        "Filters:",IDC_STATIC,5,179,210,52
 END
 
 IDD_SCHEMA_COLUMNS DIALOG  0, 0, 238, 142
@@ -3071,7 +3078,19 @@ BEGIN
                     WS_TABSTOP,WS_EX_TRANSPARENT
     GROUPBOX        "Help",IDC_STATIC,159,104,118,107,0,WS_EX_RIGHT
     LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",
-                    IDC_STATIC,167,112,101,94,0,WS_EX_TRANSPARENT
+                    IDC_STATIC,167,112,101,94
+END
+
+IDD_SAVE_FILTER_AS DIALOGEX 0, 0, 205, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Save filter as"
+FONT 8, "Tahoma", 400, 0, 0xA1
+BEGIN
+    EDITTEXT        IDC_NAME,7,19,128,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
+    LTEXT           "Save the current filter as",IDC_STATIC,7,7,81,8
 END
 
 
@@ -3101,10 +3120,14 @@ BEGIN
 
     IDD_FILTER_SEARCH, DIALOG
     BEGIN
-        LEFTMARGIN, 7
+        LEFTMARGIN, 5
         RIGHTMARGIN, 215
+        VERTGUIDE, 14
+        VERTGUIDE, 181
         TOPMARGIN, 7
-        BOTTOMMARGIN, 193
+        BOTTOMMARGIN, 251
+        HORZGUIDE, 198
+        HORZGUIDE, 216
     END
 
     IDD_SCHEMA_COLUMNS, DIALOG
@@ -3722,6 +3745,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 213
     END
+
+    IDD_SAVE_FILTER_AS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -4208,6 +4239,213 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDR_HOMEFRAME           "Shareaza Home"
+    IDR_MEDIAFRAME          "Media Player"
+    IDR_SEARCHPADFRAME      "Search"
+    IDR_HELPFRAME           "Shareaza Help"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SETTINGS            "Shareaza Settings"
+    IDS_WIZARD              "Welcome to Shareaza"
+    IDS_FILE_PROPERTIES     "File Properties"
+    IDS_USER_PROFILE        "Edit My Profile"
+    IDS_SYSTEM_MESSAGE      "!Welcome to Shareaza (version) !\n.\nShareaza is completely free software.\nPlease use it responsibly and respect intellectual property law.\n."
+    IDS_CLOSING_AFTER       " (closing after transfers)"
+    IDS_TABBAR_NOT_CONNECTED 
+                            "You're not connected.  Click the Connect button to get started."
+    IDS_TABBAR_CONNECTED    "There are no active searches.  Click here to search for files."
+    IDS_UPGRADE_LAUNCH      "Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
+    IDS_SKIN_DELETE         "Are you sure you want to delete the ""%s"" skin?  This cannot be undone."
+    IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."
+    IDS_VIEW_MODE_CONFIRM   "Changing view will close any windows you have open.  Would you like to change now?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_BAR_CONNECTED 
+                            "Connected to %lu neighbour(s).  %s in local library."
+    IDS_STATUS_BAR_CONNECTING "Connecting to the network..."
+    IDS_STATUS_BAR_DISCONNECTED "Not connected to the network."
+    IDS_STATUS_BAR_BANDWIDTH "%s in : %s out [D:%i/U:%i]"
+    IDS_TRAY_TIP            "[H:%i] %s in : %s out [D:%i/U:%i]"
+    IDS_NETWORK_CONNECT     "Connect"
+    IDS_NETWORK_CONNECTING  "Connecting..."
+    IDS_NETWORK_CONNECTED   "Connected"
+    IDS_NETWORK_DISCONNECT  "Disconnect"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_DETAILS_EMPTY 
+                            "This area shows more information about files you select."
+    IDS_SEARCH_DETAILS_SOURCES_ONE "One source is available (%s).  "
+    IDS_SEARCH_DETAILS_SOURCES_MANY "%i sources are available (%s).  "
+    IDS_SEARCH_DETAILS_REVIEWS_ONE "There is one review."
+    IDS_SEARCH_DETAILS_REVIEWS_MANY "There are %i reviews."
+    IDS_SEARCH_DETAILS_WRITES "%s writes:"
+    IDS_SEARCH_DETAILS_RATES "%s rates this file:"
+    IDS_SEARCH_DETAILS_PREVIEW "Click to Preview"
+    IDS_SEARCH_DETAILS_PREVIEWING "Previewing..."
+    IDS_SEARCH_DETAILS_PREVIEW_FAILED 
+                            "Unable to download preview content from ""%s""."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_AGAIN        "Click here to search again"
+    IDS_SEARCH_NONE         "No searches have been started in this window yet."
+    IDS_SEARCH_WORKING      "Shareaza is searching the network..."
+    IDS_SEARCH_EMPTY        "The network has not returned any matches yet."
+    IDS_SEARCH_FILTERED     "Some results are available, but were filtered out."
+    IDS_SEARCH_ACTIVE       "Shareaza is actively searching the network..."
+    IDS_SEARCH_CLEAR_PREVIOUS 
+                            "You are about to start a new search.  Would you like to clear the results of your previous search?"
+    IDS_SEARCH_NO_METADATA  "No Metadata"
+    IDS_SEARCH_PLAIN_TEXT   "Plain Text Search"
+    IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
+    IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
+    IDS_SEARCH_PANEL_SEARCHING "Searching..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PANEL_START  "Start Search"
+    IDS_SEARCH_PANEL_MORE   "Search More"
+    IDS_SEARCH_PANEL_STOP   "Stop"
+    IDS_SEARCH_PANEL_AFT    "Any File Type"
+    IDS_SEARCH_PANEL_INPUT_1 "Type your search here:"
+    IDS_SEARCH_PANEL_INPUT_2 "Look for this type of file:"
+    IDS_SEARCH_PANEL_RESULTS_STATUS "Searching:"
+    IDS_SEARCH_PANEL_RESULTS_FOUND "Found:"
+    IDS_SEARCH_PANEL_RESULTS_ACTIVE "%lu hubs, %lu leaves"
+    IDS_SEARCH_PANEL_RESULTS_INACTIVE "Not currently searching"
+    IDS_SEARCH_PANEL_RESULTS_NONE "No files found"
+    IDS_SEARCH_PANEL_RESULTS_FORMAT 
+                            "%lu file in %lu hit|%lu file in %lu hits|%lu files in %lu hits"
+    IDS_SEARCH_PANEL_INPUT_CAPTION "Search"
+    IDS_SEARCH_PANEL_RESULTS_CAPTION "Results"
+    IDS_SEARCH_PANEL_CLEAR  "Clear"
+    IDS_SEARCH_PANEL_ADVANCED "Advanced..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BROWSE_CONNECTING   "Establishing a connection to host..."
+    IDS_BROWSE_PUSHED       "Sent a push request, waiting for connection..."
+    IDS_BROWSE_REQUESTING   "Connected, requesting browse..."
+    IDS_BROWSE_DOWNLOADING  "Downloading browse response (%2.f%%)..."
+    IDS_BROWSE_CANT_CONNECT "Unable to connect to host to browse user."
+    IDS_BROWSE_NOT_SUPPORTED 
+                            "Unable to download file listing.  This host may not support browsing."
+    IDS_SEARCH_PANEL_INPUT_3 "Search on this network:"
+    IDS_SEARCH_ALL_NETWORKS "All Networks"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SEARCH_PAD_HEADER   "Search Shareaza"
+    IDS_SEARCH_PAD_WORDS    "Type some keywords to search for:"
+    IDS_SEARCH_PAD_TYPE     "What type of file is it?"
+    IDS_SEARCH_PAD_CLEAR_HISTORY "(Clear Search History)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_HASH_MESSAGE        "Shareaza is creating hashes for %i file(s):"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DLM_DOWNLOADING     "Shareaza is downloading:"
+    IDS_DLM_PAUSED          "This download is paused:"
+    IDS_DLM_COMPLETED       "Shareaza has completed downloading:"
+    IDS_DLM_TIME_HAM        "%i hours and %i minutes"
+    IDS_DLM_TIME_MAS        "%i minutes and %i seconds"
+    IDS_DLM_TIME_S          "%i seconds"
+    IDS_DLM_SOURCING        "Shareaza is looking for sources for:"
+    IDS_DLM_NO_SOURCES      "No sources"
+    IDS_DLM_OPEN_OPEN       "Open"
+    IDS_DLM_OPEN_PREVIEW    "Preview"
+    IDS_DLM_TOTAL_SPEED     "Total transfer speed:"
+    IDS_DLM_ESTIMATED_TIME  "Estimated time remaining:"
+    IDS_DLM_VOLUME_DOWNLOADED "Volume downloaded:"
+    IDS_DLM_NUMBER_OF_SOURCES "Number of sources:"
+    IDS_DLM_COMPLETED_WORD  "Completed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DLM_MOVING          "Shareaza is moving the download:"
+    IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
+    IDS_DLM_VOLUME_UPLOADED "Upload ratio:"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBHEAD_HOME        "Exploring Your Shareaza Library"
+    IDS_LIBHEAD_EXPLORE_FOLDER "Exploring "
+    IDS_LIBHEAD_EXPLORE_MANY "Exploring the contents of %i folders"
+    IDS_LIBPANEL_MULTIPLE_FOLDERS "Multiple folders"
+    IDS_LIBPANEL_MULTIPLE_FILES "%i files selected"
+    IDS_LIBPANEL_NO_SELECTION "No files are selected"
+    IDS_LIBPANEL_RECENT_ADDITIONS "Recent Additions"
+    IDS_LIBPANEL_RATE_FILE  "Rate this file"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TIP_NA              "N/A"
+    IDS_TIP_LOCATION        "Location"
+    IDS_TIP_TYPE            "Type"
+    IDS_TIP_SIZE            "Size"
+    IDS_TIP_PARTIAL         "Partial Source (%.2f%% available)"
+    IDS_TIP_QUEUE           "%i upload slots, %i waiting in queue"
+    IDS_TIP_EXISTS_LIBRARY  "You already have this file in your library."
+    IDS_TIP_EXISTS_DOWNLOAD "You already have this file on your download list."
+    IDS_TIP_BOGUS           "This file appears to be spam."
+    IDS_TIP_EXISTS_DELETED  "You have downloaded and deleted this file before."
+    IDS_TIP_EXISTS_BLACKLISTED "Blacklisted: "
+    IDS_TIP_HITS            "Hits"
+    IDS_TIP_UPLOADS         "Uploads"
+    IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TIP_STATUS          "Status:"
+    IDS_TIP_SPEED           "Speed:"
+    IDS_TIP_URL             "URL:"
+    IDS_TIP_USERAGENT       "User Agent:"
+    IDS_TIP_INACTIVE        "Inactive"
+    IDS_TIP_ACTIVE          "Active"
+    IDS_TIP_NEXT            "Next in Line"
+    IDS_TIP_TOTAL_FILES     "Total Files:"
+    IDS_TIP_TOTAL_VOLUME    "Total Volume:"
+    IDS_TIP_LIBRARY_PERCENT "of your library"
+    IDS_TIP_FOLDER          "Folder"
+    IDS_TIP_SOURCE_BUSY     "This source is currently busy"
+    IDS_TIP_SOURCE_FIREWALLED "This source is firewalled"
+    IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
+    IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
+    IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
+    IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_BAR_CONNECTED_HUB_UP 
+                            "Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."
+    IDS_STATUS_BAR_CONNECTED_UP 
+                            "Ultrapeer mode with %lu neighbour(s).  %s in local library."
+    IDS_STATUS_BAR_CONNECTED_HUB 
+                            "Hub mode with %lu neighbour(s).  %s in local library."
+    IDS_STATUS_BAR_CONNECTED_SIMPLE "Connected. %s in local library."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_NETWORK_STARTUP     "Starting Shareaza network core..."
     IDS_NETWORK_CANT_LISTEN "Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."
     IDS_NETWORK_DISCONNECTING "Shutting down Shareaza network core..."
@@ -4228,6 +4466,16 @@ BEGIN
                             "The address %s is already blocked by your security rules."
     IDS_NETWORK_SECURITY_BLOCKED "Added a security rule to block %s."
     IDS_NETWORK_DISCONNECT_CONFIRM "Are you sure you want to disconnect?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
+    IDS_NETWORK_FORCE_HUB   "Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"
+    IDS_NETWORK_DISABLE_G1  "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"
+    IDS_NETWORK_DISABLE_G2  "Gnutella2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"
+    IDS_NETWORK_BANDWIDTH_LOW 
+                            "Your outgoing bandwidth is too low to enable this network"
 END
 
 STRINGTABLE 
@@ -4256,23 +4504,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_PROTOCOL_TOO_LARGE  "Neighbour %s forwarded a packet of excessive size, dropping connection."
-    IDS_PROTOCOL_NO_TTL     "Neighbour %s forwarded a packet with zero TTL, ignoring."
-    IDS_PROTOCOL_HIGH_TTL   "Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."
-    IDS_PROTOCOL_SIZE_PING  "Neighbour %s forwarded a ping packet with invalid length, ignoring."
-    IDS_PROTOCOL_SIZE_PONG  "Neighbour %s forwarded a pong packet with invalid length, ignoring."
-    IDS_PROTOCOL_PACKET_DUMP "%s -> %s [%i/%i] %s %s"
-    IDS_PROTOCOL_LEAF_FORWARD 
-                            "Leaf neighbour %s is forwarding queries, dropping connection."
-    IDS_PROTOCOL_UNKNOWN    "Neighbour %s forwarded an unrecognised packet (0x%.2x), ignoring."
-    IDS_PROTOCOL_ZERO_PONG  "Neighbour %s forwarded a pong with invalid address data, ignoring."
-    IDS_PROTOCOL_BAD_QUERY  "Received a malformatted query packet from %s, ignoring."
-    IDS_PROTOCOL_BAD_HIT    "Received a malformatted query hit packet from %s, ignoring."
-    IDS_PROTOCOL_SIZE_PUSH  "Neighbour %s forwarded a push packet with invalid length, ignoring."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_HANDSHAKE_TIMEOUT   "Timed out handshaking with %s."
     IDS_HANDSHAKE_ONLINE    "Gnutella connection with neighbour %s established successfully (G%i.%i : %s)."
     IDS_HANDSHAKE_FAIL      "Handshake with %s failed due to invalid data on the wire."
@@ -4291,6 +4522,23 @@ BEGIN
     IDS_HANDSHAKE_NEEDAPEER "Neighbour %s is not a hub, closing connection."
     IDS_HANDSHAKE_ONLINE_G2 "Gnutella][ connection with neighbour %s established successfully (%s)."
     IDS_HANDSHAKE_NOTG2     "Closing connection to non-Gnutella2 neighbour %s."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PROTOCOL_TOO_LARGE  "Neighbour %s forwarded a packet of excessive size, dropping connection."
+    IDS_PROTOCOL_NO_TTL     "Neighbour %s forwarded a packet with zero TTL, ignoring."
+    IDS_PROTOCOL_HIGH_TTL   "Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."
+    IDS_PROTOCOL_SIZE_PING  "Neighbour %s forwarded a ping packet with invalid length, ignoring."
+    IDS_PROTOCOL_SIZE_PONG  "Neighbour %s forwarded a pong packet with invalid length, ignoring."
+    IDS_PROTOCOL_PACKET_DUMP "%s -> %s [%i/%i] %s %s"
+    IDS_PROTOCOL_LEAF_FORWARD 
+                            "Leaf neighbour %s is forwarding queries, dropping connection."
+    IDS_PROTOCOL_UNKNOWN    "Neighbour %s forwarded an unrecognised packet (0x%.2x), ignoring."
+    IDS_PROTOCOL_ZERO_PONG  "Neighbour %s forwarded a pong with invalid address data, ignoring."
+    IDS_PROTOCOL_BAD_QUERY  "Received a malformatted query packet from %s, ignoring."
+    IDS_PROTOCOL_BAD_HIT    "Received a malformatted query hit packet from %s, ignoring."
+    IDS_PROTOCOL_SIZE_PUSH  "Neighbour %s forwarded a push packet with invalid length, ignoring."
 END
 
 STRINGTABLE 
@@ -4436,19 +4684,26 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_SETTINGS            "Shareaza Settings"
-    IDS_WIZARD              "Welcome to Shareaza"
-    IDS_FILE_PROPERTIES     "File Properties"
-    IDS_USER_PROFILE        "Edit My Profile"
-    IDS_SYSTEM_MESSAGE      "!Welcome to Shareaza (version) !\n.\nShareaza is completely free software.\nPlease use it responsibly and respect intellectual property law.\n."
-    IDS_CLOSING_AFTER       " (closing after transfers)"
-    IDS_TABBAR_NOT_CONNECTED 
-                            "You're not connected.  Click the Connect button to get started."
-    IDS_TABBAR_CONNECTED    "There are no active searches.  Click here to search for files."
-    IDS_UPGRADE_LAUNCH      "Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-    IDS_SKIN_DELETE         "Are you sure you want to delete the ""%s"" skin?  This cannot be undone."
-    IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."
-    IDS_VIEW_MODE_CONFIRM   "Changing view will close any windows you have open.  Would you like to change now?"
+    IDS_UPLOAD_BROWSER      "Upload host %s is on the user-agent block list, denying request."
+    IDS_UPLOAD_HEADERS      "Sending upload headers from ""%s"" to host %s (%s)."
+    IDS_UPLOAD_BAD_RANGE    "Upload host %s requested an unsatisfiable range of file ""%s""."
+    IDS_UPLOAD_ABOUT        "Sending default HTML response to upload host %s (%s)."
+    IDS_UPLOAD_BROWSE_DENIED "Denied browse user request from %s."
+    IDS_UPLOAD_BROWSE       "Upload host %s (%s) sent a browse user request, responding..."
+    IDS_UPLOAD_TRAFFIC_TIMEOUT 
+                            "Closing upload connection %s due to lack of traffic."
+    IDS_UPLOAD_DROPPED_OLDER 
+                            "Closing older upload to %s because it has made a fresh connection."
+    IDS_UPLOAD_DROPPED_NEWER 
+                            "Refusing new upload to %s because an earlier connection is still pending."
+    IDS_UPLOAD_DELETED      "Stopped uploading ""%s"" to %s because the file was deleted."
+    IDS_UPLOAD_PARTIAL_CONTENT 
+                            "Sending upload content range %I64i-%I64i from partial file ""%s"" to host %s (%s)."
+    IDS_UPLOAD_BUSY_FAST    "Queued upload %s is re-requesting too fast, closing connection."
+    IDS_UPLOAD_PUSH_BUSY    "Refusing push request to %s because it has too many upload connections."
+    IDS_UPLOAD_TIGER_SEND   "Uploading tiger-tree data for ""%s"" to %s."
+    IDS_UPLOAD_METADATA_SEND "Uploading metadata for ""%s"" to %s."
+    IDS_UPLOAD_BUSY_HOST    "Refusing upload of ""%s"" to %s (%s), too many concurrent from host."
 END
 
 STRINGTABLE 
@@ -4485,6 +4740,202 @@ BEGIN
     IDS_GRAPH_GNUTELLA_ROUTED "Gnutella Packets Routed"
     IDS_GRAPH_GNUTELLA_DROPPED "Gnutella Packets Dropped"
     IDS_GRAPH_GNUTELLA_LOST "Gnutella Packets Lost"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GRAPH_GNUTELLA_QUERIES "Gnutella Local Queries"
+    IDS_GRAPH_TOTAL_BANDWIDTH_TCP_IN "Total TCP Receive Bandwidth"
+    IDS_GRAPH_TOTAL_BANDWIDTH_TCP_OUT "Total TCP Transmit Bandwidth"
+    IDS_GRAPH_TOTAL_BANDWIDTH_UDP_IN "Total UDP Receive Bandwidth"
+    IDS_GRAPH_TOTAL_BANDWIDTH_UDP_OUT "Total UDP Transmit Bandwidth"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_URL_RECEIVED        "Received URL ""%s"""
+    IDS_URL_PARSE_ERROR     "Unable to parse URL: Shareaza does not understand this URL."
+    IDS_URL_BUSY            "Unable to display URL action dialog because Shareaza is busy."
+    IDS_URL_ALREADY_HAVE    "You already have the file ""%s"" in your library.  Do you want to download it anyway?"
+    IDS_URL_HOST            "Host:"
+    IDS_URL_PORT            "Port:"
+    IDS_URL_CONNECT         "&Connect"
+    IDS_URL_BROWSE          "&Browse"
+    IDS_URL_ADD             "Add"
+    IDS_URL_FILENAME        "Filename:"
+    IDS_URL_URL             "URL:"
+    IDS_URL_TYPE            "Type:"
+    IDS_URL_UNSPECIFIED     "Unspecified"
+    IDS_BITZI_REQUESTING    "Requesting..."
+    IDS_BITZI_SUCCESS       "Success!"
+    IDS_BITZI_FINISHED      "Finished, click Close"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BITZI_CLOSE         "&Close"
+    IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_WIZARD_NEED_SPEED   "You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."
+    IDS_WIZARD_NEED_CONNECTION 
+                            "Please choose the type of Internet connection you are using before continuing."
+    IDS_WIZARD_SHARE_CONFIRM 
+                            "You have not specified any folders to share.  Are you sure?"
+    IDS_WIZARD_SHARE_ALREADY 
+                            "The folder you are sharing is already shared as part of another shared folder:\n\n%s"
+    IDS_PROFILE_NO_NICK     "You haven't entered a screen name in your user profile."
+    IDS_PROFILE_NO_LOCATION "You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"
+    IDS_WIZARD_PORT_FORWARD "You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."
+    IDS_SETTINGS_NEED_BANDWIDTH 
+                            "Please type the bandwidth limit you wish to set in the form ""123 kb/s"" for kilobits per second, or ""123 KB/s"" for kilobytes per second."
+    IDS_PROFILE_NO_VITALS   "You have not selected your age and gender.  Are you sure you want to continue without doing this?"
+    IDS_WIZARD_EXIT         "E&xit"
+    IDS_WIZARD_YEARS_OLD    "year old"
+    IDS_SETTINGS_AUTOMATIC_IP "Automatic"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DISCOVERY_BOOTSTRAP "Querying host discovery services..."
+    IDS_DISCOVERY_QUERY     "Querying discovery service ""%s""..."
+    IDS_DISCOVERY_WEB_SUCCESS "GWebCache transaction successful (""%s"")."
+    IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
+    IDS_DISCOVERY_FAIL_REMOVE 
+                            "Discovery service ""%s"" has failed %i times, removing."
+    IDS_DISCOVERY_DEFAULTS  "http://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://homepage.ntlworld.com/marriott96/server.met\nhttp://bazooka1.servehttp.com/g2/bazooka.php\nhttp://g2.instantnetworks.net/g2/bazooka.php\nhttp://bazooka.stealthspy.net/g2/bazooka.php"
+    IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
+    IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BROWSE_CONNECTING_TO "Initiating a connection to %s to browse user..."
+    IDS_BROWSE_CANT_CONNECT_TO 
+                            "Unable to initiate a connection to %s to browse user."
+    IDS_BROWSE_PUSHED_TO    "Sent a push request to %s to browse user."
+    IDS_BROWSE_CANT_PUSH_TO "Unable to send a push request to %s to browse user."
+    IDS_BROWSE_SENT_REQUEST "Sent browse user request to %s..."
+    IDS_BROWSE_NOT_HTTP     "Browse host %s responded with an invalid HTTP response."
+    IDS_BROWSE_HTTPCODE     "Browse host %s responded with code %s (%s)."
+    IDS_BROWSE_BAD_RESPONSE "Browse host %s responded with an unrecognised response, and may not support user/host browsing."
+    IDS_BROWSE_DOWNLOADING_FROM "Receiving content from browse host %s (%s)"
+    IDS_BROWSE_PACKET_ERROR "Error decoding Gnutella packets from browse host %s."
+    IDS_BROWSE_FINISHED     "Finished browsing user %s, %i files found."
+    IDS_BROWSE_DROPPED      "Browse user connection to %s was dropped."
+    IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
+    IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
+    IDS_BROWSE_TITLE_FORMAT "Browsing %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MEDIA_PLUGIN_CREATE "Shareaza could not instantiate its MediaServices plugin.  Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
+    IDS_MEDIA_FILTER        "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+    IDS_MEDIA_LOAD_FAIL     "Unable to load media file ""%s"""
+    IDS_MEDIA_LOAD_FAIL_HELP 
+                            "The file may be damaged, or you may not have the necessary codecs to play it."
+    IDS_MEDIA_PARTIAL_RENDER 
+                            "Part of this file could not be played, you may need to download additional codecs."
+    IDS_MEDIA_EMPTY         "There is no file playing.  Double-click a media file in your library to play it."
+    IDS_MEDIA_TITLE         "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
+    IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_G1PP      "Gnutella: Peer-to-Peer Connection"
+    IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
+    IDS_NEIGHBOUR_G1UL      "Gnutella: Ultrapeer-to-Leaf Connection"
+    IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
+    IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
+    IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
+    IDS_NEIGHBOUR_ED2K_HIGH "eDonkey2000 Server Connection"
+    IDS_NEIGHBOUR_HANDSHAKE "Handshake"
+    IDS_NEIGHBOUR_INBOUND   "Inbound"
+    IDS_NEIGHBOUR_OUTBOUND  "Outbound"
+    IDS_NEIGHBOUR_CURRENT   "Current:"
+    IDS_NEIGHBOUR_TOTAL     "Total:"
+    IDS_NEIGHBOUR_COMPRESSION "Compression:"
+    IDS_NEIGHBOUR_RATIO     "Ratio:"
+    IDS_NEIGHBOUR_COMPRESSION_DF "Deflate"
+    IDS_NEIGHBOUR_COMPRESSION_NONE "None"
+    IDS_NEIGHBOUR_CONNECTING "Connecting"
+    IDS_NEIGHBOUR_HANDSHAKING "Handshaking"
+    IDS_NEIGHBOUR_REJECTED  "Rejected"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_CLOSING   "Closing"
+    IDS_NEIGHBOUR_UNKNOWN   "Unknown"
+    IDS_NEIGHBOUR_G1PEER    "G1 Peer"
+    IDS_NEIGHBOUR_G1ULTRA   "G1 Ultrapeer"
+    IDS_NEIGHBOUR_G1LEAF    "G1 Leaf"
+    IDS_NEIGHBOUR_G2PEER    "G2 Peer"
+    IDS_NEIGHBOUR_G2HUB     "G2 Hub"
+    IDS_NEIGHBOUR_G2LEAF    "G2 Leaf"
+    IDS_NEIGHBOUR_ED2K_SERVER "eDonkey2000 Server"
+    IDS_NEIGHBOUR_ED2K_LOWID "eDonkey2000 (LowID)"
+    IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOAD_TIGER_CORRUPT 
+                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
+    IDS_DOWNLOAD_TIGER_MISMATCH 
+                            "Download host's tiger-tree does not match expected root value."
+    IDS_DOWNLOAD_TIGER_READY 
+                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
+    IDS_DOWNLOAD_CLOSING_EXTRA 
+                            "Closing download connection to %s, no longer required."
+    IDS_DOWNLOAD_CLOSING_OVERFLOW 
+                            "Download host %s sent unsolicited data, closing connection."
+    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
+    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
+    IDS_DOWNLOAD_HASHSET_REQUEST 
+                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
+    IDS_DOWNLOAD_HASHSET_ERROR 
+                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
+    IDS_DOWNLOAD_HASHSET_READY 
+                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
+    IDS_DOWNLOAD_HASHSET_CORRUPT 
+                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
+    IDS_DOWNLOAD_INFLATE_ERROR 
+                            "Unable to initialize inflate for download ""%s""."
+    IDS_DOWNLOAD_QUEUE_TIMEOUT 
+                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
+    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
+    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
+    IDS_DOWNLOAD_VERIFY_DROP 
+                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
+    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
+    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
+    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
+    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
+    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
+    IDS_UPLOAD_QUEUE_NEW    "New Queue"
+    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
+    IDS_UPLOAD_QUEUE_COMPLETE "Complete Files"
+    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
 END
 
 STRINGTABLE 
@@ -4599,44 +5050,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATUS_BAR_CONNECTED 
-                            "Connected to %lu neighbour(s).  %s in local library."
-    IDS_STATUS_BAR_CONNECTING "Connecting to the network..."
-    IDS_STATUS_BAR_DISCONNECTED "Not connected to the network."
-    IDS_STATUS_BAR_BANDWIDTH "%s in : %s out [D:%i/U:%i]"
-    IDS_TRAY_TIP            "[H:%i] %s in : %s out [D:%i/U:%i]"
-    IDS_NETWORK_CONNECT     "Connect"
-    IDS_NETWORK_CONNECTING  "Connecting..."
-    IDS_NETWORK_CONNECTED   "Connected"
-    IDS_NETWORK_DISCONNECT  "Disconnect"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_UPLOAD_BROWSER      "Upload host %s is on the user-agent block list, denying request."
-    IDS_UPLOAD_HEADERS      "Sending upload headers from ""%s"" to host %s (%s)."
-    IDS_UPLOAD_BAD_RANGE    "Upload host %s requested an unsatisfiable range of file ""%s""."
-    IDS_UPLOAD_ABOUT        "Sending default HTML response to upload host %s (%s)."
-    IDS_UPLOAD_BROWSE_DENIED "Denied browse user request from %s."
-    IDS_UPLOAD_BROWSE       "Upload host %s (%s) sent a browse user request, responding..."
-    IDS_UPLOAD_TRAFFIC_TIMEOUT 
-                            "Closing upload connection %s due to lack of traffic."
-    IDS_UPLOAD_DROPPED_OLDER 
-                            "Closing older upload to %s because it has made a fresh connection."
-    IDS_UPLOAD_DROPPED_NEWER 
-                            "Refusing new upload to %s because an earlier connection is still pending."
-    IDS_UPLOAD_DELETED      "Stopped uploading ""%s"" to %s because the file was deleted."
-    IDS_UPLOAD_PARTIAL_CONTENT 
-                            "Sending upload content range %I64i-%I64i from partial file ""%s"" to host %s (%s)."
-    IDS_UPLOAD_BUSY_FAST    "Queued upload %s is re-requesting too fast, closing connection."
-    IDS_UPLOAD_PUSH_BUSY    "Refusing push request to %s because it has too many upload connections."
-    IDS_UPLOAD_TIGER_SEND   "Uploading tiger-tree data for ""%s"" to %s."
-    IDS_UPLOAD_METADATA_SEND "Uploading metadata for ""%s"" to %s."
-    IDS_UPLOAD_BUSY_HOST    "Refusing upload of ""%s"" to %s (%s), too many concurrent from host."
-END
-
-STRINGTABLE 
-BEGIN
     ID_NETWORK_AUTO_CLOSE   "Automatically close Shareaza when transfers have completed."
     ID_UPLOADS_AUTO_CLEAR   "Automatically clear uploads which have been completed."
     ID_LIBRARY_SEARCH       "Search your file library..."
@@ -4650,15 +5063,6 @@ BEGIN
     ID_LIBRARY_BITZI_DOWNLOAD 
                             "Download metadata for the selected file(s) from Bitzi(TM)..."
     ID_VIEW_SECURITY        "Show or hide the SECURITY window."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_GRAPH_GNUTELLA_QUERIES "Gnutella Local Queries"
-    IDS_GRAPH_TOTAL_BANDWIDTH_TCP_IN "Total TCP Receive Bandwidth"
-    IDS_GRAPH_TOTAL_BANDWIDTH_TCP_OUT "Total TCP Transmit Bandwidth"
-    IDS_GRAPH_TOTAL_BANDWIDTH_UDP_IN "Total UDP Receive Bandwidth"
-    IDS_GRAPH_TOTAL_BANDWIDTH_UDP_OUT "Total UDP Transmit Bandwidth"
 END
 
 STRINGTABLE 
@@ -4715,114 +5119,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_URL_RECEIVED        "Received URL ""%s"""
-    IDS_URL_PARSE_ERROR     "Unable to parse URL: Shareaza does not understand this URL."
-    IDS_URL_BUSY            "Unable to display URL action dialog because Shareaza is busy."
-    IDS_URL_ALREADY_HAVE    "You already have the file ""%s"" in your library.  Do you want to download it anyway?"
-    IDS_URL_HOST            "Host:"
-    IDS_URL_PORT            "Port:"
-    IDS_URL_CONNECT         "&Connect"
-    IDS_URL_BROWSE          "&Browse"
-    IDS_URL_ADD             "Add"
-    IDS_URL_FILENAME        "Filename:"
-    IDS_URL_URL             "URL:"
-    IDS_URL_TYPE            "Type:"
-    IDS_URL_UNSPECIFIED     "Unspecified"
-    IDS_BITZI_REQUESTING    "Requesting..."
-    IDS_BITZI_SUCCESS       "Success!"
-    IDS_BITZI_FINISHED      "Finished, click Close"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_WIZARD_NEED_SPEED   "You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."
-    IDS_WIZARD_NEED_CONNECTION 
-                            "Please choose the type of Internet connection you are using before continuing."
-    IDS_WIZARD_SHARE_CONFIRM 
-                            "You have not specified any folders to share.  Are you sure?"
-    IDS_WIZARD_SHARE_ALREADY 
-                            "The folder you are sharing is already shared as part of another shared folder:\n\n%s"
-    IDS_PROFILE_NO_NICK     "You haven't entered a screen name in your user profile."
-    IDS_PROFILE_NO_LOCATION "You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"
-    IDS_WIZARD_PORT_FORWARD "You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."
-    IDS_SETTINGS_NEED_BANDWIDTH 
-                            "Please type the bandwidth limit you wish to set in the form ""123 kb/s"" for kilobits per second, or ""123 KB/s"" for kilobytes per second."
-    IDS_PROFILE_NO_VITALS   "You have not selected your age and gender.  Are you sure you want to continue without doing this?"
-    IDS_WIZARD_EXIT         "E&xit"
-    IDS_WIZARD_YEARS_OLD    "year old"
-    IDS_SETTINGS_AUTOMATIC_IP "Automatic"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DISCOVERY_BOOTSTRAP "Querying host discovery services..."
-    IDS_DISCOVERY_QUERY     "Querying discovery service ""%s""..."
-    IDS_DISCOVERY_WEB_SUCCESS "GWebCache transaction successful (""%s"")."
-    IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
-    IDS_DISCOVERY_FAIL_REMOVE 
-                            "Discovery service ""%s"" has failed %i times, removing."
-    IDS_DISCOVERY_DEFAULTS  "http://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://homepage.ntlworld.com/marriott96/server.met\nhttp://bazooka1.servehttp.com/g2/bazooka.php\nhttp://g2.instantnetworks.net/g2/bazooka.php\nhttp://bazooka.stealthspy.net/g2/bazooka.php"
-    IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
-    IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
-END
-
-STRINGTABLE 
-BEGIN
-    AFX_IDS_APP_TITLE       "Shareaza"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEARCH_AGAIN        "Click here to search again"
-    IDS_SEARCH_NONE         "No searches have been started in this window yet."
-    IDS_SEARCH_WORKING      "Shareaza is searching the network..."
-    IDS_SEARCH_EMPTY        "The network has not returned any matches yet."
-    IDS_SEARCH_FILTERED     "Some results are available, but were filtered out."
-    IDS_SEARCH_ACTIVE       "Shareaza is actively searching the network..."
-    IDS_SEARCH_CLEAR_PREVIOUS 
-                            "You are about to start a new search.  Would you like to clear the results of your previous search?"
-    IDS_SEARCH_NO_METADATA  "No Metadata"
-    IDS_SEARCH_PLAIN_TEXT   "Plain Text Search"
-    IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
-    IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
-    IDS_SEARCH_PANEL_SEARCHING "Searching..."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BROWSE_CONNECTING   "Establishing a connection to host..."
-    IDS_BROWSE_PUSHED       "Sent a push request, waiting for connection..."
-    IDS_BROWSE_REQUESTING   "Connected, requesting browse..."
-    IDS_BROWSE_DOWNLOADING  "Downloading browse response (%2.f%%)..."
-    IDS_BROWSE_CANT_CONNECT "Unable to connect to host to browse user."
-    IDS_BROWSE_NOT_SUPPORTED 
-                            "Unable to download file listing.  This host may not support browsing."
-    IDS_SEARCH_PANEL_INPUT_3 "Search on this network:"
-    IDS_SEARCH_ALL_NETWORKS "All Networks"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BROWSE_CONNECTING_TO "Initiating a connection to %s to browse user..."
-    IDS_BROWSE_CANT_CONNECT_TO 
-                            "Unable to initiate a connection to %s to browse user."
-    IDS_BROWSE_PUSHED_TO    "Sent a push request to %s to browse user."
-    IDS_BROWSE_CANT_PUSH_TO "Unable to send a push request to %s to browse user."
-    IDS_BROWSE_SENT_REQUEST "Sent browse user request to %s..."
-    IDS_BROWSE_NOT_HTTP     "Browse host %s responded with an invalid HTTP response."
-    IDS_BROWSE_HTTPCODE     "Browse host %s responded with code %s (%s)."
-    IDS_BROWSE_BAD_RESPONSE "Browse host %s responded with an unrecognised response, and may not support user/host browsing."
-    IDS_BROWSE_DOWNLOADING_FROM "Receiving content from browse host %s (%s)"
-    IDS_BROWSE_PACKET_ERROR "Error decoding Gnutella packets from browse host %s."
-    IDS_BROWSE_FINISHED     "Finished browsing user %s, %i files found."
-    IDS_BROWSE_DROPPED      "Browse user connection to %s was dropped."
-    IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
-    IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
-    IDS_BROWSE_TITLE_FORMAT "Browsing %s"
-END
-
-STRINGTABLE 
-BEGIN
     ID_DOWNLOADS_BOOST      "Boost the performance of the selected download by removing bandwidth limits."
     ID_TAB_HOME             "Return to the Shareaza Home page"
     ID_DOWNLOADS_LAUNCH_COPY "SmartPreview the selected download(s)."
@@ -4836,42 +5132,6 @@ BEGIN
     ID_LIBRARY_LAUNCH       "Open or play the selected file(s)."
     ID_NEIGHBOURS_COPY      "Copy a URI to access the selected host."
     ID_TOOLS_RESKIN         "Reload and apply your current skin selection."
-END
-
-STRINGTABLE 
-BEGIN
-    IDR_HOMEFRAME           "Shareaza Home"
-    IDR_MEDIAFRAME          "Media Player"
-    IDR_SEARCHPADFRAME      "Search"
-    IDR_HELPFRAME           "Shareaza Help"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEARCH_PANEL_START  "Start Search"
-    IDS_SEARCH_PANEL_MORE   "Search More"
-    IDS_SEARCH_PANEL_STOP   "Stop"
-    IDS_SEARCH_PANEL_AFT    "Any File Type"
-    IDS_SEARCH_PANEL_INPUT_1 "Type your search here:"
-    IDS_SEARCH_PANEL_INPUT_2 "Look for this type of file:"
-    IDS_SEARCH_PANEL_RESULTS_STATUS "Searching:"
-    IDS_SEARCH_PANEL_RESULTS_FOUND "Found:"
-    IDS_SEARCH_PANEL_RESULTS_ACTIVE "%lu hubs, %lu leaves"
-    IDS_SEARCH_PANEL_RESULTS_INACTIVE "Not currently searching"
-    IDS_SEARCH_PANEL_RESULTS_NONE "No files found"
-    IDS_SEARCH_PANEL_RESULTS_FORMAT 
-                            "%lu file in %lu hit|%lu file in %lu hits|%lu files in %lu hits"
-    IDS_SEARCH_PANEL_INPUT_CAPTION "Search"
-    IDS_SEARCH_PANEL_RESULTS_CAPTION "Results"
-    IDS_SEARCH_PANEL_CLEAR  "Clear"
-    IDS_SEARCH_PANEL_ADVANCED "Advanced..."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
-    ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
-    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
 
 STRINGTABLE 
@@ -4890,35 +5150,6 @@ BEGIN
     ID_DOWNLOADS_MOVE_DOWN  "Move the selected download(s) down the priority list."
     ID_TOOLS_LANGUAGE       "Select the language you wish to use Shareaza in..."
     ID_DOWNLOADS_SETTINGS   "Configure download settings..."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DLM_DOWNLOADING     "Shareaza is downloading:"
-    IDS_DLM_PAUSED          "This download is paused:"
-    IDS_DLM_COMPLETED       "Shareaza has completed downloading:"
-    IDS_DLM_TIME_HAM        "%i hours and %i minutes"
-    IDS_DLM_TIME_MAS        "%i minutes and %i seconds"
-    IDS_DLM_TIME_S          "%i seconds"
-    IDS_DLM_SOURCING        "Shareaza is looking for sources for:"
-    IDS_DLM_NO_SOURCES      "No sources"
-    IDS_DLM_OPEN_OPEN       "Open"
-    IDS_DLM_OPEN_PREVIEW    "Preview"
-    IDS_DLM_TOTAL_SPEED     "Total transfer speed:"
-    IDS_DLM_ESTIMATED_TIME  "Estimated time remaining:"
-    IDS_DLM_VOLUME_DOWNLOADED "Volume downloaded:"
-    IDS_DLM_NUMBER_OF_SOURCES "Number of sources:"
-    IDS_DLM_COMPLETED_WORD  "Completed"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
-    IDS_NETWORK_FORCE_HUB   "Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"
-    IDS_NETWORK_DISABLE_G1  "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"
-    IDS_NETWORK_DISABLE_G2  "Gnutella2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"
-    IDS_NETWORK_BANDWIDTH_LOW 
-                            "Your outgoing bandwidth is too low to enable this network"
 END
 
 STRINGTABLE 
@@ -4944,18 +5175,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_LIBHEAD_HOME        "Exploring Your Shareaza Library"
-    IDS_LIBHEAD_EXPLORE_FOLDER "Exploring "
-    IDS_LIBHEAD_EXPLORE_MANY "Exploring the contents of %i folders"
-    IDS_LIBPANEL_MULTIPLE_FOLDERS "Multiple folders"
-    IDS_LIBPANEL_MULTIPLE_FILES "%i files selected"
-    IDS_LIBPANEL_NO_SELECTION "No files are selected"
-    IDS_LIBPANEL_RECENT_ADDITIONS "Recent Additions"
-    IDS_LIBPANEL_RATE_FILE  "Rate this file"
-END
-
-STRINGTABLE 
-BEGIN
     ID_LIBRARY_PARENT       "Move up to the parent folder."
     ID_LIBRARY_PANEL        "Show or hide the library detail panel."
     ID_LIBRARY_FOLDER_PROPERTIES 
@@ -4973,48 +5192,6 @@ BEGIN
     ID_MEDIA_PREVIOUS       "Skip back to the previous file in the current playlist.\nPrevious File"
     ID_MEDIA_NEXT           "Skip ahead to the next file in the current playlist.\nNext File"
     ID_MEDIA_SIZE_FILL      "Choose the best size for the video based on its aspect ratio."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_MEDIA_PLUGIN_CREATE "Shareaza could not instantiate its MediaServices plugin.  Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
-    IDS_MEDIA_FILTER        "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-    IDS_MEDIA_LOAD_FAIL     "Unable to load media file ""%s"""
-    IDS_MEDIA_LOAD_FAIL_HELP 
-                            "The file may be damaged, or you may not have the necessary codecs to play it."
-    IDS_MEDIA_PARTIAL_RENDER 
-                            "Part of this file could not be played, you may need to download additional codecs."
-    IDS_MEDIA_EMPTY         "There is no file playing.  Double-click a media file in your library to play it."
-    IDS_MEDIA_TITLE         "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
-    IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_NEIGHBOUR_G1PP      "Gnutella: Peer-to-Peer Connection"
-    IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
-    IDS_NEIGHBOUR_G1UL      "Gnutella: Ultrapeer-to-Leaf Connection"
-    IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
-    IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
-    IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
-    IDS_NEIGHBOUR_ED2K_HIGH "eDonkey2000 Server Connection"
-    IDS_NEIGHBOUR_HANDSHAKE "Handshake"
-    IDS_NEIGHBOUR_INBOUND   "Inbound"
-    IDS_NEIGHBOUR_OUTBOUND  "Outbound"
-    IDS_NEIGHBOUR_CURRENT   "Current:"
-    IDS_NEIGHBOUR_TOTAL     "Total:"
-    IDS_NEIGHBOUR_COMPRESSION "Compression:"
-    IDS_NEIGHBOUR_RATIO     "Ratio:"
-    IDS_NEIGHBOUR_COMPRESSION_DF "Deflate"
-    IDS_NEIGHBOUR_COMPRESSION_NONE "None"
-    IDS_NEIGHBOUR_CONNECTING "Connecting"
-    IDS_NEIGHBOUR_HANDSHAKING "Handshaking"
-    IDS_NEIGHBOUR_REJECTED  "Rejected"
 END
 
 STRINGTABLE 
@@ -5054,94 +5231,6 @@ BEGIN
     ID_TOOLS_PROFILE        "Edit your user profile..."
     ID_BROWSE_PROFILE       "Browse the user's profile."
     ID_BROWSE_FILES         "View the user's shared files"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_TIP_NA              "N/A"
-    IDS_TIP_LOCATION        "Location"
-    IDS_TIP_TYPE            "Type"
-    IDS_TIP_SIZE            "Size"
-    IDS_TIP_PARTIAL         "Partial Source (%.2f%% available)"
-    IDS_TIP_QUEUE           "%i upload slots, %i waiting in queue"
-    IDS_TIP_EXISTS_LIBRARY  "You already have this file in your library."
-    IDS_TIP_EXISTS_DOWNLOAD "You already have this file on your download list."
-    IDS_TIP_BOGUS           "This file appears to be spam."
-    IDS_TIP_EXISTS_DELETED  "You have downloaded and deleted this file before."
-    IDS_TIP_EXISTS_BLACKLISTED "Blacklisted: "
-    IDS_TIP_HITS            "Hits"
-    IDS_TIP_UPLOADS         "Uploads"
-    IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_TIP_STATUS          "Status:"
-    IDS_TIP_SPEED           "Speed:"
-    IDS_TIP_URL             "URL:"
-    IDS_TIP_USERAGENT       "User Agent:"
-    IDS_TIP_INACTIVE        "Inactive"
-    IDS_TIP_ACTIVE          "Active"
-    IDS_TIP_NEXT            "Next in Line"
-    IDS_TIP_TOTAL_FILES     "Total Files:"
-    IDS_TIP_TOTAL_VOLUME    "Total Volume:"
-    IDS_TIP_LIBRARY_PERCENT "of your library"
-    IDS_TIP_FOLDER          "Folder"
-    IDS_TIP_SOURCE_BUSY     "This source is currently busy"
-    IDS_TIP_SOURCE_FIREWALLED "This source is firewalled"
-    IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
-    IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
-    IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DOWNLOAD_TIGER_CORRUPT 
-                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
-    IDS_DOWNLOAD_TIGER_MISMATCH 
-                            "Download host's tiger-tree does not match expected root value."
-    IDS_DOWNLOAD_TIGER_READY 
-                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
-    IDS_DOWNLOAD_CLOSING_EXTRA 
-                            "Closing download connection to %s, no longer required."
-    IDS_DOWNLOAD_CLOSING_OVERFLOW 
-                            "Download host %s sent unsolicited data, closing connection."
-    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
-    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
-    IDS_DOWNLOAD_HASHSET_REQUEST 
-                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
-    IDS_DOWNLOAD_HASHSET_ERROR 
-                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
-    IDS_DOWNLOAD_HASHSET_READY 
-                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
-    IDS_DOWNLOAD_HASHSET_CORRUPT 
-                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
-    IDS_DOWNLOAD_INFLATE_ERROR 
-                            "Unable to initialize inflate for download ""%s""."
-    IDS_DOWNLOAD_QUEUE_TIMEOUT 
-                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
-    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
-    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
-    IDS_DOWNLOAD_VERIFY_DROP 
-                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEARCH_PAD_HEADER   "Search Shareaza"
-    IDS_SEARCH_PAD_WORDS    "Type some keywords to search for:"
-    IDS_SEARCH_PAD_TYPE     "What type of file is it?"
-    IDS_SEARCH_PAD_CLEAR_HISTORY "(Clear Search History)"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
 END
 
 STRINGTABLE 
@@ -5213,6 +5302,7 @@ BEGIN
                             "Would you like to prevent this collection from prompting you to download anything else?"
     IDS_LIBRARY_COPYURI     "Copy &URI"
     IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
+    IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
 END
 
 STRINGTABLE 
@@ -5232,27 +5322,6 @@ BEGIN
     ID_SEARCH_FOR_THIS      "Search for other copies of the selected file."
     ID_SEARCH_FOR_SIMILAR   "Search for files which are similar to the selected file."
     ID_SEARCH_FOR_ARTIST    "Search for music files by the same artist as the selected file."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_HASH_MESSAGE        "Shareaza is creating hashes for %i file(s):"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SEARCH_DETAILS_EMPTY 
-                            "This area shows more information about files you select."
-    IDS_SEARCH_DETAILS_SOURCES_ONE "One source is available (%s).  "
-    IDS_SEARCH_DETAILS_SOURCES_MANY "%i sources are available (%s).  "
-    IDS_SEARCH_DETAILS_REVIEWS_ONE "There is one review."
-    IDS_SEARCH_DETAILS_REVIEWS_MANY "There are %i reviews."
-    IDS_SEARCH_DETAILS_WRITES "%s writes:"
-    IDS_SEARCH_DETAILS_RATES "%s rates this file:"
-    IDS_SEARCH_DETAILS_PREVIEW "Click to Preview"
-    IDS_SEARCH_DETAILS_PREVIEWING "Previewing..."
-    IDS_SEARCH_DETAILS_PREVIEW_FAILED 
-                            "Unable to download preview content from ""%s""."
 END
 
 STRINGTABLE 
@@ -5322,10 +5391,6 @@ BEGIN
                             "Create a .torrent for this file to upload to a website."
 END
 
-STRINGTABLE 
-BEGIN
-    ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
-END
 
 STRINGTABLE 
 BEGIN
@@ -5395,13 +5460,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DLM_MOVING          "Shareaza is moving the download:"
-    IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
-    IDS_DLM_VOLUME_UPLOADED "Upload ratio:"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
     IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
     IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
@@ -5431,29 +5489,6 @@ BEGIN
     IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
     IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
     IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
-    ID_DOWNLOADS_RATE       "Rate the selected download."
-    ID_LIBRARY_VIEW_COLLECTION 
-                            "Show the rich collection view\nCollection View"
-    ID_LIBRARY_FOLDER_DOWNLOAD 
-                            "Download all files in the selected collection."
-    ID_LIBRARY_FOLDER_EXPORT_COLLECTION 
-                            "Export the selected album folder as a collection file..."
-    ID_LIBRARY_EXPORT_COLLECTION 
-                            "Export the selected album folder to a collection file..."
-    ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
-    ID_DOWNLOADS_EDIT       "Show the advanced edit download interface..."
-    ID_MEDIA_MUTE           "Mute audio playback"
-    ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
-    ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
-    ID_TOOLS_MERCORA        "Start P2P Radio"
-    ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
-    ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
-    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
 END
 
 STRINGTABLE 
@@ -5504,19 +5539,13 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_STATUS_BAR_CONNECTED_HUB_UP 
-                            "Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."
-    IDS_STATUS_BAR_CONNECTED_UP 
-                            "Ultrapeer mode with %lu neighbour(s).  %s in local library."
-    IDS_STATUS_BAR_CONNECTED_HUB 
-                            "Hub mode with %lu neighbour(s).  %s in local library."
-    IDS_STATUS_BAR_CONNECTED_SIMPLE "Connected. %s in local library."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BITZI_CLOSE         "&Close"
-    IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
+    IDS_DAY_SUNDAY          "Sunday"
+    IDS_DAY_MONDAY          "Monday"
+    IDS_DAY_TUESDAY         "Tuesday"
+    IDS_DAY_WEDNESDAY       "Wednesday"
+    IDS_DAY_THURSDAY        "Thursday"
+    IDS_DAY_FRIDAY          "Friday"
+    IDS_DAY_SATURDAY        "Saturday"
 END
 
 STRINGTABLE 
@@ -5570,43 +5599,49 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DAY_SUNDAY          "Sunday"
-    IDS_DAY_MONDAY          "Monday"
-    IDS_DAY_TUESDAY         "Tuesday"
-    IDS_DAY_WEDNESDAY       "Wednesday"
-    IDS_DAY_THURSDAY        "Thursday"
-    IDS_DAY_FRIDAY          "Friday"
-    IDS_DAY_SATURDAY        "Saturday"
+    IDS_PROPERTY_PAGE_GENERAL "General"
+    IDS_PROPERTY_PAGE_METADATA "Metadata"
+    IDS_PROPERTY_PAGE_COMMENTS "My Review"
+    IDS_PROPERTY_PAGE_SHARING "Sharing"
+    IDS_PROPERTY_PAGE_SOURCES "Sources"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_NEIGHBOUR_CLOSING   "Closing"
-    IDS_NEIGHBOUR_UNKNOWN   "Unknown"
-    IDS_NEIGHBOUR_G1PEER    "G1 Peer"
-    IDS_NEIGHBOUR_G1ULTRA   "G1 Ultrapeer"
-    IDS_NEIGHBOUR_G1LEAF    "G1 Leaf"
-    IDS_NEIGHBOUR_G2PEER    "G2 Peer"
-    IDS_NEIGHBOUR_G2HUB     "G2 Hub"
-    IDS_NEIGHBOUR_G2LEAF    "G2 Leaf"
-    IDS_NEIGHBOUR_ED2K_SERVER "eDonkey2000 Server"
-    IDS_NEIGHBOUR_ED2K_LOWID "eDonkey2000 (LowID)"
-    IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
+    ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
+    ID_DOWNLOADS_RATE       "Rate the selected download."
+    ID_LIBRARY_VIEW_COLLECTION 
+                            "Show the rich collection view\nCollection View"
+    ID_LIBRARY_FOLDER_DOWNLOAD 
+                            "Download all files in the selected collection."
+    ID_LIBRARY_FOLDER_EXPORT_COLLECTION 
+                            "Export the selected album folder as a collection file..."
+    ID_LIBRARY_EXPORT_COLLECTION 
+                            "Export the selected album folder to a collection file..."
+    ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
+    ID_DOWNLOADS_EDIT       "Show the advanced edit download interface..."
+    ID_MEDIA_MUTE           "Mute audio playback"
+    ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
+    ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
+    ID_TOOLS_MERCORA        "Start P2P Radio"
+    ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
+    ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
+    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
+    ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
-    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
-    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
-    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
-    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
-    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
-    IDS_UPLOAD_QUEUE_NEW    "New Queue"
-    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
-    IDS_UPLOAD_QUEUE_COMPLETE "Complete Files"
-    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
+    AFX_IDS_APP_TITLE       "Shareaza"
 END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
+    ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
+    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+END
+
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
