@@ -22,8 +22,6 @@
 #ifndef __AVITHUMB_H_
 #define __AVITHUMB_H_
 
-#include "Resource.h"
-
 class ATL_NO_VTABLE CAVIThumb : 
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CAVIThumb, &CLSID_AVIThumb>,

@@ -172,7 +172,7 @@ HRESULT CAVIThumb::LoadImpl(LPCTSTR pszFile, IMAGESERVICEDATA __RPC_FAR *pParams
 	CRegKey pKey;
 	
 	pKey.Create( HKEY_LOCAL_MACHINE, FAIL_KEY );
-	pKey.QueryValue( nProtect, szCodec );
+	pKey.QueryDWORDValue( szCodec, nProtect );
 	
 	if ( nProtect )
 	{
@@ -190,7 +190,7 @@ HRESULT CAVIThumb::LoadImpl(LPCTSTR pszFile, IMAGESERVICEDATA __RPC_FAR *pParams
 		return S_OK;
 	}
 	
-	pKey.SetValue( 1, szCodec );
+	pKey.SetDWORDValue( szCodec, 1 );
 	pKey.Close();
 	pKey.Open( HKEY_LOCAL_MACHINE, FAIL_KEY );
 	

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Sun Oct 10 17:18:09 2004
+/* at Mon Oct 11 16:05:57 2004
  */
 /* Compiler settings for .\ImageServices.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

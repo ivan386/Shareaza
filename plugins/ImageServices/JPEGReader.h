@@ -32,9 +32,6 @@ extern "C" {
 #include <jpeglib.h> 
 }
 
-#include "Resource.h"
-
-
 class ATL_NO_VTABLE CJPEGReader : 
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CJPEGReader, &CLSID_JPEGReader>,

@@ -21,13 +21,22 @@
 
 #pragma once
 
+#ifndef STRICT
 #define STRICT
+#endif
 
-#define _WIN32_WINNT 0x0400
+#ifndef _WIN32_WINNT		// Allow use of features specific to Windows NT 4 or later.
+#define _WIN32_WINNT 0x0400	// Change this to the appropriate value to target Windows 2000 or later.
+#endif
+
 #define _ATL_FREE_THREADED
+#define _ATL_NO_AUTOMATIC_NAMESPACE
 
 #include <atlbase.h>
-extern CComModule _Module;
+//extern CComModule _Module; 
 #include <atlcom.h>
 
 #include <setjmp.h>
+#include "resource.h"
+
+using namespace ATL;
