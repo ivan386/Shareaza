@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CTextCtrl, CWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -176,6 +177,10 @@ int CTextCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_nPosition = m_nTotal = 0;
 	m_bProcess = TRUE;
 	
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+		m_nScrollWheelLines = 3;
+
 	return 0;
 }
 
@@ -295,6 +300,37 @@ void CTextCtrl::OnSize(UINT nType, int cx, int cy)
 void CTextCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	SetFocus();
+}
+
+BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	short nRows = (zDelta / WHEEL_DELTA);
+
+	if ( WHEEL_PAGESCROLL==m_nScrollWheelLines )
+	{
+		// scroll by page is activated
+		SCROLLINFO si;
+
+		ZeroMemory( &si, sizeof(si) );
+		si.cbSize	= sizeof(si);
+		si.fMask	= SIF_ALL;
+
+		GetScrollInfo( SB_VERT, &si );
+
+		nRows *=( si.nPage - 1 );
+	}
+	else
+		nRows *= m_nScrollWheelLines;
+
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	m_nPosition-= nRows;
+	m_nPosition = max( 0, min( m_nTotal, m_nPosition ) );
+
+	UpdateScroll();
+	Invalidate();
+
+	return CWnd::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 /////////////////////////////////////////////////////////////////////////////

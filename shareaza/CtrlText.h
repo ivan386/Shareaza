@@ -43,6 +43,7 @@ protected:
 	COLORREF			m_crText[5];
 	BOOL				m_bProcess;
 	CCriticalSection	m_pSection;
+	UINT				m_nScrollWheelLines; // number of lines to scroll when the mouse wheel is rotated
 
 // Operations
 public:
@@ -69,11 +70,10 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
-
 
 class CTextLine
 {
