@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
    ================================================================
-   | NucleoX 2.4 by ogg123  <oggvorbis123@hotmail.com> |
+   | NucleoX 2.41 by ogg123  <oggvorbis123@hotmail.com> |
    ================================================================
    | You may edit this, and re-distribute, but please leave all
    | commenting attached; you see.... I finally cleaned it up!  :p
@@ -44,7 +44,7 @@
 		<colour name="Dialog.Back"                  value="DBDBDB"/>
 		<colour name="ToolTip.Back"                 value="DBDBDB"/>
 		<colour name="ToolTip.Text"                 value="000000"/>
-		<colour name="TaskPanel.Back"               value="DEDFE0"/>
+		<colour name="TaskPanel.Back"               value="9BB9F0"/>
 		<colour name="TaskBox.Caption.Back"         value="151515"/>
 		<colour name="TaskBox.Caption.Text"         value="000000"/>
 		<colour name="TaskBox.Primary.Text"         value="000000"/>
@@ -62,7 +62,6 @@
 		<watermark target="CMainWnd.Toolbar" path="Toolbar2.bmp"/>
 		<watermark target="CMonitorBar" path="Toolbar2.bmp"/>
 		<watermark target="CSearchWnd.Panel.Toolbar" path="SearchToolbar.bmp"/>
-		<watermark target="CSearchPanel" path="SearchPanel.bmp"/>
 		<watermark target="CHomeBox" path="InfoBox.bmp"/>
 		<watermark target="CHomeDownloadsBox.Caption" path="InfoBox.bmp"/>
 		<watermark target="CHomeLibraryBox.Caption" path="InfoBox.bmp"/>
