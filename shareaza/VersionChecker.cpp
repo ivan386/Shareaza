@@ -84,7 +84,7 @@ BOOL CVersionChecker::NeedToCheck()
 
 BOOL CVersionChecker::Start(HWND hWndNotify)
 {
-	return FALSE;
+	//return FALSE;
 	
 	Stop();
 	
@@ -154,12 +154,14 @@ void CVersionChecker::BuildRequest(CString& strRequest)
 
 BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 {
+
 #if 1
-	m_pRequest.SetURL( _T("http://www.shareaza.com/version?") + strPost );
+	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version?") + strPost );
 #else
-	m_pRequest.SetURL( _T("http://www.shareaza.com/version") );
+	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version") );
 	m_pRequest.SetPost( (LPCSTR)strPost, strPost.GetLength() );
 #endif
+	//Remember to set the update server for final releases.
 	
 	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
 	
@@ -167,7 +169,7 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 	
 	CString strResponse = m_pRequest.GetResponseString();
-	
+
 	CString strHack = theApp.GetProfileString( _T("VersionCheck"), _T("TestResponse"), _T("") );
 	if ( strHack.GetLength() ) strResponse = strHack;
 	
