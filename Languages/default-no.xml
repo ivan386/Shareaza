@@ -11,11 +11,11 @@
 
 <!-- Manifest -->
 <manifest      name="Norsk"
-                       author="Tom Seland (Vegard Martinsen)"
+                       author="Tom Seland (and Vegard Martinsen)"
                        description="Shareaza Default Norwegian Skin File"
                        link="http://www.shareaza.com/"
                        email="contact@shareaza.com"
-                       version="2.0.3.8"
+                       version="2.0.5.0"
                        type="Language"
                        language="no"
                        prompt="Klikk her for å velge norsk som språk"
