@@ -2,8 +2,8 @@
     <!-- 
 	Name:		Shareaza OS
 	Author:		RocketX
-	Version:	1.1
-	Released:	Sep. 09, 2004
+	Version:	1.2
+	Released:	Sep. 11, 2004
 	-->
     <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0"> 
       <manifest
@@ -11,7 +11,7 @@
 		author="RocketX"
 		link="http://www.shareaza.com/"
 		Description="Skin based on the Shareaza Website"
-		version="1.1"
+		version="1.2"
 		type="Skin"
 		language="en" />
       <fonts> 
@@ -44,8 +44,6 @@
       <!-- Command bar watermarks -->
       <watermarks> 
         <watermark target="CCoolMenu" path="sos_menuwm.bmp"/>
-        <watermark target="CHomeBox" path="sos_box.bmp"/>
-        <watermark target="CAboutPanel" path="sos_box.bmp"/>
         <watermark target="CHomePanel" path="sos_sidebg.bmp" />
         <watermark target="CSearchPanel" path="sos_sidebg.bmp" />
         <watermark target="CHomeDownloadsBox.Caption" path="sos_box.bmp"/>
@@ -65,22 +63,22 @@
           <parts> 
             <part name="TopLeft"		rect="0,0,179,35"/>
             <part name="Top"            rect="179,0,30,35"/>
-            <part name="TopRight"       rect="324,0,115,35"/>
-            <part name="LeftTop"		rect="0,35,7,31"/>
-            <part name="Left"           rect="0,66,7,20"/>
-            <part name="LeftBottom"		rect="0,152,7,14"/>
-            <part name="BottomLeft"	    rect="0,166,21,8"/>
-            <part name="Bottom"         rect="21,166,20,8"/>
-            <part name="BottomRight"    rect="418,166,21,8"/>
-            <part name="RightBottom"	rect="432,152,7,14"/>
-            <part name="Right"          rect="432,66,7,20"/>
-            <part name="RightTop"		rect="432,35,7,31"/>
-            <part name="MinimiseDown"	rect="56,44,25,25"/>
-            <part name="MinimiseHover"  rect="56,84,25,25"/>
-            <part name="MaximiseDown"   rect="89,44,25,25"/>
-            <part name="MaximiseHover"  rect="89,84,25,25"/>
-            <part name="CloseDown"      rect="122,44,25,25"/>
-            <part name="CloseHover"     rect="122,84,25,25"/>
+            <part name="TopRight"       rect="23,36,115,35"/>
+            <part name="LeftTop"		rect="0,36,7,31"/>
+            <part name="Left"           rect="0,67,7,20"/>
+            <part name="LeftBottom"		rect="0,115,7,14"/>
+            <part name="BottomLeft"	    rect="0,129,21,8"/>
+            <part name="Bottom"         rect="1,107,20,8"/>
+            <part name="BottomRight"    rect="0,151,21,8"/>
+            <part name="RightBottom"	rect="14,137,7,14"/>
+            <part name="Right"          rect="8,67,7,20"/>
+            <part name="RightTop"		rect="8,36,7,31"/>
+            <part name="MinimiseDown"	rect="23,146,25,25"/>
+            <part name="MinimiseHover"  rect="23,120,25,25"/>
+            <part name="MaximiseDown"   rect="49,146,25,25"/>
+            <part name="MaximiseHover"  rect="49,120,25,25"/>
+            <part name="CloseDown"      rect="75,146,25,25"/>
+            <part name="CloseHover"     rect="75,120,25,25"/>
           </parts>
           <anchors> 
             <anchor name="Close"        rect="-32,5,25,25"/> 
@@ -95,22 +93,21 @@
         <windowSkin> 
           <image path="sos_main.bmp"/>
           <target window="CDialog"/>
-          <target window="CWizardWelcomePage"/>
           <parts> 
-            <part name="TopLeft"        rect="183,43,41,33"/>
-            <part name="Top"            rect="374,43,5,33"/>
-            <part name="TopRight"       rect="379,43,44,33"/>
-            <part name="LeftTop"		rect="0,37,7,29"/>
-            <part name="Left"           rect="0,66,7,20"/>
-            <part name="LeftBottom"		rect="0,152,7,15"/>
-            <part name="BottomLeft"	    rect="0,167,21,7"/>
-            <part name="Bottom"         rect="21,167,20,7"/>
-            <part name="BottomRight"    rect="418,167,21,7"/>
-            <part name="RightBottom"	rect="432,152,7,15"/>
-            <part name="Right"          rect="432,66,7,20"/>
-            <part name="RightTop"		rect="432,37,7,29"/>
-            <part name="CloseDown"      rect="392,119,23,23"/>
-            <part name="CloseHover"     rect="392,83,23,23"/>
+            <part name="TopLeft"        rect="139,36,41,33"/>
+            <part name="Top"            rect="181,36,5,33"/>
+            <part name="TopRight"       rect="187,36,44,33"/>
+            <part name="LeftTop"		rect="16,36,7,31"/>
+            <part name="Left"           rect="0,67,7,20"/>
+            <part name="LeftBottom"		rect="0,115,7,14"/>
+            <part name="BottomLeft"	    rect="0,129,21,8"/>
+            <part name="Bottom"         rect="1,107,20,8"/>
+            <part name="BottomRight"    rect="0,151,21,8"/>
+            <part name="RightBottom"	rect="14,137,7,14"/>
+            <part name="Right"          rect="8,67,7,20"/>
+            <part name="RightTop"		rect="16,67,7,31"/>
+            <part name="CloseDown"      rect="95,72,23,23"/>
+            <part name="CloseHover"     rect="95,96,23,23"/>
           </parts>
           <anchors> 
             <anchor name="Close"	rect="-31,5,23,23"/> 
@@ -125,24 +122,24 @@
           <image path="sos_main.bmp"/>
           <target window="CChildWnd"/>
           <parts> 
-            <part name="TopLeft"        rect="183,43,41,33"/>
-            <part name="Top"            rect="374,43,5,33"/>
-            <part name="TopRight"       rect="249,43,104,33"/>
-            <part name="LeftTop"		rect="0,37,7,29"/>
-            <part name="Left"           rect="0,66,7,20"/>
-            <part name="LeftBottom"		rect="0,152,7,15"/>
-            <part name="BottomLeft"	    rect="0,167,21,7"/>
-            <part name="Bottom"         rect="21,167,20,7"/>
-            <part name="BottomRight"    rect="418,167,21,7"/>
-            <part name="RightBottom"	rect="432,152,7,15"/>
-            <part name="Right"          rect="432,66,7,20"/>
-            <part name="RightTop"		rect="432,37,7,29"/>
-            <part name="MinimiseDown"      rect="264,119,23,23"/>
-            <part name="MinimiseHover"     rect="264,83,23,23"/>
-            <part name="MaximiseDown"      rect="293,119,23,23"/>
-            <part name="MaximiseHover"     rect="293,83,23,23"/>
-            <part name="CloseDown"      rect="392,119,23,23"/>
-            <part name="CloseHover"     rect="392,83,23,23"/>
+            <part name="TopLeft"        rect="139,36,41,33"/>
+            <part name="Top"            rect="181,36,5,33"/>
+            <part name="TopRight"       rect="119,72,104,33"/>
+            <part name="LeftTop"		rect="16,36,7,31"/>
+            <part name="Left"           rect="0,67,7,20"/>
+            <part name="LeftBottom"		rect="0,115,7,14"/>
+            <part name="BottomLeft"	    rect="0,129,21,8"/>
+            <part name="Bottom"         rect="1,107,20,8"/>
+            <part name="BottomRight"    rect="0,151,21,8"/>
+            <part name="RightBottom"	rect="14,137,7,14"/>
+            <part name="Right"          rect="8,67,7,20"/>
+            <part name="RightTop"		rect="16,67,7,31"/>
+            <part name="MinimiseDown"      rect="47,72,23,23"/>
+            <part name="MinimiseHover"     rect="47,96,23,23"/>
+            <part name="MaximiseDown"      rect="71,72,23,23"/>
+            <part name="MaximiseHover"     rect="71,96,23,23"/>
+            <part name="CloseDown"      rect="95,72,23,23"/>
+            <part name="CloseHover"     rect="95,96,23,23"/>
           </parts>
           <anchors> 
             <anchor name="Minimise"	rect="-89,5,23,23" /> 
@@ -153,6 +150,40 @@
             <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
           </region>
           <caption align="left" rect="40,0,600,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
+        </windowSkin>
+        <!-- Download Monitor contributed by StevenB -->
+        <windowSkin> 
+          <image path="sos_main.bmp"/>
+          <target window="CDownloadMonitorDlg"/>
+          <parts> 
+            <part name="TopLeft"        rect="139,36,41,33"/>
+            <part name="Top"            rect="181,36,5,33"/>
+            <part name="TopRight"       rect="119,105,104,33"/>
+            <part name="LeftTop"		rect="16,36,7,31"/>
+            <part name="Left"           rect="0,67,7,20"/>
+            <part name="LeftBottom"		rect="0,115,7,14"/>
+            <part name="BottomLeft"	    rect="0,129,21,8"/>
+            <part name="Bottom"         rect="1,107,20,8"/>
+            <part name="BottomRight"    rect="0,151,21,8"/>
+            <part name="RightBottom"	rect="14,137,7,14"/>
+            <part name="Right"          rect="8,67,7,20"/>
+            <part name="RightTop"		rect="16,67,7,31"/>
+            <part name="MinimiseDown"      rect="47,72,23,23"/>
+            <part name="MinimiseHover"     rect="47,96,23,23"/>
+            <part name="MaximiseDown"      rect="23,72,23,23"/>
+            <part name="MaximiseHover"     rect="23,96,23,23"/>
+            <part name="CloseDown"      rect="95,72,23,23"/>
+            <part name="CloseHover"     rect="95,96,23,23"/>
+          </parts>
+          <anchors> 
+            <anchor name="Minimise"    rect="-60,5,23,23" /> 
+            <anchor name="Maximise"    rect="-89,5,23,23" /> 
+            <anchor name="Close"        rect="-31,5,23,23"/> 
+            <anchor name="Icon"       rect="8,8,16,16"/> </anchors>
+          <region> 
+            <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
+          </region>
+          <caption align="left" rect="40,0,280,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- Other Panels -->
         <windowSkin> 
@@ -273,40 +304,6 @@
             <part name="TopRight" rect="66,187,76,31"/>
           </parts>
           <caption align="left" rect="40,-0,500,30" fontFace="Tahoma" fontSize="14" colour="333333" inactivecolour="999999" />
-        </windowSkin>
-        <!-- Download Monitor contributed by StevenB -->
-        <windowSkin> 
-          <image path="sos_main.bmp"/>
-          <target window="CDownloadMonitorDlg"/>
-          <parts> 
-            <part name="TopLeft"        rect="183,43,41,33"/>
-            <part name="Top"            rect="374,43,5,33"/>
-            <part name="TopRight"       rect="61,125,104,33"/>
-            <part name="LeftTop"        rect="0,37,7,29"/>
-            <part name="Left"           rect="0,66,7,20"/>
-            <part name="LeftBottom"        rect="0,152,7,15"/>
-            <part name="BottomLeft"        rect="0,167,21,7"/>
-            <part name="Bottom"         rect="21,167,20,7"/>
-            <part name="BottomRight"    rect="418,167,21,7"/>
-            <part name="RightBottom"    rect="432,152,7,15"/>
-            <part name="Right"          rect="432,66,7,20"/>
-            <part name="RightTop"        rect="432,37,7,29"/>
-            <part name="MinimiseDown"      rect="264,119,23,23"/>
-            <part name="MinimiseHover"     rect="264,83,23,23"/>
-            <part name="MaximiseDown"      rect="179,136,23,23"/>
-            <part name="MaximiseHover"     rect="179,109,23,23"/>
-            <part name="CloseDown"      rect="392,119,23,23"/>
-            <part name="CloseHover"     rect="392,83,23,23"/>
-          </parts>
-          <anchors> 
-            <anchor name="Minimise"    rect="-60,5,23,23" /> 
-            <anchor name="Maximise"    rect="-89,5,23,23" /> 
-            <anchor name="Close"        rect="-31,5,23,23"/> 
-            <anchor name="Icon"       rect="8,8,16,16"/> </anchors>
-          <region> 
-            <shape type="roundRect" rect="0,0,-1,-1" size="4,4" />
-          </region>
-          <caption align="left" rect="40,0,250,33" fontFace="Tahoma" fontSize="13" colour="333333" inactivecolour="999999" />
         </windowSkin>
         <!-- MULTI-LANGUAGE NAVBARS -->
         <!-- navbar language for es -->
@@ -1525,6 +1522,83 @@
             <anchor name="_ID_TAB_TRANSFERS"	rect="407,2,113,29"/> </anchors>
         </windowSkin>
         <!-- end navbar language for en -->
+		<!-- navbar language for gr -->
+		<windowSkin>
+		<image type="image" language="gr" path="sos_navbar_gr.bmp"/>
+		<image type="watermark" language="gr" path="sos_navbarbg.bmp"/>
+		<target window="CMainTabBarCtrl"/>
+		<target window="CMainTabBarCtrl.Windowed"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"	 rect="0,0,78,29"/>
+			<part name="_ID_TAB_HOME.Checked"	 rect="0,28,78,29"/>
+			<part name="_ID_TAB_HOME.Hover"	 rect="0,28,78,29"/>
+			<part name="_ID_TAB_HOME.Down"	 rect="0,0,78,29"/>
+			<part name="_ID_TAB_LIBRARY.Up"	 rect="78,0,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	 rect="78,28,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Hover"	 rect="78,28,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Down"	 rect="78,0,115,29"/>
+			<part name="_ID_TAB_MEDIA.Up"	 rect="193,0,184,29"/>
+			<part name="_ID_TAB_MEDIA.Checked"	 rect="193,28,184,29"/>
+			<part name="_ID_TAB_MEDIA.Hover"	 rect="193,28,184,29"/>
+			<part name="_ID_TAB_MEDIA.Down"	 rect="193,0,184,29"/>
+			<part name="_ID_TAB_SEARCH.Up"	 rect="377,0,87,29"/>
+			<part name="_ID_TAB_SEARCH.Checked"	 rect="377,28,87,29"/>
+			<part name="_ID_TAB_SEARCH.Hover"	 rect="377,28,87,29"/>
+			<part name="_ID_TAB_SEARCH.Down"	 rect="377,0,87,29"/>
+			<part name="_ID_TAB_TRANSFERS.Up"	 rect="464,0,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	 rect="464,28,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	 rect="464,28,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Down"	 rect="464,0,116,29"/>
+			<part name="_ID_TAB_NETWORK.Up"	 rect="580,0,82,29"/>
+			<part name="_ID_TAB_NETWORK.Checked"	 rect="580,28,82,29"/>
+			<part name="_ID_TAB_NETWORK.Hover"	 rect="580,28,82,29"/>
+			<part name="_ID_TAB_NETWORK.Down"	 rect="580,0,82,29"/>
+		</parts>
+		<anchors>
+			<anchor name="Background"	rect="15,0,686,38"/>
+			<anchor name="_ID_TAB_HOME"	rect="15,2,78,29"/>
+			<anchor name="_ID_TAB_LIBRARY"	rect="93,2,115,29"/>
+			<anchor name="_ID_TAB_MEDIA"	rect="208,2,184,29"/>
+			<anchor name="_ID_TAB_SEARCH"	rect="392,2,87,29"/>
+			<anchor name="_ID_TAB_TRANSFERS"	rect="479,2,116,29"/>
+			<anchor name="_ID_TAB_NETWORK"	rect="595,2,82,29"/>
+		</anchors>
+		</windowSkin>
+		<windowSkin>
+		<image type="image" language="gr" path="sos_navbar_gr.bmp"/>
+		<image type="watermark" language="gr" path="sos_navbarbg.bmp"/>
+		<target window="CMainTabBarCtrl.Basic"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"	 rect="0,0,78,29"/>
+			<part name="_ID_TAB_HOME.Checked"	 rect="0,28,78,29"/>
+			<part name="_ID_TAB_HOME.Hover"	 rect="0,28,78,29"/>
+			<part name="_ID_TAB_HOME.Down"	 rect="0,0,78,29"/>
+			<part name="_ID_TAB_LIBRARY.Up"	 rect="78,0,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	 rect="78,28,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Hover"	 rect="78,28,115,29"/>
+			<part name="_ID_TAB_LIBRARY.Down"	 rect="78,0,115,29"/>
+			<part name="_ID_TAB_MEDIA.Up"	 rect="193,0,184,29"/>
+			<part name="_ID_TAB_MEDIA.Checked"	 rect="193,28,184,29"/>
+			<part name="_ID_TAB_MEDIA.Hover"	 rect="193,28,184,29"/>
+			<part name="_ID_TAB_MEDIA.Down"	 rect="193,0,184,29"/>
+			<part name="_ID_TAB_SEARCH.Up"	 rect="377,0,87,29"/>
+			<part name="_ID_TAB_SEARCH.Checked"	 rect="377,28,87,29"/>
+			<part name="_ID_TAB_SEARCH.Hover"	 rect="377,28,87,29"/>
+			<part name="_ID_TAB_SEARCH.Down"	 rect="377,0,87,29"/>
+			<part name="_ID_TAB_TRANSFERS.Up"	 rect="464,0,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	 rect="464,28,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	 rect="464,28,116,29"/>
+			<part name="_ID_TAB_TRANSFERS.Down"	 rect="464,0,116,29"/>
+		</parts>
+		<anchors>
+			<anchor name="Background"	rect="15,0,604,38"/>
+			<anchor name="_ID_TAB_HOME"	rect="15,2,78,29"/>
+			<anchor name="_ID_TAB_LIBRARY"	rect="93,2,115,29"/>
+			<anchor name="_ID_TAB_MEDIA"	rect="208,2,184,29"/>
+			<anchor name="_ID_TAB_SEARCH"	rect="392,2,87,29"/>
+			<anchor name="_ID_TAB_TRANSFERS"	rect="479,2,116,29"/>
+		</anchors>
+		</windowSkin>
+		<!-- end navbar language for gr -->
       </windowSkins>
-    </skin>
-  
+    </skin>  
