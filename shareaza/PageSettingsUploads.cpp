@@ -46,6 +46,7 @@ BEGIN_MESSAGE_MAP(CUploadsSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_QUEUE_DELETE, OnQueueDelete)
 	ON_NOTIFY(NM_DBLCLK, IDC_QUEUES, OnDblClkQueues)
 	ON_NOTIFY(LVN_DRAGDROP, IDC_QUEUES, OnQueueDrop)
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -120,17 +121,6 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_bHubUnshare		= Settings.Uploads.HubUnshare;
 	m_bThrottleMode		= Settings.Uploads.ThrottleMode;
 	m_bVirtualFiles		= Settings.Library.VirtualFiles;
-	
-	if ( Settings.Bandwidth.Uploads )
-	{
-		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
-	}
-	else
-	{
-		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-		int nSpace		= m_sBandwidth.Find( ' ' );
-		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
-	}
 	
 	for ( CString strList = Settings.Uploads.BlockAgents + '|' ; strList.GetLength() ; )
 	{
@@ -394,3 +384,22 @@ void CUploadsSettingsPage::OnOK()
 	}
 }
 
+
+void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CSettingsPage::OnShowWindow(bShow, nStatus);
+
+	// Update speed units
+	if ( Settings.Bandwidth.Uploads )
+	{
+		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+	}
+	else
+	{
+		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
+		int nSpace		= m_sBandwidth.Find( ' ' );
+		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+	}
+
+	UpdateData( FALSE );
+}

@@ -77,6 +77,7 @@ protected:
 	afx_msg void OnDownloadsBrowse();
 	afx_msg void OnIncompleteBrowse();
 	//}}AFX_MSG
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	DECLARE_MESSAGE_MAP()
 };
 

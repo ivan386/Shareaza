@@ -83,6 +83,7 @@ protected:
 	afx_msg void OnChangeInboundPort();
 	afx_msg void OnInboundRandom();
 	//}}AFX_MSG
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	DECLARE_MESSAGE_MAP()
 
 };

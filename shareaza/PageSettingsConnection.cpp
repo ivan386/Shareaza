@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CConnectionSettingsPage, CSettingsPage)
 	ON_EN_CHANGE(IDC_INBOUND_PORT, OnChangeInboundPort)
 	ON_BN_CLICKED(IDC_INBOUND_RANDOM, OnInboundRandom)
 	//}}AFX_MSG_MAP
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -112,8 +113,6 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_nInPort				= Settings.Connection.InPort;
 	m_bInBind				= Settings.Connection.InBind;
 	m_sOutHost				= Settings.Connection.OutHost;
-	m_sInSpeed				= FormatSpeed( Settings.Connection.InSpeed );
-	m_sOutSpeed				= FormatSpeed( Settings.Connection.OutSpeed );
 	m_bIgnoreLocalIP		= Settings.Connection.IgnoreLocalIP;
 	m_nTimeoutConnection	= Settings.Connection.TimeoutConnect / 1000;
 	m_nTimeoutHandshake		= Settings.Connection.TimeoutHandshake / 1000;
@@ -253,4 +252,15 @@ CString CConnectionSettingsPage::GetInOutHostTranslation()
 	// get non-english string if any
 	strNew = strInCombo.CompareNoCase( _T("Automatic") ) == 0 ? strOutCombo : strInCombo;
 	return strAutomatic.CompareNoCase( _T("Automatic") ) == 0 ? strNew : strAutomatic;
+}
+
+void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CSettingsPage::OnShowWindow(bShow, nStatus);
+	
+	// Update speed units
+	m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
+	m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
+
+	UpdateData( FALSE );
 }

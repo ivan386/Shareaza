@@ -506,7 +506,7 @@ void CSettings::Load()
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, DWORD(1000) );
 	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, DWORD(45*60) );
 	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, DWORD(60*60) );
-	Downloads.ConnectThrottle	= max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 
 	// Set client links
 	Gnutella1.NumHubs			= min( Gnutella1.NumHubs, 2 );

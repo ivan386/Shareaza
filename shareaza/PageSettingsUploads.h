@@ -76,5 +76,5 @@ protected:
 	afx_msg void OnQueueDelete();
 	afx_msg void OnDblClkQueues(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnQueueDrop(NMHDR* pNMHDR, LRESULT* pResult);
-
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 };

@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CDownloadsSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnDownloadsBrowse)
 	ON_BN_CLICKED(IDC_INCOMPLETE_BROWSE, OnIncompleteBrowse)
 	//}}AFX_MSG_MAP
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -100,17 +101,6 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
 	m_nQueueLimit			= Settings.Downloads.QueueLimit;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
-	
-	if ( Settings.Bandwidth.Downloads )
-	{
-		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
-	}
-	else
-	{
-		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-		int nSpace		= m_sBandwidth.Find( ' ' );
-		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
-	}
 	
 	m_wndMaxDownFiles.SetRange( 1, 128 );
 	m_wndMaxDownTransfers.SetRange( 1, 128 );
@@ -251,3 +241,22 @@ void CDownloadsSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
+
+void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CSettingsPage::OnShowWindow(bShow, nStatus);
+
+	// Update speed units
+	if ( Settings.Bandwidth.Downloads )
+	{
+		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+	}
+	else
+	{
+		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
+		int nSpace		= m_sBandwidth.Find( ' ' );
+		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+	}
+
+	UpdateData( FALSE );
+}
