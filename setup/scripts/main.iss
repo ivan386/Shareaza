@@ -66,9 +66,8 @@ Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerro
 
 ; Main files
 Source: "setup\builds\zlib.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\zlib.dll"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\skin.exe"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\DefaultAvatar.png"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
 Source: "Data\Emoticons.bmp"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -150,13 +149,13 @@ BeveledLabel=Shareaza Development Team
 
 [Run]
 ; Run the skin installer at end of installation
-Filename: "{app}\Skins\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"
+Filename: "{app}\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"
 ; Run Shareaza at end of installation
 Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent nowait
 
 [UninstallRun]
 ; Run the skin installer at start of uninstallation and make sure it only runs once
-Filename: "{app}\Skins\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"
+Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"
 
 [Registry]
 ; Write installation path to registry
@@ -221,6 +220,7 @@ Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\LICENSE.txt"
 Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
+Type: files; Name: "{app}\Skins\skin.exe"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
