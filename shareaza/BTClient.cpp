@@ -177,7 +177,7 @@ BOOL CBTClient::OnRun()
 	}
 	else
 	{
-		if ( tNow - max( m_mOutput.tLast, m_mInput.tLast ) > Settings.BitTorrent.LinkTimeout * 2 )
+		if ( tNow - m_mInput.tLast > Settings.BitTorrent.LinkTimeout * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_LOST, (LPCTSTR)m_sAddress );
 			Close();
@@ -185,11 +185,9 @@ BOOL CBTClient::OnRun()
 		}
 		else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
 		{
-			DWORD tOutput = m_mOutput.tLast;
 			DWORD dwZero = 0;
 			m_pOutput->Add( &dwZero, 4 );
 			OnWrite();
-			m_mOutput.tLast = tNow;
 		}
 		
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
