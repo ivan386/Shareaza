@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Greek Skin File -->
 <!-- Body element, don't touch -->
-
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
@@ -10,7 +9,7 @@
                        description="Shareaza Default Greek Skin File"
                        link="http://www.shareaza.com/"
                        email="contact@shareaza.com"
-                       version="2.1.0.102"
+                       version="2.1.0.120"
                        type="Language"
                        language="gr"
                        prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα."
@@ -89,11 +88,11 @@
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
        <toolbar name="CSearchWnd.Full">
-               <button id="ID_SEARCH_SEARCH" text="Ψάξε ξανά..."/>
-               <button id="ID_SEARCH_STOP" text="Σταμάτα!"/>
-               <separator/>
                <button id="ID_SEARCH_DOWNLOAD" text="Κατέβασμα"/>
                <button id="ID_BROWSE_LAUNCH" text="Έρευνα αρχείων του χρήστη"/>
+               <separator/>
+               <button id="ID_SEARCH_SEARCH" text="Ψάξε ξανά..."/>
+               <button id="ID_SEARCH_STOP" text="Σταμάτα!"/>
                <separator/>
                <button id="ID_SEARCH_PANEL" text="Δείξε τα αποτελέσματα"/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
@@ -147,7 +146,7 @@
                <separator/>
                <button id="ID_DOWNLOADS_MONITOR" text="Δείξε την οθόνη"/>
                <rightAlign/>
-               <button id="ID_TOOLS_DOWNLOAD" text="Πρόσθεσε/κατέβασε Torrent..."/>
+               <button id="ID_TOOLS_DOWNLOAD" text="Πρόσθεσε/κατέβασεTorrent..."/>
                <button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Καθάρισε τα ολοκληρωμένα αρχεία"/>
        </toolbar>
        <toolbar name="CDownloadsWnd">
@@ -423,14 +422,14 @@
                        <item id="ID_TAB_SEARCH" text="_Έρευνα"/>
                        <item id="ID_TAB_TRANSFERS" text="_Κατέβασμα αρχείων"/>
                        <separator/>
-                       <menu text="Για Π_ροχωρημένους">
+                       <menu text="_Για προχωρημένους">
                                <item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
                                <item id="ID_VIEW_UPLOADS" text="_Ανέβασμα"/>
-                               <separator/>
-                               <item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-                               <item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
-                               <item id="ID_VIEW_DISCOVERY" text="Ανακαλύψιμο"/>
-                      </menu>
+				<separator/>
+                       <item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
+                       <item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
+				<item id="ID_VIEW_DISCOVERY" text="Ανακαλύψιμο"/>
+                       </menu>
                        <separator/>
                        <item id="ID_VIEW_BASIC" text="_Normal Mode"/>
                        <item id="ID_VIEW_TABBED" text="_Power Mode"/>
@@ -492,7 +491,7 @@
                        <item id="ID_VIEW_SECURITY" text="_Ασφάλεια"/>
                        <item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
                        <separator/>
-                       <menu text="Για Π_ροχωρημένους">
+                       <menu text="Για π_ροχωρημένους">
                                <item id="ID_VIEW_SYSTEM" text="Σ_ύστημα" shortcut="F11"/>
                                <item id="ID_VIEW_NEIGHBOURS" text="Γ_είτονες" shortcut="F2"/>
                                <item id="ID_VIEW_DOWNLOADS" text="_Κατέβασμα" shortcut="F3"/>
@@ -560,7 +559,7 @@
                        <item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _με..." shortcut="Ctrl+T"/>
                        <item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
                        <separator/>
-                       <menu text="Δίλαξε _Δίκτυα">
+                       <menu text="Διάλεξε _Δίκτυα">
                                <item id="ID_NETWORK_G2" text="Σύνδεση με _Gnutella2"/>
                                <item id="ID_NETWORK_ED2K" text="Σύνδεση με το _eDonkey2000"/>
                                <item id="ID_NETWORK_G1" text="Σύνδεση με Gnutella_1"/>
@@ -697,6 +696,23 @@
                <separator/>
                <item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _μετά την μεταφορά"/>
                <item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
+	</menu>
+	<!--  REMOTE MENU -->
+	<menu name="CRemoteWnd">
+		<item id="ID_TRAY_OPEN" text="_Άνοιξε το Shareaza"/>
+		<separator/>
+		<item id="ID_NETWORK_SEARCH" text="Νέ_α έρευνα..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Κατέβασε το αρχείο..."/>
+		<separator/>
+		<item id="ID_MEDIA_PLAY" text="_Παίξε το αρχείο"/>
+		<item id="ID_MEDIA_PAUSE" text="_Διέκοψε το αρχείο"/>
+		<item id="ID_MEDIA_STOP" text="_Σταμάτα το αρχείο"/>
+		<separator/>
+		<item id="ID_MEDIA_PREVIOUS" text="Δ_ες το κομμάτι"/>
+		<item id="ID_MEDIA_NEXT" text="_Επόμενο κομμάτι"/>
+		<separator/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος μετά τις _μεταφορές"/>
+		<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
        </menu>
        <!-- HOME MENU -->
        <menu name="CHomeWnd.Basic">
@@ -797,6 +813,7 @@
        <!-- BROWSE HOST WINDOW -->
        <menu name="CBrowseHostWnd.Basic">
                <item id="ID_SEARCH_DOWNLOAD" text="_Κατέβασε"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
                <separator/>
                <item id="ID_SEARCH_CHAT" text="_Μίλα με τον χρήστη"/>
                <separator/>
@@ -813,6 +830,7 @@
                </menu>
        </menu>
        <menu name="CBrowseHostWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
                <item id="ID_SEARCH_DOWNLOAD" text="_Κατέβασε"/>
                <item id="ID_SEARCH_COPY" text="Αντέγραψε το _URI"/>
                <separator/>
@@ -866,6 +884,7 @@
        <!-- DOWNLOADS WINDOW -->
        <menu name="CDownloadsWnd.Download.Basic">
                <item id="ID_DOWNLOADS_LAUNCH" text="_Επισκόπηση"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="_Επανέφερε"/>
                <item id="ID_DOWNLOADS_PAUSE" text="Δ_ιέκοψε"/>
@@ -880,8 +899,9 @@
        </menu>
        <menu name="CDownloadsWnd.Download">
                <item id="ID_DOWNLOADS_LAUNCH" text="_Επισκόπηση"/>
-               <!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Δες το αντίγραφο"/> -->
+               <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Δες το αντίγραφο"/>
                <item id="ID_DOWNLOADS_ENQUEUE" text="Εισαγωγή στην Pla_ylist"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="_Eπανέφερε"/>
                <item id="ID_DOWNLOADS_PAUSE" text="Διέκοψε_"/>
@@ -903,7 +923,7 @@
                        <item id="ID_DOWNLOADS_MOVE_DOWN" text="Προχώρα _κάτω"/>
                        <item id="ID_DOWNLOADS_BOOST" text="_Αγνόησε το Bandwidth Limit"/>
                </menu>
-               <item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
        </menu>
        <menu name="CDownloadsWnd.Source">
                <item id="ID_TRANSFERS_CONNECT" text="_Είσοδος"/>
@@ -919,7 +939,7 @@
                <item id="ID_DOWNLOADS_ENQUEUE" text="_Εισαγωγή στην Playlist"/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Καθάρισε"/>
                <separator/>
-               <item id="ID_DOWNLOADS_FILE_DELETE" text="_Διέγραψε το αρχείο"/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Διέγραψε το αρχείο"/>
        </menu>
        <menu name="CDownloadsWnd.Completed">
                <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιξε ή παίξε"/>
@@ -927,20 +947,20 @@
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Καθάρισε"/>
                <separator/>
                <item id="ID_DOWNLOADS_COPY" text="Αντέγραψε _URI"/>
-               <item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
                <separator/>
-               <item id="ID_DOWNLOADS_FILE_DELETE" text="_Δίεγραψε το αρχείο"/>
-               <item id="ID_DOWNLOADS_RATE" text="_Βαθμολόγησε το αρχείο..."/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Δίεγραψε το αρχείο"/>
+		<item id="ID_DOWNLOADS_RATE" text="_Βαθμολόγησε το αρχείο..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιξε ή παίξε"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Πληροφορίες για το Torrent"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Α_πομάκρυνε τα ολοκληρωμένα αρχεία"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Α_υτόματο καθάρισμα"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Κ_αθάρισε τα ολοκληρωμένα αρχεία"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Αυ_τόματο καθάρισμα"/>
        </menu>
        <menu name="CDownloadTabBar">
                <item id="ID_DOWNLOAD_GROUP_RESUME" text="_Επανέφερε όλα τα αρχεία"/>
@@ -966,17 +986,17 @@
                <item id="ID_DOWNLOAD_GROUP_SHOW" text="Δείξε τα _Groups"/>
        </menu>
        <!-- UPLOADS WINDOW -->
-       <menu name="CUploadsWnd.Upload.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
                <item id="ID_BROWSE_LAUNCH" text="_Έρευνα αρχείων του χρήστη"/>
                <item id="ID_UPLOADS_CHAT" text="_Μίλα στον χρήστη"/>
        </menu>
-       <menu name="CUploadsWnd.Upload">
+	<menu name="CUploadsWnd.Upload">
                <item id="ID_UPLOADS_START" text="_Άρχισε τώρα"/>
                <item id="ID_UPLOADS_CLEAR" text="_Καθάρισε"/>
                <separator/>
-               <item id="ID_BROWSE_LAUNCH" text="_Έρευνα αρχείων του χρήστη"/>
-               <item id="ID_UPLOADS_CHAT" text="_Μίλα στον χρήστη"/>
-               <item id="ID_SECURITY_BAN" text="Κάνε B_an τον χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Έρευνα αρχείων του χρήστη"/>
+		<item id="ID_UPLOADS_CHAT" text="_Μίλα στον χρήστη"/>
+		<item id="ID_SECURITY_BAN" text="Κάνε B_an τον χρήστη"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
@@ -986,7 +1006,7 @@
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Βοήθεια..."/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Κ_αθάρισε τα ολοκληρωμένα αρχεία"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Α_υτόματο καθάρισμα"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Αυτ_όματο καθάρισμα"/>
        </menu>
        <menu name="CUploadsWnd.Filter">
                <item id="ID_UPLOADS_FILTER_ALL" text="Δείξε όλα"/>
@@ -1019,7 +1039,7 @@
                <item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Παίξε το αρχείο"/>
                <item id="ID_LIBRARY_FOLDER_DELETE" text="_Διέγραψε"/>
                <separator/>
-               <item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες φκέλου"/>
+               <item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες φακέλου"/>
                <item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Ιδιότητες Album"/>
        </menu>
        <menu name="CLibraryTree.Virtual">
@@ -1068,6 +1088,7 @@
                        <item id="ID_LIBRARY_MOVE" text="_Μετέφερε τα αρχεία..."/>
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε τα αρχεία..."/>
                </menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
        </menu>
@@ -1099,7 +1120,6 @@
                        <item id="ID_LIBRARY_MOVE" text="_Μετέφερε το αρχείο..."/>
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε το αρχείο..."/>
                </menu>
-               <!-- Add the following entry if you need metadata conversion from ANSI -->
                <item id="ID_LIBRARY_REBUILD_ANSI" text="Ξαναχτίσε το Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Διάλεξε _στήλη..."/>
@@ -1136,6 +1156,7 @@
                        <item id="ID_LIBRARY_MOVE" text="_Μετακίνησε το αρχείο..."/>
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε το αρχείο..."/>
                </menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
        </menu>
@@ -1169,7 +1190,6 @@
                        <item id="ID_LIBRARY_MOVE" text="_Μετακίνησε το αρχείο..."/>
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε το αρχείο..."/>
                </menu>
-               <!-- Add the following entry if you need metadata conversion from ANSI -->
                <item id="ID_LIBRARY_REBUILD_ANSI" text="Ξαναχτίσε το Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Διάλεξε _στηλη..."/>
@@ -1441,7 +1461,7 @@
 
                <group id="3">
                        <icon res="128" width="32" height="32"/><gap size="8"/>
-                       <heading align="middle">Μ Η Ν Υ Μ Α  &#160; Α Ν Α Β Α Θ Μ Ι Σ Η Σ</heading>
+                       <heading align="middle">Μ Η Ν Υ Μ Α &#160; Α Ν Α Β Α Θ Μ Ι Σ Η Σ</heading>
                        <newline gap="8" indent="42"/>
                        <text id="Upgrade"/>
                        <newline gap="6"/>
@@ -1451,7 +1471,7 @@
 
         <group id="4">
                        <icon res="252" width="32" height="32"/><gap size="8"/>
-                       <heading align="middle">Π Ρ Ο Σ Ο Χ Η &#160; - &#160; Ε Χ Ε Τ Ε &#160;  F I R E W A L L</heading>
+                       <heading align="middle">Π Ρ Ο Σ Ο Χ Η &#160; - &#160; Ε Χ Ε Τ Ε &#160; F I R E W A L L</heading>
                        <newline gap="8" indent="42"/>
                        <text colour="FF0000">Το Shareaza έχει εντοπίσει οτι είστε πίσω απο ένα NAT router ή firewall,
                        και δεν είστε σε θέση να λάβετε συνδέσεις απο το Internet. &#160;</text>
@@ -1538,7 +1558,7 @@
                        <link format="bu" target="raza:command:ID_VIEW_LIBRARY">Πήγαινε στην βιβλιοθήκη μου</link>
                        <group id="1">
                                <newline gap="8"/>
-                               <text>Το Shareaza αναλύει και επεξεργάζετε </text>
+                               <text>Το Shareaza αναλύει και επεξεργάζετε</text>
                                <text id="LibraryHashRemaining" format="b">%lu </text>
                                <text>αρχεία.</text>
                                <newline gap="8"/>
@@ -1615,8 +1635,8 @@
                        <newline gap="4"/>
 
                        <text id="UploadedNone">Δεν έχετε ανεβάσει κανένα αρχείο σήμερα.</text>
-                       <text id="UploadedOne">Έχετε ανεβάσει ένα αρχείο (%α).</text>
-                       <text id="UploadedMany">Έχετε ανεβάσει %i αρχεία σήμερα.</text>
+                       <text id="UploadedOne">Έχετε ανεβάσει ένα αρχείο (%s).</text>
+                       <text id="UploadedMany">Έχετε ανεβάσει %i αρχεία σήμερα (%s).</text>
                </para>
        </document>
 
@@ -1631,14 +1651,14 @@
                        <text id="TorrentsOne" format="b">1 seeding torrent</text>
                        <text id="TorrentsMany" format="b">%i seeding torrents</text>
                        <newline gap="4"/>
-                       <link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
-                       <newline gap="4"/>
-                       <group id="1">
-                       <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
-                       </group>
-                       <group id="2">
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
+			</group>
+			<group id="2">
                        <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
-                       </group>
+			</group>
                </para>
 
        </document>
@@ -1849,13 +1869,13 @@
        <!-- Download help documents -->
 
        <document name="DownloadHelp.Select">
-               <text format="b">Please Select a Download</text>
+               <text format="b">Downloads Area</text>
                <newline gap="8"/>
-               <text>Μπορείς να χρησιμοποιήσεις αυτήν την επιλογή για να λάβεις βοήθεια σχετικά με το αρχείο που κατεβάζεις.  Απλά
-               διάλεξε ένα αρχείο και διάλεξε αυτήν την επιλογή πάλι.</text>
-               <newline gap="8"/>
-               <text>You can also use this command to get help information on a specific download.
-               Simply select a download and choose this command again.</text>
+		<text>Εδώ είναι ο χώρος στον οποίο τα αρχεία που κατεβαίνουν επιδεικνύωνται.. Μπορείς να δεις
+		ξεχωριστές πηγές αφού επεκτείνεις κάθε αρχείο με το μικρό + στα αριστερά.</text>
+		<newline gap="8"/>
+		<text>Μπορείς να χρησιμοποιήσεις αυτήν την επιλογή για να λάβεις βοήθεια σχετικά με το αρχείο που κατεβάζεις.
+		Απλά διάλεξε ένα αρχείο και διάλεξε αυτήν την επιλογή πάλι.</text>
        </document>
 
        <document name="DownloadHelp.Completed">
@@ -1910,21 +1930,23 @@
           <document name="DownloadHelp.Pending">
                <text format="b">Αυτό το αρχείο είναι εν αναμονή</text>
                <newline gap="8"/>
-               <text>Αυτό το αρχείο περιμένει να τελειώσουν τα άλλα αρχεία που κατεβαίνουν.
-               Οι επιλογές σας μειώνουν τα αρχεία που μπορούν να είναι ενεργά σε μια
-               χρονική στιγμή, για να βεβαιωθεί ότι το κάθε αρχείο που κατεβαίνει πέρνει καλό bandwidth.
-                 Μπορείς να αλλάξεις αυτές τις επιλογές απο τα Εργαλεία, Οι επιλογές του shareaza.</text>
+		<text>Αυτό το αρχείο περιμένει απο κάποιον να αρχίσεινα ανεβάζει.
+		Το Shareaza είναι έτοιμο να αρχίσει να κατεβάζει το αρχείο, αλλά κανένας δεν το στέλνει
+		αυτή τη στιγμή. Λογικά περιμένετε στην ουρά των χρηστών, και το κατέβασμα
+		μπορεί να αρχίσει οποιαδήποτε στιγμή. Μπορείς να εξετάσεις τις ξεχωριστές πηγές για να 
+		δεις σε ποια σειρά περιμένεις. Εαν και εσύ μοιράζεις αρχεία, ίσως καλλιτερέψεις
+		τις πιθανότητες για να αρχίσει να κατέβαίνει ένα αρχείο ποιο γρήγορα.</text>
 	</document>
 
 	<document name="DownloadHelp.Queued">
-		<text format="b">This Download is Queued</text>
+		<text format="b">Αυτό το αρχείο περιμένει στην ουρά</text>
 		<newline gap="8"/>
-		<text>This download is waiting for some of your other downloads to complete.
-		Your download settings limit the number of downloads which may be active at
-		any given time, to ensure that each download gets a good share of the available
-		bandwidth.  You can change these settings via Tools, Shareaza Settings.
-		Alternatively, you may manually start this download with the resume command.</text>
-	</document>
+		<text>Αυτό το αρχείο περιμένει να τελειώσουν τα άλλα αρχεία που κατεβαίνουν.
+		Οι επιλογές σας μειώνουν τα αρχεία που μπορούν να είναι ενεργά σε μια
+		χρονική στιγμή,, tγια να βεβαιωθεί ότι το κάθε αρχείο που κατεβαίνει πέρνει καλό
+		bandwidth.  Μπορείς να αλλάξεις αυτές τις επιλογές απο τα Εργαλεία, Οι επιλογές του shareaza
+		Εναλλακτικά, μπορείς να αρχίσεις αυτό το αρχείο χειροκίνητα με το κουμπί ξανα άρχισε you may manually start this download with the resume command.</text>
+       </document>
 
           <document name="DownloadHelp.Searching">
                <text format="b">Αυτό το αρχείο ψάχνει</text>
@@ -1951,9 +1973,9 @@
           <document name="DownloadHelp.Tracker">
                <text format="b">BitTorrent Tracker Down</text>
                <newline gap="8"/>
-               <text>Ο BitTorrent tracker server για αυτό το αρχείο φαίνετε να είναι
-               κάτω ή να έχει χαλάσει.  Το Shareaza δεν είναι σε θέση να επικοινωνήσει για να λάβει
-               μια λίστα με όλα τα διαθέσιμα peers.</text>
+		<text>Ο BitTorrent tracker server για αυτό το αρχείο φαίνετε να είναι
+		κάτω ή να έχει χαλάσει.  Το Shareaza δεν είναι σε θέση να  επικοινωνήσει
+		για να λάβει μια λίστα με όλα τα διαθέσιμα peers.</text>
 	</document>
 
 	<!-- Upload help documents -->
@@ -1961,9 +1983,9 @@
 	<document name="UploadHelp">
 		<text format="b">Uploads Area</text>
 		<newline gap="8"/>
-		<text>This is where queues and uploads are displayed. You can expand each queue
-		with the small + on the left, and filter what is displayed with the button on the
-		right on the window toolbar.</text>
+		<text>Εδώ είναι ο χώρος στον οποίο τα αρχεία που ανεβαίνουν και περιμένουν στην σειρά επιδεικνύωνται... Μπορείς να επεκτείνεις
+		κάθε σειρά με το μικρό + στα αριστερά, και να φιλτράρεις τα αποτελέσματα με το κουμπί στα
+		δεξιά στην μπάρα εργαλείων.</text>
        </document>
 
        <!-- General help documents -->
@@ -1975,33 +1997,55 @@
        <newline gap="8"/>
        <text>Πρέπει πάντα να προσπαθήτε να κρατάτε ένα λογίκο ποσοστό ελεύθερου χώρου στον δίσκο σας.
        Τα προγράμματα μπορούν να γίνουν άστατα εαν ο δίσκος σας γεμίσει, και τα προσωρινά αρχεία να
-       χαθούν. Πρέπει να τρέξετε ένα καθάρισμα του δίσκου, να διαγράψετε τα αχρείαστα αρχεία, ή να απεγκαταστήσετε εφαρμογές
+       χαθούν. Πρέπει να τρέξετε ένα καθάρισμα του δίσκου, να διαγράψετε τα ανεπιθύμητα αρχεία, ή να απεγκαταστήσετε εφαρμογές
        που δεν χρειάζεστε πια.</text>
        </document>
+
+	         <document name="GeneralHelp.DiskWriteFail">
+  	                 <text format="b">A Required Directory is Non-writable</text>
+  	                 <newline gap="8"/>
+  	                 <text>A disk or directory Shareaza needs cannot be written to.</text>
+  	                 <newline gap="8"/>
+  	                 <text>A network drive may have been disconnected, or you may not have write permission
+  	                 to a selected directory. Please check directories and permissions, or change the
+  	                 temporary files location.</text>
+  	         </document>
 
        <document name="GeneralHelp.XPsp2">
                 <text format="b">Windows XP Service Pack 2 detected</text>
               <newline gap="8"/>
-                <text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
-                that applications can attempt at once.</text>
+                <text>Το Shareaza έχει εντοπίσει το Windows XP Service Pack 2. Αυτό περιορίζει τον αριθμό των συνδέσεων
+                που οι εφαρμογές δοκιμάζουν κάθε φορά.</text>
                 <newline gap="8"/>
-                <text>Shareaza has limited network connections and set appropriate default values to
-                ensure proper operation, however performance may be reduced. Please visit the Shareaza
-                forums for further information, and up to date news.</text>
-       </document>
+                <text>Το Shareaza έχει λιγοστές συνδέσεις δικτύου και έβαλε τις κατάλληλες προκαθορισμένες τιμές για να 
+                σιγουρέψει την σωστή λειτουργεία, αλλά η απόδοση ίσως χαμηλώσει. Παρακαλώ επισκεπτήτε τα forums
+		 του Shareaza για περισσότερες πληροφορίες, και ενημερωμένα νέα.</text>
+	</document>
 
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
-		<text>Please note that (as with any automated filter) it may not be 100% effective at screening
-		content. It is designed simply to filter out excess unwanted results, rather than as a 100% safe block.</text>
+		<text>Παρακαλώ προσέξτε ότι (όπως γίνετε με τα περισσότερα αυτοματοποιημένα φίλτρα) ίσως να μην είναι 100% αποτελεσματικά στον διαχωρισμό των
+		λέξεων. Σχεδιάστηκε απλά για να φιλτράρει υπερβολικά ανεπιθύμητα αποτελέσματα, παρά να είναι 100% ασφαλές το μπλοκάρισμα.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
-	</document>
+		<text>Η χρήση του Internet απο παιδιά (συμπεριλαμβανομένου και της χρήσης P2P) θα πρέπει να γίνετε πάντα κάτω απο την επίβλεψη των γονέων.</text>
+       </document>
 
+	         <document name="GeneralHelp.BadTorrentEncoding">
+  	                 <text format="b">This torrent appears to have an encoding error</text>
+  	                 <newline gap="8"/>
+  	                 <text>Windows has reported a translation fault while decoding text in this torrent. It is
+  	                 possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+  	                 still download properly, although some file names could be incorrect.</text>
+  	                 <newline gap="8"/>
+  	                 <text>Most torrent creation programs should allow you to repair this torrent, which
+  	                 will ensure it works properly in all BitTorrent applications. Check the Shareaza forums if
+  	                 you require additional help.</text>
+  	         </document>
+  	 
        <!-- Search help documents -->
 
-      <document name="SearchHelp.BadSearch">
+      <document name="SearchHelp.BadSearch1">
     <text format="b">Παρακαλώ επανα-διατυπώστε</text>
     <newline gap="8"/>
     <text>Αυτή η έρευνα είναι φτωχά διατυπωμένη, και μπορεί να μην λειτουργήσει σωστά.
@@ -2009,19 +2053,45 @@
     (Τύπος αρχείου). Πάνω απ' όλα, οι έρευνες δεν πρέπει να περιορίζονται στους αριθμούς ή σε αρνητικούς
     όρους μόνο, και πρέπει να αποφεύγωνται σε μεγάλο βαθμό γενικές ερωτήσεις.</text>
     <newline gap="8"/>
-    <text> Οι περισσότεροι clients στο δίκτυο θα αγνοήσουν μια έρευνα για όλα τα
-        τα MP3 αρχεία, για παράδειγμα, γιατί δεν είναι σαφής και θα
-        διμιουργούσε πάρα πολλά αποτελέσματα.</text>
+		<text>Οι περισσότεροι clients στο δίκτυο θα αγνοήσουν μια έρευνα για όλα τα MP3 αρχεία, για παράδειγμα,
+		γιατί δεν είναι σαφής και θα δημιουργούσε πάρα πολλά αποτελέσματα.</text>
+	</document>
+	
+	<document name="SearchHelp.BadSearch2">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search does not contain enough terms to function properly. All searches need
+		a minimum number of valid, alphabetic characters to be able to start.</text>
+		<newline gap="8"/>
+		<text>While common file extentions (and numbers) can be searched for, you must enter
+		other terms as well when creating the search. Punctuation and wildcards are not used 
+		in searches, just the text you enter.</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search seems to contain only common file extentions, or no searchable
+		words.</text>
+		<newline gap="8"/>
+		<text>If you are having trouble creating searches, keep in mind that it's quite similar
+		to a web search. Specific terms or phrases are best- Unique names, titles and
+		keywords.</text>
+		<newline gap="8"/>
+		<text>General terms cannot be searched for efficiently and may result in poor
+		search performance, as well as high bandwidth use during searches.</text>
+		<newline gap="8"/>
+		<text>Further help is available on the Shareaza web site.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
-		<text format="b">This search cannot be started</text>
+		<text format="b">Αυτή η έρευνα δεν μπορεί να αρχίσει</text>
 		<newline gap="8"/>
-		<text>The specified search would probably return a large number of results with adult
-		content, and this has been turned off in the settings. You should either re-phrase the
-		search, or disable the filter.</text>
+		<text>Η συγκεκριμένη έρευνα θα δημιουργούσε πολλά αποτελέσματα με περιεχώμενο για
+		ενήλικους, και αυτό έχει αποκλειστεί απο τις επιλογές. Ή θα επαναδιατυπώσετε,
+		ή θα απενεργοποιήσετε το φίλτρο.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
+		<text>Για να απενεργοποιήσετε το φίλτρο, πηγαίντε στα εργαλεία &gt; Οι Επιλογές του Shareaza &gt; Γενικά και ξετσεκάρετε το φίλτρο για το περιεχόμενο ενηλίκων.</text>
  </document>
 
 <!-- Share help documents -->
@@ -2029,20 +2099,19 @@
        <document name="ShareHelp.AlreadyShared">
        <text format="b">Already Shared</text>
        <newline gap="8"/>
-       <text>Ο φάκελος που έχετε διαλέξει μοιράζετε ήδη ως μέρος ενός
-       υπάρχων μοιραζόμενου φακέλου.</text>
+		<text>Ο φάκελος που έχετε διαλέξει μοιράζετε ήδη ως μέρος ενός υπάρχων μοιραζόμενου φακέλου..</text>
        <newline gap="8"/>
        <text> %s </text>
  </document>
 
        <document name="ShareHelp.BadShare">
-       <text format="b">Αυτός ο φάκελος δεν θα έπρεπε να γίνει shared</text>
+       <text format="b">Αυτός ο φάκελος δεν θα έπρεπε να μοιραστεί</text>
        <newline gap="8"/>
        <text>Αυτός ο φάκελος είναι (ή περιέχει) ένα σύστημα αρχείου. Το μοίρασμα αυτού του φάκελου
        δεν συνίστατε, για τον λόγο ότι τα περισσότερα αρχεία εκεί είναι αχρείαστα για τους άλλους χρήστες.</text>
        <newline gap="8"/>
        <text>Φάκελοι όπως των windows Windows, Program Files,και παρόμοιοι φάκελοι
-       δεν περιέχουν συνήθως αρχεία κατάλληλα για sharing. Αρχεία ενδιαφέροντως θα βρίσκονται
+       δεν περιέχουν συνήθως αρχεία κατάλληλα για μοίρασμα. Αρχεία ενδιαφέροντως θα βρίσκονται
        μεσα σε </text><text format="i"> υπο-φακέλους </text><text>
        Παρακαλώ κάντε share αυτά.</text>
        <newline gap="8"/>
@@ -2110,7 +2179,7 @@
        <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Δείξε τα αρχεία που είναι στην αναμονή."/>
        <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Δείξε τα αρχεία που περιμένουν για περισσότερες πηγές."/>
        <tip id="ID_DOWNLOADS_HELP" message="Δες πληροφορίες βοηθείας για το αρχείο..."/>
-       <tip id="ID_DOWNLOADS_LAUNCH" message="Επισκόπηη αυτού του αρχείου."/>
+       <tip id="ID_DOWNLOADS_LAUNCH" message="Επισκόπηση αυτού του αρχείου."/>
        <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Άνοιξε ή παίξε το συγκεκριμένο αρχείο(α)."/>
        <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview το συγκεκριμένο αρχείο(α)."/>
        <tip id="ID_DOWNLOADS_MONITOR" message="Άνοιξε ένα παράθυρο κατεβάσματος για αυτό το αρχείο..."/>
@@ -2125,12 +2194,13 @@
        <tip id="ID_DOWNLOADS_SOURCES" message="Βρες περισσότερες πηγές για το συγκεκριμένο αρχείο(α)."/>
        <tip id="ID_DOWNLOADS_TORRENT_INFO" message="Δες πληροφορίες για το αρχείο BitTorrent..."/>
        <tip id="ID_DOWNLOADS_URL" message="Βάλε μια πηγή URL στο συγκεκριμένο αρχείο..."/>
+       <tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download"/>
        <tip id="ID_HELP_ABOUT" message="Εμφάνισε το παράθυρο διαλόγου του Shareaza..."/>
        <tip id="ID_HELP_FAQ" message="Επισκέψου το Shareaza Users Guide."/>
        <tip id="ID_HELP_FIREWALLS" message="Πάρε μια βοήθεια για το πως να ρυθμίσεις το router ή το firewall."/>
        <tip id="ID_HELP_FORUMS" message="Επισκέψου τα Forums του Shareaza."/>
        <tip id="ID_HELP_HOMEPAGE" message="Επισκέψου το web site του Shareaza.com ."/>
-       <tip id="ID_HELP_SECURITY" message="Βοήθεια για το πως θα προστατέψεις το σύστημα σου απο εχθρικά προγράμματα"/>
+       <tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs"/>
        <tip id="ID_HELP_WEB_1" message="Επισκέψου το Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Επισκέψου το P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Επισκέψου το Slyck.com"/>
@@ -2176,8 +2246,7 @@
        <tip id="ID_LIBRARY_PARENT" message="Μετακινήσου στον κεντρικό φάκελο."/>
        <tip id="ID_LIBRARY_PROPERTIES" message="Δες και επεξεργάσου τις ιδιότητες του συγκεκριμένου αρχείου..."/>
        <tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
-       <!-- Add the following line if you need it -->
-       <tip id="ID_LIBRARY_REBUILD_ANSI" message="Ξαναχτίσε το Metadata χρησιμοποιόντας την γλώσσα σου."/>
+       <tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using other language."/>
        <tip id="ID_LIBRARY_REFRESH" message="Ανανέωσε την Βιβλιοθήκη."/>
        <tip id="ID_LIBRARY_REMOVE" message="Απομάκρυνε τα συγκεκριμένα αρχεία που μοιράζεσε."/>
        <tip id="ID_LIBRARY_RENAME" message="Μετονόμασε το συγκεκριμένο αρχείο."/>
@@ -2362,7 +2431,7 @@
        <string id="WINDOW_SEARCHMONITOR" value="Search Monitor"/>
        <string id="WINDOW_SEARCH" value="Έρευνα"/>
        <string id="WINDOW_HITMONITOR" value="Hit Monitor"/>
-       <string id="WINDOW_DOWNLOADS" value="Downloads"/>
+       <string id="WINDOW_DOWNLOADS" value="Κατεβασμένα αρχεία"/>
        <string id="WINDOW_LIBRARY" value="Βιβλιοθήλκη"/>
        <string id="WINDOW_UPLOADS" value="Ανεβασμένα αρχεία"/>
        <string id="WINDOW_TRAFFIC" value="Γραφικά"/>
@@ -2372,23 +2441,23 @@
        <string id="WINDOW_BROWSEHOST" value="Έρευνα"/>
        <string id="WINDOW_HOME" value="Η αρχική σελίδα του Shareaza"/>
        <string id="WINDOW_MEDIA" value="Media Player"/>
-       <string id="WINDOW_SEARCHPAD" value="Έρευνα"/>
-       <string id="WINDOW_HELP" value="Η βοήθεια του Shareaza"/>
-       <string id="7000" value="Are you sure you want to delete this filter ?"/>
-       <string id="8000" value="Οι επιλογές του Shareaza"/>
-       <string id="8001" value="Καλώς ήρθατε στο Shareaza"/>
-       <string id="8002" value="Ιδιότητες του αρχείου"/>
-       <string id="8003" value="Επεξεργασία του προφίλ μου"/>
-       <string id="8004" value="!Καλώς ήρθατε στο Shareaza (version) !\n.\nΤο Shareaza είναι ένα εντελός ελεύθερο προοιόν.\nΠαρακαλώ χρησιμοποιήστε υπεύθηνα και σεβαστείτε τους νόμους περι πνευματικής ιδιοκτησίας.\n."/>
-       <string id="8005" value=" (Κλείσιμο μετά τις μεταφορές)"/>
-       <string id="8006" value="Δεν είστε συνδεδεμένοι.  Πατήστε το κουμπί Σύνδεση για να αρχίσετε."/>
-       <string id="8007" value="Δεν υπάρχουν ενεργές αναζητήσεις.  Πατήστε εδώ για να ψάξετε για αρχεία."/>
-       <string id="8008" value="Το Shareaza  τελείωσε την λήψη της επόμενης έκδοσης (%s).  Θέλετε να την εγκαταστήσετε τώρα?\n\nΕαν πατήσετε Ναι, το Shareaza θα κλείσει προσωρινά καθώς η νέα έκδοση εγκαθίστατε."/>
-       <string id="8009" value="Είστε σίγουροι ότι θέλετε να διαγράψετε το &quot;%s&quot; skin?  Αυτό δεν μπορεί να ανασταλεί."/>
-       <string id="8010" value="Αυτή είναι μία beta έκδοση του Shareaza της οποίας η περίοδος τελείωσε.  Παρακαλώ κατεβάστε την ολοκληρωμένη έκδοση, απο το www.shareaza.com."/>
-       <string id="8011" value="Η αλλαγή της όψης θα κλείσει όποιο παράθυρο έχετε ανοιχτό.  Θέλετε να την αλλάξετε τώρα?"/>
-       <string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
-       <string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
+	<string id="WINDOW_SEARCHPAD" value="Έρευνα"/>
+	<string id="WINDOW_HELP" value="Η βοήθεια του Shareaza"/>
+	<string id="7000" value="Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το φίλτρο?"/>
+	<string id="8000" value="Οι επιλογές του Shareaza"/>
+	<string id="8001" value="Καλώς ήρθατε στο Shareaza"/>
+	<string id="8002" value="Ιδιότητες του αρχείου"/>
+	<string id="8003" value="Επεξεργασία του προφίλ μου"/>
+	<string id="8004" value="!Καλώς ήρθατε στο Shareaza (version) !\n.\nΤο Shareaza είναι ένα εντελός ελεύθερο προοιόν.\nΠαρακαλώ χρησιμοποιήστε υπεύθυνα και σεβαστείτε τους νόμους περι πνευματικής ιδιοκτησίας.\n.."/>
+	<string id="8005" value="(Κλείσιμο μετά τις μεταφορές)"/>
+	<string id="8006" value="YΔεν είστε συνδεδεμένοι.  Πατήστε το κουμπί Σύνδεση για να αρχίσετε."/>
+	<string id="8007" value="Δεν υπάρχουν ενεργές αναζητήσεις.  Πατήστε εδώ για να ψάξετε για αρχεία."/>
+	<string id="8008" value="Το Shareaza  τελείωσε την λήψη της επόμενης έκδοσης (%s).  Θέλετε να την εγκαταστήσετε τώρα?\n\nΕαν πατήσετε Ναι, το Shareaza θα κλείσει προσωρινά καθώς η νέα έκδοση εγκαθίστατε."/>
+	<string id="8009" value="Είστε σίγουροι ότι θέλετε να διαγράψετε το &quot;%s&quot; skin?  Αυτό δεν μπορεί να ανασταλεί."/>
+	<string id="8010" value="Αυτή είναι μία beta έκδοση του Shareaza της οποίας η περίοδος τελείωσε.  Παρακαλώ κατεβάστε την ολοκληρωμένη επίσημη έκδοση απο το www.shareaza.com"/>
+	<string id="8011" value="Η αλλαγή της όψης θα κλείσει όποιο παράθυρο έχετε ανοιχτό.  Θέλετε να την αλλάξετε τώρα?"/>
+	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
+	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
        <string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
        <string id="8063" value="Σύνδεση. %s σε τοπική βιβλιοθήκη."/>
        <string id="8064" value="Σύνδεση σε %lu γείτονα(ες).  %s σε τοπικές βιβλιοθήκες."/>
@@ -2406,30 +2475,30 @@
        <string id="8099" value="Υπάρχει μια κριτική."/>
        <string id="8100" value="Υπάρχουν %i κριτικές."/>
        <string id="8101" value="%s writes:"/>
-       <string id="8102" value="%s Βαθμολόγηση αυτού του αρχείου:"/>
-       <string id="8103" value="Πατήστε για επισκόπηση"/>
-       <string id="8104" value="Επισκόπηση..."/>
-       <string id="8105" value="Δεν είναι δυνατό να κατέβει το preview content από &quot;%s&quot;."/>
-       <string id="8128" value="Πατήστε εδώ για να ψάξετε πάλι"/>
-       <string id="8129" value="Δεν έχετε αρχίσει καμία έρευνα σε αυτό το παράθυρο ακόμα."/>
-       <string id="8130" value="Το Shareaza ψάχνει στο δίκτυο..."/>
-       <string id="8131" value="Το δίκτυο δεν έχει επιστρέψει κανένα αποτέλεσμα ακόμα."/>
-       <string id="8132" value="Υπάρχουν αποτελέσματα αλλά το φίλτρο δεν τα εμφανίζει."/>
-       <string id="8133" value="Το Shareaza ψάχνει ενεργά στο δίκτυο..."/>
-       <string id="8134" value="Είστε έτοιμος να αρχίσετε μια νέα έρευνα.  Θέλετε να καθαρίσετε τα αποτελέσματα της προηγούμενης έρευνας?"/>
-       <string id="8135" value="No Metadata"/>
-       <string id="8136" value="Plain Text Search"/>
-       <string id="8141" value="Δείξε το Search Panel"/>
-       <string id="8142" value="Κρύψε το the Search Panel"/>
-       <string id="8143" value="Έρευνα..."/>
-       <string id="8144" value="Άρχισε έρευνα"/>
-       <string id="8145" value="Ψάξε για περισσότερα αρχεία"/>
-       <string id="8146" value="Σταμάτα"/>
-       <string id="8147" value="Οποιονδήποτε τύπο αρχείου"/>
-       <string id="8148" value="Πληκτρολόγησε την έρευνα σου εδώ:"/>
-       <string id="8149" value="Ψάξε για αυτού του είδους τα αρχεία:"/>
-       <string id="8150" value="Έρευνα:"/>
-       <string id="8151" value="Εύρεση:"/>
+	<string id="8102" value="%s Βαθμολόγηση αυτού του αρχείου:"/>
+	<string id="8103" value="Πατήστε για επισκόπηση"/>
+	<string id="8104" value="Επισκόπηση..."/>
+	<string id="8105" value="Δεν είναι δυνατό να κατέβει το preview content από &quot;%s&quot;."/>
+	<string id="8128" value="Πατήστε εδώ για να ψάξετε πάλι"/>
+	<string id="8129" value="Δεν έχετε αρχίσει καμία έρευνα σε αυτό το παράθυρο ακόμα."/>
+	<string id="8130" value="Το Shareaza ψάχνει στο δίκτυο..."/>
+	<string id="8131" value="Το δίκτυο δεν έχει επιστρέψει κανένα αποτέλεσμα ακόμα."/>
+	<string id="8132" value="Υπάρχουν αποτελέσματα αλλά το φίλτρο δεν τα εμφανίζει."/>
+	<string id="8133" value="Το Shareaza ψάχνει ενεργά στο δίκτυο..."/>
+	<string id="8134" value="Είστε έτοιμος να αρχίσετε μια νέα έρευνα.  Θέλετε να καθαρίσετε τα αποτελέσματα της προηγούμενης έρευνας?"/>
+	<string id="8135" value="No Metadata"/>
+	<string id="8136" value="Plain Text Search"/>
+	<string id="8141" value="Δείξε το Search Panel"/>
+	<string id="8142" value="Κρύψε το the Search Panel"/>
+	<string id="8143" value="Έρευνα..."/>
+	<string id="8144" value="Άρχισε έρευνα"/>
+	<string id="8145" value="Ψάξε για περισσότερα αρχεία"/>
+	<string id="8146" value="Σταμάτα"/>
+	<string id="8147" value="Οποιονδήποτε τύπο αρχείου"/>
+	<string id="8148" value="Πληκτρολόγησε την έρευνα σου εδώ:"/>
+	<string id="8149" value="Ψάξε για αυτού του είδους τα αρχεία:"/>
+	<string id="8150" value="Έρευνα:"/>
+	<string id="8151" value="Εύρεση"/>
        <string id="8152" value="%lu hubs, %lu leaves"/>
        <string id="8153" value="Αυτή την στιγμή δεν γίνετε έρευνα"/>
        <string id="8154" value="Δεν βρέθηκαν αρχεία"/>
@@ -2437,8 +2506,8 @@
        <string id="8156" value="Έρευνα"/>
        <string id="8157" value="Αποτελέσματα"/>
        <string id="8158" value="Καθάρισε"/>
-       <string id="8159" value="Advanced..."/>
-       <string id="8160" value="Establishing a connection to host..."/>
+       <string id="8159" value="Advanced"/>
+       <string id="8160" value="Εγκαθίστατε η σύνδεση με τον host..."/>
        <string id="8161" value="Sent a push request, waiting for connection..."/>
        <string id="8162" value="Σύνδεση, Ζήτηση για έρευνα αρχείων..."/>
        <string id="8163" value="Κατέβασμα της απάντησης τουυ χρήστη (%2.f%%)..."/>
@@ -2450,7 +2519,9 @@
        <string id="8177" value="Βάλε μερικές λέξεις για να ψάξεις:"/>
        <string id="8178" value="Τι είδους αρχείο είναι?"/>
        <string id="8179" value="(Καθάρισε το ιστορικό έρευνας)"/>
-       <string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
+       <string id="8180" value="File size must be"/>
+       <string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
+       <string id="8208" value="Το Shareaza δημιουργεί hashes για %i αρχείο(α):"/>
        <string id="8224" value="Το Shareaza κατεβάζει:"/>
        <string id="8225" value="Αυτό το αρχείο έχει σταματίσει:"/>
        <string id="8226" value="Το Shareaza έχει ολοκληρώσει το κατέβασμα:"/>
@@ -2495,26 +2566,26 @@
        <string id="8321" value="Ταχύτητα:"/>
        <string id="8322" value="URL:"/>
        <string id="8323" value="User Agent:"/>
-       <string id="8324" value="Μη ενεργό"/>
-       <string id="8325" value="Ενεργό"/>
-       <string id="8326" value="Επόμενο στην σειρά"/>
-       <string id="8327" value="Total Files:"/>
-       <string id="8328" value="Total Volume:"/>
-       <string id="8329" value="of your library"/>
-       <string id="8330" value="Folder"/>
-       <string id="8331" value="This source is currently busy"/>
-       <string id="8332" value="This source is firewalled"/>
-       <string id="8333" value="This source may be unstable"/>
-       <string id="8334" value="Sources for this file are currently busy"/>
-       <string id="8335" value="Sources for this file are firewalled"/>
-       <string id="8336" value="Sources for this file may be unstable"/>
-       <string id="16064" value="Έναρξη του πυρήνα του δικτύου του Shareaza..."/>
-       <string id="16065" value="Δεν μπορεί να δεσμευτεί %s  η πόρτα %i για εισερχόμενη σύνδεση.  Η εισερχόμενη σύνδεση δεν θα μπορεί να πραγματοποιηθεί."/>
-       <string id="16066" value="Κλείσιμο του πυρήνα του δικτύου του Shareaza..."/>
-       <string id="16067" value="Αποσύνδεση απο το δίκτυο."/>
-       <string id="16068" value="Αποδοχή εισερχόμενων TCP συνδέσεων στην %s πόρτα %i."/>
-       <string id="16069" value="Η εξερχόμενη σύνδεση θα γίνετε απο την %s πόρτα %i."/>
-       <string id="16070" value="Δεν μπορεί να αναλυθεί η  %s για τις εξερχόμενες συνδέσεις.  Οι εξερχόμενες συνδέσεις θα χρησιμοποιούν την καθορισμένη σύνδεση."/>
+	<string id="8324" value="Μη ενεργό"/>
+	<string id="8325" value="Ενεργό"/>
+	<string id="8326" value="Επόμενο στην σειρά"/>
+	<string id="8327" value="Σύνολο αρχείων:"/>
+	<string id="8328" value="Συνολική ποσότητα:"/>
+	<string id="8329" value="της βιβλιοθήκης σου"/>
+	<string id="8330" value="Φάκελος"/>
+	<string id="8331" value="Αυτή η πηγή είναι απασχολημένη"/>
+	<string id="8332" value="Αυτή η πηγή είναι πίσω απο firewall"/>
+	<string id="8333" value="Αυτή η πηγή ίσως είναι ασταθής"/>
+	<string id="8334" value="Οι πηγές γι'αυτό το αρχείο είναι απασχολημένες"/>
+	<string id="8335" value="Οι πηγές γι'αυτό το αρχείο είναι πίσω απο firewall"/>
+	<string id="8336" value="Οι πηγές γι'αυτό το αρχείο ίσως είναι ασταθείς"/>
+	<string id="16064" value="Έναρξη του πυρήνα του δικτύου του Shareaza..."/>
+	<string id="16065" value="Δεν μπορεί να δεσμευτεί %s  η πόρτα %i για εισερχόμενη σύνδεση.  Η εισερχόμενη σύνδεση δεν θα μπορεί να πραγματοποιηθεί."/>
+	<string id="16066" value="Κλείσιμο του πυρήνα του δικτύου του Shareaza..."/>
+	<string id="16067" value="Αποσύνδεση απο το δίκτυο."/>
+	<string id="16068" value="Αποδοχή εισερχόμενων TCP συνδέσεων στην %s πόρτα %i."/>
+	<string id="16069" value="Η εξερχόμενη σύνδεση θα γίνετε απο την %s πόρτα %i."/>
+	<string id="16070" value="Δεν μπορεί να αναλυθεί η  %s για τις εξερχόμενες συνδέσεις.  Οι εξερχόμενες συνδέσεις θα χρησιμοποιούν την καθορισμένη σύνδεση."/>
        <string id="16071" value="Firewalled, not listening for incoming connections."/>
        <string id="16072" value="Listening for UDP datagrams on %s port %i."/>
        <string id="16073" value="Resolving host &quot;%s&quot;..."/>
@@ -2592,7 +2663,7 @@
        <string id="16268" value="No more download fragments, closing connection to %s."/>
        <string id="16269" value="Fragment shortened, closing connection to %s."/>
        <string id="16270" value="Download request to %s timed out, closing connection."/>
-       <string id="16271" value="Closing download connection %s due to lack of traffic."/>
+	<string id="16271" value="Closing download connection %s due to lack of traffic."/>
        <string id="16272" value="Download host %s does not have the file &quot;%s&quot;."/>
        <string id="16273" value="Download host % responded with an invalid HTTP response."/>
        <string id="16274" value="Download host %s responded with %s (%s)."/>
@@ -2631,7 +2702,7 @@
        <string id="16307" value="Closing download connection to %s, no longer required."/>
        <string id="16308" value="Download host %s sent unsolicited data, closing connection."/>
        <string id="16309" value="Requesting metadata for &quot;%s&quot; from %s..."/>
-       <string id="16310" value="Receiving tiger-tree data from %s (%s)..."/>
+	<string id="16310" value="Receiving tiger-tree data from %s (%s)..."/>
        <string id="16311" value="Requesting eDonkey2000 hashset for &quot;%s&quot; from %s..."/>
        <string id="16312" value="Received an invalid eDonkey2000 hashset from %s, dropping source."/>
        <string id="16313" value="Received eDonkey2000 hashset for &quot;%s&quot;, minimum verifiable chunk %s."/>
@@ -2672,7 +2743,7 @@
        <string id="16348" value="Refusing push request to %s because it has too many upload connections."/>
        <string id="16349" value="Uploading tiger-tree data for &quot;%s&quot; to %s."/>
        <string id="16350" value="Uploading metadata for &quot;%s&quot; to %s."/>
-       <string id="16351" value="Refusing upload of &quot;%s&quot; to %s (%s), too many concurrent from host."/>
+	<string id="16351" value="Refusing upload of &quot;%s&quot; to %s (%s), too many concurrent from host."/>
        <string id="16352" value="Uploading a preview of &quot;%s&quot; to %s."/>
        <string id="16353" value="Refusing to upload a preview of &quot;%s&quot; to %s, too many preview connections."/>
        <string id="16354" value="Upload host %s requested a preview of &quot;%s&quot;, but no preview is available."/>
@@ -2687,33 +2758,33 @@
        <string id="16363" value="Torrent Uploads"/>
        <string id="16364" value="Completed Uploads"/>
        <string id="16365" value="Are you sure you want to cancel/abort every download in this group?"/>
-       <string id="16366" value="Queue"/>
-       <string id="16367" value="eDonkey Core"/>
-       <string id="16368" value="eDonkey Partials"/>
-       <string id="16369" value="eDonkey Guard"/>
-       <string id="16370" value="Small Files"/>
-       <string id="16371" value="Medium Files"/>
-       <string id="16372" value="Large Files"/>
-       <string id="16373" value="Partial Files"/>
-       <string id="16374" value="New Queue"/>
-       <string id="16375" value="Partial"/>
-       <string id="16376" value="Complete Files"/>
-       <string id="16377" value="HTTP Guard"/>
-       <string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
-       <string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
-       <string id="16386" value="Editing metadata of %i files."/>
+	<string id="16366" value="Queue"/>
+	<string id="16367" value="eDonkey Core"/>
+	<string id="16368" value="eDonkey Partials"/>
+	<string id="16369" value="eDonkey Guard"/>
+	<string id="16370" value="Μικρά αρχεία"/>
+	<string id="16371" value="Μεσαία αρχεία"/>
+	<string id="16372" value="Μεγάλα αρχεία"/>
+	<string id="16373" value="Partial Files"/>
+	<string id="16374" value="New Queue"/>
+	<string id="16375" value="Partial"/>
+	<string id="16376" value="Ολοκληρωμένα αρχεία"/>
+	<string id="16377" value="HTTP Guard"/>
+       <string id="16384" value="Είστε σίγουροι ότι θέλετε να ανοίξετε το αρχείο &quot;%s&quot; ?\n\nΜερικά αρχεία μπορεί να είναι επιζήμια για το computer σας.  Βεβαιωθήτε ότι ξέρετε τι αρχείο είναι πριν το ανοίξετε."/>
+       <string id="16385" value="Είστε έτοιμοι να τροποποιήσετε την metadata του αρχείου %i, είστε σίγουροι ότι θέλετε να συνεχίσετε?"/>
+       <string id="16386" value="Επεξεργασία της metadata των αρχείων %i."/>
        <string id="16387" value="The file &quot;%s&quot; has not yet been hashed.  Please wait for the file to be hashed, and then try again."/>
        <string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
        <string id="16389" value="Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
        <string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft WinAmp.  Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
-       <string id="16391" value="You're not connected to the network."/>
-       <string id="16392" value="Click the Connect button to get started."/>
+       <string id="16391" value="Δεν είστε συνδεδεμένοι στο δίκτυο."/>
+       <string id="16392" value="Πατήστε το κουμπί Σύνδεση Τώρα για να αρχίσετε."/>
        <string id="16393" value="The file &quot;%s&quot; failed a hash verification test, and might not be the file you intended to download.  Are you sure you want to open it?"/>
        <string id="16394" value="Would you like to remove the &quot;potentially unsafe&quot; attribute from this file?"/>
        <string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading.  Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
        <string id="16396" value="Your downloads folder has been added to your library.  Would you like to share it too?"/>
        <string id="16397" value="Are you sure you want to delete the %i selected album folder(s) ?\n\nNote that this action does not delete the files within the album folders, only the folders themselves."/>
-       <string id="16398" value="Shareaza could not rename:\n\n%s\nto\n%s"/>
+	<string id="16398" value="Shareaza could not rename:\n\n%s\nto\n%s"/>
        <string id="16399" value="Shareaza could not delete the file:\n\n%s"/>
        <string id="16400" value="Target file exists:\n\n%s\n\nWould you like to overwrite it?"/>
        <string id="16401" value="Show All File Types"/>
@@ -2759,13 +2830,13 @@
        <string id="16534" value="Συνολικό UDP Receive Bandwidth"/>
        <string id="16535" value="Συνολικό UDP Transmit Bandwidth"/>
        <string id="16768" value="Received URL &quot;%s&quot;"/>
-       <string id="16769" value="Unable to parse URL: Το shareaza δεν αναγνωρίζει αυτό το URL."/>
+       <string id="16769" value="Δεν είναι δυνατό να αναλυθεί το URL: Το shareaza δεν αναγνωρίζει αυτό το URL."/>
        <string id="16770" value="Δεν είναι δυνατό να εμφανιστεί το URL action dialog γιατί το Shareaza είναι απασχολημένο."/>
        <string id="16771" value="Έχεις αυτό το αρχείο  &quot;%s&quot; στην βιβλιοθήκη σου.  Θες να το κατεβάσεις πάλι?"/>
        <string id="16772" value="Host:"/>
-       <string id="16773" value="Port:"/>
+       <string id="16773" value="Θύρα:"/>
        <string id="16774" value="&amp;Σύνδεση"/>
-       <string id="16775" value="&amp;Browse"/>
+       <string id="16775" value="&amp;Έρευνα"/>
        <string id="16776" value="Πρόσθεση"/>
        <string id="16777" value="Όνομα:"/>
        <string id="16778" value="URL:"/>
@@ -2786,13 +2857,13 @@
        <string id="16807" value="Παρακαλώ θέστε το bandwidth limit που θέλετε &quot;123 kb/s&quot; για kilobits per second, ή &quot;123 KB/s&quot; για kilobytes per second."/>
        <string id="16808" value="Δεν έχεις βάλει την ηλικία σου και το φίλο σου.  Είσαι σίγουρος ότι θες να συνεχίσεις χωρίς να τα βάλεις?"/>
        <string id="16809" value="E&amp;xit"/>
-       <string id="16810" value="year old"/>
-       <string id="16811" value="Automatic"/>
+	<string id="16810" value="Ετών"/>
+	<string id="16811" value="Αυτόματα"/>
        <string id="16864" value="Querying host discovery services..."/>
        <string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
-       <string id="16867" value="Ανακαλύψιμες υπηρεσίες &quot;%s&quot; Αποτυχία, αποτυχία στο μέτρημα %i."/>
-       <string id="16868" value="Ανακαλύψιμες υπηρεσίες &quot;%s&quot; απέτυχαν %i χρόνοι, διαγραφεί."/>
+       <string id="16867" value="Ανακαλύψημες υπηρεσίες &quot;%s&quot; Αποτυχία, αποτυχία στο μέτρημα %i."/>
+       <string id="16868" value="Ανακαλύψημες υπηρεσίες &quot;%s&quot; απέτυχαν %i χρόνοι, διαγραφεί."/>
        <string id="16870" value="Sending GWebCache update to service &quot;%s&quot;..."/>
        <string id="16871" value="Submitting GWebCache &quot;%s&quot; to a random GWebCache..."/>
        <string id="16928" value="Έναρξη σύνδεσης σε Initiating a connection to %s για έρευνα αρχείων του χρήστη..."/>
@@ -2839,37 +2910,37 @@
        <string id="17041" value="Δεν μπορείτε να στείλετε μήνυμα, δεν έχει δημιουργηθεί μια σύνδση ακόμα."/>
        <string id="17042" value="Δεν έχετε συμπληρώσει στο προφίλα σας ακόμα.  Πρέπει να διμιουργήσετε ένα προφιλ πριν κάνετε chat με άλλους χρήστες.\n\nΘέλετε να φτιάξετε τώρα το προφίλ σας?"/>
        <string id="17043" value="Granted upload priority to host %s."/>
-       <string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
-       <string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
-       <string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
-       <string id="17103" value="Gnutella II: Hub-to-Hub Connection"/>
-       <string id="17104" value="Gnutella II: Leaf-to-Hub Connection"/>
-       <string id="17105" value="Gnutella II: Hub-to-Leaf Connection"/>
-       <string id="17106" value="eDonkey Server Connection (LOWID: %lu)"/>
-       <string id="17107" value="eDonkey2000 Server Connection"/>
-       <string id="17108" value="Handshake"/>
-       <string id="17109" value="Inbound"/>
-       <string id="17110" value="Outbound"/>
-       <string id="17111" value="Current:"/>
-       <string id="17112" value="Total:"/>
-       <string id="17113" value="Compression:"/>
-       <string id="17114" value="Ratio:"/>
-       <string id="17115" value="Deflate"/>
-       <string id="17116" value="None"/>
-       <string id="17117" value="Connecting"/>
-       <string id="17118" value="Handshaking"/>
-       <string id="17119" value="Rejected"/>
-       <string id="17120" value="Closing"/>
-       <string id="17121" value="Unknown"/>
-       <string id="17122" value="G1 Peer"/>
-       <string id="17123" value="G1 Ultrapeer"/>
-       <string id="17124" value="G1 Leaf"/>
-       <string id="17125" value="G2 Peer"/>
-       <string id="17126" value="G2 Hub"/>
-       <string id="17127" value="G2 Leaf"/>
-       <string id="17128" value="eDonkey2000 Server"/>
-       <string id="17129" value="eDonkey2000 (LowID)"/>
-       <string id="17130" value="eDonkey2000 (HighID)"/>
+	<string id="17100" value="Gnutella: Σύνδεση Peer-to-Peer"/>
+	<string id="17101" value="Gnutella: Σύνδεση Leaf-to-Ultrapeer "/>
+	<string id="17102" value="Gnutella: Σύνδεση Ultrapeer-to-Leaf"/>
+	<string id="17103" value="Gnutella II: Σύνδεση Hub-to-Hub "/>
+	<string id="17104" value="Gnutella II: Σύνδεση Leaf-to-Hub"/>
+	<string id="17105" value="Gnutella II: Σύνδεση Hub-to-Leaf "/>
+	<string id="17106" value="Σύνδεση με τον eDonkey Server(LOWID: %lu)"/>
+	<string id="17107" value="Σύνδεση με τον eDonkey2000 Server"/>
+	<string id="17108" value="Handshake"/>
+	<string id="17109" value="Inbound"/>
+	<string id="17110" value="Outbound"/>
+	<string id="17111" value="Current:"/>
+	<string id="17112" value="Σύνολο:"/>
+	<string id="17113" value="Συμπίεση:"/>
+	<string id="17114" value="Αναλογία:"/>
+	<string id="17115" value="Deflate"/>
+	<string id="17116" value="None"/>
+	<string id="17117" value="Connecting"/>
+	<string id="17118" value="Handshaking"/>
+	<string id="17119" value="Rejected"/>
+	<string id="17120" value="Closing"/>
+	<string id="17121" value="Unknown"/>
+	<string id="17122" value="G1 Peer"/>
+	<string id="17123" value="G1 Ultrapeer"/>
+	<string id="17124" value="G1 Leaf"/>
+	<string id="17125" value="G2 Peer"/>
+	<string id="17126" value="G2 Hub"/>
+	<string id="17127" value="G2 Leaf"/>
+	<string id="17128" value="eDonkey2000 Server"/>
+	<string id="17129" value="eDonkey2000 (LowID)"/>
+	<string id="17130" value="eDonkey2000 (HighID)"/>
        <string id="17216" value="Έναρξη σύνδεσης με έναν server του eDonkey2000 σε %s..."/>
        <string id="17217" value="Σύνδεση με τον server του eDonkey2000 %s, χειραψία..."/>
        <string id="17218" value="ED2K[%s] %s"/>
@@ -2973,26 +3044,33 @@
        <string id="20121" value="Δημιουργεία"/>
        <string id="20122" value="Torrent"/>
        <string id="20123" value="Tracker Down"/>
-       <string id="20124" value="(Δεν υπάρχουν πηγές)"/>
-       <string id="20125" value="Επαλήθευση"/>
-       <string id="20126" value="Ανεπιβεβαίωτος"/>
-       <string id="20127" value="Πηγές"/>
-       <string id="20128" value="Πηγές"/><!-- numbers 21, 31, ... -->
-       <string id="20129" value="Πηγές"/><!-- tens -->
-       <string id="20130" value="Πηγές"/><!-- from 11 to 19 -->
-       <string id="20131" value="Πηγές"/><!-- from 2 to 4 -->
-       <string id="20132" value="Πηγές"/><!-- from 5 to 9 -->
-       <string id="20133" value="Uninterested"/>
-       <string id="20134" value="Choked"/>
-       <string id="20135" value="Next"/>
-       <string id="20136" value="Q"/>
-       <string id="20200" value="Sunday"/>
-       <string id="20201" value="Monday"/>
-       <string id="20202" value="Tuesday"/>
-       <string id="20203" value="Wednesday"/>
-       <string id="20204" value="Thursday"/>
-       <string id="20205" value="Friday"/>
-       <string id="20206" value="Saturday"/>
+	<string id="20124" value="(Δεν υπάρχουν πηγές)"/>
+	<string id="20125" value="Επαλήθευση"/>
+	<string id="20126" value="Ανεπιβεβαίωτο"/>
+	<string id="20127" value="Πηγές"/>
+	<string id="20128" value="Πηγές"/><!-- numbers 21, 31, ... -->
+	<string id="20129" value="Πηγές"/><!-- tens -->
+	<string id="20130" value="Πηγές"/><!-- from 11 to 19 -->
+	<string id="20131" value="Πηγές"/><!-- from 2 to 4 -->
+	<string id="20132" value="Πηγές"/><!-- from 5 to 9 -->
+	<string id="20133" value="Αδιάφορο"/>
+	<string id="20134" value="Choked"/>
+	<string id="20135" value="Επόμενο"/>
+	<string id="20136" value="Q"/>
+	<string id="20200" value="Κυριακή"/>
+	<string id="20201" value="Δευτέρα"/>
+	<string id="20202" value="Τρίτη"/>
+	<string id="20203" value="Τετάρτη"/>
+	<string id="20204" value="Πέμπτη"/>
+	<string id="20205" value="Παρασκευή"/>
+	<string id="20206" value="Σάββατο"/>
+	<string id="20210" value="(Δεν έχει αξιολογηθεί)"/>
+	<string id="20211" value="Ψεύτικο / Κατεστραμένο"/>
+	<string id="20212" value="Φτωχό"/>
+	<string id="20213" value="Μεσαίο"/>
+	<string id="20214" value="Καλό"/>
+	<string id="20215" value="Πολύ καλό"/>
+	<string id="20216" value="Τέλειο"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3000,7 +3078,7 @@
        <dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Settings">
                <control/>
                <control caption="OK"/>
-               <control caption="Cancel"/>
+               <control caption="Ακύρωση"/>
                <control caption="Apply"/>
                <control/>
        </dialog>
@@ -3017,7 +3095,7 @@
                <control caption="Expand new downloads by default"/>
                <control caption="Δείξε μια προτροπή πριν ανοίξεις τα URLs"/>
                <control caption="Show rates in:"/>
-               <control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
                <control caption="_Tooltips:"/>
                <control/>
                <control caption="Αργοπορία (ms):"/>
@@ -3025,23 +3103,23 @@
                <control caption="Opacity:"/>
                <control/>
                <control caption="_Tray:"/>
-               <control caption="Όταν πατάω κλείσιμο:"/>
-               <control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers"/>
-               <control caption="Όταν πατάω ελαχιστοποίηση:"/>
-               <control caption="Normal|Minimise to Tray"/>
-               <control caption="Hide side bar when starting search"/>
-               <control caption="Filter adult content from searches"/>
-               <control caption="Auto-clean downloads window"/>
-               <control caption="Auto-clean uploads window"/>
+		<control caption="Όταν πατάω κλείσιμο:"/>
+		<control caption="Ρώτα με|Κλείσε αμέσως|Ελαχιστοποίησε στην μπάρα|Κλείσε όταν τελειώσουν οι μεταφορές"/>
+		<control caption="Όταν πατάω ελαχιστοποίηση:"/>
+		<control caption="Κανονικά|Ελαχιστοποίησε στην μπάρα"/>
+		<control caption="Κρύψε την πλαινή μπάρα όταν αρχίζει μια έρευνα"/>
+		<control caption="Φίλτραρε το περιεχώμενο για ενήλικους απο τις έρευνες"/>
+		<control caption="Auto-clean downloads window"/>
+		<control caption="Auto-clean uploads window"/>
        </dialog>
 
        <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Βιβλιοθήκη">
                <control caption="_Επιλογές:"/>
                <control caption="Remember folder views"/>
                <control caption="Watch library folders"/>
-               <control caption="Quick hashing (Uses more CPU)"/>
+		<control caption="Quick hashing (Uses more CPU)"/>
                <control caption="Filter objects by extension"/>
-               <control/>
+        <control/>
                <control caption="Allow others to browse shares"/>
                <control caption="_Πρόσφατα αρχεία:"/>
                <control caption="Θυμήσου:"/>
@@ -3067,7 +3145,7 @@
                <control caption="_Options:"/>
                <control caption="Χρησιμοποίησε το Shareaza Media Player για να ΠΑΙΞΕΙΣ τα αρχεία τα οποία είναι σημειωμέμα απο κάτω"/>
                <control caption="Χρησιμοποίησε το Shareaza Media Player για να ΕΞΕΤΑΣΕΙΣ τα αρχεία τα οποία είναι σημειωμέμα απο κάτω"/>
-               <control caption=" _Τύποι αρχείων:"/>
+               <control caption="_Τύποι αρχείων:"/>
                <control/>
                <control caption="_Πρόσθεσε"/>
                <control caption="_Απομάκρυνε"/>
@@ -3082,10 +3160,10 @@
                <control caption="Μπορείς να χρησιμοποιήσεις το προφίλ που έχεις στο Gnutella για να μοιραστείς πληροφορίεςγια τον εαυτό σου, τα ενδιαφέροντά σου και τα προτινώμενα αρχεία και websites με τους άλλους."/>
                <control caption="Επεξεργασία του προφίλ μου"/>
                <control caption="_Chat:"/>
-               <control caption="Enable peer to peer chat with compatible clients"/>
-               <control caption="Enable chat on all networks"/>
-               <control caption="Filter chat messages for spam"/>
-               <control caption="Censor profanity in chat"/>
+		<control caption="Ενεργοποίησε το peer to peer chat με συμβατούς πελάτες"/>
+		<control caption="Ενεργοποίησε το chat σε όλα τα δίκτυα"/>
+		<control caption="Φίλτραρε το μηνύματα απο το spam"/>
+		<control caption="Λογοκρισία στο chat"/>
        </dialog>
 
        <dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
@@ -3106,22 +3184,22 @@
 
        <dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-       <dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Σύνδεση">
-               <control caption="_Εισερχόμενες διευθύνσεις."/>
-               <control caption="Διεύθυνση:"/>
-               <control caption="Automatic"/>
-               <control caption="Πόρτα:"/>
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Connection">
+		<control caption="_Εισερχόμενες διευθύνσεις:"/>
+		<control caption="Διεύθυνση:"/>
+		<control caption="Αυτόματα"/>
+		<control caption="Πόρτα:"/>
                <control/>
-               <control caption="Τυχαίο"/>
-               <control caption="Ταχύτητα:"/>
+		<control caption="Γενικά"/>
+		<control caption="Ταχύτητα:"/>
                <control/>
                <control caption="Force binding to this address"/>
-               <control caption="_Εξερχόμενες διευθύνσεις:"/>
-               <control caption="Διεύθυνση:"/>
-               <control caption="Automatic"/>
-               <control caption="Ταχύτητα:"/>
+		<control caption="_Εξερχόμενες διευθύνσεις:"/>
+		<control caption="Διεύθυνση:"/>
+		<control caption="Αυτόματα"/>
+		<control caption="Ταχύτητα:"/>
                <control/>
-               <control caption="Ε_πιλογές:"/>
+		<control caption="Ε_επιλογές:"/>
                <control caption="Ignore private/local IP addresses"/>
                <control caption="_Timeouts:"/>
                <control caption="Σύνδεση:"/>
@@ -3159,7 +3237,7 @@
                <control caption="Share preview files"/>
                <control caption="Strip tag metadata"/>
                <control caption="Limit per unique host:"/>
-               <control/><control/>
+		<control/><control/>
                <control caption="_User-Agent Filter:"/>
                <control/>
                <control caption="+"/>
@@ -3191,62 +3269,62 @@
        </dialog>
 
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
-		<control caption="_Options:"/>
-		<control caption="_Enable Scheduler"/>
+		<control caption="_Επιλογές:"/>
+		<control caption="_Ενεργοποίηση ατζέντας"/>
 		<control/><control/>
 		<control caption="_Restrict networks when limited"/>
-		<control caption="Key:"/>
-		<control caption="Sun"/>
-		<control caption="Mon"/>
-		<control caption="Tue"/>
-		<control caption="Wed"/>
-		<control caption="Thu"/>
-		<control caption="Fri"/>
-		<control caption="Sat"/>
-		<control caption="Do not connect"/>
-		<control caption="Limited connection"/>
-		<control caption="Connect at full speed"/>
+		<control caption="Κλειδι:"/>
+		<control caption="Κυρ"/>
+		<control caption="Δευ"/>
+		<control caption="Τρι"/>
+		<control caption="Τετ"/>
+		<control caption="Πέμ"/>
+		<control caption="Παρ"/>
+		<control caption="Σάβ"/>
+		<control caption="Μην συνδεθείς"/>
+		<control caption="Περιορισμένη σύνδεση"/>
+		<control caption="Σύνδεση με πλήρη ταχύτηταConnect at full speed"/>
 		<control caption="% of _bandwidth under limit"/>
 		<control/>
-		<control caption="Help"/>
-		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. &#13;&#10;&#13;&#10;&#13;&#10;Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
-	</dialog>
-
-       <dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Δίκτυα">
-               <control caption="Το Shareaza είναι ένα γενικού σκοπού file-sharing πρόγραμμα που μπορεί να μπει σε πολλά P2P δίκτυα την ίδια στιγμή.  Σε αυτήν την σελίδα μπορείτε να διαλέξετε ποιά P2P δίκτυα θέλετε να συνδέεστε, και να ρυθμίσετε το κάθε δίκτυο."/>
-               <control caption="Το δίκτυο του Gnutella2:"/>
-               <control caption="Το δίκτυο του Gnutella2 είναι το βασικό δίκτυο του Shareaza, που προσφέρει πολλές επιλογές και ιδιότητες απο κάθε άλλο P2P δίκτυο.  Συνήστατε."/>
-               <control caption="Σύνδεση με το Gnutella2 (G2)"/>
-               <control caption="Ρύθμισε το Gnutella2"/>
-               <control caption="Το δίκτυο του eDonkey2000:"/>
-               <control caption="Το δίκτυο του eDonkey2000 είναι ένας πολύ δημοφιλής server-based network.  Αν και δεν είναι τόσο πλούσιο όσο το Gnutella2, το eDonkey2000 έχει μια εκπληκτική συλλογή απο αρχεία."/>
-               <control caption="Σύνδεση με το eDonkey2000"/>
-               <control caption="Ρύθμισε το eDonkey2000"/>
-               <control caption="Το αυθεντικό δίκτυο του Gnutella:"/>
-               <control caption="Αν και το αυθεντικό δίκτυο του Gnutella είναι λιγότερο πλούσιο σε σχέση με το Gnutella2, και έχει λιγότερα αρχεία απο το eDonkey2000, παραμένει μια πολύτιμη πηγή."/>
-               <control caption="Σύνδεση με το αυθεντικό δίκτυο του Gnutella"/>
-               <control caption="Ρύθμισε το Gnutella1"/>
+		<control caption="Βοήθεια"/>
+		<control caption="Η ατζέντα σχεδιάστηκε για να σας επιτρέπει να βάζετε ώρες στις οποίες το Shareaza θα συνδέετε και θα κατεβάζει αρχεία. &#13;&#10;&#13;&#10;Note: Εαν έχετε το Shareaza ανοιχτό καθώς η ατζέντα είναι ανοιχτή, ίσως την δείτε να αλλάζει τις επιλογές- Αυτό είναι κανονικό!-"/>
        </dialog>
 
+	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
+		<control caption="Το Shareaza είναι ένα γενικού σκοπού file-sharing πρόγραμμα που μπορεί να μπει σε πολλά P2P δίκτυα την ίδια στιγμή.  Σε αυτήν την σελίδα μπορείτε να διαλέξετε ποιά P2P δίκτυα θέλετε να συνδέεστε, και να ρυθμίσετε το κάθε δίκτυο."/>
+		<control caption="Το δίκτυο του Gnutella2:"/>
+		<control caption="Το δίκτυο του Gnutella2 είναι το βασικό δίκτυο του Shareaza, που προσφέρει πολλές επιλογές και ιδιότητες απο κάθε άλλο P2P δίκτυο."/>
+		<control caption="Σύνδεση με το Gnutella2 (G2)"/>
+		<control caption="Ρύθμισε το Gnutella2"/>
+		<control caption="Το δίκτυο του eDonkey2000:"/>
+		<control caption="Το δίκτυο του eDonkey2000 είναι ένας πολύ δημοφιλής server-based network.  Αν και δεν είναι τόσο πλούσιο όσο το Gnutella2, το eDonkey2000 έχει μια εκπληκτική συλλογή απο αρχεία."/>
+		<control caption="Σύνδεση με το eDonkey2000"/>
+		<control caption="Ρύθμισε το eDonkey2000"/>
+		<control caption="Το αυθεντικό δίκτυο του Gnutella:"/>
+		<control caption="Αν και το αυθεντικό δίκτυο του Gnutella είναι λιγότερο πλούσιο σε σχέση με το Gnutella2, και έχει λιγότερα αρχεία απο το eDonkey2000, παραμένει μια πολύτιμη πηγή."/>
+		<control caption="Σύνδεση με το αυθεντικό δίκτυο του Gnutella"/>
+		<control caption="Ρύθμισε το Gnutella1"/>
+	</dialog>
+
 	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-               <control caption="Το δίκτυο του Gnutella2:"/>
-               <control caption="(G2 Συνίστατε)"/>
-               <control caption="Σύνδεση με το Gnutella2 σήμερα"/>
-		<control caption="Μέθοδος:"/>
+		<control caption="Το δίκτυο του Gnutella2:"/>
+		<control caption="(G2 recommended)"/>
+		<control caption="Σύνδεση με το Gnutella2 σήμερα"/>
+		<control caption="Mode:"/>
 		<control caption="Optimal|Leaf|Hub"/>
-		<control caption="Συνδέσεις G_2:"/>
+		<control caption="G_2 Συνδέσεις:"/>
                <control caption="Leaf to Hub:"/>
                <control/><control/>
                <control caption="Hub to Leaf:"/>
                <control/><control/>
                <control caption="Hub to Hub:"/>
                <control/><control/>
-               <control caption="Το δίκτυο του Gnutella1:"/>
-               <control caption="Σύνδεση με το Gnutella1 σήμερα"/>
-               <control caption="Πάντα συνδέση με το Gnutella1"/>
-		<control caption="Μέθοδος:"/>
+		<control caption="Gnutella1 Network:"/>
+		<control caption="Πάντα σύνδεση με το Gnutella1"/>
+		<control caption="Σύνδεση με το Gnutella1 σήμερα"/>
+		<control caption="Mode:"/>
 		<control caption="Optimal|Leaf|Ultrapeer"/>
-		<control caption="Συνδέσεις G_1:"/>
+		<control caption="G_1 Συνδέσεις:"/>
 		<control caption="Leaf to Ultrapeer:"/>
                <control/><control/>
 		<control caption="Ultrapeer to Leaf:"/>
@@ -3264,7 +3342,7 @@
                <control caption="Σύνδεση με το eDonkey2000 σήμερα"/>
                <control caption="Αυτόματη σύνδεση κάθε περίοδο"/>
                <control caption="_Παγκόσμια έρευνα:"/>
-               <control caption="Search known remote servers in the server cache:"/>
+               <control caption="Έρευνα γνωστών απομακρυσμένων servers στην μνήμη των server:"/>
                <control caption="Σταμάτα την έρευνα μετά:"/>
                <control/><control/>
                <control caption="Αποτελέσματα."/>
@@ -3273,28 +3351,28 @@
                <control/><control/>
                <control caption="Άλλοι eDonkey clients."/>
                <control caption="Τα _ερργαλεία του eDonkey2000:"/>
-               <control caption="Import eDonkey/eMule partial downloads (.part):"/>
-               <control caption="Import..."/>
-               <control caption="Download eDonkey2000 serverlist from the web:"/>
+               <control caption="Εισήγαγε eDonkey/eMule partial downloads (.part):"/>
+               <control caption="Εισήγαγε..."/>
+               <control caption="Κατέβασε eDonkey2000 serverlist απο το web:"/>
                <control caption="Κατέβασε..."/>
        </dialog>
 
 <dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
-	<control caption="_Interface:"/>
-	<control caption="Display additional BitTorrent interface elements"/>
+       <control caption="_Interface:"/>
+       <control caption="Display additional BitTorrent interface elements"/>
 	<control caption="_Download Connections:"/>
 	<control/><control/>
-	<control caption="Torrents at once"/>
+	<control caption="Κατέβασμα Torrents με τη μια"/>
 	<control/><control/>
 	<control caption="Client connections"/>
-	<control caption=" Clear downloaded torrents"/>
+	<control caption=" Καθαρισμός των κατεβασμένων torrents"/>
 	<control caption="When the share ratio reaches "/>
 	<control/><control/>
-	<control caption="_EndGame:"/>
-	<control caption="Enable EndGame mode when completing torrents"/>
-	<control caption="_Store Torrents Here:"/>
+       <control caption="_EndGame:"/>
+       <control caption="Enable EndGame mode when completing torrents"/>
+	<control caption="_Αποθήκευσε τα Torrents εδώ:"/>
 	<control/><control/>
-	<control caption="_Torrent Creator"/>
+	<control caption="_Δημιουργεία Torrent"/>
 	<control/><control/>
 	<control caption="Default Tracker: "/>
 	<control/><control/>
@@ -3339,8 +3417,8 @@
                <control/>
        </dialog>
 
-       <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Upload Queue Properties">
-               <control caption="_Name:"/>
+       <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
+               <control caption="_Όνομα:"/>
                <control/>
                <control caption="_Entry Criteria:"/>
                <control caption="Partially downloaded files only"/>
@@ -3352,26 +3430,26 @@
                <control/>
                <control caption="Ταίριασμα ονόματος:"/>
                <control/>
-               <control caption="Προτόκολα:"/>
+               <control caption="Πρωτόκολλα:"/>
                <control/>
                <control caption="_Χωρητικότητα:"/>
                <control caption="Enable this queue"/>
-               <control caption="Minimum number of transfers:"/>
+               <control caption="Ελάχιστος αριθμός μεταφορών:"/>
                <control/><control/>
-               <control caption="Maximum number of transfers:"/>
+               <control caption="Μέγιστος αριθμός μεταφορών:"/>
                <control/><control/>
-               <control caption="Maximum number waiting in queue:"/>
+               <control caption="Μέγιστος αριθμός αρχείων που περιμένουν στην ουρά:"/>
                <control/><control/>
                <control caption="_Service Parameters:"/>
                <control caption="Saturated bandwidth percentage:"/>
                <control/>
                <control caption="Upload bandwidth for this queue:"/>
                <control/><control/>
-               <control caption="Rotate after N seconds:"/>
+               <control caption="Περιστροφή ύστερα απο N δευτερόλεπτα:"/>
                <control/><control/>
                <control caption="OK"/>
-               <control caption="Άκυρο"/>
-               <control caption="Reward uploaders"/>
+		<control caption="Άκυρο"/>
+		<control caption="Αντάμοιψε τους χρήστες που ανεβάζουν"/>
        </dialog>
 
        <dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Καλώς ήρθατε στο Shareaza">
@@ -3392,41 +3470,41 @@
        <dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Καλώς ήρθατε στο Shareaza [2 of 7]">
                <control caption="Το Shareaza υποστηρίζει δυο διαφορετικά user interfaces, ώστε να μπορείτε να διαλέξετε όποιο σας βολεύει περισσότερο."/>
                <control caption="Παρακαλώ διαλέχτε ποιο απο τα δυο user interfaces θέλετε:"/>
-               <control caption="Normal Mode"/>
-               <control caption="Power Mode"/>
+               <control caption="Κανονική μορφή"/>
+               <control caption="Δυναμική μορφή"/>
                <control caption="Απλό, Εύκολο να χρησιμοποιήτε τα μενού και τα κουμπιά.	Συνηθίζει τους χρήστες σε άλλα προγράμματα file sharing."/>
-               <control caption="Η Power mode προσφέρει στους εξιδικευμένους χρήστες πολλές επιπλεόν εντολές, παράθυρα, κτλ."/>
+               <control caption="Η Δυναμική μορφή προσφέρει στους εξιδικευμένους χρήστες πολλές επιπλεόν εντολές, παράθυρα, κτλ."/>
        </dialog>
 
-       <dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Καλώς ήρθατε στο Shareaza [3 of 7]">
-               <control caption="Για βέλτιστη απόδοση, το Shareaza πρέπει να ξέρει λίγα πράγματα για την σύνδεσή σας στο Internet."/>
-		<control caption="&#160;( please select )| I am using the Internet at home| I am using the Internet on a college LAN| I am using the Internet on a office LAN| I am using the Internet at a hotel or airport"/>
-               <control caption="Προστατεύετε το δίκτυό σας απο  firewall ή NAT router?"/>
-		<control caption="&#160;No, I CAN accept all incoming connections| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
-               <control caption="Έχετε firewall ή NAT route στην σύνδεση του Internet στο σπίτι σας?"/>
-		<control caption="&#160;No, I have FULL ACCESS to the Internet| Yes, but I will set up port-forwarding for Shareaza| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
-               <control caption="Εαν ξέρετε πόσο γρήγορη είναι η ταχύτητά σας στο Internet, διαλέχτε την καλλύτερη επιλογή απο κάτω:"/>
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Καλώς ήλθατε στο Shareaza [3 of 7]">
+		<control caption="Για βέλτιστη απόδοση, το Shareaza πρέπει να ξέρει λίγα πράγματα για την σύνδεσή σας στο Internet.."/>
+		<control caption="&#160;( please select )| Χρησιμοποιώ το Internet στο σπίτι| Χρησιμοποιώ το Internet μέσω πανεπιστημιακού LAN| Χρησιμοποιώ το Internet μέσω ένος LAN γραφείου| Χρησιμοποιώ το Internet στο ξενοδοχείο ή στο αεροδρόμιο"/>
+		<control caption="Το δίκτυο σας προστατεύετε απο firewall ή NAT ενός  router?"/>
+		<control caption="&#160;Όχι, ΜΠΟΡΩ να δεχτώ όλες τις εισερχόμενες συνδέσεις| Ναι, και ΔΕΝ ΜΠΟΡΩ να δεχτώ τις εισερχόμενες συνδέσεις απο το Internet| Δεν ξέρω, παρακαλώ ΕΛΕΝΞΤΕ ΑΥΤΟΜΑΤΑ την κατάσταση του firewall"/>
+		<control caption="Έχετε στην σύνδεση στο σπίτι σας firewall ή NAT μέσω router?"/>
+		<control caption="&#160;Όχι, ΜΠΟΡΩ να δεχτώ όλες τις εισερχόμενες συνδέσεις| Ναι, αλλά θα ρυθμίσω τις πόρτες που θα συνδέετε το Shareaza| Ναι, και ΔΕΝ ΜΠΟΡΩ να δεχτώ τις εισερχόμενες συνδέσεις απο το Internet| Δεν ξέρω, παρακαλώ ΕΛΕΝΞΤΕ ΑΥΤΟΜΑΤΑ την κατάσταση του firewall"/>
+		<control caption="Εαν ξέρετε την ταχύτητα της σύνδεσης σας επιλέξτε την καλλύτερη επιλογή απο κάτω:"/>
 		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
-               <control caption="Ή, διαλέχτε:"/>
+		<control caption="Ή, διαλέχτε:"/>
                <control/>
+	</dialog>
+
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καλώς ήλθατε στο Shareaza [4 of 7]">
+		<control caption="Τα δίκτυα P2P είναι καλά μόνο για τους ανθρώπους που τα χρησιμοποιούν.  Όλα τα αρχεία που είναι διαθέσιμα για κατέβασμα μοιράζονται απο άλλους χρήστες."/>
+		<control caption="Δεν χρειάζετε να μοιράζετε κάτι για να χρησιμοποιήσετε το Shareaza, αλλά μερικά λογισμικά θα συμπεριφέρονται αλλιώς σε χρήστες οι οποίοι δεν μοιράζουν τίποτα."/>
+		<control caption="Παρακαλώ επιλέξτε ποιούς φακέλους θέλετε να μοιράζεστε, εάν θέλετε.  Απλά πατήστε το κουμπί Πρόσθεση για να προσθέσετε ένα νέο φάκελο."/>
+               <control/>
+		<control caption="_Πρόσθεση..."/>
+		<control caption="_Απομάκρυνση"/>
+		<control caption="ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το να μοιράζετε υλικό που είναι κάτω απο δικαιώματα είναι απαγορευμένο σε πολλές χώρες."/>
        </dialog>
 
-       <dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καλώς ήρθατε στο Shareaza  [4 of 7]">
-               <control caption="Τα δίκτυα P2P είναι καλά μόνο για τους ανθρώπους που τα χρησιμοποιούν.  Όλα τα αρχεία που είναι διαθέσιμα για κατέβασμα μοιράζονται απο άλλους χρήστες."/>
-               <control caption="Δεν χρειάζετε να μοιράζετε κάτι για να χρησιμοποιήσετε το Shareaza, αλλά μερικά λογισμικά θα συμπεριφέρονται αλλιώς σε χρήστες οι οποίοι δεν μοιράζουν τίποτα."/>
-               <control caption="Παρακαλώ επιλέξτε ποιούς φακέλους θέλετε να μοιράζεστε, εάν θέλετε.  Απλά πατήστε το κουμπί Πρόσθεση για να προσθέσετε ένα νέο φάκελο."/>
-               <control/>
-               <control caption="_Πρόσθεση..."/>
-               <control caption="_Απομάκρυνση"/>
-               <control caption="ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το να μοιράζετε υλικό που είναι κάτω απο δικαιώματα είναι απαγορευμένο σε πολλές χώρες."/>
-       </dialog>
-
-       <dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Έλεγχος του φακέλου...">
+	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Έλεγχος του φακέλου....">
                <control/>
                <control caption="..."/>
                <control caption="Αρχεία:"/>
                <control caption="0"/>
-               <control caption="Κλείσιμο:"/>
+		<control caption="Volume:"/>
                <control caption="0"/>
                <control caption="Κλείσιμο"/>
        </dialog>
@@ -3435,14 +3513,14 @@
                <control caption="Το Shareaza είναι πολύ ποιο φιλόξενο σε όσους γράψουν μερικά πράγματα για τον εαυτό τους."/>
                <control caption="Χρησιμοποιώ το όνομα:"/>
                <control/>
-               <control caption="και είμαι:"/>
-		<control caption="&#160;(choose)"/>
-		<control caption="&#160;(choose)| guy| girl| man| woman"/>
-               <control caption="απο:"/>
+		<control caption="και είμαι:"/>
+		<control caption="&#160;(διαλέχτε)"/>
+		<control caption="&#160;(διαλέχτε)| αγόρι| κορίτσι| άνδρας| γυναίκα"/>
+		<control caption="απο:"/>
                <control/><control/>
        </dialog>
 
-       <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welcome to Shareaza [6 of 7]">
+       <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Καλώς ήρθατε στο Shareaza [6 of 7]">
                <control caption="Το Shareaza είναι ένα γενικού σκοπού file-sharing πρόγραμμα που μπορεί να that can  μπεί σε πολλά P2P δίκτυα την ίδια στιγμή.  Εδώ μπορείτε να διαλέξετε σε ποια δίκτυα θέλετε να έχετε πρόσβαση.  Σημειώστε ότι μπορείτε να διαλέξετε διαφορετικά δίκτυα αργότερα."/>
                <control caption="Σύνδεση με το Gnutella2 (Συνήστατε)"/>
                <control caption="Το δίκτυο του Gnutella2 είναι το κύριο δίκτυο του Shareaza, που προσφέρει πολλες επιλογές και επιδόσεις απο κάθε άλλο δίκτυο P2P."/>
@@ -3468,7 +3546,7 @@
                <control caption="Σύνδεση με το δίκτυο όταν κλείσω τον οδηγό"/>
                <control caption="Σύνδεση με το δίκτυο κάθε φορά που αρχίζω το Shareaza"/>
                <control caption="Ξεκίνα το Shareaza κάθε φορά που αρχίζουν τα Windows"/>
-               <control caption="Απολάυστε το Shareaza!"/>
+               <control caption="Απολαύστε το Shareaza!"/>
        </dialog>
 
        <dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Επεξεργασία του Προφίλ μου">
@@ -3485,17 +3563,17 @@
                <control/>
                <control caption="Πραγματικό όνομα:"/>
                <control/><control/>
-               <control caption="_Ζωτικά μέρη:"/>
-		<control caption="|Άνδρας|Γυναίκα"/>
-               <control caption="Γένος:"/>
+               <control caption="_Vitals:"/>
+		<control caption="|Αρσενικό|Θηλυκό"/>
+		<control caption="Γένος:"/>
                <control/>
-               <control caption="Ηλικία:"/>
-               <control caption="Επέτρεψε σε άλλους να βλέπουν το προφίλ μου"/>
+		<control caption="Ηλικία:"/>
+		<control caption="Επέτρεψε σε άλλους να βλέπουν το προφίλ μου"/>
        </dialog>
 
        <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Επικοινωνία">
-               <control caption="_Διεύθυνση Email:"/>
-               <control caption="Πρωτεύων:"/>
+               <control caption="_Email Addresses:"/>
+               <control caption="Primary:"/>
                <control/>
                <control caption="_Instant Messaging:"/>
                <control caption="MSN/.NET Passport:"/>
@@ -3580,57 +3658,57 @@
                <control caption="Cancel"/>
        </dialog>
 
-       <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Download File or Torrent">
+       <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Κατέβασε ένα αρχείο ή ένα Torrent">
                <control/><control/>
-               <control caption="Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."/>
+               <control caption="Το κατέβασμα οποιουδήποτε αρχείου με το Shareaza είναι εύκολο.  Απλά γράψτε ή επικόλλησε το URL ή το URI που περιγράφει το αρχείο στο κουτί και πάτήστε Enter."/>
                <control/>
-               <control caption="Download"/>
-               <control caption="Cancel"/>
-               <control caption="Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey2000, mP2P)."/>
-               <control caption="Shareaza can also download BitTorrent files.  A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"/>
-               <control caption="Open _Torrent..."/>
+               <control caption="Κατέβασμα"/>
+               <control caption="Ακύρωση"/>
+               <control caption="Το Shareaza μπορεί να κατεβάσει αρχεία απο τον ιστό (HTTP), και αυτόματα να ψάξει και να κατεβάσει P2P links (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+               <control caption="Το Shareaza μπορεί επίσης να κατεβάσει αρχεία BitTorrent.  Ένα torrent μπορεί να περιγραφεί απο ένα αρχείο xyz.torrent, ή έναν υπερσύνδεσμο στο .torrent αρχείο.  Για να κατεβάσετε ένα αρχείο torrent HTTP, επικολλήστε το στο κουτί.  Εαν ήδη έχετε ένα .torrent αρχείο, Πατήστε Άνοιξε ένα αρχείο Torrent:"/>
+               <control caption="Άνοιξε ένα αρχείο _Torrent..."/>
        </dialog>
 
-       <dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="New Search|Search Again|Find in Library">
+       <dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Νέα Έρευνα|Αναζήτηση ξανά|Έρευνα στην Βιβλιοθήκη">
                <control/><control/>
-               <control caption="Search"/>
-               <control caption="Cancel"/>
+               <control caption="Έρευνα"/>
+               <control caption="Ακύρωση"/>
        </dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Matches">
-               <control caption="Only show matches which include the _words:"/>
+       <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Φίλτραρε τα αποτελέσματα">
+               <control caption="Δείξε μόνο τα αποτελέσματα που περιέχουν τις _λέξεις:"/>
                <control/>
                <control caption="( you can also exclude words with -word )"/>
-               <control caption="And are of _size:"/>
-               <control caption="Minimum:"/>
+               <control caption="Και είναι _μεγέθους:"/>
+               <control caption="Το ελέχιστο:"/>
                <control/>
-               <control caption="Maximum:"/>
+               <control caption="Το μεγαλύτερο:"/>
                <control/>
-               <control caption="With at least:"/>
+               <control caption="Με το λιγότερο:"/>
                <control/><control/>
-               <control caption="sources."/>
-               <control caption="_Hide:"/>
-               <control caption="Busy hosts"/>
+               <control caption="Πηγές."/>
+               <control caption="_Απόκρυψε:"/>
+               <control caption="Απασχολημένους hosts"/>
                <control caption="Firewalled/push hosts"/>
-               <control caption="Unstable hosts"/>
-               <control caption="Non-matching files"/>
-               <control caption="Files you have already"/>
-               <control caption="Bogus results"/>
-               <control caption="Filter"/>
-               <control caption="Cancel"/>
+		<control caption="Ασταθείς hosts"/>
+		<control caption="Μη-ταιριαστά αρχεία"/>
+		<control caption="Αρχεία που έχεις ήδη"/>
+		<control caption="Ψεύτικα αποτελέσματα"/>
+		<control caption="Φίλτραρε"/>
+		<control caption="Ακύρωση"/>
 		<control/>
 		<control caption="Set as default"/>
-		<control caption="_Save as"/>
-		<control caption="_Delete"/>
-		<control caption="Filters:"/>
-       </dialog>
+		<control caption="_Αποθήκευση ως"/>
+		<control caption="_Διέγραψε"/>
+		<control caption="Φίλτρα:"/>
+	</dialog>
 
-	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Αποθήκευσε τα φίλτρα ως">
 		<control/>
 		<control caption="OK"/>
-		<control caption="Cancel"/>
-		<control caption="Save the current filter as"/>
-	</dialog>
+		<control caption="Ακύρωση"/>
+		<control caption="Αποθήκευσε τα φίλτρα ως"/>
+       </dialog>
 
        <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
                <control caption="Service _Address:"/>
@@ -3638,11 +3716,11 @@
                <control caption="Discovery Service Type:"/>
                <control/>
                <control caption="OK"/>
-               <control caption="Cancel"/>
+               <control caption="Ακύρωση"/>
        </dialog>
 
        <dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
-               <control caption="Shareaza is downloading:"/>
+               <control caption="Το Shareaza κατεβάζει:"/>
                <control caption="..."/>
                <control/><control/><control/>
                <control caption="Συνολική ταχύτητα μεταφοράς:"/>
@@ -3782,12 +3860,12 @@
                <control/>
                <control caption="Match Any"/>
                <control caption="Match All"/>
-               <control caption="_Options:"/>
+               <control caption="_Επιλογές:"/>
                <control caption="Action:"/>
-		<control caption="None|Accept|Deny"/>
-               <control caption="Expire:"/>
-		<control caption="Never (Indefinite)|At End of Session|After:"/>
-               <control/>
+		<control caption="Κανένα|Αποδοχή|Άρνηση"/>
+		<control caption="Λήξη:"/>
+		<control caption="Ποτέ (Ασαφής)|Στο τέλος κάθε περιόδου|Μετά:"/>
+		<control/>
                <control caption="d"/>
                <control/>
                <control caption="h"/>
@@ -3835,12 +3913,12 @@
                <control caption="You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"/>
                <control caption="You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"/>
                <control/><control/><control/><control/>
-               <control caption="Please select the action you would like Shareaza to take:"/>
-               <control caption="_Download Now"/>
-               <control caption="_Search for File"/>
-               <control caption="Cancel"/>
-               <control caption="_Remember my selection next time"/>
-               <control caption="Open a download _monitor window"/>
+               <control caption="Παρακαλώ διαλέχτε τι θέλετε το Shareaza να κάνει:"/>
+               <control caption="_Κατέβασμα τώρα"/>
+               <control caption="_Έρευνα για αρχεία"/>
+               <control caption="Ακύρωση"/>
+               <control caption="_Θυμήσου την επιλογή μου την επόμενη φορά"/>
+               <control caption="Άνοιξε ένα παράθυρο ελένχου _κατεβάσματος"/>
                <control caption="You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."/>
        </dialog>
 
@@ -3855,18 +3933,18 @@
 
        <dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart Download Preview...">
                <control/>
-               <control caption="Shareaza is creating a preview of the download:"/>
+               <control caption="Το Shareaza δημιουργεί μια αναπαράστασητου αρχείου:"/>
                <control/><control/>
-               <control caption="(copying downloaded chunks to a new preview file)"/>
-               <control caption="Cancel"/>
+		<control caption="(copying downloaded chunks to a new preview file)"/>
+               <control caption="Ακύρωση"/>
        </dialog>
 
        <dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Το Shareaza σέβετε τους χρήστες του">
                <control/>
                <control caption="Το ξέρατε ότι το Shareaza είναι 100% ελεύθερο προοιόν?"/>
-               <control caption="ΤΟ Shareaza ΔΕΝ περιέχει ΚΑΘΟΛΟΥ &quot;spyware&quot;, &quot;adware&quot; ή άλλα προγράμματα. ΔΕΝ δείχνει διαφημίσεις ή &quot;popups&quot;, ποτέ.{n}{n}Εαν δείτε διαφημίσεις ή &quot;popups&quot; καθώς χρησιμοποιήτε το Shareaza, να είστε βέβαιοι ότι ΔΕΝ προέρχωνται απο αυτό το πρόγραμμα."/>
-               <control caption="Δυστηχλως πολλά παρόμοια προγράμματα έρχονται με πολλά δυσάρεστα adware ή spyware, έτσι αν δείτε κάτι ύποπτο ίσως να θέλετε να κοιτάξετε το PC  σας με ένα πρόγραμμα απομάκρυνσης διαφημίσεων και spyware."/>
-               <control caption="Δεν πρέπει να έχετε πληρώσει για να προμηθευτητε το Shareaza.  Το Shareaza μπορεί ελεύθερα να κατεβαστεί απο όλους απο το site www.shareaza.com.  Εαν δώσατε χρήματα σε κάποιον για το  Shareaza, πρέπει να ζητήσετε πλήρη επιστροφή χρημάτων αμέσως."/>
+               <control caption="ΤΟ Shareaza ΔΕΝ περιέχει ΚΑΘΟΛΟΥ &quot;spyware&quot;, &quot;adware&quot; ή άλλα προγράμματα. ΔΕΝ δείχνει διαφημίσεις ή &quot;popups&quot;, ποτέ.{n}{n}Εαν δείτε διαφημίσεις ή &quot;popups&quot; καθώς χρησιμοποιήτε το Shareaza, να είστε βέβαιοι ότι ΔΕΝ είναι απο αυτό το πρόγραμμα."/>
+               <control caption="Δυστηχώς πολλά παρόμοια προγράμματα έρχονται με πολλά δυσάρεστα adware ή spyware, έτσι αν δείτε κάτι ύποπτο ίσως να θέλετε να κοιτάξετε το PC  σας με ένα πρόγραμμα απομάκρυνσης διαφημίσεων και spyware."/>
+               <control caption="Δεν πρέπει να έχετε πληρώσει για να πάρετε το Shareaza.  Το Shareaza μπορεί ελεύθερα να κατεβαστεί απο όλους στο site www.shareaza.com.  Εαν δώσατε χρήματα σε κάποιον για το  Shareaza, πρέπει να ζητήσετε πλήρη επιστροφή χρημάτων αμέσως."/>
                <control caption="Το Shareaza σέβετε τους χρήστες του!"/>
                <control caption="www.shareaza.com"/>
                <control caption="Κλείσιμο"/>
@@ -3875,29 +3953,29 @@
        <dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Spread the Word">
                <control/>
                <control caption="Help Us Spread the Word"/>
-               <control caption="We hope you have enjoyed using Shareaza so far.  We believe it is the best file sharing application around."/>
-               <control caption="Unfortunately, a lot of file sharers don't know what they're missing!"/>
-               <control caption="If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"/>
-               <control caption="Chances are they'll be grateful you rescued them!"/>
+               <control caption="Ελπίζουμε να απολάυσατε να χρησιμοποιήτε το Shareaza μέχρι τώρα.  Πιστεύουμε ότι είναι το καλλύτερο πρόγραμμα διαμοιρασμού αρχείων."/>
+               <control caption="Δυστηχώς, πολλοί χρήστες δεν ξέρουν τι χάνουν!"/>
+               <control caption="Εαν ξέρετε κάποιον που θα του άρεσε το Shareaza, είτε είναι νέος χρήστης ή κάποιος που έχει ένα παρόμοιο πρόγραμμα, γιατί να μην τον ενημερώσετε ότι υπάρχουν καλλύτερες λύσεις?"/>
+               <control caption="Οι πιθανότητες είναι ότι θα σας ευχαριστούν που τους σώσατε!"/>
                <control caption="www.shareaza.com"/>
                <control caption="OK"/>
        </dialog>
 
-       <dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Existing File">
+       <dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Ίδια αρχεία">
                <control/><control/><control/><control/>
-               <control caption="You already have this file in your file library.  What would you like to do?"/>
-               <control caption="Show me the file in my library"/>
-               <control caption="Download the file again"/>
-               <control caption="Don't download this file"/>
+               <control caption="Έχετε αυτό το αρχείο στην βιβλιοθήκη σας.  Τι θέλετε να κάνετε?"/>
+               <control caption="Δείξε μου το αρχείο στην βιβλιοθήκη"/>
+               <control caption="Κατέβασε το αρχείο πάλι"/>
+               <control caption="Μην κατεβάσεις το αρχείο"/>
                <control caption="OK"/>
-               <control caption="Cancel"/>
-               <control caption="You have downloaded and deleted this file before.  What would you like to do?"/>
+               <control caption="Ακύρωση"/>
+               <control caption="Έχετε κατεβάσει και σβήσει αυτό το αρχείο ποιο παλιά.  Τι θέλετε να κάνετε τώρα?"/>
        </dialog>
 
-       <dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
+       <dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Κλείσιμο">
                <control/>
                <control caption="Αυτή είναι η πρώτη φορά που πατήσατε να κλείσει το Shareaza.  Παρακαλώ επιλέξτε τι θέλετε να κάνει το Shareaza όταν θα πατάτε το κουμπί αυτό απο δω και πέρα:"/>
-               <control caption="Ελαχιστοποίηση στην tray area"/>
+               <control caption="Ελαχιστοποίηση στην μπάρα εργασιών"/>
                <control caption="Κλείσε το Shareaza αμέσως"/>
                <control caption="Κλείσε το Shareaza όταν τελειώσουν όλα τα αρχεία που ανεβαίνουν/κατεβαίνουν"/>
                <control caption="OK"/>
@@ -3907,14 +3985,14 @@
        <dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Download Server.met File">
                <control/>
                <control caption="You can download an eDonkey2000 server.met file from the web to refresh your local list of servers."/>
-               <control/><control/>
+		<control/><control/>
                <control caption="OK"/>
-               <control caption="Cancel"/>
+               <control caption="Ακύρωση"/>
        </dialog>
 
-       <dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza Help">
+       <dialog name="CHelpDlg" cookie="StBuAf" caption="Η βοήθεια του Shareaza">
                <control/>
-               <control caption="Close"/>
+               <control caption="Κλείσιμο"/>
                <control/>
        </dialog>
 
@@ -3929,8 +4007,8 @@
                <control caption="Δεν θέλω να προσθέσω κανένα σχόλιο."/>
                <control caption="Αυτό το αρχείο έχει ονομαστεί λάθος και μπορεί να παραπληροφορεί."/>
                <control caption="Αυτό το αρχείο είναι πολύ κακής ποιότητα."/>
-               <control caption="Αυτ΄οτο αρχείο είναι ψεύτικο, ή είναι χαλασμένο ή με κανένα τρόπο δεν μπορεί να χρησιμοποιηθεί."/>
-               <control caption="Μπορείς να γράψεις λίγα λόγια γιατί αυτό το αρχείο είναι άσχημο:"/>
+               <control caption="Αυτό το αρχείο είναι ψεύτικο, ή είναι χαλασμένο ή με κανένα τρόπο δεν μπορεί να χρησιμοποιηθεί."/>
+               <control caption="Μπορείς να γράψεις λίγα λόγια γιατί αυτό το αρχείο είναι κακό:"/>
                <control/>
        </dialog>
 
@@ -3991,10 +4069,10 @@
            <control/>
            <control caption="_Ανανέωση"/>
            <control/>
-           <control caption="Κλείσιμο"/>
+		<control caption="Κλείσιμο"/>
 		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
-		<control caption="Start new download transfers:"/>
-		<control caption="Transfers:"/>
+		<control caption="Άρχισε μια νέα μεταφορά:"/>
+		<control caption="Μεταφορές:"/>
        </dialog>
 
        <dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Κατέβασε τις επιλογές του Group">
@@ -4012,124 +4090,137 @@
 
        <dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Διάλεξε απεικόνιση">
            <control/>
-           <control caption="Διάλεξε μια ηχητική απεικόνιση απο την λίστα:"/>
+		<control caption="Διάλεξε μια ηχητική απεικόνιση απο την λίστα:"/>
 		<control/>
 		<control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display"/>
-           <control caption="_Εγκατάσταση..."/>
+		<control caption="_Εγκατάσταση..."/>
            <control caption="OK"/>
            <control caption="Ακύρωση"/>
        </dialog>
 
        <dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Νέα έκδοση">
                <control/>
-               <control caption="Μια νέα έκδοση του Shareaza έχει εκδοθεί.  Θέλετε να αναβαθμίσετε?"/>
-               <control caption="Αν πατίσετε Αναβάθμιση τώρα, το Shareaza θα βάλει την αναβάθμιση στην λίστα των κατεβασμένων αρχείων σας και ξεκινήσει αυτόματα να την κατεβάζει."/>
-               <control caption="_Αναβάθμιση τώρα"/>
-               <control caption="Μην ελένχεις για νέες εκδόσεις"/>
-               <control caption="Μην κάνεις αναβάθμιση"/>
+		<control caption="Μια νέα έκδοση του Shareaza έχει εκδοθεί.  Θέλετε να αναβαθμίσετε?"/>
+		<control caption="Αν πατήσετε Αναβάθμιση τώρα, το Shareaza θα βάλει την αναβάθμιση στην λίστα των κατεβασμένων αρχείων σας και ξεκινήσει αυτόματα να την κατεβάζει."/>
+		<control caption="_Αναβάθμιση τώρα"/>
+		<control caption="Μην ελένχεις για νέες εκδόσεις"/>
+		<control caption="Μην κάνεις αναβάθμιση"/>
+	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+		<control/>
+		<control caption="OK"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+		<control caption="OK"/>
+		<control caption="Ακύρωση"/>
+		<control caption="Παρακαλώ επιλέξτε τον τρόπο επανα-κωδικοποίησης"/>
+		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
        </dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
 <listColumns>
     <list name="CLibraryWnd">
-        <column from="File" to=""/>
-        <column from="Type" to=""/>
-        <column from="Size" to=""/>
-           <column from="Folder" to=""/>
+        <column from="File" to="Αρχείο"/>
+        <column from="Type" to="Τύπος"/>
+        <column from="Size" to="Μέγεθος"/>
+           <column from="Folder" to="Φάκελος"/>
         <column from="Hits" to=""/>
-        <column from="Uploads" to=""/>
-        <column from="Modified" to=""/>
+        <column from="Uploads" to="Ανέβασμα"/>
+        <column from="Modified" to="Τροποποίηση"/>
     </list>
     <list name="CDownloadCtrl">
-        <column from="Downloaded File" to=""/>
-        <column from="Size" to=""/>
-        <column from="Progress" to=""/>
-        <column from="Speed" to=""/>
-        <column from="Status" to=""/>
-        <column from="Client" to=""/>
-        <column from="Downloaded" to=""/>
-           <column from="Complete" to=""/>
+        <column from="Downloaded File" to="Κατεβασμένα αρχεία"/>
+        <column from="Size" to="Μέγεθος"/>
+        <column from="Progress" to="Πρόοδος"/>
+        <column from="Speed" to="Ταχύτητα"/>
+        <column from="Status" to="Κατάσταση"/>
+        <column from="Client" to="Πελάτης"/>
+        <column from="Downloaded" to="Κατέβασμα"/>
+           <column from="Complete" to="Ολοκλήρωση"/>
     </list>
     <list name="CUploadCtrl">
-        <column from="Remote User" to=""/>
-        <column from="Uploaded File" to=""/>
-        <column from="Size" to=""/>
-        <column from="Progress" to=""/>
-        <column from="Speed" to=""/>
-        <column from="Client" to=""/>
-		<column from="Rating" to=""/>
+		<column from="Remote User" to="Απομακρυσμένος χρήστης"/>
+		<column from="Uploaded File" to="Ανεβασμένο αρχείο"/>
+		<column from="Size" to="Μέγεθος"/>
+		<column from="Progress" to="Πρόοδος"/>
+		<column from="Speed" to="Ταχύτητα"/>
+		<column from="Client" to="Πελάτης"/>
+		<column from="Rating" to="Βαθμολογία"/>
     </list>
     <list name="CNeighboursWnd">
-        <column from="Address" to=""/>
-        <column from="Port" to=""/>
-        <column from="Time" to=""/>
-        <column from="Packets" to=""/>
-        <column from="Bandwidth" to=""/>
-        <column from="Total" to=""/>
+        <column from="Address" to="Διεύθυνση"/>
+        <column from="Port" to="Θύρα"/>
+        <column from="Time" to="Χρόνος"/>
+        <column from="Packets" to="Πακέτα"/>
+        <column from="Bandwidth" to="Εύρος ζώνης"/>
+        <column from="Total" to="Σύνολο"/>
         <column from="Flow" to=""/>
         <column from="Leaves" to=""/>
-        <column from="Mode" to=""/>
-        <column from="Client" to=""/>
-        <column from="Name" to=""/>
+        <column from="Mode" to="Μέθοδος"/>
+        <column from="Client" to="Πελάτης"/>
+        <column from="Name" to="Όνομα"/>
     </list>
     <list name="CSecurityWnd">
-        <column from="Address / Content" to=""/>
+        <column from="Address / Content" to="Διεύθυνση / Content"/>
         <column from="Action" to=""/>
-        <column from="Expires" to=""/>
-        <column from="Precedence" to=""/>
+        <column from="Expires" to="Λήξη"/>
+        <column from="Precedence" to="Πρβάδισμα"/>
         <column from="Hits" to=""/>
-        <column from="Comment" to=""/>
+        <column from="Comment" to="Σχόλια"/>
     </list>
     <list name="CHostCacheWnd">
-        <column from="Address" to=""/>
-        <column from="Port" to=""/>
-        <column from="Client" to=""/>
+        <column from="Address" to="Διεύθυνση"/>
+        <column from="Port" to="Θύρα"/>
+        <column from="Client" to="Πελάτης"/>
         <column from="Last Seen" to=""/>
-        <column from="Name" to=""/>
-        <column from="Description" to=""/>
+        <column from="Name" to="Όνομα"/>
+        <column from="Description" to="Περιγραφή"/>
         <column from="CurUsers" to=""/>
         <column from="MaxUsers" to=""/>
     </list>
     <list name="CDiscoveryWnd">
-        <column from="Address" to=""/>
-        <column from="Type" to=""/>
+        <column from="Address" to="Διεύθυνση"/>
+        <column from="Type" to="Τύπος"/>
         <column from="Last Access" to=""/>
         <column from="Hosts" to=""/>
-        <column from="Accesses" to=""/>
-        <column from="Updates" to=""/>
-        <column from="Failures" to=""/>
+        <column from="Accesses" to="Προσπελάσεις"/>
+        <column from="Updates" to="Ενημερώσεις"/>
+        <column from="Failures" to="Αποτυχίες"/>
     </list>
     <list name="CPacketWnd">
-        <column from="Address" to=""/>
-        <column from="Protocol" to=""/>
-        <column from="Type" to=""/>
+        <column from="Address" to="Διεύθυνση"/>
+        <column from="Protocol" to="Πρωτόκολλο"/>
+        <column from="Type" to="Τύπος"/>
         <column from="T/H" to=""/>
         <column from="Hex" to=""/>
         <column from="ASCII" to=""/>
         <column from="G1-ID" to=""/>
     </list>
     <list name="CSearchMonitorWnd">
-        <column from="Search" to=""/>
+        <column from="Search" to="Έρευνα"/>
         <column from="URN" to=""/>
         <column from="Schema" to=""/>
     </list>
     <list name="CMatchCtrl">
-        <column from="File" to=""/>
-        <column from="Type" to=""/>
-        <column from="Size" to=""/>
-        <column from="Rating" to=""/>
-           <column from="Status" to=""/>
+        <column from="File" to="Αρχείο"/>
+        <column from="Type" to="Τύπος"/>
+        <column from="Size" to="Μέγεθος"/>
+        <column from="Rating" to="Βαθμολόγιση"/>
+           <column from="Status" to="Κατάσταση"/>
         <column from="Host/Count" to=""/>
-        <column from="Speed" to=""/>
-        <column from="Client" to=""/>
+        <column from="Speed" to="Ταχύτητα"/>
+        <column from="Client" to="Πελάτης"/>
     </list>
     <list name="CUploadQueueList">
-        <column from="Name" to=""/>
-        <column from="Criteria" to=""/>
-        <column from="Bandwidth" to=""/>
-        <column from="Transfers" to=""/>
-        <column from="Order" to=""/>
+        <column from="Name" to="Όνομα"/>
+        <column from="Criteria" to="Κριτήρια"/>
+        <column from="Bandwidth" to="Εύρος ζώνης"/>
+        <column from="Transfers" to="Μεταφορές"/>
+        <column from="Order" to="Εντολή"/>
     </list>
 	<list name="CAdvancedSettingsList">
 		<column from="Setting" to=""/>
@@ -4146,6 +4237,12 @@
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to=""/>
 		<column from="Size" to=""/>
+	</list>
+	<list name="CReviewList">
+		<column from="User" to=""/>
+		<column from="Rating" to=""/>
+		<column from="Comments" to=""/>
+		<column from="Order" to=""/>
 	</list>
 </listColumns>
 </skin>
