@@ -1705,9 +1705,9 @@
 		<text>Upload capacity, queuing, banning, timeouts and special requests.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CNetworksSettingsPage" format="b">Networks:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Remote:</link>
 		<gap size="4"/>
-		<text>Select and configure the peer-to-peer networks you would like Shareaza to connect to.</text>
+		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
 		
 		
