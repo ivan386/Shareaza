@@ -385,7 +385,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			}
 		}
 	}
-	else
+	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 	{
 		//Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pServerAddress.S_un.S_un_b.s_b1 == 0 )
