@@ -376,8 +376,8 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	DWORD nLen, nKey;
 	DWORD nUsers = 0, nFiles = 0, nMaxUsers = 0, nFileLimit = 1000, nUDPFlags = 0;
 
+	// Read in and check the key value to make sure we requested this update
 	nKey = pPacket->ReadLongLE();
-
 	if ( nKey != m_nLastServerKey )
 	{
 		theApp.Message( MSG_ERROR, _T("Received unexpected server status" ) );
@@ -408,24 +408,24 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	}
 	if ( nLen >= 12 ) 
 	{
-		// Max users allowed
+		// Maximum users allowed
 		nMaxUsers = pPacket->ReadLongLE();
 	}
 	if ( nLen >= 20 ) 
 	{
-		// Client file limit
-		nFileLimit = pPacket->ReadLongLE();
-		pPacket->ReadLongLE(); // 'Hard' limit. (Obey the previous one, since it saves bandwidth)
+		// Client file limit. (Maximum files you can send to the server)
+		nFileLimit = pPacket->ReadLongLE();	// Soft limit. (Files over this are ignored)
+		pPacket->ReadLongLE();				// 'Hard' limit. (Obey previous, it saves bandwidth)
 	}
 	if ( nLen >= 24 ) 
 	{
-		// UDP Flags
+		// UDP Flags. (This is important, it determines search types, etc)
 		nUDPFlags = pPacket->ReadLongLE();
 	}
 	if ( nLen >= 28 ) 
 	{
 		// Low ID users. 
-		pPacket->ReadLongLE(); // (Don't need this)
+		pPacket->ReadLongLE(); // We don't use this
 	}
 
 	// Update the server variables
@@ -436,12 +436,12 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	pServer->m_nFileLimit	= nFileLimit;
 	pServer->m_nUDPFlags	= nUDPFlags;
 
-	if ( nUDPFlags & ED2K_SERVER_UDP_UNICODE )
-		pServer->m_nUDPFlags |= ED2K_SERVER_TCP_UNICODE;
-	if ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 )
-		pServer->m_nUDPFlags |= ED2K_SERVER_TCP_GETSOURCES2;
-	if ( pServer->m_tSeen < pServer->m_tStats )
+	if ( pServer->m_tSeen < pServer->m_tStats ) 
 		pServer->m_tSeen = pServer->m_tStats;
+	if ( nUDPFlags & ED2K_SERVER_UDP_UNICODE ) 
+		pServer->m_nTCPFlags |= ED2K_SERVER_TCP_UNICODE;
+	if ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 ) 
+		pServer->m_nTCPFlags |= ED2K_SERVER_TCP_GETSOURCES2;
 
 	//CString strT;
 	//strT.Format( _T("Users:%d Files:%d Max Users:%d File limit:%d UDP flags:%08X"), nUsers, nFiles, nMaxUsers, nFileLimit, nUDPFlags );
