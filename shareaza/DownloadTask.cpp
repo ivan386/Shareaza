@@ -64,6 +64,19 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 	m_sName		= pDownload->m_sRemoteName;
 	m_sFilename	= pDownload->m_sLocalName;
 	m_sPath		= DownloadGroups.GetCompletedPath( pDownload );
+
+	int nExt = m_sFilename.ReverseFind( '.' );
+	if ( nExt >= 2 )
+	{
+		CString sExtention = m_sFilename.Mid( nExt );
+		sExtention.MakeLower();
+
+		if( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
+			m_sPath	= Settings.Downloads.CollectionPath;
+		else if( sExtention == ".torrent" )
+			m_sPath	= Settings.Downloads.TorrentPath;
+	}
+
 	
 	if ( m_nTask == dtaskCopySimple && m_pDownload->m_pTorrent.m_nFiles > 1 )
 	{
