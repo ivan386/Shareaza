@@ -48,6 +48,7 @@ Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: 
 
 [Tasks]
 Name: "multiuser"; Description: "{cm:tasks_multisetup}"
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 
 [Files]
 ; Install unicows.dll on Win 9X
@@ -125,7 +126,7 @@ Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ig
 [Icons]
 ; Shareaza icons
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"
-Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"
+Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: desktopicon
 
 ; License and uninstall icon in user language
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
@@ -211,6 +212,7 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
+Type: files; Name: "{userdesktop}\Shareaza.lnk"
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
 
 ; Delete extra components so installer can "uninstall" them
