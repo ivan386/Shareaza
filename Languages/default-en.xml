@@ -3288,26 +3288,26 @@
 		<control caption="Download..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
-		<control caption="_Interface:"/>
-		<control caption="Display additional BitTorrent interface elements"/>
-		<control caption="_Download Connections:"/>
-		<control/><control/>
-		<control caption="Torrents at once"/>
-		<control/><control/>
-		<control caption="Client connections"/>
-		<control caption=" Clear downloaded torrents"/>
-		<control caption="When the share ratio reaches "/>
-		<control/><control/>
-		<control caption="_EndGame:"/>
-		<control caption="Enable EndGame mode when completing torrents"/>
-		<control caption="_Store Torrents Here:"/>
-		<control/><control/>
-		<control caption="_Torrent Creator"/>
-		<control/><control/>
-		<control caption="Default Tracker:"/>
-		<control/><control/>
-	</dialog>
+<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<control caption="_Interface:"/>
+	<control caption="Display additional BitTorrent interface elements"/>
+	<control caption="_Download Connections:"/>
+	<control/><control/>
+	<control caption="Torrents at once"/>
+	<control/><control/>
+	<control caption="Client connections"/>
+	<control caption=" Clear downloaded torrents"/>
+	<control caption="When the share ratio reaches "/>
+	<control/><control/>
+	<control caption="_EndGame:"/>
+	<control caption="Enable EndGame mode when completing torrents"/>
+	<control caption="_Store Torrents Here:"/>
+	<control/><control/>
+	<control caption="_Torrent Creator"/>
+	<control/><control/>
+	<control caption="Default Tracker: "/>
+	<control/><control/>
+</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
