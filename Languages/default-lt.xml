@@ -2801,6 +2801,26 @@ right quote	&#147;
 	<string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
 	<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
 	<string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
+	<string id="17100" value="Gnutella: Ryšys dalyvis-dalyvis"/>
+	<string id="17101" value="Gnutella: Ryšys atšaka-vedantysis"/>
+	<string id="17102" value="Gnutella: Ryšys vedantysis-atšaka"/>
+	<string id="17103" value="Gnutella II: Ryšys mazgas-mazgas"/>
+	<string id="17104" value="Gnutella II: Ryšys atšaka-mazgas"/>
+	<string id="17105" value="Gnutella II: Ryšys mazgas-atšaka"/>
+	<string id="17106" value="eDonkey serverio ryšys (LOWID: %lu)"/>
+	<string id="17107" value="eDonkey2000 serverio ryšys"/>
+	<string id="17108" value="Patvirtinimas"/>
+	<string id="17109" value="Įeinantis"/>
+	<string id="17110" value="Išeinantis"/>
+	<string id="17111" value="Esamas:"/>
+	<string id="17112" value="Viso:"/>
+	<string id="17113" value="Suspaudimas:"/>
+	<string id="17114" value="Santykis:"/>
+	<string id="17115" value="Defliacija"/>
+	<string id="17116" value="Jokio"/>
+	<string id="17117" value="Jungiamasi"/>
+	<string id="17118" value="Patvirtinama"/>
+	<string id="17119" value="Atsakyta"/>
 	<string id="17120" value="Atsijungiama"/>
 	<string id="17121" value="Nežinoma"/>
 	<string id="17122" value="G1 dalyvis"/>
