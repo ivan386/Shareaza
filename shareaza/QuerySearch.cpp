@@ -1041,6 +1041,9 @@ void CQuerySearch::BuildWordList()
 	
 	m_sSearch.Trim();
 	ToLower( m_sSearch );
+	// temporarily solution for last greek sigma fix
+	// the phrase can contain punctuation marks and it won't work
+	Replace( m_sSearch, _T("\x03C3 "), _T("\x03C2 ") ); 
 	
 	BOOL bHash = FALSE;
 	
