@@ -39,9 +39,10 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadWithSearch::CDownloadWithSearch()
 {
-	m_pSearch		= NULL;
-	m_tSearchTime	= 0;
-	m_tSearchCheck	= 0;
+	m_pSearch			= NULL;
+	m_tSearchTime		= 0;
+	m_tSearchCheck		= 0;
+	m_tLastED2KGlobal	= 0;
 }
 
 CDownloadWithSearch::~CDownloadWithSearch()
@@ -177,10 +178,22 @@ void CDownloadWithSearch::PrepareSearch()
 	}
 	
 	pSearch->m_bWantURL	= TRUE;
-	pSearch->m_bWantDN	= ( m_sRemoteName.GetLength() == 0 || m_nSize == SIZE_UNKNOWN );
+	pSearch->m_bWantDN	= ( m_sRemoteName.GetLength() == 0 );
 	pSearch->m_bWantXML	= FALSE;
 	pSearch->m_bWantPFS	= TRUE;
 	pSearch->m_bWantCOM = FALSE;
+
+	if ( m_nSize == SIZE_UNKNOWN )
+	{
+		pSearch->m_nMinSize = 0;
+		pSearch->m_nMaxSize = SIZE_UNKNOWN;
+		pSearch->m_bWantDN	= TRUE;
+	}
+	else
+	{
+		pSearch->m_nMinSize = m_nSize;
+		pSearch->m_nMaxSize = m_nSize;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
