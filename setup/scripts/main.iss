@@ -81,10 +81,11 @@ Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremov
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-; Always install ImageServices.dll to enable Shareaza splash screen
-Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Components: plugins; Excludes: "RazaWebHook.dll,ImageServices.dll"
+; Always install ImageServices.dll and MediaPlayer.dll to avoid program errors.
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Components: plugins; Excludes: "RazaWebHook.dll,ImageServices.dll,MediaPlayer.dll"
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: plugins
 Source: "setup\plugins\ImageServices.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror
+Source: "setup\plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror
 
 ; Uninstall icon for software panel
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -243,6 +244,18 @@ Type: files; Name: "{app}\Data\*.xml"
 #include "settings.iss"
 
 ; Code sections need to be the last section in a script or the compiler will get confused
+; This code still needs work:
+
+;procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+;var
+;  Wnd: HWND;
+;begin
+;  if CurUninstallStep = usUninstall then
+;    Wnd := FindWindowByClassName('ShareazaMainWnd');
+;    if Wnd <> 0 then
+;      SendMessage(Wnd, WM_CLOSE, 0, 0);
+;end;
+
 [Code]
 Function ShareazaInstalled(): boolean;
 Begin
@@ -257,21 +270,11 @@ End;
 const
   WM_CLOSE = $0010;
 
-procedure CurStepChanged(CurStep: Integer);
+procedure CurStepChanged(CurStep: TSetupStep);
 var
   Wnd: HWND;
 begin
-  if CurStep = csCopy then
-    Wnd := FindWindowByClassName('ShareazaMainWnd');
-    if Wnd <> 0 then
-      SendMessage(Wnd, WM_CLOSE, 0, 0);
-end;
-
-procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
-var
-  Wnd: HWND;
-begin
-  if CurUninstallStep = usUninstall then
+  if CurStep = ssInstall then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
     if Wnd <> 0 then
       SendMessage(Wnd, WM_CLOSE, 0, 0);
