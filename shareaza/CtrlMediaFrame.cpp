@@ -511,6 +511,7 @@ void CMediaFrame::PaintSplash(CDC& dc, CRect& rcBar)
 
 void CMediaFrame::PaintListHeader(CDC& dc, CRect& rcBar)
 {
+	CString strText;
 	CPoint pt = rcBar.CenterPoint();
 	LoadString( strText, IDS_MEDIA_PLAYLIST );
 	CSize szText = dc.GetTextExtent( strText );

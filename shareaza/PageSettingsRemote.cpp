@@ -114,18 +114,18 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 		}
 		else
 		{
-			strURL = _T("Unable to accept connections, URL unavailable.");
+			strURL.LoadString( IDS_REMOTE_UNAVAILABLE );
 			m_wndURL.EnableWindow( FALSE );
 		}
 	}
 	else if ( m_bEnable )
 	{
-		strURL = _T("You must choose a username and password.");
+		strURL.LoadString( IDS_REMOTE_ENABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	else
 	{
-		strURL = _T("Remote access is disabled.");
+		strURL.LoadString( IDS_REMOTE_DISABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	
