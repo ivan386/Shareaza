@@ -71,6 +71,7 @@ void CSchedulerSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_SCHEDULER_ENABLE, m_bSchedulerEnable);
 	DDX_Text(pDX, IDC_SCHEDULER_LIMITED, m_nLimited);
 	DDX_Control(pDX, IDC_SCHEDULER_LIMITED_SPIN, m_wndLimitedSpin);
+	DDX_Check(pDX, IDC_SCHEDULER_LIMITED_NETWORKS, m_bLimitedNetworks);
 	DDX_Control(pDX, IDC_SCHEDULER_DISPLAY, m_wndDisplay);
 	//}}AFX_DATA_MAP
 }
