@@ -105,7 +105,12 @@ void CDownload::Pause()
 
 void CDownload::Resume()
 {
-	if ( m_bComplete || ! m_bPaused ) return;
+	if ( m_bComplete ) return;
+	if ( ! m_bPaused ) 
+	{
+		SetStartTimer();
+		return;
+	}
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_RESUMED, (LPCTSTR)GetDisplayName() );
 	
@@ -120,9 +125,13 @@ void CDownload::Resume()
 	m_bPaused	= FALSE;
 	m_bDiskFull	= FALSE;
 	m_tReceived	= GetTickCount();
-	m_tBegan	= GetTickCount();
 	m_bTorrentTrackerError = FALSE;
-	
+
+	if( m_bBTH && ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) )
+		SetStartTimer();
+	else if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+		SetStartTimer();
+
 	SetModified();
 	CloseTorrentUploads();
 }

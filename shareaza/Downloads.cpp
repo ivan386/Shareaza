@@ -121,9 +121,8 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( ( (pDownload->GetSourceCount() == 0 ) ||
-		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
-		   (GetTryingCount() < Settings.Downloads.MaxFiles ) )
+	if ( ( (pDownload->GetSourceCount() == 0 ) || ( pDownload->m_bED2K && ! pDownload->m_bSHA1 ) ) 
+	 &&( (GetTryingCount() < Settings.Downloads.MaxFiles ) || ( bAddToHead ) ) )
 	{
 		pDownload->SetStartTimer();
 	}
@@ -186,7 +185,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	
 	if ( ( (pDownload->GetSourceCount() == 0 ) ||
 		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
-		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
+		   (GetTryingCount() < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->FindMoreSources();
 		pDownload->SetStartTimer();
