@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
                <title language="cht">一般:我的 Shareaza 收藏</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
+               <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
                <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
@@ -33,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Welkom by Jou Biblioteek!</title>
                <title language="cht">歡迎來到您的收藏!</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
+               <title language="es">Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
                <title language="lt">Sveiki apsilankę&#160;savo kolekcijoje!</title>
                <title language="nl">Welkom bij Mijn Bibliotheek!</title>
@@ -42,6 +45,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="cht">您有 {totalFiles} 個檔案，總計大小 {totalVolume} 在您的收藏.</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
+               <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}. </subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>

@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Film</title>
                <title language="cht">影像-電影</title>
                <title language="de">Film</title>
+               <title language="es">Video Film</title>
                <title language="fr">Film</title>
                <title language="lt">Filmas</title>
                <title language="nl">Video Film</title>
@@ -35,6 +37,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="af">Titel</title>
                        <title language="cht">標題</title>
                        <title language="de">Titel</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
@@ -46,6 +49,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="af">Akteurs</title>
                        <title language="cht">演員</title>
                        <title language="de">Schauspieler</title>
+                       <title language="es">Actores</title>
                        <title language="fr">Acteurs</title>
                        <title language="lt">Aktoriai</title>
                        <title language="nl">Acteurs</title>
@@ -57,6 +61,7 @@ Shareaza Russian Schemas File translated by dAbserver
                       <title language="af">Verspreider Skakel</title>
                       <title language="cht">經銷商連結</title>
                       <title language="de">Link zum Herausgeber</title>
+                      <title language="es">Link del Distribuidor</title>
                       <title language="fr">Lien du distributeur</title>
                       <title language="lt">Distrib. nuoroda</title>
                       <title language="nl">Link naar Distributeur</title>
@@ -68,6 +73,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="af">Kwaliteit Notas</title>
                        <title language="cht">品質注解</title>
                        <title language="de">Qualitätshinweise</title>
+                       <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
                        <title language="lt">Apie kokybę</title>
                        <title language="nl">Kwaliteitsaantekeningen</title>
@@ -79,6 +85,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="af">Uitgewers Groep</title>
                        <title language="cht">釋放團體</title>
                        <title language="de">Release Group</title>
+                       <title language="es">Release Group</title>
                        <title language="fr">Groupe de release</title>
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Verschijningsgroep</title>
@@ -87,9 +94,10 @@ Shareaza Russian Schemas File translated by dAbserver
                </member>
                <member name="releasegroupLink">
                        <title language="en">Release Group Link</title>
-                       <title language="af">Uitgewers Groep Skakel</title>
+                       <title language="af">Uitgewers Skakel</title>
                        <title language="cht">釋放團體連結</title>
                        <title language="de">Release Group Link</title>
+                       <title language="es">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link Verschijningsgroep</title>

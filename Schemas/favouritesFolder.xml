@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Gunstelinge:Gunstelinge</title>
                <title language="cht">喜愛的:喜愛的</title>
                <title language="de">Favoriten:Favoriten</title>
+               <title language="es">Favoritos: Favoritos</title>
                <title language="fr">Favoris:Favoris</title>
                <title language="lt">Mėgiamybės:Mėgiamybės</title>
                <title language="nl">Favorieten:Favorieten</title>
@@ -33,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">My Gunsteling Lêers</title>
                <title language="cht">我的最愛檔案</title>
                <title language="de">Favoriten</title>
+               <title language="es">Mis Archivos Favoritos</title>
                <title language="fr">Mes fichiers favoris</title>
                <title language="lt">Mano mėgiamos bylos</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
@@ -42,6 +45,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
                <subtitle language="cht">這個資料夾包含了最愛的檔案 Shareaza 將推薦給其他瀏覽您收藏的使用者.</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
+               <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias&#160;„Shareaza“&#160;rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>

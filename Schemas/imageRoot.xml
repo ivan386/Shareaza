@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Prent:My Prente</title>
                <title language="cht">圖片:我的圖片</title>
                <title language="de">Bild:Eigene Bilder</title>
+               <title language="es">Imagen: Mis imágenes</title>
                <title language="fr">Image:Mes images</title>
                <title language="lt">Paveikslėlis:Mano paveikslėliai</title>
                <title language="nl">Afbeelding:Mijn Afbeeldingen</title>
@@ -36,6 +38,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Welkom by My Prente!</title>
                <title language="cht">歡迎來到我的圖片!</title>
                <title language="de">Willkommen bei Eigene Bilder!</title>
+               <title language="es">Bienvenido a Mis Imágenes!</title>
                <title language="fr">Bienvenue dans Mes images!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano paveikslėliuose“!</title>
                <title language="nl">Welkom bij Mijn Afbeeldingenen!</title>
@@ -45,6 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="cht">這些資料夾包含了在您的收藏中所有的圖片, 由相簿組織.  在下面開啟一個資料夾來繼續.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Bilder in ihrer Bibliothek, geordnet nach Album. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
+               <subtitle language="es">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque, organisées par album.  Ouvrez un sous-dossier pour continuer.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos paveikslėliai, surūšiuoti pagal albumus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle afbeeldingen uit je bibliotheek, georganiseerd per album.  Open een map hieronder om verder te gaan.</subtitle>

@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Musiek Kunstenaar</title>
                <title language="cht">音樂-藝人</title>
                <title language="de">Musiker</title>
+               <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
                <title language="lt">Muzikantas</title>
                <title language="nl">Muziek Artiest</title>
@@ -52,6 +54,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">{name} - Diskografie</title>
                <title language="cht">{name} - 唱片分類目錄</title>
                <title language="de">{name}</title>
+               <title language="es">{name}</title>
                <title language="fr">{name} - Discographie</title>
                <title language="lt">{name} diskografija</title>
                <title language="nl">{name} - Discografie</title>
@@ -61,6 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
                <subtitle language="cht">這個資料夾包含了您所有以 {name} 的音樂.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
+               <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa&#160;„{name}“&#160;muzika.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek gesorteerd op {name}.</subtitle>

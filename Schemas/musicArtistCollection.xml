@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Musiek:Volgens Kunstenaar</title>
                <title language="cht">音樂:由-藝人</title>
                <title language="de">Musik:Nach Künstler</title>
+               <title language="es">Música: Por Artista</title>
                <title language="fr">Musique:Par artiste</title>
                <title language="lt">Muzika:Pagal atlikėjus</title>
                <title language="nl">Muziek:Per Artiest</title>
@@ -36,6 +38,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Musiek Volgens Kunstenaar</title>
                <title language="cht">音樂-由-藝人</title>
                <title language="de">Musik nach Künstler</title>
+               <title language="es">Música por Artista</title>
                <title language="fr">Musique par artiste</title>
                <title language="lt">Muzika pagal atlikėjus</title>
                <title language="nl">Muziek Per Artiest</title>
@@ -45,6 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的音樂收藏中一個藝人清單.</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>
+               <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas. </subtitle>
                <subtitle language="nl">Deze map bevat een lijst met artiesten uit je muziekbibliotheek.</subtitle>

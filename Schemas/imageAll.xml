@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Prent:Alle Prente</title>
                <title language="cht">圖片:所有圖片</title>
                <title language="de">Bild:Alle Bilder</title>
+               <title language="es">Imagen: Todas las Imágenes</title>
                <title language="fr">Image:Toutes les images</title>
                <title language="lt">Paveikslėlis:Visi paveikslėliai</title>
                <title language="nl">Afbeelding:Alle Afbeeldingen</title>
@@ -36,6 +38,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Alle Prente</title>
                <title language="cht">所有圖片</title>
                <title language="de">Alle Bilder</title>
+               <title language="es">Todas las imágenes</title>
                <title language="fr">Toutes les images</title>
                <title language="lt">Visi paveikslėliai</title>
                <title language="nl">Alle Afbeeldingen</title>
@@ -45,6 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gids bevat alle prentlêers in jou biblioteek.</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的圖片檔案.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bilder in ihrer Bibliothek.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos paveikslėlių bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elke afbeelding uit je bibliotheek.</subtitle>

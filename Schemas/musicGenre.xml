@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Musiek Genre</title>
                <title language="cht">音樂-類型</title>
                <title language="de">Musikgenre</title>
+               <title language="es">Género de Música</title>
                <title language="fr">Genre musical</title>
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
@@ -46,6 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">{name} Musiek</title>
                <title language="cht">{name} 音樂</title>
                <title language="de">{name} Musik</title>
+               <title language="es">{name} Música</title>
                <title language="fr">Musique {name}</title>
                <title language="lt">{name} muzika</title>
                <title language="nl">Muziek {name}</title>
@@ -55,6 +58,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="cht">這個資料夾包含了您所有以 {name} 流派的音樂.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
+               <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het {name} genre.</subtitle>

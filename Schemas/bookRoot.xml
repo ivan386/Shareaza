@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
+Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by thurstydog
@@ -19,6 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Boek:My Boeke</title>
                <title language="cht">書籍:我的書籍</title>
                <title language="de">Buch:Eigene Bücher</title>
+               <title language="es">Libro: Todos mis libros</title>
                <title language="fr">Livres:Mes livres</title>
                <title language="lt">Knyga:Mano knygos</title>
                <title language="nl">Boek:Mijn Boeken</title>
@@ -36,6 +38,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="af">Welkom by My Boeke!</title>
                <title language="cht">歡迎來到我的書籍!</title>
                <title language="de">Willkommen bei Eigene Bücher!</title>
+               <title language="es">Bienvenido a Mis Libros!</title>
                <title language="fr">Bienvenue dans Mes livres!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano knygose“!</title>
                <title language="nl">Welkom bij Mijn Boeken!</title>
@@ -45,6 +48,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
                <subtitle language="cht">這些資料夾包含了您所有的書籍.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Bücher.</subtitle>
+               <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
