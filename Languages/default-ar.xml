@@ -2101,7 +2101,7 @@
 	<tip id="ID_TRANSFERS_DISCONNECT" message="قطع الاتصال عند الانتهاء من تحميل الملف المحدد."/>
 	<tip id="ID_TRANSFERS_FORGET" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com قم بزيارة موقع."/>
-	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية">	
+	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية"/>	
 	<tip id="ID_HELP_WEB_1" message="قم بزياره Zeropaid.com"/>
 	<tip id="ID_HELP_WEB_2" message="قم بزياره P2PForums.com"/>
 	<tip id="ID_HELP_WEB_3" message="قم بزياره Slyck.com"/>
