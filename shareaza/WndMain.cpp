@@ -1141,9 +1141,17 @@ void CMainWnd::UpdateMessages()
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
 
-		LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
-		strMessage.Format( strFormat, nCount,
-			(LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
+		if( Settings.General.GUIMode == GUI_BASIC )
+		{
+			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
+			strMessage.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
+		}
+		else
+		{
+			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+			strMessage.Format( strFormat, nCount,
+								(LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
+		}
 	}
 	else if ( Network.IsConnected() )
 	{
