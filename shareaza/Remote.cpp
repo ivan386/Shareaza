@@ -948,8 +948,6 @@ void CRemote::PageDownloads()
 		}
 		else if ( pDownload->GetSourceCount() > 0 )
 			LoadString( str, IDS_STATUS_PENDING );
-		else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-			LoadString( str, IDS_STATUS_SEARCHING );
 		else if ( pDownload->m_bBTH )
 		{
 			if ( pDownload->IsTasking() )
@@ -960,7 +958,7 @@ void CRemote::PageDownloads()
 				LoadString( str, IDS_STATUS_TORRENT );
 		}
 		else
-			LoadString( str, IDS_STATUS_NOSOURCES );
+			LoadString( str, IDS_STATUS_SEARCHING );
 		Add( _T("download_status"), str );
 		if ( pDownload->IsCompleted() )
 		{

@@ -1340,8 +1340,6 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		LoadString( strText, IDS_STATUS_QUEUED );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
-	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-		LoadString( strText, IDS_STATUS_SEARCHING );
 	else if ( pDownload->m_bBTH )
 	{
 		if ( pDownload->IsTasking() )
@@ -1352,7 +1350,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 			LoadString( strText, IDS_STATUS_TORRENT );
 	}
 	else
-		LoadString( strText, IDS_STATUS_NOSOURCES );
+		LoadString( strText, IDS_STATUS_SEARCHING );
 
 	return strText;
 }
