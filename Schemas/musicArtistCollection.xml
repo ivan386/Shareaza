@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
@@ -23,7 +23,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <titles>
                <title language="en">Music:By Artist</title>
                <title language="af">Musiek:Volgens Kunstenaar</title>
-               <title language="ar">&#160;اغنية بواسطة الفنان</title>
+               <title language="ar">&#160;اغنية: بواسطة الفنان</title>
                <title language="chs">&#160;音乐:按-艺人</title>
                <title language="de">Musik:Nach Künstler</title>
                <title language="es">Música: Por Artista</title>
