@@ -768,13 +768,10 @@ const CLowerCaseTable ToLowerCase;
 
 void ToLower(CString& strSource)
 {
-	if ( strSource.IsEmpty() ) return;
-	LPTSTR pszString = strSource.GetBuffer();
-
-	CString strOut;
-	const TCHAR* source = pszString;
-	while ( strOut += ToLowerCase[ *source ], *source++ );
-	lstrcpy( pszString, strOut );
+	const int nLength = strSource.GetLength();
+	const LPTSTR str = strSource.GetBuffer();
+	std::transform( &str[ 0 ], &str[ nLength ], &str[ 0 ], ToLowerCase );
+	strSource.ReleaseBuffer( nLength );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -801,7 +798,7 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 			}
 			else
 			{
-	return NULL;
+				return NULL;
 			}
 		}
 
@@ -830,7 +827,7 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 			}
 			else
 			{
-	return NULL;
+				return NULL;
 			}
 		}
 
