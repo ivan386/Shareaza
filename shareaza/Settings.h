@@ -121,6 +121,7 @@ public:
 		BOOL		DetailPanelVisible;
 		DWORD		DetailPanelSize;
 		DWORD		MaxPreviewLength;
+		BOOL		AdultFilter;
 	} Search;
 	
 	struct sMediaPlayer

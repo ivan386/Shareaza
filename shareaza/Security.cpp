@@ -34,6 +34,7 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 CSecurity Security;
+CAdultFilter AdultFilter;
 
 
 //////////////////////////////////////////////////////////////////////
@@ -1010,4 +1011,175 @@ void  CSecureRule::MaskFix()
 		}
 		m_nIP[ nByte ] = nNetByte;
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CAdultFilter construction
+
+CAdultFilter::CAdultFilter()
+{
+	m_pszBlockedWords = NULL;
+	m_pszDubiousWords = NULL;
+}
+
+CAdultFilter::~CAdultFilter()
+{
+	if ( m_pszBlockedWords ) delete [] m_pszBlockedWords;
+	m_pszBlockedWords = NULL;
+
+	if ( m_pszDubiousWords ) delete [] m_pszDubiousWords;
+	m_pszDubiousWords = NULL;
+}
+
+void CAdultFilter::Load()
+{
+	CFile pFile;
+	CString strFile = Settings.General.Path + _T("\\Data\\AdultFilter.dat");
+
+	//Delete current adult filters (if present)
+	if ( m_pszBlockedWords ) delete [] m_pszBlockedWords;
+	m_pszBlockedWords = NULL;
+
+	if ( m_pszDubiousWords ) delete [] m_pszDubiousWords;
+	m_pszDubiousWords = NULL;
+
+	//Load the adult filter from disk
+	if (  pFile.Open( strFile, CFile::modeRead ) ) 
+	{
+		CString strBlockedWords, strDubiousWords;
+		try
+		{
+			CBuffer pBuffer;
+
+			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
+			pBuffer.m_nLength = (DWORD)pFile.GetLength();
+			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
+			pFile.Close();
+
+			pBuffer.ReadLine( strBlockedWords );	//Line 1: words that are blocked
+			pBuffer.ReadLine( strDubiousWords );	//Line 2: words that may be okay
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
+		pFile.Close();
+
+		//Load the blocked words into the Adult Filter
+		if ( strBlockedWords.GetLength() > 3 )
+		{
+			LPCTSTR pszPtr = strBlockedWords;
+			int nWordLen = 3;
+			CStringList pWords;
+			
+			for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+			{
+				if ( *pszPtr == ' ' )
+				{
+					if ( nStart < nPos )
+					{
+						pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
+						nWordLen += ( nPos - nStart ) + 1;
+					}
+					nStart = nPos + 1;	
+				}
+			}
+			
+			if ( nStart < nPos )
+			{
+				pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
+				nWordLen += ( nPos - nStart ) + 1;
+			}
+			
+			m_pszBlockedWords = new TCHAR[ nWordLen ];
+			LPTSTR pszFilter = m_pszBlockedWords;
+			
+			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+			{
+				CString strWord = pWords.GetNext( pos );
+				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+				pszFilter += strWord.GetLength() + 1;
+			}
+			
+			*pszFilter++ = 0;
+			*pszFilter++ = 0;
+		}
+	
+		//Load the possibly blocked words into the Adult Filter
+		if ( strDubiousWords.GetLength() > 3 )
+		{
+			LPCTSTR pszPtr = strDubiousWords;
+			int nWordLen = 3;
+			CStringList pWords;
+			
+			for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+			{
+				if ( *pszPtr == ' ' )
+				{
+					if ( nStart < nPos )
+					{
+						pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
+						nWordLen += ( nPos - nStart ) + 1;
+					}
+					nStart = nPos + 1;	
+				}
+			}
+			
+			if ( nStart < nPos )
+			{
+				pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
+				nWordLen += ( nPos - nStart ) + 1;
+			}
+			
+			m_pszDubiousWords = new TCHAR[ nWordLen ];
+			LPTSTR pszFilter = m_pszDubiousWords;
+			
+			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+			{
+				CString strWord = pWords.GetNext( pos );
+				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+				pszFilter += strWord.GetLength() + 1;
+			}
+			
+			*pszFilter++ = 0;
+			*pszFilter++ = 0;
+		}
+	}
+}
+
+BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
+{
+	if ( Settings.Search.AdultFilter && pszText )
+	{
+		LPCTSTR pszWord;
+
+		//Check blocked words
+		if ( m_pszBlockedWords )
+		{	
+			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
+			{
+				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;
+
+				pszWord += _tcslen( pszWord ) + sizeof( TCHAR );
+			}
+		}
+
+		//Check dubious words
+		if ( m_pszDubiousWords )
+		{
+			int nDubiousWords = 0, nTextLength = _tcslen( pszText );
+
+			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
+			{
+				if ( _tcsistr( pszText, pszWord ) != NULL ) nDubiousWords++;
+
+				if ( nDubiousWords > 1 ) return TRUE;
+				else if ( ( nDubiousWords == 1 ) && ( nTextLength < 10 ) ) return TRUE;
+
+				pszWord += _tcslen( pszWord ) + sizeof( TCHAR );
+			}
+		}
+	}
+	
+	return FALSE;
 }

@@ -152,6 +152,7 @@ BOOL CShareazaApp::InitInstance()
 		DiscoveryServices.Load();
 	dlgSplash->Step( _T("Security Services") );
 		Security.Load();
+		AdultFilter.Load();
 	dlgSplash->Step( _T("Download Manager") );
 		Downloads.Load();
 	dlgSplash->Step( _T("Upload Manager") );

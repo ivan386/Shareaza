@@ -115,6 +115,7 @@ void CSettings::Setup()
 	Add( _T("Search.DetailPanelVisible"), &Search.DetailPanelVisible, TRUE );
 	Add( _T("Search.DetailPanelSize"), &Search.DetailPanelSize, 100 );
 	Add( _T("Search.MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024 );
+	Add( _T("Search.AdultFilter"), &Search.AdultFilter, FALSE );
 
 	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
 	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );

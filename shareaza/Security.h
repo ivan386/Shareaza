@@ -118,6 +118,25 @@ public:
 
 };
 
+class CAdultFilter
+{
+// Construction
+public:
+	CAdultFilter();
+	virtual ~CAdultFilter();
+	
+// Attributes
+private:
+	LPTSTR		m_pszBlockedWords;		//Definitely adult content
+	LPTSTR		m_pszDubiousWords;		//Possibly adult content
+	
+// Operations
+public:
+	void		Load();
+	BOOL		IsFiltered( LPCTSTR );
+};
+
+extern CAdultFilter AdultFilter;
 extern CSecurity Security;
 
 #endif // !defined(AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_)
