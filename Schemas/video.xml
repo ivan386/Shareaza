@@ -661,9 +661,17 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                </member>
        </members>
        <typeFilter>
+               <type extension="3gp"/>
+               <type extension="3g2"/>
+               <type extension="asf"/>
                <type extension="avi"/>
                <type extension="divx"/>
+               <type extension="dv"/>
+               <type extension="ivf"/>
+               <type extension="mkv"/>
                <type extension="mov"/>
+               <type extension="mp1"/>
+               <type extension="mp2"/>
                <type extension="mpe"/>
                <type extension="mpeg"/>
                <type extension="mpg"/>
@@ -673,5 +681,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="ram"/>
                <type extension="wm"/>
                <type extension="wmv"/>
+               <type extension="xvid"/>
        </typeFilter>
 </schemaDescriptor>
