@@ -95,6 +95,8 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+protected:
+	virtual void RecalcLayout(BOOL bNotify = TRUE);
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -531,5 +531,16 @@ BOOL CHostCacheWnd::PreTranslateMessage(MSG* pMsg)
 			OnHostCacheRemove();
 		}
 	}
+	else if ( pMsg->message == WM_MOUSEWHEEL )
+	{
+		m_bAllowUpdates = FALSE;
+	}
 	return CPanelWnd::PreTranslateMessage( pMsg );
+}
+
+void CHostCacheWnd::RecalcLayout(BOOL bNotify)
+{
+	m_bAllowUpdates = FALSE;
+
+	CPanelWnd::RecalcLayout(bNotify);
 }
