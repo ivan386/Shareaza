@@ -33,6 +33,8 @@ CompletePath=C:\Documents and Settings\All Users\Application Data\Shareaza\Downl
 IncompletePath=C:\Documents and Settings\All Users\Application Data\Shareaza\Incomplete
 TorrentPath=C:\Documents and Settings\All Users\Application Data\Shareaza\Torrents
 CollectionPath=C:\Documents and Settings\All Users\Application Data\Shareaza\Collections
+UserPath=C:\Documents and Settings\All Users\Application Data\Shareaza
+Path=C:\Program Files\Shareaza
 [General]
 RatesInBytes=1
 VerboseMode=0
