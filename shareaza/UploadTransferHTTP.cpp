@@ -50,6 +50,7 @@
 #include "Neighbour.h"
 #include "G2Packet.h"
 #include "GProfile.h"
+#include "Security.h"
 
 #include "SHA.h"
 #include "ED2K.h"
@@ -343,6 +344,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		if ( m_sFileName.IsEmpty() ) m_sFileName = _T("file");
 		SendResponse( IDR_HTML_BROWSER );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		Security.TempBlock( &m_pHost.sin_addr ); //Anti-hammer protection if client doesn't understand 403 (Don't bother re-sending HTML every 5 seconds)
 		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
 		Remove( FALSE );
 		return FALSE;
@@ -351,6 +353,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		SendResponse( IDR_HTML_DISABLED );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		Security.TempBlock( &m_pHost.sin_addr ); //Anti-hammer protection if client doesn't understand 403
 		Remove( FALSE );
 		return FALSE;
 	}
