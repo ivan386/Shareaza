@@ -24,6 +24,7 @@
 #include "GProfile.h"
 #include "XML.h"
 #include "PageProfileFavourites.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -109,7 +110,7 @@ BOOL CFavouritesProfilePage::OnInitDialog()
 			}
 		}
 	}
-	
+	Skin.Translate( _T("CFavouritesProfileList"), m_wndList.GetHeaderCtrl() );
 	UpdateData( FALSE );
 	m_wndAdd.EnableWindow( FALSE );
 	m_wndRemove.EnableWindow( FALSE );

@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "LiveList.h"
 #include "PageSettingsTraffic.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -245,7 +246,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
-	
+
+	Skin.Translate( _T("CAdvancedSettingsList"), m_wndList.GetHeaderCtrl() );
 	return TRUE;
 }
 
