@@ -155,6 +155,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		AddSize( pDC, m_sBTH );
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
+	if ( m_sTiger.GetLength() )
+	{
+		AddSize( pDC, m_sTiger );
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
 
 	m_sz.cy += TIP_RULE;
 	AddSize( pDC, m_sSize, 80 );
