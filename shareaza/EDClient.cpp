@@ -969,6 +969,11 @@ void CEDClient::DeriveVersion()
 			//Client allows G2 browse, etc
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+		case 5:
+			m_sUserAgent.Format( _T("ePlus %i.%i%c"), 
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+			break;
 		case 10:
 			m_sUserAgent.Format( _T("MlDonkey") );
 			break;
@@ -978,8 +983,8 @@ void CEDClient::DeriveVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		default:
-			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), 
-				( m_nEmCompatible, ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), m_nEmCompatible,
+				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		}
