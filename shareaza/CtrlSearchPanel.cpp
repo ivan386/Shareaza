@@ -101,7 +101,7 @@ int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CTaskPanel::OnCreate( lpCreateStruct ) == -1 )return -1;
 	
-	BOOL bAdvanced = Settings.General.GUIMode != GUI_BASIC && GetSystemMetrics( SM_CYSCREEN ) > 600;
+	BOOL bAdvanced = Settings.General.GUIMode != GUI_BASIC &&  ( ! Settings.Interface.LowResMode ) ;
 	
 	m_boxSearch.Create( this, bAdvanced ? 188 : 140, _T("Search"), IDR_SEARCHFRAME );
 	m_boxSchema.Create( this, 0, _T("Schema"), IDR_SEARCHFRAME );
@@ -387,7 +387,7 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
 	
-	if ( Settings.General.GUIMode != GUI_BASIC && GetSystemMetrics( SM_CYSCREEN ) > 600 )
+	if ( Settings.General.GUIMode != GUI_BASIC && ( ! Settings.Interface.LowResMode ) )
 	{
 		if ( ! m_wndNetworks.Create( WS_TABSTOP, this, IDC_SEARCH_NETWORKS ) ) return -1;
 	}
