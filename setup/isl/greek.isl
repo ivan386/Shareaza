@@ -2,9 +2,9 @@
 ; $Translator:NL=%n:TB=%t
 ;
 [LangOptions]
-LanguageName=Greek
+LanguageName=<0395><03BB><03BB><03B7><03BD><03B9><03BA><03AC>
 LanguageID=$0408
-LanguageCodePage=0
+LanguageCodePage=1253
 DialogFontName=
 DialogFontSize=8
 WelcomeFontName=Verdana
@@ -13,6 +13,7 @@ TitleFontName=Arial
 TitleFontSize=29
 CopyrightFontName=Arial
 CopyrightFontSize=8
+
 [Messages]
 SetupAppTitle=Εγκατάσταση
 SetupWindowTitle=Εγκατάσταση - %1
