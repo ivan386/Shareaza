@@ -47,6 +47,12 @@ public:
 	BOOL				m_bLive;
 	BOOL				m_bNT;
 	DWORD				m_dwWindowsVersion;
+
+	HINSTANCE m_hUser32;
+	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
+	BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
+	HMONITOR (WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
+
 protected:
 	CCriticalSection	m_csMessage;
 	static TCHAR		szMessageBuffer[16384];

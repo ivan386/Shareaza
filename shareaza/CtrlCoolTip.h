@@ -48,11 +48,6 @@ protected:
 	CSize	m_sz;
 protected:
 	static LPCTSTR	m_hClass;
-protected:
-	HINSTANCE m_hUser32;
-	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
-	//BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
-	//HMONITOR (WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	
 // Operations
 public:

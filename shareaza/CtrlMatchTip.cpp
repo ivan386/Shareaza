@@ -240,14 +240,14 @@ void CMatchTipCtrl::ShowInternal()
 	rc.bottom = rc.top + sz.cy;
 	
 
-	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
+	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) && (theApp.m_pfnMonitorFromRect) )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
 		if (NULL != hMonitor)
 		{
-		if ( GetMonitorInfoA(hMonitor, &mi) )
+		if ( theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
 			rcMonitor = mi.rcWork;
 		else
 			hMonitor = NULL; // Fall back to GetSystemMetrics

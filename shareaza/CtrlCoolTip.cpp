@@ -67,16 +67,6 @@ CCoolTipCtrl::CCoolTipCtrl()
 	m_bVisible	= FALSE;
 	m_tOpen		= 0;
 
-	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
-	{
-		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
-			m_hUser32, "SetLayeredWindowAttributes" );
-	}
-	else
-	{
-		m_pfnSetLayeredWindowAttributes = NULL;
-	}
-
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
 
 	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
@@ -85,7 +75,6 @@ CCoolTipCtrl::CCoolTipCtrl()
 CCoolTipCtrl::~CCoolTipCtrl()
 {
 	if ( m_hWnd != NULL ) DestroyWindow();
-	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,15 +186,15 @@ void CCoolTipCtrl::ShowImpl()
 	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
 	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
 
-	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
+	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) && (theApp.m_pfnMonitorFromRect) )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
 		//hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 		if (NULL != hMonitor)
 		{
-			if ( GetMonitorInfoA(hMonitor, &mi) )
+			if ( theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
 				rcMonitor = mi.rcWork;
 			else
 				hMonitor = NULL; // Fall back to GetSystemMetrics
@@ -236,14 +225,14 @@ void CCoolTipCtrl::ShowImpl()
 	
 	OnShow();
 	
-	if ( Settings.Interface.TipAlpha == 255 || m_pfnSetLayeredWindowAttributes == NULL )
+	if ( Settings.Interface.TipAlpha == 255 || theApp.m_pfnSetLayeredWindowAttributes == NULL )
 	{
 		ModifyStyleEx( WS_EX_LAYERED, 0 );
 	}
 	else
 	{
 		ModifyStyleEx( 0, WS_EX_LAYERED );
-		(*m_pfnSetLayeredWindowAttributes)( GetSafeHwnd(),
+		(*theApp.m_pfnSetLayeredWindowAttributes)( GetSafeHwnd(),
 			0, (BYTE)Settings.Interface.TipAlpha, LWA_ALPHA );
 	}
 	

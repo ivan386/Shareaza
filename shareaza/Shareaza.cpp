@@ -225,6 +225,8 @@ int CShareazaApp::ExitInstance()
 	Skin.Clear();
 	
 	if ( m_bLive ) Settings.Save( TRUE );
+
+	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
 	
 	WSACleanup();
 	
@@ -290,6 +292,26 @@ void CShareazaApp::InitResources()
 
 	//Win 95/98/Me/NT (<5) do not support some functions
 	m_dwWindowsVersion = pVersion.dwMajorVersion; 
+
+
+	//Get pointers to some functions that don't exist under 95/NT
+	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
+	{
+		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
+			m_hUser32, "SetLayeredWindowAttributes" );
+		   
+		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress( 
+			m_hUser32, "GetMonitorInfoA" ); 
+    
+		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress( 
+			m_hUser32, "MonitorFromRect" ); 
+	}
+	else
+	{
+		m_pfnSetLayeredWindowAttributes = NULL;
+		m_pfnGetMonitorInfoA = NULL; 
+        m_pfnMonitorFromRect = NULL; 
+	}
 	
 	m_gdiFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
