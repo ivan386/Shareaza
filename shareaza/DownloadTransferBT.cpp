@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -185,18 +185,30 @@ BOOL CDownloadTransferBT::OnConnected()
 {
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
-	SetState( dtsTorrent );
-	m_pHost		= m_pClient->m_pHost;
-	m_sAddress	= m_pClient->m_sAddress;
-	m_pSource->SetLastSeen();
-	m_pClient->m_mInput.pLimit = &Downloads.m_nLimitGeneric;
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
-	if ( ! m_pDownload->PrepareFile() )
+
+	if( m_pDownload->IsCompleted() )
 	{
-		Close( TS_TRUE );
+		// This source is only here to push start torrent uploads. (We don't want to download)
+		theApp.Message( MSG_DEFAULT, _T("Initiated push start for upload to %s"), (LPCTSTR)m_sAddress );
+		Close( TS_FALSE );
 		return FALSE;
 	}
-	return TRUE;
+	else
+	{
+		// Regular download
+		SetState( dtsTorrent );
+		m_pHost		= m_pClient->m_pHost;
+		m_sAddress	= m_pClient->m_sAddress;
+		m_pSource->SetLastSeen();
+		m_pClient->m_mInput.pLimit = &Downloads.m_nLimitGeneric;
+		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
+		if ( ! m_pDownload->PrepareFile() )
+		{
+			Close( TS_TRUE );
+			return FALSE;
+		}
+		return TRUE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

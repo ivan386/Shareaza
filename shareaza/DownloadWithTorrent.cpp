@@ -204,15 +204,18 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
+		// Regular tracker update
+		int nSources = GetSourceCount();
 		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
 		if ( IsMoving() )								//If we are seeding or completed, base requests on BT uploads
 		{
-			if ( ( ! IsCompleted() ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
+			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
+			if ( ( ! IsCompleted() ) || ( ! Settings.Connection.Firewalled ) ||  ( nSources > (Settings.Downloads.SourcesWanted / 8) ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
 				CBTTrackerRequest::SendUpdate( this, 0 );	// We don't need to request peers.
 			else
 				CBTTrackerRequest::SendUpdate( this, 10 );	// We might need more peers.					
 		}
-		else if ( GetSourceCount() > Settings.Downloads.SourcesWanted )
+		else if ( nSources > Settings.Downloads.SourcesWanted )
 			CBTTrackerRequest::SendUpdate( this, 5 );	//If we have many sources, just get a few to make sure we have some fresh ones. 
 		else
 			CBTTrackerRequest::SendUpdate( this );		//Otherwise, take the tracker default. (It should be an appropriate number.)
@@ -315,7 +318,9 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 		
 	if ( pSource->m_pTransfer != NULL ) 
 	{
-theApp.Message( MSG_ERROR, _T("**** possibly unable to create m_pDownloadTransfer") );  //******************************* (Temp debug check)
+//******************************* (Temp debug check)
+theApp.Message( MSG_ERROR, _T("**** possibly unable to create m_pDownloadTransfer") );  
+//*******************debug
 		return NULL;
 	}
 	
@@ -403,6 +408,21 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	if ( ! tNow ) tNow = GetTickCount();
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke < 2000 ) return;
 	m_tTorrentChoke = tNow;
+
+	// Check if a firewalled seeding client needs to start some new connections
+	if ( ( IsCompleted() ) && ( Settings.Connection.Firewalled ) )
+	{
+		// We might need to 'push' a connection if we don't have enough upload connections
+		if ( Uploads.GetTorrentTransferCount() < max( Settings.BitTorrent.UploadCount * 2, 8 ) )
+		{
+			if ( CanStartTransfers( tNow ) )
+			{
+				theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload")  ); 
+				StartNewTransfer( tNow );
+			}
+		}
+	}
+
 	
 	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 	{
@@ -599,7 +619,7 @@ float CDownloadWithTorrent::GetRatio() const
 
 BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
-	if ( ! m_bBTH ) return TRUE;						//Not a torrent
+	if ( ! m_bBTH ) return TRUE;								//Not a torrent
 	
 	if ( m_nStartTorrentDownloads == dtAlways ) return TRUE;	//Torrent is set to download as needed
 

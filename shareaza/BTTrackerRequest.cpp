@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -286,7 +286,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	CBENode* pPeers = pRoot->GetNode( "peers" );
 	int nCount = 0;
 	
-	if ( pPeers->IsType( CBENode::beList ) && ! m_pDownload->IsMoving() )
+	if ( pPeers->IsType( CBENode::beList )  && ( ( ! m_pDownload->IsMoving() ) || ( Settings.Connection.Firewalled ) ) )
 	{
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
@@ -319,7 +319,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			}
 		}
 	}
-	else if ( pPeers->IsType( CBENode::beString ) && ! m_pDownload->IsMoving() )
+	else if ( pPeers->IsType( CBENode::beString ) && ( ( ! m_pDownload->IsMoving() ) || ( Settings.Connection.Firewalled ) ) )
 	{
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{

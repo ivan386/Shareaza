@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,7 +119,13 @@ void CBTClient::Close()
 	if ( m_pUpload != NULL ) m_pUpload->Close();
 	ASSERT( m_pUpload == NULL );
 	
-	if ( m_pDownloadTransfer != NULL ) m_pDownloadTransfer->Close( TS_UNKNOWN );
+	if ( m_pDownloadTransfer != NULL ) 
+	{
+		if ( ( m_pDownload == NULL ) || ( m_pDownload->IsCompleted() ) )
+			m_pDownloadTransfer->Close( TS_FALSE );
+		else
+			m_pDownloadTransfer->Close( TS_UNKNOWN );
+	}
 	ASSERT( m_pDownloadTransfer == NULL );
 	
 	m_pDownload = NULL;
@@ -190,8 +196,12 @@ BOOL CBTClient::OnRun()
 			OnWrite();
 		}
 		
+
+		//*****debug check- this shouldn't happen
+		ASSERT ( m_pUpload != NULL );
+
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
-		if ( ! m_pUpload->OnRun() ) return FALSE;
+		if ( m_pUpload == NULL || ! m_pUpload->OnRun() ) return FALSE;
 	}
 	
 	return TRUE;
