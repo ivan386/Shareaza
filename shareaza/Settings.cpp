@@ -501,11 +501,11 @@ void CSettings::Load()
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
-	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(5*60) );
+	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(5*60*1000) );
 	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, DWORD(45*60) );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, DWORD(1000) );
 	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, DWORD(45*60) );
-	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, DWORD(45*60) );
+	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, DWORD(60*60) );
 	Downloads.ConnectThrottle	= max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 
 	// Set client links
