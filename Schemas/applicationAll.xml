@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Programa:Visos programos</title>
                <title language="nl">Programma:Alle Programma's</title>
                <title language="no">Program: alle program</title>
+               <title language="br">Aplicativo:Todos Aplicativos</title>
                <title language="ru">&#160;Приложение:&#160;Все приложения</title>
        </titles>
        <images>
@@ -48,6 +50,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
        </members>
@@ -66,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Visos programos</title>
                <title language="nl">Alle Programma's</title>
                <title language="no">Alle programmer</title>
+               <title language="br">Todos os aplicativos</title>
                <title language="ru">&#160;Все приложения</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
@@ -78,6 +82,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>
                <subtitle language="nl">Deze map bevat alle programmabestanden uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
+               <subtitle language="br">Esta pasta contém todos os aplicativos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает каждое приложение в&#160;Вашем хранилище.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>

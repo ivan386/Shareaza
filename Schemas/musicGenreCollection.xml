@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Muzika:Pagal stilių</title>
                <title language="nl">Muziek:Per Genre</title>
                <title language="no">Musikk: per sjanger</title>
+               <title language="br">Música:Por Gênero</title>
                <title language="ru">&#160;Музыка:&#160;По стилям</title>
        </titles>
        <images>
@@ -48,6 +50,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
        </members>
@@ -66,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Muzika pagal stilių</title>
                <title language="nl">Muziek Per Genre</title>
                <title language="no">Musikk per sjanger</title>
+               <title language="br">Música por Gênero</title>
                <title language="ru">&#160;Музыка по стилям</title>
                <subtitle language="en">This folder contains a list of musical genres found in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die musiek genres wat jy in jou biblioteek het.</subtitle>
@@ -78,6 +82,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met muziekgenres die in je bibliotheek zijn gevonden.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste med musikk sjangrer som fin i mine filer</subtitle>
+               <subtitle language="br">Esta pasta contém todos os gêneros musicais presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает список музыкальных стилей найденных в файлах&#160;Вашего хранилища.</subtitle>
        </headerContent>
 

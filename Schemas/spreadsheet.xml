@@ -4,6 +4,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Dokumentas:Skaičiuoklė</title>
                <title language="nl">Document:Spreadsheet</title>
                <title language="no">Dokument: regneark</title>
+               <title language="br">Documento:Planilha</title>
                <title language="ru">&#160;Документ:&#160;Таблица</title>
        </titles>
        <members>
@@ -45,6 +47,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
                <member name="author" search="generic">
@@ -60,6 +63,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Autorius</title>
                        <title language="nl">Auteur</title>
                        <title language="no">Forfatter</title>
+                       <title language="br">Autor</title>
                        <title language="ru">&#160;Автор</title>
                </member>
                <member name="subject">
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Tema</title>
                        <title language="nl">Onderwerp</title>
                        <title language="no">Tema</title>
+                       <title language="br">Assunto</title>
                        <title language="ru">&#160;Тема</title>
                </member>
                <member name="keywords">
@@ -88,6 +93,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
+                       <title language="br">Palavras-chave</title>
                        <title language="ru">&#160;Ключевые слова</title>
                </member>
                <member name="abstract">
@@ -102,6 +108,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Santrauka</title>
                        <title language="nl">Samenvatting</title>
                        <title language="no">Abstrakt</title>
+                       <title language="br">Abstração</title>
                        <title language="ru">&#160;Содержание</title>
                </member>
                <member name="initials">
@@ -116,6 +123,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Inicialai</title>
                        <title language="nl">Initialen</title>
                        <title language="no">Initialer</title>
+                       <title language="br">Iniciais</title>
                        <title language="ru">&#160;Инициалы</title>
                </member>
                <member name="copyright">
@@ -130,6 +138,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Autorių teisės</title>
                        <title language="nl">Copyright</title>
                        <title language="no">Kopibeskyttelse</title>
+                       <title language="br">Direitos de Cópia</title>
                        <title language="ru">&#160;Правообладатель</title>
                </member>
                <member name="version">
@@ -144,6 +153,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
+                       <title language="br">Versão</title>
                        <title language="ru">&#160;Версия</title>
                </member>
                <member name="revision">
@@ -158,6 +168,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Revizija</title>
                        <title language="nl">Revisie</title>
                        <title language="no">Revisjon</title>
+                       <title language="br">Revisão</title>
                        <title language="ru">&#160;Ревизия</title>
                </member>
                <member name="type">
@@ -172,6 +183,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
+                       <title language="br">Tipo</title>
                        <title language="ru">&#160;Тип</title>
                </member>
                <member name="format">
@@ -187,6 +199,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Formatas</title>
                        <title language="nl">Formaat</title>
                        <title language="no">Format</title>
+                       <title language="br">Formato</title>
                        <title language="ru">&#160;Формат</title>
                </member>
                <member name="formatversion">
@@ -201,6 +214,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Formato versija</title>
                        <title language="nl">Formaatsversie</title>
                        <title language="no">Format versjon</title>
+                       <title language="br">Versão do Formato</title>
                        <title language="ru">&#160;Версия формата</title>
                </member>
                <member name="records">
@@ -215,6 +229,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Įrašų</title>
                        <title language="nl">Registers</title>
                        <title language="no">Anvisning</title>
+                       <title language="br">Regisitros</title>
                        <title language="ru">&#160;Записей</title>
                </member>
                <member name="link">
@@ -230,6 +245,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
+                       <title language="br">Link</title>
                        <title language="ru">&#160;Ссылка</title>
                </member>
                <member name="comments">
@@ -245,6 +261,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
+                       <title language="br">Comentários</title>
                        <title language="ru">&#160;Коментарии</title>
                </member>
        </members>

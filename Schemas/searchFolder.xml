@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
+               <title language="br">Pesquisar:Resultados de Pesquisa</title>
                <title language="ru">&#160;Поиск:&#160;Результаты поиска</title>
        </titles>
        <members>
@@ -44,6 +46,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
                <member name="time" search="none">
@@ -58,6 +61,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Laikas</title>
                        <title language="nl">Tijd</title>
                        <title language="no">Tid</title>
+                       <title language="br">Tempo</title>
                        <title language="ru">&#160;Время</title>
                </member>
                <member name="date" search="none">
@@ -72,6 +76,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Data</title>
                        <title language="nl">Datum</title>
                        <title language="no">Dato</title>
+                       <title language="br">Data</title>
                        <title language="ru">&#160;Дата</title>
                </member>
                <member name="content" search="none">
@@ -86,6 +91,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Turinys</title>
                        <title language="nl">Inhoud</title>
                        <title language="no">Innhold</title>
+                       <title language="br">Conteúdo</title>
                        <title language="ru">&#160;Содержание</title>
                </member>
        </members>
@@ -104,6 +110,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">&#160;„{content}“&#160;radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
+               <title language="br">Pesquisar por "{content}"</title>
                <title language="ru">&#160;Поиск для&#160;"{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
@@ -116,6 +123,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">&#160;Šiame kataloge yra bylos, surastos pagal ieškinį&#160;„{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
+               <subtitle language="br">Esta pasta contém os arquivos que foram encontrados na sua pesquisa por "{content}".</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает результаты поиска для&#160;{content}.</subtitle>
        </headerContent>
 

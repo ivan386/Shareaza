@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Video:Filmai</title>
                <title language="nl">Video:Films</title>
                <title language="no">Video: filmer</title>
+               <title language="br">Vídeo:Filmes</title>
                <title language="ru">&#160;Видео:&#160;Фильмы</title>
        </titles>
        <images>
@@ -48,6 +50,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
        </members>
@@ -66,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Filmai</title>
                <title language="nl">Films</title>
                <title language="no">Filmer</title>
+               <title language="br">Filmes</title>
                <title language="ru">&#160;Фильмы</title>
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
@@ -78,6 +82,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos filmų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst van films die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine filmer</subtitle>
+               <subtitle language="br">Esta pasta contém todos os filmes presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает список фильмов в&#160;Вашем хранилище.</subtitle>
        </headerContent>
 

@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Knyga:Mano knygos</title>
                <title language="nl">Boek:Mijn Boeken</title>
                <title language="no">Bok: mine bøker</title>
+               <title language="br">Livro:Meus Livros</title>
                <title language="ru">&#160;Книга:&#160;Мои книги</title>
        </titles>
        <images>
@@ -48,6 +50,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
        </members>
@@ -66,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Sveiki apsilankę&#160;„Mano knygose“!</title>
                <title language="nl">Welkom bij Mijn Boeken!</title>
                <title language="no">Velkommen til mine bøker</title>
+               <title language="br">Bem-vindo à Meus Livros</title>
                <title language="ru">&#160;Добро пожаловать в&#160;Ваши книги!</title>
                <subtitle language="en">These folders contain all of your books.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
@@ -78,6 +82,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine bøker</subtitle>
+               <subtitle language="br">Estas pastas contém todos os seus livros.</subtitle>
                <subtitle language="ru">&#160;Эти папки отображают все&#160;Ваши книги.</subtitle>
        </headerContent>
 

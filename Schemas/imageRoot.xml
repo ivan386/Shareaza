@@ -3,6 +3,7 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
@@ -29,6 +30,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Paveikslėlis:Mano paveikslėliai</title>
                <title language="nl">Afbeelding:Mijn Afbeeldingen</title>
                <title language="no">Bilde: mine bilder</title>
+               <title language="br">Imagem:Minhas Imagens</title>
                <title language="ru">&#160;Картинка:&#160;Мои картинки</title>
        </titles>
        <images>
@@ -48,6 +50,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="br">Título</title>
                        <title language="ru">&#160;Название</title>
                </member>
        </members>
@@ -66,6 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="lt">Sveiki apsilankę&#160;„Mano paveikslėliuose“!</title>
                <title language="nl">Welkom bij Mijn Afbeeldingen!</title>
                <title language="no">Velkommen til mine bilder</title>
+               <title language="br">Bem-vindo à Minhas Imagens</title>
                <title language="ru">&#160;Добро пожаловать в&#160;Ваши картинки!</title>
                <subtitle language="en">These folders contain all of the images in your library, organised by album.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
@@ -78,6 +82,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos paveikslėliai, surūšiuoti pagal albumus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle afbeeldingen uit je bibliotheek, georganiseerd per album.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholde alle bildene i mine filer, organisert i album. Åpne en mappe for å fortsette.</subtitle>
+               <subtitle language="br">Estas pastas contém todas as imagens da sua biblioteca, organizadas por àlbum. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">&#160;Эти папки отображают все картинки в&#160;Вашем хранилище организовнные по альбомам.</subtitle>
        </headerContent>
 
