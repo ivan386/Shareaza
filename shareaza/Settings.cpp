@@ -67,7 +67,7 @@ void CSettings::Setup()
 	Add( _T("Interface.TipUploads"), &Interface.TipUploads, TRUE );
 	Add( _T("Interface.TipNeighbours"), &Interface.TipNeighbours, TRUE );
 	Add( _T("Interface.TipMedia"), &Interface.TipMedia, TRUE );
-	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
+	//Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
 	
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
 	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
