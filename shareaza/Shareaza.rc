@@ -5509,15 +5509,6 @@ BEGIN
     IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
 END
 
-STRINGTABLE 
-BEGIN
-    IDS_PROPERTY_PAGE_GENERAL "General"
-    IDS_PROPERTY_PAGE_METADATA "Metadata"
-    IDS_PROPERTY_PAGE_COMMENTS "My Review"
-    IDS_PROPERTY_PAGE_SHARING "Sharing"
-    IDS_PROPERTY_PAGE_SOURCES "Sources"
-END
-
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
 

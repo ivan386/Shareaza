@@ -87,6 +87,7 @@ void CFilePropertiesSheet::Add(CLibraryList* pList)
 
 int CFilePropertiesSheet::DoModal(int nPage) 
 {
+	//TODO: Get page title from defined caption in resources (Rolandas)
 	CFileGeneralPage	pGeneral;
 	CFileMetadataPage	pMetadata;
 	CFileCommentsPage	pComments;
@@ -100,39 +101,39 @@ int CFilePropertiesSheet::DoModal(int nPage)
 	case 0:
 		return IDCANCEL;
 	case 1:
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_GENERAL );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileGeneralPage") );
 		pGeneral.m_psp.dwFlags |= PSP_USETITLE;
-		pGeneral.m_psp.pszTitle = strTabLabel;
+		pGeneral.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("General") : strTabLabel;
 		AddPage( &pGeneral );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_METADATA );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileMetadataPage") );
 		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
-		pMetadata.m_psp.pszTitle = strTabLabel;
+		pMetadata.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Metadata") : strTabLabel;
 		AddPage( &pMetadata );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_COMMENTS );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileCommentsPage") );
 		pComments.m_psp.dwFlags |= PSP_USETITLE;
-		pComments.m_psp.pszTitle = strTabLabel;
+		pComments.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("My Review") : strTabLabel;
 		AddPage( &pComments );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SHARING );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileSharingPage") );
 		pSharing.m_psp.dwFlags |= PSP_USETITLE;
-		pSharing.m_psp.pszTitle = strTabLabel;
+		pSharing.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sharing") : strTabLabel;
 		AddPage( &pSharing );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SOURCES );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileSourcesPage") );
 		pSources.m_psp.dwFlags |= PSP_USETITLE;
-		pSources.m_psp.pszTitle = strTabLabel;
+		pSources.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sources") : strTabLabel;
 		AddPage( &pSources );
 		break;
 	default:
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_METADATA );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileMetadataPage") );
 		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
-		pMetadata.m_psp.pszTitle = strTabLabel;
+		pMetadata.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Metadata") : strTabLabel;
 		AddPage( &pMetadata );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_COMMENTS );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileCommentsPage") );
 		pComments.m_psp.dwFlags |= PSP_USETITLE;
-		pComments.m_psp.pszTitle = strTabLabel;
+		pComments.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("My Review") : strTabLabel;
 		AddPage( &pComments );
-		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SHARING );
+		strTabLabel = Skin.GetDialogCaption( _T("CFileSharingPage") );
 		pSharing.m_psp.dwFlags |= PSP_USETITLE;
-		pSharing.m_psp.pszTitle = strTabLabel;
+		pSharing.m_psp.pszTitle = strTabLabel.IsEmpty() ? _T("Sharing") : strTabLabel;
 		AddPage( &pSharing );
 		if ( nPage == 1 ) nPage = 0;
 		else if ( nPage == 2 ) nPage = 1;
