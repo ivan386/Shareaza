@@ -86,7 +86,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CBitTorrentSettingsPage::OnInitDialog() 
 {
-	//CSettingsPage::OnInitDialog();
+	CSettingsPage::OnInitDialog();
 	m_bTorrentInterface = Settings.BitTorrent.AdvancedInterface;
 	m_bEndGame			= Settings.BitTorrent.Endgame;
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;
