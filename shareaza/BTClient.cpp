@@ -413,6 +413,7 @@ BOOL CBTClient::OnHandshake2()
 	{
 		ASSERT( m_pDownloadTransfer == NULL );
 		
+		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
 		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
 		
 		if ( m_pDownloadTransfer == NULL )

@@ -177,6 +177,7 @@ void CWizardSharePage::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult
 
 void CWizardSharePage::OnShareAdd() 
 {
+	//Let user select path to share
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
@@ -199,6 +200,7 @@ void CWizardSharePage::OnShareAdd()
 	CString strPathLC( szPath );
 	CharLower( strPathLC.GetBuffer() );
 	strPathLC.ReleaseBuffer();
+
 
 	//Get system paths (to compare)
 	CString strWindowsLC, strProgramsLC;
@@ -296,6 +298,7 @@ void CWizardSharePage::OnShareAdd()
 		return;
 	}
 	
+	//Add path to shared list
 	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
 		szPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 }
