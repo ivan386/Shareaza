@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,14 +15,11 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Music Genre</title>
                <title language="af">Musiek Genre</title>
-               <title language="cht">音樂-類型</title>
                <title language="de">Musikgenre</title>
-               <title language="es">Género de Música</title>
-               <title language="fr">Genre musical</title>
+               <title language="es-ve">Género de Música</title>
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
                <title language="no">Musikk sjanger</title>
-               <title language="ru">&#160;Стиль&#160;Музыки</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -35,50 +29,38 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
-                       <title language="cht">描述</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es">Descripción</title>
-                       <title language="fr">Description</title>
+                       <title language="es-ve">Descripción</title>
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
-                       <title language="ru">&#160;Описание</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
-                       <title language="cht">美術品收藏者</title>
                        <title language="de">Sammler</title>
-                       <title language="es">Colector</title>
-                       <title language="fr">Collecteur</title>
+                       <title language="es-ve">Colector</title>
                        <title language="lt">Kolekcionierius</title>
                        <title language="nl">Samensteller</title>
                        <title language="no">Samler</title>
-                       <title language="ru">&#160;Коллекционер</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
-                       <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
-                       <title language="es">Comentarios</title>
-                       <title language="fr">Commentaires</title>
+                       <title language="es-ve">Comentarios</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="ru">&#160;Коментарии</title>
                </member>
        </members>
        <extends>
@@ -92,24 +74,18 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">{name} Music</title>
                <title language="af">{name} Musiek</title>
-               <title language="cht">{name} 音樂</title>
                <title language="de">{name} Musik</title>
-               <title language="es">{name} Música</title>
-               <title language="fr">Musique {name}</title>
+               <title language="es-ve">{name} Música</title>
                <title language="lt">{name} muzika</title>
                <title language="nl">{name} Muziek</title>
                <title language="no">{name} Musikk</title>
-               <title language="ru">&#160;Музыка&#160;{name}</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
-               <subtitle language="cht">這個資料夾包含了您所有以 {name} 流派的音樂.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
-               <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
-               <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
+               <subtitle language="es-ve">Esta carpeta contiene musica que es del Género {name}</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name} sjangeren.</subtitle>
-               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Всю&#160;Музыку&#160;Стиля&#160;{name}.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/searchFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,63 +15,48 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Search:Search Results</title>
                <title language="af">Soek:Soekresultate</title>
-               <title language="cht">搜尋:搜尋結果</title>
                <title language="de">Suche:Suchergebnisse</title>
-               <title language="es">Buscar: Resultados de busqueda</title>
-               <title language="fr">Recherche:Résultats de recherche</title>
+               <title language="es-ve">Buscar: Resultados de busqueda</title>
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
-               <title language="ru">&#160;Поиск:&#160;Результаты&#160;Поиска</title>
        </titles>
        <members>
                <member name="title" search="none">
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
                <member name="time" search="none">
                        <title language="en">Time</title>
                        <title language="af">Tyd</title>
-                       <title language="cht">時間</title>
                        <title language="de">Zeit</title>
-                       <title language="es">Tiempo</title>
-                       <title language="fr">Temps</title>
+                       <title language="es-ve">Tiempo</title>
                        <title language="lt">Laikas</title>
                        <title language="nl">Tijd</title>
                        <title language="no">Tid</title>
-                       <title language="ru">&#160;Время</title>
                </member>
                <member name="date" search="none">
                        <title language="en">Date</title>
                        <title language="af">Datum</title>
-                       <title language="cht">日期</title>
                        <title language="de">Datum</title>
-                       <title language="es">Fecha</title>
-                       <title language="fr">Date</title>
+                       <title language="es-ve">Fecha</title>
                        <title language="lt">Data</title>
                        <title language="nl">Datum</title>
                        <title language="no">Dato</title>
-                       <title language="ru">&#160;Дата</title>
                </member>
                <member name="content" search="none">
                        <title language="en">Content</title>
                        <title language="af">Inhoud</title>
-                       <title language="cht">Content</title>
                        <title language="de">Inhalt</title>
-                       <title language="es">Contenido</title>
-                       <title language="fr">Contenu</title>
+                       <title language="es-ve">Contenido</title>
                        <title language="lt">Turinys</title>
                        <title language="nl">Inhoud</title>
                        <title language="no">Innhold</title>
-                       <title language="ru">&#160;Содержание</title>
                </member>
        </members>
        <images>
@@ -83,24 +65,18 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">Search for "{content}"</title>
                <title language="af">Soek vir " {content} "</title>
-               <title language="cht">搜尋於 "{content}"</title>
                <title language="de">Suche nach "{content}"</title>
-               <title language="es">Busca por "{contenido}</title>
-               <title language="fr">Recherche de "{content}"</title>
+               <title language="es-ve">Busca por "{contenido}</title>
                <title language="lt">&#160;„{content}“&#160;radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
-               <title language="ru">&#160;Поиск&#160;для&#160;"{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
-               <subtitle language="cht">這個資料夾包含了符合您搜尋 "{content}" 的檔案</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
-               <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
-               <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
+               <subtitle language="es-ve">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="lt">&#160;Šiame kataloge yra bylos, surastos pagal ieškinį&#160;„{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
-               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Результаты&#160;Поиска&#160;для&#160;{content}.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

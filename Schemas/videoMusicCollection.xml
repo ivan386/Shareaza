@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/videoMusicCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,14 +15,11 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Video:Music Videos</title>
                <title language="af">Video:Musiek Video's</title>
-               <title language="cht">影像:音樂影像</title>
                <title language="de">Video:Musikvideos</title>
-               <title language="es">Video: Videos de Música</title>
-               <title language="fr">Vidéo:Clips vidéo</title>
+               <title language="es-ve">Video: Videos de Música</title>
                <title language="lt">Video:Muzikiniai klipai</title>
                <title language="nl">Video:Muziek Video's</title>
                <title language="no">Video: musikk video</title>
-               <title language="ru">&#160;Видео:&#160;Музыкальные&#160;Видео</title>
        </titles>
        <images>
                <icon path="videoFolder.ico"/>
@@ -35,14 +29,11 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <contains>
@@ -51,24 +42,18 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">Music Videos</title>
                <title language="af">Musiek Video's</title>
-               <title language="cht">音樂-影像</title>
                <title language="de">Musikvideos</title>
-               <title language="es">Videos de Música</title>
-               <title language="fr">Clips vidéo</title>
+               <title language="es-ve">Videos de Música</title>
                <title language="lt">Muzikiniai klipai</title>
                <title language="nl">Muziek Video's</title>
                <title language="no">Musikk video</title>
-               <title language="ru">&#160;Музыкальные&#160;Видео</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
-               <subtitle language="cht">這個資料夾包含了音樂影像.</subtitle>
                <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
-               <subtitle language="es">Esta carpeta contiene videos de música</subtitle>
-               <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
+               <subtitle language="es-ve">Esta carpeta contiene videos de música</subtitle>
                <subtitle language="lt">Šiame kataloge yra muzikiniai klipai.</subtitle>
                <subtitle language="nl">Deze map bevat alle muziekvideo's uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder musikk videoer</subtitle>
-               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждое&#160;Музыкальное&#160;Видео&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/allFiles.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,14 +15,11 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">General:All Files</title>
                <title language="af">Algemeen:Alle Lêers</title>
-               <title language="cht">一般:所有檔案</title>
                <title language="de">Allgemein:Alle Dateien</title>
-               <title language="es">General: Todos los archivos</title>
-               <title language="fr">Général:Tous les fichiers</title>
+               <title language="es-ve">General: Todos los archivos</title>
                <title language="lt">Bendra:Visos bylos</title>
                <title language="nl">Algemeen:Alle Bestanden</title>
                <title language="no">Generelt: alle filer</title>
-               <title language="ru">&#160;Основное:&#160;Все&#160;Файлы</title>
         </titles>
        <images>
                <icon path="folder.ico"/>
@@ -35,37 +29,28 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <headerContent version="1.0">
                <title language="en">All Files</title>
                <title language="af">Alle Lêers</title>
-               <title language="cht">所有檔案</title>
                <title language="de">Alle Dateien</title>
-               <title language="es">Todos los archivos</title>
-               <title language="fr">Tous les fichiers</title>
+               <title language="es-ve">Todos los archivos</title>
                <title language="lt">Visos bylos</title>
                <title language="nl">Alle Bestanden</title>
                <title language="no">Alle filer</title>
-               <title language="ru">&#160;Все&#160;Файлы</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
-               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的檔案.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
-               <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
-               <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>
+               <subtitle language="es-ve">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk bestand uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle filene i mine filer</subtitle>
-               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждый&#160;Файл&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
      </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

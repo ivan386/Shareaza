@@ -4,14 +4,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/wordProcessing.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -19,203 +16,155 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Document:Word Processing</title>
                <title language="af">Dokument:Woordverwerking</title>
-               <title language="cht">文件:文字加工</title>
                <title language="de">Dokument:Textverarbeitung</title>
-               <title language="es">Dokument:Hoja de Balance</title>
-               <title language="fr">Document:Traitement de texte</title>
+               <title language="es-ve">Dokument:Hoja de Balance</title>
                <title language="lt">Dokumentas:Tekstų apdorojimas</title>
                <title language="nl">Document:Word Processing</title>
                <title language="no">Dokument: word</title>
-               <title language="ru">&#160;Документ:&#160;Форматир.&#160;Текст</title>
        </titles>
        <members>
                <member name="title" search="generic">
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
                <member name="author" search="generic">
                        <display defaultColumn="true"/>
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
-                       <title language="cht">作者</title>
                        <title language="de">Autor</title>
-                       <title language="es">Autor</title>
-                       <title language="fr">Auteur</title>
+                       <title language="es-ve">Autor</title>
                        <title language="lt">Autorius</title>
                        <title language="nl">Auteur</title>
                        <title language="no">Forfatter</title>
-                       <title language="ru">&#160;Автор</title>
                </member>
                <member name="subject">
                        <title language="en">Subject</title>
                        <title language="af">Onderwerp</title>
-                       <title language="cht">主題</title>
                        <title language="de">Thema</title>
-                       <title language="es">Sujeto</title>
-                       <title language="fr">Sujet</title>
+                       <title language="es-ve">Sujeto</title>
                        <title language="lt">Tema</title>
                        <title language="nl">Onderwerp</title>
                        <title language="no">Tema</title>
-                       <title language="ru">&#160;Тема</title>
                </member>
                <member name="keywords">
                        <display defaultColumn="true"/>
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
-                       <title language="cht">關鍵字</title>
                        <title language="de">Schlüsselwörter</title>
-                       <title language="es">Palabras Clave</title>
-                       <title language="fr">Mots clés</title>
+                       <title language="es-ve">Palabras Clave</title>
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
-                       <title language="ru">&#160;Ключевые&#160;Слова</title>
                </member>
                <member name="abstract">
                        <display defaultColumn="true"/>
                        <title language="en">Abstract</title>
                        <title language="af">Abstrak</title>
-                       <title language="cht">抽象的</title>
                        <title language="de">Zusammenfassung</title>
-                       <title language="es">Abstracto</title>
-                       <title language="fr">Abstrait</title>
+                       <title language="es-ve">Abstracto</title>
                        <title language="lt">Santrauka</title>
                        <title language="nl">Samenvatting</title>
                        <title language="no">Abstrakt</title>
-                       <title language="ru">&#160;Содержание</title>
                </member>
                <member name="initials">
                        <title language="en">Initials</title>
                        <title language="af">Voorletters</title>
-                       <title language="cht">字首</title>
                        <title language="de">Initialen</title>
-                       <title language="es">Iniciales</title>
-                       <title language="fr">Initiales</title>
+                       <title language="es-ve">Iniciales</title>
                        <title language="lt">Inicialai</title>
                        <title language="nl">Initialen</title>
                        <title language="no">Initialer</title>
-                       <title language="ru">&#160;Инициалы</title>
                </member>
                <member name="copyright">
                        <title language="en">Copyright</title>
                        <title language="af">Kopiereg</title>
-                       <title language="cht">版權</title>
                        <title language="de">Copyright</title>
-                       <title language="es">Copyright</title>
-                       <title language="fr">Copyright</title>
+                       <title language="es-ve">Copyright</title>
                        <title language="lt">Autorių teisės</title>
                        <title language="nl">Copyright</title>
                        <title language="no">Kopibeskyttelse</title>
-                       <title language="ru">&#160;Правообладатель</title>
                </member>
                <member name="version">
                        <display defaultColumn="true"/>
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
-                       <title language="cht">版本</title>
                        <title language="de">Version</title>
-                       <title language="es">Versión</title>
-                       <title language="fr">Version</title>
+                       <title language="es-ve">Versión</title>
                        <title language="lt">Versija</title>
                        <title language="nl">Versie</title>
                        <title language="no">Versjon</title>
-                       <title language="ru">&#160;Версия</title>
                </member>
                <member name="revision">
                        <title language="en">Revision</title>
                        <title language="af">Hersiening</title>
-                       <title language="cht">校訂</title>
                        <title language="de">Revision</title>
-                       <title language="es">Revision</title>
-                       <title language="fr">Révision</title>
+                       <title language="es-ve">Revision</title>
                        <title language="lt">Revizija</title>
                        <title language="nl">Revisie</title>
                        <title language="no">Revisjon</title>
-                       <title language="ru">&#160;Ревизия</title>
                </member>
                <member name="type">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
-                       <title language="cht">類型</title>
                        <title language="de">Art</title>
-                       <title language="es">Arte</title>
-                       <title language="fr">Type</title>
+                       <title language="es-ve">Arte</title>
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
-                       <title language="ru">&#160;Тип</title>
                </member>
                <member name="format">
                        <display defaultColumn="true"/>
                        <title language="en">Format</title>
                        <title language="af">Formaat</title>
-                       <title language="cht">格式</title>
                        <title language="de">Format</title>
-                       <title language="es">Formato</title>
-                       <title language="fr">Format</title>
+                       <title language="es-ve">Formato</title>
                        <title language="lt">Formatas</title>
                        <title language="nl">Formaat</title>
                        <title language="no">Format</title>
-                       <title language="ru">&#160;Формат</title>
                </member>
                <member name="formatversion">
                        <title language="en">Format Version</title>
                        <title language="af">Formaat Weerg.</title>
-                       <title language="cht">格式版本</title>
                        <title language="de">Formatversion</title>
-                       <title language="es">Versión del Formato</title>
-                       <title language="fr">Version du format</title>
+                       <title language="es-ve">Versión del Formato</title>
                        <title language="lt">Formato versija</title>
                        <title language="nl">Formaatsversie</title>
                        <title language="no">Format versjon</title>
-                       <title language="ru">&#160;Версия&#160;Формата</title>
                </member>
                <member name="pages">
                        <title language="en">Pages</title>
                        <title language="af">Bladsye</title>
-                       <title language="cht">頁數</title>
                        <title language="de">Seiten</title>
-                       <title language="es">Páginas</title>
-                       <title language="fr">Pages</title>
+                       <title language="es-ve">Páginas</title>
                        <title language="lt">Puslapių</title>
                        <title language="nl">Bladzijden</title>
                        <title language="no">Sider</title>
-                       <title language="ru">&#160;Страниц</title>
                </member>
                <member name="link">
                        <display defaultColumn="true"/>
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
-                       <title language="cht">連結</title>
                        <title language="de">Link</title>
-                       <title language="es">Link</title>
-                       <title language="fr">Lien</title>
+                       <title language="es-ve">Link</title>
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
-                       <title language="ru">&#160;Ссылка</title>
                </member>
                <member name="comments">
                        <display defaultColumn="true"/>
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
-                       <title language="cht">注釋</title>
                        <title language="de">Kommentar</title>
-                       <title language="es">Comentarios</title>
-                       <title language="fr">Commentaires</title>
+                       <title language="es-ve">Comentarios</title>
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
-                       <title language="ru">&#160;Коментарии</title>
                </member>
        </members>
        <typeFilter>

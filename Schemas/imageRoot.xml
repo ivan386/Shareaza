@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/imageRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,14 +15,11 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Image:My Images</title>
                <title language="af">Prent:My Prente</title>
-               <title language="cht">圖片:我的圖片</title>
                <title language="de">Bild:Eigene Bilder</title>
-               <title language="es">Imagen: Mis imágenes</title>
-               <title language="fr">Image:Mes images</title>
+               <title language="es-ve">Imagen: Mis imágenes</title>
                <title language="lt">Paveikslėlis:Mano paveikslėliai</title>
                <title language="nl">Afbeelding:Mijn Afbeeldingen</title>
                <title language="no">Bilde: mine bilder</title>
-               <title language="ru">&#160;Картинка:&#160;Мои&#160;Картинки</title>
        </titles>
        <images>
                <icon path="imageFolder.ico"/>
@@ -35,14 +29,11 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <contains>
@@ -51,24 +42,18 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">Welcome to My Images!</title>
                <title language="af">Welkom by My Prente!</title>
-               <title language="cht">歡迎來到我的圖片!</title>
                <title language="de">Willkommen bei Eigene Bilder!</title>
-               <title language="es">Bienvenido a Mis Imágenes!</title>
-               <title language="fr">Bienvenue dans Mes images!</title>
+               <title language="es-ve">Bienvenido a Mis Imágenes!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano paveikslėliuose“!</title>
                <title language="nl">Welkom bij Mijn Afbeeldingen!</title>
                <title language="no">Velkommen til mine bilder</title>
-               <title language="ru">&#160;Добро&#160;Пожаловать&#160;в&#160;Ваши&#160;Картинки!</title>
                <subtitle language="en">These folders contain all of the images in your library, organised by album.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
-               <subtitle language="cht">這些資料夾包含了在您的收藏中所有的圖片, 由相簿組織.  在下面開啟一個資料夾來繼續.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Bilder in ihrer Bibliothek, geordnet nach Album. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
-               <subtitle language="es">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
-               <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque, organisées par album.  Ouvrez un sous-dossier pour continuer.</subtitle>
+               <subtitle language="es-ve">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos paveikslėliai, surūšiuoti pagal albumus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle afbeeldingen uit je bibliotheek, georganiseerd per album.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholde alle bildene i mine filer, organisert i album. Åpne en mappe for å fortsette.</subtitle>
-               <subtitle language="ru">&#160;Эти&#160;папки&#160;отображают&#160;Все&#160;Картинки&#160;в&#160;Вашем&#160;Хранилище&#160;организовнные&#160;по&#160;Альбомам.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

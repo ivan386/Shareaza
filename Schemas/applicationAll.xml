@@ -2,14 +2,11 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Chinese Traditional Schemas File translated by CML
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
-Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
-Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/applicationAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -18,14 +15,11 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Application:All Applications</title>
                <title language="af">Program:Alle Programme</title>
-               <title language="cht">應用程式:所有應用程式</title>
                <title language="de">Anwendung:Alle Anwendungen</title>
-               <title language="es">Aplicación: Todas los programas</title>
-               <title language="fr">Application:Toutes les applications</title>
+               <title language="es-ve">Aplicación: Todas los programas</title>
                <title language="lt">Programa:Visos programos</title>
                <title language="nl">Programma:Alle Programma's</title>
                <title language="no">Program: alle program</title>
-               <title language="ru">&#160;Приложение:&#160;Все&#160;Приложения</title>
        </titles>
        <images>
                <icon path="applicationFolder.ico"/>
@@ -35,14 +29,11 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="cht">標題</title>
                        <title language="de">Titel</title>
-                       <title language="es">Título</title>
-                       <title language="fr">Titre</title>
+                       <title language="es-ve">Título</title>
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
-                       <title language="ru">&#160;Название</title>
                </member>
        </members>
        <contains>
@@ -51,24 +42,18 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">All Applications</title>
                <title language="af">Alle Programme</title>
-               <title language="cht">所有應用程式</title>
                <title language="de">Alle Anwendungen</title>
-               <title language="es">Todas las aplicaciones</title>
-               <title language="fr">Toutes les applications</title>
+               <title language="es-ve">Todas las aplicaciones</title>
                <title language="lt">Visos programos</title>
                <title language="nl">Alle Programma's</title>
                <title language="no">Alle programmer</title>
-               <title language="ru">&#160;Все&#160;Приложения</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
-               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的應用程式檔案.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Anwendungen in ihrer Bibliothek.</subtitle>
-               <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
-               <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>
+               <subtitle language="es-ve">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>
                <subtitle language="nl">Deze map bevat alle programmabestanden uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
-               <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждое&#160;Приложение&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 
