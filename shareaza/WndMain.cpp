@@ -691,8 +691,6 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 
 void CMainWnd::OnTimer(UINT nIDEvent) 
 {
-	static DWORD tLastCheck = 0;
-
 	// Fix resource handle
 	
 	if ( AfxGetResourceHandle() != m_hInstance )
@@ -754,48 +752,9 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	
 	if ( Settings.Scheduler.Enable ) Schedule.Update();
 
-	// Disk space / writable checks
+	// Network / disk space / directory checks
 
-	DWORD tTicks = GetTickCount();
-	if ( tTicks - tLastCheck > 2 * 60 * 1000 )  // Run once every 2 minutes
-	{
-		tLastCheck = tTicks;
-
-		// Check disk space
-		if ( Settings.Live.DiskSpaceWarning == FALSE )
-		{
-			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
-			{
-				Settings.Live.DiskSpaceWarning = TRUE;
-				PostMessage( WM_COMMAND, ID_HELP_DISKSPACE );
-			}
-		}
-
-		// Check disk/directory exists and isn't read-only
-		if ( Settings.Live.DiskWriteWarning == FALSE )
-		{
-			DWORD nCompleteAttributes, nIncompleteAttributes;
-			nCompleteAttributes = GetFileAttributes( Settings.Downloads.CompletePath );
-			nIncompleteAttributes = GetFileAttributes( Settings.Downloads.IncompletePath );
-
-			if ( ( nCompleteAttributes == INVALID_FILE_ATTRIBUTES ) || ( nIncompleteAttributes == INVALID_FILE_ATTRIBUTES ) || 
-				 ( nCompleteAttributes &  FILE_ATTRIBUTE_READONLY ) || ( nIncompleteAttributes &  FILE_ATTRIBUTE_READONLY ) )
-			{
-				Settings.Live.DiskWriteWarning = TRUE;
-				PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
-			}
-		}
-
-		// Check network connection state
-		if ( Settings.Connection.DetectConnectionLoss &&  Network.IsConnected() )
-		{
-			if ( ! Network.IsAvailable() )
-			{
-				Network.Disconnect();
-				PostMessage( WM_COMMAND, ID_HELP_CONNECTIONFAIL );
-			}
-		}
-	}
+	LocalSystemChecks();
 	
 	// Update messages
 	
@@ -1323,6 +1282,103 @@ void CMainWnd::UpdateMessages()
 	
 	GetWindowText( strOld );
 	if ( strOld != strMessage ) SetWindowText( strMessage );
+}
+
+// This function runs some basic checks that everything is okay- disks, directories, local network is
+// up, etc.
+void CMainWnd::LocalSystemChecks()
+{
+	static DWORD tLastCheck = 0;			// Time the checks were last run
+	static DWORD nConnectionFailCount = 0;	// Counter for times a connection problem has been detected
+	DWORD tTicks = GetTickCount();			// Current time
+
+	if ( tTicks - tLastCheck > 1 * 60 * 1000 )  // Run once every minute
+	{
+		tLastCheck = tTicks;
+
+		// Check disk space
+		if ( Settings.Live.DiskSpaceWarning == FALSE )
+		{
+			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
+			{
+				Settings.Live.DiskSpaceWarning = TRUE;
+				PostMessage( WM_COMMAND, ID_HELP_DISKSPACE );
+			}
+		}
+
+
+		// Check disk/directory exists and isn't read-only
+		if ( Settings.Live.DiskWriteWarning == FALSE )
+		{
+			DWORD nCompleteAttributes, nIncompleteAttributes;
+			nCompleteAttributes = GetFileAttributes( Settings.Downloads.CompletePath );
+			nIncompleteAttributes = GetFileAttributes( Settings.Downloads.IncompletePath );
+
+			if ( ( nCompleteAttributes == INVALID_FILE_ATTRIBUTES ) ||  ( nIncompleteAttributes == INVALID_FILE_ATTRIBUTES ) || 
+				!( nCompleteAttributes & FILE_ATTRIBUTE_DIRECTORY ) || !( nIncompleteAttributes & FILE_ATTRIBUTE_DIRECTORY ) )
+			{
+				Settings.Live.DiskWriteWarning = TRUE;
+				PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
+			}
+			else if ( theApp.m_bNT )
+			{
+/*
+// Note: These checks fail on some machines. WinXP goofyness?
+				// Extra NT/Win2000/XP permission checks
+				if ( ( _taccess( Settings.Downloads.IncompletePath, 06 ) != 0 ) ||
+					 ( _taccess( Settings.Downloads.CompletePath, 06 ) != 0 ) )
+				{
+					Settings.Live.DiskWriteWarning = TRUE;
+					PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
+				}
+*/
+			}
+		}
+
+
+		// Check network connection state
+		if ( Settings.Connection.DetectConnectionLoss )
+		{
+			if ( Network.IsConnected() )
+			{
+				if ( ( Network.IsAvailable() ) || ( Network.IsWellConnected() > 0 ) )				
+				{
+					// Internet is available
+					nConnectionFailCount = 0;
+				}
+				else
+				{
+					// Internet may have failed
+					nConnectionFailCount++;
+					// Give it at least two failures before assuming it's bad
+					if ( nConnectionFailCount > 1 )
+					{
+						if ( Settings.Connection.DetectConnectionReset )
+							theApp.Message( MSG_ERROR, _T("Internet disconnection detected- shutting down network") );
+						else
+							PostMessage( WM_COMMAND, ID_HELP_CONNECTIONFAIL );
+
+						Network.Disconnect();
+					}
+				}
+			}
+			else
+			{
+				// We are not currently connected. Check if we disconnected because of failure and want to re-connect.
+				if ( ( nConnectionFailCount > 0 ) && ( Settings.Connection.DetectConnectionReset ) )
+				{
+					// See if we can reconnect
+					if ( Network.IsAvailable() )
+					{
+						nConnectionFailCount = 0;
+						Network.Connect();
+						theApp.Message( MSG_ERROR, _T("Internet reconnect detected- restarting network") );
+					}
+				}
+			}
+		}
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////

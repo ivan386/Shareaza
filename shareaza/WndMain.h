@@ -71,6 +71,7 @@ public:
 	void		CloseToTray();
 	void		OpenFromTray(int nShowCmd = SW_SHOW);
 	void		UpdateMessages();
+	void		LocalSystemChecks();
 
 // Overrides
 public:
