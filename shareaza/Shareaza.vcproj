@@ -179,10 +179,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib"
+				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib MD4_asm.obj MD5_asm.obj SHA_asm.obj Tiger_asm.obj"
 				OutputFile=".\Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories=".\asm\"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -252,10 +253,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib MD4_asm.obj MD5_asm.obj SHA_asm.obj Tiger_asm.obj"
 				OutputFile=".\Release/Shareaza.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories=".\asm\"
 				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Release/Shareaza.pdb"
@@ -7520,6 +7522,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PageSettingsBitTorrent.cpp">
+			</File>
+			<File
 				RelativePath="PageSettingsCommunity.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -12056,6 +12061,9 @@
 				RelativePath="PageSettingsBandwidth.h">
 			</File>
 			<File
+				RelativePath=".\PageSettingsBitTorrent.h">
+			</File>
+			<File
 				RelativePath="PageSettingsCommunity.h">
 			</File>
 			<File
@@ -12664,6 +12672,22 @@
 			</File>
 			<File
 				RelativePath="Res\World.ico">
+			</File>
+		</Filter>
+		<Filter
+			Name="Assembler Files"
+			Filter="">
+			<File
+				RelativePath=".\asm\MD4_asm.asm">
+			</File>
+			<File
+				RelativePath=".\asm\MD5_asm.asm">
+			</File>
+			<File
+				RelativePath=".\asm\SHA_asm.asm">
+			</File>
+			<File
+				RelativePath=".\asm\Tiger_asm.asm">
 			</File>
 		</Filter>
 	</Files>
