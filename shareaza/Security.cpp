@@ -185,6 +185,37 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CSecurity 5-minute block
+
+void CSecurity::TempBlock(IN_ADDR* pAddress)
+{
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return;
+
+	CString strAddress = inet_ntoa( *pAddress );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->Match( pAddress ) )
+		{
+			if ( pRule->m_nAction == CSecureRule::srDeny )
+			{
+				return;
+			}
+		}
+	}
+
+	CSecureRule* pRule	= new CSecureRule();
+	pRule->m_nAction	= CSecureRule::srDeny;
+	pRule->m_nExpire	= time( NULL ) + 300;
+	pRule->m_sComment	= _T("Temp Block");
+	CopyMemory( pRule->m_nIP, pAddress, 4 );
+	Add( pRule );
+}
+
+//////////////////////////////////////////////////////////////////////
 // CSecurity access check
 
 BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)

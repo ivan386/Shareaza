@@ -56,6 +56,7 @@ public:
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
 	void			SessionBan(IN_ADDR* pAddress, BOOL bMessage = TRUE);
+	void			TempBlock(IN_ADDR* pAddress);
 public:
 	void			Clear();
 	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
