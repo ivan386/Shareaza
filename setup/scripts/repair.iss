@@ -46,13 +46,15 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 [InstallDelete]
 ; Delete all files exept uninstall dir
 Type: filesandordirs; Name: "{app}\Skins"
-Type: filesandordirs; Name: "{app}\Plugins"
-Type: filesandordirs; Name: "{app}\Remote"
 Type: filesandordirs; Name: "{app}\Data"
 Type: filesandordirs; Name: "{app}\Schemas"
+Type: filesandordirs; Name: "{app}\Remote"
+Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Plugins"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\Shareaza.exe"

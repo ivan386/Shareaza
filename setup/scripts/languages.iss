@@ -12,21 +12,21 @@ Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"; LicenseFi
 
 [Files]
 ; Install default remote
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language
+Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
+Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language
 ; Install localized remote
 ; English:
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language
+Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language
+Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language
 ; Dutch:
-Source: "Remote-localized\dutch\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language
-Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language
+Source: "Remote-localized\dutch\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language
+Source: "Remote-localized\dutch\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language
 ; Lithuanian
-Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language
-Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language
+Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language
+Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language
 ; German:
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language
+Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
+Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
