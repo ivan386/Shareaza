@@ -191,7 +191,7 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 		return;
 	}
 	
-	AddText( TRUE, bAction, MyProfile.GetNick(), pszText );
+	AddText( TRUE, bAction, MyProfile.GetNick().Left( 255 ), pszText );
 	m_pSession->SendPrivateMessage( bAction, pszText );
 }
 

@@ -630,8 +630,9 @@ void CBTClient::SendBeHandshake()
 {
 	CBENode pRoot;
 	
-	CString strNick = MyProfile.GetNick();
+	CString strNick = MyProfile.GetNick().Left( 255 ); //Truncate to 255 characters
 	if ( strNick.GetLength() ) pRoot.Add( "nickname" )->SetString( strNick );
+
 	
 	pRoot.Add( "source-exchange" )->SetInt( 2 );
 	pRoot.Add( "user-agent" )->SetString( Settings.SmartAgent( Settings.General.UserAgent ) );

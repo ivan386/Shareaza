@@ -410,7 +410,7 @@ BOOL CChatSession::OnHeadersComplete()
 		else if ( MyProfile.IsValid() )
 		{
 			m_pOutput->Print( "X-Nickname: " );
-			m_pOutput->Print( MyProfile.GetNick() );
+			m_pOutput->Print( MyProfile.GetNick().Left( 255 ) );
 			m_pOutput->Print( "\r\n" );
 		}
 		

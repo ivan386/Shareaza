@@ -798,7 +798,7 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 		strLine.Format( _T("X-PerHost: %lu\r\n"), Settings.Uploads.MaxPerHost );
 		m_pOutput->Print( strLine );
 		
-		strLine = MyProfile.GetNick();
+		strLine = MyProfile.GetNick().Left( 255 );
 		
 		if ( strLine.GetLength() > 0 )
 		{

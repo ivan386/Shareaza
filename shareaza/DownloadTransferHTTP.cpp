@@ -341,7 +341,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	{
 		if ( m_bInitiated ) SendMyAddress();
 		
-		strLine = MyProfile.GetNick();
+		strLine = MyProfile.GetNick().Left( 255 );
 		
 		if ( strLine.GetLength() > 0 )
 		{
