@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.13"
+		version="2.1.0.15"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -460,7 +460,7 @@ Other:
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editer mon _profil..."/>
-			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration rapide..."/>
+			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration..."/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Réglages de Shareaza..."/>
 		</menu>
@@ -539,7 +539,7 @@ Other:
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editer mon _profil..."/>
-			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration rapide..."/>
+			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration..."/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Réglages de Shareaza..."/>
 		</menu>
@@ -616,7 +616,7 @@ Other:
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Editer mon _profil..."/>
 			<separator/>
-			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration rapide..."/>
+			<item id="ID_TOOLS_WIZARD" text="Assistant de _configuration..."/>
 			<item id="ID_TOOLS_SETTINGS" text="_Réglages de Shareaza..."/>
 		</menu>
 		<menu text="_Fenêtre">
@@ -1512,7 +1512,7 @@ Other:
 
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Assistant de configuration rapide</link>
+		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Assistant de configuration</link>
 		<text align="middle">&#160;- Editez les réglages de Shareaza.</text>
 		<newline gap="8"/>
 
@@ -2456,6 +2456,10 @@ Other:
 	<string id="8324" value="Inactif"/>
 	<string id="8325" value="Actif"/>
 	<string id="8326" value="Prochain dans la queue"/>
+	<string id="8327" value="Nombre total de fichiers:"/>
+    <string id="8328" value="Volume total:"/>
+    <string id="8329" value="de votre bibliothèque"/>
+    <string id="8330" value="Dossier"/>
 	<string id="16064" value="Démarrage du core réseau Shareaza..."/>
 	<string id="16065" value="Impossible de se relier au %s port %i pour les connexions entrantes.  Les connexions entrantes ne seront pas supportées."/>
 	<string id="16066" value="Fermeture du core réseau Shareaza..."/>
@@ -3051,7 +3055,7 @@ Other:
 		<control caption="_Délai avant expiration:"/>
 		<control caption="Connexion:"/>
 		<control/><control/>
-		<control caption="Handshake:"/>
+		<control caption="Poignée de m.:"/>
 		<control/><control/>
 		<control caption="Accepter les connexions entrantes"/>
 	</dialog>
@@ -3071,7 +3075,7 @@ Other:
 		<control caption="Bande passante:"/>
 		<control caption="Limite en réception:"/>
 		<control/>
-		<control caption="Taille de la queue d'attente:"/>
+		<control caption="Taille de la file d'attente:"/>
 		<control/><control/>
 		<control/>
 		<control caption="Télécharger et envoyer uniquement sur les réseaux connectés."/>
