@@ -162,6 +162,7 @@ void CSettings::Setup()
 	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
 	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
 	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
+	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionReset, FALSE );
 	
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
@@ -878,7 +879,7 @@ CString CSettings::SmartAgent(LPCTSTR pszAgent)
 //////////////////////////////////////////////////////////////////////
 // CSettings volume
 
-CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits)
+CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL bTruncate)
 {	//Returns a nicely formatted string displaying a given transfer speed
 	LPCTSTR pszUnit = _T("B");
 	CString strVolume;
@@ -933,15 +934,24 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits)
 	}
 	else if ( nVolume < 1024*1024 )
 	{
-		strVolume.Format( _T("%.2lf M%s"), (double)nVolume / 1024, pszUnit );
+		if ( bTruncate )
+			strVolume.Format( _T("%.0lf M%s"), (double)nVolume / 1024, pszUnit );
+		else
+			strVolume.Format( _T("%.2lf M%s"), (double)nVolume / 1024, pszUnit );
 	}
 	else if ( nVolume < 1024*1024*1024 )
 	{
-		strVolume.Format( _T("%.3lf G%s"), (double)nVolume / (1024*1024), pszUnit );
+		if ( bTruncate )
+			strVolume.Format( _T("%.0lf G%s"), (double)nVolume / (1024*1024), pszUnit );
+		else
+			strVolume.Format( _T("%.3lf G%s"), (double)nVolume / (1024*1024), pszUnit );
 	}
 	else
 	{
-		strVolume.Format( _T("%.3lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
+		if ( bTruncate )
+			strVolume.Format( _T("%.0lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
+		else
+			strVolume.Format( _T("%.3lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
 	}
 	
 	return strVolume;
