@@ -155,7 +155,6 @@
 #define IDD_DOWNLOAD_EDIT               248
 #define IDD_SETTINGS_REMOTE             249
 #define IDD_SETTINGS_SCHEDULER          250
-#define IDD_DOWNLOAD1                   251
 #define IDD_DOWNLOAD_REVIEWS            251
 #define IDI_FIREWALLED                  252
 #define IDI_MERCORA                     254
@@ -171,6 +170,7 @@
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDB_BITMAP3                     265
+#define IDD_CODEPAGES                   266
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
 #define IDC_CONNECT_HOST                1000
@@ -658,6 +658,7 @@
 #define IDC_G2_CLIENTMODE               1397
 #define IDC_REVIEWS                     1397
 #define IDC_REVIEW_FILENAME             1398
+#define IDC_CODEPAGES                   1399
 #define IDC_SCHEDULER_ENABLE            1400
 #define IDC_SCHEDULER_LIMITED           1401
 #define IDC_SCHEDULER_LIMITED_SPIN      1402
@@ -1627,9 +1628,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        266
+#define _APS_NEXT_RESOURCE_VALUE        268
 #define _APS_NEXT_COMMAND_VALUE         33121
-#define _APS_NEXT_CONTROL_VALUE         1399
+#define _APS_NEXT_CONTROL_VALUE         1406
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

@@ -47,7 +47,6 @@ protected:
 	BOOL		m_bEnableAVI;
 	BOOL		m_bEnablePDF;
 	BOOL		m_bEnableCHM;
-	BOOL		m_bMetadataANSI;
 protected:
 	DWORD		m_nSleep;
 public:

@@ -343,7 +343,6 @@ void CLibraryBuilder::OnRun()
 	m_bThread	= FALSE;
 	m_sPath.Empty();
 	
-	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 0 );
 	theApp.Message( MSG_DEBUG, _T("CLibraryBuilder shutting down.") );
 }
 

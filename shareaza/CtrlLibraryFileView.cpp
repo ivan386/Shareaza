@@ -1,7 +1,11 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+//	Date:			"$Date: 2005/03/11 01:00:54 $"
+//	Revision:		"$Revision: 1.12 $"
+//  Last change by:	"$Author: rolandas $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +49,7 @@
 #include "DlgURLExport.h"
 #include "DlgDeleteFile.h"
 #include "DlgTorrentSeed.h"
+#include "DlgDecodeMetadata.h"
 #include "RelatedSearch.h"
 
 #ifdef _DEBUG
@@ -517,31 +522,38 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 
 void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI) 
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
 	int nSelected = GetSelectedCount();
 
 	StartSelectedFileLoop();
 
-	// count selected mp3's only
+	// Count only selected mp3's which have no custom metadata in XML format
 	while ( m_posSel )
 	{
+		// Lookup locks and unlocks library
 		CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) );
-		if ( pFile->m_sName.Right(3).MakeLower() != _T("mp3") ) nSelected--;
+		if ( pFile->m_sName.Right(3).MakeLower() != _T("mp3") ||
+			 !pFile->m_bMetadataAuto ) nSelected--;
 	}
-	pLock.Unlock();
 	pCmdUI->Enable( nSelected > 0 );
 }
 
 void CLibraryFileView::OnLibraryRebuildAnsi() 
 {
+	CDecodeMetadataDlg dlg;
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	
-	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 1 );
 	StartSelectedFileLoop();
-	// rebuild only mp3's
+
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
-		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") ) pFile->Rebuild();
+	{
+		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") ) 
+			dlg.AddFile( pFile );
+	}
+
 		pLock.Unlock();
+
+	if ( dlg.m_pFiles.GetCount() ) dlg.DoModal();
 }
 
 /*

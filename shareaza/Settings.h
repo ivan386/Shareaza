@@ -98,7 +98,6 @@ public:
 		CString		BitziXML;
 		BOOL		BitziOkay;
 		BOOL		HighPriorityHash;			// Use high priority hashing
-		BOOL		MetadataANSI;				// Convert ID3 tags from ANSI to unicode when encoding is not specified
 
 		//Not used at the moment
 		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram

@@ -66,7 +66,6 @@ void CLibraryBuilderInternals::LoadSettings()
 	m_bEnableAVI	= theApp.GetProfileInt( _T("Library"), _T("ScanAVI"), TRUE );
 	m_bEnablePDF	= theApp.GetProfileInt( _T("Library"), _T("ScanPDF"), TRUE );
 	m_bEnableCHM	= theApp.GetProfileInt( _T("Library"), _T("ScanCHM"), TRUE );
-	m_bMetadataANSI	= theApp.GetProfileInt( _T("Library"), _T("MetadataANSI"), FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -476,24 +475,15 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 	
 	if ( nEncoding == 0 )
 	{
-
 		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
 		
-		if ( m_bMetadataANSI )
+        DWORD nOut = 0;
+		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
 		{
-			MultiByteToWideChar(CP_ACP, 0, (LPCSTR)pBuffer, nLength, pszOutput, nLength + 1);
-			strValue.ReleaseBuffer( nLength );
+			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
+			if ( pszOutput[ nOut ] == 0 ) break;
 		}
-		else
-		{
-            DWORD nOut = 0;
-		    for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
-		    {
-			    pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
-			    if ( pszOutput[ nOut ] == 0 ) break;
-		    }
-			strValue.ReleaseBuffer( nOut );
-		}
+		strValue.ReleaseBuffer( nOut );
 		
 	}
 	else if ( nEncoding == 1 && ( nLength & 1 ) == 0 && nLength >= 2 )

@@ -7947,6 +7947,9 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\DlgDecodeMetadata.cpp">
+				</File>
+				<File
 					RelativePath=".\DlgDeleteFile.cpp">
 				</File>
 				<File
@@ -12612,6 +12615,9 @@
 				</File>
 				<File
 					RelativePath="DlgConnectTo.h">
+				</File>
+				<File
+					RelativePath=".\DlgDecodeMetadata.h">
 				</File>
 				<File
 					RelativePath=".\DlgDeleteFile.h">

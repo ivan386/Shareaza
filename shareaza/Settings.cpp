@@ -97,7 +97,6 @@ void CSettings::Setup()
 	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1)") );
 	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
 	Add( _T("Library.HashPriority"), &Library.HighPriorityHash, FALSE );
-	Add( _T("Library.MetadataANSI"), &Library.MetadataANSI, FALSE );
 
 	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
 	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
