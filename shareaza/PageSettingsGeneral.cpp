@@ -134,7 +134,7 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 		strTitle = pSchema->m_sTitle;
 		int nColon = strTitle.Find( ':' );
 		if ( nColon >= 0 ) 
-			strTitle = strTitle.Mid( nColon + 1 );
+			strTitle = strTitle.Mid( nColon + 1 ).Trim();
 	}
 
 	Add( strTitle, Settings.Interface.TipSearch );
