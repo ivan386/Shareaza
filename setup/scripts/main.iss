@@ -16,7 +16,6 @@ DefaultDirName={reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}
 DirExistsWarning=no
 DefaultGroupName=Shareaza
 DisableReadyPage=yes
-DisableProgramGroupPage=yes
 OutputDir=setup\builds
 OutputBaseFilename=Shareaza {#version}
 SolidCompression=yes
@@ -66,7 +65,7 @@ Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremov
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "setup\plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Excludes: "RazaWebHook.dll"
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Excludes: "RazaWebHook.dll"
 Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
@@ -83,12 +82,16 @@ Source: "Skins\ShareazaOS\*"; DestDir: "{userappdata}\Shareaza\Skins\ShareazaOS"
 Source: "Languages\default-en.xml"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Languages\*"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml"
 
-; Old versions of Shareaza stored xml and dat files under {app}
+; Old versions of Shareaza stored data under {app}
 ; These need to be copied to {userappdata}\Shareaza\Data
 Source: "{app}\*.dat"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 Source: "{app}\*.xml"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
+Source: "{app}\*.png"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
+Source: "{app}\*.bmp"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 Source: "{app}\Data\*.dat"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 Source: "{app}\Data\*.xml"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
+Source: "{app}\Data\*.png"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
+Source: "{app}\Data\*.bmp"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 
 ; Copy installer into download and uninstall dir
 Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
@@ -179,10 +182,10 @@ Type: filesandordirs; Name: "{app}\Schemas"
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
 Type: files; Name: "{app}\*.xml"
-Type: files; Name: "{app}\Data\*.dat"
-Type: files; Name: "{app}\Data\*.xml"
-Type: files; Name: "{userappdata}\Shareaza\Data\*.dat"
-Type: files; Name: "{userappdata}\Shareaza\Data\*.xml"
+Type: files; Name: "{app}\*.png"
+Type: files; Name: "{app}\*.bmp"
+Type: files; Name: "{app}\Data\*"
+Type: files; Name: "{userappdata}\Shareaza\Data\*"
 
 ; Pull in languages and localized files
 #include "languages.iss"
@@ -203,6 +206,15 @@ Type: files; Name: "{userappdata}\Shareaza\Data\*.xml"
 ;end;
 
 [Code]
+const
+  WM_CLOSE = $0010;
+  KeyLoc1 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
+  KeyLoc2 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
+  KeyName = 'UninstallString';
+
+var
+  Installed: Boolean;
+
 Function ShareazaInstalled(): boolean;
 Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza');
@@ -213,8 +225,10 @@ Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1');
 End;
 
-const
-  WM_CLOSE = $0010;
+Function NSISUsed(): boolean;
+Begin
+    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_');
+End;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
@@ -226,24 +240,17 @@ begin
       SendMessage(Wnd, WM_CLOSE, 0, 0);
 end;
 
-const
-  ISKey1 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
-  ISKey2 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
-  ISVal = 'UninstallString';
-  
-var
-  AppExists: Boolean;
-
 function InitializeSetup: Boolean;
 begin
   Result := True;
-  AppExists := RegValueExists(HKEY_LOCAL_MACHINE, ISKey1, ISVal) or
-    RegValueExists(HKEY_LOCAL_MACHINE, ISKey2, ISVal);
+  Installed := RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or
+    RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName);
 end;
 
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
   Result := False;
-  if PageID = wpSelectDir then Result := AppExists;
+  if PageID = wpSelectDir then Result := Installed;
+  if PageID = wpSelectProgramGroup then Result := Installed;
 end;
 
