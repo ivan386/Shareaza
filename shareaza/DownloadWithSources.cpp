@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -440,20 +440,18 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 	
 	m_nSourceCount ++;
-	
-	{
-		pSource->m_pPrev = m_pSourceLast;
-		pSource->m_pNext = NULL;
+
+	pSource->m_pPrev = m_pSourceLast;
+	pSource->m_pNext = NULL;
 		
-		if ( m_pSourceLast != NULL )
-		{
-			m_pSourceLast->m_pNext = pSource;
-			m_pSourceLast = pSource;
-		}
-		else
-		{
-			m_pSourceFirst = m_pSourceLast = pSource;
-		}
+	if ( m_pSourceLast != NULL )
+	{
+		m_pSourceLast->m_pNext = pSource;
+		m_pSourceLast = pSource;
+	}
+	else
+	{
+		m_pSourceFirst = m_pSourceLast = pSource;
 	}
 	
 	SetModified();
