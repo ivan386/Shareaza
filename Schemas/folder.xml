@@ -7,7 +7,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
 -->
@@ -31,7 +31,54 @@ Shareaza Russian Schemas File translated by dAbserver
                <icon path="folder.ico"/>
        </images>
        <members>
-               <member name="title" search="generic"/>
+               <member name="title" search="generic">
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="es">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="description" search="none">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="cht">描述</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="es">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Описание</title>
+               </member>
+               <member name="collector" search="indexed">
+                       <title language="en">Collector</title>
+                       <title language="af">Versamelaar</title>
+                       <title language="cht">美術品收藏者</title>
+                       <title language="de">Sammler</title>
+                       <title language="es">Colector</title>
+                       <title language="fr">Collecteur</title>
+                       <title language="lt">Kolekcionierius</title>
+                       <title language="nl">Samensteller</title>
+                       <title language="no">Samler</title>
+                       <title language="ru">&#160;Коллекционер</title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="cht">注釋</title>
+                       <title language="de">Kommentar</title>
+                       <title language="es">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Коментарии</title>
+               </member>
        </members>
        <contains>
                <object type="folder" location="http://www.shareaza.com/schemas/folder.xsd"/>

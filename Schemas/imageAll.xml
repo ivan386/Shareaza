@@ -7,7 +7,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
 -->
@@ -30,6 +30,21 @@ Shareaza Russian Schemas File translated by dAbserver
        <images>
                <icon path="imageFolder.ico"/>
        </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="es">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+       </members>
        <contains>
                <object type="file" location="http://www.shareaza.com/schemas/image.xsd"/>
        </contains>

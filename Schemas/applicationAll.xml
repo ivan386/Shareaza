@@ -7,7 +7,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
 -->
@@ -30,6 +30,21 @@ Shareaza Russian Schemas File translated by dAbserver
        <images>
                <icon path="applicationFolder.ico"/>
        </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="es">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+       </members>
        <contains>
                <object type="file" location="http://www.shareaza.com/schemas/application.xsd"/>
        </contains>
@@ -51,7 +66,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>
-               <subtitle language="nl">Deze map bevat alle programmabestanden uit je bebliotheek.</subtitle>
+               <subtitle language="nl">Deze map bevat alle programmabestanden uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
                <subtitle language="ru">&#160;Эта&#160;папка&#160;отображает&#160;Каждое&#160;Приложение&#160;в&#160;Вашем&#160;Хранилище.</subtitle>
        </headerContent>

@@ -7,7 +7,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
 -->
@@ -60,7 +60,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="lt">Nuoroda</title>
-                       <title language="nl">Snelkoppeling</title>
+                       <title language="nl">Link</title>
                        <title language="no">Link</title>
                        <title language="ru">&#160;Ссылка</title>
                </member>
@@ -72,7 +72,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">E-Mail</title>
                        <title language="fr">Email</title>
                        <title language="lt">El. paštas</title>
-                       <title language="nl">Email</title>
+                       <title language="nl">E-mail</title>
                        <title language="no">E-post</title>
                        <title language="ru">E-mail</title>
                </member>
@@ -133,7 +133,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="lt">Komentarai</title>
-                       <title language="nl">Commentaren</title>
+                       <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
                        <title language="ru">&#160;Коментарии</title>
                </member>

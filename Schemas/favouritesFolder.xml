@@ -7,7 +7,7 @@ Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Surf@ceS
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by thurstydog
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
 -->
@@ -30,6 +30,33 @@ Shareaza Russian Schemas File translated by dAbserver
        <images>
                <icon path="favourites.ico"/>
        </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="cht">標題</title>
+                       <title language="de">Titel</title>
+                       <title language="es">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="ru">&#160;Название</title>
+               </member>
+               <member name="description">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="cht">描述</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="es">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Описание</title>
+               </member>
+       </members>
        <headerContent version="1.0">
                <title language="en">My Favourite Files</title>
                <title language="af">My Gunsteling Lêers</title>

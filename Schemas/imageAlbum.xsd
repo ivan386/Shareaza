@@ -11,8 +11,7 @@
 		<all>
 			<attribute name="title" type="string"/>
 			<attribute name="description" type="string"/>
-			<attribute name="keywords" type="string"/>
-			
+      
 			<attribute name="type">
 				<simpleType base="string">
 					<enumeration value="Photograph"/>
