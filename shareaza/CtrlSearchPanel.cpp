@@ -142,6 +142,8 @@ void CSearchPanel::OnSkinChange()
 	m_boxSearch.SetCaption( strCaption );
 	LoadString( strCaption, IDS_SEARCH_PANEL_RESULTS_CAPTION );
 	m_boxResults.SetCaption( strCaption );
+	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );
+	m_boxAdvanced.SetCaption( strCaption );
 	
 	SetWatermark( Skin.GetWatermark( _T("CSearchPanel") ) );
 	SetFooter( Skin.GetWatermark( _T("CSearchPanel.Footer") ), TRUE );
