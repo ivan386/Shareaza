@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -162,7 +162,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 	delete [] (CEDPacket*)pPacket;
 }
 
-// TCP
+// Client - Server, Local (TCP)
 #define ED2K_C2S_LOGINREQUEST			0x01
 #define ED2K_C2S_GETSERVERLIST			0x14
 #define	ED2K_C2S_OFFERFILES				0x15
@@ -181,7 +181,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_S2C_SERVERIDENT			0x41
 #define ED2K_S2C_CALLBACKREQUESTED		0x35
 
-// Global (UDP)
+// Client - Server, Global (UDP)
 #define ED2K_C2SG_SEARCHREQUEST2		0x92
 #define ED2K_C2SG_GETSOURCES2			0x94
 #define ED2K_C2SG_SERVERSTATUSREQUEST	0x96
@@ -193,7 +193,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2SG_CALLBACKREQUEST		0x9C
 #define ED2K_S2CG_CALLBACKFAIL			0x9E
 
-// TCP
+// Client - Client, TCP
 #define ED2K_C2C_HELLO					0x01
 #define ED2K_C2C_HELLOANSWER			0x4C
 #define ED2K_C2C_FILEREQUEST			0x58
@@ -222,7 +222,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_REQUESTSOURCES			0x81
 #define ED2K_C2C_ANSWERSOURCES			0x82
 
-// UDP
+// Client - Client, UDP
 #define ED2K_C2C_UDP_REASKFILEPING		0x90
 #define ED2K_C2C_UDP_REASKACK			0x91
 #define ED2K_C2C_UDP_FILENOTFOUND		0x92

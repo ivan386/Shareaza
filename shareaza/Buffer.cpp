@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -173,16 +173,9 @@ CString CBuffer::ReadString(DWORD nBytes, UINT nCodePage)
 	
 	int nSource = (int)min( nBytes, m_nLength );
 	int nLength = MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nSource, NULL, 0 );
-#ifdef _UNICODE
+
 	MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nSource, str.GetBuffer( nLength ), nLength );
 	str.ReleaseBuffer( nLength );
-#else
-	LPWSTR pszWide = new WCHAR[ nLength + 1 ];
-	MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nSource, pszWide, nLength );
-	pszWide[ nLength ] = 0;
-	str = pszWide;
-	delete [] pszWide;
-#endif
 	
 	return str;
 }
@@ -203,16 +196,11 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 	
 	if ( nLength >= m_nLength ) return FALSE;
 	
-#ifdef _UNICODE
 	int nWide = MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, NULL, 0 );
     MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, strLine.GetBuffer( nWide ), nWide );
 	strLine.ReleaseBuffer( nWide );
 	int nCR = strLine.ReverseFind( '\r' );
 	if ( nCR >= 0 ) strLine.Truncate( nCR );
-#else
-	CopyMemory( strLine.GetBuffer( nLength ), m_pBuffer, nLength );
-	strLine.ReleaseBuffer( ( nLength > 0 && m_pBuffer[ nLength - 1 ] == '\r' ) ? nLength - 1 : nLength );
-#endif
 	
 	if ( ! bPeek ) Remove( nLength + 1 );
 	

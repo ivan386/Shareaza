@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -545,15 +545,11 @@ BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 	
 	DWORD nWritten;
 	
-#ifdef _UNICODE
 	int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszASCII = new CHAR[ nASCII ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
 	WriteFile( hFile, pszASCII, nASCII, &nWritten, NULL );
 	delete [] pszASCII;
-#else
-	WriteFile( hFile, (LPCSTR)strXML, strXML.GetLength(), &nWritten, NULL );
-#endif
 	
 	CloseHandle( hFile );
 	
