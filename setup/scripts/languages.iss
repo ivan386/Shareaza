@@ -19,6 +19,8 @@ Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseF
 Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"; LicenseFile: "setup/license/russian.rtf"
 Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
 Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
+Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
+Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
 
 [Files]
 ; Install default remote
@@ -52,6 +54,8 @@ Source: "Remote-localized\Russian\*"; DestDir: "{app}\Remote"; Flags: ignorevers
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 ; Hungarian
 Source: "Remote-localized\hungarian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
+; Chinese Simp
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -84,6 +88,9 @@ Source: "setup\license\russian.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\greek.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 ; Hungarian
 Source: "setup\license\hungarian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
+; Chinese Simp
+Source: "setup\license\chinese.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
+
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -116,6 +123,8 @@ Source: "setup\filter\russian.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\greek.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 ; Hungarian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
+; Chinese Simp
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -330,4 +339,20 @@ hu.icons_license=Licensz
 hu.icons_uninstall=T鰎l閟
 hu.icons_downloads=Let鰈t閟ek
 hu.dialog_shutdown=A %1 jelenleg fut. Be akarod z醨ni a programot, hogy a telep韙閟 folytat骴hasson?
+; Chinese Simp
+chs.components_plugins=插件
+chs.components_skins=皮肤
+chs.components_languages=语言
+chs.tasks_allusers=所有用户
+chs.tasks_selectusers=安装 %1 为:
+chs.tasks_currentuser=仅 %1
+chs.tasks_multisetup=启用多用户支持
+chs.run_skinexe=安装皮肤...
+chs.reg_incomingchat=传入聊天消息
+chs.reg_apptitle=Shareaza 终极文件共享
+chs.icons_license=许可
+chs.icons_uninstall=卸载
+chs.icons_downloads=下载
+chs.dialog_shutdown=%1 正在运行。您希望关闭 %1 以便继续安装吗？
+
 
