@@ -44,7 +44,7 @@ public:
 	//G2
 	BOOL	IsG2Leaf();									//Check if this node is a G2 Leaf
 	BOOL	IsG2Hub();									//Check if this node is a G2 Hub
-	BOOL	IsG2HubCapable(BOOL bDebug = FALSE);		//Check if this node can be a G2 Hub
+	DWORD	IsG2HubCapable(BOOL bDebug = FALSE);		//Check if this node can be a G2 Hub
 	//Either
 	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more hubs for the specified protocol
 	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more leaves for the specified protocol

@@ -619,9 +619,9 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 
 BOOL CShakeNeighbour::OnHeadersCompleteG2()
 {
-	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G2") ); //****temp
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G2 client") ); //****temp
 /*
-//Shouldn't be needed any more
+//Shouldn't be needed any more. G1 clients should head on over to the other function
 	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected )
 	{
 		if ( ! m_bG2Accept || ( m_bInitiated && ! m_bG2Send ) )
@@ -795,8 +795,9 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 
 BOOL CShakeNeighbour::OnHeadersCompleteG1()
 {
-	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G1") ); //****temp
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G1 client") ); //****temp
 
+	//Check if Gnutella1 is enabled before connecting to a gnutella client
 	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected )
 	{
 		m_pOutput->Print( "GNUTELLA/0.6 503 G2 Required\r\n" );
@@ -806,6 +807,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		DelayClose( IDS_HANDSHAKE_NOTG2 );
 		return FALSE;
 	}
+	//
 	
 	if ( m_nState == nrsRejected )
 	{
