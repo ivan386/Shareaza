@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,96
- PRODUCTVERSION 2,1,0,96
+ FILEVERSION 2,1,0,97
+ PRODUCTVERSION 2,1,0,97
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 96"
+            VALUE "FileVersion", "2, 1, 0, 97"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 96"
+            VALUE "ProductVersion", "2, 1, 0, 97"
         END
     END
     BLOCK "VarFileInfo"
@@ -4103,6 +4103,9 @@ BEGIN
     IDC_STARTTORRENTDOWNLOADS, 0x403, 21, 0
 0x6857, 0x6e65, 0x7220, 0x7461, 0x6f69, 0x6f20, 0x6576, 0x2072, 0x3031, 
 0x2530, "\000" 
+    IDC_STARTTORRENTDOWNLOADS, 0x403, 20, 0
+0x6e4f, 0x796c, 0x7720, 0x6568, 0x206e, 0x6572, 0x7571, 0x7365, 0x6574, 
+0x0064, 
     IDC_STARTTORRENTDOWNLOADS, 0x403, 6, 0
 0x654e, 0x6576, 0x0072, 
     0
