@@ -1205,8 +1205,9 @@ void CDownloadsWnd::OnTransfersConnect()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
-		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; pSource = pSource->m_pNext )
+		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; )
 		{
+            CDownloadSource* pNext = pSource->m_pNext;
 			if ( pSource->m_bSelected && pSource->m_pTransfer == NULL )
 			{
 				if ( pSource->m_nProtocol != PROTOCOL_ED2K )
@@ -1223,6 +1224,7 @@ void CDownloadsWnd::OnTransfersConnect()
 					}
 				}
 			}
+            pSource = pNext;
 		}
 	}
 	
