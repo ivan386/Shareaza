@@ -797,11 +797,14 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume)
 {
 	QWORD nMargin = 10485760;
 	
-	if ( HINSTANCE hKernel = LoadLibrary( _T("KERNEL32.DLL") ) )
+	if ( HINSTANCE hKernel = GetModuleHandle( _T("KERNEL32.DLL") ) )
 	{
-		BOOL (WINAPI *pfnGetDiskFreeSpaceEx)(LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER); 
-		(FARPROC&)pfnGetDiskFreeSpaceEx = GetProcAddress( hKernel, "GetDiskFreeSpaceExA" );
-		
+		 BOOL (WINAPI *pfnGetDiskFreeSpaceEx)(LPCTSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER); 
+#ifdef UNICODE
+		(FARPROC&)pfnGetDiskFreeSpaceEx = GetProcAddress( hKernel, "GetDiskFreeSpaceExW" );
+#else
+ 		(FARPROC&)pfnGetDiskFreeSpaceEx = GetProcAddress( hKernel, "GetDiskFreeSpaceExA" );
+#endif	
 		if ( pfnGetDiskFreeSpaceEx != NULL )
 		{
 			ULARGE_INTEGER nFree, nNull;
@@ -818,8 +821,6 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume)
 				return TRUE;
 			}
 		}
-		
-		FreeLibrary( hKernel );
 	}
 	
 	CString str = Settings.Downloads.IncompletePath.SpanExcluding( _T("\\") ) + '\\';
