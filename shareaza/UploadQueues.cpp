@@ -26,7 +26,6 @@
 #include "UploadQueue.h"
 #include "UploadTransfer.h"
 #include "Transfers.h"
-#include "Skin.h"
 #include "SharedFile.h"
 #include "Download.h"
 
