@@ -257,15 +257,22 @@ End;
 const
   WM_CLOSE = $0010;
 
-function InitializeSetup: Boolean;
+procedure CurStepChanged(CurStep: Integer);
 var
   Wnd: HWND;
 begin
-  Wnd := FindWindowByClassName('ShareazaMainWnd');
-  if Wnd <> 0 then
+  if CurStep = csCopy then
+    Wnd := FindWindowByClassName('ShareazaMainWnd');
+    if Wnd <> 0 then
       SendMessage(Wnd, WM_CLOSE, 0, 0);
-
-  Result := True;
 end;
 
-
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  Wnd: HWND;
+begin
+  if CurUninstallStep = usUninstall then
+    Wnd := FindWindowByClassName('ShareazaMainWnd');
+    if Wnd <> 0 then
+      SendMessage(Wnd, WM_CLOSE, 0, 0);
+end;
