@@ -99,7 +99,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 	// Metadata
 	
 	CSchema* pSchema = pFile->m_pSchema;
-	CString str;
+	CString str, sData;
 
 	m_pMetadata.Clear();
 
@@ -110,10 +110,12 @@ BOOL CLibraryTipCtrl::OnPrepare()
 	LoadString( str, IDS_TIP_SIZE );
 	m_pMetadata.Add( str, m_sSize );
 	
-	str.Format( _T("%lu today, %lu total"), pFile->m_nHitsToday, pFile->m_nHitsTotal );
-	m_pMetadata.Add( _T("Hits"), str );
-	str.Format( _T("%lu today, %lu total"), pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
-	m_pMetadata.Add( _T("Uploads"), str );
+	sData.Format( IDS_TIP_TODAYTOTAL, pFile->m_nHitsToday, pFile->m_nHitsTotal );
+	LoadString( str, IDS_TIP_HITS );
+	m_pMetadata.Add( str, sData );
+	sData.Format( IDS_TIP_TODAYTOTAL, pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
+	LoadString( str, IDS_TIP_UPLOADS );
+	m_pMetadata.Add( str, sData );
 
 	if ( pFile->m_pMetadata && pSchema )
 	{

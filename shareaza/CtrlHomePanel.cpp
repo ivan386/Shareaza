@@ -139,7 +139,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! Settings.Interface.LowResMode ) 
 	{
 		AddBox( &m_boxUploads );
-		if(Settings.BitTorrent.AdvancedInterface) AddBox( &m_boxTorrents );
+		if( Settings.BitTorrent.AdvancedInterface ) AddBox( &m_boxTorrents );
 	}
 	
 	// SetStretchBox( &m_boxLibrary );

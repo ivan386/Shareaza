@@ -742,6 +742,9 @@
 #define IDS_TIP_BOGUS                   8313
 #define IDS_TIP_EXISTS_DELETED          8314
 #define IDS_TIP_EXISTS_BLACKLISTED      8315
+#define IDS_TIP_HITS					8316
+#define IDS_TIP_UPLOADS					8317
+#define IDS_TIP_TODAYTOTAL				8318
 #define IDS_TIP_STATUS                  8320
 #define IDS_TIP_SPEED                   8321
 #define IDS_TIP_URL                     8322

@@ -56,7 +56,7 @@ END_MESSAGE_MAP()
 
 CSchemaCtrl::CSchemaCtrl()
 {
-	m_nCaptionWidth	= 96;
+	m_nCaptionWidth	= 120;
 	m_nItemHeight	= 32;
 	m_bShowBorder	= TRUE;
 	m_pSchema		= NULL;
