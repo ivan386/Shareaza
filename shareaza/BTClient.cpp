@@ -50,7 +50,7 @@ static char THIS_FILE[]=__FILE__;
 
 CBTClient::CBTClient()
 {
-	m_bShareaza			= FALSE;
+	m_bExtended			= FALSE;
 	m_pUpload			= NULL;
 	m_pDownload			= NULL;
 	m_pDownloadTransfer	= NULL;
@@ -293,7 +293,7 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 	
 	if ( bPart2 )
 	{
-		m_pOutput->Add( &m_pDownload->m_pPeerID, sizeof(SHA1) );//m_pOutput->Add( BTClients.GetGUID(), sizeof(SHA1) );
+		m_pOutput->Add( &m_pDownload->m_pPeerID, sizeof(SHA1) );
 	}
 	
 	OnWrite();
@@ -379,13 +379,13 @@ BOOL CBTClient::OnHandshake2()
 	{
 		if ( nByte < 16 )
 		{
-			if ( m_pGUID.b[ nByte ] ) m_bShareaza = TRUE;
+			if ( m_pGUID.b[ nByte ] ) m_bExtended = TRUE;
 		}
 		else
 		{
 			if ( m_pGUID.b[ nByte ]	!= ( m_pGUID.b[ nByte % 16 ] ^ m_pGUID.b[ 15 - ( nByte % 16 ) ] ) )
 			{
-				m_bShareaza = FALSE;
+				m_bExtended = FALSE;
 				break;
 			}
 		}
@@ -399,6 +399,8 @@ BOOL CBTClient::OnHandshake2()
 		CopyMemory( &m_pDownloadTransfer->m_pSource->m_pGUID, &m_pGUID, 16 );
 		
 		/*
+
+		//ToDo: This seems to trip when it shouldn't. Should be investigated...
 		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
@@ -448,37 +450,46 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("Azureus");
 		}
-		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'T' )
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'B' )
 		{
-			m_sUserAgent = _T("MoonlightTorrent");
-		}
-		else if ( m_pGUID.b[1] == 'L' && m_pGUID.b[2] == 'T' )
-		{
-			m_sUserAgent = _T("libtorrent");
+			m_sUserAgent = _T("BitBuddy");
 		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'X' )
 		{
 			m_sUserAgent = _T("Bittorrent X");
 		}
-		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'S' )
+		else if ( m_pGUID.b[1] == 'C' && m_pGUID.b[2] == 'T' )
 		{
-			m_sUserAgent = _T("Torrentstorm");
+			m_sUserAgent = _T("CTorrent");
+		}
+		else if ( m_pGUID.b[1] == 'L' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("libtorrent");
+		}
+		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("MoonlightTorrent");
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'S' )
 		{
 			m_sUserAgent = _T("Swarmscope");
 		}
-		else if ( m_pGUID.b[1] == 'X' && m_pGUID.b[2] == 'T' )
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )	//ToDo: Make certain SZ isn't used before 2.2 final
 		{
-			m_sUserAgent = _T("XanTorrent");
-		}
-		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'B' )
-		{
-			m_sUserAgent = _T("BitBuddy");
+			m_sUserAgent = _T("Shareaza");
+			//if ( m_pGUID.b[3] > '1' ) m_bExtended = TRUE;
 		}
 		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
 		{
 			m_sUserAgent = _T("TorrentDOTnet");
+		}
+		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'S' )
+		{
+			m_sUserAgent = _T("Torrentstorm");
+		}
+		else if ( m_pGUID.b[1] == 'X' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("XanTorrent");
 		}
 		else //Unknown client using this naming.
 		{
@@ -494,17 +505,17 @@ void CBTClient::DetermineUserAgent()
 	{
 		switch ( m_pGUID.b[0] )
 		{
+		case 'A':
+			m_sUserAgent = _T("ABC");
+			break;
 		case 'S':
 			m_sUserAgent = _T("Shadow");
-			break;
-		case 'U':
-			m_sUserAgent = _T("UPnP NAT BT");
 			break;
 		case 'T':
 			m_sUserAgent = _T("BitTornado");
 			break;
-		case 'A':
-			m_sUserAgent = _T("ABC");
+		case 'U':
+			m_sUserAgent = _T("UPnP NAT BT");
 			break;
 		default: //Unknown client using this naming.
 			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
@@ -539,7 +550,7 @@ BOOL CBTClient::OnOnline()
 	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
-	if ( m_bShareaza ) SendBeHandshake();
+	if ( m_bExtended ) SendBeHandshake();
 	
 	if ( CBTPacket* pBitfield = m_pDownload->CreateBitfieldPacket() )
 		Send( pBitfield );
@@ -587,7 +598,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 		return m_pUpload->OnCancel( pPacket );
 	
 	case BT_PACKET_HANDSHAKE:
-		if ( ! m_bShareaza ) break;
+		if ( ! m_bExtended ) break;
 		return OnBeHandshake( pPacket );
 	case BT_PACKET_SOURCE_REQUEST:
 		if ( ! m_bExchange ) break;

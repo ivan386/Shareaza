@@ -39,8 +39,8 @@ public:
 // Attributes
 public:
 	SHA1					m_pGUID;
-	BOOL					m_bShareaza;
-	BOOL					m_bExchange;
+	BOOL					m_bExtended;		//Send extened details (User name, exact version, etc)
+	BOOL					m_bExchange;		//Exchange other info (with extended client)
 public:
 	CUploadTransferBT*		m_pUpload;
 	CDownload*				m_pDownload;
