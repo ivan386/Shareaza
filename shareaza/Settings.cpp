@@ -188,9 +188,9 @@ void CSettings::Setup()
 	Add( _T("Discovery.BootstrapCount"), &Discovery.BootstrapCount, 10 );
 	Add( _T("Discovery.G2DAddress"), &Discovery.G2DAddress, _T("stats.shareaza.com:6446") );
 	Add( _T("Discovery.G2DRetryAfter"), &Discovery.G2DRetryAfter, 0 );
-	Add( _T("Discovery.CacheCount"), &Discovery.CacheCount, 35 );
+	Add( _T("Discovery.CacheCount"), &Discovery.CacheCount, 50 );
 	
-	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 5 );
+	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 4 );
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );
 	Add( _T("Gnutella.DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, FALSE );
 	Add( _T("Gnutella.DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, TRUE );
@@ -303,8 +303,8 @@ void CSettings::Setup()
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
 	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 128 );
 	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 8 );
-	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 4 );
-	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 40 );
+	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 3 );
+	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 30 );
 	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
 	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 200 );
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
