@@ -31,7 +31,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="it">Genere musicale</title>
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
-               <title language="no">Musikk sjanger</title>
+               <title language="no">Musikksjanger</title>
                <title language="br">Gênero Musical</title>
                <title language="ru">Стиль музыки</title>
        </titles>
@@ -139,7 +139,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="it">Questa cartella contiene tutta la musica che cade nel genere {name}.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti „{name}“ žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
-               <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name} sjangeren.</subtitle>
+               <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name}-sjangeren.</subtitle>
                <subtitle language="br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
        </headerContent>

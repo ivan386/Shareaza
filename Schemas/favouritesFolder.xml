@@ -85,7 +85,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="it">I miei file preferiti</title>
                <title language="lt">Mano mėgiamos bylos</title>
                <title language="nl">Mijn Favoriete Bestanden</title>
-               <title language="no">Mine favoritt filer</title>
+               <title language="no">Mine favorittfiler</title>
                <title language="br">Meus Arquivos Favoritos</title>
                <title language="ru">Мои избранные файлы</title>
                <subtitle language="en">This folder contains favourite files which Shareaza will recommend to other users who browse your collection.</subtitle>
@@ -99,7 +99,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="it">Questa cartella contiene i file preferiti che Shareaza raccomanderà agli utenti che esamineranno la tua collezione.</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias „Shareaza“ rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
-               <subtitle language="no">Denne mappen inneholder dine favoritter som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>
+               <subtitle language="no">Denne mappen inneholder dine favoritter, som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>
                <subtitle language="br">Esta pasta contém arquivos favoritos que o Shareaza irá recomendar para outros usuários que navegarem pela sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает избранные файлы, они также видны смотрящим Ваш профиль.</subtitle>
        </headerContent>

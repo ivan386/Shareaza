@@ -31,7 +31,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="it">Codice sorgente</title>
                <title language="lt">Pirminis kodas</title>
                <title language="nl">Bron Code</title>
-               <title language="no">Kilde kode</title>
+               <title language="no">Kildekode</title>
                <title language="br">Código Fonte</title>
                <title language="ru">Исходный код</title>
        </titles>
@@ -217,7 +217,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Versione lingua</title>
                        <title language="lt">Kalbos versija</title>
                        <title language="nl">Taalversie</title>
-                       <title language="no">Språk versjon</title>
+                       <title language="no">Språkversjon</title>
                        <title language="br">Versão do Idioma</title>
                        <title language="ru">Версия языка</title>
                </member>

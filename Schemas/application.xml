@@ -97,7 +97,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Note di rilascio</title>
                        <title language="lt">Apie leidimą</title>
                        <title language="nl">Aantekeningen bij Vrijgave</title>
-                       <title language="no">Release notat</title>
+                       <title language="no">Releasenotat</title>
                        <title language="br">Notas de Lançamento</title>
                        <title language="ru">Заметки по релизу</title>
                </member>
@@ -113,7 +113,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Versione file</title>
                        <title language="lt">Bylos versija</title>
                        <title language="nl">Bestandsversie</title>
-                       <title language="no">Fil versjon</title>
+                       <title language="no">Filversjon</title>
                        <title language="br">Versão do Arquivo</title>
                        <title language="ru">Версия файла</title>
                </member>
@@ -129,7 +129,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Nome file originale</title>
                        <title language="lt">Pradinis vardas</title>
                        <title language="nl">Originele Bestandsnaam</title>
-                       <title language="no">Original navn</title>
+                       <title language="no">Originalnavn</title>
                        <title language="br">Nome Original do Arquivo</title>
                        <title language="ru">Оригинальное имя файла</title>
                </member>
@@ -195,7 +195,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Tipo di archivio</title>
                        <title language="lt">Archyvo tipas</title>
                        <title language="nl">Archief Types</title>
-                       <title language="no">Arkiv type</title>
+                       <title language="no">Arkivtype</title>
                        <title language="br">Tipo de Arquivo</title>
                        <title language="ru">Архивный тип</title>
                </member>
@@ -244,7 +244,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Data di rilascio P2P</title>
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P Vrijgave</title>
-                       <title language="no">P2P release dato</title>
+                       <title language="no">P2P releasedato</title>
                        <title language="br">Data de Lançamento</title>
                        <title language="ru">Дата релиза в P2P</title>
                </member>
@@ -276,7 +276,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Link del distributore</title>
                        <title language="lt">Distrib. nuoroda</title>
                        <title language="nl">Link naar Verspreider</title>
-                       <title language="no">Distributør link</title>
+                       <title language="no">Distributørlink</title>
                        <title language="br">Link do Distribuidor</title>
                        <title language="ru">Ссылка на дистрибьютера</title>
                </member>
@@ -292,7 +292,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Gruppo di rilascio</title>
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Vrijgave Groep</title>
-                       <title language="no">Release gruppe</title>
+                       <title language="no">Releasegruppe</title>
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
                </member>
@@ -308,7 +308,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="it">Link gruppo di rilascio</title>
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link Vrijgave Groep</title>
-                       <title language="no">Release gruppe link</title>
+                       <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка на релиз группу</title>
                </member>

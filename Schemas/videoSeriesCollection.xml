@@ -31,7 +31,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="it">Video:Show TV</title>
                <title language="lt">Video:TV programos</title>
                <title language="nl">Video:TV-Series</title>
-               <title language="no">Video: Tv-show</title>
+               <title language="no">Video: TV-show</title>
                <title language="br">Vídeo:Shows de TV</title>
                <title language="ru">&#160;Видео: Видео шоу</title>
        </titles>
@@ -72,7 +72,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="it">Show TV</title>
                <title language="lt">TV programos</title>
                <title language="nl">TV-Series</title>
-               <title language="no">Tv-show</title>
+               <title language="no">TV-show</title>
                <title language="br">Shows de TV</title>
                <title language="ru">ТВ шоу</title>
                <subtitle language="en">This folder contains a list of TV series you have in your library.</subtitle>
@@ -86,7 +86,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="it">Questa cartella contiene la lista delle serie TV che hai nella libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos TV serialų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met de TV series die in je bibliotheek te vinden zijn.</subtitle>
-               <subtitle language="no">Denne mappen inneholder en liste med tv-serier i mine filer</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste over TV-serier i mine filer</subtitle>
                <subtitle language="br">Esta pasta contém todos os seriados de TV presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список ТВ шоу и/или серий в Вашем хранилище.</subtitle>
        </headerContent>
