@@ -258,8 +258,9 @@ BOOL CShakeNeighbour::OnRun()
 			return FALSE;
 		}
 
-	// We are exchanging handshake headers with the remote computer
-			            // The most recent thing that's happened in the handshake is
+		break;
+
+	// We are exchanging handshake headers with the remote computer, and the most recent thing that's happened is
 	case nrsHandshake1: // We've sent a complete group of headers
 	case nrsHandshake2: // The remote computer sent the first line of its initial group of headers to us
 	case nrsHandshake3: // The remote computer sent the first line of its final group of headers to us
@@ -272,13 +273,17 @@ BOOL CShakeNeighbour::OnRun()
 			Close( IDS_HANDSHAKE_TIMEOUT );
 			return FALSE;
 		}
+
 		break;
+
 	// DelayClose was called, it sends the write buffer to the remote computer before closing the socket
 	case nrsClosing:
 
 		// Close the connection
 		Close( 0 );
 		return FALSE;
+
+		break;
 	}
 
 	// Have CConnection::DoRun keep talking to this remote computer
@@ -1271,23 +1276,29 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Point the bandwidth meter limits at the numbers from Shareaza Settings
 	switch ( m_nNodeType ) {
 	case ntHub:
+
 		// Point the limits at the settings for connections to hubs above us
 		m_mInput.pLimit  = &Settings.Bandwidth.HubIn;
 		m_mOutput.pLimit = &Settings.Bandwidth.HubOut;
+
 		break;
 
 	// This connection is to a leaf below us
 	case ntLeaf:
+
 		// Point the limits at the settings for connections to leaves below us
 		m_mInput.pLimit  = &Settings.Bandwidth.LeafIn;
 		m_mOutput.pLimit = &Settings.Bandwidth.LeafOut;
+
 		break;
 
 	// We are both hubs
 	case ntNode:
+
 		// Point the limits at the settings for peer hub-to-hub connections
 		m_mInput.pLimit  = &Settings.Bandwidth.PeerIn;
 		m_mOutput.pLimit = &Settings.Bandwidth.PeerOut;
+
 		break;
 	}
 

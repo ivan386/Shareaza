@@ -22,16 +22,19 @@
 #if !defined(AFX_ZLIB_H__3ABC5B39_501F_41B0_828A_B7CDFAD0F73B__INCLUDED_)
 #define AFX_ZLIB_H__3ABC5B39_501F_41B0_828A_B7CDFAD0F73B__INCLUDED_
 
+// Only include the lines beneath this one once
 #pragma once
 
-
+// Wraps the compress and decompress data compression functions of the ZLib compression library
 class CZLib  
 {
+
 // Operations
 public:
-	static LPBYTE	Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
-	static LPBYTE	Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
 
+	// Compress and decompress nInput bytes at pInput to a new returned buffer of size pnOutput
+	static LPBYTE Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
+	static LPBYTE Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest = 0);
 };
 
 #endif // !defined(AFX_ZLIB_H__3ABC5B39_501F_41B0_828A_B7CDFAD0F73B__INCLUDED_)
