@@ -260,7 +260,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 60 );
-	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 60*1000 );
+	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
@@ -470,36 +470,42 @@ void CSettings::Load()
 	}
 	
 	// Set current networks
-	Gnutella1.EnableToday	= Gnutella1.EnableAlways;
-	Gnutella2.EnableToday	= Gnutella2.EnableAlways;
-	eDonkey.EnableToday		= eDonkey.EnableAlways;
+	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
+	Gnutella2.EnableToday		= Gnutella2.EnableAlways;
+	eDonkey.EnableToday			= eDonkey.EnableAlways;
 	
 	// Make sure some needed paths exist
 	CreateDirectory( General.Path + _T("\\Data"), NULL );
 	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
 
-	Interface.LowResMode	= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
-
-	// Enforce a few sensible values (in case of registry fiddling)
-	Downloads.SearchPeriod = min( Downloads.SearchPeriod, 5*60 );
-	Downloads.StarveTimeout = max( Downloads.StarveTimeout, 45*60 );
-	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
-	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
-	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
-	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+	// Set interface
+	Interface.LowResMode		= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
 
 	// Reset certain network variables if bandwidth is too low
 	// Set ed2k
 	if ( GetOutgoingBandwidth() < 2 ) 
 	{
-		eDonkey.EnableToday = FALSE;
-		eDonkey.EnableAlways = FALSE;
+		eDonkey.EnableToday		= FALSE;
+		eDonkey.EnableAlways	= FALSE;
 	}
 	// Set number of torrents
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
 
+	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
+	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, 5*60 );
+	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, 45*60 );
+	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
+	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, 45*60 );
+	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 45*60 );
+	Downloads.ConnectThrottle	= max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+
+	// Set client links
+	Gnutella1.NumHubs			= min( Gnutella1.NumHubs, 2 );
+	Gnutella2.NumHubs			= min( Gnutella2.NumHubs, 3 );
+	Gnutella2.NumLeafs			= max( Gnutella2.NumLeafs, 1024 );
+
 	//Temporary- until G1 ultrapeer has been updated
-	Gnutella1.ClientMode = MODE_LEAF; 
+	Gnutella1.ClientMode		= MODE_LEAF; 
 }
 
 void CSettings::Save(BOOL bShutdown)
