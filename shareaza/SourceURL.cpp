@@ -134,7 +134,39 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CSourceURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 {
-	return FALSE;
+	if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) != 0 ) return FALSE;
+	
+	CString strURL = pszURL + 6;
+	
+	int nSlash = strURL.Find( '/' );
+	
+	if ( nSlash >= 0 )
+	{
+		m_sAddress	= strURL.Left( nSlash );
+		m_sPath		= strURL.Mid( nSlash );
+	}
+	else
+	{
+		m_sAddress = strURL;
+		m_sPath = _T("/");
+	}
+	
+	int nAt = m_sAddress.Find( '@' );
+	if ( nAt >= 0 ) m_sAddress = m_sAddress.Mid( nAt + 1 );
+	
+	if ( m_sAddress.IsEmpty() ) return FALSE;
+	
+	SOCKADDR_IN saHost;
+	
+	BOOL bResult = Network.Resolve( m_sAddress, 21, &saHost, bResolve );
+	
+	m_pAddress	= saHost.sin_addr;
+	m_nPort		= htons( saHost.sin_port );
+	
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_FTP;
+	
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////

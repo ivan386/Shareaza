@@ -192,6 +192,10 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished) const
 					 ! Settings.Gnutella2.EnableToday ) return FALSE;
 			}
 		}
+		else if ( m_nProtocol == PROTOCOL_FTP )
+		{
+			if ( ! bNetwork ) return FALSE;
+		}
 	}
 	
 	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress );

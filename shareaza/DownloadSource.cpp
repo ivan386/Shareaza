@@ -26,7 +26,7 @@
 #include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransferHTTP.h"
-//#include "DownloadTransferFTP.h"
+#include "DownloadTransferFTP.h"
 #include "DownloadTransferED2K.h"
 #include "DownloadTransferBT.h"
 #include "FragmentedFile.h"
@@ -365,6 +365,10 @@ CDownloadTransfer* CDownloadSource::CreateTransfer()
 	if ( m_nProtocol == PROTOCOL_HTTP )
 	{
 		return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	}
+	if ( m_nProtocol == PROTOCOL_FTP )
+	{
+		return ( m_pTransfer = new CDownloadTransferFTP( this ) );
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{
