@@ -3385,7 +3385,7 @@ Other:
 		</dialog>
 		<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote Access">
 			<control caption="_Erklärung:" />
-			<control caption="Shareaza Remote Access erlaubt es ihnen, Shareaza auf ihrem PC laufen zu lassen und es, aus der Ferne, über einen Webbrowser zu bedienen.  Sie müssen eingehende Verbindungen akzeptieren können um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)" />
+			<control caption="Shareaza Remote Access erlaubt es ihnen, Shareaza auf ihrem PC laufen zu lassen und es aus der Ferne, über einen Webbrowser zu bedienen.  Sie müssen eingehende Verbindungen akzeptieren können um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)" />
 			<control caption="_Aktivieren:" />
 			<control caption="Shareaza Remote Access aktivieren:" />
 			<control caption="URL" />
@@ -3714,10 +3714,10 @@ Other:
 			<gap size="4" />
 			<text>Uploadkapazität, Warteschlange, Bannen, Timeouts und spezielle Freigaben.</text>
 			<newline gap="10" />
-			<link target="raza:page:CNetworksSettingsPage" format="b">Netzwerke:</link>
-			<gap size="4" />
-			<text>Wählen und konfigurieren Sie die P2P Netzwerke die Sie mit Shareaza benutzen möchten.</text>
-			<newline gap="10" />
+			<link target="raza:page:CRemoteSettingsPage" format="b">Remote Access:</link>
+			<gap size="4"/>
+			<text>Shareaza konfigurieren, um es aus der Ferne über einen Webbrowser bedienen zu können.</text>
+			<newline gap="10"/>
 		</document>
 		<!-- Browse User Profile -->
 		<document name="CBrowseHostProfile.1">

@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.2.16"
+                        version="2.0.3.8"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -1745,9 +1745,9 @@ right quote    &#147;
                <text>Išsiuntimo pajėgumo, eilių, prieigos užkirtimo, uždelsties ir specialiųjų užklausų valdymas.</text>
                <newline gap="10"/>
 
-               <link target="raza:page:CNetworksSettingsPage" format="b">Tinklai:</link>
+               <link target="raza:page:CRemoteSettingsPage" format="b">Nuotolinė prieiga:</link>
                <gap size="4"/>
-               <text>Rinkitės ir konfigūruokite lygiaverčio susijungimo tinklus, prie kurių „Shareaza“ jungsis.</text>
+               <text>Įjunkite nuotolinio „Shareaza“ programos valdymo, naudojantis naršykle, galimybę.</text>
                <newline gap="10"/>
 
        </document>
