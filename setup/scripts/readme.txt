@@ -1,3 +1,5 @@
+Use Inno Setup 5.0.2 or higher + Inno Setup PreProcessor
+
 Compile procedure for Shareaza:
 1)	Place Shareaza.exe in \setup\builds\
 2)	Place skin.exe in \setup\builds\

@@ -7,7 +7,6 @@ AppComments=Shareaza Ultimate File Sharing
 AppId=Shareaza
 AppName=Shareaza
 AppPublisher=Shareaza Development Team
-AppReadmeFile={app}\Uninstall\readme.txt
 AppVersion={#version}
 AppVerName=Shareaza {#version}
 VersionInfoVersion={#version}
@@ -194,13 +193,12 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
 #include "settings.iss"
 
 ; Code sections need to be the last section in a script or the compiler will get confused
-; This code still needs work:
 
 [Code]
 const
   WM_CLOSE = $0010;
-  KeyLoc1 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
-  KeyLoc2 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
+  KeyLoc1 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
+  KeyLoc2 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
   KeyName = 'UninstallString';
 var
   Installed: Boolean;
@@ -212,12 +210,12 @@ End;
 
 Function InnoSetupUsed(): boolean;
 Begin
-    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1');
+    Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc1);
 End;
 
 Function NSISUsed(): boolean;
 Begin
-    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_');
+    Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc2);
 End;
 
 Procedure CurStepChanged(CurStep: TSetupStep);
@@ -259,15 +257,15 @@ Begin
   DelTree(SkinDir, True, True, True);
 End;
 
-procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+Procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   Wnd: HWND;
-begin
+Begin
   if CurUninstallStep = usUninstall then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
     if Wnd <> 0 then
       SendMessage(Wnd, WM_CLOSE, 0, 0);
       Sleep(1000)
-;end;
+End;
 
 
