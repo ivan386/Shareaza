@@ -1,33 +1,35 @@
-//
-// Tiger_asm.asm
-//
-// Copyright (c) Shareaza Development Team, 2002-2004.
-// This file is part of SHAREAZA (www.shareaza.com)
-//
-// Shareaza is free software; you can redistribute it
-// and/or modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2 of
-// the License, or (at your option) any later version.
-//
-// Shareaza is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Shareaza; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
-
-; ##########################################################################################
+; #####################################################################################################################
 ;
-; Tiger_asm - Implementation of Tiger for x86 - use together with TigerTree.cpp and TigerTree.h
+; Tiger_asm.asm
+;
+; Copyright (c) Shareaza Development Team, 2002-2004.
+; This file is part of SHAREAZA (www.shareaza.com)
+;
+; Shareaza is free software; you can redistribute it
+; and/or modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2 of
+; the License, or (at your option) any later version.
+;
+; Shareaza is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with Shareaza; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+; #####################################################################################################################
+;
+; Tiger_asm - Implementation of Tiger for x86 - use together with TigerTree.cppmp86p
 ;
 ; created              7.7.2004         by Camper
 ;
-; last modified        9.7.2004         by Camper
+; modified             20.7.2004        by Camper
 ;
-; ##########################################################################################
+; The integration into other projects than Shareaza is expressivly encouraged. Feel free to contact me about it.
+;
+; #####################################################################################################################
 
                         .586p
                         .model      flat, C 
@@ -35,9 +37,9 @@
                         option      prologue:none                   ; we generate our own entry/exit code
                         option      epilogue:none
 
-; ##########################################################################################
+; #####################################################################################################################
 
-USEMMX                  equ         1                               ; include MMX code path ? - slower than normal p5
+USEMMX                  equ         0                               ; include MMX code path ? - slower than normal p5 - not fixed
 
 m_nState0               equ         0
 m_nState1               equ         8
@@ -1079,14 +1081,6 @@ const_0123456789ABCDEF  dq          00123456789ABCDEFH
                         ALIGN       16
 const_FFFFFFFFFFFFFFFF  dq          0FFFFFFFFFFFFFFFFH
 
-                        .data?
-
-_x                      dq          8 dup (?)                       ; we use a buffer which allows static addresses for x[i], that also allows write access
-_t                      dq          ?
-_aa                     dq          ?
-_bb                     dq          ?
-_cc                     dq          ?
-
                         .code
 
 ; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
@@ -1385,9 +1379,14 @@ TigerTree_Tiger_p5      PROC        PUBLIC  _Data:DWORD, _State:DWORD
 ; Compiles a Block of 8 64-bit words that can be found at _Data
                         pusha
 
-__Data                  textequ     <[esp+36]>
-__State                 textequ     <[esp+40]>                        
-
+__Data                  textequ     <[esp+36+96]>
+__State                 textequ     <[esp+40+96]>                        
+_x                      textequ     <esp+32>
+_t                      textequ     <esp+24>
+_aa                     textequ     <esp+16>
+_bb                     textequ     <esp+8>
+_cc                     textequ     <esp>
+                        sub         esp, 96
                         mov         reg_temp, __Data
 count                   =           0
                         REPEAT      8
@@ -1413,6 +1412,7 @@ count                   =           count + 1
                         LOAD64MR    reg_temp+m_nState1, b_h, b_l
                         ADD64MR     reg_temp+m_nState2, c_h, c_l
 
+                        add         esp, 96
                         popa
                         ret
 
@@ -1877,7 +1877,7 @@ TigerTree_Tiger_SSE2    PROC        PUBLIC  _Data:DWORD, _State:DWORD
                         pusha
 
 __Data                  textequ     <[esp+36]>
-__State                 textequ     <[esp+40]>                        
+__State                 textequ     <[esp+40]>
 
                         mov         reg_temp5, __Data
                         movdqu      xmm0, [reg_temp5]                        ; we can't guaranty alignment
@@ -1906,7 +1906,7 @@ __State                 textequ     <[esp+40]>
                         movq        qword ptr [reg_temp5+m_nState1], mmx_b
                         paddq       mmx_c, qword ptr [reg_temp5+m_nState2]
                         movq        qword ptr [reg_temp5+m_nState2], mmx_c
- 
+
                         popa
                         ret
 

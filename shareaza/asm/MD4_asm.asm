@@ -1,33 +1,35 @@
-//
-// MD4_asm.asm
-//
-// Copyright (c) Shareaza Development Team, 2002-2004.
-// This file is part of SHAREAZA (www.shareaza.com)
-//
-// Shareaza is free software; you can redistribute it
-// and/or modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2 of
-// the License, or (at your option) any later version.
-//
-// Shareaza is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Shareaza; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
-
-; ##########################################################################################
+; #####################################################################################################################
+;
+; MD4_asm.asm
+;
+; Copyright (c) Shareaza Development Team, 2002-2004.
+; This file is part of SHAREAZA (www.shareaza.com)
+;
+; Shareaza is free software; you can redistribute it
+; and/or modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2 of
+; the License, or (at your option) any later version.
+;
+; Shareaza is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with Shareaza; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+; #####################################################################################################################
 ;
 ; MD4_asm - Implementation of MD4 for x86 - use together with MD4.cpp and MD4.h
 ;
 ; created              7.7.2004         by Camper
 ;
-; last modified        7.7.2004         by Camper
+; last modified        20.7.2004        by Camper
 ;
-; ##########################################################################################
+; The integration into other projects than Shareaza is expressivly encouraged. Feel free to contact me about it.
+;
+; #####################################################################################################################
 
                         .586p
                         .model      flat, C 
@@ -35,10 +37,9 @@
                         option      prologue:none                   ; we generate our own entry/exit code
                         option      epilogue:none
 
-; ##########################################################################################
+; #####################################################################################################################
 
-
-m_nState0               equ         4                              ; offsets as laid out in MD4.h
+m_nState0               equ         4                              ; offsets as found in MD4.h
 m_nState1               equ         8
 m_nState2               equ         12
 m_nState3               equ         16
@@ -110,11 +111,6 @@ b                       textequ     reg_t
                         add         a, reg_temp1
                         rol         a, s
                         ENDM
-
-                        .data?
-
-_buffer                 dd          16 dup (?)                          ; we use our own buffer
-                        PUBLIC      _buffer
 
                         .code
 
@@ -219,7 +215,6 @@ __this                  textequ     <[esp+36]>                              ; di
 __Data                  textequ     <[esp+40]>
 __nLength               textequ     <[esp+44]>
 
-
                         mov         ecx, __nLength
                         and         ecx, ecx
                         jz          get_out
@@ -244,15 +239,11 @@ full_blocks:            mov         ecx, __nLength
                         add         ebp, 64
                         jmp         full_blocks
 
-end_of_stream:          lea         edi, _buffer
-                        mov         ebx, 4
+end_of_stream:          mov         edi, __this
+                        mov         esi, ebp
+                        lea         edi, [edi+m_pBuffer]
                         add         ecx, 64
-@@:                     mov         eax, [ebp]                              ; can cause access violations !!!!
-                        add         ebp, ebx
-                        mov         [edi], eax
-                        add         edi, ebx
-                        sub         ecx, ebx
-                        ja          @B
+                        rep movsb
                         jmp         get_out
 
 partial_buffer:         add         ecx, eax                                ; eax = offset in buffer, ecx = _nLength
@@ -261,26 +252,21 @@ partial_buffer:         add         ecx, eax                                ; ea
                         mov         ecx, -64
                         add         ecx, eax
                         add         __nLength, ecx                          ; _nlength += (offset-64)
-@@:                     mov         bl, byte ptr [ebp]
+@@:                     mov         bl, [ebp]
                         inc         ebp
-                        mov         byte ptr [_buffer+64+ecx], bl
+                        mov         byte ptr [edi+m_pBuffer+64+ecx], bl
                         inc         ecx
                         jnz         @B                                      ; offset = 64
                         mov         __Data, ebp
-                        lea         ebp, _buffer
+                        lea         ebp, [edi+m_pBuffer]
                         call        MD4_Transform_p5
                         mov         ebp, __Data
                         jmp         full_blocks
 
 short_stream:           sub         ecx, eax                                ;  --> ecx=_nLength
-                        add         eax, offset _buffer
-                        mov         edx, 4
-@@:                     mov         ebx, [ebp]                              ; can cause access violations !!!!
-                        add         ebp, edx
-                        mov         [eax], ebx
-                        add         eax, edx
-                        sub         ecx, edx
-                        ja          @B
+                        mov         esi, ebp
+                        lea         edi, [edi+m_pBuffer+eax]
+                        rep movsb
 
 get_out:                popa
                         ret
