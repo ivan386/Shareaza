@@ -166,6 +166,7 @@ Name: "{userprograms}\{groupname}\{cm:icons_downloads}"; Filename: "{ini:{param:
 ; Overwrite standard ISL entries
 ; DO NOT use for localized messages
 BeveledLabel=Shareaza Development Team
+SetupAppTitle=Setup - Shareaza
 
 [Run]
 ; Run the skin installer at end of installation
