@@ -151,7 +151,8 @@ QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* pAddress) const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers consider starting more transfers
 
-BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
+// This function checks if it's okay to try opening a new download. (Download throttle, etc)
+BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 {
 	if ( tNow == 0 ) tNow = GetTickCount();
 	
@@ -170,15 +171,26 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	{
 		return FALSE;
 	}
-	
-	int nTransfers = GetTransferCount( dtsDownloading );
+	return TRUE;
+}
 
+// This functions starts a new download transfer if needed and allowed.
+BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
+{
+	if ( tNow == 0 ) tNow = GetTickCount();
+
+	// Check connection throttles, max open connections, etc
+	if ( ! CanStartTransfers( tNow ) ) return FALSE;
+	
 	//BitTorrent limiting
 	if ( m_bBTH )
 	{
-		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;		
+		// Max connections
+		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;	
 	}
-	
+
+	int nTransfers = GetTransferCount( dtsDownloading );
+
 	if ( nTransfers < Settings.Downloads.MaxFileTransfers &&
 		 ( ! Settings.Downloads.StaggardStart ||
 		 nTransfers == GetTransferCount( dtsCountAll ) ) )
@@ -187,6 +199,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		{
 			if ( Downloads.m_bAllowMoreTransfers )
 			{
+				// Start a new download
 				if ( StartNewTransfer( tNow ) )
 				{
 					Downloads.UpdateAllows( TRUE );
