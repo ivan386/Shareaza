@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/02/22 21:01:59 $"
-//	Revision:		"$Revision: 1.12 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/02/25 09:06:38 $"
+//	Revision:		"$Revision: 1.13 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -988,31 +988,43 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	return strOutput;
 }
 
+
 // Decodes unsafe characters in a string, turning "hello%20world" into "hello world", for instance
 // Takes text and returns a string
 CString CConnection::URLDecode(LPCTSTR pszInput)
+{
+	LPCTSTR pszLoop = pszInput;
+	// Check each character of input text
+	for ( ; *pszLoop ; pszLoop++ )
+	{
+		if ( *pszLoop > 255 )
+		{
+			// This URI is not properly encoded, and has unicode characters in it. URL-decode only
+			return URLDecodeUnicode( pszInput );
+		}
+	}
+
+	// This is a correctly formatted URI, which must be url-decoded, then UTF-8 decoded.
+	return URLDecodeANSI( pszInput );
+}
+
+// Decodes a properly formatted URI, then UTF-8 decodes it
+CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 {
 	// Setup local variables useful for the conversion
 	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
 	CString strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 	
-// If we are compiling this project in Unicode, include these lines of code in the program
 #ifdef _UNICODE
-
 	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
 	LPSTR pszBytes = new CHAR[ _tcslen( pszInput ) + 1 ];
 
 	// Point the output string pointer at this array
 	LPSTR pszOutput = pszBytes;
-
-// If we are not compiling in Unicode, include these lines instead
 #else
-
 	// Open the output string for direct editing, making sure its buffer will be long enough to hold the input string
 	LPSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) );
-
-// Go back to compiling all the lines
 #endif
 	
 	// Loop for each character of input text
@@ -1052,9 +1064,8 @@ CString CConnection::URLDecode(LPCTSTR pszInput)
 	// Cap off the output text with a null terminator
 	*pszOutput = 0;
 
-// If we are compiling this project in Unicode, include these lines of code in the program
-#ifdef _UNICODE
 
+#ifdef _UNICODE
 	// Copy the text from pszBytes into strOutput, converting it into Unicode
 	int nLength = MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, NULL, 0 );
 	MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, strOutput.GetBuffer( nLength ), nLength );
@@ -1064,16 +1075,73 @@ CString CConnection::URLDecode(LPCTSTR pszInput)
 
 	// Free the memory we allocated above
 	delete [] pszBytes;
-
-// If we are not compiling in Unicode, include these lines instead
 #else
-
 	// Close the output string, we are done editing its buffer directly
 	strOutput.ReleaseBuffer();
-
-// Go back to compiling all the lines
 #endif
 
+	// Return the output string
+	return strOutput;
+}
+
+
+// Decodes encoded characters in a unicode string
+CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
+{
+	// Setup local variables useful for the conversion
+	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
+	CString strOutput;				// The output string, which starts out blank
+	int nHex;						// The hex code of the character we found
+	
+#ifdef _UNICODE
+	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
+	LPTSTR pszBytes = new TCHAR[ _tcslen( pszInput ) + 1 ];
+
+	// Point the output string pointer at this array
+	LPTSTR pszOutput = pszBytes;
+#else
+	// Open the output string for direct editing, making sure its buffer will be long enough to hold the input string
+	LPTSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) );
+#endif
+	
+	// Loop for each character of input text
+	for ( ; *pszInput ; pszInput++ )
+	{
+		// We hit a %, which might be the start of something like %20
+		if ( *pszInput == '%' )
+		{
+			// Copy characters like "20" into szHex, making sure neither are null
+			if ( ! ( szHex[0] = pszInput[1] ) ) break;
+			if ( ! ( szHex[1] = pszInput[2] ) ) break;
+
+			// Read the text like "20" as a number, and store it in nHex
+			if ( _stscanf( szHex, _T("%x"), &nHex ) != 1 ) break;
+			if ( nHex < 1 ) break; // Make sure the number isn't 0 or negative
+
+			// That number is the code of a character, copy it into the output string
+			*pszOutput++ = nHex; // And then move the output pointer to the next spot
+
+			// Move the input pointer past the two characters of the "20"
+			pszInput += 2;
+
+		} // We hit a +, which is shorthand for space
+		else if ( *pszInput == '+' )
+		{
+			// Add a space to the output text, and move the pointer forward
+			*pszOutput++ = ' ';
+
+		} // The input pointer is just on a normal character
+		else
+		{
+			// Copy it across
+			*pszOutput++ = (TCHAR)*pszInput;
+		}
+	}
+
+	// End the output text with a null terminator
+	*pszOutput = 0;
+	// Put the output into a CString
+	strOutput = pszBytes;
 	// Return the output string
 	return strOutput;
 }

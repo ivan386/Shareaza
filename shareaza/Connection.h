@@ -118,6 +118,8 @@ public:
 	// Encode and decode URL text, and see if a string starts with a tag
 	static CString	URLEncode(LPCTSTR pszInput);					// Encode "hello world" into "hello%20world"
 	static CString	URLDecode(LPCTSTR pszInput);					// Decode "hello%20world" back to "hello world"
+	static CString	URLDecodeANSI(LPCTSTR pszInput);				// Decodes properly encoded URLs
+	static CString	URLDecodeUnicode(LPCTSTR pszInput);				// Decodes URLs with extended characters
 	static BOOL		StartsWith(LPCTSTR pszInput, LPCTSTR pszText);	// StartsWith("hello world", "hello") is true
 };
 
