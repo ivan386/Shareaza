@@ -251,6 +251,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	
 	if ( pPushHead != NULL )
 	{
+		if( Network.GetStableTime() < 15 ) return FALSE;
 		if ( pPushHead->PushRequest() ) return FALSE;
 		if ( ! Settings.Downloads.NeverDrop ) pPushHead->Remove( TRUE, TRUE );
 	}
