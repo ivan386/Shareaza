@@ -81,14 +81,16 @@ public:
 	BOOL		CanPreview();
 	void		AddPreviewName(LPCTSTR pszFile);
 	void		DeletePreviews();
-	BOOL		AddReview(in_addr *pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment);
+	BOOL		AddReview(IN_ADDR* pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment);
 	BOOL		AddReview(CDownloadReview* pReview);
 	void		DeleteReviews();
 	void		DeleteReview(CDownloadReview* pReview);
 	inline int	GetReviewCount() const { return m_nReviewCount; }
 	inline CDownloadReview* GetFirstReview() const { return m_pReviewFirst; }
-	CDownloadReview* FindReview(in_addr *pIP) const;
+	CDownloadReview* FindReview(IN_ADDR* pIP) const;
 	CDownloadReview* FindReview(LPCTSTR pszUserName) const;
+	CDownloadReview* FindReview(int nRating, LPCTSTR pszName, LPCTSTR pszComment) const;
+
 public:
 	void		ShowMonitor(CSingleLock* pLock = NULL);
 	BOOL		IsMonitorVisible() const;

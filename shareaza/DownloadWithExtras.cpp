@@ -126,7 +126,7 @@ void CDownloadWithExtras::DeletePreviews()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras review file management
 
-BOOL CDownloadWithExtras::AddReview(in_addr *pIP, int nClientID, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment)
+BOOL CDownloadWithExtras::AddReview(IN_ADDR* pIP, int nClientID, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment)
 {
 	// If we have too may reviews, then exit
 	if ( m_nReviewCount > Settings.Downloads.MaxReviews ) 
@@ -135,20 +135,22 @@ BOOL CDownloadWithExtras::AddReview(in_addr *pIP, int nClientID, int nRating, LP
 		return FALSE;
 	}
 
-	// If we already have a review from this user name with the same data, then exit
-	CDownloadReview* pReview = FindReview( pszUserName );
-	if ( pReview ) 
+	// If we already have a review from this IP, then exit
+	if ( FindReview( pIP ) ) 
 	{
-		if ( _tcscmp( pReview->m_sFileComments, pszComment ) == 0 &&
-			 pReview->m_nFileRating == nRating )
-		{
-			theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
-			return FALSE;
-		}
+		theApp.Message( MSG_DEBUG, _T("Ignoring multiple reviews from %s"), inet_ntoa( *pIP ) );
+		return FALSE;
+	}
+
+	// If we already have a review from this user name with the same data, then exit
+	if ( FindReview( nRating, pszUserName, pszComment ) ) 
+	{
+		theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
+		return FALSE;
 	}
 
 	// Add the review
-	pReview = new CDownloadReview(pIP, nClientID, nRating, pszUserName, pszComment);
+	CDownloadReview* pReview = new CDownloadReview(pIP, nClientID, nRating, pszUserName, pszComment);
 	m_nReviewCount++;
 
 	pReview->m_pPrev = m_pReviewLast;
@@ -259,7 +261,7 @@ void CDownloadWithExtras::DeleteReviews()
 }
 
 // Find a review given an IP
-CDownloadReview* CDownloadWithExtras::FindReview(in_addr *pIP) const
+CDownloadReview* CDownloadWithExtras::FindReview(IN_ADDR* pIP) const
 {
 	CDownloadReview *pReview = m_pReviewFirst;
 	if ( pIP == NULL ) return NULL;
@@ -289,6 +291,27 @@ CDownloadReview* CDownloadWithExtras::FindReview(LPCTSTR pszUserName) const
 
 	return NULL;
 }
+
+// Find a review given a rating/name/comment
+CDownloadReview* CDownloadWithExtras::FindReview(int nRating, LPCTSTR pszName, LPCTSTR pszComment) const
+{
+	CDownloadReview *pReview = m_pReviewFirst;
+	CString strName, strComment;
+	strName = pszName;
+	strComment = pszComment;
+
+	while ( pReview )
+	{
+		if ( ( pReview->m_nFileRating == nRating ) && 
+			 ( _tcscmp( pReview->m_sUserName, pszName ) == 0 ) && 
+			 ( _tcscmp( pReview->m_sFileComments, pszComment ) == 0 ) )
+			return pReview;
+		pReview = pReview->m_pNext;
+	}
+
+	return NULL;
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras monitor window
