@@ -387,6 +387,8 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="sub"/>
                <type extension="ssa"/>
                <type extension="ass"/>
+               <type extension="kas"/>
+               <type extension="lrc"/>
                <type extension="mks"/>
                <type extension="smi"/>
                <type extension="psb"/>
