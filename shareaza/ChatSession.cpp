@@ -1,11 +1,11 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/02/20 11:59:49 $"
-//	Revision:		"$Revision: 1.12 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/03/05 09:28:16 $"
+//	Revision:		"$Revision: 1.13 $"
+//  Last change by:	"$Author: mogthecat $"
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1109,9 +1109,9 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		// Limit outgoing ed2k messages to 400 characters, just in case
+		// Limit outgoing ed2k messages to shorter than ED2K_MESSAGE_MAX characters, just in case
 		CString strMessage = pszText;
-		strMessage = strMessage.Left( 400 );
+		strMessage = strMessage.Left( ED2K_MESSAGE_MAX - 50 );
 
 		// Create an ed2k packet holding the message
 		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_MESSAGE, ED2K_PROTOCOL_EDONKEY );

@@ -586,7 +586,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			if ( m_pDownload != NULL ) m_pDownload->OnRankingInfo( pPacket );
 			return TRUE;
 		case ED2K_C2C_FILEDESC:
-			// Handle comments
+			//if ( m_pDownload != NULL ) m_pDownload->OnFileComment( pPacket );
 			return TRUE;
 
 		case ED2K_C2C_REQUESTSOURCES:
@@ -1278,7 +1278,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	nMessageLength = pPacket->ReadShortLE();
 
 	// Validate message length
-	if ( ( nMessageLength < 1 ) || ( nMessageLength > 500 ) || ( nMessageLength != pPacket->GetRemaining() ) )
+	if ( ( nMessageLength < 1 ) || ( nMessageLength > ED2K_MESSAGE_MAX ) || ( nMessageLength != pPacket->GetRemaining() ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid message packet received from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;

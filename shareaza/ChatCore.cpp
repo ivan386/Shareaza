@@ -1,7 +1,7 @@
 //
 // ChatCore.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -127,12 +127,11 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 	{
 		pSession = GetNext( pos );
 
+		// If we already have a session
 		if ( ( ( ! pSession->m_bGUID ) || ( pSession->m_pGUID == pClient->m_pGUID ) ) &&
 			 ( pSession->m_pHost.sin_addr.S_un.S_addr == pClient->m_pHost.sin_addr.S_un.S_addr ) &&
 			 ( pSession->m_nProtocol == PROTOCOL_ED2K ) )
-
 		{
-
 			// Update details
 			pSession->m_bGUID		= pClient->m_bGUID;
 			pSession->m_pGUID		= pClient->m_pGUID;
@@ -146,10 +145,12 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 
 			pSession->m_bMustPush	= ( ( pClient->m_nClientID > 0 ) && ( pClient->m_nClientID < 16777216 ) );
 
+			// return existing session
 			return pSession;
 		}
 	}
 
+	// Create a new chat session
 	pSession = new CChatSession();
 
 	pSession->m_nProtocol	= PROTOCOL_ED2K;

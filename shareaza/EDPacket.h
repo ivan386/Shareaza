@@ -357,8 +357,16 @@ public:
 // Max files (Hash + Size) in a getsources packet
 #define ED2K_MAXFILESINPACKET		0x20
 
+// Max message (chat) length
+#define ED2K_MESSAGE_MAX			500
+// Max file comment length
+#define ED2K_COMMENT_MAX			250
+
 // Client ID
 #define ED2K_COMPATIBLECLIENT_ID	0x4
+
+// "Unknown" client ID for compatible client variable
+#define ED2K_CLIENT_UNKNOWN			0xFF
 
 // Shareaza's advertised capabilities / feature versions
 #define ED2K_VERSION_UDP			0x02
@@ -370,6 +378,5 @@ public:
 #define ED2K_VERSION_SECUREID		0x00
 #define ED2K_VERSION_COMMENTS		0x00
 
-// "Unknown" client ID for compatible client variable
-#define ED2K_CLIENT_UNKNOWN			0xFF
+
 
