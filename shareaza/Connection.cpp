@@ -1,6 +1,10 @@
 //
 // Connection.cpp
 //
+//	Date:			"$Date: 2004/11/17 14:43:51 $"
+//	Revision:		"$Revision: 1.6 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
