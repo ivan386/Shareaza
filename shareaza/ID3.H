@@ -158,11 +158,15 @@ LPCTSTR CLibraryBuilderInternals::pszID3Genre[] =
 	_T("Primus"), _T("Porn Groove"), _T("Satire"), _T("Slow Jam"), _T("Club"),
 	_T("Tango"), _T("Samba"), _T("Folklore"), _T("Ballad"), _T("Power Ballad"),
 	_T("Rhythmic Soul"), _T("Freestyle"), _T("Duet"), _T("Punk Rock"), _T("Drum Solo"),
-	_T("A capella"), _T("Euro-House"), _T("Dance Hall")
+	_T("A capella"), _T("Euro-House"), _T("Dance Hall"), _T("Goa"), _T("Drum & Bass"),
+	_T("Club-House"), _T("Hardcore"), _T("Terror"), _T("Indie"), _T("BritPop"), _T("Negerpunk"),
+	_T("Polsk Punk"), _T("Beat"), _T("Christian Gangsta"), _T("Heavy Metal"), _T("Black Metal"),
+	_T("Crossover"), _T("Contemporary C"), _T("Christian Rock"), _T("Merengue"),
+	_T("Salsa"), _T("Thrash Metal"), _T("Anime"), _T("JPop"), _T("SynthPop")
 
 };
 #endif
 
-#define ID3_GENRES	126
+#define ID3_GENRES	148
 
 #pragma pack()
