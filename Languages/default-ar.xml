@@ -16,7 +16,7 @@
 			description="Shareaza Default Arabic Skin File"
 			link="http://www.shareaza.com/"
 			email="lazorde_sa@hotmail.com"
-			version="2.1.0.10"
+			version="2.1.0.15"
 			type="Language"
 			language="ar"
 			prompt="هنا اضغط العربية للغة."
@@ -1441,7 +1441,7 @@
 		</styles>
 
 		<anchor id="Header" width="32" height="172"/>
-        <newline gap="0"/>
+		<newline gap="0"/>
 
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
@@ -1468,9 +1468,9 @@
 			<newline gap="6"/>
 			<link target="raza:upgrade">اضغط هنا للتحديث</link>
 			<newline gap="18" indent="0"/>
-        </group>
+		</group>
 
-        <group id="4">
+		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">تحذير &#160; - &#160; من  &#160; جدار&#160;الحماية</heading>
 			<newline gap="8" indent="42"/>
@@ -1482,11 +1482,11 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-        <icon res="254" width="32" height="32"/><gap size="8"/>
-        <heading align="middle" colour="6060FF">إستمع &#160; إلى &#160;الموسيقى &#160; الجديدة</heading>
-        <newline gap="8" indent="42"/>
-        <bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-        <newline gap="18" indent="0"/>
+		<icon res="254" width="32" height="32"/><gap size="8"/>
+		<heading align="middle" colour="6060FF">إستمع &#160; إلى &#160;الموسيقى &#160; الجديدة</heading>
+		<newline gap="8" indent="42"/>
+		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
+		<newline gap="18" indent="0"/>
 
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">اعدادات &#160; S H A R E A Z A</heading>
@@ -1510,17 +1510,17 @@
 		<text align="middle">&#160;- احصل على مساعدة سريعة لاستخدام Shareaza</text>
 		<newline gap="18" indent="0"/>
 
-        <group id="5">
-            <icon res="128" width="32" height="32"/><gap size="8"/>
-            <heading align="middle">التحكم &#160; عن &#160; بعد &#160; مفعل</heading>
-            <newline gap="8" indent="42"/>
-            <text>مفعل Shareaza التحكم عن بعد في. استخدم المتصفح Shareaza للتحكم في :</text>
-            <newline gap="6"/>
-            <link id="RemoteAccessURL1"/>
-            <text>&#160;- or -&#160;</text>
-            <link id="RemoteAccessURL2"/>
-            <newline gap="16" indent="0"/>
-        </group>
+		<group id="5">
+			<icon res="128" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">التحكم &#160; عن &#160; بعد &#160; مفعل</heading>
+			<newline gap="8" indent="42"/>
+			<text>مفعل Shareaza التحكم عن بعد في. استخدم المتصفح Shareaza للتحكم في :</text>
+			<newline gap="6"/>
+			<link id="RemoteAccessURL1"/>
+			<text>&#160;- or -&#160;</text>
+			<link id="RemoteAccessURL2"/>
+			<newline gap="16" indent="0"/>
+		</group>
 
 	</document>
 
@@ -1891,17 +1891,17 @@
 		<text format="b">مساحة الهارديك ممتلئ</text>
 		<newline gap="8"/>
 		<text>أوقف Shareaza هذا التحميل آليا لأن القرص الصلب يبدو كاملا، أو ملف التحميل لا يمكن أن يكتب إلى.
-		 إذا تتمنّى الإستمرار بتحميل،
-		  رجاء حرّر بعض الفضاء على قرصك الصلب و/ أو دقّقا لتأكيد حافظة الملف الناقصة سهلة الوصول،
-		   وبعد ذلك يستأنف التحميل.</text>
+		إذا تتمنّى الإستمرار بتحميل،
+		رجاء حرّر بعض الفضاء على قرصك الصلب و/ أو دقّقا لتأكيد حافظة الملف الناقصة سهلة الوصول،
+		وبعد ذلك يستأنف التحميل.</text>
 	</document>
 
 	<document name="DownloadHelp.Verifying">
 		<text format="b">هذا التحميل يحقّق</text>
 		<newline gap="8"/>
-		<text>هذا التحميل أنهى, وShareaza يدقّقه الآن لضمان بأنّه بالضبط تماما مثل الملف الأصلي. 
+		<text>هذا التحميل أنهى, وShareaza يدقّقه الآن لضمان بأنّه بالضبط تماما مثل الملف الأصلي.
 		إذا أيّ أجزاء متضرّرة
-وجد، Shareaza سيصلّحهم آليا.</text>
+		وجد، Shareaza سيصلّحهم آليا.</text>
 	</document>
 
 	<document name="DownloadHelp.Downloading">
@@ -1910,7 +1910,7 @@
 		<text>هذا التحميل حاليا مستمرّ.  اذا كان التحميل بطي,
 		بامكانك البحث عن مصادر اكبر من الشبكة</text>
 		<text format="b">ايجاد المزيد من المصادر </text><text>هذا الامر.   إذا السرعة لا تتحسّنها قد ينتظر أن تحدّد سرعة ارسال المستعملين التي أنت تحمّل من
-		  تزيد سرعة تحميل عادة بمرور الوقت.</text>
+		تزيد سرعة تحميل عادة بمرور الوقت.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
@@ -1928,8 +1928,8 @@
 		<text>There are no known sources for this download, so Shareaza is searching
 		all connected P2P networks for new sources.  Once sources are found, the
 		download will start automatically.  Shareaza searches for sources automatically,
-		however you can speed up the process using the </text>
-		<text format="b">Find More Sources </text><text>command.</text>
+		however you can speed up the process using the</text>
+		<text format="b"> Find More Sources</text><text> command.</text>
 		<newline gap="8"/>
 		<text>Unfortunately in many cases there may be no users online who have the
 		file you are looking for.  The only course of action here is to wait for
@@ -1959,20 +1959,20 @@
 		<newline gap="8"/>
 		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
 		<newline gap="8"/>
-		<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
-		can become unstable if the drives become full, and temporary files may be lost. You should 
+		<text>You should always attempt to keep a reasonable amount of disk space free. Programs
+		can become unstable if the drives become full, and temporary files may be lost. You should
 		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
-	 	 <text format="b">Windows XP Service Pack 2 detected</text>
-	       <newline gap="8"/>
-		 <text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
-		 that applications can attempt at once.</text>
-		 <newline gap="8"/>
-		 <text>Shareaza has limited network connections and set appropriate default values to 
-		 ensure proper operation, however performance may be reduced. Please visit the Shareaza 
-		 forums for further imformation, and up to date news.</text>
+		<text format="b">Windows XP Service Pack 2 detected</text>
+		<newline gap="8"/>
+		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
+		that applications can attempt at once.</text>
+		<newline gap="8"/>
+		<text>Shareaza has limited network connections and set appropriate default values to
+		ensure proper operation, however performance may be reduced. Please visit the Shareaza
+		forums for further imformation, and up to date news.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
@@ -1983,21 +1983,21 @@
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
 	</document>
-	
+
 	<!-- Search help documents -->
 
-      <document name="SearchHelp.BadSearch">
-             <text format="b">Please re-phrase the search</text>
-             <newline gap="8"/>
-             <text>This search is poorly formatted, and may not function correctly.
-             Searches should include several terms where possible, and should specify a schema
-             (file type). Furthermore, searches must not be limited to numbers or negative
-             terms only, and you should avoid overly general queries.</text>
-             <newline gap="8"/>
-             <text> Most clients on the network will ignore a search for
-             all MP3 files, for example, because it is not specific
-             enough and would generate too many results.</text>
-      </document>
+	<document name="SearchHelp.BadSearch">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search is poorly formatted, and may not function correctly.
+		Searches should include several terms where possible, and should specify a schema
+		(file type). Furthermore, searches must not be limited to numbers or negative
+		terms only, and you should avoid overly general queries.</text>
+		<newline gap="8"/>
+		<text>Most clients on the network will ignore a search for
+		all MP3 files, for example, because it is not specific enough and would generate
+		too many results.</text>
+	</document>
 
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
@@ -2008,333 +2008,330 @@
 		<newline gap="8"/>
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
 	</document>
-	
-<!-- Share help documents -->
+
+	<!-- Share help documents -->
 
 	<document name="ShareHelp.AlreadyShared">
-	       <text format="b">Already Shared</text>
-	       <newline gap="8"/>
-	       <text>The folder you have selected is already being shared as part of an existing share.</text>
-	       <newline gap="8"/>
-	       <text> %s </text>
+		<text format="b">Already Shared</text>
+		<newline gap="8"/>
+		<text>The folder you have selected is already being shared as part of an existing share.</text>
+		<newline gap="8"/>
+		<text> %s </text>
       </document>
 
 	<document name="ShareHelp.BadShare">
-	        <text format="b">This folder should not be shared</text>
-	        <newline gap="8"/>
-	        <text>This folder is (or contains) a system folder. Sharing this folder is not
-	        recommended, since most of the files in it are of no use to other people.</text>
-	        <newline gap="8"/>
-	        <text>Folders such as the Windows directory, Program Files, and similar folders
-	        do not usually contain files suitable for sharing. Any files of interest would be in
-              sub-folders located </text><text format="i"> inside </text><text> these
-	        folders. Please share those instead.</text>
-	       <newline gap="8"/>
-	       <text>The Shareaza 'incomplete' folder should also not be shared through the
-             library, since attempting to hash downloads in progress may impact on
-	       performance.</text>
- </document>
+		<text format="b">This folder should not be shared</text>
+		<newline gap="8"/>
+		<text>This folder is (or contains) a system folder. Sharing this folder is not
+		recommended, since most of the files in it are of no use to other people.</text>
+		<newline gap="8"/>
+		<text>Folders such as the Windows directory, Program Files, and similar folders
+		do not usually contain files suitable for sharing. Any files of interest would be in
+		sub-folders located</text><text format="i"> inside</text>
+		<text> these folders. Please share those instead.</text>
+		<newline gap="8"/>
+		<text>The Shareaza 'incomplete' folder should also not be shared through the
+		library, since attempting to hash downloads in progress may impact on performance.</text>
+	</document>
 
 </documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-	<tip id="ID_HELP_ABOUT" message="Shareaza اعرض مربع معلومات الـ..."/>
-	<tip id="ID_NETWORK_EXIT" message="الخروج من Shareaza"/>
-	<tip id="ID_NETWORK_CONNECT" message="اتصل بالشبكة."/>
-	<tip id="ID_NETWORK_DISCONNECT" message="اقطع الاتصال من الشبكة."/>
-	<tip id="ID_TOOLS_SETTINGS" message="ضبط Shareaza اعدادات..."/>
-	<tip id="ID_VIEW_SYSTEM" message="اظهار او اخفاء نافذة النظام."/>
-	<tip id="ID_VIEW_NEIGHBOURS" message="اظهار او اخفاء نافذة المتصلين."/>
-	<tip id="ID_VIEW_TRAFFIC" message="اظهار او اخفاء نافذة التخطيط."/>
-	<tip id="ID_VIEW_LIBRARY" message="اظهار او اخفاء نافذة المكتبة."/>
-	<tip id="ID_VIEW_DOWNLOADS" message="اظهار او اخفاء نافذة تحميل الملفات."/>
-	<tip id="ID_VIEW_UPLOADS" message="اظهار او اخفاء نافذة رفع الملفات."/>
-	<tip id="ID_VIEW_HOSTS" message="اظهار او اخفاء نافذة المضيف."/>
-	<tip id="ID_VIEW_PACKETS" message="اظهار او اخفاء نافذة نفاية الحزمة."/>
-	<tip id="ID_NEIGHBOURS_DISCONNECT" message="فصل الاتصال بالاتصالات المجاورة."/>
-	<tip id="ID_SYSTEM_CLEAR" message="مسح سجل الحالة."/>
-	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Open a new Packet Dump window monitoring this neighbour."/>
-	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Open a new Packet Dump window monitoring incoming traffic from this neighbour."/>
-	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
-	<tip id="ID_VIEW_SEARCH_MONITOR" message="اظهار او اخفاء نافذة شاشة البحث."/>
-	<tip id="ID_VIEW_RESULTS_MONITOR" message="اظهار او اخفاء نافذة المراقبة."/>
-	<tip id="ID_HOSTCACHE_CONNECT" message="اتصل بالمضيف المحدد."/>
-	<tip id="ID_HOSTCACHE_DISCONNECT" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
-	<tip id="ID_HOSTCACHE_REMOVE" message="أزل المضيّفين المختارين من ذاكرة المضيّف الوسيطة."/>
-	<tip id="ID_NETWORK_CONNECT_TO" message="الاتصال يدوي بالمضيف..."/>
-	<tip id="ID_NETWORK_SEARCH" message="بدا بحث جديد عن الشبكة..."/>
-	<tip id="ID_SEARCH_DOWNLOAD" message="تحميل الملفات المختارة."/>
-	<tip id="ID_SEARCH_DOWNLOADNOW" message="حمل الملفات المختاره بالاولوية."/>
-	<tip id="ID_SEARCH_SEARCH" message="ابحث في الشبكة مرة اخرى..."/>
-	<tip id="ID_SEARCH_FILTER" message="افرز نتائج البحث ببعض الكلمات والشروط..."/>
-	<tip id="ID_SEARCH_FILTER_REMOVE" message="ازالة عملية الفرز من النتائج."/>
-	<tip id="ID_SEARCH_GROUPED" message="تجميع النتائج في ملف."/>
-	<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
-	<tip id="ID_SEARCHMONITOR_PAUSE" message="ايقاف مؤقت لشاشة البحث."/>
-	<tip id="ID_HITMONITOR_PAUSE" message="ايقاف مؤقت للشاشة."/>
-	<tip id="ID_SEARCHMONITOR_CLEAR" message="تنظيف شاشة البحث."/>
-	<tip id="ID_SEARCH_COPY" message="نسخ رابط الملف المحدد."/>
-	<tip id="ID_HITMONITOR_SEARCH" message="ابحث في الشبكة عن النعابير المحددة."/>
-	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Show Gnutella2 horizon hubs."/>
-	<tip id="ID_HOSTCACHE_G2_CACHE" message="Show Gnutella2 cached hosts."/>
-	<tip id="ID_HOSTCACHE_G1_CACHE" message="Show Gnutella1 cached hosts."/>
-	<tip id="ID_SEARCH_COLUMNS" message="أعمدة metadata المنتقاة الّتي ستعرض..."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="تكملت تحميل الملفات المختارة."/>
-	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="تنظيف التحميل من الملفات المكتملة."/>
-	<tip id="ID_DOWNLOADS_SOURCES" message="ابحث عن المزيد من المصادر لملفات التحميل المحددة."/>
-	<tip id="ID_DOWNLOADS_LAUNCH" message="استعراض الملف المختار."/>
-	<tip id="ID_DOWNLOADS_CLEAR" message="مسح/ازالة ملفات التحميل المحددة."/>
-	<tip id="ID_DOWNLOADS_PAUSE" message="ايقاف موقت لملفات التحميل المحددة."/>
-	<tip id="ID_LIBRARY_EXPLORE" message="افتح المجلدات المختارة."/>
-	<tip id="ID_LIBRARY_SCAN" message="تفحص المجلدات او الملفات المتغيرة."/>
-	<tip id="ID_LIBRARY_SHARED_FILE" message="مشاركة او عدم مشاركة الملفات المحددة."/>
-	<tip id="ID_LIBRARY_REMOVE" message="ازالة مجلدات المشاركة المحددة."/>
-	<tip id="ID_LIBRARY_ADD" message="اضف مجلد جديد لمكتبتك.."/>
-	<tip id="ID_LIBRARY_PROPERTIES" message="عرض وتحرير خصائص الملفات المحددة..."/>
-	<tip id="ID_LIBRARY_COLUMNS" message=" اختر اعمدة الـmetadata ليتم عرضها..."/>
-	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="امسح ملفات التحميل التي تم ايقافها مؤقتا."/>
-	<tip id="ID_UPLOADS_LAUNCH" message="تشغيل ملف المشاركة المحدد."/>
-	<tip id="ID_UPLOADS_DISCONNECT" message="قطع الاتصال عن الانتهاء من رفع الملف المختار."/>
-	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="امسح الملفات التي تم اكمال رفعها."/>
-	<tip id="ID_UPLOADS_CLEAR" message="امسح الملفات المحددة من القائمة التي تم رفعها."/>
-	<tip id="ID_TRANSFERS_DISCONNECT" message="قطع الاتصال عند الانتهاء من تحميل الملف المحدد."/>
-	<tip id="ID_TRANSFERS_FORGET" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com قم بزيارة موقع."/>
-	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية"/>	
-	<tip id="ID_HELP_WEB_1" message="قم بزياره Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="قم بزياره P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="قم بزياره Slyck.com"/>
-	<tip id="ID_HELP_FAQ" message="Visit the Shareaza Users Guide."/>
-	<tip id="ID_SEARCH_CHAT" message="فتح المحادثة مع المستخدم المحدد."/>
-	<tip id="ID_TRAFFIC_GRID" message="اعرض خطوط الشبكة."/>
-	<tip id="ID_TRAFFIC_AXIS" message="اعرض المحور عاموديا"/>
-	<tip id="ID_TRAFFIC_LEGEND" message="اعرض الاسطورة."/>
-	<tip id="ID_TRAFFIC_SETUP" message="اختر الاعدادات للتخطيط..."/>
-	<tip id="ID_TRAFFIC_CLEAR" message="Clear the traffic graph."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message=" torrent ارسال ملف"/>
-	<tip id="ID_TOOLS_WIZARD" message="تشغيل  Shareaza سريع للمالج..."/>
-	<tip id="ID_CHILD_RESTORE" message="افتح النافذة المحددة."/>
+	<tip id="ID_BROWSE_FILES" message="عرض ملفات المشاركة للمستخدم"/>
+	<tip id="ID_BROWSE_LAUNCH" message="استعراض الملف الخاص بالمستخدم المحدد و ملفات المشاركة."/>
+	<tip id="ID_BROWSE_PROFILE" message="استعرض ملف الخاص بالمستخدم."/>
+	<tip id="ID_BROWSE_REFRESH" message="Refresh the list of files available on this host."/>
+	<tip id="ID_BROWSE_STOP" message="Stop browsing files on this host."/>
+	<tip id="ID_CHAT_BOLD" message="تطبيق عرض الخط (Ctrl+B)"/>
+	<tip id="ID_CHAT_BROWSE" message="استعراض الملف الشخصي للمستخدم و ملفات المشاركة."/>
+	<tip id="ID_CHAT_CLEAR" message="مسح الشاشة من المحادثة."/>
+	<tip id="ID_CHAT_COLOUR" message="اختيار لون النص (Ctrl+K)"/>
+	<tip id="ID_CHAT_CONNECT" message="الاتصال لاجرا المحادثة."/>
+	<tip id="ID_CHAT_DISCONNECT" message="قطع اتصال المحادثة."/>
+	<tip id="ID_CHAT_EMOTICONS" message="إدراج وجوه تعبيرية."/>
+	<tip id="ID_CHAT_ITALIC" message="تطبيق ميلان الخط (Ctrl+I)"/>
+	<tip id="ID_CHAT_PRIORITY" message="Grant upload priority to this user."/>
+	<tip id="ID_CHAT_SEND_FILE" message="ارصال ملف الى المستخدم..."/>
+	<tip id="ID_CHAT_TIMESTAMP" message="Show the time when each message was received."/>
+	<tip id="ID_CHAT_UNDERLINE" message="تطبيق وضع خط تحت النص (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="اغلق النافذة النشطة."/>
 	<tip id="ID_CHILD_MAXIMISE" message="كبر النافذة النشطة لتملاء النافذة."/>
 	<tip id="ID_CHILD_MINIMISE" message="صغر الشاشة المختارة."/>
-	<tip id="ID_TRANSFERS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
-	<tip id="ID_UPLOADS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
-	<tip id="ID_SEARCH_CLEAR" message="امسح نتائج البحث."/>
-	<tip id="ID_TRAY_OPEN" message="افتح Shareaza نافذة الـ."/>
-	<tip id="ID_NETWORK_AUTO_CLOSE" message="اغلق الـShareazaاليا عند اكمال نقل البيانات."/>
-	<tip id="ID_UPLOADS_AUTO_CLEAR" message="امسح الملفات المرفوعة الكاملة اليا."/>
-	<tip id="ID_LIBRARY_SEARCH" message="ابحث عن ملفك في المكتبة..."/>
-	<tip id="ID_TRAFFIC_WINDOW" message="افتح نافذة رسم بياني جديدة..."/>
-	<tip id="ID_NEIGHBOURS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
-	<tip id="ID_HELP_WEB_4" message="قم بزيارة NapJunk.net"/>
-	<tip id="ID_SEARCH_STOP" message="Stop receiving results in this window."/>
-	<tip id="ID_TOOLS_DOWNLOAD" message=" torrent ابداء تحميل ملف جديد او ملف..."/>
-	<tip id="ID_DOWNLOADS_URL" message="اضف مصدر الرابط للتحميل المختار..."/>
-	<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
-	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
-	<tip id="ID_VIEW_SECURITY" message="اظهار او اخفاء نافذة الامن."/>
-	<tip id="ID_SECURITY_REMOVE" message="حذف قواعد الامن المحددة."/>
-	<tip id="ID_SECURITY_RESET" message="Reset the hit counts on the selected rules."/>
-	<tip id="ID_SECURITY_POLICY_ACCEPT" message="ضع سياسة الأمن الأصلية للسماح لكلّ المضيّفون."/>
-	<tip id="ID_SECURITY_POLICY_DENY" message="ضع سياسة الأمن الأصلية لحرمان كلّ المضيّفون."/>
-	<tip id="ID_LIBRARY_REFRESH" message="تحديث عرض المكتبة."/>
-	<tip id="ID_LIBRARY_MOVE" message="انقل الملفات المحددة لمجلد مكتبة اخر..."/>
-	<tip id="ID_LIBRARY_COPY" message="انسخ الملفات المحددة لمجلد مكتبة اخر..."/>
-	<tip id="ID_LIBRARY_DELETE" message="Delete the selected files permenantly."/>
-	<tip id="ID_LIBRARY_ENQUEUE" message="اضف الملفات المحددة الى قائمة تشغيل وسائطك."/>
-	<tip id="ID_DOWNLOADS_ENQUEUE" message="اضف الملفات المحملة المحددة الى قائمة تشغيل وسائطك."/>
-	<tip id="ID_SECURITY_MOVE_UP" message="Move the selected security rules up the precedence list."/>
-	<tip id="ID_SECURITY_MOVE_DOWN" message="Move the selected security rules down the precedence list."/>
-	<tip id="ID_SECURITY_BAN" message="حظر المضيف المحدد اثناء هذه الجلسة."/>
-	<tip id="ID_SECURITY_EDIT" message="تحرير القاعدة الامنية المحددة..."/>
-	<tip id="ID_SECURITY_ADD" message="اضف قاعدة جديدة لسلسلة الامن..."/>
-	<tip id="ID_SECURITY_EXPORT" message="تصدير شروط الامن المحددة من الملف المختار..."/>
-	<tip id="ID_SECURITY_IMPORT" message="استيراد شروط الامن من الملف ..."/>
-	<tip id="ID_TAB_NETWORK" message="شاهد السيرفرات التي تعمل الان."/>
-	<tip id="ID_TAB_LIBRARY" message="مشاهده وادارة المكتبة."/>
-	<tip id="ID_TAB_TRANSFERS" message="شاهد الملفات التي تقوم الان بتحميلها او رفعها."/>
-	<tip id="ID_TAB_CONNECT" message="اتصال او قطع الاتصال بالشبكة."/>
-	<tip id="ID_VIEW_TABBED" message="Use Shareaza in power Tabbed mode (الرئيسية, المكتبة, الوسائط, نقل البيانات, شبكة)."/>
-	<tip id="ID_VIEW_WINDOWED" message="Use Shareaza in power Windowed mode."/>
-	<tip id="ID_LIBRARY_URL" message="نسخ رابط الملف المحدد."/>
-	<tip id="ID_VIEW_DISCOVERY" message="اظهار او اخفاء نافذة الاستكشاف."/>
-	<tip id="ID_DISCOVERY_EDIT" message="View the properties for the selected discovery service."/>
-	<tip id="ID_DISCOVERY_QUERY" message="Query the selected discovery services now."/>
-	<tip id="ID_DISCOVERY_REMOVE" message="حذف خدمة الاكتشاف المختارة."/>
+	<tip id="ID_CHILD_RESTORE" message="افتح النافذة المحددة."/>
 	<tip id="ID_DISCOVERY_ADD" message="إضافة خدمة الاكتشاف ..."/>
-	<tip id="ID_DISCOVERY_GNUTELLA" message="Show bootstrap services in the Discovery window."/>
-	<tip id="ID_DISCOVERY_WEBCACHE" message="Show GWebCache services in the Discovery window."/>
-	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatically clear downloads which have been completed."/>
-	<tip id="ID_TRANSFERS_CONNECT" message="Access the selected download source(s) and attempt to download."/>
-	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
-	<tip id="ID_SYSTEM_VERBOSE" message="Display a detailed system activity log."/>
 	<tip id="ID_DISCOVERY_ADVERTISE" message="Advertise the selected GWebCache service to a random existing GWebCache."/>
 	<tip id="ID_DISCOVERY_BROWSE" message="Browse statistics for the selected GWebCache service on the Web."/>
-	<tip id="ID_BROWSE_STOP" message="Stop browsing files on this host."/>
-	<tip id="ID_BROWSE_REFRESH" message="Refresh the list of files available on this host."/>
-	<tip id="ID_BROWSE_LAUNCH" message="استعراض الملف الخاص بالمستخدم المحدد و ملفات المشاركة."/>
+	<tip id="ID_DISCOVERY_EDIT" message="View the properties for the selected discovery service."/>
+	<tip id="ID_DISCOVERY_GNUTELLA" message="Show bootstrap services in the Discovery window."/>
+	<tip id="ID_DISCOVERY_QUERY" message="Query the selected discovery services now."/>
+	<tip id="ID_DISCOVERY_REMOVE" message="حذف خدمة الاكتشاف المختارة."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey2000 Server.met services in the Discovery window."/>
+	<tip id="ID_DISCOVERY_WEBCACHE" message="Show GWebCache services in the Discovery window."/>
+	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Cancel and remove all downloads in this group."/>
+	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Create a new download group..."/>
+	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pause all downloads in this group."/>
+	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Edit the properties of the selected download group."/>
+	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Remove the selected download group."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Resume all downloads in this group."/>
+	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Show or hide the download group bar."/>
+	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatically clear downloads which have been completed."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
-	<tip id="ID_TAB_HOME" message="الرئيسية Shareaza عد إلى صفحة"/>
-	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
-	<tip id="ID_DOWNLOADS_MONITOR" message="افتح شاشة التحميل لهذا الملف..."/>
-	<tip id="ID_LIBRARY_SELECT_ALL" message="حدد و شاهد جيمع المجلدات في المكتبة."/>
-	<tip id="ID_SEARCH_FILTER_RAW" message="فرز نتائج البحث ببعض الكلمات و الشروط..."/>
-	<tip id="ID_SEARCH_PANEL" message="ايقاف عرض لوحة البحث في نافذه البحث."/>
-	<tip id="ID_SYSTEM_TIMESTAMP" message="Record a timestamp for each line."/>
-	<tip id="ID_LIBRARY_LAUNCH" message="فتح او تشغيل الملفات المحدده."/>
-	<tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
-	<tip id="ID_TOOLS_RESKIN" message="Reload and apply your current skin selection."/>
-	<tip id="ID_MONITOR_CLOSE" message="اغلاق نافذه الشاشه."/>
-	<tip id="ID_WINDOW_TOOLBAR" message="اظهار او اخفاء مربع الادوات."/>
-	<tip id="ID_WINDOW_TABBAR" message="اظهار او اخفاء النافذه."/>
-	<tip id="ID_WINDOW_MONITOR" message="اظهار او اخفائ شاشة التحميل."/>
-	<tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
-	<tip id="ID_TOOLS_SKIN" message="Choose a different skin for Shareaza to use..."/>
-	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Boost the speed of file scanning and hashing."/>
+	<tip id="ID_DOWNLOADS_CLEAR" message="مسح/ازالة ملفات التحميل المحددة."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="حذف التحميل المحدد من القائمة."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="تنظيف التحميل من الملفات المكتملة."/>
+	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="الغاء التحميل الناقص."/>
+	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="امسح ملفات التحميل التي تم ايقافها مؤقتا."/>
+	<tip id="ID_DOWNLOADS_COPY" message="نسخ رابط الملف المحدد."/>
+	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
+	<tip id="ID_DOWNLOADS_ENQUEUE" message="اضف الملفات المحملة المحددة الى قائمة تشغيل وسائطك."/>
 	<tip id="ID_DOWNLOADS_FILE_DELETE" message="Delete the selected completed file(s)."/>
-	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
-	<tip id="ID_UPLOADS_START" message="بدء رفع الملف المحدد."/>
-	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
-	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Move the selected download(s) down the priority list."/>
-	<tip id="ID_TOOLS_LANGUAGE" message="Shareaza اختر اللغة التي تريد استخدامها في برنامج ..."/>
-	<tip id="ID_DOWNLOADS_SETTINGS" message="اعدادات التحميل..."/>
-	<tip id="ID_UPLOADS_SETTINGS" message="اعدادات رفع الملفات..."/>
-	<tip id="ID_DOWNLOADS_FILTER_ALL" message="عرض كل التحميل."/>
 	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="عرض التحميل النشط."/>
+	<tip id="ID_DOWNLOADS_FILTER_ALL" message="عرض كل التحميل."/>
+	<tip id="ID_DOWNLOADS_FILTER_MENU" message="اختر نوع تحميل الملفات او عرض نوع  اخفاء الملفات."/>
+	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="عرض التحميل الموقف مؤقتاً."/>
 	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="عرض التحميل التي في الانتظار."/>
 	<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="عرض التحميل التي لا يوجد لها مصادر."/>
-	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="عرض التحميل الموقف مؤقتاً."/>
-	<tip id="ID_NEIGHBOURS_SETTINGS" message="اعدادات الشبكة..."/>
+	<tip id="ID_DOWNLOADS_HELP" message="View help information on this download..."/>
+	<tip id="ID_DOWNLOADS_LAUNCH" message="استعراض الملف المختار."/>
+	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="فتح او تشغيل الملف المحدد."/>
+	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
+	<tip id="ID_DOWNLOADS_MONITOR" message="افتح شاشة التحميل لهذا الملف..."/>
+	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Move the selected download(s) down the priority list."/>
+	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
+	<tip id="ID_DOWNLOADS_PAUSE" message="ايقاف موقت لملفات التحميل المحددة."/>
+	<tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="تكملت تحميل الملفات المختارة."/>
+	<tip id="ID_DOWNLOADS_SETTINGS" message="اعدادات التحميل..."/>
+	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
+	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
+	<tip id="ID_DOWNLOADS_SOURCES" message="ابحث عن المزيد من المصادر لملفات التحميل المحددة."/>
+	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
+	<tip id="ID_DOWNLOADS_URL" message="اضف مصدر الرابط للتحميل المختار..."/>
+	<tip id="ID_HELP_ABOUT" message="Shareaza اعرض مربع معلومات الـ..."/>
+	<tip id="ID_HELP_FAQ" message="Visit the Shareaza Users Guide."/>
+	<tip id="ID_HELP_FIREWALLS" message="احصل على اعدادات لبرنامج الجدار الناري."/>
+	<tip id="ID_HELP_FORUMS" message="Shareaza زيارة منتدى ."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com قم بزيارة موقع."/>
+	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية"/>
+	<tip id="ID_HELP_WEB_1" message="قم بزياره Zeropaid.com"/>
+	<tip id="ID_HELP_WEB_2" message="قم بزياره P2PForums.com"/>
+	<tip id="ID_HELP_WEB_3" message="قم بزياره Slyck.com"/>
+	<tip id="ID_HELP_WEB_4" message="قم بزيارة NapJunk.net"/>
+	<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
+	<tip id="ID_HITMONITOR_PAUSE" message="ايقاف مؤقت للشاشة."/>
+	<tip id="ID_HITMONITOR_SEARCH" message="ابحث في الشبكة عن النعابير المحددة."/>
+	<tip id="ID_HOSTCACHE_CONNECT" message="اتصل بالمضيف المحدد."/>
+	<tip id="ID_HOSTCACHE_DISCONNECT" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000 عرض سيرفرات."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey2000 &quot;server.met&quot; file..."/>
+	<tip id="ID_HOSTCACHE_G1_CACHE" message="Show Gnutella1 cached hosts."/>
+	<tip id="ID_HOSTCACHE_G2_CACHE" message="Show Gnutella2 cached hosts."/>
+	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Show Gnutella2 horizon hubs."/>
+	<tip id="ID_HOSTCACHE_IMPORT" message="Import a list of known hosts, such as a &quot;server.met&quot; file..."/>
+	<tip id="ID_HOSTCACHE_PRIORITY" message="Try to connect to this server before other servers."/>
+	<tip id="ID_HOSTCACHE_REMOVE" message="أزل المضيّفين المختارين من ذاكرة المضيّف الوسيطة."/>
+	<tip id="ID_LIBRARY_ADD" message="اضف مجلد جديد لمكتبتك.."/>
+	<tip id="ID_LIBRARY_ALBUM_DELETE" message="حذف مجلد الالبوم المختار."/>
+	<tip id="ID_LIBRARY_ALBUM_OPEN" message="افتح مجلد الالبوم."/>
+	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="مشاهدة و تحرير مجلد الالبوم المحدد..."/>
+	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
+	<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
+	<tip id="ID_LIBRARY_COLUMNS" message=" اختر اعمدة الـmetadata ليتم عرضها..."/>
+	<tip id="ID_LIBRARY_COPY" message="انسخ الملفات المحددة لمجلد مكتبة اخر..."/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="للارسال الى الانترنت .torrent انشاء ملف."/>
+	<tip id="ID_LIBRARY_DELETE" message="Delete the selected files permenantly."/>
+	<tip id="ID_LIBRARY_ENQUEUE" message="اضف الملفات المحددة الى قائمة تشغيل وسائطك."/>
+	<tip id="ID_LIBRARY_EXPLORE" message="افتح المجلدات المختارة."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
+	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
+	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="اضف اي ملف في مجلدالالبوم لقائمة الشتغيل."/>
+	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
+	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="عرض و تحرير خصائص الملفات  الموجوده في المجلد(s)..."/>
+	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Apply common metadata from the album folder to all of its files."/>
+	<tip id="ID_LIBRARY_FOLDER_NEW" message="انشاء مجلد الالبوم جديد هنا..."/>
+	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="مشاهدة و تحرير خصائص مجلد الالبوم المحدد..."/>
+	<tip id="ID_LIBRARY_FOLDERS" message="إدارة مشاركة المجلدات في مكتبتك..."/>
+	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Boost the speed of file scanning and hashing."/>
+	<!--<tip id="ID_LIBRARY_JIGLE" message="Query the Jigle database for information on the selected file on the web."/>-->
+	<tip id="ID_LIBRARY_LAUNCH" message="فتح او تشغيل الملفات المحدده."/>
+	<tip id="ID_LIBRARY_MOVE" message="انقل الملفات المحددة لمجلد مكتبة اخر..."/>
+	<tip id="ID_LIBRARY_PANEL" message="اظهار او اخفاء لوحة التفاصيل."/>
+	<tip id="ID_LIBRARY_PARENT" message="نقل الى المجلد الاصلي."/>
+	<tip id="ID_LIBRARY_PROPERTIES" message="عرض وتحرير خصائص الملفات المحددة..."/>
+	<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
+	<tip id="ID_LIBRARY_REFRESH" message="تحديث عرض المكتبة."/>
+	<tip id="ID_LIBRARY_REMOVE" message="ازالة مجلدات المشاركة المحددة."/>
+	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
+	<tip id="ID_LIBRARY_SCAN" message="تفحص المجلدات او الملفات المتغيرة."/>
+	<tip id="ID_LIBRARY_SEARCH" message="ابحث عن ملفك في المكتبة..."/>
+	<tip id="ID_LIBRARY_SEARCH_QUICK" message="بحث في مكتبة الملفات..."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
+	<tip id="ID_LIBRARY_SELECT_ALL" message="حدد و شاهد جيمع المجلدات في المكتبة."/>
+	<tip id="ID_LIBRARY_SHARED_FILE" message="مشاركة او عدم مشاركة الملفات المحددة."/>
+	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Share or unshare the selected folder(s)."/>
 	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="View the physical folders in your library."/>
 	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="نظم مكتبتك."/>
-	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Share or unshare the selected folder(s)."/>
+	<tip id="ID_LIBRARY_UNLINK" message="Remove the select files from the current album folder."/>
+	<tip id="ID_LIBRARY_URL" message="نسخ رابط الملف المحدد."/>
 	<tip id="ID_LIBRARY_VIEW" message="اختر طريقة عرض مكتبتك..."/>
+	<tip id="ID_LIBRARY_VIEW_ALBUM" message="عرض مشاهدة الالبوم" tip="عرض الالبوم"/>
+	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Collection View"/>
 	<tip id="ID_LIBRARY_VIEW_DETAIL" message="عرض اسم الملف,ومتفصيل metadata" tip="عرض التفاصيل"/>
 	<tip id="ID_LIBRARY_VIEW_HOME" message="عرض مكتبة الصفحة الرئيسية" tip="عرض الرئيسية"/>
-	<tip id="ID_LIBRARY_VIEW_LIST" message="عرض الملفات في قائمة افقية" tip="عرض القائمة"/>
 	<tip id="ID_LIBRARY_VIEW_ICON" message="عضر رموز الملفات" tip="عرض الرمز"/>
+	<tip id="ID_LIBRARY_VIEW_LIST" message="عرض الملفات في قائمة افقية" tip="عرض القائمة"/>
 	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Show thumbnails for files" tip="Thumbnail View"/>
-	<tip id="ID_LIBRARY_PARENT" message="نقل الى المجلد الاصلي."/>
-	<tip id="ID_LIBRARY_PANEL" message="اظهار او اخفاء لوحة التفاصيل."/>
-	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="مشاهدة و تحرير خصائص مجلد الالبوم المحدد..."/>
-	<tip id="ID_LIBRARY_FOLDER_NEW" message="انشاء مجلد الالبوم جديد هنا..."/>
-	<tip id="ID_LIBRARY_UNLINK" message="Remove the select files from the current album folder."/>
-	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Apply common metadata from the album folder to all of its files."/>
-	<tip id="ID_VIEW_MEDIA" message="اظهار او اخفاء نافذة مشغل الوسائط."/>
-	<tip id="ID_TAB_MEDIA" message="تشغيل الملفات الصوتية و المرئية الموجودة في المكتبة."/>
-	<tip id="ID_MEDIA_OPEN" message="فتح وتشغيل ملف الوسائط او قائمة التشغيل..."/>
-	<tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
-	<tip id="ID_MEDIA_PLAY" message="Start playing the current media file." tip="تشغيل"/>
-	<tip id="ID_MEDIA_STOP" message="ايقاف تشغيل ملف الوسائط." tip="ايقاف"/>
-	<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="الملف السابق"/>
-	<tip id="ID_MEDIA_NEXT" message="Skip ahead to the next file in the current playlist." tip="الملف التالي"/>
-	<tip id="ID_MEDIA_SIZE_FILL" message="Choose the best size for the video based on its aspect ratio."/>
-	<tip id="ID_MEDIA_SIZE_DISTORT" message="Stretch the video to fill the window, potentially distorting it."/>
-	<tip id="ID_MEDIA_SIZE_ONE" message="Show the video at its original (natural) size."/>
-	<tip id="ID_MEDIA_SIZE_TWO" message="Show the video at double its original (natural) size."/>
-	<tip id="ID_MEDIA_SIZE_THREE" message="Show the video at triple its original (natural) size."/>
-	<tip id="ID_MEDIA_FULLSCREEN" message="ثبّت نمط فيديو شاشة كامل."/>
-	<tip id="ID_MEDIA_RANDOM" message="تشغيل عشوائي للملفات الموجودة في قائمة التشغيل."/>
-	<tip id="ID_MEDIA_REPEAT" message="كرر تشغيل ملف الوسائط ."/>
-	<tip id="ID_MEDIA_SETTINGS" message="ايقاف اعدادات صفحة الوسائط..."/>
-	<tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="ايقاف مؤقت"/>
-	<tip id="ID_MEDIA_ZOOM" message="Adjust video zoom and aspect ratio settings."/>
-	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Use the video's default aspect ratio."/>
-	<tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
-	<tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
-	<tip id="ID_MEDIA_SELECT" message="اختر و شغل هذا الملف."/>
-	<tip id="ID_MEDIA_ADD" message="اضف ملف في قائمة التشغيل..."/>
-	<tip id="ID_MEDIA_REMOVE" message="حذف الملف المحدد في قائمة التشغيل."/>
-	<tip id="ID_MEDIA_CLEAR" message="تنظيف ( حذف ) جميع الموجود في قائمة التشغيل."/>
-	<tip id="ID_MEDIA_SAVE" message="حفظ قائمة التشغيل في ملف..."/>
-	<tip id="ID_MEDIA_PLAYLIST" message="عرض او اخفاء محرر قائمة التشغيل."/>
 	<tip id="ID_LIBRARY_VIEW_TILE" message="عرض قائمة مجلدات الالبوم." tip="مجموع العرض"/>
-	<tip id="ID_LIBRARY_ALBUM_OPEN" message="افتح مجلد الالبوم."/>
-	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="اضف اي ملف في مجلدالالبوم لقائمة الشتغيل."/>
-	<tip id="ID_LIBRARY_ALBUM_DELETE" message="حذف مجلد الالبوم المختار."/>
-	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="مشاهدة و تحرير مجلد الالبوم المحدد..."/>
-	<tip id="ID_TAB_SEARCH" message="البحث في الشبكة عن ملفات للتحميل"/>
-	<tip id="ID_LIBRARY_FOLDERS" message="إدارة مشاركة المجلدات في مكتبتك..."/>
-	<tip id="ID_TOOLS_PROFILE" message="تحرير ملف الخاص بالمستخدم..."/>
-	<tip id="ID_BROWSE_PROFILE" message="استعرض ملف الخاص بالمستخدم."/>
-	<tip id="ID_BROWSE_FILES" message="عرض ملفات المشاركة للمستخدم"/>
-	<tip id="ID_MEDIA_VIS" message="Select an audio visualisation plugin..."/>
-	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="فتح او تشغيل الملف المحدد."/>
-	<tip id="ID_CHAT_CONNECT" message="الاتصال لاجرا المحادثة."/>
-	<tip id="ID_CHAT_DISCONNECT" message="قطع اتصال المحادثة."/>
-	<tip id="ID_CHAT_BROWSE" message="استعراض الملف الشخصي للمستخدم و ملفات المشاركة."/>
-	<tip id="ID_CHAT_COLOUR" message="اختيار لون النص (Ctrl+K)"/>
-	<tip id="ID_CHAT_BOLD" message="تطبيق عرض الخط (Ctrl+B)"/>
-	<tip id="ID_CHAT_ITALIC" message="تطبيق ميلان الخط (Ctrl+I)"/>
-	<tip id="ID_CHAT_UNDERLINE" message="تطبيق وضع خط تحت النص (Ctrl+U)"/>
-	<tip id="ID_CHAT_SEND_FILE" message="ارصال ملف الى المستخدم..."/>
-	<tip id="ID_CHAT_PRIORITY" message="Grant upload priority to this user."/>
-	<tip id="ID_CHAT_CLEAR" message="مسح الشاشة من المحادثة."/>
-	<tip id="ID_CHAT_EMOTICONS" message="إدراج وجوه تعبيرية."/>
-	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
+	<tip id="ID_MEDIA_ADD" message="اضف ملف في قائمة التشغيل..."/>
 	<tip id="ID_MEDIA_ADD_FOLDER" message="اضف المجلد الى قائمة التشغيل..."/>
-	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="عرض و تحرير خصائص الملفات  الموجوده في المجلد(s)..."/>
-	<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
-	<tip id="ID_VIEW_HELP" message="اظهار او اخفاء نافذة المساعدة."/>
-	<tip id="ID_TAB_HELP" message=" Shareaza احصل على مساعده من ."/>
-	<tip id="ID_DOWNLOADS_COPY" message="نسخ رابط الملف المحدد."/>
-	<tip id="ID_LIBRARY_VIEW_ALBUM" message="عرض مشاهدة الالبوم" tip="عرض الالبوم"/>
-	<tip id="ID_SEARCH_DETAILS" message="Display detailed information on the selected file."/>
-	<tip id="ID_UPLOADS_FILTER_ALL" message="كل جميع رفع الملفات."/>
-	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Show all uploads which are actively sending."/>
-	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Show uploads which are waiting in your queues."/>
-	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Show uploads which are no longer connected."/>
-	<tip id="ID_SEARCH_FOR_THIS" message="Search for other copies of the selected file."/>
-	<tip id="ID_SEARCH_FOR_SIMILAR" message="Search for files which are similar to the selected file."/>
-	<tip id="ID_SEARCH_FOR_ARTIST" message="Search for music files by the same artist as the selected file."/>
-	<tip id="ID_SEARCH_FOR_ALBUM" message="Search for music files in the same album as the selected file."/>
-	<tip id="ID_SEARCH_FOR_SERIES" message="Search for video files in the same series as the selected file."/>
-	<tip id="ID_CHAT_TIMESTAMP" message="Show the time when each message was received."/>
-	<tip id="ID_MEDIA_STATUS" message="Show or hide the media status line."/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000 عرض سيرفرات."/>
-	<tip id="ID_HOSTCACHE_IMPORT" message="Import a list of known hosts, such as a &quot;server.met&quot; file..."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey2000 &quot;server.met&quot; file..."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey2000 Server.met services in the Discovery window."/>
-	<tip id="ID_NETWORK_G2" message="الاتصال بـ Gnutella2 شبكة (مهم جدا)."/>
-	<tip id="ID_NETWORK_G1" message="الاتصال بـ the original Gnutella network."/>
-	<tip id="ID_NETWORK_ED2K" message="الاتصال بـ the eDonkey2000 network."/>
-	<!--<tip id="ID_LIBRARY_JIGLE" message="Query the Jigle database for information on the selected file on the web."/>-->
-	<tip id="ID_HOSTCACHE_PRIORITY" message="Try to connect to this server before other servers."/>
-	<tip id="ID_VIEW_BASIC" message="Shareaza استخدم نظام العرض العادي في ."/>
-	<tip id="ID_LIBRARY_SEARCH_QUICK" message="بحث في مكتبة الملفات..."/>
-	<tip id="ID_HELP_FORUMS" message="Shareaza زيارة منتدى ."/>
-	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Create a new download group..."/>
-	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Remove the selected download group."/>
-	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Edit the properties of the selected download group."/>
-	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pause all downloads in this group."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Resume all downloads in this group."/>
-	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Cancel and remove all downloads in this group."/>
-	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
-	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Show or hide the download group bar."/>
-	<tip id="ID_DOWNLOADS_HELP" message="View help information on this download..."/>
-	<tip id="ID_DOWNLOADS_FILTER_MENU" message="اختر نوع تحميل الملفات او عرض نوع  اخفاء الملفات."/>
-	<tip id="ID_UPLOADS_FILTER_MENU" message="اختر نوع رفع الملفات او عرض نوع  اخفاء الملفات."/>
-	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="الغاء التحميل الناقص."/>
-	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="حذف التحميل المحدد من القائمة."/>
-	<tip id="ID_LIBRARY_CREATETORRENT" message="للارسال الى الانترنت .torrent انشاء ملف."/>
-	<tip id="ID_WINDOW_NAVBAR" message="اظهار او اخفاء عامود المتصفح."/>
-	<tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
-	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Collection View"/>
-	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
-	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
-	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
-    <tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
-    <tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
-	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
+	<tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
+	<tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
+	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Use the video's default aspect ratio."/>
+	<tip id="ID_MEDIA_CLEAR" message="تنظيف ( حذف ) جميع الموجود في قائمة التشغيل."/>
+	<tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
+	<tip id="ID_MEDIA_FULLSCREEN" message="ثبّت نمط فيديو شاشة كامل."/>
 	<tip id="ID_MEDIA_MUTE" message="كتم الصوت"/>
-	<tip id="ID_WINDOW_REMOTE" message="Shareaza اظهار او اخفاء التحكم عن بعد بـ"/>
-	<tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent عرض رفع الملفات لـ."/>
+	<tip id="ID_MEDIA_NEXT" message="Skip ahead to the next file in the current playlist." tip="الملف التالي"/>
+	<tip id="ID_MEDIA_OPEN" message="فتح وتشغيل ملف الوسائط او قائمة التشغيل..."/>
+	<tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="ايقاف مؤقت"/>
+	<tip id="ID_MEDIA_PLAY" message="Start playing the current media file." tip="تشغيل"/>
+	<tip id="ID_MEDIA_PLAYLIST" message="عرض او اخفاء محرر قائمة التشغيل."/>
+	<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="الملف السابق"/>
+	<tip id="ID_MEDIA_RANDOM" message="تشغيل عشوائي للملفات الموجودة في قائمة التشغيل."/>
+	<tip id="ID_MEDIA_REMOVE" message="حذف الملف المحدد في قائمة التشغيل."/>
+	<tip id="ID_MEDIA_REPEAT" message="كرر تشغيل ملف الوسائط ."/>
+	<tip id="ID_MEDIA_SAVE" message="حفظ قائمة التشغيل في ملف..."/>
+	<tip id="ID_MEDIA_SELECT" message="اختر و شغل هذا الملف."/>
+	<tip id="ID_MEDIA_SETTINGS" message="ايقاف اعدادات صفحة الوسائط..."/>
+	<tip id="ID_MEDIA_SIZE_DISTORT" message="Stretch the video to fill the window, potentially distorting it."/>
+	<tip id="ID_MEDIA_SIZE_FILL" message="Choose the best size for the video based on its aspect ratio."/>
+	<tip id="ID_MEDIA_SIZE_ONE" message="Show the video at its original (natural) size."/>
+	<tip id="ID_MEDIA_SIZE_THREE" message="Show the video at triple its original (natural) size."/>
+	<tip id="ID_MEDIA_SIZE_TWO" message="Show the video at double its original (natural) size."/>
+	<tip id="ID_MEDIA_STATUS" message="Show or hide the media status line."/>
+	<tip id="ID_MEDIA_STOP" message="ايقاف تشغيل ملف الوسائط." tip="ايقاف"/>
+	<tip id="ID_MEDIA_VIS" message="Select an audio visualisation plugin..."/>
+	<tip id="ID_MEDIA_ZOOM" message="Adjust video zoom and aspect ratio settings."/>
+	<tip id="ID_MONITOR_CLOSE" message="اغلاق نافذه الشاشه."/>
+	<tip id="ID_NEIGHBOURS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
+	<tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
+	<tip id="ID_NEIGHBOURS_DISCONNECT" message="فصل الاتصال بالاتصالات المجاورة."/>
+	<tip id="ID_NEIGHBOURS_SETTINGS" message="اعدادات الشبكة..."/>
+	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Open a new Packet Dump window monitoring this neighbour."/>
+	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Open a new Packet Dump window monitoring incoming traffic from this neighbour."/>
+	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
+	<tip id="ID_NETWORK_AUTO_CLOSE" message="اغلق الـShareazaاليا عند اكمال نقل البيانات."/>
+	<tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
+	<tip id="ID_NETWORK_CONNECT" message="اتصل بالشبكة."/>
+	<tip id="ID_NETWORK_CONNECT_TO" message="الاتصال يدوي بالمضيف..."/>
+	<tip id="ID_NETWORK_DISCONNECT" message="اقطع الاتصال من الشبكة."/>
+	<tip id="ID_NETWORK_ED2K" message="الاتصال بـ the eDonkey2000 network."/>
+	<tip id="ID_NETWORK_EXIT" message="الخروج من Shareaza"/>
+	<tip id="ID_NETWORK_G1" message="الاتصال بـ the original Gnutella network."/>
+	<tip id="ID_NETWORK_G2" message="الاتصال بـ Gnutella2 شبكة (مهم جدا)."/>
+	<tip id="ID_NETWORK_SEARCH" message="بدا بحث جديد عن الشبكة..."/>
+	<tip id="ID_SEARCH_CHAT" message="فتح المحادثة مع المستخدم المحدد."/>
+	<tip id="ID_SEARCH_CLEAR" message="امسح نتائج البحث."/>
+	<tip id="ID_SEARCH_COLUMNS" message="أعمدة metadata المنتقاة الّتي ستعرض..."/>
+	<tip id="ID_SEARCH_COPY" message="نسخ رابط الملف المحدد."/>
+	<tip id="ID_SEARCH_DETAILS" message="Display detailed information on the selected file."/>
+	<tip id="ID_SEARCH_DOWNLOAD" message="تحميل الملفات المختارة."/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="حمل الملفات المختاره بالاولوية."/>
+	<tip id="ID_SEARCH_FILTER" message="افرز نتائج البحث ببعض الكلمات والشروط..."/>
+	<tip id="ID_SEARCH_FILTER_RAW" message="فرز نتائج البحث ببعض الكلمات و الشروط..."/>
+	<tip id="ID_SEARCH_FILTER_REMOVE" message="ازالة عملية الفرز من النتائج."/>
+	<tip id="ID_SEARCH_FOR_ALBUM" message="Search for music files in the same album as the selected file."/>
+	<tip id="ID_SEARCH_FOR_ARTIST" message="Search for music files by the same artist as the selected file."/>
+	<tip id="ID_SEARCH_FOR_SERIES" message="Search for video files in the same series as the selected file."/>
+	<tip id="ID_SEARCH_FOR_SIMILAR" message="Search for files which are similar to the selected file."/>
+	<tip id="ID_SEARCH_FOR_THIS" message="Search for other copies of the selected file."/>
+	<tip id="ID_SEARCH_PANEL" message="ايقاف عرض لوحة البحث في نافذه البحث."/>
+	<tip id="ID_SEARCH_SEARCH" message="ابحث في الشبكة مرة اخرى..."/>
+	<tip id="ID_SEARCH_STOP" message="Stop receiving results in this window."/>
+	<tip id="ID_SEARCHMONITOR_CLEAR" message="تنظيف شاشة البحث."/>
+	<tip id="ID_SEARCHMONITOR_PAUSE" message="ايقاف مؤقت لشاشة البحث."/>
+	<tip id="ID_SECURITY_ADD" message="اضف قاعدة جديدة لسلسلة الامن..."/>
+	<tip id="ID_SECURITY_BAN" message="حظر المضيف المحدد اثناء هذه الجلسة."/>
+	<tip id="ID_SECURITY_EDIT" message="تحرير القاعدة الامنية المحددة..."/>
+	<tip id="ID_SECURITY_EXPORT" message="تصدير شروط الامن المحددة من الملف المختار..."/>
+	<tip id="ID_SECURITY_IMPORT" message="استيراد شروط الامن من الملف ..."/>
+	<tip id="ID_SECURITY_MOVE_DOWN" message="Move the selected security rules down the precedence list."/>
+	<tip id="ID_SECURITY_MOVE_UP" message="Move the selected security rules up the precedence list."/>
+	<tip id="ID_SECURITY_POLICY_ACCEPT" message="ضع سياسة الأمن الأصلية للسماح لكلّ المضيّفون."/>
+	<tip id="ID_SECURITY_POLICY_DENY" message="ضع سياسة الأمن الأصلية لحرمان كلّ المضيّفون."/>
+	<tip id="ID_SECURITY_REMOVE" message="حذف قواعد الامن المحددة."/>
+	<tip id="ID_SECURITY_RESET" message="Reset the hit counts on the selected rules."/>
+	<tip id="ID_SYSTEM_CLEAR" message="مسح سجل الحالة."/>
+	<tip id="ID_SYSTEM_TIMESTAMP" message="Record a timestamp for each line."/>
+	<tip id="ID_SYSTEM_VERBOSE" message="Display a detailed system activity log."/>
+	<tip id="ID_TAB_CONNECT" message="اتصال او قطع الاتصال بالشبكة."/>
+	<tip id="ID_TAB_HELP" message=" Shareaza احصل على مساعده من ."/>
+	<tip id="ID_TAB_HOME" message="الرئيسية Shareaza عد إلى صفحة"/>
+	<tip id="ID_TAB_LIBRARY" message="مشاهده وادارة المكتبة."/>
+	<tip id="ID_TAB_MEDIA" message="تشغيل الملفات الصوتية و المرئية الموجودة في المكتبة."/>
+	<tip id="ID_TAB_NETWORK" message="شاهد السيرفرات التي تعمل الان."/>
+	<tip id="ID_TAB_SEARCH" message="البحث في الشبكة عن ملفات للتحميل"/>
+	<tip id="ID_TAB_TRANSFERS" message="شاهد الملفات التي تقوم الان بتحميلها او رفعها."/>
+	<tip id="ID_TOOLS_DOWNLOAD" message=" torrent ابداء تحميل ملف جديد او ملف..."/>
+	<tip id="ID_TOOLS_LANGUAGE" message="Shareaza اختر اللغة التي تريد استخدامها في برنامج ..."/>
 	<tip id="ID_TOOLS_MERCORA" message="P2P بدء تشغيل رادو"/>
-	<tip id="ID_HELP_FIREWALLS" message="احصل على اعدادات لبرنامج الجدار الناري."/>
+	<tip id="ID_TOOLS_PROFILE" message="تحرير ملف الخاص بالمستخدم..."/>
+	<tip id="ID_TOOLS_RESKIN" message="Reload and apply your current skin selection."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message=" torrent ارسال ملف"/>
+	<tip id="ID_TOOLS_SETTINGS" message="ضبط Shareaza اعدادات..."/>
+	<tip id="ID_TOOLS_SKIN" message="Choose a different skin for Shareaza to use..."/>
+	<tip id="ID_TOOLS_WIZARD" message="تشغيل  Shareaza سريع للمالج..."/>
+	<tip id="ID_TRAFFIC_AXIS" message="اعرض المحور عاموديا"/>
+	<tip id="ID_TRAFFIC_CLEAR" message="Clear the traffic graph."/>
+	<tip id="ID_TRAFFIC_GRID" message="اعرض خطوط الشبكة."/>
+	<tip id="ID_TRAFFIC_LEGEND" message="اعرض الاسطورة."/>
+	<tip id="ID_TRAFFIC_SETUP" message="اختر الاعدادات للتخطيط..."/>
+	<tip id="ID_TRAFFIC_WINDOW" message="افتح نافذة رسم بياني جديدة..."/>
+	<tip id="ID_TRANSFERS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
+	<tip id="ID_TRANSFERS_CONNECT" message="Access the selected download source(s) and attempt to download."/>
+	<tip id="ID_TRANSFERS_DISCONNECT" message="قطع الاتصال عند الانتهاء من تحميل الملف المحدد."/>
+	<tip id="ID_TRANSFERS_FORGET" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
+	<tip id="ID_TRAY_OPEN" message="افتح Shareaza نافذة الـ."/>
+	<tip id="ID_UPLOADS_AUTO_CLEAR" message="امسح الملفات المرفوعة الكاملة اليا."/>
+	<tip id="ID_UPLOADS_CHAT" message="افتح قسم للمحادثة مع المستخدم المحدد."/>
+	<tip id="ID_UPLOADS_CLEAR" message="امسح الملفات المحددة من القائمة التي تم رفعها."/>
+	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="امسح الملفات التي تم اكمال رفعها."/>
+	<tip id="ID_UPLOADS_DISCONNECT" message="قطع الاتصال عن الانتهاء من رفع الملف المختار."/>
+	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Show all uploads which are actively sending."/>
+	<tip id="ID_UPLOADS_FILTER_ALL" message="كل جميع رفع الملفات."/>
+	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Show uploads which are no longer connected."/>
+	<tip id="ID_UPLOADS_FILTER_MENU" message="اختر نوع رفع الملفات او عرض نوع  اخفاء الملفات."/>
+	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Show uploads which are waiting in your queues."/>
+	<tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent عرض رفع الملفات لـ."/>
+	<tip id="ID_UPLOADS_LAUNCH" message="تشغيل ملف المشاركة المحدد."/>
+	<tip id="ID_UPLOADS_SETTINGS" message="اعدادات رفع الملفات..."/>
+	<tip id="ID_UPLOADS_START" message="بدء رفع الملف المحدد."/>
+	<tip id="ID_VIEW_BASIC" message="Shareaza استخدم نظام العرض العادي في ."/>
+	<tip id="ID_VIEW_DISCOVERY" message="اظهار او اخفاء نافذة الاستكشاف."/>
+	<tip id="ID_VIEW_DOWNLOADS" message="اظهار او اخفاء نافذة تحميل الملفات."/>
+	<tip id="ID_VIEW_HELP" message="اظهار او اخفاء نافذة المساعدة."/>
+	<tip id="ID_VIEW_HOSTS" message="اظهار او اخفاء نافذة المضيف."/>
+	<tip id="ID_VIEW_LIBRARY" message="اظهار او اخفاء نافذة المكتبة."/>
+	<tip id="ID_VIEW_MEDIA" message="اظهار او اخفاء نافذة مشغل الوسائط."/>
+	<tip id="ID_VIEW_NEIGHBOURS" message="اظهار او اخفاء نافذة المتصلين."/>
+	<tip id="ID_VIEW_PACKETS" message="اظهار او اخفاء نافذة نفاية الحزمة."/>
+	<tip id="ID_VIEW_RESULTS_MONITOR" message="اظهار او اخفاء نافذة المراقبة."/>
+	<tip id="ID_VIEW_SEARCH_MONITOR" message="اظهار او اخفاء نافذة شاشة البحث."/>
+	<tip id="ID_VIEW_SECURITY" message="اظهار او اخفاء نافذة الامن."/>
+	<tip id="ID_VIEW_SYSTEM" message="اظهار او اخفاء نافذة النظام."/>
+	<tip id="ID_VIEW_TABBED" message="Use Shareaza in power Tabbed mode (الرئيسية, المكتبة, الوسائط, نقل البيانات, شبكة)."/>
+	<tip id="ID_VIEW_TRAFFIC" message="اظهار او اخفاء نافذة التخطيط."/>
+	<tip id="ID_VIEW_UPLOADS" message="اظهار او اخفاء نافذة رفع الملفات."/>
+	<tip id="ID_VIEW_WINDOWED" message="Use Shareaza in power Windowed mode."/>
 	<tip id="ID_WINDOW_CASCADE" message="Expand all open windows to fill the screen."/>
+	<tip id="ID_WINDOW_MONITOR" message="اظهار او اخفائ شاشة التحميل."/>
+	<tip id="ID_WINDOW_NAVBAR" message="اظهار او اخفاء عامود المتصفح."/>
+	<tip id="ID_WINDOW_REMOTE" message="Shareaza اظهار او اخفاء التحكم عن بعد بـ"/>
+	<tip id="ID_WINDOW_TABBAR" message="اظهار او اخفاء النافذه."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="اظهار او اخفاء مربع الادوات."/>
 </commandTips>
 
 <!-- Localised Strings -->
@@ -2372,7 +2369,7 @@
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
 	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
-    <string id="8063" value="Connected. %s in local library."/>
+	<string id="8063" value="Connected. %s in local library."/>
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
 	<string id="8065" value="Connecting to the network..."/>
 	<string id="8066" value="Not connected to the network."/>
@@ -2400,7 +2397,7 @@
 	<string id="8133" value="Shareaza is actively searching the network..."/>
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
 	<string id="8141" value="اظهار لوحة البحث"/>
-    <string id="8142" value="اخفاء لوحة البحث"/>
+	<string id="8142" value="اخفاء لوحة البحث"/>
 	<string id="8143" value="بحث..."/>
 	<string id="8144" value="ابداء البحث"/>
 	<string id="8145" value="بحث عن المزيد"/>
@@ -2441,7 +2438,6 @@
 	<string id="8231" value="لايوجد مصادر"/>
 	<string id="8232" value="فتح"/>
 	<string id="8233" value="عرض"/>
-	<string id="8234" value="%s of %s (%.2f%%)"/>
 	<string id="8235" value="Total transfer speed:"/>
 	<string id="8236" value="Estimated time remaining:"/>
 	<string id="8237" value="حجم التحميل:"/>
@@ -2449,8 +2445,7 @@
 	<string id="8239" value="مكمل"/>
 	<string id="8240" value="Shareaza is moving the download:"/>
 	<string id="8241" value="Shareaza is checking the download for errors:"/>
-      <string id="8242" value="%s of %s (%.2f%%)"/>
-      <string id="8243" value="حجم رفع الملفات:"/>
+	<string id="8243" value="حجم رفع الملفات:"/>
 	<string id="8288" value="Shareaza استكشف مكتبة"/>
 	<string id="8289" value="الإستكشاف"/>
 	<string id="8290" value="Exploring the contents of %i folders"/>
@@ -2460,7 +2455,6 @@
 	<string id="8294" value="الإضافات الأخيرة"/>
 	<string id="8295" value="Rate this file"/>
 	<string id="8304" value="N/A"/>
-	<string id="8305" value="%i of %i"/>
 	<string id="8306" value="الموقع"/>
 	<string id="8307" value="النوع"/>
 	<string id="8308" value="الحجم"/>
@@ -2471,16 +2465,20 @@
 	<string id="8313" value="This file appears to be spam."/>
 	<string id="8314" value="You have downloaded and deleted this file before."/>
 	<string id="8315" value="مدرج في القائمة السوداء: "/>
-    <string id="8316" value="Hits"/>
-    <string id="8317" value="رفع الملفات"/>
-    <string id="8318" value="%lu اليوم, %lu المجموع"/>
-    <string id="8320" value="الحالة:"/>
-    <string id="8321" value="السرعة:"/>
-    <string id="8322" value="الرابط:"/>
-    <string id="8323" value="User Agent:"/>
-    <string id="8324" value="غير نشط"/>
-    <string id="8325" value="نشط"/>
-    <string id="8326" value="السطر التالي"/>
+	<string id="8316" value="Hits"/>
+	<string id="8317" value="رفع الملفات"/>
+	<string id="8318" value="%lu اليوم, %lu المجموع"/>
+	<string id="8320" value="الحالة:"/>
+	<string id="8321" value="السرعة:"/>
+	<string id="8322" value="الرابط:"/>
+	<string id="8323" value="User Agent:"/>
+	<string id="8324" value="غير نشط"/>
+	<string id="8325" value="نشط"/>
+	<string id="8326" value="السطر التالي"/>
+	<string id="8327" value="مجموع الملفات:"/>
+	<string id="8328" value="Total Volume:"/>
+	<string id="8329" value="of your library"/>
+	<string id="8330" value="مجلد"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
@@ -2684,8 +2682,8 @@
 	<string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
-    <string id="16408" value="نسخ &amp;الرابط"/>
-    <string id="16409" value="تصدير &amp;الروابط..."/>
+	<string id="16408" value="نسخ &amp;الرابط"/>
+	<string id="16409" value="تصدير &amp;الروابط..."/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
@@ -2727,16 +2725,16 @@
 	<string id="16773" value="المنفذ:"/>
 	<string id="16774" value="&amp;اتصال"/>
 	<string id="16775" value="&amp;استعراض"/>
-    <string id="16776" value="إضافة"/>
-    <string id="16777" value="اسم الملف:"/>
-    <string id="16778" value="الرابط:"/>
-    <string id="16779" value="النوع:"/>
-    <string id="16780" value="Unspecified"/>
-    <string id="16781" value="Requesting..."/>
-    <string id="16782" value="نجاح!"/>
-    <string id="16783" value="انتهاء, اضغط اغلاق"/>
-    <string id="16784" value="&amp;اغلاق"/>
-    <string id="16785" value="(No Visualisation)"/>
+	<string id="16776" value="إضافة"/>
+	<string id="16777" value="اسم الملف:"/>
+	<string id="16778" value="الرابط:"/>
+	<string id="16779" value="النوع:"/>
+	<string id="16780" value="Unspecified"/>
+	<string id="16781" value="Requesting..."/>
+	<string id="16782" value="نجاح!"/>
+	<string id="16783" value="انتهاء, اضغط اغلاق"/>
+	<string id="16784" value="&amp;اغلاق"/>
+	<string id="16785" value="(No Visualisation)"/>
 	<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 	<string id="16801" value="Please choose the type of Internet connection you are using before continuing."/>
 	<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -2746,7 +2744,7 @@
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
-    <string id="16809" value="خ&amp;روج"/>
+	<string id="16809" value="خ&amp;روج"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2798,6 +2796,37 @@
 	<string id="17041" value="Cannot send message, a connection has not been established yet."/>
 	<string id="17042" value="You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 	<string id="17043" value="Granted upload priority to host %s."/>
+	<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
+	<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
+	<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
+	<string id="17103" value="Gnutella II: Hub-to-Hub Connection"/>
+	<string id="17104" value="Gnutella II: Leaf-to-Hub Connection"/>
+	<string id="17105" value="Gnutella II: Hub-to-Leaf Connection"/>
+	<string id="17106" value="eDonkey Server Connection (LOWID: %lu)"/>
+	<string id="17107" value="eDonkey2000 Server Connection"/>
+	<string id="17108" value="Handshake"/>
+	<string id="17109" value="Inbound"/>
+	<string id="17110" value="Outbound"/>
+	<string id="17111" value="Current:"/>
+	<string id="17112" value="Total:"/>
+	<string id="17113" value="Compression:"/>
+	<string id="17114" value="Ratio:"/>
+	<string id="17115" value="Deflate"/>
+	<string id="17116" value="None"/>
+	<string id="17117" value="Connecting"/>
+	<string id="17118" value="Handshaking"/>
+	<string id="17119" value="Rejected"/>
+	<string id="17120" value="Closing"/>
+	<string id="17121" value="Unknown"/>
+	<string id="17122" value="G1 Peer"/>
+	<string id="17123" value="G1 Ultrapeer"/>
+	<string id="17124" value="G1 Leaf"/>
+	<string id="17125" value="G2 Peer"/>
+	<string id="17126" value="G2 Hub"/>
+	<string id="17127" value="G2 Leaf"/>
+	<string id="17128" value="eDonkey2000 Server"/>
+	<string id="17129" value="eDonkey2000 (LowID)"/>
+	<string id="17130" value="eDonkey2000 (HighID)"/>
 	<string id="17216" value="Initiating connection to eDonkey2000 server at %s..."/>
 	<string id="17217" value="Connected to eDonkey2000 server %s, handshaking..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
@@ -2873,8 +2902,8 @@
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
 	<string id="19000" value="Remote access is disabled."/>
-    <string id="19001" value="You must choose a username and password."/>
-    <string id="19002" value="Unable to accept connections, URL unavailable."/>
+	<string id="19001" value="You must choose a username and password."/>
+	<string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
 	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
 	<string id="20100" value="اتصال"/>
@@ -2931,7 +2960,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="عام"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="عام">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="عام">
 		<control caption="_واجهة المستخدم:"/>
 		<control caption=" Shareaza اتصال تلقائي عند تشغيل"/>
 		<control caption=" عند تشغيل الويندوز Shareaza تشغيل "/>
@@ -2954,6 +2983,7 @@
 		<control caption="When I click minimise:"/>
 		<control/>
         <control caption="Hide side bar when starting search"/>
+		<control caption="Filter adult content from searches"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="مكتبة الملفات">
@@ -3107,9 +3137,9 @@
 	    <control/>
 	    <control caption="اختر كلمة المرور:"/>
 	    <control/>
-
 	</dialog>
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="_خصائص:"/>
 		<control caption="_تفعيل Scheduler"/>
 		<control/><control/>
@@ -3126,6 +3156,9 @@
 		<control caption="اتصال نحدود"/>
 		<control caption="اتصل باقصى سرعة"/>
 		<control caption="% اس_تهلاك تحت الحد"/>
+		<control/>
+		<control caption="مساعدة"/>
+		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. &#13;&#10;&#13;&#10;&#13;&#10;Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="شبكات">
