@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -896,6 +896,9 @@ void CNeighboursWithConnect::Maintain()
 					{
 						ASSERT( pHost->m_nProtocol == nProtocol );
 						nCount[ nProtocol ][0] ++;
+
+						// Prevent queries while we log on
+						pHost->m_tQuery = tNow;
 						
 						if ( Settings.Connection.ConnectThrottle != 0 )
 						{
@@ -916,6 +919,12 @@ void CNeighboursWithConnect::Maintain()
 				{
 					ASSERT( pHost->m_nProtocol == nProtocol );
 					nCount[ nProtocol ][0] ++;
+
+					if ( nProtocol == PROTOCOL_ED2K )
+					{
+						// Prevent queries while we log on
+						pHost->m_tQuery = tNow;
+					}
 					
 					if ( Settings.Connection.ConnectThrottle != 0 )
 					{
