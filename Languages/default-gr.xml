@@ -1019,7 +1019,7 @@
                <item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Παίξε το αρχείο"/>
                <item id="ID_LIBRARY_FOLDER_DELETE" text="_Διέγραψε"/>
                <separator/>
-               <item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες φακέλου"/>
+               <item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες φκέλου"/>
                <item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Ιδιότητες Album"/>
        </menu>
        <menu name="CLibraryTree.Virtual">
@@ -1100,7 +1100,7 @@
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε το αρχείο..."/>
                </menu>
                <!-- Add the following entry if you need metadata conversion from ANSI -->
-               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Ξαναχτίσε το Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Διάλεξε _στήλη..."/>
                <separator/>
@@ -1170,7 +1170,7 @@
                        <item id="ID_LIBRARY_COPY" text="_Αντέγραψε το αρχείο..."/>
                </menu>
                <!-- Add the following entry if you need metadata conversion from ANSI -->
-               <item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+               <item id="ID_LIBRARY_REBUILD_ANSI" text="Ξαναχτίσε το Metadata"/>
                <separator/>
                <item id="ID_LIBRARY_COLUMNS" text="Διάλεξε _στηλη..."/>
                <separator/>
@@ -1754,24 +1754,24 @@
 
                <group id="2">
                        <newline gap="8" indent="0"/>
-                       <text format="b">Location</text>
+                       <text format="b">Περιοχή</text>
                        <newline gap="2" indent="8"/>
                        <text id="FullLocation"/>
                </group>
 
                <group id="3">
                        <newline gap="8" indent="0"/>
-                       <text format="b">Demographic</text>
+                       <text format="b">Δημογραφικός</text>
                        <newline gap="2" indent="8"/>
-                       <text id="GenderMale">Male</text>
-                       <text id="GenderFemale">Female</text>
+                       <text id="GenderMale">Άνδρας</text>
+                       <text id="GenderFemale">Γυναίκα</text>
                        <text>, </text>
                        <text id="Age"/>
                </group>
 
                <group id="4">
                        <newline gap="8" indent="0"/>
-                       <text format="b">Contact Information</text>
+                       <text format="b">Πληροφορίες Επικοινωνίας</text>
                        <newline gap="1" indent="8"/>
                </group>
                <group id="40">
@@ -1807,7 +1807,7 @@
 
                <group id="5">
                        <newline gap="8" indent="0"/>
-                       <text format="b">Interests</text>
+                       <text format="b">Ενδιαφέροντα</text>
                        <newline gap="2" indent="8"/>
                        <text id="Interests"/>
                </group>
@@ -2130,7 +2130,7 @@
        <tip id="ID_HELP_FIREWALLS" message="Πάρε μια βοήθεια για το πως να ρυθμίσεις το router ή το firewall."/>
        <tip id="ID_HELP_FORUMS" message="Επισκέψου τα Forums του Shareaza."/>
        <tip id="ID_HELP_HOMEPAGE" message="Επισκέψου το web site του Shareaza.com ."/>
-       <tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs"/>
+       <tip id="ID_HELP_SECURITY" message="Βοήθεια για το πως θα προστατέψεις το σύστημα σου απο εχθρικά προγράμματα"/>
        <tip id="ID_HELP_WEB_1" message="Επισκέψου το Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Επισκέψου το P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Επισκέψου το Slyck.com"/>
@@ -2177,7 +2177,7 @@
        <tip id="ID_LIBRARY_PROPERTIES" message="Δες και επεξεργάσου τις ιδιότητες του συγκεκριμένου αρχείου..."/>
        <tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
        <!-- Add the following line if you need it -->
-       <tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using your native language."/>
+       <tip id="ID_LIBRARY_REBUILD_ANSI" message="Ξαναχτίσε το Metadata χρησιμοποιόντας την γλώσσα σου."/>
        <tip id="ID_LIBRARY_REFRESH" message="Ανανέωσε την Βιβλιοθήκη."/>
        <tip id="ID_LIBRARY_REMOVE" message="Απομάκρυνε τα συγκεκριμένα αρχεία που μοιράζεσε."/>
        <tip id="ID_LIBRARY_RENAME" message="Μετονόμασε το συγκεκριμένο αρχείο."/>
@@ -3230,11 +3230,11 @@
 
 	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
                <control caption="Το δίκτυο του Gnutella2:"/>
-               <control caption="(G2 recommended)"/>
+               <control caption="(G2 Συνίστατε)"/>
                <control caption="Σύνδεση με το Gnutella2 σήμερα"/>
-		<control caption="Mode:"/>
+		<control caption="Μέθοδος:"/>
 		<control caption="Optimal|Leaf|Hub"/>
-		<control caption="G_2 Connections:"/>
+		<control caption="Συνδέσεις G_2:"/>
                <control caption="Leaf to Hub:"/>
                <control/><control/>
                <control caption="Hub to Leaf:"/>
@@ -3244,9 +3244,9 @@
                <control caption="Το δίκτυο του Gnutella1:"/>
                <control caption="Σύνδεση με το Gnutella1 σήμερα"/>
                <control caption="Πάντα συνδέση με το Gnutella1"/>
-		<control caption="Mode:"/>
+		<control caption="Μέθοδος:"/>
 		<control caption="Optimal|Leaf|Ultrapeer"/>
-		<control caption="G_1 Connections:"/>
+		<control caption="Συνδέσεις G_1:"/>
 		<control caption="Leaf to Ultrapeer:"/>
                <control/><control/>
 		<control caption="Ultrapeer to Leaf:"/>
@@ -3485,8 +3485,8 @@
                <control/>
                <control caption="Πραγματικό όνομα:"/>
                <control/><control/>
-               <control caption="_Vitals:"/>
-		<control caption="|Male|Female"/>
+               <control caption="_Ζωτικά μέρη:"/>
+		<control caption="|Άνδρας|Γυναίκα"/>
                <control caption="Γένος:"/>
                <control/>
                <control caption="Ηλικία:"/>
@@ -3494,8 +3494,8 @@
        </dialog>
 
        <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Επικοινωνία">
-               <control caption="_Email Addresses:"/>
-               <control caption="Primary:"/>
+               <control caption="_Διεύθυνση Email:"/>
+               <control caption="Πρωτεύων:"/>
                <control/>
                <control caption="_Instant Messaging:"/>
                <control caption="MSN/.NET Passport:"/>
