@@ -1,7 +1,7 @@
 //
 // CtrlSchema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,14 +48,14 @@ BEGIN_MESSAGE_MAP(CSchemaCtrl, CWnd)
 	ON_CBN_EDITCHANGE(IDC_METADATA_CONTROL, OnControlEdit)
 END_MESSAGE_MAP()
 
-#define MULTIPLE_STRING _T("(Multiple Values)")
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl construction
 
 CSchemaCtrl::CSchemaCtrl()
 {
+	CString strText;
+	LoadString( strText, IDS_MULTIPLE_VALUES );
+	strMultipleString = _T("(") + strText + _T(")");
 	m_nCaptionWidth	= 120;
 	m_nItemHeight	= 32;
 	m_bShowBorder	= TRUE;
@@ -200,7 +200,7 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 		{
 			pControl->GetWindowText( strValue );
 			
-			if ( strValue != MULTIPLE_STRING )
+			if ( strValue != strMultipleString )
 				pMember->SetValueTo( pBase, strValue );
 		}
 		else
@@ -209,7 +209,7 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 			
 			if ( strValue == _T("(~mt~)") )
 			{
-				pControl->SetWindowText( MULTIPLE_STRING );
+				pControl->SetWindowText( strMultipleString );
 			}
 			else
 			{
@@ -544,7 +544,7 @@ BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		
 		pEdit->GetWindowText( strTextIn );
 
-		if ( strTextIn != MULTIPLE_STRING )
+		if ( strTextIn != strMultipleString )
 		{
 			LPTSTR pszOut = strTextOut.GetBuffer( strTextIn.GetLength() );
 			

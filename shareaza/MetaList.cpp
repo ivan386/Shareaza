@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,12 +33,14 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+CString strMultiple; // Translation string
 
 //////////////////////////////////////////////////////////////////////
 // CMetaList construction
 
 CMetaList::CMetaList()
 {
+	LoadString( strMultiple, IDS_MULTIPLE );
 }
 
 CMetaList::~CMetaList()
@@ -285,7 +287,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 	}
 	else if ( m_sValue != strValue )
 	{
-		m_sValue = _T("Multiple");
+		m_sValue = strMultiple;
 	}
 	
 	int nVote = 1;
@@ -300,7 +302,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 
 void CMetaItem::Vote()
 {
-	if ( m_sValue != _T("Multiple") ) return;
+	if ( m_sValue != strMultiple ) return;
 	
 	int nBest = 0;
 	

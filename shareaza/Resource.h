@@ -670,6 +670,9 @@
 #define IDC_SET_DEFAULT_FILTER          1502
 #define IDC_DELETE_FILTER               1503
 #define IDS_FILTER_DELETE_CONFIRM       7000
+#define IDS_SCHEMAS                     7001
+#define IDS_MULTIPLE_VALUES             7002
+#define IDS_MULTIPLE                    7003
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002

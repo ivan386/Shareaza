@@ -193,7 +193,9 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 			&m_wndList.m_pColumns );
 		
 		pMenu->AppendMenu( MF_SEPARATOR, ID_SEPARATOR, (LPCTSTR)NULL );
-		pMenu->AppendMenu( MF_STRING, ID_SEARCH_COLUMNS, _T("&Schemas...") );
+		CString strText;
+		LoadString( strText, IDS_SCHEMAS );
+		pMenu->AppendMenu( MF_STRING, ID_SEARCH_COLUMNS, strText + _T("...") );
 
 		m_pCoolMenu = new CCoolMenu();
 		m_pCoolMenu->AddMenu( pMenu, TRUE );

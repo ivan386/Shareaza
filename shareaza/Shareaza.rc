@@ -5395,6 +5395,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
+    IDS_SCHEMAS             "&Schemas"
+    IDS_MULTIPLE_VALUES     "Multiple Values"
+    IDS_MULTIPLE            "Multiple"
 END
 
 STRINGTABLE 

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -929,7 +929,9 @@ void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 	CMenu* pMenu = CSchemaColumnsDlg::BuildColumnMenu( m_pSchema, &m_pColumns );
 	
 	pMenu->AppendMenu( MF_SEPARATOR, ID_SEPARATOR, (LPCTSTR)NULL );
-	pMenu->AppendMenu( MF_STRING, ID_LIBRARY_COLUMNS, _T("&Schemas...") );
+	CString strSchemas;
+	LoadString( strSchemas, IDS_SCHEMAS );
+	pMenu->AppendMenu( MF_STRING, ID_LIBRARY_COLUMNS, strSchemas + _T("...") );
 
 	m_pCoolMenu = new CCoolMenu();
 	m_pCoolMenu->AddMenu( pMenu, TRUE );
