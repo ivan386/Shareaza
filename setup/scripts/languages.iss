@@ -11,23 +11,26 @@ Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; Licen
 Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"; LicenseFile: "setup/license/German.rtf"
 Name: "pt"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-std.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "it"; MessagesFile: "compiler:Default.isl,setup\isl\italian.isl"; LicenseFile: "setup/license/italian.rtf"
+Name: "no"; MessagesFile: "compiler:Default.isl,setup\isl\norwegian.isl"; LicenseFile: "setup/license/default.rtf"
 
 [Files]
 ; Install default remote
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
 ; Install localized remote
-; English:
+; English
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language
-; Dutch:
+; Dutch
 Source: "Remote-localized\dutch\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language
 ; Lithuanian
 Source: "Remote-localized\lithuanian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language
-; German:
+; German
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
 ; Portuguese
 Source: "Remote-localized\portuguese\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language
 ; Italian
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Components: language
+; Norwegian
+Source: "Remote-localized\norwegian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: no; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -42,8 +45,10 @@ Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "l
 Source: "setup\license\german.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
 ; Portuguese
 Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language
-; italian
+; Italian
 Source: "setup\license\italian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Components: language
+; Norwegian
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: no; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -126,4 +131,17 @@ it.reg_incomingchat=Messaggio di chat in arrivo
 it.reg_apptitle=Shareaza, il programma definitivo di P2P
 it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
+; Norwegian
+no.components_plugins=Plugins
+no.components_skins=Skins
+no.components_languages=Språk
+no.tasks_allusers=Alle brukere
+no.tasks_selectusers=Installer %1 for:
+no.tasks_currentuser=Kun %1
+no.tasks_multisetup=Flere brukere
+no.run_skinexe=Kjører skin installasjon...
+no.reg_incomingchat=Innkommende melding
+no.reg_apptitle=Shareaza Ultimate File Sharing
+no.icons_license=Lisens
+no.icons_uninstall=Uninstall
 
