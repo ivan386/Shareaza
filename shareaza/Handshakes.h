@@ -24,7 +24,8 @@
 
 #pragma once
 
-class CHandshake;
+// Tell the compiler that a class named CHandshake exists, and is defined in detail elsewhere
+class CHandshake; // Lets methods defined here take and return pointers to CHandshake objects
 
 class CHandshakes  
 {

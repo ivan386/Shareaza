@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2004/12/18 14:44:06 $"
-//	Revision:		"$Revision: 1.8 $"
+//	Date:			"$Date: 2005/02/18 01:42:34 $"
+//	Revision:		"$Revision: 1.9 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -302,7 +302,7 @@ BOOL CConnection::DoRun()
 		if ( pEvents.iErrorCode[ FD_CONNECT_BIT ] != 0 )
 		{
 			// This connection was dropped
-			OnDropped( TRUE );
+			OnDropped( TRUE ); // Calls CShakeNeighbour::OnDropped
 			return FALSE;
 		}
 
@@ -310,7 +310,7 @@ BOOL CConnection::DoRun()
 		m_bConnected = TRUE;
 		m_tConnected = m_mInput.tLast = m_mOutput.tLast = GetTickCount(); // Store the time 3 places
 
-		// Call OnConnected to make sure
+		// Call CShakeNeighbour::OnConnected to start reading the handshake
 		if ( ! OnConnected() ) return FALSE;
 	}
 
@@ -323,8 +323,8 @@ BOOL CConnection::DoRun()
 	// Change the queued run state to 1 (do)
 	m_nQueuedRun = 1;
 
-	// Even though there is nothing to read and write yet, call them to make sure they work
-	if ( ! OnWrite() ) return FALSE;
+	// Write the contents of the output buffer to the remote computer, and read in data it sent us
+	if ( ! OnWrite() ) return FALSE; // If this is a CShakeNeighbour object, calls CShakeNeighbour::OnWrite
 	if ( ! OnRead() ) return FALSE;
 
 	// If the close event happened
@@ -335,8 +335,8 @@ BOOL CConnection::DoRun()
 		return FALSE;
 	}
 
-	// Right now, OnRun does nothing but return true (do)
-	if ( ! OnRun() ) return FALSE;
+	// Make sure the handshake doesn't take too long
+	if ( ! OnRun() ) return FALSE; // If this is a CShakeNeighbour object, calls CShakeNeighbour::OnRun
 
 	// If the queued run state is 2 and OnWrite returns false, leave here with false also
 	if ( m_nQueuedRun == 2 && ! OnWrite() ) return FALSE;
@@ -364,6 +364,7 @@ BOOL CConnection::OnConnected()
 
 void CConnection::OnDropped(BOOL bError)
 {
+
 }
 
 BOOL CConnection::OnRun()
@@ -487,8 +488,8 @@ _ignore:	inc		ebx
 			// Use the same place in the array as before
 			m_mInput.pHistory[ m_mInput.nPosition ] += nTotal;
 
-		}
-		else // It's been more than a tenth of a second since we last recorded a read
+		} // It's been more than a tenth of a second since we last recorded a read
+		else
 		{
 			// Store the time and total in a new array slot
 			m_mInput.nPosition = ( m_mInput.nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
@@ -569,8 +570,9 @@ _ignore:	inc		ebx
 		{
 			// Set nLimit to the remaining bytes we're allowd to write this second
 			nLimit = ( nUsed >= nLimit ) ? 0 : ( nLimit - nUsed );
-		}
-		else // The program is not running in throttle mode
+
+		} // The program is not running in throttle mode
+		else
 		{
 			// tCutoff is the number of bytes we can write now, multiply the speed limit with the elapsed time to get it
 			tCutoff = nLimit * ( tNow - m_mOutput.tLastAdd ) / 1000;
@@ -629,8 +631,9 @@ _ignore:	inc		ebx
 		{
 			// Just add the bytes in the same time slot as before
 			m_mOutput.pHistory[ m_mOutput.nPosition ] += nTotal;
-		}
-		else // It's been more than a tenth of a second since we last recorded a write
+
+		} // It's been more than a tenth of a second since we last recorded a write
+		else
 		{
 			// Store the time and total in a new array slot
 			m_mOutput.nPosition = ( m_mOutput.nPosition + 1 ) % METER_LENGTH;	// Move to the next position in the array
@@ -715,7 +718,7 @@ _ignoreOut:inc	ecx
 //////////////////////////////////////////////////////////////////////
 // CConnection HTML header reading
 
-// Remove the headers from the inptu buffer, handing each to OnHeaderLine
+// Remove the headers from the input buffer, handing each to OnHeaderLine
 BOOL CConnection::ReadHeaders()
 {
 	// Move the first line from the m_pInput buffer to strLine and do the contents of the while loop
@@ -733,9 +736,10 @@ BOOL CConnection::ReadHeaders()
 		{
 			// Empty the last header member variable (do)
 			m_sLastHeader.Empty();
-			return OnHeadersComplete(); // Just returns true (do)
 
-		
+			// Call the OnHeadersComplete method for the most advanced class that inherits from CConnection
+			return OnHeadersComplete(); // Calls CShakeNeighbour::OnHeadersComplete()
+
 		} // The line starts with a space
 		else if ( _istspace( strLine.GetAt( 0 ) ) ) // Get the first character in the string, and see if its a space
 		{
@@ -751,6 +755,7 @@ BOOL CConnection::ReadHeaders()
 					if ( ! OnHeaderLine( m_sLastHeader, strLine ) ) return FALSE;
 				}
 			}
+
 		} // The colon is at a distance greater than 1 and less than 64
 		else if ( nPos > 1 && nPos < 64 ) // ":a" is 0 and "a:a" is 1, but "aa:a" is greater than 1
 		{
@@ -764,7 +769,7 @@ BOOL CConnection::ReadHeaders()
 			if ( strValue.GetLength() > 0 )
 			{
 				// Give OnHeaderLine this last header, and its value
-				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE;
+				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
 			}
 		}
 	}
@@ -775,6 +780,8 @@ BOOL CConnection::ReadHeaders()
 }
 
 // Takes a header and its value
+// Reads and processes popular Gnutella headers
+// Returns true to have ReadHeaders keep going
 BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	// It's the user agent header
@@ -782,15 +789,13 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		// Copy the value into the user agent member string
 		m_sUserAgent = strValue; // This tells what software the remote computer is running
-		return TRUE;
-
+		return TRUE;             // Have ReadHeaders keep going
 	
 	} // It's the remote IP header
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{
 		// Add this address to our record of them
 		Network.AcquireLocalAddress( strValue );
-
 	
 	} // It's the x my address, listen IP, or node header, like "X-My-Address: 10.254.0.16:6349"
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
@@ -814,12 +819,15 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		}
 	}
 
-	// Report success
+	// Have ReadHeaders keep going
 	return TRUE;
 }
 
+// Classes that inherit from CConnection override this virtual method, adding code specific to them
+// Returns true
 BOOL CConnection::OnHeadersComplete()
 {
+	// Just return true, it's CShakeNeighbour::OnHeadersComplete() that usually gets called instead of this method
 	return TRUE;
 }
 
@@ -838,8 +846,8 @@ BOOL CConnection::SendMyAddress()
 
 		// Format works just like sprintf
 		strHeader.Format(
-			_T("Listen-IP: %s:%lu\r\n"),								// Make it like "Listen-IP: 1.2.3.4:5\r\n"
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "1.2.3.4"
+			_T("Listen-IP: %s:%lu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
+			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "67.176.34.172"
 			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
 		// Print the line into the bottom of the output buffer
@@ -955,7 +963,6 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 			*pszOutput++ = pszHex[ ( *pszInput >> 4 ) & 0x0F ];
 			*pszOutput++ = pszHex[ *pszInput & 0x0F ];
 
-		
 		} // The character doesn't need to be encoded
 		else
 		{
@@ -1028,14 +1035,14 @@ CString CConnection::URLDecode(LPCTSTR pszInput)
 			// Move the input pointer past the two characters of the "20"
 			pszInput += 2;
 
-		
-		} 
-		else if ( *pszInput == '+' ) // We hit a +, which is shorthand for space
+		} // We hit a +, which is shorthand for space
+		else if ( *pszInput == '+' )
 		{
 			// Add a space to the output text, and move the pointer forward
-			*pszOutput++ = ' ';		
-		} 
-		else // The input pointer is just on a normal character
+			*pszOutput++ = ' ';
+
+		} // The input pointer is just on a normal character
+		else
 		{
 			// Copy it across
 			*pszOutput++ = (CHAR)*pszInput;

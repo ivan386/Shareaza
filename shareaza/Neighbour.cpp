@@ -61,16 +61,15 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_nProtocol		= nProtocol;	// nProtocol is like PROTOCOL_ED2K
 
 	// Set null and default values for connection state, software vendor, guid, and user profile
-	m_nState		= nrsNull;		// No state now, will be connecting or closing later
+	m_nState		= nrsNull;		// No state now, soon we'll connect and do the handshake
 	m_pVendor		= NULL;			// We don't know what brand software the remote computer is running yet
 	m_bGUID			= FALSE;		// There is no GUID stored here yet
 	m_pProfile		= NULL;			// No profile on the person running the remote computer yet
 
 	// Set handshake values to defaults
 	m_bAutomatic	= FALSE;		// Automatic setting used to maintain the connection
-	//m_bShake06		= TRUE;			// Expect the remote computer to be using the current Gnutella 0.6 protocol
 	m_bShareaza		= FALSE;		// Expect the remote computer to not be running Shareaza
-	m_nNodeType		= ntNode;		// This connection is just to a node to start out, later it might be a hub or a leaf
+	m_nNodeType		= ntNode;		// Start out assuming that we and the remote computer are both hubs
 	m_bQueryRouting	= FALSE;		// Don't start query routing or pong caching yet
 	m_bPongCaching	= FALSE;
 	m_bVendorMsg	= FALSE;		// We haven't gotten a vendor message header in the handshake yet
@@ -244,7 +243,7 @@ BOOL CNeighbour::OnRun()
 		return FALSE;
 	}
 
-	// If the remote computer is a hub or a Gnutella2 node
+	// If this connection is to a hub above us, or to a Gnutella2 hub like us
 	if ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) )
 	{
 		// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)

@@ -26,48 +26,108 @@
 
 #include "Neighbour.h"
 
-
+// Define the class CShakeNeighbour to inherit from CNeighbour, which inherits from CConnection, picking up a socket
 class CShakeNeighbour : public CNeighbour  
 {
+
 // Construction
 public:
-	CShakeNeighbour();
-	virtual ~CShakeNeighbour();
-	
+
+	CShakeNeighbour();          // Make a new blank CShakeNeighbour object
+	virtual ~CShakeNeighbour(); // Delete this CShakeNeighbour object, virtual means we expect a derived class to redefine this
+
 // Attributes
 protected:
-	BOOL		m_bSentAddress;
-	BOOL		m_bG2Send;
-	BOOL		m_bG2Accept;
-	BOOL		m_bDeflateSend;
-	BOOL		m_bDeflateAccept;
-	BOOL		m_bCanDeflate;
-	TRISTATE	m_bUltraPeerSet;
-	TRISTATE	m_bUltraPeerNeeded;
-	TRISTATE	m_bUltraPeerLoaded;
 
-// Operations
+	// Shareaza Settings allow us to send and receive compressed data
+	BOOL m_bCanDeflate;
+
+	// Set to true when we have sent the following handshake header
+	BOOL		m_bSentAddress;		// We told the remote computer our Internet IP address that we are listening on
+									// We sent it a header like this
+									//
+									//    Listen-IP: 1.2.3.4:5
+									//
+
+	// Set to true when we have received the following handshake headers
+	BOOL		m_bG2Send;			// The remote computer is going to send us Gnutella2 packets
+									// It sent us a header like one of these
+									//
+									//    Content-Type: application/x-gnutella2
+									//    Content-Type: application/x-shareaza
+									//
+	BOOL		m_bG2Accept;		// The remote computer accepts Gnutella2 packets
+									// It sent us a header like one of these
+									//
+									//    Accept: application/x-gnutella2
+									//    Accept: application/x-shareaza
+									//
+	BOOL		m_bDeflateSend;		// All the data from the remote computer is going to be compressed
+									// It sent us a header like this
+									//
+									//    Content-Encoding: deflate
+									//
+	BOOL		m_bDeflateAccept;	// The remote computer accepts compressed data
+									// It sent us a header like this
+									//
+									//    Accept-Encoding: deflate
+									//
+	TRISTATE	m_bUltraPeerSet;	// The remote computer is an ultrapeer or hub, true, a leaf, false, or hasn't told us yet, unknown
+									// True if it sent us a header like this
+									//
+									//    X-Ultrapeer: True
+									//    X-Hub: True
+									//
+									// False if it sent us a header like this
+									//
+									//    X-Ultrapeer: False
+									//    X-Hub: False
+									//
+									// Unknown if it hasn't sent us any headers like that yet
+	TRISTATE	m_bUltraPeerNeeded;	// True if the remote computer has told us it needs more connections to ultrapeers or hubs
+									// True if it sent us a header like this
+									//
+									//    X-Ultrapeer-Needed: True
+									//    X-Hub-Needed: True
+									//
+									// False if it sent us a header like this
+									//
+									//    X-Ultrapeer-Needed: False
+									//    X-Hub-Needed: False
+									//
+									// Unknown if it hasn't sent us any headers like that yet
+
+	// Possibly not in use (do)
+	TRISTATE m_bUltraPeerLoaded;
+
+// Interface methods
 public:
-	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPost, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE);
-	virtual void	AttachTo(CConnection* pConnection);
-	virtual void	Close(UINT nError = IDS_CONNECTION_CLOSED ); //, BOOL bRetry04 = FALSE);
-protected:
-	virtual BOOL	OnConnected();
-	virtual BOOL	OnRead();
-	virtual void	OnDropped(BOOL bError);
-	virtual BOOL	OnRun();
-	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
-	virtual BOOL	OnHeadersComplete();
-	virtual BOOL	OnHeadersCompleteG1();
-	virtual BOOL	OnHeadersCompleteG2();
-protected:
-	void	SendMinimalHeaders();
-	void	SendPublicHeaders(PROTOCOLID nProtocol = PROTOCOL_NULL);
-	void	SendPrivateHeaders();
-	void	SendHostHeaders(LPCTSTR pszMessage = NULL);
-	BOOL	ReadResponse();
-	void	OnHandshakeComplete();
 
+	// Connect, disconnect, and copy
+	virtual BOOL ConnectTo(IN_ADDR* pAddress, WORD nPost, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
+	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
+	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
+
+// Internal methods
+protected:
+
+	// Read headers and respond to them
+	virtual BOOL OnConnected();          // Send the remote computer our first big block of Gnutella headers
+	virtual BOOL OnRead();               // Read data from the remote computer, and look at it as a handshake
+	virtual void OnDropped(BOOL bError); // Document that the connection was lost and why, and put everything away
+	virtual BOOL OnRun();                // Make sure the handshake hasn't been taking too long
+	virtual BOOL OnHeaderLine(CString& strHeader, CString& strValue); // Reads a header line and sets a corresponding member variable to true
+	virtual BOOL OnHeadersComplete();    // Responds to a group of headers by closing, sending a response, or turning this object into a more specific one
+	virtual BOOL OnHeadersCompleteG1();
+	virtual BOOL OnHeadersCompleteG2();
+
+	// Send headers to the remote computer
+	void SendMinimalHeaders();                                    // Tell the remote computer we are Shareaza, and try to setup Gnutella2 communications
+	void SendPublicHeaders(PROTOCOLID nProtocol = PROTOCOL_NULL); // Send our first big group of Gnutella headers to the remote computer
+	void SendPrivateHeaders();                                    // Reply to a remote computer's headers, confirming Gnutella2 packets and data compression
+	void SendHostHeaders(LPCTSTR pszMessage = NULL);              // Send a 503 error message, and the "X-Try-Ultrapeers:" header
+	BOOL ReadResponse();                                          // Read the first line of a new group of headers from the remote computer
+	void OnHandshakeComplete();                                   // Turn this object into one specialized for Gnutella or Gnutella2
 };
 
 #endif // !defined(AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_)
