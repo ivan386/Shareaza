@@ -1898,10 +1898,10 @@
 	<document name="DownloadHelp.Downloading">
 		<text format="b">Transferencia Activa!</text>
 		<newline gap="8"/>
-		<text>Esta desgarda esta en progreso.  Si esta bajando demásiado lento,
-		puedes tratar de buscar en la red para más fuentes de </text>
-		<text format="b">Buscar Más Fuentes </text><text>comando.  Si la velocidad no incrementa y no mejora puede ser que los usuarios
-		de los que estas descargando el archivo tienen una subida muy baja. La velocidad de descarga mejora con el tiempo.</text>
+		<text>Esta descarga esta en progreso.  Si esta bajando demásiado lento,
+		puedes tratar de buscar en la red más fuentes usando el comando </text>
+		<text format="b">Buscar Más Fuentes. </text><text>  Si la velocidad no incrementa y no mejora puede ser que los usuarios
+		de los que estas descargando el archivo tienen una velocidad de subida muy baja. La velocidad de descarga mejora con el tiempo.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
@@ -1911,7 +1911,7 @@
 		aquellas que estén arriba de esta.
 		El número de transferencias activas en cualquier momento es limitado por la opción
 		que se encuentra en la parte de descargas de la configuración, esto es para asegurar
-		el buen uso del ancho de banda.  Esto se puede cambiar en Herramientas, Configurar Shareaza.</text>
+		el buen uso del ancho de banda.  Esto se puede cambiar en Herramientas, Configurar Shareaza. O estas en cola con las fuentes.</text>
 		</document>
 		 <document name="DownloadHelp.Queued">
 		<text format="b">Esta descarga esta en cola</text>
