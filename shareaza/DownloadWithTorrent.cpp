@@ -200,31 +200,42 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithTorrent GenerateTorrentDownloadID (Called 'Peer ID', but seperate for each transfer)
+// CDownloadWithTorrent GenerateTorrentDownloadID (Called 'Peer ID', but seperate for each download and *not* retained between sessions)
 
 BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 {
-	theApp.Message( MSG_DEBUG, _T("Creating Peer ID") );
+	theApp.Message( MSG_DEBUG, _T("Creating BitTorrent Peer ID") );
 
 	int nByte;
 
+	//Check ID is not in use
 	for ( nByte = 0 ; nByte < 20 ; nByte++ )
 	{
 		if ( m_pPeerID.n[ nByte ] != 0 ) 
 		{
-			theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use peer ID") );
+			theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use Peer ID") );
 			return FALSE;
 		}
 	}
 
-	(GGUID&)m_pPeerID = MyProfile.GUID;
+	//Client ID
+	m_pPeerID.n[ 0 ] = '-';
+	m_pPeerID.n[ 1 ] = 'S';
+	m_pPeerID.n[ 2 ] = 'Z';
+	m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + ( ( theApp.m_nVersion[0] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + ( ( theApp.m_nVersion[1] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + ( ( theApp.m_nVersion[2] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + ( ( theApp.m_nVersion[3] < 9 ) ? '0' :  ( 'A' - 10 ) );
+	m_pPeerID.n[ 7 ] = '-';
+
+	//Random characters for ID
 	srand( GetTickCount() );
-	
-	for ( nByte = 0 ; nByte < 16 ; nByte++ ) 
+	for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
 	{
 		m_pPeerID.n[ nByte ] += rand();
 	}
 
+	//Old style ID (retain for at least one version)
 	for ( nByte = 16 ; nByte < 20 ; nByte++ )
 	{
 		m_pPeerID.n[ nByte ]	= m_pPeerID.n[ nByte % 16 ]
