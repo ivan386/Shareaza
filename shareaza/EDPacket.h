@@ -56,7 +56,7 @@ typedef struct
 	LPCTSTR	pszName;
 } ED2K_PACKET_DESC;
 
-#define	ED2K_VERSION			0x3C
+#define	ED2K_VERSION			0x3D
 #define ED2K_PROTOCOL_EDONKEY	0xE3
 #define ED2K_PROTOCOL_PACKED	0xD4
 #define ED2K_PROTOCOL_EMULE		0xC5
