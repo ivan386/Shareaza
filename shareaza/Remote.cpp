@@ -1007,8 +1007,11 @@ void CRemote::PageDownloads()
 						pDownload->Resume();
 						if ( pSource->m_bPushOnly )
 							pSource->PushRequest();
-						else if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
-							pTransfer->Initiate();
+						else if ( pSource->m_pTransfer == NULL ) // Only create a new Transfer if there isn't already one 
+						{	
+							if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
+								pTransfer->Initiate();
+						}
 					}
 					else if ( str == _T("forget") )
 					{
