@@ -3926,7 +3926,7 @@
 		<control caption="Slett alt"/>
 		<control caption="Avbryt"/>
 		<control/>
-		<control caption="Shareaza kan huske denne filen og varsle deg om du skulle komme over den på nytt i et annet søk.  Vennligst velg hvorfor du vil slette denne filen:"/>
+		<control caption="Shareaza kan huske denne filen og varsle deg om du skulle komme over den p nytt i et annet søk.  Vennligst velg hvorfor du vil slette denne filen:"/>
 		<control caption="Ingen kommentar."/>
 		<control caption="Denne filen har feil navn, og kan være misvisende."/>
 		<control caption="Denne filen har veldig lav kvalitet."/>
@@ -3993,7 +3993,7 @@
 		<control caption="Oppdater"/>
 		<control/>
 		<control caption="Lukk"/>
-		<control caption="Etter behov|Når delingsrate er over 100%|Aldri"/>
+		<control caption="Etter behov|Når delingsrate er over 100%|Kun ved forespørsel|Aldri"/>
 		<control caption="Start nye nedlastingsoverføringer:"/>
 		<control caption="Overføringer:"/>
 	</dialog>
