@@ -88,6 +88,8 @@ CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 
 void CSecurity::Add(CSecureRule* pRule)
 {
+	pRule->MaskFix();
+
 	POSITION pos = m_pRules.Find( pRule );
 	if ( pos == NULL ) m_pRules.AddHead( pRule );
 }
@@ -168,7 +170,7 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 		}
 	}
 
-	CSecureRule* pRule = new CSecureRule();
+	CSecureRule* pRule	= new CSecureRule();
 	pRule->m_nAction	= CSecureRule::srDeny;
 	pRule->m_nExpire	= CSecureRule::srSession;
 	pRule->m_sComment	= _T("Quick Ban");
@@ -512,7 +514,11 @@ BOOL CSecureRule::Match(IN_ADDR* pAddress, LPCTSTR pszContent)
 		DWORD* pBase = (DWORD*)m_nIP;
 		DWORD* pMask = (DWORD*)m_nMask;
 		DWORD* pTest = (DWORD*)pAddress;
-		
+
+// this shorter method only works if you do the & before entering it in the list
+// change it later after CSecureRule::MaskFix() has been in for a while
+//		if ( ( ( *pTest ) & ( *pMask ) ) == ( *pBase ) )	// one less & to do
+
 		if ( ( ( *pTest ) & ( *pMask ) ) == ( ( *pBase ) & ( *pMask ) ) )
 		{
 			return TRUE;
@@ -820,6 +826,8 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 		_stscanf( strValue, _T("%lu"), &m_nExpire );
 	}
 	
+	MaskFix();
+
 	return TRUE;
 }
 
@@ -895,11 +903,83 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 			}
 		}
 	}
-	
+
 	m_nType		= srAddress;
 	m_nAction	= srDeny;
 	m_nExpire	= srIndefinite;
 	m_sComment	= str.SpanExcluding( _T(":") );
 	
+	MaskFix();
+
 	return TRUE;
+}
+//////////////////////////////////////////////////////////////////////
+// CSecureRule Netmask Fix
+void  CSecureRule::MaskFix()
+{
+	DWORD pNetwork = 0 , pOldMask  = 0 , pNewMask = 0;
+
+	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the byte arrays to dwords
+	{
+		BYTE nMaskByte = 0;
+		BYTE nNetByte = 0;
+		nNetByte = m_nIP[ nByte ];
+		nMaskByte = m_nMask[ nByte ];
+		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
+		{
+			pNetwork <<= 1;
+			if( nNetByte & 0x80 )
+			{
+				pNetwork |= 1;
+			}
+			nNetByte <<= 1;
+
+			pOldMask <<= 1;
+			if( nMaskByte & 0x80 )
+			{
+				pOldMask |= 1;
+			}
+			nMaskByte <<= 1;
+		}
+	}
+
+	for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
+	{
+		if( pOldMask & 0x80000000 )					// check the high bit
+		{
+			pNewMask >>= 1;							// shift mask down
+			pNewMask |= 0x80000000;					// put the bit on
+		}
+		else
+		{
+			break;									// found a 0 so ignore the rest
+		}
+		pOldMask <<= 1;
+	}
+
+	pNetwork &= pNewMask;		// do the & now so we don't have to each time there's a match	
+
+	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
+	{
+		BYTE nMaskByte = 0;
+		BYTE nNetByte = 0;
+		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
+		{
+			nNetByte <<= 1;
+			if( pNetwork & 0x80000000 )
+			{
+				nNetByte |= 1;
+			}
+			pNetwork <<= 1;
+
+			nMaskByte <<= 1;
+			if( pNewMask & 0x80000000 )
+			{
+				nMaskByte |= 1;
+			}
+			pNewMask <<= 1;
+		}
+		m_nIP[ nByte ] = nNetByte;
+		m_nMask[ nByte ] = nMaskByte;
+	}
 }

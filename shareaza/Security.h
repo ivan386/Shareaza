@@ -103,6 +103,7 @@ public:
 public:
 	void	Remove();
 	void	Reset();
+	void	MaskFix();
 	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE);
 	BOOL	Match(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
 	void	SetContentWords(const CString& strContent);
