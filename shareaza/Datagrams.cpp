@@ -1294,8 +1294,10 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	CString vendorCode;
 	CString currentVersion;
 	
-	if ( bWantNames ) strNick = MyProfile.GetNick();
+	if ( bWantNames ) strNick = MyProfile.GetNick().Left(255); //trim if over 255 characters
+
 	if ( bWantGPS ) nGPS = MyProfile.GetPackedGPS();
+
 	if ( bWantREXT ) 
 	{
 		vendorCode = "RAZA";
@@ -1348,7 +1350,8 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		{
 			if ( CGProfile* pProfile = ((CG2Neighbour*)pNeighbour)->m_pProfile )
 			{
-				if ( bWantNames ) strNick = pProfile->GetNick();
+				if ( bWantNames ) strNick = pProfile->GetNick().Left(255); //Trim if over 255 characters
+
 				if ( bWantGPS ) nGPS = pProfile->GetPackedGPS();
 				
 				if ( strNick.GetLength() ) nExtraLen += 6 + pPacket->GetStringLen( strNick );
