@@ -1364,8 +1364,9 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		else
 			strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 			//strText.Format( _T("%i"),  nTime);
-			
 	}
+	else if ( ! pDownload->IsTrying() )
+		LoadString( strText, IDS_STATUS_QUEUED );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
