@@ -108,7 +108,6 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 5, _T("Updates"), LVCFMT_CENTER, 55, 4 );
 	m_wndList.InsertColumn( 6, _T("Failures"), LVCFMT_CENTER, 55, 5 );
 	
-	Settings.LoadList( _T("CDiscoveryWnd"), &m_wndList, 3 );
 	LoadState( _T("CDiscoveryWnd"), TRUE );
 
 	m_bShowGnutella		= TRUE;
@@ -210,6 +209,12 @@ CDiscoveryService* CDiscoveryWnd::GetItem(int nItem)
 	}
 	
 	return NULL;
+}
+
+void CDiscoveryWnd::OnSkinChange()
+{
+	CPanelWnd::OnSkinChange();
+	Settings.LoadList( _T("CDiscoveryWnd"), &m_wndList, 3 );
 }
 
 void CDiscoveryWnd::OnSize(UINT nType, int cx, int cy) 

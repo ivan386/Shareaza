@@ -131,12 +131,9 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 9, _T("Client"), LVCFMT_LEFT, 100, 8 );
 	m_wndList.InsertColumn( 10, _T("Name"), LVCFMT_LEFT, 100, 9 );
 	
-	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	LoadState( _T("CNeighboursWnd"), FALSE );
 	
 	PostMessage( WM_TIMER, 1 );
-	
-	OnSkinChange();
 	
 	return 0;
 }
@@ -325,6 +322,7 @@ CNeighbour* CNeighboursWnd::GetItem(int nItem)
 void CNeighboursWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CNeighboursWnd"), &m_wndToolBar );
 }
 

@@ -39,6 +39,9 @@ public:
 	CMatchCtrl();
 	virtual ~CMatchCtrl();
 
+	friend class CHitMonitorWnd;
+	friend class CSearchWnd;
+
 // Attributes
 public:
 	CMatchList*		m_pMatches;

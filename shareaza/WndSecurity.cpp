@@ -111,7 +111,6 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 4, _T("Hits"), LVCFMT_CENTER, 60, 3 );
 	m_wndList.InsertColumn( 5, _T("Comment"), LVCFMT_LEFT, 100, 4 );
 	
-	Settings.LoadList( _T("CSecurityWnd"), &m_wndList, -4 );
 	LoadState( _T("CSecurityWnd"), TRUE );
 
 	CSingleLock pLock( &Network.m_pSection );
@@ -529,6 +528,12 @@ void CSecurityWnd::OnSecurityImport()
 		// TODO: Error message, unable to import rules
 		AfxMessageBox( _T("Error") );
 	}
+}
+
+void CSecurityWnd::OnSkinChange()
+{
+	CPanelWnd::OnSkinChange();
+	Settings.LoadList( _T("CSecurityWnd"), &m_wndList, -4 );
 }
 
 void CSecurityWnd::OnUpdateSecurityPolicyAccept(CCmdUI* pCmdUI) 

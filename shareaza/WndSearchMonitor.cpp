@@ -92,7 +92,6 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 120, 0 );
 	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 120, 1 );
 	
-	Settings.LoadList( _T("CSearchMonitorWnd"), &m_wndList );
 	LoadState( _T("CSearchMonitorWnd"), TRUE );
 	
 	m_bPaused = FALSE;
@@ -120,6 +119,12 @@ void CSearchMonitorWnd::OnDestroy()
 	SaveState( _T("CSearchMonitorWnd") );
 
 	CPanelWnd::OnDestroy();
+}
+
+void CSearchMonitorWnd::OnSkinChange()
+{
+	CPanelWnd::OnSkinChange();
+	Settings.LoadList( _T("CSearchMonitorWnd"), &m_wndList );
 }
 
 void CSearchMonitorWnd::OnSize(UINT nType, int cx, int cy) 

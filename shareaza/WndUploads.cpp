@@ -124,8 +124,6 @@ int CUploadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_tSel = 0;
 	
-	OnSkinChange();
-	
 	return 0;
 }
 
@@ -155,6 +153,7 @@ void CUploadsWnd::OnSize(UINT nType, int cx, int cy)
 void CUploadsWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+	Skin.Translate( _T("CUploadCtrl"), &m_wndUploads.m_wndHeader);
 	Skin.CreateToolBar( _T("CUploadsWnd"), &m_wndToolBar );
 }
 

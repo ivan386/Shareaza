@@ -98,8 +98,6 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 6, _T("G1-ID"), LVCFMT_LEFT, 0, 5 );
 	// 210 for full width ID column
 	
-	Settings.LoadList( _T("CPacketWnd"), &m_wndList );
-
 	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, _T("Lucida Console") );
@@ -143,6 +141,12 @@ void CPacketWnd::OnDestroy()
 	SaveState( _T("CPacketWnd") );
 
 	CPanelWnd::OnDestroy();
+}
+
+void CPacketWnd::OnSkinChange()
+{
+	CPanelWnd::OnSkinChange();
+	Settings.LoadList( _T("CPacketWnd"), &m_wndList );
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -133,7 +133,6 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( DOWNLOAD_COLUMN_DOWNLOADED, _T("Downloaded"), LVCFMT_CENTER, 0 );
 	InsertColumn( DOWNLOAD_COLUMN_PERCENTAGE, _T("Complete"), LVCFMT_CENTER, 60 );
 	
-	Skin.Translate( _T("CDownloadCtrl"), &m_wndHeader );
 	LoadColumnState();
 	
 	CBitmap bmImages;

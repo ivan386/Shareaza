@@ -191,8 +191,6 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_hCursCopy		= AfxGetApp()->LoadCursor( IDC_COPY );
 	m_tSel			= 0;
 	
-	OnSkinChange();
-	
 	return 0;
 }
 
@@ -208,6 +206,7 @@ void CDownloadsWnd::OnDestroy()
 void CDownloadsWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+	Skin.Translate( _T("CDownloadCtrl"), &m_wndDownloads.m_wndHeader);
 	Skin.CreateToolBar( _T("CDownloadsWnd"), &m_wndToolBar );
 }
 

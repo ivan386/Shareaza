@@ -51,6 +51,7 @@ public:
 public:
 	void				Update();
 	CDiscoveryService*	GetItem(int nItem);
+	void				OnSkinChange();
 
 // Overrides
 public:

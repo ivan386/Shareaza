@@ -46,6 +46,7 @@ public:
 	void		Add(int nType, LPCTSTR pszText);
 	void		Clear();
 	void		ShowStartupText();
+	void		OnSkinChange();
 
 // Overrides
 public:

@@ -242,6 +242,7 @@ void CSearchWnd::OnSkinChange()
 	UpdateMessages();
 	
 	m_wndPanel.OnSkinChange();
+	Skin.Translate( _T("CMatchCtrl"), &m_wndList.m_wndHeader );
 }
 
 void CSearchWnd::OnContextMenu(CWnd* pWnd, CPoint point) 

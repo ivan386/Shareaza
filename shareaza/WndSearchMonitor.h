@@ -49,6 +49,7 @@ protected:
 // Operations
 public:
 	virtual void	OnQuerySearch(CQuerySearch* pSearch);
+	virtual void	OnSkinChange();
 
 // Overrides
 public:

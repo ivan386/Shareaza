@@ -89,6 +89,16 @@ void CSystemWnd::Clear()
 	m_wndText.Clear();
 }
 
+void CSystemWnd::OnSkinChange()
+{
+	CPanelWnd::OnSkinChange();
+	m_wndText.Clear( FALSE );
+	if ( Settings.Live.LoadWindowState == FALSE )
+	{
+		ShowStartupText();
+	}
+}
+
 void CSystemWnd::ShowStartupText()
 {
 	CString strBody;
@@ -125,12 +135,6 @@ int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndText.Create( WS_VISIBLE, rc, this, 100 );
 	
 	LoadState( _T("CSystemWnd"), FALSE );
-	
-	if ( Settings.Live.LoadWindowState == FALSE )
-	{
-		ShowStartupText();
-	}
-	
 	theApp.Message( MSG_DEBUG, _T("IsHubCapable() = %i"), Neighbours.IsHubCapable() );
 	
 	return 0;

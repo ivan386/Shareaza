@@ -128,8 +128,6 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( MATCH_COL_SPEED, _T("Speed"), HDF_CENTER, 60 );
 	InsertColumn( MATCH_COL_CLIENT, _T("Client"), HDF_CENTER, 80 );
 	
-	Skin.Translate( _T("CMatchCtrl"), &m_wndHeader );
-	
 	CBitmap bmStar;
 	bmStar.LoadBitmap( IDB_SMALL_STAR );
 	if ( ! m_pStars.Create( 12, 12, ILC_COLOR16|ILC_MASK, 7, 0 ) )

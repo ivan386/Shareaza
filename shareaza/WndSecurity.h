@@ -48,6 +48,7 @@ protected:
 public:
 	void			Update(int nColumn = -1, BOOL bSort = TRUE);
 	CSecureRule*	GetItem(int nItem);
+	virtual void	OnSkinChange();
 
 // Overrides
 public:

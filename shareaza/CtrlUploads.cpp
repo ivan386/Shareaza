@@ -116,7 +116,6 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( UPLOAD_COLUMN_SPEED, _T("Speed"), LVCFMT_CENTER, 80 );
 	InsertColumn( UPLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 100 );
 	
-	Skin.Translate( _T("CUploadCtrl"), &m_wndHeader );
 	LoadColumnState();
 	
 	CBitmap bmImages;
