@@ -745,6 +745,7 @@ void CRemote::PageSearchRowColumn(int nColumnID, CMatchFile* pFile, LPCTSTR pszV
 
 void CRemote::PageNewSearch()
 {
+	CString strURI;
 	if ( CheckCookie() ) return;
 	
 	CSingleLock pLock( &theApp.m_pSection );
@@ -764,6 +765,10 @@ void CRemote::PageNewSearch()
 	CQuerySearch* pSearch	= new CQuerySearch();
 	pSearch->m_sSearch		= strSearch;
 	pSearch->m_pSchema		= SchemaCache.Get( strSchema );
+
+	if ( pSearch->m_pSchema != NULL ) strURI = pSearch->m_pSchema->m_sURI;
+	
+	Settings.Search.LastSchemaURI = strURI;
 	
 	pMainWnd->PostMessage( WM_OPENSEARCH, (WPARAM)pSearch );
 	pLock.Unlock();
