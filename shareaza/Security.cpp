@@ -1177,13 +1177,10 @@ BOOL CAdultFilter::IsChatFiltered( LPCTSTR pszText )
 	return FALSE;
 }
 
-LPCTSTR CAdultFilter::Censor( LPCTSTR pszText )
+BOOL CAdultFilter::Censor( TCHAR* pszText )
 {
 	BOOL bModified = FALSE;
-	if ( ! pszText ) return NULL;
-
-	CString strCensored = pszText;
-
+	if ( ! pszText ) return FALSE;
 	
 	LPCTSTR pszWord;
 
@@ -1192,13 +1189,26 @@ LPCTSTR CAdultFilter::Censor( LPCTSTR pszText )
 	{	
 		for ( pszWord = m_pszBlockedWords ; *pszWord ; )
 		{
-			Replace( strCensored, pszWord, _T("***") );
+			TCHAR* pReplace = (TCHAR*)_tcsistr( pszText, pszWord );
+
+			if ( pReplace != NULL )
+			{
+				TCHAR cExpletives[6] = {'#','@','$','%','&','*'};
+				
+				for ( unsigned nLoop = 0 ; nLoop < _tcslen( pszWord ) ; nLoop++ )
+				{
+					*pReplace = cExpletives[ ( nLoop % 6 ) ];
+					pReplace++;
+				}
+
+				bModified = TRUE;
+			}
 
 			pszWord += _tcslen( pszWord ) + 1;
 		}
 	}
 	
-	return strCensored;
+	return bModified;
 }
 
 BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )

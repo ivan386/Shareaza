@@ -136,7 +136,7 @@ public:
 	void		Load();
 	BOOL		IsSearchFiltered( LPCTSTR );// Check filter for search
 	BOOL		IsChatFiltered( LPCTSTR );	// Check filter for chat
-	LPCTSTR		Censor( LPCTSTR );			// Censor (remove) bad words from a string
+	BOOL		Censor( TCHAR* );			// Censor (remove) bad words from a string
 private:
 	BOOL		IsFiltered( LPCTSTR );
 };

@@ -29,6 +29,7 @@
 #include "CtrlPrivateChatFrame.h"
 #include "WndBrowseHost.h"
 #include "Skin.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -167,9 +168,16 @@ void CPrivateChatFrame::OnProfileReceived()
 
 void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 {
-	AddText( FALSE, bAction, m_sNick, pszText );
-	SetAlert();
-	PostMessage( WM_TIMER, 4 );
+	// Check message spam filter (if enabled)
+	if ( ! MessageFilter.IsFiltered( pszText ) )
+	{
+		// Adult filter (if enabled)
+		if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );	
+		
+		AddText( FALSE, bAction, m_sNick, pszText );
+		SetAlert();
+		PostMessage( WM_TIMER, 4 );
+	}
 }
 
 void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
@@ -189,6 +197,9 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 		}
 		return;
 	}
+
+	// Adult filter (if enabled)
+	if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
 	
 	AddText( TRUE, bAction, MyProfile.GetNick().Left( 255 ), pszText );
 	m_pSession->SendPrivateMessage( bAction, pszText );
