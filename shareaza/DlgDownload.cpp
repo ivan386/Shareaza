@@ -24,6 +24,7 @@
 #include "Download.h"
 #include "ShareazaURL.h"
 #include "DlgDownload.h"
+#include "Settings.h"
 
 IMPLEMENT_DYNAMIC(CDownloadDlg, CSkinDialog)
 
@@ -123,7 +124,7 @@ void CDownloadDlg::OnChangeURL()
 
 void CDownloadDlg::OnTorrentFile() 
 {
-	CFileDialog dlg( TRUE, _T("torrent"), NULL, OFN_HIDEREADONLY,
+	CFileDialog dlg( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
 		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
 	
 	if ( dlg.DoModal() != IDOK ) return;
