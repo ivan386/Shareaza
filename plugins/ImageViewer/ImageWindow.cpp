@@ -3,6 +3,7 @@
 //
 // This software is released into the public domain. You are free to
 // redistribute and modify without any restrictions.
+// This file is part of Shareaza (www.shareaza.com), original author Michael Stokes. 
 //
 // The CImageWindow class contained in this file represents a single image window
 // in the Shareaza GUI.  Several windows can be open at once, viewing different

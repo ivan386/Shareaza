@@ -3,6 +3,7 @@
 //
 // This software is released into the public domain. You are free to
 // redistribute and modify without any restrictions.
+// This file is part of Shareaza (www.shareaza.com), original author Michael Stokes. 
 //
 // This file contains the CImageViewerPlugin class, which is the "plugin object".
 // It is created by Shareaza when the plugin is loaded or enabled by the user, and
