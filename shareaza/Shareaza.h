@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,6 +98,7 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen);
+void ToLower(CString& strSource);
 void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace);
 void Split(CString strSource, LPCTSTR strDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty);
 BOOL LoadSourcesString(CString& str, DWORD num);

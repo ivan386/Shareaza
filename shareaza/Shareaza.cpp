@@ -764,99 +764,78 @@ BOOL LoadSourcesString(CString& str, DWORD num)
 	}
 }
 
+const CLowerCaseTable ToLowerCase;
+
+void ToLower(CString& strSource)
+{
+	if ( strSource.IsEmpty() ) return;
+	LPTSTR pszString = strSource.GetBuffer();
+
+	CString strOut;
+	const TCHAR* source = pszString;
+	while ( strOut += ToLowerCase[ *source ], *source++ );
+	lstrcpy( pszString, strOut );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Case independent string search
 
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 {
-	LPCTSTR pptr, sptr, start;
-	DWORD slen, plen;
+	if ( !*pszString || !*pszPattern ) return NULL;
 
-	if ( *pszString == NULL ) return NULL;
+	const TCHAR cFirstPatternChar = ToLowerCase[ *pszPattern ];
 
-	for (	start	= pszString,
-			pptr	= pszPattern,
-			slen	= _tcslen( pszString ),
-			plen	= _tcslen( pszPattern ) ;
-			slen >= plen ; start++, slen-- )
+	for ( ; ; ++pszString )
 	{
-		while ( TRUE )
+		while ( *pszString && ToLowerCase[ *pszString ] != cFirstPatternChar ) ++pszString;
+
+		if ( !*pszString ) return NULL;
+
+		int i = 0;
+		while ( const TCHAR cPatternChar = ToLowerCase[ pszPattern[ ++i ] ] )
 		{
-			register WCHAR s[2] = {*start, 0};
-			register WCHAR p[2] = {*pszPattern, 0};
-			CharUpper(s);
-			CharUpper(p);
-			if ( s[0] == p[0] ) break;
-			start++;
-			slen--;
-
-			if ( slen < plen ) return NULL;
-		}
-
-		sptr = start;
-		pptr = pszPattern;
-
-		while ( TRUE )
-		{
-			register WCHAR s[2] = {*sptr, 0};
-			register WCHAR p[2] = {*pptr, 0};
-			CharUpper(s);
-			CharUpper(p);
-			if ( s[0] != p[0] ) break;
-			sptr++;
-			pptr++;
-
-			if ( ! *pptr) return start;
-		}
-	}
-
+			if ( const TCHAR cStringChar = ToLowerCase[ pszString[ i ] ] )
+			{
+				if ( cStringChar != cPatternChar ) break;
+			}
+			else
+			{
 	return NULL;
+			}
+		}
+
+		if ( !pszPattern[ i ] ) return pszString;
+	}
 }
 
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 {
-	LPCTSTR pptr, sptr, start;
-	DWORD slen, plen2;
+	if ( !*pszString || !*pszPattern || !plen ) return NULL;
 
-	if ( *pszString == NULL ) return NULL;
+	const TCHAR cFirstPatternChar = ToLowerCase[ *pszPattern ];
 
-	for (	start	= pszString,
-			pptr	= pszPattern,
-			slen	= _tcslen( pszString ) ;
-			slen >= plen ; start++, slen-- )
+	for ( ; ; ++pszString )
 	{
-		while ( TRUE )
+		while ( *pszString && ToLowerCase[ *pszString ] != cFirstPatternChar ) ++pszString;
+
+		if ( !*pszString ) return NULL;
+
+		DWORD i = 0;
+		while ( ++i < plen )
 		{
-			register WCHAR s[2] = {*start, 0};
-			register WCHAR p[2] = {*pszPattern, 0};
-			CharUpper(s);
-			CharUpper(p);
-			if ( s[0] == p[0] ) break;
-			start++;
-			slen--;
-
-			if ( slen < plen ) return NULL;
-		}
-
-		sptr = start;
-		pptr = pszPattern;
-		plen2 = plen;
-
-		while ( TRUE )
-		{
-			register WCHAR s[2] = {*sptr, 0};
-			register WCHAR p[2] = {*pptr, 0};
-			CharUpper(s);
-			CharUpper(p);
-			if ( s[0] != p[0] ) break;
-			sptr++;
-			pptr++;
-
-			if ( ! --plen2 ) return start;
-		}
-	}
-
+			if ( const TCHAR cStringChar = ToLowerCase[ pszString[ i ] ] )
+			{
+				if ( cStringChar != ToLowerCase[ pszPattern[ i ] ] ) break;
+			}
+			else
+			{
 	return NULL;
+			}
+		}
+
+		if ( i == plen ) return pszString;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

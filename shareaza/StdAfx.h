@@ -187,3 +187,19 @@ private:
 	static void operator delete(void*);
 	static void operator delete[](void*);
 };
+
+class CLowerCaseTable
+{
+public:
+	explicit CLowerCaseTable()
+	{
+		for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = i;
+		cTable[ 65536 ] = 0;
+		CharLower( &cTable[ 1 ] );
+		cTable[ 304 ] = 105; // turkish capital I with dot is converted to "i"
+	};
+	const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
+	const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
+private:
+	TCHAR CLowerCaseTable::cTable[ 65537 ];
+};
