@@ -121,8 +121,9 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, BOOL b
 	CString strAddress( pszAddress );
 	
 	if ( strAddress.GetLength() < 8 ) return NULL;
-	if ( strAddress.GetAt( strAddress.GetLength() - 1 ) == '/' )
-		strAddress = strAddress.Left( strAddress.GetLength() - 1 );
+
+	//if ( strAddress.GetAt( strAddress.GetLength() - 1 ) == '/' )
+		//strAddress = strAddress.Left( strAddress.GetLength() - 1 );
 	
 	CDiscoveryService* pService = GetByAddress( strAddress );
 	
