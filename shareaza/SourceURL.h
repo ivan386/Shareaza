@@ -1,7 +1,7 @@
 //
-// HttpURL.h
+// SourceURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,6 +53,8 @@ public:
 	SHA1		m_pBTC;
 	BOOL		m_bSize;
 	QWORD		m_nSize;
+	CString		m_sLogin;
+	CString		m_sPassword;
 	
 // Operations
 public:
@@ -62,7 +64,6 @@ public:
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve = TRUE);
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve = TRUE);
 	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve = TRUE);
-
 };
 
 #endif // !defined(AFX_HTTPURL_H__E247E342_B4B7_4E3C_84E4_B69BBFF0BC2E__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,7 @@
 #include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransferHTTP.h"
-//#include "DownloadTransferFTP.h"
+#include "DownloadTransferFTP.h"
 #include "DownloadTransferED2K.h"
 #include "DownloadTransferBT.h"
 #include "FragmentedFile.h"
@@ -410,7 +410,7 @@ CDownloadTransfer* CDownloadSource::CreateTransfer()
 	}
 	if ( m_nProtocol == PROTOCOL_FTP )
 	{
-		return NULL; //( m_pTransfer = new CDownloadTransferFTP( this ) );
+		return ( m_pTransfer = new CDownloadTransferFTP( this ) );
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{

@@ -350,7 +350,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		}
 	}
 	
-	if ( m_pSource->m_nPort == 80 )
+	if ( m_pSource->m_nPort == INTERNET_DEFAULT_HTTP_PORT )
 	{
 		int nSlash = m_pSource->m_sURL.ReverseFind( '/' );
 		if ( nSlash > 0 )

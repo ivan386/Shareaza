@@ -1,7 +1,7 @@
 //
 // DlgDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,12 +82,9 @@ BOOL CDownloadDlg::OnInitDialog()
 			
 			GlobalUnlock( hData );
 			
-			if ( str.Find( _T("http://") ) == 0 ||
-				 str.Find( _T("magnet:?") ) == 0 ||
-				 str.Find( _T("gnutella:") ) == 0 ||
-				 str.Find( _T("gnet:") ) == 0 ||
-				 str.Find( _T("shareaza:") ) == 0 ||
-				 str.Find( _T("ed2k:") ) == 0 )
+			str.Trim( _T(" \t\r\n") );
+			CShareazaURL pURL;
+			if( pURL.Parse( str ) )
 			{
 				m_sURL = str;
 				UpdateData( FALSE );

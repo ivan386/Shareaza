@@ -111,7 +111,6 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hFTP, _T("Capabilities"), _T("Passive") );
 	AddItem( hFTP, _T("ProtocolVersion"), _T("1.0") );
 	AddItem( hFTP, _T("ComponentVersion"), _T("1.0.0.0") );
-	AddItem( hFTP, _T("Available"), _T("No") );
 	
 	HTREEITEM hEFTP = AddItem( hTransfers, _T("eDonkey2000 Client Link (EFTP)") );
 	AddItem( hEFTP, _T("Name"), _T("eDonkey2000 Client Link FTP (EFTP)") );

@@ -1,7 +1,7 @@
 //
 // SourceURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,7 @@ void CSourceURL::Clear()
 	m_nProtocol = PROTOCOL_NULL;
 	m_sAddress.Empty();
 	m_pAddress.S_un.S_addr = 0;
-	m_nPort = 80;
+	m_nPort = 0;
 	m_pServerAddress.S_un.S_addr = 0;
 	m_nServerPort = 0;
 	m_sPath.Empty();
@@ -61,6 +61,8 @@ void CSourceURL::Clear()
 	m_bBTH	= FALSE;
 	m_bBTC	= FALSE;
 	m_bSize	= FALSE;
+	m_sLogin.Empty ();
+	m_sPassword.Empty ();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -89,7 +91,7 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	
 	CString strURL = pszURL + 7;
 	
-	int nSlash = strURL.Find( '/' );
+	int nSlash = strURL.Find( _T('/') );
 	
 	if ( nSlash >= 0 )
 	{
@@ -102,7 +104,7 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 		m_sPath = _T("/");
 	}
 	
-	int nAt = m_sAddress.Find( '@' );
+	int nAt = m_sAddress.Find( _T('@') );
 	if ( nAt >= 0 ) m_sAddress = m_sAddress.Mid( nAt + 1 );
 	
 	if ( m_sAddress.IsEmpty() ) return FALSE;
@@ -118,7 +120,7 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	
 	SOCKADDR_IN saHost;
 	
-	BOOL bResult = Network.Resolve( m_sAddress, 80, &saHost, bResolve );
+	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_HTTP_PORT, &saHost, bResolve );
 	
 	m_pAddress	= saHost.sin_addr;
 	m_nPort		= htons( saHost.sin_port );
@@ -134,11 +136,14 @@ BOOL CSourceURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CSourceURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 {
+	// URI format
+	// ftp://[user[:password]@]host[:port][/path]
+
 	if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) != 0 ) return FALSE;
 	
-	CString strURL = pszURL + 6;
+	CString strURL ( pszURL + 6 );
 	
-	int nSlash = strURL.Find( '/' );
+	int nSlash = strURL.Find( _T('/') );
 	
 	if ( nSlash >= 0 )
 	{
@@ -151,14 +156,31 @@ BOOL CSourceURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 		m_sPath = _T("/");
 	}
 	
-	int nAt = m_sAddress.Find( '@' );
-	if ( nAt >= 0 ) m_sAddress = m_sAddress.Mid( nAt + 1 );
+	int nAt = m_sAddress.Find( _T('@') );
+	if ( nAt >= 0 )
+	{
+		m_sLogin = m_sAddress.Left( nAt );
+		m_sAddress = m_sAddress.Mid( nAt + 1 );
 	
-	if ( m_sAddress.IsEmpty() ) return FALSE;
+		int nColon = m_sLogin.Find( _T(':') );
+		if ( nColon >= 0 )
+		{
+            m_sPassword = m_sLogin.Mid( nColon + 1 );			
+            m_sLogin = m_sLogin.Left( nColon );			
+		}
+	}
+	else
+	{
+		m_sLogin = _T("anonymous");
+		m_sPassword = _T("guest@shareaza.com");
+	}
+
+	if ( m_sAddress.IsEmpty() || m_sLogin.IsEmpty() )
+		return FALSE;
 	
 	SOCKADDR_IN saHost;
 	
-	BOOL bResult = Network.Resolve( m_sAddress, 21, &saHost, bResolve );
+	BOOL bResult = Network.Resolve( m_sAddress, INTERNET_DEFAULT_FTP_PORT, &saHost, bResolve );
 	
 	m_pAddress	= saHost.sin_addr;
 	m_nPort		= htons( saHost.sin_port );
@@ -179,13 +201,13 @@ BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	CString strURL = pszURL + 10;
 	BOOL bPush = FALSE;
 	
-	int nSlash = strURL.Find( '/' );
+	int nSlash = strURL.Find( _T('/') );
 	if ( nSlash < 7 ) return FALSE;
 
 	m_sAddress	= strURL.Left( nSlash );
 	strURL		= strURL.Mid( nSlash + 1 );
 	
-	nSlash = strURL.Find( '/' );
+	nSlash = strURL.Find( _T('/') );
 	if ( nSlash != 32 ) return FALSE;
 	
 	CString strHash	= strURL.Left( 32 );
@@ -196,7 +218,7 @@ BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
 	if ( ! m_bSize ) return FALSE;
 	
-	nSlash = m_sAddress.Find( '@' );
+	nSlash = m_sAddress.Find( _T('@') );
 	
 	if ( nSlash > 0 )
 	{
@@ -237,13 +259,13 @@ BOOL CSourceURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	CString strURL = pszURL + 6;
 	BOOL bPush = FALSE;
 	
-	int nSlash = strURL.Find( '/' );
+	int nSlash = strURL.Find( _T('/') );
 	if ( nSlash < 7 ) return FALSE;
 
 	m_sAddress	= strURL.Left( nSlash );
 	strURL		= strURL.Mid( nSlash + 1 );
 	
-	nSlash = strURL.Find( '/' );
+	nSlash = strURL.Find( _T('/') );
 	m_bBTC = FALSE;
 	
 	if ( nSlash == 32 )
