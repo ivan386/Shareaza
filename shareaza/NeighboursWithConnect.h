@@ -45,19 +45,19 @@ public:
 	BOOL	IsG2Leaf();									//Check if this node is a G2 Leaf
 	BOOL	IsG2Hub();									//Check if this node is a G2 Hub
 	DWORD	IsG2HubCapable(BOOL bDebug = FALSE);		//Check if this node can be a G2 Hub
-	//Either
-	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more hubs for the specified protocol
-	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more leaves for the specified protocol
-	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);		//Unused?
 	//G1
 	BOOL	IsG1Leaf();									//Check if this node is a G1 Leaf
 	BOOL	IsG1Ultrapeer();							//Check if this node is a G1 Ultrapeer
 	DWORD	IsG1UltrapeerCapable(BOOL bDebug = FALSE);	//Check if this node can be a G1 Ultrapeer
+	//Either
+	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more hubs for the specified protocol
+	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more leaves for the specified protocol
+	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);		//Is this hub/up at more than 3/4 capacity? (Unused?)
 public:
 	virtual void	OnRun();
 protected:
-	void	Maintain();
-	void	PeerPrune(PROTOCOLID nProtocol);			//Close peer connections if you get a hub/up
+	void	Maintain();									//Initiate/close connections as required
+	void	PeerPrune(PROTOCOLID nProtocol);			//Close peer connections (if you get a hub/up)
 
 // Data
 protected:

@@ -502,7 +502,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		}
 		else
 		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 4 hours") );
 		}
 		if ( ! Datagrams.IsStable() )
 		{
