@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Italian Skin File -->
 
@@ -3730,7 +3730,7 @@
 		<control caption="Aiutaci a diffonderlo nel mondo"/>
 		<control caption="Spero che abbiate gradito Shareaza.  Crediamo che sia la migliore applicazione esistente per la condivisione dei file."/>
 		<control caption="Sfortunatamente molti utenti non lo conoscono!"/>
-		<control caption="Se conosci qualcuno a cui piace o un utente che utilizza un programma di qualità inferiore, è non dargli un'alternativa?"/>
+		<control caption="Se conosci qualcuno a cui piace o un utente che utilizza un programma di qualità inferiore, perchè non dargli un'alternativa?"/>
 		<control caption="Ti ringrazierà del consiglio"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="OK"/>
