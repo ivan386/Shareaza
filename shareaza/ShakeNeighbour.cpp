@@ -511,7 +511,15 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 	if ( strHeader.CompareNoCase( _T("User-Agent") ) == 0 )
 	{
 		m_sUserAgent = strValue;
-		if ( _tcsistr( m_sUserAgent, _T("Shareaza") ) ) m_bShareaza = TRUE;
+		if ( _tcsistr( m_sUserAgent, _T("Shareaza") ) ) 
+		{
+			m_bShareaza = TRUE;
+		}
+		else if ( IsAgentBlocked() )
+		{
+			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			m_nState = nrsRejected;
+		}
 	}
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{
