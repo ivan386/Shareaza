@@ -42,6 +42,8 @@ CBTInfo::CBTInfo()
 	m_bValid		= FALSE;
 	m_bEncodingError= FALSE;
 	m_bDataSHA1		= FALSE;
+	m_bDataED2K		= FALSE;
+	m_bDataTiger	= FALSE;
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
@@ -90,6 +92,10 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_pInfoSHA1		= pSource->m_pInfoSHA1;
 	m_bDataSHA1		= pSource->m_bDataSHA1;
 	m_pDataSHA1		= pSource->m_pDataSHA1;
+	m_bDataED2K		= pSource->m_bDataED2K;
+	m_pDataED2K		= pSource->m_pDataED2K;
+	m_bDataTiger	= pSource->m_bDataTiger;
+	m_pDataTiger	= pSource->m_pDataTiger;
 	m_nTotalSize	= pSource->m_nTotalSize;
 	m_nBlockSize	= pSource->m_nBlockSize;
 	m_nBlockCount	= pSource->m_nBlockCount;
@@ -184,10 +190,14 @@ void CBTInfo::Serialize(CArchive& ar)
 
 void CBTInfo::CBTFile::Copy(CBTFile* pSource)
 {
-	m_sPath = pSource->m_sPath;
-	m_nSize = pSource->m_nSize;
-	m_bSHA1 = pSource->m_bSHA1;
-	m_pSHA1 = pSource->m_pSHA1;
+	m_sPath		= pSource->m_sPath;
+	m_nSize		= pSource->m_nSize;
+	m_bSHA1		= pSource->m_bSHA1;
+	m_pSHA1		= pSource->m_pSHA1;
+	m_bED2K		= pSource->m_bED2K;
+	m_pED2K		= pSource->m_pED2K;
+	m_bTiger	= pSource->m_bTiger;
+	m_pTiger	= pSource->m_pTiger;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -340,6 +350,20 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		CopyMemory( &m_pDataSHA1, pSHA1->m_pValue, sizeof(SHA1) );
 	}
 	
+	if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
+	{
+		if ( ! pED2K->IsType( CBENode::beString ) || pED2K->m_nValue != sizeof(MD4) ) return FALSE;
+		m_bDataED2K = TRUE;
+		CopyMemory( &m_pDataED2K, pED2K->m_pValue, sizeof(MD4) );
+	}
+
+	if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
+	{
+		if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != sizeof(TIGEROOT) ) return FALSE;
+		m_bDataTiger = TRUE;
+		CopyMemory( &m_pDataTiger, pTiger->m_pValue, sizeof(TIGEROOT) );
+	}
+	
 	if ( CBENode* pLength = pInfo->GetNode( "length" ) )
 	{
 		if ( ! pLength->IsType( CBENode::beInt ) ) return FALSE;
@@ -410,6 +434,20 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != sizeof(SHA1) ) return FALSE;
 				m_pFiles[ nFile ].m_bSHA1 = TRUE;
 				CopyMemory( &m_pFiles[ nFile ].m_pSHA1, pSHA1->m_pValue, sizeof(SHA1) );
+			}
+
+			if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
+			{
+				if ( ! pED2K->IsType( CBENode::beString ) || pED2K->m_nValue != sizeof(MD4) ) return FALSE;
+				m_pFiles[ nFile ].m_bED2K = TRUE;
+				CopyMemory( &m_pFiles[ nFile].m_pED2K, pED2K->m_pValue, sizeof(MD4) );
+			}
+
+			if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
+			{
+				if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != sizeof(TIGEROOT) ) return FALSE;
+				m_pFiles[ nFile ].m_bTiger = TRUE;
+				CopyMemory( &m_pFiles[ nFile ].m_pTiger, pTiger->m_pValue, sizeof(TIGEROOT) );
 			}
 			
 			m_nTotalSize += m_pFiles[ nFile ].m_nSize;

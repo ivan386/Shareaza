@@ -25,7 +25,9 @@
 #pragma once
 
 #include "SHA.h"
+#include "ED2K.h"
 #include "Buffer.h"
+#include "TigerTree.h"
 
 class CBuffer;
 class CBENode;
@@ -44,13 +46,17 @@ public:
 	{
 	public:
 		CBTFile();
-		void	Copy(CBTFile* pSource);
-		void	Serialize(CArchive& ar, int nVersion);
+		void		Copy(CBTFile* pSource);
+		void		Serialize(CArchive& ar, int nVersion);
 	public:
-		CString	m_sPath;
-		QWORD	m_nSize;
-		BOOL	m_bSHA1;
-		SHA1	m_pSHA1;
+		CString		m_sPath;
+		QWORD		m_nSize;
+		BOOL		m_bSHA1;
+		SHA1		m_pSHA1;
+		BOOL		m_bED2K;
+		MD4			m_pED2K;
+		BOOL		m_bTiger;
+		TIGEROOT	m_pTiger;
 	};
 	
 // Attributes
@@ -60,6 +66,10 @@ public:
 	SHA1		m_pInfoSHA1;
 	BOOL		m_bDataSHA1;
 	SHA1		m_pDataSHA1;
+	BOOL		m_bDataED2K;
+	MD4			m_pDataED2K;
+	BOOL		m_bDataTiger;
+	TIGEROOT	m_pDataTiger;
 public:
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;

@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,6 +59,10 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	m_pBTH		= pTorrent->m_pInfoSHA1;
 	m_bSHA1		= pTorrent->m_bDataSHA1;
 	m_pSHA1		= pTorrent->m_pDataSHA1;
+	m_bED2K		= pTorrent->m_bDataED2K;
+	m_pED2K		= pTorrent->m_pDataED2K;
+	m_bTiger	= pTorrent->m_bDataTiger;
+	m_pTiger	= pTorrent->m_pDataTiger;
 	m_sName		= pTorrent->m_sName;
 	m_bSize		= TRUE;
 	m_nSize		= pTorrent->m_nTotalSize;
