@@ -2,7 +2,7 @@
 
 <!-- Shareaza Chinese(Simplified) Skin File -->
 
-<!-- This skin basically represents the current Shareaza defaults. You can use this file as    -->
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
 <!-- compatibility with future versions and other skins.  -->
@@ -20,9 +20,9 @@
 <manifest	name="Chinese (Simplified)"
 		author="STC"
 		description="Shareaza Chinese(Simplified) Skin File"
-		link="http://shareaza.czp-kd.com/"
-		email="shareaza(AT)163(DOT)com"
-		version="2.1.0.87"
+		link="http://www.p2pnet.cn/shareaza"
+		email="ShareazaSTC(AT)gmail(DOT)com"
+		version="2.1.0.94"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -404,7 +404,7 @@
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="浏览用户"/>
-		<!-- <button id="ID_CHAT_SEND_FILE" text="发送文件"/> -->
+		<!--<button id="ID_CHAT_SEND_FILE" text="发送文件"/> -->
 		<button id="ID_CHAT_PRIORITY" text="准予优先权"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="连接" visible="false"/>
@@ -711,7 +711,7 @@
 		<item id="ID_NETWORK_EXIT" text="退出(_X)"/>
 	</menu>
 	<!--  REMOTE MENU -->
-  <menu name="CRemoteWnd">
+	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="打开 Shareaza(_O)"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="新建搜索(_W)..."/>
@@ -1456,7 +1456,7 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">准 备 &#160; 连 接</heading>
 			<newline gap="8" indent="42"/>
-			<text>欢迎来到 Shareaza！ &#160;您现在没有连接到任何 P2P 网络。 &#160;</text>
+			<text>欢迎来到 Shareaza ！&#160;您现在没有连接到任何 P2P 网络。 &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">点击这里开始！</link>
 			<newline gap="18" indent="0"/>
 		</group>
@@ -1682,7 +1682,7 @@
 		<text>
 			设置管理器使得高级用户可以完全定制 Shareaza 的工作方式。此
 		</text>
-		<text format="b">常规 </text>
+		<text format="b">常规</text>
 		<text>
 			部分的设置与用户的经验存在密切关系。
 		</text>
@@ -1899,7 +1899,7 @@
 		<text>您已经暂停了这一下载。如果您想进行续传，
 		您可以单击</text><text format="b">续传下载</text><text>命令。</text>
 	</document>
-	
+
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">磁盘已满</text>
 		<newline gap="8"/>
@@ -1997,8 +1997,8 @@
 		<text format="b">检测到 Windows XP Service Pack 2</text>
 		<newline gap="8"/>
 		<text>Shareaza 已经检测到 Windows XP Service Pack 2。它会限制应用程序一次试图连接的数量。</text>
-		 <newline gap="8"/>
-		 <text>Shareaza 已经限制了网络连接并设置了合适的默认值
+		<newline gap="8"/>
+		<text>Shareaza 已经限制了网络连接并设置了合适的默认值
 		以保证适当的操作，但是性能可能会降低。请访问 Shareaza 
 		论坛以获取更多信息，以及最近新闻。</text>
 	</document>
@@ -2042,7 +2042,7 @@
 		<newline gap="8"/>
 		<text>您选定的文件夹已经被作为所有共享的一部分而共享。</text>
 		<newline gap="8"/>
-		<text> %s </text>
+		<text>%s</text>
 	</document>
 
 	<document name="ShareHelp.BadShare">
@@ -2132,7 +2132,7 @@
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="显示目前未被使用的资源。"/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="为选定的文件搜索更多的资源。"/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="查看选定 BitTorrent 下载的信息..."/>
-	<tip id="ID_DOWNLOADS_URL" message="添加一个 URL 资源到选定的下载..."/>
+	<tip id="ID_DOWNLOADS_URL" message="添加一个资源链接到选定的下载..."/>
 	<tip id="ID_HELP_ABOUT" message="显示 Shareaza 关于对话框..."/>
 	<tip id="ID_HELP_FAQ" message="访问 Shareaza 用户指南。"/>
 	<tip id="ID_HELP_FIREWALLS" message="获取配置您的路由器或防火墙的帮助。"/>
@@ -2982,11 +2982,11 @@
 	<string id="20125" value="已校验"/>
 	<string id="20126" value="未校验"/>
 	<string id="20127" value="个资源"/>
-	<string id="20128" value="个资源"/> <!-- 数目21, 31, ... -->
-	<string id="20129" value="个资源"/> <!-- 数十 -->
-	<string id="20130" value="个资源"/> <!-- 从 11 至 19 -->
-	<string id="20131" value="个资源"/> <!-- 从 2 至 4 -->
-	<string id="20132" value="个资源"/> <!-- 从 5 至 9 -->
+	<string id="20128" value="个资源"/><!-- 数目21, 31, ... -->
+	<string id="20129" value="个资源"/><!-- 数十 -->
+	<string id="20130" value="个资源"/><!-- 从 11 至 19 -->
+	<string id="20131" value="个资源"/><!-- 从 2 至 4 -->
+	<string id="20132" value="个资源"/><!-- 从 5 至 9 -->
 	<string id="20133" value="无所需部分"/>
 	<string id="20134" value="通道已满"/>
 	<string id="20135" value="下一个"/>
@@ -3020,7 +3020,7 @@
 		<control caption="默认展开多个资源文件"/>
 		<control caption="切换到下载的传输视图"/>
 		<control caption="默认展开新的下载"/>
-		<control caption="打开 URL 前显示提示"/>
+		<control caption="打开链接前显示提示"/>
 		<control caption="速率显示单位:"/>
 		<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="工具提示(_T):"/>
@@ -3082,12 +3082,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="社区">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="社区">
 		<control caption="我的个人资料(_P):"/>
 		<control caption="您可以使用您的 Gnutella 用户个人资料来和别人共享信息，比如您的个人资料，您的兴趣，推荐的文件。"/>
 		<control caption="编辑个人资料"/>
 		<control caption="聊天(_C):"/>
 		<control caption="允许和兼容用户进行点对点聊天"/>
+		<control caption="在所有网络中启用聊天功能"/>
+		<control caption="过滤垃圾聊天消息"/>
+		<control caption="在聊天中检查粗俗用语"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
@@ -3281,7 +3284,7 @@
 		<control caption="下载..."/>
 	</dialog>
 
-<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="界面(_I):"/>
 		<control caption="显示 BitTorrent 额外的界面元素"/>
 		<control caption="下载连接(_D):"/>
@@ -3298,8 +3301,8 @@
 		<control/><control/>
 		<control caption="Torrent 制作工具(_T)"/>
 		<control/><control/>
-		<control caption="默认 Tracker(_D):"/>
-	<control/><control/>
+		<control caption="默认 Tracker:"/>
+		<control/><control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="协议">
@@ -3548,7 +3551,7 @@
 		<control caption="编辑(_E):"/>
 		<control caption="标题:"/>
 		<control/>
-		<control caption="URL:"/>
+		<control caption="链接:"/>
 		<control/>
 		<control caption="新建"/>
 		<control caption="移除"/>
@@ -3584,7 +3587,7 @@
 
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="下载文件或 Torrent">
 		<control/><control/>
-		<control caption="使用 Shareaza 下载任何文件都很容易。只需要输入或粘贴 URL 地址 或者 URI 描述 在以下的方框中然后按下回车。"/>
+		<control caption="使用 Shareaza 下载任何文件都很容易。只需要输入或粘贴链接地址或者 URI 描述到以下的方框中，然后按下回车。"/>
 		<control/>
 		<control caption="下载"/>
 		<control caption="取消"/>
@@ -3801,7 +3804,7 @@
 		<control/>
 		<control caption="您可以用多种不同的格式为选定的项目复制 URI。请通过点击下列某一 URI 选择您希望使用的格式:"/>
 		<control/><control/><control/>
-		<control caption="将自己作为固定的资源包含在 URL 中(_M)"/>
+		<control caption="将自己作为固定的资源包含在链接中(_M)"/>
 		<control caption="取消"/>
 	</dialog>
 
@@ -3822,7 +3825,7 @@
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI 管理器">
 		<control/>
 		<control caption="您点击的 Shareaza URI 链接到以下的网络:"/>
-		<control caption="您点击的 Shareaza URL 将会连接您到以下主机或服务器:"/>
+		<control caption="您点击的 Shareaza 链接将会连接您到以下主机或服务器:"/>
 		<control caption="您点击的 Shareaza URI 允许您浏览以下可用主机的共享文件:"/>
 		<control/><control/><control/><control/>
 		<control caption="请选择您希望 Shareaza 采取的操作:"/>
