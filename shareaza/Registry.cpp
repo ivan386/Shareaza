@@ -21,10 +21,6 @@
 
 
 #include "StdAfx.h"
-//#include "Shareaza.h"
-//#include "Settings.h"
-//#include "Schema.h"
-//#include "Skin.h"
 #include "Registry.h"
 
 
@@ -40,195 +36,165 @@ CRegistry::~CRegistry()
 }
 
 //////////////////////////////////////////////////////////////////////
-// Registry Helper functions
+// CRegistry read a string value
 
-//Helper function to display a message box holding an error code
-void CRegistry::DisplayErrorMessageBox(DWORD dwErrorCode)
+CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault)
 {
+	CString strKey, strValue;
+	DWORD nErrorCode;
+	HKEY hKey;
+	
+	if ( pszDefault != NULL ) strValue = pszDefault;
+	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	
+	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		DWORD nType = 0, nSize = 0;
+		
+		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, NULL, &nSize ); 
+		
+		if ( nErrorCode == ERROR_MORE_DATA && nType == REG_SZ && nSize >= sizeof(TCHAR) )
+		{
+			LPTSTR pszValue = strValue.GetBuffer( nSize / sizeof(TCHAR) - 1 );
+			nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)pszValue, &nSize ); 
+			strValue.ReleaseBuffer( nSize / sizeof(TCHAR) - 1 );
+		}
+		
+		RegCloseKey( hKey );
+	}
+	
+	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( nErrorCode );
+	
+	return strValue;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CRegistry read an integer value
+
+int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault)
+{
+	int nValue = nDefault;
+	DWORD nErrorCode;
+	CString strKey;
+	HKEY hKey;
+	
+	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	
+	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		DWORD nType = 0, nSize = sizeof(nValue);
+		
+		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)&nValue, &nSize ); 
+		
+		if ( nType != REG_DWORD || nSize != sizeof(nValue) )
+		{
+			nErrorCode = ERROR_MORE_DATA;
+			nValue = nDefault;
+		}
+		
+		RegCloseKey( hKey );
+	}
+	
+	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( nErrorCode );
+	
+	return nValue;
+}
+
+DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault)
+{
+	return (int)GetInt( pszSection, pszName, (int)dwDefault );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CRegistry read a float value
+
+double CRegistry::GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault)
+{
+	double fValue = fDefault;
+	_stscanf( GetString( pszSection, pszName ), _T("%lf"), &fValue );
+	return fValue;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CRegistry write a string value
+
+BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue)
+{
+	DWORD nErrorCode;
+	CString strKey;
+	HKEY hKey;
+	
+	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	
+	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_SZ, (const BYTE *)pszValue,
+								_tcslen(pszValue) * sizeof(TCHAR) + sizeof(TCHAR) );
+		
+		RegCloseKey( hKey );
+	}
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		return TRUE;
+	}
+	else
+	{
+		DisplayErrorMessageBox( nErrorCode );
+		return FALSE;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CRegistry write an int value
+
+BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue)
+{
+	DWORD nErrorCode;
+	CString strKey;
+	HKEY hKey;
+	
+	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
+	
+	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_DWORD,
+							(const BYTE *)&nValue, sizeof(nValue) );
+		
+		RegCloseKey( hKey );
+	}
+	
+	if ( nErrorCode == ERROR_SUCCESS )
+	{
+		return TRUE;
+	}
+	else
+	{
+		DisplayErrorMessageBox( nErrorCode );
+		return FALSE;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// Helper function to display a message box holding an error code
+
+void CRegistry::DisplayErrorMessageBox(DWORD nErrorCode)
+{
+#ifdef _DEBUG
 	LPVOID lpMsgBuf;
 	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-	FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-	NULL, dwErrorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-	(LPTSTR) &lpMsgBuf,	0, NULL );
-	// Display the string.
+		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL, nErrorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPTSTR) &lpMsgBuf,	0, NULL );
 	MessageBox( NULL, (LPCTSTR)lpMsgBuf, _T("Error"), MB_OK | MB_ICONINFORMATION );
-	// Free the buffer.
 	LocalFree( lpMsgBuf );
-}
-
-CString CRegistry::GetString(LPCTSTR pLocation, LPCTSTR pKeyName, LPCTSTR pDefault)
-{
-	char  sTemp[2048]; //Buffer to store value
-	CString sReturnValue;
-	HKEY  dmKey;
-	DWORD  dwErrorCode; 
-
-	DWORD  dwType;
-	DWORD  len=2048; 
-
-	sReturnValue.Format( _T("%s"), pDefault );
-		
-	dwErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER,  pLocation,   0,   KEY_ALL_ACCESS,   &dmKey   ); 
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( sReturnValue );
-	} 
-
-	dwErrorCode = RegQueryValueEx( dmKey, pKeyName , 0, &dwType, (LPBYTE)sTemp, &len ); 
-
-	RegCloseKey( dmKey );
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( sReturnValue ); 
-	} 
-		
-	if( dwType == REG_SZ )
-		sReturnValue.Format( _T("%s"), sTemp );
-	//else AfxMessageBox( _T("Type error reading from registry") , MB_ICONQUESTION );
-
-	return( sReturnValue );
-}
-
-
-int CRegistry::GetInt(LPCTSTR pLocation, LPCTSTR pKeyName, int iDefault)
-{
-	int iReturnValue = iDefault;
-	HKEY  dmKey;
-	DWORD dwErrorCode; 
-
-	DWORD dwType;
-	DWORD len = sizeof( int ); 
-		
-	dwErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER,  pLocation,   0,   KEY_ALL_ACCESS,   &dmKey   ); 
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( iDefault );
-	} 
-
-	dwErrorCode = RegQueryValueEx( dmKey, pKeyName , 0, &dwType, (LPBYTE)&iReturnValue, &len ); 
-
-	RegCloseKey( dmKey );
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( iDefault ); 
-	} 
-		
-	if( dwType != REG_DWORD && dwType != REG_DWORD_BIG_ENDIAN )
-	{
-		//AfxMessageBox( _T("Type error reading from registry") , MB_ICONQUESTION );
-		return( iDefault );
-	}
-
-	return( iReturnValue );
-}
-
-DWORD CRegistry::GetDword(LPCTSTR pLocation, LPCTSTR pKeyName, DWORD dwDefault)
-{
-	DWORD dwReturnValue = dwDefault;
-	HKEY  dmKey;
-	DWORD dwErrorCode; 
-
-	DWORD dwType;
-	DWORD len = sizeof( DWORD ); 
-		
-	dwErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER,  pLocation,   0,   KEY_ALL_ACCESS,   &dmKey   ); 
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( dwDefault );
-	} 
-
-	dwErrorCode = RegQueryValueEx( dmKey, pKeyName , 0, &dwType, (LPBYTE)&dwReturnValue, &len ); 
-
-	RegCloseKey( dmKey );
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( dwDefault ); 
-	} 
-		
-	if( dwType != REG_DWORD && dwType != REG_DWORD_BIG_ENDIAN )
-	{
-		//AfxMessageBox( _T("Type error reading from registry") , MB_ICONQUESTION );
-		return( dwDefault );
-	}
-
-	return( dwReturnValue );
-}
-
-double CRegistry::GetFloat(LPCTSTR pLocation, LPCTSTR pKeyName, double fDefault)
-{
-	double fReturnValue;
-
-	CString sTemp = GetString( pLocation, pKeyName, _T("") );
-	if ( sTemp.GetLength() ) 
-	{
-		_stscanf( sTemp, _T("%lf"), &fReturnValue );
-		return( fReturnValue );
-	}
-	return( fDefault );
-}
-
-
-BOOL CRegistry::SetInt(LPCTSTR pLocation, LPCTSTR pKeyName, int iValue)
-{
-	HKEY  dmKey;
-	DWORD dwDisposition, dwErrorCode; 
-
-	dwErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER,  pLocation, 0,  NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &dmKey, &dwDisposition ); 
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( FALSE );
-	} 
-
-	dwErrorCode = RegSetValueEx( dmKey, pKeyName , 0, REG_DWORD, (LPBYTE)&iValue, sizeof(DWORD) ); 
-
-	RegCloseKey( dmKey );
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( FALSE ); 
-	} 
-		
-	return( TRUE );
-}
-
-
-BOOL CRegistry::SetString(LPCTSTR pLocation, LPCTSTR pKeyName, LPCTSTR sValue)
-{
-	HKEY  dmKey;
-	DWORD dwDisposition, dwErrorCode; 
-
-	dwErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER,  pLocation, 0,  NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &dmKey, &dwDisposition ); 
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( FALSE );
-	} 
-
-	dwErrorCode = RegSetValueEx( dmKey, pKeyName , 0, REG_SZ, (LPBYTE)sValue, (_tcslen(sValue) + 1 ) * sizeof(TCHAR) ); 
-
-	RegCloseKey( dmKey );
-
-	if ( dwErrorCode != ERROR_SUCCESS ) 
-	{
-		//DisplayErrorMessageBox(dwErrorCode);
-		return( FALSE ); 
-	} 
-		
-	return( TRUE );
+#endif
 }

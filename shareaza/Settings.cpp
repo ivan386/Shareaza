@@ -404,30 +404,31 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 
 void CSettings::Load()
 {
-	CRegistry Registry;
+	CRegistry pRegistry;
+	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = (Item*)m_pItems.GetNext( pos );
 		pItem->Load();
 	}
-
-	if ( Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("FirstRun"), TRUE ) )
+	
+	if ( pRegistry.GetInt( _T("Settings"), _T("FirstRun"), TRUE ) )
 	{
 		Live.FirstRun = TRUE;
-		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("FirstRun"), FALSE );
+		pRegistry.SetInt( _T("Settings"), _T("FirstRun"), FALSE );
 	}
 	
 	SmartUpgrade();
-
-	if ( Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("Running"), FALSE ) )
+	
+	if ( pRegistry.GetInt( _T("Settings"), _T("Running"), FALSE ) )
 	{
-		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\VersionCheck"),  _T("NextCheck"), 0 );
+		pRegistry.SetInt( _T("VersionCheck"), _T("NextCheck"), 0 );
 	}
 	else
 	{
-		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("Running"), TRUE );
+		pRegistry.SetInt( _T("Settings"), _T("Running"), TRUE );
 	}
-
+	
 	Gnutella1.EnableToday	= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday	= Gnutella2.EnableAlways;
 	eDonkey.EnableToday		= eDonkey.EnableAlways;
@@ -437,7 +438,8 @@ void CSettings::Load()
 
 void CSettings::Save(BOOL bShutdown)
 {
-	CRegistry Registry;
+	CRegistry pRegistry;
+	
 	if ( Connection.TimeoutConnect == 0 ) return;
 	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
@@ -445,10 +447,9 @@ void CSettings::Save(BOOL bShutdown)
 		Item* pItem = (Item*)m_pItems.GetNext( pos );
 		if ( pItem->m_sName != _T(".Path") ) pItem->Save();
 	}
-
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("SmartVersion"), SMART_VERSION );
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("Running"),  bShutdown ? FALSE : TRUE );
-
+	
+	pRegistry.SetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
+	pRegistry.SetInt( _T("Settings"), _T("Running"), bShutdown ? FALSE : TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -456,9 +457,8 @@ void CSettings::Save(BOOL bShutdown)
 
 void CSettings::SmartUpgrade()
 {
-	CRegistry Registry;
-	int nVersion = Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("SmartVersion"), SMART_VERSION );
-
+	CRegistry pRegistry;
+	int nVersion = pRegistry.GetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
 	
 	if ( nVersion < 20 )
 	{
@@ -586,24 +586,24 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 {
 	WINDOWPLACEMENT pPos;
+	CRegistry pRegistry;
 	CString strEntry;
-	CRegistry Registry;
 	
 	if ( pszName != NULL )
 		strEntry = pszName;
 	else
 		strEntry = pWindow->GetRuntimeClass()->m_lpszClassName;
 	
-	int nShowCmd = Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".ShowCmd"), -1 );
+	int nShowCmd = pRegistry.GetInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
 	if ( nShowCmd == -1 ) return FALSE;
 	
 	ZeroMemory( &pPos, sizeof(pPos) );
 	pPos.length = sizeof(pPos);
 
-	pPos.rcNormalPosition.left		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Left"), 0 );
-	pPos.rcNormalPosition.top		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Top"), 0 );
-	pPos.rcNormalPosition.right		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Right"), 0 );
-	pPos.rcNormalPosition.bottom	= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Bottom"), 0 );
+	pPos.rcNormalPosition.left		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Left"), 0 );
+	pPos.rcNormalPosition.top		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Top"), 0 );
+	pPos.rcNormalPosition.right		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Right"), 0 );
+	pPos.rcNormalPosition.bottom	= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Bottom"), 0 );
 	
 	if ( pPos.rcNormalPosition.right && pPos.rcNormalPosition.bottom )
 	{
@@ -626,8 +626,8 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 {
 	WINDOWPLACEMENT pPos;
+	CRegistry pRegistry;
 	CString strEntry;
-	CRegistry Registry;
 
 	if ( pszName != NULL )
 		strEntry = pszName;
@@ -636,14 +636,14 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 
 	pWindow->GetWindowPlacement( &pPos );
 
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
+	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
 
 	if ( pPos.showCmd != SW_SHOWNORMAL ) return;
 
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
-	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
+	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
+	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
+	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
+	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
 
 }
 
@@ -652,20 +652,21 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 
 BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 {
+	CRegistry pRegistry;
 	LV_COLUMN pColumn;
+	
 	pColumn.mask = LVCF_FMT;
-	CRegistry Registry;
 	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
-
+	
 	CString strOrdering, strWidths, strItem;
 	BOOL bSuccess = FALSE;
-
+	
 	strItem.Format( _T("%s.Ordering"), pszName );
-	strOrdering = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, _T("") );
+	strOrdering = pRegistry.GetString( _T("ListStates"), strItem, _T("") );
 	strItem.Format( _T("%s.Widths"), pszName );
-	strWidths = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, _T("") );
+	strWidths = pRegistry.GetString( _T("ListStates"), strItem, _T("") );
 	strItem.Format( _T("%s.Sort"), pszName );
-	nSort = Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, nSort );
+	nSort = pRegistry.GetInt( _T("ListStates"), strItem, nSort );
 
 	if ( strOrdering.GetLength() == nColumns * 2 &&
 		 strWidths.GetLength() == nColumns * 4 )
@@ -694,9 +695,10 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 
 void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 {
+	CRegistry pRegistry;
 	LV_COLUMN pColumn;
+	
 	pColumn.mask = LVCF_FMT;
-	CRegistry Registry;
 	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 	
 	UINT* pOrdering = new UINT[ nColumns ];
@@ -718,11 +720,11 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	int nSort = GetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA );
 	
 	strItem.Format( _T("%s.Ordering"), pszName );
-	Registry.SetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, strOrdering);
+	pRegistry.SetString( _T("ListStates"), strItem, strOrdering);
 	strItem.Format( _T("%s.Widths"), pszName );
-	Registry.SetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, strWidths);
+	pRegistry.SetString( _T("ListStates"), strItem, strWidths);
 	strItem.Format( _T("%s.Sort"), pszName );
-	Registry.SetInt( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, nSort );
+	pRegistry.SetInt( _T("ListStates"), strItem, nSort );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -907,43 +909,45 @@ CSettings::Item::Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* p
 
 void CSettings::Item::Load()
 {
-	CRegistry Registry;
+	CRegistry pRegistry;
+	
 	int nPos = m_sName.Find( '.' );
 	if ( nPos < 0 ) return;
 
 	if ( m_pDword )
 	{
-		*m_pDword = Registry.GetDword( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pDword );
+		*m_pDword = pRegistry.GetDword( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
 	}
 	else if ( m_pFloat )
 	{
-		*m_pFloat = Registry.GetFloat( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pFloat );
+		*m_pFloat = pRegistry.GetFloat( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pFloat );
 	}
 	else
 	{
-		*m_pString = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pString );
+		*m_pString = pRegistry.GetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
 	}
 
 }
 
 void CSettings::Item::Save()
 {
-	CRegistry Registry;
+	CRegistry pRegistry;
+	
 	int nPos = m_sName.Find( '.' );
 	if ( nPos < 0 ) return;
 
 	if ( m_pDword )
 	{
-		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ), *m_pDword);
+		pRegistry.SetInt( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
 	}
 	else if ( m_pFloat )
 	{
 		CString str;
 		str.Format( _T("%e"), *m_pFloat );
-		Registry.SetString(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ), str);
+		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), str );
 	}
 	else
 	{
-		Registry.SetString(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ),*m_pString );
+		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
 	}
 }

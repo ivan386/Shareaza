@@ -19,26 +19,27 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_REGISTRY_H____INCLUDED_)
-#define AFX_REGISTRY_H____INCLUDED_
-
 #pragma once
+
 
 class CRegistry 
 {
 // Construction
 public:
 	CRegistry();
-	virtual ~CRegistry();
-
+	~CRegistry();
+	
+// Operations
 public:
-	void	DisplayErrorMessageBox(DWORD);
-	CString GetString(LPCTSTR pLocation, LPCTSTR pKeyName, LPCTSTR pDefault);
-	int		GetInt(LPCTSTR pLocation, LPCTSTR pKeyName, int iDefault);
-	DWORD	GetDword(LPCTSTR pLocation, LPCTSTR pKeyName, DWORD dwDefault);
-	double	GetFloat(LPCTSTR pLocation, LPCTSTR pKeyName, double fDefault);
-	BOOL	SetInt(LPCTSTR pLocation, LPCTSTR pKeyName, int iValue);
-	BOOL	SetString(LPCTSTR pLocation, LPCTSTR pKeyName, LPCTSTR sValue);
+	CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL);
+	int		GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault = 0);
+	DWORD	GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault = 0);
+	double	GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault = 0.0f);
+public:
+	BOOL	SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue);
+	BOOL	SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue);
+	
+// Implementation
+protected:
+	void	DisplayErrorMessageBox(DWORD nErrorCode);
 };
-
-#endif
