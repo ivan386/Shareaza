@@ -42,6 +42,7 @@
 #include "SourceURL.h"
 
 #include "ChatCore.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1219,6 +1220,8 @@ BOOL CEDClient::OnQueueRequest(CEDPacket* pPacket)
 BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 {
 	DWORD nMessageLength;
+	CString sMessage;
+	BOOL bDisplay;
 
 	// Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
@@ -1237,20 +1240,24 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		return TRUE;
 	}
 
+	// Read in message
+	if ( m_bEmUnicode )
+		sMessage = pPacket->ReadStringUTF8( nMessageLength );
+	else
+		sMessage = pPacket->ReadString( nMessageLength );
 
-	// Check if chat is enabled
-	if ( Settings.Community.ChatEnable )	// Chat is enabled- accept/open a chat window.
+
+	// Check if chat is enabled and the message is not blocked
+	bDisplay = Settings.Community.ChatEnable;
+	if ( MessageFilter.IsFiltered( sMessage ) ) bDisplay = FALSE;
+
+	
+	if ( bDisplay )	// Chat is enabled- accept/open a chat window.
 	{	
 		ChatCore.OnED2KMessage( this, pPacket );
 	}
 	else									// Chat is disabled- don't open a chat window. 
 	{	
-		CString sMessage;
-		// Read in message
-		if ( m_bEmUnicode )
-			sMessage = pPacket->ReadStringUTF8( nMessageLength );
-		else
-			sMessage = pPacket->ReadString( nMessageLength );
 		// Display in system window
 		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}

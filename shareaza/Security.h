@@ -127,8 +127,26 @@ public:
 	
 // Attributes
 private:
-	LPTSTR		m_pszBlockedWords;		//Definitely adult content
-	LPTSTR		m_pszDubiousWords;		//Possibly adult content
+	LPTSTR		m_pszBlockedWords;		// Definitely adult content
+	LPTSTR		m_pszDubiousWords;		// Possibly adult content
+	
+// Operations
+public:
+	void		Load();
+	BOOL		IsFiltered( LPCTSTR );
+	BOOL		Censor( LPCTSTR );
+};
+
+class CMessageFilter
+{
+// Construction
+public:
+	CMessageFilter();
+	virtual ~CMessageFilter();
+	
+// Attributes
+private:
+	LPTSTR		m_pszFilteredPhrases;	// Known spam phrases
 	
 // Operations
 public:
@@ -136,6 +154,7 @@ public:
 	BOOL		IsFiltered( LPCTSTR );
 };
 
+extern CMessageFilter MessageFilter;
 extern CAdultFilter AdultFilter;
 extern CSecurity Security;
 

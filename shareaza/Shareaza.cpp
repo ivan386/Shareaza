@@ -159,6 +159,7 @@ BOOL CShareazaApp::InitInstance()
 	dlgSplash->Step( _T("Security Services") );
 		Security.Load();
 		AdultFilter.Load();
+		MessageFilter.Load();
 	dlgSplash->Step( _T("Scheduler") );
 		Schedule.Load();
 	dlgSplash->Step( _T("Rich Documents") );

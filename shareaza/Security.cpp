@@ -35,6 +35,7 @@ static char THIS_FILE[]=__FILE__;
 
 CSecurity Security;
 CAdultFilter AdultFilter;
+CMessageFilter MessageFilter;
 
 
 //////////////////////////////////////////////////////////////////////
@@ -1035,18 +1036,19 @@ void CAdultFilter::Load()
 {
 	CFile pFile;
 	CString strFile = Settings.General.Path + _T("\\Data\\AdultFilter.dat");
+	CString strBlockedWords, strDubiousWords;
 
-	//Delete current adult filters (if present)
+	// Delete current adult filters (if present)
 	if ( m_pszBlockedWords ) delete [] m_pszBlockedWords;
 	m_pszBlockedWords = NULL;
 
 	if ( m_pszDubiousWords ) delete [] m_pszDubiousWords;
 	m_pszDubiousWords = NULL;
 
-	//Load the adult filter from disk
+	// Load the adult filter from disk
 	if (  pFile.Open( strFile, CFile::modeRead ) ) 
 	{
-		CString strBlockedWords, strDubiousWords;
+
 		try
 		{
 			CBuffer pBuffer;
@@ -1056,97 +1058,105 @@ void CAdultFilter::Load()
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 			pFile.Close();
 
-			pBuffer.ReadLine( strBlockedWords );	//Line 1: words that are blocked
-			pBuffer.ReadLine( strDubiousWords );	//Line 2: words that may be okay
+			pBuffer.ReadLine( strBlockedWords );	// Line 1: words that are blocked
+			pBuffer.ReadLine( strDubiousWords );	// Line 2: words that may be okay
 		}
 		catch ( CException* pException )
 		{
 			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); //Check if file is still open, if yes close
 			pException->Delete();
 		}
-
-		//Load the blocked words into the Adult Filter
-		if ( strBlockedWords.GetLength() > 3 )
-		{
-			LPCTSTR pszPtr = strBlockedWords;
-			int nWordLen = 3;
-			CStringList pWords;
-			
-			for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
-			{
-				if ( *pszPtr == ' ' )
-				{
-					if ( nStart < nPos )
-					{
-						pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
-						nWordLen += ( nPos - nStart ) + 1;
-					}
-					nStart = nPos + 1;	
-				}
-			}
-			
-			if ( nStart < nPos )
-			{
-				pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
-				nWordLen += ( nPos - nStart ) + 1;
-			}
-			
-			m_pszBlockedWords = new TCHAR[ nWordLen ];
-			LPTSTR pszFilter = m_pszBlockedWords;
-			
-			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
-			{
-				CString strWord = pWords.GetNext( pos );
-				strWord = CharLower( strWord.GetBuffer() );
-				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
-				pszFilter += strWord.GetLength() + 1;
-			}
-			
-			*pszFilter++ = 0;
-			*pszFilter++ = 0;
-		}
-	
-		//Load the possibly blocked words into the Adult Filter
-		if ( strDubiousWords.GetLength() > 3 )
-		{
-			LPCTSTR pszPtr = strDubiousWords;
-			int nWordLen = 3;
-			CStringList pWords;
-			
-			for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
-			{
-				if ( *pszPtr == ' ' )
-				{
-					if ( nStart < nPos )
-					{
-						pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
-						nWordLen += ( nPos - nStart ) + 1;
-					}
-					nStart = nPos + 1;	
-				}
-			}
-			
-			if ( nStart < nPos )
-			{
-				pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
-				nWordLen += ( nPos - nStart ) + 1;
-			}
-			
-			m_pszDubiousWords = new TCHAR[ nWordLen ];
-			LPTSTR pszFilter = m_pszDubiousWords;
-			
-			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
-			{
-				CString strWord = pWords.GetNext( pos );
-				strWord = CharLower( strWord.GetBuffer() );
-				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
-				pszFilter += strWord.GetLength() + 1;
-			}
-			
-			*pszFilter++ = 0;
-			*pszFilter++ = 0;
-		}
 	}
+
+	// Insert some defaults if the load failed
+	if ( strBlockedWords.IsEmpty() )
+		strBlockedWords = _T("xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian whore shit rape preteen hardcore lolita playboy penthouse dick dildo upskirt beastiality pedofil necrofil");
+	if ( strDubiousWords.IsEmpty() )
+		strDubiousWords = _T("ass sex anal gay teen thong babe bikini viagra");
+
+	// Load the blocked words into the Adult Filter
+	if ( strBlockedWords.GetLength() > 3 )
+	{
+		LPCTSTR pszPtr = strBlockedWords;
+		int nWordLen = 3;
+		CStringList pWords;
+			
+		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+		{
+			if ( *pszPtr == ' ' )
+			{
+				if ( nStart < nPos )
+				{
+					pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
+					nWordLen += ( nPos - nStart ) + 1;
+				}
+				nStart = nPos + 1;	
+			}
+		}
+			
+			
+		if ( nStart < nPos )
+		{
+			pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
+			nWordLen += ( nPos - nStart ) + 1;
+		}
+			
+		m_pszBlockedWords = new TCHAR[ nWordLen ];
+		LPTSTR pszFilter = m_pszBlockedWords;
+			
+		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+		{
+			CString strWord = pWords.GetNext( pos );
+			strWord = CharLower( strWord.GetBuffer() );
+			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+			pszFilter += strWord.GetLength() + 1;
+		}
+			
+		*pszFilter++ = 0;
+		*pszFilter++ = 0;
+	}
+	
+	// Load the possibly blocked words into the Adult Filter
+	if ( strDubiousWords.GetLength() > 3 )
+	{
+		LPCTSTR pszPtr = strDubiousWords;
+		int nWordLen = 3;
+		CStringList pWords;
+			
+		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+		{
+			if ( *pszPtr == ' ' )
+			{
+				if ( nStart < nPos )
+				{
+					pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
+					nWordLen += ( nPos - nStart ) + 1;
+				}
+				nStart = nPos + 1;	
+			}
+		}
+			
+		if ( nStart < nPos )
+		{
+			pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
+			nWordLen += ( nPos - nStart ) + 1;
+		}
+			
+		m_pszDubiousWords = new TCHAR[ nWordLen ];
+		LPTSTR pszFilter = m_pszDubiousWords;
+			
+		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+		{
+			CString strWord = pWords.GetNext( pos );
+			strWord = CharLower( strWord.GetBuffer() );
+			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+			pszFilter += strWord.GetLength() + 1;
+		}
+			
+		*pszFilter++ = 0;
+		*pszFilter++ = 0;
+	}
+
 }
 
 BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
@@ -1155,7 +1165,7 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 	{
 		LPCTSTR pszWord;
 
-		//Check blocked words
+		// Check blocked words
 		if ( m_pszBlockedWords )
 		{	
 			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
@@ -1165,7 +1175,7 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 			}
 		}
 
-		//Check dubious words
+		// Check dubious words
 		if ( m_pszDubiousWords )
 		{
 			int nDubiousWords = 0, nWordsPermitted = min( (_tcslen( pszText ) / 8 ), 4 );
@@ -1174,6 +1184,144 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) nDubiousWords++;
 				if ( nDubiousWords > nWordsPermitted ) return TRUE;
+				pszWord += _tcslen( pszWord ) + 1;
+			}
+		}
+	}
+	
+	return FALSE;
+}
+
+BOOL CAdultFilter::Censor( LPCTSTR pszText )
+{
+	BOOL bModified = FALSE;
+	if ( Settings.Search.AdultFilter && pszText )
+	{
+		LPCTSTR pszWord;
+
+		// Check and replace blocked words
+		if ( m_pszBlockedWords )
+		{	
+			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
+			{
+				if ( _tcsistr( pszText, pszWord ) != NULL )
+				{
+					CString strReplace = pszText;
+					Replace( strReplace, pszWord, _T("***") );
+					pszText = strReplace;
+					bModified = TRUE;
+				}
+				pszWord += _tcslen( pszWord ) + 1;
+			}
+		}
+	}
+	
+	return bModified;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CMessageFilter construction
+
+CMessageFilter::CMessageFilter()
+{
+	m_pszFilteredPhrases = NULL;
+}
+
+CMessageFilter::~CMessageFilter()
+{
+	if ( m_pszFilteredPhrases ) delete [] m_pszFilteredPhrases;
+	m_pszFilteredPhrases = NULL;
+}
+
+void CMessageFilter::Load()
+{
+	CFile pFile;
+	CString strFile = Settings.General.Path + _T("\\Data\\MessageFilter.dat");
+	CString strFilteredPhrases;
+
+	// Delete current filter (if present)
+	if ( m_pszFilteredPhrases ) delete [] m_pszFilteredPhrases;
+	m_pszFilteredPhrases = NULL;
+
+	// Load the adult filter from disk
+	if (  pFile.Open( strFile, CFile::modeRead ) ) 
+	{
+		try
+		{
+			CBuffer pBuffer;
+
+			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
+			pBuffer.m_nLength = (DWORD)pFile.GetLength();
+			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
+			pFile.Close();
+
+			pBuffer.ReadLine( strFilteredPhrases );
+		}
+		catch ( CException* pException )
+		{
+			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); // Check if file is still open, if yes close
+			pException->Delete();
+		}
+	}
+
+	// Insert some defaults if there was a read error
+	if ( strFilteredPhrases.IsEmpty() )
+		strFilteredPhrases = _T("client is connecting too fast");
+
+	// Load the blocked strings into the filter
+	if ( strFilteredPhrases.GetLength() > 3 )
+	{
+		LPCTSTR pszPtr = strFilteredPhrases;
+		int nWordLen = 3;
+		CStringList pWords;
+			
+		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+		{
+			if ( *pszPtr == '|' )
+			{
+				if ( nStart < nPos )
+				{
+					pWords.AddTail( strFilteredPhrases.Mid( nStart, nPos - nStart ) );
+					nWordLen += ( nPos - nStart ) + 1;
+				}
+				nStart = nPos + 1;	
+			}
+		}
+			
+		if ( nStart < nPos )
+		{
+			pWords.AddTail( strFilteredPhrases.Mid( nStart, nPos - nStart ) );
+			nWordLen += ( nPos - nStart ) + 1;
+		}
+			
+		m_pszFilteredPhrases = new TCHAR[ nWordLen ];
+		LPTSTR pszFilter = m_pszFilteredPhrases;
+			
+		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+		{
+			CString strWord = pWords.GetNext( pos );
+			strWord = CharLower( strWord.GetBuffer() );
+			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+			pszFilter += strWord.GetLength() + 1;
+		}
+			
+		*pszFilter++ = 0;
+		*pszFilter++ = 0;
+	}
+}
+
+BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
+{
+	if ( pszText )
+	{
+		LPCTSTR pszWord;
+
+		// Check for filtered (spam) phrases
+		if ( m_pszFilteredPhrases )
+		{	
+			for ( pszWord = m_pszFilteredPhrases ; *pszWord ; )
+			{
+				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;
 				pszWord += _tcslen( pszWord ) + 1;
 			}
 		}
