@@ -49,13 +49,13 @@ public:
 	CButton	m_wndPrivateRemove;
 	CButton	m_wndPrivateAdd;
 	CComboBox	m_wndPrivateList;
-	BOOL	m_bSourceMesh;
+	//BOOL	m_bSourceMesh;
 	BOOL	m_bWatchFolders;
 	DWORD	m_nRecentDays;
 	int		m_nRecentTotal;
 	BOOL	m_bStoreViews;
 	BOOL	m_bSchemaTypes;
-	BOOL	m_bHashIntegrity;
+	//BOOL	m_bHashIntegrity;
 	BOOL	m_bBrowseFiles;
 	CIconButtonCtrl	m_wndCollectionPath;
 	CString	m_sCollectionPath;

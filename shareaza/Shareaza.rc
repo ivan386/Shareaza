@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,29
- PRODUCTVERSION 2,0,0,29
+ FILEVERSION 2,0,0,30
+ PRODUCTVERSION 2,0,0,30
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 29"
+            VALUE "FileVersion", "2, 0, 0, 30"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 29"
+            VALUE "ProductVersion", "2, 0, 0, 30"
         END
     END
     BLOCK "VarFileInfo"
@@ -2055,13 +2055,15 @@ BEGIN
     CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,31,115,12
     CONTROL         "Maintain alternate source mesh",IDC_SOURCE_MESH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,115,12
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,73,115,
+                    12
     CONTROL         "Filter objects by extension",IDC_SCHEMA_TYPES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,59,115,12
     CONTROL         "Preserve hash integrity",IDC_HASH_INTEGRITY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,73,115,12
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,87,115,
+                    12
     CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,87,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,115,12
     GROUPBOX        "&Recent Files:",IDC_STATIC,5,106,135,70,WS_GROUP
     LTEXT           "Remember:",IDC_STATIC,15,118,40,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_TOTAL,65,118,35,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -4645,7 +4647,7 @@ BEGIN
     IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
     IDS_DISCOVERY_FAIL_REMOVE 
                             "Discovery service ""%s"" has failed %i times, removing."
-    IDS_DISCOVERY_DEFAULTS  "http://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://homepage.ntlworld.com/marriott96/server.met\nhttp://bazooka1.servehttp.com/g2/bazooka.php\nhttp://g2.instantnetworks.net/g2/bazooka.php"
+    IDS_DISCOVERY_DEFAULTS  "http://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://homepage.ntlworld.com/marriott96/server.met\nhttp://bazooka1.servehttp.com/g2/bazooka.php\nhttp://g2.instantnetworks.net/g2/bazooka.php\nhttp://bazooka.stealthspy.net/g2/bazooka.php"
     IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
     IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
 END

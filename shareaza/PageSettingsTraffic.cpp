@@ -88,6 +88,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.DebugLog, 1, 0, 1 );
 	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
 	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
+	AddSetting( &Settings.General.HashIntegrity, 1, 0, 1 );
 	
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
 	AddSetting( &Settings.Connection.TimeoutTraffic, 1000, 10, 60*60, _T(" s") );
@@ -220,6 +221,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Interface.LowResMode, 1, 0, 1 );
 	
 	AddSetting( &Settings.Library.SourceExpire, 60, 60, 604800, _T(" m") );
+	AddSetting( &Settings.Library.SourceMesh, 1, 0, 1);
 	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );
 	AddSetting( &Settings.Library.QueryRouteSize, 1, 8, 24 );
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );

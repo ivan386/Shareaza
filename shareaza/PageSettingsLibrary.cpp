@@ -56,13 +56,13 @@ END_MESSAGE_MAP()
 CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPage::IDD)
 {
 	//{{AFX_DATA_INIT(CLibrarySettingsPage)
-	m_bSourceMesh = FALSE;
+	//m_bSourceMesh = FALSE;
 	m_bWatchFolders = FALSE;
 	m_nRecentDays = 0;
 	m_nRecentTotal = 0;
 	m_bStoreViews = FALSE;
 	m_bSchemaTypes = FALSE;
-	m_bHashIntegrity = FALSE;
+	//m_bHashIntegrity = FALSE;
 	m_bBrowseFiles = FALSE;
 	m_sCollectionPath = _T("");
 	//}}AFX_DATA_INIT
@@ -84,13 +84,13 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PRIVATE_REMOVE, m_wndPrivateRemove);
 	DDX_Control(pDX, IDC_PRIVATE_ADD, m_wndPrivateAdd);
 	DDX_Control(pDX, IDC_PRIVATE_TYPES, m_wndPrivateList);
-	DDX_Check(pDX, IDC_SOURCE_MESH, m_bSourceMesh);
+	//DDX_Check(pDX, IDC_SOURCE_MESH, m_bSourceMesh);
 	DDX_Check(pDX, IDC_WATCH_FOLDERS, m_bWatchFolders);
 	DDX_Text(pDX, IDC_RECENT_DAYS, m_nRecentDays);
 	DDX_Text(pDX, IDC_RECENT_TOTAL, m_nRecentTotal);
 	DDX_Check(pDX, IDC_STORE_VIEWS, m_bStoreViews);
 	DDX_Check(pDX, IDC_SCHEMA_TYPES, m_bSchemaTypes);
-	DDX_Check(pDX, IDC_HASH_INTEGRITY, m_bHashIntegrity);
+	//DDX_Check(pDX, IDC_HASH_INTEGRITY, m_bHashIntegrity);
 	DDX_Check(pDX, IDC_BROWSE_FILES, m_bBrowseFiles);
 	DDX_Control(pDX, IDC_COLLECTIONS_BROWSE, m_wndCollectionPath);
 	DDX_Text(pDX, IDC_COLLECTIONS_FOLDER, m_sCollectionPath);
@@ -106,9 +106,9 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	
 	m_bStoreViews		= Settings.Library.StoreViews;
 	m_bWatchFolders		= Settings.Library.WatchFolders;
-	m_bSourceMesh		= Settings.Library.SourceMesh;
+	//m_bSourceMesh		= Settings.Library.SourceMesh;
 	m_bSchemaTypes		= Settings.Search.SchemaTypes;
-	m_bHashIntegrity	= Settings.General.HashIntegrity;
+	//m_bHashIntegrity	= Settings.General.HashIntegrity;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
 	
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
@@ -254,9 +254,9 @@ void CLibrarySettingsPage::OnOK()
 
 	Settings.Library.StoreViews		= m_bStoreViews;
 	Settings.Library.WatchFolders	= m_bWatchFolders;
-	Settings.Library.SourceMesh		= m_bSourceMesh;
+	//Settings.Library.SourceMesh		= m_bSourceMesh;
 	Settings.Search.SchemaTypes		= m_bSchemaTypes;
-	Settings.General.HashIntegrity	= m_bHashIntegrity;
+	//Settings.General.HashIntegrity	= m_bHashIntegrity;
 	Settings.Community.ServeFiles	= m_bBrowseFiles;
 
 	Settings.Library.HistoryTotal	= m_nRecentTotal;
