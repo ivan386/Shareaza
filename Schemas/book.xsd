@@ -61,6 +61,7 @@
       <attribute name="format">
         <simpleType base="string">
           <enumeration value="Adobe Reader"/>
+          <enumeration value="Compiled HTML Help"/>
           <enumeration value="Image"/>
           <enumeration value="Microsoft Reader"/>
           <enumeration value="PDF"/>
