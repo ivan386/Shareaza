@@ -81,6 +81,8 @@ protected:
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnUpdateSearchDownload(CCmdUI* pCmdUI);
 	afx_msg void OnSearchDownload();
+	afx_msg void OnUpdateSearchDownloadNow(CCmdUI* pCmdUI);
+	afx_msg void OnSearchDownloadNow();
 	afx_msg void OnUpdateSearchCopy(CCmdUI* pCmdUI);
 	afx_msg void OnSearchCopy();
 	afx_msg void OnUpdateSearchChat(CCmdUI* pCmdUI);

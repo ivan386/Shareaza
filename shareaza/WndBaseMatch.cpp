@@ -72,6 +72,8 @@ BEGIN_MESSAGE_MAP(CBaseMatchWnd, CPanelWnd)
 	ON_WM_DRAWITEM()
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_DOWNLOAD, OnUpdateSearchDownload)
 	ON_COMMAND(ID_SEARCH_DOWNLOAD, OnSearchDownload)
+	ON_UPDATE_COMMAND_UI(ID_SEARCH_DOWNLOADNOW, OnUpdateSearchDownloadNow)
+	ON_COMMAND(ID_SEARCH_DOWNLOADNOW, OnSearchDownloadNow)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_COPY, OnUpdateSearchCopy)
 	ON_COMMAND(ID_SEARCH_COPY, OnSearchCopy)
 	ON_UPDATE_COMMAND_UI(ID_SEARCH_CHAT, OnUpdateSearchChat)
@@ -306,6 +308,82 @@ void CBaseMatchWnd::OnSearchDownload()
 	{
 		CQueryHit* pHit = (CQueryHit*)pHits.GetNext( pos );
 		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit );
+	}
+	
+	pMultiLock.Unlock();
+	
+	m_wndList.Invalidate();
+	
+	if ( Settings.Search.SwitchToTransfers && ! m_bContextMenu && GetTickCount() - m_tContextMenu > 5000 )
+	{
+		GetManager()->Open( RUNTIME_CLASS(CDownloadsWnd) );
+	}
+}
+
+void CBaseMatchWnd::OnUpdateSearchDownloadNow(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( m_pMatches->GetSelectedCount() > 0 );
+}
+
+void CBaseMatchWnd::OnSearchDownloadNow() 
+{
+	CSingleLock pSingleLock( &m_pMatches->m_pSection, TRUE );
+	CPtrList pFiles, pHits;
+	POSITION pos;
+	
+	for ( pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
+	{
+		CMatchFile* pFile = (CMatchFile*)m_pMatches->m_pSelectedFiles.GetNext( pos );
+		
+		pSingleLock.Unlock();
+		
+		switch ( CheckExisting( pFile->m_bSHA1, &pFile->m_pSHA1, pFile->m_bTiger, &pFile->m_pTiger, pFile->m_bED2K, &pFile->m_pED2K ) )
+		{
+		case 1:
+			pFiles.AddTail( pFile );
+			break;
+		case 3:
+			return;
+		}
+		
+		pSingleLock.Lock();
+	}
+	
+	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
+	{
+		CQueryHit* pHit = (CQueryHit*)m_pMatches->m_pSelectedHits.GetNext( pos );
+		
+		pSingleLock.Unlock();
+		
+		switch ( CheckExisting( pHit->m_bSHA1, &pHit->m_pSHA1, pHit->m_bTiger, &pHit->m_pTiger, pHit->m_bED2K, &pHit->m_pED2K ) )
+		{
+		case 1:
+			pHits.AddTail( pHit );
+			break;
+		case 3:
+			return;
+		}
+		
+		pSingleLock.Lock();
+	}
+	
+	pSingleLock.Unlock();
+	
+	if ( pFiles.IsEmpty() && pHits.IsEmpty() ) return;
+	
+	CSyncObject* pSync[2] = { &Network.m_pSection, &Transfers.m_pSection };
+	CMultiLock pMultiLock( pSync, 2, TRUE );
+	
+	for ( pos = pFiles.GetHeadPosition() ; pos ; )
+	{
+		CMatchFile* pFile = (CMatchFile*)pFiles.GetNext( pos );
+		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile, TRUE );
+	}
+	
+	for ( pos = pHits.GetHeadPosition() ; pos ; )
+	{
+		CQueryHit* pHit = (CQueryHit*)pHits.GetNext( pos );
+		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit, TRUE );
 	}
 	
 	pMultiLock.Unlock();
