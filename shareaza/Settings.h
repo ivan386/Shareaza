@@ -177,6 +177,7 @@ public:
 		BOOL		AsyncIO;
 		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
 		BOOL		DetectConnectionLoss;		// Detect loss of internet connection
+		BOOL		DetectConnectionReset;		// Detect regaining of internet connection
 	} Connection;
 
 	struct sBandwidth
@@ -446,7 +447,7 @@ public:
 		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
-		BOOL		FirstRun;
+		BOOL		FirstRun;					// Is this the firt time Shareaza is being run?
 	} Live;
 
 // Attributes : Item List
@@ -478,7 +479,7 @@ public:
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
 	void	SaveList(LPCTSTR pszName, CListCtrl* pCtrl);
 	CString	SmartAgent(LPCTSTR pszAgent);
-	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE);
+	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE, BOOL bTruncate = FALSE );
 	QWORD	ParseVolume(LPCTSTR psz, BOOL bSpeedInBits);
 	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
