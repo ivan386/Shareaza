@@ -1258,6 +1258,7 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	BOOL bWantLeaves	= FALSE;
 	BOOL bWantNames		= FALSE;
 	BOOL bWantGPS		= FALSE;
+	BOOL bWantREXT		= FALSE;
 	
 	CHAR szType[9];
 	DWORD nLength;
@@ -1278,6 +1279,10 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		{
 			bWantGPS = TRUE;
 		}
+		else if ( strcmp( szType, "REXT" ) == 0 )
+		{
+			bWantREXT = TRUE;
+		}
 		
 		pPacket->m_nPosition = nNext;
 	}
@@ -1286,11 +1291,20 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	
 	CString strNick;
 	DWORD nGPS = 0;
+	CString vendorCode;
+	CString currentVersion;
 	
 	if ( bWantNames ) strNick = MyProfile.GetNick();
 	if ( bWantGPS ) nGPS = MyProfile.GetPackedGPS();
+	if ( bWantREXT ) 
+	{
+		vendorCode = "RAZA";
+		currentVersion = "Shareaza " + theApp.m_sVersion;
+	}
 	
-	pPacket->WritePacket( "SELF", 16 + ( strNick.GetLength() ? pPacket->GetStringLen( strNick ) + 6 : 0 ) + ( nGPS ? 5 + 4 : 0 ), TRUE );
+	pPacket->WritePacket( "SELF", 16 + ( strNick.GetLength() ? pPacket->GetStringLen( strNick ) + 6 : 0 ) + 
+			( nGPS ? 5 + 4 : 0 ) + (vendorCode.GetLength() ? pPacket->GetStringLen( vendorCode ) + 3 : 0 ) + 
+			(currentVersion.GetLength() ? pPacket->GetStringLen( currentVersion ) + 4 : 0 ), TRUE );
 	
 	pPacket->WritePacket( "NA", 6 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
@@ -1303,6 +1317,16 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	{
 		pPacket->WritePacket( "NAME", pPacket->GetStringLen( strNick) );
 		pPacket->WriteString( strNick, FALSE );
+	}
+	if ( vendorCode.GetLength() )
+	{
+		pPacket->WritePacket( "V", pPacket->GetStringLen( vendorCode) );
+		pPacket->WriteString( vendorCode, FALSE );
+	}
+	if ( currentVersion.GetLength() )
+	{
+		pPacket->WritePacket( "CV", pPacket->GetStringLen( currentVersion) );
+		pPacket->WriteString( currentVersion, FALSE );
 	}
 	
 	if ( nGPS )
