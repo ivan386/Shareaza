@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.97"
+		version="2.1.0.102"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -1013,11 +1013,6 @@ Other:
 		<item id="ID_UPLOADS_CHAT" text="_Discuter avec l'util."/>
 		<item id="ID_SECURITY_BAN" text="_Bannir l'util."/>
     </menu>
-    <menu name="CUploadsWnd.Queue.Basic">
-  	    <item id="ID_UPLOADS_HELP" text="Ai_de..."/>
-  	    <item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-  	    <item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>		 
-    </menu>
     <menu name="CUploadsWnd.Queue">
   	    <item id="ID_UPLOADS_EDIT_QUEUE" text="Réglages _Queue"/>
   	    <item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
@@ -1139,6 +1134,8 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+  	    <item id="ID_LIBRARY_REBUILD_ANSI" text="Reconstruire les métadonnées"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choisir les _colonnes..."/>
 		<separator/>
@@ -1207,6 +1204,8 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+  	    <item id="ID_LIBRARY_REBUILD_ANSI" text="Reconstruire les métadonnées"/>		
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choisir les _colonnes..."/>
 		<separator/>
@@ -1667,7 +1666,14 @@ Other:
 			<text id="TorrentsOne" format="b">1 torrent en semence (seed)</text>
 			<text id="TorrentsMany" format="b">%i torrents en semence (seed)</text>
 			<newline gap="4"/>
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">semer (seed) un torrent</link>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-semer (re-seed) %s</link>
+			<newline gap="4"/>
+  	        <group id="1">
+  	        <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Semer (seed) un autre torrent</link>
+  	        </group>
+  	        <group id="2">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Semer (seed) un torrent</link>
+			</group>
 		</para>
 
 	</document>
@@ -2164,6 +2170,8 @@ Other:
 	<tip id="ID_LIBRARY_PARENT" message="Remonter vers le dossier parent."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Voir et éditer les propriétés de cette sélection de fichiers..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Reconstruire les métadonnées et recalculer les hash de cette sélection de dossiers ou fichiers."/>
+	<!-- Add the following line if you need it -->
+  	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruire les métadonnées en utilisant votre langue maternelle."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Rafraîchir l'affichage de la bibliothèque."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Enlever cette sélection de dossiers partagés."/>
 	<tip id="ID_LIBRARY_RENAME" message="Renommer le fichier sélectionné en interne."/>
@@ -2947,7 +2955,7 @@ Other:
 	<string id="20109" value="Mis en queue"/>
 	<string id="20110" value="Inconnu"/>
 	<string id="20111" value="Complété"/>
-	<string id="20112" value="Seeding"/>
+	<string id="20112" value="Ensemencement (seeding)"/>
 	<string id="20113" value="Déplace"/>
 	<string id="20114" value="En pause"/>
 	<string id="20115" value="Erreur de fichier"/>
@@ -3610,6 +3618,13 @@ Other:
         <control caption="_Effacer"/>
         <control caption="Filtres:"/>		
 	</dialog>
+	
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sauvegarder le filtre sous">
+  	    <control/>
+  	    <control caption="OK"/>
+  	    <control caption="Annuler"/>
+  	    <control caption="Sauvegarder le filtre actuel sous"/>
+  	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Service Discovery">
 		<control caption="_Adresse du service:"/>
