@@ -176,16 +176,41 @@ typedef int PROTOCOLID;
 class CQuickLock
 {
 public:
-	CQuickLock(CSyncObject& mutex) : m_mutex( mutex ) { m_mutex.Lock(); }
-	~CQuickLock() { m_mutex.Unlock(); }
+	explicit CQuickLock(CSyncObject& oMutex) : m_oMutex( oMutex ) { oMutex.Lock(); }
+	~CQuickLock() { m_oMutex.Unlock(); }
 private:
-	CSyncObject& m_mutex;
+	CSyncObject& m_oMutex;
 	CQuickLock(const CQuickLock&);
 	CQuickLock& operator=(const CQuickLock&);
 	static void* operator new(std::size_t);
 	static void* operator new[](std::size_t);
 	static void operator delete(void*);
 	static void operator delete[](void*);
+	CQuickLock* operator&();
+};
+
+template< class T >
+class CGuarded
+{
+public:
+	explicit CGuarded() : m_oSection(), m_oValue() { }
+	explicit CGuarded(const CGuarded& other) : m_oSection(), m_oValue( other ) { }
+	CGuarded(const T& oValue) : m_oSection(), m_oValue( oValue ) { }
+	CGuarded& operator=(const T& oValue)
+	{
+		CQuickLock oLock( m_oSection );
+		m_oValue = oValue;
+		return *this;
+	}
+	operator T() const
+	{
+		CQuickLock oLock( m_oSection );
+		return m_oValue;
+	}
+private:
+	mutable CCriticalSection m_oSection;
+	T m_oValue;
+	CGuarded* operator&(); // too unsafe
 };
 
 class CLowerCaseTable

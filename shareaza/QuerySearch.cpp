@@ -57,7 +57,7 @@ static char THIS_FILE[]=__FILE__;
 
 CQuerySearch::CQuerySearch(BOOL bGUID)
 {
-	if ( bGUID ) Network.CreateID( &m_pGUID, 1, 1 );
+	if ( bGUID ) Network.CreateID( m_pGUID );
 	
 	m_pSchema	= NULL;
 	m_pXML		= NULL;

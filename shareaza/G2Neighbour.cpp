@@ -492,7 +492,8 @@ void CG2Neighbour::SendLNI()
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 
 	pPacket->WritePacket( "GU", 16 );
-	pPacket->Write( &MyProfile.GUID, 16 );
+	GGUID tmp( MyProfile.GUID );
+	pPacket->Write( &tmp, 16 );
 
 	pPacket->WritePacket( "V", 4 );
 	pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );
@@ -775,7 +776,7 @@ void CG2Neighbour::SendHAW()
 	WORD nLeafs = 0;
 	GGUID pGUID;
 	
-	Network.CreateID( &pGUID, 0, 0 );
+	Network.CreateID( pGUID );
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{

@@ -305,25 +305,13 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 //////////////////////////////////////////////////////////////////////
 // CNetwork GGUID generation
 
-void CNetwork::CreateID(GGUID* pID, int nNeedTransfers, int nNeedSearchManager)
+void CNetwork::CreateID(GGUID& oID)
 {
-	// this function must not throw or we have a problem here
-	for ( int i = 0; i < nNeedSearchManager; ++i ) SearchManager.m_pSection.Unlock();
-	for ( int i = 0; i < nNeedTransfers; ++i ) Transfers.m_pSection.Unlock();
-
-	static CSyncObject* pLocks[] = { &Transfers.m_pSection, &m_pSection, &SearchManager.m_pSection };
-	CMultiLock oLock( pLocks, sizeof( pLocks ) / sizeof( CSyncObject* ), TRUE );
-	
-	*pID = MyProfile.GUID;
-	
-	DWORD *pNum = (DWORD*)pID;
-	pNum[0] += GetTickCount();
-	pNum[1] += ( m_nSequence++ );
-	pNum[2] += rand() * rand();
-	pNum[3] += rand() * rand();
-
-	for ( int i = 0; i < nNeedTransfers; ++i ) Transfers.m_pSection.Lock();
-	for ( int i = 0; i < nNeedSearchManager; ++i ) SearchManager.m_pSection.Lock();
+	oID = MyProfile.GUID;
+	oID.w[0] += GetTickCount();
+	oID.w[1] += m_nSequence++;
+	oID.w[2] += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
+	oID.w[3] += rand() * ( RAND_MAX + 1 ) * ( RAND_MAX + 1 ) + rand() * ( RAND_MAX + 1 ) + rand();
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -73,7 +73,8 @@ BOOL CCertificateProfilePage::OnInitDialog()
 	CSettingsPage::OnInitDialog();
 	
 	wchar_t szGUID[39];
-	szGUID[ StringFromGUID2( *(GUID*)&MyProfile.GUID, szGUID, 39 ) - 2 ] = 0;
+	GGUID tmp( MyProfile.GUID );
+	szGUID[ StringFromGUID2( *(GUID*)&tmp, szGUID, 39 ) - 2 ] = 0;
 	m_sGUID = (CString)&szGUID[1];
 	
 	UpdateData( FALSE );
@@ -88,7 +89,8 @@ void CCertificateProfilePage::OnGuidCreate()
 	UpdateData( TRUE );
 	
 	wchar_t szGUID[39];
-	szGUID[ StringFromGUID2( *(GUID*)&MyProfile.GUID, szGUID, 39 ) - 2 ] = 0;
+	GGUID tmp( MyProfile.GUID );
+	szGUID[ StringFromGUID2( *(GUID*)&tmp, szGUID, 39 ) - 2 ] = 0;
 	m_sGUID = (CString)&szGUID[1];
 	
 	UpdateData( FALSE );

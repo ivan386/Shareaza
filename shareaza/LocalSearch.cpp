@@ -129,7 +129,7 @@ int CLocalSearch::Execute(int nMaximum)
 	}
 	else
 	{
-		Network.CreateID( &m_pGUID, 0, 0 );
+		Network.CreateID( m_pGUID );
 	}
 	
 	int nCount = ExecuteSharedFiles( nMaximum );
@@ -695,7 +695,8 @@ void CLocalSearch::CreatePacketG2()
 	m_pPacket = pPacket;
 	
 	pPacket->WritePacket( "GU", 16 );
-	pPacket->Write( &MyProfile.GUID, sizeof(GGUID) );
+	GGUID tmp( MyProfile.GUID );
+	pPacket->Write( &tmp, sizeof(GGUID) );
 	
 	if ( TRUE /* Network.IsListening() */ )
 	{
@@ -916,8 +917,9 @@ void CLocalSearch::WriteTrailerG1()
 	}
 	
 	if ( pszXML != NULL ) delete [] pszXML;
-	
-	m_pPacket->Write( &MyProfile.GUID, sizeof(GGUID) );
+
+	GGUID tmp( MyProfile.GUID );
+	m_pPacket->Write( &tmp, sizeof(GGUID) );
 }
 
 void CLocalSearch::WriteTrailerG2()

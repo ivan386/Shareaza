@@ -545,7 +545,7 @@ void CSearchWnd::OnSearchSearch()
 		pSearch = new CManagedSearch( pCriteria );
 	}
 	
-	Network.CreateID( &pSearch->m_pSearch->m_pGUID, 0, 0 );
+	Network.CreateID( pSearch->m_pSearch->m_pGUID );
 	
 	pLock.Lock();
 	

@@ -1302,7 +1302,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	CString strUUID, strXML;
 	GUID pUUID;
 	
-	Network.CreateID( (GGUID*)&pUUID, 0, 0 );
+	Network.CreateID( *(GGUID*)&pUUID );
 	strUUID.Format( _T("uuid:%.8x-%.4x-%.4x-%.2x%.2x-%.2x%.2x%.2x%.2x%.2x%.2x"),
 		pUUID.Data1, pUUID.Data2, pUUID.Data3,
 		pUUID.Data4[0], pUUID.Data4[1], pUUID.Data4[2], pUUID.Data4[3],

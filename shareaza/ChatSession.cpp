@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/22 22:00:11 $"
-//	Revision:		"$Revision: 1.15 $"
+//	Date:			"$Date: 2005/03/23 18:22:22 $"
+//	Revision:		"$Revision: 1.16 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1031,7 +1031,8 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 	pPacket = CG2Packet::New( "CHATANS", TRUE );
 	
 	pPacket->WritePacket( "USERGUID", 16 );
-	pPacket->Write( &MyProfile.GUID, 16 );
+	GGUID tmp( MyProfile.GUID );
+	pPacket->Write( &tmp, 16 );
 	
 	if ( bGUID && pGUID == MyProfile.GUID )
 	{

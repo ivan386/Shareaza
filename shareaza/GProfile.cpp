@@ -85,13 +85,16 @@ void CGProfile::Create()
 {
 	Clear();
 
-	CoCreateGuid( (::GUID*)&GUID );
+	GGUID tmp( GUID );
+	CoCreateGuid( (::GUID*)&tmp );
 	srand( GetTickCount() );
 	
-	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) GUID.n[ nByte ] += rand();
+	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp.n[ nByte ] += rand();
 
 	wchar_t szGUID[39];
-	szGUID[ StringFromGUID2( *(::GUID*)&GUID, szGUID, 39 ) - 2 ] = 0;
+	szGUID[ StringFromGUID2( *(::GUID*)&tmp, szGUID, 39 ) - 2 ] = 0;
+
+	GUID = tmp;
 
 	m_pXML = new CXMLElement( NULL, _T("gProfile") );
 	m_pXML->AddAttribute( _T("xmlns"), xmlns );
@@ -176,8 +179,10 @@ BOOL CGProfile::FromXML(CXMLElement* pXML)
 	
 	CString strGUID = pGnutella->GetAttributeValue( _T("guid") );
 	
-	if ( ! GUIDX::Decode( strGUID, &GUID ) ) return FALSE;
-	
+	GGUID tmp;
+	if ( ! GUIDX::Decode( strGUID, &tmp ) ) return FALSE;
+	GUID = tmp;
+
 	m_pXML = pXML;
 	
 	return TRUE;

@@ -75,7 +75,7 @@ public:
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	WORD		RandomPort() const;
-	void		CreateID(GGUID* pID, int nNeedTransfers, int nNeedSearchManager);
+	void		CreateID(GGUID& oID);
 	BOOL		IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf = FALSE);
 public:
 	BOOL		GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);

@@ -37,7 +37,7 @@ public:
 	
 // Attributes
 public:
-	GGUID			GUID;
+	CGuarded< GGUID > GUID;
 protected:
 	CXMLElement*	m_pXML;
 protected:
