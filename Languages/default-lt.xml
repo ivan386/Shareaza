@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.5.0"
+                        version="2.0.5.2"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2024,302 +2024,302 @@ right quote    &#147;
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-       <tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
-       <tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
-       <tip id="ID_NETWORK_CONNECT" message="Jungtis prie tinklo"/>
-       <tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklo"/>
-       <tip id="ID_TOOLS_SETTINGS" message="Keisti „Shareaza“ nuostatas..."/>
-       <tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
-       <tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
-       <tip id="ID_VIEW_TRAFFIC" message="Rodyti arba paslėpti „GRAFIKŲ“ langą."/>
-       <tip id="ID_VIEW_LIBRARY" message="Rodyti arba paslėpti „KOLEKCIJOS“ langą."/>
-       <tip id="ID_VIEW_DOWNLOADS" message="Rodyti arba paslėpti „ATSISIUNTIMŲ“ langą."/>
-       <tip id="ID_VIEW_UPLOADS" message="Rodyti arba paslėpti „IŠSIUNTIMŲ“ langą."/>
-       <tip id="ID_VIEW_HOSTS" message="Rodyti arba paslėpti „ADRESATŲ TALPYKLOS“ langą."/>
-       <tip id="ID_VIEW_PACKETS" message="Rodyti arba paslėpti „PAKETŲ IŠVESTIES“ langą."/>
-       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
-       <tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos žurnalą."/>
-       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Atverti naują „Paketų išvesties“ langą šiam kaimynui stebėti."/>
-       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno įeinačiam srautui stebėti."/>
-       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno išeinačiam srautui stebėti."/>
-       <tip id="ID_VIEW_SEARCH_MONITOR" message="Rodyti arba paslėpti „PAIEŠKOS UŽKLAUSŲ MONITORIAUS“ langą."/>
-       <tip id="ID_VIEW_RESULTS_MONITOR" message="Rodyti arba paslėpti „KREIPINIŲ MONITORIAUS“ langą."/>
-       <tip id="ID_HOSTCACHE_CONNECT" message="Jungtis prie pasirinkto adresato(-ų)."/>
-       <tip id="ID_HOSTCACHE_DISCONNECT" message="Atsijungti nuo pasirinkto kaimyno(-ų)."/>
-       <tip id="ID_HOSTCACHE_REMOVE" message="Šalinti pasirinktus adresatus iš adresatų talpyklos."/>
-       <tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
-       <tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
-       <tip id="ID_SEARCH_DOWNLOAD" message="Parsisiųsti pasirinktą bylą(-as)."/>
-       <tip id="ID_SEARCH_DOWNLOADNOW" message="Parsisiųsti pasirinktą bylą(-as) su prioritetu."/>
-       <tip id="ID_SEARCH_SEARCH" message="Ieškoti tinkle dar kartą..."/>
-       <tip id="ID_SEARCH_FILTER" message="Filtruoti radinius pagal tam tikrus žodžius ir sąlygas..."/>
-       <tip id="ID_SEARCH_FILTER_REMOVE" message="Pašalinti filtrą nuo radinių."/>
-       <tip id="ID_SEARCH_GROUPED" message="Grupuoti radinius pagal bylą."/>
-       <tip id="ID_HITMONITOR_CLEAR" message="Valyti kreipinių monitoriaus buferį."/>
-       <tip id="ID_SEARCHMONITOR_PAUSE" message="Pristabdyti paieškos užklausų stebėjimą."/>
-       <tip id="ID_HITMONITOR_PAUSE" message="Pristabdyti kreipinių stebėjimą."/>
-       <tip id="ID_SEARCHMONITOR_CLEAR" message="Išvalyti paieškos užklausų monitoriaus buferį."/>
-       <tip id="ID_SEARCH_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
-       <tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
-       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
-       <tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
-       <tip id="ID_HOSTCACHE_G1_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
-       <tip id="ID_SEARCH_COLUMNS" message="Pasirinkti meta duomenų stulpelius, kuriuos rodyti..."/>
-       <tip id="ID_DOWNLOADS_RESUME" message="Tęsti pasirinktos bylos(-ų) atsisiuntimą."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Ištrinti atsisiųstas bylas iš sąrašo."/>
-       <tip id="ID_DOWNLOADS_SOURCES" message="Ieškoti daugiau šaltinių pasirinktai siunčiamai bylai(-oms)."/>
-       <tip id="ID_DOWNLOADS_LAUNCH" message="Peržiūrėti pasirinktą siunčiamą bylą(-as) vietoje."/>
+       <tip id="ID_BROWSE_FILES" message="Peržiūrėti vartotojo bendrintas bylas."/>
+       <tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto vartotojo profilį ir bendrintas bylas."/>
+       <tip id="ID_BROWSE_PROFILE" message="Peržiūrėti vartotojo profilį."/>
+       <tip id="ID_BROWSE_REFRESH" message="Atnaujinti šio adresato siūlomų bylų sąrašą."/>
+       <tip id="ID_BROWSE_STOP" message="Sustabdyti šio adresato bylų peržiūrą."/>
+       <tip id="ID_CHAT_BOLD" message="Paryškinti pusjuodžiu šriftu (Ctrl+B)"/>
+       <tip id="ID_CHAT_BROWSE" message="Peržiūrėti vartotojo profilį ir bendrintas bylas."/>
+       <tip id="ID_CHAT_CLEAR" message="Išvalyti pranešimo langą (panaikinti tekstą)."/>
+       <tip id="ID_CHAT_COLOUR" message="Pasirinkti teksto spalvą (Ctrl+K)"/>
+       <tip id="ID_CHAT_CONNECT" message="Jungtis pokalbiui."/>
+       <tip id="ID_CHAT_DISCONNECT" message="Nutraukti pokalbį."/>
+       <tip id="ID_CHAT_EMOTICONS" message="Įterpti emociją."/>
+       <tip id="ID_CHAT_ITALIC" message="Išskirti kursyvu (Ctrl+I)"/>
+       <tip id="ID_CHAT_PRIORITY" message="Suteikti vartotojui parsisiuntimo prioritetą."/>
+       <tip id="ID_CHAT_SEND_FILE" message="Siųsti bylą vartotojui..."/>
+       <tip id="ID_CHAT_TIMESTAMP" message="Rodyti laiką, kada buvo gautas kiekvienas pranešimas."/>
+       <tip id="ID_CHAT_UNDERLINE" message="Rašyti su pabraukimu (Ctrl+U)"/>
+       <tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
+       <tip id="ID_CHILD_MAXIMISE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
+       <tip id="ID_CHILD_MINIMISE" message="Sutraukti pasirinktą langą, patalpinant į kortelių juostą."/>
+       <tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
+       <tip id="ID_DISCOVERY_ADD" message="Pridėti naują paslaugų radimo tarnybą..."/>
+       <tip id="ID_DISCOVERY_ADVERTISE" message="Anonsuoti pasirinktą GWebCache tarnybą atsitiktinei egzistuojančiai GWebCache tarnybai."/>
+       <tip id="ID_DISCOVERY_BROWSE" message="Peržvelgti internete pasirinktos GWebCache tarnybos statistiką."/>
+       <tip id="ID_DISCOVERY_EDIT" message="Peržiūrėti pasirinktos paslaugų radimo tarnybos ypatybes."/>
+       <tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
+       <tip id="ID_DISCOVERY_QUERY" message="Nusiųsti tuoj pat užklausą pasirinktai paslaugų radimo tarnybai."/>
+       <tip id="ID_DISCOVERY_REMOVE" message="Pašalinti pasirinktas paslaugų radimo tarnybas."/>
+       <tip id="ID_DISCOVERY_SERVERMET" message="Rodyti eDonkey2000 Server.met tarnybas paslaugų radimo tarnybų lange."/>
+       <tip id="ID_DISCOVERY_WEBCACHE" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
+       <tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Atšaukti visų šios grupės bylų parsisiuntimą ir pašalinti bylas."/>
+       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Sukurti naują parsisiuntimų grupę..."/>
+       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Sustabdyti visų šios grupės bylų parsisiuntmą."/>
+       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Taisyti pasirinktos parsisiuntimų grupės ypatybes."/>
+       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Pašalinti pasirinktą parsisiuntimų grupę."/>
+       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Tęsti visų šios grupės bylų parsisiuntimą."/>
+       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="Rodyti ar paslėpti parsisiuntimų grupės juostą."/>
+       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatiškai šalinti iš sąrašo parsisiųstas bylas."/>
+       <tip id="ID_DOWNLOADS_BOOST" message="Paspartinti pasirinktos bylos parsisiuntimą, panaikinant greitaveikos apribojimus."/>
        <tip id="ID_DOWNLOADS_CLEAR" message="Trinti/šalinti pasirinktą siunčiamą bylą(-as)."/>
-       <tip id="ID_DOWNLOADS_PAUSE" message="Pristabdyti pasirinktos bylos(-ų) atsisiuntimą."/>
-       <tip id="ID_LIBRARY_EXPLORE" message="Atverti pasirinktą aplanką(-us)."/>
-       <tip id="ID_LIBRARY_SCAN" message="Skenuoti pokyčius pasirinktose bylose ar aplankuose."/>
-       <tip id="ID_LIBRARY_SHARED_FILE" message="Bendrinti ar ne pasirinktas bylas."/>
-       <tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
-       <tip id="ID_LIBRARY_ADD" message="Pridėti naują aplanką prie savo kolekcijos..."/>
-       <tip id="ID_LIBRARY_PROPERTIES" message="Peržiūrėti ir taisyti pasirinktų bylų ypatybes..."/>
-       <tip id="ID_LIBRARY_COLUMNS" message="Pasirinkti, kuriuos meta duomenų stulpelius rodyti..."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą bylą(-as) iš sąrašo."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Ištrinti atsisiųstas bylas iš sąrašo."/>
+       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigtos siųstis bylos(-ų) parsisiuntimą."/>
        <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Ištrinti bylas, kurių atsisiuntimas yra sustabdytas."/>
-       <tip id="ID_UPLOADS_LAUNCH" message="Atverti/vykdyti pasirinktą bendrintą bylą(-as)."/>
-       <tip id="ID_UPLOADS_DISCONNECT" message="Nutraukti pasirinktą išsiuntimą(-us)."/>
-       <tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Pašalinti iš sąrašo bylas, kurių išsiuntimas baigtas."/>
-       <tip id="ID_UPLOADS_CLEAR" message="Pašalinti iš išsiunčiamų bylų sąrašo pasirinktą bylą(-as)."/>
-       <tip id="ID_TRANSFERS_DISCONNECT" message="Atjungti pasirinktą atsisiuntimo srautą(-us)."/>
-       <tip id="ID_TRANSFERS_FORGET" message="Atsijungti nuo ir užmiršti pasirinktą atsisiuntimo šaltinį(-ius)."/>
+       <tip id="ID_DOWNLOADS_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
+       <tip id="ID_DOWNLOADS_EDIT" message="Rodyti bylos išplėstinės taisos langą..."/>
+       <tip id="ID_DOWNLOADS_ENQUEUE" message="Įtraukti pasirinktą bylą(-as) į grojaraštį."/>
+       <tip id="ID_DOWNLOADS_FILE_DELETE" message="Trinti pasirinktą užbaigtą bylą(-as)."/>
+       <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Rodyti aktyvias parsisiunčiamas bylas."/>
+       <tip id="ID_DOWNLOADS_FILTER_ALL" message="Rodyti visas parsisiunčiamas bylas."/>
+       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo parsisiunčiamas bylas rodyti, o kurių nerodyti."/>
+       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Rodyti bylas, kurių parsisiuntimas yra pristabdytas."/>
+       <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Rodyti parsisiunčiamas bylas, kurios laukia savo eilės."/>
+       <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Rodyti parsisiunčiamas bylas, kurios laukia šaltinių."/>
+       <tip id="ID_DOWNLOADS_HELP" message="Peržiūrėti pagalbos informaciją apie šią parsisiunčiamą bylą..."/>
+       <tip id="ID_DOWNLOADS_LAUNCH" message="Peržiūrėti pasirinktą siunčiamą bylą(-as) vietoje."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Pasirinktos bylos(-ų) kopijos peržiūra."/>
+       <tip id="ID_DOWNLOADS_MONITOR" message="Atverti parsisiuntimo monitoriaus langą, stebint pasirinktą bylą..."/>
+       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="Perkelti pasirinktą bylą(-as) žemyn, suteikiant mažesnį prioritetą."/>
+       <tip id="ID_DOWNLOADS_MOVE_UP" message="Perkelti pasirinktą bylą(-as) aukštyn, suteikiant didesnį prioritetą."/>
+       <tip id="ID_DOWNLOADS_PAUSE" message="Pristabdyti pasirinktos bylos(-ų) atsisiuntimą."/>
+       <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
+       <tip id="ID_DOWNLOADS_RESUME" message="Tęsti pasirinktos bylos(-ų) atsisiuntimą."/>
+       <tip id="ID_DOWNLOADS_SETTINGS" message="Keisti parsisiuntimų nuostatas..."/>
+       <tip id="ID_DOWNLOADS_SHARE" message="Bendrinti šią dalinai parsisiųstą bylą."/>
+       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Rodyti šaltinius, kurie šiuo metu nenaudojami."/>
+       <tip id="ID_DOWNLOADS_SOURCES" message="Ieškoti daugiau šaltinių pasirinktai siunčiamai bylai(-oms)."/>
+       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="Peržiūrėti pasirinktos bylos BitTorrent informaciją..."/>
+       <tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinktos bylos..."/>
+       <tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
+       <tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
+       <tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
+       <tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
        <tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza.com tinklalapį."/>
        <tip id="ID_HELP_WEB_1" message="Aplankyti Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Aplankyti P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Aplankyti Slyck.com"/>
-       <tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
-       <tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
-       <tip id="ID_TRAFFIC_GRID" message="Rodyti tinklelį."/>
-       <tip id="ID_TRAFFIC_AXIS" message="Rodyti vertikalią ašį."/>
-       <tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
-       <tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
-       <tip id="ID_TRAFFIC_CLEAR" message="Išvalyti duomenų srauto grafiką."/>
-       <tip id="ID_TOOLS_WIZARD" message="Paleisti „Shareaza“ nuostatų vedlį..."/>
-       <tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
-       <tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
-       <tip id="ID_CHILD_MAXIMISE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
-       <tip id="ID_CHILD_MINIMISE" message="Sutraukti pasirinktą langą, patalpinant į kortelių juostą."/>
-       <tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
-       <tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
-       <tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
-       <tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
-       <tip id="ID_NETWORK_AUTO_CLOSE" message="Automatiškai išeiti iš „Shareaza“ programos, kai bus baigti visi atsisiuntimai/išsiuntimai."/>
-       <tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatiškai šalinti užbaigtas bylas iš išsiunčiamų bylų sąrašo."/>
-       <tip id="ID_LIBRARY_SEARCH" message="Ieškoti savo bylų kolekcijoje..."/>
-       <tip id="ID_TRAFFIC_WINDOW" message="Atverti naują grafiko langą..."/>
-       <tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
        <tip id="ID_HELP_WEB_4" message="Aplankyti NapJunk.net"/>
-       <tip id="ID_SEARCH_STOP" message="Sustabdyti radinių išvedimą šiame lange."/>
-       <tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti naują ar BitTorrent tinklo torrent bylą..."/>
-       <tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinktos bylos..."/>
-       <tip id="ID_LIBRARY_BITZI_WEB" message="Peržiūrėti pasirinktos bylos Bitzi(TM) etiketę internete."/>
+       <tip id="ID_HITMONITOR_CLEAR" message="Valyti kreipinių monitoriaus buferį."/>
+       <tip id="ID_HITMONITOR_PAUSE" message="Pristabdyti kreipinių stebėjimą."/>
+       <tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
+       <tip id="ID_HOSTCACHE_CONNECT" message="Jungtis prie pasirinkto adresato(-ų)."/>
+       <tip id="ID_HOSTCACHE_DISCONNECT" message="Atsijungti nuo pasirinkto kaimyno(-ų)."/>
+       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Rodyti eDonkey2000 serverius."/>
+       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey2000 „server.met“ bylą..."/>
+       <tip id="ID_HOSTCACHE_G1_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
+       <tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
+       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
+       <tip id="ID_HOSTCACHE_IMPORT" message="Importuoti žinomų adresatų sąrašą iš tokios bylos, kaip kad „server.met“ byla..."/>
+       <tip id="ID_HOSTCACHE_PRIORITY" message="Mėginti jungtis prie šito serverio, prieš jungiantis prie kitų."/>
+       <tip id="ID_HOSTCACHE_REMOVE" message="Šalinti pasirinktus adresatus iš adresatų talpyklos."/>
+       <tip id="ID_LIBRARY_ADD" message="Pridėti naują aplanką prie savo kolekcijos..."/>
+       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
+       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Atverti pasirinktą albumo katalogą."/>
+       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
        <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Parsisiųsti pasirinktos bylos(-ų) meta duomenis iš Bitzi(TM)..."/>
-       <tip id="ID_VIEW_SECURITY" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
-       <tip id="ID_SECURITY_EDIT" message="Taisyti pasirinktą saugos taisyklę..."/>
-       <tip id="ID_SECURITY_REMOVE" message="Pašalinti pasirinktą(-as) saugos taisyklę(-es)."/>
-       <tip id="ID_SECURITY_RESET" message="Apnulinti pasirinktų saugos taisyklių kreipinių skaitliukus."/>
-       <tip id="ID_SECURITY_ADD" message="Pridėti naują taisyklę prie apsaugos sekos..."/>
-       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Nustatyti, kad saugos politika, leidžianti visų adresatų prieigą, būtų numatytąja."/>
-       <tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, būtų numatytąja."/>
-       <tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
-       <tip id="ID_LIBRARY_MOVE" message="Perkelti pasirinktas bylas į kitą kolekcijos aplanką..."/>
+       <tip id="ID_LIBRARY_BITZI_WEB" message="Peržiūrėti pasirinktos bylos Bitzi(TM) etiketę internete."/>
+       <tip id="ID_LIBRARY_COLUMNS" message="Pasirinkti, kuriuos meta duomenų stulpelius rodyti..."/>
        <tip id="ID_LIBRARY_COPY" message="Kopijuoti pasirinktas bylas į kitą kolekcijos aplanką..."/>
+       <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
        <tip id="ID_LIBRARY_DELETE" message="Trinti pasirinktas bylas visam laikui."/>
        <tip id="ID_LIBRARY_ENQUEUE" message="Įtraukti pasirinktą bylą(-as) į grojaraštį."/>
-       <tip id="ID_DOWNLOADS_ENQUEUE" message="Įtraukti pasirinktą bylą(-as) į grojaraštį."/>
-       <tip id="ID_SECURITY_MOVE_UP" message="Perkelti pasirinktas saugos taisykles į viršų, suteikiant aukštesnį rangą."/>
-       <tip id="ID_SECURITY_MOVE_DOWN" message="Perkelti pasirinktas saugos taisykles į apačią, suteikiant žemesnį rangą."/>
-       <tip id="ID_SECURITY_BAN" message="Užkirsti pasirinkto adresato prieigą visos šios sesijos metu."/>
-       <tip id="ID_UPLOADS_GROUP" message="Grupuoti išsiunčiamas bylas pagal ryšį (adresatą)."/>
-       <tip id="ID_TAB_NETWORK" message="Pažiūrėkite, kaip gerai Jūs esate prisijungę prie tinklo."/>
-       <tip id="ID_TAB_LIBRARY" message="Peržiūrėkite ir keiskite savo kolekcijos bylas."/>
-       <tip id="ID_TAB_TRANSFERS" message="Stebėkite, kaip vyksta bylų atsisiuntimas ir išsiuntimas."/>
-       <tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
-       <tip id="ID_VIEW_TABBED" message="Perjunkite „Shareaza“ į kortelių veikseną (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas), skirtą patyrusiems vartotojams."/>
-       <tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems vartotojams."/>
-       <tip id="ID_LIBRARY_URL" message="Kopijuoti pasirinktos bylos nuorodą."/>
-       <tip id="ID_VIEW_DISCOVERY" message="Rodyti ar paslėpti „PASLAUGŲ RADIMO TARNYBŲ“ langą."/>
-       <tip id="ID_DISCOVERY_EDIT" message="Peržiūrėti pasirinktos paslaugų radimo tarnybos ypatybes."/>
-       <tip id="ID_DISCOVERY_QUERY" message="Nusiųsti tuoj pat užklausą pasirinktai paslaugų radimo tarnybai."/>
-       <tip id="ID_DISCOVERY_REMOVE" message="Pašalinti pasirinktas paslaugų radimo tarnybas."/>
-       <tip id="ID_DISCOVERY_ADD" message="Pridėti naują paslaugų radimo tarnybą..."/>
-       <tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
-       <tip id="ID_DISCOVERY_WEBCACHE" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
-       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatiškai šalinti iš sąrašo parsisiųstas bylas."/>
-       <tip id="ID_TRANSFERS_CONNECT" message="Susijungti su pasirinktu šaltiniu(-ais) ir pamėginti parsisiųsti bylą."/>
-       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Rodyti šaltinius, kurie šiuo metu nenaudojami."/>
-       <tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
-       <tip id="ID_DISCOVERY_ADVERTISE" message="Anonsuoti pasirinktą GWebCache tarnybą atsitiktinei egzistuojančiai GWebCache tarnybai."/>
-       <tip id="ID_DISCOVERY_BROWSE" message="Peržvelgti internete pasirinktos GWebCache tarnybos statistiką."/>
-       <tip id="ID_BROWSE_STOP" message="Sustabdyti šio adresato bylų peržiūrą."/>
-       <tip id="ID_BROWSE_REFRESH" message="Atnaujinti šio adresato siūlomų bylų sąrašą."/>
-       <tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto vartotojo profilį ir bendrintas bylas."/>
-       <tip id="ID_DOWNLOADS_BOOST" message="Paspartinti pasirinktos bylos parsisiuntimą, panaikinant greitaveikos apribojimus."/>
-       <tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Pasirinktos bylos(-ų) kopijos peržiūra."/>
-       <tip id="ID_SEARCH_MERGE" message="Apjungti pasirinktas bylų grupes."/>
-       <tip id="ID_DOWNLOADS_MONITOR" message="Atverti parsisiuntimo monitoriaus langą, stebint pasirinktą bylą..."/>
-       <tip id="ID_LIBRARY_SELECT_ALL" message="Pasirinkti ir peržiūrėti visus savo kolekcijos aplankus."/>
-       <tip id="ID_SECURITY_EXPORT" message="Eksportuoti pasirinktas saugos taisykles į bylą..."/>
-       <tip id="ID_SECURITY_IMPORT" message="Importuoti saugos taisykles iš bylos..."/>
-       <tip id="ID_SEARCH_FILTER_RAW" message="Filtruoti radinius pagal tam tikrus žodžius arba sąlygas..."/>
-       <tip id="ID_SEARCH_PANEL" message="Rodyti sparčiosios paieškos skydelį kairėje „Paieškos“ lango pusėje."/>
-       <tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
-       <tip id="ID_LIBRARY_LAUNCH" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
-       <tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
-       <tip id="ID_TOOLS_RESKIN" message="Perkrauti ir pritaikyti pasirinktą apvalkalą."/>
-       <tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
-       <tip id="ID_WINDOW_TOOLBAR" message="Rodyti ar paslėpti įrankių juostą."/>
-       <tip id="ID_WINDOW_TABBAR" message="Rodyti ar paslėpti langų kortelių juostą."/>
-       <tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>
-       <tip id="ID_NETWORK_BROWSE_TO" message="Peržiūrėti vartotojo profilį ir bendrintas bylas..."/>
-       <tip id="ID_TOOLS_SKIN" message="Pasirinkti kitokį „Shareaza“ apvalkalą..."/>
+       <tip id="ID_LIBRARY_EXPLORE" message="Atverti pasirinktą aplanką(-us)."/>
+       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į turimą rinkinio bylą..."/>
+       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visas bylas iš pasirinkto rinkinio."/>
+       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Įtraukti visas bylas iš pasirinkto albumo katalogo(-ų) į grojaraštį."/>
+       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti ir išsaugoti pasirinktą albumo aplanką kaip rinkinio bylą..."/>
+       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Peržiūrėti ir taisyti visų bylų ypatybes pasirinktame aplanke(-uose)..."/>
+       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Pritaikyti bendrus albumo katalogo meta duomenis visoms jame esančioms byloms."/>
+       <tip id="ID_LIBRARY_FOLDER_NEW" message="Sukurti naują albumo katalogą..."/>
+       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
+       <tip id="ID_LIBRARY_FOLDERS" message="Tvarkyti fizinius savo kolekcijos aplankus..."/>
        <tip id="ID_LIBRARY_HASH_PRIORITY" message="Paspartinti skenavimą ir maišos (tapatybės kodo) skaičiavimą."/>
-       <tip id="ID_DOWNLOADS_FILE_DELETE" message="Trinti pasirinktą užbaigtą bylą(-as)."/>
+
+       <tip id="ID_LIBRARY_LAUNCH" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
+       <tip id="ID_LIBRARY_MOVE" message="Perkelti pasirinktas bylas į kitą kolekcijos aplanką..."/>
+       <tip id="ID_LIBRARY_PANEL" message="Rodyti ar paslėpti kolekcijos išsamios informacijos skydelį."/>
+       <tip id="ID_LIBRARY_PARENT" message="Eiti į aukštesnį aplanką."/>
+       <tip id="ID_LIBRARY_PROPERTIES" message="Peržiūrėti ir taisyti pasirinktų bylų ypatybes..."/>
+       <tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar bylų meta duomenis ir maišas."/>
+       <tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
+       <tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
        <tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą bylą."/>
-       <tip id="ID_UPLOADS_START" message="Tęsti pasirinktos siunčiamos bylos(-ų) išsiuntimą."/>
-       <tip id="ID_DOWNLOADS_MOVE_UP" message="Perkelti pasirinktą bylą(-as) aukštyn, suteikiant didesnį prioritetą."/>
-       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="Perkelti pasirinktą bylą(-as) žemyn, suteikiant mažesnį prioritetą."/>
-       <tip id="ID_TOOLS_LANGUAGE" message="Pasirinkti „Shareaza“ grafinės sąsajos kalbą..."/>
-       <tip id="ID_DOWNLOADS_SETTINGS" message="Keisti parsisiuntimų nuostatas..."/>
-       <tip id="ID_UPLOADS_SETTINGS" message="Keisti išsiuntimų nuostatas..."/>
-       <tip id="ID_DOWNLOADS_FILTER_ALL" message="Rodyti visas parsisiunčiamas bylas."/>
-       <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Rodyti aktyvias parsisiunčiamas bylas."/>
-       <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Rodyti parsisiunčiamas bylas, kurios laukia savo eilės."/>
-       <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Rodyti parsisiunčiamas bylas, kurios laukia šaltinių."/>
-       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Rodyti bylas, kurių parsisiuntimas yra pristabdytas."/>
-       <tip id="ID_NEIGHBOURS_SETTINGS" message="Konfigūruoti tinklą..."/>
+       <tip id="ID_LIBRARY_SCAN" message="Skenuoti pokyčius pasirinktose bylose ar aplankuose."/>
+       <tip id="ID_LIBRARY_SEARCH" message="Ieškoti savo bylų kolekcijoje..."/>
+       <tip id="ID_LIBRARY_SEARCH_QUICK" message="Ieškoti savo kolekcijoje..."/>
+       <tip id="ID_LIBRARY_SEED_TORRENT" message="Pradėti skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
+       <tip id="ID_LIBRARY_SELECT_ALL" message="Pasirinkti ir peržiūrėti visus savo kolekcijos aplankus."/>
+       <tip id="ID_LIBRARY_SHARED_FILE" message="Bendrinti ar ne pasirinktas bylas."/>
+       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Bendrinti ar išbendrinti pasirinktą aplanką(-us)."/>
        <tip id="ID_LIBRARY_TREE_PHYSICAL" message="Peržiūrėti savo kolekcijos fizinius aplankus."/>
        <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organizuoti savo kolekciją."/>
-       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Bendrinti ar išbendrinti pasirinktą aplanką(-us)."/>
+       <tip id="ID_LIBRARY_UNLINK" message="Pašalinti pasirinktas bylas iš šio albumo katalogo."/>
+       <tip id="ID_LIBRARY_URL" message="Kopijuoti pasirinktos bylos nuorodą."/>
        <tip id="ID_LIBRARY_VIEW" message="Pasirinkti kolekcijos peržiūros būdą..."/>
+       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Rodyti išsamią albumų informaciją" tip="Albumai"/>
+       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
        <tip id="ID_LIBRARY_VIEW_DETAIL" message="Rodyti bylos pavadinimą, išsamią informaciją ir meta duomenis" tip="Lentelė"/>
        <tip id="ID_LIBRARY_VIEW_HOME" message="Kolekcijos pagrindinis katalogas" tip="Pradžia"/>
-       <tip id="ID_LIBRARY_VIEW_LIST" message="Rodyti bylas iš viršaus į apačią" tip="Sąrašas"/>
        <tip id="ID_LIBRARY_VIEW_ICON" message="Rodyti bylas piktogramomis" tip="Piktogramos"/>
+       <tip id="ID_LIBRARY_VIEW_LIST" message="Rodyti bylas iš viršaus į apačią" tip="Sąrašas"/>
        <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Rodyti bylas kartu su peržiūros paveikslėliais" tip="Paveikslėliai"/>
-       <tip id="ID_LIBRARY_PARENT" message="Eiti į aukštesnį aplanką."/>
-       <tip id="ID_LIBRARY_PANEL" message="Rodyti ar paslėpti kolekcijos išsamios informacijos skydelį."/>
-       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
-       <tip id="ID_LIBRARY_FOLDER_NEW" message="Sukurti naują albumo katalogą..."/>
-       <tip id="ID_LIBRARY_UNLINK" message="Pašalinti pasirinktas bylas iš šio albumo katalogo."/>
-       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Pritaikyti bendrus albumo katalogo meta duomenis visoms jame esančioms byloms."/>
-       <tip id="ID_VIEW_MEDIA" message="Rodyti ar paslėpti „GROTUVO“ langą."/>
-       <tip id="ID_TAB_MEDIA" message="Grokite savo kolekcijos garso ir vaizdo bylas."/>
-       <tip id="ID_MEDIA_OPEN" message="Atverti ir groti grotuvo bylą ar grojaraštį..."/>
-       <tip id="ID_MEDIA_CLOSE" message="Užverti veikiančią grotuvo bylą, tuo pačiu atlaisvinant atmintį."/>
-       <tip id="ID_MEDIA_PLAY" message="Groti pažymėtą grotuvo bylą."/>
-       <tip id="ID_MEDIA_STOP" message="Sustabdyti grotuvo bylos grojimą."/>
-       <tip id="ID_MEDIA_PREVIOUS" message="Pereiti prie ankstesnės bylos veikiančiame grojaraštyje."/>
-       <tip id="ID_MEDIA_NEXT" message="Pereiti prie sekančios bylos veikiančiame grojaraštyje."/>
-       <tip id="ID_MEDIA_SIZE_FILL" message="Pasirinkti geriausius vaizdo matmenis, atitinkančius jo matmenų santykį."/>
-       <tip id="ID_MEDIA_SIZE_DISTORT" message="Užpildyti langą vaizdu, galbūt vaizdą iškreipiant."/>
-       <tip id="ID_MEDIA_SIZE_ONE" message="Rodyti vaizdą tokiais matmenimis, kaip nurodyta byloje."/>
-       <tip id="ID_MEDIA_SIZE_TWO" message="Rodyti vaizdą padvigubinant nurodytus byloje matmenis."/>
-       <tip id="ID_MEDIA_SIZE_THREE" message="Rodyti vaizdą patrigubinant nurodytus byloje matmenis."/>
-       <tip id="ID_MEDIA_FULLSCREEN" message="Į-/Išjungti visaekranę vaizdo veikseną."/>
-       <tip id="ID_MEDIA_RANDOM" message="Į-/Išjungti atsitiktinį bylų pasirinkimą iš veikiančio grojaraščio."/>
-       <tip id="ID_MEDIA_REPEAT" message="Kartoti veikiančios bylos grojimą."/>
-       <tip id="ID_MEDIA_SETTINGS" message="Atverti grotuvo nuostatų langą..."/>
-       <tip id="ID_MEDIA_PAUSE" message="Pristabdyti grotuvo bylos grojimą."/>
-       <tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
-       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="Naudoti numatytąjį vaizdo matmenų santykį."/>
-       <tip id="ID_MEDIA_ASPECT_4_3" message="Nustatyti vaizdo matmenų santykį 4:3, kaip televizoriuje."/>
-       <tip id="ID_MEDIA_ASPECT_16_9" message="Nustatyti vaizdo matmenų santykį 16:9, kaip plačiaekraniniame filme."/>
-       <tip id="ID_MEDIA_SELECT" message="Pažymėti ir groti pasirinktą bylą."/>
-       <tip id="ID_MEDIA_ADD" message="Pridėti grotuvo bylą prie grojaraščio..."/>
-       <tip id="ID_MEDIA_REMOVE" message="Pašalinti pažymėtą grotuvo bylą iš grojaraščio."/>
-       <tip id="ID_MEDIA_CLEAR" message="Išvalyti (ištuštinti) grojaraštį."/>
-       <tip id="ID_MEDIA_SAVE" message="Išsaugoti veikiantį grojaraštį į bylą..."/>
-       <tip id="ID_MEDIA_PLAYLIST" message="Rodyti ar paslėpti grojaraščio redaktorių."/>
        <tip id="ID_LIBRARY_VIEW_TILE" message="Rodyti albumo katalogų sąrašą." tip="Išklotinė"/>
-       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Atverti pasirinktą albumo katalogą."/>
-       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Įtraukti visas bylas iš pasirinkto albumo katalogo(-ų) į grojaraštį."/>
-       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
-       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
-       <tip id="ID_TAB_SEARCH" message="Ieškoti tinkle bylų parsisiuntimui"/>
-       <tip id="ID_LIBRARY_FOLDERS" message="Tvarkyti fizinius savo kolekcijos aplankus..."/>
-       <tip id="ID_TOOLS_PROFILE" message="Taisyti savo vartotojo profilį..."/>
-       <tip id="ID_BROWSE_PROFILE" message="Peržiūrėti vartotojo profilį."/>
-       <tip id="ID_BROWSE_FILES" message="Peržiūrėti vartotojo bendrintas bylas."/>
-       <tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
-       <tip id="ID_CHAT_CONNECT" message="Jungtis pokalbiui."/>
-       <tip id="ID_CHAT_DISCONNECT" message="Nutraukti pokalbį."/>
-       <tip id="ID_CHAT_BROWSE" message="Peržiūrėti vartotojo profilį ir bendrintas bylas."/>
-       <tip id="ID_CHAT_COLOUR" message="Pasirinkti teksto spalvą (Ctrl+K)"/>
-       <tip id="ID_CHAT_BOLD" message="Paryškinti pusjuodžiu šriftu (Ctrl+B)"/>
-       <tip id="ID_CHAT_ITALIC" message="Išskirti kursyvu (Ctrl+I)"/>
-       <tip id="ID_CHAT_UNDERLINE" message="Rašyti su pabraukimu (Ctrl+U)"/>
-       <tip id="ID_CHAT_SEND_FILE" message="Siųsti bylą vartotojui..."/>
-       <tip id="ID_CHAT_PRIORITY" message="Suteikti vartotojui parsisiuntimo prioritetą."/>
-       <tip id="ID_CHAT_CLEAR" message="Išvalyti pranešimo langą (panaikinti tekstą)."/>
-       <tip id="ID_CHAT_EMOTICONS" message="Įterpti emociją."/>
-       <tip id="ID_DOWNLOADS_SHARE" message="Bendrinti šią dalinai parsisiųstą bylą."/>
+       <tip id="ID_MEDIA_ADD" message="Pridėti grotuvo bylą prie grojaraščio..."/>
        <tip id="ID_MEDIA_ADD_FOLDER" message="Įtraukti aplanką su grotuvo bylomis į grojaraštį..."/>
-       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Peržiūrėti ir taisyti visų bylų ypatybes pasirinktame aplanke(-uose)..."/>
-       <tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar bylų meta duomenis ir maišas."/>
-       <tip id="ID_VIEW_HELP" message="Rodyti ar paslėpti „ŽINYNO“ langą."/>
-       <tip id="ID_TAB_HELP" message="Skaityti „Shareaza“ vartotojo instrukciją."/>
-       <tip id="ID_DOWNLOADS_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
-       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Rodyti išsamią albumų informaciją" tip="Albumai"/>
-       <tip id="ID_SEARCH_DETAILS" message="Rodyti išsamią pasirinktos bylos informaciją."/>
-       <tip id="ID_UPLOADS_FILTER_ALL" message="Rodyti visas išsiunčiamas bylas."/>
-       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Rodyti tas bylas, kurios aktyviai siunčiamos."/>
-       <tip id="ID_UPLOADS_FILTER_QUEUED" message="Rodyti tas bylas, kurių išsiuntimo laukiama."/>
-       <tip id="ID_UPLOADS_FILTER_HISTORY" message="Rodyti bylas, kurios buvo išsiųstos."/>
-       <tip id="ID_SEARCH_FOR_THIS" message="Ieškoti kitų pasirinktos bylos kopijų."/>
-       <tip id="ID_SEARCH_FOR_SIMILAR" message="Ieškoti bylų, panašių į pasirinktą bylą."/>
-       <tip id="ID_SEARCH_FOR_ARTIST" message="Ieškoti to pačio, kaip ir pasirinktos bylos, atlikėjo muzikos bylų."/>
-       <tip id="ID_SEARCH_FOR_ALBUM" message="Ieškoti muzikos bylų iš to pačio, kaip ir pasirinktos bylos, albumo."/>
-       <tip id="ID_SEARCH_FOR_SERIES" message="Ieškoti vaizdo bylų iš to pačio, kaip ir pasirinktosios bylos, serialo."/>
-       <tip id="ID_CHAT_TIMESTAMP" message="Rodyti laiką, kada buvo gautas kiekvienas pranešimas."/>
-       <tip id="ID_MEDIA_STATUS" message="Rodyti ar paslėpti grotuvo būklės juostelę."/>
-       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Rodyti eDonkey2000 serverius."/>
-       <tip id="ID_HOSTCACHE_IMPORT" message="Importuoti žinomų adresatų sąrašą iš tokios bylos, kaip kad „server.met“ byla..."/>
-       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey2000 „server.met“ bylą..."/>
-       <tip id="ID_DISCOVERY_SERVERMET" message="Rodyti eDonkey2000 Server.met tarnybas paslaugų radimo tarnybų lange."/>
-       <tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
-       <tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
-       <tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey2000 tinklo."/>
-
-       <tip id="ID_HOSTCACHE_PRIORITY" message="Mėginti jungtis prie šito serverio, prieš jungiantis prie kitų."/>
-       <tip id="ID_VIEW_BASIC" message="Naudoti „Shareaza“ įprastinėje veiksenoje."/>
-       <tip id="ID_LIBRARY_SEARCH_QUICK" message="Ieškoti savo kolekcijoje..."/>
-       <tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
-       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Sukurti naują parsisiuntimų grupę..."/>
-       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Pašalinti pasirinktą parsisiuntimų grupę."/>
-       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Taisyti pasirinktos parsisiuntimų grupės ypatybes."/>
-       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Sustabdyti visų šios grupės bylų parsisiuntmą."/>
-       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Tęsti visų šios grupės bylų parsisiuntimą."/>
-       <tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Atšaukti visų šios grupės bylų parsisiuntimą ir pašalinti bylas."/>
-       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="Peržiūrėti pasirinktos bylos BitTorrent informaciją..."/>
-       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="Rodyti ar paslėpti parsisiuntimų grupės juostą."/>
-       <tip id="ID_DOWNLOADS_HELP" message="Peržiūrėti pagalbos informaciją apie šią parsisiunčiamą bylą..."/>
-       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo parsisiunčiamas bylas rodyti, o kurių nerodyti."/>
-       <tip id="ID_UPLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo išsiunčiamas bylas rodyti, o kurių nerodyti."/>
-       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigtos siųstis bylos(-ų) parsisiuntimą."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą bylą(-as) iš sąrašo."/>
-       <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
-       <tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
-       <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
-       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
-       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visas bylas iš pasirinkto rinkinio."/>
-       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti ir išsaugoti pasirinktą albumo aplanką kaip rinkinio bylą..."/>
-       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į turimą rinkinio bylą..."/>
-       <tip id="ID_LIBRARY_SEED_TORRENT" message="Pradėti skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
-       <tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
-       <tip id="ID_DOWNLOADS_EDIT" message="Rodyti bylos išplėstinės taisos langą..."/>
+       <tip id="ID_MEDIA_ASPECT_16_9" message="Nustatyti vaizdo matmenų santykį 16:9, kaip plačiaekraniniame filme."/>
+       <tip id="ID_MEDIA_ASPECT_4_3" message="Nustatyti vaizdo matmenų santykį 4:3, kaip televizoriuje."/>
+       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="Naudoti numatytąjį vaizdo matmenų santykį."/>
+       <tip id="ID_MEDIA_CLEAR" message="Išvalyti (ištuštinti) grojaraštį."/>
+       <tip id="ID_MEDIA_CLOSE" message="Užverti veikiančią grotuvo bylą, tuo pačiu atlaisvinant atmintį."/>
+       <tip id="ID_MEDIA_FULLSCREEN" message="Į-/Išjungti visaekranę vaizdo veikseną."/>
        <tip id="ID_MEDIA_MUTE" message="Nutildyti garsą"/>
-       <tip id="ID_WINDOW_REMOTE" message="Rodyti ar paslėpti „Shareaza“ nuotolinio valdymo pultelį"/>
-       <tip id="ID_UPLOADS_FILTER_TORRENT" message="Rodyti BitTorrent išsiuntimus."/>
+       <tip id="ID_MEDIA_NEXT" message="Pereiti prie sekančios bylos veikiančiame grojaraštyje."/>
+       <tip id="ID_MEDIA_OPEN" message="Atverti ir groti grotuvo bylą ar grojaraštį..."/>
+       <tip id="ID_MEDIA_PAUSE" message="Pristabdyti grotuvo bylos grojimą."/>
+       <tip id="ID_MEDIA_PLAY" message="Groti pažymėtą grotuvo bylą."/>
+       <tip id="ID_MEDIA_PLAYLIST" message="Rodyti ar paslėpti grojaraščio redaktorių."/>
+       <tip id="ID_MEDIA_PREVIOUS" message="Pereiti prie ankstesnės bylos veikiančiame grojaraštyje."/>
+       <tip id="ID_MEDIA_RANDOM" message="Į-/Išjungti atsitiktinį bylų pasirinkimą iš veikiančio grojaraščio."/>
+       <tip id="ID_MEDIA_REMOVE" message="Pašalinti pažymėtą grotuvo bylą iš grojaraščio."/>
+       <tip id="ID_MEDIA_REPEAT" message="Kartoti veikiančios bylos grojimą."/>
+       <tip id="ID_MEDIA_SAVE" message="Išsaugoti veikiantį grojaraštį į bylą..."/>
+       <tip id="ID_MEDIA_SELECT" message="Pažymėti ir groti pasirinktą bylą."/>
+       <tip id="ID_MEDIA_SETTINGS" message="Atverti grotuvo nuostatų langą..."/>
+       <tip id="ID_MEDIA_SIZE_DISTORT" message="Užpildyti langą vaizdu, galbūt vaizdą iškreipiant."/>
+       <tip id="ID_MEDIA_SIZE_FILL" message="Pasirinkti geriausius vaizdo matmenis, atitinkančius jo matmenų santykį."/>
+       <tip id="ID_MEDIA_SIZE_ONE" message="Rodyti vaizdą tokiais matmenimis, kaip nurodyta byloje."/>
+       <tip id="ID_MEDIA_SIZE_THREE" message="Rodyti vaizdą patrigubinant nurodytus byloje matmenis."/>
+       <tip id="ID_MEDIA_SIZE_TWO" message="Rodyti vaizdą padvigubinant nurodytus byloje matmenis."/>
+       <tip id="ID_MEDIA_STATUS" message="Rodyti ar paslėpti grotuvo būklės juostelę."/>
+       <tip id="ID_MEDIA_STOP" message="Sustabdyti grotuvo bylos grojimą."/>
+       <tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
+       <tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
+       <tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
+       <tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
+       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
+       <tip id="ID_NEIGHBOURS_SETTINGS" message="Konfigūruoti tinklą..."/>
+       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Atverti naują „Paketų išvesties“ langą šiam kaimynui stebėti."/>
+       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno įeinačiam srautui stebėti."/>
+       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno išeinačiam srautui stebėti."/>
+       <tip id="ID_NETWORK_AUTO_CLOSE" message="Automatiškai išeiti iš „Shareaza“ programos, kai bus baigti visi atsisiuntimai/išsiuntimai."/>
+       <tip id="ID_NETWORK_BROWSE_TO" message="Peržiūrėti vartotojo profilį ir bendrintas bylas..."/>
+       <tip id="ID_NETWORK_CONNECT" message="Jungtis prie tinklo"/>
+       <tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
+       <tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklo"/>
+       <tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey2000 tinklo."/>
+       <tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
+       <tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
+       <tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
+       <tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
+       <tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
+       <tip id="ID_SEARCH_COLUMNS" message="Pasirinkti meta duomenų stulpelius, kuriuos rodyti..."/>
+       <tip id="ID_SEARCH_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
+       <tip id="ID_SEARCH_DETAILS" message="Rodyti išsamią pasirinktos bylos informaciją."/>
+       <tip id="ID_SEARCH_DOWNLOAD" message="Parsisiųsti pasirinktą bylą(-as)."/>
+       <tip id="ID_SEARCH_DOWNLOADNOW" message="Parsisiųsti pasirinktą bylą(-as) su prioritetu."/>
+       <tip id="ID_SEARCH_FILTER" message="Filtruoti radinius pagal tam tikrus žodžius ir sąlygas..."/>
+       <tip id="ID_SEARCH_FILTER_RAW" message="Filtruoti radinius pagal tam tikrus žodžius arba sąlygas..."/>
+       <tip id="ID_SEARCH_FILTER_REMOVE" message="Pašalinti filtrą nuo radinių."/>
+       <tip id="ID_SEARCH_FOR_ALBUM" message="Ieškoti muzikos bylų iš to pačio, kaip ir pasirinktos bylos, albumo."/>
+       <tip id="ID_SEARCH_FOR_ARTIST" message="Ieškoti to pačio, kaip ir pasirinktos bylos, atlikėjo muzikos bylų."/>
+       <tip id="ID_SEARCH_FOR_SERIES" message="Ieškoti vaizdo bylų iš to pačio, kaip ir pasirinktosios bylos, serialo."/>
+       <tip id="ID_SEARCH_FOR_SIMILAR" message="Ieškoti bylų, panašių į pasirinktą bylą."/>
+       <tip id="ID_SEARCH_FOR_THIS" message="Ieškoti kitų pasirinktos bylos kopijų."/>
+       <tip id="ID_SEARCH_GROUPED" message="Grupuoti radinius pagal bylą."/>
+       <tip id="ID_SEARCH_MERGE" message="Apjungti pasirinktas bylų grupes."/>
+       <tip id="ID_SEARCH_PANEL" message="Rodyti sparčiosios paieškos skydelį kairėje „Paieškos“ lango pusėje."/>
+       <tip id="ID_SEARCH_SEARCH" message="Ieškoti tinkle dar kartą..."/>
+       <tip id="ID_SEARCH_STOP" message="Sustabdyti radinių išvedimą šiame lange."/>
+       <tip id="ID_SEARCHMONITOR_CLEAR" message="Išvalyti paieškos užklausų monitoriaus buferį."/>
+       <tip id="ID_SEARCHMONITOR_PAUSE" message="Pristabdyti paieškos užklausų stebėjimą."/>
+       <tip id="ID_SECURITY_ADD" message="Pridėti naują taisyklę prie apsaugos sekos..."/>
+       <tip id="ID_SECURITY_BAN" message="Užkirsti pasirinkto adresato prieigą visos šios sesijos metu."/>
+       <tip id="ID_SECURITY_EDIT" message="Taisyti pasirinktą saugos taisyklę..."/>
+       <tip id="ID_SECURITY_EXPORT" message="Eksportuoti pasirinktas saugos taisykles į bylą..."/>
+       <tip id="ID_SECURITY_IMPORT" message="Importuoti saugos taisykles iš bylos..."/>
+       <tip id="ID_SECURITY_MOVE_DOWN" message="Perkelti pasirinktas saugos taisykles į apačią, suteikiant žemesnį rangą."/>
+       <tip id="ID_SECURITY_MOVE_UP" message="Perkelti pasirinktas saugos taisykles į viršų, suteikiant aukštesnį rangą."/>
+       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Nustatyti, kad saugos politika, leidžianti visų adresatų prieigą, būtų numatytąja."/>
+       <tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, būtų numatytąja."/>
+       <tip id="ID_SECURITY_REMOVE" message="Pašalinti pasirinktą(-as) saugos taisyklę(-es)."/>
+       <tip id="ID_SECURITY_RESET" message="Apnulinti pasirinktų saugos taisyklių kreipinių skaitliukus."/>
+       <tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos žurnalą."/>
+       <tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
+       <tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
+       <tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
+       <tip id="ID_TAB_HELP" message="Skaityti „Shareaza“ vartotojo instrukciją."/>
+       <tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
+       <tip id="ID_TAB_LIBRARY" message="Peržiūrėkite ir keiskite savo kolekcijos bylas."/>
+       <tip id="ID_TAB_MEDIA" message="Grokite savo kolekcijos garso ir vaizdo bylas."/>
+       <tip id="ID_TAB_NETWORK" message="Pažiūrėkite, kaip gerai Jūs esate prisijungę prie tinklo."/>
+       <tip id="ID_TAB_SEARCH" message="Ieškoti tinkle bylų parsisiuntimui"/>
+       <tip id="ID_TAB_TRANSFERS" message="Stebėkite, kaip vyksta bylų atsisiuntimas ir išsiuntimas."/>
+       <tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti naują ar BitTorrent tinklo torrent bylą..."/>
+       <tip id="ID_TOOLS_LANGUAGE" message="Pasirinkti „Shareaza“ grafinės sąsajos kalbą..."/>
        <tip id="ID_TOOLS_MERCORA" message="Paleisti P2P radiją"/>
-       <tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
+       <tip id="ID_TOOLS_PROFILE" message="Taisyti savo vartotojo profilį..."/>
+       <tip id="ID_TOOLS_RESKIN" message="Perkrauti ir pritaikyti pasirinktą apvalkalą."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
+       <tip id="ID_TOOLS_SETTINGS" message="Keisti „Shareaza“ nuostatas..."/>
+       <tip id="ID_TOOLS_SKIN" message="Pasirinkti kitokį „Shareaza“ apvalkalą..."/>
+       <tip id="ID_TOOLS_WIZARD" message="Paleisti „Shareaza“ nuostatų vedlį..."/>
+       <tip id="ID_TRAFFIC_AXIS" message="Rodyti vertikalią ašį."/>
+       <tip id="ID_TRAFFIC_CLEAR" message="Išvalyti duomenų srauto grafiką."/>
+       <tip id="ID_TRAFFIC_GRID" message="Rodyti tinklelį."/>
+       <tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
+       <tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
+       <tip id="ID_TRAFFIC_WINDOW" message="Atverti naują grafiko langą..."/>
+       <tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
+       <tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_TRANSFERS_CONNECT" message="Susijungti su pasirinktu šaltiniu(-ais) ir pamėginti parsisiųsti bylą."/>
+       <tip id="ID_TRANSFERS_DISCONNECT" message="Atjungti pasirinktą atsisiuntimo srautą(-us)."/>
+       <tip id="ID_TRANSFERS_FORGET" message="Atsijungti nuo ir užmiršti pasirinktą atsisiuntimo šaltinį(-ius)."/>
+       <tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatiškai šalinti užbaigtas bylas iš išsiunčiamų bylų sąrašo."/>
+       <tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_UPLOADS_CLEAR" message="Pašalinti iš išsiunčiamų bylų sąrašo pasirinktą bylą(-as)."/>
+       <tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Pašalinti iš sąrašo bylas, kurių išsiuntimas baigtas."/>
+       <tip id="ID_UPLOADS_DISCONNECT" message="Nutraukti pasirinktą išsiuntimą(-us)."/>
+       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Rodyti tas bylas, kurios aktyviai siunčiamos."/>
+       <tip id="ID_UPLOADS_FILTER_ALL" message="Rodyti visas išsiunčiamas bylas."/>
+       <tip id="ID_UPLOADS_FILTER_HISTORY" message="Rodyti bylas, kurios buvo išsiųstos."/>
+       <tip id="ID_UPLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo išsiunčiamas bylas rodyti, o kurių nerodyti."/>
+       <tip id="ID_UPLOADS_FILTER_QUEUED" message="Rodyti tas bylas, kurių išsiuntimo laukiama."/>
+       <tip id="ID_UPLOADS_FILTER_TORRENT" message="Rodyti BitTorrent išsiuntimus."/>
+       <tip id="ID_UPLOADS_GROUP" message="Grupuoti išsiunčiamas bylas pagal ryšį (adresatą)."/>
+       <tip id="ID_UPLOADS_LAUNCH" message="Atverti/vykdyti pasirinktą bendrintą bylą(-as)."/>
+       <tip id="ID_UPLOADS_SETTINGS" message="Keisti išsiuntimų nuostatas..."/>
+       <tip id="ID_UPLOADS_START" message="Tęsti pasirinktos siunčiamos bylos(-ų) išsiuntimą."/>
+       <tip id="ID_VIEW_BASIC" message="Naudoti „Shareaza“ įprastinėje veiksenoje."/>
+       <tip id="ID_VIEW_DISCOVERY" message="Rodyti ar paslėpti „PASLAUGŲ RADIMO TARNYBŲ“ langą."/>
+       <tip id="ID_VIEW_DOWNLOADS" message="Rodyti arba paslėpti „ATSISIUNTIMŲ“ langą."/>
+       <tip id="ID_VIEW_HELP" message="Rodyti ar paslėpti „ŽINYNO“ langą."/>
+       <tip id="ID_VIEW_HOSTS" message="Rodyti arba paslėpti „ADRESATŲ TALPYKLOS“ langą."/>
+       <tip id="ID_VIEW_LIBRARY" message="Rodyti arba paslėpti „KOLEKCIJOS“ langą."/>
+       <tip id="ID_VIEW_MEDIA" message="Rodyti ar paslėpti „GROTUVO“ langą."/>
+       <tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
+       <tip id="ID_VIEW_PACKETS" message="Rodyti arba paslėpti „PAKETŲ IŠVESTIES“ langą."/>
+       <tip id="ID_VIEW_RESULTS_MONITOR" message="Rodyti arba paslėpti „KREIPINIŲ MONITORIAUS“ langą."/>
+       <tip id="ID_VIEW_SEARCH_MONITOR" message="Rodyti arba paslėpti „PAIEŠKOS UŽKLAUSŲ MONITORIAUS“ langą."/>
+       <tip id="ID_VIEW_SECURITY" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
+       <tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
+       <tip id="ID_VIEW_TABBED" message="Perjunkite „Shareaza“ į kortelių veikseną (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas), skirtą patyrusiems vartotojams."/>
+       <tip id="ID_VIEW_TRAFFIC" message="Rodyti arba paslėpti „GRAFIKŲ“ langą."/>
+       <tip id="ID_VIEW_UPLOADS" message="Rodyti arba paslėpti „IŠSIUNTIMŲ“ langą."/>
+       <tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems vartotojams."/>
        <tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
+       <tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>
+       <tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
+       <tip id="ID_WINDOW_REMOTE" message="Rodyti ar paslėpti „Shareaza“ nuotolinio valdymo pultelį"/>
+       <tip id="ID_WINDOW_TABBAR" message="Rodyti ar paslėpti langų kortelių juostą."/>
        <tip id="ID_WINDOW_TILE_HORZ" message="Išdėstyti atvertus langus iš kairės į dešinę, neuždengiant vienas kito."/>
        <tip id="ID_WINDOW_TILE_VERT" message="Išdėstyti atvertus langus iš viršaus į apačią, neuždengiant vienas kito."/>
+       <tip id="ID_WINDOW_TOOLBAR" message="Rodyti ar paslėpti įrankių juostą."/>
 </commandTips>
 
 <!-- Localised Strings -->
