@@ -591,7 +591,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 			
 			if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 			{
-				pPacket = m_pSearch->ToEDPacket( TRUE, 0 );
+				pPacket = m_pSearch->ToEDPacket( TRUE, pHost->m_nUDPFlags );
 			}
 			else
 			{
@@ -604,7 +604,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 			{
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort + 4, pPacket, TRUE );
 				
-				theApp.Message( MSG_DEBUG, _T("Sending query to %s"),
+				theApp.Message( MSG_DEBUG, _T("Sending UDP query to %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 				
 				return TRUE;
