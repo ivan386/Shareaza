@@ -772,14 +772,21 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 	LPCTSTR pptr, sptr, start;
 	DWORD slen, plen;
 
+	if ( *pszString == NULL ) return NULL;
+
 	for (	start	= pszString,
 			pptr	= pszPattern,
 			slen	= _tcslen( pszString ),
 			plen	= _tcslen( pszPattern ) ;
 			slen >= plen ; start++, slen-- )
 	{
-		while ( CharUpper( (WCHAR*)*start ) != CharUpper( (WCHAR*)*pszPattern ) )
+		while ( TRUE )
 		{
+			WCHAR s[2] = {*start, 0};
+			WCHAR p[2] = {*pszPattern, 0};
+			CharUpper(s);
+			CharUpper(p);
+			if ( s[0] == p[0] ) break;
 			start++;
 			slen--;
 
@@ -789,8 +796,13 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 		sptr = start;
 		pptr = pszPattern;
 
-		while ( CharUpper( (WCHAR*)*sptr ) == CharUpper( (WCHAR*)*pptr ) )
+		while ( TRUE )
 		{
+			WCHAR s[2] = {*sptr, 0};
+			WCHAR p[2] = {*pptr, 0};
+			CharUpper(s);
+			CharUpper(p);
+			if ( s[0] != p[0] ) break;
 			sptr++;
 			pptr++;
 
@@ -806,13 +818,20 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 	LPCTSTR pptr, sptr, start;
 	DWORD slen, plen2;
 
+	if ( *pszString == NULL ) return NULL;
+
 	for (	start	= pszString,
 			pptr	= pszPattern,
 			slen	= _tcslen( pszString ) ;
 			slen >= plen ; start++, slen-- )
 	{
-		while ( CharUpper( (WCHAR*)*start ) != CharUpper( (WCHAR*)*pszPattern ) )
+		while ( TRUE )
 		{
+			WCHAR s[2] = {*start, 0};
+			WCHAR p[2] = {*pszPattern, 0};
+			CharUpper(s);
+			CharUpper(p);
+			if ( s[0] == p[0] ) break;
 			start++;
 			slen--;
 
@@ -823,8 +842,13 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 		pptr = pszPattern;
 		plen2 = plen;
 
-		while ( CharUpper( (WCHAR*)*sptr ) == CharUpper( (WCHAR*)*pptr ) )
+		while ( TRUE )
 		{
+			WCHAR s[2] = {*sptr, 0};
+			WCHAR p[2] = {*pptr, 0};
+			CharUpper(s);
+			CharUpper(p);
+			if ( s[0] != p[0] ) break;
 			sptr++;
 			pptr++;
 
