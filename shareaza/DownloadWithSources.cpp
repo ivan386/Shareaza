@@ -364,15 +364,25 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 
 BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
-		
-	//Check/Reject if source is the local IP/port
-	if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
+	//Check/Reject if source is invalid
+	if ( ! pSource->m_bPushOnly )
 	{
-		if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
-			|| ( Settings.Connection.IgnoreOwnIP ) )
-		{	
+		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		if ( !( pSource->m_pAddress.S_un.S_addr & 0xFF000000 ) )
+		{
 			delete pSource;
 			return FALSE;
+		}
+
+		//Reject if source is the local IP/port
+		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
+		{
+			if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
+				|| ( Settings.Connection.IgnoreOwnIP ) )
+			{	
+				delete pSource;
+				return FALSE;
+			}
 		}
 	}
 
