@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.13"
+		version="2.1.0.14"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2480,6 +2480,10 @@
 	<string id="8324" value="Inactive"/>
 	<string id="8325" value="Active"/>
 	<string id="8326" value="Next in Line"/>
+	<string id="8327" value="Total Files:"/>
+	<string id="8328" value="Total Volume:"/>
+	<string id="8329" value="of your library"/>
+	<string id="8330" value="Folder"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
