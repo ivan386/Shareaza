@@ -28,6 +28,7 @@
 #include "Neighbours.h"
 #include "Neighbour.h"
 #include "Packet.h"
+#include "Buffer.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -301,20 +302,52 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 
 void CDiscoveryServices::AddDefaults()
 {
-	CString strServices;
-	strServices.LoadString( IDS_DISCOVERY_DEFAULTS );
-	
-	for ( strServices += '\n' ; strServices.GetLength() ; )
+	CFile pFile;
+	CString strFile = Settings.General.Path + _T("\\Data\\gwebcache.txt");
+
+	if (  pFile.Open( strFile, CFile::modeRead ) ) //Load default list from file if possible
 	{
-		CString strService = strServices.SpanExcluding( _T("\r\n") );
-		strServices = strServices.Mid( strService.GetLength() + 1 );
-		
-		if ( strService.GetLength() > 0 )
+		try
 		{
-			Add( strService,
+			CString strService;
+			CString strLine;
+			CBuffer pBuffer;
+
+			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
+			pBuffer.m_nLength = (DWORD)pFile.GetLength();
+			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
+			pFile.Close();
+
+			while ( pBuffer.ReadLine( strService ) )
+			{
+				Add( strService,( _tcsistr( strService, _T(".met") ) == NULL ?
+					CDiscoveryService::dsWebCache : CDiscoveryService::dsServerMet ),
+					TRUE ); // ( _tcsistr( strService, _T("GWC2") ) != NULL || _tcsistr( strService, _T("g2cache") ) != NULL ) );
+			}
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
+		pFile.Close();
+	}
+	else                //If file can't be used, drop back to the the in-built list
+	{
+		CString strServices;
+		strServices.LoadString( IDS_DISCOVERY_DEFAULTS );
+	
+		for ( strServices += '\n' ; strServices.GetLength() ; )
+		{
+			CString strService = strServices.SpanExcluding( _T("\r\n") );
+			strServices = strServices.Mid( strService.GetLength() + 1 );
+		
+			if ( strService.GetLength() > 0 )
+			{
+				Add( strService,
 				( _tcsistr( strService, _T("server.met") ) == NULL ?
 				CDiscoveryService::dsWebCache : CDiscoveryService::dsServerMet ),
 				TRUE ); // ( _tcsistr( strService, _T("GWC2") ) != NULL || _tcsistr( strService, _T("g2cache") ) != NULL ) );
+			}
 		}
 	}
 }
@@ -334,7 +367,7 @@ BOOL CDiscoveryServices::Update()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
-	if ( Network.GetStableTime() < 3600 ) return FALSE;				// Up for an hour
+	if ( Network.GetStableTime() < 7200 ) return FALSE;				// Up for two hours
 	if ( ! Neighbours.IsHub() ) return FALSE;						// Must be a hub now
 	if ( Neighbours.GetCount( -1, -1, ntNode ) < 4 ) return FALSE;	// Must have 4 peers
 	
