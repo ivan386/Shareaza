@@ -60,6 +60,10 @@ public:
 	void			OnRun();
 	BOOL			OnAccept(CConnection* pConnection);
 	BOOL			OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+private:
+	void			OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+
+public:
 	
 	inline CEDClient* GetFirst() const
 	{

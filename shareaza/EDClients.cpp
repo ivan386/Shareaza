@@ -337,6 +337,9 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 			pClient->OnUdpFileNotFound( pPacket );
 		}
 		break;
+	case ED2K_S2CG_SERVERSTATUS:
+		OnServerStatus( pHost, pPacket );
+		break;
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
@@ -354,3 +357,43 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	
 	return TRUE;
 }
+
+void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+{
+	DWORD nLen, nKey;
+	DWORD nUsers = 0, nFiles = 0, nMaxUsers = 0, nMaxFiles = 1000, nUDPFlags = 0;
+
+	nKey = pPacket->ReadLongLE();
+
+	nLen = pPacket->GetRemaining();
+
+
+	if ( nLen >= 8 ) 
+	{
+		nUsers = pPacket->ReadLongLE();
+		nFiles = pPacket->ReadLongLE();
+	}
+	if ( nLen >= 12 ) 
+	{
+		nMaxUsers = pPacket->ReadLongLE();
+	}
+	if ( nLen >= 20 ) 
+	{
+		nMaxFiles = pPacket->ReadLongLE();
+		pPacket->ReadLongLE(); // 'Hard' limit. (We obey the soft one, since it saves bandwidth)
+	}
+	if ( nLen >= 24 ) 
+	{
+		nUDPFlags = pPacket->ReadLongLE();
+	}
+	if ( nLen >= 28 ) 
+	{
+		pPacket->ReadLongLE(); // Low ID users
+	}
+
+
+	// ToDo: Handle this!
+	// Send flags to host, etc...
+	// ********** Temp
+}
+	
