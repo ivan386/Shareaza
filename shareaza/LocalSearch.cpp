@@ -211,7 +211,14 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 	
 	m_pPacket->WriteLongLE( pFile->m_nIndex );
 	m_pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), QWORD(0xFFFFFFFF) ) );
-	m_pPacket->WriteString( pFile->m_sName );
+	if ( Settings.Gnutella1.QueryHitUTF8 ) //Support UTF-8 Query
+	{
+		m_pPacket->WriteStringUTF8( pFile->m_sName );
+	}
+	else
+	{
+		m_pPacket->WriteString( pFile->m_sName );
+	}
 	
 	if ( pFile->m_bSHA1 )
 	{

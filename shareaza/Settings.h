@@ -262,6 +262,8 @@ public:
 		DWORD		PongCache;
 		int			PongCount;
 		int			HitQueueLimit;				// Protect G1 clients from badly configured queues
+		BOOL		QueryHitUTF8;				// Use UTF-8 encoding to read Gnutella1 QueryHit packets
+		BOOL		QuerySearchUTF8;			// Use UTF-8 encoding to create Gnutella1 Query packets
 	} Gnutella1;
 
 	struct sGnutella2

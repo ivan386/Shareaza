@@ -145,7 +145,14 @@ CG1Packet* CQuerySearch::ToG1Packet()
 	
 	if ( m_sSearch.GetLength() )
 	{
-		pPacket->WriteString( m_sSearch );
+		if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
+		{
+			pPacket->WriteStringUTF8( m_sSearch );
+		}
+		else
+		{
+			pPacket->WriteString( m_sSearch );
+		}
 	}
 	else if ( m_pSchema != NULL && m_pXML != NULL )
 	{
@@ -530,7 +537,14 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 		m_bWantXML	= 0 != ( nFlags & G1_QF_XML );
 	}
 	
-	m_sSearch = pPacket->ReadString();
+	if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
+	{
+		m_sSearch = pPacket->ReadStringUTF8();
+	}
+	else
+	{
+		m_sSearch = pPacket->ReadString();
+	}
 	
 	if ( pPacket->GetRemaining() >= 1 )
 	{
