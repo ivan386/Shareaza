@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
-
 class CPongItem;
 class CNeighbour;
 class CG1Packet;
@@ -74,7 +72,7 @@ public:
 
 // Operations
 public:
-	CG1Packet*		ToPacket(int nTTL = 0, CGUID* pGUID = NULL);
+	CG1Packet*		ToPacket(int nTTL = 0, GGUID* pGUID = NULL);
 
 };
 

@@ -228,6 +228,7 @@ public:
 	
 	struct sGnutella1
 	{
+		DWORD		ClientMode;					// MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		BOOL		Handshake04;
@@ -256,6 +257,7 @@ public:
 
 	struct sGnutella2
 	{
+		DWORD		ClientMode;					//MODE_AUTO, MODE_LEAF, MODE_HUB
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		int			NumHubs;
@@ -469,6 +471,11 @@ extern CSettings Settings;
 enum
 {
 	GUI_WINDOWED, GUI_TABBED, GUI_BASIC
+};
+
+enum
+{
+	MODE_AUTO, MODE_LEAF, MODE_HUB, MODE_ULTRAPEER = MODE_HUB
 };
 
 #define GNUTELLA_DEFAULT_PORT	6346

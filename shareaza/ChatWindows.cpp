@@ -80,7 +80,7 @@ void CChatWindows::Close()
 //////////////////////////////////////////////////////////////////////
 // CChatWindows private chat windows
 
-CPrivateChatFrame* CChatWindows::FindPrivate(CGUID* pGUID)
+CPrivateChatFrame* CChatWindows::FindPrivate(GGUID* pGUID)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -114,7 +114,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(CGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush)
+CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush)
 {
 	SOCKADDR_IN pHost;
 	
@@ -125,7 +125,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(CGUID* pGUID, IN_ADDR* pAddress, WO
 	return OpenPrivate( pGUID, &pHost, bMustPush );
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
+CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 {
 	CPrivateChatFrame* pFrame = NULL;
 	

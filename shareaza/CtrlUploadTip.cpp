@@ -158,8 +158,7 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)
 {
-	CString strText, strOf;
-	LoadString( strOf, IDS_GENERAL_OF );
+	CString strText;
 
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
@@ -189,9 +188,9 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	
 	if ( pUpload->m_nProtocol != PROTOCOL_BT )
 	{
-		strSpeed.Format( _T("%s %s %s"),
+		strSpeed.Format( _T("%s of %s"),
 			(LPCTSTR)Settings.SmartVolume( pUpload->GetMeasuredSpeed() * 8, FALSE, TRUE ),
-			strOf, (LPCTSTR)Settings.SmartVolume( pUpload->m_nBandwidth * 8, FALSE, TRUE ) );
+			(LPCTSTR)Settings.SmartVolume( pUpload->m_nBandwidth * 8, FALSE, TRUE ) );
 	}
 	else
 	{
@@ -219,9 +218,9 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	}
 	else if ( nQueue > 0 )
 	{
-		strStatus.Format( _T("%s: %i %s %i"),
+		strStatus.Format( _T("%s: %i of %i"),
 			(LPCTSTR)pUpload->m_pQueue->m_sName,
-			nQueue, strOf, pUpload->m_pQueue->GetQueuedCount() );
+			nQueue, pUpload->m_pQueue->GetQueuedCount() );
 	}
 	else
 	{

@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
-
 class CNeighbour;
 class CBuffer;
 class CPacket;
@@ -76,12 +74,12 @@ public:
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	WORD		RandomPort() const;
-	void		CreateID(CGUID* pID);
+	void		CreateID(GGUID* pID);
 	BOOL		IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf = FALSE);
 public:
-	BOOL		GetNodeRoute(CGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
+	BOOL		GetNodeRoute(GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
 	BOOL		RoutePacket(CG2Packet* pPacket);
-	BOOL		SendPush(CGUID* pGUID, DWORD nIndex = 0);
+	BOOL		SendPush(GGUID* pGUID, DWORD nIndex = 0);
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
 	void		OnQuerySearch(CQuerySearch* pSearch);

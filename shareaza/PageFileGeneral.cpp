@@ -101,36 +101,36 @@ BOOL CFileGeneralPage::OnInitDialog()
 	m_sType = ShellIcons.GetTypeString( pFile->m_sName );	
 	m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
-	if ( pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
-		m_sSHA1 = _T("sha1:") + pFile->m_oSHA1.ToString();
+		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
 	}
 	else
 	{
 		LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
 	}
 	
-	if ( pFile->m_oTiger.IsValid() )
+	if ( pFile->m_bTiger )
 	{
-		m_sTiger = _T("tree:tiger/:") + pFile->m_oTiger.ToString();
+		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
 	}
 	else
 	{
 		m_sTiger.Empty();
 	}
 	
-	if ( pFile->m_oMD5.IsValid() )
+	if ( pFile->m_bMD5 )
 	{
-		m_sMD5 = _T("md5:") + pFile->m_oMD5.ToString();
+		m_sMD5 = _T("md5:") + CMD5::HashToString( &pFile->m_pMD5 );
 	}
 	else
 	{
 		m_sMD5.Empty();
 	}
 	
-	if ( pFile->m_oED2K.IsValid() )
+	if ( pFile->m_bED2K )
 	{
-		m_sED2K = _T("ed2k:") + pFile->m_oED2K.ToString();
+		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
 	}
 	else
 	{

@@ -141,7 +141,7 @@ void CHashDatabase::Close()
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase lookup
 
-HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, HASHID nType)
+HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType)
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = m_pIndex;
@@ -157,7 +157,7 @@ HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, HASHID nType)
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase prepare to store
 
-HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, HASHID nType, DWORD nLength)
+HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLength)
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = Lookup( nIndex, nType );
@@ -220,7 +220,7 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, HASHID nType, DWORD nL
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase erase
 
-BOOL CHashDatabase::Erase(DWORD nIndex, HASHID nType)
+BOOL CHashDatabase::Erase(DWORD nIndex, DWORD nType)
 {
 	ASSERT( m_bOpen );
 	
@@ -292,7 +292,7 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::load );
-		pTree->SerializeLoad( ar, 32 );										// Version !!!
+		pTree->Serialize( ar );
 	}
 	catch ( CException* pException )
 	{
@@ -317,7 +317,7 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::store );
-		pTree->SerializeStore( ar, 32 );										// Version !!!
+		pTree->Serialize( ar );
 	}
 	catch ( CException* pException )
 	{
@@ -353,7 +353,7 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::load );
-		pSet->SerializeLoad( ar, 32 );									// Version Info !!!
+		pSet->Serialize( ar );
 	}
 	catch ( CException* pException )
 	{
@@ -378,7 +378,7 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::store );
-		pSet->SerializeStore( ar, 32 );									// Version Info !!!
+		pSet->Serialize( ar );
 	}
 	catch ( CException* pException )
 	{

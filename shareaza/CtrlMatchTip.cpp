@@ -312,27 +312,27 @@ void CMatchTipCtrl::LoadFromFile()
 	m_sSize = m_pFile->m_sSize;
 	LoadTypeInfo();
 	
-	if ( m_pFile->m_oSHA1.IsValid() )
+	if ( m_pFile->m_bSHA1 )
 	{
-		m_sSHA1 = _T("sha1:") + m_pFile->m_oSHA1.ToString();
+		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &m_pFile->m_pSHA1 );
 	}
 	else
 	{
 		m_sSHA1.Empty();
 	}
 	
-	if ( m_pFile->m_oTiger.IsValid() )
+	if ( m_pFile->m_bTiger )
 	{
-		m_sTiger = _T("tree:tiger/:") + m_pFile->m_oTiger.ToString();
+		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &m_pFile->m_pTiger );
 	}
 	else
 	{
 		m_sTiger.Empty();
 	}
 	
-	if ( m_pFile->m_oED2K.IsValid() )
+	if ( m_pFile->m_bED2K )
 	{
-		m_sED2K = _T("ed2k:") + m_pFile->m_oED2K.ToString();
+		m_sED2K = _T("ed2k:") + CED2K::HashToString( &m_pFile->m_pED2K );
 	}
 	else
 	{
@@ -394,12 +394,12 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		CLibraryFile* pExisting = NULL;
 		
-		if ( pExisting == NULL && m_pFile->m_oSHA1.IsValid() )
-			pExisting = LibraryMaps.LookupFileBySHA1( m_pFile->m_oSHA1, TRUE );
-		if ( pExisting == NULL && m_pFile->m_oTiger.IsValid() )
-			pExisting = LibraryMaps.LookupFileByTiger( m_pFile->m_oTiger, TRUE );
-		if ( pExisting == NULL && m_pFile->m_oED2K.IsValid() )
-			pExisting = LibraryMaps.LookupFileByED2K( m_pFile->m_oED2K, TRUE );
+		if ( pExisting == NULL && m_pFile->m_bSHA1 == TRUE )
+			pExisting = LibraryMaps.LookupFileBySHA1( &m_pFile->m_pSHA1, TRUE );
+		if ( pExisting == NULL && m_pFile->m_bTiger == TRUE )
+			pExisting = LibraryMaps.LookupFileByTiger( &m_pFile->m_pTiger, TRUE );
+		if ( pExisting == NULL && m_pFile->m_bED2K == TRUE )
+			pExisting = LibraryMaps.LookupFileByED2K( &m_pFile->m_pED2K, TRUE );
 		
 		if ( pExisting != NULL )
 		{
@@ -447,8 +447,8 @@ void CMatchTipCtrl::LoadFromFile()
 		{
 			if( ( m_pFile->m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pFile->m_pBest->m_bPush == TS_TRUE ) )
 			{
-				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_pClientID.m_d[2], 
-					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pFile->m_pBest->m_pClientID.m_d[0]) ),
+				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_pClientID.w[2], 
+					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pFile->m_pBest->m_pClientID.w[0]) ),
 					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
 			}
 			else
@@ -471,27 +471,27 @@ void CMatchTipCtrl::LoadFromHit()
 	m_sSize = Settings.SmartVolume( m_pHit->m_nSize, FALSE );
 	LoadTypeInfo();
 	
-	if ( m_pHit->m_oSHA1.IsValid() )
+	if ( m_pHit->m_bSHA1 )
 	{
-		m_sSHA1 = _T("sha1:") + m_pHit->m_oSHA1.ToString();
+		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &m_pHit->m_pSHA1 );
 	}
 	else
 	{
 		m_sSHA1.Empty();
 	}
 	
-	if ( m_pHit->m_oTiger.IsValid() )
+	if ( m_pHit->m_bTiger )
 	{
-		m_sTiger = _T("tree:tiger/:") + m_pHit->m_oTiger.ToString();
+		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &m_pHit->m_pTiger );
 	}
 	else
 	{
 		m_sTiger.Empty();
 	}
 	
-	if ( m_pHit->m_oED2K.IsValid() )
+	if ( m_pHit->m_bED2K )
 	{
-		m_sED2K = _T("ed2k:") + m_pHit->m_oED2K.ToString();
+		m_sED2K = _T("ed2k:") + CED2K::HashToString( &m_pHit->m_pED2K );
 	}
 	else
 	{
@@ -546,7 +546,7 @@ void CMatchTipCtrl::LoadFromHit()
 	else if ( m_pFile->m_bDownload || m_pHit->m_bDownload )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DOWNLOAD );
-		m_crStatus = RGB( 0, 0, 160 );
+		m_crStatus = RGB( 0, 128, 0 );
 	}
 	else if ( m_pHit->m_bBogus )
 	{
@@ -566,8 +566,8 @@ void CMatchTipCtrl::LoadFromHit()
 		if( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
 		{
 			m_sUser.Format( _T("%lu@%s - %s"),
-				m_pHit->m_pClientID.m_d[2],
-				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pHit->m_pClientID.m_d[0]) ),
+				m_pHit->m_pClientID.w[2], 
+				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pHit->m_pClientID.w[0]) ),
 				(LPCTSTR)m_pHit->m_pVendor->m_sName );
 		}
 		else

@@ -25,10 +25,10 @@
 #pragma once
 
 #include "UploadTransfer.h"
-#include "FileFragment.h"
 
 class CEDClient;
 class CEDPacket;
+class CFileFragment;
 
 
 class CUploadTransferED2K : public CUploadTransfer
@@ -44,12 +44,12 @@ public:
 	DWORD			m_tRequest;
 	int				m_nRanking;
 	DWORD			m_tRanking;
-	CFileFragmentQueue m_pRequested;
-	CFileFragmentList m_pServed;
+	CFileFragment*	m_pRequested;
+	CFileFragment*	m_pServed;
 
 // Operations
 public:
-	BOOL			Request(const CHashED2K &oED2K);
+	BOOL			Request(MD4* pMD4);
 	virtual void	Close(BOOL bMessage = FALSE);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();

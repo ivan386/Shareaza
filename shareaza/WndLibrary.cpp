@@ -180,8 +180,8 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		{	//Collection IS already in the library
 
 			//Re-mount the collection
-			LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
-			pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+			LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+			pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 			Library.Unlock();
 		}
 		else
@@ -201,8 +201,8 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 			{	//Collection is already in the collection folder
 
 				//Re-mount the collection
-				LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
-				pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+				LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+				pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 				Library.Unlock();
 			}
 			else
@@ -219,7 +219,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 					AfxMessageBox( strMessage, MB_ICONINFORMATION );		
 					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
 					{
-						pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+						pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 						Library.Unlock();
 					}
 				}
@@ -241,8 +241,8 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
 						{	//Collection was already there.
 							//Re-mount the collection
-							LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
-							pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+							LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+							pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
 							Library.Unlock();
 						}
 						else

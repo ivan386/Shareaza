@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
-
 class CXMLElement;
 class CG2Packet;
 
@@ -39,7 +37,7 @@ public:
 	
 // Attributes
 public:
-	CGUID			GUID;
+	GGUID			GUID;
 protected:
 	CXMLElement*	m_pXML;
 protected:

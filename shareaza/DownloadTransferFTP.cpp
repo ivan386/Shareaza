@@ -206,7 +206,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 		return FALSE;
 	}
 }
-
+/*
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP subtract pending requests
 
@@ -225,7 +225,7 @@ BOOL CDownloadTransferFTP::SubtractRequested(CFileFragmentList& Fragments)
 	
 	return FALSE;
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP send request
 

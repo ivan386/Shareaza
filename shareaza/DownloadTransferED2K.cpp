@@ -56,15 +56,15 @@ CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource) : CDownlo
 	m_bHashset		= FALSE;
 	m_tRequest		= 0;
 	m_tRanking		= 0;
-	ASSERT( m_oPossible.IsEmpty() );
-	ASSERT( m_oRequested.IsEmpty() );
-
+	m_pAvailable	= NULL;
+	m_pRequested	= NULL;
+	m_nRequested	= 0;
 	m_bUDP			= FALSE;
 	
 	m_pInflatePtr		= NULL;
 	m_pInflateBuffer	= new CBuffer();
 	
-	ASSERT( m_pDownload->m_oED2K.IsValid() );
+	ASSERT( m_pDownload->m_bED2K );
 }
 
 CDownloadTransferED2K::~CDownloadTransferED2K()
@@ -72,6 +72,7 @@ CDownloadTransferED2K::~CDownloadTransferED2K()
 	ClearRequests();
 	delete m_pInflateBuffer;
 	
+	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 	
 #ifdef _DEBUG
 	ASSERT( m_pClient == NULL );
@@ -91,7 +92,7 @@ BOOL CDownloadTransferED2K::Initiate()
 	ASSERT( m_pClient == NULL );
 	ASSERT( m_nState == dtsNull );
 	
-	if ( ! m_pDownload->m_oED2K.IsValid() || m_pDownload->m_nSize == SIZE_UNKNOWN )
+	if ( ! m_pDownload->m_bED2K || m_pDownload->m_nSize == SIZE_UNKNOWN )
 	{
 		Close( TS_FALSE );
 		return FALSE;
@@ -102,7 +103,7 @@ BOOL CDownloadTransferED2K::Initiate()
 		m_pSource->m_nPort,
 		m_pSource->m_nServerPort ? &m_pSource->m_pServerAddress : NULL,
 		m_pSource->m_nServerPort,
-		m_pSource->m_bGUID ? &m_pSource->m_oGUID : NULL );
+		m_pSource->m_bGUID ? &m_pSource->m_pGUID : NULL );
 	
 	if ( m_pClient == NULL )
 	{
@@ -217,12 +218,12 @@ BOOL CDownloadTransferED2K::OnConnected()
 {
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
-	
+
 	m_pHost		= m_pClient->m_pHost;
 	m_sAddress	= m_pClient->m_sAddress;
 	
 	m_pSource->m_bGUID		= TRUE;
-	m_pSource->m_oGUID		= m_pClient->m_pGUID;
+	m_pSource->m_pGUID		= m_pClient->m_pGUID;
 	m_pSource->m_sServer	= m_sUserAgent = m_pClient->m_sUserAgent;
 	m_pSource->m_sNick		= m_pClient->m_sNick;
 	m_pSource->SetLastSeen();
@@ -271,17 +272,17 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 {
 	if ( m_nState <= dtsConnecting ) return TRUE;
 	
-	if ( pPacket->GetRemaining() < 2 + ED2K_HASH_SIZE )
+	if ( pPacket->GetRemaining() < sizeof(MD4) + 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		Close( TS_FALSE );
 		return FALSE;
 	}
 	
-	CHashED2K oED2K;
-	pPacket->Read( oED2K );
+	MD4 pMD4;
+	pPacket->Read( &pMD4, sizeof(MD4) );
 	
-	if ( ! ( m_pDownload->m_oED2K == oED2K ) )
+	if ( pMD4 != m_pDownload->m_pED2K )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
@@ -292,7 +293,12 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	
 	if ( nBlocks == (DWORD)( ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE ) )
 	{
-		m_pSource->m_oAvailable.Delete();
+		m_pSource->m_pAvailable->DeleteChain();
+		m_pSource->m_pAvailable = NULL;
+		
+		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
+		m_pAvailable = new BYTE[ nBlocks ];
+		ZeroMemory( m_pAvailable, nBlocks );
 		
 		for ( DWORD nBlock = 0 ; nBlock < nBlocks && pPacket->GetRemaining() ; )
 		{
@@ -306,14 +312,19 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 					QWORD nTo = nFrom + ED2K_PART_SIZE;
 					nTo = min( nTo, m_pDownload->m_nSize );
 					
-					m_pSource->m_oAvailable.Add( nFrom, nTo );
+					CFileFragment::AddMerge( &m_pSource->m_pAvailable, nFrom, nTo - nFrom );
+					m_pAvailable[ nBlock ] = TRUE;
 				}
 			}
 		}
 	}
 	else if ( nBlocks == 0 )
 	{
-		m_pSource->m_oAvailable.Delete();
+		m_pSource->m_pAvailable->DeleteChain();
+		m_pSource->m_pAvailable = NULL;
+		
+		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
+		m_pAvailable = NULL;
 	}
 	else
 	{
@@ -331,17 +342,17 @@ BOOL CDownloadTransferED2K::OnHashsetAnswer(CEDPacket* pPacket)
 {
 	if ( m_nState != dtsHashset ) return TRUE;
 	
-	if ( pPacket->GetRemaining() < 2 + ED2K_HASH_SIZE )
+	if ( pPacket->GetRemaining() < sizeof(MD4) + 2 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		Close( TS_FALSE );
 		return FALSE;
 	}
 	
-	CHashED2K oED2K;
-	pPacket->Read( oED2K );
+	MD4 pMD4;
+	pPacket->Read( &pMD4, sizeof(MD4) );
 	
-	if ( ! ( m_pDownload->m_oED2K == oED2K ) )
+	if ( pMD4 != m_pDownload->m_pED2K )
 	{
 		return TRUE;	// Hack
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_ERROR, (LPCTSTR)m_sAddress );
@@ -433,17 +444,17 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 {
 	if ( m_nState != dtsDownloading ) return TRUE;
 	
-	if ( pPacket->GetRemaining() <= 8 + ED2K_HASH_SIZE )
+	if ( pPacket->GetRemaining() <= sizeof(MD4) + 8 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		Close( TS_FALSE );
 		return FALSE;
 	}
 	
-	CHashED2K oED2K;
-	pPacket->Read( oED2K );
+	MD4 pMD4;
+	pPacket->Read( &pMD4, sizeof(MD4) );
 
-	if ( ! ( m_pDownload->m_oED2K == oED2K ) )
+	if ( pMD4 != m_pDownload->m_pED2K )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
@@ -475,7 +486,8 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 	BOOL bUseful = m_pDownload->SubmitData( nOffset,
 		pPacket->m_pBuffer + pPacket->m_nPosition, nLength );
 	
-	m_oRequested.Subtract( nOffset, nOffset + nLength );
+	CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
+	m_nRequested = m_pRequested->GetCount();
 	
 	m_pSource->AddFragment( nOffset, nLength,
 		( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
@@ -490,15 +502,18 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 {
 	if ( m_nState != dtsDownloading ) return TRUE;
-	if ( pPacket->GetRemaining() <= 8 + ED2K_HASH_SIZE )
+	
+	if ( pPacket->GetRemaining() <= sizeof(MD4) + 8 )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		Close( TS_FALSE );
 		return FALSE;
 	}
-	CHashED2K oED2K;
-	pPacket->Read( oED2K );
-	if ( ! ( m_pDownload->m_oED2K == oED2K ) )
+	
+	MD4 pMD4;
+	pPacket->Read( &pMD4, sizeof(MD4) );
+	
+	if ( pMD4 != m_pDownload->m_pED2K )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_HASH,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
@@ -506,9 +521,12 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 		// return FALSE;
 		return TRUE;
 	}
+	
 	QWORD nBaseOffset = pPacket->ReadLongLE();
 	QWORD nBaseLength = pPacket->ReadLongLE();
+	
 	z_streamp pStream = (z_streamp)m_pInflatePtr;
+	
 	if ( m_pInflatePtr == NULL || m_nInflateOffset != nBaseOffset || m_nInflateLength != nBaseLength )
 	{
 		if ( pStream != NULL )
@@ -516,14 +534,17 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 			inflateEnd( pStream );
 			delete pStream;
 		}
+		
 		m_nInflateOffset	= nBaseOffset;
 		m_nInflateLength	= nBaseLength;
 		m_nInflateRead		= 0;
 		m_nInflateWritten	= 0;
 		m_pInflateBuffer->Clear();
+		
 		m_pInflatePtr = new z_stream;
 		pStream = (z_streamp)m_pInflatePtr;
 		ZeroMemory( pStream, sizeof(z_stream) );
+		
 		if ( inflateInit( pStream ) != Z_OK )
 		{
 			delete pStream;
@@ -536,35 +557,49 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 			return FALSE;
 		}
 	}
+	
 	m_pInflateBuffer->Add( pPacket->m_pBuffer + pPacket->m_nPosition, pPacket->GetRemaining() );
+	
 	BYTE pBuffer[ BUFFER_SIZE ];
+	
 	if ( m_pInflateBuffer->m_nLength > 0 && m_nInflateRead < m_nInflateLength )
 	{
 		pStream->next_in	= m_pInflateBuffer->m_pBuffer;
 		pStream->avail_in	= m_pInflateBuffer->m_nLength;
+		
 		do
 		{
 			pStream->next_out	= pBuffer;
 			pStream->avail_out	= BUFFER_SIZE;
+			
 			inflate( pStream, Z_SYNC_FLUSH );
+			
 			if ( pStream->avail_out < BUFFER_SIZE )
 			{
 				QWORD nOffset = m_nInflateOffset + m_nInflateWritten;
 				QWORD nLength = BUFFER_SIZE - pStream->avail_out;
+				
 				BOOL bUseful = m_pDownload->SubmitData( nOffset, pBuffer, nLength );
-				m_oRequested.Subtract( nOffset, nOffset + nLength );
-				m_pSource->AddFragment( nOffset, nLength, ( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
+				
+				CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
+				m_nRequested = m_pRequested->GetCount();
+				
+				m_pSource->AddFragment( nOffset, nLength,
+					( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
+				
 				m_nDownloaded += nLength;
 				m_nInflateWritten += nLength;
 			}
 		}
 		while ( pStream->avail_out == 0 );
+		
 		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInflateBuffer->m_nLength )
 		{
 			m_nInflateRead += ( m_pInflateBuffer->m_nLength - pStream->avail_in );
 			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - pStream->avail_in );
 		}
 	}
+	
 	if ( m_nInflateRead >= m_nInflateLength )
 	{
 		inflateEnd( pStream );
@@ -572,7 +607,9 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 		m_pInflatePtr = NULL;
 		m_pInflateBuffer->Clear();
 	}
+	
 	m_pSource->SetValid();
+	
 	return SendFragmentRequests();
 }
 
@@ -607,18 +644,18 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	ClearRequests();
 	
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
-	pPacket->Write( m_pDownload->m_oED2K );
+	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 ) m_pClient->WritePartStatus( pPacket, m_pDownload );
 	Send( pPacket );
 	
 	pPacket = CEDPacket::New( ED2K_C2C_FILESTATUSREQUEST );
-	pPacket->Write( m_pDownload->m_oED2K );
+	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	Send( pPacket );
 	
 	if ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted && m_pClient->m_bEmule && Network.IsListening() )
 	{
 		pPacket = CEDPacket::New( ED2K_C2C_REQUESTSOURCES, ED2K_PROTOCOL_EMULE );
-		pPacket->Write( m_pDownload->m_oED2K );
+		pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 		Send( pPacket );
 	}
 	
@@ -640,7 +677,7 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 	if ( m_bHashset == FALSE && m_pDownload->NeedHashset() )
 	{
 		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_HASHSETREQUEST );
-		pPacket->Write( m_pDownload->m_oED2K );
+		pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 		Send( pPacket );
 		
 		SetState( dtsHashset );
@@ -649,7 +686,7 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 	else if ( m_pSource->HasUsefulRanges() )
 	{
 		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUEREQUEST );
-		pPacket->Write( m_pDownload->m_oED2K );
+		pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 		Send( pPacket );
 		
 		SetState( dtsEnqueue );
@@ -676,31 +713,33 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 {
 	ASSERT( m_nState == dtsDownloading );
 	ASSERT( m_pClient != NULL );
-	if ( m_oRequested.GetCount() >= Settings.eDonkey.RequestPipe ) return TRUE;
-	if ( m_pSource->m_oAvailable.IsEmpty() )
+	
+	if ( m_nRequested >= (int)Settings.eDonkey.RequestPipe ) return TRUE;
+	
+	CFileFragment* pPossible = m_pDownload->GetFirstEmptyFragment()->CreateCopy();
+	
+	for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && pPossible ; pTransfer = pTransfer->m_pDlNext )
 	{
-		m_oPossible.GetCopy( m_pDownload->m_pFile->m_oFree );
+		pTransfer->SubtractRequested( &pPossible );
 	}
-	else
-	{
-		m_oPossible.GetAnd( m_pDownload->m_pFile->m_oFree, m_pSource->m_oAvailable );
-	}
-	CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer();
-	while ( pTransfer && !m_oPossible.IsEmpty() )
-	{
-		pTransfer->SubtractRequested( m_oPossible );
-		pTransfer = pTransfer->m_pDlNext;
-	}
-	while ( !m_oPossible.IsEmpty() && m_oRequested.GetCount() < Settings.eDonkey.RequestPipe )
+	
+	while ( m_nRequested < (int)Settings.eDonkey.RequestPipe )
 	{
 		QWORD nOffset, nLength;
-		if ( SelectFragment( m_oPossible, nOffset, nLength ) )
+		
+		if ( SelectFragment( pPossible, &nOffset, &nLength ) )
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.eDonkey.RequestSize, FALSE );
-			m_oPossible.Subtract( nOffset, nOffset + nLength );
-			m_oRequested.Add( nOffset, nOffset + nLength );
+			
+			CFileFragment::Subtract( &pPossible, nOffset, nLength );
+			
+			CFileFragment* pRequest = CFileFragment::New( NULL, m_pRequested, nOffset, nLength );
+			if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = pRequest;
+			m_pRequested = pRequest;
+			m_nRequested ++;
+			
 			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_REQUESTPARTS );
-			pPacket->Write( m_pDownload->m_oED2K );
+			pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 			pPacket->WriteLongLE( (DWORD)nOffset );
 			pPacket->WriteLongLE( 0 );
 			pPacket->WriteLongLE( 0 );
@@ -708,23 +747,37 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			pPacket->WriteLongLE( 0 );
 			pPacket->WriteLongLE( 0 );
 			Send( pPacket );
-			int nType = ( m_nDownloaded == 0 || ( nOffset % ED2K_PART_SIZE ) == 0 )	? MSG_DEFAULT : MSG_DEBUG;
+			
+			int nType = ( m_nDownloaded == 0 || ( nOffset % ED2K_PART_SIZE ) == 0 )
+				? MSG_DEFAULT : MSG_DEBUG;
+			
 			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffset, nOffset + nLength - 1,
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		}
-		else break;
+		else
+		{
+			break;
+		}
 	}
-	if ( m_oRequested.GetCount() > 0 ) return TRUE;
+	
+	pPossible->DeleteChain();
+	
+	if ( m_nRequested > 0 ) return TRUE;
+	
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
+	
 	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 	Close( TS_TRUE );
+	
 	return FALSE;
 }
 
 void CDownloadTransferED2K::ClearRequests()
 {
-	m_oRequested.Delete();
+	m_pRequested->DeleteChain();
+	m_pRequested = NULL;
+	m_nRequested = 0;
 	
 	if ( z_streamp pStream = (z_streamp)m_pInflatePtr )
 	{
@@ -738,52 +791,96 @@ void CDownloadTransferED2K::ClearRequests()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K fragment selector
 
-BOOL CDownloadTransferED2K::SelectFragment(CFileFragmentList& oPossible, QWORD& nOffset, QWORD& nLength)
+BOOL CDownloadTransferED2K::SelectFragment(CFileFragment* pPossible, QWORD* pnOffset, QWORD* pnLength)
 {
-	if ( oPossible.IsEmpty() ) return FALSE;
-	BOOL bAvailable = TRUE;
-	DWORD nBlock, nLengthCount, nFound = 0;
-	DWORD* aBlocks;
-	CFileFragment* pFragment = oPossible.GetFirst();
-	do
+	ASSERT( pnOffset != NULL && pnLength != NULL );
+	
+	if ( pPossible == NULL ) return FALSE;
+	
+	CFileFragment* pComplete = NULL;
+	DWORD nBlock;
+	
+	for ( ; pPossible ; pPossible = pPossible->m_pNext )
 	{
-		if ( pFragment->Offset() % ED2K_PART_SIZE )
-		{	// the start of a block is complete, but part is missing
-			nOffset = pFragment->Offset();
-			nLength = min( ED2K_PART_SIZE - ( pFragment->Offset() % ED2K_PART_SIZE ), pFragment->Length() );
-			return TRUE;
+		if ( pPossible->m_nOffset % ED2K_PART_SIZE )
+		{
+			// the start of a block is complete, but part is missing
+			
+			nBlock = (DWORD)( pPossible->m_nOffset / ED2K_PART_SIZE );
+			
+			if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
+			{
+				*pnOffset = pPossible->m_nOffset;
+				*pnLength = ED2K_PART_SIZE * (QWORD)nBlock + ED2K_PART_SIZE - *pnOffset;
+				*pnLength = min( *pnLength, pPossible->m_nLength );
+				ASSERT( *pnLength <= ED2K_PART_SIZE );
+				
+				pComplete->DeleteChain();
+				return TRUE;
+			}
 		}
-		else if ( ( pFragment->Next() % ED2K_PART_SIZE ) && ( pFragment->Next() < m_pDownload->m_nSize ) )
-		{	// the end of a block is complete, but part is missing
-			nOffset = pFragment->Next() - ( pFragment->Next() % ED2K_PART_SIZE );
-			nLength = pFragment->Next() - nOffset;
-			return TRUE;
+		else if (	( pPossible->m_nLength % ED2K_PART_SIZE ) &&
+					( pPossible->m_nOffset + pPossible->m_nLength < m_pDownload->m_nSize ) )
+		{
+			// the end of a block is complete, but part is missing
+			
+			nBlock = (DWORD)( ( pPossible->m_nOffset + pPossible->m_nLength ) / ED2K_PART_SIZE );
+			
+			if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
+			{
+				*pnOffset = ED2K_PART_SIZE * (QWORD)nBlock;
+				*pnLength = pPossible->m_nOffset + pPossible->m_nLength - *pnOffset;
+				ASSERT( *pnLength <= ED2K_PART_SIZE );
+				
+				pComplete->DeleteChain();
+				return TRUE;
+			}
+		}
+		else
+		{
+			// this fragment contains one or more aligned empty blocks
+			
+			nBlock = (DWORD)( pPossible->m_nOffset / ED2K_PART_SIZE );
+			*pnLength = pPossible->m_nLength;
+			ASSERT( *pnLength != 0 );
+			
+			for ( ; ; nBlock ++, *pnLength -= ED2K_PART_SIZE )
+			{
+				if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
+				{
+					pComplete = CFileFragment::New( NULL, pComplete, (QWORD)nBlock, 0 );
+				}
+				
+				if ( *pnLength <= ED2K_PART_SIZE ) break;
+			}
 		}
 	}
-	while ( pFragment = pFragment->GetNext() );
-	aBlocks = new DWORD[ (DWORD)(( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE) ];
-	pFragment = oPossible.GetFirst();
-	do
-	{	// all Fragments contain aligned Blocks
-		nBlock = (DWORD)( pFragment->Offset() / ED2K_PART_SIZE );
-		nLengthCount = (DWORD)( ( pFragment->Length() + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE );
-		while ( nLengthCount-- ) aBlocks[ nFound++ ] = nBlock++;
+	
+	if ( CFileFragment* pRandom = pComplete->GetRandom() )
+	{
+		*pnOffset = pRandom->m_nOffset * ED2K_PART_SIZE;
+		*pnLength = ED2K_PART_SIZE;
+		*pnLength = min( *pnLength, m_pDownload->m_nSize - *pnOffset );
+		ASSERT( *pnLength <= ED2K_PART_SIZE );
+		
+		pComplete->DeleteChain();
+		return TRUE;
 	}
-	while ( pFragment = pFragment->GetNext() );
-	nOffset = (QWORD)(aBlocks[ ( nFound * rand() ) >> 15 ]) * ED2K_PART_SIZE;
-	nLength = nOffset + ED2K_PART_SIZE > m_pDownload->m_nSize ? m_pDownload->m_nSize - nOffset : ED2K_PART_SIZE;
-	delete [] aBlocks;
-	return TRUE;
+	else
+	{
+		ASSERT( pComplete == NULL );
+		return FALSE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K subtract requested fragments
 
-BOOL CDownloadTransferED2K::SubtractRequested(CFileFragmentList& Fragments)
+BOOL CDownloadTransferED2K::SubtractRequested(CFileFragment** ppFragments)
 {
 	if ( m_nState == dtsDownloading )
 	{
-		if ( m_oRequested.GetCount() != 0 ) Fragments.Subtract( m_oRequested );
+		if ( m_nRequested != 0 ) CFileFragment::Subtract( ppFragments, m_pRequested );
 		return TRUE;
 	}
 	
@@ -815,7 +912,7 @@ BOOL CDownloadTransferED2K::RunQueued(DWORD tNow)
 	else if ( m_pClient->m_nUDP > 0 && ! m_bUDP && tNow > m_tRequest && tNow - m_tRequest > Settings.eDonkey.ReAskTime * 1000 - 20000 )
 	{
 		CEDPacket* pPing = CEDPacket::New( ED2K_C2C_UDP_REASKFILEPING, ED2K_PROTOCOL_EMULE );
-		pPing->Write( m_pDownload->m_oED2K );
+		pPing->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 		Datagrams.Send( &m_pClient->m_pHost.sin_addr, m_pClient->m_nUDP, pPing );
 		m_bUDP = TRUE;
 	}

@@ -204,9 +204,9 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 	m_pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), 0xFFFFFFFF ) );
 	m_pPacket->WriteString( pFile->m_sName );
 	
-	if ( pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
-		CString strHash = pFile->m_oSHA1.ToURN();
+		CString strHash = CSHA::HashToString( &pFile->m_pSHA1, TRUE );
 		m_pPacket->WriteString( strHash );
 		
 		/*
@@ -214,20 +214,20 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 		
 		CGGEPItem* pItem = pBlock.Add( _T("H") );
 		pItem->WriteByte( 1 );
-		pItem->Write( pFile->m_oSHA1 );
+		pItem->Write( &pFile->m_pSHA1, 20 );
 		
 		pBlock.Write( m_pPacket );
 		m_pPacket->WriteByte( 0 );
 		*/
 	}
-	else if ( pFile->m_oTiger.IsValid() )
+	else if ( pFile->m_bTiger )
 	{
-		CString strHash = pFile->m_oTiger.ToURN();
+		CString strHash = CTigerNode::HashToString( &pFile->m_pTiger, TRUE );
 		m_pPacket->WriteString( strHash );
 	}
-	else if ( pFile->m_oED2K.IsValid() )
+	else if ( pFile->m_bED2K )
 	{
-		CString strHash = pFile->m_oED2K.ToURN();
+		CString strHash = CED2K::HashToString( &pFile->m_pED2K, TRUE );
 		m_pPacket->WriteString( strHash );
 	}
 	else
@@ -253,22 +253,22 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int nIndex)
 	
 	// Pass 1: Calculate child group size
 	
-	if ( pFile->m_oTiger.IsValid() && pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bTiger && pFile->m_bSHA1 )
 	{
-		nGroup += 5 + 3 + TIGER_HASH_SIZE + SHA1_HASH_SIZE;
+		nGroup += 5 + 3 + sizeof(SHA1) + sizeof(TIGEROOT);
 	}
-	else if ( pFile->m_oTiger.IsValid() )
+	else if ( pFile->m_bTiger )
 	{
-		nGroup += 5 + 4 + TIGER_HASH_SIZE;
+		nGroup += 5 + 4 + sizeof(TIGEROOT);
 	}
-	else if ( pFile->m_oSHA1.IsValid() )
+	else if ( pFile->m_bSHA1 )
 	{
-		nGroup += 5 + 5 + SHA1_HASH_SIZE;
+		nGroup += 5 + 5 + sizeof(SHA1);
 	}
 	
-	if ( pFile->m_oED2K.IsValid() )
+	if ( pFile->m_bED2K )
 	{
-		nGroup += 5 + 5 + ED2K_HASH_SIZE;
+		nGroup += 5 + 5 + sizeof(MD4);
 	}
 	
 	if ( m_pSearch == NULL || m_pSearch->m_bWantDN )
@@ -371,31 +371,31 @@ BOOL CLocalSearch::AddHitG2(CLibraryFile* pFile, int nIndex)
 	
 	pPacket->WritePacket( "H", nGroup, TRUE );
 	
-	if ( pFile->m_oTiger.IsValid() && pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bTiger && pFile->m_bSHA1 )
 	{
-		pPacket->WritePacket( "URN", 3 + SHA1_HASH_SIZE + TIGER_HASH_SIZE );
+		pPacket->WritePacket( "URN", 3 + sizeof(SHA1) + sizeof(TIGEROOT) );
 		pPacket->WriteString( "bp" );
-		pPacket->Write( pFile->m_oSHA1 );
-		pPacket->Write( pFile->m_oTiger );
+		pPacket->Write( &pFile->m_pSHA1, sizeof(SHA1) );
+		pPacket->Write( &pFile->m_pTiger, sizeof(TIGEROOT) );
 	}
-	else if ( pFile->m_oTiger.IsValid() )
+	else if ( pFile->m_bTiger )
 	{
-		pPacket->WritePacket( "URN", 4 + TIGER_HASH_SIZE );
+		pPacket->WritePacket( "URN", 4 + sizeof(TIGEROOT) );
 		pPacket->WriteString( "ttr" );
-		pPacket->Write( pFile->m_oTiger );
+		pPacket->Write( &pFile->m_pTiger, sizeof(TIGEROOT) );
 	}
-	else if ( pFile->m_oSHA1.IsValid() )
+	else if ( pFile->m_bSHA1 )
 	{
-		pPacket->WritePacket( "URN", 5 + SHA1_HASH_SIZE );
+		pPacket->WritePacket( "URN", 5 + sizeof(SHA1) );
 		pPacket->WriteString( "sha1" );
-		pPacket->Write( pFile->m_oSHA1 );
+		pPacket->Write( &pFile->m_pSHA1, sizeof(SHA1) );
 	}
 	
-	if ( pFile->m_oED2K.IsValid() )
+	if ( pFile->m_bED2K )
 	{
-		pPacket->WritePacket( "URN", 5 + ED2K_HASH_SIZE );
+		pPacket->WritePacket( "URN", 5 + sizeof(MD4) );
 		pPacket->WriteString( "ed2k" );
-		pPacket->Write( pFile->m_oED2K );
+		pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
 	}
 	
 	if ( m_pSearch == NULL || m_pSearch->m_bWantDN )
@@ -475,8 +475,8 @@ int CLocalSearch::ExecutePartialFiles(int nMaximum)
 	ASSERT( m_nProtocol == PROTOCOL_G2 );
 	ASSERT( m_pSearch != NULL );
 	
-	if ( ! m_pSearch->m_oTiger.IsValid() && ! m_pSearch->m_oSHA1.IsValid() &&
-		! m_pSearch->m_oED2K.IsValid() && ! m_pSearch->m_oBTH.IsValid() ) return 0;
+	if ( m_pSearch->m_bTiger == FALSE && m_pSearch->m_bSHA1 == FALSE &&
+		 m_pSearch->m_bED2K  == FALSE && m_pSearch->m_bBTH == FALSE ) return 0;
 	
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return 0;
@@ -490,12 +490,12 @@ int CLocalSearch::ExecutePartialFiles(int nMaximum)
 		
 		if ( ! pDownload->IsShared() ) continue;
 		
-		if (	( m_pSearch->m_oTiger == pDownload->m_oTiger )
-			||	( m_pSearch->m_oSHA1  == pDownload->m_oSHA1 )
-			||	( m_pSearch->m_oED2K  == pDownload->m_oED2K )
-			||	( m_pSearch->m_oBTH   == pDownload->m_oBTH ) )
+		if (	( m_pSearch->m_bTiger && pDownload->m_bTiger && m_pSearch->m_pTiger == pDownload->m_pTiger )
+			||	( m_pSearch->m_bSHA1  && pDownload->m_bSHA1  && m_pSearch->m_pSHA1  == pDownload->m_pSHA1 )
+			||	( m_pSearch->m_bED2K  && pDownload->m_bED2K  && m_pSearch->m_pED2K  == pDownload->m_pED2K )
+			||	( m_pSearch->m_bBTH   && pDownload->m_bBTH   && m_pSearch->m_pBTH   == pDownload->m_pBTH ) )
 		{
-			if ( pDownload->m_oBTH.IsValid() || pDownload->IsStarted() )
+			if ( pDownload->m_bBTH || pDownload->IsStarted() )
 			{
 				if ( m_pPacket == NULL ) CreatePacketG2();
 				AddHit( pDownload, nCount++ );
@@ -522,27 +522,27 @@ void CLocalSearch::AddHit(CDownload* pDownload, int nIndex)
 	DWORD nGroup = 2 + 4 + 4;
 	CString strURL;
 	
-	if ( pDownload->m_oTiger.IsValid() && pDownload->m_oSHA1.IsValid() )
+	if ( pDownload->m_bTiger && pDownload->m_bSHA1 )
 	{
-		nGroup += 5 + 3 + SHA1_HASH_SIZE + TIGER_HASH_SIZE;
+		nGroup += 5 + 3 + sizeof(SHA1) + sizeof(TIGEROOT);
 	}
-	else if ( pDownload->m_oSHA1.IsValid() )
+	else if ( pDownload->m_bSHA1 )
 	{
-		nGroup += 5 + 5 + SHA1_HASH_SIZE;
+		nGroup += 5 + 5 + sizeof(SHA1);
 	}
-	else if ( pDownload->m_oTiger.IsValid() )
+	else if ( pDownload->m_bTiger )
 	{
-		nGroup += 5 + 4 + TIGER_HASH_SIZE;
-	}
-	
-	if ( pDownload->m_oED2K.IsValid() )
-	{
-		nGroup += 5 + 5 + ED2K_HASH_SIZE;
+		nGroup += 5 + 4 + sizeof(TIGEROOT);
 	}
 	
-	if ( pDownload->m_oBTH.IsValid() )
+	if ( pDownload->m_bED2K )
 	{
-		nGroup += 5 + 5 + BT_HASH_SIZE;
+		nGroup += 5 + 5 + sizeof(MD4);
+	}
+	
+	if ( pDownload->m_bBTH )
+	{
+		nGroup += 5 + 5 + sizeof(SHA1);
 	}
 	
 	if ( m_pSearch->m_bWantDN )
@@ -556,51 +556,51 @@ void CLocalSearch::AddHit(CDownload* pDownload, int nIndex)
 		
 		// if ( m_pSearch->m_bBTH && pDownload->m_pTorrent.IsAvailable() && Network.IsListening() )
 		
-		if ( m_pSearch->m_oBTH.IsValid() && pDownload->m_pTorrent.IsAvailable() && Network.m_pHost.sin_addr.S_un.S_addr != 0 )
+		if ( m_pSearch->m_bBTH && pDownload->m_pTorrent.IsAvailable() && Network.m_pHost.sin_addr.S_un.S_addr != 0 )
 		{
 			strURL.Format( _T("btc://%s:%i/%s/%s/"),
 				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 				htons( Network.m_pHost.sin_port ),
-				(LPCTSTR)pDownload->m_oPeerID.ToString(),//(LPCTSTR)CSHA1::HashToString( BTClients.GetGUID() ),
-				(LPCTSTR)pDownload->m_oBTH.ToString() );
+				(LPCTSTR)CSHA::HashToString( &pDownload->m_pPeerID ),//(LPCTSTR)CSHA::HashToString( BTClients.GetGUID() ),
+				(LPCTSTR)CSHA::HashToString( &pDownload->m_pBTH ) );
 			nGroup += pPacket->GetStringLen( strURL );
 		}
 	}
 	
 	pPacket->WritePacket( "H", nGroup, TRUE );
 	
-	if ( pDownload->m_oTiger.IsValid() && pDownload->m_oSHA1.IsValid() )
+	if ( pDownload->m_bTiger && pDownload->m_bSHA1 )
 	{
-		pPacket->WritePacket( "URN", 3 + SHA1_HASH_SIZE + TIGER_HASH_SIZE );
+		pPacket->WritePacket( "URN", 3 + sizeof(SHA1) + sizeof(TIGEROOT) );
 		pPacket->WriteString( "bp" );
-		pPacket->Write( pDownload->m_oSHA1 );
-		pPacket->Write( pDownload->m_oTiger );
+		pPacket->Write( &pDownload->m_pSHA1, sizeof(SHA1) );
+		pPacket->Write( &pDownload->m_pTiger, sizeof(TIGEROOT) );
 	}
-	else if ( pDownload->m_oTiger.IsValid() )
+	else if ( pDownload->m_bTiger )
 	{
-		pPacket->WritePacket( "URN", 4 + TIGER_HASH_SIZE );
+		pPacket->WritePacket( "URN", 4 + sizeof(TIGEROOT) );
 		pPacket->WriteString( "ttr" );
-		pPacket->Write( pDownload->m_oTiger );
+		pPacket->Write( &pDownload->m_pTiger, sizeof(TIGEROOT) );
 	}
-	else if ( pDownload->m_oSHA1.IsValid() )
+	else if ( pDownload->m_bSHA1 )
 	{
-		pPacket->WritePacket( "URN", 5 + SHA1_HASH_SIZE );
+		pPacket->WritePacket( "URN", 5 + sizeof(SHA1) );
 		pPacket->WriteString( "sha1" );
-		pPacket->Write( pDownload->m_oSHA1 );
+		pPacket->Write( &pDownload->m_pSHA1, sizeof(SHA1) );
 	}
 	
-	if ( pDownload->m_oED2K.IsValid() )
+	if ( pDownload->m_bED2K )
 	{
-		pPacket->WritePacket( "URN", 5 + ED2K_HASH_SIZE );
+		pPacket->WritePacket( "URN", 5 + sizeof(MD4) );
 		pPacket->WriteString( "ed2k" );
-		pPacket->Write( pDownload->m_oED2K );
+		pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 	}
 	
-	if ( pDownload->m_oBTH.IsValid() )
+	if ( pDownload->m_bBTH )
 	{
-		pPacket->WritePacket( "URN", 5 + BT_HASH_SIZE );
+		pPacket->WritePacket( "URN", 5 + sizeof(SHA1) );
 		pPacket->WriteString( "btih" );
-		pPacket->Write( pDownload->m_oBTH );
+		pPacket->Write( &pDownload->m_pBTH, sizeof(SHA1) );
 	}
 	
 	if ( m_pSearch->m_bWantDN )
@@ -686,7 +686,7 @@ void CLocalSearch::CreatePacketG2()
 	m_pPacket = pPacket;
 	
 	pPacket->WritePacket( "GU", 16 );
-	pPacket->Write( &MyProfile.GUID, GUID_SIZE );
+	pPacket->Write( &MyProfile.GUID, sizeof(GGUID) );
 	
 	if ( TRUE /* Network.IsListening() */ )
 	{
@@ -915,7 +915,7 @@ void CLocalSearch::WriteTrailerG1()
 	if ( pszXML != NULL ) delete [] pszXML;
 #endif
 	
-	m_pPacket->Write( &MyProfile.GUID, GUID_SIZE );
+	m_pPacket->Write( &MyProfile.GUID, sizeof(GGUID) );
 }
 
 void CLocalSearch::WriteTrailerG2()
@@ -924,7 +924,7 @@ void CLocalSearch::WriteTrailerG2()
 	
 	pPacket->WriteByte( 0 );
 	pPacket->WriteByte( 0 );
-	pPacket->Write( &m_pGUID, GUID_SIZE );
+	pPacket->Write( &m_pGUID, sizeof(GGUID) );
 }
 
 //////////////////////////////////////////////////////////////////////

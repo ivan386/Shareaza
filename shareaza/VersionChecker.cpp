@@ -157,7 +157,6 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 
 #if 1
 	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version?") + strPost );
-	//m_pRequest.SetURL( _T("http://update.shareaza.com/update/version?") + strPost );
 #else
 	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version") );
 	m_pRequest.SetPost( (LPCSTR)strPost, strPost.GetLength() );
@@ -267,11 +266,11 @@ void CVersionChecker::SetNextCheck(int nDays)
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker check if a download is an upgrade
 
-BOOL CVersionChecker::CheckUpgradeHash(const CHashSHA1 &oHash, LPCTSTR pszPath)
+BOOL CVersionChecker::CheckUpgradeHash(const SHA1* pHash, LPCTSTR pszPath)
 {
 	if ( ! m_bUpgrade ) return FALSE;
 
-	if ( oHash.ToString() != m_sUpgradeHash ) return FALSE;
+	if ( CSHA::HashToString( pHash ) != m_sUpgradeHash ) return FALSE;
 
 	if ( _tcsstr( pszPath, _T(".exe") ) == NULL ) return FALSE;
 

@@ -227,7 +227,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			if ( ! m_bAllowED2K ) continue;
 			break;
 		}
-
+		
 		// Must be stable for 15 seconds, or longer for G1 low priority searches
 		
 		nPeriod = bIsOld ? 15 : 5;

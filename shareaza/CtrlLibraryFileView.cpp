@@ -358,9 +358,12 @@ void CLibraryFileView::OnLibraryURL()
 		dlg.m_sName = pFile->m_sName;
 		dlg.m_bSize = TRUE;
 		dlg.m_nSize = pFile->GetSize();
-		dlg.m_oSHA1 = pFile->m_oSHA1;
-		dlg.m_oTiger = pFile->m_oTiger;
-		dlg.m_oED2K = pFile->m_oED2K;
+		dlg.m_bSHA1 = pFile->m_bSHA1;
+		if ( pFile->m_bSHA1 ) dlg.m_pSHA1 = pFile->m_pSHA1;
+		dlg.m_bTiger = pFile->m_bTiger;
+		if ( pFile->m_bTiger ) dlg.m_pTiger = pFile->m_pTiger;
+		dlg.m_bED2K = pFile->m_bED2K;
+		if ( pFile->m_bED2K ) dlg.m_pED2K = pFile->m_pED2K;
 		
 		pLock.Unlock();
 		
@@ -561,7 +564,7 @@ void CLibraryFileView::OnLibraryBitziDownload()
 
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
 	{
-		if ( pFile->m_oSHA1.IsValid() ) dlg.AddFile( pFile->m_nIndex );
+		if ( pFile->m_bSHA1 ) dlg.AddFile( pFile->m_nIndex );
 	}
 
 	pLock.Unlock();

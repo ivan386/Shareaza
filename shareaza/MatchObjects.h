@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
-
 class CSchema;
 class CSchemaMember;
 class CQuerySearch;
@@ -127,9 +125,12 @@ public:
 	CMatchFile*	m_pNextTiger;
 	CMatchFile*	m_pNextED2K;
 public:
-	CManagedSHA1	m_oSHA1;
-	CManagedTiger	m_oTiger;
-	CManagedED2K	m_oED2K;
+	BOOL		m_bSHA1;
+	SHA1		m_pSHA1;
+	BOOL		m_bTiger;
+	TIGEROOT	m_pTiger;
+	BOOL		m_bED2K;
+	MD4			m_pED2K;
 	QWORD		m_nSize;
 	CString		m_sSize;
 public:

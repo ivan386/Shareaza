@@ -24,9 +24,6 @@
  
 #pragma once
 
-#include "Hashes.h"
-#include "GUID.h"
-
 class CDownload;
 class CDownloadSource;
 class CConnection;
@@ -84,10 +81,10 @@ public:
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
 	BOOL		Swap(CDownload* p1, CDownload* p2);
 	CDownload*	FindByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE) const;
-	CDownload*	FindBySHA1(const CHashSHA1 &oHash, BOOL bSharedOnly = FALSE) const;
-	CDownload*	FindByTiger(const CHashTiger &oHash, BOOL bSharedOnly = FALSE) const;
-	CDownload*	FindByED2K(const CHashED2K &oHash, BOOL bSharedOnly = FALSE) const;
-	CDownload*	FindByBTH(const CHashBT &oHash, BOOL bSharedOnly = FALSE) const;
+	CDownload*	FindBySHA1(const SHA1* pHash, BOOL bSharedOnly = FALSE) const;
+	CDownload*	FindByTiger(const TIGEROOT* pHash, BOOL bSharedOnly = FALSE) const;
+	CDownload*	FindByED2K(const MD4* pED2K, BOOL bSharedOnly = FALSE) const;
+	CDownload*	FindByBTH(const SHA1* pHash, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindBySID(DWORD nSerID) const;
 	DWORD		GetFreeSID();
 	DWORD		GetBandwidth() const;
@@ -95,7 +92,7 @@ public:
 	void		Load();
 	void		Save(BOOL bForce = TRUE);
 	void		OnRun();
-	BOOL		OnPush(CGUID* pGUID, CConnection* pConnection);
+	BOOL		OnPush(GGUID* pGUID, CConnection* pConnection);
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
 	void		OnQueryHits(CQueryHit* pHits);
 	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);

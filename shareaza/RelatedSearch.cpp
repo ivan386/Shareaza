@@ -47,9 +47,12 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		m_oSHA1		= pFile->m_oSHA1;
-		m_oTiger	= pFile->m_oTiger;
-		m_oED2K		= pFile->m_oED2K;
+		m_bSHA1		= pFile->m_bSHA1;
+		m_pSHA1		= pFile->m_pSHA1;
+		m_bTiger	= pFile->m_bTiger;
+		m_pTiger	= pFile->m_pTiger;
+		m_bED2K		= pFile->m_bED2K;
+		m_pED2K		= pFile->m_pED2K;
 		m_sName		= pFile->m_pBest->m_sName;
 		
 		m_pSchema	= SchemaCache.Get( pFile->m_pBest->m_sSchemaURI );
@@ -76,10 +79,7 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 	}
 	else
 	{
-		m_oSHA1.Clear();
-		m_oTiger.Clear();
-		m_oED2K.Clear();
-		m_bXML = FALSE;
+		m_bSHA1 = m_bTiger = m_bED2K = m_bXML = FALSE;
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -89,9 +89,12 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 {
 	if ( pFile != NULL )
 	{
-		m_oSHA1		= pFile->m_oSHA1;
-		m_oTiger	= pFile->m_oTiger;
-		m_oED2K		= pFile->m_oED2K;
+		m_bSHA1		= pFile->m_bSHA1;
+		m_pSHA1		= pFile->m_pSHA1;
+		m_bTiger	= pFile->m_bTiger;
+		m_pTiger	= pFile->m_pTiger;
+		m_bED2K		= pFile->m_bED2K;
+		m_pED2K		= pFile->m_pED2K;
 		m_sName		= pFile->m_sName;
 		m_pSchema	= pFile->m_pSchema;
 		m_bXML		= ( pFile->m_pMetadata != NULL );
@@ -99,10 +102,7 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 	}
 	else
 	{
-		m_oSHA1.Clear();
-		m_oTiger.Clear();
-		m_oED2K.Clear();
-		m_bXML = FALSE;
+		m_bSHA1 = m_bTiger = m_bED2K = m_bXML = FALSE;
 		m_pSchema = NULL;
 		m_pXML = NULL;
 	}
@@ -118,16 +118,19 @@ CRelatedSearch::~CRelatedSearch()
 
 BOOL CRelatedSearch::CanSearchForThis()
 {
-	return m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oED2K.IsValid();
+	return m_bSHA1 || m_bTiger || m_bED2K;
 }
 
 BOOL CRelatedSearch::RunSearchForThis()
 {
 	if ( ! CanSearchForThis() ) return FALSE;
 	CQuerySearch* pSearch = new CQuerySearch();
-	pSearch->m_oSHA1	= m_oSHA1;
-	pSearch->m_oTiger	= m_oTiger;
-	pSearch->m_oED2K	= m_oED2K;
+	pSearch->m_bSHA1	= m_bSHA1;
+	pSearch->m_pSHA1	= m_pSHA1;
+	pSearch->m_bTiger	= m_bTiger;
+	pSearch->m_pTiger	= m_pTiger;
+	pSearch->m_bED2K	= m_bED2K;
+	pSearch->m_pED2K	= m_pED2K;
 	return pSearch->OpenWindow() != NULL;
 }
 

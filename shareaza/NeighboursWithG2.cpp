@@ -60,7 +60,7 @@ void CNeighboursWithG2::Connect()
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 create query web packet
 
-CG2Packet* CNeighboursWithG2::CreateQueryWeb(CGUID* pGUID, CNeighbour* pExcept)
+CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
 	
@@ -118,7 +118,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(CGUID* pGUID, CNeighbour* pExcept)
 	HubHorizonPool.AddHorizonHubs( pPacket );
 	
 	pPacket->WriteByte( 0 );
-	pPacket->Write( pGUID, GUID_SIZE );
+	pPacket->Write( pGUID, sizeof(GGUID) );
 	
 	return pPacket;
 }
@@ -126,7 +126,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(CGUID* pGUID, CNeighbour* pExcept)
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 random hub selector
 
-CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, CGUID* pGUID)
+CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, GGUID* pGUID)
 {
 	CPtrArray pRandom;
 	

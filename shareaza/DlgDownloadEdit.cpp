@@ -88,9 +88,12 @@ BOOL CDownloadEditDlg::OnInitDialog()
 	
 	m_sName = m_pDownload->m_sRemoteName;
 	
-	if ( m_pDownload->m_oSHA1.IsValid() ) m_sSHA1 = m_pDownload->m_oSHA1.ToString();
-	if ( m_pDownload->m_oTiger.IsValid() ) m_sTiger = m_pDownload->m_oTiger.ToString();
-	if ( m_pDownload->m_oED2K.IsValid() ) m_sED2K = m_pDownload->m_oED2K.ToString();
+	if ( m_pDownload->m_bSHA1 )
+		m_sSHA1 = CSHA::HashToString( &m_pDownload->m_pSHA1 );
+	if ( m_pDownload->m_bTiger )
+		m_sTiger = CTigerNode::HashToString( &m_pDownload->m_pTiger );
+	if ( m_pDownload->m_bED2K )
+		m_sED2K = CED2K::HashToString( &m_pDownload->m_pED2K );
 	
 	m_wndTorrent.EnableWindow( m_pDownload->m_pTorrent.IsAvailable() );
 	
@@ -154,7 +157,7 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
-		m_pDownload->ResetVerification();
+		m_pDownload->ClearVerification();
 	}
 	else if ( rcCtrl2.PtInRect( point ) )
 	{
@@ -180,7 +183,7 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
 		
-		if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && ! m_pDownload->m_oBTH.IsValid() )
+		if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && ! m_pDownload->m_bBTH )
 		{
 			pLock.Unlock();
 			LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
@@ -241,6 +244,7 @@ void CDownloadEditDlg::OnErase()
 	
 	if ( nErased > 0 )
 	{
+		m_pDownload->ClearVerification();
 		pLock.Unlock();
 		CString strFormat;
 		LoadString( strFormat, IDS_DOWNLOAD_EDIT_ERASED );
@@ -267,27 +271,26 @@ BOOL CDownloadEditDlg::Commit()
 	
 	UpdateData();
 	
-	CManagedSHA1 oSHA1;
-	CManagedTiger oTiger;
-	CManagedED2K oED2K;
-
-	oSHA1.FromString( m_sSHA1 );
-	oTiger.FromString( m_sTiger );
-	oED2K.FromString( m_sED2K );
+	SHA1 pSHA1;
+	BOOL bSHA1 = CSHA::HashFromString( m_sSHA1, &pSHA1 );
+	TIGEROOT pTiger;
+	BOOL bTiger = CTigerNode::HashFromString( m_sTiger, &pTiger );
+	MD4 pED2K;
+	BOOL bED2K = CED2K::HashFromString( m_sED2K, &pED2K );
 	
-	if ( m_sSHA1.GetLength() > 0 && ! oSHA1.IsValid() )
+	if ( m_sSHA1.GetLength() > 0 && ! bSHA1 )
 	{
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_BAD_SHA1 );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return FALSE;
 	}
-	else if ( m_sTiger.GetLength() > 0 && ! oTiger.IsValid() )
+	else if ( m_sTiger.GetLength() > 0 && ! bTiger )
 	{
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_BAD_TIGER );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return FALSE;
 	}
-	else if ( m_sED2K.GetLength() > 0 && ! oED2K.IsValid() )
+	else if ( m_sED2K.GetLength() > 0 && ! bED2K )
 	{
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_BAD_ED2K );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
@@ -308,7 +311,7 @@ BOOL CDownloadEditDlg::Commit()
 		m_pDownload->Rename( m_sName );
 	}
 	
-	if ( m_pDownload->m_oSHA1.IsValid() != oSHA1.IsValid() || m_pDownload->m_oSHA1 != oSHA1 )
+	if ( m_pDownload->m_bSHA1 != bSHA1 || ( bSHA1 && m_pDownload->m_pSHA1 != pSHA1 ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_SHA1 );
@@ -316,13 +319,14 @@ BOOL CDownloadEditDlg::Commit()
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oSHA1 = oSHA1;
-		m_pDownload->m_oSHA1.SetTrusted();
-
+		m_pDownload->m_bSHA1 = bSHA1;
+		m_pDownload->m_pSHA1 = pSHA1;
+		
 		m_pDownload->CloseTransfers();
+		m_pDownload->ClearVerification();
 	}
 	
-	if ( m_pDownload->m_oTiger.IsValid() != oTiger.IsValid() || m_pDownload->m_oTiger != oTiger )
+	if ( m_pDownload->m_bTiger != bTiger || ( bTiger && m_pDownload->m_pTiger != pTiger ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_TIGER );
@@ -330,14 +334,14 @@ BOOL CDownloadEditDlg::Commit()
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oTiger = oTiger;
-		m_pDownload->m_oTiger.SetTrusted();
+		m_pDownload->m_bTiger = bTiger;
+		m_pDownload->m_pTiger = pTiger;
 		
 		m_pDownload->CloseTransfers();
-		m_pDownload->ClearTiger();
+		m_pDownload->ClearVerification();
 	}
 	
-	if ( m_pDownload->m_oED2K.IsValid() != oED2K.IsValid() || m_pDownload->m_oED2K != oED2K )
+	if ( m_pDownload->m_bED2K != bED2K || ( bED2K && m_pDownload->m_pED2K != pED2K ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_ED2K );
@@ -345,11 +349,11 @@ BOOL CDownloadEditDlg::Commit()
 		pLock.Lock();
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oED2K = oED2K;
-		m_pDownload->m_oED2K.SetTrusted();
+		m_pDownload->m_bED2K = bED2K;
+		m_pDownload->m_pED2K = pED2K;
 		
 		m_pDownload->CloseTransfers();
-		m_pDownload->ClearHashset();
+		m_pDownload->ClearVerification();
 	}
 	
 	return TRUE;

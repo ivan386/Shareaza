@@ -137,21 +137,21 @@ void CFilePropertiesDlg::Update()
 	m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
 	m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
-	if ( pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
 		if ( m_bHexHash )
-			m_sSHA1 = _T("sha1:") + pFile->m_oSHA1.ToHexString();
+			m_sSHA1 = _T("sha1:") + CSHA::HashToHexString( &pFile->m_pSHA1 );
 		else
-			m_sSHA1 = _T("sha1:") + pFile->m_oSHA1.ToString();
+			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
 	}
 	else
 	{
 		LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
 	}
 
-	if ( pFile->m_oTiger.IsValid() )
+	if ( pFile->m_bTiger )
 	{
-		m_sTiger = _T("tree:tiger/:") + pFile->m_oTiger.ToString();
+		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
 	}
 	else
 	{
@@ -180,8 +180,8 @@ void CFilePropertiesDlg::Update()
 	{
 		CXMLElement* pXML = pFile->m_pMetadata->Clone();
 
-		if ( pFile->m_oSHA1.IsValid() )
-			pXML->AddAttribute( _T("SHA1"), pFile->m_oSHA1.ToString() );
+		if ( pFile->m_bSHA1 )
+			pXML->AddAttribute( _T("SHA1"), CSHA::HashToString( &pFile->m_pSHA1 ) );
 		else if ( CXMLAttribute* pSHA1 = pXML->GetAttribute( _T("SHA1") ) )
 			pSHA1->Delete();
 

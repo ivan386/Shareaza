@@ -850,7 +850,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		dc.SetTextColor( CoolInterface.m_crText );
 	else if ( pDownload->m_bVerify == TS_TRUE )
 	{
-		if( pDownload->m_oBTH.IsValid() && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
+		if( pDownload->m_bBTH && ( pDownload->m_nTorrentUploaded < pDownload->m_nTorrentDownloaded ) )
 			dc.SetTextColor( CoolInterface.m_crText );
 		else
 			dc.SetTextColor( RGB( 0, 127, 0 ) );
@@ -1338,7 +1338,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
 		LoadString( strText, IDS_STATUS_SEARCHING );
-	else if ( pDownload->m_oBTH.IsValid() )
+	else if ( pDownload->m_bBTH )
 	{
 		if ( pDownload->IsTasking() )
 			LoadString( strText, IDS_STATUS_CREATING );

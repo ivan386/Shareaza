@@ -34,6 +34,7 @@ public:
 	CWndTabBar();
 	virtual ~CWndTabBar();
 
+	friend class CWindowManager;
 // Item Class
 public:
 	class TabItem

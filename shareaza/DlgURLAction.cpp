@@ -281,23 +281,23 @@ void CURLActionDlg::Update()
 		{
 			m_sHashValue.Format( _T("%i file(s)"), m_pURLs.GetCount() );
 		}
-		else if ( pURL->m_oTiger.IsValid() && pURL->m_oSHA1.IsValid() )
+		else if ( pURL->m_bTiger && pURL->m_bSHA1 )
 		{
 			m_sHashValue	= _T("bitprint:")
-				+ pURL->m_oSHA1.ToString() + _T(".")
-				+ pURL->m_oTiger.ToString();
+							+ CSHA::HashToString( &pURL->m_pSHA1 ) + _T(".")
+							+ CTigerNode::HashToString( &pURL->m_pTiger );
 		}
-		else if ( pURL->m_oTiger.IsValid() )
+		else if ( pURL->m_bTiger )
 		{
-			m_sHashValue = _T("tree:tiger/:") + pURL->m_oTiger.ToString();
+			m_sHashValue = _T("tree:tiger/:") + CTigerNode::HashToString( &pURL->m_pTiger );
 		}
-		else if ( pURL->m_oSHA1.IsValid() )
+		else if ( pURL->m_bSHA1 )
 		{
-			m_sHashValue = _T("sha1:") + pURL->m_oSHA1.ToString();
+			m_sHashValue = _T("sha1:") + CSHA::HashToString( &pURL->m_pSHA1 );
 		}
-		else if ( pURL->m_oED2K.IsValid() )
+		else if ( pURL->m_bED2K )
 		{
-			m_sHashValue = _T("ed2k:") + pURL->m_oED2K.ToString();
+			m_sHashValue = _T("ed2k:") + CED2K::HashToString( &pURL->m_pED2K );
 		}
 		else
 		{
@@ -355,8 +355,8 @@ void CURLActionDlg::OnUrlDownload()
 		{
 			CLibraryFile* pFile;
 			
-			if ( ( pURL->m_oSHA1.IsValid() && ( pFile = LibraryMaps.LookupFileBySHA1( pURL->m_oSHA1, TRUE ) ) )
-				|| ( pURL->m_oED2K.IsValid() && ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K, TRUE ) ) ) )
+			if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1, TRUE ) ) ) ||
+				 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K, TRUE ) ) ) )
 			{
 				CString strFormat, strMessage;
 				::Skin.LoadString( strFormat, IDS_URL_ALREADY_HAVE );

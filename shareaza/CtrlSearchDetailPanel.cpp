@@ -71,7 +71,7 @@ END_MESSAGE_MAP()
 CSearchDetailPanel::CSearchDetailPanel()
 {
 	m_pMatches	= NULL;
-	ASSERT( ! m_oSHA1.IsValid() );
+	m_bValid	= FALSE;
 	m_pFile		= NULL;
 	m_hThread	= NULL;
 	m_bThread	= FALSE;
@@ -103,17 +103,18 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	
 	if ( pFile == NULL )
 	{
-		if ( m_oSHA1.IsValid() )
+		if ( m_bValid )
 		{
-			m_oSHA1.Clear();
+			m_bValid = FALSE;
 			OnSize( SIZE_INTERNAL, 0, 0 );
 		}
 		return;
 	}
 	
 	m_pMatches	= pFile->m_pList;
+	m_bValid	= TRUE;
 	m_pFile		= pFile;
-	m_oSHA1		= pFile->m_oSHA1;
+	m_pSHA1		= pFile->m_pSHA1;
 	m_sName		= pFile->m_pBest->m_sName;
 	m_sSize		= pFile->m_sSize;
 	m_nIcon32	= ShellIcons.Get( pFile->m_pBest->m_sName, 32 );
@@ -130,7 +131,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		if ( m_pSchema == NULL ) m_pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
 		nSpeed += pHit->m_nSpeed;
 		
-		if ( pHit->m_oSHA1.IsValid() && pHit->m_bPush == TS_FALSE )
+		if ( pHit->m_bSHA1 && pHit->m_bPush == TS_FALSE )
 		{
 			if ( pHit->m_bPreview )
 			{
@@ -147,7 +148,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 				CString strURL;
 				strURL.Format( _T("http://%s:%i/gnutella/preview/v1?%s"),
 					(LPCTSTR)CString( inet_ntoa( pHit->m_pAddress ) ), pHit->m_nPort,
-					(LPCTSTR)pHit->m_oSHA1.ToString() );
+					(LPCTSTR)CSHA::HashToString( &pHit->m_pSHA1, TRUE ) );
 				m_pPreviewURLs.AddTail( strURL );
 				m_bCanPreview = TRUE;
 			}
@@ -215,7 +216,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
 		{
 			pLock.Unlock();
-			OnPreviewLoaded( m_oSHA1, &pImage );
+			OnPreviewLoaded( &m_pSHA1, &pImage );
 		}
 	}
 	
@@ -301,7 +302,7 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 		nHeight += rcReview.Height();
 	}
 	
-	if ( ! m_oSHA1.IsValid() ) nHeight = 0;
+	if ( ! m_bValid ) nHeight = 0;
 	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -385,7 +386,7 @@ void CSearchDetailPanel::OnPaint()
 	dc.SetBkMode( OPAQUE );
 	dc.SetTextColor( CoolInterface.m_crText );
 	
-	if ( ! m_oSHA1.IsValid() )
+	if ( ! m_bValid )
 	{
 		dc.SelectObject( &CoolInterface.m_fntNormal );
 		LoadString( str, IDS_SEARCH_DETAILS_EMPTY );
@@ -513,7 +514,7 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 				if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)m_pFile->m_pPreview, m_pFile->m_nPreview, FALSE, TRUE ) )
 				{
 					pLock.Unlock();
-					OnPreviewLoaded( m_oSHA1, &pImage );
+					OnPreviewLoaded( &m_pSHA1, &pImage );
 				}
 			}
 		}
@@ -586,7 +587,7 @@ BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	GetCursorPos( &point );
 	ScreenToClient( &point );
 	
-	if ( m_oSHA1.IsValid() && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
+	if ( m_bValid && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
@@ -594,13 +595,13 @@ BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	
 	point.y += GetScrollPos( SB_VERT );
 	
-	if ( m_oSHA1.IsValid() && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
+	if ( m_bValid && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
 	
-	if ( m_oSHA1.IsValid() && m_pMetadata.HitTest( point, TRUE ) != NULL )
+	if ( m_bValid && m_pMetadata.HitTest( point, TRUE ) != NULL )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
@@ -611,14 +612,14 @@ BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-	if ( m_oSHA1.IsValid() && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
+	if ( m_bValid && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
 	{
 		RequestPreview();
 	}
 	
 	point.y += GetScrollPos( SB_VERT );
 	
-	if ( m_oSHA1.IsValid() && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
+	if ( m_bValid && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
 	{
 		int nHeight = 54 + m_pMetadata.m_nHeight;
 		SetScrollPos( SB_VERT, nHeight );
@@ -634,7 +635,7 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel::Review construction
 
-CSearchDetailPanel::Review::Review(CGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
+CSearchDetailPanel::Review::Review(GGUID* pGUID, IN_ADDR* pAddress, LPCTSTR pszNick, int nRating, LPCTSTR pszComments)
 {
 	m_pGUID		= *pGUID;
 	m_nRating	= nRating;
@@ -745,7 +746,7 @@ BOOL CSearchDetailPanel::RequestPreview()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( ! m_oSHA1.IsValid() || ! m_bCanPreview || m_pPreviewURLs.IsEmpty() ) return FALSE;
+	if ( ! m_bValid || ! m_bCanPreview || m_pPreviewURLs.IsEmpty() ) return FALSE;
 	
 	if ( m_hThread == NULL )
 	{
@@ -801,7 +802,7 @@ void CSearchDetailPanel::OnRun()
 	{
 		pLock.Lock();
 		
-		if ( ! m_oSHA1.IsValid() || ! m_bRunPreview || m_pPreviewURLs.IsEmpty() )
+		if ( ! m_bValid || ! m_bRunPreview || m_pPreviewURLs.IsEmpty() )
 		{
 			if ( m_bIsPreviewing )
 			{
@@ -816,7 +817,7 @@ void CSearchDetailPanel::OnRun()
 		}
 		
 		CString strURL	= m_pPreviewURLs.RemoveHead();
-//		SHA1 pSHA1		= m_pSHA1;
+		SHA1 pSHA1		= m_pSHA1;
 		
 		if ( ! m_bIsPreviewing )
 		{
@@ -835,8 +836,8 @@ void CSearchDetailPanel::OnRun()
 			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pBuffer, nBuffer, FALSE, TRUE ) )
 			{
-				OnPreviewLoaded( m_oSHA1, &pImage );
-				CachePreviewImage( m_oSHA1, pBuffer, nBuffer );
+				OnPreviewLoaded( &pSHA1, &pImage );
+				CachePreviewImage( &pSHA1, pBuffer, nBuffer );
 			}
 			else
 			{
@@ -878,9 +879,9 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	
 	if ( strURN.GetLength() )
 	{
-		CHashSHA1 oSHA1;
+		SHA1 pSHA1;
 		
-		if ( oSHA1.FromURN( strURN ) && ! ( m_oSHA1 == oSHA1 ) )
+		if ( CSHA::HashFromURN( strURN, &pSHA1 ) && pSHA1 != m_pSHA1 )
 		{
 			theApp.Message( MSG_DEBUG, _T("Preview failed: wrong URN.") );
 			return FALSE;
@@ -905,7 +906,7 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	return TRUE;
 }
 
-void CSearchDetailPanel::OnPreviewLoaded(const CHashSHA1 &oSHA1, CImageFile* pImage)
+void CSearchDetailPanel::OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage)
 {
 	if ( m_nThumbSize == 0 ) return;
 	
@@ -923,7 +924,7 @@ void CSearchDetailPanel::OnPreviewLoaded(const CHashSHA1 &oSHA1, CImageFile* pIm
 	
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( ! ( m_oSHA1 == oSHA1 ) ) return;
+	if ( m_pSHA1 != *pSHA1 ) return;
 	
 	m_bCanPreview = m_bRunPreview = m_bIsPreviewing = FALSE;
 	
@@ -937,7 +938,7 @@ void CSearchDetailPanel::OnPreviewLoaded(const CHashSHA1 &oSHA1, CImageFile* pIm
 	Invalidate();
 }
 
-BOOL CSearchDetailPanel::CachePreviewImage(const CHashSHA1 &oSHA1, LPBYTE pBuffer, DWORD nBuffer)
+BOOL CSearchDetailPanel::CachePreviewImage(SHA1* pSHA1, LPBYTE pBuffer, DWORD nBuffer)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	

@@ -47,10 +47,6 @@
 #include "Emoticons.h"
 #include "ShellIcons.h"
 #include "Skin.h"
-#include "MD4.h"
-#include "MD5.h"
-#include "SHA.h"
-#include "TigerTree.h"
 #include "Scheduler.h"
 
 #include "WndMain.h"
@@ -129,10 +125,6 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
-		CMD4::Init();
-		CMD5::Init();
-		CSHA1::Init();
-		CTigerTree::Init();
 	dlgSplash->Step( _T("P2P URIs") );
 		CShareazaURL::Register();
 	dlgSplash->Step( _T("Shell Icons") );

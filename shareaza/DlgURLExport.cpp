@@ -101,7 +101,7 @@ BOOL CURLExportDlg::OnInitDialog()
 
 void CURLExportDlg::AddFile(CLibraryFile* pFile)
 {
-	if ( pFile->m_oSHA1.IsValid() ) m_pFiles.AddTail( (LPVOID)pFile->m_nIndex );
+	if ( pFile->m_bSHA1 ) m_pFiles.AddTail( (LPVOID)pFile->m_nIndex );
 }
 
 void CURLExportDlg::OnCloseUpUrlToken() 
@@ -191,10 +191,14 @@ void CURLExportDlg::OnSave()
 		strItem.Format( _T("%I64i"), pFile->m_nSize );
 		Replace( strLine, _T("[ByteSize]"), strItem );
 		
-		Replace( strLine, _T("[TIGER]"), pFile->m_oTiger.ToString() );
-		Replace( strLine, _T("[SHA1]"), pFile->m_oSHA1.ToString() );
-		Replace( strLine, _T("[MD5]"), pFile->m_oMD5.ToString() );
-		Replace( strLine, _T("[ED2K]"), pFile->m_oED2K.ToString() );
+		strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+		Replace( strLine, _T("[TIGER]"), strItem );
+		strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+		Replace( strLine, _T("[SHA1]"), strItem );
+		strItem = CMD5::HashToString( &pFile->m_pMD5 );
+		Replace( strLine, _T("[MD5]"), strItem );
+		strItem = CED2K::HashToString( &pFile->m_pED2K );
+		Replace( strLine, _T("[ED2K]"), strItem );
 		
 		int nDot = pFile->m_sName.ReverseFind( '.' );
 		
@@ -272,10 +276,14 @@ void CURLExportDlg::OnCopy()
 		strItem.Format( _T("%I64i"), pFile->m_nSize );
 		Replace( strLine, _T("[ByteSize]"), strItem );
 		
-		Replace( strLine, _T("[TIGER]"), pFile->m_oTiger.ToString() );
-		Replace( strLine, _T("[SHA1]"), pFile->m_oSHA1.ToString() );
-		Replace( strLine, _T("[MD5]"), pFile->m_oMD5.ToString() );
-		Replace( strLine, _T("[ED2K]"), pFile->m_oED2K.ToString() );
+		strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+		Replace( strLine, _T("[TIGER]"), strItem );
+		strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+		Replace( strLine, _T("[SHA1]"), strItem );
+		strItem = CMD5::HashToString( &pFile->m_pMD5 );
+		Replace( strLine, _T("[MD5]"), strItem );
+		strItem = CED2K::HashToString( &pFile->m_pED2K );
+		Replace( strLine, _T("[ED2K]"), strItem );
 		
 		int nDot = pFile->m_sName.ReverseFind( '.' );
 		

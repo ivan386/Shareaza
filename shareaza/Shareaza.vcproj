@@ -1546,9 +1546,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\DownloadTransferFTP.cpp">
-			</File>
-			<File
 				RelativePath="DownloadTransferHTTP.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -11937,15 +11934,6 @@
 				RelativePath="DownloadTransferED2K.h">
 			</File>
 			<File
-				RelativePath=".\DownloadTransferFTP.h">
-			</File>
-			<File
-				RelativePath=".\DownloadTransferFTPDATA.h">
-			</File>
-			<File
-				RelativePath=".\DownloadTransferFTPLIST.h">
-			</File>
-			<File
 				RelativePath="DownloadTransferHTTP.h">
 			</File>
 			<File
@@ -12030,22 +12018,13 @@
 				RelativePath="GraphLine.h">
 			</File>
 			<File
-				RelativePath=".\GUID.h">
-			</File>
-			<File
 				RelativePath="Handshake.h">
 			</File>
 			<File
 				RelativePath="Handshakes.h">
 			</File>
 			<File
-				RelativePath=".\Hash.h">
-			</File>
-			<File
 				RelativePath="HashDatabase.h">
-			</File>
-			<File
-				RelativePath=".\Hashes.h">
 			</File>
 			<File
 				RelativePath="HostBrowser.h">

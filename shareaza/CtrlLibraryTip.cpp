@@ -93,8 +93,8 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	// URN
 
-	if ( pFile->m_oSHA1.IsValid() ) m_sSHA1 = _T("sha1:") + pFile->m_oSHA1.ToString();
-	if ( pFile->m_oTiger.IsValid() ) m_sTTH = _T("tree:tiger/:") + pFile->m_oTiger.ToString();
+	if ( pFile->m_bSHA1 ) m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+	if ( pFile->m_bTiger ) m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
 
 	// Metadata
 	

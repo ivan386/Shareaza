@@ -270,15 +270,14 @@ void CMatchCtrl::SetSortColumn(int nColumn, BOOL bDirection)
 
 void CMatchCtrl::SetMessage(UINT nMessageID, BOOL bLink)
 {
-	CString strCurrentText;
-	Skin.LoadString( strCurrentText, m_nMessage );
-
-	if ( nMessageID == m_nMessage && m_bSearchLink == bLink && strCurrentText == m_sMessage ) return;
+	if ( nMessageID == m_nMessage && m_bSearchLink == bLink ) return;
 	
 	m_bSearchLink = bLink;
 	
-	m_nMessage = nMessageID;
-	m_sMessage = strCurrentText;
+	if ( m_nMessage = nMessageID )
+		Skin.LoadString( m_sMessage, m_nMessage );
+	else
+		m_sMessage.Empty();
 	
 	if ( m_nCacheItems == 0 ) Invalidate();
 }
@@ -864,14 +863,14 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), 
 							ppHit->m_nSources - 1 );*/
 						_stprintf( szBuffer, _T("(%s)+%lu"),
-							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.m_d[0] ) ), ppHit->m_nSources - 1 );
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), ppHit->m_nSources - 1 );
 
 					}
 					else
 					{
 						/*_stprintf( szBuffer, _T("%lu@%s"), ppHit->m_pClientID.w[2], 
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );*/
-						_stprintf( szBuffer, _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.m_d[0] ) ) );
+						_stprintf( szBuffer, _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );
 					}
 					pszText = szBuffer;
 					

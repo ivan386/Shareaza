@@ -62,7 +62,7 @@ void CRouteCache::SetDuration(DWORD nSeconds)
 	Clear();
 }
 
-BOOL CRouteCache::Add(const CGUID* pGUID, const CNeighbour* pNeighbour)
+BOOL CRouteCache::Add(const GGUID* pGUID, const CNeighbour* pNeighbour)
 {
 	if ( CRouteCacheItem* pItem = Lookup( pGUID ) )
 	{
@@ -84,7 +84,7 @@ BOOL CRouteCache::Add(const CGUID* pGUID, const CNeighbour* pNeighbour)
 	return TRUE;
 }
 
-BOOL CRouteCache::Add(const CGUID* pGUID, const SOCKADDR_IN* pEndpoint)
+BOOL CRouteCache::Add(const GGUID* pGUID, const SOCKADDR_IN* pEndpoint)
 {
 	if ( CRouteCacheItem* pItem = Lookup( pGUID ) )
 	{
@@ -107,9 +107,9 @@ BOOL CRouteCache::Add(const CGUID* pGUID, const SOCKADDR_IN* pEndpoint)
 	return TRUE;
 }
 
-CRouteCacheItem* CRouteCache::Add(const CGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded)
+CRouteCacheItem* CRouteCache::Add(const GGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded)
 {
-	CGUID cGUID = *pGUID;
+	GGUID cGUID = *pGUID;
 	SOCKADDR_IN cEndpoint;
 	if ( pEndpoint != NULL ) cEndpoint = *pEndpoint;
 
@@ -125,7 +125,7 @@ CRouteCacheItem* CRouteCache::Add(const CGUID* pGUID, const CNeighbour* pNeighbo
 	return m_pRecent->Add( &cGUID, pNeighbour, pEndpoint != NULL ? &cEndpoint : NULL, tAdded );
 }
 
-CRouteCacheItem* CRouteCache::Lookup(const CGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
+CRouteCacheItem* CRouteCache::Lookup(const GGUID* pGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
 {
 	CRouteCacheItem* pItem = m_pRecent->Find( pGUID );
 
@@ -183,7 +183,7 @@ CRouteCacheTable::~CRouteCacheTable()
 //////////////////////////////////////////////////////////////////////
 // CRouteCacheTable operations
 
-CRouteCacheItem* CRouteCacheTable::Find(const CGUID* pGUID)
+CRouteCacheItem* CRouteCacheTable::Find(const GGUID* pGUID)
 {
 	WORD nGUID = 0, *ppGUID = (WORD*)pGUID;
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID += *ppGUID++;
@@ -198,7 +198,7 @@ CRouteCacheItem* CRouteCacheTable::Find(const CGUID* pGUID)
 	return NULL;
 }
 
-CRouteCacheItem* CRouteCacheTable::Add(const CGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime)
+CRouteCacheItem* CRouteCacheTable::Add(const GGUID* pGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD nTime)
 {
 	if ( m_nUsed == m_nBuffer || ! m_pFree ) return NULL;
 

@@ -47,7 +47,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CHostBrowser construction
 
-CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, CGUID* pClientID)
+CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, GGUID* pClientID)
 {
 	m_nState		= hbsNull;
 	m_pNotify		= pNotify;
@@ -285,7 +285,7 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 	}
 }
 
-BOOL CHostBrowser::OnPush(CGUID* pClientID, CConnection* pConnection)
+BOOL CHostBrowser::OnPush(GGUID* pClientID, CConnection* pConnection)
 {
 	if ( m_tPushed == 0 ) return FALSE;
 	if ( m_hSocket != INVALID_SOCKET ) return FALSE;

@@ -280,16 +280,16 @@ void CPacket::SmartDump(CNeighbour* pNeighbour, IN_ADDR* pUDP, BOOL bOutgoing) c
 //////////////////////////////////////////////////////////////////////
 // CPacket RAZA signatures
 
-BOOL CPacket::GetRazaHash(CHashSHA1 &oHash, DWORD nLength) const
+BOOL CPacket::GetRazaHash(SHA1* pHash, DWORD nLength) const
 {
 	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
 	if ( (DWORD)m_nLength < nLength ) return FALSE;
 	
-	CSHA1 oSHA1;
+	CSHA pSHA;
 	
-	oSHA1.Add( m_pBuffer, nLength );
-	oSHA1.Finish();
-	oHash = oSHA1;
+	pSHA.Add( m_pBuffer, nLength );
+	pSHA.Finish();
+	pSHA.GetHash( pHash );
 	
 	return TRUE;
 }

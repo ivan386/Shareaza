@@ -499,7 +499,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	
 	if ( m_sFileName.IsEmpty() )
 	{
-		m_sFileName = m_oSHA1.ToURN();
+		if ( m_bSHA1 ) m_sFileName = CSHA::HashToString( &m_pSHA1, TRUE );
 	}
 	
 	SendResponse( IDR_HTML_FILENOTFOUND );
@@ -544,10 +544,10 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
 		return TRUE;
 	}
 	
-	m_bTigerTree	= m_oTiger.IsValid();
+	m_bTigerTree	= m_bTiger;
 	m_bMetadata		= ( pFile->m_pMetadata != NULL && ( pFile->m_bMetadataAuto == FALSE || pFile->m_nVirtualSize > 0 ) );
 	
-	if ( ! m_oSHA1.IsValid() && ! m_oTiger.IsValid() && ! m_oED2K.IsValid() ) m_sLocations.Empty();
+	if ( ! m_bSHA1 && ! m_bTiger && ! m_bED2K ) m_sLocations.Empty();
 	
 	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nFileSize - m_nOffset;
 	
@@ -586,7 +586,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	
 	ASSERT( m_nFileBase == 0 );
 	
-	m_bTigerTree	= ( m_oTiger.IsValid() && pDownload->GetTigerTree() != NULL );
+	m_bTigerTree	= ( m_bTiger && pDownload->GetTigerTree() != NULL );
 	m_bMetadata		= ( pDownload->m_pXML != NULL );
 	
 	if ( m_sLocations.GetLength() ) pDownload->AddSourceURLs( m_sLocations, TRUE );
@@ -815,47 +815,47 @@ void CUploadTransferHTTP::SendFileHeaders()
 {
 	CString strHeader;
 	
-	if ( m_oSHA1.IsValid() )
+	if ( m_bSHA1 )
 	{
-		if ( m_oTiger.IsValid() )
+		if ( m_bTiger )
 		{
 			strHeader	= _T("X-Content-URN: urn:bitprint:")
-				+ m_oSHA1.ToString() + '.'
-				+ m_oTiger.ToString() + _T("\r\n");
+						+ CSHA::HashToString( &m_pSHA1, FALSE ) + '.'
+						+ CTigerNode::HashToString( &m_pTiger, FALSE ) + _T("\r\n");
 		}
 		else
 		{
-			strHeader = _T("X-Content-URN: ") + m_oSHA1.ToURN() + _T("\r\n");
+			strHeader = _T("X-Content-URN: ") + CSHA::HashToString( &m_pSHA1, TRUE ) + _T("\r\n");
 		}
 		
 		m_pOutput->Print( strHeader );
 	}
-	else if ( m_oTiger.IsValid() )
+	else if ( m_bTiger )
 	{
-		strHeader = _T("X-Content-URN: ") + m_oTiger.ToURN() + _T("\r\n");
+		strHeader = _T("X-Content-URN: ") + CTigerNode::HashToString( &m_pTiger, TRUE ) + _T("\r\n");
 		m_pOutput->Print( strHeader );
 	}
 	
-	if ( m_oED2K.IsValid() )
+	if ( m_bED2K )
 	{
-		strHeader = _T("X-Content-URN: ") + m_oED2K.ToURN() + _T("\r\n");
+		strHeader = _T("X-Content-URN: ") + CED2K::HashToString( &m_pED2K, TRUE ) + _T("\r\n");
 		m_pOutput->Print( strHeader );
 	}
 	
 	if ( m_bTigerTree && Settings.Uploads.ShareTiger )
 	{
 		strHeader	= _T("X-Thex-URI: /gnutella/thex/v1?")
-			+ m_oTiger.ToURN()
-			+ _T("&depth=9&ed2k=0;")
-			+ m_oTiger.ToString()
+			+ CTigerNode::HashToString( &m_pTiger, TRUE )
+			+ _T("&depth=9&ed2k=0;") 
+			+ CTigerNode::HashToString( &m_pTiger, FALSE )
 			+ _T("\r\n");
 	}
 	
 	if ( m_bMetadata )
 	{
 		strHeader	= _T("X-Metadata-Path: /gnutella/metadata/v1?")
-			+ m_oTiger.ToURN()
-			+ _T("\r\n");
+					+ CTigerNode::HashToString( &m_pTiger, TRUE )
+					+ _T("\r\n");
 		m_pOutput->Print( strHeader );
 	}
 	
@@ -936,7 +936,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		m_pOutput->Print( "Content-Encoding: backwards\r\n" );
 	}
 	
-	if ( m_oSHA1.IsValid() || m_oTiger.IsValid() || m_oED2K.IsValid() ) SendFileHeaders();
+	if ( m_bSHA1 || m_bTiger || m_bED2K ) SendFileHeaders();
 	
 	m_pOutput->Print( "\r\n" );
 	
@@ -1178,10 +1178,10 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		return TRUE;
 	}
 	
-	LPBYTE pSerialTree;
+	BYTE* pSerialTree;
 	DWORD nSerialTree;
 	
-	pTigerTree->ToBytes( pSerialTree, nSerialTree );
+	pTigerTree->ToBytes( &pSerialTree, &nSerialTree );
 	if ( bDelete ) delete pTigerTree;
 	
 	if ( m_bRange )
@@ -1259,19 +1259,19 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	}
 	
 	DWORD nSerialTree;
-	LPBYTE pSerialTree;
+	BYTE* pSerialTree;
 	CBuffer pDIME;
 	
 	if ( nDepth < 1 ) nDepth = pTigerTree->GetHeight();
 	else if ( nDepth > (int)pTigerTree->GetHeight() ) nDepth = pTigerTree->GetHeight();
 	
-	pTigerTree->ToBytes( pSerialTree, nSerialTree, nDepth );
+	pTigerTree->ToBytes( &pSerialTree, &nSerialTree, nDepth );
 	if ( bDelete ) delete pTigerTree;
 	
 	CString strUUID, strXML;
 	GUID pUUID;
 	
-	Network.CreateID( (CGUID*)&pUUID );
+	Network.CreateID( (GGUID*)&pUUID );
 	strUUID.Format( _T("uuid:%.8x-%.4x-%.4x-%.2x%.2x-%.2x%.2x%.2x%.2x%.2x%.2x"),
 		pUUID.Data1, pUUID.Data2, pUUID.Data3,
 		pUUID.Data4[0], pUUID.Data4[1], pUUID.Data4[2], pUUID.Data4[3],
@@ -1309,7 +1309,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	
 	if ( pHashset != NULL )
 	{
-		pHashset->ToBytes( pSerialTree, nSerialTree );
+		pHashset->ToBytes( &pSerialTree, &nSerialTree );
 		if ( bDelete ) delete pHashset;
 		
 		pDIME.WriteDIME( 2, "", "http://edonkey2000.com/spec/md4-hashset", pSerialTree, nSerialTree );
@@ -1382,9 +1382,12 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile)
 	
 	m_sFileName		= pFile->m_sName;
 	m_sFilePath		= pFile->GetPath();
-	m_oSHA1			= pFile->m_oSHA1;
-	m_oTiger		= pFile->m_oTiger;
-	m_oED2K			= pFile->m_oED2K;
+	m_bSHA1			= pFile->m_bSHA1;
+	m_pSHA1			= pFile->m_pSHA1;
+	m_bTiger		= pFile->m_bTiger;
+	m_pTiger		= pFile->m_pTiger;
+	m_bED2K			= pFile->m_bED2K;
+	m_pED2K			= pFile->m_pED2K;
 	DWORD nIndex	= pFile->m_nIndex;
 	BOOL bCached	= pFile->m_bCachedPreview;
 	
@@ -1469,20 +1472,20 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile)
 	
 	CString strHeader;
 	
-	if ( m_oSHA1.IsValid() )
+	if ( m_bSHA1 )
 	{
 		strHeader.Format( _T("X-Previewed-URN: %s\r\n"),
-			(LPCTSTR)m_oSHA1.ToURN() );
+			(LPCTSTR)CSHA::HashToString( &m_pSHA1, TRUE ) );
 	}
-	else if ( m_oTiger.IsValid() )
+	else if ( m_bTiger )
 	{
 		strHeader.Format( _T("X-Previewed-URN: %s\r\n"),
-			(LPCTSTR)m_oTiger.ToURN() );
+			(LPCTSTR)CTigerNode::HashToString( &m_pTiger, TRUE ) );
 	}
-	else if ( m_oED2K.IsValid() )
+	else if ( m_bED2K )
 	{
 		strHeader.Format( _T("X-Previewed-URN: %s\r\n"),
-			(LPCTSTR)m_oED2K.ToURN() );
+			(LPCTSTR)CED2K::HashToString( &m_pED2K, TRUE ) );
 	}
 	
 	m_pOutput->Print( strHeader );
@@ -1638,9 +1641,9 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 		if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
 			strReplace = m_sFileName;
 		else if ( strReplace.CompareNoCase( _T("SHA1") ) == 0 )
-			strReplace = m_oSHA1.ToString();
+			strReplace = CSHA::HashToString( &m_pSHA1 );
 		else if ( strReplace.CompareNoCase( _T("URN") ) == 0 )
-			strReplace = m_oSHA1.ToURN();
+			strReplace = CSHA::HashToString( &m_pSHA1, TRUE );
 		else if ( strReplace.CompareNoCase( _T("Version") ) == 0 )
 			strReplace = theApp.m_sVersion;
 		else if ( strReplace.CompareNoCase( _T("Neighbours") ) == 0 )

@@ -90,9 +90,12 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	
 	CDownload* pDownload = NULL;
 	
-	if ( pDownload == NULL && pHit->m_oSHA1.IsValid() ) pDownload = FindBySHA1( pHit->m_oSHA1 );
-	if ( pDownload == NULL && pHit->m_oTiger.IsValid() ) pDownload = FindByTiger( pHit->m_oTiger );
-	if ( pDownload == NULL && pHit->m_oED2K.IsValid() ) pDownload = FindByED2K( pHit->m_oED2K );
+	if ( pDownload == NULL && pHit->m_bSHA1 )
+		pDownload = FindBySHA1( &pHit->m_pSHA1 );
+	if ( pDownload == NULL && pHit->m_bTiger )
+		pDownload = FindByTiger( &pHit->m_pTiger );
+	if ( pDownload == NULL && pHit->m_bED2K )
+		pDownload = FindByED2K( &pHit->m_pED2K );
 	
 	if ( pDownload != NULL )
 	{
@@ -105,17 +108,15 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	{
 		pDownload = new CDownload();
 		pDownload->AddSourceHit( pHit, TRUE );
-		pDownload->m_oBTH.SetTrusted();
-		pDownload->m_oTiger.SetTrusted();
-		pDownload->m_oED2K.SetTrusted();
-		pDownload->m_oSHA1.SetTrusted();
-		pDownload->m_oMD5.SetTrusted();
 
 		if ( bAddToHead ) m_pList.AddHead( pDownload );
 		else m_pList.AddTail( pDownload );
 		
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+
+		if( pDownload->m_bSHA1 ) pDownload->m_bSHA1Trusted = TRUE;
+		else if( pDownload->m_bED2K ) pDownload->m_bED2KTrusted = TRUE;
 	}
 
 	pHit->m_bDownload = TRUE;
@@ -123,7 +124,7 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( ( (pDownload->GetSourceCount() == 0 ) || ( pDownload->m_oED2K.IsValid() && ! pDownload->m_oSHA1.IsValid() ) ) 
+	if ( ( (pDownload->GetSourceCount() == 0 ) || ( pDownload->m_bED2K && ! pDownload->m_bSHA1 ) ) 
 	 &&( (GetTryingCount() < Settings.Downloads.MaxFiles ) || ( bAddToHead ) ) )
 	{
 		pDownload->SetStartTimer();
@@ -139,9 +140,12 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	
 	CDownload* pDownload = NULL;
 	
-	if ( pDownload == NULL && pFile->m_oSHA1.IsValid() ) pDownload = FindBySHA1( pFile->m_oSHA1 );
-	if ( pDownload == NULL && pFile->m_oTiger.IsValid() ) pDownload = FindByTiger( pFile->m_oTiger );
-	if ( pDownload == NULL && pFile->m_oED2K.IsValid() ) pDownload = FindByED2K( pFile->m_oED2K );
+	if ( pDownload == NULL && pFile->m_bSHA1 )
+		pDownload = FindBySHA1( &pFile->m_pSHA1 );
+	if ( pDownload == NULL && pFile->m_bTiger )
+		pDownload = FindByTiger( &pFile->m_pTiger );
+	if ( pDownload == NULL && pFile->m_bED2K )
+		pDownload = FindByED2K( &pFile->m_pED2K );
 	
 	if ( pDownload != NULL )
 	{
@@ -159,15 +163,10 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		pDownload = new CDownload();
 		if ( bAddToHead ) m_pList.AddHead( pDownload );
 		else m_pList.AddTail( pDownload );
-		BOOL bTrustedSet;
-		if ( bTrustedSet = ( pFile->m_pBest != NULL ) )
+		
+		if ( pFile->m_pBest != NULL )
 		{
 			pDownload->AddSourceHit( pFile->m_pBest, TRUE );
-			pDownload->m_oBTH.SetTrusted();
-			pDownload->m_oTiger.SetTrusted();
-			pDownload->m_oED2K.SetTrusted();
-			pDownload->m_oSHA1.SetTrusted();
-			pDownload->m_oMD5.SetTrusted();
 		}
 		
 		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
@@ -175,20 +174,14 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 			if ( pHit != pFile->m_pBest )
 			{
 				pDownload->AddSourceHit( pHit, TRUE );
-				if ( !bTrustedSet )
-				{
-					bTrustedSet = TRUE;
-					pDownload->m_oBTH.SetTrusted();
-					pDownload->m_oTiger.SetTrusted();
-					pDownload->m_oED2K.SetTrusted();
-					pDownload->m_oSHA1.SetTrusted();
-					pDownload->m_oMD5.SetTrusted();
-				}
 			}
 		}
 		
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+
+		if( pDownload->m_bSHA1 ) pDownload->m_bSHA1Trusted = TRUE;
+		else if( pDownload->m_bED2K ) pDownload->m_bED2KTrusted = TRUE;
 	}
 	
 	pFile->m_bDownload = TRUE;
@@ -197,8 +190,8 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	Transfers.StartThread();
 	
 	if ( ( (pDownload->GetSourceCount() == 0 ) ||
-		( pDownload->m_oED2K.IsValid() && ! pDownload->m_oSHA1.IsValid() )) &&
-		(GetTryingCount() < Settings.Downloads.MaxFiles ) )
+		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
+		   (GetTryingCount() < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->FindMoreSources();
 		pDownload->SetStartTimer();
@@ -218,10 +211,14 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = NULL;
 	
-	if ( pDownload == NULL && pURL->m_oSHA1.IsValid() ) pDownload = FindBySHA1( pURL->m_oSHA1 );
-	if ( pDownload == NULL && pURL->m_oTiger.IsValid() ) pDownload = FindByTiger( pURL->m_oTiger );
-	if ( pDownload == NULL && pURL->m_oED2K.IsValid() ) pDownload = FindByED2K( pURL->m_oED2K );
-	if ( pDownload == NULL && pURL->m_oBTH.IsValid() ) pDownload = FindByBTH( pURL->m_oBTH );
+	if ( pDownload == NULL && pURL->m_bSHA1 )
+		pDownload = FindBySHA1( &pURL->m_pSHA1 );
+	if ( pDownload == NULL && pURL->m_bTiger )
+		pDownload = FindByTiger( &pURL->m_pTiger );
+	if ( pDownload == NULL && pURL->m_bED2K )
+		pDownload = FindByED2K( &pURL->m_pED2K );
+	if ( pDownload == NULL && pURL->m_bBTH )
+		pDownload = FindByBTH( &pURL->m_pBTH );
 	
 	if ( pDownload != NULL )
 	{
@@ -235,31 +232,36 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	
 	pDownload = new CDownload();
 	
-	if ( pURL->m_oSHA1.IsValid() )
+	if ( pURL->m_bSHA1 )
 	{
-		pDownload->m_oSHA1 = pURL->m_oSHA1;
-		pDownload->m_oSHA1.SetTrusted();
+		pDownload->m_bSHA1			= TRUE;
+		pDownload->m_pSHA1			= pURL->m_pSHA1;
+		pDownload->m_bSHA1Trusted	= TRUE;
 	}
-	if ( pURL->m_oTiger.IsValid() )
+	if ( pURL->m_bTiger )
 	{
-		pDownload->m_oTiger = pURL->m_oTiger;
-		pDownload->m_oTiger.SetTrusted();
+		pDownload->m_bTiger			= TRUE;
+		pDownload->m_pTiger			= pURL->m_pTiger;
+		pDownload->m_bTigerTrusted	= TRUE;
 	}
-	if ( pURL->m_oMD5.IsValid() )
+	if ( pURL->m_bMD5 )
 	{
-		pDownload->m_oMD5 = pURL->m_oMD5;
-		pDownload->m_oMD5.SetTrusted();
+		pDownload->m_bMD5			= TRUE;
+		pDownload->m_pMD5			= pURL->m_pMD5;
+		pDownload->m_bMD5Trusted	= TRUE;
 	}
-	if ( pURL->m_oED2K.IsValid() )
+	if ( pURL->m_bED2K )
 	{
-		pDownload->m_oED2K = pURL->m_oED2K;
-		pDownload->m_oED2K.SetTrusted();
+		pDownload->m_bED2K			= TRUE;
+		pDownload->m_pED2K			= pURL->m_pED2K;
+		pDownload->m_bED2KTrusted	= TRUE;
 		pDownload->Share( TRUE );
 	}
-	if ( pURL->m_oBTH.IsValid() )
+	if ( pURL->m_bBTH )
 	{
-		pDownload->m_oBTH = pURL->m_oBTH;
-		pDownload->m_oBTH.SetTrusted();
+		pDownload->m_bBTH			= TRUE;
+		pDownload->m_pBTH			= pURL->m_pBTH;
+		pDownload->m_bBTHTrusted	= TRUE;
 		pDownload->Share( TRUE );
 	}
 	
@@ -292,8 +294,8 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 	
-	if( (  pDownload->m_oBTH.IsValid() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
-		( !pDownload->m_oBTH.IsValid() && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
+	if( (  pDownload->m_bBTH && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
+		( !pDownload->m_bBTH && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
 	{
 		pDownload->SetStartTimer();
 		if ( pURL->m_nAction != CShareazaURL::uriSource )
@@ -397,7 +399,7 @@ int CDownloads::GetActiveTorrentCount() const
 	{
 		CDownload* pDownload = GetNext( pos );
 		
-		if ( pDownload->IsDownloading() && pDownload->m_oBTH.IsValid() &&
+		if ( pDownload->IsDownloading() && pDownload->m_bBTH &&
 			! pDownload->IsSeeding()	&& ! pDownload->IsCompleted() &&
 			! pDownload->IsMoving()		&& ! pDownload->IsPaused() )
 				nCount++;
@@ -446,7 +448,7 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 		
 		if ( ( pDownload->IsTrying() ) && ( ! pDownload->IsCompleted() ) && ( ! pDownload->IsPaused() ) )
 		{
-			if ( ( pDownload->m_oBTH.IsValid() ) || ( ! bTorrentsOnly ) )
+			if ( ( pDownload->m_bBTH ) || ( ! bTorrentsOnly ) )
 				nCount++;
 		}
 	}
@@ -504,34 +506,34 @@ BOOL CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 CDownload* CDownloads::FindByURN(LPCTSTR pszURN, BOOL bSharedOnly) const
 {
 	CDownload* pDownload;
-	CHashTiger oTiger;
-	CHashSHA1 oSHA1;
-	CHashED2K oED2K;
+	TIGEROOT pTiger;
+	SHA1 pSHA1;
+	MD4 pED2K;
 	
-	if ( oSHA1.FromURN( pszURN ) )
+	if ( CSHA::HashFromURN( pszURN, &pSHA1 ) )
 	{
-		if ( pDownload = FindBySHA1( oSHA1, bSharedOnly ) ) return pDownload;
+		if ( pDownload = FindBySHA1( &pSHA1, bSharedOnly ) ) return pDownload;
 	}
 	
-	if ( oTiger.FromURN( pszURN ) )
+	if ( CTigerNode::HashFromURN( pszURN, &pTiger ) )
 	{
-		if ( pDownload = FindByTiger( oTiger, bSharedOnly ) ) return pDownload;
+		if ( pDownload = FindByTiger( &pTiger, bSharedOnly ) ) return pDownload;
 	}
 	
-	if ( oED2K.FromURN( pszURN ) )
+	if ( CED2K::HashFromURN( pszURN, &pED2K ) )
 	{
-		if ( pDownload = FindByED2K( oED2K, bSharedOnly ) ) return pDownload;
+		if ( pDownload = FindByED2K( &pED2K, bSharedOnly ) ) return pDownload;
 	}
 	
 	return NULL;
 }
 
-CDownload* CDownloads::FindBySHA1(const CHashSHA1 &oSHA1, BOOL bSharedOnly) const
+CDownload* CDownloads::FindBySHA1(const SHA1* pSHA1, BOOL bSharedOnly) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->m_oSHA1 == oSHA1 )
+		if ( pDownload->m_bSHA1 && pDownload->m_pSHA1 == *pSHA1 )
 		{
 			if ( ! bSharedOnly || ( pDownload->IsShared() && pDownload->IsStarted() ) )
 				return pDownload;
@@ -541,12 +543,12 @@ CDownload* CDownloads::FindBySHA1(const CHashSHA1 &oSHA1, BOOL bSharedOnly) cons
 	return NULL;
 }
 
-CDownload* CDownloads::FindByTiger(const CHashTiger &oTiger, BOOL bSharedOnly) const
+CDownload* CDownloads::FindByTiger(const TIGEROOT* pTiger, BOOL bSharedOnly) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->m_oTiger == oTiger )
+		if ( pDownload->m_bTiger && pDownload->m_pTiger == *pTiger )
 		{
 			if ( ! bSharedOnly || ( pDownload->IsShared() && pDownload->IsStarted() ) )
 				return pDownload;
@@ -556,12 +558,12 @@ CDownload* CDownloads::FindByTiger(const CHashTiger &oTiger, BOOL bSharedOnly) c
 	return NULL;
 }
 
-CDownload* CDownloads::FindByED2K(const CHashED2K &oED2K, BOOL bSharedOnly) const
+CDownload* CDownloads::FindByED2K(const MD4* pED2K, BOOL bSharedOnly) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->m_oED2K == oED2K )
+		if ( pDownload->m_bED2K && pDownload->m_pED2K == *pED2K )
 		{
 			if ( ! bSharedOnly || ( pDownload->IsShared() && pDownload->IsStarted() ) )
 				return pDownload;
@@ -571,12 +573,12 @@ CDownload* CDownloads::FindByED2K(const CHashED2K &oED2K, BOOL bSharedOnly) cons
 	return NULL;
 }
 
-CDownload* CDownloads::FindByBTH(const CHashBT &oBTH, BOOL bSharedOnly) const
+CDownload* CDownloads::FindByBTH(const SHA1* pBTH, BOOL bSharedOnly) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->m_oBTH == oBTH )
+		if ( pDownload->m_bBTH && pDownload->m_pBTH == *pBTH )
 		{
 			if ( ! bSharedOnly || ( pDownload->IsShared() ) )
 				return pDownload;
@@ -847,14 +849,14 @@ void CDownloads::OnRun()
 			{
 				if ( pTransfer->m_nProtocol == PROTOCOL_ED2K )
 				{
-					if ( ! ((CDownloadTransferED2K*)pTransfer)->m_pClient
-						|| ! ((CDownloadTransferED2K*)pTransfer)->m_pClient->m_bConnected ) continue;
+					CDownloadTransferED2K* pED2K = (CDownloadTransferED2K*)pTransfer;
+					if ( pED2K->m_pClient == NULL || pED2K->m_pClient->m_bConnected == FALSE ) continue;
 					if ( pTransfer->m_nState == dtsQueued ) continue;
 				}
 				else if ( pTransfer->m_nProtocol == PROTOCOL_BT )
 				{
-					if ( ((CDownloadTransferBT*)pTransfer)->m_nState == dtsTorrent
-						&& ((CDownloadTransferBT*)pTransfer)->m_bChoked ) continue;
+					CDownloadTransferBT* pBT = (CDownloadTransferBT*)pTransfer;
+					if ( pBT->m_nState == dtsTorrent && pBT->m_bChoked ) continue;
 				}
 				
 				nTemp ++;
@@ -923,7 +925,7 @@ void CDownloads::OnQueryHits(CQueryHit* pHits)
 //////////////////////////////////////////////////////////////////////
 // CDownloads push handler
 
-BOOL CDownloads::OnPush(CGUID* pGUID, CConnection* pConnection)
+BOOL CDownloads::OnPush(GGUID* pGUID, CConnection* pConnection)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;

@@ -198,6 +198,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella.HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella.ConnectThrottle"), &Gnutella.ConnectThrottle, 120 );
 	
+	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
 	Add( _T("Gnutella1.Handshake04"), &Gnutella1.Handshake04, TRUE );
 	Add( _T("Gnutella1.Handshake06"), &Gnutella1.Handshake06, TRUE );
@@ -222,6 +223,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.PongCache"), &Gnutella1.PongCache, 10000 );
 	Add( _T("Gnutella1.PongCount"), &Gnutella1.PongCount, 10 );
 	
+	Add( _T("Gnutella2.ClientMode"), &Gnutella2.ClientMode, MODE_AUTO );
 	Add( _T("Gnutella2.EnableAlways"), &Gnutella2.EnableAlways, TRUE );
 	Add( _T("Gnutella2.NumHubs"), &Gnutella2.NumHubs, 2 );
 	Add( _T("Gnutella2.NumLeafs"), &Gnutella2.NumLeafs, 300 );

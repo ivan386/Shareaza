@@ -47,8 +47,8 @@ public:
 	int				m_nRandomUnchoke;
 	DWORD			m_tRandomUnchoke;
 public:
-	CFileFragmentQueue m_pRequested;
-	CFileFragmentList m_pServed;
+	CFileFragment*	m_pRequested;
+	CFileFragment*	m_pServed;
 	
 // Operations
 public:

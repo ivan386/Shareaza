@@ -85,7 +85,7 @@ CChatSession::~CChatSession()
 //////////////////////////////////////////////////////////////////////
 // CChatSession setup
 
-void CChatSession::Setup(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
+void CChatSession::Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 {
 	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
 	
@@ -178,7 +178,7 @@ BOOL CChatSession::SendPush(BOOL bAutomatic)
 	}
 }
 
-BOOL CChatSession::OnPush(CGUID* pGUID, CConnection* pConnection)
+BOOL CChatSession::OnPush(GGUID* pGUID, CConnection* pConnection)
 {
 	if ( m_tPushed == 0 ) return FALSE;
 	if ( ! m_bGUID || m_pGUID != *pGUID ) return FALSE;
@@ -734,7 +734,7 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 	if ( ! pPacket->m_bCompound ) return TRUE;
 	
 	BOOL bGUID = FALSE;
-	CGUID pGUID;
+	GGUID pGUID;
 	
 	CHAR szType[9];
 	DWORD nLength;

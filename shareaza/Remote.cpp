@@ -434,10 +434,10 @@ void CRemote::PageLogin()
 	
 	if ( ! strPassword.IsEmpty() )
 	{
-		CSHA1 oSHA1;
-		oSHA1.Add( (LPCTSTR)strPassword, strPassword.GetLength() * sizeof(TCHAR) );
-		oSHA1.Finish();
-		strPassword = oSHA1.ToString();
+		CSHA pSHA1;
+		pSHA1.Add( (LPCTSTR)strPassword, strPassword.GetLength() * sizeof(TCHAR) );
+		pSHA1.Finish();
+		strPassword = pSHA1.GetHashString( FALSE );
 	}
 	
 	if ( GetKey( _T("username") ) == Settings.Remote.Username &&
@@ -945,7 +945,7 @@ void CRemote::PageDownloads()
 			LoadString( str, IDS_STATUS_PENDING );
 		else if ( pDownload->m_nSize == SIZE_UNKNOWN )
 			LoadString( str, IDS_STATUS_SEARCHING );
-		else if ( pDownload->m_oBTH.IsValid() )
+		else if ( pDownload->m_bBTH )
 		{
 			if ( pDownload->IsTasking() )
 				LoadString( str, IDS_STATUS_CREATING );

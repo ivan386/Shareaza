@@ -24,142 +24,122 @@
 
 #pragma once
 
-#include "Hashes.h"
+typedef unsigned __int64 WORD64;
 
-class CTigerTree : public CHashTiger
+class CTigerNode;
+
+
+class CTigerTree
 {
+// Construction
+public:
+	CTigerTree();
+	~CTigerTree();
+	
+	void (*pTiger)(WORD64*, WORD64*);
+
+// Operations
+public:
+	void	SetupAndAllocate(DWORD nHeight, QWORD nLength);
+	void	SetupParameters(QWORD nLength);
+	void	Clear();
+	void	Serialize(CArchive& ar);
+	DWORD	GetSerialSize() const;
+public:
+	BOOL	GetRoot(TIGEROOT* pTiger) const;
+	CString	RootToString() const;
+	void	Assume(CTigerTree* pSource);
+public:
+	void	BeginFile(DWORD nHeight, QWORD nLength);
+	void	AddToFile(LPCVOID pInput, DWORD nLength);
+	BOOL	FinishFile();
+public:
+	void	BeginBlockTest();
+	void	AddToTest(LPCVOID pInput, DWORD nLength);
+	BOOL	FinishBlockTest(DWORD nBlock);
+public:
+	BOOL	ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight = 0);
+	BOOL	FromBytes(BYTE* pOutput, DWORD nOutput, DWORD nHeight, QWORD nLength);
+	BOOL	CheckIntegrity();
+	void	Dump();
+
+// Inlines
+public:
+	inline BOOL		IsAvailable() const { return m_pNode != NULL; }
+	inline DWORD	GetHeight() const { return m_nHeight; }
+	inline DWORD	GetBlockLength() const { return 1024 * m_nBlockCount; }
+	inline DWORD	GetBlockCount() const { return m_nBaseUsed; }
+
 // Attributes
-private:
+protected:
 	DWORD		m_nHeight;
+	CTigerNode*	m_pNode;
 	DWORD		m_nNodeCount;
-	CManagedTiger* m_pNode;
-	CHashTiger*	m_pStackBase;
-	CHashTiger*	m_pStackTop;
+
+// Processing Data
+protected:
 	DWORD		m_nNodeBase;
 	DWORD		m_nNodePos;
 	DWORD		m_nBaseUsed;
 	DWORD		m_nBlockCount;
 	DWORD		m_nBlockPos;
-public:
-	inline	CTigerTree();
-	inline	~CTigerTree();
-	inline	void	Clear();
-			void	SetupAndAllocate(const DWORD nHeight, const QWORD nLength);
-			void	SetupParameters(const QWORD nLength);
-	inline	void	SerializeStore(CArchive& ar, const DWORD nVersion);
-	inline	void	SerializeLoad(CArchive& ar, const DWORD nVersion);
-	inline	void	Assume(CTigerTree* pSource);
-			void	BeginFile(const DWORD nHeight, const QWORD nLength);
-			void	AddToFile(LPCVOID pInput, DWORD nLength);
-			BOOL	FinishFile();
-			void	BeginBlockTest();
-			void	AddToTest(LPCVOID pInput, DWORD nLength);
-			BOOL	FinishBlockTest(DWORD nBlock);
-			BOOL	ToBytes(LPBYTE &pOutput, DWORD &nOutput, DWORD nHeight = 0);
-			BOOL	FromBytes(LPBYTE pOutput, DWORD nOutput, DWORD nHeight, QWORD nLength);
-			BOOL	CheckIntegrity();
-#ifdef _DEBUG
-	void	Dump();
-#endif
-	inline	BOOL	IsAvailable() const { return m_pNode != NULL; }
-	inline	DWORD	GetHeight() const { return m_nHeight; }
-	inline	DWORD	GetBlockLength() const { return m_nBlockCount << 10; }
-	inline	DWORD	GetBlockCount() const { return m_nBaseUsed; }
-	inline	DWORD	GetSerialSize() const { return 4 + m_nNodeCount * ( TIGER_HASH_SIZE + 1 ); }
+	CTigerNode*	m_pStackBase;
+	CTigerNode*	m_pStackTop;
+protected:
+	static WORD64 m_pTable[4*256];
+
 // Implementation
-private:
-	inline	void	BlocksToNode();
-	inline	void	Collapse();
-	typedef	void	(__stdcall *tpTiger_Var)	(CHashTiger* state, LPVOID str, DWORD nLength);
-	typedef	void	(__stdcall *tpTiger_1)		(CHashTiger* state, LPVOID str);
-	typedef	void	(__stdcall *tpTiger_2)		(CHashTiger* state1, LPVOID str1, CHashTiger* state2, LPVOID str2);
-	typedef	void	(__stdcall *tpTiger_3)		(CHashTiger* state1, LPVOID str1, CHashTiger* state2, LPVOID str2, CHashTiger* state3, LPVOID str3);
-	typedef	void	(__stdcall *tpTiger_Node)	(CHashTiger* state, CHashTiger* hash1, CHashTiger* hash2);
-	static	tpTiger_Var		pTiger_Var;
-	static	tpTiger_1		pTiger_1;
-	static	tpTiger_2		pTiger_2;
-	static	tpTiger_3		pTiger_3;
-	static	tpTiger_Node	pTiger_Node;
-public:
-	static	void	Init();
+protected:
+	inline void	Collapse();
+	inline void BlocksToNode();
+	inline void	Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* pInput1 = NULL, WORD64* pInput2 = NULL);
+//	inline void	Tiger(WORD64* str, WORD64* state);
 };
 
-inline CTigerTree::CTigerTree()
-{
-	m_nNodeCount = m_nHeight = 0;
-	m_pStackTop = m_pStackBase = m_pNode = NULL;
-}
 
-inline CTigerTree::~CTigerTree()
+class CTigerNode
 {
-	Clear();
-	if ( m_pStackBase ) delete [] m_pStackBase;
-}
-
-inline void CTigerTree::Clear()
-{
-	if ( m_pNode )
+// Construction
+public:
+	inline CTigerNode()
 	{
-		delete [] m_pNode;
-		m_pNode = NULL;
+		v1 = v2 = v3 = 0;
+		bValid = FALSE;
 	}
-	m_nNodeCount = m_nHeight = 0;
-}
 
-inline void CTigerTree::SerializeStore(CArchive& ar, const DWORD nVersion)
-{
-	ASSERT( ar.IsStoring() );
-	DWORD nNode = 0;
-	BYTE bValid;
-	ar << m_nHeight;
-	ASSERT( ( m_pNode != NULL ) || ( m_nHeight == 0 ) );
-	ASSERT( ( m_nHeight == 0 ) == ( m_nNodeCount == 0 ) );
-	if ( m_nNodeCount ) do
+// Attributes
+public:
+	union
 	{
-		( (CHashTiger)m_pNode[ nNode ] ).SerializeStore( ar, nVersion );
-		bValid = m_pNode[ nNode ].IsValid();			// always storing entire tree - is that necessary?
-		ar << bValid;
-	}
-	while ( ++nNode < m_nNodeCount );
-}
-
-inline void CTigerTree::SerializeLoad(CArchive& ar, const DWORD nVersion)
-{
-	ASSERT( ar.IsLoading() );
-	DWORD nNode = 0;
-	BYTE bValid;
-	Clear();
-	ar >> m_nHeight;
-	if ( m_nHeight != 0 )
-	{
-		m_nNodeCount = ( 1 << m_nHeight ) - 1;
-		m_pNode = new CManagedTiger[ m_nNodeCount ];
-		do
+		WORD64	value[3];
+		struct
 		{
-			ASSERT( ! m_pNode[ nNode ].IsValid() );
-		//	( (CHashTiger)m_pNode[ nNode ] ).SerializeLoad( ar, nVersion );
-			ar.Read( &m_pNode[ nNode ].m_b, 24 );
-			ar >> bValid;
-			if ( bValid ) m_pNode[ nNode ].SetValid();
-		}
-		while ( ++nNode < m_nNodeCount );
-		if ( ! CheckIntegrity() )
-		{
-			Clear();
-			AfxThrowArchiveException( CArchiveException::generic, ar.m_strFileName );
-		}
-	}
+			WORD64	v1;
+			WORD64	v2;
+			WORD64	v3;
+		};
+	};
+
+	BYTE bValid;
+
+// Operations
+public:
+	CString			ToString();
+	static CString	HashToString(const TIGEROOT* pTiger, BOOL bURN = FALSE);
+	static BOOL		HashFromString(LPCTSTR pszHash, TIGEROOT* pTiger);
+	static BOOL		HashFromURN(LPCTSTR pszHash, TIGEROOT* pTiger);
+	static BOOL		IsNull(TIGEROOT* pTiger);
+
+};
+
+inline bool operator==(const TIGEROOT& tigera, const TIGEROOT& tigerb)
+{
+    return memcmp( &tigera, &tigerb, 24 ) == 0;
 }
 
-inline void CTigerTree::Assume(CTigerTree* pSource)
+inline bool operator!=(const TIGEROOT& tigera, const TIGEROOT& tigerb)
 {
-	Clear();
-	if ( pSource->m_pNode == NULL ) return;
-	m_nHeight = pSource->m_nHeight;
-	m_nNodeCount = pSource->m_nNodeCount;
-	m_pNode = pSource->m_pNode;
-	pSource->m_nNodeCount = pSource->m_nHeight = 0;
-	pSource->m_pNode = NULL;
+    return memcmp( &tigera, &tigerb, 24 ) != 0;
 }
 
 #endif // !defined(AFX_TIGERTREE_H__59910156_59A2_454F_A0FE_0A66B7D37218__INCLUDED_)

@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 #include "CtrlLibraryFileView.h"
 
 class CCollectionFile;
@@ -43,7 +42,7 @@ protected:
 	CWebCtrl*			m_pWebCtrl;
 	DWORD				m_nWebIndex;
 	CCollectionFile*	m_pCollection;
-	CHashSHA1			m_oSHA1;
+	SHA1				m_pSHA1;
 	
 // Operations
 public:

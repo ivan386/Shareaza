@@ -108,7 +108,7 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory add new download
 
-CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const CManagedSHA1 &oSHA1, const CManagedED2K &oED2K, LPCTSTR pszSources)
+CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return NULL;
@@ -116,7 +116,7 @@ CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const CManagedSHA1 &oSHA1,
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent != NULL ) return pRecent;
 	
-	pRecent = new CLibraryRecent( pszPath, oSHA1, oED2K, pszSources );
+	pRecent = new CLibraryRecent( pszPath, pSHA1, pED2K, pszSources );
 	m_pList.AddHead( pRecent );
 	
 	Prune();
@@ -261,11 +261,11 @@ CLibraryRecent::CLibraryRecent()
 
 	m_bToday	= FALSE;
 	m_pFile		= NULL;
-	ASSERT( ! m_oSHA1.IsValid() );
-	ASSERT( ! m_oED2K.IsValid() );
+	m_bSHA1		= FALSE;
+	m_bED2K		= FALSE;
 }
 
-CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const CManagedSHA1 &oSHA1, const CManagedED2K &oED2K, LPCTSTR pszSources)
+CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources)
 {
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
@@ -274,9 +274,11 @@ CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const CManagedSHA1 &oSHA1, const
 	m_pFile		= NULL;
 	m_sPath		= pszPath;
 	m_sSources	= pszSources;
+	m_bSHA1		= pSHA1 != NULL;
+	m_bED2K		= pED2K != NULL;
 	
-	m_oSHA1 = oSHA1;
-	m_oED2K = oED2K;
+	if ( m_bSHA1 ) m_pSHA1 = *pSHA1;
+	if ( m_bED2K ) m_pED2K = *pED2K;
 }
 
 CLibraryRecent::~CLibraryRecent()
@@ -291,7 +293,8 @@ void CLibraryRecent::RunVerify(CLibraryFile* pFile)
 	if ( m_pFile == NULL )
 	{
 		m_pFile = pFile;
-		m_pFile->OnVerifyDownload( m_oSHA1, m_oED2K, m_sSources );
+		m_pFile->OnVerifyDownload( m_bSHA1 ? &m_pSHA1 : NULL,
+			m_bED2K ? &m_pED2K : NULL, m_sSources );
 	}
 }
 
@@ -317,8 +320,10 @@ void CLibraryRecent::Serialize(CArchive& ar, int nVersion)
 		if ( m_pFile = Library.LookupFile( nIndex ) )
 		{
 			m_sPath = m_pFile->GetPath();
-			m_oSHA1 = m_pFile->m_oSHA1;
-			m_oED2K = m_pFile->m_oED2K;
+			m_bSHA1 = m_pFile->m_bSHA1;
+			m_bED2K = m_pFile->m_bED2K;
+			if ( m_bSHA1 ) m_pSHA1 = m_pFile->m_pSHA1;
+			if ( m_bED2K ) m_pED2K = m_pFile->m_pED2K;
 		}
 	}
 }

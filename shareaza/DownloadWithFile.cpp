@@ -29,7 +29,6 @@
 #include "DownloadGroups.h"
 #include "FragmentedFile.h"
 #include "Uploads.h"
-#include "DownloadWithTiger.h"
 
 #include "ID3.h"
 #include "SHA.h"
@@ -224,8 +223,8 @@ CString CDownloadWithFile::GetDisplayName() const
 	
 	CString strName;
 	
-	if ( m_oSHA1.IsValid() )
-		strName = _T("sha1:") + m_oSHA1.ToString();
+	if ( m_bSHA1 )
+		strName = _T("sha1:") + CSHA::HashToString( &m_pSHA1 );
 	else
 		strName = _T("Unknown File");
 	
@@ -233,40 +232,54 @@ CString CDownloadWithFile::GetDisplayName() const
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownloadWithFile get the first empty fragment
+
+CFileFragment* CDownloadWithFile::GetFirstEmptyFragment() const
+{
+	return m_pFile ? m_pFile->GetFirstEmptyFragment() : NULL;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get a list of possible download fragments
 
-void CDownloadWithFile::GetPossibleFragments(CFileFragmentList& Possible, CFileFragmentList& Available, QWORD& nLargestOffset, QWORD& nLargestLength)
+CFileFragment* CDownloadWithFile::GetPossibleFragments(CFileFragment* pAvailable, QWORD* pnLargestOffset, QWORD* pnLargestLength)
 {
-	Possible.Delete();
-	if ( ! PrepareFile() ) return;
+	if ( ! PrepareFile() ) return NULL;
 	
-	if ( ! Available.IsEmpty() )
+	CFileFragment* pPossible;
+	
+	if ( pAvailable != NULL )
 	{
-		Possible.GetAnd( Available, m_pFile->m_oFree );
+		pPossible = m_pFile->GetFirstEmptyFragment();
+		pPossible = pPossible->CreateAnd( pAvailable );
 	}
 	else
 	{
-		Possible.GetCopy( m_pFile->m_oFree );
+		pPossible = m_pFile->CopyFreeFragments();
 	}
 	
-	if ( Possible.IsEmpty() ) return;
+	if ( pPossible == NULL ) return NULL;
 	
-	if ( CFileFragment* pLargest = Possible.GetLargest() )
+	if ( pnLargestOffset && pnLargestLength )
 	{
-		nLargestOffset = pLargest->Offset();
-		nLargestLength = pLargest->Length();
-	}
-	else
-	{
-		ASSERT( FALSE );
-		return;
-	}
-	
-	for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer && ( ! Possible.IsEmpty() ) ; pTransfer = pTransfer->m_pDlNext )
-	{
-		pTransfer->SubtractRequested( Possible );
+		if ( CFileFragment* pLargest = pPossible->GetLargest() )
+		{
+			*pnLargestOffset = pLargest->m_nOffset;
+			*pnLargestLength = pLargest->m_nLength;
+		}
+		else
+		{
+			ASSERT( FALSE );
+			return NULL;
+		}
 	}
 	
+	for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer && pPossible ; pTransfer = pTransfer->m_pDlNext )
+	{
+		pTransfer->SubtractRequested( &pPossible );
+	}
+	
+	return pPossible;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -277,24 +290,27 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 	if ( ! PrepareFile() ) return NULL;
 	
 	QWORD nLargestOffset = SIZE_UNKNOWN, nLargestLength = SIZE_UNKNOWN;
-	CFileFragmentList Possible;
-	GetPossibleFragments( Possible, pTransfer->m_pSource->m_oAvailable,	nLargestOffset, nLargestLength );
+	
+	CFileFragment* pPossible = GetPossibleFragments(
+		pTransfer->m_pSource->m_pAvailable,
+		&nLargestOffset, &nLargestLength );
 	
 	if ( nLargestOffset == SIZE_UNKNOWN )
 	{
-		ASSERT( Possible.IsEmpty() );
+		ASSERT( pPossible == NULL );
 		return FALSE;
 	}
 	
-	if ( ! Possible.IsEmpty() )
+	if ( pPossible != NULL )
 	{
-		CFileFragment* pRandom = Possible.GetRandom( TRUE );
+		CFileFragment* pRandom = pPossible;
+		pRandom = pPossible->GetRandom( TRUE );
 		if ( pRandom == NULL ) return FALSE;
 		
-		pTransfer->m_nOffset = pRandom->Offset();
-		pTransfer->m_nLength = pRandom->Length();
+		pTransfer->m_nOffset = pRandom->m_nOffset;
+		pTransfer->m_nLength = pRandom->m_nLength;
 		
-		Possible.Delete();
+		pPossible->DeleteChain();
 		
 		return TRUE;
 	}
@@ -365,8 +381,8 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 
 BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 {
-	if ( !m_pFile || ! m_pFile->IsValid() ) return FALSE;
-	return m_pFile->m_oFree.ContainsRange( nOffset, nOffset + 1 );
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	return m_pFile->IsPositionRemaining( nOffset );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -374,8 +390,8 @@ BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 
 BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 {
-	if ( !m_pFile || ! m_pFile->IsValid() ) return 0;
-	return m_pFile->m_oFree.OverlapsRange( nOffset, nOffset + nLength );
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return 0;
+	return m_pFile->DoesRangeOverlap( nOffset, nLength );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -384,18 +400,37 @@ BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 CString CDownloadWithFile::GetAvailableRanges() const
 {
 	CString strRange, strRanges;
-	if ( !m_pFile  || !m_pFile->IsValid() ) return strRanges;
-	CFileFragment *pFragment;
-	if ( pFragment = m_oVerified.GetFirst() )
+	QWORD nLast = 0;
+	
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return strRanges;
+	
+	for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
 	{
-		strRange.Format( _T("%I64i-%I64i"), pFragment->Offset(), pFragment->Next() - 1 );
-		strRanges = _T("bytes ") + strRange;
-		while ( pFragment = pFragment->GetNext() )
+		if ( pFragment->m_nOffset > nLast )
 		{
-			strRange.Format( _T("%I64i-%I64i"), pFragment->Offset(), pFragment->Next() - 1 );
-			strRanges += ',' + strRange;
+			if ( strRanges.IsEmpty() )
+				strRanges = _T("bytes ");
+			else
+				strRanges += ',';
+			
+			strRange.Format( _T("%I64i-%I64i"), nLast, pFragment->m_nOffset - 1 );
+			strRanges += strRange;
 		}
+		
+		nLast = pFragment->m_nOffset + pFragment->m_nLength;
 	}
+	
+	if ( m_nSize > nLast )
+	{
+		if ( strRanges.IsEmpty() )
+			strRanges = _T("bytes ");
+		else
+			strRanges += ',';
+		
+		strRange.Format( _T("%I64i-%I64i"), nLast, m_nSize - 1 );
+		strRanges += strRange;
+	}
+	
 	return strRanges;
 }
 
@@ -407,17 +442,16 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
 	if ( nOffset >= m_nSize ) return FALSE;
 	
-	if ( m_pFile->m_oFree.ContainsRange( nOffset, nOffset + 1 ) ) return FALSE;
-	CFileFragment* pFragment = m_pFile->m_oFree.GetFirst();
-	while ( pFragment )
+	if ( m_pFile->IsPositionRemaining( nOffset ) ) return FALSE;
+	
+	for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
 	{
-		if ( pFragment->Offset() > nOffset )
+		if ( pFragment->m_nOffset > nOffset )
 		{
-			if ( nOffset + nLength <= pFragment->Offset() ) return TRUE;
-			nLength = pFragment->Offset() - nOffset;
+			if ( nOffset + nLength <= pFragment->m_nOffset ) return TRUE;
+			nLength = pFragment->m_nOffset - nOffset;
 			return ( nLength > 0 );
 		}
-		pFragment = pFragment->GetNext();
 	}
 	
 	if ( nLength > m_nSize - nOffset ) nLength = m_nSize - nOffset;
@@ -430,63 +464,22 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 
 BOOL CDownloadWithFile::GetRandomRange(QWORD& nOffset, QWORD& nLength) const
 {
-	if ( ! m_pFile || !m_pFile->IsValid() ) return FALSE;
-	CFileFragment *pNext, *pPrevious;
-	if ( CFileFragment* pRandom = m_pFile->m_oFree.GetRandom() )
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	
+	CFileFragment* pFilled = m_pFile->CopyFilledFragments();
+	
+	if ( CFileFragment* pRandom = pFilled->GetRandom() )
 	{
-		if ( pRandom->Offset() )
-		{
-			if ( pRandom->Next() == m_pFile->m_nTotal )
-			{
-				nOffset = 0;
-				nLength = pRandom->Offset();
-			}
-			else if ( rand() >= 16768 )
-			{
-				nOffset = pRandom->Next();
-				if ( pNext = pRandom->GetNext() )
-				{
-					nLength = pNext->Offset() - nOffset;
-				}
-				else
-				{
-					nLength = m_pFile->m_nTotal - nOffset;
-				}
-			}
-			else
-			{
-				if ( pPrevious = pRandom->GetPrevious() )
-				{
-					nOffset = pPrevious->Next();
-					nLength = pRandom->Offset() - nOffset;
-				}
-				else
-				{
-					nOffset = 0;
-					nLength = pRandom->Offset();
-				}
-			}
-		}
-		else
-		{
-			if ( pRandom->Next() == m_pFile->m_nTotal ) return FALSE;
-			nOffset = pRandom->Next();
-			if ( pNext = pRandom->GetNext() )
-			{
-				nLength = pNext->Offset() - nOffset;
-			}
-			else
-			{
-				nLength = m_pFile->m_nTotal - nOffset;
-			}
-		}
+		nOffset = pRandom->m_nOffset;
+		nLength = pRandom->m_nLength;
+		pFilled->DeleteChain();
+		return TRUE;
 	}
 	else
 	{
-		nOffset = 0;
-		nLength = m_pFile->m_nTotal;
+		pFilled->DeleteChain();
+		return FALSE;
 	}
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -497,16 +490,15 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	SetModified();
 	m_tReceived = GetTickCount();
 	
-	if ( m_oBTH.IsValid() )	// Hack: Only do this for BitTorrent
+	if ( m_bBTH )	// Hack: Only do this for BitTorrent
 	{
 		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 		{
 			if ( pTransfer->m_nProtocol == PROTOCOL_BT ) pTransfer->UnrequestRange( nOffset, nLength );
 		}
 	}
-	if ( !m_pFile || !m_pFile->WriteRange( nOffset, pData, nLength ) ) return FALSE;
-	((CDownloadWithTiger*)this)->AddVerificationBlocks( nOffset, nOffset + nLength );
-	return TRUE;
+	
+	return m_pFile != NULL && m_pFile->WriteRange( nOffset, pData, nLength );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -515,8 +507,8 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 {
 	if ( m_pFile == NULL ) return 0;
-	QWORD nCount;
-	if ( nCount = m_pFile->InvalidateRange( nOffset, nLength ) ) SetModified();
+	QWORD nCount = m_pFile->InvalidateRange( nOffset, nLength );
+	if ( nCount > 0 ) SetModified();
 	return nCount;
 }
 

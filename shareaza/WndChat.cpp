@@ -128,12 +128,6 @@ void CChatWnd::OnTimer(UINT nIDEvent)
 	{
 		CString str;
 		m_pFrame->GetWindowText( str );
-		if ( str.Find( _T("Chat : ") ) == 0 )
-		{
-			CString strTranslation;
-			LoadString( strTranslation, IDR_CHATFRAME );
-			str = strTranslation + str.Mid( 4 );		
-		}
 		SetWindowText( str );
 	}
 	

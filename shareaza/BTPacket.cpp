@@ -59,7 +59,7 @@ void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 	}
 	else
 	{
-		DWORD nLength = _byteswap_ulong( m_nLength + 1 );
+		DWORD nLength = SWAP_LONG( m_nLength + 1 );
 		pBuffer->Add( &nLength, 4 );
 		pBuffer->Add( &m_nType, 1 );
 		pBuffer->Add( m_pBuffer, m_nLength );
@@ -75,7 +75,7 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 	if ( pBuffer->m_nLength < 4 ) return NULL;
 	
 	DWORD nLength = *(DWORD*)pBuffer->m_pBuffer;
-	nLength = _byteswap_ulong( nLength );
+	nLength = SWAP_LONG( nLength );
 	if ( pBuffer->m_nLength < 4 + nLength ) return NULL;
 	
 	if ( nLength == 0 )

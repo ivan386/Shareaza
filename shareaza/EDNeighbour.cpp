@@ -64,7 +64,7 @@ CEDNeighbour::~CEDNeighbour()
 {
 	for ( POSITION pos = m_pQueries.GetHeadPosition() ; pos ; )
 	{
-		delete (CGUID*)m_pQueries.GetNext( pos );
+		delete (GGUID*)m_pQueries.GetNext( pos );
 	}
 }
 
@@ -165,9 +165,9 @@ BOOL CEDNeighbour::OnConnected()
 	
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_LOGINREQUEST );
 	
-	CGUID pGUID	= MyProfile.GUID;
-	pGUID.m_b[5]	= 14;
-	pGUID.m_b[14]	= 111;
+	GGUID pGUID	= MyProfile.GUID;
+	pGUID.n[5]	= 14;
+	pGUID.n[14]	= 111;
 	pPacket->Write( &pGUID, 16 );
 	
 	pPacket->WriteLongLE( m_nClientID );
@@ -391,10 +391,10 @@ BOOL CEDNeighbour::OnServerStatus(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < GUID_SIZE + 6 + 4 ) return TRUE;
+	if ( pPacket->GetRemaining() < sizeof(GGUID) + 6 + 4 ) return TRUE;
 	
 	m_bGUID = TRUE;
-	pPacket->Read( &m_pGUID, GUID_SIZE );
+	pPacket->Read( &m_pGUID, sizeof(GGUID) );
 	
 	pPacket->ReadLongLE();	// IP
 	pPacket->ReadShortLE();	// Port
@@ -461,7 +461,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 		return TRUE;
 	}
 	
-	CGUID* pGUID		= (CGUID*)m_pQueries.RemoveHead();
+	GGUID* pGUID		= (GGUID*)m_pQueries.RemoveHead();
 	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, pGUID );
 	
 	if ( pHits == NULL )
@@ -523,9 +523,9 @@ void CEDNeighbour::SendSharedFiles()
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 		
-		if ( pFile->IsShared() && pFile->m_oED2K.IsValid() )
+		if ( pFile->IsShared() && pFile->m_bED2K )
 		{
-			pPacket->Write( pFile->m_oED2K );
+			pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
 			pPacket->Write( pPadding, 6 );
 			pPacket->WriteLongLE( 2 );
 			CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket );
@@ -541,10 +541,10 @@ void CEDNeighbour::SendSharedFiles()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
-		if ( pDownload->m_oED2K.IsValid() && pDownload->IsStarted() && ! pDownload->IsMoving() &&
+		if ( pDownload->m_bED2K && pDownload->IsStarted() && ! pDownload->IsMoving() &&
 			 pDownload->NeedHashset() == FALSE )
 		{
-			pPacket->Write( pDownload->m_oED2K );
+			pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 			pPacket->Write( pPadding, 6 );
 			pPacket->WriteLongLE( 2 );
 			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
@@ -564,13 +564,13 @@ void CEDNeighbour::SendSharedFiles()
 BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 {
 	if ( m_nState < nrsConnected ) return FALSE;
-	if ( ! pDownload->m_oED2K.IsValid() || pDownload->NeedHashset() ) return FALSE;
+	if ( ! pDownload->m_bED2K || pDownload->NeedHashset() ) return FALSE;
 	
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_OFFERFILES );
 	BYTE pPadding[6] = { 0, 0, 0, 0, 0, 0 };
 	
 	pPacket->WriteLongLE( 1 );
-	pPacket->Write( pDownload->m_oED2K );
+	pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 	pPacket->Write( pPadding, 6 );
 	pPacket->WriteLongLE( 2 );
 	CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
@@ -596,7 +596,7 @@ BOOL CEDNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLoca
 		return FALSE;	// Packet is bad
 	}
 	
-	m_pQueries.AddTail( new CGUID( pSearch->m_pGUID ) );
+	m_pQueries.AddTail( new GGUID( pSearch->m_pGUID ) );
 	Send( pPacket, FALSE, FALSE );
 	
 	return TRUE;

@@ -313,7 +313,7 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 		pItem->m_pVirtual	= pFolder;
 		pItem->m_sText		= pFolder->m_sName;
 		pItem->m_nIcon16	= pFolder->m_pSchema ? pFolder->m_pSchema->m_nIcon16 : -1;
-		pItem->m_bBold		= pItem->m_bCollection = pFolder->m_oCollSHA1.IsValid();
+		pItem->m_bBold		= pItem->m_bCollection = pFolder->m_bCollSHA1;
 		
 		bChanged = bVisible;
 	}
@@ -325,9 +325,9 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 			bChanged = bVisible;
 		}
 		
-		if ( pItem->m_bCollection != pFolder->m_oCollSHA1.IsValid() )
+		if ( pItem->m_bCollection != pFolder->m_bCollSHA1 )
 		{
-			pItem->m_bBold = pItem->m_bCollection = pFolder->m_oCollSHA1.IsValid();
+			pItem->m_bBold = pItem->m_bCollection = pFolder->m_bCollSHA1;
 			bChanged = bVisible;
 		}
 	}

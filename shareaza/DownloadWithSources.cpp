@@ -124,24 +124,24 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	
 	if ( ! bForce )
 	{
-		if ( m_oSHA1.IsValid() && pHit->m_oSHA1.IsValid() )
+		if ( m_bSHA1 && pHit->m_bSHA1 )
 		{
-			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
+			if ( m_pSHA1 != pHit->m_pSHA1 ) return FALSE;
 			bHash = TRUE;
 		}
-		else if ( m_oTiger.IsValid() && pHit->m_oTiger.IsValid() )
+		else if ( m_bTiger && pHit->m_bTiger )
 		{
-			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
+			if ( m_pTiger != pHit->m_pTiger ) return FALSE;
 			bHash = TRUE;
 		}
-		if ( m_oED2K.IsValid() && pHit->m_oED2K.IsValid() )
+		if ( m_bED2K && pHit->m_bED2K )
 		{
-			if ( m_oED2K != pHit->m_oED2K ) return FALSE;
+			if ( m_pED2K != pHit->m_pED2K ) return FALSE;
 			bHash = TRUE;
 		}
-		if ( m_oBTH.IsValid() && pHit->m_oBTH.IsValid() )
+		if ( m_bBTH && pHit->m_bBTH )
 		{
-			if ( m_oBTH != pHit->m_oBTH ) return FALSE;
+			if ( m_pBTH != pHit->m_pBTH ) return FALSE;
 			bHash = TRUE;
 		}
 	}
@@ -157,17 +157,20 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 		if ( m_sRemoteName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 	
-	if ( ! m_oSHA1.IsValid() && pHit->m_oSHA1.IsValid() )
+	if ( ! m_bSHA1 && pHit->m_bSHA1 )
 	{
-		m_oSHA1 = pHit->m_oSHA1;
+		m_bSHA1 = TRUE;
+		m_pSHA1 = pHit->m_pSHA1;
 	}
-	if ( ! m_oTiger.IsValid() && pHit->m_oTiger.IsValid() )
+	if ( ! m_bTiger && pHit->m_bTiger )
 	{
-		m_oTiger = pHit->m_oTiger;
+		m_bTiger = TRUE;
+		m_pTiger = pHit->m_pTiger;
 	}
-	if ( ! m_oED2K.IsValid() && pHit->m_oED2K.IsValid() )
+	if ( ! m_bED2K && pHit->m_bED2K )
 	{
-		m_oED2K = pHit->m_oED2K;
+		m_bED2K = TRUE;
+		m_pED2K = pHit->m_pED2K;
 	}
 	
 	if ( m_nSize == SIZE_UNKNOWN && pHit->m_bSize )
@@ -198,8 +201,8 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	
 	if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
-		Neighbours.FindDonkeySources( pHit->m_oED2K,
-			(IN_ADDR*)pHit->m_pClientID.m_d, (WORD)pHit->m_pClientID.m_d[1] );
+		Neighbours.FindDonkeySources( &pHit->m_pED2K,
+			(IN_ADDR*)pHit->m_pClientID.w, (WORD)pHit->m_pClientID.w[1] );
 	}
 	
 	// No URL, stop now with success
@@ -211,14 +214,14 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add miscellaneous sources
 
-BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, CGUID* pGUID)
+BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID)
 {
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, nClientID, nClientPort, nServerIP, nServerPort, pGUID ) );
 }
 
-BOOL CDownloadWithSources::AddSourceBT(const CGUIDBT *pGUIDBT, IN_ADDR* pAddress, WORD nPort)
+BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPort)
 {
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUIDBT, pAddress, nPort ) );
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -248,8 +251,10 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	
 	if ( m_pFailedSources.Find( pszURL ) != NULL ) return FALSE;
 	
-	if ( m_oSHA1.IsValid () && pURL.m_oSHA1.IsValid () &&
-		m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
+	if ( pURL.m_bSHA1 && m_bSHA1 )
+	{
+		if ( m_pSHA1 != pURL.m_pSHA1 ) return FALSE;
+	}
 	
 	if ( m_sRemoteName.IsEmpty() && _tcslen( pszURL ) > 9 )
 	{
@@ -339,11 +344,11 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 			
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort != 0 && nAddress != INADDR_NONE )
 			{
-				if ( m_oSHA1.IsValid() )
+				if ( m_bSHA1 )
 				{
 					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 						(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ),
-						nPort, (LPCTSTR)m_oSHA1.ToURN() );
+						nPort, (LPCTSTR)CSHA::HashToString( &m_pSHA1, TRUE ) );
 				}
 			}
 		}

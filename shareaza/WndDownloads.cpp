@@ -414,7 +414,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelNotMoving = TRUE;
 			if ( ! pDownload->IsBoosted() )
 				m_bSelBoostable = TRUE;
-			if ( pDownload->m_oSHA1.IsValid() || pDownload->m_oED2K.IsValid() )
+			if ( pDownload->m_bSHA1 || pDownload->m_bED2K )
 				m_bSelSHA1orED2K = TRUE;
 			if ( pDownload->m_pTorrent.IsAvailable() )
 				m_bSelTorrent = TRUE;
@@ -953,13 +953,16 @@ void CDownloadsWnd::OnDownloadsCopy()
 	{
 		CDownload* pDownload = pList.RemoveHead();
 		
-		if ( Downloads.Check( pDownload ) && ( pDownload->m_oSHA1.IsValid() || pDownload->m_oED2K.IsValid() ) )
+		if ( Downloads.Check( pDownload ) && ( pDownload->m_bSHA1 || pDownload->m_bED2K ) )
 		{
 			CURLCopyDlg dlg;
 			dlg.m_sName		= pDownload->m_sRemoteName;
-			dlg.m_oSHA1		= pDownload->m_oSHA1;
-			dlg.m_oTiger	= pDownload->m_oTiger;
-			dlg.m_oED2K		= pDownload->m_oED2K;
+			dlg.m_bSHA1		= pDownload->m_bSHA1;
+			dlg.m_pSHA1		= pDownload->m_pSHA1;
+			dlg.m_bTiger	= pDownload->m_bTiger;
+			dlg.m_pTiger	= pDownload->m_pTiger;
+			dlg.m_bED2K		= pDownload->m_bED2K;
+			dlg.m_pED2K		= pDownload->m_pED2K;
 			dlg.m_bSize		= pDownload->m_nSize != SIZE_UNKNOWN;
 			dlg.m_nSize		= pDownload->m_nSize;
 			dlg.DoModal();
@@ -1255,7 +1258,7 @@ void CDownloadsWnd::OnBrowseLaunch()
 			if ( pSource->m_bSelected && pSource->m_nProtocol == PROTOCOL_HTTP )
 			{
 				new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort,
-					pSource->m_bPushOnly, &pSource->m_oGUID );
+					pSource->m_bPushOnly, &pSource->m_pGUID );
 			}
 		}
 	}
@@ -1513,13 +1516,17 @@ void CDownloadsWnd::OnDownloadsHelp()
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Searching") );
 	}
-	else if ( pDownload->m_oBTH.IsValid() && pDownload->IsTasking() )
+	else if ( pDownload->m_bBTH && pDownload->IsTasking() )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Creating") );
 	}
 	else if ( pDownload->m_bTorrentTrackerError )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Tracker") );
+	}
+	else if ( !pDownload->IsTrying() )
+	{
+		CHelpDlg::Show( _T("DownloadHelp.Pending") );
 	}
 	else
 	{

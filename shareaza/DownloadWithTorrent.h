@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "DownloadWithFile.h"
 #include "BTInfo.h"
 
@@ -52,17 +51,13 @@ public:
 	BOOL		m_bTorrentEndgame;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
-	CGUIDBT		m_oPeerID;
+	SHA1		m_pPeerID;
 protected:
+	BYTE*		m_pTorrentBlock;
 	DWORD		m_nTorrentBlock;
 	DWORD		m_nTorrentSize;
-public:
+	DWORD		m_nTorrentSuccess;
 	BOOL		m_bSeeding;
-protected:
-	DWORD	   *m_pBTHVerificationQueue;
-	BYTE	   *m_pBTHVerificationCandidates;
-	DWORD		m_nBTHVerificationStart;
-	DWORD		m_nBTHVerificationEnd;
 private:
 	CPtrList	m_pTorrentUploads;
 	DWORD		m_tTorrentChoke;

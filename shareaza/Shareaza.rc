@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,18
- PRODUCTVERSION 2,1,0,18
+ FILEVERSION 2,1,0,20
+ PRODUCTVERSION 2,1,0,20
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 18"
+            VALUE "FileVersion", "2, 1, 0, 20"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 18"
+            VALUE "ProductVersion", "2, 1, 0, 20"
         END
     END
     BLOCK "VarFileInfo"
@@ -5204,8 +5204,12 @@ BEGIN
     IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
     IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
     IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
+    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
+    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
     IDS_DOWNLOAD_CLEAR_GROUP 
                             "Are you sure you want to cancel/abort every download in this group?"
+    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
+    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
 END
 
 STRINGTABLE 
@@ -5474,11 +5478,6 @@ BEGIN
     IDS_STATUS_VERIFIED     "Verified"
     IDS_STATUS_UNVERIFIED   "Unverified"
     IDS_STATUS_SOURCE       "source"
-    IDS_STATUS_UNINTERESTED "Uninterested"
-    IDS_STATUS_CHOKED       "Choked"
-    IDS_STATUS_NEXT         "Next"
-    IDS_STATUS_Q            "Q"
-
 END
 
 STRINGTABLE 
@@ -5488,6 +5487,10 @@ BEGIN
     IDS_STATUS_SOURCES11TO19 "sources"
     IDS_STATUS_SOURCES2TO4  "sources"
     IDS_STATUS_SOURCES5TO9  "sources"
+    IDS_STATUS_UNINTERESTED "Uninterested"
+    IDS_STATUS_CHOKED       "Choked"
+    IDS_STATUS_NEXT         "Next"
+    IDS_STATUS_Q            "Q"
 END
 
 STRINGTABLE 
@@ -5518,9 +5521,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
-    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
-    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
     IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
     IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
     IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
@@ -5529,7 +5529,6 @@ BEGIN
     IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
     IDS_UPLOAD_QUEUE_NEW    "New Queue"
     IDS_UPLOAD_QUEUE_PARTIAL "Partial"
-    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
 END
 
 #endif    // English (Australia) resources

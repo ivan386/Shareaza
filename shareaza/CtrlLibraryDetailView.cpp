@@ -409,7 +409,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 	
 	pItem->nState &= LDVI_SELECTED;
 	if ( ! pFile->IsShared() ) pItem->nState |= LDVI_PRIVATE;
-	if ( ! pFile->m_oSHA1.IsValid() ) pItem->nState |= LDVI_UNSCANNED;
+	if ( ! pFile->m_bSHA1 ) pItem->nState |= LDVI_UNSCANNED;
 	if ( pFile->m_bVerify == TS_FALSE ) pItem->nState |= LDVI_UNSAFE;
 	
 	if ( m_nStyle != LVS_REPORT ) return;
@@ -453,7 +453,11 @@ void CLibraryDetailView::CacheItem(int nItem)
 		
 		if ( pMember->m_sName.CompareNoCase( _T("SHA1") ) == 0 )
 		{
-			pText->SetAt( nColumn, pFile->m_oSHA1.ToString() );
+			if ( pFile->m_bSHA1 )
+			{
+				pText->SetAt( nColumn, CSHA::HashToString( &pFile->m_pSHA1 ) );
+			}
+			else pText->SetAt( nColumn, _T("") );
 		}
 		else if ( bSource )
 		{

@@ -98,7 +98,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.RequireForTransfers, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
-	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 2000 );
+	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );
 	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
@@ -230,9 +230,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );
 	AddSetting( &Settings.Library.QueryRouteSize, 1, 8, 24 );
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
-	AddSetting( &Settings.Library.BufferSize, 1, 0, 2048, _T(" MB") );
-	AddSetting( &Settings.Library.Parallel, 1, 0, 6 );
-	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s") );
 	
 	AddSetting( &Settings.Bandwidth.Request, 128, 0, 8192, _T(" Kb/s") );
 	AddSetting( &Settings.Bandwidth.HubIn, 128, 0, 8192, _T(" Kb/s") );
@@ -246,7 +243,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
-
+	
 	Skin.Translate( _T("CAdvancedSettingsList"), m_wndList.GetHeaderCtrl() );
 	return TRUE;
 }

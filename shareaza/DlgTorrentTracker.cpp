@@ -53,7 +53,7 @@ CTorrentTrackerDlg::CTorrentTrackerDlg(CBTInfo* pInfo, CWnd* pParent) : CSkinDia
 	//}}AFX_DATA_INIT
 	
 	m_pInfo.Copy( pInfo );
-	m_pInfo.m_oInfoBTH.Clear();
+	m_pInfo.m_bValid = FALSE;
 }
 
 void CTorrentTrackerDlg::DoDataExchange(CDataExchange* pDX)
@@ -178,7 +178,7 @@ void CTorrentTrackerDlg::OnOK()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			m_pInfo.m_sTracker = m_sTracker;
-			m_pInfo.m_oInfoBTH.SetValid();
+			m_pInfo.m_bValid = TRUE;
 		}
 	}
 	
@@ -229,7 +229,9 @@ BOOL CTorrentTrackerDlg::OnTree(CBENode* pNode)
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
 	
-	CBENode* pFile = pFiles->GetNode( (LPBYTE)&m_pInfo.m_oInfoBTH.m_b, BT_HASH_SIZE );
+	SHA1* pSHA1 = &m_pInfo.m_pInfoSHA1;
+	
+	CBENode* pFile = pFiles->GetNode( (LPBYTE)pSHA1, sizeof(SHA1) );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
 	
 	m_nComplete		= 0;

@@ -71,7 +71,7 @@ CPrivateChatFrame::~CPrivateChatFrame()
 /////////////////////////////////////////////////////////////////////////////
 // CPrivateChatFrame operations
 
-void CPrivateChatFrame::Initiate(CGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
+void CPrivateChatFrame::Initiate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 {
 	ASSERT( m_pSession == NULL );
 	

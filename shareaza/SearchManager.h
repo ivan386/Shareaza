@@ -24,11 +24,10 @@
 
 #pragma once
 
-#include "GUID.h"
-
 class CManagedSearch;
 class CG2Packet;
 class CQueryHit;
+
 
 class CSearchManager  
 {
@@ -51,11 +50,11 @@ public:
 	POSITION		GetIterator() const;
 	CManagedSearch*	GetNext(POSITION& pos) const;
 	int				GetCount() const;
-	CManagedSearch*	Find(CGUID* pGUID);
+	CManagedSearch*	Find(GGUID* pGUID);
 	void			OnRun();
-	BOOL			OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, CGUID* pGUID);
+	BOOL			OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* pGUID);
 	BOOL			OnQueryHits(CQueryHit* pHits);
-	WORD			OnQueryStatusRequest(CGUID* pGUID);
+	WORD			OnQueryStatusRequest(GGUID* pGUID);
 protected:
 	void			Add(CManagedSearch* pSearch);
 	void			Remove(CManagedSearch* pSearch);

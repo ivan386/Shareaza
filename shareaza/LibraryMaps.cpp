@@ -166,23 +166,23 @@ CLibraryFile* CLibraryMaps::LookupFileByPath(LPCTSTR pszPath, BOOL bLockOnSucces
 CLibraryFile* CLibraryMaps::LookupFileByURN(LPCTSTR pszURN, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
 	CLibraryFile* pFile;
-	CHashTiger oTiger;
-	CHashSHA1 oSHA1;
-	CHashED2K oED2K;
+	TIGEROOT pTiger;
+	SHA1 pSHA1;
+	MD4 pED2K;
 	
-	if ( oSHA1.FromURN( pszURN ) )
+	if ( CSHA::HashFromURN( pszURN, &pSHA1 ) )
 	{
-		if ( pFile = LookupFileBySHA1( oSHA1, bLockOnSuccess, bSharedOnly ) ) return pFile;
+		if ( pFile = LookupFileBySHA1( &pSHA1, bLockOnSuccess, bSharedOnly ) ) return pFile;
 	}
 	
-	if ( oTiger.FromURN( pszURN ) )
+	if ( CTigerNode::HashFromURN( pszURN, &pTiger ) )
 	{
-		if ( pFile = LookupFileByTiger( oTiger, bLockOnSuccess, bSharedOnly ) ) return pFile;
+		if ( pFile = LookupFileByTiger( &pTiger, bLockOnSuccess, bSharedOnly ) ) return pFile;
 	}
 	
-	if ( oED2K.FromURN( pszURN ) )
+	if ( CED2K::HashFromURN( pszURN, &pED2K ) )
 	{
-		if ( pFile = LookupFileByED2K( oED2K, bLockOnSuccess, bSharedOnly ) ) return pFile;
+		if ( pFile = LookupFileByED2K( &pED2K, bLockOnSuccess, bSharedOnly ) ) return pFile;
 	}
 	
 	return NULL;
@@ -191,15 +191,15 @@ CLibraryFile* CLibraryMaps::LookupFileByURN(LPCTSTR pszURN, BOOL bLockOnSuccess,
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps lookup file by individual hash types
 
-CLibraryFile* CLibraryMaps::LookupFileBySHA1(const CHashSHA1 &oSHA1, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
+CLibraryFile* CLibraryMaps::LookupFileBySHA1(const SHA1* pSHA1, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
 	Library.Lock();
 	
-	CLibraryFile* pFile = m_pSHA1Map[ oSHA1.m_b[ 0 ] & HASH_MASK ];
+	CLibraryFile* pFile = m_pSHA1Map[ *(WORD*)pSHA1 & HASH_MASK ];
 	
 	for ( ; pFile ; pFile = pFile->m_pNextSHA1 )
 	{
-		if ( pFile->m_oSHA1 == oSHA1 )
+		if ( *pSHA1 == pFile->m_pSHA1 )
 		{
 			if ( ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 			{
@@ -219,15 +219,15 @@ CLibraryFile* CLibraryMaps::LookupFileBySHA1(const CHashSHA1 &oSHA1, BOOL bLockO
 	return NULL;
 }
 
-CLibraryFile* CLibraryMaps::LookupFileByTiger(const CHashTiger &oTiger, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
+CLibraryFile* CLibraryMaps::LookupFileByTiger(const TIGEROOT* pTiger, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
 	Library.Lock();
 	
-	CLibraryFile* pFile = m_pTigerMap[ oTiger.m_b[ 0 ] & HASH_MASK ];
+	CLibraryFile* pFile = m_pTigerMap[ *(WORD*)pTiger & HASH_MASK ];
 	
 	for ( ; pFile ; pFile = pFile->m_pNextTiger )
 	{
-		if ( pFile->m_oTiger == oTiger)
+		if ( *pTiger == pFile->m_pTiger )
 		{
 			if ( ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 			{
@@ -247,15 +247,15 @@ CLibraryFile* CLibraryMaps::LookupFileByTiger(const CHashTiger &oTiger, BOOL bLo
 	return NULL;
 }
 
-CLibraryFile* CLibraryMaps::LookupFileByED2K(const CHashED2K &oED2K, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
+CLibraryFile* CLibraryMaps::LookupFileByED2K(const MD4* pED2K, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
 	Library.Lock();
 	
-	CLibraryFile* pFile = m_pED2KMap[ oED2K.m_b[ 0 ] & HASH_MASK ];
+	CLibraryFile* pFile = m_pED2KMap[ *(WORD*)pED2K & HASH_MASK ];
 	
 	for ( ; pFile ; pFile = pFile->m_pNextED2K )
 	{
-		if ( pFile->m_oED2K == oED2K )
+		if ( *pED2K == pFile->m_pED2K )
 		{
 			if ( ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 			{
@@ -346,23 +346,23 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 		m_pDeleted.AddTail( pFile );
 	}
 	
-	if ( pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
-		CLibraryFile** pHash = &m_pSHA1Map[ pFile->m_oSHA1.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pHash = &m_pSHA1Map[ *(WORD*)&pFile->m_pSHA1 & HASH_MASK ];
 		pFile->m_pNextSHA1 = *pHash;
 		*pHash = pFile;
 	}
 	
-	if ( pFile->m_oTiger.IsValid() )
+	if ( pFile->m_bTiger )
 	{
-		CLibraryFile** pHash = &m_pTigerMap[ pFile->m_oTiger.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pHash = &m_pTigerMap[ *(WORD*)&pFile->m_pTiger & HASH_MASK ];
 		pFile->m_pNextTiger = *pHash;
 		*pHash = pFile;
 	}
 	
-	if ( pFile->m_oED2K.IsValid() )
+	if ( pFile->m_bED2K )
 	{
-		CLibraryFile** pHash = &m_pED2KMap[ pFile->m_oED2K.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pHash = &m_pED2KMap[ *(WORD*)&pFile->m_pED2K & HASH_MASK ];
 		pFile->m_pNextED2K = *pHash;
 		*pHash = pFile;
 	}
@@ -400,9 +400,9 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 	if ( POSITION pos = m_pDeleted.Find( pFile ) )
 		m_pDeleted.RemoveAt( pos );
 	
-	if ( pFile->m_oSHA1.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
-		CLibraryFile** pPrev = &m_pSHA1Map[ pFile->m_oSHA1.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pPrev = &m_pSHA1Map[ *(WORD*)&pFile->m_pSHA1 & HASH_MASK ];
 		
 		for ( CLibraryFile* pOther = *pPrev ; pOther ; pOther = pOther->m_pNextSHA1 )
 		{
@@ -417,9 +417,9 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		pFile->m_pNextSHA1 = NULL;
 	}
 	
-	if ( pFile->m_oTiger.IsValid() )
+	if ( pFile->m_bTiger )
 	{
-		CLibraryFile** pPrev = &m_pTigerMap[ pFile->m_oTiger.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pPrev = &m_pTigerMap[ *(WORD*)&pFile->m_pTiger & HASH_MASK ];
 		
 		for ( CLibraryFile* pOther = *pPrev ; pOther ; pOther = pOther->m_pNextTiger )
 		{
@@ -434,9 +434,9 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		pFile->m_pNextTiger = NULL;
 	}
 	
-	if ( pFile->m_oED2K.IsValid() )
+	if ( pFile->m_bED2K )
 	{
-		CLibraryFile** pPrev = &m_pED2KMap[ pFile->m_oED2K.m_b[ 0 ] & HASH_MASK ];
+		CLibraryFile** pPrev = &m_pED2KMap[ *(WORD*)&pFile->m_pED2K & HASH_MASK ];
 		
 		for ( CLibraryFile* pOther = *pPrev ; pOther ; pOther = pOther->m_pNextED2K )
 		{
@@ -460,25 +460,25 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 	if ( ! Library.Lock( 100 ) ) return;
 	CLibraryFile* pFile;
 	
-	if ( pMatch->m_oSHA1.IsValid() )
+	if ( pMatch->m_bSHA1 )
 	{
-		if ( pFile = LookupFileBySHA1( pMatch->m_oSHA1 ) )
+		if ( pFile = LookupFileBySHA1( &pMatch->m_pSHA1 ) )
 		{
 			if ( ! pFile->IsAvailable() ) pFile->Delete();
 		}
 	}
 	
-	if ( pMatch->m_oTiger.IsValid() )
+	if ( pMatch->m_bTiger )
 	{
-		if ( pFile = LookupFileByTiger( pMatch->m_oTiger ) )
+		if ( pFile = LookupFileByTiger( &pMatch->m_pTiger ) )
 		{
 			if ( ! pFile->IsAvailable() ) pFile->Delete();
 		}
 	}
 	
-	if ( pMatch->m_oED2K.IsValid() )
+	if ( pMatch->m_bED2K )
 	{
-		if ( pFile = LookupFileByED2K( pMatch->m_oED2K ) )
+		if ( pFile = LookupFileByED2K( &pMatch->m_pED2K ) )
 		{
 			if ( ! pFile->IsAvailable() ) pFile->Delete();
 		}
@@ -502,7 +502,7 @@ CPtrList* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 			
 			if ( pFile->IsAvailable() )
 			{
-				if ( bLocal || ( pFile->IsShared() && pFile->m_oSHA1.IsValid() ) )
+				if ( bLocal || ( pFile->IsShared() && pFile->m_bSHA1 ) )
 				{
 					if ( ! pHits ) pHits = new CPtrList( 64 );
 					pHits->AddTail( pFile );
@@ -510,9 +510,9 @@ CPtrList* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 			}
 		}
 	}
-	else if ( pSearch->m_oSHA1.IsValid() )
+	else if ( pSearch->m_bSHA1 )
 	{
-		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1 ) )
+		if ( CLibraryFile* pFile = LookupFileBySHA1( &pSearch->m_pSHA1 ) )
 		{
 			if ( bLocal || pFile->IsShared() )
 			{
@@ -527,9 +527,9 @@ CPtrList* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 			}
 		}
 	}
-	else if ( pSearch->m_oTiger.IsValid() )
+	else if ( pSearch->m_bTiger )
 	{
-		if ( CLibraryFile* pFile = LookupFileByTiger( pSearch->m_oTiger ) )
+		if ( CLibraryFile* pFile = LookupFileByTiger( &pSearch->m_pTiger ) )
 		{
 			if ( bLocal || pFile->IsShared() )
 			{
@@ -544,15 +544,15 @@ CPtrList* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 			}
 		}
 	}
-	else if ( pSearch->m_oED2K.IsValid() )
+	else if ( pSearch->m_bED2K )
 	{
 		for ( POSITION pos = GetFileIterator() ; pos ; )
 		{
 			CLibraryFile* pFile = GetNextFile( pos );
 			
-			if ( pFile->m_oED2K == pSearch->m_oED2K )
+			if ( pFile->m_bED2K && pFile->m_pED2K == pSearch->m_pED2K )
 			{
-				if ( bLocal || ( pFile->IsShared() && pFile->m_oSHA1.IsValid() ) )
+				if ( bLocal || ( pFile->IsShared() && pFile->m_bSHA1 ) )
 				{
 					if ( ! pHits ) pHits = new CPtrList( 64 );
 					pHits->AddTail( pFile );

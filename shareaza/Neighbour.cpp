@@ -91,8 +91,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_pZSOutput			= NULL;
 	m_bZFlush			= FALSE;
 	m_tZOutput			= 0;
-
-	m_pMoreResultsGUID	= NULL;
 }
 
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)

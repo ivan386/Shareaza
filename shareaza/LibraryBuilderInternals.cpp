@@ -70,7 +70,7 @@ void CLibraryBuilderInternals::LoadSettings()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
-BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, const CHashSHA1 &oSHA1)
+BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, SHA1* pSHA1)
 {
 	CString strType;
 	
@@ -144,7 +144,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 	}
 	else if ( strType == _T(".co") || strType == _T(".collection") )
 	{
-		return ReadCollection( hFile, oSHA1 );
+		return ReadCollection( hFile, pSHA1 );
 	}
 	
 	return FALSE;
@@ -252,7 +252,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return FALSE;
 	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return FALSE;
 	
-	DWORD nBuffer = _byteswap_ulong( pHeader.nSize );
+	DWORD nBuffer = SWAP_LONG( pHeader.nSize );
 	ID3_DESYNC_SIZE( nBuffer );
 	
 	if ( nBuffer > 1024 * 1024 * 2 ) return FALSE;
@@ -279,7 +279,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 		pBuffer += sizeof(ID3V2_EXTENDED_HEADER_1);
 		nBuffer -= sizeof(ID3V2_EXTENDED_HEADER_1);
 		
-		pExtended->nSize = _byteswap_ulong( pExtended->nSize );
+		pExtended->nSize = SWAP_LONG( pExtended->nSize );
 		
 		if ( nBuffer < pExtended->nSize )
 		{
@@ -302,7 +302,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 		pBuffer += sizeof(ID3V2_EXTENDED_HEADER_2);
 		nBuffer -= sizeof(ID3V2_EXTENDED_HEADER_2);
 		
-		pExtended->nSize = _byteswap_ulong( pExtended->nSize );
+		pExtended->nSize = SWAP_LONG( pExtended->nSize );
 		ID3_DESYNC_SIZE( pExtended->nSize );
 		pExtended->nSize -= 6;
 		
@@ -337,7 +337,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 			szFrameTag[3] = pFrame->szID[3];
 			szFrameTag[4] = 0;
 			
-			nFrameSize = _byteswap_ulong( pFrame->nSize );
+			nFrameSize = SWAP_LONG( pFrame->nSize );
 			if ( pHeader.nMajorVersion >= 4 ) ID3_DESYNC_SIZE( nFrameSize );
 			if ( pFrame->nFlags2 & ~ID3V2_KNOWNFRAME ) szFrameTag[0] = 0;
 		}
@@ -595,7 +595,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 	DWORD nRead;
 	ReadFile( hFile, &nHeader, 4, &nRead, NULL );
 	if ( nRead != 4 ) return FALSE;
-	nHeader = _byteswap_ulong( nHeader );
+	nHeader = SWAP_LONG( nHeader );
 
 	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 ) ; nSeek++ )
 	{
@@ -650,7 +650,7 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			SetFilePointer( hFile, nFrameSize - 4, NULL, FILE_CURRENT );
 			ReadFile( hFile, &nHeader, 4, &nRead, NULL );
 			if ( nRead != 4 ) break;
-			nHeader = _byteswap_ulong( nHeader );
+			nHeader = SWAP_LONG( nHeader );
 		}
 		else
 		{
@@ -932,7 +932,7 @@ BOOL CLibraryBuilderInternals::ReadPNG( HANDLE hFile)
 	
 	DWORD nLength, nIHDR;
 	
-	ReadFile( hFile, &nLength, 4, &nRead, NULL ); nLength = _byteswap_ulong( nLength );
+	ReadFile( hFile, &nLength, 4, &nRead, NULL ); nLength = SWAP_LONG( nLength );
 	if ( nRead != 4 || nLength < 10 ) return FALSE;
 	ReadFile( hFile, &nIHDR, 4, &nRead, NULL );
 	if ( nRead != 4 || nIHDR != 'RDHI' ) return FALSE;
@@ -940,9 +940,9 @@ BOOL CLibraryBuilderInternals::ReadPNG( HANDLE hFile)
 	DWORD nWidth, nHeight;
 	BYTE nBits, nColors;
 
-	ReadFile( hFile, &nWidth, 4, &nRead, NULL );  nWidth = _byteswap_ulong( nWidth );
+	ReadFile( hFile, &nWidth, 4, &nRead, NULL );  nWidth = SWAP_LONG( nWidth );
 	if ( nRead != 4 || nWidth <= 0 || nWidth > 0xFFFF ) return FALSE;
-	ReadFile( hFile, &nHeight, 4, &nRead, NULL ); nHeight = _byteswap_ulong( nHeight );
+	ReadFile( hFile, &nHeight, 4, &nRead, NULL ); nHeight = SWAP_LONG( nHeight );
 	if ( nRead != 4 || nHeight <= 0 || nHeight > 0xFFFF ) return FALSE;
 
 	ReadFile( hFile, &nBits, 1, &nRead, NULL );
@@ -2042,12 +2042,12 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals Collection (threaded)
 
-BOOL CLibraryBuilderInternals::ReadCollection( HANDLE hFile, const CHashSHA1 &oSHA1)
+BOOL CLibraryBuilderInternals::ReadCollection( HANDLE hFile, SHA1* pSHA1)
 {
 	CCollectionFile pCollection;
 	if ( ! pCollection.Attach( hFile ) ) return FALSE;
 	
-	LibraryFolders.MountCollection( oSHA1, &pCollection );
+	LibraryFolders.MountCollection( pSHA1, &pCollection );
 	
 	if ( CXMLElement* pMetadata = pCollection.GetMetadata() )
 	{

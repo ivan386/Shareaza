@@ -122,14 +122,13 @@ BOOL CHandshake::OnConnected()
 {
 	CConnection::OnConnected();
 	
-	CGUID* pID = &MyProfile.GUID;
+	GGUID* pID = &MyProfile.GUID;
 	CString strGIV;
 	
-	strGIV.Format( _T("GIV %lu:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"), m_nIndex,
-		pID->m_b[  0 ], pID->m_b[  1 ], pID->m_b[  2 ], pID->m_b[  3 ],
-		pID->m_b[  4 ], pID->m_b[  5 ], pID->m_b[  6 ], pID->m_b[  7 ],
-		pID->m_b[  8 ], pID->m_b[  9 ], pID->m_b[ 10 ], pID->m_b[ 11 ],
-		pID->m_b[ 12 ], pID->m_b[ 13 ], pID->m_b[ 14 ], pID->m_b[ 15 ] );
+	strGIV.Format( _T("GIV %lu:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"),
+		m_nIndex, pID->n[0], pID->n[1], pID->n[2], pID->n[3], pID->n[4], pID->n[5], pID->n[6],
+		pID->n[7], pID->n[8], pID->n[9], pID->n[10], pID->n[11], pID->n[12], pID->n[13],
+		pID->n[14], pID->n[15] );
 	
 	m_pOutput->Print( strGIV );
 	OnWrite();
@@ -240,7 +239,7 @@ BOOL CHandshake::OnRead()
 BOOL CHandshake::OnAcceptPush()
 {
 	CString strLine, strGUID;
-	CGUID pGUID;
+	GGUID pGUID;
 	
 	if ( ! m_pInput->ReadLine( strLine ) ) return FALSE;
 	
@@ -255,7 +254,7 @@ BOOL CHandshake::OnAcceptPush()
 	{
 		int nValue;
 		_stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue );
-		pGUID.m_b[ nByte ] = (BYTE)nValue;
+		pGUID.n[ nByte ] = (BYTE)nValue;
 	}
 	
 	if ( OnPush( &pGUID ) ) return TRUE;
@@ -273,7 +272,7 @@ BOOL CHandshake::OnAcceptGive()
 {
 	CString strLine, strClient, strFile;
 	DWORD nFileIndex = 0xFFFFFFFF;
-	CGUID pClientID;
+	GGUID pClientID;
 	int nPos;
 	
 	if ( ! m_pInput->ReadLine( strLine ) ) return FALSE;
@@ -301,7 +300,7 @@ BOOL CHandshake::OnAcceptGive()
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
 		_stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos );
-		pClientID.m_b[ nByte ] = (BYTE)nPos;
+		pClientID.n[ nByte ] = (BYTE)nPos;
 	}
 	
 	if ( OnPush( &pClientID ) ) return TRUE;
@@ -317,7 +316,7 @@ BOOL CHandshake::OnAcceptGive()
 //////////////////////////////////////////////////////////////////////
 // CHandshake accept a push from a GUID
 
-BOOL CHandshake::OnPush(CGUID* pGUID)
+BOOL CHandshake::OnPush(GGUID* pGUID)
 {
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 	

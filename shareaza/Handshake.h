@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "Connection.h"
 
 class CEDPacket;
@@ -55,7 +54,7 @@ protected:
 protected:
 	BOOL	OnAcceptGive();
 	BOOL	OnAcceptPush();
-	BOOL	OnPush(CGUID* pGUID);
+	BOOL	OnPush(GGUID* pGUID);
 	
 };
 

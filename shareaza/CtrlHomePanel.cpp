@@ -1031,7 +1031,7 @@ void CHomeUploadsBox::Update()
 	}
 	else if ( Statistics.Today.Uploads.Files == 1 )
 	{
-		str.Format( m_sUploadedOne, (LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume / 1024, TRUE ) );
+		str.Format( m_sUploadedOne, (LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume, TRUE ) );
 
 		if ( m_pdUploadedNone ) m_pdUploadedNone->Show( FALSE );
 		if ( m_pdUploadedMany ) m_pdUploadedMany->Show( FALSE );
@@ -1045,7 +1045,7 @@ void CHomeUploadsBox::Update()
 	else
 	{
 		str.Format( m_sUploadedMany, (int)Statistics.Today.Uploads.Files,
-			(LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume / 1024, TRUE ) );
+			(LPCTSTR)Settings.SmartVolume( Statistics.Today.Uploads.Volume, TRUE ) );
 		
 		if ( m_pdUploadedNone ) m_pdUploadedNone->Show( FALSE );
 		if ( m_pdUploadedOne )  m_pdUploadedOne->Show( FALSE );

@@ -94,8 +94,8 @@ void CTorrentSeedDlg::OnDownload()
 		//if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 		CLibraryFile* pFile;
 			
-		if ( ( pURL->m_oSHA1.IsValid() && ( pFile = LibraryMaps.LookupFileBySHA1( pURL->m_oSHA1, TRUE ) ) )
-			|| ( pURL->m_oED2K.IsValid() && ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K, TRUE ) ) ) )
+		if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1, TRUE ) ) ) ||
+				 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K, TRUE ) ) ) )
 		{
 			CString strFormat, strMessage;
 			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
@@ -150,7 +150,7 @@ void CTorrentSeedDlg::OnSeed()
 	
 	if ( m_pInfo.LoadTorrentFile( m_sTorrent ) )
 	{
-		if ( Downloads.FindByBTH( m_pInfo.m_oInfoBTH ) == NULL )
+		if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
 		{
 			m_hThread = AfxBeginThread( ThreadStart, this,
 				THREAD_PRIORITY_NORMAL )->m_hThread;
@@ -299,9 +299,9 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
 
-	if ( pFile->m_oBTH.IsValid() )
+	if ( pFile->m_bSHA1 )
 	{
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( pFile->m_oBTH, TRUE, FALSE, TRUE ) )
+		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( &pFile->m_pSHA1, TRUE, FALSE, TRUE ) )
 		{
 			strFile = pShared->GetPath();
 			Library.Unlock();
@@ -379,7 +379,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 HANDLE CTorrentSeedDlg::CreateTarget()
 {
 	m_sTarget = Settings.Downloads.IncompletePath + '\\';
-	m_sTarget += m_pInfo.m_oInfoBTH.ToHexString();
+	m_sTarget += CSHA::HashToHexString( &m_pInfo.m_pInfoSHA1, FALSE );
 	
 	HANDLE hTarget = CreateFile(	m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_NEW,
 									FILE_ATTRIBUTE_NORMAL, NULL );
@@ -557,7 +557,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 2000 ) ) return FALSE;
 	
-	if ( Downloads.FindByBTH( m_pInfo.m_oInfoBTH ) != NULL )
+	if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) != NULL )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_ALREADY );

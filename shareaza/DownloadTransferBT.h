@@ -43,12 +43,9 @@ public:
 	BOOL			m_bChoked;
 	BOOL			m_bInterested;
 public:
-	CFileFragmentQueue m_oRequested;
-	CFileFragmentList m_oPossible;
-	DWORD*			m_pBitFields;
-	DWORD			m_nOldBitField;
-	DWORD			m_nNewBitField;
-	DWORD			m_nBitFieldSize;
+	BYTE*			m_pAvailable;
+	CFileFragment*	m_pRequested;
+	int				m_nRequested;
 	DWORD			m_tRunThrottle;
 	DWORD			m_tSourceRequest;
 
@@ -62,7 +59,7 @@ public:
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual BOOL	SubtractRequested(CFileFragmentList& Fragments);
+	virtual BOOL	SubtractRequested(CFileFragment** ppFragments);
 	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength);
 public:
 	BOOL	OnBitfield(CBTPacket* pPacket);
@@ -76,8 +73,7 @@ protected:
 	void	Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
 	void	ShowInterest();
 	BOOL	SendRequests();
-private:
-	BOOL	SelectFragment(const CFileFragmentList& oPossible, QWORD& nOffset, QWORD& nLength);
+	BOOL	SelectFragment(CFileFragment* pPossible, QWORD* pnOffset, QWORD* pnLength);
 	
 };
 

@@ -142,8 +142,7 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural)
 {
 	QWORD nvOffset, nvLength;
-	DWORD nVerifyState;
-	COLORREF crVerifyBar;
+	BOOL bvSuccess;
 	
 	if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
 	{
@@ -151,35 +150,18 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 			RGB( 0, 255, 0 ), TRUE );
 	}
 	
-	for ( nvOffset = 0, nvLength = -1 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, nVerifyState ) ; )
+	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
 	{
-		switch ( nVerifyState )
-		{
-			case 3:
-	            crVerifyBar = RGB( 220, 220, 0 );
-				break;
-			case 2:
-				crVerifyBar = RGB( 0, 220, 0 );
-				break;
-			case 1:
-				crVerifyBar = RGB( 220, 0, 0 );
-				break;
-			default:
-				ASSERT( FALSE );
-		}
-		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength, crVerifyBar );
+		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
+			bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
 		nvOffset += nvLength;
 	}
-
-	if ( pDownload->m_pFile )
+	
+	for ( CFileFragment* pFragment = pDownload->GetFirstEmptyFragment() ; pFragment ; )
 	{
-		CFileFragment* pFragment = pDownload->m_pFile->m_oFree.GetFirst();
-		while ( pFragment )
-		{
-			DrawFragment( pDC, prcBar, pDownload->m_nSize,
-				pFragment->Offset(), pFragment->Length(), crNatural, FALSE );
-			pFragment = pFragment->GetNext();
-		}
+		DrawFragment( pDC, prcBar, pDownload->m_nSize,
+			pFragment->m_nOffset, pFragment->m_nLength, crNatural, FALSE );
+		pFragment = pFragment->m_pNext;
 	}
 	
 	for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
@@ -198,40 +180,43 @@ void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource,
 {
 	CFileFragment* pRequested = NULL;
 	
-	if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nProtocol == PROTOCOL_ED2K )
+	if (	pSource->m_pTransfer != NULL &&
+			pSource->m_pTransfer->m_nProtocol == PROTOCOL_ED2K )
 	{
 		CDownloadTransferED2K* pED2K = (CDownloadTransferED2K*)pSource->m_pTransfer;
-		pRequested = pED2K->m_oRequested.GetFirst();
+		pRequested = pED2K->m_pRequested;
 	}
-	else if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nProtocol == PROTOCOL_BT )
+	else if (	pSource->m_pTransfer != NULL &&
+				pSource->m_pTransfer->m_nProtocol == PROTOCOL_BT )
 	{
 		CDownloadTransferBT* pBT = (CDownloadTransferBT*)pSource->m_pTransfer;
-		pRequested = pBT->m_oRequested.GetFirst();
+		pRequested = pBT->m_pRequested;
 	}
 	
-	if ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nLength < SIZE_UNKNOWN )
+	if ( pSource->m_pTransfer != NULL &&
+		 pSource->m_pTransfer->m_nLength < SIZE_UNKNOWN )
 	{
 		DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength, RGB( 255, 255, 0 ), TRUE );
+			pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength,
+			RGB( 255, 255, 0 ), TRUE );
 	}
 
-	while ( pRequested )
+	for ( ; pRequested ; pRequested = pRequested->m_pNext )
 	{
 		DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			pRequested->Offset(), pRequested->Length() , RGB( 255, 255, 0 ), TRUE );
-		pRequested = pRequested->GetNext();
+			pRequested->m_nOffset, pRequested->m_nLength, RGB( 255, 255, 0 ), TRUE );
 	}
 	
 	DrawSourceImpl( pDC, prcBar, pSource );
 	
-	if ( !pSource->m_oAvailable.IsEmpty() )
+	if ( pSource->m_pAvailable != NULL )
 	{
-		CFileFragment* pFragment = pSource->m_oAvailable.GetFirst();
-		while ( pFragment )
+		CFileFragment* pFragment = pSource->m_pAvailable;
+		
+		for ( ; pFragment ; pFragment = pFragment->m_pNext )
 		{
 			DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-				pFragment->Offset(), pFragment->Length() , crNatural, FALSE );
-			pFragment = pFragment->GetNext();
+				pFragment->m_nOffset, pFragment->m_nLength, crNatural, FALSE );
 		}
 		
 		pDC->FillSolidRect( prcBar, GetSysColor( COLOR_BTNFACE ) );
@@ -282,12 +267,12 @@ void CFragmentBar::DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSou
 			}
 		}
 	}
-	CFileFragment* pFragment = pSource->m_oPastFragment.GetFirst();
-	while ( pFragment )
+	
+	for ( CFileFragment* pFragment = pSource->m_pPastFragment ; pFragment ; )
 	{
 		DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			pFragment->Offset(), pFragment->Length() , crTransfer, TRUE );
-		pFragment = pFragment->GetNext();
+			pFragment->m_nOffset, pFragment->m_nLength, crTransfer, TRUE );
+		pFragment = pFragment->m_pNext;
 	}
 }
 
@@ -298,12 +283,11 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 {
 	CUploadTransfer* pUpload = pFile->GetActive();
 	if ( pUpload == NULL ) return;
-	CFileFragment* pFragment = pFile->m_pFragments.GetFirst();
-	while ( pFragment )
+	
+	for ( CFileFragment* pFragment = pFile->m_pFragments ; pFragment ; pFragment = pFragment->m_pNext )
 	{
-		DrawFragment( pDC, prcBar, pFile->m_nSize, pFragment->Offset(),
-			pFragment->Length(), GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
-		pFragment = pFragment->GetNext();
+		DrawFragment( pDC, prcBar, pFile->m_nSize, pFragment->m_nOffset,
+			pFragment->m_nLength, GetSysColor( COLOR_ACTIVECAPTION ), TRUE );
 	}
 	
 	if ( pFile == pUpload->m_pBaseFile )

@@ -58,8 +58,8 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	CString strURL;
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
 		(LPCTSTR)pDownload->m_pTorrent.m_sTracker,
-		(LPCTSTR)Escape( pDownload->m_oBTH ),
-		(LPCTSTR)Escape( m_pDownload->m_oPeerID ),//(LPCTSTR)Escape( BTClients.GetGUID() ),
+		(LPCTSTR)Escape( &pDownload->m_pBTH ),
+		(LPCTSTR)Escape( &m_pDownload->m_pPeerID ),//(LPCTSTR)Escape( BTClients.GetGUID() ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		(QWORD)pDownload->m_nTorrentUploaded,
 		(QWORD)pDownload->m_nTorrentDownloaded,
@@ -124,51 +124,34 @@ void CBTTrackerRequest::SendStopped(CDownloadBase* pDownload)
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest escaper
 
-CString CBTTrackerRequest::Escape(const CHashBT &oBTH)
+CString CBTTrackerRequest::Escape(SHA1* pSHA1)
 {
+	static LPCTSTR pszHex = _T("0123456789ABCDEF");
+	
 	CString str;
-	LPTSTR psz = str.GetBuffer( 3 * BT_HASH_SIZE );
-	int nLength = 0;
-	for ( int nByte = 0 ; nByte < BT_HASH_SIZE ; nByte++ )
+	LPTSTR psz = str.GetBuffer( sizeof(SHA1) * 3 + 1 );
+	
+	for ( int nByte = 0 ; nByte < sizeof(SHA1) ; nByte++ )
 	{
-		if (	( oBTH.m_b[ nByte ] >= '0' && oBTH.m_b[ nByte ] <= '9' ) ||
-				( oBTH.m_b[ nByte ] >= 'a' && oBTH.m_b[ nByte ] <= 'z' ) ||
-				( oBTH.m_b[ nByte ] >= 'A' && oBTH.m_b[ nByte ] <= 'Z' ) )
+		int nValue = (int)(unsigned char)pSHA1->n[ nByte ];
+		
+		if (	( nValue >= '0' && nValue <= '9' ) ||
+				( nValue >= 'a' && nValue <= 'z' ) ||
+				( nValue >= 'A' && nValue <= 'Z' ) )
 		{
-			psz[ nLength++ ] = (TCHAR)oBTH.m_b[ nByte ];
+			*psz++ = (TCHAR)nValue;
 		}
 		else
 		{
-			psz[ nLength++ ] = '%';
-			psz[ nLength++ ] = pszBase16[ oBTH.m_b[ nByte ] >> 4 ];
-			psz[ nLength++ ] = pszBase16[ oBTH.m_b[ nByte ] & 15 ];
+			*psz++ = '%';
+			*psz++ = pszHex[ ( nValue >> 4 ) & 15 ];
+			*psz++ = pszHex[ nValue & 15 ];
 		}
 	}
-	str.ReleaseBuffer( nLength );
-	return str;
-}
-
-CString CBTTrackerRequest::Escape(const CGUIDBT &oGUIDBT)
-{
-	CString str;
-	LPTSTR psz = str.GetBuffer( 3* GUIDBT_SIZE );
-	int nLength = 0;
-	for ( int nByte = 0 ; nByte < GUIDBT_SIZE ; nByte++ )
-	{
-		if (	( oGUIDBT.m_b[ nByte ] >= '0' && oGUIDBT.m_b[ nByte ] <= '9' ) ||
-				( oGUIDBT.m_b[ nByte ] >= 'a' && oGUIDBT.m_b[ nByte ] <= 'z' ) ||
-				( oGUIDBT.m_b[ nByte ] >= 'A' && oGUIDBT.m_b[ nByte ] <= 'Z' ) )
-		{
-			psz[ nLength++ ] = (TCHAR)oGUIDBT.m_b[ nByte ];
-		}
-		else
-		{
-			psz[ nLength++ ] = '%';
-			psz[ nLength++ ] = pszBase16[ oGUIDBT.m_b[ nByte ] >> 4 ];
-			psz[ nLength++ ] = pszBase16[ oGUIDBT.m_b[ nByte ] & 15 ];
-		}
-	}
-	str.ReleaseBuffer( nLength );
+	
+	*psz = 0;
+	str.ReleaseBuffer();
+	
 	return str;
 }
 
@@ -295,9 +278,9 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 			theApp.Message( MSG_DEBUG, _T("Tracker: %s:%i"),
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
 			
-			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == GUIDBT_SIZE  )
+			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == sizeof(SHA1) )
 			{
-				nCount += m_pDownload->AddSourceBT( (CGUIDBT*)pID->m_pValue,
+				nCount += m_pDownload->AddSourceBT( (SHA1*)pID->m_pValue,
 					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
 			}
 			else

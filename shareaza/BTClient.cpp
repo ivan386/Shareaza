@@ -177,7 +177,7 @@ BOOL CBTClient::OnRun()
 	}
 	else
 	{
-		if ( tNow - max( m_mOutput.tLast, m_mInput.tLast ) > Settings.BitTorrent.LinkTimeout * 2 )
+		if ( tNow - m_mInput.tLast > Settings.BitTorrent.LinkTimeout * 2 )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_LOST, (LPCTSTR)m_sAddress );
 			Close();
@@ -185,11 +185,9 @@ BOOL CBTClient::OnRun()
 		}
 		else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
 		{
-			DWORD tOutput = m_mOutput.tLast;
 			DWORD dwZero = 0;
 			m_pOutput->Add( &dwZero, 4 );
 			OnWrite();
-			m_mOutput.tLast = tNow;
 		}
 		
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
@@ -263,12 +261,12 @@ BOOL CBTClient::OnRead()
 	}
 	else
 	{
-		if ( ! m_bShake && m_pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN + 8 + BT_HASH_SIZE )
+		if ( ! m_bShake && m_pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN + 8 + sizeof(SHA1) )
 		{
 			bSuccess = OnHandshake1();
 		}
 		
-		if ( bSuccess && m_bShake && m_pInput->m_nLength >= GUIDBT_SIZE )
+		if ( bSuccess && m_bShake && m_pInput->m_nLength >= sizeof(SHA1) )
 		{
 			bSuccess = OnHandshake2();
 		}
@@ -290,12 +288,12 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 		m_pOutput->Print( BT_PROTOCOL_HEADER );
 		m_pOutput->Add( &dwZero, 4 );
 		m_pOutput->Add( &dwZero, 4 );
-		m_pOutput->Add( m_pDownload->m_oBTH );
+		m_pOutput->Add( &m_pDownload->m_pBTH, sizeof(SHA1) );
 	}
 	
 	if ( bPart2 )
 	{
-		m_pOutput->Add( &m_pDownload->m_oPeerID, GUIDBT_SIZE );//m_pOutput->Add( BTClients.GetGUID(), sizeof(SHA1) );
+		m_pOutput->Add( &m_pDownload->m_pPeerID, sizeof(SHA1) );//m_pOutput->Add( BTClients.GetGUID(), sizeof(SHA1) );
 	}
 	
 	OnWrite();
@@ -317,17 +315,17 @@ BOOL CBTClient::OnHandshake1()
 	
 	pIn += BT_PROTOCOL_HEADER_LEN + 8;
 	
-	CHashBT oFileHash = *(CHashBT*)pIn;
-	pIn += BT_HASH_SIZE;
+	SHA1 pFileHash = *(SHA1*)pIn;
+	pIn += sizeof(SHA1);
 	
-	m_pInput->Remove( BT_PROTOCOL_HEADER_LEN + 8 + BT_HASH_SIZE );
+	m_pInput->Remove( BT_PROTOCOL_HEADER_LEN + 8 + sizeof(SHA1) );
 	
 	if ( m_bInitiated )
 	{
 		ASSERT( m_pDownload != NULL );
 		ASSERT( m_pDownloadTransfer != NULL );
 		
-		if ( oFileHash != m_pDownload->m_oBTH || m_pDownload->IsShared() == FALSE )
+		if ( pFileHash != m_pDownload->m_pBTH || m_pDownload->IsShared() == FALSE )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_FILE, (LPCTSTR)m_sAddress );
 			Close();
@@ -345,7 +343,7 @@ BOOL CBTClient::OnHandshake1()
 		ASSERT( m_pDownload == NULL );
 		ASSERT( m_pDownloadTransfer == NULL );
 		
-		m_pDownload = Downloads.FindByBTH( oFileHash, TRUE );
+		m_pDownload = Downloads.FindByBTH( &pFileHash, TRUE );
 		
 		if ( m_pDownload == NULL )
 		{
@@ -363,7 +361,7 @@ BOOL CBTClient::OnHandshake1()
 	}
 	
 	ASSERT( m_pDownload != NULL );
-	ASSERT( m_pDownload->m_oBTH == oFileHash );
+	ASSERT( m_pDownload->m_pBTH == pFileHash );
 	
 	if ( ! m_bInitiated ) SendHandshake( TRUE, FALSE );
 	
@@ -374,17 +372,31 @@ BOOL CBTClient::OnHandshake1()
 
 BOOL CBTClient::OnHandshake2()
 {
-	m_oGUIDBT = *(CGUIDBT*)m_pInput->m_pBuffer;
-	m_pInput->Remove( GUIDBT_SIZE );
+	m_pGUID = *(SHA1*)m_pInput->m_pBuffer;
+	m_pInput->Remove( sizeof(SHA1) );
 	
-	m_bShareaza = m_oGUIDBT.IsShareaza();
+	for ( int nByte = 0 ; nByte < 20 ; nByte++ )
+	{
+		if ( nByte < 16 )
+		{
+			if ( m_pGUID.b[ nByte ] ) m_bShareaza = TRUE;
+		}
+		else
+		{
+			if ( m_pGUID.b[ nByte ]	!= ( m_pGUID.b[ nByte % 16 ] ^ m_pGUID.b[ 15 - ( nByte % 16 ) ] ) )
+			{
+				m_bShareaza = FALSE;
+				break;
+			}
+		}
+	}
 	
 	ASSERT( m_pDownload != NULL );
 	
 	if ( m_bInitiated )
 	{
 		ASSERT( m_pDownloadTransfer != NULL );
-		m_pDownloadTransfer->m_pSource->m_oGUID = m_oGUIDBT;
+		CopyMemory( &m_pDownloadTransfer->m_pSource->m_pGUID, &m_pGUID, 16 );
 		
 		/*
 		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
@@ -428,7 +440,81 @@ BOOL CBTClient::OnHandshake2()
 
 void CBTClient::DetermineUserAgent()
 {
-	m_sUserAgent = m_oGUIDBT.GetUserAgent();
+	CString strVer;
+	
+	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )
+	{
+		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'Z' )
+		{
+			m_sUserAgent = _T("Azureus");
+		}
+		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("MoonlightTorrent");
+		}
+		else if ( m_pGUID.b[1] == 'L' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("libtorrent");
+		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'X' )
+		{
+			m_sUserAgent = _T("Bittorrent X");
+		}
+		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'S' )
+		{
+			m_sUserAgent = _T("Torrentstorm");
+		}
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'S' )
+		{
+			m_sUserAgent = _T("Swarmscope");
+		}
+		else if ( m_pGUID.b[1] == 'X' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("XanTorrent");
+		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'B' )
+		{
+			m_sUserAgent = _T("BitBuddy");
+		}
+		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
+		{
+			m_sUserAgent = _T("TorrentDOTnet");
+		}
+		else //Unknown client using this naming.
+		{
+			m_sUserAgent.Format( _T("%c%c"), m_pGUID.b[1], m_pGUID.b[2] );
+		}
+		
+		strVer.Format( _T(" %i.%i.%i.%i"),
+			( m_pGUID.b[3] - '0' ), ( m_pGUID.b[4] - '0' ),
+			( m_pGUID.b[5] - '0' ), ( m_pGUID.b[6] - '0' ) );
+		m_sUserAgent += strVer;
+	}
+	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
+	{
+		switch ( m_pGUID.b[0] )
+		{
+		case 'S':
+			m_sUserAgent = _T("Shadow");
+			break;
+		case 'U':
+			m_sUserAgent = _T("UPnP NAT BT");
+			break;
+		case 'T':
+			m_sUserAgent = _T("BitTornado");
+			break;
+		case 'A':
+			m_sUserAgent = _T("ABC");
+			break;
+		default: //Unknown client using this naming.
+			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
+		}
+		
+		strVer.Format( _T(" %i%i%i"),
+			( m_pGUID.b[1] - '0' ), ( m_pGUID.b[2] - '0' ),
+			( m_pGUID.b[3] - '0' ) );
+		m_sUserAgent += strVer;
+	}
 	
 	if ( m_pDownloadTransfer != NULL )
 	{
@@ -609,9 +695,9 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* pPacket)
 			CBENode* pPeer = pPeers->Add();
 			CSourceURL pURL;
 			
-			if ( pURL.Parse( pSource->m_sURL ) && pURL.m_oBTC.IsValid() )
+			if ( pURL.Parse( pSource->m_sURL ) && pURL.m_bBTC )
 			{
-				pPeer->Add( "peer id" )->SetString( &pURL.m_oBTC.m_b, BT_HASH_SIZE );
+				pPeer->Add( "peer id" )->SetString( &pURL.m_pBTC, sizeof(SHA1) );
 			}
 			
 			pPeer->Add( "ip" )->SetString( CString( inet_ntoa( pSource->m_pAddress ) ) );

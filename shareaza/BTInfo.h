@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 #include "SHA.h"
 #include "Buffer.h"
 
@@ -50,25 +49,28 @@ public:
 	public:
 		CString	m_sPath;
 		QWORD	m_nSize;
-		CManagedBTH m_oBTH;
+		BOOL	m_bSHA1;
+		SHA1	m_pSHA1;
 	};
 	
 // Attributes
 public:
-	CManagedBTH	m_oInfoBTH;
-	CManagedBTH	m_oDataBTH;
+	BOOL		m_bValid;
+	SHA1		m_pInfoSHA1;
+	BOOL		m_bDataSHA1;
+	SHA1		m_pDataSHA1;
 public:
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;
 	DWORD		m_nBlockCount;
-	CHashBT*	m_pBlockBTH;
+	SHA1*		m_pBlockSHA1;
 public:
 	CString		m_sName;
 	CString		m_sTracker;
 	int			m_nFiles;
 	CBTFile*	m_pFiles;
 private:
-	CBTH		m_oTestBTH;
+	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
 	CBuffer		m_pSource;
 	
@@ -91,7 +93,7 @@ protected:
 
 // Inlines
 public:
-	inline BOOL IsAvailable() const { return m_oInfoBTH.IsValid(); }
+	inline BOOL IsAvailable() const { return m_bValid; }
 
 };
 

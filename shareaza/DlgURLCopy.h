@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 #include "DlgSkinDialog.h"
 
 
@@ -50,9 +49,12 @@ public:
 // Attributes
 public:
 	CString		m_sName;
-	CManagedSHA1	m_oSHA1;
-	CManagedTiger	m_oTiger;
-	CManagedED2K	m_oED2K;
+	BOOL		m_bSHA1;
+	SHA1		m_pSHA1;
+	BOOL		m_bTiger;
+	TIGEROOT	m_pTiger;
+	BOOL		m_bED2K;
+	MD4			m_pED2K;
 	BOOL		m_bSize;
 	QWORD		m_nSize;
 

@@ -936,21 +936,21 @@ BOOL CQueryHashTable::Check(CQuerySearch* pSearch)
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
 	
-	if ( pSearch->m_oSHA1.IsValid() || pSearch->m_oED2K.IsValid() || pSearch->m_oBTH.IsValid() )
+	if ( pSearch->m_bSHA1 || pSearch->m_bED2K || pSearch->m_bBTH )
 	{
-		if ( pSearch->m_oSHA1.IsValid() )
+		if ( pSearch->m_bSHA1 )
 		{
-			if ( CheckString( pSearch->m_oSHA1.ToURN() ) ) return TRUE;
+			if ( CheckString( CSHA::HashToString( &pSearch->m_pSHA1, TRUE ) ) ) return TRUE;
 		}
 		
-		if ( pSearch->m_oED2K.IsValid() )
+		if ( pSearch->m_bED2K )
 		{
-			if ( CheckString( pSearch->m_oED2K.ToURN() ) ) return TRUE;
+			if ( CheckString( CED2K::HashToString( &pSearch->m_pED2K, TRUE ) ) ) return TRUE;
 		}
 		
-		if ( pSearch->m_oBTH.IsValid() )
+		if ( pSearch->m_bBTH )
 		{
-			if ( CheckString( _T("urn:btih:") + pSearch->m_oBTH.ToString() ) ) return TRUE;
+			if ( CheckString( _T("urn:btih:") + CSHA::HashToString( &pSearch->m_pBTH, FALSE ) ) ) return TRUE;
 		}
 		
 		return FALSE;

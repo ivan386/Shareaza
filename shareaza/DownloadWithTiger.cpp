@@ -38,30 +38,29 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger construction
 
 CDownloadWithTiger::CDownloadWithTiger()
 {
-	m_nTigerBlock = 0;
-	m_nTigerSize = 0;
-	m_pTigerVerificationQueue = NULL;
-	m_pTigerVerificationCandidates = NULL;
+	m_pTigerBlock		= NULL;
+	m_nTigerBlock		= 0;
+	m_nTigerSuccess		= 0;
 	
-	m_nHashsetBlock = 0;
-	m_pHashsetVerificationQueue = NULL;
-	m_pHashsetVerificationCandidates = NULL;
+	m_pHashsetBlock		= NULL;
+	m_nHashsetBlock		= 0;
+	m_nHashsetSuccess	= 0;
 	
-	m_nVerifyCookie = 0;
-	m_nVerifyHash = HASH_NULL;
+	m_nVerifyCookie		= 0;
+	m_nVerifyHash		= HASH_NULL;
+	m_nVerifyBlock		= 0xFFFFFFFF;
 }
 
 CDownloadWithTiger::~CDownloadWithTiger()
 {
-	delete [] m_pTigerVerificationQueue;
-	delete [] m_pTigerVerificationCandidates;
-	delete [] m_pHashsetVerificationQueue;
-	delete [] m_pHashsetVerificationCandidates;
+	if ( m_pHashsetBlock != NULL ) delete [] m_pHashsetBlock;
+	if ( m_pTigerBlock != NULL ) delete [] m_pTigerBlock;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -72,71 +71,101 @@ DWORD CDownloadWithTiger::GetValidationCookie() const
 	return m_nVerifyCookie;
 }
 
-QWORD CDownloadWithTiger::GetVerifyLength(HASHID nHash) const
+QWORD CDownloadWithTiger::GetVerifyLength(int nHash) const
 {
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_oBTH.IsTrusted() ) return m_nTorrentSize;
-		if ( m_oTigerTree.IsAvailable() && m_oTiger.IsTrusted() ) return m_nTigerSize;
-		if ( m_oHashset.IsAvailable() && m_oED2K.IsTrusted() ) return ED2K_PART_SIZE;
+		if ( m_pTorrentBlock != NULL ) return m_nTorrentSize;
+		else if ( m_pTigerBlock != NULL ) return m_nTigerSize;
+		else if ( m_pHashsetBlock != NULL ) return ED2K_PART_SIZE;
 	}
-	else if ( nHash == HASH_TIGERTREE && m_oTigerTree.IsAvailable() && m_oTiger.IsTrusted() ) return m_nTigerSize;
-	else if ( nHash == HASH_ED2K && m_oHashset.IsAvailable() && m_oED2K.IsTrusted() ) return ED2K_PART_SIZE;
-	else if ( nHash == HASH_TORRENT && m_oBTH.IsTrusted() ) return m_nTorrentSize;
+	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock != NULL )
+	{
+		return m_nTigerSize;
+	}
+	else if ( nHash == HASH_ED2K && m_pHashsetBlock != NULL )
+	{
+		return ED2K_PART_SIZE;
+	}
+	else if ( nHash == HASH_TORRENT && m_pTorrentBlock != NULL )
+	{
+		return m_nTorrentSize;
+	}
+	
 	return 0;
 }
 
-BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, DWORD& nVerifyState) const
+BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash) const
 {
-	CFileFragment *pNextVerified, *pNextInvalid;
-	if ( m_nVerifyHash == HASH_SHA1 || m_nVerifyHash == HASH_MD5 )
+	if ( nOffset >= m_nSize ) return FALSE;
+	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return FALSE;
+	
+	if ( nHash == HASH_NULL )
 	{
-		if ( !nOffset && nLength )
+		if ( m_pTorrentBlock != NULL ) nHash = HASH_TORRENT;
+		else if ( m_pTigerBlock != NULL ) nHash = HASH_TIGERTREE;
+		else if ( m_pHashsetBlock != NULL ) nHash = HASH_ED2K;
+	}
+	
+	QWORD nBlockCount, nBlockSize;
+	BYTE* pBlockPtr;
+	
+	switch ( nHash )
+	{
+	case HASH_TIGERTREE:
+		if ( m_pTigerBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pTigerBlock;
+		nBlockCount	= m_nTigerBlock;
+		nBlockSize	= m_nTigerSize;
+		break;
+	case HASH_ED2K:
+		if ( m_pHashsetBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pHashsetBlock;
+		nBlockCount	= m_nHashsetBlock;
+		nBlockSize	= ED2K_PART_SIZE;
+		break;
+	case HASH_TORRENT:
+		if ( m_pTorrentBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pTorrentBlock;
+		nBlockCount	= m_nTorrentBlock;
+		nBlockSize	= m_nTorrentSize;
+		break;
+	default:
+		return FALSE;
+	}
+	
+	if ( nBlockSize == 0 ) return FALSE;
+	
+	for ( QWORD nBlock = nOffset / nBlockSize ; nBlock < nBlockCount ; nBlock++ )
+	{
+		QWORD nThis = nBlock * nBlockSize;
+		
+		if ( nThis >= nOffset && pBlockPtr[ nBlock ] )
 		{
-			nLength = m_nVerifyOffset;
-			nVerifyState = 3;
+			TRISTATE nBase	= pBlockPtr[ nBlock ];
+			bSuccess		= nBase == TS_TRUE;
+			nOffset			= nThis;
+			nLength			= 0;
+			
+			for ( ; nBlock < nBlockCount ; nBlock++ )
+			{
+				if ( nBase != pBlockPtr[ nBlock ] ) break;
+				nLength += nBlockSize;
+			}
+			
 			return TRUE;
 		}
-		if ( nOffset == m_nSize || !m_bVerifySpeculative ) return FALSE;
-		nLength = m_nSize - m_nVerifyOffset;
-		nVerifyState = 1;
-		return TRUE;
 	}
-	if ( pNextVerified = m_oVerified.FindNextFragment( nOffset ) )
-	{
-		if ( ( pNextInvalid = m_oInvalid.FindNextFragment( nOffset ) )
-			&& ( pNextInvalid->Offset() < pNextVerified->Offset() ) )
-		{
-			nOffset = pNextInvalid->Offset();
-			nLength = pNextInvalid->Length();
-			nVerifyState = 1;
-			return TRUE;
-		}
-		else
-		{
-			nOffset = pNextVerified->Offset();
-			nLength = pNextVerified->Length();
-			nVerifyState = 2;
-			return TRUE;
-		}
-	}
-	else if ( pNextInvalid = m_oInvalid.FindNextFragment( nOffset ) )
-	{
-		nOffset = pNextInvalid->Offset();
-		nLength = pNextInvalid->Length();
-		nVerifyState = 1;
-		return TRUE;
-	}
+	
 	return FALSE;
 }
 
 BOOL CDownloadWithTiger::IsFullyVerified()
 {
-	return ( m_oVerified.GetSize() == m_nSize ) || ( m_pFile && m_pFile->m_oFree.IsEmpty()
-		&& ! m_oSHA1.IsTrusted() && ! m_oMD5.IsTrusted()
-		&& ( ! m_oBTH.IsTrusted() || ! m_pBTHVerificationQueue )
-		&& ( ! m_oTiger.IsTrusted() || ! m_pTigerVerificationQueue )
-		&& ( ! m_oED2K.IsTrusted() || ! m_pHashsetVerificationQueue ) );
+	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock ) return TRUE;
+	if ( m_nTigerBlock > 0 && m_nTigerSuccess >= m_nTigerBlock ) return TRUE;
+	if ( m_nHashsetBlock > 0 && m_nHashsetSuccess >= m_nHashsetBlock ) return TRUE;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -144,46 +173,56 @@ BOOL CDownloadWithTiger::IsFullyVerified()
 
 BOOL CDownloadWithTiger::NeedTigerTree() const
 {
-	return ( m_nSize < SIZE_UNKNOWN && ! m_oTigerTree.IsAvailable() );
+	return ( m_nSize < SIZE_UNKNOWN && m_pTigerTree.IsAvailable() == FALSE );
 }
 
 BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 {
 	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
-	if ( m_oTigerTree.IsAvailable() ) return TRUE;
-	if ( ! m_oTigerTree.FromBytes( pTiger, nTiger, Settings.Library.TigerHeight, m_nSize ) )
+	if ( m_pTigerTree.IsAvailable() ) return TRUE;
+	
+	if ( ! m_pTigerTree.FromBytes( pTiger, nTiger,
+			Settings.Library.TigerHeight, m_nSize ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TIGER_CORRUPT, (LPCTSTR)GetDisplayName() );
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TIGER_CORRUPT,
+			(LPCTSTR)GetDisplayName() );
 		return FALSE;
 	}
-	if ( m_oTiger.IsValid()  )
+	
+	TIGEROOT pRoot;
+	m_pTigerTree.GetRoot( &pRoot );
+	
+	if ( m_bTiger && m_pTiger != pRoot )
 	{
-		if ( m_oTiger != m_oTigerTree )
-		{
-			m_oTigerTree.Clear();
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TIGER_MISMATCH, (LPCTSTR)GetDisplayName() );
-			return FALSE;
-		}
+		m_pTigerTree.Clear();
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TIGER_MISMATCH,
+			(LPCTSTR)GetDisplayName() );
+		return FALSE;
 	}
-	else
+	else if ( ! m_bTiger )
 	{
-		m_oTiger = m_oTigerTree;
+		m_bTiger = TRUE;
+		m_pTiger = pRoot;
 	}
-	m_nTigerSize	= m_oTigerTree.GetBlockLength();
-	m_nTigerBlock	= m_oTigerTree.GetBlockCount();
+	
+	m_nTigerSize	= m_pTigerTree.GetBlockLength();
+	m_nTigerBlock	= m_pTigerTree.GetBlockCount();
+	m_pTigerBlock	= new BYTE[ m_nTigerBlock ];
+	
+	ZeroMemory( m_pTigerBlock, sizeof(BYTE) * m_nTigerBlock );
+	
 	SetModified();
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_READY, (LPCTSTR)GetDisplayName(), m_oTigerTree.GetHeight(),
+	
+	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_READY,
+		(LPCTSTR)GetDisplayName(), m_pTigerTree.GetHeight(),
 		(LPCTSTR)Settings.SmartVolume( m_nTigerSize, FALSE ) );
-	m_pTigerVerificationQueue = new DWORD[ m_nTigerBlock + 1 ];
-	m_nTigerVerificationEnd = m_nTigerVerificationStart = m_nTigerBlock;
-	m_pTigerVerificationCandidates = new BYTE[ m_nTigerBlock ];
-	ZeroMemory( m_pTigerVerificationCandidates, sizeof(BYTE) * m_nTigerBlock );
+	
 	return TRUE;
 }
 
 CTigerTree* CDownloadWithTiger::GetTigerTree()
 {
-	return m_oTigerTree.IsAvailable() ? &m_oTigerTree : NULL;
+	return m_pTigerTree.IsAvailable() ? &m_pTigerTree : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -191,50 +230,62 @@ CTigerTree* CDownloadWithTiger::GetTigerTree()
 
 BOOL CDownloadWithTiger::NeedHashset() const
 {
-	return ( m_nSize < SIZE_UNKNOWN && ! m_oHashset.IsAvailable() );
+	return ( m_nSize < SIZE_UNKNOWN && m_pHashset.IsAvailable() == FALSE );
 }
 
 BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 {
 	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
-	if ( m_oHashset.IsAvailable() ) return TRUE;
-	if ( ! nSource && m_oED2K.IsValid() ) m_oHashset.FromRoot( m_oED2K );
-	else if ( m_oHashset.FromBytes( pSource, nSource, m_nSize ) )
+	if ( m_pHashset.IsAvailable() ) return TRUE;
+	
+	if ( nSource == 0 && m_bED2K )
 	{
-		if ( m_oED2K.IsValid() )
+		m_pHashset.FromRoot( &m_pED2K );
+	}
+	else if ( m_pHashset.FromBytes( pSource, nSource, m_nSize ) )
+	{
+		MD4 pRoot;
+		m_pHashset.GetRoot( &pRoot );
+		
+		if ( m_bED2K && m_pED2K != pRoot )
 		{
-			if ( m_oED2K != m_oHashset )
-			{
-				m_oHashset.Clear();
-				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_CORRUPT, (LPCTSTR)GetDisplayName() );
-				return FALSE;
-			}
+			m_pHashset.Clear();
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_CORRUPT,
+				(LPCTSTR)GetDisplayName() );
+			return FALSE;
 		}
-		else
+		else if ( ! m_bED2K )
 		{
-			m_oED2K = m_oHashset;
+			m_bED2K = TRUE;
+			m_pED2K = pRoot;
 		}
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_CORRUPT, (LPCTSTR)GetDisplayName() );
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_HASHSET_CORRUPT,
+			(LPCTSTR)GetDisplayName() );
 		return FALSE;
 	}
-	m_nHashsetBlock	= m_oHashset.GetBlockCount();
+	
+	m_nHashsetBlock	= m_pHashset.GetBlockCount();
+	m_pHashsetBlock	= new BYTE[ m_nHashsetBlock ];
+	
+	ZeroMemory( m_pHashsetBlock, sizeof(BYTE) * m_nHashsetBlock );
+	
 	SetModified();
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_HASHSET_READY, (LPCTSTR)GetDisplayName(),
+	
+	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_HASHSET_READY,
+		(LPCTSTR)GetDisplayName(),
 		(LPCTSTR)Settings.SmartVolume( ED2K_PART_SIZE, FALSE ) );
+	
 	Neighbours.SendDonkeyDownload( reinterpret_cast<CDownload*>( this ) );
-	m_pHashsetVerificationQueue = new DWORD[ m_nHashsetBlock + 1 ];
-	m_nHashsetVerificationEnd = m_nHashsetVerificationStart = m_nHashsetBlock;
-	m_pHashsetVerificationCandidates = new BYTE[ m_nHashsetBlock ];
-	ZeroMemory( m_pHashsetVerificationCandidates, sizeof(BYTE) * m_nHashsetBlock );
+	
 	return TRUE;
 }
 
 CED2K* CDownloadWithTiger::GetHashset()
 {
-	return m_oHashset.IsAvailable() ? &m_oHashset : NULL;
+	return m_pHashset.IsAvailable() ? &m_pHashset : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -242,11 +293,27 @@ CED2K* CDownloadWithTiger::GetHashset()
 
 BOOL CDownloadWithTiger::ValidationCanFinish() const
 {
-	return ( m_oVerified.GetSize() == m_nSize ) || ( m_pFile && m_pFile->m_oFree.IsEmpty()
-		&& ! m_oSHA1.IsTrusted() && ! m_oMD5.IsTrusted()
-		&& ( ! m_oBTH.IsTrusted() || ! m_pBTHVerificationQueue )
-		&& ( ! m_oTiger.IsTrusted() || ! m_pTigerVerificationQueue )
-		&& ( ! m_oED2K.IsTrusted() || ! m_pHashsetVerificationQueue ) );
+	BOOL bAvailable = FALSE;
+	
+	if ( m_pTorrentBlock != NULL )
+	{
+		if ( m_nTorrentSuccess >= m_nTorrentBlock ) return TRUE;
+		bAvailable = TRUE;
+	}
+	
+	if ( m_pTigerBlock != NULL && Settings.Downloads.VerifyTiger )
+	{
+		if ( m_nTigerSuccess >= m_nTigerBlock ) return TRUE;
+		bAvailable = TRUE;
+	}
+	
+	if ( m_pHashsetBlock != NULL && Settings.Downloads.VerifyED2K )
+	{
+		if ( m_nHashsetSuccess >= m_nHashsetBlock ) return TRUE;
+		bAvailable = TRUE;
+	}
+	
+	return ! bAvailable;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -254,287 +321,157 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 
 void CDownloadWithTiger::RunValidation(BOOL bSeeding)
 {
-	if ( m_sLocalName.IsEmpty() || ( !bSeeding && ( !m_pFile || !OpenFile() ) ) ) return;
-	if ( m_nVerifyHash != HASH_NULL )
+	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return;
+	if ( m_sLocalName.IsEmpty() ) return;
+	
+	if ( ! bSeeding )
 	{
-		Downloads.m_nValidation++;
-		ContinueValidation();
-		return;
+		if ( m_pFile == NULL || ! OpenFile() ) return;
 	}
-	if ( m_oBTH.IsTrusted() && m_pBTHVerificationQueue && m_nBTHVerificationStart != m_nBTHVerificationEnd )
+	
+	if ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF )
 	{
-		m_nVerifyHash = HASH_TORRENT;
-		m_nVerifyBlock = m_pBTHVerificationQueue[ m_nBTHVerificationStart ];
-		ASSERT( m_pBTHVerificationCandidates[ m_nVerifyBlock ] );
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * m_nTorrentSize;
-		m_nVerifyLength = min( m_nTorrentSize, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
+		Downloads.m_nValidation ++;
+		ContinueValidation();
+	}
+	else
+	{
+		if ( FindNewValidationBlock( HASH_TORRENT ) ||
+			 FindNewValidationBlock( HASH_TIGERTREE ) ||
+			 FindNewValidationBlock( HASH_ED2K ) )
 		{
-			m_pBTHVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nBTHVerificationStart-- ) m_nBTHVerificationStart = m_nTorrentBlock;
-			m_nVerifyHash = HASH_NULL;
+			Downloads.m_nValidation ++;
+			ContinueValidation();
 		}
-		else
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTiger validation setup
+
+BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
+{
+	if ( nHash == HASH_TIGERTREE && ! Settings.Downloads.VerifyTiger ) return FALSE;
+	if ( nHash == HASH_ED2K && ! Settings.Downloads.VerifyED2K ) return FALSE;
+	
+	DWORD nBlockCount;
+	QWORD nBlockSize;
+	BYTE* pBlockPtr;
+	
+	switch ( nHash )
+	{
+	case HASH_TIGERTREE:
+		if ( m_pTigerBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pTigerBlock;
+		nBlockCount	= m_nTigerBlock;
+		nBlockSize	= m_nTigerSize;
+		break;
+	case HASH_ED2K:
+		if ( m_pHashsetBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pHashsetBlock;
+		nBlockCount	= m_nHashsetBlock;
+		nBlockSize	= ED2K_PART_SIZE;
+		break;
+	case HASH_TORRENT:
+		if ( m_pTorrentBlock == NULL ) return FALSE;
+		pBlockPtr	= m_pTorrentBlock;
+		nBlockCount	= m_nTorrentBlock;
+		nBlockSize	= m_nTorrentSize;
+		break;
+	default:
+		return FALSE;
+	}
+	
+	DWORD nTarget = 0xFFFFFFFF;
+	
+	if ( m_pFile == NULL )
+	{
+		for ( TRISTATE nState = TS_UNKNOWN ; nState < TS_TRUE ; nState++ )
 		{
-			if ( ! ( m_bVerifySpeculative = ( m_pFile
-				&& m_pFile->m_oFree.OverlapsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) ) ) )
+			for ( DWORD nBlock = 0 ; nBlock < nBlockCount ; nBlock ++ )
 			{
-				m_pBTHVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-				if ( ! m_nBTHVerificationStart-- ) m_nBTHVerificationStart = m_nTorrentBlock;
-				m_tVerifyLast = GetTickCount();
-				m_pTorrent.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
+				if ( pBlockPtr[ nBlock ] == nState )
+				{
+					nTarget = nBlock;
+					break;
+				}
+			}
+			
+			if ( nTarget != 0xFFFFFFFF ) break;
+		}
+	}
+	else
+	{
+		DWORD nRetry = 0xFFFFFFFF;
+		QWORD nPrevious = 0;
+		
+		for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
+		{
+			if ( pFragment->m_nOffset - nPrevious >= nBlockSize )
+			{
+				DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
+				nPrevious = nBlockSize * (QWORD)nBlock + nBlockSize;
+				
+				for ( ; nPrevious <= pFragment->m_nOffset ; nBlock ++, nPrevious += nBlockSize )
+				{
+					if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
+					{
+						nTarget = nBlock;
+						break;
+					}
+					else if ( pBlockPtr[ nBlock ] == TS_FALSE && nRetry == 0xFFFFFFFF )
+					{
+						nRetry = nBlock;
+					}
+				}
+				
+				if ( nTarget != 0xFFFFFFFF ) break;
+			}
+			
+			nPrevious = pFragment->m_nOffset + pFragment->m_nLength;
+		}
+		
+		if ( m_nSize > nPrevious && nTarget == 0xFFFFFFFF )
+		{
+			DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
+			nPrevious = nBlockSize * (QWORD)nBlock;
+			
+			for ( ; nPrevious < m_nSize ; nBlock ++, nPrevious += nBlockSize )
+			{
+				if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
+				{
+					nTarget = nBlock;
+					break;
+				}
+				else if ( pBlockPtr[ nBlock ] == TS_FALSE && nRetry == 0xFFFFFFFF )
+				{
+					nRetry = nBlock;
+				}
 			}
 		}
 		
+		if ( nTarget == 0xFFFFFFFF ) nTarget = nRetry;
 	}
-	if ( m_oTiger.IsTrusted() && m_pTigerVerificationQueue && m_nTigerVerificationStart != m_nTigerVerificationEnd )
+	
+	if ( nTarget != 0xFFFFFFFF )
 	{
-		m_nVerifyHash = HASH_TIGERTREE;
-		m_nVerifyBlock = m_pTigerVerificationQueue[ m_nTigerVerificationStart ];
-		ASSERT( m_pTigerVerificationCandidates[ m_nVerifyBlock ] );
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * m_nTigerSize;
-		m_nVerifyLength = min( m_nTigerSize, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-		{
-			m_pTigerVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nTigerVerificationStart-- ) m_nTigerVerificationStart = m_nTigerBlock;
-			m_nVerifyHash = HASH_NULL;
-		}
-		else
-		{
-			if ( ! ( m_bVerifySpeculative = ( m_pFile
-				&& m_pFile->m_oFree.OverlapsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) ) ) )
-			{
-				m_pTigerVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-				if ( ! m_nTigerVerificationStart-- ) m_nTigerVerificationStart = m_nTigerBlock;
-				m_tVerifyLast = GetTickCount();
-				m_oTigerTree.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
-	}
-	if ( m_oED2K.IsTrusted() && m_pHashsetVerificationQueue && m_nHashsetVerificationStart != m_nHashsetVerificationEnd )
-	{
-		m_nVerifyHash = HASH_ED2K;
-		m_nVerifyBlock = m_pHashsetVerificationQueue[ m_nHashsetVerificationStart ];
-		ASSERT( m_pHashsetVerificationCandidates[ m_nVerifyBlock ] );
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * ED2K_PART_SIZE;
-		m_nVerifyLength = min( ED2K_PART_SIZE, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-		{
-			m_pHashsetVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nHashsetVerificationStart-- ) m_nHashsetVerificationStart = m_nHashsetBlock;
-			m_nVerifyHash = HASH_NULL;
-		}
-		else
-		{
-			if ( ! ( m_bVerifySpeculative = ( m_pFile
-				&& m_pFile->m_oFree.OverlapsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) ) ) )
-			{
-				m_pHashsetVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-				if ( ! m_nHashsetVerificationStart-- ) m_nHashsetVerificationStart = m_nHashsetBlock;
-				m_tVerifyLast = GetTickCount();
-				m_oHashset.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
-	}
-	if ( m_oBTH.IsValid() && ! m_oBTH.IsTrusted() && m_pBTHVerificationQueue
-		&& m_nBTHVerificationStart != m_nBTHVerificationEnd )
-	{
-		m_nVerifyHash = HASH_TORRENT;
-		m_nVerifyBlock = m_pBTHVerificationQueue[ m_nBTHVerificationStart ];
-		if ( ! m_nBTHVerificationStart-- ) m_nBTHVerificationStart = m_nTorrentBlock;
-		ASSERT( m_pBTHVerificationCandidates[ m_nVerifyBlock ] );
-		m_pBTHVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * m_nTorrentSize;
-		m_nVerifyLength = min( m_nTorrentSize, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-		{
-			m_bVerifySpeculative = FALSE;
-			m_tVerifyLast = GetTickCount();
-			m_pTorrent.BeginBlockTest();
-			Downloads.m_nValidation++;
-			ContinueValidation();
-			return;
-		}
-		else
-		{
-			m_nVerifyHash = HASH_NULL;
-		}
-	}
-	if ( m_oTiger.IsValid() && ! m_oTiger.IsTrusted() && m_pTigerVerificationQueue
-		&& m_nTigerVerificationStart != m_nTigerVerificationEnd )
-	{
-		m_nVerifyHash = HASH_TIGERTREE;
-		m_nVerifyBlock = m_pTigerVerificationQueue[ m_nTigerVerificationStart ];
-		if ( ! m_nTigerVerificationStart-- ) m_nTigerVerificationStart = m_nTigerBlock;
-		ASSERT( m_pTigerVerificationCandidates[ m_nVerifyBlock ] );
-		m_pTigerVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * m_nTigerSize;
-		m_nVerifyLength = min( m_nTigerSize, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-		{
-			m_bVerifySpeculative = FALSE;
-			m_tVerifyLast = GetTickCount();
-			m_oTigerTree.BeginBlockTest();
-			Downloads.m_nValidation++;
-			ContinueValidation();
-			return;
-		}
-		else
-		{
-			m_nVerifyHash = HASH_NULL;
-		}
-	}
-	if ( m_oED2K.IsValid() && ! m_oED2K.IsTrusted() && m_pHashsetVerificationQueue
-		&& m_nHashsetVerificationStart != m_nHashsetVerificationEnd )
-	{
-		m_nVerifyHash = HASH_ED2K;
-		m_nVerifyBlock = m_pHashsetVerificationQueue[ m_nHashsetVerificationStart ];
-		if ( ! m_nHashsetVerificationStart--) m_nHashsetVerificationStart = m_nHashsetBlock;
-		ASSERT( m_pHashsetVerificationCandidates[ m_nVerifyBlock ] );
-		m_pHashsetVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-		m_nVerifyOffset = (QWORD)( m_nVerifyBlock ) * ED2K_PART_SIZE;
-		m_nVerifyLength = min( ED2K_PART_SIZE, m_nSize - m_nVerifyOffset );
-		if ( m_oVerified.ContainsRange( m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-		{
-			m_bVerifySpeculative = FALSE;
-			m_tVerifyLast = GetTickCount();
-			m_oHashset.BeginBlockTest();
-			Downloads.m_nValidation++;
-			ContinueValidation();
-			return;
-		}
-		else
-		{
-			m_nVerifyHash = HASH_NULL;
-		}
-	}
-	if ( m_nVerifyHash != HASH_NULL )					// speculative
-	{
-		if ( m_nVerifyHash == HASH_TORRENT )
-		{
-			m_pBTHVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nBTHVerificationStart-- ) m_nBTHVerificationStart = m_nTorrentBlock;
-			if ( m_pFile->m_oFree.LessOrEqualMatch( m_oInvalid, m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-			{
-				m_tVerifyLast = GetTickCount();
-				m_pTorrent.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
-		else if ( m_nVerifyHash == HASH_TIGERTREE )
-		{
-			m_pTigerVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nTigerVerificationStart-- ) m_nTigerVerificationStart = m_nTigerBlock;
-			if ( m_pFile->m_oFree.LessOrEqualMatch( m_oInvalid, m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-			{
-				m_tVerifyLast = GetTickCount();
-				m_oTigerTree.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
+		m_nVerifyHash	= nHash;
+		m_nVerifyBlock	= nTarget;
+		m_nVerifyOffset	= nTarget * nBlockSize;
+		m_nVerifyLength	= min( nBlockSize, m_nSize - m_nVerifyOffset );
+		m_tVerifyLast	= GetTickCount();
+		
+		if ( m_nVerifyHash == HASH_TIGERTREE )
+			m_pTigerTree.BeginBlockTest();
 		else if ( m_nVerifyHash == HASH_ED2K )
-		{
-			m_pHashsetVerificationCandidates[ m_nVerifyBlock ] = FALSE;
-			if ( ! m_nHashsetVerificationStart-- ) m_nHashsetVerificationStart = m_nHashsetBlock;
-			if ( m_pFile->m_oFree.LessOrEqualMatch( m_oInvalid, m_nVerifyOffset, m_nVerifyOffset + m_nVerifyLength ) )
-			{
-				m_tVerifyLast = GetTickCount();
-				m_oHashset.BeginBlockTest();
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
-		else ASSERT( FALSE );
+			m_pHashset.BeginBlockTest();
+		else if ( m_nVerifyHash == HASH_TORRENT )
+			m_pTorrent.BeginBlockTest();
+		
+		return TRUE;
 	}
-	else
-	{		// == HASH_NULL
-		if ( ( m_oSHA1.IsTrusted() || m_oMD5.IsTrusted() ) && m_pFile )
-		{
-			if ( m_pFile->m_oFree.IsEmpty() )
-			{
-				m_bVerifySpeculative = FALSE;
-				m_nVerifyBlock = 0;
-				m_nVerifyOffset = 0;
-				m_nVerifyLength = m_nSize;
-				m_tVerifyLast = GetTickCount();
-				if ( m_oSHA1.IsTrusted() )
-				{
-					m_nVerifyHash = HASH_SHA1;
-					BeginSHA1Test();
-				}
-				else
-				{
-					m_nVerifyHash = HASH_SHA1;
-					BeginMD5Test();
-				}
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-			else if ( ( m_oInvalid.GetSize() == m_nSize )
-				&& ( ! m_oBTH.IsTrusted() || ! m_pBTHVerificationQueue )
-				&& ( ! m_oTiger.IsTrusted() || ! m_pTigerVerificationQueue )
-				&& ( ! m_oED2K.IsTrusted() || ! m_pHashsetVerificationQueue ) )
-			{
-				m_bVerifySpeculative = TRUE;
-				m_nVerifyBlock = 0;
-				m_nVerifyOffset = 0;
-				m_nVerifyLength = m_nSize;
-				m_tVerifyLast = GetTickCount();
-				if ( m_oSHA1.IsTrusted() )
-				{
-					m_nVerifyHash = HASH_SHA1;
-					BeginSHA1Test();
-				}
-				else
-				{
-					m_nVerifyHash = HASH_SHA1;
-					BeginMD5Test();
-				}
-				Downloads.m_nValidation++;
-				ContinueValidation();
-				return;
-			}
-		}
-	}
-	m_nVerifyHash = HASH_NULL;
-}
-
-void CDownloadWithTiger::BeginSHA1Test()
-{
-	m_oTestSHA1.Reset();
-}
-
-void CDownloadWithTiger::BeginMD5Test()
-{
-	m_oTestMD5.Reset();
-}
-
-BOOL CDownloadWithTiger::FinishSHA1Test()
-{
-	m_oTestSHA1.Finish();
-	return m_oSHA1 == m_oTestSHA1;
-}
-
-BOOL CDownloadWithTiger::FinishMD5Test()
-{
-	m_oTestMD5.Finish();
-	return m_oMD5 == m_oTestMD5;
+	
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -543,251 +480,144 @@ BOOL CDownloadWithTiger::FinishMD5Test()
 void CDownloadWithTiger::ContinueValidation()
 {
 	ASSERT( m_nVerifyHash > HASH_NULL );
-	BOOL bDone = ( !m_pFile || !m_pFile->GetRemaining() );
+	ASSERT( m_nVerifyBlock < 0xFFFFFFFF );
+	
+	BOOL bDone = ( m_pFile == NULL ) || ( m_pFile->GetRemaining() == 0 );
 	HANDLE hComplete = INVALID_HANDLE_VALUE;
-	if ( !m_pFile )
+	
+	if ( m_pFile == NULL )
 	{
-		hComplete = CreateFile( m_sLocalName, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+		hComplete = CreateFile( m_sLocalName, GENERIC_READ,
+			FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL, NULL );
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;
 	}
-	for ( int nRound = bDone ? 20 : 4 ; nRound && m_nVerifyLength ; nRound-- )
+	
+	for ( int nRound = bDone ? 10 : 2 ; nRound > 0 && m_nVerifyLength > 0 ; nRound-- )
 	{
 		DWORD nChunk	= (DWORD)min( m_nVerifyLength, Transfers.m_nBuffer );
 		LPBYTE pChunk	= Transfers.m_pBuffer;
-		if ( m_pFile ) m_pFile->ReadRangeUnlimited( m_nVerifyOffset, pChunk, nChunk );
+		
+		if ( m_pFile != NULL )
+		{
+			m_pFile->ReadRange( m_nVerifyOffset, pChunk, nChunk );
+		}
 		else
 		{
 			LONG nOffsetHigh = (LONG)( m_nVerifyOffset >> 32 );
-			SetFilePointer( hComplete, (DWORD)m_nVerifyOffset, &nOffsetHigh, FILE_BEGIN );
+			SetFilePointer( hComplete, (DWORD)( m_nVerifyOffset & 0xFFFFFFFF ), &nOffsetHigh, FILE_BEGIN );
 			ReadFile( hComplete, pChunk, nChunk, &nChunk, NULL );
 		}
-		if ( m_nVerifyHash == HASH_TORRENT ) m_pTorrent.AddToTest( pChunk, nChunk );
-		else if ( m_nVerifyHash == HASH_TIGERTREE ) m_oTigerTree.AddToTest( pChunk, nChunk );
-		else if ( m_nVerifyHash == HASH_ED2K ) m_oHashset.AddToTest( pChunk, nChunk );
-		else if ( m_nVerifyHash == HASH_SHA1 )
-		{
-			m_oTestSHA1.Add( pChunk, nChunk );
-			SetModified();
-		}
-		else if ( m_nVerifyHash == HASH_MD5 )
-		{
-			m_oTestMD5.Add( pChunk, nChunk );
-			SetModified();
-		}
-		else ASSERT( FALSE );
+		
+		if ( m_nVerifyHash == HASH_TIGERTREE )
+			m_pTigerTree.AddToTest( pChunk, (DWORD)nChunk );
+		else if ( m_nVerifyHash == HASH_ED2K )
+			m_pHashset.AddToTest( pChunk, (DWORD)nChunk );
+		else if ( m_nVerifyHash == HASH_TORRENT )
+			m_pTorrent.AddToTest( pChunk, (DWORD)nChunk );
+		else
+			ASSERT( FALSE );
+		
 		m_nVerifyOffset += nChunk;
 		m_nVerifyLength -= nChunk;
 	}
+	
 	if ( hComplete != INVALID_HANDLE_VALUE ) CloseHandle( hComplete );
-	if ( !m_nVerifyLength ) FinishValidation();
+	if ( m_nVerifyLength == 0 ) FinishValidation();
 }
 
 void CDownloadWithTiger::FinishValidation()
 {
-	QWORD nOffset, nNext;
-	BOOL bSuccess = FALSE;
-	BOOL bInvalidate = FALSE;
-	if ( m_nVerifyHash == HASH_TORRENT )
+	CFileFragment* pCorrupted = NULL;
+	
+	if ( m_nVerifyHash == HASH_TIGERTREE )
 	{
-		nOffset = (QWORD)m_nVerifyBlock * m_nTorrentSize;
-		nNext = min( m_nSize, nOffset + m_nTorrentSize );
-		if ( m_pTorrent.FinishBlockTest( m_nVerifyBlock ) )
+		if ( m_pTigerTree.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			m_oBTH.SetSuccess();
-			if ( m_oBTH.IsTrusted() )
-			{
-				if ( m_bVerifySpeculative )
-				{
-					if ( m_pFile ) m_pFile->m_oFree.Subtract( nOffset, nNext );
-					if ( ! m_pBTHVerificationCandidates[ m_nVerifyBlock ] )
-					{
-						m_pBTHVerificationCandidates[ m_nVerifyBlock ] = TRUE;
-						m_pBTHVerificationQueue[ m_nBTHVerificationEnd ] = m_nVerifyBlock;
-						if ( ! m_nBTHVerificationEnd-- ) m_nBTHVerificationEnd = m_nTorrentBlock;
-					}
-				}
-				else
-				{
-					bSuccess = TRUE;
-					OnFinishedTorrentBlock( m_nVerifyBlock );
-				}
-			}
+			m_pTigerBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_nTigerSuccess ++;
 		}
 		else
 		{
-			m_oBTH.SetFailure();
-			bInvalidate = m_oBTH.IsTrusted() && ! m_bVerifySpeculative;
-		}
-	}
-	else if ( m_nVerifyHash == HASH_TIGERTREE )
-	{
-		nOffset = (QWORD)m_nVerifyBlock * m_nTigerSize;
-		nNext = min( m_nSize, nOffset + m_nTigerSize );
-		if ( m_oTigerTree.FinishBlockTest( m_nVerifyBlock ) )
-		{
-			m_oTiger.SetSuccess();
-			if ( m_oTiger.IsTrusted() )
-			{
-				if ( m_bVerifySpeculative )
-				{
-					if ( m_pFile ) m_pFile->m_oFree.Subtract( nOffset, nNext );
-					if ( ! m_pTigerVerificationCandidates[ m_nVerifyBlock ] )
-					{
-						m_pTigerVerificationCandidates[ m_nVerifyBlock ] = TRUE;
-						m_pTigerVerificationQueue[ m_nTigerVerificationEnd ] = m_nVerifyBlock;
-						if ( ! m_nTigerVerificationEnd-- ) m_nTigerVerificationEnd = m_nTigerBlock;
-					}
-				}
-				else bSuccess = TRUE;
-			}
-		}
-		else
-		{
-			m_oTiger.SetFailure();
-			bInvalidate = m_oTiger.IsTrusted() && ! m_bVerifySpeculative;
+			m_pTigerBlock[ m_nVerifyBlock ] = TS_FALSE;
+			
+			pCorrupted = CFileFragment::New();
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTigerSize;
+			pCorrupted->m_nLength	= min( m_nTigerSize, m_nSize - pCorrupted->m_nOffset );
 		}
 	}
 	else if ( m_nVerifyHash == HASH_ED2K )
 	{
-		nOffset = (QWORD)m_nVerifyBlock * ED2K_PART_SIZE;
-		nNext = min( m_nSize, nOffset + ED2K_PART_SIZE );
-		if ( m_oHashset.FinishBlockTest( m_nVerifyBlock ) )
+		if ( m_pHashset.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			m_oED2K.SetSuccess();
-			if ( m_oED2K.IsTrusted() )
-			{
-				if ( m_bVerifySpeculative )
-				{
-					if ( m_pFile ) m_pFile->m_oFree.Subtract( nOffset, nNext );
-					if ( ! m_pHashsetVerificationCandidates[ m_nVerifyBlock ] )
-					{
-						m_pHashsetVerificationCandidates[ m_nVerifyBlock ] = TRUE;
-						m_pHashsetVerificationQueue[ m_nHashsetVerificationEnd ] = m_nVerifyBlock;
-						if ( ! m_nHashsetVerificationEnd-- ) m_nHashsetVerificationEnd = m_nHashsetBlock;
-					}
-				}
-				else bSuccess = TRUE;
-			}
+			m_pHashsetBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_nHashsetSuccess ++;
 		}
 		else
 		{
-			m_oED2K.SetFailure();
-			bInvalidate = m_oED2K.IsTrusted() && ! m_bVerifySpeculative;
+			m_pHashsetBlock[ m_nVerifyBlock ] = TS_FALSE;
+			
+			pCorrupted = CFileFragment::New();
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * ED2K_PART_SIZE;
+			pCorrupted->m_nLength	= min( ED2K_PART_SIZE, m_nSize - pCorrupted->m_nOffset );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_SHA1 )
+	else if ( m_nVerifyHash == HASH_TORRENT )
 	{
-		nOffset = 0;
-		nNext = m_nSize;
-		if ( FinishSHA1Test() )
+		if ( m_pTorrent.FinishBlockTest( m_nVerifyBlock ) )
 		{
-			if ( m_bVerifySpeculative )
-			{
-				m_pFile->m_oFree.Delete();
-			}
-			else bSuccess = TRUE;
+			m_pTorrentBlock[ m_nVerifyBlock ] = TS_TRUE;
+			m_nTorrentSuccess ++;
+			
+			OnFinishedTorrentBlock( m_nVerifyBlock );
 		}
 		else
 		{
-			bInvalidate = ! m_bVerifySpeculative;
+			m_pTorrentBlock[ m_nVerifyBlock ] = TS_FALSE;
+			
+			pCorrupted = CFileFragment::New();
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTorrentSize;
+			pCorrupted->m_nLength	= min( m_nTorrentSize, m_nSize - pCorrupted->m_nOffset );
 		}
 	}
-	else if ( m_nVerifyHash == HASH_MD5 )
+	
+	if ( pCorrupted != NULL && m_pFile != NULL )
 	{
-		nOffset = 0;
-		nNext = m_nSize;
-		if ( FinishMD5Test() )
+		if ( m_pTigerBlock != NULL )
+			SubtractHelper( &pCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
+		if ( m_pHashsetBlock != NULL )
+			SubtractHelper( &pCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
+		if ( m_pTorrentBlock != NULL )
+			SubtractHelper( &pCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
+		
+		for ( CFileFragment* pRange = pCorrupted ; pRange ; pRange = pRange->m_pNext )
 		{
-			if ( m_bVerifySpeculative )
-			{
-				m_pFile->m_oFree.Delete();
-			}
-			else bSuccess = TRUE;
+			m_pFile->InvalidateRange( pRange->m_nOffset, pRange->m_nLength );
+			RemoveOverlappingSources( pRange->m_nOffset, pRange->m_nLength );
 		}
-		else
-		{
-			bInvalidate = ! m_bVerifySpeculative;
-		}
+		
+		pCorrupted->DeleteChain();
 	}
-	else ASSERT( FALSE );
-	if ( bSuccess )
-	{
-		m_oVerified.Add( nOffset, nNext );
-		( m_oInvalid.Subtract( nOffset, nNext ) && m_pFile );
-		m_pFile->m_oFree.Subtract( nOffset, nNext );
-		SetModified();
-	}
-	else if ( bInvalidate && m_pFile )
-	{
-		CFileFragmentList Corrupted;
-		Corrupted.Add( nOffset, nNext );
-		Corrupted.Subtract( m_oVerified );
-		m_pFile->InvalidateRange( Corrupted );
-		m_oInvalid.Merge( Corrupted );
-		SetModified();
-	}
-	m_nVerifyHash = HASH_NULL;
+	
+	m_nVerifyHash	= HASH_NULL;
+	m_nVerifyBlock	= 0xFFFFFFFF;
 	m_nVerifyCookie++;
+	
+	SetModified();
 }
 
-void CDownloadWithTiger::AddVerificationBlocks(const QWORD nOffset, const QWORD nNext)
+void CDownloadWithTiger::SubtractHelper(CFileFragment** ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize)
 {
-	QWORD nBlockOffset, nBlockNext;
-	DWORD nBlock;
-	if ( m_pBTHVerificationQueue )
+	QWORD nOffset = 0;
+	
+	while ( nBlock-- && *ppCorrupted )
 	{
-		nBlock = (DWORD)( nOffset / m_nTorrentSize );
-		nBlockOffset = (QWORD)nBlock * m_nTorrentSize;
-		nBlockNext = nBlockOffset + m_nTorrentSize;
-		while ( nBlockOffset < nNext )
+		if ( *pBlock++ == TS_TRUE )
 		{
-			if ( !m_pBTHVerificationCandidates[ nBlock ] )
-			{
-				m_pBTHVerificationCandidates[ nBlock ] = TRUE;
-				m_pBTHVerificationQueue[ m_nBTHVerificationEnd ] = nBlock;
-				if ( ! m_nBTHVerificationEnd-- ) m_nBTHVerificationEnd = m_nTorrentBlock;
-			}
-			nBlock++;
-			nBlockOffset = nBlockNext;
-			nBlockNext += m_nTorrentSize;
+			CFileFragment::Subtract( ppCorrupted, nOffset, nSize );
 		}
-	}
-	if ( m_pTigerVerificationQueue )
-	{
-		nBlock = (DWORD)( nOffset / m_nTigerSize );
-		nBlockOffset = (QWORD)nBlock * m_nTigerSize;
-		nBlockNext = nBlockOffset + m_nTigerSize;
-		while ( nBlockOffset < nNext )
-		{
-			if ( !m_pTigerVerificationCandidates[ nBlock ] )
-			{
-				m_pTigerVerificationCandidates[ nBlock ] = TRUE;
-				m_pTigerVerificationQueue[ m_nTigerVerificationEnd ] = nBlock;
-				if ( ! m_nTigerVerificationEnd-- ) m_nTigerVerificationEnd = m_nTigerBlock;
-			}
-			nBlock++;
-			nBlockOffset = nBlockNext;
-			nBlockNext += m_nTigerSize;
-		}
-	}
-	if ( m_pHashsetVerificationQueue )
-	{
-		nBlock = (DWORD)( nOffset / ED2K_PART_SIZE );
-		nBlockOffset = (QWORD)nBlock * ED2K_PART_SIZE;
-		nBlockNext = nBlockOffset + ED2K_PART_SIZE;
-		while ( nBlockOffset < nNext )
-		{
-			if ( !m_pHashsetVerificationCandidates[ nBlock ] )
-			{
-				m_pHashsetVerificationCandidates[ nBlock ] = TRUE;
-				m_pHashsetVerificationQueue[ m_nHashsetVerificationEnd ] = nBlock;
-				if ( ! m_nHashsetVerificationEnd-- ) m_nHashsetVerificationEnd = m_nHashsetBlock;
-			}
-			nBlock++;
-			nBlockOffset = nBlockNext;
-			nBlockNext += ED2K_PART_SIZE;
-		}
+		
+		nOffset += nSize;
 	}
 }
 
@@ -797,17 +627,27 @@ void CDownloadWithTiger::AddVerificationBlocks(const QWORD nOffset, const QWORD 
 CString CDownloadWithTiger::GetAvailableRanges() const
 {
 	CString strRanges, strRange;
-	CFileFragment *pFragment;
-	if ( pFragment = m_oVerified.GetFirst() )
+	QWORD nOffset, nLength;
+	BOOL bSuccess;
+	
+	for ( nOffset = 0 ; GetNextVerifyRange( nOffset, nLength, bSuccess ) ; )
 	{
-		strRange.Format( _T("%I64i-%I64i"), pFragment->Offset(), pFragment->Next() - 1 );
-		strRanges = _T("bytes ") + strRange;
-		while ( pFragment = pFragment->GetNext() )
+		if ( bSuccess )
 		{
-			strRange.Format( _T("%I64i-%I64i"), pFragment->Offset(), pFragment->Next() - 1 );
-			strRanges += ',' + strRange;
+			if ( strRanges.IsEmpty() )
+				strRanges = _T("bytes ");
+			else
+				strRanges += ',';
+			
+			strRange.Format( _T("%I64i-%I64i"), nOffset, nOffset + nLength - 1 );
+			strRanges += strRange;
 		}
+		
+		nOffset += nLength;
 	}
+	
+	if ( strRanges.IsEmpty() ) strRanges = CDownloadWithTorrent::GetAvailableRanges();
+	
 	return strRanges;
 }
 
@@ -816,68 +656,49 @@ CString CDownloadWithTiger::GetAvailableRanges() const
 
 void CDownloadWithTiger::ResetVerification()
 {
-	if ( m_nVerifyHash == HASH_TIGERTREE ) m_oTigerTree.FinishBlockTest( m_nVerifyBlock );
-	else if ( m_nVerifyHash == HASH_ED2K ) m_oHashset.FinishBlockTest( m_nVerifyBlock );
-	else if ( m_nVerifyHash == HASH_TORRENT ) m_pTorrent.FinishBlockTest( m_nVerifyBlock );
-	if ( m_pBTHVerificationQueue )
+	if ( m_nVerifyHash == HASH_TIGERTREE )
 	{
-		m_nBTHVerificationEnd = m_nBTHVerificationStart = m_nTorrentBlock;
-		ZeroMemory( m_pBTHVerificationCandidates, sizeof(BYTE) * m_nTorrentBlock );
+		m_pTigerTree.FinishBlockTest( m_nVerifyBlock );
 	}
-	if ( m_pTigerVerificationQueue )
+	else if ( m_nVerifyHash == HASH_ED2K )
 	{
-		m_nTigerVerificationEnd = m_nTigerVerificationStart = m_nTigerBlock;
-		ZeroMemory( m_pTigerVerificationCandidates, sizeof(BYTE) * m_nTigerBlock );
+		m_pHashset.FinishBlockTest( m_nVerifyBlock );
 	}
-	if ( m_pHashsetVerificationQueue )
+	else if ( m_nVerifyHash == HASH_TORRENT )
 	{
-		m_nHashsetVerificationEnd = m_nHashsetVerificationStart = m_nHashsetBlock;
-		ZeroMemory( m_pHashsetVerificationCandidates, sizeof(BYTE) * m_nHashsetBlock );
+		m_pTorrent.FinishBlockTest( m_nVerifyBlock );
 	}
-	m_nVerifyHash = HASH_NULL;
-	m_oVerified.Delete();
-	m_oInvalid.Delete();
-	m_nVerifyCookie++;
-	CFileFragment *pFragment;
-	QWORD nLast = 0;
-	if ( m_pFile && ( pFragment = m_pFile->m_oFree.GetFirst() ) )
-	{
-		if ( pFragment->Offset() ) AddVerificationBlocks( 0, pFragment->Offset() );
-		nLast = pFragment->Next();
-		if ( pFragment = pFragment->GetNext() ) do
-		{
-			AddVerificationBlocks( nLast, pFragment->Offset() );
-			nLast = pFragment->Next();
-		}
-		while ( pFragment = pFragment->GetNext() );
-	}
-	if ( nLast < m_nSize ) AddVerificationBlocks( nLast, m_nSize );
-	SetModified();
-}
-
-void CDownloadWithTiger::ClearTiger()
-{
-	delete [] m_pTigerVerificationQueue;
-	delete [] m_pTigerVerificationCandidates;
-	m_pTigerVerificationQueue = NULL;
-	m_pTigerVerificationCandidates = NULL;
-	m_nTigerBlock = 0;
-	m_nTigerSize = 0;
-	m_oTigerTree.Clear();
-	ResetVerification();
+	
+	if ( m_pTigerBlock != NULL ) ZeroMemory( m_pTigerBlock, m_nTigerBlock );
+	if ( m_pHashsetBlock != NULL ) ZeroMemory( m_pHashsetBlock, m_nHashsetBlock );
+	if ( m_pTorrentBlock != NULL ) ZeroMemory( m_pTorrentBlock, m_nTorrentBlock );
+	
+	m_nTigerSuccess		= 0;
+	m_nHashsetSuccess	= 0;
+	m_nTorrentSuccess	= 0;
+	
+	m_nVerifyHash		= HASH_NULL;
+	m_nVerifyBlock		= 0xFFFFFFFF;
+	
 	m_nVerifyCookie++;
 	SetModified();
 }
 
-void CDownloadWithTiger::ClearHashset()
+void CDownloadWithTiger::ClearVerification()
 {
-	delete [] m_pHashsetVerificationQueue;
-	delete [] m_pHashsetVerificationCandidates;
-	m_pHashsetVerificationQueue = NULL;
-	m_pHashsetVerificationCandidates = NULL;
-	m_nHashsetBlock = 0;
-	m_oHashset.Clear();
 	ResetVerification();
+	
+	if ( m_pTigerBlock != NULL ) delete [] m_pTigerBlock;
+	if ( m_pHashsetBlock != NULL ) delete [] m_pHashsetBlock;
+	
+	m_pTigerBlock		= NULL;
+	m_nTigerBlock		= 0;
+	m_pHashsetBlock		= NULL;
+	m_nHashsetBlock		= 0;
+	
+	m_pTigerTree.Clear();
+	m_pHashset.Clear();
+	
 	m_nVerifyCookie++;
 	SetModified();
 }
@@ -888,135 +709,57 @@ void CDownloadWithTiger::ClearHashset()
 void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 {
 	CDownloadWithTorrent::Serialize( ar, nVersion );
-	if ( nVersion >= 32 )
+	
+	m_pTigerTree.Serialize( ar );
+	
+	if ( m_pTigerTree.IsAvailable() )
 	{
-		if ( ar.IsLoading() )
+		if ( ar.IsStoring() )
 		{
-			m_oTigerTree.SerializeLoad( ar, nVersion );
-			if ( m_oTigerTree.IsAvailable() )
-			{
-				m_oTigerTree.SetupParameters( m_nSize );
-				ar >> m_nTigerBlock;
-				ar >> m_nTigerSize;
-				m_pTigerVerificationQueue = new DWORD[ m_nTigerBlock + 1 ];
-				m_nTigerVerificationEnd = m_nTigerVerificationStart = m_nTigerBlock;
-				m_pTigerVerificationCandidates = new BYTE[ m_nTigerBlock ];
-				ZeroMemory( m_pTigerVerificationCandidates, sizeof(BYTE) * m_nTigerBlock );
-			}
-			m_oHashset.SerializeLoad( ar, nVersion );
-			if ( m_oHashset.IsAvailable() )
-			{
-				ar >> m_nHashsetBlock;
-				m_pHashsetVerificationQueue = new DWORD[ m_nHashsetBlock + 1 ];
-				m_nHashsetVerificationEnd = m_nHashsetVerificationStart = m_nHashsetBlock;
-				m_pHashsetVerificationCandidates = new BYTE[ m_nHashsetBlock ];
-				ZeroMemory( m_pHashsetVerificationCandidates, sizeof(BYTE) * m_nHashsetBlock );
-			}
-			m_oVerified.Serialize( ar, nVersion );
-			m_oInvalid.Serialize( ar, nVersion );
-			CFileFragment *pFragment;										// find Validation Blocks
-			QWORD nLast = 0;
-			if ( m_pFile && ( pFragment = m_pFile->m_oFree.GetFirst() ) )
-			{
-				if ( pFragment->Offset() ) AddVerificationBlocks( 0, pFragment->Offset() );
-				nLast = pFragment->Next();
-				if ( pFragment = pFragment->GetNext() ) do
-				{
-					AddVerificationBlocks( nLast, pFragment->Offset() );
-					nLast = pFragment->Next();
-				}
-				while ( pFragment = pFragment->GetNext() );
-			}
-			if ( nLast < m_nSize ) AddVerificationBlocks( nLast, m_nSize );
+			ar << m_nTigerBlock;
+			ar << m_nTigerSize;
+			ar << m_nTigerSuccess;
+			ar.Write( m_pTigerBlock, sizeof(BYTE) * m_nTigerBlock );
 		}
 		else
 		{
-			m_oTigerTree.SerializeStore( ar, nVersion );
-			if ( m_oTigerTree.IsAvailable() )
-			{
-				m_oTigerTree.SetupParameters( m_nSize );
-				ar << m_nTigerBlock;
-				ar << m_nTigerSize;
-			}
-			m_oHashset.SerializeStore( ar, nVersion );
-			if ( m_oHashset.IsAvailable() ) ar << m_nHashsetBlock;
-			m_oVerified.Serialize( ar, nVersion );
-			m_oInvalid.Serialize( ar, nVersion );
+			m_pTigerTree.SetupParameters( m_nSize );
+			
+			ar >> m_nTigerBlock;
+			ar >> m_nTigerSize;
+			ar >> m_nTigerSuccess;
+			
+			m_pTigerBlock = new BYTE[ m_nTigerBlock ];
+			ar.Read( m_pTigerBlock, sizeof(BYTE) * m_nTigerBlock );
 		}
-		return;
 	}
-	ASSERT( ar.IsLoading() );
-	DWORD nTigerSuccess, nHashsetSuccess;
-	m_oTigerTree.SerializeLoad( ar, nVersion );
-	if ( m_oTigerTree.IsAvailable() )
-	{
-		m_oTigerTree.SetupParameters( m_nSize );
-		ar >> m_nTigerBlock;
-		ar >> m_nTigerSize;
-		ar >> nTigerSuccess;
-		BYTE nState;
-		QWORD nOffset = 0, nNext = m_nTigerSize;
-		while ( nNext < m_nSize )
-		{
-			ar >> nState;
-			if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, nNext );
-			else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, nNext );
-			nOffset = nNext;
-			nNext += m_nTigerSize;
-		}
-		ar >> nState;
-		if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, m_nSize );
-		else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, m_nSize );
-		m_pTigerVerificationQueue = new DWORD[ m_nTigerBlock + 1 ];
-		m_nTigerVerificationEnd = m_nTigerVerificationStart = m_nTigerBlock;
-		m_pTigerVerificationCandidates = new BYTE[ m_nTigerBlock ];
-		ZeroMemory( m_pTigerVerificationCandidates, sizeof(BYTE) * m_nTigerBlock );
-	}
+	
 	if ( nVersion >= 19 )
 	{
-		m_oHashset.SerializeLoad( ar, nVersion );
-		if ( m_oHashset.IsAvailable() )
+		m_pHashset.Serialize( ar );
+		
+		if ( m_pHashset.IsAvailable() )
 		{
-			ar >> m_nHashsetBlock;
-			ar >> nHashsetSuccess;
-			BYTE nState;
-			QWORD nOffset = 0, nNext = ED2K_PART_SIZE;
-			while ( nNext < m_nSize )
+			if ( ar.IsStoring() )
 			{
-				ar >> nState;
-				if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, nNext );
-				else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, nNext );
-				nOffset = nNext;
-				nNext += ED2K_PART_SIZE;
+				ar << m_nHashsetBlock;
+				ar << m_nHashsetSuccess;
+				ar.Write( m_pHashsetBlock, sizeof(BYTE) * m_nHashsetBlock );
 			}
-			ar >> nState;
-			if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, m_nSize );
-			else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, m_nSize );
-			m_pHashsetVerificationQueue = new DWORD[ m_nHashsetBlock + 1 ];
-			m_nHashsetVerificationEnd = m_nHashsetVerificationStart = m_nHashsetBlock;
-			m_pHashsetVerificationCandidates = new BYTE[ m_nHashsetBlock ];
-			ZeroMemory( m_pHashsetVerificationCandidates, sizeof(BYTE) * m_nHashsetBlock );
+			else
+			{
+				ar >> m_nHashsetBlock;
+				ar >> m_nHashsetSuccess;
+				
+				m_pHashsetBlock = new BYTE[ m_nHashsetBlock ];
+				ar.Read( m_pHashsetBlock, sizeof(BYTE) * m_nHashsetBlock );
+			}
 		}
 	}
-	if ( nVersion < 30 && m_oBTH.IsValid() )
+	
+	if ( nVersion < 30 && m_bBTH )
 	{
-		m_oED2K.Clear();
-		m_oSHA1.Clear();
-		m_oTiger.Clear();
+		ClearVerification();
+		m_bSHA1 = m_bTiger = m_bED2K = FALSE;
 	}
-	m_oInvalid.Subtract( m_oVerified );
-	CFileFragment *pFragment;
-	QWORD nLast = 0;
-	if ( m_pFile && ( pFragment = m_pFile->m_oFree.GetFirst() ) )
-	{
-		if ( pFragment->Offset() ) AddVerificationBlocks( 0, pFragment->Offset() );
-		nLast = pFragment->Next();
-		if ( pFragment = pFragment->GetNext() ) do
-		{
-			AddVerificationBlocks( nLast, pFragment->Offset() );
-			nLast = pFragment->Next();
-		}
-		while ( pFragment = pFragment->GetNext() );
-	}
-	if ( nLast < m_nSize ) AddVerificationBlocks( nLast, m_nSize );
 }

@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "Connection.h"
 
 class CBuffer;
@@ -66,9 +65,9 @@ public:
 	NrsState	m_nState;
 	CVendor*	m_pVendor;
 	BOOL		m_bGUID;
-	CGUID		m_pGUID;
+	GGUID		m_pGUID;
 	CGProfile*	m_pProfile;
-	CGUID*		m_pMoreResultsGUID;		//Last search GUID- used to get more results
+	GGUID*		m_pMoreResultsGUID;		//Last search GUID- used to get more results
 // Attributes : Capabilities
 public:
 	BOOL		m_bAutomatic;

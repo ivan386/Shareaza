@@ -84,7 +84,7 @@ void CNeighboursWithG1::OnG1Ping()
 	if ( m_pPongCache->ClearIfOld() )
 	{
 		DWORD dwNow = GetTickCount();
-		CGUID pGUID;
+		GGUID pGUID;
 		
 		Network.CreateID( &pGUID );
 		

@@ -86,7 +86,7 @@ BOOL CLibraryMetaPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList*
 		
 		if ( pFolders->m_pSelNext == NULL && pFolders->m_pVirtual != NULL )
 		{
-			if ( pFolders->m_pVirtual->m_oCollSHA1.IsValid() &&
+			if ( pFolders->m_pVirtual->m_bCollSHA1 &&
 				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 )
 				 m_bAvailable = FALSE;
 			if ( pFolders->m_pVirtual->GetFolderCount() > 0 ) m_bAvailable = FALSE;

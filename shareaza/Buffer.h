@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 
 class CBuffer
 {
@@ -62,16 +61,6 @@ public:
 	BOOL	ReadDIME(DWORD* pnFlags, CString* psID, CString* psType, DWORD* pnBody);
 public:
 	static void ReverseBuffer(const void* pInput, void* pOutput, DWORD nLength);
-	// Add a Hash to the Buffer
-	template < int nHashSize > inline void Add(const CHash < nHashSize > &oHash)
-	{
-		Add( &oHash.m_b, sizeof oHash.m_b );
-	}
-	// Add a Managed Hash to the Buffer
-	template < class Hash > inline void Add(const CManagedHash < Hash > &oHash)
-	{
-		ASSERT( oHash.IsValid() );
-		Add( &oHash.m_b, sizeof oHash.m_b );
-	}
+
 };
 

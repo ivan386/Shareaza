@@ -23,6 +23,8 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "WindowManager.h"
+#include "Skin.h"
+#include "CtrlWndTabBar.h"
 
 #include "WndHome.h"
 #include "WndSystem.h"
@@ -530,7 +532,20 @@ void CWindowManager::PostSkinChange()
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		GetNext( pos )->OnSkinChange();
+		CChildWnd* pChildWnd = GetNext( pos );
+		pChildWnd->OnSkinChange();
+/*
+		CWndTabBar* pTabBar = (CWndTabBar*)pChildWnd;
+		CMenu* pMenu = &pTabBar->m_mnuChild;
+		//CMenu* pTabMenu = Skin.GetMenu( _T("Child") );
+		//CMenu pTabMenu = pTabBar->m_mnuChild;
+
+		MENUITEMINFO pInfo;
+		ZeroMemory( &pInfo, sizeof( pInfo ) );
+		pInfo.cbSize = sizeof( MENUITEMINFO );
+		pInfo.fMask = MIIM_DATA;
+		pMenu->DestroyMenu();
+*/
 	}
 }
 

@@ -584,12 +584,9 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 
 	if ( m_nState >= smsOpen )
 	{
-		CString strOf;
-		LoadString( strOf, IDS_GENERAL_OF );
-		str.Format( _T("%.2i:%.2i %s %.2i:%.2i"),
+		str.Format( _T("%.2i:%.2i of %.2i:%.2i"),
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
-			strOf,
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) % 60 ) );
 		
@@ -616,12 +613,9 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	
 	if ( m_nState >= smsOpen )
 	{
-		CString strOf;
-		LoadString( strOf, IDS_GENERAL_OF );
-		str.Format( _T("%.2i:%.2i %s %.2i:%.2i"),
+		str.Format( _T("%.2i:%.2i of %.2i:%.2i"),
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
-			strOf,
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) % 60 ) );
 		

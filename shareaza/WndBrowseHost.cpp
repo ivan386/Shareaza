@@ -63,13 +63,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseHostWnd construction
 
-CBrowseHostWnd::CBrowseHostWnd(SOCKADDR_IN* pAddress, CGUID* pClientID)
+CBrowseHostWnd::CBrowseHostWnd(SOCKADDR_IN* pAddress, GGUID* pClientID)
 {
 	m_pBrowser = new CHostBrowser( this, &pAddress->sin_addr, htons( pAddress->sin_port ), FALSE, pClientID );
 	Create( IDR_BROWSEHOSTFRAME );
 }
 
-CBrowseHostWnd::CBrowseHostWnd(IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, CGUID* pClientID)
+CBrowseHostWnd::CBrowseHostWnd(IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, GGUID* pClientID)
 {
 	m_pBrowser = new CHostBrowser( this, pAddress, nPort, bMustPush, pClientID );
 	Create( IDR_BROWSEHOSTFRAME );
@@ -366,7 +366,7 @@ void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
 	m_wndFrame.OnVirtualTree( pPacket );
 }
 
-BOOL CBrowseHostWnd::OnPush(CGUID* pClientID, CConnection* pConnection)
+BOOL CBrowseHostWnd::OnPush(GGUID* pClientID, CConnection* pConnection)
 {
 	return m_pBrowser != NULL && m_pBrowser->OnPush( pClientID, pConnection );
 }

@@ -62,7 +62,7 @@ void CUploadFiles::Clear()
 //////////////////////////////////////////////////////////////////////
 // CUploadFiles file allocation
 
-CUploadFile* CUploadFiles::GetFile(CUploadTransfer* pUpload, const CManagedSHA1 &oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
+CUploadFile* CUploadFiles::GetFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -78,7 +78,7 @@ CUploadFile* CUploadFiles::GetFile(CUploadTransfer* pUpload, const CManagedSHA1 
 		}
 	}
 	
-	CUploadFile* pFile = new CUploadFile( pUpload, oSHA1, pszName, pszPath, nSize );
+	CUploadFile* pFile = new CUploadFile( pUpload, pSHA1, pszName, pszPath, nSize );
 	m_pList.AddTail( pFile );
 	
 	return pFile;

@@ -48,6 +48,7 @@ static char THIS_FILE[]=__FILE__;
 
 CLibraryBuilder LibraryBuilder;
 
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder construction
 
@@ -58,12 +59,11 @@ CLibraryBuilder::CLibraryBuilder()
 	
 	m_hThread		= NULL;
 	m_bThread		= FALSE;
-	m_bTerminate	= FALSE;
 	m_bPriority		= FALSE;
-//	m_nHashSleep	= 100;
+	m_nHashSleep	= 100;
 	m_nIndex		= 0;
 	m_tActive		= 0;
-//	m_pBuffer		= NULL;
+	m_pBuffer		= NULL;
 }
 
 CLibraryBuilder::~CLibraryBuilder()
@@ -83,20 +83,8 @@ void CLibraryBuilder::Add(CLibraryFile* pFile)
 	CSingleLock pLock( &m_pSection, TRUE );
 	
 	POSITION pos = m_pFiles.Find( (LPVOID)pFile->m_nIndex );
-	if ( pos == NULL ) 
-	{
-		BOOL bNotFound = TRUE;
-		if ( m_bThread && !m_bTerminate )
-		{
-			DWORD nEntry = 0;
-			if ( m_nStackTop ) do
-			{
-			}
-			while ( ( bNotFound = m_qStack[ nEntry ].m_nIndex != pFile->m_nIndex ) && ( ++nEntry < m_nStackTop ) );
-			if ( bNotFound ) bNotFound = m_qStackN.m_nIndex != pFile->m_nIndex;
-		}
-		if ( bNotFound ) m_pFiles.AddHead( (LPVOID)pFile->m_nIndex );
-	}
+	if ( pos == NULL ) m_pFiles.AddHead( (LPVOID)pFile->m_nIndex );
+	
 	if ( ! m_bThread ) StartThread();
 }
 
@@ -107,11 +95,11 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 	if ( POSITION pos = m_pFiles.Find( (LPVOID)pFile->m_nIndex ) )
 	{
 		m_pFiles.RemoveAt( pos );
-		SignalListChanged();
-/*		if ( pos = m_pPriority.Find( pFile->GetPath() ) )
+		
+		if ( pos = m_pPriority.Find( pFile->GetPath() ) )
 		{
 			m_pPriority.RemoveAt( pos );
-		}*/
+		}
 	}
 	
 	m_pSection.Unlock();
@@ -121,7 +109,7 @@ int CLibraryBuilder::GetRemaining()
 {
 	m_pSection.Lock();
 	int nCount = m_pFiles.GetCount();
-	if ( m_bThread ) nCount += m_nStackTop + 1;
+	if ( m_bThread ) nCount ++;
 	m_pSection.Unlock();
 	return nCount;
 }
@@ -137,10 +125,10 @@ CString CLibraryBuilder::GetCurrentFile()
 
 void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
 {
-/*	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &m_pSection, TRUE );
 	
 	POSITION pos = m_pPriority.Find( pszPath );
-	if ( pos == NULL ) m_pPriority.AddTail( pszPath );*/
+	if ( pos == NULL ) m_pPriority.AddTail( pszPath );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -150,7 +138,7 @@ void CLibraryBuilder::Clear()
 {
 	m_pSection.Lock();
 	m_pFiles.RemoveAll();
-//	m_pPriority.RemoveAll();
+	m_pPriority.RemoveAll();
 	m_pSection.Unlock();
 }
 
@@ -183,14 +171,15 @@ BOOL CLibraryBuilder::StartThread()
 void CLibraryBuilder::StopThread()
 {
 	if ( m_hThread == NULL ) return;
-	RequestTerminateBuilder();
 	
-	for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+	m_bThread = FALSE;
+	
+	for ( int nAttempt = 20 ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
 		if ( nCode != STILL_ACTIVE ) break;
-		Sleep( 30 );
+		Sleep( 150 );
 	}
 	
 	if ( nAttempt == 0 )
@@ -200,8 +189,6 @@ void CLibraryBuilder::StopThread()
 		Sleep( 100 );
 	}
 	
-	m_bThread	= FALSE;
-	m_bTerminate = FALSE;
 	m_hThread	= NULL;
 	m_tActive	= 0;
 }
@@ -258,391 +245,191 @@ UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
 
 void CLibraryBuilder::OnRun()
 {
-	DWORD nEntry;
-	if ( m_pBuffer == NULL )
-	{
-		Init();
-		m_pBuffer = (BYTE*)malloc( ( ( m_nStackSize - 1 ) * m_nMaxBlock + 1 ) * LIBRARY_BUILDER_BLOCK_SIZE );
-		if ( m_pBuffer == NULL )
-		{
-			m_nMaxBlock = m_nStackSize = 1;
-			m_pBuffer = (BYTE*)malloc( LIBRARY_BUILDER_BLOCK_SIZE );
-			ASSERT( m_pBuffer != NULL );
-		}
-		nEntry = 0;
-		if ( m_nStackSize > 1 ) do
-		{
-			m_qStack[ nEntry ].m_pBufferIndex = m_qStack[ nEntry ].m_pBuffer =
-				m_pBuffer + ( nEntry * m_nMaxBlock + 1 ) * LIBRARY_BUILDER_BLOCK_SIZE;
-		}
-		while ( ++nEntry < m_nStackSize - 1 );
-		do
-		{
-			m_qStack[ nEntry ].m_pBufferIndex = m_qStack[ nEntry ].m_pBuffer = NULL;
-		}
-		while ( ++nEntry < MAX_PARALLEL );
-    	m_qStackN.m_pBufferIndex = m_qStackN.m_pBuffer = NULL;
-		m_qStackO.m_pBufferIndex = m_qStackO.m_pBuffer = NULL;
-		m_nStackTop = 0;
-	}
-	while ( m_bThread && !m_bTerminate )
+	if ( m_pBuffer == NULL ) m_pBuffer = new BYTE[20480];
+	
+	while ( m_bThread )
 	{
 		if ( m_pSection.Lock() )
 		{
 			m_nIndex	= 0;
 			m_tActive	= 0;
-			m_qStackN.m_sPath.Empty();
+			m_sPath.Empty();
 			
-			if ( m_bTerminate )
-			{
-				m_pSection.Unlock();
-				break;
-			}
-
-			if ( m_bSuspend )
-			{
-				m_bSuspended = TRUE;
-				m_pSection.Unlock();
-				while ( m_bSuspend )
-				{
-					if ( m_bTerminate ) break;
-					Sleep ( 20 );
-				}
-				if ( m_bTerminate ) break;
-				SignalListChanged();
-				m_bSuspended = FALSE;
-				continue;
-			}
-
-			if ( m_bListChanged )
-			{
-				m_pSection.Unlock();
-				nEntry = 0;
-				while ( nEntry < m_nStackTop )
-				{
-					if ( Library.LookupFile( m_qStackN.m_nIndex, TRUE ) == NULL )
-					{
-						CloseHandle( m_qStack[ nEntry ].hFile );
-						BYTE* pBuffer = m_qStack[ nEntry ].m_pBuffer;
-						DWORD nCopyEntry = nEntry;
-						if ( nCopyEntry < m_nStackSize - 1 ) do
-						{
-							m_qStack[ nCopyEntry ] = m_qStack[ nCopyEntry + 1 ];
-						}
-						while ( ++nCopyEntry < m_nStackSize - 1 );
-						if ( nEntry < m_nStackSize - 1 )		// the last entry never holds a valid pointer
-						{
-							m_qStack[ m_nStackSize - 2 ].m_pBuffer = pBuffer;
-							m_qStack[ m_nStackSize - 2 ].m_pBufferIndex = pBuffer;
-						}
-						--m_nStackTop;
-					}
-					else
-					{
-						++nEntry;
-					}
-				}
-				m_bListChanged = false;
-				continue;
-			}
-
-			if ( ( m_pFiles.IsEmpty() ) && ( m_nStackTop == 0 ) )
+			if ( m_pFiles.IsEmpty() )
 			{
 				m_pSection.Unlock();
 				break;
 			}
 			
-			if ( ( !m_pFiles.IsEmpty() ) && ( m_nStackTop < m_nStackSize ) )
+			m_nIndex = (DWORD)m_pFiles.RemoveHead();
+			
+			m_pSection.Unlock();
+		}
+		
+		if ( m_nIndex == 0 )
+		{
+			Sleep( 250 );
+			continue;
+		}
+		
+		if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE ) )
+		{
+			m_sPath = pFile->GetPath();
+			Library.Unlock();
+		}
+		else
+		{
+			m_nIndex = 0;
+			continue;
+		}
+		
+		BOOL bPriority = FALSE;
+		
+		if ( m_pSection.Lock() )
+		{
+			if ( POSITION pos = m_pPriority.Find( m_sPath ) )
 			{
-				m_qStackN.m_nIndex = (DWORD)m_pFiles.RemoveHead();
-				m_pSection.Unlock();
-				if ( m_qStackN.m_nIndex == 0 )
-				{
-					m_qStackN = m_qStack[ --m_nStackTop ];
-					m_sPath = m_qStackN.m_sPath;
-					HashFile(true);
-					continue;
-				}
-				if ( CLibraryFile* pFile = Library.LookupFile( m_qStackN.m_nIndex, TRUE ) )
-				{
-					m_qStackN.m_sPath = pFile->GetPath();
-					Library.Unlock();
-					m_qStackN.hFile = CreateFile( m_qStackN.m_sPath, GENERIC_READ,
-						FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
-						FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-					if ( m_qStackN.hFile == INVALID_HANDLE_VALUE )
-					{
-						m_pSection.Lock();
-						if ( m_pFiles.Find( NULL ) == NULL ) m_pFiles.AddTail( (LPVOID)0 );
-						m_pFiles.AddTail( (LPVOID)m_nIndex );
-						m_pSection.Unlock();
-						continue;
-					}
-					theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_qStackN.m_sPath);
-					m_qStackN.nSizeHigh = 0;
-					m_qStackN.nSizeLow = GetFileSize( m_qStackN.hFile, &m_qStackN.nSizeHigh );
-					m_qStackN.nFileSize = (QWORD)m_qStackN.nSizeLow | ( (QWORD)m_qStackN.nSizeHigh << 32 );
-					m_qStackN.nFileBase = 0;
-					m_qStackN.bVirtual = Settings.Library.VirtualFiles ? DetectVirtualFile( m_qStackN.hFile, m_qStackN.nFileBase, m_qStackN.nFileSize ) : false;
-					m_qStackN.nSizeLow = (DWORD)( m_qStackN.nFileBase & 0xFFFFFFFF );
-					m_qStackN.nSizeHigh = (DWORD)( m_qStackN.nFileBase >> 32 );
-					SetFilePointer( m_qStackN.hFile, m_qStackN.nSizeLow, (PLONG)&m_qStackN.nSizeHigh, FILE_BEGIN );
-					m_qStackN.nStoredBytes = 0;
-					m_qStackN.nCount = m_qStackN.nFileSize;
-					m_qStackN.pTiger = new CTigerTree;
-					m_qStackN.pTiger->BeginFile( Settings.Library.TigerHeight, m_qStackN.nFileSize );
-					m_qStackN.pED2K = new CED2K;
-					m_qStackN.pED2K->BeginFile( m_qStackN.nFileSize );
-					m_qStackN.pMD5 = new CMD5;
-					m_qStackN.pSHA1 = new CSHA1;
-					if ( m_qStackN.nFileSize == 0 )
-					{
-						m_qStackO = m_qStackN;	// ToDo: do something witty to account for the TigerTree bug
-						m_bRetired = TRUE;
-					}
-					else
-					{
-						m_sPath = m_qStackN.m_sPath;
-						HashFile( FALSE );
-					}
-				}
-				else
-				{
-					m_nIndex = 0;
-					continue;
-				}
+				bPriority = TRUE;
+				m_pPriority.RemoveAt( pos );
 			}
-			else
+			
+			m_pSection.Unlock();
+		}
+		
+		HANDLE hFile = CreateFile( m_sPath, GENERIC_READ,
+			FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+		
+		if ( hFile == INVALID_HANDLE_VALUE )
+		{
+			m_pSection.Lock();
+			if ( m_pFiles.Find( NULL ) == NULL ) m_pFiles.AddTail( (LPVOID)0 );
+			m_pFiles.AddTail( (LPVOID)m_nIndex );
+			m_pSection.Unlock();
+			continue;
+		}
+		
+		theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
+		
+		SHA1 pSHA1;
+		
+		if ( HashFile( hFile, bPriority, &pSHA1 ) )
+		{
+			SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+			m_tActive = GetTickCount();
+			
+			if ( m_pPlugins->ExtractMetadata( m_sPath, hFile ) )
 			{
-				m_pSection.Unlock();
-				m_qStackN = m_qStack[ --m_nStackTop ];
-				theApp.Message( MSG_DEBUG, _T("Continue Hashing: %s"), (LPCTSTR)m_qStackN.m_sPath);
-				m_sPath = m_qStackN.m_sPath;
-				HashFile( TRUE );
+				// Plugin got it
 			}
-			if ( m_bRetired )
+			else if ( m_pInternals->ExtractMetadata( m_sPath, hFile, &pSHA1 ) )
 			{
-				m_qStackO.pSHA1->Finish();
-				m_qStackO.pMD5->Finish();
-				m_qStackO.pTiger->FinishFile();
-				m_qStackO.pED2K->FinishFile();
-				CLibraryFile* pFile = Library.LookupFile( m_qStackO.m_nIndex, TRUE );
-				if ( pFile != NULL )
-				{
-					Library.RemoveFile( pFile );
-					pFile->m_bBogus			= FALSE;
-					pFile->m_nVirtualBase	= m_qStackO.bVirtual ? m_qStackO.nFileBase : 0;
-					pFile->m_nVirtualSize	= m_qStackO.bVirtual ? m_qStackO.nFileSize : 0;
-					pFile->m_oSHA1 = *m_qStackO.pSHA1;
-					pFile->m_oMD5 = *m_qStackO.pMD5;
-					pFile->m_oTiger = *m_qStackO.pTiger;
-					pFile->m_oED2K = *m_qStackO.pED2K;
-					LibraryMaps.CullDeletedFiles( pFile );
-					Library.AddFile( pFile );
-					Library.Unlock( TRUE );
-					LibraryHashDB.StoreTiger( m_nIndex, m_qStackO.pTiger );
-					LibraryHashDB.StoreED2K( m_nIndex, m_qStackO.pED2K );
-					theApp.Message( MSG_DEBUG, _T("Finished Hashing: %s"), (LPCTSTR)m_qStackO.m_sPath);
-					SetFilePointer( m_qStackO.hFile, 0, NULL, FILE_BEGIN );
-					m_tActive = GetTickCount();
-					if ( m_pPlugins->ExtractMetadata( m_qStackO.m_sPath, m_qStackO.hFile ) )
-					{
-						// Plugin got it
-					}
-					else if ( m_pInternals->ExtractMetadata( m_qStackO.m_sPath, m_qStackO.hFile, *m_qStackO.pSHA1 ) )
-					{
-						// Internal got it
-					}
-				}
-				theApp.Message( MSG_DEBUG, _T("Finished Hashing: %s"), (LPCTSTR)m_qStackO.m_sPath);
-				CloseHandle( m_qStackO.hFile );
-				delete m_qStackO.pSHA1;
-				delete m_qStackO.pMD5;
-				delete m_qStackO.pTiger;
-				delete m_qStackO.pED2K;
-				m_bRetired = FALSE;
+				// Internal got it
 			}
 		}
-		else Sleep ( 100 );
+		
+		CloseHandle( hFile );
 	}
-
-	for ( nEntry = 0; nEntry < m_nStackTop; ++nEntry ) CloseHandle( m_qStack[ nEntry ].hFile );
-	free ( m_pBuffer );
-	m_pBuffer = NULL;
+	
 	m_pPlugins->Cleanup();
+	
+	delete [] m_pBuffer;
+	m_pBuffer = NULL;
+	
 	m_nIndex	= 0;
 	m_tActive	= 0;
 	m_bThread	= FALSE;
 	m_sPath.Empty();
+	
 	theApp.Message( MSG_DEBUG, _T("CLibraryBuilder shutting down.") );
 }
 
-void CLibraryBuilder::HashFile(BOOL bForceHash)
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilder file hashing (threaded)
+
+BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 {
-	DWORD nBytesToRead = LIBRARY_BUILDER_BLOCK_SIZE;
-	m_bRetired = FALSE;
-	DWORD nTime=GetTickCount(), nTime2, nTime3, nEntry, nInsertEntry; 
-	if ( bForceHash )
+	DWORD nSizeHigh	= 0;
+	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
+	QWORD nFileSize	= (QWORD)nSizeLow | ( (QWORD)nSizeHigh << 32 );
+	QWORD nFileBase	= 0;
+	
+	BOOL bVirtual = FALSE;
+	
+	if ( Settings.Library.VirtualFiles )
+		bVirtual = DetectVirtualFile( hFile, nFileBase, nFileSize );
+	
+	nSizeLow	= (DWORD)( nFileBase & 0xFFFFFFFF );
+	nSizeHigh	= (DWORD)( nFileBase >> 32 );
+	SetFilePointer( hFile, nSizeLow, (PLONG)&nSizeHigh, FILE_BEGIN );
+	
+	CTigerTree pTiger;
+	CED2K pED2K;
+	CSHA pSHA1;
+	CMD5 pMD5;
+	
+	pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
+	pED2K.BeginFile( nFileSize );
+	
+	for ( QWORD nLength = nFileSize ; nLength > 0 ; )
 	{
-		while ( m_qStackN.nStoredBytes >= LIBRARY_BUILDER_BLOCK_SIZE )
+		DWORD nBlock	= (DWORD)min( nLength, 20480 );
+		DWORD nTime		= GetTickCount();
+		
+		ReadFile( hFile, m_pBuffer, nBlock, &nBlock, NULL );
+		
+		pSHA1.Add( m_pBuffer, nBlock );
+		pMD5.Add( m_pBuffer, nBlock );
+		pTiger.AddToFile( m_pBuffer, nBlock );
+		pED2K.AddToFile( m_pBuffer, nBlock );
+		
+		nLength -= nBlock;
+		
+		if ( ! m_bPriority && ! bPriority )
 		{
-			(this->*pDoHash[ m_nStackTop ])();
-			m_qStackN.nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-			m_qStackN.m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-			if ( m_bTerminate || m_bSuspend || m_bListChanged )
-			{
-				m_qStack[ m_nStackTop++ ] = m_qStackN;
-				return;
-			}
+			if ( nBlock == 20480 ) m_nHashSleep = ( GetTickCount() - nTime ) * 2;
+			m_nHashSleep = max( m_nHashSleep, 20 );
+			Sleep( m_nHashSleep );
 		}
-		if ( m_qStackN.nStoredBytes == m_qStackN.nCount )
-		{
-			if ( m_qStackN.nCount != 0 )
-			{
-				m_qStackN.pSHA1->Add( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-				m_qStackN.pED2K->AddToFile( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-				m_qStackN.pMD5->Add( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-				m_qStackN.nCount = 0;
-			}
-			m_qStackO = m_qStackN;
-			m_bRetired = TRUE;
-			return;
-		}
+		
+		if ( ! m_bThread ) return FALSE;
 	}
-	m_qStackN.m_pBufferIndex = m_pBuffer;
-	if ( ( m_nStackSize == 1 ) || ( ( bForceHash ) && ( m_nStackTop == 0 ) ) )// special handling to speed up bufferless hashing
-	{
-		while ( m_qStackN.nCount >= LIBRARY_BUILDER_BLOCK_SIZE )
-		{
-			ReadFile( m_qStackN.hFile, m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE, &nBytesToRead, NULL );
-			m_qStackN.pTiger->AddToFile( m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE );
-			(this->*pDoHash[0])();
-			if ( m_bTerminate || m_bSuspend || m_bListChanged)
-			{
-				m_qStack[m_nStackTop++] = m_qStackN;
-				return;
-			}
-			if ( ! m_bPriority ) 
-			{
-				nTime2 = nTime + ( 1000 * LIBRARY_BUILDER_BLOCK_SIZE ) / ( 1024*1024*Settings.Library.LowPriorityHashing);
-				if ( nTime2 <= ( nTime3 = GetTickCount() ) ) nTime2 = 1; else nTime2 = nTime2 - nTime3;
-				Sleep ( nTime2 );
-				nTime=GetTickCount();
-			}
-		}
-	}
-	else if ( m_nStackTop == m_nStackSize - 1 )					// parallel hashing
-	{
-		while ( ( m_qStack[m_nStackTop-1].nStoredBytes >= LIBRARY_BUILDER_BLOCK_SIZE )
-			&& ( m_qStackN.nCount >= LIBRARY_BUILDER_BLOCK_SIZE ) )
-		{
-			ReadFile( m_qStackN.hFile, m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE, &nBytesToRead, NULL );
-			m_qStackN.pTiger->AddToFile( m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE );
-			(this->*pDoHash[m_nStackTop])();
-			if ( m_bTerminate || m_bSuspend || m_bListChanged)
-			{
-				m_qStack[m_nStackTop++] = m_qStackN;
-				return;
-			}
-			if ( ! m_bPriority ) 
-			{
-				nTime2 = nTime + ( 1000 * LIBRARY_BUILDER_BLOCK_SIZE ) / ( 1024*1024*Settings.Library.LowPriorityHashing);
-				if ( nTime2 <= ( nTime3 = GetTickCount() ) ) nTime2 = 1; else nTime2 = nTime2 - nTime3;
-				Sleep ( nTime2 );
-				nTime=GetTickCount();
-			}
-		}
-	}
-	if ( m_qStackN.nCount < LIBRARY_BUILDER_BLOCK_SIZE )	// find out why we stopped
-	{
-		if ( m_qStackN.nCount != 0 )
-		{
-			ReadFile( m_qStackN.hFile, m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount, &nBytesToRead, NULL );
-			m_qStackN.pTiger->AddToFile( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-			m_qStackN.pSHA1->Add( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-			m_qStackN.pED2K->AddToFile( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-			m_qStackN.pMD5->Add( m_qStackN.m_pBufferIndex, (DWORD)m_qStackN.nCount );
-			if ( ! m_bPriority ) 
-			{
-				nTime2 = nTime + ( 1000 * nBytesToRead ) / ( 1024*1024*Settings.Library.LowPriorityHashing);
-				if ( nTime2 <= ( nTime3 = GetTickCount() ) ) nTime2 = 1; else nTime2 = nTime2 - nTime3;
-				Sleep ( nTime2 );
-				nTime=GetTickCount();
-			}
-		}
-		m_qStackO = m_qStackN;
-		m_bRetired = TRUE;
-		return;
-	}
-	if ( ( m_nStackTop > 0 ) && ( ( m_qStack[m_nStackTop-1].nCount == 0 ) || 
-		( ( m_qStack[m_nStackTop-1].nStoredBytes > 0 ) && ( m_qStack[m_nStackTop-1].nCount < LIBRARY_BUILDER_BLOCK_SIZE ) ) ) )
-	{
-		m_qStackO = m_qStack[--m_nStackTop];
-		if ( m_qStackO.nCount < LIBRARY_BUILDER_BLOCK_SIZE )
-		{
-			m_qStackO.pSHA1->Add( m_qStackO.m_pBufferIndex, (DWORD)m_qStackO.nCount );
-			m_qStackO.pED2K->AddToFile( m_qStackO.m_pBufferIndex, (DWORD)m_qStackO.nCount );
-			m_qStackO.pMD5->Add( m_qStackO.m_pBufferIndex, (DWORD)m_qStackO.nCount );
-		}
-		m_bRetired = TRUE;
-	}
-	DWORD nBlockCount = 0;												// fill the buffer
-	m_qStackN.m_pBuffer = m_qStack[m_nStackSize-2].m_pBuffer;  // we do know this isn't used
-	m_qStackN.m_pBufferIndex = m_qStackN.m_pBuffer;
-	m_qStack[m_nStackSize-2].m_pBuffer = NULL;
-	while ( ( nBlockCount < m_nMaxBlock ) && ( m_qStackN.nCount >= ( ( nBlockCount + 1 ) * LIBRARY_BUILDER_BLOCK_SIZE ) ) )
-	{
-		ReadFile( m_qStackN.hFile, m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE, &nBytesToRead, NULL );
-		m_qStackN.pTiger->AddToFile( m_qStackN.m_pBufferIndex, LIBRARY_BUILDER_BLOCK_SIZE );
-		++nBlockCount;
-		m_qStackN.m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-		if ( m_bTerminate || m_bSuspend || m_bListChanged)
-		{
-			m_qStackN.nStoredBytes = m_qStackN.m_pBufferIndex - m_qStackN.m_pBuffer;
-			nInsertEntry = 0;
-			if ( m_nStackTop )
-			{
-				while ( m_qStackN.nStoredBytes < m_qStack[ nInsertEntry ].nStoredBytes && ++nInsertEntry < m_nStackTop );
-			}
-			nEntry = MAX_PARALLEL;
-			while ( --nEntry > nInsertEntry ) m_qStack[ nEntry ] = m_qStack[ nEntry - 1 ];
-			++m_nStackTop;
-			m_qStack[ nEntry ] = m_qStackN;
-			return;
-		}
-		if ( ! m_bPriority ) 
-		{
-			nTime2 = nTime + ( 1000 * LIBRARY_BUILDER_BLOCK_SIZE ) / ( 1024*1024*Settings.Library.LowPriorityHashing);
-			if ( nTime2 <= ( nTime3 = GetTickCount() ) ) nTime2 = 1; else nTime2 = nTime2 - nTime3;
-			Sleep ( nTime2 );
-			nTime=GetTickCount();
-		}
-	}
-	if ( ( nBlockCount < m_nMaxBlock ) && ( ( nBlockCount * LIBRARY_BUILDER_BLOCK_SIZE ) < m_qStackN.nCount) )
-	{
-		ReadFile( m_qStackN.hFile, m_qStackN.m_pBufferIndex,
-			(DWORD)m_qStackN.nCount - ( nBlockCount * LIBRARY_BUILDER_BLOCK_SIZE ), &nBytesToRead, NULL );
-		m_qStackN.pTiger->AddToFile( m_qStackN.m_pBufferIndex, nBytesToRead );
-		if ( ! m_bPriority ) 
-		{
-			nTime2 = nTime + ( 1000 * nBytesToRead ) / ( 1024*1024*Settings.Library.LowPriorityHashing);
-			if ( nTime2 <= ( nTime3 = GetTickCount() ) ) nTime2 = 1; else nTime2 = nTime2 - nTime3;
-			Sleep ( nTime2 );
-			nTime=GetTickCount();
-		}
-	}
-	m_qStackN.m_pBufferIndex = m_qStackN.m_pBuffer;
-	m_qStackN.nStoredBytes =
-		( nBlockCount == m_nMaxBlock ) ? nBlockCount * LIBRARY_BUILDER_BLOCK_SIZE : (DWORD)m_qStackN.nCount;
-	nInsertEntry = 0;
-	if ( m_nStackTop )
-	{
-		while ( m_qStackN.nStoredBytes < m_qStack[ nInsertEntry ].nStoredBytes && ++nInsertEntry < m_nStackTop );
-	}
-	nEntry = MAX_PARALLEL;
-	while ( --nEntry > nInsertEntry ) m_qStack[ nEntry ] = m_qStack[ nEntry - 1 ];
-	++m_nStackTop;
-	m_qStack[ nEntry ] = m_qStackN;
+	
+	pSHA1.Finish();
+	pMD5.Finish();
+	pTiger.FinishFile();
+	pED2K.FinishFile();
+	
+	CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE );
+	if ( pFile == NULL ) return FALSE;
+	
+	Library.RemoveFile( pFile );
+	
+	pFile->m_bBogus			= FALSE;
+	pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
+	pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
+	
+	pFile->m_bSHA1 = TRUE;
+	pSHA1.GetHash( &pFile->m_pSHA1 );
+	if ( pOutSHA1 != NULL ) *pOutSHA1 = pFile->m_pSHA1;
+	
+	pFile->m_bMD5 = TRUE;
+	pMD5.GetHash( &pFile->m_pMD5 );
+	
+	pFile->m_bTiger = TRUE;
+	pTiger.GetRoot( &pFile->m_pTiger );
+	
+	pFile->m_bED2K = TRUE;
+	pED2K.GetRoot( &pFile->m_pED2K );
+	
+	LibraryMaps.CullDeletedFiles( pFile );
+	Library.AddFile( pFile );
+	Library.Unlock( TRUE );
+	
+	LibraryHashDB.StoreTiger( m_nIndex, &pTiger );
+	LibraryHashDB.StoreED2K( m_nIndex, &pED2K );
+	
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -763,7 +550,7 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return FALSE;
 	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return FALSE;
 	
-	DWORD nTagSize = _byteswap_ulong( pHeader.nSize );
+	DWORD nTagSize = SWAP_LONG( pHeader.nSize );
 	ID3_DESYNC_SIZE( nTagSize );
 	
 	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT ) nTagSize += 10;
@@ -775,165 +562,4 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	nLength -= nTagSize;
 	
 	return TRUE;
-}
-
-DWORD CLibraryBuilder::m_nStackSize = MAX_PARALLEL;
-DWORD CLibraryBuilder::m_nMaxBlock = 10;
-void CLibraryBuilder::DoHash1()
-{
-	CMD5::pAdd1(m_qStackN.pMD5, m_qStackN.m_pBufferIndex);
-	CSHA1::pAdd1(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex);
-	m_qStackN.pED2K->Add1( m_qStackN.m_pBufferIndex );
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-}
-void CLibraryBuilder::DoHash2()
-{
-	CMD5::pAdd2(m_qStackN.pMD5, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pMD5, m_qStack[0].m_pBufferIndex);
-	CSHA1::pAdd2(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pSHA1, m_qStack[0].m_pBufferIndex);
-	m_qStackN.pED2K->Add2( m_qStackN.m_pBufferIndex,
-		m_qStack[0].pED2K, m_qStack[0].m_pBufferIndex);
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-}
-void CLibraryBuilder::DoHash3()
-{
-	CMD5::pAdd3(m_qStackN.pMD5, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pMD5, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pMD5, m_qStack[1].m_pBufferIndex);
-	CSHA1::pAdd3(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pSHA1, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pSHA1, m_qStack[1].m_pBufferIndex);
-	m_qStackN.pED2K->Add3( m_qStackN.m_pBufferIndex,
-		m_qStack[0].pED2K, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pED2K, m_qStack[1].m_pBufferIndex);
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-}
-void CLibraryBuilder::DoHash4()
-{
-	CMD5::pAdd4(m_qStackN.pMD5, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pMD5, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pMD5, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pMD5, m_qStack[2].m_pBufferIndex);
-	CSHA1::pAdd4(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pSHA1, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pSHA1, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pSHA1, m_qStack[2].m_pBufferIndex);
-	m_qStackN.pED2K->Add4( m_qStackN.m_pBufferIndex,
-		m_qStack[0].pED2K, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pED2K, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pED2K, m_qStack[2].m_pBufferIndex);
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-}
-void CLibraryBuilder::DoHash5()
-{
-	CMD5::pAdd5(m_qStackN.pMD5, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pMD5, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pMD5, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pMD5, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pMD5, m_qStack[3].m_pBufferIndex);
-	CSHA1::pAdd5(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pSHA1, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pSHA1, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pSHA1, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pSHA1, m_qStack[3].m_pBufferIndex);
-	m_qStackN.pED2K->Add5( m_qStackN.m_pBufferIndex,
-		m_qStack[0].pED2K, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pED2K, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pED2K, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pED2K, m_qStack[3].m_pBufferIndex);
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-}
-void CLibraryBuilder::DoHash6()
-{
-	CMD5::pAdd6(m_qStackN.pMD5, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pMD5, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pMD5, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pMD5, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pMD5, m_qStack[3].m_pBufferIndex,
-		m_qStack[4].pMD5, m_qStack[4].m_pBufferIndex);
-	CSHA1::pAdd6(m_qStackN.pSHA1, m_qStackN.m_pBufferIndex,
-		m_qStack[0].pSHA1, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pSHA1, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pSHA1, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pSHA1, m_qStack[3].m_pBufferIndex,
-		m_qStack[4].pSHA1, m_qStack[4].m_pBufferIndex);
-	m_qStackN.pED2K->Add6( m_qStackN.m_pBufferIndex,
-		m_qStack[0].pED2K, m_qStack[0].m_pBufferIndex,
-		m_qStack[1].pED2K, m_qStack[1].m_pBufferIndex,
-		m_qStack[2].pED2K, m_qStack[2].m_pBufferIndex,
-		m_qStack[3].pED2K, m_qStack[3].m_pBufferIndex,
-		m_qStack[4].pED2K, m_qStack[4].m_pBufferIndex);
-	m_qStackN.nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[4].nCount -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[4].nStoredBytes -= LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[0].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[1].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[2].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[3].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-	m_qStack[4].m_pBufferIndex += LIBRARY_BUILDER_BLOCK_SIZE;
-}
-
-const CLibraryBuilder::tpDoHash CLibraryBuilder::pDoHash[MAX_PARALLEL] = {
-	&CLibraryBuilder::DoHash1, &CLibraryBuilder::DoHash2, &CLibraryBuilder::DoHash3,
-	&CLibraryBuilder::DoHash4, &CLibraryBuilder::DoHash5, &CLibraryBuilder::DoHash6 };
-void CLibraryBuilder::Init()
-{
-	m_nStackSize = Settings.Library.Parallel;
-	if ( m_nStackSize > MAX_PARALLEL )
-	{
-		m_nStackSize = MAX_PARALLEL;
-	}
-	else if ( m_nStackSize == 0 )
-	{
-		m_nStackSize = 1;
-		if ( SupportsMMX() ) m_nStackSize = 4;
-		if ( SupportsSSE2() ) m_nStackSize = 6;
-	}
-	if ( Settings.Library.BufferSize == 0 )
-	{
-		MEMORYSTATUS stat;
-		GlobalMemoryStatus (&stat);
-		m_nMaxBlock = ( m_nStackSize == 1 ) ? 1 : ( stat.dwTotalPhys / ( LIBRARY_BUILDER_BLOCK_SIZE * ( m_nStackSize - 1 ) * 4 ) );
-	}
-	else m_nMaxBlock = ( m_nStackSize == 1 ) ? 1 : ( ( Settings.Library.BufferSize*1024*1024 ) / ( LIBRARY_BUILDER_BLOCK_SIZE * ( m_nStackSize -1 ) ) );
-	if ( m_nMaxBlock == 0 ) m_nMaxBlock = 1;
 }

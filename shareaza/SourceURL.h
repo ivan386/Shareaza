@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 
 class CSourceURL  
 {
@@ -44,11 +43,14 @@ public:
 	WORD		m_nServerPort;
 	CString		m_sPath;
 public:
-	CManagedSHA1	m_oSHA1;
-	CManagedTiger	m_oTiger;
-	CManagedED2K	m_oED2K;
-	CManagedBTH		m_oBTH;
-	CManagedBTH		m_oBTC;
+	BOOL		m_bSHA1;
+	SHA1		m_pSHA1;
+	BOOL		m_bED2K;
+	MD4			m_pED2K;
+	BOOL		m_bBTH;
+	SHA1		m_pBTH;
+	BOOL		m_bBTC;
+	SHA1		m_pBTC;
 	BOOL		m_bSize;
 	QWORD		m_nSize;
 	

@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
-
 class CLibraryRecent;
 class CLibraryFile;
 
@@ -50,7 +48,7 @@ public:
 public:
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;
 	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
-	CLibraryRecent*	Add(LPCTSTR pszPath, const CManagedSHA1 &oSHA1, const CManagedED2K &oED2K, LPCTSTR pszSources);
+	CLibraryRecent*	Add(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources);
 	BOOL			Submit(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			ClearTodays();
@@ -65,7 +63,7 @@ class CLibraryRecent
 // Construction
 public:
 	CLibraryRecent();
-	CLibraryRecent(LPCTSTR pszPath, const CManagedSHA1 &oSHA1, const CManagedED2K &oED2K, LPCTSTR pszSources);
+	CLibraryRecent(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pED2K, LPCTSTR pszSources);
 	virtual ~CLibraryRecent();
 
 // Attributes
@@ -75,8 +73,10 @@ public:
 public:
 	CLibraryFile*	m_pFile;
 public:
-	CManagedSHA1	m_oSHA1;
-	CManagedED2K	m_oED2K;
+	BOOL			m_bSHA1;
+	SHA1			m_pSHA1;
+	BOOL			m_bED2K;
+	MD4				m_pED2K;
 	CString			m_sPath;
 	CString			m_sSources;
 

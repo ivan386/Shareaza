@@ -139,7 +139,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		{
 			pHit->m_bMatched = pFilter->Match(
 				pHit->m_sName, pHit->m_nSize, pHit->m_sSchemaURI, pHit->m_pXML,
-				pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K );
+				pHit->m_bSHA1 ? &pHit->m_pSHA1 : NULL,
+				pHit->m_bTiger ? &pHit->m_pTiger : NULL,
+				pHit->m_bED2K ? &pHit->m_pED2K : NULL );
 			
 			if ( bRequire && ! pHit->m_bMatched )
 			{
@@ -175,18 +177,18 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		int nHadFiltered	= 0;
 		BOOL bHad[3];
 		
-		if ( pHit->m_oSHA1.IsValid() )
+		if ( pHit->m_bSHA1 )
 		{
-			pMap = m_pMapSHA1 + ( pHit->m_oSHA1.m_b[ 0 ] );
+			pMap = m_pMapSHA1 + ( pHit->m_pSHA1.n[0] );
 			
 			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextSHA1 )
 			{
-				if ( pSeek->m_oSHA1 == pHit->m_oSHA1 )
+				if ( pSeek->m_pSHA1 == pHit->m_pSHA1 )
 				{
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_oSHA1.IsValid(); bHad[1] = pSeek->m_oTiger.IsValid(); bHad[2] = pSeek->m_oED2K.IsValid();
+					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -199,18 +201,18 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				}
 			}
 		}
-		if ( pFile == NULL && pHit->m_oTiger.IsValid() )
+		if ( pFile == NULL && pHit->m_bTiger )
 		{
-			pMap = m_pMapTiger + ( pHit->m_oTiger.m_b[ 0 ] );
+			pMap = m_pMapTiger + ( pHit->m_pTiger.n[0] );
 			
 			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextTiger )
 			{
-				if ( pSeek->m_oTiger == pHit->m_oTiger )
+				if ( pSeek->m_pTiger == pHit->m_pTiger )
 				{
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_oSHA1.IsValid(); bHad[1] = pSeek->m_oTiger.IsValid(); bHad[2] = pSeek->m_oED2K.IsValid();
+					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -223,18 +225,18 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				}
 			}
 		}
-		if ( pFile == NULL && pHit->m_oED2K.IsValid() )
+		if ( pFile == NULL && pHit->m_bED2K )
 		{
-			pMap = m_pMapED2K + ( pHit->m_oED2K.m_b[ 0 ] );
+			pMap = m_pMapED2K + ( pHit->m_pED2K.n[0] );
 			
 			for ( pSeek = *pMap ; pSeek ; pSeek = pSeek->m_pNextED2K )
 			{
-				if ( pSeek->m_oED2K == pHit->m_oED2K )
+				if ( pSeek->m_pED2K == pHit->m_pED2K )
 				{
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_oSHA1.IsValid(); bHad[1] = pSeek->m_oTiger.IsValid(); bHad[2] = pSeek->m_oED2K.IsValid();
+					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -249,7 +251,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			}
 		}
 		
-		if ( pFile == NULL && ( ( ! pHit->m_oSHA1.IsValid() && ! pHit->m_oTiger.IsValid() && ! pHit->m_oED2K.IsValid() ) || ! Settings.General.HashIntegrity ) )
+		if ( pFile == NULL && ( ( ! pHit->m_bSHA1 && ! pHit->m_bTiger && ! pHit->m_bED2K ) || ! Settings.General.HashIntegrity ) )
 		{
 			pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
 
@@ -257,9 +259,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			{
 				if ( pSeek->m_nSize == pHit->m_nSize )
 				{
-					bHadSHA1		= pSeek->m_oSHA1.IsValid();
-					bHadTiger		= pSeek->m_oTiger.IsValid();
-					bHadED2K		= pSeek->m_oED2K.IsValid();
+					bHadSHA1		= pSeek->m_bSHA1;
+					bHadTiger		= pSeek->m_bTiger;
+					bHadED2K		= pSeek->m_bED2K;
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 
@@ -349,21 +351,21 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			}
 		}
 		
-		if ( ! bHadSHA1 && pFile->m_oSHA1.IsValid() )
+		if ( ! bHadSHA1 && pFile->m_bSHA1 )
 		{
-			pMap = m_pMapSHA1 + ( pFile->m_oSHA1.m_b[ 0 ] );
+			pMap = m_pMapSHA1 + ( pFile->m_pSHA1.n[0] );
 			pFile->m_pNextSHA1 = *pMap;
 			*pMap = pFile;
 		}
-		if ( ! bHadTiger && pFile->m_oTiger.IsValid() )
+		if ( ! bHadTiger && pFile->m_bTiger )
 		{
-			pMap = m_pMapTiger + ( pFile->m_oTiger.m_b[ 0 ] );
+			pMap = m_pMapTiger + ( pFile->m_pTiger.n[0] );
 			pFile->m_pNextTiger = *pMap;
 			*pMap = pFile;
 		}
-		if ( ! bHadED2K && pFile->m_oED2K.IsValid() )
+		if ( ! bHadED2K && pFile->m_bED2K )
 		{
-			pMap = m_pMapED2K + ( pFile->m_oED2K.m_b[ 0 ] );
+			pMap = m_pMapED2K + ( pFile->m_pED2K.n[0] );
 			pFile->m_pNextED2K = *pMap;
 			*pMap = pFile;
 		}
@@ -998,21 +1000,21 @@ void CMatchList::Serialize(CArchive& ar)
 			pFile->m_pNextSize = *pMap;
 			*pMap = pFile;
 			
-			if ( pFile->m_oSHA1.IsValid() )
+			if ( pFile->m_bSHA1 )
 			{
-				pMap = m_pMapSHA1 + ( pFile->m_oSHA1.m_b[ 0 ] );
+				pMap = m_pMapSHA1 + ( pFile->m_pSHA1.n[0] );
 				pFile->m_pNextSHA1 = *pMap;
 				*pMap = pFile;
 			}
-			if ( pFile->m_oTiger.IsValid() )
+			if ( pFile->m_bTiger )
 			{
-				pMap = m_pMapTiger + ( pFile->m_oTiger.m_b[ 0 ] );
+				pMap = m_pMapTiger + ( pFile->m_pTiger.n[0] );
 				pFile->m_pNextTiger = *pMap;
 				*pMap = pFile;
 			}
-			if ( pFile->m_oED2K.IsValid() )
+			if ( pFile->m_bED2K )
 			{
-				pMap = m_pMapED2K + ( pFile->m_oED2K.m_b[ 0 ] );
+				pMap = m_pMapED2K + ( pFile->m_pED2K.n[0] );
 				pFile->m_pNextED2K = *pMap;
 				*pMap = pFile;
 			}
@@ -1040,9 +1042,9 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit)
 	m_pNextTiger	= NULL;
 	m_pNextED2K		= NULL;
 	
-	ASSERT( ! m_oSHA1.IsValid() );
-	ASSERT( ! m_oTiger.IsValid() );
-	ASSERT( ! m_oED2K.IsValid() );
+	m_bSHA1		= FALSE;
+	m_bTiger	= FALSE;
+	m_bED2K		= FALSE;
 	m_nSize		= pHit ? pHit->m_nSize : 0;
 	m_sSize		= Settings.SmartVolume( m_nSize, FALSE );
 	
@@ -1093,13 +1095,13 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	
 	if ( ! bForce )
 	{
-		if ( m_oSHA1.IsValid() && ( pHit->m_oSHA1.IsValid() || Settings.General.HashIntegrity ) )
+		if ( m_bSHA1 && ( pHit->m_bSHA1 || Settings.General.HashIntegrity ) )
 		{
-			if ( ! pHit->m_oSHA1.IsValid() ) return FALSE;
-			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
+			if ( ! pHit->m_bSHA1 ) return FALSE;
+			if ( m_pSHA1 != pHit->m_pSHA1 ) return FALSE;
 			bForce = TRUE;
 		}
-		else if ( ! m_oSHA1.IsValid() && pHit->m_oSHA1.IsValid() && Settings.General.HashIntegrity && m_pHits )
+		else if ( ! m_bSHA1 && pHit->m_bSHA1 && Settings.General.HashIntegrity && m_pHits )
 		{
 			return FALSE;
 		}
@@ -1147,37 +1149,40 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	CSingleLock pLock1( &Library.m_pSection );
 	BOOL bLocked = FALSE;
 	
-	if ( ! m_oSHA1.IsValid() && pHit->m_oSHA1.IsValid() )
+	if ( ! m_bSHA1 && pHit->m_bSHA1 )
 	{
-		m_oSHA1 = pHit->m_oSHA1;
+		m_pSHA1 = pHit->m_pSHA1;
+		m_bSHA1 = TRUE;
 		
 		if ( ! m_bExisting && pLock1.Lock( 100 ) )
 		{
-			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileBySHA1( m_oSHA1 ) )
+			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileBySHA1( &m_pSHA1 ) )
 				m_bExisting = pExisting->IsAvailable() ? 1 : 2;
 			bLocked = TRUE;
 		}
 	}
 	
-	if ( ! m_oTiger.IsValid() && pHit->m_oTiger.IsValid() )
+	if ( ! m_bTiger && pHit->m_bTiger )
 	{
-		m_oTiger = pHit->m_oTiger;
+		m_pTiger = pHit->m_pTiger;
+		m_bTiger = TRUE;
 		
 		if ( ! m_bExisting && ( bLocked || pLock1.Lock( 100 ) ) )
 		{
-			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileByTiger( m_oTiger ) )
+			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileByTiger( &m_pTiger ) )
 				m_bExisting = pExisting->IsAvailable() ? 1 : 2;
 			bLocked = TRUE;
 		}
 	}
 	
-	if ( ! m_oED2K.IsValid() && pHit->m_oED2K.IsValid() )
+	if ( ! m_bED2K && pHit->m_bED2K )
 	{
-		m_oED2K = pHit->m_oED2K;
+		m_pED2K = pHit->m_pED2K;
+		m_bED2K = TRUE;
 		
 		if ( ! m_bExisting && ( bLocked || pLock1.Lock( 100 ) ) )
 		{
-			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileByED2K( m_oED2K ) )
+			if ( CLibraryFile* pExisting = LibraryMaps.LookupFileByED2K( &m_pED2K ) )
 				m_bExisting = pExisting->IsAvailable() ? 1 : 2;
 			bLocked = TRUE;
 		}
@@ -1185,17 +1190,17 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	
 	if ( bLocked ) pLock1.Unlock();
 	
-	if ( ! m_bDownload && ! m_bExisting && ( m_oSHA1.IsValid() || m_oTiger.IsValid() ) )
+	if ( ! m_bDownload && ! m_bExisting && ( m_bSHA1 || m_bTiger ) )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
 		
 		if ( pLock2.Lock( 50 ) )
 		{
-			if ( m_oSHA1.IsValid() && Downloads.FindBySHA1( m_oSHA1 ) != NULL )
+			if ( m_bSHA1 && Downloads.FindBySHA1( &m_pSHA1 ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
-			else if ( m_oTiger.IsValid() && Downloads.FindByTiger( m_oTiger ) != NULL )
+			else if ( m_bTiger && Downloads.FindByTiger( &m_pTiger ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
@@ -1336,7 +1341,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 	BOOL bSchema;
 	
 	if ( m_pList->m_pSchema &&
-		( bSchema = m_pList->m_pSchema->CheckURI( pHit->m_sSchemaURI ) || pHit->m_oSHA1.IsValid() ) )
+		 ( bSchema = m_pList->m_pSchema->CheckURI( pHit->m_sSchemaURI ) || pHit->m_bSHA1 ) )
 	{
 		if ( m_pColumns == NULL )
 		{
@@ -1351,9 +1356,9 @@ void CMatchFile::Added(CQueryHit* pHit)
 		{
 			if ( _tcsicmp( (*pMember)->m_sName, _T("SHA1") ) == 0 )
 			{
-				if ( pHit->m_oSHA1.IsValid() )
+				if ( pHit->m_bSHA1 )
 				{
-					m_pColumns[ nCount ] = m_oSHA1.ToString();
+					m_pColumns[ nCount ] = CSHA::HashToString( &m_pSHA1 );
 				}
 			}
 			else if ( bSchema )
@@ -1500,23 +1505,23 @@ CString CMatchFile::GetURN() const
 {
 	CString strURN;
 	
-	if ( m_oSHA1.IsValid() && m_oTiger.IsValid() )
+	if ( m_bSHA1 && m_bTiger )
 	{
 		strURN	= _T("urn:bitprint:")
-			+ m_oSHA1.ToString() + '.'
-			+ m_oTiger.ToString();
+				+ CSHA::HashToString( &m_pSHA1 ) + '.'
+				+ CTigerNode::HashToString( &m_pTiger );
 	}
-	else if ( m_oSHA1.IsValid() )
+	else if ( m_bSHA1 )
 	{
-		strURN = m_oSHA1.ToURN();
+		strURN = CSHA::HashToString( &m_pSHA1, TRUE );
 	}
-	else if ( m_oTiger.IsValid() )
+	else if ( m_bTiger )
 	{
-		strURN = m_oTiger.ToURN();
+		strURN = CTigerNode::HashToString( &m_pTiger, TRUE );
 	}
-	else if ( m_oED2K.IsValid() )
+	else if ( m_bED2K )
 	{
-		strURN = m_oED2K.ToURN();
+		strURN = CED2K::HashToString( &m_pED2K, TRUE );
 	}
 	
 	return strURN;
@@ -1531,9 +1536,12 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 	{
 		ar << m_nSize;
 		ar << m_sSize;
-		m_oSHA1.SerializeStore( ar, nVersion );
-		m_oTiger.SerializeStore( ar, nVersion );
-		m_oED2K.SerializeStore( ar, nVersion );
+		ar << m_bSHA1;
+		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
+		ar << m_bTiger;
+		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
+		ar << m_bED2K;
+		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
 
 		ar << m_bBusy;
 		ar << m_bPush;
@@ -1577,9 +1585,12 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 		}
 		
 		ar >> m_sSize;
-		m_oSHA1.SerializeLoad( ar, nVersion );
-		m_oTiger.SerializeLoad( ar, nVersion );
-		m_oED2K.SerializeLoad( ar, nVersion );
+		ar >> m_bSHA1;
+		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
+		ar >> m_bTiger;
+		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
+		ar >> m_bED2K;
+		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
 		
 		ar >> m_bBusy;
 		ar >> m_bPush;

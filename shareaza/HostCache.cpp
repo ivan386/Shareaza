@@ -784,7 +784,7 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost packet conversion
 
-CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, CGUID* pGUID)
+CG1Packet* CHostCacheHost::ToG1Ping(int nTTL, GGUID* pGUID)
 {
 	CG1Packet* pPong = CG1Packet::New( G1_PACKET_PONG, nTTL, pGUID );
 	

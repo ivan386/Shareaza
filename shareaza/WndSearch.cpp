@@ -723,9 +723,9 @@ void CSearchWnd::UpdateMessages(BOOL bActive)
 		{
 			strCaption += pSearch->m_pSchema->GetIndexedWords( pSearch->m_pXML->GetFirstElement() );
 		}
-		else if ( pSearch->m_oSHA1.IsValid() ) 
+		else if ( pSearch->m_bSHA1 ) 
 		{
-			strCaption += pSearch->m_oSHA1.ToURN();
+			strCaption += CSHA::HashToString( &pSearch->m_pSHA1, TRUE );
 		}
 		
 		if ( pSearch->m_pSchema )
@@ -813,7 +813,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 		
 		if ( pManaged->m_bReceive &&
 			 (	pManaged->m_pSearch->m_pGUID == pHits->m_pSearchID ||
-				( bNull = ( pHits->m_pSearchID == (CGUID&)GUID_NULL ) ) ) )
+				( bNull = ( pHits->m_pSearchID == (GGUID&)GUID_NULL ) ) ) )
 		{
 			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
 			m_bUpdate = TRUE;

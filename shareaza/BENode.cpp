@@ -61,13 +61,13 @@ void CBENode::Clear()
 		else if ( m_nType == beList )
 		{
 			CBENode** pNode = (CBENode**)m_pValue;
-			for ( ; m_nValue-- ; ++pNode ) delete *pNode;
+			for ( ; m_nValue-- ; pNode++ ) delete *pNode;
 			delete [] (CBENode**)m_pValue;
 		}
 		else if ( m_nType == beDict )
 		{
 			CBENode** pNode = (CBENode**)m_pValue;
-			for ( ; m_nValue-- ; ++pNode )
+			for ( ; m_nValue-- ; pNode++ )
 			{
 				delete *pNode++;
 				delete [] (LPBYTE)*pNode;
@@ -177,17 +177,17 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode SHA1 computation
 
-CHashBT CBENode::GetBTH() const
+void CBENode::GetSHA1(SHA1* pSHA1) const
 {
 	ASSERT( this != NULL );
 	
 	CBuffer pBuffer;
 	Encode( &pBuffer );
 	
-	CBTH oBTH;
-	oBTH.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
-	oBTH.Finish();
-	return oBTH;
+	CSHA pSHA;
+	pSHA.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
+	pSHA.Finish();
+	pSHA.GetHash( pSHA1 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -218,7 +218,7 @@ void CBENode::Encode(CBuffer* pBuffer) const
 		
 		pBuffer->Print( "l" );
 		
-		for ( DWORD nItem = 0 ; nItem < (DWORD)m_nValue ; ++nItem , ++pNode )
+		for ( DWORD nItem = 0 ; nItem < (DWORD)m_nValue ; nItem++, pNode++ )
 		{
 			(*pNode)->Encode( pBuffer );
 		}
@@ -286,7 +286,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 	{
 		INC( 1 );
 		
-		for ( DWORD nSeek = 0 ; ++nSeek < 40 ; )
+		for ( DWORD nSeek = 1 ; nSeek < 40 ; nSeek++ )
 		{
 			if ( nSeek >= nInput ) AfxThrowUserException();
 			if ( pInput[nSeek] == 'e' ) break;
@@ -352,7 +352,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 
 int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 {
-	for ( DWORD nSeek = 0 ; ++nSeek < 32 ; )
+	for ( DWORD nSeek = 1 ; nSeek < 32 ; nSeek++ )
 	{
 		if ( nSeek >= nInput ) AfxThrowUserException();
 		if ( pInput[ nSeek ] == ':' ) break;

@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "Transfer.h"
 
 class CBTPacket;
@@ -39,7 +38,7 @@ public:
 
 // Attributes
 public:
-	CGUIDBT					m_oGUIDBT;
+	SHA1					m_pGUID;
 	BOOL					m_bShareaza;
 	BOOL					m_bExchange;
 public:

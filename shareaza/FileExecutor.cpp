@@ -181,7 +181,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	CLibraryFile* pFile = Library.LookupFile( nIndex );
 	if ( pFile == NULL ) return FALSE;
 	
-	if ( ! pFile->m_oSHA1.IsValid() || ! pFile->m_oTiger.IsValid() )
+	if ( pFile->m_bSHA1 == FALSE || pFile->m_bTiger == FALSE )
 	{
 		CString strFormat;
 		Skin.LoadString( strFormat, IDS_LIBRARY_BITZI_HASHED );
@@ -213,8 +213,8 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	}
 	
 	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( pFile->m_sName ) );
-	Replace( strURL, _T("(SHA1)"), pFile->m_oSHA1.ToString() );
-	Replace( strURL, _T("(TTH)"), pFile->m_oTiger.ToString() );
+	Replace( strURL, _T("(SHA1)"), CSHA::HashToString( &pFile->m_pSHA1 ) );
+	Replace( strURL, _T("(TTH)"), CTigerNode::HashToString( &pFile->m_pTiger ) );
 	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent( Settings.Library.BitziAgent ) ) );
 	
 	str.Format( _T("%I64i"), pFile->GetSize() );

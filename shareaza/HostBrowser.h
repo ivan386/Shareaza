@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "Transfer.h"
 
 class CG1Packet;
@@ -39,7 +38,7 @@ class CHostBrowser : public CTransfer
 {
 // Construction
 public:
-	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, CGUID* pClientID = NULL);
+	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, GGUID* pClientID = NULL);
 	virtual ~CHostBrowser();
 	
 // Attributes
@@ -53,8 +52,8 @@ public:
 	WORD			m_nPort;
 	BOOL			m_bMustPush;
 	BOOL			m_bCanPush;
-	CGUID			m_pPushID;
-	CGUID			m_pClientID;
+	GGUID			m_pPushID;
+	GGUID			m_pClientID;
 	DWORD			m_tPushed;
 	BOOL			m_bConnect;
 	int				m_nHits;
@@ -97,7 +96,7 @@ protected:
 	virtual BOOL	OnHeadersComplete();
 	virtual BOOL	OnRun();
 public:
-	virtual BOOL	OnPush(CGUID* pClientID, CConnection* pConnection);
+	virtual BOOL	OnPush(GGUID* pClientID, CConnection* pConnection);
 
 };
 

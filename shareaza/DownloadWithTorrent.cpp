@@ -59,23 +59,22 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	m_bTorrentEndgame		= FALSE;
 	m_bTorrentTrackerError	= FALSE;
 	
+	m_pTorrentBlock			= NULL;
 	m_nTorrentBlock			= 0;
 	m_nTorrentSize			= 0;
-	m_pBTHVerificationQueue = NULL;
-	m_pBTHVerificationCandidates = NULL;
+	m_nTorrentSuccess		= 0;
 	m_bSeeding				= FALSE;
 	
 	m_tTorrentChoke			= 0;
 	m_tTorrentSources		= 0;
-	ZeroMemory( &m_oPeerID, 20);
+	ZeroMemory(m_pPeerID.n, 20);
 }
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
 {
 	if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
 	CloseTorrentUploads();
-	delete [] m_pBTHVerificationQueue;
-	delete [] m_pBTHVerificationCandidates;
+	if ( m_pTorrentBlock != NULL ) delete [] m_pTorrentBlock;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -83,61 +82,34 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 
 void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 {
-	DWORD nTorrentSuccess = 0;
 	CDownloadWithFile::Serialize( ar, nVersion );
+	
 	if ( nVersion < 22 ) return;
+	
 	m_pTorrent.Serialize( ar );
-	if ( nVersion >= 32 )
+	
+	if ( ar.IsLoading() && m_pTorrent.IsAvailable() )
 	{
-		m_oBTH = m_pTorrent.m_oInfoBTH;
-		m_oBTH.SetTrusted();
-		if ( ar.IsLoading() )
-		{
-			m_nTorrentSize = m_pTorrent.m_nBlockSize;
-			m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
-			if ( m_pTorrent.IsAvailable() )
-			{
-				m_oBTH = m_pTorrent.m_oInfoBTH;
-				m_pBTHVerificationQueue = new DWORD[ m_nTorrentBlock + 1 ];
-				m_nBTHVerificationEnd = m_nBTHVerificationStart = m_nTorrentBlock;
-				m_pBTHVerificationCandidates = new BYTE[ m_nTorrentBlock ];
-				ZeroMemory( m_pBTHVerificationCandidates, sizeof(BYTE) * m_nTorrentBlock );
-			}
-		}
-		return;
+		m_bBTH = TRUE;
+		m_bBTHTrusted = TRUE;
+		m_pBTH = m_pTorrent.m_pInfoSHA1;
 	}
-	ASSERT( ar.IsLoading() );
-	if ( m_pTorrent.IsAvailable() )
+
+	if ( nVersion >= 23 && m_pTorrent.IsAvailable() )
 	{
-		m_oBTH = m_pTorrent.m_oInfoBTH;
-		m_oBTH.SetTrusted();
-		if ( nVersion >= 23 )
+		if ( ar.IsStoring() )
+		{
+			ar << m_nTorrentSuccess;
+			ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		}
+		else
 		{
 			m_nTorrentSize	= m_pTorrent.m_nBlockSize;
 			m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
-			ar >> nTorrentSuccess;
-			BYTE *pTorrentBlock = new BYTE[ m_nTorrentBlock ];
-			ar.Read( pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
-			BYTE nState;
-			DWORD i = 0;
-			QWORD nOffset = 0, nNext = m_nTorrentSize;
-			while ( nNext < m_nSize )
-			{
-				nState = pTorrentBlock[ i++ ];
-				if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, nNext );
-				else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, nNext );
-				nOffset = nNext;
-				nNext += m_nTorrentSize;
-			}
-			nState = pTorrentBlock[ i++ ];
-			if ( nState == TS_TRUE ) m_oVerified.Add( nOffset, m_nSize );
-			else if ( nState == TS_FALSE ) m_oInvalid.Add( nOffset, m_nSize );
-			ASSERT( i == m_nTorrentBlock );
-			delete [] pTorrentBlock;
-			m_pBTHVerificationQueue = new DWORD[ m_nTorrentBlock + 1 ];
-			m_nBTHVerificationEnd = m_nBTHVerificationStart = m_nTorrentBlock;
-			m_pBTHVerificationCandidates = new BYTE[ m_nTorrentBlock ];
-			ZeroMemory( m_pBTHVerificationCandidates, sizeof(BYTE) * m_nTorrentBlock );
+			
+			ar >> m_nTorrentSuccess;
+			m_pTorrentBlock = new BYTE[ m_nTorrentBlock ];
+			ar.Read( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 		}
 	}
 }
@@ -152,23 +124,15 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	if ( ! pTorrent->IsAvailable() ) return FALSE;
 	
 	m_pTorrent.Copy( pTorrent );
-
-	if ( m_oBTH.IsTrusted() )
-	{
-        m_oBTH = m_pTorrent.m_oInfoBTH;
-		m_oBTH.SetTrusted();
-	}
-	else
-	{
-        m_oBTH = m_pTorrent.m_oInfoBTH;
-	}
+	
+	m_bBTH = TRUE;
+	m_pBTH = m_pTorrent.m_pInfoSHA1;
 	
 	m_nTorrentSize	= m_pTorrent.m_nBlockSize;
 	m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
-	m_pBTHVerificationQueue = new DWORD[ m_nTorrentBlock + 1 ];
-	m_nBTHVerificationEnd = m_nBTHVerificationStart = m_nTorrentBlock;
-	m_pBTHVerificationCandidates = new BYTE[ m_nTorrentBlock ];
-	ZeroMemory( m_pBTHVerificationCandidates, sizeof(BYTE) * m_nTorrentBlock );
+	m_pTorrentBlock	= new BYTE[ m_nTorrentBlock ];
+	
+	ZeroMemory( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 	SetModified();
 	
 	CreateDirectory( Settings.Downloads.TorrentPath, NULL );//Create/set up torrents folder
@@ -223,7 +187,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = 0;
-		ZeroMemory( &m_oPeerID, 20);
+		ZeroMemory(m_pPeerID.n, 20);
 	}
 	
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
@@ -242,13 +206,30 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 {
 	theApp.Message( MSG_DEBUG, _T("Creating Peer ID") );
 
-	if ( ! m_oPeerID.IsEmpty() )
+	int nByte;
+
+	for ( nByte = 0 ; nByte < 20 ; nByte++ )
 	{
-		theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use peer ID") );
-		return FALSE;
+		if ( m_pPeerID.n[ nByte ] != 0 ) 
+		{
+			theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use peer ID") );
+			return FALSE;
+		}
 	}
 
-	m_oPeerID = MyProfile.GUID;
+	(GGUID&)m_pPeerID = MyProfile.GUID;
+	srand( GetTickCount() );
+	
+	for ( nByte = 0 ; nByte < 16 ; nByte++ ) 
+	{
+		m_pPeerID.n[ nByte ] += rand();
+	}
+
+	for ( nByte = 16 ; nByte < 20 ; nByte++ )
+	{
+		m_pPeerID.n[ nByte ]	= m_pPeerID.n[ nByte % 16 ]
+								^ m_pPeerID.n[ 15 - ( nByte % 16 ) ];
+	}
 
 	return TRUE;
 }
@@ -283,12 +264,12 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource->m_nProtocol == PROTOCOL_BT &&
-			 memcmp( &pSource->m_oGUID, &pClient->m_oGUIDBT, 16 ) == 0 ) break;
+			 memcmp( &pSource->m_pGUID, &pClient->m_pGUID, 16 ) == 0 ) break;
 	}
 	
 	if ( pSource == NULL )
 	{
-		pSource = new CDownloadSource( (CDownload*)this, &pClient->m_oGUIDBT,
+		pSource = new CDownloadSource( (CDownload*)this, &pClient->m_pGUID,
 			&pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
 		pSource->m_bPushOnly = TRUE;
 		
@@ -319,48 +300,30 @@ void CDownloadWithTorrent::OnFinishedTorrentBlock(DWORD nBlock)
 CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 {
 	ASSERT( m_pTorrent.IsAvailable() );
+	
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_BITFIELD );
-	BYTE nByte = 0, nBit = 0x80;
-	QWORD nOffset = 0, nNext = m_nTorrentSize;
-	CFileFragment *pFragment;
-	if ( pFragment = m_oVerified.GetFirst() ) do
+	int nCount = 0;
+	
+	for ( QWORD nBlock = 0 ; nBlock < m_nTorrentBlock ; )
 	{
-		if ( pFragment->Next() < nOffset )
+		BYTE nByte = 0;
+		
+		for ( int nBit = 7 ; nBit >= 0 && nBlock < m_nTorrentBlock ; nBit--, nBlock++ )
 		{
-			while ( ( pFragment = pFragment->GetNext() ) && ( pFragment->Next() < nOffset ) );
-			if ( ! pFragment ) break;
+			if ( m_pTorrentBlock[ nBlock ] )
+			{
+				nByte |= ( 1 << nBit );
+				nCount++;
+			}
 		}
-		if ( nOffset >= pFragment->Offset() && nNext <= pFragment->Next() ) nByte |= nBit;
-		if ( ! ( nBit >>= 1 ) )
-		{
-			pPacket->WriteByte( nByte );
-			nBit = 0x80;
-			nByte = 0;
-		}
-		nOffset = nNext;
-	}
-	while ( ( nNext += m_nTorrentSize ) < m_nSize );
-	if ( pFragment )
-	{
-		if ( nOffset >= pFragment->Offset() && m_nSize <= pFragment->Next() ) nByte |= nBit;
+		
 		pPacket->WriteByte( nByte );
 	}
-	else
-	{
-		do
-		{
-			nOffset += m_nTorrentSize;
-		}
-		while ( nBit >>= 1 );
-		pPacket->WriteByte( nByte );
-		QWORD nTorrentSize8 = 8 * (QWORD)m_nTorrentSize;
-		while ( nOffset < m_nSize )
-		{
-			nOffset += nTorrentSize8;
-			pPacket->WriteByte( 0 );
-		}
-	}
-	return pPacket;
+	
+	if ( nCount > 0 ) return pPacket;
+	pPacket->Release();
+	
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -548,7 +511,8 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	pDownload->m_bComplete	= TRUE;
 	pDownload->m_tCompleted	= GetTickCount();
 	
-	m_oVerified.Add( 0, m_nSize );
+	memset( m_pTorrentBlock, TS_TRUE, m_nTorrentBlock );
+	m_nTorrentSuccess = m_nTorrentBlock;
 	
 	if ( m_sLocalName.GetLength() > 0 )
 	{
@@ -577,7 +541,7 @@ void CDownloadWithTorrent::CloseTorrent()
 	m_bTorrentRequested		= FALSE;
 	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
-	ZeroMemory( &m_oPeerID, 20);
+	ZeroMemory(m_pPeerID.n, 20);
 }
 
 

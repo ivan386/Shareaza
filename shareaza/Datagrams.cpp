@@ -1000,7 +1000,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		pAnswer->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 		pAnswer->WriteShortBE( 0 );
 		pAnswer->WriteByte( 0 );
-		pAnswer->Write( &pSearch->m_pGUID, GUID_SIZE );
+		pAnswer->Write( &pSearch->m_pGUID, sizeof(GGUID) );
 		Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
 		
 		delete pSearch;
@@ -1030,7 +1030,7 @@ BOOL CDatagrams::OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	CHostCacheHost* pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
 	if ( pCache ) pCache->m_tAck = pCache->m_nFailures = 0;
 	
-	CGUID pGUID;
+	GGUID pGUID;
 	
 	if ( SearchManager.OnQueryAck( pPacket, pHost, &pGUID ) )
 	{

@@ -40,11 +40,13 @@ public:
 // Attributes
 protected:
 	CTransferFile*	m_pFile;
-	QWORD			m_nUnflushed;
-public:
 	QWORD			m_nTotal;
-	CFileFragmentList m_oFree;
-	QWORD			m_nShift;
+	QWORD			m_nRemaining;
+	QWORD			m_nUnflushed;
+protected:
+	DWORD			m_nFragments;
+	CFileFragment*	m_pFirst;
+	CFileFragment*	m_pLast;
 	
 // Operations
 public:
@@ -56,51 +58,60 @@ public:
 	BOOL			MakeComplete();
 	void			Serialize(CArchive& ar, int nVersion);
 public:
+	void			SetEmptyFragments(CFileFragment* pInput);
+	CFileFragment*	CopyFreeFragments() const;
+	CFileFragment*	CopyFilledFragments() const;
+	BOOL			IsPositionRemaining(QWORD nOffset) const;
+	BOOL			DoesRangeOverlap(QWORD nOffset, QWORD nLength) const;
+	QWORD			GetRangeOverlap(QWORD nOffset, QWORD nLength) const;
 	BOOL			WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength);
 	BOOL			ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength);
-	BOOL			ReadRangeUnlimited(QWORD nOffset, LPVOID pData, QWORD nLength);
-	QWORD			InvalidateRange(const QWORD nOffset, const QWORD nLength);
-	void			InvalidateRange(const CFileFragmentList& Corrupted);
+	QWORD			InvalidateRange(QWORD nOffset, QWORD nLength);
+	
 // Operations
 public:
-	inline BOOL IsValid() const;
-	inline BOOL IsOpen() const;
-	inline QWORD GetTotal() const;
-	inline QWORD GetRemaining() const;
-	inline QWORD GetCompleted() const;
-	inline QWORD GetEmptyFragmentCount() const;
-	inline BOOL IsFlushNeeded() const;
+	inline BOOL IsValid() const
+	{
+		return ( this != NULL ) && ( m_nTotal > 0 );
+	}
 	
+	inline BOOL IsOpen() const
+	{
+		return ( this != NULL ) && ( m_pFile != NULL );
+	}
+	
+	inline QWORD GetTotal() const
+	{
+		return m_nTotal;
+	}
+	
+	inline QWORD GetRemaining() const
+	{
+		return m_nRemaining;
+	}
+	
+	inline QWORD GetCompleted() const
+	{
+		return IsValid() ? m_nTotal - m_nRemaining : 0;
+	}
+	
+	inline CFileFragment* GetFirstEmptyFragment() const
+	{
+		return m_pFirst;
+	}
+	
+	inline QWORD GetEmptyFragmentCount() const
+	{
+		return m_nFragments;
+	}
+	
+	inline BOOL IsFlushNeeded() const
+	{
+		return ( m_pFile != NULL ) && ( m_nUnflushed > 0 );
+	}
+
+	friend class CEDPartImporter;
 };
 
-inline BOOL CFragmentedFile::IsValid() const
-{
-	return ( this != NULL ) && ( m_nTotal > 0 );
-}
-	
-inline BOOL CFragmentedFile::IsOpen() const
-{
-	return ( this != NULL ) && ( m_pFile != NULL );
-}
-	
-inline QWORD CFragmentedFile::GetTotal() const
-{
-	return m_nTotal;
-}
-	
-inline QWORD CFragmentedFile::GetRemaining() const
-{
-	return m_oFree.GetSize();
-}
-	
-inline QWORD CFragmentedFile::GetCompleted() const
-{
-	return IsValid() ? m_nTotal - m_oFree.GetSize() : 0;
-}
-	
-inline BOOL CFragmentedFile::IsFlushNeeded() const
-{
-	return ( m_pFile != NULL ) && ( m_nUnflushed > 0 );
-}
 
 #endif // !defined(AFX_FRAGMENTEDFILE_H__03EF9CB6_10EC_43A5_B6E0_D74B54044B51__INCLUDED_)

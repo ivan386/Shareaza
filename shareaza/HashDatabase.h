@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
-
 typedef struct
 {
 	DWORD nIndex;
@@ -36,7 +34,7 @@ typedef struct
 typedef struct
 {
 	DWORD nIndex;
-	HASHID nType;
+	DWORD nType;
 	DWORD nOffset;
 	DWORD nLength;
 } HASHDB_INDEX_1001, HASHDB_INDEX;
@@ -71,9 +69,9 @@ public:
 	void	Close();
 	BOOL	DeleteAll(DWORD nIndex);
 protected:
-	HASHDB_INDEX*	Lookup(DWORD nIndex, HASHID nType);
-	HASHDB_INDEX*	PrepareToStore(DWORD nIndex, HASHID nType, DWORD nLength);
-	BOOL			Erase(DWORD nIndex, HASHID nType);
+	HASHDB_INDEX*	Lookup(DWORD nIndex, DWORD nType);
+	HASHDB_INDEX*	PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLength);
+	BOOL			Erase(DWORD nIndex, DWORD nType);
 	void			Commit();
 public:
 	BOOL	GetTiger(DWORD nIndex, CTigerTree* pTree);

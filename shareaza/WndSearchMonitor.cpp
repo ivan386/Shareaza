@@ -194,28 +194,28 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	CString strSchema	= _T("None");
 	CString strURN		= _T("None");
 
-	if ( pSearch->m_oSHA1.IsValid() && pSearch->m_oTiger.IsValid() )
+	if ( pSearch->m_bSHA1 && pSearch->m_bTiger )
 	{
 		strURN	= _T("bitprint:")
-			+ pSearch->m_oSHA1.ToString()
-			+ '.'
-			+ pSearch->m_oTiger.ToString();
+				+ CSHA::HashToString( &pSearch->m_pSHA1 )
+				+ '.'
+				+ CTigerNode::HashToString( &pSearch->m_pTiger );
 	}
-	else if ( pSearch->m_oTiger.IsValid() )
+	else if ( pSearch->m_bTiger )
 	{
-		strURN = _T("tree:tiger/:") + pSearch->m_oTiger.ToString();
+		strURN = _T("tree:tiger/:") + CTigerNode::HashToString( &pSearch->m_pTiger );
 	}
-	else if ( pSearch->m_oSHA1.IsValid() )
+	else if ( pSearch->m_bSHA1 )
 	{
-		strURN = _T("sha1:") + pSearch->m_oSHA1.ToString();
+		strURN = _T("sha1:") + CSHA::HashToString( &pSearch->m_pSHA1 );
 	}
-	else if ( pSearch->m_oED2K.IsValid() )
+	else if ( pSearch->m_bED2K )
 	{
-		strURN = _T("ed2k:") + pSearch->m_oED2K.ToString();
+		strURN = _T("ed2k:") + CED2K::HashToString( &pSearch->m_pED2K );
 	}
-	else if ( pSearch->m_oBTH.IsValid() )
+	else if ( pSearch->m_bBTH )
 	{
-		strURN = _T("btih:") + pSearch->m_oBTH.ToString();
+		strURN = _T("btih:") + CSHA::HashToString( &pSearch->m_pBTH );
 	}
 
 	if ( pSearch->m_pXML )

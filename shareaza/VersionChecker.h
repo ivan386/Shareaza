@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
 #include "HttpRequest.h"
 
 
@@ -57,7 +56,7 @@ public:
 	BOOL		Start(HWND hWndNotify);
 	void		Stop();
 	void		SetNextCheck(int nDays);
-	BOOL		CheckUpgradeHash(const CHashSHA1 &oHash, LPCTSTR pszPath);
+	BOOL		CheckUpgradeHash(const SHA1* pHash, LPCTSTR pszPath);
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();

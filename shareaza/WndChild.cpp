@@ -514,7 +514,7 @@ BOOL CChildWnd::OnQueryHits(CQueryHit* pHits)
 	return FALSE;
 }
 
-BOOL CChildWnd::OnPush(CGUID* pClientID, CConnection* pConnection)
+BOOL CChildWnd::OnPush(GGUID* pClientID, CConnection* pConnection)
 {
 	return FALSE;
 }

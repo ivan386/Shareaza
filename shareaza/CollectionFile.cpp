@@ -99,22 +99,23 @@ void CCollectionFile::Close()
 
 CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
 {
-	CManagedSHA1 oSHA1;
-	CManagedTiger oTiger;
-	CManagedMD5 oMD5;
-	CManagedED2K oED2K;
-
-	oSHA1.FromURN( pszURN );
-	oTiger.FromURN( pszURN );
-	oMD5.FromURN( pszURN );
-	oED2K.FromURN( pszURN );
-
+	SHA1 pSHA1; MD5 pMD5; TIGEROOT pTiger; MD4 pED2K;
+	
+	BOOL bSHA1	= CSHA::HashFromURN( pszURN, &pSHA1 );
+	BOOL bMD5	= CMD5::HashFromURN( pszURN, &pMD5 );
+	BOOL bTiger	= CTigerNode::HashFromURN( pszURN, &pTiger );
+	BOOL bED2K	= CED2K::HashFromURN( pszURN, &pED2K );
+	
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		File* pFile = GetNextFile( pos );
-		if ( ( oSHA1 == pFile->m_oSHA1 ) || ( oMD5 == pFile->m_oMD5 )
-			|| ( oTiger == pFile->m_oTiger ) || ( oED2K == pFile->m_oED2K ) ) return pFile;
+		
+		if ( bSHA1 && pFile->m_bSHA1 && pSHA1 == pFile->m_pSHA1 ) return pFile;
+		if ( bMD5 && pFile->m_bMD5 && pMD5 == pFile->m_pMD5 ) return pFile;
+		if ( bTiger && pFile->m_bTiger && pTiger == pFile->m_pTiger ) return pFile;
+		if ( bED2K && pFile->m_bED2K && pED2K == pFile->m_pED2K ) return pFile;
 	}
+	
 	return NULL;
 }
 
@@ -123,17 +124,21 @@ CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
 
 CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bApply)
 {
+	File* pFile = NULL;
+	
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		File* pFile = GetNextFile( pos );
-		if ( ( pShared->m_oSHA1 == pFile->m_oSHA1 ) || ( pShared->m_oMD5 == pFile->m_oMD5 )
-			|| ( pShared->m_oTiger == pFile->m_oTiger ) || ( pShared->m_oED2K == pFile->m_oED2K ) )
-		{
-			if ( bApply ) pFile->ApplyMetadata( pShared );
-			return pFile;
-		}
+		pFile = GetNextFile( pos );
+		if ( pShared->m_bSHA1 && pFile->m_bSHA1 && pShared->m_pSHA1 == pFile->m_pSHA1 ) break;
+		if ( pShared->m_bMD5 && pFile->m_bMD5 && pShared->m_pMD5 == pFile->m_pMD5 ) break;
+		if ( pShared->m_bTiger && pFile->m_bTiger && pShared->m_pTiger == pFile->m_pTiger ) break;
+		if ( pShared->m_bED2K && pFile->m_bED2K && pShared->m_pED2K == pFile->m_pED2K ) break;
+		pFile = NULL;
 	}
-	return NULL;
+	
+	if ( bApply && pFile != NULL ) pFile->ApplyMetadata( pShared );
+	
+	return pFile;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -271,10 +276,10 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 CCollectionFile::File::File(CCollectionFile* pParent)
 {
 	m_pParent	= pParent;
-	ASSERT( ! m_oSHA1.IsValid() );
-	ASSERT( ! m_oMD5.IsValid() );
-	ASSERT( ! m_oTiger.IsValid() );
-	ASSERT( ! m_oED2K.IsValid() );
+	m_bSHA1		= FALSE;
+	m_bMD5		= FALSE;
+	m_bTiger	= FALSE;
+	m_bED2K		= FALSE;
 	m_nSize		= SIZE_UNKNOWN;
 	m_pMetadata	= NULL;
 }
@@ -289,10 +294,6 @@ CCollectionFile::File::~File()
 
 BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 {
-	CHashSHA1 oSHA1;
-	CHashTiger oTiger;
-	CHashMD5 oMD5;
-	CHashED2K oED2K;
 	if ( ! pRoot->IsNamed( _T("file") ) ) return FALSE;
 	
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
@@ -301,10 +302,10 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		
 		if ( pXML->IsNamed( _T("id") ) )
 		{
-			if ( oSHA1.FromURN( pXML->GetValue() ) ) m_oSHA1 = oSHA1;
-			if ( oMD5.FromURN( pXML->GetValue() ) ) m_oMD5 = oMD5;
-			if ( oTiger.FromURN( pXML->GetValue() ) ) m_oTiger = oTiger;
-			if ( oED2K.FromURN( pXML->GetValue() ) ) m_oED2K = oED2K;
+			m_bSHA1		|= CSHA::HashFromURN( pXML->GetValue(), &m_pSHA1 );
+			m_bMD5		|= CMD5::HashFromURN( pXML->GetValue(), &m_pMD5 );
+			m_bTiger	|= CTigerNode::HashFromURN( pXML->GetValue(), &m_pTiger );
+			m_bED2K		|= CED2K::HashFromURN( pXML->GetValue(), &m_pED2K );
 		}
 		else if ( pXML->IsNamed( _T("description") ) )
 		{
@@ -331,7 +332,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		}
 	}
 	
-	return m_oSHA1.IsValid() || m_oMD5.IsValid() || m_oTiger.IsValid() || m_oED2K.IsValid();
+	return m_bSHA1 || m_bMD5 || m_bTiger || m_bED2K;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -339,16 +340,24 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 
 BOOL CCollectionFile::File::IsComplete() const
 {
-	return ( ( m_oSHA1.IsValid() && LibraryMaps.LookupFileBySHA1( m_oSHA1, FALSE, FALSE, TRUE ) )
-		|| ( m_oTiger.IsValid() && LibraryMaps.LookupFileByTiger( m_oTiger, FALSE, FALSE, TRUE ) )
-		|| ( m_oED2K.IsValid() && LibraryMaps.LookupFileByED2K( m_oED2K, FALSE, FALSE, TRUE ) ) );
+	if ( m_bSHA1 && LibraryMaps.LookupFileBySHA1( &m_pSHA1, FALSE, FALSE, TRUE ) )
+		return TRUE;
+	if ( m_bTiger && LibraryMaps.LookupFileByTiger( &m_pTiger, FALSE, FALSE, TRUE ) )
+		return TRUE;
+	if ( m_bED2K && LibraryMaps.LookupFileByED2K( &m_pED2K, FALSE, FALSE, TRUE ) )
+		return TRUE;
+	return FALSE;
 }
 
 BOOL CCollectionFile::File::IsDownloading() const
 {
-	return ( ( m_oSHA1.IsValid() && Downloads.FindBySHA1( m_oSHA1 ) )
-		 || ( m_oTiger.IsValid() && Downloads.FindByTiger( m_oTiger ) )
-		 || ( m_oED2K.IsValid() && Downloads.FindByED2K( m_oED2K ) ) );
+	if ( m_bSHA1 && Downloads.FindBySHA1( &m_pSHA1 ) )
+		return TRUE;
+	if ( m_bTiger && Downloads.FindByTiger( &m_pTiger ) )
+		return TRUE;
+	if ( m_bED2K && Downloads.FindByED2K( &m_pED2K ) )
+		return TRUE;
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -361,10 +370,14 @@ BOOL CCollectionFile::File::Download()
 	if ( IsComplete() || IsDownloading() ) return FALSE;
 	
 	pURL.m_nAction	= CShareazaURL::uriDownload;
-	pURL.m_oSHA1	= m_oSHA1;
-	pURL.m_oMD5		= m_oMD5;
-	pURL.m_oTiger	= m_oTiger;
-	pURL.m_oED2K	= m_oED2K;
+	pURL.m_bSHA1	= m_bSHA1;
+	pURL.m_pSHA1	= m_pSHA1;
+	pURL.m_bMD5		= m_bMD5;
+	pURL.m_pMD5		= m_pMD5;
+	pURL.m_bTiger	= m_bTiger;
+	pURL.m_pTiger	= m_pTiger;
+	pURL.m_bED2K	= m_bED2K;
+	pURL.m_pED2K	= m_pED2K;
 	pURL.m_sName	= m_sName;
 	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;

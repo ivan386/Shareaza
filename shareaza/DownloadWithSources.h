@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "GUID.h"
 #include "DownloadBase.h"
 
 class CDownloadSource;
@@ -56,8 +55,8 @@ public:
 	void				ClearSources();
 public:
 	BOOL				AddSourceHit(CQueryHit* pHit, BOOL bForce = FALSE);
-	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, CGUID* pGUID = NULL);
-	BOOL				AddSourceBT(const CGUIDBT* pGUIDBT, IN_ADDR* pAddress, WORD nPort);
+	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID = NULL);
+	BOOL				AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPort);
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE);
 	virtual BOOL		OnQueryHits(CQueryHit* pHits);

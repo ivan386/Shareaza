@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "Hashes.h"
-
 class CLibrary;
 class CLibraryFile;
 class CCollectionFile;
@@ -52,7 +50,8 @@ public:
 	CString			m_sSchemaURI;
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pXML;
-	CManagedSHA1	m_oCollSHA1;
+	BOOL			m_bCollSHA1;
+	SHA1			m_pCollSHA1;
 public:
 	CString			m_sName;
 	BOOL			m_bExpanded;
@@ -74,7 +73,7 @@ public:
 	int				GetFolderCount() const;
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
-	CAlbumFolder*	FindCollection(const CHashSHA1 &oSHA1);
+	CAlbumFolder*	FindCollection(SHA1* pSHA1);
 public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
@@ -90,11 +89,11 @@ public:
 	BOOL			MetaFromFile(CLibraryFile* pFile);
 	BOOL			MetaToFiles(BOOL bAggressive = FALSE);
 	BOOL			OrganiseFile(CLibraryFile* pFile);
-	BOOL			MountCollection(const CHashSHA1 &oSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
+	BOOL			MountCollection(SHA1* pSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
 	CCollectionFile*GetCollection();
 	CString			GetBestView() const;
 protected:
-	void			SetCollection(const CHashSHA1 &oSHA1, CCollectionFile* pCollection);
+	void			SetCollection(SHA1* pSHA1, CCollectionFile* pCollection);
 	void			OnFolderDelete(CAlbumFolder* pFolder);
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			Serialize(CArchive& ar, int nVersion);
