@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.87"
+		version="2.1.0.94"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3084,12 +3084,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Сообщество">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Сообщество">
 		<control caption="Мой _профиль:"/>
 		<control caption="Используйте профиль пользователя Gnutella для обмена информацией о себе, своих интересах, ссылках на файлы и сайты, с другими."/>
 		<control caption="_Ред. свой профиль"/>
 		<control caption="_Чат:"/>
 		<control caption="Разрешить P2P чат с совместимыми клиентами"/>
+		<control caption="Разрешить чат во всех сетях"/>
+		<control caption="Фильтровать текст чата от спама"/>
+		<control caption="Фильтровать нецензурные слова в чате"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Вэб">
