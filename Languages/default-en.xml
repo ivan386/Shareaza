@@ -2401,6 +2401,8 @@
 	<string id="8132" value="Some results are available, but were filtered out."/>
 	<string id="8133" value="Shareaza is actively searching the network..."/>
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
+	<string id="8135" value="No Metadata"/>
+	<string id="8136" value="Plain Text Search"/>
 	<string id="8141" value="Show the Search Panel"/>
 	<string id="8142" value="Hide the Search Panel"/>
 	<string id="8143" value="Searching..."/>
@@ -2663,6 +2665,16 @@
 	<string id="16363" value="Torrent Uploads"/>
 	<string id="16364" value="Completed Uploads"/>
 	<string id="16365" value="Are you sure you want to cancel/abort every download in this group?"/>
+	<string id="16366" value="Queue"/>
+	<string id="16367" value="eDonkey Core"/>
+	<string id="16368" value="eDonkey Partials"/>
+	<string id="16369" value="eDonkey Guard"/>
+	<string id="16370" value="Small Files"/>
+	<string id="16371" value="Medium Files"/>
+	<string id="16372" value="Large Files"/>
+	<string id="16373" value="Partial Files"/>
+	<string id="16374" value="New Queue"/>
+	<string id="16375" value="Partial"/>
 	<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 	<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 	<string id="16386" value="Editing metadata of %i files."/>
@@ -2946,6 +2958,10 @@
 	<string id="20130" value="sources"/><!-- from 11 to 19 -->
 	<string id="20131" value="sources"/><!-- from 2 to 4 -->
 	<string id="20132" value="sources"/><!-- from 5 to 9 -->
+	<string id="20133" value="Uninterested"/>
+	<string id="20134" value="Choked"/>
+	<string id="20135" value="Next"/>
+	<string id="20136" value="Q"/>
 	<string id="20200" value="Sunday"/>
 	<string id="20201" value="Monday"/>
 	<string id="20202" value="Tuesday"/>
