@@ -45,6 +45,9 @@ AppUpdatesURL=http://www.shareaza.com/?id=download
 ; Ask user wich components to install
 Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
 
+[Tasks]
+Name: "multiuser"; Description: "{cm:tasks_multisetup}"
+
 [Files]
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; MinVersion: 4.0,0
@@ -55,8 +58,11 @@ Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: ign
 Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
-Source: "Schemas\*"; DestDir: "{userappdata}\Shareaza\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Schemas\*"; DestDir: "{userappdata}\Shareaza\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Data\*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+
 
 ; Copy repair installer
 Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremovereadonly sortfilesbyextension onlyifdoesntexist
@@ -70,27 +76,41 @@ Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: ignore
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Skins
-Source: "Skins\BlueStreak\*"; DestDir: "{userappdata}\Shareaza\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\CleanBlue\*"; DestDir: "{userappdata}\Shareaza\Skins\CleanBlue"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Corona\*"; DestDir: "{userappdata}\Shareaza\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Shareaza2\*"; DestDir: "{userappdata}\Shareaza\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\ShareazaOS\*"; DestDir: "{userappdata}\Shareaza\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "Skins\BlueStreak\*"; DestDir: "{userappdata}\Shareaza\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Skins\CleanBlue\*"; DestDir: "{userappdata}\Shareaza\Skins\CleanBlue"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Skins\Corona\*"; DestDir: "{userappdata}\Shareaza\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Skins\Shareaza2\*"; DestDir: "{userappdata}\Shareaza\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Skins\ShareazaOS\*"; DestDir: "{userappdata}\Shareaza\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Skins\CleanBlue\*"; DestDir: "{app}\Skins\CleanBlue"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
 
 ; Languages: English gets installed by default
-Source: "Languages\default-en.xml"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Languages\*"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml"
+Source: "Languages\default-en.xml"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: multiuser
+Source: "Languages\*"; DestDir: "{userappdata}\Shareaza\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml"; Tasks: multiuser
+Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not multiuser
+Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml"; Tasks: not multiuser
 
 ; Old versions of Shareaza stored data under {app}
-; These need to be copied to {userappdata}\Shareaza
-Source: "{app}\*.dat"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
-Source: "{app}\*.xml"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
-Source: "{app}\*.png"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
-Source: "{app}\*.bmp"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
-Source: "{app}\Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteDataDir
-Source: "{app}\Skins\*"; DestDir: "{userappdata}\Shareaza\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteSkinDir
+; These need to be copied to \Data\
+Source: "{app}\*.dat"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: multiuser
+Source: "{app}\*.xml"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: multiuser
+Source: "{app}\*.png"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: multiuser
+Source: "{app}\*.bmp"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: multiuser
+Source: "{app}\Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteSingleDataDir; Tasks: multiuser
+Source: "{app}\Skins\*"; DestDir: "{userappdata}\Shareaza\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteSingleSkinDir; Tasks: multiuser
+Source: "{app}\*.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
+Source: "{app}\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
+Source: "{app}\*.png"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
+Source: "{app}\*.bmp"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist; Tasks: not multiuser
+Source: "{userappdata}\Shareaza\Data\*"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteMultiDataDir; Tasks: not multiuser
+Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteMultiSkinDir; Tasks: not multiuser
 
 ; Copy installer into download and uninstall dir
-Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza_{#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza_{#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: multiuser
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; DestName: "Shareaza_{#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: not multiuser
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
 
 [Icons]
@@ -120,7 +140,8 @@ Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}";
 [Registry]
 ; Write installation path to registry
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; ValueType: string; ValueName: ; ValueData: "{app}"; Flags: uninsdeletekey
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Path" ; ValueData: "{userappdata}\Shareaza"; Flags: uninsdeletekey
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Path" ; ValueData: "{userappdata}\Shareaza"; Flags: uninsdeletekey; Tasks: multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Path" ; ValueData: "{app}"; Flags: uninsdeletekey; Tasks: not multiuser
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Shareaza.exe"; ValueType: string; ValueName: ; ValueData: "{app}\Shareaza.exe"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Shareaza.exe"; ValueType: string; ValueName: "Path"; ValueData: "{app}"; Flags: uninsdeletekey
 
@@ -131,10 +152,14 @@ Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.current"
 Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.default"; ValueType: string; ValueName: ; ValueData: "%SystemRoot%\media\notify.wav"; Flags: uninsdeletekey
 
 ; Set directory locations
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{userappdata}\Shareaza\Downloads"; Flags: uninsdeletekey createvalueifdoesntexist
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{userappdata}\Shareaza\Incomplete"; Flags: uninsdeletekey createvalueifdoesntexist
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "TorrentPath"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: uninsdeletekey createvalueifdoesntexist
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{userappdata}\Shareaza\Collections"; Flags: uninsdeletekey createvalueifdoesntexist
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{userappdata}\Shareaza\Downloads"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{userappdata}\Shareaza\Incomplete"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "TorrentPath"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{userappdata}\Shareaza\Collections"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{app}\Downloads"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{app}\Incomplete"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "TorrentPath"; ValueData: "{app}\Torrents"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{app}\Collections"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
@@ -145,15 +170,20 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza"; Flags: dontcreatekey deletekey
 
 ; Create TorrentAid default dir locations
-Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist
-Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 
 [Dirs]
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
-Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall
-Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall
-Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall
+Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
+Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
+Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: multiuser
+Name: "{ini:{param:SETTINGS|},Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{app}\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{app}\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
+Name: "{ini:{param:SETTINGS|},Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{app}\Collections}}"; Flags: uninsalwaysuninstall; Tasks: not multiuser
 
 [InstallDelete]
 ; Clean up old files from Shareaza
@@ -169,15 +199,18 @@ Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
 
 ; Delete extra components so installer can "uninstall" them
-Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"; Tasks: multiuser
+Type: filesandordirs; Name: "{app}\Remote"; Tasks: not multiuser
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"; Components: not language
 Type: filesandordirs; Name: "{app}\Skins\Languages"; Components: not language
 
-; Clean up {app} after moving to {userappdata}\Shareaza
-Type: filesandordirs; Name: "{app}\Schemas"
-Type: filesandordirs; Name: "{app}\Remote"
-Type: filesandordirs; Name: "{app}\Plugins"
-
+; Clean up switching locations
+Type: filesandordirs; Name: "{app}\Schemas"; Tasks: multiuser
+Type: filesandordirs; Name: "{app}\Remote"; Tasks: multiuser
+Type: filesandordirs; Name: "{app}\Plugins"; Tasks: multiuser
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"; Tasks: not multiuser
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"; Tasks: not multiuser
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Plugins"; Tasks: not multiuser
 
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
@@ -243,20 +276,36 @@ Begin
   if PageID = wpSelectProgramGroup then Result := Installed;
 End;
 
-Procedure DeleteDataDir();
+Procedure DeleteSingleDataDir();
 var
-  DataDir: string;
+  SingleDataDir: string;
 Begin
-  DataDir := ExpandConstant('{app}\Data');
-  DelTree(DataDir, True, True, True);
+  SingleDataDir := ExpandConstant('{app}\Data');
+  DelTree(SingleDataDir, True, True, True);
 End;
 
-Procedure DeleteSkinDir();
+Procedure DeleteSingleSkinDir();
 var
-  SkinDir: string;
+  SingleSkinDir: string;
 Begin
-  SkinDir := ExpandConstant('{app}\Skins');
-  DelTree(SkinDir, True, True, True);
+  SingleSkinDir := ExpandConstant('{app}\Skins');
+  DelTree(SingleSkinDir, True, True, True);
+End;
+
+Procedure DeleteMultiDataDir();
+var
+  MultiDataDir: string;
+Begin
+  MultiDataDir := ExpandConstant('{userappdata}\Shareaza\Data');
+  DelTree(MultiDataDir, True, True, True);
+End;
+
+Procedure DeleteMultiSkinDir();
+var
+  MultiSkinDir: string;
+Begin
+  MultiSkinDir := ExpandConstant('{userappdata}\Shareaza\Skins');
+  DelTree(MultiSkinDir, True, True, True);
 End;
 
 Procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
