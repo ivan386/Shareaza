@@ -188,7 +188,7 @@ void CNeighboursWnd::Update()
 			LoadString ( str,IDS_NEIGHBOUR_CLOSING );
 			break;
 		case nrsConnected:
-			pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
+			str.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 			break;
 		default:
 			LoadString ( str,IDS_NEIGHBOUR_UNKNOWN );
