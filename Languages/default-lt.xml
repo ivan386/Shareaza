@@ -1754,6 +1754,11 @@ right quote	&#147;
 		<text>Įjunkite nuotolinio „Shareaza“ programos valdymo, naudojantis naršykle, galimybę.</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Planuotojas</link>
+		<gap size="4"/>
+		<text></text>
+		<newline gap="10"/>
+
 	</document>
 
 	<!-- Browse User Profile -->
@@ -2913,6 +2918,13 @@ right quote	&#147;
 	<string id="20130" value="šaltinių"/>  <!-- from 11 to 19 -->
 	<string id="20131" value="šaltiniai"/> <!-- from 2 to 4 -->
 	<string id="20132" value="šaltiniai"/> <!-- from 5 to 9 -->
+	<string id="20200" value="Sekmadienis"/>
+	<string id="20201" value="Pirmadienis"/>
+	<string id="20202" value="Antradienis"/>
+	<string id="20203" value="Trečiadienis"/>
+	<string id="20204" value="Ketvirtadienis"/>
+	<string id="20205" value="Penktadienis"/>
+	<string id="20206" value="Šeštadienis"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3104,6 +3116,25 @@ right quote	&#147;
 		<control/>
 		<control caption="Slaptažodis:"/>
 		<control/>
+	</dialog>
+
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Planuotojas">
+		<control caption="_Parinktys:"/>
+		<control caption="Į_galinti planuotoją"/>
+		<control/><control/>
+		<control caption="_Apriboti taip pat tinklus"/>
+		<control caption="Raktai:"/>
+		<control caption="Sek"/>
+		<control caption="Pir"/>
+		<control caption="Ant"/>
+		<control caption="Tre"/>
+		<control caption="Ket"/>
+		<control caption="Pen"/>
+		<control caption="Šeš"/>
+		<control caption="Nesijungti"/>
+		<control caption="Apribotas susijungimas"/>
+		<control caption="Jungtis pilna sparta"/>
+		<control caption="% greitaveikos, kai ribojama"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Tinklai">
