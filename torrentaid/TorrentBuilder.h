@@ -24,9 +24,9 @@
 
 #pragma once
 
-class CSHA1;
-class CED2K;
-
+#include "SHA1.h"
+#include "MD4.h"
+#include "ED2K.h"
 
 class CTorrentBuilder : public CWinThread
 {
@@ -77,13 +77,13 @@ protected:
 	QWORD				m_nTotalSize;
 	QWORD				m_nTotalPos;
 protected:
-	SHA1				m_pDataSHA1;
-	MD4					m_pDataED2K;
+	CHashSHA1			m_pDataSHA1;
+	CHashMD4			m_pDataED2K;
 	QWORD*				m_pFileSize;
-	SHA1*				m_pFileSHA1;
-	MD4*				m_pFileED2K;
+	CHashSHA1*			m_pFileSHA1;
+	CHashMD4*			m_pFileED2K;
 protected:
-	SHA1*				m_pPieceSHA1;
+	CHashSHA1*			m_pPieceSHA1;
 	DWORD				m_nPieceSize;
 	DWORD				m_nPieceCount;
 	DWORD				m_nPiecePos;

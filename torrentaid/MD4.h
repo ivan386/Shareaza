@@ -24,37 +24,103 @@
 
 #pragma once
 
+#include "StdAfx.h"
 
-class CMD4  
+class CHashMD4
 {
-// Construction
 public:
-	CMD4();
-	virtual ~CMD4();
-	
-// Attributes
-protected:
-	DWORD	m_nState[4];
-	DWORD	m_nCount[2];
-	BYTE	m_pBuffer[64];
-
-// Operations
-public:
-	void	Reset();
-	void	Add(LPCVOID pData, DWORD nLength);
-	void	Finish();
-	void	GetHash(MD4* pHash);
-
+	union
+	{
+		BYTE	m_b[ 16 ];
+		WORD	m_w[  8 ];
+		DWORD	m_d[  4 ];
+		QWORD	m_q[  2 ];
+	};
+	inline	CHashMD4();
+	inline	CHashMD4(const CHashMD4 &oHash);
+	inline	~CHashMD4();
+	inline	void	operator =(const CHashMD4 &oHash);
+	inline	BOOL	operator ==(const CHashMD4 &oHash);
+	inline	BOOL	operator !=(const CHashMD4 &oHash);
 };
 
-inline bool operator==(const MD4& md4a, const MD4& md4b)
+class CMD4 : public CHashMD4
 {
-    return memcmp( &md4a, &md4b, 16 ) == 0;
+public:
+	inline	CMD4();
+	inline	~CMD4();
+protected:
+			QWORD	m_nCount;
+			BYTE	m_pBuffer[64];
+	static	BYTE	MD4_PADDING[ 64 ];
+public:
+	inline	void	Reset();
+	inline	void	Add(LPCVOID pData, DWORD nLength);
+	inline	void	Finish();
+};
+
+inline CHashMD4::CHashMD4()
+{
 }
 
-inline bool operator!=(const MD4& md4a, const MD4& md4b)
+inline CHashMD4::CHashMD4(const CHashMD4 &oHash)
 {
-    return memcmp( &md4a, &md4b, 16 ) != 0;
+	memcpy( &m_b, &oHash.m_b, sizeof m_b );
+}
+
+inline CHashMD4::~CHashMD4()
+{
+}
+
+inline void CHashMD4::operator =(const CHashMD4 &oHash)
+{
+	memcpy( &m_b, &oHash.m_b, sizeof m_b );
+}
+
+inline BOOL CHashMD4::operator ==(const CHashMD4 &oHash)
+{
+	return memcmp( &m_b, &oHash.m_b, sizeof m_b ) == 0;
+}
+
+inline BOOL CHashMD4::operator !=(const CHashMD4 &oHash)
+{
+	return memcmp( &m_b, &oHash.m_b, sizeof m_b ) != 0;
+}
+
+inline CMD4::CMD4()
+{
+	Reset();
+}
+
+inline CMD4::~CMD4()
+{
+}
+
+// MD4 initialization. Begins an MD4 operation, writing a new context
+inline void CMD4::Reset()
+{
+	// Clear count
+	m_nCount = 0;
+	// Load magic initialization constants
+	m_d[0] = 0x67452301;
+	m_d[1] = 0xefcdab89;
+	m_d[2] = 0x98badcfe;
+	m_d[3] = 0x10325476;
+}
+
+extern "C" void __stdcall MD4_Add_p5(CMD4*, LPCVOID pData, DWORD nLength);
+
+inline void CMD4::Add(LPCVOID pData, DWORD nLength)
+{
+	MD4_Add_p5( this, pData, nLength );
+}
+
+inline void CMD4::Finish()
+{
+	QWORD nBits = m_nCount << 3;
+	DWORD index = (DWORD)m_nCount & 0x3f;
+	MD4_Add_p5( this, MD4_PADDING, (index < 56) ? (56 - index) : (120 - index) );
+	MD4_Add_p5( this, &nBits, 8 );
 }
 
 #endif // !defined(AFX_MD4_H__B0429238_3786_452C_B43D_3311AE91B5DA__INCLUDED_)

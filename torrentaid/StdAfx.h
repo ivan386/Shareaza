@@ -38,22 +38,6 @@
 
 typedef unsigned __int64 QWORD;
 
-typedef union
-{
-	struct
-	{
-		BYTE	b[20];
-	};
-} SHA1;
-
-typedef union
-{
-	struct
-	{
-		BYTE	b[16];
-	};
-} MD4;
-
 #define BIF_NEWDIALOGSTYLE	0x0040
 #define OFN_ENABLESIZING	0x00800000
 

@@ -22,7 +22,9 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				BufferSecurityCheck="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/TorrentWizard.pch"
@@ -82,8 +84,13 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				InlineFunctionExpansion="1"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				OptimizeForWindowsApplication="TRUE"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -420,6 +427,24 @@
 				RelativePath=".\MD4.h">
 			</File>
 			<File
+				RelativePath=".\MD4_asm.asm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\PageCommandline.h">
 			</File>
 			<File
@@ -448,6 +473,24 @@
 			</File>
 			<File
 				RelativePath="SHA1.h">
+			</File>
+			<File
+				RelativePath=".\SHA_asm.asm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="StdAfx.h">

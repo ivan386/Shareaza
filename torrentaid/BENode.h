@@ -24,8 +24,9 @@
 
 #pragma once
 
-class CBuffer;
+#include "SHA1.h"
 
+class CBuffer;
 
 class CBENode  
 {
@@ -48,7 +49,7 @@ public:
 	CBENode*	Add(const LPBYTE pKey, int nKey);
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
-	void		GetSHA1(SHA1* pSHA1) const;
+	CHashSHA1	GetSHA1() const;
 	void		Encode(CBuffer* pBuffer) const;
 #ifdef _BE_DECODE_
 public:

@@ -187,7 +187,7 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode SHA1 computation
 
-void CBENode::GetSHA1(SHA1* pSHA1) const
+CHashSHA1 CBENode::GetSHA1() const
 {
 	ASSERT( this != NULL );
 	
@@ -197,7 +197,7 @@ void CBENode::GetSHA1(SHA1* pSHA1) const
 	CSHA1 pDigest;
 	pDigest.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pDigest.Finish();
-	pDigest.GetHash( pSHA1 );
+	return pDigest;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -318,9 +318,9 @@ BOOL CTorrentBuilder::ProcessFiles()
 	m_nPieceUsed	= 0;
 	m_nPiecePos		= 0;
 	m_nPieceCount	= (DWORD)( ( m_nTotalSize + (QWORD)m_nPieceSize - 1 ) / (QWORD)m_nPieceSize );
-	m_pPieceSHA1	= new SHA1[ m_nPieceCount ];
-	m_pFileSHA1		= new SHA1[ m_pFiles.GetCount() ];
-	m_pFileED2K		= new MD4[ m_pFiles.GetCount() ];
+	m_pPieceSHA1	= new CHashSHA1[ m_nPieceCount ];
+	m_pFileSHA1		= new CHashSHA1[ m_pFiles.GetCount() ];
+	m_pFileED2K		= new CHashMD4[ m_pFiles.GetCount() ];
 	
 	m_phFullSHA1->Reset();
 	m_phFullED2K->Reset();
@@ -349,23 +349,23 @@ BOOL CTorrentBuilder::ProcessFiles()
 		}
 		
 		m_phFileSHA1->Finish();
-		m_phFileSHA1->GetHash( &m_pFileSHA1[ nFile ] );
+		m_pFileSHA1[ nFile ] = *m_phFileSHA1;
 
 		m_phFileED2K->Finish();
-		m_phFileED2K->GetHash( &m_pFileED2K[ nFile ] );
+		m_pFileED2K[ nFile ] = *m_phFileED2K;
 	}
 	
 	if ( m_nPieceUsed > 0 )
 	{
 		m_phPieceSHA1->Finish();
-		m_phPieceSHA1->GetHash( &m_pPieceSHA1[ m_nPiecePos++ ] );
+		m_pPieceSHA1[ m_nPiecePos++ ] = *m_phPieceSHA1;
 	}
 	
 	m_phFullSHA1->Finish();
-	m_phFullSHA1->GetHash( &m_pDataSHA1 );
+	m_pDataSHA1 = *m_phFullSHA1;
 	
 	m_phFullED2K->Finish();
-	m_phFullED2K->GetHash( &m_pDataED2K );
+	m_pDataED2K = *m_phFullED2K;
 	
 	delete m_phPieceSHA1;
 	delete m_phFullSHA1;
@@ -414,7 +414,7 @@ BOOL CTorrentBuilder::ProcessFile(LPCTSTR pszFile)
 		if ( m_nPieceUsed >= m_nPieceSize )
 		{
 			m_phPieceSHA1->Finish();
-			m_phPieceSHA1->GetHash( &m_pPieceSHA1[ m_nPiecePos++ ] );
+			m_pPieceSHA1[ m_nPiecePos++ ] = *m_phPieceSHA1;
 			m_phPieceSHA1->Reset();
 			m_nPieceUsed = 0;
 		}
@@ -447,13 +447,13 @@ BOOL CTorrentBuilder::WriteOutput()
 	pPL->SetInt( m_nPieceSize );
 	
 	CBENode* pPieces = pInfo->Add( "pieces" );
-	pPieces->SetString( m_pPieceSHA1, sizeof(SHA1) * m_nPieceCount );
+	pPieces->SetString( m_pPieceSHA1, m_nPieceCount * sizeof CHashSHA1 );
 	
 	CBENode* pSHA1 = pInfo->Add( "sha1" );
-	pSHA1->SetString( &m_pDataSHA1, sizeof(SHA1) );
+	pSHA1->SetString( &m_pDataSHA1, sizeof CHashSHA1 );
 	
 	CBENode* pED2K = pInfo->Add( "ed2k" );
-	pED2K->SetString( &m_pDataED2K, sizeof(MD4) );
+	pED2K->SetString( &m_pDataED2K, sizeof CHashMD4 );
 	
 	CString strFirst = m_pFiles.GetHead();
 	
@@ -526,10 +526,10 @@ BOOL CTorrentBuilder::WriteOutput()
 			}
 			
 			pSHA1 = pFile->Add( "sha1" );
-			pSHA1->SetString( &m_pFileSHA1[ nFile ], sizeof(SHA1) );
+			pSHA1->SetString( &m_pFileSHA1[ nFile ], sizeof CHashSHA1 );
 			
 			pED2K = pFile->Add( "ed2k" );
-			pED2K->SetString( &m_pFileED2K[ nFile ], sizeof(MD4) );
+			pED2K->SetString( &m_pFileED2K[ nFile ], sizeof CHashMD4 );
 		}
 	}
 	
