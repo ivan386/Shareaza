@@ -745,6 +745,8 @@
 #define IDS_SEARCH_PAD_WORDS            8177
 #define IDS_SEARCH_PAD_TYPE             8178
 #define IDS_SEARCH_PAD_CLEAR_HISTORY    8179
+#define IDS_SEARCH_PANEL_INPUT_4        8180
+#define IDS_SEARCH_PANEL_INPUT_5        8181
 #define IDS_HASH_MESSAGE                8208
 #define IDS_DLM_DOWNLOADING             8224
 #define IDS_DLM_PAUSED                  8225
