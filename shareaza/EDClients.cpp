@@ -252,14 +252,12 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 
 void CEDClients::OnRun()
 {
-	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastRun < 1000 ) return;
-	m_tLastRun = tNow;
+	m_tLastRun = GetTickCount();
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
 	{
 		CEDClient* pNext = pClient->m_pEdNext;
-		pClient->OnRunEx( tNow );
+		pClient->OnRunEx( m_tLastRun );
 		pClient = pNext;
 	}
 }
