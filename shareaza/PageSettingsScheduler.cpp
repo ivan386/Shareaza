@@ -54,6 +54,7 @@ CSchedulerSettingsPage::CSchedulerSettingsPage() : CSettingsPage(CSchedulerSetti
 {
 	//{{AFX_DATA_INIT(CSchedulerSettingsPage)
 	m_bSchedulerEnable = FALSE;
+	m_nLimited = 0;
 	//}}AFX_DATA_INIT
 	CopyMemory( m_pSchedule, Schedule.m_pSchedule, 7 * 24 );
 }
@@ -67,6 +68,8 @@ void CSchedulerSettingsPage::DoDataExchange(CDataExchange* pDX)
 	CSettingsPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSchedulerSettingsPage)
 	DDX_Check(pDX, IDC_SCHEDULER_ENABLE, m_bSchedulerEnable);
+	DDX_Text(pDX, IDC_SCHEDULER_LIMITED, m_nLimited);
+	DDX_Control(pDX, IDC_SCHEDULER_LIMITED_SPIN, m_wndLimitedSpin);
 	//}}AFX_DATA_MAP
 }
 
@@ -89,9 +92,12 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	
 	
 	m_bSchedulerEnable = Settings.Scheduler.Enable;
+	m_nLimited			= Settings.Scheduler.LimitedBandwidth;
 
 	m_nDownDay = m_nHoverDay = 0xFF;
 	m_nDownHour = m_nHoverHour = 0xFF;
+
+	m_wndLimitedSpin.SetRange( 5, 95 );
 	
 	UpdateData( FALSE );
 
@@ -215,7 +221,6 @@ void CSchedulerSettingsPage::OnPaint()
 					30 , 220 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	//CSettingsPage::OnPaint();
-	
 }
 
 void CSchedulerSettingsPage::OnOK() 
@@ -223,6 +228,8 @@ void CSchedulerSettingsPage::OnOK()
 	UpdateData();
 
 	Settings.Scheduler.Enable = m_bSchedulerEnable;
+	Settings.Scheduler.LimitedBandwidth = m_nLimited;
+
 	CopyMemory( Schedule.m_pSchedule , m_pSchedule, 7 * 24 );
 	Schedule.Save();
 	

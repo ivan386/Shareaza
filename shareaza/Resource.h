@@ -153,7 +153,6 @@
 #define IDB_REMOTE_SKIN                 248
 #define IDD_DOWNLOAD_EDIT               248
 #define IDD_SETTINGS_REMOTE             249
-#define IDD_SETTINGS_COMMUNITY1         250
 #define IDD_SETTINGS_SCHEDULER          250
 #define IDI_FIREWALLED                  252
 #define IDI_MERCORA                     254
@@ -642,6 +641,9 @@
 #define IDC_TORRENTS_TORRENTMAKER       1392
 #define IDC_TORRENTS_TORRENTMAKERBROWSE 1393
 #define IDC_SCHEDULER_ENABLE            1400
+#define IDC_SCHEDULER_LIMITED           1401
+#define IDC_SCHEDULER_LIMITED_SPIN      1402
+#define IDC_SCHEDULER_ALLOWHUB			1403
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -1511,7 +1513,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33120
-#define _APS_NEXT_CONTROL_VALUE         1382
+#define _APS_NEXT_CONTROL_VALUE         1383
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

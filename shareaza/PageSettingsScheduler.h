@@ -41,6 +41,8 @@ public:
 	//{{AFX_DATA(CSchedulerSettingsPage)
 	enum { IDD = IDD_SETTINGS_SCHEDULER };
 	BOOL	m_bSchedulerEnable;
+	CSpinButtonCtrl	m_wndLimitedSpin;
+	int		m_nLimited;
 	//}}AFX_DATA
 
 // Painting Data
