@@ -1020,7 +1020,7 @@
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
-	<menu name="CLibraryTileView.Virtual">
+	<menu name="CLibraryTileView">
 		<item id="ID_LIBRARY_ALBUM_OPEN" text="_Open"/>
 		<item id="ID_LIBRARY_ALBUM_DELETE" text="_Delete"/>
 		<separator/>
@@ -1046,7 +1046,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
@@ -1063,7 +1063,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1080,7 +1080,6 @@
 			<separator/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
-			
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1113,7 +1112,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
@@ -1132,9 +1131,9 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
-`		<separator/>
+		<separator/>
 		<menu text="S_earch For">
 			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
@@ -1501,7 +1500,7 @@
 				<newline gap="4"/>
 			</group>
 			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Downloads</link>
-			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Downloads (1)</link>
+			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Download (1)</link>
 			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Go to Downloads (%i)</link>
 		</para>
 	</document>
@@ -1713,7 +1712,6 @@
 		<gap size="4"/>
 		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
-		
 		
 	</document>
 	
@@ -1966,7 +1964,6 @@
 		<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
 	</document>
 
-	
 	<!-- Search help documents -->
 	
 	<document name="SearchHelp.BadSearch">
@@ -1988,7 +1985,7 @@
 		content, and this has been turned off in the settings. You should either re-phrase the 
 		search, or disable the filter.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools > Settings > General and un-check the adult content filter.</text>
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2004,12 +2001,16 @@
 	<document name="ShareHelp.BadShare">
 		<text format="b">This folder should not be shared</text>
 		<newline gap="8"/>
-		<text>This folder is (or contains) a system folder. Sharing this folder is not 					recommended, since most of the files in it are of no use to other people.</text>
+		<text>This folder is (or contains) a system folder. Sharing this folder is not
+		recommended, since most of the files in it are of no use to other people.</text>
 		<newline gap="8"/>
 		<text>Folders such as the Windows directory, Program Files, and similar folders
-		do not usually contain files suitable for sharing. Any files of interest would be in 		sub-folders located </text><text format="i"> inside </text><text> these 				folders. Please share those instead.</text>
+		do not usually contain files suitable for sharing. Any files of interest would be in
+		sub-folders located</text><text format="i"> inside</text>
+		<text> these folders. Please share those instead.</text>
 		<newline gap="8"/>
-		<text>The Shareaza 'incomplete' folder should also not be shared through the 					library, since attempting to hash downloads in progress may impact on 				performance.</text>
+		<text>The Shareaza 'incomplete' folder should also not be shared through the
+		library, since attempting to hash downloads in progress may impact on performance.</text>
 	</document>
 	
 </documents>
