@@ -258,7 +258,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
 	Add( _T("eDonkey.RequestSize"), &eDonkey.RequestSize, 180*1024/2 );
 	Add( _T("eDonkey.FrameSize"), &eDonkey.FrameSize, 10240 );
-	Add( _T("eDonkey.ReAskTime"), &eDonkey.ReAskTime, 1300 );
+	Add( _T("eDonkey.ReAskTime"), &eDonkey.ReAskTime, 1740 );
 	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
 	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
 	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, TRUE );
