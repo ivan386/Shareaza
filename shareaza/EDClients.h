@@ -42,6 +42,10 @@ protected:
 	CEDClient*		m_pLast;
 	int				m_nCount;
 	DWORD			m_tLastRun;
+	DWORD			m_tLastServerStats;
+	in_addr			m_pLastServer;
+	DWORD			m_nLastServerKey;
+	BOOL			m_bAllServerStats;
 	
 // Operations
 protected:
@@ -62,6 +66,8 @@ public:
 	BOOL			OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket);
 private:
 	void			OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	void			RequestServerStatus(IN_ADDR* pHost, WORD nPort);
+	void			RunGlobalStatsRequests(DWORD tNow);
 
 public:
 	
