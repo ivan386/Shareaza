@@ -384,8 +384,14 @@ void CSearchInputBox::OnSkinChange()
 	CString strCaption;
 	
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
-	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
-	
+	//m_wndSchemas.Load( Settings.Search.LastSchemaURI );
+
+	CString sSchema = m_wndSchemas.GetSelectedURI();
+	if( sSchema.GetLength() > 0 )
+		m_wndSchemas.Load( sSchema );
+	else
+		m_wndSchemas.Load( Settings.Search.LastSchemaURI );
+
 	if ( m_wndNetworks.m_hWnd != NULL ) m_wndNetworks.OnSkinChange();
 	
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
