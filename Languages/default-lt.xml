@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.58"
+		version="2.1.0.60"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -709,7 +709,7 @@ right quote	&#147;
 		<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
 		<item id="ID_NETWORK_EXIT" text="Išeiti"/>
 	</menu>
-	<!--  Shareaza Remote -->
+	<!--  REMOTE MENU -->
 	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="_Atverti Shareaza"/>
 		<separator/>
@@ -793,7 +793,6 @@ right quote	&#147;
 		<menu text="P_aslaugos internete">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą..."/>
-
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -815,7 +814,6 @@ right quote	&#147;
 		</menu>
 		<menu text="P_aslaugos internete">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -840,7 +838,6 @@ right quote	&#147;
 		<menu text="_Bylos aprašas internete">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą..."/>
-
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -859,7 +856,6 @@ right quote	&#147;
 		</menu>
 		<menu text="P_aslaugos internete">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -885,7 +881,6 @@ right quote	&#147;
 		</menu>
 		<menu text="P_aslaugos internete">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -966,12 +961,18 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Val_yti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent duomenys"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
 		<item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
 		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
+	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Atverti"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _duomenys"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Nutraukti skleidimą"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Tęsti visus"/>
@@ -1011,9 +1012,9 @@ right quote	&#147;
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
 		<item id="ID_SECURITY_BAN" text="Užkirsti _vartotojo prieigą"/>
-		<separator/>
-		<!-- <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti _baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>  -->
+		<!-- <separator/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti _baigtus"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Rodyti _viską"/>
@@ -1089,7 +1090,6 @@ right quote	&#147;
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-
 		</menu>
 		<menu text="_Organizuoti">
 			<item id="ID_LIBRARY_RENAME" text="_Pervadinti bylą"/>
@@ -1120,7 +1120,6 @@ right quote	&#147;
 			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			<separator/>
-
 			<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent bylą"/>
 		</menu>
 		<menu text="_Organizuoti">
@@ -1155,7 +1154,6 @@ right quote	&#147;
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-
 		</menu>
 		<menu text="_Organizuoti">
 			<item id="ID_LIBRARY_RENAME" text="_Pervadinti bylą"/>
@@ -1949,7 +1947,8 @@ right quote	&#147;
 		<text>Laukiama, kol kitų Jūsų bylų parsisiuntimas bus baigtas.
 		Parsisiuntimų, aktyvių bet kuriuo metu, skaičius yra ribojamas parsisiuntimo
 		nuostatomis, tam kad kiekvienai bylai parsisiųsti būtų pilnai išnaudojama
-		greitaveika. Jūs galite pakeisti šias nuostatas per „Įrankiai“, „‚Shareaza‘ nuostatos“.</text>
+		greitaveika. Jūs galite pakeisti šias nuostatas per „Įrankiai“, „‚Shareaza‘ nuostatos“.
+		Dar Jūs galite rankiniu būdu pradėti siuntimą pasirinkę komandą „Tęsti“</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
@@ -2182,7 +2181,6 @@ right quote	&#147;
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Peržiūrėti ir taisyti pasirinkto albumo katalogo ypatybes..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Tvarkyti fizinius savo kolekcijos aplankus..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Paspartinti skenavimą ir maišos (tapatybės kodo) skaičiavimą."/>
-
 	<tip id="ID_LIBRARY_LAUNCH" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
 	<tip id="ID_LIBRARY_MOVE" message="Perkelti pasirinktas bylas į kitą kolekcijos aplanką..."/>
 	<tip id="ID_LIBRARY_PANEL" message="Rodyti ar paslėpti kolekcijos išsamios informacijos skydelį."/>
@@ -2981,7 +2979,7 @@ right quote	&#147;
 	<string id="20119" value="Laukiama"/>
 	<string id="20120" value="Ieškoma"/>
 	<string id="20121" value="Kuriama"/>
-	<string id="20122" value="Torrent"/>
+
 	<string id="20123" value="Seklys atsijungęs"/>
 	<string id="20124" value="(Nėra šaltinių)"/>
 	<string id="20125" value="Patikrinta"/>

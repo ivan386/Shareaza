@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.58"
+		version="2.1.0.60"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -767,7 +767,6 @@
 		<menu text="_Вэб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотр в _Jigle"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -789,7 +788,6 @@
 		</menu>
 		<menu text="_Вэб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -814,7 +812,6 @@
 		<menu text="_Вэб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -833,7 +830,6 @@
 		</menu>
 		<menu text="_Вэб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
@@ -859,7 +855,6 @@
 		</menu>
 		<menu text="_Вэб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать найденое..."/>
@@ -940,12 +935,18 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent инфо"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
 		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
+	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Прекратить распространение"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Возобновить все"/>
@@ -985,8 +986,8 @@
 		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
-		<separator/>
-		<!-- <item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
+		<!-- <separator/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>	-->
 	</menu>
 	<menu name="CUploadsWnd.Filter">
@@ -1063,7 +1064,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Копировать _ссылку"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1094,7 +1094,6 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 		</menu>
 		<menu text="О_перации">
@@ -1129,7 +1128,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1163,7 +1161,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть _Jigle Lookup"/>-->
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_UNLINK" text="_Удалить файлы"/>
@@ -1936,7 +1933,8 @@
 		<text>Эта загрузка ждет завершения Ваших некоторых других загрузок.
 		Кол-во одновременных загрузок ограничиваются в установках Shareaza, для того чтобы
 		быть уверенными в том, что каждая загрузка получает хорошую долю пропускной
-		способности.  Вы можете изменить эти настройки в меню Инструменты - Установи Shareaza.</text>
+		способности.  Вы можете изменить эти настройки в меню Инструменты - Установи Shareaza.
+		Вы также можете начать загрузку вручную, выбрав команду Возобновить.</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
