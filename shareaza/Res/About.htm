@@ -1,119 +1,141 @@
 200 OK
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
- <title>Shareaza</title>
- <style>
-	td { font-family: Verdana; font-size: 12px; }
-	a { color: maroon; text-decoration: none; }
-	a:hover { color: red; text-decoration: underline; }
-	table.flat { border-collapse: collapse; border-style: solid; border-width: 1px; border-color: maroon; }
-	td.fh { border-style: solid; border-width: 1px; border-color: maroon; font-weight: bold; color: maroon; }
-	td.fi { border-style: solid; border-width: 1px; border-color: maroon; }
- </style>
+<title>Shareaza Node Information</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="robots" content="noindex, nofollow" />
+<style type="text/css">
+body {
+	margin: 0px;
+	background-color: #FDFDFD;
+}
+.headerborder {
+	border-width: 1px;
+	border-bottom-style: solid;
+	border-color: #999999;
+}
+body,td,th {
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	color: #666666;
+}
+a:link {
+	color: #333333;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #333333;
+}
+a:hover {
+	text-decoration: underline;
+	color: #333333;
+}
+a:active {
+	text-decoration: none;
+	color: #333333;
+}
+.boldtext {
+	font-size: 12px;
+	font-weight: bold;
+}
+.solidborder {
+	border: 1px solid #999999;
+}
+.text1 {color: #333333}
+.text2 {font-size: 12px; font-weight: bold; color: #333333; }
+.text3 {font-size: 12px}
+.text4 {color: #000000; font-size: 14px; }
+.blacktext {color: #000000}
+.tableborder1 {
+	border-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #CCCCCC;
+}
+.tableborder2 {
+	border-width: 1px;
+	border-right-style: solid;
+	border-width: 1px;
+	border-color: #CCCCCC;
+}
+.tableborder3 {
+	border-width: 1px;
+	border-bottom-style: solid;
+	border-color: #CCCCCC;
+}
+</style>
 </head>
-<body bgcolor="white" link="black" vlink="black" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" background="http://www.shareaza.com/nodeinfo/headerbg.png" class="headerborder">
+  <tr>
+    <td><img src="http://www.shareaza.com/nodeinfo/header.png" width="624" height="172" /></td>
+  </tr>
+</table>
+<div align="center"><br />
+  <table width="800" border="0" cellspacing="4" cellpadding="6">
+    <tr align="center" bgcolor="#999999">
+      <td colspan="2" bgcolor="#C5C5C5" class="blacktext">This node is powered by <a href="http://www.shareaza.com/download/" target="_top"><strong>Shareaza <% Version %></strong></a></td>
+    </tr>
+    <tr class="tableborder2">
+      <td width="50%" align="center" valign="top" class="solidborder"><a href="gnutella:browse:<% ListenIP %>"><strong>Browse Node</strong></a> In Shareaza</td>
+      <td width="50%" align="center" valign="top" class="solidborder"><a href="/remote/" target="_top"><strong>Remotely Access </strong></a>this node</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center" valign="top">
+	    <table width="630" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><table width="630" border="0" cellpadding="4" cellspacing="0">
+                <tr>
+                  <td width="170" align="center" valign="top" class="text2">Neighbor Address</td>
+                  <td width="100" align="center" valign="top" class="text2">Uptime</td>
+                  <td width="100" align="center" valign="top" class="text2">Mode</td>
+                  <td width="170" align="center" valign="top" class="text2">User Agent</td>
+		  <td width="80" align="center" valign="top" class="text2">&nbsp;</td>
+                </tr>
+            </table></td>
+          </tr>
+        </table>
+          <table width="630" border="0" cellpadding="0" cellspacing="0" class="solidborder">
+            <tr>
+              <td>
+		<table width="630" border="0" cellpadding="4" cellspacing="0" bgcolor="#F7F7F7">
 
-<table width="100%" height="100%" cellPadding="0" cellSpacing="0">
-
-<tr height="48">
-<td bgcolor="#BE0000" align="left" valign="center" style="border-style: solid; border-width: 0px 0px 1px 0px; border-color: black;">
-	<a href="http://www.shareaza.com/">
-	<img src="http://www.shareaza.com/images/barlogo.gif" width="240" height="48" border="0" align="absmiddle" alt="Shareaza"></a>
-	<font face="Verdana" color="yellow" size="4"><b>Shareaza Node Information</b></font>
-</td>
-</tr>
-
-<tr>
-<td valign="top">
-
-<br>
-
-<table width="100%">
-<td width="32">&nbsp;</td>
-<td>
-<font face="Verdana" size="2">
-
-<h3>This is a Shareaza Node</h3>
-
-<p>
-This P2P node is powered by <b><a href="http://www.shareaza.com/download/">Shareaza</a></b>
-v<% Version %>.
-</p>
-
-<p>
-If this copy of Shareaza is running on your PC, you can connect to
-<a href="/remote/"><b>Shareaza Remote Access</b></a>.
-</p>
-
-<p>
-If you're using Shareaza or another URI enabled P2P client, you can
-<a href="gnutella:browse:<% ListenIP %>"><b>browse this user</b></a>.
-</p>
-
-<table class="flat" cellPadding="4">
-<tr bgColor="#FFFFE0">
-	<td class="fh">Neighbour Address</td>
-	<td class="fh" align="center">Uptime</td>
-	<td class="fh">Mode</td>
-	<td class="fh">User-Agent</td>
-	<td class="fh">&nbsp;</td>
-</tr>
+                <tr>
+                  <td width="170" align="center" valign="top" class="text2"></td>
+                  <td width="100" align="center" valign="top" class="text2"></td>
+                  <td width="100" align="center" valign="top" class="text2"></td>
+                  <td width="170" align="center" valign="top" class="text2"></td>
+		  <td width="80"  align="center" valign="top" class="text2"></td>
+                </tr>
 <% Neighbours %>
-</table>
-
-<br><br>
-
-<h3>Get Shareaza Now</h3>
-
-<p>
-Shareaza is the definitive P2P file-sharing application.  It connects to four
-premiere file-sharing networks:
-</p>
-
-<ul>
-<li><a href="http://www.gnutella2.com/"><b>Gnutella2</b></a> - Shareaza's premiere
-file-sharing network boasting leading edge features like "global search",
-preview-before-you-download, community file ratings / reviews (and ghost ratings),
-comprehensive metadata support and full Unicode/international support.</li>
-<li><a href="http://www.gnutella.com/"><b>Gnutella1</b></a> - This network is
-supported by a very diverse range of file-sharing clients on a variety of
-operating systems.</li>
-<li><a href="http://www.edonkey2000.com/"><b>eDonkey2000</b></a> - The eDonkey2000
-and <b>eMule</b> network boasts an amazing selection of files.</li>
-<li><b>BitTorrent</b> - This distribution network focuses on "new" files, and
-is legendary for its high download speeds.</li>
-</ul>
-
-<p>
-<b>Shareaza</b> can access all of these networks, and even download parts of the
-same file from multiple networks at once!  It also features an awesome interface
-and first class remote access facility.  Oh, and its free, too.
-</p>
-
-<font size="1">
-<a href="http://www.shareaza.com/download/">
-<img src="http://www.shareaza.com/images/iconshadowed.gif" width="42" height="50" align="absmiddle" hspace="5" border="0"></a>
-<a href="http://www.shareaza.com/download/">Download now at Shareaza.com</a>
-</font>
-
-<br><br>
-
-</font>
-</td>
-<td width="32">&nbsp;</td>
-</table>
-
-</td>
-</tr>
-<tr height="48">
-<td align="right" valign="center" bgcolor="#BE0000" style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: black;">
-<font face="Verdana" size="1" color="maroon">Shareaza v<% Version %>&nbsp;&nbsp;</font>
-</td>
-</tr>
-</table>
-
+                </table>
+	    </td>
+            </tr>
+        </table></td>
+    </tr>
+  </table>
+  <br />
+  <table width="800" border="0" cellpadding="4" cellspacing="0" bgcolor="#F8F8F8" class="solidborder">
+    <tr align="center" valign="top">
+      <td colspan="2" bgcolor="#CFCFCF" class="headerborder blacktext"><strong>What Is Shareaza?</strong></td>
+    </tr>
+    <tr>
+      <td rowspan="2" align="left" valign="top" style="width: 35px"><img src="http://www.shareaza.com/nodeinfo/ico_raza.jpg" alt="raza" width="31" height="35" /></td>
+      <td valign="top" class="text4">Shareaza is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. Shareaza is 
+	  <strong>FREE</strong> and contains <strong>NO</strong> Spyware or third-party products.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+	  <ul>
+          <li class="text1"><a href="http://www.shareaza.com/" target="_top">Visit the Shareaza Homepage</a> </li>
+          <li class="text1"><a href="http://www.shareaza.com/download/" target="_top">Check out the latest Shareaza Release</a></a></li>
+      </ul>	 </td>
+    </tr>
+  </table>
+  <br />
+  <br />
+</div>
 </body>
 </html>
-
-
-
