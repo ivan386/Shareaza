@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.97"
+		version="2.1.0.101"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3631,6 +3631,13 @@
 		<control caption="_Сохранить как"/>
 		<control caption="_Удалить"/>
 		<control caption="Фильтры:"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Сохранить фильтр как">
+		<control/>
+		<control caption="ДА"/>
+		<control caption="Отмена"/>
+		<control caption="Сохранить текущий фильтр как"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Ресурс соединений">

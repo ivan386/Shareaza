@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.97"
+		version="2.1.0.101"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3636,6 +3636,13 @@
 		<control caption="_Save as"/>
 		<control caption="_Delete"/>
 		<control caption="Filters:"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancel"/>
+		<control caption="Save the current filter as"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">

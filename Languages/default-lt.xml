@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.97"
+		version="2.1.0.101"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3650,6 +3650,13 @@ right quote	&#147;
 		<control caption="_Išsaugoti kaip"/>
 		<control caption="_Trinti"/>
 		<control caption="Filtrai:"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Išsaugoti filtrą kaip">
+		<control/>
+		<control caption="Gerai"/>
+		<control caption="Atšaukti"/>
+		<control caption="Išsaugoti šį filtrą kaip"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Paslaugų radimo tarnyba">
