@@ -7,3 +7,5 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Settings"; ValueType: dword; Val
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Settings"; ValueType: dword; ValueName: "VerboseMode"; ValueData: "{ini:{param:SETTINGS|},General,VerboseMode|0}"; Flags: createvalueifdoesntexist uninsdeletekey
 ; Turn on ShareazaOS skin
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+; Set Downloads.SearchPeriod to 120
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: dword; ValueName: "SearchPeriod"; ValueData: "{ini:{param:SETTINGS|},Downloads,SearchPeriod|120000}"; Flags: deletevalue uninsdeletekey
