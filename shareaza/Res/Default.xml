@@ -1601,6 +1601,22 @@
 			<text id="UploadedMany">You have uploaded %i files (%s).</text>
 		</para>
 	</document>
+
+	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="TorrentsNone" format="b">No seeding torrents</text>
+			<text id="TorrentsOne" format="b">1 seeding torrent</text>
+			<text id="TorrentsMany" format="b">%i seeding torrents</text>
+			<newline gap="4"/>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
+		</para>
+
+	</document>
 	
 	<!-- Settings Pages -->
 
@@ -1902,6 +1918,17 @@
 		down or malfunctioning.  Shareaza is unable to contact it to receive
 		a list of downloader peers.</text>
 	</document>
+
+	<!-- General help documents -->
+	
+	<document name="GeneralHelp.DiskSpace">
+		<text format="b">Disk Space is Low</text>
+		<newline gap="8"/>
+		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
+		<newline gap="8"/>
+		<text>You should always attempt to keep a reasonable amount of disk space free. 				Programs can become unstable if the drives become full, and temporary files may be 				lost. You should run a disk clean-up, delete unwanted files, or un-install software 				you no longer need.</text>
+	</document>
+
 	
 	<!-- Search help documents -->
 	
@@ -1923,6 +1950,7 @@
 		<newline gap="8"/>
 		<text>The folder you have selected is already being shared as part of an 					existing share.</text>
 		<newline gap="8"/>
+		<text> %s </text>
 	</document>
 
 	<document name="ShareHelp.BadShare">
