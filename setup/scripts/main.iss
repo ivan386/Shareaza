@@ -155,6 +155,8 @@ Type: files; Name: "{app}\Plugins\DivFix.dll"
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
 Type: files; Name: "{app}\*.xml"
+Type: files; Name: "{app}\Data\*.dat"
+Type: files; Name: "{app}\Data\*.xml"
 
 ; Pull in languages and localized files
 #include "languages.iss"
