@@ -1,0 +1,56 @@
+		<table width="95%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="center">
+					<table width="100%" cellspacing="0">
+						<tr>
+							<td class="tabedg">&nbsp;</td>
+							<td class="tab">Inicio</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Buscar</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Descargas</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Subidas</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Redes</td>
+							<td class="tabedg">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="frame">
+					<div>
+						Bienvenido al <b>Acceso Remoto de Shareaza.</b>
+						Si esta copia de Shareaza est&#225; abierta en tu PC, por favor
+						escribe tu nombre de usuario y contrase&#241;a del acceso remoto, despu&#233;s haz click en <b>Entrar</b>.
+					</div>
+					<%? failure %>
+					<div align="center" style="color: red; font-weight: bold;">
+						<br>
+						El nombre de usuario o contrase&#241;a est&#225;n incorrectos.
+						<br>
+						Intenta nuevamente.
+					</div>
+					<%?%>
+					<form method="get" action="">
+					<input type="hidden" name="submit" value="1">
+					<table align="center">
+						<tr>
+							<td>Nombre de usuario:</td>
+							<td><input type="text" name="username" size="20"></td>
+						</tr>
+						<tr>
+							<td>Contrase&#241;a:</td>
+							<td><input type="password" name="password" size="20" ID="Text1"></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input type="submit" value="Entrar">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</td>
+			</tr>
+		</table>
