@@ -465,8 +465,8 @@ void CSearchWnd::OnSearchSearch()
 		m_bWaitMore = FALSE;
 
 		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
-		m_nMaxQueryCount = pSearch->m_nQueryCount + min(Settings.Gnutella2.QueryLimit, 10000);
+		m_nMaxResults = m_pMatches->m_nFilteredHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
+		m_nMaxQueryCount = pSearch->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
 
 		//Resume ED2K search
 		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
@@ -493,6 +493,10 @@ void CSearchWnd::OnSearchSearch()
 			m_bUpdate = TRUE;
 			PostMessage( WM_TIMER, 2 );
 			pLock.Unlock();
+
+			m_nMaxResults		= 0;
+			m_nMaxED2KResults	= 0;
+			m_nMaxQueryCount	= 0;
 		}
 	}
 	
@@ -560,6 +564,10 @@ void CSearchWnd::OnSearchClear()
 	PostMessage( WM_TIMER, 2 );
 	
 	OnSearchStop();
+
+	m_nMaxResults		= 0;
+	m_nMaxED2KResults	= 0;
+	m_nMaxQueryCount	= 0;
 }
 
 void CSearchWnd::OnUpdateSearchStop(CCmdUI* pCmdUI) 
@@ -666,13 +674,13 @@ void CSearchWnd::ExecuteSearch()
 			m_tSearch			= GetTickCount();
 			m_bWaitMore			= FALSE;
 
-			m_nMaxResults		= Settings.Gnutella.MaxResults;
-			m_nMaxED2KResults	= (DWORD)min( 201, Settings.eDonkey.MaxResults );
-			m_nMaxQueryCount	= min(Settings.Gnutella2.QueryLimit, 10000);
-		
 			pManaged->Stop();
 			pManaged->Start();
-		
+
+			m_nMaxResults		+= (DWORD)min( 300, Settings.Gnutella.MaxResults );
+			m_nMaxED2KResults	+= (DWORD)min( 201, Settings.eDonkey.MaxResults );
+			m_nMaxQueryCount	+= (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
+
 			m_wndPanel.ShowSearch( pManaged );
 
 			m_wndPanel.Disable();
@@ -808,7 +816,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
 			m_bUpdate = TRUE;
 			
-			if ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults )
+			if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && (pManaged->m_tLastED2K != 0xFFFFFFFF) )
 			{
 				if( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
 				{						
