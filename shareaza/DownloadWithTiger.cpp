@@ -542,7 +542,7 @@ void CDownloadWithTiger::FinishValidation()
 			m_pTigerBlock[ m_nVerifyBlock ] = TS_FALSE;
 			
 			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= m_nVerifyBlock * m_nTigerSize;
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTigerSize;
 			pCorrupted->m_nLength	= min( m_nTigerSize, m_nSize - pCorrupted->m_nOffset );
 		}
 	}
@@ -558,7 +558,7 @@ void CDownloadWithTiger::FinishValidation()
 			m_pHashsetBlock[ m_nVerifyBlock ] = TS_FALSE;
 			
 			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= m_nVerifyBlock * ED2K_PART_SIZE;
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * ED2K_PART_SIZE;
 			pCorrupted->m_nLength	= min( ED2K_PART_SIZE, m_nSize - pCorrupted->m_nOffset );
 		}
 	}
@@ -576,7 +576,7 @@ void CDownloadWithTiger::FinishValidation()
 			m_pTorrentBlock[ m_nVerifyBlock ] = TS_FALSE;
 			
 			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= m_nVerifyBlock * m_nTorrentSize;
+			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTorrentSize;
 			pCorrupted->m_nLength	= min( m_nTorrentSize, m_nSize - pCorrupted->m_nOffset );
 		}
 	}

@@ -288,6 +288,11 @@ void CTigerTree::AddToFile(LPCVOID pInput, DWORD nLength)
 BOOL CTigerTree::FinishFile()
 {
 	if ( m_pStackTop == NULL ) return FALSE;
+	if ( m_nBaseUsed == 0 )
+	{
+		Tiger( this, 0, (m_pStackTop++)->value );
+		m_nBlockPos++;
+	}
 	
 	BlocksToNode();
 	
