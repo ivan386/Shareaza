@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,59
- PRODUCTVERSION 2,1,0,59
+ FILEVERSION 2,1,0,60
+ PRODUCTVERSION 2,1,0,60
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 59"
+            VALUE "FileVersion", "2, 1, 0, 60"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 59"
+            VALUE "ProductVersion", "2, 1, 0, 60"
         END
     END
     BLOCK "VarFileInfo"
@@ -5270,7 +5270,35 @@ BEGIN
     ID_NETWORK_ED2K         "Connect to the eDonkey2000 network."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Normal mode."
+END
+
+STRINGTABLE 
+BEGIN
     ID_LIBRARY_SEARCH_QUICK "Search your file library..."
+    ID_DOWNLOAD_GROUP_NEW   "Create a new download group..."
+    ID_DOWNLOAD_GROUP_REMOVE "Remove the selected download group."
+    ID_DOWNLOAD_GROUP_PROPERTIES 
+                            "Edit the properties of the selected download group."
+    ID_DOWNLOAD_GROUP_PAUSE "Pause all downloads in this group."
+    ID_DOWNLOAD_GROUP_RESUME "Resume all downloads in this group."
+    ID_DOWNLOAD_GROUP_CLEAR "Cancel and remove all downloads in this group."
+    ID_DOWNLOADS_TORRENT_INFO 
+                            "View information about the selected BitTorrent download..."
+    ID_DOWNLOAD_GROUP_SHOW  "Show or hide the download group bar."
+    ID_DOWNLOADS_HELP       "View help information on this download..."
+    ID_DOWNLOADS_FILTER_MENU 
+                            "Choose which types of downloads to show and which types to hide in this view."
+    ID_UPLOADS_FILTER_MENU  "Choose which types of uploads to show and which types to hide in this view."
+    ID_DOWNLOADS_CLEAR_INCOMPLETE 
+                            "Cancel the selected incomplete download(s)."
+    ID_DOWNLOADS_CLEAR_COMPLETE 
+                            "Remove the selected download(s) from the list."
+    ID_LIBRARY_CREATETORRENT 
+                            "Create a .torrent for this file to upload to a website."
+END
+
+STRINGTABLE 
+BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
 END
 
@@ -5363,30 +5391,6 @@ BEGIN
                             "  Created Shareaza partial download, %s remaining."
     IDS_ED2K_EPI_ALREADY    "  This file is already in the Shareaza download list."
     IDS_ED2K_EPI_DISK_SPACE "  Insufficient disk space to copy download file."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_DOWNLOAD_GROUP_NEW   "Create a new download group..."
-    ID_DOWNLOAD_GROUP_REMOVE "Remove the selected download group."
-    ID_DOWNLOAD_GROUP_PROPERTIES 
-                            "Edit the properties of the selected download group."
-    ID_DOWNLOAD_GROUP_PAUSE "Pause all downloads in this group."
-    ID_DOWNLOAD_GROUP_RESUME "Resume all downloads in this group."
-    ID_DOWNLOAD_GROUP_CLEAR "Cancel and remove all downloads in this group."
-    ID_DOWNLOADS_TORRENT_INFO 
-                            "View information about the selected BitTorrent download..."
-    ID_DOWNLOAD_GROUP_SHOW  "Show or hide the download group bar."
-    ID_DOWNLOADS_HELP       "View help information on this download..."
-    ID_DOWNLOADS_FILTER_MENU 
-                            "Choose which types of downloads to show and which types to hide in this view."
-    ID_UPLOADS_FILTER_MENU  "Choose which types of uploads to show and which types to hide in this view."
-    ID_DOWNLOADS_CLEAR_INCOMPLETE 
-                            "Cancel the selected incomplete download(s)."
-    ID_DOWNLOADS_CLEAR_COMPLETE 
-                            "Remove the selected download(s) from the list."
-    ID_LIBRARY_CREATETORRENT 
-                            "Create a .torrent for this file to upload to a website."
 END
 
 STRINGTABLE 
