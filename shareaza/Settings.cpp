@@ -260,7 +260,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
-	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 60 );
+	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
@@ -308,7 +308,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 3 );
 	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 30 );
 	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
-	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 200 );
+	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 250 );
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
 	Add( _T("Downloads.SearchPeriod"), &Downloads.SearchPeriod, 120000 );
 	Add( _T("Downloads.StarveTimeout"), &Downloads.StarveTimeout, 2700 );
@@ -337,7 +337,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.ClearDelay"), &Downloads.ClearDelay, 30000 );
 	Add( _T("Downloads.FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
 	Add( _T("Downloads.ShowMonitorURLs"), &Downloads.ShowMonitorURLs, TRUE );
-	Add( _T("Downloads.SortColumns"), &Downloads.SortColumns, FALSE );
+	Add( _T("Downloads.SortColumns"), &Downloads.SortColumns, TRUE );
 	Add( _T("Downloads.SortSources"), &Downloads.SortSources, TRUE );
 	Add( _T("Downloads.SourcesWanted"), &Downloads.SourcesWanted, 500 );
 

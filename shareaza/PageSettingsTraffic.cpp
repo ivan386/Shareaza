@@ -149,7 +149,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
-	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
+	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 300, _T(" m") );
 	AddSetting( &Settings.eDonkey.QueueRankThrottle, 1000, 60, 600, _T(" s") );
 	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 500, 5000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
@@ -189,9 +189,9 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
-	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 10 );
+	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 5 );
 	AddSetting( &Settings.Downloads.MaxConnectingSources, 1, 5, 50 );
-	AddSetting( &Settings.Downloads.MinSources, 1, 0, 8 );
+	AddSetting( &Settings.Downloads.MinSources, 1, 0, 6 );
 	AddSetting( &Settings.Downloads.ConnectThrottle, 1, 0, 5000, _T(" ms") );
 	AddSetting( &Settings.Downloads.PushTimeout, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Downloads.StarveTimeout, 60, 45, 1440, _T(" m") );
