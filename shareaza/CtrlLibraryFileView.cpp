@@ -517,21 +517,18 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 
 void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( GetSelectedCount() == 1 );
+	pCmdUI->Enable( GetSelectedCount() > 0 );
 }
 
 void CLibraryFileView::OnLibraryRebuildAnsi() 
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	
-	if ( CLibraryFile* pFile = GetSelectedFile() )
-	{
+	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 1 );
+	StartSelectedFileLoop();
+	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
+			pFile->Rebuild();
 		pLock.Unlock();
-
-		// Do stuff here
-		Beep( 500, 500 );
-
-	}
 }
 
 /*
