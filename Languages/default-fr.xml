@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.10"
+		version="2.1.0.13"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2773,6 +2773,37 @@ Other:
 	<string id="17041" value="Ne peut envoyer le message, aucune connexion n'est encore établie."/>
 	<string id="17042" value="Vous n'avez pas encore rempli votre profil utilisateur.  Vous devez envoyer un profil avant de pouvoir chatter avec les autres utilisateurs.\n\nVoulez-vous remplir votre profil utilisateur maintenant?"/>
 	<string id="17043" value="Envoi prioritaire établi à l'hôte %s."/>
+	<string id="17100" value="Gnutella: Connexion Peer-to-Peer"/>
+    <string id="17101" value="Gnutella: Connexion Leaf-to-Ultrapeer"/>
+    <string id="17102" value="Gnutella: Connexion Ultrapeer-to-Leaf"/>
+    <string id="17103" value="Gnutella II: Connexion Hub-to-Hub"/>
+    <string id="17104" value="Gnutella II: Connexion Leaf-to-Hub"/>
+    <string id="17105" value="Gnutella II: Connexion Hub-to-Leaf"/>
+    <string id="17106" value="Connexion serveur eDonkey (LOWID: %lu)"/>
+    <string id="17107" value="Connexion serveur eDonkey2000"/>
+    <string id="17108" value="Poignée de main (Handshake)"/>
+    <string id="17109" value="Entrant (Inbound)"/>
+    <string id="17110" value="Sortant (Outbound)"/>
+    <string id="17111" value="Courant:"/>
+    <string id="17112" value="Total:"/>
+    <string id="17113" value="Compression:"/>
+    <string id="17114" value="Ratio:"/>
+    <string id="17115" value="Dégonflé (Deflate)"/>
+    <string id="17116" value="Aucun"/>
+    <string id="17117" value="Se connecte"/>
+    <string id="17118" value="Poignée de main (Handshaking)"/>
+    <string id="17119" value="Rejeté"/>
+    <string id="17120" value="Se ferme"/>
+    <string id="17121" value="Inconnu"/>
+    <string id="17122" value="G1 Peer"/>
+    <string id="17123" value="G1 Ultrapeer"/>
+    <string id="17124" value="G1 Leaf"/>
+    <string id="17125" value="G2 Peer"/>
+    <string id="17126" value="G2 Hub"/>
+    <string id="17127" value="G2 Leaf"/>
+    <string id="17128" value="Serveur eDonkey2000"/>
+    <string id="17129" value="eDonkey2000 (LowID)"/>
+    <string id="17130" value="eDonkey2000 (HighID)"/>
 	<string id="17216" value="Initialisation d'une connexion au serveur eDonkey2000 %s..."/>
 	<string id="17217" value="Connecté au serveur eDonkey2000 %s, poignée de main (handshake)..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
@@ -2853,7 +2884,7 @@ Other:
 	<string id="20000" value="Pas d'URN disponible"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20100" value="Se connecte"/>
-	<string id="20101" value="Requière"/>
+	<string id="20101" value="Requiert"/>
 	<string id="20102" value="Réponse"/>
 	<string id="20103" value="Télécharge"/>
 	<string id="20104" value="TigerTree"/>
@@ -3085,7 +3116,7 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Programmateur">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Programmateur">
 		<control caption="_Options:"/>
 		<control caption="_Activer le programmateur"/>
 		<control/><control/>
@@ -3102,6 +3133,9 @@ Other:
 		<control caption="Connection limitée"/>
 		<control caption="Se connecter à pleine vitesse"/>
 		<control caption="% de _bande passante lorsque limitée"/>
+		<control/>
+        <control caption="Aide"/>
+        <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. &#13;&#10;&#13;&#10;Note: Si vous avez Shareaza ouvert lorsque le programmateur est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
