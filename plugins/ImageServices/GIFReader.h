@@ -22,6 +22,8 @@
 #ifndef __GIFREADER_H_
 #define __GIFREADER_H_
 
+#include "Resource.h"
+
 
 class ATL_NO_VTABLE CGIFReader : 
 	public CComObjectRootEx<CComMultiThreadModel>,

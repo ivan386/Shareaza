@@ -26,9 +26,13 @@
 // libjpeg
 //
 
-#undef FAR
-#define FILE void
-#include <jpeglib.h>
+//#undef FAR
+//#define FILE void
+extern "C" {
+#include <jpeglib.h> 
+}
+
+#include "Resource.h"
 
 
 class ATL_NO_VTABLE CJPEGReader : 

@@ -28,6 +28,7 @@
 
 #include <png.h>
 
+#include "Resource.h"
 
 class ATL_NO_VTABLE CPNGReader : 
 	public CComObjectRootEx<CComMultiThreadModel>,
