@@ -2118,7 +2118,7 @@
 	<tip id="ID_HELP_FIREWALLS" message="Get help configuring your router or firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visit the Shareaza Discussion Forums."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
-	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs">
+	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs"/>
 	<tip id="ID_HELP_WEB_1" message="Visit Zeropaid.com"/>
 	<tip id="ID_HELP_WEB_2" message="Visit P2PForums.com"/>
 	<tip id="ID_HELP_WEB_3" message="Visit Slyck.com"/>
