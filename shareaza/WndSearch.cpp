@@ -453,7 +453,7 @@ void CSearchWnd::OnSearchSearch()
 	
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
-	//** The 'Search More' situation   (ToDo: Detect if search changed and skip)
+	//** The 'Search More' situation
 	POSITION pos = m_pSearches.GetTailPosition();
 	if( ( !m_bPaused ) && ( m_bWaitMore ) && ( pos ) )
 	{
@@ -544,8 +544,6 @@ void CSearchWnd::OnSearchSearch()
 	pLock.Unlock();
 	
 	ExecuteSearch();
-
-	m_wndPanel.Disable();
 
 	if ( m_bPanel && Settings.Search.HideSearchPanel )
 	{
@@ -683,6 +681,8 @@ void CSearchWnd::ExecuteSearch()
 			pManaged->Start();
 		
 			m_wndPanel.ShowSearch( pManaged );
+
+			m_wndPanel.Disable();
 		}
 		else
 		{
