@@ -1178,31 +1178,41 @@ void CMainWnd::UpdateMessages()
 	int nCount = Network.IsWellConnected();
 
 	if ( nCount > 0 )
-	{
+	{	//If you have neighbours, you are connected
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
 
 		if( Settings.General.GUIMode == GUI_BASIC )
-		{
+		{	//In the basic GUI, don't bother with mode details or neighbour count.
 			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
 			strMessage.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
 		}
 		else
-		{
-			if (  Neighbours.IsHub() )
-				LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB );
+		{	//Display node type and number of neighbours
+			if (  Neighbours.IsG2Hub() )
+			{
+				if (  Neighbours.IsG1Ultrapeer() )
+					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB_UP );
+				else
+					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB );
+			}
 			else
-				LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+			{
+				if (  Neighbours.IsG1Ultrapeer() )
+					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_UP );
+				else
+					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+			}
 			strMessage.Format( strFormat, nCount,
 								(LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
 		}
 	}
 	else if ( Network.IsConnected() )
-	{
+	{	//Trying to connect
 		LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
 	}
 	else
-	{
+	{	//Idle
 		LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
 	}
 
@@ -2195,7 +2205,8 @@ void CMainWnd::OnHelpAbout()
 {
 	CAboutDlg dlg;
 	dlg.DoModal();
-	Neighbours.IsHubCapable( TRUE );
+	Neighbours.IsG1UltrapeerCapable( TRUE );
+	Neighbours.IsG2HubCapable( TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
