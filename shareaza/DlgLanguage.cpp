@@ -136,7 +136,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
 	pScroll.nMin	= 0;
 	pScroll.nMax	= m_pPaths.GetSize(); 
-	pScroll.nPage	= ( rc.bottom - HEADING_HEIGHT ) / ( ITEM_HEIGHT + 1 ) ;
+	pScroll.nPage	= nLanguagesToDisplay + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	SetTimer( 1, 100, NULL );
