@@ -47,6 +47,7 @@ public:
 	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);
 	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);
 	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);
+	DWORD	IsUltrapeerCapable(BOOL bDebug = FALSE);	//Check if this node can be a G1 Ultrapeer (unused at present)
 public:
 	virtual void	OnRun();
 protected:

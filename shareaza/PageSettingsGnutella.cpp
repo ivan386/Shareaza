@@ -101,6 +101,7 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 	
+	//Load initial values from the settings variables
 	m_bG2Today			= Settings.Gnutella2.EnableToday;
 	m_bG1Today			= Settings.Gnutella1.EnableToday;
 	m_bG1Always			= Settings.Gnutella1.EnableAlways;
@@ -210,7 +211,22 @@ void CGnutellaSettingsPage::OnG1Today()
 void CGnutellaSettingsPage::OnOK() 
 {
 	UpdateData();
+
+	//Check if G2 hub mode is forcednow, and wasn't forced before.
+	if ( ( m_wndG2ClientMode.GetCurSel() == MODE_HUB ) && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )	
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
+		//Warn the user, give them a chance to reset it.
+		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
+		{
+			m_wndG2ClientMode.SetCurSel( MODE_AUTO );
+			Settings.Gnutella2.ClientMode = MODE_AUTO;
+			UpdateData( FALSE );
+		}
+	}
 	
+	//Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today;
 	Settings.Gnutella1.EnableToday		= m_bG1Today || m_bG1Always;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always;
@@ -230,19 +246,8 @@ void CGnutellaSettingsPage::OnOK()
 	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position
 	if ( Settings.Gnutella2.ClientMode > MODE_HUB ) Settings.Gnutella2.ClientMode = MODE_AUTO;
 
-	if (  Settings.Gnutella2.ClientMode == MODE_HUB )	//Check if hub mode is forced.
-	{
-		CString strMessage;
-		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
 
-		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
-		{
-			m_wndG2ClientMode.SetCurSel( MODE_AUTO );
-			Settings.Gnutella2.ClientMode = MODE_AUTO;
-			UpdateData( FALSE );
-		}
-	}
-
+/*
 	//***
 	//Tempary code- the 'gnutella' setting should be removed and use the seperate G1/G2 modes instead.
 	switch (Settings.Gnutella2.ClientMode)
@@ -267,6 +272,7 @@ void CGnutellaSettingsPage::OnOK()
 		break;
 	}
 	//***
+*/
 
 	CSettingsPage::OnOK();
 }

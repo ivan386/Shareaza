@@ -339,7 +339,7 @@ void CShakeNeighbour::SendPublicHeaders()
 			}
 			*/
 		}
-		else if ( Settings.Gnutella.LeafEnable )
+		else if ( Settings.Gnutella2.ClientMode != MODE_HUB ) //( Settings.Gnutella.LeafEnable )
 		{
 			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 		}
@@ -671,7 +671,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 					return FALSE;
 				}
 
-				if ( ! Settings.Gnutella.LeafEnable )
+				if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 				{
 					SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
 					DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
@@ -684,7 +684,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 		}
 		else if ( m_bUltraPeerSet == TS_TRUE )
 		{
-			if ( ! Settings.Gnutella.LeafEnable )
+			if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 			{
 				SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
 				DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
@@ -695,7 +695,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 		}
 		else if ( m_bUltraPeerSet != TS_TRUE )
 		{
-			if ( Settings.Gnutella.LeafEnable && Settings.Gnutella.LeafForce )
+			if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
 			{
 				SendHostHeaders( _T("GNUTELLA/0.6 503 Need an Ultrapeer") );
 				DelayClose( IDS_HANDSHAKE_NEEDAPEER );
@@ -730,7 +730,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 				m_nNodeType = ntNode;
 			}
 		}
-		else if ( m_bUltraPeerSet == TS_TRUE && Settings.Gnutella.LeafEnable )
+		else if ( m_bUltraPeerSet == TS_TRUE && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )
 		{
 			m_nNodeType = ntHub;
 		}
@@ -743,14 +743,14 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			DelayClose( IDS_HANDSHAKE_SURPLUS );
 			return FALSE;
 		}
-		else if ( ( m_nNodeType == ntHub && ! Settings.Gnutella.LeafEnable ) ||
-				  ( m_nNodeType == ntLeaf && ! Settings.Gnutella.HubEnable ) )
+		else if ( ( m_nNodeType == ntHub && ( Settings.Gnutella2.ClientMode == MODE_HUB ) ) ||
+				  ( m_nNodeType == ntLeaf && ( Settings.Gnutella2.ClientMode == MODE_LEAF ) ) )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Ultrapeer disabled") );
 			DelayClose( IDS_HANDSHAKE_NOULTRAPEER );
 			return FALSE;
 		}
-		else if ( m_nNodeType != ntHub && Settings.Gnutella.LeafEnable && Settings.Gnutella.LeafForce )
+		else if ( m_nNodeType != ntHub && ( Settings.Gnutella2.ClientMode == MODE_LEAF ) )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Need an Ultrapeer") );
 			DelayClose( IDS_HANDSHAKE_NEEDAPEER );
@@ -766,14 +766,14 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			if ( m_nNodeType != ntLeaf &&
 				 Neighbours.NeedMoreHubs( m_bG2Accept ? TS_TRUE : TS_FALSE ) )
 			{
-				if ( Settings.Gnutella.HubEnable )
+				if ( Settings.Gnutella2.ClientMode != MODE_LEAF )
 				{
 					m_pOutput->Print( "X-Ultrapeer-Needed: True\r\n" );
 				}
 			}
 			else
 			{
-				if ( Settings.Gnutella.LeafEnable )
+				if ( Settings.Gnutella2.ClientMode != MODE_HUB )
 				{
 					m_pOutput->Print( "X-Ultrapeer-Needed: False\r\n" );
 				}
@@ -786,6 +786,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 
 	return TRUE;
 }
+
 
 //////////////////////////////////////////////////////////////////////
 // CShakeNeighbour handshake completed

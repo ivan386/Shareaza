@@ -182,10 +182,6 @@ void CSettings::Setup()
 	Add( _T("Discovery.G2DAddress"), &Discovery.G2DAddress, _T("stats.shareaza.com:6446") );
 	Add( _T("Discovery.G2DRetryAfter"), &Discovery.G2DRetryAfter, 0 );
 	
-	Add( _T("Gnutella.HubEnable"), &Gnutella.HubEnable, TRUE );
-	Add( _T("Gnutella.HubForce"), &Gnutella.HubForce, FALSE );
-	Add( _T("Gnutella.LeafEnable"), &Gnutella.LeafEnable, TRUE );
-	Add( _T("Gnutella.LeafForce"), &Gnutella.LeafForce, FALSE );
 	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 5 );
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );
 	Add( _T("Gnutella.DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, FALSE );
@@ -493,13 +489,13 @@ void CSettings::Save(BOOL bShutdown)
 // CSettings smart upgrade
 
 void CSettings::SmartUpgrade()
-{
+{	//This function resets certain values when upgrading, depending on version.
 	CRegistry pRegistry;
 	int nVersion = pRegistry.GetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
 	
 	if ( nVersion < 20 )
 	{
-		Gnutella.HubForce	= FALSE;
+		//Gnutella.HubForce	= FALSE;
 		
 		Gnutella1.TranslateTTL			= 3;
 		Gnutella1.RequeryDelay			= 45*60;
@@ -576,6 +572,7 @@ void CSettings::SmartUpgrade()
 		Uploads.QueuePollMax = 60000;	//  is now applied based on Q# (from 1x to 5x)
 	}
 	
+	//Add OGG handling if needed
 	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
 		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
 	{
@@ -832,7 +829,7 @@ CString CSettings::SmartAgent(LPCTSTR pszAgent)
 // CSettings volume
 
 CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits)
-{
+{	//Returns a nicely formatted string displaying a given transfer speed
 	LPCTSTR pszUnit = _T("B");
 	CString strVolume;
 	

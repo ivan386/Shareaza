@@ -38,7 +38,7 @@ public:
 		CString		UserPath;					//Path for user data. (May be the same as above for single user installs)
 		BOOL		Debug;
 		BOOL		DebugLog;
-		DWORD		MaxDebugLogSize;			//Max size of the lof file
+		DWORD		MaxDebugLogSize;			//Max size of the log file
 		BOOL		UpdateCheck;
 		DWORD		DiskSpaceWarning;			//Value at which to warn the user about low disk space
 		INT			GUIMode;
@@ -209,10 +209,6 @@ public:
 	
 	struct sGnutella
 	{
-		BOOL		HubEnable;
-		BOOL		HubForce;
-		BOOL		LeafEnable;
-		BOOL		LeafForce;
 		DWORD		ConnectFactor;
 		BOOL		DeflateHub2Hub;
 		BOOL		DeflateLeaf2Hub;
@@ -229,7 +225,7 @@ public:
 	
 	struct sGnutella1
 	{
-		DWORD		ClientMode;					// MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
+		DWORD		ClientMode;					//Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		BOOL		Handshake04;
@@ -258,7 +254,7 @@ public:
 
 	struct sGnutella2
 	{
-		DWORD		ClientMode;					//MODE_AUTO, MODE_LEAF, MODE_HUB
+		DWORD		ClientMode;					//Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_HUB
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		int			NumHubs;

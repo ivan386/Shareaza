@@ -160,30 +160,39 @@ BOOL CNeighboursWithConnect::IsHub()
 }
 
 BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
-{
+{	//Determine if this client can be a G2 hub
 	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsHubCapable():") );
+
+/*
+	if ( ! Settings.Gnutella2.EnableToday )
+	{	// Can't be a hub if you don't connect to G2
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: G2 not enabled") );
+		return FALSE;
+	}
+*/
 	
 	if ( ! theApp.m_bNT )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not NT") );
+	{	//Win95, Win98 and WinMe cannot support enough connections to make a good hub
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: OS is not NT based") );
 		return FALSE;
 	}
 	else
 	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: OS is NT") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: OS is NT based") );
 	}
 	
-	if ( ! Settings.Gnutella.HubEnable )
-	{
+	if ( Settings.Gnutella2.ClientMode == MODE_LEAF ) //( ! Settings.Gnutella.HubEnable )
+	{	//User has disabled hub mode G2 settings
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: hub mode disabled") );
 		return FALSE;
 	}
-	
-	if ( Settings.Gnutella.LeafEnable && Settings.Gnutella.LeafForce )
+	/*
+	if ( Settings.Gnutella.LeafEnable && Settings.Gnutella.LeafForce ) //Covered by above check now
 	{
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: leaf mode forced") );
 		return FALSE;
 	}
+	*/
 	
 	if ( IsLeaf() )
 	{
@@ -195,8 +204,8 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 	
-	if ( Settings.Gnutella.HubForce )
-	{
+	if ( Settings.Gnutella2.ClientMode == MODE_HUB ) // ( Settings.Gnutella.HubForce )
+	{	//This node has hub mode turned on in the G2 settings.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub mode forced") );
 		return TRUE;
 	}
@@ -252,10 +261,180 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
 	}
 	
+	//This node meets the minimum requirements to be a hub.
 	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub capable by test") );
 	
 	return TRUE;
 }
+
+//*** NOTE: This function is not used yet
+DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug) 
+{	//Check if this node can be a G1 Ultrapeer
+
+	DWORD nRating = 0; //Zero means this node can not be an ultrapeer.
+	//Higher numbers indicate it is likely to be a better ultrapeer.
+
+	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsUltrapeerCapable():") );
+
+	if ( ! Settings.Gnutella1.EnableToday )
+	{	// Can't be an ultrapeer if you don't connect to Gnutella1
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Gnutella1 not enabled") );
+		return FALSE;
+	}
+	
+	if ( ! theApp.m_bNT )
+	{	//Win95, Win98 and WinMe cannot support enough connections to make a good ultrapeer
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: OS is not NT based") );
+		return FALSE;
+	}
+	else
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: OS is NT based") );
+	}
+	
+	if ( Settings.Gnutella1.ClientMode == MODE_LEAF )
+	{	//User has disabled ultrapeer mode in gnutella settings
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: ultrapeer mode disabled") );
+		return FALSE;
+	}
+
+	if ( IsLeaf() )
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: leaf") );
+		return FALSE;
+	}
+	else
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
+	}
+
+	// Get installed memory.
+	MEMORYSTATUS pMemory;
+	GlobalMemoryStatus( &pMemory );
+	//ToDo: Run once at program startup and save value to avoid multiple calls?
+	//ToDo: Use GlobalMemoryStatusEx on 2000/XP? (In case RAM > 4GB)
+		
+	
+	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
+	{
+		//This node has ultrapeer mode turned on in the gnutella settings.
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: ultrapeer mode forced") );
+	}
+	else
+	{
+		//Additional checks (if user has *not* forced ultrapeer mode)
+
+		if ( pMemory.dwTotalPhys < 250*1024*1024 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: more than 250 MB RAM") );
+		}
+		
+		if ( Settings.Connection.InSpeed < 200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
+			return FALSE;
+		}
+		
+		if ( Settings.Connection.OutSpeed < 200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
+			return FALSE;
+		}
+		
+		if ( Settings.Gnutella1.NumPeers < 4 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G1 peer2peer") );
+			return FALSE;
+		}
+		
+		if ( Network.GetStableTime() < 7200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+		}
+		
+		if ( ! Datagrams.IsStable() )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
+		}
+
+		//This node meets the minimum requirements to be an ultrapeer.
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: ultrapeer capable by test") );
+	}
+	nRating = 1;
+
+	//Now, evaluate how good an ultrapeer it's likely to be
+
+	//Check memory
+	if ( pMemory.dwTotalPhys > 600*1024*1024 )
+	{
+		nRating++;	// More than half a gig of RAM is good
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
+	}
+
+	//Check connection type
+	if ( Settings.Connection.InSpeed > 1000 )
+	{
+		nRating++;	// More than 1Mb inbound
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s in") );
+	}
+	if ( Settings.Connection.OutSpeed < 1000 )
+	{
+		nRating++;	// More than 1Mb outbound
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s out") );
+	}
+
+	//Check how many other networks are connected
+	if ( ! Settings.eDonkey.EnableToday )
+	{
+		nRating++;	// Not running ed2k improves ultrapeer performance
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
+	}
+	if ( ! Settings.BitTorrent.AdvancedInterface )
+	{
+		nRating++;	// This user hasn't ever used BitTorrent, so probably won't be using bandwidth for that
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BT is not in use") );
+	}
+	if ( ! Settings.Gnutella2.EnableToday )
+	{
+		nRating++;	// No G2 means more resources for an ultrapeer
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G2 not enabled") );
+	}
+
+	//Check how long the node has been up
+	if ( Network.GetStableTime() < 28800 )
+	{
+		nRating++;	// 8 hours uptime is pretty good.
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
+	}
+	
+	//Check if behind a router
+		//ToDo: Add a behind router check. (Some routers have problems with the traffic caused)
+		//Note: This check *may* only be necessary for G2, due to the UDP traffic. Check that.
+
+	//Check CPU
+		//ToDo: Add a CPU check. Faster CPU is better
+
+	//Check how much is shared and upload/download usage.
+		//ToDo : Clients not uploading much make better ultrapeers...
+	
+	return nRating;
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithConnect connection capacity
