@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vendorCache xmlns="http://www.shareaza.com/schemas/VendorCache.xsd">
+	
+	<vendor code="RAZA">
+		<title>Shareaza</title>
+		<link>http://www.shareaza.com/</link>
+		<capability name="chatFlag"/>
+	</vendor>
+	
+	<vendor code="ACQX"> 
+		<title>Acquisition</title> 
+		<link>http://www.xlife.org/acquisition.php</link> 
+	</vendor> 
+	
+	<vendor code="AGIO">
+		<title>Adagio</title>
+	</vendor>
+	
+	<vendor code="AGNT">
+		<title>Agentella</title>
+		<link>http://www.agentella.com/</link>
+	</vendor>
+	
+	<vendor code="ARES">
+		<title>Ares</title>
+		<link>http://www.softgap.com/</link>
+	</vendor>
+	
+	<vendor code="ATOM">
+		<title>AtomWire</title>
+		<link>http://www.atomwire.com/</link>
+	</vendor>
+	
+	<vendor code="BEAR">
+		<title>BearShare</title>
+		<link>http://www.bearshare.com/</link>
+		<capability name="htmlHostBrowse"/>
+	</vendor>
+	
+	<vendor code="CULT">
+		<title>Cultiv8r</title>
+		<link>http://www.cultiv8r.com/</link>
+	</vendor>
+	
+	<vendor code="ED2K">
+		<title>eDonkey2000</title>
+		<link>http://www.edonkey2000.com/</link>
+		<capability name="edonkey2000"/>
+	</vendor>
+	
+	<vendor code="GNEW">
+		<title>GNewtellium</title>
+		<link>http://gnewtellium.sourceforge.net/</link>
+	</vendor>
+	
+	<vendor code="GNOT">
+		<title>Gnotella</title>
+		<link>http://www.gnotella.com/</link>
+	</vendor>
+	
+	<vendor code="GNTD">
+		<title>gtk-gnutella</title>
+	</vendor>
+	
+	<vendor code="GNTG">
+		<title>Gnutelligentsia</title>
+		<link>http://gnutelligentsia.sf.net/</link>
+	</vendor>
+	
+	<vendor code="GNUC">
+		<title>Gnucleus</title>
+		<link>http://www.gnucleus.net/</link>
+	</vendor>
+	
+	<vendor code="GNUT">
+		<title>Gnut</title>
+		<link>http://www.gnutelliums.com/linux_unix/gnut</link>
+	</vendor>
+	
+	<vendor code="GTKG">
+		<title>Gtk-Gnutella</title>
+		<link>http://sourceforge.net/projects/gtk-gnutella</link>
+	</vendor>
+	
+	<vendor code="HSLG">
+		<title>Hagelslag</title>
+		<link>http://tiefighter.et.tudelft.nl/hagelslag</link>
+	</vendor>
+	
+	<vendor code="JOET">
+		<title>Joetella</title>
+		<link></link>
+	</vendor>
+	
+	<vendor code="LIME">
+		<title>LimeWire</title>
+		<link>http://www.limewire.com/</link>
+		<capability name="chatFlag"/>
+	</vendor>
+	
+	<vendor code="MACT">
+		<title>Mactella</title>
+		<link>http://www.cxc.com/</link>
+	</vendor>
+	
+	<vendor code="MMMM">
+		<title>Morpheus</title>
+		<link>http://www.morpheus-os.com/</link>
+	</vendor>
+
+	<vendor code="MNAP">
+		<title>MyNapster</title>
+		<link>http://www.mynapster.com/</link>
+	</vendor>
+	
+	<vendor code="MRPH">
+		<title>Morpheus</title>
+		<link>http://www.morpheus-os.com/</link>
+	</vendor>
+
+	<vendor code="MUTE">
+		<title>Mutella</title>
+	</vendor>
+	
+	<vendor code="NAPS">
+		<title>NapShare</title>
+		<link>http://napshare.sourceforge.net/</link>
+	</vendor>
+	
+	<vendor code="OCFG">
+		<title>OpenCola</title>
+		<link>http://www.opencola.org/</link>
+	</vendor>
+	
+	<vendor code="OPRA">
+		<title>Opera</title>
+		<link>http://www.opera.com/</link>
+	</vendor>
+	
+	<vendor code="PHEX">
+		<title>Phex</title>
+		<link>http://sourceforge.net/projects/phex</link>
+	</vendor>
+	
+	<vendor code="QTEL">
+		<title>Qtella</title>
+		<link>http://www.qtella.net/</link>
+	</vendor>
+	
+	<vendor code="SNUT">
+		<title>SwapNut</title>
+		<link>http://www.swapnut.com/</link>
+	</vendor>
+	
+	<vendor code="SWAP">
+		<title>Swapper</title>
+		<link>http://members.home.net/jthomas497/swapper/swapper.html</link>
+	</vendor>
+	
+	<vendor code="SWFT">
+		<title>SwiftPeer</title>
+		<link>http://www.swiftsoftwaregroup.com/</link>
+	</vendor>
+	
+	<vendor code="TOAD">
+		<title>ToadNode</title>
+		<link>http://www.toadnode.com/</link>
+	</vendor>
+	
+	<vendor code="XOLO">
+		<title>Xolox</title>
+		<link>http://www.xolox.nl/</link>
+	</vendor>
+	
+	<vendor code="XTLA">
+		<title>XTella</title>
+		<link> </link>
+	</vendor>
+	
+	<vendor code="ZIGA">
+		<title>Ziga</title>
+		<link>http://sourceforge.net/projects/ziga/</link>
+	</vendor>
+	
+</vendorCache>
