@@ -1155,7 +1155,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
 		<item id="ID_LIBRARY_LAUNCH" text="_Abrir O Reproducir"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Agregar to Pla_ylist"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Agregar a Pla_ylist"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartir"/>
 		<separator/>
