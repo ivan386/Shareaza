@@ -320,6 +320,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="ai"/>
                <type extension="bmp"/>
                <type extension="bw"/>
+               <type extension="cel"/>
                <type extension="clp"/>
                <type extension="ct"/>
                <type extension="cut"/>
@@ -366,5 +367,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="tub"/>
                <type extension="wpg"/>
                <type extension="wmf"/>
+               <type extension="xcf"/>
        </typeFilter>
 </schemaDescriptor>

@@ -354,13 +354,17 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <type extension="ace"/>
                <type extension="arj"/>
                <type extension="bin"/>
+               <type extension="bz2"/>
+               <type extension="cab"/>
                <type extension="cue"/>
                <type extension="exe"/>
                <type extension="iso"/>
+               <type extension="jar"/>
                <type extension="gz"/>
                <type extension="gzip"/>
                <type extension="msi"/>
                <type extension="rar"/>
+               <type extension="sit"/>
                <type extension="t"/>
                <type extension="tar"/>
                <type extension="tar.gz"/>
