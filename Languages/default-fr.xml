@@ -30,7 +30,7 @@ Other:
 			description="Shareaza French Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.2.14"
+			version="2.0.3.0"
 			type="Language"
 			language="fr"
 			prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -3059,8 +3059,8 @@ Other:
 	    <control/>
 	</dialog>
 
-	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
-		<control caption="Shareaza est un client P2P multi-réseaux. Il peut se connecter à plusieurs réseaux en même temps. Sur cette page, vous pouvez sélectionner à quels réseaux vous souhaitez vous connecter, puis paramétrer des réglages spécifiques à chacun des réseaux."/>
+	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
+		<control caption="Shareaza est un client P2P multi-réseaux. Il peut se connecter à plusieurs réseaux en même temps. Sur cette page, vous pouvez sélectionner à quels réseaux vous souhaitez vous connecter, puis paramétrer des réglages spécifiques à chacun."/>
 		<control caption="Réseau Gnutella2:"/>
 		<control caption="Le réseau Gnutella2 est le réseau de prédilection de Shareaza, et est le plus performant des réseaux P2P. Hautement recommendé."/>
 		<control caption="Se connecter à Gnutella2 (G2)"/>

@@ -13,7 +13,7 @@
 ; Corrected by Rolandas Rudomanskis
 
 [LangOptions]
-LanguageName=Lithuanian
+LanguageName=Lietuvi<0173>
 LanguageID=$0427
 LanguageCodePage=1257
 ; If the language you are translating to requires special font faces or
