@@ -231,7 +231,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 
 		if ( pFileTemp->IsShared() )	// Check if the file is shared
 		{
-			if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFileTemp, FALSE ) ) // Check if a queue exists
+			if ( ( pFileTemp->IsGhost() ) || (UploadQueues.CanUpload( PROTOCOL_HTTP, pFileTemp, FALSE ) ) ) // Check if a queue exists
 			{
 				//Add the keywords to the table
 				m_pTable->AddString( strWord );
@@ -257,7 +257,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 		
 		if (pFile->IsShared())	// Check if the file is shared
 		{		
-			if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, FALSE ) ) // Check if a queue exists
+			if ( ( pFile->IsGhost() ) || ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, FALSE ) ) ) // Check if a queue exists
 			{
 				//Add the hashes to the table
 				if ( pFile->m_bSHA1 )
