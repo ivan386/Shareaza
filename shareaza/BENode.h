@@ -83,6 +83,19 @@ public:
 		CString str;
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
+		int nSource = str.GetLength();
+		int nLength = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, NULL, 0 );
+#ifdef _UNICODE
+		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+		str.ReleaseBuffer( nLength );
+#else
+		LPWSTR pszWide = new WCHAR[ nLength + 1 ];
+		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, pszWide, nLength );
+		pszWide[ nLength ] = 0;
+		str = pszWide;
+		delete [] pszWide;
+#endif
+
 		return str;
 	}
 
