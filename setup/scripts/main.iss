@@ -44,6 +44,7 @@ AppModifyPath="{app}\Uninstall\repair.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest.txt
+MinVersion=4.0.950,4.0.1381sp4
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
