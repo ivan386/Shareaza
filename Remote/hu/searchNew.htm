@@ -1,36 +1,34 @@
-										<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                                        <td class="tabsel">Új keresés</td>
-										<td class="tabedg">&nbsp;</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td class="frame">
-								<div>
-									Írd be a keresendő szót vagy szavakat a 
-                                    mezőbe és kattints a <b>Keresés</b> gombra.
-									Fájltípus kiválasztása a listából lehetséges.
-								</div>
-								<form method="get" action="newsearch">
-								<table align="center">
-									<tr>
-										<td>Keresés:</td>
-										<td><input type="text" name="search" size="30"></td>
-									</tr>
-									<tr>
-										<td>Fájltípus:</td>
-										<td>
-											<select name="schema">
-												<option>Bármilyen fájl</option>
-												<%= schema_option_list %>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2" align="center">
-											<input type="submit" value="Keresés">
-										</td>
-									</tr>
-								</table>
-								</form>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<td class="tabsel">Új keresés</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Írd be a keresendő szót vagy szavakat a mezőbe és kattints a <b>
+            Keresés</b> gombra. Fájltípus kiválasztása a listából lehetséges.</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Keresés:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Fájltípus:</td>
+					<td>
+						<select name="schema">
+							<option>Bármilyen fájl</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Keresés">
+					</td>
+				</tr>
+			</table>
+		</form>
