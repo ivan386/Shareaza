@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.21"
+		version="2.1.0.25"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3308,7 +3308,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Upload Queue Properties">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
 		<control caption="_Name:"/>
 		<control/>
 		<control caption="_Entry Criteria:"/>
@@ -3340,6 +3340,7 @@
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
+		<control caption="Reward uploaders"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Welcome to Shareaza">
@@ -4011,6 +4012,7 @@
 		<column from="Progress" to=""/>
 		<column from="Speed" to=""/>
 		<column from="Client" to=""/>
+		<column from="Rating" to=""/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to=""/>
