@@ -1,7 +1,7 @@
 //
 // SchemaMember.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -100,33 +100,31 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	
 	if ( strValue.IsEmpty() ) return strValue;
 	
-	if ( bFormat )
+	if ( bFormat && m_bNumeric )
 	{
 		BOOL bInvalid = FALSE;
-		if ( m_bNumeric )
+
+		if ( m_nFormat == smfTimeMMSS )
 		{
-			if ( m_nFormat == smfTimeMMSS )
-			{
-				DWORD nSeconds = 0;
-				_stscanf( strValue, _T("%lu"), &nSeconds );
-				bInvalid = ( nSeconds < (DWORD)m_nMinOccurs || nSeconds > (DWORD)m_nMaxOccurs );
-				strValue.Format( _T("%.2u:%.2u"), nSeconds / 60, nSeconds % 60 );
-			}
-			else if ( m_nFormat == smfTimeHHMMSSdec )
-			{
-				float nMinutes = 0;
-				_stscanf( strValue, _T("%f"), &nMinutes );
-				bInvalid = ( nMinutes < (DWORD)m_nMinOccurs || nMinutes > (DWORD)m_nMaxOccurs );
-				strValue.Format( _T("%.2u:%.2u:%.2u"), (int)nMinutes / 60,
-					(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
-			}
-			else if ( m_nFormat == smfFrequency )
-			{
-				DWORD nRate = 0;
-				_stscanf( strValue, _T("%lu"), &nRate );
-				bInvalid = ( nRate < (DWORD)m_nMinOccurs || nRate > (DWORD)m_nMaxOccurs );
-				strValue.Format( _T("%.1f kHz"), nRate / 1000.0 );
-			}
+			DWORD nSeconds = 0;
+			_stscanf( strValue, _T("%lu"), &nSeconds );
+			bInvalid = ( nSeconds < (DWORD)m_nMinOccurs || nSeconds > (DWORD)m_nMaxOccurs );
+			strValue.Format( _T("%.2u:%.2u"), nSeconds / 60, nSeconds % 60 );
+		}
+		else if ( m_nFormat == smfTimeHHMMSSdec )
+		{
+			float nMinutes = 0;
+			_stscanf( strValue, _T("%f"), &nMinutes );
+			bInvalid = ( nMinutes < (DWORD)m_nMinOccurs || nMinutes > (DWORD)m_nMaxOccurs );
+			strValue.Format( _T("%.2u:%.2u:%.2u"), (int)nMinutes / 60,
+				(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
+		}
+		else if ( m_nFormat == smfFrequency )
+		{
+			DWORD nRate = 0;
+			_stscanf( strValue, _T("%lu"), &nRate );
+			bInvalid = ( nRate < (DWORD)m_nMinOccurs || nRate > (DWORD)m_nMaxOccurs );
+			strValue.Format( _T("%.1f kHz"), nRate / 1000.0 );
 		}
 		else if ( m_nFormat == smfBitrate )
 		{
