@@ -117,7 +117,7 @@ nl.reg_apptitle=Shareaza Ultimate File Sharing
 nl.icons_license=Gebruiksovereenkomst
 nl.icons_uninstall=Verwijderen
 nl.icons_downloads=Downloads
-nl.dialog_shutdown=Wil je %1 afsluiten?
+nl.dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installatie verder kan gaan?
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
