@@ -84,6 +84,7 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	
 	m_wndGroup.SetCurSel( 0 );
 	
+	/*
 	m_wndType.SetItemData( 0, 0 );
 	m_wndType.SetItemData( 1, 56 );
 	m_wndType.SetItemData( 2, 128 );
@@ -93,10 +94,26 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndType.SetItemData( 6, 45000 );
 	m_wndType.SetItemData( 7, 100000 );
 	m_wndType.SetItemData( 8, 155000 );
+	*/
+	//; Dialup Modem; ISDN; Cable Modem/DSL; T1; T3; LAN; OC3;
+
+	m_wndType.SetItemData( 0, 0 );
+	m_wndType.SetItemData( 1, 56 );
+	m_wndType.SetItemData( 2, 128 );
+	m_wndType.SetItemData( 3, 256);
+	m_wndType.SetItemData( 4, 512);
+	m_wndType.SetItemData( 5, 1536 );
+	m_wndType.SetItemData( 6, 1544 );
+	m_wndType.SetItemData( 7, 45000 );
+	m_wndType.SetItemData( 8, 100000 );
+	m_wndType.SetItemData( 9, 155000 );
+	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (1.5M); Cable Modem/SDSL; T3; LAN; OC3;
 	
 	CString strSpeed;
 	strSpeed.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
 	m_wndSpeed.SetWindowText( strSpeed );
+
+	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps;
 	
 	return TRUE;
 }
@@ -123,7 +140,7 @@ void CWizardConnectionPage::OnSelChangeConnectionGroup()
 	m_wndSpeed.SetCurSel( -1 );
 	m_wndSpeed.EnableWindow( FALSE );
 	m_wndType.EnableWindow( TRUE );
-	m_wndType.SetCurSel( nGroup == 1 ? 1 : 4 );
+	m_wndType.SetCurSel( nGroup == 1 ? 1 : 6 );
 }
 
 void CWizardConnectionPage::OnSelChangeConnectionType() 
@@ -181,6 +198,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 			Settings.Connection.Firewalled	= TRUE;
 			Settings.Connection.InPort		= 6346;
 			break;
+		case 3:
+			Settings.Connection.Firewalled	= TRUE;
+			Settings.Connection.InPort		= 6346;
+			break;
 		}
 	}
 	else
@@ -193,6 +214,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 				Settings.Connection.InPort	= Network.RandomPort();
 			break;
 		case 1:
+			Settings.Connection.Firewalled	= TRUE;
+			Settings.Connection.InPort		= 6346;
+			break;
+		case 2:
 			Settings.Connection.Firewalled	= TRUE;
 			Settings.Connection.InPort		= 6346;
 			break;
@@ -220,20 +245,34 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	}
 	
 	Settings.Connection.InSpeed		= nSpeed;
-	Settings.Connection.OutSpeed	= nSpeed == 56 ? 32 : nSpeed;
+	//Settings.Connection.OutSpeed	= nSpeed == 56 ? 32 : nSpeed;
+	if( nSpeed <= 56 )
+		Settings.Connection.OutSpeed = 32;
+	else if( nSpeed <= 1536 )
+		Settings.Connection.OutSpeed = nSpeed / 4;
+	else
+		Settings.Connection.OutSpeed = nSpeed;
+
+
 	
 	if ( nSpeed > 750 )
 	{
 		Settings.Gnutella2.NumPeers = max( Settings.Gnutella2.NumPeers, 4 );
 	}
 	
-	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 20 : 200;
+	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed >= 100 && theApp.m_bNT )
+	if ( nSpeed > 256 && theApp.m_bNT )
 	{
 		Settings.Downloads.MaxFiles			= 32;
 		Settings.Downloads.MaxTransfers		= 128;
 		Settings.Downloads.MaxFileTransfers	= 8;
+	}
+	else if ( nSpeed > 80 && theApp.m_bNT )
+	{
+		Settings.Downloads.MaxFiles			= 16;
+		Settings.Downloads.MaxTransfers		= 64;
+		Settings.Downloads.MaxFileTransfers	= 6;
 	}
 	else
 	{
