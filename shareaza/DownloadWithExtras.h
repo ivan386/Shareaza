@@ -88,6 +88,7 @@ public:
 	inline int	GetReviewCount() const { return m_nReviewCount; }
 	inline CDownloadReview* GetFirstReview() const { return m_pReviewFirst; }
 	CDownloadReview* FindReview(in_addr *pIP) const;
+	CDownloadReview* FindReview(LPCTSTR pszUserName) const;
 public:
 	void		ShowMonitor(CSingleLock* pLock = NULL);
 	BOOL		IsMonitorVisible() const;

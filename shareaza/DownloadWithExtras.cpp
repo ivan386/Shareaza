@@ -135,15 +135,20 @@ BOOL CDownloadWithExtras::AddReview(in_addr *pIP, int nClientID, int nRating, LP
 		return FALSE;
 	}
 
-	// If we already have a review from this IP, then exit
-	if ( FindReview( pIP ) ) 
+	// If we already have a review from this user name with the same data, then exit
+	CDownloadReview* pReview = FindReview( pszUserName );
+	if ( pReview ) 
 	{
-		theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
-		return FALSE;
+		if ( _tcscmp( pReview->m_sFileComments, pszComment ) == 0 &&
+			 pReview->m_nFileRating == nRating )
+		{
+			theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
+			return FALSE;
+		}
 	}
 
 	// Add the review
-	CDownloadReview* pReview = new CDownloadReview(pIP, nClientID, nRating, pszUserName, pszComment);
+	pReview = new CDownloadReview(pIP, nClientID, nRating, pszUserName, pszComment);
 	m_nReviewCount++;
 
 	pReview->m_pPrev = m_pReviewLast;
@@ -262,6 +267,22 @@ CDownloadReview* CDownloadWithExtras::FindReview(in_addr *pIP) const
 	while ( pReview )
 	{
 		if ( pReview->m_pUserIP.S_un.S_addr == pIP->S_un.S_addr )
+			return pReview;
+		pReview = pReview->m_pNext;
+	}
+
+	return NULL;
+}
+
+// Find a review given a user name
+CDownloadReview* CDownloadWithExtras::FindReview(LPCTSTR pszUserName) const
+{
+	CDownloadReview *pReview = m_pReviewFirst;
+	if ( _tcsclen( pszUserName ) == 0 ) return NULL;
+
+	while ( pReview )
+	{
+		if ( _tcscmp( pReview->m_sUserName, pszUserName ) == 0 )
 			return pReview;
 		pReview = pReview->m_pNext;
 	}
