@@ -168,6 +168,7 @@
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDB_BITMAP3                     265
+#define IDD_SAVE_FILTER_AS              267
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
 #define IDC_CONNECT_HOST                1000
@@ -636,11 +637,15 @@
 #define IDC_REMOTE_URL                  1380
 #define IDC_COLLECTIONS_FOLDER          1381
 #define IDC_COLLECTIONS_BROWSE          1382
+#define IDC_FILTERS                     1382
 #define IDC_TORRENTS_FOLDER             1383
+#define IDC_SET_DEFAULT_FILTER          1383
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENT_LINKS_SPIN          1385
+#define IDC_SAVE_FILTER                 1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
 #define IDC_STARTTORRENTDOWNLOADS       1386
+#define IDC_DELETE_FILTER               1386
 #define IDC_TORRENT_ENDGAME             1387
 #define IDC_TORRENT_INTERFACE           1388
 #define IDC_TORRENT_CLIENTLINKS         1389
@@ -792,6 +797,12 @@
 #define IDS_TIP_FILE_BUSY               8334
 #define IDS_TIP_FILE_FIREWALLED         8335
 #define IDS_TIP_FILE_UNSTABLE           8336
+#define IDS_PROPERTY_PAGE_GENERAL       9000
+#define IDS_PROPERTY_PAGE_METADATA      9001
+#define IDS_PROPERTY_PAGE_REVIEW        9002
+#define IDS_PROPERTY_PAGE_COMMENTS      9002
+#define IDS_PROPERTY_PAGE_SHARING       9003
+#define IDS_PROPERTY_PAGE_SOURCES       9004
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003
@@ -1020,6 +1031,7 @@
 #define IDS_LIBRARY_COLLECTION_LOCKDOWN 16407
 #define IDS_LIBRARY_COPYURI             16408
 #define IDS_LIBRARY_EXPORTURIS          16409
+#define IDS_FILTER_DELETE_CONFIRM       16410
 #define IDS_CHAT_CONNECTED_X            16448
 #define IDS_CHAT_ONLINE_X               16449
 #define IDS_CHAT_CLOSED_X               16450
