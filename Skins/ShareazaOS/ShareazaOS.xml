@@ -1093,10 +1093,10 @@
         </anchors>
       </windowSkin>
       <!-- end navbar language for pt-br -->
-      <!-- navbar language for cn -->
+      <!-- navbar language for chs -->
       <windowSkin> 
-        <image type="image" language="cn" path="sos_navbar_cn.bmp"/>
-        <image type="watermark" language="cn" path="sos_navbarbg.bmp"/>
+        <image type="image" language="chs" path="sos_navbar_chs.bmp"/>
+        <image type="watermark" language="chs" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
         <target window="CMainTabBarCtrl.Windowed"/>
         <parts> 
@@ -1136,8 +1136,8 @@
         </anchors>
       </windowSkin>
       <windowSkin> 
-        <image type="image" language="cn" path="sos_navbar_cn.bmp"/>
-        <image type="watermark" language="cn" path="sos_navbarbg.bmp"/>
+        <image type="image" language="chs" path="sos_navbar_chs.bmp"/>
+        <image type="watermark" language="chs" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts> 
           <part name="_ID_TAB_HOME.Up"	 rect="0,0,81,29"/>
