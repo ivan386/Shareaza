@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.17"
+		version="2.1.0.18"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -1552,14 +1552,14 @@
 				<text>You have not downloaded any new files recently.</text>
 				<newline gap="8"/>
 			</group>
-			<text id="LibraryFiles" format="b">%lu</text>
-			<text>files,</text>
+			<text id="LibraryFiles" format="b">%lu </text>
+			<text>files, </text>
 			<text id="LibraryVolume" format="b">%s</text>
 			<newline gap="0"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
 			<group id="1">
 				<newline gap="8"/>
-				<text>Shareaza is scanning and processing</text>
+				<text>Shareaza is scanning and processing </text>
 				<text id="LibraryHashRemaining" format="b">%lu</text>
 				<text>files.</text>
 				<newline gap="8"/>
@@ -1613,10 +1613,10 @@
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
-				<text>You have been connected for</text>
-				<text id="ConnectedHours" format="b">%i</text>
-				<text>hours and</text>
-				<text id="ConnectedMinutes" format="b">%i</text>
+				<text>You have been connected for </text>
+				<text id="ConnectedHours" format="b">%i </text>
+				<text>hours and </text>
+				<text id="ConnectedMinutes" format="b">%i </text>
 				<text>minutes.</text>
 			</para>
 		</group>
@@ -1722,7 +1722,7 @@
 			The Shareaza Settings Manager allows advanced users to completely customise how
 			Shareaza works.  The settings in the
 		</text>
-		<text format="b">Internet</text>
+		<text format="b">Internet </text>
 		<text>
 			section control how Shareaza interacts with other nodes within distributed peer-to-peer
 			networks.
@@ -3112,8 +3112,7 @@
 		<control caption="Share preview files"/>
 		<control caption="Strip tag metadata"/>
 		<control caption="Limit per unique host:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="_User-Agent Filter:"/>
 		<control/>
 		<control caption="+"/>
@@ -3842,8 +3841,7 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Download Server.met File">
 		<control/>
 		<control caption="You can download an eDonkey2000 server.met file from the web to refresh your local list of servers."/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
 	</dialog>
