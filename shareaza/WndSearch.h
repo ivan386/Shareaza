@@ -52,6 +52,10 @@ public:
 	DWORD				m_nCacheHubs;
 	DWORD				m_nCacheLeaves;
 	CString				m_sCaption;
+	BOOL				m_bWaitMore;
+	DWORD				m_nMaxResults;
+	DWORD				m_nMaxED2KResults;
+	DWORD				m_nMaxQueryCount;
 	
 // Operations
 public:

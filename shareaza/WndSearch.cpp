@@ -40,6 +40,7 @@
 #include "WndMain.h"
 #include "DlgNewSearch.h"
 #include "DlgHitColumns.h"
+#include "DlgHelp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -138,6 +139,10 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_nDetails		= Settings.Search.DetailPanelSize;
 	m_bPaused		= TRUE;
 	m_bSetFocus		= TRUE;
+	m_bWaitMore		= FALSE;
+	m_nMaxResults	= 0;
+	m_nMaxED2KResults=0;
+	m_nMaxQueryCount= 0;
 	
 	LoadState( _T("CSearchWnd"), TRUE );
 	
@@ -191,7 +196,7 @@ void CSearchWnd::OnSize(UINT nType, int cx, int cy)
 		m_wndPanel.ShowWindow( SW_HIDE );
 	}
 	
-	if ( ! m_bPaused ) rc.top += STATUS_HEIGHT;
+	if ( ! (m_bPaused||m_bWaitMore) ) rc.top += STATUS_HEIGHT;
 	
 	m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom - TOOLBAR_HEIGHT, rc.Width(), TOOLBAR_HEIGHT, SWP_NOZORDER );
 	rc.bottom -= TOOLBAR_HEIGHT;
@@ -280,7 +285,7 @@ void CSearchWnd::OnPaint()
 			GetSysColor( COLOR_BTNFACE ) );
 	}
 	
-	if ( m_bPaused ) return;
+	if ( m_bPaused || m_bWaitMore) return;
 	
 	CRect rc( &rcClient );
 	rc.bottom = rc.top + STATUS_HEIGHT;
@@ -372,7 +377,7 @@ BOOL CSearchWnd::DoSizeDetails()
 	
 	GetClientRect( &rcClient );
 	if ( m_bPanel ) rcClient.left += PANEL_WIDTH;
-	if ( ! m_bPaused ) rcClient.top += STATUS_HEIGHT;
+	if ( ! (m_bPaused||m_bWaitMore) ) rcClient.top += STATUS_HEIGHT;
 	rcClient.bottom -= TOOLBAR_HEIGHT;
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
@@ -432,6 +437,26 @@ void CSearchWnd::OnSearchSearch()
 	CManagedSearch* pSearch = NULL;
 	
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+
+	//********** The 'Search More' situation
+	//ToDo: Detect if search has changed and skip this
+	POSITION pos = m_pSearches.GetTailPosition();
+	if((!m_bPaused)&&(m_bWaitMore)&&(pos))
+	{
+		m_bWaitMore=FALSE;
+		pSearch = (CManagedSearch*)m_pSearches.GetPrev(pos);
+		pSearch->m_bActive=TRUE;
+		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
+
+		m_nMaxResults=m_pMatches->m_nFilteredHits+Settings.Gnutella.MaxResults;
+		m_nMaxQueryCount=pSearch->m_nQueryCount+Settings.Gnutella2.QueryLimit;
+
+		//m_nMaxED2KResults=m_pMatches->m_nED2KHits+100;//ED2K is only 100 extra on search more
+
+		m_bUpdate = TRUE;
+		return;
+	}
+	//**********
 	
 	if ( m_pMatches->m_nFiles > 0 )
 	{
@@ -451,7 +476,11 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_wndPanel.m_bSendSearch )
 	{
 		pSearch = m_wndPanel.GetSearch();
-		if ( pSearch == NULL ) return;
+		if ( pSearch == NULL ) 
+		{								//Invalid search, open help window
+			CHelpDlg::Show( _T("SearchHelp.BadSearch") );
+			return;
+		}
 		
 		if ( m_pMatches->m_nFiles == 0 && pSearch->m_pSearch->m_pSchema != NULL )
 		{
@@ -586,15 +615,27 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
-		m_bPaused = FALSE;
-		m_tSearch = GetTickCount();
+		if(pManaged->m_pSearch->CheckValid())
+		{
+			m_bPaused	= FALSE;
+			m_tSearch   = GetTickCount();
+			m_bWaitMore	= FALSE;
+
+			m_nMaxResults=Settings.Gnutella.MaxResults;
+			m_nMaxED2KResults=(DWORD)min( 201, Settings.eDonkey.MaxResults );
+
+			m_nMaxQueryCount= Settings.Gnutella2.QueryLimit;
 		
-		pManaged->m_pSearch->BuildWordList();
+			pManaged->Stop();
+			pManaged->Start();
 		
-		pManaged->Stop();
-		pManaged->Start();
-		
-		m_wndPanel.ShowSearch( pManaged );
+			m_wndPanel.ShowSearch( pManaged );
+		}
+		else
+		{
+			//Bad search, open help window
+			CHelpDlg::Show( _T("SearchHelp.BadSearch") );
+		}
 	}
 	
 	UpdateMessages();
@@ -661,7 +702,7 @@ void CSearchWnd::UpdateMessages(BOOL bActive)
 
 	if ( bActive )
 	{
-		m_wndPanel.ShowStatus( ! m_bPaused,
+		m_wndPanel.ShowStatus( ! m_bPaused, !m_bWaitMore,
 			m_pMatches->m_nFilteredFiles,
 			m_pMatches->m_nFilteredHits,
 			m_nCacheHubs, m_nCacheLeaves );
@@ -669,7 +710,7 @@ void CSearchWnd::UpdateMessages(BOOL bActive)
 		CRect rcList;
 		m_wndList.GetWindowRect( &rcList );
 		ScreenToClient( &rcList );
-		if ( ( rcList.top == 0 ) != m_bPaused ) OnSize( SIZE_INTERNAL, 0, 0 );
+		if ( ( rcList.top == 0 ) != (m_bPaused||m_bWaitMore) ) OnSize( SIZE_INTERNAL, 0, 0 );
 	}
 
 	if ( m_pMatches->m_nFilteredFiles == 0 )
@@ -715,11 +756,18 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
 			m_bUpdate = TRUE;
 			
-			if ( m_pMatches->m_nFilteredHits >= (DWORD)min( 201, Settings.eDonkey.MaxResults ) )
+			if ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults )
+			{
 				pManaged->m_tLastED2K = 0xFFFFFFFF;
-			
-			if ( m_pMatches->m_nFilteredHits >= Settings.Gnutella.MaxResults )
-				pManaged->Stop();
+				theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
+			}
+
+			if (!m_bWaitMore&& ( (m_pMatches->m_nFilteredHits - m_pMatches->m_nED2KHits) >= m_nMaxResults))
+			{
+				m_bWaitMore=TRUE;
+				pManaged->m_bActive=FALSE;
+				theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
+			}
 			
 			return TRUE;
 		}
@@ -730,6 +778,19 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 
 void CSearchWnd::OnTimer(UINT nIDEvent) 
 {
+	POSITION pos = m_pSearches.GetTailPosition();
+	if(Settings.Gnutella2.QueryLimit && pos)
+	{
+		CManagedSearch* pManaged = (CManagedSearch*)m_pSearches.GetPrev(pos);
+		if((pManaged->m_bActive) && (pManaged->m_nQueryCount>m_nMaxQueryCount))
+		{
+			m_bWaitMore=TRUE;
+			pManaged->m_bActive=FALSE;
+			theApp.Message( MSG_DEBUG, _T("Search Reached Maximum Duration") );
+			m_bUpdate = TRUE;
+		}
+	}
+
 	if ( nIDEvent == 1 )
 	{
 		if ( m_bSetFocus )
