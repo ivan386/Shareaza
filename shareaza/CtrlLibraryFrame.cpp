@@ -1144,10 +1144,17 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 	pSearch->BuildWordList();
 	
 	CAlbumFolder* pRoot		= Library.GetAlbumRoot();
-	CAlbumFolder* pFolder	= pRoot->GetFolder( _T("Search Results") );
+	CAlbumFolder* pFolder	= pRoot->GetFolderByURI( CSchema::uriSearchFolder );
 	
 	if ( pFolder == NULL )
+	{
 		pFolder = pRoot->AddFolder( CSchema::uriSearchFolder, _T("Search Results") );
+		if ( pFolder->m_pSchema != NULL )
+		{
+			int nColon = pFolder->m_pSchema->m_sTitle.Find( ':' );
+			if ( nColon >= 0 ) pFolder->m_sName = pFolder->m_pSchema->m_sTitle.Mid( nColon + 1 );
+		}
+	}
 	else
 		pFolder->Clear();
 	
@@ -1163,7 +1170,7 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 		
 		CXMLElement* pOuter = pFolder->m_pSchema->Instantiate();
 		CXMLElement* pInner = pOuter->AddElement( _T("searchFolder") );
-		pInner->AddAttribute( _T("title"), _T("Search Results") );
+		pInner->AddAttribute( _T("title"), pFolder->m_sName );
 		pInner->AddAttribute( _T("content"), pSearch->m_sSearch );
 		pInner->AddAttribute( _T("date"), strDate );
 		pInner->AddAttribute( _T("time"), strTime );
