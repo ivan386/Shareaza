@@ -43,6 +43,7 @@ WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\repair.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
+OutputManifestFile=Manifest.txt
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
@@ -65,7 +66,6 @@ Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 #ifndef debug
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-;Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension regserver noregerror; MinVersion: 4.0,0
 
 ; Main files
 Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -392,6 +392,4 @@ Begin
         End
 End;
 
-#ifdef Debug
-  #expr SaveToFile("..\builds\Preprocessed.iss")
-#endif
+#expr SaveToFile("..\builds\Preprocessed.iss")

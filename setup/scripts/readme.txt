@@ -3,7 +3,7 @@ http://files.jrsoftware.org/is/5/
 You'll also need to install the PreProcessor:
 http://files.jrsoftware.org/ispack/
 
-Minimum version needed is 5.0.4.
+Minimum version needed is 5.0.5.
 
 To compile a debug build without any files uncomment "#define debug" in main.iss.
 
