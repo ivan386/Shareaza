@@ -59,5 +59,8 @@ Source: "{app}\Uninstall\setup.exe"; DestDir: "{tmp}"; DestName: "temp.exe"; Fla
 
 [Run]
 ; Run installer in silent mode and pass all settings.
-Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /NORESTART /DIR=""{app}"" /GROUP=""{groupname}"" /Settings=""{tmp}"""
+Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /NORESTART /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{tmp}"""
 
+[Messages]
+WelcomeLabel1=Welcome to the [name] Repair Wizard
+WelcomeLabel2=This will repair [name/ver] on your computer.%n%nIt is recommended that you close all other applications before continuing.

@@ -15,9 +15,9 @@ VersionInfoVersion={#version}
 DefaultDirName={reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}
 DirExistsWarning=no
 DefaultGroupName=Shareaza
-DisableFinishedPage=yes
 DisableReadyPage=yes
 OutputDir=setup\builds
+OutputBaseFilename=Shareaza {#version}
 SolidCompression=yes
 Compression=lzma/ultra
 InternalCompressLevel=Ultra
@@ -26,7 +26,7 @@ VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=admin
 ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\Uninstall\uninstall.ico
-UninstallDisplayName=Shareaza
+UninstallDisplayName={cm:NameAndVersion,Shareaza,{#version}}
 UninstallFilesDir={app}\Uninstall
 SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
@@ -111,10 +111,10 @@ Source: "{app}\*.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovere
 Source: "{app}\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 
 ; Copy installer into download and uninstall dir
-Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: currentuser
-Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: allusers
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: currentuser
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: allusers
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
-Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Check: ShareazaInstalled
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Check: ShareazaInstalled
 [Icons]
 ; Shareaza icons
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
@@ -140,6 +140,8 @@ BeveledLabel=Shareaza Development Team
 [Run]
 ; Run the skin installer at end of installation
 Filename: "{app}\Skins\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}\Skins"; StatusMsg: "{cm:run_skinexe}"
+; Run Shareaza at end of installation
+Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; WorkingDir: "{app}"; Flags: postinstall skipifsilent
 
 [UninstallRun]
 ; Run the skin installer at start of uninstallation and make sure it only runs once
@@ -179,12 +181,12 @@ Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaz
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
 ; Note: These do not have to be set if ShareazaInstalled=1
-Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{commonappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: allusers
-Name: "{ini:{param:Settings|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{ini:{param:Settings|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{commonappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: allusers
-Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{commonappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{commonappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{commonappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:SETTINGS|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{commonappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: allusers
 
 [InstallDelete]
 ; Clean up old files from Shareaza
