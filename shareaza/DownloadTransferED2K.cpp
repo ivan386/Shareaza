@@ -641,9 +641,13 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 		return FALSE;
 	}
 	*/
-	
-	SetState( dtsRequesting );	//This source is current requesting
-	m_tRequest	= tNow;			//Set the 'last requested' time
+
+	//This source is current requesting
+	SetState( dtsRequesting );
+
+	//Set the 'last requested' time
+	m_tRequest	= tNow;		
+
 	ClearRequests();
 	
 	//Send ed2k file request

@@ -138,12 +138,14 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( tNow - m_tTransferStart < 100 ) return FALSE;
 	m_tTransferStart = tNow;
 	
+	// Limit the connection rate
 	if ( Settings.Downloads.ConnectThrottle != 0 )
 	{
 		if ( tNow < Downloads.m_tLastConnect ) return FALSE;
 		if ( tNow - Downloads.m_tLastConnect <= Settings.Downloads.ConnectThrottle ) return FALSE;
 	}
 
+	// Limit the amount of connecting (half-open) sources. (Very important for XP sp2)
 	if ( Downloads.GetConnectingTransferCount() >= Settings.Downloads.MaxConnectingSources )
 	{
 		return FALSE;
