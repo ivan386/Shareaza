@@ -72,7 +72,7 @@ Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: 
 
 [Messages]
 WelcomeLabel1=Welcome to the [name] Repair Wizard
-WelcomeLabel2=This will repair [name/ver] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 
 [Code]
 const
