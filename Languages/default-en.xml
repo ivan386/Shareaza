@@ -3250,21 +3250,23 @@
 		<control caption="Download..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="_Store Torrents Here:"/>
-		<control/><control/>
-		<control caption="_Download Connections:"/>
-		<control/><control/>
-		<control caption="Client connections"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
 		<control caption="_Interface:"/>
 		<control caption="Display additional BitTorrent interface elements"/>
+		<control caption="_Download Connections:"/>
+		<control/><control/>
+		<control caption="Torrents at once"/>
+		<control/><control/>
+		<control caption="Client connections"/>
 		<control caption="_EndGame:"/>
 		<control caption="Enable EndGame mode when completing torrents"/>
+		<control caption="_Store Torrents Here:"/>
+		<control/><control/>
 		<control caption="_Torrent Creator"/>
-		<control caption="Tracker:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="Torrents at once"/>
+		<control/><control/>
 		<control caption="_Default Tracker:"/>
+		<control caption="Tracker:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
