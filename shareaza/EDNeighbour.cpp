@@ -509,7 +509,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	}
 	
 	GGUID* pGUID		= (GGUID*)m_pQueries.RemoveHead();
-	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, pGUID );
+	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, pGUID, m_nFlags );
 	
 	if ( pHits == NULL )
 	{

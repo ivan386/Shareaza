@@ -101,7 +101,7 @@ protected:
 public:
 	static CQueryHit*	FromPacket(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromPacket(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID* pSearchID = NULL);
+	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID* pSearchID = NULL, DWORD m_nServerFlags = 0 );
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -117,7 +117,7 @@ protected:
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ParseAttributes(GGUID* pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
-	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer);
+	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 	void		Resolve();
