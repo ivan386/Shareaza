@@ -50,6 +50,7 @@ protected:
 	void		SelectTo(int nIndex);
 	void		BubbleSortDownloads(int nColumn);
     void		DeselectAll(CDownload* pExcept1 = NULL, CDownloadSource* pExcept2 = NULL);
+	void		SelectAll(CDownload* pExcept1 = NULL, CDownloadSource* pExcept2 = NULL);
 	int			GetSelectedCount();
 	BOOL		HitTest(const CPoint& point, CDownload** ppDownload, CDownloadSource** ppSource, int* pnIndex, RECT* prcItem);
 	BOOL		GetAt(int nSelect, CDownload** ppDownload, CDownloadSource** ppSource);

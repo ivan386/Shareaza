@@ -1,7 +1,11 @@
 //
 // CtrlDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+//	Date:			"$Date: 2005/03/05 22:59:26 $"
+//	Revision:		"$Revision: 1.27 $"
+//  Last change by:	"$Author: spooky23 $"
+//
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -379,6 +383,59 @@ void CDownloadsCtrl::SelectTo(int nIndex)
 	{
 		Invalidate();
 	}
+}
+
+void CDownloadsCtrl::SelectAll(CDownload* pDownload, CDownloadSource* pSource)
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	BOOL bSelected = FALSE;
+
+	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+
+		// If a download is selected, select all downloads
+		if ( pDownload != NULL && pDownload->m_bSelected )
+		{
+			for ( POSITION pos2 = Downloads.GetIterator() ; pos2 != NULL ; )
+			{
+				CDownload* pDownload = Downloads.GetNext( pos2 );
+
+				if ( pDownload != NULL ) pDownload->m_bSelected = TRUE;
+			}
+
+			bSelected = TRUE;
+		}
+
+		// If a source is selected, select all sources for that download
+		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; pSource = pSource->m_pNext )
+		{
+			if ( pSource != NULL && pSource->m_bSelected )
+			{
+				for ( CDownloadSource* pSource2 = pDownload->GetFirstSource() ; pSource2 != NULL ; pSource2 = pSource2->m_pNext )
+				{
+					if ( pSource2 != NULL ) pSource2->m_bSelected = TRUE;
+				}
+
+				bSelected = TRUE;
+				break;
+			}
+		}
+	}
+
+	// If nothing is selected, select all downloads
+	if ( bSelected != TRUE )
+	{
+		for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			
+			if ( pDownload != NULL ) pDownload->m_bSelected = TRUE;
+		}
+	}
+
+	Invalidate();
 }
 
 void CDownloadsCtrl::DeselectAll(CDownload* pExcept1, CDownloadSource* pExcept2)
@@ -1536,7 +1593,7 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		SelectTo( m_nFocus + 10 );
 		return;
 	case VK_LEFT:
-	case '-':
+	case VK_SUBTRACT:
 		if ( GetAt( m_nFocus, &pDownload, &pSource ) )
 		{
 			if ( pSource != NULL ) pDownload = pSource->m_pDownload;
@@ -1548,12 +1605,16 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		return;
 	case VK_RIGHT:
-	case '+':
+	case VK_ADD:
 		if ( GetAt( m_nFocus, &pDownload, NULL ) && pDownload != NULL && pDownload->m_bExpanded == FALSE )
 		{
 			pDownload->m_bExpanded = TRUE;
 			Update();
 		}
+		return;
+	case 'A':
+		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+			SelectAll();
 		return;
 	case VK_DELETE:
 		GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_CLEAR );
