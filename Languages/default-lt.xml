@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.25"
+		version="2.1.0.58"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -100,11 +100,11 @@ right quote	&#147;
 		<button id="ID_SEARCH_FILTER_RAW" text="Dar..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_SEARCH" text="Ieškoti dar..."/>
+		<button id="ID_SEARCH_STOP" text="Stabdyti"/>
+		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Siųstis"/>
 		<button id="ID_BROWSE_LAUNCH" text="Rodyti vartotojo duomenis"/>
-		<separator/>
-		<button id="ID_SEARCH_SEARCH" text="Ieškoti dar..."/>
-		<button id="ID_SEARCH_STOP" text="Stop"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Paieškos skydelis"/>
 		<button id="ID_SEARCH_DETAILS" text="Išsamus aprašas"/>
@@ -434,12 +434,13 @@ right quote	&#147;
 			<item id="ID_TAB_SEARCH" text="Pa_ieška"/>
 			<item id="ID_TAB_TRANSFERS" text="_Atsisiuntimai"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Ap_sauga"/>
-			<item id="ID_VIEW_HOSTS" text="Adresatų _talpykla"/>
-			<separator/>
 			<menu text="Kita">
-				<item id="ID_VIEW_NEIGHBOURS" text="_Kaimynai" shortcut="F7"/>
-				<item id="ID_VIEW_UPLOADS" text="_Išsiuntimai" shortcut="F8"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="_Kaimynai"/>
+				<item id="ID_VIEW_UPLOADS" text="_Išsiuntimai"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="Ap_sauga"/>
+				<item id="ID_VIEW_HOSTS" text="Adresatų _talpykla"/>
+				<item id="ID_VIEW_DISCOVERY" text="Paslaugų _radimo tarnybos"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Įprastinė _veiksena"/>
@@ -904,15 +905,15 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Š_alinti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="Rasti _daugiau šaltinių"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Valyti _sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Kopijos peržiūra"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Kopijos peržiūra"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Tęsti"/>
@@ -935,9 +936,9 @@ right quote	&#147;
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Žem_yn"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Nepaisyti _greitaveikos limito"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
+		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
-		<separator/>
+		<separator/> -->
 		<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -955,9 +956,9 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Valyti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Šalinti _bylas"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Valyti _sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="S_avaiminis valymas"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="S_avaiminis valymas"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Atv_erti ar vykdyti"/>
@@ -968,9 +969,9 @@ right quote	&#147;
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
 		<item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Tęsti visus"/>
@@ -999,9 +1000,9 @@ right quote	&#147;
 	<menu name="CUploadsWnd.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 	</menu>
 	<menu name="CUploadsWnd">
 		<item id="ID_UPLOADS_START" text="_Leisti dabar"/>
@@ -1011,8 +1012,8 @@ right quote	&#147;
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
 		<item id="ID_SECURITY_BAN" text="Užkirsti _vartotojo prieigą"/>
 		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti _baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+		<!-- <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti _baigtus"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>  -->
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Rodyti _viską"/>
@@ -1932,7 +1933,18 @@ right quote	&#147;
 	</document>
 
 	<document name="DownloadHelp.Pending">
-		<text format="b">Laukiama eilės</text>
+		<text format="b">Laukiama veiksmo</text>
+		<newline gap="8"/>
+		<text>Laukiama, kol kas nors pradės siųsti.
+		„Shareaza“ pasiruošusi siųstis bylą, bet niekas šiuo metu jos nesiunčia. 
+		Jūs tikriausiai laukiate kitų vartotojų eilėse, taigi bylos siuntimas gali
+		prasidėti bet kuriuo metu. Galite panagrinėti atskirus šaltinius ir pažiūrėti,  
+		kokį numerį turite kiekvieno eilėje. Jei Jūs irgi dalinatės bylomis, tada šansai, 
+		kad bylos parsisiuntimas prasidės greičiau, bus didesni.</text>
+	</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">Laukiama eilėje</text>
 		<newline gap="8"/>
 		<text>Laukiama, kol kitų Jūsų bylų parsisiuntimas bus baigtas.
 		Parsisiuntimų, aktyvių bet kuriuo metu, skaičius yra ribojamas parsisiuntimo
@@ -2385,6 +2397,8 @@ right quote	&#147;
 	<string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
 	<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš www.shareaza.com."/>
 	<string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
+	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
+	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8062" value="Mazgo veiksena su %lu kaimynais(-ų). %s vietinėje kolekcijoje."/>
 	<string id="8063" value="Prisijungta. Jūsų kolekcijoje yra %s."/>
 	<string id="8064" value="Prisijungta prie %lu kaimynų(-o). %s vietinėje kolekcijoje."/>
@@ -2498,6 +2512,12 @@ right quote	&#147;
 	<string id="8328" value="Bendra apimtis:"/>
 	<string id="8329" value="visos kolekcijos"/>
 	<string id="8330" value="aplankas"/>
+	<string id="8331" value="Šis šaltinis šiuo metu užimtas"/>
+	<string id="8332" value="Šis šaltinis yra už užkardos"/>
+	<string id="8333" value="Šis šaltinis gali siųsti nestabiliai"/>
+	<string id="8334" value="Šios bylos šaltiniai šiuo metu užimti"/>
+	<string id="8335" value="Šios bylos šaltiniai yra už užkardos"/>
+	<string id="8336" value="Šios bylos šaltiniai gali siųsti nestabiliai"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
 	<string id="16066" value="Stabdomas „Shareaza“ tinklo branduolys..."/>
@@ -2688,6 +2708,7 @@ right quote	&#147;
 	<string id="16374" value="Nauja eilė"/>
 	<string id="16375" value="Daliniai"/>
 	<string id="16376" value="Pilnos bylos"/>
+	<string id="16377" value="HTTP saugančioji"/>
 	<string id="16384" value="Ar tikrai norite vykdyti bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
 	<string id="16385" value="Jūs ruošiatės pakeisti %i bylų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
 	<string id="16386" value="Taisomi %i bylų(-os) meta duomenys."/>
@@ -2996,7 +3017,7 @@ right quote	&#147;
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Bendra"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="Bendra">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Bendra">
 		<control caption="_Vartotojo sąsaja:"/>
 		<control caption="Paleidus „Shareaza“, jungtis prie tinklo"/>
 		<control caption="Paleisti „Shareaza“ startuojant Windows"/>
@@ -3020,13 +3041,15 @@ right quote	&#147;
 		<control caption="Įprastas veiksmas|Patalpinti juostelėn"/>
 		<control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
 		<control caption="Paieškose filtruoti turinį suaugusiems"/>
+		<control caption="Savaiminis valymas atsisiuntimų lange"/>
+		<control caption="Savaiminis valymas išsiuntimų lange"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
 		<control caption="Pa_rinktys:"/>
 		<control caption="Prisiminti aplankų peržiūros būdą"/>
 		<control caption="Stebėti kolekcijos katalogus"/>
-		<control/>
+		<control caption="Greita maiša (daugiau CPU)"/>
 		<control caption="Filtruoti pagal plėtinius"/>
 		<control/>
 		<control caption="Leisti peržiūrėti bendrintas bylas"/>
@@ -3143,8 +3166,7 @@ right quote	&#147;
 		<control caption="Bendrinti bylų peržiūros turinį"/>
 		<control caption="Iškirpti ID3 žymas iš mp3 bylų"/>
 		<control caption="Limitas unikaliam IP:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="_Vartotojų agentų filtras:"/>
 		<control/>
 		<control caption="+"/>
@@ -3878,8 +3900,7 @@ right quote	&#147;
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met bylos parsisiuntimas">
 		<control/>
 		<control caption="Jūs galite parsisiųsti eDonkey2000 server.met bylą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -3948,7 +3969,7 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent seklio žiūryklė">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent išsami informacija">
 		<control caption="Torrent _informacija:"/>
 		<control caption="Vardas:"/>
 		<control/>
@@ -3964,6 +3985,9 @@ right quote	&#147;
 		<control caption="_Atnaujinti"/>
 		<control/>
 		<control caption="Užverti"/>
+		<control caption="Kada reikia|Kai santykis virš 100%|Niekada"/>
+		<control caption="Pradėti naujus siuntimus:"/>
+		<control caption="Siuntimai:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Atsisiuntimų grupės ypatybės">
