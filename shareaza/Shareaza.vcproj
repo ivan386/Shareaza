@@ -8440,6 +8440,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Registry.cpp">
+			</File>
+			<File
 				RelativePath="RelatedSearch.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -12211,6 +12214,9 @@
 			</File>
 			<File
 				RelativePath="QuerySearch.h">
+			</File>
+			<File
+				RelativePath=".\Registry.h">
 			</File>
 			<File
 				RelativePath="RelatedSearch.h">
