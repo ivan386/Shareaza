@@ -41,6 +41,9 @@ public:
 	//{{AFX_DATA(CCommunitySettingsPage)
 	enum { IDD = IDD_SETTINGS_COMMUNITY };
 	BOOL	m_bChatEnable;
+	BOOL	m_bChatAllNetworks;
+	BOOL	m_bChatFilter;
+	BOOL	m_bChatCensor;
 	//}}AFX_DATA
 
 // Overrides

@@ -172,6 +172,10 @@ void CSettings::Setup()
 	Add( _T("Bandwidth.HubUploads"), &Bandwidth.HubUploads, 5120 );
 	
 	Add( _T("Community.ChatEnable"), &Community.ChatEnable, TRUE );
+	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, FALSE );
+	Add( _T("Community.ChatFilter"), &Community.ChatFilter, FALSE );
+	Add( _T("Community.ChatCensor"), &Community.ChatCensor, FALSE );
+
 	Add( _T("Community.Timestamp"), &Community.Timestamp, TRUE );
 	Add( _T("Community.ServeProfile"), &Community.ServeProfile, TRUE );
 	Add( _T("Community.ServeFiles"), &Community.ServeFiles, TRUE );

@@ -290,7 +290,7 @@ void CHomeSearchCtrl::OnSearchCreate()
 	pSearch->m_sSearch		= strText;
 	pSearch->m_pSchema		= pSchema;
 
-	if ( AdultFilter.IsFiltered( pSearch->m_sSearch ) )
+	if ( AdultFilter.IsSearchFiltered( pSearch->m_sSearch ) )
 	{								//Adult search blocked, open help window
 		CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
 	}

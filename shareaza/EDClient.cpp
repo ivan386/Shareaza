@@ -1248,11 +1248,12 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 
 
 	// Check if chat is enabled and the message is not blocked
-	bDisplay = Settings.Community.ChatEnable;
-	if ( MessageFilter.IsFiltered( sMessage ) ) bDisplay = FALSE;
+	bDisplay = Settings.Community.ChatEnable && Settings.Community.ChatAllNetworks;
 
-	
-	if ( bDisplay )	// Chat is enabled- accept/open a chat window.
+	if ( MessageFilter.IsBlockedED2K( sMessage ) ) bDisplay = FALSE;	// Block some ed2k client generated messages
+	if ( MessageFilter.IsFiltered( sMessage ) ) bDisplay = FALSE;		// General spam filter (if enabled)
+
+	if ( bDisplay )	// Chat is enabled, message OK. Accept/open a chat window.
 	{	
 		ChatCore.OnED2KMessage( this, pPacket );
 	}

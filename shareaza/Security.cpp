@@ -1159,6 +1159,48 @@ void CAdultFilter::Load()
 
 }
 
+BOOL CAdultFilter::IsSearchFiltered( LPCTSTR pszText )
+{
+	if ( Settings.Search.AdultFilter && pszText )
+	{
+		return IsFiltered( pszText );
+	}
+	return FALSE;
+}
+
+BOOL CAdultFilter::IsChatFiltered( LPCTSTR pszText )
+{
+	if ( Settings.Community.ChatFilter && pszText )
+	{
+		return IsFiltered( pszText );
+	}
+	return FALSE;
+}
+
+LPCTSTR CAdultFilter::Censor( LPCTSTR pszText )
+{
+	BOOL bModified = FALSE;
+	if ( ! pszText ) return NULL;
+
+	CString strCensored = pszText;
+
+	
+	LPCTSTR pszWord;
+
+	// Check and replace blocked words
+	if ( m_pszBlockedWords )
+	{	
+		for ( pszWord = m_pszBlockedWords ; *pszWord ; )
+		{
+			Replace( strCensored, pszWord, _T("***") );
+
+			pszWord += _tcslen( pszWord ) + 1;
+		}
+	}
+	
+	return strCensored;
+}
+
 BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 {
 	if ( Settings.Search.AdultFilter && pszText )
@@ -1192,32 +1234,6 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 	return FALSE;
 }
 
-BOOL CAdultFilter::Censor( LPCTSTR pszText )
-{
-	BOOL bModified = FALSE;
-	if ( Settings.Search.AdultFilter && pszText )
-	{
-		LPCTSTR pszWord;
-
-		// Check and replace blocked words
-		if ( m_pszBlockedWords )
-		{	
-			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
-			{
-				if ( _tcsistr( pszText, pszWord ) != NULL )
-				{
-					CString strReplace = pszText;
-					Replace( strReplace, pszWord, _T("***") );
-					pszText = strReplace;
-					bModified = TRUE;
-				}
-				pszWord += _tcslen( pszWord ) + 1;
-			}
-		}
-	}
-	
-	return bModified;
-}
 
 //////////////////////////////////////////////////////////////////////
 // CMessageFilter construction
@@ -1310,9 +1326,28 @@ void CMessageFilter::Load()
 	}
 }
 
+BOOL CMessageFilter::IsBlockedED2K( LPCTSTR pszText )
+{
+#define NUM_STRINGS 3
+
+	CString ED2KBlock[NUM_STRINGS] = {_T("client is connecting too fast"),_T("block message"),_T("Blah") };
+
+	if ( Settings.Community.ChatFilter && pszText )
+	{
+		// Check for filtered (client generated) phrases
+		for ( int nLoop = 0 ; nLoop < NUM_STRINGS ; nLoop++ )
+		{
+			if ( _tcsistr( pszText, ED2KBlock[nLoop].GetBuffer() ) != NULL ) return TRUE;
+		}
+	}
+	
+	return FALSE;
+}
+
+
 BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
 {
-	if ( pszText )
+	if ( Settings.Community.ChatFilter && pszText )
 	{
 		LPCTSTR pszWord;
 

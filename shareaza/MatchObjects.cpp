@@ -715,7 +715,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	else
 		pHit->m_sSpeed.Empty();
 
-	if ( AdultFilter.IsFiltered( pHit->m_sName ) ) return FALSE;
+	if ( AdultFilter.IsSearchFiltered( pHit->m_sName ) ) return FALSE;
 	
 	return ( pHit->m_bFiltered = TRUE );
 }

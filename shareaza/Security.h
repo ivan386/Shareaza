@@ -118,6 +118,7 @@ public:
 
 };
 
+// An adult filter class, used in searches, chat, etc
 class CAdultFilter
 {
 // Construction
@@ -127,16 +128,20 @@ public:
 	
 // Attributes
 private:
-	LPTSTR		m_pszBlockedWords;		// Definitely adult content
-	LPTSTR		m_pszDubiousWords;		// Possibly adult content
+	LPTSTR		m_pszBlockedWords;			// Definitely adult content
+	LPTSTR		m_pszDubiousWords;			// Possibly adult content
 	
 // Operations
 public:
 	void		Load();
+	BOOL		IsSearchFiltered( LPCTSTR );// Check filter for search
+	BOOL		IsChatFiltered( LPCTSTR );	// Check filter for chat
+	LPCTSTR		Censor( LPCTSTR );			// Censor (remove) bad words from a string
+private:
 	BOOL		IsFiltered( LPCTSTR );
-	BOOL		Censor( LPCTSTR );
 };
 
+// A message filter class for chat messages. (Spam protection)
 class CMessageFilter
 {
 // Construction
@@ -146,12 +151,13 @@ public:
 	
 // Attributes
 private:
-	LPTSTR		m_pszFilteredPhrases;	// Known spam phrases
+	LPTSTR		m_pszFilteredPhrases;		// Known spam phrases
 	
 // Operations
 public:
 	void		Load();
-	BOOL		IsFiltered( LPCTSTR );
+	BOOL		IsBlockedED2K( LPCTSTR );	// ED2K message spam filter (ED2K only, always on)
+	BOOL		IsFiltered( LPCTSTR );		// Chat message spam filter
 };
 
 extern CMessageFilter MessageFilter;

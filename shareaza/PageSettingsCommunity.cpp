@@ -47,6 +47,9 @@ CCommunitySettingsPage::CCommunitySettingsPage() : CSettingsPage(CCommunitySetti
 {
 	//{{AFX_DATA_INIT(CCommunitySettingsPage)
 	m_bChatEnable = FALSE;
+	m_bChatAllNetworks = FALSE;
+	m_bChatFilter = FALSE;
+	m_bChatCensor = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -69,7 +72,10 @@ BOOL CCommunitySettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 	
-	m_bChatEnable = Settings.Community.ChatEnable;
+	m_bChatEnable		= Settings.Community.ChatEnable;
+	m_bChatAllNetworks	= Settings.Community.ChatAllNetworks;
+	m_bChatFilter		= Settings.Community.ChatFilter;
+	m_bChatCensor		= Settings.Community.ChatCensor;
 	
 	UpdateData( FALSE );
 
@@ -86,7 +92,11 @@ void CCommunitySettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Community.ChatEnable = m_bChatEnable;
+	Settings.Community.ChatEnable		= m_bChatEnable;
+	Settings.Community.ChatEnable		= m_bChatEnable;
+	Settings.Community.ChatAllNetworks	= m_bChatAllNetworks;
+	Settings.Community.ChatFilter		= m_bChatFilter;
+	Settings.Community.ChatCensor		= m_bChatCensor;
 	
 	CSettingsPage::OnOK();
 }

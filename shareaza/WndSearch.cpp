@@ -667,7 +667,7 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
-		if ( AdultFilter.IsFiltered( pManaged->m_pSearch->m_sSearch ) )
+		if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sSearch ) )
 		{
 			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
 		}
