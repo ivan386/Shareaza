@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,22
- PRODUCTVERSION 2,1,0,22
+ FILEVERSION 2,1,0,23
+ PRODUCTVERSION 2,1,0,23
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 22"
+            VALUE "FileVersion", "2, 1, 0, 23"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 22"
+            VALUE "ProductVersion", "2, 1, 0, 23"
         END
     END
     BLOCK "VarFileInfo"
@@ -2682,18 +2682,18 @@ BEGIN
     CONTROL         "Spin1",IDC_CAPACITY_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,74,8,12
-    GROUPBOX        "&Service Parameters:",IDC_STATIC,195,110,180,90,
+    GROUPBOX        "&Service Parameters:",IDC_STATIC,195,103,180,97,
                     WS_GROUP
-    LTEXT           "Saturated bandwidth percentage:",IDC_STATIC,205,126,115,
+    LTEXT           "Saturated bandwidth percentage:",IDC_STATIC,205,114,115,
                     12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH_POINTS,325,126,40,12,ES_CENTER | 
+    EDITTEXT        IDC_BANDWIDTH_POINTS,325,114,40,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,140,
+    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,128,
                     115,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH_VALUE,325,140,40,12,ES_CENTER | 
+    EDITTEXT        IDC_BANDWIDTH_VALUE,325,128,40,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY
     CONTROL         "Slider1",IDC_BANDWIDTH_SLIDER,"msctls_trackbar32",
-                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,160,170,15
+                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,146,170,15
     CONTROL         "Rotate after N seconds:",IDC_ROTATE_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,205,178,115,12
     EDITTEXT        IDC_ROTATE_TIME,325,178,40,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -2702,6 +2702,8 @@ BEGIN
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,178,8,12
     DEFPUSHBUTTON   "OK",IDOK,270,205,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,325,205,50,14
+    CONTROL         "Reward uploaders",IDC_REWARD_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,205,164,115,12
 END
 
 IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 124

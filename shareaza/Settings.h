@@ -38,6 +38,7 @@ public:
 		CString		UserPath;					//Path for user data. (May be the same as above for single user installs)
 		BOOL		Debug;
 		BOOL		DebugLog;
+		DWORD		MaxDebugLogSize;			//Max size of the lof file
 		BOOL		UpdateCheck;
 		DWORD		DiskSpaceWarning;			//Value at which to warn the user about low disk space
 		INT			GUIMode;

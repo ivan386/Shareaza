@@ -44,6 +44,7 @@ void CSettings::Setup()
 	Add( _T(".UserPath"), &General.UserPath, General.UserPath );
 	Add( _T(".Debug"), &General.Debug, FALSE );
 	Add( _T(".DebugLog"), &General.DebugLog, FALSE );
+	Add( _T(".MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024 );
 	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
 	Add( _T(".HashIntegrity"), &General.HashIntegrity, TRUE );
 	Add( _T(".DiskSpaceWarning"), &General.DiskSpaceWarning, 500 );

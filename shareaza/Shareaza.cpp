@@ -420,12 +420,21 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 	
 	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
-		pFile.Seek( 0, CFile::end );
+		if ( ( Settings.General.MaxDebugLogSize ) &&					// If file rotation is on 
+			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
+		{	
+			pFile.Close();				// Close the file and start a new one
+			if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
+		}
+		else
+		{
+			pFile.Seek( 0, CFile::end ); // Otherwise, go to the end of the file to add entires.
+		}
 	}
 	else
 	{
-		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) )
-			return;
+		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
+
 #ifdef _UNICODE
 		WORD nByteOrder = 0xFEFF;
 		pFile.Write( &nByteOrder, 2 );
@@ -809,8 +818,20 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	pTime.tm_min = nTemp;
 	
 	time_t tGMT = mktime( &pTime );
+	// check for invalid dates
+	if (tGMT == -1) 
+	{
+		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
+		return 0;
+	}
 	struct tm* pGM = gmtime( &tGMT );
 	time_t tSub = mktime( pGM );
+	
+	if (tSub == -1) 
+	{
+		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
+		return 0;
+	}
 	
 	return tGMT + ( tGMT - tSub );
 }
