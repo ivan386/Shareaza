@@ -90,11 +90,12 @@ CDownload::~CDownload()
 void CDownload::Pause()
 {
 	if ( m_bComplete || m_bPaused ) return;
-	m_bPaused = TRUE;
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	
 	StopTrying();
+
+	m_bPaused = TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -211,7 +212,7 @@ BOOL CDownload::Rename(LPCTSTR pszName)
 
 void CDownload::StopTrying()
 {
-	if ( m_bComplete || m_bPaused ) return;
+	if ( m_bComplete ) return;
 	m_tBegan = 0;
 
 	if ( m_bBTH ) CloseTorrent();
