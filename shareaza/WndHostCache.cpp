@@ -279,7 +279,8 @@ void CHostCacheWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CHostCacheWnd::OnUpdateHostCacheConnect(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 );	
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) &&
+		( (m_nMode != PROTOCOL_ED2K) || (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) );	
 }
 
 void CHostCacheWnd::OnHostCacheConnect() 
@@ -336,6 +337,7 @@ void CHostCacheWnd::OnUpdateHostcachePriority(CCmdUI* pCmdUI)
 	{
 		pCmdUI->Enable( FALSE );
 		pCmdUI->SetCheck( FALSE );
+		return;
 	}
 	
 	CSingleLock pLock( &Network.m_pSection, TRUE );
