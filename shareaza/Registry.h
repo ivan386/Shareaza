@@ -41,5 +41,5 @@ public:
 	
 // Implementation
 protected:
-	void	DisplayErrorMessageBox(DWORD nErrorCode);
+	void	DisplayErrorMessageBox(LPCTSTR pszName, DWORD nErrorCode);
 };

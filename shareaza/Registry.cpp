@@ -65,7 +65,7 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 		RegCloseKey( hKey );
 	}
 	
-	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( nErrorCode );
+	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( pszName, nErrorCode );
 	
 	return strValue;
 }
@@ -99,7 +99,7 @@ int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault)
 		RegCloseKey( hKey );
 	}
 	
-	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( nErrorCode );
+	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( pszName, nErrorCode );
 	
 	return nValue;
 }
@@ -146,7 +146,7 @@ BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue)
 	}
 	else
 	{
-		DisplayErrorMessageBox( nErrorCode );
+		DisplayErrorMessageBox( pszName, nErrorCode );
 		return FALSE;
 	}
 }
@@ -178,7 +178,7 @@ BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue)
 	}
 	else
 	{
-		DisplayErrorMessageBox( nErrorCode );
+		DisplayErrorMessageBox( pszName, nErrorCode );
 		return FALSE;
 	}
 }
@@ -186,15 +186,17 @@ BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue)
 //////////////////////////////////////////////////////////////////////
 // Helper function to display a message box holding an error code
 
-void CRegistry::DisplayErrorMessageBox(DWORD nErrorCode)
+void CRegistry::DisplayErrorMessageBox(LPCTSTR pszName, DWORD nErrorCode)
 {
 #ifdef _DEBUG
+	CString sMessage;
 	LPVOID lpMsgBuf;
 	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | 
 		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL, nErrorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPTSTR) &lpMsgBuf,	0, NULL );
-	MessageBox( NULL, (LPCTSTR)lpMsgBuf, _T("Error"), MB_OK | MB_ICONINFORMATION );
+	sMessage.Format( _T("%s returned error: %s"), pszName, (LPCTSTR)lpMsgBuf );
 	LocalFree( lpMsgBuf );
+	MessageBox( NULL, sMessage, _T("Warning"), MB_OK | MB_ICONINFORMATION );
 #endif
 }
