@@ -2410,13 +2410,13 @@ FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,135,95,WS_GROUP
     CONTROL         "Share NEW partial downloads",IDC_SHARE_PARTIALS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,116,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
     CONTROL         "Limit sharing in hub mode",IDC_HUB_UNSHARE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,105,13
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,120,13
     CONTROL         "Share preview files",IDC_SHARE_PREVIEW,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,105,13
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,120,13
     CONTROL         "Strip tag metadata",IDC_VIRTUAL_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,105,13
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,120,13
     LTEXT           "Limit per unique host:",IDC_STATIC,15,80,80,12,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_MAX_HOST,100,80,30,12,ES_AUTOHSCROLL | ES_NUMBER
