@@ -7,6 +7,7 @@ AppPublisher=Shareaza Development Team
 AppId=Shareaza
 AppMutex=Shareaza
 Compression=lzma/ultra
+InternalCompressLevel=Ultra
 SolidCompression=yes
 OutputBaseFilename=repair
 OutputDir=setup\builds
@@ -30,7 +31,7 @@ WizardSmallImageFile=setup\misc\corner.bmp
 SourceDir=..\..
 
 [INI]
-; Write important settings to safe location beofre erasing them from registry
+; Write important settings to safe location before erasing them from registry
 Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "CompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|}"
 Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "IncompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|}"
 Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "TorrentPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|}"

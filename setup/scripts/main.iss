@@ -20,6 +20,7 @@ DisableReadyPage=yes
 OutputDir=setup\builds
 SolidCompression=yes
 Compression=lzma/ultra
+InternalCompressLevel=Ultra
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=admin
@@ -49,12 +50,13 @@ Name: "languages"; Description: "{cm:components_languages}"; Types: full; Flags:
 
 [Tasks]
 ; Ask user to setup Shareaza for all users or just current user
-Name: allusers; Description: "{cm:tasks_allusers}"; GroupDescription: "{cm:tasks_selectusers,Shareaza}"; Flags: exclusive
-Name: currentuser; Description: "{cm:tasks_currentuser,{username}}"; GroupDescription: "{cm:tasks_selectusers,Shareaza}"; Flags: exclusive
+; Note: Tasks disabled by functions are not unchecked, they DISSAPPEAR
+Name: allusers; Description: "{cm:tasks_allusers}"; GroupDescription: "{cm:tasks_selectusers,Shareaza}"; Flags: exclusive; Check: not ShareazaInstalled
+Name: currentuser; Description: "{cm:tasks_currentuser,{username}}"; GroupDescription: "{cm:tasks_selectusers,Shareaza}"; Flags: exclusive; Check: not ShareazaInstalled
 
 [Files]
 ; Need zlib.dll in {sys} or regserver will crash
-; Place this entriy before other entries using regserver
+; Place this entry before other entries using regserver
 Source: "setup\builds\zlib.dll"; DestDir: "{sys}"; Flags: regserver noregerror overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension
 
 ; Install unicows.dll on Win 9X
@@ -112,18 +114,23 @@ Source: "{app}\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovere
 Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: currentuser
 Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Tasks: allusers
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
-
+Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza {#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Check: ShareazaInstalled
 [Icons]
 ; Shareaza icons
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
 Name: "{commonprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: allusers
-Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
-Name: "{commondesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: allusers
+
 ; License and uninstall icon in user language
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Tasks: currentuser
 Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Tasks: currentuser; IconFilename: "{app}\Uninstall\uninstall.ico"
 Name: "{commonprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Tasks: allusers
 Name: "{commonprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Tasks: allusers; IconFilename: "{app}\Uninstall\uninstall.ico"
+
+; Set icons if ShareazaInstalled=1
+Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Check: ShareazaInstalled
+Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Check: ShareazaInstalled
+Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Check: ShareazaInstalled; IconFilename: "{app}\Uninstall\uninstall.ico"
+
 
 [Messages]
 ; Overwrite standard ISL entries
@@ -151,6 +158,7 @@ Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.current"
 Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.default"; ValueType: string; ValueName: ; ValueData: "%SystemRoot%\media\notify.wav"; Flags: uninsdeletekey
 
 ; Set directory locations
+; Note: These do not have to be set if ShareazaInstalled=1
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{userappdata}\Shareaza\Downloads"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: currentuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{commonappdata}\Shareaza\Downloads"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: allusers
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{userappdata}\Shareaza\Incomplete"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: currentuser
@@ -170,6 +178,7 @@ Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaz
 [Dirs]
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
+; Note: These do not have to be set if ShareazaInstalled=1
 Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
 Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{commonappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: allusers
 Name: "{ini:{param:Settings|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
@@ -188,12 +197,6 @@ Type: files; Name: "{app}\Plugins\DivFix.dll"
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
 
-; Clean up icons if user changes tasks
-Type: files; Name: "{userdesktop}\Shareaza.lnk"
-Type: files; Name: "{commondesktop}\Shareaza.lnk"
-Type: filesandordirs; Name: "{userprograms}\{groupname}"
-Type: filesandordirs; Name: "{commonprograms}\{groupname}"
-
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Plugins"
@@ -209,3 +212,10 @@ Type: files; Name: "{app}\Data\*.xml"
 #include "languages.iss"
 ; Pull in Shareaza settings to write to registry
 #include "settings.iss"
+
+; Code sections need to be the last section in a script or the compiler will get confused
+[Code]
+Function ShareazaInstalled(): boolean;
+Begin
+    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza');
+End;
