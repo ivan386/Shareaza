@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.0.114"
+		version="2.1.0.120"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2021,6 +2021,26 @@ right quote	&#147;
 		įrangą, kuri jums daugiau nereikalinga.</text>
 	</document>
 
+	<document name="GeneralHelp.DiskWriteFail">
+		<text format="b">Reikalingas katalogas nėra įrašomas</text>
+		<newline gap="8"/>
+		<text>Į diską ar katalogą, kurį naudoja „Shareaza“, neįmanoma įrašyti.</text>
+		<newline gap="8"/>
+		<text>Tinklo diskas buvo atjungtas arba Jūs neturite rašymo į pasirinktą katalogą teisių.
+		Patikrinkite katalogus ir jų teises arba pakeiskite laikinųjų bylų aplanko būvimo vietą.</text>
+	</document>
+
+	<document name="GeneralHelp.ConnectionFail">
+		<text format="b">Interneto ryšys nutrūko</text>
+		<newline gap="8"/>
+		<text>Windows pranešė, kad nėra ryšio su internetu.</text>
+		<newline gap="8"/>
+		<text>Greičiausiai Jūsų modemas ar maršrutizatorius atsijungė, ir internetas tapo nepasiekiamas.
+		Jums reikėtų susijungti rankiniu būdu arba išjungti ir įjungti įrangą iš naujo.</text>
+		<newline gap="8"/>
+		<text>„Shareaza“ liovėsi bandžiusi jungtis, tam kad nebūtų prarasta adresatų talpykla.</text>
+	</document>
+	
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Aptiktas Windows XP Service Pack 2</text>
 		<newline gap="8"/>
@@ -2055,7 +2075,7 @@ right quote	&#147;
 
 	<!-- Search help documents -->
 
-	<document name="SearchHelp.BadSearch">
+	<document name="SearchHelp.BadSearch1">
 		<text format="b">Perfrazuokite ieškinį</text>
 		<newline gap="8"/>
 		<text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai.
@@ -2075,6 +2095,20 @@ right quote	&#147;
 		<newline gap="8"/>
 		<text>Jei atliekate paiešką pagal bylų plėtinius ar naudojate skaičius, Jūs privalote užklausoje nurodyti
 		taip pat ir papildomas sąlygas.</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">Perfrazuokite ieškinį</text>
+		<newline gap="8"/>
+		<text>Šiame ieškinyje, rodos, yra tik bendri bylų plėtiniai arba jame nėra žodžių.</text>
+		<newline gap="8"/>
+		<text>Jei susidūriate su sunkumais formuluodami užklausą, įsidėmėkite, kad ji panaši į paiešką žiniatinklyje.
+		Geriausi yra specifiniai terminai ir frazės: unikalūs pavadinimai, vardai ir raktažodžiai.</text>
+		<newline gap="8"/>
+		<text>Bendrinių terminų paieškos būna neefektyvios, blogai ieškomos ir gali sukelti duomenų srauto padidėjimą
+		tokių paieškų metu.</text>
+		<newline gap="8"/>
+		<text>Išsamesnę informaciją rasite Shareaza svetainėje.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
@@ -2436,6 +2470,9 @@ right quote	&#147;
 	<string id="WINDOW_SEARCHPAD" value="Paieška"/>
 	<string id="WINDOW_HELP" value="„Shareaza“ žinynas"/>
 	<string id="7000" value="Ar tikrai norite pašalinti šį filtrą?"/>
+	<string id="7001" value="&amp;Schemos"/>
+	<string id="7002" value="Skirtingos reikšmės"/>
+	<string id="7003" value="Skirtingi"/>
 	<string id="8000" value="„Shareaza“ nuostatos"/>
 	<string id="8001" value="Sveiki! Čia „Shareaza“"/>
 	<string id="8002" value="Bylos ypatybės"/>
@@ -2498,7 +2535,7 @@ right quote	&#147;
 	<string id="8156" value="Paieška"/>
 	<string id="8157" value="Radiniai"/>
 	<string id="8158" value="Valyti"/>
-	<string id="8159" value="Išsamiau..."/>
+	<string id="8159" value="Išsamiau"/>
 	<string id="8160" value="Užmezgamas ryšys su adresatu..."/>
 	<string id="8161" value="Nusiųsta įstūmiančiojo susijungimo užklausa, laukiama ryšio..."/>
 	<string id="8162" value="Prisijungta, prašoma peržiūros..."/>
@@ -2511,6 +2548,8 @@ right quote	&#147;
 	<string id="8177" value="Įrašykite kelis paieškos raktažodžius:"/>
 	<string id="8178" value="Koks tai bylos tipas?"/>
 	<string id="8179" value="(Valyti paieškos žurnalą)"/>
+	<string id="8180" value="Bylos dydis turi būti"/>
+	<string id="8181" value="&#160;iki"/><!-- size from xx TO xx-->
 	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) bylai (liko %i):"/>
 	<string id="8224" value="„Shareaza“ siunčiasi:"/>
 	<string id="8225" value="Šios bylos parsisiuntimas pristabdytas:"/>
