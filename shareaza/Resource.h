@@ -43,6 +43,7 @@
 #define IDC_HAND                        147
 #define IDR_HELPFRAME                   147
 #define IDD_ABOUT                       148
+#define IDD_FILTER_SAVE_AS              149
 #define IDD_GRAPH_LIST                  150
 #define IDD_GRAPH_ITEM                  151
 #define IDB_COLOURDOT                   151
@@ -168,7 +169,6 @@
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDB_BITMAP3                     265
-#define IDD_SAVE_FILTER_AS              267
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
 #define IDC_CONNECT_HOST                1000
@@ -637,15 +637,11 @@
 #define IDC_REMOTE_URL                  1380
 #define IDC_COLLECTIONS_FOLDER          1381
 #define IDC_COLLECTIONS_BROWSE          1382
-#define IDC_FILTERS                     1382
 #define IDC_TORRENTS_FOLDER             1383
-#define IDC_SET_DEFAULT_FILTER          1383
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENT_LINKS_SPIN          1385
-#define IDC_SAVE_FILTER                 1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
 #define IDC_STARTTORRENTDOWNLOADS       1386
-#define IDC_DELETE_FILTER               1386
 #define IDC_TORRENT_ENDGAME             1387
 #define IDC_TORRENT_INTERFACE           1388
 #define IDC_TORRENT_CLIENTLINKS         1389
@@ -664,6 +660,11 @@
 #define IDC_SCHEDULER_LIMITED_NETWORKS  1403
 #define IDC_SCHEDULER_ALLOWHUB          1404
 #define IDC_SCHEDULER_DISPLAY           1405
+#define IDC_FILTERS                     1500
+#define IDC_SAVE_FILTER                 1501
+#define IDC_SET_DEFAULT_FILTER          1502
+#define IDC_DELETE_FILTER               1503
+#define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -1031,7 +1032,6 @@
 #define IDS_LIBRARY_COLLECTION_LOCKDOWN 16407
 #define IDS_LIBRARY_COPYURI             16408
 #define IDS_LIBRARY_EXPORTURIS          16409
-#define IDS_FILTER_DELETE_CONFIRM       16410
 #define IDS_CHAT_CONNECTED_X            16448
 #define IDS_CHAT_ONLINE_X               16449
 #define IDS_CHAT_CLOSED_X               16450

@@ -33,7 +33,7 @@ public:
 	virtual ~CSaveFilterAsDlg();
 
 // Dialog Data
-	enum { IDD = IDD_SAVE_FILTER_AS };
+	enum { IDD = IDD_FILTER_SAVE_AS };
 
 // Implementation
 protected:
