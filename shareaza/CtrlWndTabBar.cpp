@@ -1,4 +1,4 @@
-//
+﻿//
 // CtrlWndTabBar.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
