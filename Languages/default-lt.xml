@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.4"
+		version="2.1.0.13"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2801,6 +2801,17 @@ right quote	&#147;
 	<string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
 	<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
 	<string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
+	<string id="17120" value="Atsijungiama"/>
+	<string id="17121" value="Nežinoma"/>
+	<string id="17122" value="G1 dalyvis"/>
+	<string id="17123" value="G1 vedantysis"/>
+	<string id="17124" value="G1 atšaka"/>
+	<string id="17125" value="G2 dalyvis"/>
+	<string id="17126" value="G2 mazgas"/>
+	<string id="17127" value="G2 atšaka"/>
+	<string id="17128" value="eDonkey2000 serveris"/>
+	<string id="17129" value="eDonkey2000 (žemas ID)"/>
+	<string id="17130" value="eDonkey2000 (aukštas ID)"/>
 	<string id="17216" value="Užmezgamas ryšys su eDonkey2000 serveriu %s..."/>
 	<string id="17217" value="Ryšys su eDonkey2000 serveriu %s užmegztas, patvirtinama..."/>
 
@@ -3113,7 +3124,7 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Planuotojas">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planuotojas">
 		<control caption="_Parinktys:"/>
 		<control caption="Į_galinti planuotoją"/>
 		<control/><control/>
@@ -3130,6 +3141,9 @@ right quote	&#147;
 		<control caption="Apribotas susijungimas"/>
 		<control caption="Jungtis pilna sparta"/>
 		<control caption="% greitaveikos, kai ribojama"/>
+		<control/>
+		<control caption="Pagalba"/>
+		<control caption="Planuotojas yra sukurtas tam, kad leistų Jums nustatyti, kada „Shareaza“ prisijungs ir siųsis bylas.&#13;&#10;&#13;&#10;&#13;&#10;Pastaba: Jei esate atvėrę „Shareaza“ tuo metu, kai planuotojas veikia, Jūs galite pastebėti, jog nuostatos keičiasi — tai normalu!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Tinklai">
@@ -3489,7 +3503,7 @@ right quote	&#147;
 		<control/><control/>
 		<control caption="Tinklo _protokolas:"/>
 		<control/>
-		<control caption="_Slopinti „Ultrapeer“"/>
+		<control caption="_Slopinti vedančiuosius"/>
 		<control caption="Jungtis"/>
 		<control caption="Atšaukti"/>
 	</dialog>
