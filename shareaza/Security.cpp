@@ -1170,7 +1170,7 @@ BOOL CAdultFilter::IsSearchFiltered( LPCTSTR pszText )
 
 BOOL CAdultFilter::IsChatFiltered( LPCTSTR pszText )
 {
-	if ( Settings.Community.ChatFilter && pszText )
+	if ( Settings.Community.ChatCensor && pszText )
 	{
 		return IsFiltered( pszText );
 	}
