@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 7 Augustus 2004 vir Shareaza 2.0.0.33 -->
+<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 3 September 2004 vir Shareaza 2.0.3 Beta -->
 
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
@@ -11,7 +11,7 @@
 		description="Shareaza Afrikaanse Omslaglêer"
 		link="http://www.freewebs.com/afrshareaza"
 		email="johannw AT imaginet.co.za"
-		version="2.0.0.33"
+		version="2.0.3.8"
 		type="Language"
 		language="af"
 		prompt="Kliek hier om Afrikaans as jou taal te kies."
@@ -90,11 +90,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_DOWNLOAD" text="Laai Af"/>
-		<button id="ID_BROWSE_LAUNCH" text="Vertoon Gebruikersinligting"/>
-		<separator/>
 		<button id="ID_SEARCH_SEARCH" text="Soek Weer..."/>
 		<button id="ID_SEARCH_STOP" text="Stop"/>
+		<separator/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Laai Af"/>
+		<button id="ID_BROWSE_LAUNCH" text="Vertoon Gebruikersinligting"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Soekpaneel"/>
 		<button id="ID_SEARCH_DETAILS" text="Inligtingspaneel"/>
@@ -1726,9 +1726,9 @@
 		<text>Oplaai kapasiteit, waglyste, verbanning, tydsopskorting en spesiale navrae.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CNetworksSettingsPage" format="b">Netwerke:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Afstandbeheer:</link>
 		<gap size="4"/>
-		<text>Selekteer en konfigureer die persoon-tot-persoon netwerke waaraan Shareaza moet konnekteer.</text>
+		<text>Stel Shareaza in om deur 'n afgeleë web blaaier beheer te kan word.</text>
 		<newline gap="10"/>
 		
 	</document>
@@ -1950,6 +1950,17 @@
     Programme kan onstabiel raak as die skywe vol raak, en tydelike lêers mag dalk
     verlore gaan. Jy kan 'n skyfskoonmaak-program hardloop, ongewenste lêers skrap,
     of sagteware deïnstalleer wat jy nie meer nodig het nie.</text>
+</document> 
+    
+<document name="GeneralHelp.XPsp2"> 
+     <text format="b">Windows XP Service Pack 2 raakgesien</text> 
+     <newline gap="8"/> 
+     <text>Shareaza het raakgesien dat Windows XP Service Pack 2 geïnstalleer is. Dit beperk 
+     die hoeveelheid konneksies wat programme op een slag kan maak.</text>
+     <newline gap="8"/>
+     <text>As gevolg hiervan het Shareaza 'n beperkte hoeveelheid netwerk konneksies en is die 
+     instellings outomaties verander om normale uitvoering te verseker, alhoewel werkverrigting 
+     daaronder mag ly. Besoek gerus die Shareaza forums vir verdere informasie, en onlangse nuus.</text>
 </document>
 
 <!-- Search help documents -->
@@ -1972,8 +1983,7 @@
 <document name="ShareHelp.AlreadyShared">
     <text format="b">Alreeds Gedeel</text>
     <newline gap="8"/>
-    <text>Die gids wat jy geselekteer het word alreeds as deel van 'n
-    bestaande gids gedeel.</text>
+    <text>Die gids wat jy geselekteer het word alreeds as deel van 'n bestaande gids gedeel.</text>
     <newline gap="8"/>
     <text> %s </text>
 </document>
@@ -2226,7 +2236,6 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Vertoon Verklarings."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Selekteer en verstel items op die grafiek..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Verwyder die dataverkeer-grafiek."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai 'n torrent"/>
 	<tip id="ID_TOOLS_WIZARD" message="Open die Shareaza SnelBegin Assistent..."/>
 	<tip id="ID_CHILD_RESTORE" message="Open die geselekteerde venster."/>
 	<tip id="ID_CHILD_CLOSE" message="Sluit die geselekteerde venster."/>
@@ -2614,6 +2623,7 @@
 	<string id="16083" value="Deur jou rekenaar te forseer om in hub-modus te werk, mag 'n negatiewe impak hê op werksverrigting, asook die P2P netwerk.  Dit is normaalweg beter om Shareaza toe te laat om te besluit of hub-modus gebruik moet word of nie.\n\nHub-modus gee NIE beter soekresultate nie en hou ook geen ander voordele vir 'n gebruiker in nie.\n\nIs jy seker dat jy dit nogsteeds wil doen, ten spyte van die nadele?"/>
 	<string id="16084" value="Deur ondersteuning van die Gnutella-1 protokol af te skakel mag 'n negatiewe impak op jou soekresultate hê en as jy as 'n hub optree mag dit ook 'n negatiewe impak hê op die resultate van ander gebruikers.  Is jy seker jy wil dit doen?"/>
 	<string id="16085" value="Gnutella2 is Shareaza se primêre netwerk.  Deur ondersteuning daarvan af te skakel mag dit die aantal en kwaliteit van jou soekresultate aansienlik benadeel.  Is jy SEKER jy wil dit doen?"/>
+	<string id="16087" value="Jou uitgaande bandwydte is te laag om hierdie netwerk aan te skakel"/>
 	<string id="16128" value="Inkomende konneksie van %s poort %i goedgekeur."/>
 	<string id="16129" value="'n Gasheer konneksie na %s poort %i word nou bewerkstellig..."/>
 	<string id="16130" value="Kon nie 'n gasheer konneksie na %s bewerkstellig nie."/>
@@ -2932,16 +2942,16 @@
 	<string id="17248" value="Begin eDonkey2000 gedeeltelike aflaaie intrekproses."/>
 	<string id="17249" value="Proses voltooi, %i gedeeltelike aflaaie suksesvol ingetrek."/>
 	<string id="17250" value="Ondersoek Gids: &quot;%s&quot;..."/>
-	<string id="17251" value="  Kan nie lêer intrek nie."/>
-	<string id="17252" value=" Gedeeltelike lêer &quot;%s&quot; gevind, besig om in te trek..."/>
-	<string id="17253" value="  Kan nie part-lêer &quot;%s&quot; oopmaak nie."/>
-	<string id="17254" value="  Aflaailêer &quot;%s&quot; gevind, grootte %s."/>
-	<string id="17255" value="  Aflaaidatalêer is nuwer as .part lêer, proses word gestaak."/>
-	<string id="17256" value="  Kopieer &quot;%s&quot; na &quot;%s&quot;..."/>
-	<string id="17257" value="  Kopiëring voltooi."/>
-	<string id="17258" value="  Shareaza gedeeltelike aflaailêer geskep, %s oor."/>
-	<string id="17259" value="  Hierdie lêer is alreeds op die Shareaza aflaailys."/>
-	<string id="17260" value="  Nie genoeg skyfspasie om aflaailêer te kopieer nie."/>
+	<string id="17251" value="Kan nie lêer intrek nie."/>
+	<string id="17252" value="Gedeeltelike lêer &quot;%s&quot; gevind, besig om in te trek..."/>
+	<string id="17253" value="Kan nie part-lêer &quot;%s&quot; oopmaak nie."/>
+	<string id="17254" value="Aflaailêer &quot;%s&quot; gevind, grootte %s."/>
+	<string id="17255" value="Aflaaidatalêer is nuwer as .part lêer, proses word gestaak."/>
+	<string id="17256" value="Kopieer &quot;%s&quot; na &quot;%s&quot;..."/>
+	<string id="17257" value="Kopiëring voltooi."/>
+	<string id="17258" value="Shareaza gedeeltelike aflaailêer geskep, %s oor."/>
+	<string id="17259" value="Hierdie lêer is alreeds op die Shareaza aflaailys."/>
+	<string id="17260" value="Nie genoeg skyfspasie om aflaailêer te kopieer nie."/>
 	<string id="17472" value="Inkomende konneksie vanaf %s is 'n BitTorrent koppeling, besig om te onderhandel..."/>
 	<string id="17473" value="Tyd verstreke terwyl probeer konnekteer aan BitTorrent kliënt %s."/>
 	<string id="17474" value="Tyd verstreke terwyl probeer bladskud met BitTorrent kliënt %s."/>
@@ -3016,11 +3026,11 @@
 	<string id="20125" value="Gekontroleer"/>
 	<string id="20126" value="Nie Gekontroleer"/>
 	<string id="20127" value="bron"/>
-	<string id="20128" value="bronne"/> <!-- numbers 21, 31, ... -->
-       <string id="20129" value="bronne"/> <!-- tens -->
-       <string id="20130" value="bronne"/> <!-- from 11 to 19 -->
-       <string id="20131" value="bronne"/> <!-- from 2 to 4 -->
-       <string id="20132" value="bronne"/> <!-- from 5 to 9 -->
+	<string id="20128" value="bronne"/> <!-- numbers 21, 31, ... --> 
+        <string id="20129" value="bronne"/> <!-- tens --> 
+        <string id="20130" value="bronne"/> <!-- from 11 to 19 --> 
+        <string id="20131" value="bronne"/> <!-- from 2 to 4 --> 
+        <string id="20132" value="bronne"/> <!-- from 5 to 9 --> 
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
