@@ -49,19 +49,19 @@ CEDPacket::~CEDPacket()
 //////////////////////////////////////////////////////////////////////
 // CEDPacket length prefixed strings
 
-CString CEDPacket::ReadEDString(BOOL bUTF8)
+CString CEDPacket::ReadEDString(DWORD ServerFlags)
 {
 	int nLen = ReadShortLE();
-	if ( bUTF8 )
+	if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 		return ReadStringUTF8( nLen );
 	else
 		return ReadString( nLen );
 }
 
-void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUTF8)
+void CEDPacket::WriteEDString(LPCTSTR psz, DWORD ServerFlags)
 {
 	int nLen;
-	if ( bUTF8 )
+	if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 	{
 		nLen = GetStringLenUTF8( psz );
 		WriteShortLE( nLen );
@@ -307,60 +307,78 @@ void CEDTag::Clear()
 //////////////////////////////////////////////////////////////////////
 // CEDTag write to packet
 
-void CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
+void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 {
+	BOOL bSmallTags = ServerFlags & ED2K_SERVER_TCP_SMALLTAGS, bUnicode = ServerFlags & ED2K_SERVER_TCP_UNICODE;
 	DWORD nPos = pPacket->m_nLength;
 	pPacket->WriteByte( m_nType );
 	
 	if ( int nKeyLen = m_sKey.GetLength() )
 	{
-		pPacket->WriteEDString( m_sKey, bUTF8 );
+		pPacket->WriteEDString( m_sKey, ServerFlags );
 	}
 	else
 	{
-		pPacket->WriteShortLE( 1 );
+		if ( ! bSmallTags ) pPacket->WriteShortLE( 1 );
 		pPacket->WriteByte( m_nKey );
 	}
 
 	if ( m_nType == ED2K_TAG_STRING )
 	{
-		int nLength; 
-		if ( bUTF8 )
-			nLength = pPacket->GetStringLenUTF8( m_sValue );
-		else
-			nLength = pPacket->GetStringLen( m_sValue );
+		if ( bSmallTags )// If we're supporting small tags
+		{
+			int nLength; 
+			if ( bUnicode )
+				nLength = pPacket->GetStringLenUTF8( m_sValue );
+			else
+				nLength = pPacket->GetStringLen( m_sValue );
 
-		if ( bSmallTag && ( nLength <= 16 ) )	
-		{	// We should use a 'short' string tag
+			if ( ( nLength <= 16 ) )	
+			{	
+				// We should use a 'short' string tag
+				// Correct the packet type
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ED2K_TAG_SHORTSTRING + nLength ) ;	
 
-			// Correct the packet type
-			(BYTE)pPacket->m_pBuffer[nPos] = ED2K_TAG_SHORTSTRING + nLength;	
+				// Write the string
+				if ( bUnicode ) pPacket->WriteStringUTF8( m_sValue, FALSE );
+				else pPacket->WriteString( m_sValue, FALSE );
+			}
+			else					
+			{	// We should use a normal string tag
+				// Correct the packet type
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_STRING ;	
 
-			// Write the string
-			if ( bUTF8 ) pPacket->WriteStringUTF8( m_sValue, FALSE );
-			else pPacket->WriteString( m_sValue, FALSE );
+				// Write the string
+				pPacket->WriteEDString( m_sValue, ServerFlags );
+			}
 		}
 		else					
-		{	// We should use a normal string tag
+		{
 			// Write the string
-			pPacket->WriteEDString( m_sValue, bUTF8 );
+			pPacket->WriteEDString( m_sValue, ServerFlags );
 		}
 	}
 	else if ( m_nType == ED2K_TAG_INT )
 	{
-		if ( bSmallTag && ( m_nValue <= 0xFFFF) )	// If we're supporting small tags and the value is small enough
+		if ( bSmallTags )// If we're supporting small tags
 		{	// Use a short tag
 			if ( m_nValue <= 0xFF)
 			{	// Correct type - to byte
-				(BYTE)pPacket->m_pBuffer[nPos] = ED2K_TAG_UINT8;
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT8;
 				// Write a byte
 				pPacket->WriteByte( (BYTE)m_nValue );
 			}
-			else
+			else if ( m_nValue <= 0xFFFF)
 			{	// Correct type - to word
-				(BYTE)pPacket->m_pBuffer[nPos] = ED2K_TAG_UINT16;
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT16;
 				// Write a word
 				pPacket->WriteShortLE( (WORD)m_nValue );
+			}
+			else
+			{	// Use a normal int
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_INT;
+				// Write a DWORD
+				pPacket->WriteLongLE( m_nValue );
 			}
 		}
 		else
@@ -371,7 +389,7 @@ void CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
 	}
 }
 /*
-oid CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
+void CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
 {
 	pPacket->WriteByte( m_nType );
 	
@@ -434,15 +452,31 @@ oid CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8, BOOL bSmallTag)
 //////////////////////////////////////////////////////////////////////
 // CEDTag read from packet
 
-BOOL CEDTag::Read(CEDPacket* pPacket, BOOL bUTF8)
+BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 {
+	int nLen;
+
 	Clear();
 	
 	if ( pPacket->GetRemaining() < 3 ) return FALSE;
 	m_nType = pPacket->ReadByte();
-	if ( m_nType < ED2K_TAG_HASH || m_nType > ( ED2K_TAG_SHORTSTRING + 16 ) ) return FALSE;
-	
-	int nLen = pPacket->ReadShortLE();
+
+	if ( m_nType & 0x80 )
+	{	//This is a short tag (No length)
+
+		//Remove the 0x80
+		m_nType -= 0x80;	
+		// No length in packet
+		nLen = 1;
+	}
+	else 
+	{	// Read in length
+		nLen = pPacket->ReadShortLE();
+	}
+
+	if ( m_nType < ED2K_TAG_HASH || m_nType > ( ED2K_TAG_SHORTSTRING + 15 ) ) return FALSE;
+
+
 	if ( pPacket->GetRemaining() < nLen ) return FALSE;
 	
 	if ( nLen == 1 )
@@ -451,46 +485,60 @@ BOOL CEDTag::Read(CEDPacket* pPacket, BOOL bUTF8)
 	}
 	else if ( nLen > 1 )
 	{
-		if ( bUTF8 )
+		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sKey = pPacket->ReadStringUTF8( nLen );
 		else
 			m_sKey = pPacket->ReadString( nLen );
 	}
 	
-	if ( m_nType == ED2K_TAG_STRING )
+	if ( m_nType == ED2K_TAG_STRING )					// Length prefixed string
 	{
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
 		nLen = pPacket->ReadShortLE();
 		if ( pPacket->GetRemaining() < nLen ) return FALSE;
-		if ( bUTF8 )
+		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sValue = pPacket->ReadStringUTF8( nLen );
 		else
 			m_sValue = pPacket->ReadString( nLen );
 	}
-	else if ( m_nType == ED2K_TAG_INT )
+	else if ( m_nType == ED2K_TAG_INT )					// 32 bit integer
 	{
 		if ( pPacket->GetRemaining() < 4 ) return FALSE;
 		m_nValue = pPacket->ReadLongLE();
 	}
-	else if ( m_nType == ED2K_TAG_UINT16 )	//"New tag" 16 bit int
+	else if ( m_nType == ED2K_TAG_FLOAT )				// 32 bit float
+	{
+		if ( pPacket->GetRemaining() < 4 ) return FALSE;
+		m_nValue = pPacket->ReadLongLE();
+	}
+	else if ( m_nType == ED2K_TAG_UINT16 )				// 16 bit integer (New tag)
 	{
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
 		m_nValue = pPacket->ReadShortLE();
 	}
-	else if ( m_nType == ED2K_TAG_UINT8 )	//"New tag" 8 bit int
+	else if ( m_nType == ED2K_TAG_UINT8 )				// 8 bit integer (New tag)
 	{
 		if ( pPacket->GetRemaining() < 1 ) return FALSE;
 		m_nValue = pPacket->ReadByte();
 	}
-	else if ( ( m_nType >= ED2K_TAG_SHORTSTRING ) && ( m_nType <= ED2K_TAG_SHORTSTRING + 16 ) )	//"New tag" short strings
-	{
-		nLen = ( m_nType - (ED2K_TAG_SHORTSTRING -1) ); //Calculate length of short string
+	else if ( ( m_nType >= ED2K_TAG_SHORTSTRING ) && ( m_nType <= ED2K_TAG_SHORTSTRING + 15 ) )
+	{													// Short strings
+		nLen = ( m_nType - (ED2K_TAG_SHORTSTRING - 1) );//Calculate length of short string
 		if ( pPacket->GetRemaining() < nLen ) return FALSE;
 
-		if ( bUTF8 )
+		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
 			m_sValue = pPacket->ReadStringUTF8( nLen );
 		else
 			m_sValue = pPacket->ReadString( nLen );
+	}
+	else if ( m_nType == ED2K_TAG_BLOB )				// ?
+	{
+		nLen = pPacket->ReadLongLE();
+		m_sValue = pPacket->ReadString( nLen );
+	}
+	else
+	{
+		theApp.Message( MSG_SYSTEM,_T("Unrecognised ed2k packet"));
 	}
 	
 	return TRUE;

@@ -80,8 +80,8 @@ public:
 	
 // Operations
 public:
-	CString				ReadEDString(BOOL bUTF8 = FALSE);
-	void				WriteEDString(LPCTSTR psz, BOOL bUTF8 = FALSE);
+	CString				ReadEDString(DWORD ServerFlags = 0);
+	void				WriteEDString(LPCTSTR psz, DWORD ServerFlags = 0);
 	BOOL				Deflate();
 	BOOL				InflateOrRelease(BYTE nEdProtocol);
 public:
@@ -222,7 +222,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 
 //Server TCP flags
 #define	ED2K_SERVER_TCP_DEFLATE		0x00000001
-#define	ED2K_SERVER_TCP_NEWTAGS		0x00000008
+#define	ED2K_SERVER_TCP_SMALLTAGS	0x00000008
 #define	ED2K_SERVER_TCP_UNICODE		0x00000010
 //Server UDP flags
 #define	ED2K_SERVER_UDP_GETSOURCES	0x00000001
@@ -253,8 +253,8 @@ public:
 // Operations
 public:
 	void	Clear();
-	void	Write(CEDPacket* pPacket, BOOL bUTF8 = FALSE, BOOL bSmallTag = FALSE);
-	BOOL	Read(CEDPacket* pPacket, BOOL bUTF8 = FALSE);
+	void	Write(CEDPacket* pPacket, DWORD ServerFlags = 0);
+	BOOL	Read(CEDPacket* pPacket, DWORD ServerFlags = 0);
 	BOOL	Read(CFile* pFile);
 	
 // Inlines
@@ -278,10 +278,10 @@ public:
 #define ED2K_TAG_UINT16				0x08
 #define ED2K_TAG_UINT8				0x09
 #define ED2K_TAG_UNUSED				0x0A // 8 bit size, then value
-#define ED2K_TAG_SHORTSTRING		0x10 //String <=16 bytes, using tag ID for length
+#define ED2K_TAG_SHORTSTRING		0x11 //String <=16 bytes, using tag ID for length
 
 // 0x10 to 0x20 are reserved for short strings
-#define ED2K_TAG_STRING1			0x10
+#define ED2K_TAG_STRING1			0x11
 #define ED2K_TAG_STRING16			0x20
 
 #define ED2K_ST_SERVERNAME			0x01

@@ -183,7 +183,7 @@ BOOL CEDNeighbour::OnConnected()
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 
 //Strange- if ED2K_SERVER_TCP_NEWTAGS is included, you get no search results?
-CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | /*ED2K_SERVER_TCP_NEWTAGS |*/ ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
+CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
 
 
 /*
@@ -277,8 +277,16 @@ BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 	case ED2K_S2C_FOUNDSOURCES:
 		return OnFoundSources( pPacket );
 	default:
+		{
+
+			Beep(500, 500);
+
+			if (pPacket->m_nType == ED2K_PROTOCOL_PACKED)
+				Beep(800, 800);
+
 		pPacket->Debug( _T("Unknown") );
 		break;
+		}
 	}
 	
 	return TRUE;
@@ -357,7 +365,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 
 	CString strServerFlags;
-	strServerFlags.Format( _T("Server Flags: Zlib: %d New Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_NEWTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
+	strServerFlags.Format( _T("Server Flags: Zlib: %d New Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
 	theApp.Message( MSG_DEFAULT, strServerFlags );
 	
 	
@@ -425,7 +433,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 	{
 		CEDTag pTag;
 		if ( ! pTag.Read( pPacket ) ) break;
-		
+
 		if ( pTag.Check( ED2K_ST_SERVERNAME, ED2K_TAG_STRING ) )
 		{
 			m_sServerName = pTag.m_sValue;
@@ -538,7 +546,7 @@ void CEDNeighbour::SendSharedFiles()
 	
 	CSingleLock pLock1( &Library.m_pSection );
 	CSingleLock pLock2( &Transfers.m_pSection );
-
+/*
 	//Send files on download list to ed2k server (partials)
 	pLock2.Lock();
 	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
@@ -586,7 +594,7 @@ void CEDNeighbour::SendSharedFiles()
 		}
 	}
 	pLock2.Unlock();
-	
+*/	
 	//Send files in library to ed2k server (Complete files)
 	pLock1.Lock();
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
@@ -632,7 +640,7 @@ void CEDNeighbour::SendSharedFiles()
 
 					// First, figure out what tags should be sent.
 					nTags = 2; // File name and size are always present
-
+/*
 					if ( pFile->m_pSchema != NULL )	// We need a schema to have extended details
 					{
 						// Do we have a file type?
@@ -643,7 +651,7 @@ void CEDNeighbour::SendSharedFiles()
 						}
 
 						//Does this server support the new tags?
-						if ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS )	
+						if ( m_nFlags & ED2K_SERVER_TCP_SMALLTAGS )	
 						{
 							// Bitrate
 							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )	//If it's an audio file
@@ -666,20 +674,20 @@ void CEDNeighbour::SendSharedFiles()
 							}
 						}
 					}
-
+*/
 					// Set the number of tags present
 					pPacket->WriteLongLE( nTags );
 	
 					// Send the file name to the ed2k server
-					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
+					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, m_nFlags );
 					// Send the file size to the ed2k server
-					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
+					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pPacket, m_nFlags );
 					// Send the file type to the ed2k server
-					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
+					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nFlags );
 					// Send the bitrate to the ed2k server
 					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket );
 					// Send the codec to the ed2k server
-					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, ( m_nFlags & ED2K_SERVER_TCP_UNICODE ), ( m_nFlags & ED2K_SERVER_TCP_NEWTAGS ) );
+					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, m_nFlags );
 
 					// Increment count of files sent
 					nCount++;

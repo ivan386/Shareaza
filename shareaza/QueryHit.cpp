@@ -1005,22 +1005,26 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		if ( pPacket->GetRemaining() < 1 ) return FALSE;
 
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket ) ) return FALSE;
-		
-		if ( pTag.m_nKey == ED2K_FT_FILENAME && pTag.m_nType == ED2K_TAG_STRING )
+		if ( ! pTag.Read( pPacket ) ) 
+		{
+			theApp.Message( MSG_SYSTEM, _T("****ed2k search result packet read error")); //debug check
+			return FALSE;
+		}
+	
+		if ( pTag.m_nKey == ED2K_FT_FILENAME ) //&& pTag.m_nType == ED2K_TAG_STRING )
 		{
 			m_sName = pTag.m_sValue;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_FILESIZE && pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_FILESIZE )//&& pTag.m_nType == ED2K_TAG_INT )
 		{
 			m_bSize = TRUE;
 			m_nSize = pTag.m_nValue;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE && pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )//&& pTag.m_nType == ED2K_TAG_INT )
 		{
-			theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
+			//theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
 		}
-		else if ( pTag.m_nKey == ED2K_FT_SOURCES && pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_SOURCES ) //&& pTag.m_nType == ED2K_TAG_INT )
 		{
 			m_nSources = pTag.m_nValue;
 			if ( m_nSources == 0 )
@@ -1028,7 +1032,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			else
 				m_nSources--;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES && pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES ) //&& pTag.m_nType == ED2K_TAG_INT )
 		{
 			if ( ! pTag.m_nValue ) //If there are no complete sources
 			{
@@ -1041,23 +1045,19 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports complete sources present.") );
 			}
 		}
-		else if ( pTag.m_nKey == ED2K_FT_LENGTH && pTag.m_nType == ED2K_TAG_INT )
+		else if ( pTag.m_nKey == ED2K_FT_LENGTH )//&& pTag.m_nType == ED2K_TAG_INT )
 		{	//Length- new style (DWORD)
 			strLength.Format( _T("%lu"), pTag.m_nValue );
-theApp.Message( MSG_SYSTEM,_T("length as a DWORD"));
 		}
-		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE && pTag.m_nType == ED2K_TAG_INT ) )
+		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )//&& pTag.m_nType == ED2K_TAG_INT ) )
 		{	//Bitrate- new style
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
-theApp.Message( MSG_SYSTEM,_T("Bitrate - new"));
 		}
-		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC && pTag.m_nType == ED2K_TAG_STRING ) )
+		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC ) ) //&& pTag.m_nType == ED2K_TAG_STRING ) )
 		{	//Codec - new style
 			strCodec = pTag.m_sValue;
-theApp.Message( MSG_SYSTEM,_T("Codec - new"));
-
 		}
-		//Note: Maybe ignore these keys for now? They seem to have a lot of bad values....
+		//Note: Maybe ignore these keys? They seem to have a lot of bad values....
 		else if ( pTag.m_nKey == 0&& pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("length")  )
 		{	//Length- old style (As a string- x:x:x, x:x or x)
 			strLength = pTag.m_sValue;
@@ -1070,7 +1070,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 		{	//Codec - old style
 			strCodec = pTag.m_sValue;
 		}
-		else	//*** Debug check. Remove this when it's working
+		else//*** Debug check. Remove this when it's working
 		{
 			CString s;
 			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
@@ -1081,6 +1081,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 			else
 				s.Format ( _T("Value: %d"), pTag.m_nValue);
 			theApp.Message( MSG_SYSTEM, s );
+
 		}
 	}
 
@@ -1112,7 +1113,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 			if ( strLength.GetLength() )
 			{
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
-				m_pXML->AddAttribute( _T("length"), strLength );
+				m_pXML->AddAttribute( _T("seconds"), strLength );
 			}
 			if ( strBitrate.GetLength() )
 			{
@@ -1135,7 +1136,7 @@ theApp.Message( MSG_SYSTEM,_T("Codec - new"));
 			if ( strLength.GetLength() )
 			{
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
-				m_pXML->AddAttribute( _T("length"), strLength );
+				m_pXML->AddAttribute( _T("minutes"), strLength );
 			}/*
 			if ( strBitrate.GetLength() )
 			{
