@@ -489,7 +489,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		if ( tNow > m_tLastServerStats + Settings.Connection.TimeoutHandshake )
 		{
 			CSingleLock pLock( &Network.m_pSection );
-			pLock.Lock();
+			if ( ! pLock.Lock( 250 ) ) return;
 
 			// Timed out
 			m_nLastServerKey = 0;
@@ -518,7 +518,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 	{
 		// We are due to send another stats request
 		CSingleLock pLock( &Network.m_pSection );
-		pLock.Lock();
+		if ( ! pLock.Lock( 250 ) ) return;
 
 		// Get the current time (in seconds)
 		DWORD tSecs	= time( NULL );
