@@ -693,6 +693,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 		{
 			float nNumber;
 			if ( str.GetLength() && _stscanf( str, _T("%f"), &nNumber ) != 1 ) return FALSE;
+			if ( nNumber < pMember->m_nMinOccurs || nNumber > pMember->m_nMaxOccurs ) return FALSE;
 		}
 		else if ( pMember->m_nMaxLength > 0 )
 		{
