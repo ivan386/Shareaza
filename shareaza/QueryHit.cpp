@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1138,7 +1138,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 	if ( strType.GetLength() )
 	{
 		// Determine type
-		// Note: Maybe should use library plug in for this?
+		// Note: Maybe should use library plug-in for this?
 		if ( strType == _T(".mp3") ||  strType == _T(".ogg") ||  strType == _T(".wav") ||  strType == _T(".mid") ||
 			 strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") || strType == _T(".ra"))
 		{	// Audio

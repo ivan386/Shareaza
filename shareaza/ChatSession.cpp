@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/05 09:28:16 $"
-//	Revision:		"$Revision: 1.13 $"
+//	Date:			"$Date: 2005/03/07 12:45:15 $"
+//	Revision:		"$Revision: 1.14 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -686,6 +686,36 @@ BOOL CChatSession::SendChatMessage(CEDPacket* pPacket)
 	}
 	else // We don't seem to have a client that matches. 	
 	{	
+/*
+		// Make a new client/connection if we can
+		if ( m_nState != cssConnecting )
+		{
+			// If we aren't connecting, try making a new connection
+			// First, lock the section to prevent a problem with other threads
+			CSingleLock pLock( &Transfers.m_pSection );
+			if ( ! pLock.Lock( 250 ) ) return NULL;
+
+			// We need to connect to them, so either find or create an EDClient
+			if ( m_bMustPush )
+				pClient = EDClients.Connect(m_pHost.sin_addr.S_un.S_addr, m_pHost.sin_port, &m_pServer.sin_addr, m_pServer.sin_port, &m_pGUID );
+			else
+				pClient = EDClients.Connect(m_pHost.sin_addr.S_un.S_addr, m_pHost.sin_port, NULL, 0, &m_pGUID );
+			// If we weren't able to create a client (Low-id and no server), then exit.
+
+
+			if ( ( pClient ) && ( pClient->Connect() ) )
+			{	
+				pClient->OpenChat();
+				pLock.Unlock();
+				// Set the 'connection' state while we wait for EDClient to do it's job
+				m_nState = cssConnecting;
+				m_tConnected = GetTickCount();	
+				StatusMessage( 0, IDS_CHAT_NOT_CONNECTED_1 );
+				// Return false to out the packet back into the buffer until we're ready to send it
+				return FALSE;
+			}
+		}
+*/
 		// Inform the user and drop the message.
 		StatusMessage( 1, IDS_CHAT_DROPPED );
 		m_nState = cssNull;

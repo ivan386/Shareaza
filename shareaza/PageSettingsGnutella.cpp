@@ -1,7 +1,7 @@
 //
 // PageSettingsGnutella.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -212,7 +212,7 @@ void CGnutellaSettingsPage::OnOK()
 {
 	UpdateData();
 
-	//Check if G2 hub mode is forcednow, and wasn't forced before.
+	//Check if G2 hub mode is forced now, and wasn't forced before.
 	if ( ( m_wndG2ClientMode.GetCurSel() == MODE_HUB ) && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )	
 	{
 		CString strMessage;
