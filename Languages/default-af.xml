@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 4 September 2004 vir Shareaza 2.0.3 Beta -->
+<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 9 September 2004 vir Shareaza 2.0.5 Beta -->
 
-<!-- Body element, don't touch -->
+<!-- Body element -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
@@ -10,8 +10,8 @@
 		author="Johann van der Walt - Thesage"
 		description="Shareaza Afrikaanse Omslaglêer"
 		link="http://www.freewebs.com/afrshareaza"
-		email="johannw AT imaginet.co.za"
-		version="2.0.3.8"
+		email="javdwalt AT tuks DOT co.za"
+		version="2.0.5.0"
 		type="Language"
 		language="af"
 		prompt="Kliek hier om Afrikaans as jou taal te kies."
@@ -2390,7 +2390,7 @@
 	<string id="8162" value="Gekonnekteer, daar word versoek om gebruiker se inligting te sien..."/>
 	<string id="8163" value="Deurblaai-versoek data word ontvang (%2.f%%)..."/>
 	<string id="8164" value="Kan nie aan gasheer konnekteer om sy inligting te sien nie."/>
-	<string id="8165" value="Kan nie die lêerlys aflaai nie.  Hierdie gasheer mag dit dalk nie ondersteun nie."/>
+	<string id="8165" value="Kan nie die lêerlys aflaai nie.  Hierdie gasheer mag dit dalk nie ondersteun nie, of die funksie is afgeskakel."/>
 	<string id="8166" value="Soek op hierdie netwerk:"/>
 	<string id="8167" value="Alle Netwerke"/>
 	<string id="8176" value="Soek Shareaza"/>
@@ -2432,7 +2432,7 @@
 	<string id="8307" value="Tipe"/>
 	<string id="8308" value="Tot"/>
 	<string id="8309" value="Onvolledige Bron (%.2f%% beskikbaar)"/>
-	<string id="8310" value="%i oplaaiposisies, %i op waglys."/>
+	<string id="8310" value="%i oplaaiposisie(s), %i op waglys."/>
 	<string id="8311" value="Jy het hierdie lêer alreeds in jou biblioteek."/>
 	<string id="8312" value="Jy het hierdie lêer alreeds op jou aflaailys."/>
 	<string id="8313" value="Hierdie lêer blyk gemorspos te wees."/>
@@ -2540,7 +2540,7 @@
 	<string id="16276" value="Aflaaigasheer %s se weergawe van &quot;%s&quot; het 'n verskillende grootte, aflaai word gestaak."/>
 	<string id="16277" value="Aflaaigasheer %s het gereageer met 'n onbruikbare deel van &quot;%s&quot;, aflaai hangende."/>
 	<string id="16278" value="Aflaaikonneksie na %s is verbreek."/>
-	<string id="16279" value="Aflaaiinhoud word ontvang vanaf %s (%s)."/>
+	<string id="16279" value="Aflaai-inhoud word ontvang vanaf %s (%s)."/>
 	<string id="16280" value="Aflaaigasheer %s is beset, probeer weer oor %i sekondes."/>
 	<string id="16281" value="Is jy seker jy wil &quot;%s&quot; verwyder?\n\nAs 'n aflaai-oordrag eers verwyder is van die aflaai venster, kan dit nie later hervat word nie."/>
 	<string id="16282" value="Aflaai van &quot;%s&quot; vanaf %s (%s) word gestaak, netwerk afgeskakel."/>
@@ -3668,11 +3668,11 @@
 	
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Beheerder">
 		<control/>
-		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat skakel na die volgendee inhoud op die netwerk:"/>
+		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat skakel na die volgende inhoud op die netwerk:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat jou aan die volgende gasheer of bediener sal konnekteer:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat jou die gedeelde lêers op die volgende gasheer sal laat sien:"/>
 		<control/><control/><control/><control/>
-		<control caption="Selekteer asseblief die aksie wat jy wil hê Shareaza moet uitvoer:"/>
+		<control caption="Selekteer asseblief die aksie wat Shareaza moet uitvoer:"/>
 		<control caption="_Laai Nou Af"/>
 		<control caption="_Soek vir Lêer"/>
 		<control caption="Kanselleer"/>
