@@ -72,7 +72,7 @@ Source: "Data\WorldGPS.dat"; DestDir: "{app}\Data"; Flags: ignoreversion overwri
 Source: "Data\DefaultAvatar.png"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Copy repair installer
-Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
+Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
