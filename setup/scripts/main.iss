@@ -402,7 +402,7 @@ var
   FirewallManager: Variant;
   FirewallProfile: Variant;
 Begin
-  if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then
+  if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
     FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
     InstallFolder := ExpandConstant('{app}\Shareaza.exe');
     FirewallObject.ProcessImageFileName := InstallFolder;
@@ -413,6 +413,7 @@ Begin
     FirewallManager := CreateOleObject('HNetCfg.FwMgr');
     FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
     FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+  End;
 End;
 
 procedure CurStepChanged(CurStep: TSetupStep);
