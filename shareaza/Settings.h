@@ -299,8 +299,9 @@ public:
 		BOOL		ServerWalk;
 		DWORD		QueryGlobalThrottle;
 		DWORD		QueryServerThrottle;
+		DWORD		QueryFileThrottle;			// Max rate a file can have GetSources done
 		DWORD		QueueRankThrottle;
-		DWORD		PacketThrottle;
+		DWORD		PacketThrottle;				// ED2K paket rate limit
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;

@@ -261,6 +261,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
+	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 30*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
