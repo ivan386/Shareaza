@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,7 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nQueueLimit			= Settings.Downloads.QueueLimit;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
-	m_wndMaxDownFiles.SetRange( 1, 128 );
+	m_wndMaxDownFiles.SetRange( 1, 100 );
 	m_wndMaxDownTransfers.SetRange( 1, 128 );
 	m_wndMaxFileTransfers.SetRange( 1, 128 );
 	m_wndQueueLimit.SetRange( 0, 10000 );
@@ -195,7 +195,7 @@ void CDownloadsSettingsPage::OnOK()
 
 	Settings.Downloads.CompletePath			= m_sDownloadsPath;
 	Settings.Downloads.IncompletePath		= m_sIncompletePath;
-	Settings.Downloads.MaxFiles				= m_nMaxDownFiles;
+	Settings.Downloads.MaxFiles				= min ( m_nMaxDownFiles, 100 );
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= m_nQueueLimit;
