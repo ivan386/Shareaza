@@ -156,18 +156,25 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
-	if ( pDownload->m_nTorrentUploaded )
-	{
-		m_sz.cy += TIP_TEXTHEIGHT;
-	}
-
 	m_sz.cy += TIP_RULE;
 	AddSize( pDC, m_sSize, 80 );
 	AddSize( pDC, m_sType, 80 );
 	m_sz.cy += 36;
 	m_sz.cy += TIP_RULE;
 	
-	m_sz.cy += TIP_TEXTHEIGHT * 4;
+
+	if ( pDownload->IsSeeding() )
+	{
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
+	else if ( pDownload->m_bBTH )
+	{
+		m_sz.cy += TIP_TEXTHEIGHT * 5;
+	}
+	else
+	{
+		m_sz.cy += TIP_TEXTHEIGHT * 4;
+	}
 	
 	if ( m_sURL.GetLength() )
 	{
@@ -176,11 +183,21 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 	
-	m_sz.cy += 2;
-	m_sz.cy += TIP_TEXTHEIGHT;
-	m_sz.cy += TIP_GAP;
-	m_sz.cy += 40;
+	if ( ! pDownload->IsSeeding() )
+	{
+		m_sz.cy += 2;
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
 
+	if ( pDownload->IsCompleted() )
+		m_bDrawGraph = FALSE;
+	else
+	{
+		m_sz.cy += TIP_GAP;
+		m_sz.cy += 40;
+		m_bDrawGraph = TRUE;
+	}
+	
 	CString str;
 	LoadString( str, IDS_DLM_ESTIMATED_TIME );
 	m_nStatWidth = pDC->GetTextExtent( str ).cx + 8;
@@ -315,53 +332,66 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	}
 	else
 	{
-		LoadString( strTorrentUpload, IDS_TIP_NA );
+		LoadString( strFormat, IDS_DLM_UPLOADED );
+		strTorrentUpload.Format( strFormat, _T("0"),
+			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ), 0.0f );
 	}
 	
-	LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
-	DrawText( pDC, &pt, strFormat, 3 );
-	DrawText( pDC, &pt, strSpeed, m_nStatWidth );
-	pt.y += TIP_TEXTHEIGHT;
-	LoadString( strFormat, IDS_DLM_ESTIMATED_TIME );
-	DrawText( pDC, &pt, strFormat, 3 );
-	DrawText( pDC, &pt, strETA, m_nStatWidth );
-	pt.y += TIP_TEXTHEIGHT;
-	LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
-	DrawText( pDC, &pt, strFormat, 3 );
-	DrawText( pDC, &pt, strVolume, m_nStatWidth );
-	pt.y += TIP_TEXTHEIGHT;
 
-	if ( pDownload->m_nTorrentUploaded )
-	{
+	//Draw the pop-up box
+	if ( ! pDownload->IsSeeding() )
+	{	//Not applicable for seeding torrents.
+		LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strSpeed, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+		LoadString( strFormat, IDS_DLM_ESTIMATED_TIME );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strETA, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+		LoadString( strFormat, IDS_DLM_VOLUME_DOWNLOADED );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strVolume, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+	if ( pDownload->m_bBTH )
+	{	//Only torrents have the uploaded count
 		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
 		DrawText( pDC, &pt, strFormat, 3 );
 		DrawText( pDC, &pt, strTorrentUpload, m_nStatWidth );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-
-	LoadString( strFormat, IDS_DLM_NUMBER_OF_SOURCES );
-	DrawText( pDC, &pt, strFormat, 3 );
-	DrawText( pDC, &pt, strSources, m_nStatWidth );
-	pt.y += TIP_TEXTHEIGHT;
-	
+	if ( ! pDownload->IsSeeding() )
+	{	//Not applicable for seeding torrents.
+		LoadString( strFormat, IDS_DLM_NUMBER_OF_SOURCES );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strSources, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+	}
 	if ( m_sURL.GetLength() )
-	{
+	{	//Draw URL if present
 		DrawRule( pDC, &pt );
 		DrawText( pDC, &pt, m_sURL );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	
-	pt.y += 2;
-	DrawProgressBar( pDC, &pt, pDownload );
-	pt.y += TIP_GAP;
+	if ( ! pDownload->IsSeeding() )
+	{	//Not applicable for seeding torrents.
+		pt.y += 2;
+		DrawProgressBar( pDC, &pt, pDownload );
+		pt.y += TIP_GAP;
+	}
 	
-	CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
-	pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
-	rc.DeflateRect( 1, 1 );
-	m_pGraph->BufferedPaint( pDC, &rc );
-	rc.InflateRect( 1, 1 );
-	pDC->ExcludeClipRect( &rc );
-	pt.y += 40;
+	if ( m_bDrawGraph )
+	{	//Don't draw empty graph.
+		CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
+		pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+		rc.DeflateRect( 1, 1 );
+		m_pGraph->BufferedPaint( pDC, &rc );
+		rc.InflateRect( 1, 1 );
+		pDC->ExcludeClipRect( &rc );
+		pt.y += 40;
+	}
 	pt.y += TIP_GAP;
 }
 

@@ -59,6 +59,7 @@ protected:
 	CStringArray	m_pHeaderValue;
 	int				m_nHeaderWidth;
 	int				m_nStatWidth;
+	BOOL			m_bDrawGraph;
 	
 // Operations
 protected:
