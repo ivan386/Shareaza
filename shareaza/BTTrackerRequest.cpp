@@ -59,7 +59,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
 		(LPCTSTR)pDownload->m_pTorrent.m_sTracker,
 		(LPCTSTR)Escape( &pDownload->m_pBTH ),
-		(LPCTSTR)Escape( BTClients.GetGUID() ),
+		(LPCTSTR)Escape( &m_pDownload->m_pPeerID ),//(LPCTSTR)Escape( BTClients.GetGUID() ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		(QWORD)pDownload->m_nTorrentUploaded,
 		(QWORD)pDownload->m_nTorrentDownloaded,
@@ -208,7 +208,8 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	{
 		if ( Process( pRoot ) )
 		{
-			m_pDownload->OnTrackerEvent( TRUE );
+			if ( ! m_pDownload->m_bTorrentTrackerError )
+				m_pDownload->OnTrackerEvent( TRUE );
 		}
 		else
 		{
@@ -234,7 +235,7 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 
 BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 {
-	if ( CBENode* pError = pRoot->GetNode( "Event reason" ) )
+	if ( CBENode* pError = pRoot->GetNode( "failure reason" ) )
 	{
 		CString str = pError->GetString();
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
