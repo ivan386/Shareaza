@@ -426,7 +426,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
 	m_bSelNotMoving = m_bSelBoostable = m_bSelSHA1orED2K = FALSE;
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
-	m_bSelHttpSource = m_bSelShareState = FALSE;
+	m_bSelHttpSource = m_bSelDonkeySource = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
 	
@@ -490,6 +490,7 @@ void CDownloadsWnd::Prepare()
 				else
 					m_bSelActiveSource = TRUE;
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttpSource = TRUE;
+				if ( pSource->m_nProtocol == PROTOCOL_ED2K ) m_bSelDonkeySource = TRUE;
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
 			}
@@ -1246,15 +1247,18 @@ void CDownloadsWnd::OnTransfersForget()
 
 void CDownloadsWnd::OnUpdateTransfersChat(CCmdUI* pCmdUI) 
 {
+	// If chat is disabled, grey out the option
 	if ( ! Settings.Community.ChatEnable )
 	{
 		pCmdUI->Enable( FALSE );
 		return;
 	}
 	
+	// Check to see if chat is possible
 	Prepare();
-	pCmdUI->Enable( TRUE );
-	// pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections) );
+	pCmdUI->Enable( m_bSelHttpSource ||									// Enable chat for HTTP clients
+		( m_bSelDonkeySource && Settings.Community.ChatAllNetworks ) || // ED2K clients, 
+		( m_bSelSourceExtended && m_bSelSourceAcceptConnections ) );	// or for any client supporting G2 chat
 }
 
 void CDownloadsWnd::OnTransfersChat() 
@@ -1269,12 +1273,14 @@ void CDownloadsWnd::OnTransfersChat()
 		{
 			if ( pSource->m_bSelected ) 
 			{
-				ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
-/*
-				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) //HTTP chat
-					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol );
-				else if ( pSource->m_bClientExtended ) //Over ED2K/BT, you can only contact non-push Shareaza clients
-					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, FALSE );*/
+				if ( pSource->m_nProtocol == PROTOCOL_HTTP )						// HTTP chat
+					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
+				else if ( pSource->m_bClientExtended && ! pSource->m_bPushOnly )	// Client accepts G2 chat connections
+					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, FALSE, PROTOCOL_G2 );
+				else if ( pSource->m_nProtocol == PROTOCOL_ED2K )					// ED2K chat
+					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
+				else		// Should never be called
+					theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 			}
 		}
 	}
@@ -1283,7 +1289,7 @@ void CDownloadsWnd::OnTransfersChat()
 void CDownloadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections) );
+	pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections ) );
 }
 
 void CDownloadsWnd::OnBrowseLaunch() 
@@ -1298,9 +1304,9 @@ void CDownloadsWnd::OnBrowseLaunch()
 		{
 			if ( pSource->m_bSelected )
 			{
-				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) //Many HTTP clients support this
+				if ( pSource->m_nProtocol == PROTOCOL_HTTP )	// Many HTTP clients support this
 					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, &pSource->m_pGUID );
-				else if ( pSource->m_bClientExtended ) //Over ED2K/BT, you can only contact non-push Shareaza clients
+				else if ( pSource->m_bClientExtended )			// Over other protocols, you can only contact non-push G2 clients
 					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, FALSE, NULL );
 			}
 		}

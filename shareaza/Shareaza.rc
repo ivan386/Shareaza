@@ -1883,9 +1883,9 @@ BEGIN
     CONTROL         "Enable peer to peer chat with compatible clients",
                     IDC_CHAT_ENABLE,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
                     WS_TABSTOP,15,75,250,15
-    CONTROL         "Enable chat on all networks",IDC_CHAT_ALLNETWORKS,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,94,
-                    250,15
+    CONTROL         "Enable chat over other protocols (where possible)",
+                    IDC_CHAT_ALLNETWORKS,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,15,94,250,15
     CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,113,250,15
     CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",

@@ -273,7 +273,7 @@ void CUploadsWnd::Prepare()
 	
 	m_bSelFile = m_bSelUpload = FALSE;
 	m_bSelActive = m_bSelQueued = FALSE;
-	m_bSelHttp = FALSE;
+	m_bSelHttp = m_bSelDonkey = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -290,6 +290,7 @@ void CUploadsWnd::Prepare()
 			{
 				m_bSelUpload = TRUE;
 				if ( pTransfer->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttp = TRUE;
+				if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) m_bSelDonkey = TRUE;
 				
 				if ( pTransfer->m_pQueue != NULL )
 				{
@@ -306,7 +307,7 @@ void CUploadsWnd::Prepare()
 				if ( pTransfer->m_bClientExtended )
 					m_bSelSourceExtended = TRUE;
 
-					//BOOL			m_bSelSourceAcceptConnections;
+				//m_bSelSourceAcceptConnections = pTransfer->
 
 			}
 		}
@@ -455,9 +456,18 @@ void CUploadsWnd::OnUploadsLaunch()
 
 void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI) 
 {
+	// If chat is disabled, grey out the option
+	if ( ! Settings.Community.ChatEnable ) 
+	{
+		pCmdUI->Enable( FALSE );
+		return;
+	}
+
+	// Check to see if chat is possible
 	Prepare();
-	
-	pCmdUI->Enable( Settings.Community.ChatEnable ); //&& ( m_bSelHttp || m_bSelSourceExtended ) );
+	pCmdUI->Enable( m_bSelHttp ||									// Enable chat for HTTP clients
+		( m_bSelDonkey && Settings.Community.ChatAllNetworks ) ||	// ED2K clients, 
+		( m_bSelSourceExtended ) );									// or for any client supporting G2 chat
 }
 
 void CUploadsWnd::OnUploadsChat() 
@@ -470,7 +480,14 @@ void CUploadsWnd::OnUploadsChat()
 		
 		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
 		{
-			ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, pFile->GetActive()->m_nProtocol );
+			if ( pFile->GetActive()->m_nProtocol == PROTOCOL_HTTP )		// HTTP chat. (G2, G1)
+				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_HTTP );
+			else if ( pFile->GetActive()->m_bClientExtended )			// Client accepts G2 chat
+				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_G2 );
+			else if ( pFile->GetActive()->m_nProtocol == PROTOCOL_ED2K )// ED2K chat.
+				ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_ED2K );
+			else		// Should never be called
+				theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 		}
 	}
 }
