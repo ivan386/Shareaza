@@ -1643,7 +1643,14 @@
 			<text id="TorrentsOne" format="b">1 torrent compartido</text>
 			<text id="TorrentsMany" format="b">%i torrents compartidos</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-compartir %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Compartir otro torrent</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Compartir un torrent</link>
+			</group>
 		</para>
 
 	</document>
@@ -1952,6 +1959,16 @@
 		recibir la información de la transferencia.</text>
 	</document>
 
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">Area de subidas</text>
+		<newline gap="8"/>
+		<text>Aqui es donde las colas y las subidas son mostradas. Puedes expandir cada cola
+		con el pequeño + en la izquierda, y el filtro que es mostrado con el botón de la
+		derecha el la ventana de herramientas.</text>
+	</document>
+
 	<!-- General help documents -->
 
 	<document name="GeneralHelp.DiskSpace">
@@ -2163,7 +2180,9 @@
 	<tip id="ID_LIBRARY_PARENT" message="Mover a la carpeta anterior."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Ver y editar las propiedades del archivo..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Reconstruir Mi Colección, escaneandolo, y adquiriendo la metadata de nuevo."/>
-	<tip id="ID_LIBRARY_REFRESH" message="Actualizar la vista de Mi Colección."/>
+	<!-- Add the following line if you need it -->
+    <tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstrir metadata utilizando tu lenguaje."/>
+    <tip id="ID_LIBRARY_REFRESH" message="Actualizar la vista de Mi Colección."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Eliminar esta carpeta de Mi Colección."/>
 	<tip id="ID_LIBRARY_RENAME" message="Renombrar el archivo."/>
 	<tip id="ID_LIBRARY_SCAN" message="Escanear para cambio en los archivos."/>
@@ -2359,7 +2378,8 @@
 	<string id="WINDOW_MEDIA" value="Reproductor de media"/>
 	<string id="WINDOW_SEARCHPAD" value="Buscar"/>
 	<string id="WINDOW_HELP" value="Ayuda de Shareaza"/>
-	<string id="8000" value="Configuración de Shareaza"/>
+	<string id="7000" value="¿Estás seguro que deseas quitar este filtro ?"/>
+    <string id="8000" value="Configuración de Shareaza"/>
 	<string id="8001" value="Bievenido a Shareaza"/>
 	<string id="8002" value="Propiedades de Archivo"/>
 	<string id="8003" value="Editar Mi Perfil"/>
@@ -2668,12 +2688,12 @@
 	<string id="16360" value="Rechazando subida de &quot;%s&quot; a %s (%s), todas las colas llenas."/>
 	<string id="16361" value="Rechazando subida de %s (%s), red deshabilitadas."/>
 	<string id="16362" value="Subidas eDonkey2000 no deben ser canceladas.  ¿Estas seguro que deseas cancelar esta subida?"/>
-	<string id="16363" value="Torrent Uploads"/>
-	<string id="16364" value="Completed Uploads"/>
+	<string id="16363" value="Sudidas Torrent"/>
+	<string id="16364" value="Subidas Completadas"/>
 	<string id="16365" value="¿Estás seguro que deseas cancelar/abortar todas las descargas en este grupo?"/>
 	<string id="16366" value="Cola"/>
 	<string id="16367" value="eDonkey Core"/>
-	<string id="16368" value="eDonkey Partials"/>
+	<string id="16368" value="Parciales eDonkey"/>
 	<string id="16369" value="eDonkey Guard"/>
 	<string id="16370" value="Archivos Pequeños"/>
 	<string id="16371" value="Archivos Medianos"/>
@@ -2770,8 +2790,8 @@
 	<string id="16807" value="Por favor incluya la unidades para el límite del ancho de bada de la siguiente forma &quot;123 kb/s&quot; para kilobits por segundo, o &quot;123 KB/s&quot; para kiloBytes por segundo."/>
 	<string id="16808" value="No has seleccionado tu edad y sexo. ¿Estas seguro que deseas continuar sin hacer esto?"/>
 	<string id="16809" value="Sa&amp;lir"/>
-	<string id="16810" value="year old"/>
-	<string id="16811" value="Automatic"/>
+	<string id="16810" value="años"/>
+	<string id="16811" value="Automatico"/>
     <string id="16864" value="Accesando servicios de descubrimiento..."/>
 	<string id="16865" value="Accesando el servicio de descubrimiento en &quot;%s&quot;..."/>
 	<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>
@@ -2956,7 +2976,7 @@
 	<string id="20120" value="Buscando"/>
 	<string id="20121" value="Creando"/>
 	<string id="20122" value="Torrent"/>
-	<string id="20123" value="Tracker Down"/>
+	<string id="20123" value="Tracker Caído"/>
 	<string id="20124" value="(No Hay Fuentes)"/>
 	<string id="20125" value="Verificado"/>
 	<string id="20126" value="No Verificado"/>
@@ -3067,6 +3087,9 @@
 		<control caption="Editar Mi perfil"/>
 		<control caption="_Chat:"/>
 		<control caption="Habilitar función de chat con clientes compatibles"/>
+		<control caption="Habilitar chat en todas las redes"/>
+		<control caption="Filtrar mensajes de chat para spam"/>
+		<control caption="Censurar cosas obsenas en chat"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
@@ -3270,6 +3293,9 @@
 		<control caption="Torrents al mismo tiempo"/>
 		<control/><control/>
 		<control caption="Client connections"/>
+		<control caption=" Limpiar torrents descargados"/>
+		<control caption="Cuando compartas más de lo que bajaste "/>
+		<control/><control/>
 		<control caption="_EndGame:"/>
 		<control caption="Habilitar modo EndGame al completar torrents"/>
 		<control caption="_Empieza torrents aquí "/>
@@ -3599,19 +3625,31 @@
 		<control caption="Resultados falsos"/>
 		<control caption="Filtrar"/>
 		<control caption="Cancelar"/>
-	</dialog>
 
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servicios de descubrimiento">
-		<control caption="Dirección:"/>
-		<control/>
-		<control caption="Tipo de servicio:"/>
-		<control/>
-		<control caption="Aceptar"/>
-		<control caption="Cancelar"/>
+		<control caption="Ponerlo por defecto"/>
+		<control caption="_Guardar como"/>
+		<control caption="_Delete"/>
+		<control caption="Filters:"/>
 	</dialog>
 
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Descargar : Shareaza">
 		<control caption="Shareaza está descargando:"/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+		<control caption="Guardar el filtro como"/>
+	</dialog>
+
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servicio de descubrimientos">
+		<control caption="Dirección _del servicio:"/>
+		<control/>
+		<control caption="Tipo de servicio de descubrimiento:"/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+	</dialog>
+
+	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Descargar : Shareaza">
+		<control caption="Shareaza esta descargando:"/>
 		<control caption="..."/>
 		<control/><control/><control/>
 		<control caption="Velocidad de transferencia:"/>
@@ -4111,6 +4149,10 @@
 	<list name="CFileSourcesPageList">
 		<column from="URL" to=""/>
 		<column from="Expires" to="Expira"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to="Nombre de archivo"/>
+		<column from="Size" to=" Tamaño"/>
 	</list>
 </listColumns>
 </skin>
