@@ -57,12 +57,16 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
 	m_bActive		= FALSE;
 	m_bReceive		= TRUE;
 	m_tStarted		= 0;
+	m_nHits			= 0;
+
 	m_nHubs			= 0;
 	m_nLeaves		= 0;
-	m_nHits			= 0;
+	m_nQueryCount	= 0;
+
 	m_tLastED2K		= 0;
 	m_tMoreResults	= 0;
-	m_nQueryCount	= 0;
+	m_nEDServers	= 0;
+	m_nEDClients	= 0;
 
 }
 

@@ -49,13 +49,15 @@ public:
 	BOOL			m_bActive;
 	BOOL			m_bReceive;
 public:
-	DWORD			m_tStarted;
-	DWORD			m_nHubs;
-	DWORD			m_nLeaves;
-	DWORD			m_nHits;
+	DWORD			m_tStarted;					// Time search was started
+	DWORD			m_nHits;					// Hits
+	DWORD			m_nHubs;					// Number of G2 hubs searched
+	DWORD			m_nLeaves;					// Number of G2 leaves searched
+	DWORD			m_nQueryCount;				// Total Gnutella2 queries sent
 	DWORD			m_tLastED2K;				// Time an ed2k server was last searched
 	DWORD			m_tMoreResults;				// Time more results were requested from an ed2k server
-	DWORD			m_nQueryCount;				// Total Gnutella2 queries sent
+	DWORD			m_nEDServers;				// Number of EDonkey servers searched
+	DWORD			m_nEDClients;				// Number of ED2K clients searched (Guess)
 protected:
 	CMapPtrToPtr	m_pNodes;
 	DWORD			m_tExecute;
