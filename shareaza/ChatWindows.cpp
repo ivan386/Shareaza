@@ -1,7 +1,7 @@
 //
 // ChatWindows.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,6 +30,7 @@
 #include "EDClients.h"
 #include "Transfers.h"
 #include "Neighbours.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -219,22 +220,25 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 	{
 		CEDClient* pClient;
 
-		// ED2K chats are handled by the EDClient section. (Transfers)
-
 		// First, check if it's a low ID user on another server. 
 		if ( bMustPush && pServer ) 
 		{
 			// It's a firewalled user (Low ID). If they are using another server, we 
 			// can't (shouldn't) contact them. (It places a heavy load on the ed2k servers)
+			CSingleLock pLock1( &Network.m_pSection );
 			if ( Neighbours.Get( &pServer->sin_addr ) == NULL ) return NULL;
-
+			pLock1.Unlock();
 		}
 
-		// Okay, we can try to contact them. Ee need to find (or create) an EDClient to 
-		// handle this chat session, since everything on ed2k shares a TCP link.
+		// ED2K chat is handled by the EDClient section. (Transfers)
+		// We need to find (or create) an EDClient to handle this chat session, since everything 
+		// on ed2k shares a TCP link.
+
+		// First, lock the section to prevent a problem with other threads
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 250 ) ) return NULL;
-		// Find (or create) an EDClient
+
+		// We need to connect to them, so either find or create an EDClient
 		if ( pServer )
 			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, &pServer->sin_addr, pServer->sin_port, pGUID );
 		else
@@ -246,8 +250,6 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 		// Tell it to start a chat session as soon as it's able
 		pClient->OpenChat();
 		pLock.Unlock();
-		// return NULL;
-
 
 		// Check for / make active any existing window
 		pFrame = FindPrivate( &pHost->sin_addr );
