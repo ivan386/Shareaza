@@ -1,7 +1,7 @@
 //
 // EDClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,8 @@ public:
 	BOOL	SeekNewDownload(CDownloadSource* pExcept = NULL);
 	inline  void OpenChat() { m_bOpenChat = TRUE; }
 protected:
-	void	DeriveVersion();
+	void	DeriveSoftwareVersion();		// ID clients using the newer 'SoftwareVersion' tag
+	void	DeriveVersion();				// ID clients using the older method(s)
 	BOOL	OnLoggedIn();
 	void	DetachDownload();
 	void	DetachUpload();

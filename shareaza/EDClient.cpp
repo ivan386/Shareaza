@@ -565,7 +565,6 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			return TRUE;
 
 		// Misc
-
 		case ED2K_C2C_MESSAGE:
 			return OnMessage( pPacket );
 
@@ -578,19 +577,24 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_EMULEINFO:
 			return OnEmuleInfo( pPacket );
 		case ED2K_C2C_EMULEINFOANSWER:
-			return OnEmuleInfo( pPacket );
-		
+			return OnEmuleInfo( pPacket );	
+
+		case ED2K_C2C_COMPRESSEDPART:
+			if ( m_pDownload != NULL ) m_pDownload->OnCompressedPart( pPacket );
+			return TRUE;
+		case ED2K_C2C_QUEUERANKING:
+			if ( m_pDownload != NULL ) m_pDownload->OnRankingInfo( pPacket );
+			return TRUE;
+		case ED2K_C2C_FILEDESC:
+			// Handle comments
+			return TRUE;
+
 		case ED2K_C2C_REQUESTSOURCES:
 			return OnSourceRequest( pPacket );
 		case ED2K_C2C_ANSWERSOURCES:
 			return OnSourceAnswer( pPacket );
-		
-		case ED2K_C2C_QUEUERANKING:
-			if ( m_pDownload != NULL ) m_pDownload->OnRankingInfo( pPacket );
-			return TRUE;
-		case ED2K_C2C_COMPRESSEDPART:
-			if ( m_pDownload != NULL ) m_pDownload->OnCompressedPart( pPacket );
-			return TRUE;
+	
+
 
 		}
 	}
@@ -816,7 +820,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	
 
 	// Get client name/version
-	DeriveVersion();
+	DeriveSoftwareVersion();
 	
 	// If this was a hello
 	if ( pPacket->m_nType == ED2K_C2C_HELLO )
@@ -876,6 +880,8 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	// Have to assume capabilities for these versions
 	if ( m_nEmVersion > 0x22 && m_nEmVersion < 0x25 ) m_bEmSources = 1;
 	if ( m_nEmVersion == 0x24 ) m_bEmComments = 1;
+	// Set the client ID to unknown
+	m_nEmCompatible = ED2K_CLIENT_UNKNOWN;
 	
 	// Read number of tags
 	DWORD nCount = pPacket->ReadLongLE();
@@ -917,6 +923,8 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		case ED2K_ET_COMPATIBLECLIENT:
 			m_nEmCompatible = pTag.m_nValue;
 			break;
+		case ED2K_ET_FEATURES:		// We don't use these
+			break;
 		}
 	}
 	
@@ -934,9 +942,10 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CEDClient client version
 
-void CEDClient::DeriveVersion()
+//Newer clients send the 24 bit "software version" + client ID
+void CEDClient::DeriveSoftwareVersion()
 {
-	//Newer clients send the 24 bit software version
+	//Newer clients send the 24 bit software version + client ID
 	if ( m_nSoftwareVersion )
 	{
 		// It's eMule compatible
@@ -980,6 +989,7 @@ void CEDClient::DeriveVersion()
 			//Client allows G2 browse, etc
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+			break;
 		case 5:
 			m_sUserAgent.Format( _T("ePlus %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
@@ -999,11 +1009,16 @@ void CEDClient::DeriveVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		}
-		return;
 	}
+	else
+	{
+		DeriveVersion();
+	}
+}
 
-
-	//Older style IDs
+//This is the older style of IDing a client
+void CEDClient::DeriveVersion()
+{
 	if ( m_pGUID.n[5] == 13 && m_pGUID.n[14] == 110 )
 	{
 		m_bEmule = TRUE;
@@ -1038,10 +1053,10 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 2:
-			m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 3:
-			m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 4:
 			m_sUserAgent.Format( _T("Shareaza") );
@@ -1054,7 +1069,13 @@ void CEDClient::DeriveVersion()
 		case 20:
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
-		default:
+		case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
+			if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )
+				m_sUserAgent.Format( _T("Pruna") );
+			else
+				m_sUserAgent.Format( _T("Unidentified"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			break;
+		default:	// (Sent a compatible client ID, but we don't recognise it)
 			m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		}
