@@ -279,11 +279,7 @@ BOOL CDownload::IsTrying() const
 
 BOOL CDownload::IsShared() const
 {
-#ifdef _DEBUG
-	return m_bShared;
-#else
 	return m_bShared || m_bBTH || Settings.eDonkey.EnableToday;
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////
