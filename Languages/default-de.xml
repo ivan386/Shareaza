@@ -21,7 +21,7 @@ Other:
 			description="Shareaza 2.0 German Skin File"
 			link="http://www.shareaza.com/"
 			email="jann_roeder@arcor.de"
-			version="2.0.2.2"
+			version="2.0.2.3"
 			type="Language"
 			language="de"
 			prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -2054,7 +2054,7 @@ Other:
 	<string id="16806" value="Sie haben angegeben, dass Sie in ihrem NAT Router / Firewall port-forwarding benutzen möchten.\n\nBitte konfigurieren Sie ihr Netzwerk um port %i an ihren PC weiterzuleiten."/>
 	<string id="16807" value="Bitte geben sie das gewünschte Bandbreitenlimit ein. &quot;123 kb/s&quot; für Kilobits pro Sekunde, oder &quot;123 KB/s&quot; für Kilobytes pro Sekunde."/>
 	<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht angegeben. Sind Sie sicher, dass sie fortfahren möchten?"/>
-	<string id="16809" value="E&amp;xit"/>
+	<string id="16809" value="&amp;Schließen"/>
 	<string id="16864" value="Service Provider abfragen..."/>
 	<string id="16865" value="Service Provider &quot;%s&quot; abfragen..."/>
 	<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)."/>
@@ -2533,7 +2533,7 @@ Other:
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netzwerke">
 		<control caption="Shareaza ist ein allround File-sharing Programm, das auf mehrere P2P Netzwerke gleichzeitig zugreifen kann.  Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und können Netzwerkspezifische Einstellungen vornehmen."/>
 		<control caption="Gnutella2 Netzwerk:"/>
-		<control caption="Das Gnutella2 Netzwerk ist das Hauptnetzwerk von Shareaza, es bietet mehr Funktionen und Geschwindigkeit als irgendein anderes Netzwerk.  Empfohlen."/>
+		<control caption="Das Gnutella2 Netzwerk ist das Hauptnetzwerk von Shareaza, es bietet mehr Funktionen und Geschwindigkeit als irgendein anderes P2P Netzwerk.  Empfohlen."/>
 		<control caption="Gnutella2 (G2) verwenden"/>
 		<control caption="Gnutella2 konfigurieren"/>
 		<control caption="eDonkey Netzwerk:"/>
@@ -2719,9 +2719,9 @@ Other:
 	
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Wilkommen bei Shareaza [5 von 7]">
 		<control caption="Shareaza ist ein viel freundlicherer Ort, wenn jeder ein paar Sachen über sich schreibt."/>
-		<control caption="Ich benutze den Namen:"/>
+		<control caption="Ich heiße:"/>
 		<control/>
-		<control caption="und ich bin:"/>
+		<control caption="und ich bin ein:"/>
 		<control/><control/>
 		<control caption="aus:"/>
 		<control/><control/>
@@ -2736,17 +2736,16 @@ Other:
 		<control caption="0"/>
 		<control caption="Schließen"/>
 	</dialog>
-	
-	<dialog name="CWizardProfilePage" cookie="StStBuStStEd" caption="Wilkommen bei Shareaza [5 von 7]">
- 		<control caption="Wenn Sie Shareaza benutzen, werden Sie möglicherweise auf Gleichgesinnte treffen. Sie können dann deren Profil anzeigen, mit ihnen chatten oder ihre freigegebenen Dateien durchsuchen."/>
- 		<control caption="Daher sollten Sie auch ihr eigenes Profil ausfüllen, so dass andere Benutzer mehr über Sie erfahren können. Alle Angaben sind freiwillig. Sie sollten jedoch mindestens ihren Standort und einen Nickname eingeben."/>
-        <control caption="Mehr..."/>
-	 	<control caption="Klicken Sie auf den Button, um ihr Profil zu bearbeiten.  Wenn Sie fertig sind, klicken Sie auf Weiter um fortzufahren."/>
-		<control caption="Nickname:"/>
-		<control/>
-       
- 		<control caption="Klicken Sie auf den Button, um ihr Profil zu bearbeiten.  Wenn Sie fertig sind, klicken Sie auf Weiter um fortzufahren."/>
- 	</dialog>
+ 	
+ 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Wilkommen bei [6 von 7]">
+		<control caption="Shareaza ist ein allround File-sharing Programm, das auf mehrere P2P Netzwerke gleichzeitig zugreifen kann.  Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten. Sie können später jederzeit andere Netwzerke auswählen."/>
+		<control caption="Zu Gnutella2 verbinden (Empfohlen)"/>
+		<control caption="Das Gnutella2 Netzwerk ist das Hauptnetzwerk von Shareaza, es bietet mehr Funktionen und Geschwindigkeit als irgendein anderes P2P Netzwerk"/>
+		<control caption="Zu eDonkey verbinden"/>
+		<control caption="Das eDonkey Netzwerk ist ein beliebtes Server-basiertes Netzwerk.  Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
+		<control caption="Zu Gnutella1 verbinden"/>
+		<control caption="Obwohl das original Gnutella Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."/>
+	</dialog>
  	
  	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey Downloads importieren">
 		<control/>
