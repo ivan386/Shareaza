@@ -214,15 +214,15 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: more than 250 MB RAM") );
 	}
 	
-	if ( Settings.Connection.InSpeed < 160 )
+	if ( Settings.Connection.InSpeed < 200 )
 	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 160 Kb/s in") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
 		return FALSE;
 	}
 	
-	if ( Settings.Connection.OutSpeed < 160 )
+	if ( Settings.Connection.OutSpeed < 200 )
 	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 160 Kb/s out") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
 		return FALSE;
 	}
 	
