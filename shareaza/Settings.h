@@ -298,6 +298,7 @@ public:
 	struct sBitTorrent
 	{
 		BOOL		AdvancedInterface;
+		CString		DefaultTracker;
 		DWORD		DefaultTrackerPeriod;
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;

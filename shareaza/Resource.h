@@ -129,6 +129,7 @@
 #define IDD_SETTINGS_PROTOCOLS          221
 #define IDB_MEDIA_STATES                222
 #define IDD_QUEUE_PROPERTIES            222
+#define IDD_SETTINGS_BITTORRENT         223
 #define IDB_TASKPANEL_FOOTER            224
 #define IDB_TASKBOX_CAPTION             225
 #define IDB_PROTOCOLS                   227
@@ -616,10 +617,15 @@
 #define IDC_REMOTE_USERNAME             1378
 #define IDC_REMOTE_PASSWORD             1379
 #define IDC_REMOTE_URL                  1380
-#define IDC_COLLECTIONS_FOLDER			1381
+#define IDC_COLLECTIONS_FOLDER          1381
 #define IDC_COLLECTIONS_BROWSE          1382
-#define IDC_TORRENTS_FOLDER				1381
-#define IDC_TORRENTS_BROWSE				1382
+#define IDC_TORRENTS_FOLDER             1383
+#define IDC_TORRENTS_BROWSE             1384
+#define IDC_TORRENTLINKS_SPIN           1385
+#define IDC_TORRENT_DEFAULTTRACKER		1386
+#define IDC_TORRENT_ENDGAME				1387
+#define IDC_TORRENT_INTERFACE			1388
+#define IDC_TORRENT_CLIENTLINKS         1389
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -1016,6 +1022,8 @@
 #define IDS_MEDIA_LOAD_FAIL_HELP        16995
 #define IDS_MEDIA_PARTIAL_RENDER        16996
 #define IDS_MEDIA_EMPTY                 16997
+#define IDS_MEDIA_TITLE                 16998
+#define IDS_MEDIA_PLAYLIST              16999
 #define IDS_CHAT_CONNECTING_TO          17024
 #define IDS_CHAT_CANT_CONNECT           17025
 #define IDS_CHAT_PUSH_SENT              17026
@@ -1397,6 +1405,7 @@
 #define ID_UPLOADS_FILTER_MENU          33099
 #define ID_DOWNLOADS_CLEAR_INCOMPLETE   33100
 #define ID_DOWNLOADS_CLEAR_COMPLETE     33101
+#define ID_LIBRARY_CREATETORRENT        33102
 #define ID_WINDOW_NAVBAR                33104
 #define ID_DOWNLOADS_RATE               33105
 #define ID_LIBRARY_VIEW_COLLECTION      33106
@@ -1416,7 +1425,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        263
 #define _APS_NEXT_COMMAND_VALUE         33120
 #define _APS_NEXT_CONTROL_VALUE         1382

@@ -308,6 +308,7 @@
 	<command code="33099" id="ID_UPLOADS_FILTER_MENU"/>
 	<command code="33100" id="ID_DOWNLOADS_CLEAR_INCOMPLETE"/>
 	<command code="33101" id="ID_DOWNLOADS_CLEAR_COMPLETE"/>
+	<command code="33102" id="ID_LIBRARY_CREATETORRENT"/>
 	<command code="33104" id="ID_WINDOW_NAVBAR"/>
 	<command code="33105" id="ID_DOWNLOADS_RATE"/>
 	<command code="33106" id="ID_LIBRARY_VIEW_COLLECTION"/>
