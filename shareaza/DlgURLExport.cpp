@@ -166,7 +166,6 @@ void CURLExportDlg::OnSave()
 		return;
 	
 	CWaitCursor pCursor;
-	USES_CONVERSION;
 	
 	m_wndProgress.SetRange( 0, m_pFiles.GetCount() );
 	m_wndCopy.EnableWindow( FALSE );
