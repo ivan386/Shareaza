@@ -12,7 +12,7 @@
 
 <!-- Manifest -->
 <manifest	name="PortuguÃªs"
-			author="AndrÃ© Cavon, e Lukas Taves"
+			author="AndrÃ© Cavon e Lukas Taves"
 			description="TraduÃ§Ã£o para o portuguÃªs brasileiro da Ãºltima versÃ£o do Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
@@ -1856,6 +1856,11 @@
 		<gap size="4"/>
 		<text>Selecione e configure as redes Ã s quais vocÃª gostaria que o Shareaza conectasse.</text>
 		<newline gap="10"/>
+
+		<link target="raza:page:CRemoteSettingsPage" format="b">Acesso Remoto:</link>
+		<gap size="4"/>
+		<text>Configure a habilidade de usar o Shareaza através de um navegador de internet.</text>
+		<newline gap="10"/>
 		
 		
 	</document>
@@ -2056,6 +2061,14 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 
 		algum programa que vocÃª nÃ£o precise mais.</text>
 
+	</document>
+
+	<document name="GeneralHelp.XPsp2">
+		<text format="b">Windows XP Service Pack 2 Detectado</text>
+		<newline gap="8"/>
+		<text>Shareaza detectou o Windows XP Service Pack 2. Ele restringe o número de conexões que um programa pode fazer ao mesmo tempo .</text>
+		<newline gap="8"/>
+		<text>Shareaza limitou as conexões e configurou valores padrões para garantir o funcionamento normal, entretando a performance pode ser reduzida. Por favor visite os fóruns do Shareaza para maiores informações.</text>
 	</document>
 
 
@@ -2979,6 +2992,9 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 	<string id="20126" value="NÃ£o Verificado"/>
 	<string id="20127" value="Fonte"/>
 	<string id="20128" value="Fontes"/>
+	<string id="8242" value="%s de %s (%.2f%%)"/>
+	<string id="8243" value="Volume enviado:"/>
+	<string id="16087" value="Sua banda de uplaod é muito baixa para ativar essa rede"/>
 
 </strings>
 
@@ -3820,14 +3836,15 @@ O Shareaza procura por fontes automaticamente, no entanto vocÃª pode acelerar es
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBu" caption="Baixando Arquivo Existente">
-		<control/><control/><control/>
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Baixando Arquivo Existente">
+		<control/><control/><control/><control/>
 		<control caption="VocÃª jÃ¡ tem este arquivo na sua Biblioteca.  O que deseja fazer?"/>
 		<control caption="Mostre-me o arquivo na Biblioteca"/>
 		<control caption="Baixar este arquivo novamente"/>
 		<control caption="NÃ£o baixar este arquivo"/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
+		<control caption="Você já baixou e deletou esse arquivo antes. O que gostaria de fazer?"/>
 	</dialog>
 	
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="BotÃ£o de Fechar">
