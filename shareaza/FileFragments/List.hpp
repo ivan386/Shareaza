@@ -369,14 +369,14 @@ List< FragmentT, ContainerT >::erase(
     ::std::pair< Iterator, Iterator > eraseRange =
         overlappingRange( eraseFragment );
     if( eraseRange.first == eraseRange.second ) return 0;
-    FragmentType frontFragment
+    const FragmentType& frontFragment
         = eraseRange.first->begin() < eraseFragment.begin()
             ? FragmentType( *eraseRange.first,
                  eraseRange.first->begin(), eraseFragment.begin() )
             : FragmentType( *eraseRange.first, 0,
                 ::std::numeric_limits< FSizeType >::max() );
     --eraseRange.second;
-    FragmentType backFragment
+    const FragmentType& backFragment
         = eraseRange.second->end() > eraseFragment.end()
         ? FragmentType( *eraseRange.second,
                 eraseFragment.end(), eraseRange.second->end() )
