@@ -1,7 +1,7 @@
 //
 // MetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -218,12 +218,7 @@ void CMetaPanel::WrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bPaint
 	
 	for ( ; ; pszScan++ )
 	{
-
-#ifdef UNICODE
 		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
-#else
-		if ( *pszScan != NULL && (unsigned char)*pszScan > 32 ) continue;
-#endif
 		
 		if ( pszWord < pszScan )
 		{
