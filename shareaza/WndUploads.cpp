@@ -40,7 +40,11 @@
 #include "WndUploads.h"
 #include "WndBrowseHost.h"
 #include "DlgSettingsManager.h"
+#include "DlgQueueProperties.h"
 #include ".\wnduploads.h"
+
+#include "DlgHelp.h"
+#include "LibraryDictionary.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -74,6 +78,9 @@ BEGIN_MESSAGE_MAP(CUploadsWnd, CPanelWnd)
 	ON_COMMAND(ID_BROWSE_LAUNCH, OnBrowseLaunch)
 	ON_UPDATE_COMMAND_UI(ID_UPLOADS_START, OnUpdateUploadsStart)
 	ON_COMMAND(ID_UPLOADS_START, OnUploadsStart)
+	ON_UPDATE_COMMAND_UI(ID_UPLOADS_EDIT_QUEUE, OnUpdateEditQueue)
+	ON_COMMAND(ID_UPLOADS_EDIT_QUEUE, OnEditQueue)
+	ON_COMMAND(ID_UPLOADS_HELP, OnUploadsHelp)
 	ON_COMMAND(ID_UPLOADS_SETTINGS, OnUploadsSettings)
 	ON_UPDATE_COMMAND_UI(ID_UPLOADS_FILTER_ALL, OnUpdateUploadsFilterAll)
 	ON_COMMAND(ID_UPLOADS_FILTER_ALL, OnUploadsFilterAll)
@@ -189,8 +196,30 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 
 void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CUploadQueue* pQueue;
+	CUploadFile* pUpload;
+	
+	CPoint ptLocal( point );
+	m_wndUploads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
-	TrackPopupMenu( _T("CUploadsWnd"), point, ID_UPLOADS_LAUNCH );
+	
+	if ( m_wndUploads.HitTest( ptLocal, &pQueue, &pUpload, NULL, NULL ) )
+	{
+		if ( pUpload != NULL )
+		{
+			pLock.Unlock();
+			TrackPopupMenu( _T("CUploadsWnd.Upload"), point, ID_UPLOADS_LAUNCH );
+			return;
+		}
+	}
+	
+	if ( pQueue != NULL )
+		TrackPopupMenu( _T("CUploadsWnd.Queue"), point, ( Settings.General.GUIMode == GUI_BASIC ) ? ID_UPLOADS_HELP : ID_UPLOADS_EDIT_QUEUE );
+	else
+		TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
+
+	pLock.Unlock();
 }
 
 void CUploadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
@@ -532,6 +561,49 @@ void CUploadsWnd::OnUploadsAutoClear()
 {
 	Settings.Uploads.AutoClear = ! Settings.Uploads.AutoClear;
 	if ( Settings.Uploads.AutoClear ) OnTimer( 4 );
+}
+
+void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI) 
+{
+	Prepare();
+	pCmdUI->Enable( ! m_bSelFile );
+}
+
+void CUploadsWnd::OnEditQueue() 
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
+	{
+		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
+		
+		if ( pQueue->m_bSelected )
+		{
+			pLock.Unlock();
+
+			CQueuePropertiesDlg dlg( pQueue, FALSE, this );
+			dlg.DoModal();
+			
+			UploadQueues.Save();
+
+			if ( UploadQueues.GetCount() == 0 )
+				UploadQueues.CreateDefault();
+			else
+				UploadQueues.Validate();
+
+			// Changing queues might change what files are in the hash table
+			LibraryDictionary.RebuildHashTable(); 
+			// ED2k file list will automatically update on next server connection
+
+			return;
+		}
+	}
+
+}
+
+void CUploadsWnd::OnUploadsHelp() 
+{
+	CHelpDlg::Show( _T("UploadHelp") );
 }
 
 void CUploadsWnd::OnUploadsSettings() 

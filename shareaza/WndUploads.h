@@ -89,6 +89,9 @@ protected:
 	afx_msg void OnBrowseLaunch();
 	afx_msg void OnUpdateUploadsStart(CCmdUI* pCmdUI);
 	afx_msg void OnUploadsStart();
+	afx_msg void OnUpdateEditQueue(CCmdUI* pCmdUI);
+	afx_msg void OnEditQueue();
+	afx_msg void OnUploadsHelp();
 	afx_msg void OnUploadsSettings();
 	afx_msg void OnUpdateUploadsFilterAll(CCmdUI* pCmdUI);
 	afx_msg void OnUploadsFilterAll();

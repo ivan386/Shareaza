@@ -1346,8 +1346,10 @@
 #define ID_UPLOADS_DISCONNECT           32844
 #define ID_UPLOADS_CLEAR_COMPLETED      32845
 #define ID_UPLOADS_CLEAR                32846
+#define ID_UPLOADS_EDIT_QUEUE			32847
 #define ID_TRANSFERS_DISCONNECT         32848
 #define ID_TRANSFERS_FORGET             32849
+#define ID_UPLOADS_HELP					32850
 #define ID_HELP_HOMEPAGE                32851
 #define ID_HELP_WEB_1                   32852
 #define ID_HELP_WEB_2                   32853

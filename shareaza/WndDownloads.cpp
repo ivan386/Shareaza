@@ -342,9 +342,13 @@ void CDownloadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		}
 	}
 	
+	if ( pDownload != NULL )
+		TrackPopupMenu( _T("CDownloadsWnd.Download"), point,
+			Settings.General.GUIMode == GUI_BASIC ? ID_DOWNLOADS_LAUNCH_COPY : ID_DOWNLOADS_LAUNCH );
+	else
+		TrackPopupMenu( _T("CDownloadsWnd.Nothing"), point, ID_DOWNLOADS_HELP );
+
 	pLock.Unlock();
-	TrackPopupMenu( _T("CDownloadsWnd.Download"), point,
-		Settings.General.GUIMode == GUI_BASIC ? ID_DOWNLOADS_LAUNCH_COPY : ID_DOWNLOADS_LAUNCH );
 }
 
 BOOL CDownloadsWnd::PreTranslateMessage(MSG* pMsg) 
