@@ -216,6 +216,38 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
+class CHomeTorrentsBox : public CRichTaskBox
+{
+// Construction
+public:
+	CHomeTorrentsBox();
+	virtual ~CHomeTorrentsBox();
+	DECLARE_DYNAMIC(CHomeTorrentsBox)
+	
+// Attributes
+protected:
+	CRichElement*	m_pdTorrentsNone;
+	CRichElement*	m_pdTorrentsOne;
+	CRichElement*	m_pdTorrentsMany;
+	CString			m_sTorrentsMany;
+	
+// Operations
+public:
+	void	Setup();
+	void	Update();
+
+// Overrides
+public:
+	//{{AFX_VIRTUAL(CHomeDownloadsBox)
+	//}}AFX_VIRTUAL
+
+// Implementation
+protected:
+	//{{AFX_MSG(CHomeDownloadsBox)
+	//}}AFX_MSG
+
+	DECLARE_MESSAGE_MAP()
+};
 
 class CHomePanel : public CTaskPanel
 {
@@ -231,6 +263,7 @@ public:
 	CHomeUploadsBox		m_boxUploads;
 	CHomeConnectionBox	m_boxConnection;
 	CHomeLibraryBox		m_boxLibrary;
+	CHomeTorrentsBox	m_boxTorrents;
 
 // Operations
 public:
@@ -251,6 +284,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+
+
 
 //{{AFX_INSERT_LOCATION}}
 

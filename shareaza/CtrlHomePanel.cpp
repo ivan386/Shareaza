@@ -95,6 +95,18 @@ BEGIN_MESSAGE_MAP(CHomeConnectionBox, CRichTaskBox)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+IMPLEMENT_DYNAMIC(CHomeTorrentsBox, CRichTaskBox)
+BEGIN_MESSAGE_MAP(CHomeTorrentsBox, CRichTaskBox)
+	//{{AFX_MSG_MAP(CHomeTorrentsBox)
+	ON_WM_CREATE()
+	ON_WM_SIZE()
+	ON_WM_PAINT()
+	ON_WM_SETCURSOR()
+	ON_WM_LBUTTONUP()
+	ON_WM_TIMER()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomePanel construction
@@ -125,11 +137,16 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_boxUploads.Create( this, _T("Uploads"), IDR_UPLOADSFRAME );
 	m_boxConnection.Create( this, _T("Connection"), IDR_NEIGHBOURSFRAME );
 	m_boxLibrary.Create( this, _T("Library"), IDR_LIBRARYFRAME );
+	m_boxTorrents.Create( this, _T("Torrents"), IDR_UPLOADSFRAME );
 	
 	AddBox( &m_boxDownloads );
 	AddBox( &m_boxLibrary );
 	AddBox( &m_boxConnection );
-	if ( GetSystemMetrics( SM_CYSCREEN ) > 600 ) AddBox( &m_boxUploads );
+	if ( GetSystemMetrics( SM_CYSCREEN ) > 600 ) 
+	{
+		AddBox( &m_boxUploads );
+		if(Settings.BitTorrent.AdvancedInterface) AddBox( &m_boxTorrents );
+	}
 	
 	// SetStretchBox( &m_boxLibrary );
 	
@@ -145,6 +162,7 @@ void CHomePanel::Setup()
 	m_boxUploads.Setup();
 	m_boxConnection.Setup();
 	m_boxLibrary.Setup();
+	m_boxTorrents.Setup();
 	
 	Update();
 	Invalidate();
@@ -156,6 +174,7 @@ void CHomePanel::Update()
 	m_boxUploads.Update();
 	m_boxConnection.Update();
 	m_boxLibrary.Update();
+	m_boxTorrents.Update();
 }
 
 
@@ -1243,3 +1262,83 @@ void CHomeConnectionBox::Update()
 	
 	CRichTaskBox::Update();
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// CHomeTorrentsBox construction
+
+CHomeTorrentsBox::CHomeTorrentsBox()
+{
+	SetPrimary();
+}
+
+CHomeTorrentsBox::~CHomeTorrentsBox()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CHomeTorrentsBox message handlers
+
+void CHomeTorrentsBox::Setup()
+{
+	if ( m_pDocument ) delete m_pDocument;
+	m_pDocument = NULL;
+	m_pdTorrentsNone = m_pdTorrentsOne = m_pdTorrentsMany = NULL;
+	
+	SetCaptionmark( Skin.GetWatermark( _T("CHomeTorrentsBox.Caption") ) );
+	
+	CXMLElement* pXML = Skin.GetDocument( _T("CHomeTorrentsBox") );
+	if ( pXML == NULL ) return;
+	
+	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
+	
+	m_pDocument = new CRichDocument();
+	
+	CMapStringToPtr pMap;
+	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
+	
+	pMap.Lookup( _T("TorrentsNone"), (void*&)m_pdTorrentsNone );
+	pMap.Lookup( _T("TorrentsOne"), (void*&)m_pdTorrentsOne );
+	pMap.Lookup( _T("TorrentsMany"), (void*&)m_pdTorrentsMany );
+	
+	if ( m_pdTorrentsMany ) m_sTorrentsMany = m_pdTorrentsMany->m_sText;
+	
+	GetView().SetDocument( m_pDocument );
+	Update();
+}
+
+void CHomeTorrentsBox::Update()
+{
+	if ( m_pDocument == NULL ) return;
+	
+	CString str;
+	
+	int nCount = Downloads.GetSeedCount();
+	
+	if ( nCount > 1 )
+	{
+		if ( m_pdTorrentsMany )
+		{
+			str.Format( m_sTorrentsMany, nCount );
+			m_pdTorrentsMany->SetText( str );
+			m_pdTorrentsMany->Show( TRUE );
+		}
+		if ( m_pdTorrentsOne ) m_pdTorrentsOne->Show( FALSE );
+		if ( m_pdTorrentsNone ) m_pdTorrentsNone->Show( FALSE );
+	}
+	else if ( nCount == 1 )
+	{
+		if ( m_pdTorrentsMany ) m_pdTorrentsMany->Show( FALSE );
+		if ( m_pdTorrentsOne ) m_pdTorrentsOne->Show( TRUE );
+		if ( m_pdTorrentsNone ) m_pdTorrentsNone->Show( FALSE );
+	}
+	else
+	{
+		if ( m_pdTorrentsMany ) m_pdTorrentsMany->Show( FALSE );
+		if ( m_pdTorrentsOne ) m_pdTorrentsOne->Show( FALSE );
+		if ( m_pdTorrentsNone ) m_pdTorrentsNone->Show( TRUE );
+	}
+	
+	CRichTaskBox::Update();
+}
+
+
