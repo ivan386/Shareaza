@@ -14,20 +14,22 @@
       <attribute name="album" type="string"/>
       <attribute name="genre">
         <simpleType base="string">
-          <enumeration value="A capella"/>
+          <enumeration value="Acapella"/>
           <enumeration value="Acid"/>
           <enumeration value="Acid Jazz"/>
           <enumeration value="Acid Punk"/>
           <enumeration value="Acoustic"/>
           <enumeration value="Alternative"/>
-          <enumeration value="AlternRock"/>
+          <enumeration value="Alternative Rock"/>
           <enumeration value="Ambient"/>
           <enumeration value="Anime"/>
           <enumeration value="Avantgarde"/>
           <enumeration value="Ballad"/>
           <enumeration value="Bass"/>
+          <enumeration value="Beat"/>
           <enumeration value="Bebop"/>
           <enumeration value="Big Band"/>
+          <enumeration value="Black Metal"/>
           <enumeration value="Bluegrass"/>
           <enumeration value="Blues"/>
           <enumeration value="Booty Bass"/>
@@ -36,12 +38,17 @@
           <enumeration value="Chamber Music"/>
           <enumeration value="Chanson"/>
           <enumeration value="Chorus"/>
+          <enumeration value="Christian Gangsta"/>
           <enumeration value="Christian Rap"/>
+          <enumeration value="Christian Rock"/>
           <enumeration value="Classic Rock"/>
           <enumeration value="Classical"/>
           <enumeration value="Club"/>
+          <enumeration value="Club-House"/>
           <enumeration value="Comedy"/>
+          <enumeration value="Contemporary C"/>
           <enumeration value="Country"/>
+          <enumeration value="Crossover"/>
           <enumeration value="Cult"/>
           <enumeration value="Dance"/>
           <enumeration value="Dance Hall"/>
@@ -49,6 +56,7 @@
           <enumeration value="Death Metal"/>
           <enumeration value="Disco"/>
           <enumeration value="Dream"/>
+          <enumeration value="Drum & Bass"/>
           <enumeration value="Drum Solo"/>
           <enumeration value="Duet"/>
           <enumeration value="Easy Listening"/>
@@ -66,11 +74,14 @@
           <enumeration value="Fusion"/>
           <enumeration value="Game"/>
           <enumeration value="Gangsta"/>
+          <enumeration value="Goa"/>
           <enumeration value="Gospel"/>
           <enumeration value="Gothic"/>
           <enumeration value="Gothic Rock"/>
           <enumeration value="Grunge"/>
           <enumeration value="Hard Rock"/>
+          <enumeration value="Hardcore"/>
+          <enumeration value="Heavy Metal"/>
           <enumeration value="Hip-Hop"/>
           <enumeration value="House"/>
           <enumeration value="Humour"/>
@@ -80,16 +91,17 @@
           <enumeration value="Instrumental Rock"/>
           <enumeration value="Jazz"/>
           <enumeration value="Jazz+Funk"/>
-          <enumeration value="J-Pop"/>
+          <enumeration value="JPop"/>
           <enumeration value="Jungle"/>
           <enumeration value="Latin"/>
-          <enumeration value="Latin Jazz"/>
           <enumeration value="Lo-Fi"/>
           <enumeration value="Meditative"/>
+          <enumeration value="Merengue"/>
           <enumeration value="Metal"/>
           <enumeration value="Musical"/>
           <enumeration value="National Folk"/>
-          <enumeration value="Native American"/>
+          <enumeration value="Native US"/>
+          <enumeration value="Negerpunk"/>
           <enumeration value="New Age"/>
           <enumeration value="New Wave"/>
           <enumeration value="Noise"/>
@@ -97,6 +109,7 @@
           <enumeration value="Opera"/>
           <enumeration value="Other"/>
           <enumeration value="Polka"/>
+          <enumeration value="Polsk Punk"/>
           <enumeration value="Pop"/>
           <enumeration value="Pop/Funk"/>
           <enumeration value="Pop-Folk"/>
@@ -109,7 +122,7 @@
           <enumeration value="Psychedelic Rock"/>
           <enumeration value="Punk"/>
           <enumeration value="Punk Rock"/>
-          <enumeration value="R &amp; B"/>
+          <enumeration value="R&amp;B"/>
           <enumeration value="Rap"/>
           <enumeration value="Rave"/>
           <enumeration value="Reggae"/>
@@ -118,6 +131,7 @@
           <enumeration value="Rhythmic Soul"/>
           <enumeration value="Rock"/>
           <enumeration value="Rock &amp; Roll"/>
+          <enumeration value="Salsa"/>
           <enumeration value="Samba"/>
           <enumeration value="Satire"/>
           <enumeration value="Showtunes"/>
@@ -134,9 +148,12 @@
           <enumeration value="Swing"/>
           <enumeration value="Symphonic Rock"/>
           <enumeration value="Symphony"/>
+          <enumeration value="SynthPop"/>
           <enumeration value="Tango"/>
           <enumeration value="Techno"/>
           <enumeration value="Techno-Industrial"/>
+          <enumeration value="Terror"/>
+          <enumeration value="Thrash Metal"/>
           <enumeration value="Top 40"/>
           <enumeration value="Trailer"/>
           <enumeration value="Trance"/>
@@ -144,7 +161,6 @@
           <enumeration value="Trip-Hop"/>
           <enumeration value="Vocal"/>
           <enumeration value="World"/>
-          <enumeration value="Zydeco"/>
         </simpleType>
       </attribute>
       <attribute name="track" type="short"/>
