@@ -260,6 +260,11 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	else
 		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, and the big boys.
 
+	//Set upload limit to 90% of capacity, trimmed to the nearest KB.
+	Settings.Bandwidth.Uploads = Settings.Connection.OutSpeed * 0.9;
+	Settings.Bandwidth.Uploads >>= 3;
+	Settings.Bandwidth.Uploads *= 1024;
+	
 
 	
 	if ( nSpeed > 750 )
@@ -275,6 +280,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 128;
 		Settings.Downloads.MaxFileTransfers		= 8;
 		Settings.Downloads.MaxConnectingSources	= 40;
+		Settings.Downloads.MaxFileSearches		= 4;
 	}
 	else if ( nSpeed > 80 && theApp.m_bNT )
 	{
@@ -282,6 +288,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 64;
 		Settings.Downloads.MaxFileTransfers		= 6;
 		Settings.Downloads.MaxConnectingSources	= 30;
+		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	else
 	{
@@ -289,6 +296,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 32;
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 20;
+		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	
 	UploadQueues.CreateDefault();
