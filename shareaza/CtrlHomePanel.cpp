@@ -131,7 +131,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_boxUploads.Create( this, _T("Uploads"), IDR_UPLOADSFRAME );
 	m_boxConnection.Create( this, _T("Connection"), IDR_NEIGHBOURSFRAME );
 	m_boxLibrary.Create( this, _T("Library"), IDR_LIBRARYFRAME );
-	m_boxTorrents.Create( this, _T("Torrents"), IDR_UPLOADSFRAME );
+	m_boxTorrents.Create( this, _T("Torrents"), IDR_BITTORRENT_ICON );
 	
 	AddBox( &m_boxDownloads );
 	AddBox( &m_boxLibrary );

@@ -141,6 +141,7 @@
 #define IDD_DOWNLOAD_GROUP              236
 #define IDI_PAINTBRUSHES                237
 #define IDD_TORRENT_TRACKER             238
+#define IDR_TORRENT_ICON                239
 #define IDD_HELP                        240
 #define IDB_NAVBAR_IMAGE                241
 #define IDD_DELETE_FILE                 242
@@ -162,6 +163,8 @@
 #define IDI_ICON                        261
 #define IDB_BITMAP1                     262
 #define IDB_PANEL_MARK                  262
+#define IDI_ICON1                       263
+#define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
@@ -722,7 +725,7 @@
 #define IDS_DLM_COMPLETED_WORD          8239
 #define IDS_DLM_MOVING                  8240
 #define IDS_DLM_VERIFY                  8241
-#define IDS_DLM_UPLOADED				8242
+#define IDS_DLM_UPLOADED                8242
 #define IDS_DLM_VOLUME_UPLOADED         8243
 #define IDS_LIBHEAD_HOME                8288
 #define IDS_LIBHEAD_EXPLORE_FOLDER      8289
@@ -744,9 +747,9 @@
 #define IDS_TIP_BOGUS                   8313
 #define IDS_TIP_EXISTS_DELETED          8314
 #define IDS_TIP_EXISTS_BLACKLISTED      8315
-#define IDS_TIP_HITS					8316
-#define IDS_TIP_UPLOADS					8317
-#define IDS_TIP_TODAYTOTAL				8318
+#define IDS_TIP_HITS                    8316
+#define IDS_TIP_UPLOADS                 8317
+#define IDS_TIP_TODAYTOTAL              8318
 #define IDS_TIP_STATUS                  8320
 #define IDS_TIP_SPEED                   8321
 #define IDS_TIP_URL                     8322
@@ -784,7 +787,7 @@
 #define IDS_NETWORK_FORCE_HUB           16083
 #define IDS_NETWORK_DISABLE_G1          16084
 #define IDS_NETWORK_DISABLE_G2          16085
-#define IDS_NETWORK_BANDWIDTH_LOW		16087
+#define IDS_NETWORK_BANDWIDTH_LOW       16087
 #define IDS_CONNECTION_ACCEPTED         16128
 #define IDS_CONNECTION_ATTEMPTING       16129
 #define IDS_CONNECTION_CONNECT_FAIL     16130
@@ -1503,7 +1506,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        263
+#define _APS_NEXT_RESOURCE_VALUE        264
 #define _APS_NEXT_COMMAND_VALUE         33120
 #define _APS_NEXT_CONTROL_VALUE         1382
 #define _APS_NEXT_SYMED_VALUE           102
