@@ -24,6 +24,9 @@
 #include "Settings.h"
 #include "PageSettingsGeneral.h"
 #include "DlgHelp.h"
+#include "Schema.h"
+#include "SchemaCache.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -111,6 +114,8 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 							+ Settings.General.RatesUnit * 2;
 	
 	CRect rc;
+	CString strTitle( _T("Search Results") );
+
 	m_wndTips.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
 	
@@ -118,12 +123,25 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_wndTips.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES, LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES );
 	
-	Add( _T("Search Results"), Settings.Interface.TipSearch );
-	Add( _T("Library"), Settings.Interface.TipLibrary );
-	Add( _T("Downloads"), Settings.Interface.TipDownloads );
-	Add( _T("Uploads"), Settings.Interface.TipUploads );
-	Add( _T("Neighbours"), Settings.Interface.TipNeighbours );
-	Add( _T("Media Player"), Settings.Interface.TipMedia );
+	if ( CSchema* pSchema = SchemaCache.Get( CSchema::uriSearchFolder ) )
+	{
+		strTitle = pSchema->m_sTitle;
+		int nColon = strTitle.Find( ':' );
+		if ( nColon >= 0 ) 
+			strTitle = strTitle.Mid( nColon + 1 );
+	}
+
+	Add( strTitle, Settings.Interface.TipSearch );
+	LoadString( strTitle, IDR_LIBRARYFRAME );
+	Add( strTitle, Settings.Interface.TipLibrary );
+	LoadString( strTitle, IDR_DOWNLOADSFRAME );
+	Add( strTitle, Settings.Interface.TipDownloads );
+	LoadString( strTitle, IDR_UPLOADSFRAME );
+	Add( strTitle, Settings.Interface.TipUploads );
+	LoadString( strTitle, IDR_NEIGHBOURSFRAME );
+	Add( strTitle, Settings.Interface.TipNeighbours );
+	LoadString( strTitle, IDR_MEDIAFRAME );
+	Add( strTitle, Settings.Interface.TipMedia );
 	
 	m_wndTipSpin.SetRange( 100, 5000 );
 	m_nTipDelay	= Settings.Interface.TipDelay;
