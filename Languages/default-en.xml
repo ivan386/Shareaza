@@ -16,7 +16,7 @@
 			description="Shareaza Default English Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.0.25"
+			version="2.0.0.28"
 			type="Language"
 			language="en"
 			prompt="Click here to select English as your natural language."
@@ -2346,6 +2346,7 @@
 	<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
+	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
     <string id="8063" value="Connected. %s in local library."/>
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
 	<string id="8065" value="Connecting to the network..."/>
@@ -2373,6 +2374,8 @@
 	<string id="8132" value="Some results are available, but were filtered out."/>
 	<string id="8133" value="Shareaza is actively searching the network..."/>
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
+	<string id="8141" value="Show the Search Panel"/>
+    <string id="8142" value="Hide the Search Panel"/>
 	<string id="8143" value="Searching..."/>
 	<string id="8144" value="Start Search"/>
 	<string id="8145" value="Search More"/>
@@ -2447,6 +2450,7 @@
     <string id="8323" value="User Agent:"/>
     <string id="8324" value="Inactive"/>
     <string id="8325" value="Active"/>
+    <string id="8326" value="Next in Line"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
@@ -2841,6 +2845,35 @@
     <string id="19001" value="You must choose a username and password."/>
     <string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
+	<string id="20100" value="Connecting"/>
+	<string id="20101" value="Requesting"/>
+	<string id="20102" value="Response"/>
+	<string id="20103" value="Downloading"/>
+	<string id="20104" value="TigerTree"/>
+	<string id="20105" value="Hashset"/>
+	<string id="20106" value="Metadata"/>
+	<string id="20107" value="Busy"/>
+	<string id="20108" value="Enqueue"/>
+	<string id="20109" value="Queued"/>
+	<string id="20110" value="Unknown"/>
+	<string id="20111" value="Completed"/>
+	<string id="20112" value="Seeding"/>
+	<string id="20113" value="Moving"/>
+	<string id="20114" value="Paused"/>
+	<string id="20115" value="File Error"/>
+	<string id="20116" value="Can't Move"/>
+	<string id="20117" value="Verifying"/>
+	<string id="20118" value="Active"/>
+	<string id="20119" value="Pending"/>
+	<string id="20120" value="Searching"/>
+	<string id="20121" value="Creating"/>
+	<string id="20122" value="Torrent"/>
+	<string id="20123" value="Tracker Down"/>
+	<string id="20124" value="(No Sources)"/>
+	<string id="20125" value="Verified"/>
+	<string id="20126" value="Unverified"/>
+	<string id="20127" value="source"/>
+	<string id="20128" value="sources"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
