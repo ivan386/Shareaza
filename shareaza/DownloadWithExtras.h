@@ -29,6 +29,8 @@
 class CDownloadMonitorDlg;
 class CFilePreviewDlg;
 
+// CDownloadReview stores a review of a download. It can be either a G2 review, copied from the
+// search, or an ed2k review recieved during download.
 class CDownloadReview
 {
 // Construction
@@ -45,8 +47,11 @@ public:
 	int					m_nFileRating;		// 0 = Unrated, 1 = Fake, 1-6 = Num Stars
 	CString				m_sFileComments;	// The review/comments
 
-	CDownloadReview*	m_pNext;
-	CDownloadReview*	m_pPrev;
+	CDownloadReview*	m_pNext;			// Next review in list (or NULL for the last)
+	CDownloadReview*	m_pPrev;			// PRevious review in list (or NULL for the first)
+
+// Operations
+	void Serialize(CArchive& ar, int nVersion);
 
 	friend class		CDownloadWithExtras;
 };
@@ -77,7 +82,9 @@ public:
 	void		AddPreviewName(LPCTSTR pszFile);
 	void		DeletePreviews();
 	BOOL		AddReview(in_addr *pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment);
+	BOOL		AddReview(CDownloadReview* pReview);
 	void		DeleteReviews();
+	void		DeleteReview(CDownloadReview* pReview);
 	inline int	GetReviewCount() const { return m_nReviewCount; }
 	inline CDownloadReview* GetFirstReview() const { return m_pReviewFirst; }
 	CDownloadReview* FindReview(in_addr *pIP) const;

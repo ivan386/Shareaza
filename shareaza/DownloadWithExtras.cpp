@@ -89,7 +89,8 @@ BOOL CDownloadWithExtras::CanPreview()
 	if ( pszType == NULL ) return FALSE;
 	
 	CString strType( pszType );
-	strType = CharLower( strType.GetBuffer() );
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 	
 	CLSID pCLSID;
 	return Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID );
@@ -161,6 +162,81 @@ BOOL CDownloadWithExtras::AddReview(in_addr *pIP, int nClientID, int nRating, LP
 	return TRUE;
 }
 
+
+BOOL CDownloadWithExtras::AddReview(CDownloadReview* pReview)
+{
+	// If we have too may reviews, then exit
+	if ( m_nReviewCount > Settings.Downloads.MaxReviews ) 
+	{
+		theApp.Message( MSG_DEBUG, _T("Maximum number of reviews reached") );
+		delete pReview;
+		return FALSE;
+	}
+
+	// Add the review
+	m_nReviewCount++;
+
+	pReview->m_pPrev = m_pReviewLast;
+	pReview->m_pNext = NULL;
+		
+	if ( m_pReviewLast != NULL )
+	{
+		m_pReviewLast->m_pNext = pReview;
+		m_pReviewLast = pReview;
+	}
+	else
+	{
+		m_pReviewFirst = m_pReviewLast = pReview;
+	}
+
+	return TRUE;
+}
+
+// Delete all reviews
+void CDownloadWithExtras::DeleteReview(CDownloadReview *pReview)
+{
+	if ( pReview == NULL ) return;
+
+	if ( m_nReviewCount ) m_nReviewCount--;
+
+	if ( pReview->m_pNext == NULL )
+	{
+		if ( pReview->m_pPrev == NULL )
+		{
+			// Delete the last review on the list
+			m_pReviewFirst = m_pReviewLast = NULL;
+			delete pReview;
+			return;
+		}
+		else
+		{
+			// Delete the only review
+			pReview->m_pPrev->m_pNext = NULL;
+			m_pReviewLast = pReview->m_pPrev;
+			delete pReview;
+			return;
+		}
+	}
+	else if ( pReview->m_pPrev == NULL )
+	{
+		// Delete the first review on the list
+		pReview->m_pNext->m_pPrev = NULL;
+		m_pReviewFirst = pReview->m_pNext;
+		delete pReview;
+		return;
+
+	}
+	else
+	{
+		// Delete a review in the middle of the list
+		pReview->m_pPrev->m_pNext = pReview->m_pNext;
+		pReview->m_pNext->m_pPrev = pReview->m_pPrev;
+		delete pReview;
+		return;
+	}
+}
+
+// Delete all reviews
 void CDownloadWithExtras::DeleteReviews()
 {
 	CDownloadReview *pNext = NULL, *pReview = m_pReviewFirst;
@@ -177,9 +253,11 @@ void CDownloadWithExtras::DeleteReviews()
 	m_nReviewCount	= 0;
 }
 
+// Find a review given an IP
 CDownloadReview* CDownloadWithExtras::FindReview(in_addr *pIP) const
 {
 	CDownloadReview *pReview = m_pReviewFirst;
+	if ( pIP == NULL ) return NULL;
 
 	while ( pReview )
 	{
@@ -229,6 +307,17 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 		{
 			ar << m_pPreviews.GetNext( pos );
 		}
+
+		ar.WriteCount( GetReviewCount() );
+
+		CDownloadReview *pReview = m_pReviewFirst;
+		while ( pReview )
+		{
+			pReview->Serialize( ar, nVersion );
+			pReview = pReview->m_pNext;
+		}
+
+
 	}
 	else
 	{
@@ -237,6 +326,17 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 			CString str;
 			ar >> str;
 			m_pPreviews.AddTail( str );
+		}
+
+		if ( nVersion >= 32 )
+		{
+
+			for ( int nCount = ar.ReadCount() ; nCount ; nCount-- )
+			{
+				CDownloadReview *pReview = new CDownloadReview;
+				pReview->Serialize( ar, nVersion );
+				AddReview( pReview );
+			}
 		}
 	}
 }
@@ -258,14 +358,21 @@ CDownloadReview::CDownloadReview(in_addr *pIP, int nUserPicture, int nRating, LP
 	m_pNext			= NULL;
 	m_pPrev			= NULL;
 
-	m_pUserIP		= *pIP;
 	m_nUserPicture	= nUserPicture;
 	m_sUserName		= pszUserName;
 	m_nFileRating	= nRating;
 
 	m_sFileComments = pszComment;
 
-	if ( m_sUserName.IsEmpty() ) m_sUserName = inet_ntoa( *pIP );
+	if ( pIP != NULL )
+	{
+		m_pUserIP = *pIP;
+		if ( m_sUserName.IsEmpty() ) m_sUserName = inet_ntoa( *pIP );
+	}
+	else
+	{
+		m_pUserIP.S_un.S_addr = 0;
+	}
 }
 
 CDownloadReview::~CDownloadReview()
@@ -275,3 +382,25 @@ CDownloadReview::~CDownloadReview()
 
 }
 
+//////////////////////////////////////////////////////////////////////
+// CDownloadReview serialize
+
+void CDownloadReview::Serialize(CArchive& ar, int nVersion)
+{
+	if ( ar.IsStoring() )
+	{
+		ar << m_pUserIP.S_un.S_addr;
+		ar << m_nUserPicture;
+		ar << m_sUserName;
+		ar << m_nFileRating;
+		ar << m_sFileComments;
+	}
+	else
+	{
+		ar >> m_pUserIP.S_un.S_addr;
+		ar >> m_nUserPicture;
+		ar >> m_sUserName;
+		ar >> m_nFileRating;
+		ar >> m_sFileComments;
+	}
+}
