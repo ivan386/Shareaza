@@ -324,27 +324,44 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 		
 		if ( m_nMinSize > 0 || m_nMaxSize < SIZE_UNKNOWN )
 		{
-			pPacket->WriteByte( 0 );
-			pPacket->WriteByte( 0 );
-			
-			pPacket->WriteByte( 0 );
+			pPacket->WriteByte( 0 );		// Boolean AND (min/max) / (name/type)
 			pPacket->WriteByte( 0 );
 			
-			pPacket->WriteByte( 3 );
+			pPacket->WriteByte( 0 );		// Boolean AND (Min/Max)
+			pPacket->WriteByte( 0 );
+			
+			pPacket->WriteByte( 3 );		// Size limit
 			pPacket->WriteLongLE( (DWORD)m_nMinSize );
 			pPacket->WriteByte( 1 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );
 			
-			pPacket->WriteByte( 3 );
+			pPacket->WriteByte( 3 );		// Size limit
 			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, 0xFFFFFFFF ) );
 			pPacket->WriteByte( 2 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );
 		}
 		
-		pPacket->WriteByte( 1 );
-		pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords );
+
+		if ( ( m_pSchema == NULL ) || ( ! m_pSchema->m_sDonkeyType.GetLength() ) )
+		{	//ed2k search without file type
+			pPacket->WriteByte( 1 );		// Name
+			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords );
+		}
+		else
+		{	//ed2k search including file type
+			pPacket->WriteByte( 0 );		// Boolean AND (name/type)
+			pPacket->WriteByte( 0 );
+
+			pPacket->WriteByte( 1 );		//name
+			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords );
+
+			pPacket->WriteByte( 2 );		//metadata (type)
+			pPacket->WriteEDString( m_pSchema->m_sDonkeyType );
+			pPacket->WriteShortLE( 1 );
+			pPacket->WriteByte( ED2K_FT_FILETYPE );
+		}
 	}
 	
 	return pPacket;

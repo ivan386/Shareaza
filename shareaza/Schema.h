@@ -48,6 +48,7 @@ public:
 	CString		m_sSingular;
 	int			m_nAvailability;
 	BOOL		m_bPrivate;
+	CString		m_sDonkeyType;
 public:
 	CPtrList	m_pMembers;
 	CStringList	m_pExtends;

@@ -45,6 +45,7 @@ CSchema::CSchema()
 	m_nAvailability	= saDefault;
 	m_bPrivate		= FALSE;
 	m_nIcon16		= m_nIcon32 = m_nIcon48 = -1;
+	m_sDonkeyType.Empty();
 }
 
 CSchema::~CSchema()
@@ -138,6 +139,8 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 	m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 4 );
 	m_sIcon += _T("XP.ico");
 
+	//LoadIcon() causes bad registry reads
+	//CCoolInterface::IsNewWindows() causes several reapeat ones.
 	if ( ! CCoolInterface::IsNewWindows() || ! LoadIcon() )
 	{
 		m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 6 );
@@ -150,6 +153,20 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 		m_sTitle = m_sSingular;
 		m_sTitle.SetAt( 0, toupper( m_sTitle.GetAt( 0 ) ) );
 	}
+
+	//Bit of a hack - Should probably save this info as part of schema somehow
+	if ( m_sTitle == _T("Audio") )
+		m_sDonkeyType = _T("Audio");
+	else if ( m_sTitle == _T("Video") )
+		m_sDonkeyType = _T("Video");
+	else if ( m_sTitle == _T("Image") )
+		m_sDonkeyType = _T("Image");
+	else if ( m_sTitle == _T("Application") )
+		m_sDonkeyType = _T("Pro");
+	else if ( m_sTitle == _T("Book") )
+		m_sDonkeyType = _T("Doc");
+	else if ( m_sTitle.Left( 8 )  == _T("Document") )
+		m_sDonkeyType = _T("Doc");
 
 	return TRUE;
 }
