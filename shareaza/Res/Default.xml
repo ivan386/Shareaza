@@ -75,11 +75,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_SEARCH" text="Search Again..."/>
+		<button id="ID_SEARCH_STOP" text="Stop Search "/>
+		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
 		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
-		<separator/>
-		<button id="ID_SEARCH_SEARCH" text="Search Again..."/>
-		<button id="ID_SEARCH_STOP" text="Stop"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Show Search"/>
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
