@@ -769,7 +769,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				m_bTiger	|= CTigerNode::HashFromURN( strData, &m_pTiger );
 				m_bED2K		|= CED2K::HashFromURN( strData, &m_pED2K );
 			}
-			else if ( CGGEPItem* pItem = pGGEP.Find( _T("ALT"), 6 ) )
+			
+			if ( CGGEPItem* pItem = pGGEP.Find( _T("ALT"), 6 ) )
 			{
 				// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
 				m_nSources = pItem->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
