@@ -262,7 +262,7 @@ ru.reg_apptitle=Shareaza - программа дл€ обмена файлами
 ru.icons_license=Ћицензи€
 ru.icons_uninstall=ƒеинсталл€ци€
 ru.icons_downloads=«агрузки
-ru.dialog_shutdown=Do you wish to shut down %1?
+ru.dialog_shutdown=’отите ли завершить работу %1?
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
@@ -277,5 +277,5 @@ gr.reg_apptitle=Shareaza Ultimate File Sharing
 gr.icons_license=Ґдейб
 gr.icons_uninstall=Ѕрегкбф№уфбуз
 gr.icons_downloads= бфЁвбумб
-gr.dialog_shutdown=’отите ли завершить работу %1?
+gr.dialog_shutdown=Do you wish to shut down %1?
 
