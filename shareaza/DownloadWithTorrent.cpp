@@ -592,6 +592,7 @@ float CDownloadWithTorrent::GetRatio() const
 
 BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
+	if ( ! m_bBTH ) return TRUE;						//Not a torrent
 	
 	if ( m_nStartTorrentDownloads == dtAlways ) return TRUE;	//Torrent is set to download as needed
 
@@ -600,8 +601,6 @@ BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	//Ratio OK
 		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		//Always get at least 5 MB so you have something to upload	
 	}
-
-	if ( ! m_bBTH ) return TRUE;						//Not a torrent
 
 	return FALSE;
 }

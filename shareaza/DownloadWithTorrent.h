@@ -103,7 +103,7 @@ protected:
 
 enum
 {
-	dtAlways, dtWhenRatio, dtNever
+	dtAlways, dtWhenRatio, dtWhenRequested, dtNever
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_)
