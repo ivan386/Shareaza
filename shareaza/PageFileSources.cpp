@@ -25,6 +25,7 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "PageFileSources.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -99,6 +100,7 @@ BOOL CFileSourcesPage::OnInitDialog()
 
 	Library.Unlock();
 
+	Skin.Translate( _T("CFileSourcesPageList"), m_wndList.GetHeaderCtrl() );
 	m_wndNew.EnableWindow( FALSE );
 	m_wndRemove.EnableWindow( FALSE );
 	
