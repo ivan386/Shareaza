@@ -187,6 +187,14 @@ Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 ; Delete NSIS entry on software panel
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza"; Flags: dontcreatekey deletekey
 
+; Create TorrentAid default dir locations
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: currentuser
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: currentuser
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{commonappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: allusers
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{commonappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: allusers
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; MinVersion: 4.0,0
+Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; MinVersion: 4.0,0
+
 [Dirs]
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
