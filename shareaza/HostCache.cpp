@@ -692,16 +692,16 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		}
 		
 		ar << m_sName;
-		if ( m_sName.GetLength() )
-		{
-			ar << m_sDescription;
-			ar << m_nUserCount;
-			ar << m_nUserLimit;
-			ar << m_bPriority;
-			ar << m_nFileLimit;
-			ar << m_nTCPFlags;
-			ar << m_nUDPFlags;
-		}
+		if ( m_sName.GetLength() ) ar << m_sDescription;
+
+		ar << m_nUserCount;
+		ar << m_nUserLimit;
+		ar << m_bPriority;
+
+		ar << m_nFileLimit;
+		ar << m_nTCPFlags;
+		ar << m_nUDPFlags;
+		ar << m_tStats;
 		
 		ar << m_nKeyValue;
 		if ( m_nKeyValue != 0 )
@@ -729,7 +729,21 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			m_pVendor = VendorCache.Lookup( szVendor );
 		}
 		
-		if ( nVersion >= 7 )
+		if ( nVersion >= 10 )
+		{
+			ar >> m_sName;
+			if ( m_sName.GetLength() ) ar >> m_sDescription;
+			
+			ar >> m_nUserCount;
+			ar >> m_nUserLimit;
+			ar >> m_bPriority;
+
+			ar >> m_nFileLimit;
+			ar >> m_nTCPFlags;
+			ar >> m_nUDPFlags;
+			ar >> m_tStats;
+		}
+		else if ( nVersion >= 7 )
 		{
 			ar >> m_sName;
 			if ( m_sName.GetLength() )
@@ -738,12 +752,6 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 				ar >> m_nUserCount;
 				if ( nVersion >= 8 ) ar >> m_nUserLimit;
 				if ( nVersion >= 9 ) ar >> m_bPriority;
-				if ( nVersion >= 10 )
-				{
-					ar >> m_nFileLimit;
-					ar >> m_nTCPFlags;
-					ar >> m_nUDPFlags;
-				}
 			}
 		}
 		
@@ -767,8 +775,12 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 	m_bPriority		= FALSE;
 	m_nUserCount	= 0;
 	m_nUserLimit	= 0;
+	m_nFileLimit	= 0;
 	m_sName.Empty();
 	m_sDescription.Empty();
+
+	m_nUDPFlags		= 0;
+	m_nTCPFlags		= 0;
 	
 	m_tAdded		= GetTickCount();
 	m_tSeen			= 0;
@@ -776,6 +788,7 @@ void CHostCacheHost::Reset(IN_ADDR* pAddress)
 	m_tConnect		= 0;
 	m_tQuery		= 0;
 	m_tAck			= 0;
+	m_tStats		= 0;
 	m_tFailure		= 0;
 	m_nFailures		= 0;
 	

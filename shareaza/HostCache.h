@@ -103,9 +103,9 @@ public:
 	BOOL		m_bPriority;
 	DWORD		m_nUserCount;
 	DWORD		m_nUserLimit;
+	DWORD		m_nFileLimit;
 	CString		m_sName;
 	CString		m_sDescription;
-	DWORD		m_nFileLimit;
 	DWORD		m_nTCPFlags;
 	DWORD		m_nUDPFlags;
 
@@ -117,6 +117,7 @@ public:
 	DWORD		m_tConnect;
 	DWORD		m_tQuery;
 	DWORD		m_tAck;
+	DWORD		m_tStats;			// ED2K stats UDP request
 	DWORD		m_tFailure;
 	DWORD		m_nFailures;
 
