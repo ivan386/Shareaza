@@ -85,14 +85,7 @@ Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwr
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Skins
-Source: "Skins\Arcadia's Call\*"; DestDir: "{app}\Skins\Arcadia's Call"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\CleanBlue\*"; DestDir: "{app}\Skins\CleanBlue"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Green Moon\*"; DestDir: "{app}\Skins\Green Moon"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Skins\Skin+\*"; DestDir: "{app}\Skins\Skin+"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 
 ; Languages: English gets installed by default
 Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
