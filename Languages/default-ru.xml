@@ -1489,9 +1489,9 @@
 		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
 
-		<icon res="147" width="32" height="32" target="http://wiki.shareaza.com/Static/RuHome"/>
+		<icon res="147" width="32" height="32" target="http://wiki.shareaza.com/static/RuHome"/>
 		<gap size="8"/>
-		<link target="http://wiki.shareaza.com/Static/RuHome" format="bu" align="middle">Быстрaя Помoщь (RUS)</link>
+		<link target="http://wiki.shareaza.com/static/RuHome" format="bu" align="middle">Быстрaя Помoщь (RUS)</link>
 		<text align="middle">&#160;- Онлайновая Справочная Система Wiki</text>
 		<newline gap="8"/>
 
