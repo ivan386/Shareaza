@@ -3164,7 +3164,7 @@
                <control caption="% of _bandwidth under limit"/>
                <control/>
                <control caption="Súgó"/>
-               <control caption="Az ütemezővel beállíthatod, hogy a Shareaza mikor töltse kapcsolódjon és mikor töltse le a fájlokat. &#13;&#10;&#13;&#10;&#13;&#10;Note: Ha éppen meg van nyitva a Shareaza és az ütemező is be van kapcsolva, láthatod, hogy megváltoztatja a beállításaidat.- Ez teljesen normális!-"/>
+               <control caption="Az ütemezővel beállíthatod, hogy a Shareaza mikor töltse kapcsolódjon és mikor töltse le a fájlokat. &#13;&#10;&#13;&#10;Note: Ha éppen meg van nyitva a Shareaza és az ütemező is be van kapcsolva, láthatod, hogy megváltoztatja a beállításaidat.- Ez teljesen normális!-"/>
        </dialog>
 
 <dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Hálózatok">
