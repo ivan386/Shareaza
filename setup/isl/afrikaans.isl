@@ -1,13 +1,13 @@
 ; *** Inno Setup version 4.2.5+ Afrikaans messages ***
 ;
 ; Translated by Johann van der Walt (Thesage)
-; jvdwalt AT tuks DOT co DOT za
+; johannw @ imaginet.co.za
 ;
 ; $jrsoftware: issrc/Files/Languages/Afrikaans.isl,v 1.00 2004/06/19 19:57:28 jr Exp $
 
 [LangOptions]
 LanguageName=Afrikaans
-LanguageID=$0436
+LanguageID=$0409
 LanguageCodePage=0
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
@@ -134,7 +134,7 @@ ToUNCPathname=Die Opsteller kan nie na 'n UNC padnaam installeer nie. As jy prob
 InvalidPath=Jy moet 'n volle pad met aandrywerletter invoer; byvoorbeeld:%n%nC:\APP%n%nof 'n UNC pad in die vorm:%n%n\\server\share
 InvalidDrive=Die skyf of UNC adres wat jy geselekteer het bestaan nie, of is nie beskikbaar nie. Selekteer asseblief 'n ander een.
 DiskSpaceWarningTitle=Onvoldoende Skyfspasie
-DiskSpaceWarning=Die Opsteller benodig ten minste %1 KB oop spasie om te installeer, maar die geselekteerde skyf het net %2 KB beskikbaar.%n%nWil jy in elk geval voortgaan?
+DiskSpaceWarning=Die Opsteller benodig ten minste %1 KB vrye skyfspasie om te installeer, maar die geselekteerde skyf het net %2 KB beskikbaar.%n%nWil jy in elk geval voortgaan?
 DirNameTooLong=Die gidsnaam of pad is te lank.
 InvalidDirName=Die gidsnaam is nie geldig nie.
 BadDirName32=Gidsname kan nie enige van die volgende karakters bevat nie:%n%n%1
@@ -155,7 +155,7 @@ NoUninstallWarningTitle=Komponente Bestaan Reeds
 NoUninstallWarning=Die Opsteller het raakgesien dat die volgende komponente alreeds geïnstalleer is op jou rekenaar:%n%n%1%n%nDeur hierdie komponente te deselekteer sal hulle nie gedeïnstalleer word nie.%n%nWil jy in elk geval voortgaan?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
-ComponentsDiskSpaceMBLabel=Die huidige seleksie benodig ten minste [mb] MB se oop skyfspasie.
+ComponentsDiskSpaceMBLabel=Die huidige seleksie benodig ten minste [mb] MB se vrye skyfspasie.
 
 ; *** "Select Additional Tasks" wizard page
 WizardSelectTasks=Selekteer Addisionele Take
@@ -304,6 +304,6 @@ CreateDesktopIcon=Skep 'n &werkskerm ikoon
 CreateQuickLaunchIcon=Skep 'n &Quick Launch ikoon
 ProgramOnTheWeb=%1 op die Web
 UninstallProgram=Deïnstalleer %1
-LaunchProgram=Maak %1 Oop
+LaunchProgram=Loop %1
 AssocFileExtension=&Assosieer %1 met die %2 lêeruitbreiding
 AssocingFileExtension=Assosieer %1 met die %2 lêeruitbreiding...
