@@ -180,6 +180,11 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, int nC
 
 CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 {
+	if ( ( pService->m_bGnutella2 == FALSE ) && ( pService->m_bGnutella1 == FALSE ) )
+	{		
+		pService->m_bGnutella2 = TRUE;
+		pService->m_bGnutella1 = TRUE;
+	}
 	if ( pService && m_pList.Find( pService ) == NULL ) m_pList.AddTail( pService );
 	return pService;
 }
