@@ -59,6 +59,8 @@ protected:
 	BYTE			m_nDownDay;
 	BYTE			m_nDownHour;
 
+	CString			m_sDayName[7];
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CSchedulerSettingsPage)

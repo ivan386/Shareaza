@@ -1209,6 +1209,13 @@
 #define IDS_STATUS_SOURCES11TO19        20130
 #define IDS_STATUS_SOURCES2TO4          20131
 #define IDS_STATUS_SOURCES5TO9          20132
+#define IDS_DAY_SUNDAY					20200
+#define IDS_DAY_MONDAY					20201
+#define IDS_DAY_TUESDAY					20202
+#define IDS_DAY_WEDNESDAY				20203
+#define IDS_DAY_THURSDAY				20204
+#define IDS_DAY_FRIDAY					20205
+#define IDS_DAY_SATURDAY				20206
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776

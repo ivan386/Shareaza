@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,8
- PRODUCTVERSION 2,1,0,8
+ FILEVERSION 2,1,0,9
+ PRODUCTVERSION 2,1,0,9
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 8"
+            VALUE "FileVersion", "2, 1, 0, 9"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 8"
+            VALUE "ProductVersion", "2, 1, 0, 9"
         END
     END
     BLOCK "VarFileInfo"
@@ -3012,18 +3012,18 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Scheduler"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,5,154,270,56
-    CONTROL         "Enable Scheduler",IDC_SCHEDULER_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,13,162,140,15
-    EDITTEXT        IDC_SCHEDULER_LIMITED,13,179,35,12,ES_AUTOHSCROLL | 
+    GROUPBOX        "&Options:",IDC_STATIC,5,156,270,56
+    CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,13,164,140,15
+    EDITTEXT        IDC_SCHEDULER_LIMITED,13,181,29,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,49,179,11,12
-    CONTROL         "Restrict networks when limited",
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,31,181,11,12
+    CONTROL         " &Restrict networks when limited",
                     IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,13,193,137,15
-    GROUPBOX        "Key:",IDC_STATIC,5,100,147,52
+                    WS_GROUP | WS_TABSTOP,13,195,137,15
+    GROUPBOX        "Key:",IDC_STATIC,5,104,147,49
     RTEXT           "Sun",IDC_STATIC,2,26,15,8,0,WS_EX_TRANSPARENT
     RTEXT           "Mon",IDC_STATIC,2,36,15,8
     RTEXT           "Tue",IDC_STATIC,2,46,15,8
@@ -3031,13 +3031,14 @@ BEGIN
     RTEXT           "Thu",IDC_STATIC,2,66,15,8
     RTEXT           "Fri",IDC_STATIC,2,76,15,8
     RTEXT           "Sat",IDC_STATIC,2,86,15,8
-    LTEXT           "Do not connect",IDC_STATIC,36,111,113,8
-    LTEXT           "Limited connection",IDC_STATIC,36,123,113,8
-    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,136,113,8
-    LTEXT           "% of bandwidth under limit",IDC_STATIC,63,179,86,12,
+    LTEXT           "Do not connect",IDC_STATIC,36,114,113,8
+    LTEXT           "Limited connection",IDC_STATIC,36,126,113,8
+    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,113,8
+    LTEXT           "% of &bandwidth under limit",IDC_STATIC,43,181,106,12,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_SCHEDULER_DISPLAY,157,105,110,11,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
+                    ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
+                    WS_TABSTOP,WS_EX_TRANSPARENT
 END
 
 
@@ -5445,6 +5446,17 @@ BEGIN
     IDS_STATUS_SOURCES11TO19 "sources"
     IDS_STATUS_SOURCES2TO4  "sources"
     IDS_STATUS_SOURCES5TO9  "sources"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_SUNDAY          "Sunday"
+    IDS_DAY_MONDAY          "Monday"
+    IDS_DAY_TUESDAY         "Tuesday"
+    IDS_DAY_WEDNESDAY       "Wednesday"
+    IDS_DAY_THURSDAY        "Thursday"
+    IDS_DAY_FRIDAY          "Friday"
+    IDS_DAY_SATURDAY        "Saturday"
 END
 
 #endif    // English (Australia) resources

@@ -98,6 +98,14 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	m_nDownHour			= m_nHoverHour = 0xFF;
 
 	m_wndLimitedSpin.SetRange( 5, 95 );
+
+	LoadString (m_sDayName[0], IDS_DAY_SUNDAY);
+	LoadString (m_sDayName[1], IDS_DAY_MONDAY);
+	LoadString (m_sDayName[2], IDS_DAY_TUESDAY);
+	LoadString (m_sDayName[3], IDS_DAY_WEDNESDAY);
+	LoadString (m_sDayName[4], IDS_DAY_THURSDAY);
+	LoadString (m_sDayName[5], IDS_DAY_FRIDAY);
+	LoadString (m_sDayName[6], IDS_DAY_SATURDAY);
 	
 	UpdateData( FALSE );
 
@@ -128,7 +136,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 		{
 			m_nHoverDay = nHoverDay;
 
-			strSliceDisplay.Format(_T("Day: %d  Hour: %d"), m_nHoverDay + 1, m_nHoverHour );
+			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 			m_wndDisplay.SetWindowText( strSliceDisplay );
 			
 			Invalidate();
@@ -137,7 +145,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 		{
 			m_nHoverHour = nHoverHour;
 
-			strSliceDisplay.Format(_T("Day: %d  Hour: %d"), m_nHoverDay + 1, m_nHoverHour );
+			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 			m_wndDisplay.SetWindowText( strSliceDisplay );
 			
 			Invalidate();
@@ -224,13 +232,13 @@ void CSchedulerSettingsPage::OnPaint()
 
 	//Draw the schedule time slices for the 'key'
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_OFF, dc.GetSafeHdc(),
-					30 ,  180 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , 184 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_LIMITED_SPEED, dc.GetSafeHdc(),
-					30 , 200 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , 204 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_FULL_SPEED  , dc.GetSafeHdc(),
-					30 , 220 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , 224 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	//CSettingsPage::OnPaint();
 }
@@ -248,4 +256,3 @@ void CSchedulerSettingsPage::OnOK()
 	
 	CSettingsPage::OnOK();
 }
-
