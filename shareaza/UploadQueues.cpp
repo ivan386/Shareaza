@@ -232,14 +232,19 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		pQptr=GetNext( pos );
-		if ( ( pQptr->m_bEnable ) || ( !ActiveOnly ) )
+		if ( ActiveOnly )
 		{
-			if ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
-				if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
-					continue;	
+			if ( pQptr->m_bEnable )
+			{
+				if ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+				{
+					if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
+						continue;
+				}
+			}
+			else
+				continue;
 		}
-		else
-			continue;
 		nCount += pQptr->m_nBandwidthPoints;
 	}
 	
