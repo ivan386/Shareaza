@@ -165,7 +165,7 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 
 /*
 	if ( ! Settings.Gnutella2.EnableToday )
-	{	// Can't be a hub if you don't connect to G2
+	{	// Can't be a G2 hub if you don't connect to G2
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: G2 not enabled") );
 		return FALSE;
 	}
@@ -181,7 +181,7 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: OS is NT based") );
 	}
 	
-	if ( Settings.Gnutella2.ClientMode == MODE_LEAF ) //( ! Settings.Gnutella.HubEnable )
+	if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
 	{	//User has disabled hub mode G2 settings
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: hub mode disabled") );
 		return FALSE;
@@ -204,7 +204,7 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 	
-	if ( Settings.Gnutella2.ClientMode == MODE_HUB ) // ( Settings.Gnutella.HubForce )
+	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 	{	//This node has hub mode turned on in the G2 settings.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub mode forced") );
 		return TRUE;
@@ -267,7 +267,7 @@ BOOL CNeighboursWithConnect::IsHubCapable(BOOL bDebug)
 	return TRUE;
 }
 
-//*** NOTE: This function is not used yet
+//*** NOTE: This function is not used yet.
 DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug) 
 {	//Check if this node can be a G1 Ultrapeer
 
@@ -378,6 +378,7 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 	nRating = 1;
 
 	//Now, evaluate how good an ultrapeer it's likely to be
+	//The higher the rating, the better the UP.
 
 	//Check memory
 	if ( pMemory.dwTotalPhys > 600*1024*1024 )
@@ -422,15 +423,19 @@ DWORD CNeighboursWithConnect::IsUltrapeerCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
 	}
 	
-	//Check if behind a router
+	//Check if behind a router.
 		//ToDo: Add a behind router check. (Some routers have problems with the traffic caused)
 		//Note: This check *may* only be necessary for G2, due to the UDP traffic. Check that.
 
-	//Check CPU
+	//Check CPU.
 		//ToDo: Add a CPU check. Faster CPU is better
 
 	//Check how much is shared and upload/download usage.
-		//ToDo : Clients not uploading much make better ultrapeers...
+		//ToDo : Clients not uploading much make better ultrapeers.
+
+	//Check scheduler.
+		//ToDo : If this node is scheduled to shut down at any time, it's not going to be a great
+		//choice for an ultrapeer. If it's going down in the next few hours, don't be an UP at all.
 	
 	return nRating;
 }
