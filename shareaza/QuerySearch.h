@@ -98,6 +98,7 @@ public:
 	BOOL		CheckValid();
 protected:
 	void		AddStringToWordList(LPCTSTR pszString);
+	BOOL		WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP );
 
 // Utilities
 public:

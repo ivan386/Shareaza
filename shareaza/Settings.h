@@ -293,9 +293,9 @@ public:
 	{
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
-		BOOL		FastConnect;
-		DWORD		NumServers;
-		int			MaxLinks;
+		BOOL		FastConnect;				// Try connecting to 2 servers to get online faster
+		DWORD		NumServers;					// 1
+		int			MaxLinks;					// Max ed2k client links
 		int			MaxResults;
 		DWORD		MaxShareCount;				// Hard limit on file list sent to server
 		BOOL		ServerWalk;					// Enable global UDP walk of servers

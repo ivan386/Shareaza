@@ -165,7 +165,11 @@ BOOL CEDClient::Equals(CEDClient* pClient)
 BOOL CEDClient::Connect()
 {
 	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
-	if ( EDClients.IsFull( this ) ) return FALSE;
+	if ( EDClients.IsFull( this ) ) 
+	{
+		if ( ! m_pDownload || m_pDownload->m_nState != dtsQueued )
+			return FALSE;	
+	}
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) )
 	{

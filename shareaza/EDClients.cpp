@@ -257,6 +257,15 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 
 void CEDClients::OnRun()
 {
+
+	// ***********************************
+	// Note: ED2K is NOT READY FOR TESTING
+	// Do not use versions with this enabled anywhere except a private, isolated LAN
+	Settings.eDonkey.EnableToday = FALSE;
+	return;
+	// ***********************************
+
+
 	// Delay to keep ed2k transfers under 10 KB/s per source
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle ) return;
@@ -265,7 +274,6 @@ void CEDClients::OnRun()
 	if ( Settings.eDonkey.ServerWalk && Settings.eDonkey.EnableToday )
 	{
 		RunGlobalStatsRequests( tNow );
-		//RunGlobalSearches( tNow );
 	}
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
@@ -469,14 +477,6 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 	// Don't send stat requests or time out servers if we're not stable
 	if ( ! Datagrams.IsStable() ) return;
 
-
-	// ***********************************
-	// Note: This is NOT READY FOR TESTING
-	// Do not use versions with this enabled anywhere except a private, isolated LAN
-	Beep(500,500);
-	return;
-	// ***********************************
-
 	if ( m_nLastServerKey != 0 )
 	{
 		// We are waiting for a response
@@ -503,12 +503,6 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		}
 	}
 
-		
-	// ***********************************
-	// Seriously, this isn't finished. Not to be used.
-	return;
-	// ***********************************
-
 	if ( tNow > m_tLastServerStats + Settings.eDonkey.StatsGlobalThrottle )	// Limit requests to every 30 minutes
 	{
 		// We are due to send another stats request
@@ -519,9 +513,9 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		// Loop through servers in the host cache
 		for ( pHost = HostCache.eDonkey.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 		{
-			CString strT;
+			/*CString strT;
 			strT.Format( _T("  -Name:%s Last Stats:%d UDP flags:%08X"), pHost->m_sName, pHost->m_tStats, pHost->m_nUDPFlags );
-			theApp.Message( MSG_DEFAULT, strT );
+			theApp.Message( MSG_DEFAULT, strT );*/
 
 			// Check if this server could be asked for stats
 			if ( ( tSecs > pHost->m_tStats + 7*(24*60*60)  ) &&	// We have not checked this host in a week
@@ -544,20 +538,8 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		}
 		// We have checked all known servers, we may go back and re-query any that didn't respond.
 		m_bAllServersDone = TRUE;
-		// Try again later. (we don't want to keep running this function, it's a little slow)
+		// Try again later. (we don't want to keep running this section, it's a little slow)
 		m_tLastServerStats = tNow;
 	}
 }
 
-//////////////////////////////////////////////////////////////////////
-// CEDClients global UDP searches
-/*
-void CEDClients::RunGlobalSearches(DWORD tNow)
-{
-	// Note: This could create very heavy server load. Be *really* careful with it.
-
-	// Don't try this until we are stable
-	if ( ! Datagrams.IsStable() ) return;
-
-}
-*/

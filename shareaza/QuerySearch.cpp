@@ -41,6 +41,10 @@
 
 #include "WndSearch.h"
 
+#include "Download.h"
+#include "Downloads.h"
+#include "Transfers.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -330,25 +334,18 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			// For newer servers, send the file size if it's valid (and not over 4GB)
 			if ( ( bGetS2 ) && ( m_nMinSize == m_nMaxSize ) && ( m_nMaxSize < 0xFFFFFFFF ) )
 			{
-				// Newer server, send size as well as hash. May send multiple hash/sz in one packet.
-				if ( bUDP )
-				{
-					// Remote server (UDP)
-					pPacket = CEDPacket::New( ED2K_C2SG_GETSOURCES2 );
-					pPacket->Write( &m_pED2K, sizeof(MD4) );
-					pPacket->WriteLongLE( (DWORD)m_nMaxSize );
-				}
-				else
-				{
-					// Local server (TCP).
-					pPacket = CEDPacket::New( ED2K_C2S_GETSOURCES );
-					pPacket->Write( &m_pED2K, sizeof(MD4) );
-					pPacket->WriteLongLE( (DWORD)m_nMaxSize );
-				}
+				// Newer server, send size as well as hash
+				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
+				// Add the hash/size this packet is for
+				pPacket->Write( &m_pED2K, sizeof(MD4) );
+				pPacket->WriteLongLE( (DWORD)m_nMaxSize );
+				// Add any other hashes that need to be searched for.
+				WriteHashesToEDPacket( pPacket, bUDP );
+
 			}
 			else
 			{
-				// Old style GetSources. One hash only, with no size attached
+				// Old style GetSources, with no size attached
 				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
 				pPacket->Write( &m_pED2K, sizeof(MD4) );
 			}
@@ -412,6 +409,63 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	}
 	
 	return pPacket;
+}
+
+BOOL CQuerySearch::WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP )
+{
+	ASSERT ( pPacket != NULL );
+	ASSERT ( pPacket->m_nType == bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
+	int nFiles = 1; // There's one hash in the packet to begin with
+	DWORD tNow = GetTickCount();
+
+	CSingleLock pLock( &Transfers.m_pSection );
+	pLock.Lock();
+
+theApp.Message( MSG_ERROR, _T("Creating GetSources multi-packet") );
+
+	// Run through all active downloads
+	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+		
+		// Basic check
+		if ( pDownload->m_bED2K &&					// Must have an ed2k hash
+			 pDownload->IsTrying() &&				// Must be active
+			 pDownload->m_nSize < 0xFFFFFFFF &&		// Must have a valid size
+			 pDownload->IsCompleted() == FALSE &&	// Must not be complete
+			 pDownload->NeedHashset() == FALSE &&	// Must have hashset
+			 pDownload->m_pED2K != m_pED2K )		// Must not be already added to packet
+		{
+			// If a download is allowed to ask for more sources
+			DWORD tNextQuery = bUDP ? pDownload->m_tLastED2KGlobal + Settings.eDonkey.QueryFileThrottle : pDownload->m_tLastED2KLocal + Settings.eDonkey.QueryFileThrottle;
+			if ( tNow > tNextQuery )
+			{
+				// If we want more sources for this file
+				int nSources = pDownload->GetSourceCount( FALSE, TRUE );
+				if ( nSources < ( Settings.Downloads.SourcesWanted / 4 ) )
+				{
+					BOOL bFewSources = nSources < Settings.Downloads.MinSources;
+					BOOL bDataStarve = ( tNow > pDownload->m_tReceived ? tNow - pDownload->m_tReceived : 0 ) > Settings.Downloads.StarveTimeout * 1000;
+
+					if ( ( bFewSources ) || ( bDataStarve ) || ( nFiles < 10 ) )
+					{
+theApp.Message( MSG_ERROR, pDownload->m_sLocalName );
+						// Add the hash/size for this download
+						pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
+						pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );
+						if ( bUDP )
+							pDownload->m_tLastED2KGlobal = tNow; 
+						else
+							pDownload->m_tLastED2KLocal = tNow; 
+						nFiles ++;
+						if ( nFiles >= ED2K_MAXFILESINPACKET ) return TRUE;
+					}
+				}
+			}
+		}
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -703,43 +757,75 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 
 BOOL CQuerySearch::CheckValid()
 {
+	DWORD nCount, nValidWords = 0, nValidCharacters = 0;
+
 	BuildWordList();
-	
-	if ( m_nWords == 1 )
+
+	// Searches by hash are okay
+	if ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) return TRUE;
+
+
+
+	// Check we aren't just searching for broad terms-  set counters, etc
+	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
 	{
-		if ( _tcslen( *m_pWordPtr) < 3 ) return FALSE;
+		if (	_tcsicmp( m_pWordPtr[nCount], _T("mp3") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("ogg") ) == 0 ||
 
-		if ( _tcsicmp( *m_pWordPtr, _T("mp3") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("ogg") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("jpg") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("gif") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("png") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("bmp") ) == 0 ||
 
-			 _tcsicmp( *m_pWordPtr, _T("jpg") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("gif") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("png") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("bmp") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("mpg") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("avi") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("mkv") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("wmv") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("mov") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("ogm") ) == 0 ||
 
-			 _tcsicmp( *m_pWordPtr, _T("mpg") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("avi") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("mkv") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("wmv") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("mov") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("ogm") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("exe") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("zip") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("rar") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("iso") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("bin") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("cue") ) == 0 ||
 
-			 _tcsicmp( *m_pWordPtr, _T("dvd") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("mpeg") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("divx") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("xvid") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("dvd") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("mpeg") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("divx") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("xvid") ) == 0 ||
 
-			 _tcsicmp( *m_pWordPtr, _T("torrent") ) == 0 ||
-
-			 _tcsicmp( *m_pWordPtr, _T("xxx") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("sex") ) == 0 ||
-			 _tcsicmp( *m_pWordPtr, _T("fuck") ) == 0 )
+				_tcsicmp( m_pWordPtr[nCount], _T("xxx") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("sex") ) == 0 ||
+				_tcsicmp( m_pWordPtr[nCount], _T("fuck") ) == 0 ||
+				
+				_tcsicmp( m_pWordPtr[nCount], _T("torrent") ) == 0 )
 		{
-			return FALSE;
+			// Common term. Don't count it.
+		}
+		else
+		{
+			// Valid search term - add to list of valid words.
+			nValidWords++;
+			nValidCharacters += m_pWordLen[nCount];
 		}
 	}
-	
-	return m_nWords || m_bSHA1 || m_bTiger || m_bED2K || m_bBTH;
+
+	// Check we have some valid terms to search on
+	if ( ( nValidWords == 0 ) || ( nValidCharacters == 0) ) return FALSE;
+
+	// Check we have a reasonable amount of characters to search on
+	if ( ( m_pSchema == NULL ) && ( nValidWords > 1 ) )
+	{
+		if ( nValidCharacters < 5 ) return FALSE;
+	}
+	else
+	{
+		if ( nValidCharacters < 4 ) return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
