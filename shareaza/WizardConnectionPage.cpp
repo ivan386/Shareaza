@@ -274,28 +274,44 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed > 256 && theApp.m_bNT && !theApp.m_bLimitedConnections )
-	{
+	if ( nSpeed > 2500 && theApp.m_bNT && !theApp.m_bLimitedConnections )
+	{	//Very high capacity connection
 		Settings.Downloads.MaxFiles				= 32;
 		Settings.Downloads.MaxTransfers			= 128;
-		Settings.Downloads.MaxFileTransfers		= 8;
+		Settings.Downloads.MaxFileTransfers		= 16;
 		Settings.Downloads.MaxConnectingSources	= 40;
 		Settings.Downloads.MaxFileSearches		= 4;
 	}
+	if ( nSpeed > 768 && theApp.m_bNT )
+	{	//Fast broadband
+		Settings.Downloads.MaxFiles				= 24;
+		Settings.Downloads.MaxTransfers			= 96;
+		Settings.Downloads.MaxFileTransfers		= 10;
+		Settings.Downloads.MaxConnectingSources	= 28;
+		Settings.Downloads.MaxFileSearches		= 3;
+	}
+	if ( nSpeed > 256 && theApp.m_bNT )
+	{	//Slower broadband
+		Settings.Downloads.MaxFiles				= 20;
+		Settings.Downloads.MaxTransfers			= 80;
+		Settings.Downloads.MaxFileTransfers		= 8;
+		Settings.Downloads.MaxConnectingSources	= 24;
+		Settings.Downloads.MaxFileSearches		= 2;
+	}
 	else if ( nSpeed > 80 && theApp.m_bNT )
-	{
+	{	//IDSN, Dual modems, etc
 		Settings.Downloads.MaxFiles				= 16;
 		Settings.Downloads.MaxTransfers			= 64;
 		Settings.Downloads.MaxFileTransfers		= 6;
-		Settings.Downloads.MaxConnectingSources	= 30;
+		Settings.Downloads.MaxConnectingSources	= 20;
 		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	else
-	{
+	{	//Modem users / Win9x
 		Settings.Downloads.MaxFiles				= 8;
 		Settings.Downloads.MaxTransfers			= 32;
 		Settings.Downloads.MaxFileTransfers		= 4;
-		Settings.Downloads.MaxConnectingSources	= 20;
+		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	
