@@ -22,21 +22,21 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 <schemaDescriptor location="http://www.shareaza.com/schemas/wordProcessing.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
        <object type="file" availability="advanced"/>
        <titles>
-               <title language="en">Document:Word Processing</title>
-               <title language="af">Dokument:Woordverwerking</title>
-               <title language="ar">&#160;مستندات: معالج النصوص</title>
-               <title language="chs">&#160;文件:字符处理</title>
-               <title language="de">Dokument:Textverarbeitung</title>
-               <title language="es">Documento: Documento de Texto</title>
-               <title language="fr">Document:Traitement de texte</title>
-               <title language="hu">Dokumentum: szövegszerkesztés</title>
-               <title language="it">Documento:Documento di testo</title>
-               <title language="lt">Dokumentas:Dokumentas</title>
-               <title language="nl">Document:Word Processing</title>
-               <title language="no">Dokument: word</title>
-               <title language="br">Documento:Texto</title>
-               <title language="ru">&#160;Документ: Форматир. текст</title>
-               <title language="sv">Dokument: Ordbehandling</title>
+               <title language="en">Word Processing</title>
+               <title language="af">Woordverwerking</title>
+               <title language="ar">&#160;معالج النصوص</title>
+               <title language="chs">&#160;字符处理</title>
+               <title language="de">Textverarbeitung</title>
+               <title language="es">Documento de Texto</title>
+               <title language="fr">Traitement de texte</title>
+               <title language="hu">Szövegszerkesztés</title>
+               <title language="it">Documento di testo</title>
+               <title language="lt">Dokumentas</title>
+               <title language="nl">Word Processing</title>
+               <title language="no">Word</title>
+               <title language="br">Texto</title>
+               <title language="ru">&#160;Форматир. текст</title>
+               <title language="sv">Ordbehandling</title>
        </titles>
        <members>
                <member name="title" search="generic">

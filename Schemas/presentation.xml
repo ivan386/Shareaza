@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Document:Presentation XML Framework; v1.4; Jonathan C. Nilson -->
 
 <!--
@@ -21,21 +21,21 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 <schemaDescriptor location="http://www.shareaza.com/schemas/presentation.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
        <object type="file" availability="advanced"/>
        <titles>
-               <title language="en">Document:Presentation</title>
-               <title language="af">Dokument:Aanbieding</title>
-               <title language="ar">&#160;المستندات: التقديم</title>
-               <title language="chs">&#160;文档:介绍</title>
-               <title language="de">Dokument:Präsentation</title>
-               <title language="es">Documento: Presentación</title>
-               <title language="fr">Document:Présentation</title>
-               <title language="hu">Dokumentum: előadás</title>
-               <title language="it">Documento:Presentazione</title>
-               <title language="lt">Dokumentas:Pateiktis</title>
-               <title language="nl">Document:Presentatie</title>
-               <title language="no">Dokument: presentasjon</title>
-               <title language="br">Documento:Apresentação</title>
-               <title language="ru">&#160;Документ: Презентация</title>
-               <title language="sv">Dokument: Presentation</title>
+               <title language="en">Presentation</title>
+               <title language="af">Aanbieding</title>
+               <title language="ar">&#160;التقديم</title>
+               <title language="chs">&#160;介绍</title>
+               <title language="de">Präsentation</title>
+               <title language="es">Presentación</title>
+               <title language="fr">Présentation</title>
+               <title language="hu">Előadás</title>
+               <title language="it">Presentazione</title>
+               <title language="lt">Pateiktis</title>
+               <title language="nl">Presentatie</title>
+               <title language="no">Presentasjon</title>
+               <title language="br">Apresentação</title>
+               <title language="ru">&#160;Презентация</title>
+               <title language="sv">Presentation</title>
        </titles>
        <members>
                <member name="title" search="generic">

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Document:Spreadsheet XML Framework; 1.4; Jonathan C. Nilson -->
 
 <!--
@@ -21,21 +21,21 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 <schemaDescriptor location="http://www.shareaza.com/schemas/spreadsheet.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
        <object type="file" availability="advanced"/>
        <titles>
-               <title language="en">Document:Spreadsheet</title>
-               <title language="af">Dokument:Bloktabel</title>
-               <title language="ar">&#160;مستندات: برامج جدولة</title>
-               <title language="chs">&#160;文件:表格类资料</title>
-               <title language="de">Dokument:Tabellenkalkulation</title>
-               <title language="es">Documento: Presentación</title>
-               <title language="fr">Document:Bilan</title>
-               <title language="hu">Dokumentum: táblázatkezelés</title>
-               <title language="it">Documento:Foglio elettronico</title>
-               <title language="lt">Dokumentas:Skaičiuoklė</title>
-               <title language="nl">Document:Spreadsheet</title>
-               <title language="no">Dokument: regneark</title>
-               <title language="br">Documento:Planilha</title>
-               <title language="ru">&#160;Документ: Таблица</title>
-               <title language="sv">Dokument: Kalkylark</title>
+               <title language="en">Spreadsheet</title>
+               <title language="af">Bloktabel</title>
+               <title language="ar">&#160;برامج جدولة</title>
+               <title language="chs">&#160;表格类资料</title>
+               <title language="de">Tabellenkalkulation</title>
+               <title language="es">Presentación</title>
+               <title language="fr">Bilan</title>
+               <title language="hu">Táblázatkezelés</title>
+               <title language="it">Foglio elettronico</title>
+               <title language="lt">Skaičiuoklė</title>
+               <title language="nl">Spreadsheet</title>
+               <title language="no">Regneark</title>
+               <title language="br">Planilha</title>
+               <title language="ru">&#160;Таблица</title>
+               <title language="sv">Kalkylark</title>
        </titles>
        <members>
                <member name="title" search="generic">
