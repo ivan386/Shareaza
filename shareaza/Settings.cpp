@@ -227,6 +227,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 15000 );
 	Add( _T("Gnutella1.PongCache"), &Gnutella1.PongCache, 10000 );
 	Add( _T("Gnutella1.PongCount"), &Gnutella1.PongCount, 10 );
+	Add( _T("Gnutella1.QueueLimter"), &Gnutella1.HitQueueLimit, 50 );
 	
 	Add( _T("Gnutella2.ClientMode"), &Gnutella2.ClientMode, MODE_AUTO );
 	Add( _T("Gnutella2.EnableAlways"), &Gnutella2.EnableAlways, TRUE );

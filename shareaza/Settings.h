@@ -220,7 +220,7 @@ public:
 		BOOL		DeflateHub2Hub;
 		BOOL		DeflateLeaf2Hub;
 		BOOL		DeflateHub2Leaf;
-		DWORD		MaxResults;
+		DWORD		MaxResults;					// Maximum results to return to a single query
 		DWORD		MaxHits;
 		DWORD		HitsPerPacket;
 		DWORD		RouteCache;
@@ -237,9 +237,9 @@ public:
 		BOOL		EnableAlways;
 		//BOOL		Handshake04;
 		//BOOL		Handshake06;
-		int			NumHubs;
-		int			NumLeafs;
-		int			NumPeers;
+		int			NumHubs;					// Number of ultrapeers a leaf has
+		int			NumLeafs;					// Number of leafs an ultrapeer has
+		int			NumPeers;					// Number of peers an ultrapeer has
 		DWORD		PacketBufferSize;
 		DWORD		PacketBufferTime;
 		DWORD		DefaultTTL;
@@ -257,6 +257,7 @@ public:
 		DWORD		PingRate;
 		DWORD		PongCache;
 		int			PongCount;
+		int			HitQueueLimit;				// Protect G1 clients from badly configured queues
 	} Gnutella1;
 
 	struct sGnutella2
@@ -264,9 +265,9 @@ public:
 		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_HUB
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
-		int			NumHubs;
-		int			NumLeafs;
-		int			NumPeers;
+		int			NumHubs;					// Number of hubs a leaf has
+		int			NumLeafs;					// Number of leafs a hub has
+		int			NumPeers;					// Number of peers a hub has
 		int			PingRelayLimit;				// Number of other leafs to forward a /PI/UDP to: 10 - 30
 		DWORD		UdpMTU;
 		DWORD		UdpBuffers;
@@ -279,7 +280,7 @@ public:
 		DWORD		KHLPeriod;
 		DWORD		KHLHubCount;
 		DWORD		HAWPeriod;
-		DWORD		QueryGlobalThrottle;
+		DWORD		QueryGlobalThrottle;		// Max G2 query rate (Cannot exceed 8/sec)
 		DWORD		QueryHostThrottle;
 		DWORD		QueryHostDeadline;
 		DWORD		RequeryDelay;
@@ -294,7 +295,7 @@ public:
 		DWORD		NumServers;
 		int			MaxLinks;
 		int			MaxResults;
-		int			MaxShareCount;
+		int			MaxShareCount;				// Hard limit on file list sent to server
 		BOOL		ServerWalk;
 		DWORD		QueryGlobalThrottle;
 		DWORD		QueryServerThrottle;
@@ -381,7 +382,7 @@ public:
 		BOOL		ShowMonitorURLs;
 		BOOL		SortColumns;				// Allow user to sort downloads by clicking column headers
 		BOOL		SortSources;				// Automatically sort sources (Status, protocol, queue)
-		int			SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
+		int			SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k/BT)
 	} Downloads;
 	
 	struct sUploads
