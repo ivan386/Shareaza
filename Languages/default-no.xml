@@ -16,7 +16,7 @@
 		description="Shareaza Default Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.25"
+		version="2.1.0.94"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -95,11 +95,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_DOWNLOAD" text="Nedlasting"/>
-		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
-		<separator/>
 		<button id="ID_SEARCH_SEARCH" text="Søk på nytt..."/>
 		<button id="ID_SEARCH_STOP" text="Stopp"/>
+		<separator/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Nedlasting"/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Vis søk"/>
 		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
@@ -146,7 +146,7 @@
 		<button id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Start nedlasting"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Fortsett nedlasting"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pause nedlasting"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt nedlasting"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern nedlasting"/>
@@ -161,7 +161,7 @@
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
 		<button id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Start nedlasting"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Fortsett nedlasting"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pause nedlasting"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt nedlasting"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern nedlasting"/>
@@ -429,12 +429,13 @@
 			<item id="ID_TAB_SEARCH" text="Søk"/>
 			<item id="ID_TAB_TRANSFERS" text="Nedlasting"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
-			<item id="ID_VIEW_HOSTS" text="Vert-cache"/>
-			<separator/>
 			<menu text="Avansert">
 				<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
 				<item id="ID_VIEW_UPLOADS" text="Opplasting"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+				<item id="ID_VIEW_HOSTS" text="Vert-cache"/>
+				<item id="ID_VIEW_DISCOVERY" text="Oppdagelse"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Normalmodus"/>
@@ -458,7 +459,7 @@
 			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
 			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
 			<separator/>
-			<menu text="Websider">
+			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -544,7 +545,7 @@
 			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
 			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
 			<separator/>
-			<menu text="Websider">
+			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
@@ -624,7 +625,7 @@
 			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
 			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
 			<separator/>
-			<menu text="Websider">
+			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
@@ -732,7 +733,7 @@
 			<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
 			<item id="ID_VIEW_UPLOADS" text="Opplastinger"/>
 			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
-			<item id="ID_VIEW_HOSTS" text="Vert-ache"/>
+			<item id="ID_VIEW_HOSTS" text="Vert-cache"/>
 		</menu>
 	</menu>
 	<menu name="CHomeWnd.Tabbed">
@@ -787,7 +788,6 @@
 		<menu text="_Web søk">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Kopier URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -809,7 +809,6 @@
 		</menu>
 		<menu text="_Web søk">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -834,7 +833,6 @@
 		<menu text="_Web fil Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Kopier URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -853,7 +851,6 @@
 		</menu>
 		<menu text="_Web søk">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -877,9 +874,8 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 		</menu>
-		<menu text="_Web søk">
+		<menu text="_Nettjenester">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
@@ -894,14 +890,14 @@
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="Start"/>
+		<item id="ID_DOWNLOADS_RESUME" text="Fortsett"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Pause"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="Finn flere kilder"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
 	</menu>
@@ -910,7 +906,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Forhåndsvis kopi"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Legg til spilleliste"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="Start"/>
+		<item id="ID_DOWNLOADS_RESUME" text="Fortsett"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Pause"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt"/>
 		<separator/>
@@ -930,9 +926,6 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytt ned"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Ignorer hastighetsinnstillinger"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
-		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -950,9 +943,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
-		<separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
@@ -960,15 +950,23 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informasjon om torrent"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
 		<item id="ID_DOWNLOADS_RATE" text="Gi karakter"/>
-		<separator/>
+	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informasjon om torrent"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stopp spreding"/>
+	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+		<item id="ID_DOWNLOADS_HELP" text="_Hjelp..."/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern ferdige automatisk"/>
 	</menu>
 	<menu name="CDownloadTabBar">
-		<item id="ID_DOWNLOAD_GROUP_RESUME" text="Start alle"/>
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="Fortsett alle"/>
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Pause alle"/>
 		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="Fjern alle"/>
 		<separator/>
@@ -991,23 +989,32 @@
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Vis grupper"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
 		<item id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
-		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="Start nå"/>
 		<item id="ID_UPLOADS_CLEAR" text="Fjern"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
 		<item id="ID_UPLOADS_CHAT" text="Snakk med bruker"/>
 		<item id="ID_SECURITY_BAN" text="Blokker bruker"/>
-		<separator/>
+	</menu>
+	<menu name="CUploadsWnd.Queue.Basic">
+		<item id="ID_UPLOADS_HELP" text="_Hjelp..."/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern ferdige automatisk"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue">
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="Innstillinger for kø"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern ferdige automatisk"/>
+	</menu>
+	<menu name="CUploadsWnd.Nothing">
+		<item id="ID_UPLOADS_HELP" text="_Hjelp..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern ferdige automatisk"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Vis alle"/>
@@ -1078,12 +1085,11 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 		</menu>
-		<menu text="_Web søk">
+		<menu text="_Webtjenester">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="Organisert">
 			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
@@ -1114,7 +1120,6 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent metadata"/>
 			<separator/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
 		</menu>
 		<menu text="Organisert">
@@ -1144,12 +1149,11 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
 		</menu>
-		<menu text="Web søk">
+		<menu text="Webtjenester">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 		<menu text="Organisert">
 			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
@@ -1183,7 +1187,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>-->
 		</menu>
 		<menu text="Organisert">
 			<item id="ID_LIBRARY_UNLINK" text="Fjern filer"/>
@@ -1445,7 +1448,7 @@
 
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">&#160; KOBLE TIL</heading>
+			<heading align="middle">K O B L E &#160; T I L</heading>
 			<newline gap="8" indent="42"/>
 			<text>Velkommen til Shareaza! &#160;Du er ikke koblet til P2P-nettverket. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klikk her for å starte!</link>
@@ -1648,11 +1651,11 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">Seeder ingen torrent'er</text>
-			<text id="TorrentsOne" format="b">Seeder 1 torrent</text>
-			<text id="TorrentsMany" format="b">Seeder %i torrent'er</text>
+			<text id="TorrentsNone" format="b">Sprer ingen torrent'er</text>
+			<text id="TorrentsOne" format="b">Sprer 1 torrent</text>
+			<text id="TorrentsMany" format="b">Sprer %i torrent'er</text>
 			<newline gap="4"/>
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed en torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Spre en torrent</link>
 		</para>
 
 	</document>
@@ -1865,7 +1868,10 @@
 	<document name="DownloadHelp.Select">
 		<text format="b">Velg en nedlasting</text>
 		<newline gap="8"/>
-		<text>Du kan bruke denne kommandoen for å få informasjon om nedlastingen.
+		<text>Her vises de filene som blir lastet ned. Du kan se
+		individuelle kilder ved å utvide hver fil med den lille pluss'en til venstre.</text>
+		<newline gap="8"/>
+		<text>Du kan også bruke denne kommandoen for å få informasjon om nedlastingen.
 		Velg en nedlasting og denne kommandoen en gang til.</text>
 	</document>
 
@@ -1886,8 +1892,8 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">Denne filen er satt på pause</text>
 		<newline gap="8"/>
-		<text>Du har pauset denne filen. Hvis du ønsker å starte den kan du klikke på </text>
-		<text format="b">Start</text><text>-kommandoen.</text>
+		<text>Du har pauset denne filen. Hvis du ønsker å fortsette den kan du klikke på </text>
+		<text format="b"> Fortsett</text><text>-kommandoen.</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
@@ -1896,7 +1902,7 @@
 		<text>Shareaza har pauset denne filen automatisk fordi det ser ut som at
 		harddisken er full, eller at filen ikke kan skrives til. Hvis du vil fortsette,
 		lag mer plass ved å rydde harddisken og/eller sjekk at Incomplete-mappen ikke
-		er skrivebeskyttet. Deretter kan du prøve å starte nedlastingen på nytt.
+		er skrivebeskyttet. Deretter kan du prøve å fortsette nedlastingen.
 		</text>
 	</document>
 
@@ -1921,10 +1927,22 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">Denne filen venter</text>
 		<newline gap="8"/>
-		<text>Denne filen venter på at en av dine andre filer skal bli ferdig.
-		Dine innstillinger begrenser antall aktive nedlastinger, for å gi dine
-		aktive filer mest mulig nytte av båndredden.
-		Du kan endre innstillingene via Verktøy, Innstillinger.</text>
+		<text>Denne nedlastingen venter på at noen skal starte å laste opp.
+		Shareaza er klar til å laste ned denne filen, men ingen sender den
+		i øyeblikket. Du står trolig i andres køer, og nedlastingen
+		kan starte når som helst. Du kan undersøke de individuelle kildene for å
+		se de køene du venter i. Hvis du deler filer selv  kan det
+		øke mulighetene for at nedlasting starter raskere.</text>
+	</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">Denne nedlastingen er i kø</text>
+		<newline gap="8"/>
+		<text>Denne filen venter på at en av dine andre filer skal bli ferdig. 
+		Dine innstillinger begrenser antall aktive nedlastinger, 
+		for å gi dine aktive filer mest mulig nytte av båndredden. 
+		Du kan endre innstillingene via Verktøy, Innstillinger.
+		Alternativt kan du starte denne nedlastingen manuelt med fortsett-kommandoen.</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
@@ -1955,6 +1973,16 @@
 		<text>BitTorrent-serveren for denne filen ser ut til å være
 		offline eller ødelagt. Shareaza klarer ikke å kontakte serveren
 		for å få en liste over kjente kilder.</text>
+	</document>
+
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">Opplastingsområde</text>
+		<newline gap="8"/>
+		<text>Her vises køer og opplastinger. Du kan utvide hver kø
+		med den lille pluss'en til venstre, og filtrere visningen med knappen til
+		høyre på verktøylinjen.</text>
 	</document>
 
 	<!-- General help documents -->
@@ -2011,7 +2039,7 @@
 		ment kun for voksne. Dette forhindres av et filter for voksent innhold, som finnes under Innstilinger.
 		Forandre søketeksten eller skru av filteret for voksent innhold.</text>
 		<newline gap="8"/>
-		<text>For å skru av filteret, gå til Verktøy &gt; Instillinger &gt; Generelt og fjern haken for filteret.</text>
+		<text>For å skru av filteret, gå til Verktøy &gt; Innstillinger &gt; Generelt og fjern haken for filteret.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2078,7 +2106,7 @@
 	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Sett alle nedlastingene i denne gruppen på pause."/>
 	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Endre egenskapene til valgte nedlastings-gruppe."/>
 	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Fjern valgte nedlastings-gruppe."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Start alle nedlastingene i denne gruppen."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Fortsett alle nedlastingene i denne gruppen."/>
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Vis eller skjul nedlastings-gruppe linjen."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatisk fjern ferdige nedlastinger."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Øk aktiviteten til den valgte nedlastingen ved å fjerne hastighetsgrensene."/>
@@ -2106,7 +2134,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Flytt valgte nedlasting opp i prioritet."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Sett valgte nedlasting på pause."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Gi karakter til valgte nedlasting."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="Start valgte nedlasting(er)."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="Fortsett valgte nedlasting(er)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Endre nedlastingsinnstillingene."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Del denne ufullstendige filen med andre brukere."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Vis kilder som for tiden ikke er i bruk."/>
@@ -2158,7 +2186,6 @@
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Vis og endre egenskapene til valgte mappe..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Velg hvilke mapper som skal deles."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Øk hastigheten på fil-scanningen og hashingen."/>
-	<!--<tip id="ID_LIBRARY_JIGLE" message="Søk i Jigle-databasen etter informasjon om den valgte filen (på nettet)."/>-->
 	<tip id="ID_LIBRARY_LAUNCH" message="Åpne eller spill av valgte fil(er)."/>
 	<tip id="ID_LIBRARY_MOVE" message="Flytt valgte filer til en annen mappe..."/>
 	<tip id="ID_LIBRARY_PANEL" message="Vis eller skjul mine filers detaljer"/>
@@ -2171,7 +2198,7 @@
 	<tip id="ID_LIBRARY_SCAN" message="Skann valgte mappe eller filer etter forandringer."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Søk etter filmappe..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Søk gjennom Mine filer..."/>
-	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed valgte Torrent på BitTorrent."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="Spre valgt torrent på BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Velg og se alle mappene i dine filer."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="Del eller ikke del valgte filer."/>
 	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Del eller ikke del valgte mappe(er)."/>
@@ -2283,7 +2310,7 @@
 	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Endre din bruker profil..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Oppdater og bruk valgte skin."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed denne filen på BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Spre denne filen på BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Endre innstillingene..."/>
 	<tip id="ID_TOOLS_SKIN" message="Velg et annet skin du vil bruke i Shareaza."/>
 	<tip id="ID_TOOLS_WIZARD" message="Åpne Shareaza's innstillingsveiviser..."/>
@@ -2373,6 +2400,8 @@
 	<string id="8009" value="Er du sikker på at du vil slette dette &quot;%s&quot; skinnet? Det kan ikke gjenopprettes."/>
 	<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra www.shareaza.com."/>
 	<string id="8011" value="Når du endrer utseende vil alle åpne vinduer lukkes. Vil du endre nå?"/>
+	<string id="8060" value="Hub/Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
+	<string id="8061" value="Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
 	<string id="8062" value="Hub-modus med %lu nabo(er). %s i lokalt bibliotek."/>
 	<string id="8063" value="Tilkoblet. %s i lokalt bibliotek."/>
 	<string id="8064" value="Koblet til %lu nabo(er).  %s lokalt."/>
@@ -2486,6 +2515,12 @@
 	<string id="8328" value="Totalt volum:"/>
 	<string id="8329" value="av ditt bibliotek"/>
 	<string id="8330" value="Mappe"/>
+	<string id="8331" value="Kilden er for tiden opptatt"/>
+	<string id="8332" value="Denne kilden er bak brannmur"/>
+	<string id="8333" value="Denne kilden kan være ustabil"/>
+	<string id="8334" value="Kilder til denne filen er for tiden opptatt"/>
+	<string id="8335" value="Kilder til denne filen er bak brannmurer"/>
+	<string id="8336" value="Kilder til denne filen kan være ustabile"/>
 	<string id="16064" value="Starter Shareazas nettverkskjerne..."/>
 	<string id="16065" value="Klarer ikke å binde %s port %i for innkommende koblinger. Innkommende koblinger kan ikke støttes."/>
 	<string id="16066" value="Skrur av Shareazas nettverkkjerne..."/>
@@ -2580,7 +2615,7 @@
 	<string id="16278" value="Nedlastings-kobling til %s mistet."/>
 	<string id="16279" value="Mottar nedlastingsinnhold fra vert %s (%s)."/>
 	<string id="16280" value="Nedlastingsvert %s er opptatt, prøver på nytt om %i sekunder."/>
-	<string id="16281" value="Er du sikker på at du vil fjerne &quot;%s&quot;?\n\nNår en nedlasting er fjernet fra nedlastingsvinduet, kan den ikke startes på nytt senere."/>
+	<string id="16281" value="Er du sikker på at du vil fjerne &quot;%s&quot;?\n\nNår en nedlasting er fjernet fra nedlastingsvinduet, kan den ikke fortsettes senere."/>
 	<string id="16282" value="Avbryter nedlasting av &quot;%s&quot; fra %s (%s), nettverk skrudd av."/>
 	<string id="16283" value="Filen &quot;%s&quot; blir allerede lastet ned, legger til kilder."/>
 	<string id="16284" value="Mottok en ugyldig push kobling fra %s, lukker kobling."/>
@@ -2598,7 +2633,7 @@
 	<string id="16296" value="Har verifisert nedlasting &quot;%s&quot;."/>
 	<string id="16297" value="ADVARSEL: Nedlasting &quot;%s&quot; ikke verifisert, det kan være at dette ikke er den filen du ville ha!"/>
 	<string id="16298" value="Nedlastingsvert %s er opptatt, venter i kø, i posisjon #%i of %i (&quot;%s&quot;)."/>
-	<string id="16299" value="Er du sikker på at du vil fjerne alle pausede nedlastinger? Når en nedlasting blir fjernet kan den ikke startes på nytt."/>
+	<string id="16299" value="Er du sikker på at du vil fjerne alle pausede nedlastinger? Når en nedlasting blir fjernet kan den ikke fortsettes."/>
 	<string id="16300" value="Er du sikker på at du vil slette nedlasting &quot;%s&quot;?"/>
 	<string id="16301" value="Anmoder tiger tree kvantum for &quot;%s&quot; fra %s..."/>
 	<string id="16302" value="Nedlastingsvert %s klarte ikke å tilfredstille tiger-tree anmodning."/>
@@ -2676,6 +2711,7 @@
 	<string id="16374" value="Ny kø"/>
 	<string id="16375" value="Delvis"/>
 	<string id="16376" value="Fullstendige filer"/>
+	<string id="16377" value="HTTP Guard"/>
 	<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 	<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
 	<string id="16386" value="Endrer metadata til %i filer."/>
@@ -2696,7 +2732,7 @@
 	<string id="16401" value="Vis alle fil-typer"/>
 	<string id="16402" value="Shareaza mottok en samlings-fil:\r\n\r\n&quot;%s&quot;\r\n\r\nDette ser ikke ut som en gyldig samlings-fil."/>
 	<string id="16403" value="Shareaza har lagt samlings-filen &quot;%s&quot; til mine filer."/>
-	<string id="16404" value="Shareaza klarte ikke å legge inn samlings-filen &quot;%s&quot; ved å kopiere den til mappe &quot;%s&quot;."/>
+	<string id="16404" value="Shareaza klarte ikke å legge inn samlings-filen &quot;%s&quot; ved  kopiere den til mappe &quot;%s&quot;."/>
 	<string id="16405" value="Vil du laste ned denne filen?\r\n\r\n&quot;%s&quot;\r\n\r\nVelg avbryt for å slippe flere spørsmål."/>
 	<string id="16406" value="Vil du laste ned alle filene i denne samlingen?\r\n\r\nVelg avbryt for å slippe flere spørsmål."/>
 	<string id="16407" value="Vil du sette en stopp på denne samlingen slik at du slipper flere spørsmål om å laste ned mer"/>
@@ -2898,13 +2934,13 @@
 	<string id="17488" value="Du har endret tracker URL-en til denne torrenten.  Er du sikker på at du vil lagre denne endringen?\n\nEn ugyldig tracker URL kan stoppe videre nedlasting."/>
 	<string id="17489" value="BitTorrent-kobling med %s er utvidet protokoll, identifiserte &quot;%s&quot;."/>
 	<string id="17490" value="Mottok %i ny(e) BitTorrent kilde(r) fra %s."/>
-	<string id="17491" value="Denne torrenten &quot;%s&quot; er allerede i din nedlastings-liste, og kan ikke seedes."/>
+	<string id="17491" value="Denne torrenten &quot;%s&quot; er allerede i din nedlastings-liste, og kan ikke spres."/>
 	<string id="17492" value="Feil ved åpning av torrent-filen &quot;%s&quot;. Dette kan være en ugyldig torrent."/>
 	<string id="17493" value="Klarte ikke å dele BitTorrent-fil &quot;%s&quot;."/>
 	<string id="17494" value="Denne torrenten inneholder filen &quot;%s&quot;, men Shareaza klarer ikke å finne filen i mine filer. Hvis mulig flytt filen til samme mappe som torrenten og prøv på nytt."/>
 	<string id="17495" value="Denne torrenten inneholder filen &quot;%s&quot; som skulle vært %s, men versjonen av din fil er %s."/>
 	<string id="17496" value="Det skjedde en feil ved kopieringen fra &quot;%s&quot; til en BitTorrent delings-fil."/>
-	<string id="17497" value="Det skjedde en feil ved forsøk på å seede &quot;%s&quot;."/>
+	<string id="17497" value="Det skjedde en feil ved forsøk på å spre &quot;%s&quot;."/>
 	<string id="17498" value="Det ble funnet en feil i filen &quot;%s&quot;."/>
 	<string id="18496" value="Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastingen?"/>
 	<string id="18497" value="Du har skrevet inn en ugyldig SHA1 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
@@ -2938,7 +2974,7 @@
 	<string id="20109" value="I kø"/>
 	<string id="20110" value="Ukjent"/>
 	<string id="20111" value="Ferdig"/>
-	<string id="20112" value="Seeder"/>
+	<string id="20112" value="Sprer"/>
 	<string id="20113" value="Flytter"/>
 	<string id="20114" value="Pause"/>
 	<string id="20115" value="Filfeil"/>
@@ -2984,7 +3020,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generelt"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="Generelt">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Generelt">
 		<control caption="_Brukergrensesnitt:"/>
 		<control caption="Koble til automatisk når Shareaza startes"/>
 		<control caption="Start Shareaza når Windows starter"/>
@@ -3008,14 +3044,16 @@
 		<control caption="Normal|Minimer til systemfeltet"/>
 		<control caption="Skjul søkepanel ved søk"/>
 		<control caption="Ved søk, filtrer vekk innhold for voksne"/>
+		<control caption="Rydd nedlastingsvindu automatisk"/>
+		<control caption="Rydd opplastingsvindu automatisk"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mine filer">
 		<control caption="_Egenskaper:"/>
 		<control caption="Husk mappevisning"/>
 		<control caption="Overvåk mapper"/>
-		<control/>
-		<control caption="Filtrer ut fra type"/>
+		<control caption="Rask hashing (bruker mer CPU)"/>
+		<control caption="Filtrer ut i fra filtype"/>
 		<control/>
 		<control caption="La andre utforske mine filer"/>
 		<control caption="_Nye filer:"/>
@@ -3052,12 +3090,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Min profil">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Min profil">
 		<control caption="Min profil:"/>
 		<control caption="Du kan bruke din Gnutella brukerprofil til å dele informasjon om deg selv, dine interesser og anbefale filer og web-sider med andre."/>
 		<control caption="Endre min profil"/>
 		<control caption="_Chat:"/>
 		<control caption="Skru på peer to peer chat med kompatible klienter"/>
+		<control caption="Aktiver chat for alle nettverk"/>
+		<control caption="Filtrer chat-meldinger for spam"/>
+		<control caption="Sensurer krenkende meldinger i chat"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Internett">
@@ -3078,7 +3119,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internett"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Linjetype">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Forbindelse">
 		<control caption="_Inngående adresse:"/>
 		<control caption="Adresse:"/>
 		<control caption="Automatisk"/>
@@ -3115,12 +3156,12 @@
 		<control/><control/>
 		<control caption="Overføringer per fil:"/>
 		<control/><control/>
-		<control caption="_Båndbredde:"/>
-		<control caption="Grense:"/>
+		<control caption="Grenser:"/>
+		<control caption="Nedlastingsbåndbredde:"/>
 		<control/>
-		<control caption="_Antall i kø:"/>
+		<control caption="Maksimalt antall i kø:"/>
 		<control/><control/>
-		<control caption="_Valg:"/>
+		<control/>
 		<control caption="Last bare opp og ned til nettverk som er tilkoblet."/>
 	</dialog>
 
@@ -3181,7 +3222,7 @@
 		<control caption="% av _båndbredde ved begrensing"/>
 		<control/>
 		<control caption="Hjelp"/>
-		<control caption="{n}Planlegger lar deg velge når Shareaza skal koble til og laste ned filer.{n}{n}{n}Obs: Hvis du har Shareaza åpent når planleggeren er aktiv, kan det hende du ser at innstillingene forandres - dette er normalt!-"/>
+		<control caption="{n}Planlegger lar deg velge når Shareaza skal koble til og laste ned filer.{n}{n}{n}Obs: Hvis du har Shareaza åpent når planleggeren er aktiv, kan det hende du ser at innstillingene forandres - dette er normalt!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Nettverk">
@@ -3251,7 +3292,7 @@
 		<control caption="Last ned..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="Grensesnitt:"/>
 		<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
 		<control caption="Nedlastingskoblinger:"/>
@@ -3259,14 +3300,16 @@
 		<control caption="_Samtidige torrenter"/>
 		<control/><control/>
 		<control caption="Klienttilkoblinger"/>
+		<control caption=" Fjern nedlastede torrenter"/>
+		<control caption="Når delingsraten når "/>
+		<control/><control/>
 		<control caption="_EndGame:"/>
-		<control caption="Skru på EndGame modus ved komplette torrenter"/>
+		<control caption="Skru på EndGame-modus når torrenter blir ferdige"/>
 		<control caption="Lagre Torrenter her:"/>
 		<control/><control/>
 		<control caption="Program for å lage torrenter"/>
 		<control/><control/>
 		<control caption="_Standard Tracker:"/>
-		<control caption="Tracker:"/>
 		<control/>
 	</dialog>
 
@@ -3544,7 +3587,7 @@
 		<control caption="Start en ny kobling til vert eller tjener:|Utforsk denne verten:"/>
 		<control/><control/>
 		<control caption="Nettverks_protokoll:"/>
-		<control/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Reduser ultrapeer"/>
 		<control caption="Koble til"/>
 		<control caption="Avbryt"/>
@@ -3926,15 +3969,15 @@
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Åpne torrent-fil">
 		<control/>
-		<control caption="Du har åpnet en BitTorrent-fil. Ønsker du å laste den ned på nytt eller seed'e den?"/>
+		<control caption="Du har åpnet en BitTorrent-fil. Ønsker du å laste den ned på nytt eller spre den?"/>
 		<control caption="Last ned"/>
-		<control caption="Seed"/>
+		<control caption="Spre"/>
 		<control caption="Avbryt"/>
-		<control caption="For å dele ferdige filer med BitTorrent må man seed'e. Når denne prosessen er ferdig vil filen bli lagt til i nedlastings-listen."/>
+		<control caption="For å dele ferdige filer med BitTorrent må man spre. Når denne prosessen er ferdig vil filen bli lagt til i nedlastings-listen."/>
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent tracker info">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent tracker info">
 		<control caption="Torrent _informasjon:"/>
 		<control caption="Navn:"/>
 		<control/>
@@ -3950,6 +3993,9 @@
 		<control caption="Oppdater"/>
 		<control/>
 		<control caption="Lukk"/>
+		<control caption="Etter behov|Når delingsrate er over 100%|Aldri"/>
+		<control caption="Start nye nedlastingsoverføringer:"/>
+		<control caption="Overføringer:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Gruppeegenskaper">
@@ -4097,6 +4143,10 @@
 	<list name="CFileSourcesPageList">
 		<column from="URL" to=""/>
 		<column from="Expires" to="Utløper"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to="Filnavn"/>
+		<column from="Size" to="Størrelse"/>
 	</list>
 </listColumns>
 </skin>
