@@ -328,6 +328,7 @@ void CSearchPanel::Enable()
 	m_boxSearch.m_wndSearch.EnableWindow( TRUE );
 	m_boxSearch.m_wndSchemas.EnableWindow( TRUE );
 	m_boxSearch.m_wndNetworks.EnableWindow( TRUE );
+	m_boxSchema.m_wndSchema.Enable();
 }
 
 void CSearchPanel::Disable()
@@ -335,6 +336,7 @@ void CSearchPanel::Disable()
 	m_boxSearch.m_wndSearch.EnableWindow( FALSE );
 	m_boxSearch.m_wndSchemas.EnableWindow( FALSE );
 	m_boxSearch.m_wndNetworks.EnableWindow( FALSE );
+	m_boxSchema.m_wndSchema.Disable();
 }
 
 

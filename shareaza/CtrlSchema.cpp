@@ -280,6 +280,42 @@ void CSchemaCtrl::Layout()
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// CSchemaCtrl disable
+
+void CSchemaCtrl::Disable()
+{
+	if ( m_pSchema == NULL ) return;
+	
+	POSITION pos = m_pSchema->GetMemberIterator();
+	
+	for ( int nControl = 0 ; nControl < m_pControls.GetSize() && pos ; nControl++ )
+	{
+		((CWnd *)m_pControls.GetAt( nControl ))->EnableWindow( FALSE );
+	}
+	
+	return;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CSchemaCtrl enable
+
+void CSchemaCtrl::Enable()
+{
+	if ( m_pSchema == NULL ) return;
+	
+	POSITION pos = m_pSchema->GetMemberIterator();
+	
+	for ( int nControl = 0 ; nControl < m_pControls.GetSize() && pos ; nControl++ )
+	{
+		((CWnd *)m_pControls.GetAt( nControl ))->EnableWindow( TRUE );
+	}
+	
+	return;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl scrolling
 
 void CSchemaCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 

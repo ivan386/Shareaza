@@ -50,6 +50,8 @@ protected:
 public:
 	void		SetSchema(CSchema* pSchema, BOOL bPromptOnly = FALSE);
 	BOOL		UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate);
+	void		Disable();
+	void		Enable();
 	BOOL		OnTab();
 	void		ScrollBy(int nDelta);
 protected:
