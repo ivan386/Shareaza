@@ -102,8 +102,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hHTTP, _T("Encodings"), _T("Deflate, Backwards") );
 	AddItem( hHTTP, _T("ProtocolVersion"), _T("1.1") );
 	AddItem( hHTTP, _T("ComponentVersion"), _T("2.0.0.0") );
-	
-	/*
+
 	HTREEITEM hFTP = AddItem( hTransfers, _T("File Transfer Protocol (FTP)") );
 	AddItem( hFTP, _T("Name"), _T("File Transfer Protocol (FTP)") );
 	AddItem( hFTP, _T("Prefix"), _T("ftp://") );
@@ -113,7 +112,6 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hFTP, _T("ProtocolVersion"), _T("1.0") );
 	AddItem( hFTP, _T("ComponentVersion"), _T("1.0.0.0") );
 	AddItem( hFTP, _T("Available"), _T("No") );
-	*/
 	
 	HTREEITEM hEFTP = AddItem( hTransfers, _T("eDonkey2000 Client Link (EFTP)") );
 	AddItem( hEFTP, _T("Name"), _T("eDonkey2000 Client Link FTP (EFTP)") );
