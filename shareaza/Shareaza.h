@@ -97,6 +97,7 @@ BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen);
 void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace);
+BOOL LoadSourcesString(CString& str, DWORD num);
 
 DWORD	TimeFromString(LPCTSTR psz);
 CString	TimeToString(DWORD tVal);

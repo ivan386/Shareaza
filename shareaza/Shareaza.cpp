@@ -648,6 +648,38 @@ void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace)
 	}
 }
 
+BOOL LoadSourcesString(CString& str, DWORD num)
+{
+	if (num == 0)
+	{
+		return Skin.LoadString( str, IDS_STATUS_NOSOURCES );
+	}
+	else if (num == 1)
+	{
+		return Skin.LoadString( str, IDS_STATUS_SOURCE );
+	}
+	else if ( ( (num % 100) > 10) && ( (num % 100) < 20) )
+	{
+		return Skin.LoadString( str, IDS_STATUS_SOURCES11TO19 );
+	}
+	else
+	{
+		switch (num % 10)
+		{
+			case 0: 
+				return Skin.LoadString( str, IDS_STATUS_SOURCESTENS );
+			case 1:
+				return Skin.LoadString( str, IDS_STATUS_SOURCES );				
+			case 2:
+			case 3:
+			case 4:
+				return Skin.LoadString( str, IDS_STATUS_SOURCES2TO4 );
+			default:
+				return Skin.LoadString( str, IDS_STATUS_SOURCES5TO9 );
+		}
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Case independent string search
 

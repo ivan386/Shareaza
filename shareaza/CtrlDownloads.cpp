@@ -940,39 +940,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			}
 			else if ( nSources > 0 )
 			{
-				if (nSources == 1)
-				{
-					LoadString( strSource, IDS_STATUS_SOURCE );
-					strText.Format( _T("(1 %s)"), strSource );
-				}
-				else
-				{
-					int nLastTwoDigits = nSources % 100;
-
-					if ((nLastTwoDigits > 10) && (nLastTwoDigits < 20))
-					{
-						LoadString( strSource, IDS_STATUS_SOURCES11TO19 );
-					}
-					else
-						switch (nLastTwoDigits % 10)
-						{
-							case 0: 
-								LoadString( strSource, IDS_STATUS_SOURCESTENS );
-								break;
-							case 1:
-								LoadString( strSource, IDS_STATUS_SOURCES );
-								break;
-							case 2:
-							case 3:
-							case 4:
-								LoadString( strSource, IDS_STATUS_SOURCES2TO4);
-								break;
-							default:
-								LoadString( strSource,  IDS_STATUS_SOURCES5TO9);
-								break;
-						}
-						strText.Format( _T("(%i %s)"), nSources, strSource );
-				}
+				LoadSourcesString( strSource,  nSources );
+				strText.Format( _T("(%i %s)"), nSources, strSource );
 			}
 			else
 				LoadString( strText, IDS_STATUS_NOSOURCES );
