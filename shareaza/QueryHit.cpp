@@ -1152,7 +1152,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			// Add metadata
 			if ( nLength > 0 )
 			{
-				strLength.Format( _T("%lu"), nLength / 60 );
+				strLength.Format( _T("%lu.%lu"), nLength / 60, ( ( nLength % 60 ) * 10 / 60 ) );
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
 				m_pXML->AddAttribute( _T("minutes"), strLength );
 			}/*

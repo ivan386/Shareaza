@@ -681,9 +681,12 @@ void CEDNeighbour::SendSharedFiles()
 
 								// Length
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )	//And has minutes
-								{	//Read in the no. seconds
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%lu"), &nLength );
-									nLength *= 60;	//Convert to seconds
+								{	
+									double nMins;
+									//Read in the no. seconds
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3f"), &nMins );
+
+									nLength = (DWORD)( nMins * 60 );	//Convert to seconds
 									if ( nLength ) nTags ++;
 								}
 							}
