@@ -214,10 +214,11 @@ void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		}
 	}
 	
-	if ( pQueue != NULL )
-		TrackPopupMenu( _T("CUploadsWnd.Queue"), point, ( Settings.General.GUIMode == GUI_BASIC ) ? ID_UPLOADS_HELP : ID_UPLOADS_EDIT_QUEUE );
-	else
+	if( ( pQueue == NULL ) || ( Settings.General.GUIMode == GUI_BASIC ) ||		//If we're not pointing at a queue, or in basic mode
+		( pQueue == UploadQueues.m_pHistoryQueue ) || ( pQueue == UploadQueues.m_pTorrentQueue ) )	//Or pointing at a pre-defined queue
 		TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
+	else
+		TrackPopupMenu( _T("CUploadsWnd.Queue"), point, ID_UPLOADS_EDIT_QUEUE );
 
 	pLock.Unlock();
 }
