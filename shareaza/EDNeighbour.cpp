@@ -40,6 +40,8 @@
 #include "QuerySearch.h"
 #include "QueryHit.h"
 
+#include "UploadQueues.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -517,24 +519,43 @@ void CEDNeighbour::SendSharedFiles()
 	CSingleLock pLock1( &Library.m_pSection );
 	CSingleLock pLock2( &Transfers.m_pSection );
 	
+	//Send files in library to ed2k server
 	pLock1.Lock();
-	
+
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 		
-		if ( pFile->IsShared() && pFile->m_bED2K )
+		if ( pFile->IsShared() && pFile->m_bED2K )	//If file is shared and has an ed2k hash
 		{
-			pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
-			pPacket->Write( pPadding, 6 );
-			pPacket->WriteLongLE( 2 );
-			CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket );
-			CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket );
-			nCount++;
+			if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, FALSE ) ) // Check if a queue exists
+			{
+				//Send the file hash and name to the ed2k server
+				pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
+				pPacket->Write( pPadding, 6 );
+				pPacket->WriteLongLE( 2 );
+				CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket );
+				CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket );
+				//Increment count of files sent
+				nCount++;
+/*							
+				CString str;
+				str.Format( _T("ED2K list- File Added: %s"), pFile->m_sName );
+				theApp.Message( MSG_DEFAULT, str );
+			}
+			else
+			{
+				CString str;
+				str.Format( _T("ED2K list- File not added: %s"), pFile->m_sName );
+				theApp.Message( MSG_DEFAULT, str );
+*/
+			}
 		}
 	}
 	
 	pLock1.Unlock();
+
+	//Send files on download list to ed2k server
 	pLock2.Lock();
 	
 	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
@@ -542,13 +563,15 @@ void CEDNeighbour::SendSharedFiles()
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
 		if ( pDownload->m_bED2K && pDownload->IsStarted() && ! pDownload->IsMoving() &&
-			 pDownload->NeedHashset() == FALSE )
+			 pDownload->NeedHashset() == FALSE )	//If the file has and ed2k hash, has started, etc...
 		{
+			//Send the file hash and name to the ed2k server
 			pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 			pPacket->Write( pPadding, 6 );
 			pPacket->WriteLongLE( 2 );
 			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
 			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
+			//Increment count of files sent
 			nCount++;
 		}
 	}
