@@ -604,14 +604,8 @@ CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 			pByte += 2; 
 		}
 		
-#ifdef _UNICODE
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof(TCHAR) );
 		strXML.ReleaseBuffer( nByte );
-#else
-		int nChars = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)pByte, nByte, NULL, 0, NULL, NULL );
-		WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)pByte, nByte, strXML.GetBuffer( nChars ), nChars, NULL, NULL );
-		strXML.ReleaseBuffer( nChars );
-#endif
 	}
 	else
 	{
@@ -622,16 +616,8 @@ CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 		
 		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
 		
-#ifdef _UNICODE
 		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
 		strXML.ReleaseBuffer( nWide );
-#else
-		WCHAR* pWide = new WCHAR[ nWide + 1 ];
-		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, pWide, nWide );
-		pWide[ nWide ] = 0;
-		strXML = pWide;
-		delete [] pWide;
-#endif
 	}
 	
 	return FromString( strXML, bHeader );

@@ -888,12 +888,8 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					}
 					else
 					{
-#ifdef _UNICODE
 						MultiByteToWideChar( CP_ACP, 0, inet_ntoa( ppHit->m_pAddress ), -1, szBuffer, 64 );
 						pszText = szBuffer;
-#else
-						pszText = inet_ntoa( ppHit->m_pAddress );
-#endif
 					}
 				}
 				else

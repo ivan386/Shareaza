@@ -479,7 +479,6 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 
 		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
 		
-#ifdef _UNICODE
 		if ( m_bMetadataANSI )
 		{
 			MultiByteToWideChar(CP_ACP, 0, (LPCSTR)pBuffer, nLength, pszOutput, nLength + 1);
@@ -495,15 +494,6 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		    }
 			strValue.ReleaseBuffer( nOut );
 		}
-#else
-        DWORD nOut = 0;
-		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
-        {
-            pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
-            if ( pszOutput[ nOut ] == 0 ) break;
-        } 
-        strValue.ReleaseBuffer( nOut );
-#endif
 		
 	}
 	else if ( nEncoding == 1 && ( nLength & 1 ) == 0 && nLength >= 2 )

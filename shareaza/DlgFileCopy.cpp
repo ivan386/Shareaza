@@ -416,11 +416,7 @@ BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 	{
 		BOOL (WINAPI *pfnCopyFileEx)(LPCTSTR, LPCTSTR, LPPROGRESS_ROUTINE_X, LPVOID, LPBOOL, DWORD);
 		
-#ifdef _UNICODE
 		(FARPROC&)pfnCopyFileEx = GetProcAddress( hKernel, "CopyFileExW" );
-#else
-		(FARPROC&)pfnCopyFileEx = GetProcAddress( hKernel, "CopyFileExA" );
-#endif
 		
 		if ( pfnCopyFileEx != NULL )
 		{

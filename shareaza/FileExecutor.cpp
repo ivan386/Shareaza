@@ -243,13 +243,8 @@ BOOL CFileExecutor::DisplayURL(LPCTSTR pszURL)
 	UINT uiResult = DdeInitialize( &hInstance, DDECallback, dwFilterFlags, 0 );
 	if ( uiResult != DMLERR_NO_ERROR ) return FALSE;
 	
-#ifdef _UNICODE
 	HSZ hszService	= DdeCreateStringHandle( hInstance, L"IExplore", CP_WINUNICODE );
 	HSZ hszTopic	= DdeCreateStringHandle( hInstance, L"WWW_OpenURL", CP_WINUNICODE );
-#else
-	HSZ hszService	= DdeCreateStringHandle( hInstance, "IExplore", CP_WINANSI );
-	HSZ hszTopic	= DdeCreateStringHandle( hInstance, "WWW_OpenURL", CP_WINANSI );
-#endif
 	
 	if ( HCONV hConv = DdeConnect( hInstance, hszService, hszTopic, NULL ) )
 	{

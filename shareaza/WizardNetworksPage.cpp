@@ -115,13 +115,8 @@ void CWizardNetworksPage::DoDonkeyImport()
 	
 	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
 	{
-#ifdef _UNICODE
 		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
 		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-#else
-		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPSTR);
-		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathA" );
-#endif
 		
 		if ( pfnSHGetFolderPath != NULL )
 		{

@@ -540,11 +540,7 @@ void CLibraryDetailView::OnGetDispInfoA(NMLVDISPINFO* pNotify, LRESULT* pResult)
 	{
 		if ( pNotify->item.iSubItem < pItem->pText->GetSize() )
 		{
-#ifdef _UNICODE
 			WideCharToMultiByte( CP_ACP, 0, pItem->pText->GetAt( pNotify->item.iSubItem ), -1, (LPSTR)pNotify->item.pszText, pNotify->item.cchTextMax, NULL, NULL );
-#else
-			strncpy( (LPSTR)pNotify->item.pszText, pItem->pText->GetAt( pNotify->item.iSubItem ), pNotify->item.cchTextMax );
-#endif
 		}
 	}
 	

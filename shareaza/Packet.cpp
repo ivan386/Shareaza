@@ -117,29 +117,20 @@ CString CPacket::ReadString(DWORD nMaximum)
 		if ( ! *pszScan++ ) break;
 	}
 	
-#ifdef _UNICODE
 	int nWide = MultiByteToWideChar( CP_ACP, 0, pszInput, nLength, NULL, 0 );
 	MultiByteToWideChar( CP_ACP, 0, pszInput, nLength, strString.GetBuffer( nWide ), nWide );
 	strString.ReleaseBuffer( nWide );
-#else
-	CopyMemory( strString.GetBuffer( nLength ), pszInput, nLength );
-	strString.ReleaseBuffer( nLength );
-#endif
 
 	return strString;
 }
 
 void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 {
-#ifdef _UNICODE
 	int nByte		= WideCharToMultiByte( CP_ACP, 0, pszString, -1, NULL, 0, NULL, NULL );
 	LPSTR pszByte	= nByte <= PACKET_BUF_SCHAR ? m_szSCHAR : new CHAR[ nByte ];
 	WideCharToMultiByte( CP_ACP, 0, pszString, -1, pszByte, nByte, NULL, NULL );
 	Write( pszByte, nByte - ( bNull ? 0 : 1 ) );
 	if ( pszByte != m_szSCHAR ) delete [] pszByte;
-#else
-	Write( pszString, strlen( pszString ) + ( bNull ? 1 : 0 ) );
-#endif
 }
 
 int CPacket::GetStringLen(LPCTSTR pszString) const
@@ -148,9 +139,7 @@ int CPacket::GetStringLen(LPCTSTR pszString) const
 	
 	int nLength = _tcslen( pszString );
 	
-#ifdef _UNICODE
 	nLength = WideCharToMultiByte( CP_ACP, 0, pszString, nLength, NULL, 0, NULL, NULL );
-#endif
 	
 	return nLength;
 }
@@ -175,29 +164,20 @@ CString CPacket::ReadStringUTF8(DWORD nMaximum)
 		if ( ! *pszScan++ ) break;
 	}
 	
-#ifdef _UNICODE
 	int nWide = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, NULL, 0 );
 	MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, strString.GetBuffer( nWide ), nWide );
 	strString.ReleaseBuffer( nWide );
-#else
-	CopyMemory( strString.GetBuffer( nLength ), pszInput, nLength );
-	strString.ReleaseBuffer( nLength );
-#endif
 
 	return strString;
 }
 
 void CPacket::WriteStringUTF8(LPCTSTR pszString, BOOL bNull)
 {
-#ifdef _UNICODE
 	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszString, -1, NULL, 0, NULL, NULL );
 	LPSTR pszByte	= nByte <= PACKET_BUF_SCHAR ? m_szSCHAR : new CHAR[ nByte ];
 	WideCharToMultiByte( CP_UTF8, 0, pszString, -1, pszByte, nByte, NULL, NULL );
 	Write( pszByte, nByte - ( bNull ? 0 : 1 ) );
 	if ( pszByte != m_szSCHAR ) delete [] pszByte;
-#else
-	Write( pszString, strlen( pszString ) + ( bNull ? 1 : 0 ) );
-#endif
 }
 
 int CPacket::GetStringLenUTF8(LPCTSTR pszString) const
@@ -206,9 +186,7 @@ int CPacket::GetStringLenUTF8(LPCTSTR pszString) const
 	
 	int nLength = _tcslen( pszString );
 	
-#ifdef _UNICODE
 	nLength = WideCharToMultiByte( CP_UTF8, 0, pszString, nLength, NULL, 0, NULL, NULL );
-#endif
 	
 	return nLength;
 }

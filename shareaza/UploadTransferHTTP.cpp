@@ -1149,14 +1149,9 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	CString strXML = pMetadata->ToString( TRUE, TRUE );
 	delete pMetadata;
 	
-#ifdef _UNICODE
 	int nXML = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszXML = new CHAR[ nXML ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszXML, nXML, NULL, NULL );
-#else
-	int nXML = strXML.GetLength();
-	LPCSTR pszXML = (LPCSTR)strXML;
-#endif
 	
 	m_pOutput->Print( "HTTP/1.1 200 OK\r\n" );
 	SendDefaultHeaders();
@@ -1168,9 +1163,7 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	m_pOutput->Print( "\r\n" );
 	
 	if ( ! m_bHead ) m_pOutput->Add( pszXML, nXML );
-#ifdef _UNICODE
 	delete [] pszXML;
-#endif
 	
 	StartSending( upsMetadata );
 	
@@ -1304,26 +1297,19 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 					_T("</hashtree>"),
 					m_nFileSize, nDepth, (LPCTSTR)strUUID );
 	
-#ifdef _UNICODE
 	int nXML = WideCharToMultiByte( CP_UTF8, 0, strXML, -1, NULL, 0, NULL, NULL );
 	LPSTR pszXML = new CHAR[ nXML ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, -1, pszXML, nXML, NULL, NULL );
 	int nUUID = WideCharToMultiByte( CP_ACP, 0, strUUID, -1, NULL, 0, NULL, NULL );
 	LPSTR pszUUID = new CHAR[ nUUID ];
 	WideCharToMultiByte( CP_ACP, 0, strUUID, -1, pszUUID, nUUID, NULL, NULL );
-#else
-	LPCSTR pszXML	= strXML;
-	LPCSTR pszUUID	= strUUID;
-#endif
 	
 	pDIME.WriteDIME( 1, "", "text/xml", pszXML, strlen(pszXML) );
 	pDIME.WriteDIME( pHashset ? 0 : 2, pszUUID, "http://open-content.net/spec/thex/breadthfirst", pSerialTree, nSerialTree );
 	delete [] pSerialTree;
 	
-#ifdef _UNICODE
 	delete [] pszUUID;
 	delete [] pszXML;
-#endif
 	
 	if ( pHashset != NULL )
 	{
@@ -1685,23 +1671,16 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	if ( bFileHeaders ) SendFileHeaders();
 	m_pOutput->Print( "Content-Type: text/html\r\n" );
 	
-#ifdef _UNICODE
 	int nBody = WideCharToMultiByte( CP_UTF8, 0, strBody, strBody.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszBody = new CHAR[ nBody ];
 	WideCharToMultiByte( CP_UTF8, 0, strBody, strBody.GetLength(), pszBody, nBody, NULL, NULL );
-#else
-	int nBody = strBody.GetLength();
-	LPCSTR pszBody = (LPCSTR)strBody;
-#endif
 	
 	strResponse.Format( _T("Content-Length: %lu\r\n\r\n"), nBody );
 	m_pOutput->Print( strResponse );
 	
 	if ( ! m_bHead ) m_pOutput->Add( pszBody, nBody );
 	
-#ifdef _UNICODE
 	delete [] pszBody;
-#endif
 	
 	StartSending( upsResponse );
 }

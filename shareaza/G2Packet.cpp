@@ -341,32 +341,12 @@ CString CG2Packet::ReadString(DWORD nMaximum)
 	{
 		m_nPosition++;
 		if ( ! *pszScan ) break;
-#ifndef _UNICODE
-		if ( ( *pszScan ) & 0x80 ) bEncoded = TRUE;
-#endif
 		pszScan ++;
 	}
 	
-#ifdef _UNICODE
 	int nWide = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, NULL, 0 );
 	MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, strString.GetBuffer( nWide ), nWide );
 	strString.ReleaseBuffer( nWide );
-#else
-	if ( ! bEncoded )
-	{
-		CopyMemory( strString.GetBuffer( nLength ), pszInput, nLength );
-		strString.ReleaseBuffer( nLength );
-		return strString;
-	}
-	
-	LPWSTR pszOutput = ( nLength <= PACKET_BUF_WCHAR ) ? m_szWCHAR : new WCHAR[ nLength + 1 ];
-	
-	nLength = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, pszOutput, nLength );
-	pszOutput[ nLength ] = 0;
-	strString = pszOutput;
-	
-	if ( pszOutput != m_szWCHAR ) delete [] pszOutput;
-#endif
 	
 	return strString;
 }
@@ -379,7 +359,6 @@ void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
 		return;
 	}
 	
-#ifdef _UNICODE
 	int nWide		= _tcslen(pszString);
 	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, NULL, 0, NULL, NULL );
 	LPSTR pszByte	= ( nByte <= PACKET_BUF_SCHAR ) ? m_szSCHAR : new CHAR[ nByte + 1 ];
@@ -395,40 +374,7 @@ void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
 		Write( pszByte, nByte );
 	
 	if ( pszByte != m_szSCHAR ) delete [] pszByte;
-#else
-	LPCTSTR pszScan = pszString;
-	BOOL bPlain = TRUE;
-	
-	for ( int nLength = 0 ; *pszScan ; nLength++ )
-	{
-		if ( ( *pszScan++ ) & 0x80 ) bPlain = FALSE;
-	}
-	
-	if ( bPlain )
-	{
-		Write( (LPCSTR)pszString, nLength + ( bNull ? 1 : 0 ) );
-		return;
-	}
-	
-	LPWSTR pszWide	= ( nLength <= PACKET_BUF_WCHAR ) ? m_szWCHAR : new WCHAR[ nLength + 1 ];
-	
-	nLength = MultiByteToWideChar( CP_ACP, 0, pszString, nLength, pszWide, nLength );
-	pszWide[ nLength ] = 0;
-	
-	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszWide, nLength, NULL, 0, NULL, NULL );
-	LPSTR pszByte	= ( nByte <= PACKET_BUF_SCHAR ) ? m_szSCHAR : new CHAR[ nByte + 1 ];
-	
-	nByte = WideCharToMultiByte( CP_UTF8, 0, pszWide, nLength, pszByte, nByte, NULL, NULL );
-	pszByte[ nByte ] = 0;
-	
-	Write( pszByte, nByte + ( bNull ? 1 : 0 ) );
-	
-	if ( pszByte != m_szSCHAR ) delete [] pszByte;
-	if ( pszWide != m_szWCHAR ) delete [] pszWide;
-#endif
 }
-
-#ifdef _UNICODE
 
 void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)
 {
@@ -440,8 +386,6 @@ void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)
 	
 	Write( pszString, strlen(pszString) + ( bNull ? 1 : 0 ) );
 }
-
-#endif
 
 int CG2Packet::GetStringLen(LPCTSTR pszString) const
 {
@@ -456,20 +400,7 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 		if ( ( *pszScan++ ) & 0x80 ) bPlain = FALSE;
 	}
 	
-#ifdef _UNICODE
 	nLength = WideCharToMultiByte( CP_UTF8, 0, pszString, nLength, NULL, 0, NULL, NULL );
-#else
-	if ( bPlain ) return nLength;
-
-	LPWSTR pszWide	= ( nLength <= PACKET_BUF_WCHAR ) ? m_szWCHAR : new WCHAR[ nLength + 1 ];
-	
-	nLength = MultiByteToWideChar( CP_ACP, 0, pszString, nLength, pszWide, nLength );
-	pszWide[ nLength ] = 0;
-	
-	nLength = WideCharToMultiByte( CP_UTF8, 0, pszWide, nLength, NULL, 0, NULL, NULL );
-	
-	if ( pszWide != m_szWCHAR ) delete [] pszWide;
-#endif
 	
 	return nLength;
 }

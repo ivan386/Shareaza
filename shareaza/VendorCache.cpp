@@ -75,7 +75,6 @@ int CVendorCache::GetCount() const
 //////////////////////////////////////////////////////////////////////
 // CVendorCache lookup
 
-#ifdef _UNICODE
 CVendor* CVendorCache::Lookup(LPCSTR pszCode, BOOL bCreate)
 {
 	WCHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
@@ -84,16 +83,6 @@ CVendor* CVendorCache::Lookup(LPCSTR pszCode, BOOL bCreate)
 
 CVendor* CVendorCache::Lookup(LPCWSTR pszCode, BOOL bCreate)
 
-#else
-
-CVendor* CVendorCache::Lookup(LPCWSTR pszCode, BOOL bCreate)
-{
-	CHAR szCode[5] = { pszCode[0], pszCode[1], pszCode[2], pszCode[3], 0 };
-	return Lookup( szCode, bCreate );
-}
-
-CVendor* CVendorCache::Lookup(LPCSTR pszCode, BOOL bCreate)
-#endif
 {
 	CVendor* pVendor = NULL;
 

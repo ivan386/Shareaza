@@ -225,15 +225,11 @@ void CURLExportDlg::OnSave()
 
 		Library.Unlock();
 		
-		#ifdef _UNICODE
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strLine, strLine.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strLine, strLine.GetLength(), pBytes, nBytes, NULL, NULL );
 		pOutput.Write( pBytes, nBytes );
 		delete [] pBytes;
-		#else
-		pOutput.Write( (LPCSTR)strLine, strLine.GetLength() );
-		#endif
 	}
 	
 	pOutput.Close();

@@ -872,15 +872,10 @@ void CLocalSearch::WriteTrailerG1()
 	
 	if ( strXML.GetLength() > 0 )
 	{
-#ifdef _UNICODE
 		nXML = WideCharToMultiByte( CP_ACP, 0, strXML, -1, NULL, 0, NULL, NULL );
 		pszXML = new CHAR[ nXML ];
 		WideCharToMultiByte( CP_ACP, 0, strXML, -1, pszXML, nXML, NULL, NULL );
 		if ( nXML > 0 ) nXML --;
-#else
-		pszXML = (LPSTR)(LPCSTR)strXML;
-		nXML = strlen(pszXML);
-#endif
 		
 		pCompressed = CZLib::Compress( pszXML, nXML, &nCompressed );
 		
@@ -920,9 +915,7 @@ void CLocalSearch::WriteTrailerG1()
 		m_pPacket->Write( pszXML, nXML );
 	}
 	
-#ifdef _UNICODE
 	if ( pszXML != NULL ) delete [] pszXML;
-#endif
 	
 	m_pPacket->Write( &MyProfile.GUID, sizeof(GGUID) );
 }

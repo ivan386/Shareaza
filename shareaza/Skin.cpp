@@ -839,7 +839,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 			return FALSE;
 		}
 
-		#ifdef _UNICODE
 		pFile.Write( "<dialog name=\"", 14 );
 
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), NULL, 0, NULL, NULL );
@@ -866,18 +865,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 		delete [] pBytes;
 
 		pFile.Write( "\">\r\n", 4 );
-
-		#else
-		pFile.Write( "<dialog name=\"", 14 );
-		pFile.Write( strName, strlen(strName) );
-		pFile.Write( "\" cookie=\"", 10 );
-		pFile.Write( strCaption, strlen(strCaption) );
-		pFile.Write( "\" caption=\"", 11 );
-		pDialog->GetWindowText( strCaption );
-		pFile.Write( strCaption, strlen(strCaption) );
-		pFile.Write( "\">\r\n", 4 );
-		#endif
-		
 
 		/*
 		pFile.Write( "<dialog name=\"", 14 );
@@ -914,15 +901,11 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 
 				//pszOutput = T2A(strCaption);
 				//pFile.Write( pszOutput, strlen(pszOutput) );
-				#ifdef _UNICODE
 				int nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
 				LPSTR pBytes = new CHAR[nBytes];
 				WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
 				pFile.Write( pBytes, nBytes );
 				delete [] pBytes;
-				#else
-				pFile.Write( strCaption, strlen(strCaption) );
-				#endif
 
         		pFile.Write( "\"/>\r\n", 5 );
 			}
@@ -1301,11 +1284,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 			{
 				int (WINAPI *pfnAddFontResourceEx)(LPCTSTR, DWORD, PVOID);
 				
-#ifdef _UNICODE
 				(FARPROC&)pfnAddFontResourceEx = GetProcAddress( hGDI, "AddFontResourceExW" );
-#else
-				(FARPROC&)pfnAddFontResourceEx = GetProcAddress( hGDI, "AddFontResourceExA" );
-#endif
 				
 				if ( pfnAddFontResourceEx != NULL )
 				{

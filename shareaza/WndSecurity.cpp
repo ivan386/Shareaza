@@ -464,15 +464,11 @@ void CSecurityWnd::OnSecurityExport()
 				{
 					strText += _T("\r\n");
 
-					#ifdef _UNICODE
 					int nBytes = WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), NULL, 0, NULL, NULL );
 					LPSTR pBytes = new CHAR[nBytes];
 					WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes, nBytes, NULL, NULL );
 					pFile.Write( pBytes, nBytes );
 					delete [] pBytes;
-					#else
-					pFile.Write( (LPCSTR)strText, strText.GetLength() );
-					#endif
 
 				}
 			}
@@ -494,15 +490,11 @@ void CSecurityWnd::OnSecurityExport()
 
 		strText = pXML->ToString( TRUE, TRUE );
 
-		#ifdef _UNICODE
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes, nBytes, NULL, NULL );
 		pFile.Write( pBytes, nBytes );
 		delete [] pBytes;
-		#else
-		pFile.Write( (LPCSTR)strText, strText.GetLength() );
-		#endif
 		
 		delete pXML;
 	}

@@ -149,15 +149,11 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 	else
 		strXML.Empty();
 	
-#ifdef _UNICODE
 	int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszASCII = new CHAR[ nASCII ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
 	pFile.Write( pszASCII, nASCII );
 	delete [] pszASCII;
-#else
-	pFile.Write( (LPCSTR)strXML, strXML.GetLength() );
-#endif
 	
 	pFile.Close();
 	

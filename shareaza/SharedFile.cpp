@@ -1037,15 +1037,11 @@ BOOL CLibraryFile::SaveMetadata()
 		DWORD nWritten;
 		delete pXML;
 		
-#ifdef _UNICODE
 		int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pszASCII = new CHAR[ nASCII ];
 		WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
 		WriteFile( hFile, pszASCII, nASCII, &nWritten, NULL );
 		delete [] pszASCII;
-#else
-		WriteFile( hFile, (LPCSTR)strXML, strXML.GetLength(), &nWritten, NULL );
-#endif
 		
 		GetFileTime( hFile, NULL, NULL, &m_pMetadataTime );
 		CloseHandle( hFile );

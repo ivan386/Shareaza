@@ -186,14 +186,8 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 			pByte += 2; 
 		}
 		
-#ifdef _UNICODE
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * 2 );
 		strXML.ReleaseBuffer( nByte );
-#else
-		int nChars = WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)pByte, nByte, NULL, 0, NULL, NULL );
-		WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)pByte, nByte, strXML.GetBuffer( nChars ), nChars, NULL, NULL );
-		strXML.ReleaseBuffer( nChars );
-#endif
 	}
 	else
 	{
@@ -204,16 +198,8 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		
 		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
 		
-#ifdef _UNICODE
 		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
 		strXML.ReleaseBuffer( nWide );
-#else
-		WCHAR* pWide = new WCHAR[ nWide + 1 ];
-		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, pWide, nWide );
-		pWide[ nWide ] = 0;
-		strXML = pWide;
-		delete [] pWide;
-#endif
 	}
 	
 	delete [] pSource;

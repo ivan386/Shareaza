@@ -41,9 +41,7 @@ public:
 	CHAR	m_sType[9];
 	BOOL	m_bCompound;
 
-#ifdef _UNICODE
 	CString	m_sTypeCache;
-#endif
 	
 // Operations
 public:
@@ -65,9 +63,7 @@ public:
 public:
 	static CG2Packet* ReadBuffer(CBuffer* pBuffer);
 	
-#ifdef _UNICODE
 	virtual void	WriteString(LPCSTR pszString, BOOL bNull = TRUE);
-#endif
 
 // Inlines
 public:
@@ -78,12 +74,8 @@ public:
 
 	virtual inline LPCTSTR GetType() const
 	{
-#ifdef _UNICODE
 		if ( m_sTypeCache.IsEmpty() ) ((CG2Packet*)this)->m_sTypeCache = m_sType;
 		return m_sTypeCache;
-#else
-		return m_sType;
-#endif
 	}
 
 // Packet Pool
@@ -112,9 +104,7 @@ public:
 		}
 		
 		pPacket->m_bCompound = bCompound;
-#ifdef _UNICODE
 		pPacket->m_sTypeCache.Empty();
-#endif
 		
 		return pPacket;
 	}
