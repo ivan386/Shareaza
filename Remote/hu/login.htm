@@ -1,0 +1,57 @@
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <table width="95%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="center">
+					<table width="100%" cellspacing="0">
+						<tr>
+							<td class="tabedg">&nbsp;</td>
+							<td class="tab">Kezdőlap</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Keresés</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Letöltések</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Feltöltések</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Hálózatok</td>
+							<td class="tabedg">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="frame">
+					<div>
+						Üdvözöllek a <b>Shareaza távoli használat</b> 
+                        webkonzolban. Ha Shareaza fut a gépen, akkor írd be a 
+                        felhasználónevedet és jelszavadat, majd kattints a <b>
+                        Belépés</b> gombra.
+					</div>
+					<%? failure %>
+					<div align="center" style="color: red; font-weight: bold;">
+						<br>
+						Hibás felhasználónév vagy jelszó.
+						<br>
+						Próbáld meg újra.</div>
+					<%?%>
+					<form method="get">
+					<input type="hidden" name="submit" value="1">
+					<table align="center">
+						<tr>
+							<td>Felhasználó neve:</td>
+							<td><input type="text" name="username" size="20"></td>
+						</tr>
+						<tr>
+							<td>Jelszó:</td>
+							<td><input type="password" name="password" size="20" ID="Text1"></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input type="submit" value="Login">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</td>
+			</tr>
+		</table>

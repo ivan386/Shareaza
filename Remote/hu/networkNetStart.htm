@@ -1,0 +1,28 @@
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                    <h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					<font size="2">Ez a hálózat<b> nincs</b> üzemben -
+                    <a href="?connect=<%= network_id %>"><b>Kapcsolódás</b></a>
+                    </font>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					<font size="2">Ez a hálózat üzemben van -
+                    <a href="?disconnect=<%= network_id %>"><b>Lekapcsolódás</b></a>
+                    </font>
+					</p>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Cím</td>
+							<td class="viewheader" align="center">Idő</td>
+							<td class="viewheader" align="center">Csomagok</td>
+							<td class="viewheader" align="center">Sávszél</td>
+							<td class="viewheader" align="center">Teljes 
+                            forgalom</td>
+							<td class="viewheader" align="center">Mód</td>
+							<td class="viewheader" align="center">Leaf</td>
+							<td class="viewheader">Kliensprogram</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>
