@@ -76,6 +76,7 @@ CMatchList::CMatchList()
 	m_nItems			= 0;
 	m_nFilteredFiles	= 0;
 	m_nFilteredHits		= 0;
+	m_nED2KHits			= 0;
 	
 	m_nBuffer	= 0;
 	m_pSizeMap	= new CMatchFile*[ MAP_SIZE ];
@@ -242,6 +243,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 						bHadSHA1	|= bHad[0];
 						bHadTiger	|= bHad[1];
 						bHadED2K	|= bHad[2];
+
 						break;
 					}
 				}
@@ -269,7 +271,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					}
 				}
 			}
-			
 			if ( ! pFile ) bHadSHA1 = bHadTiger = bHadED2K = FALSE;
 		}
 		
@@ -302,6 +303,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				m_nItems -= nHadCount;
 				m_nFilteredFiles --;
 				m_nFilteredHits -= nHadFiltered;
+				if(pHit->m_nProtocol==PROTOCOL_ED2K) m_nED2KHits-= nHadFiltered;
 			}
 		}
 		else
@@ -364,6 +366,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			m_nItems += nHadCount;
 			m_nFilteredFiles ++;
 			m_nFilteredHits += pFile->m_nFiltered;
+
+			if(pHit->m_nProtocol==PROTOCOL_ED2K) m_nED2KHits+= pFile->m_nFiltered;
+
 		}
 		
 		pHit = pNext;

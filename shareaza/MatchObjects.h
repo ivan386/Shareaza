@@ -62,6 +62,7 @@ public:
 	DWORD			m_nItems;
 	DWORD			m_nFilteredFiles;
 	DWORD			m_nFilteredHits;
+	DWORD			m_nED2KHits;
 	BOOL			m_bUpdated;
 	DWORD			m_nUpdateMin;
 	DWORD			m_nUpdateMax;

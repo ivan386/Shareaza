@@ -60,6 +60,8 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
 	m_nLeaves		= 0;
 	m_nHits			= 0;
 	m_tLastED2K		= 0;
+	m_nQueryCount	= 0;
+
 }
 
 CManagedSearch::~CManagedSearch()
@@ -125,6 +127,7 @@ void CManagedSearch::Start()
 	m_tStarted	= time( NULL );
 	m_tExecute	= 0;
 	m_tLastED2K	= 0;
+	m_nQueryCount=0;
 	
 	m_pNodes.RemoveAll();
 	
@@ -161,7 +164,7 @@ BOOL CManagedSearch::Execute()
 	}
 	else
 	{
-		if ( tTicks - m_tExecute < 200 ) return FALSE;
+		if ( tTicks - m_tExecute < 180 ) return FALSE;
 		m_tExecute = tTicks;
 	}
 	
@@ -180,6 +183,8 @@ BOOL CManagedSearch::Execute()
 			m_tLastED2K = tTicks;
 		}
 	}
+
+	if(bSuccess) m_nQueryCount++;
 	
 	return bSuccess;
 }
