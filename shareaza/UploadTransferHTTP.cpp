@@ -129,8 +129,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	if ( m_nState == upsQueued && m_pQueue != NULL )
 	{
 		DWORD tLimit = Settings.Uploads.QueuePollMin;
-		
-		//if ( UploadQueues.GetPosition( this, FALSE ) <= 2 ) tLimit /= 2;
+
 		tLimit *= m_nReaskMultiplier;
 		
 		if ( GetTickCount() - m_tRequest < tLimit )
@@ -716,9 +715,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		SendDefaultHeaders();
 		SendFileHeaders();
 		
-		//DWORD nTimeScale = ( nPosition <= 2 ) ? 2000 : 1000;
-
-		m_nReaskMultiplier=( nPosition <= 9 ) ? ((nPosition+1)/2) : 5;
+		m_nReaskMultiplier=( nPosition <= 9 ) ? ( (nPosition+1) / 2 ) : 5;
 		DWORD nTimeScale = 1000 / m_nReaskMultiplier;
 		
 		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
@@ -1069,7 +1066,7 @@ BOOL CUploadTransferHTTP::OnRun()
 		break;
 
 	case upsQueued:
-		if ( tNow - m_tRequest > (Settings.Uploads.QueuePollMax*m_nReaskMultiplier))
+		if ( tNow - m_tRequest > ( Settings.Uploads.QueuePollMax * m_nReaskMultiplier ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
 			Close();
