@@ -62,8 +62,8 @@ protected:
 	void		OnBeginDrag(CPoint ptAction);
 	CImageList*	CreateDragImage(CPtrList* pSel, const CPoint& ptMouse);
 public:
-	inline static BOOL	IsFiltered(CDownload* pDownload);
-	inline static BOOL	IsExpandable(CDownload* pDownload);
+	static BOOL	IsFiltered(CDownload* pDownload);
+	static BOOL	IsExpandable(CDownload* pDownload);
 	
 	friend class CDownloadsWnd;
 	
