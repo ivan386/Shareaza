@@ -421,8 +421,18 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 			if ( m_pNodes.Lookup( (LPVOID)nAddress, (LPVOID&)tLastQuery ) )
 			{
 				// Check per-hub requery time
-				DWORD nFrequency = Settings.Gnutella2.RequeryDelay;
-				nFrequency *= ( m_nPriority + 1 );
+				DWORD nFrequency;
+				
+				if ( m_nPriority >=  spLowest )
+				{
+					// Low priority "auto find" sources
+					if ( m_pSearch->m_bSHA1 )		// Has SHA1- probably exists on G2
+						nFrequency = 16 * 60 * 60;
+					else							// Reduce frequency if no SHA1.
+						nFrequency = 32 * 60 * 60;
+				}
+				else
+					nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
 				if ( tSecs - tLastQuery < nFrequency ) continue;
 			}
 			
