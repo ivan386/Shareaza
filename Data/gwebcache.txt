@@ -4,41 +4,33 @@ D http://www.edonkey2000.com/server.met
 D http://www.emule-inside.net/server.met
 D http://web2k2.vivelared.com/server.met
 2 http://bazooka.stealthspy.net/g2/bazooka.php
-2 http://bazooka1.servehttp.com/g2/bazooka.php
-M http://bobsmith.is-a-geek.org/index.cgi
+2 http://bicou.hd.free.fr/g2/bazooka.php
+1 http://crab.bishopston.net:3558/
+2 http://crab.bishopston.net:3559/
 2 http://diabolo.mine.nu/g2/bazooka.php
 2 http://g2.djdan.pointclark.net/g2/bazooka.php
 2 http://g2.instantnetworks.net/g2/bazooka.php
 2 http://g2.kuwaitcontact.com/bazooka.php
 M http://g2cache.theg2.net/gwcache/lynnx.asp
-2 http://groovy.syxy.com/g2/bazooka.php
-1 http://gwc1.nouiz.org/index.jsp
-1 http://jason.ionichost.com/gwebcache/gcache.php
-1 http://kccricket.net:9080/GWebCache/index.jsp
-2 http://members.lycos.co.uk/aceamerica/g2/bazooka.php
-2 http://members.lycos.co.uk/kevinfarrugia/g2/bazooka.php
-2 http://members.lycos.nl/fcemoerbeke/g2/bazooka.php
-2 http://mitglied.lycos.de/warylogman/g2/bazooka.php
-M http://terrorist.host.sk/gnutella-cache/gwcii.php
-2 http://www.empireniteclub.com/g2/bazooka.php
-2 http://www.goeg.dk/Bazooka/g2/bazooka.php
-2 http://www.kuwaitcontact.com/g2/bazooka.php
-1 http://www.rodage.net/gnetcache/gcache.php
-2 http://www.sharehub.sytes.net/g2/bazooka.php
-2 http://www.tomjleeds.com/g2/bazooka.php
-2 http://warezbrasil.redservicio.com/g2/bazooka.php
-M http://gwebcache.wiretapped.us/
-1 http://loot.alumnigroup.org/
 1 http://gcache.cloppy.net/
-M http://gwebcache1.limewire.com/gwebcache/cgi-bin/perlgcache.cgi
+2 http://groovy.syxy.com/g2/bazooka.php
+1 http://gwc.jooz.net:8010/gwc/
+M http://gwc.lame.net/gwcii.php
+2 http://gwc.wodi.org/g2/bazooka.php
+2 http://gwc2.awyeah.net/g2/bazooka.php
 1 http://gwebcache.bearshare.net/gcache.php
-2 http://g2.cyrax.myftp.org/g2/bazooka.php
-2 http://www.pione.net/g2/bazooka.php
-M http://bobsmith-gwc.kicks-ass.org/
-M http://gwebcache.squinky.gotdns.com/perlgcache.cgi
+1 http://kisama.ath.cx:8080/
+1 http://krill.shacknet.nu:20095/gwc
+M http://node01.hewson.cns.ufl.edu:8080/cpwc.cgi
+M http://pokerface.bishopston.net:3559/
+2 http://www.ciscllc.com/g2/bazooka.php
+2 http://www.kuwaitcontact.com/g2/bazooka.php
+2 http://www.lo7.wroc.pl/~stash/g2/bazooka.php
+M http://ygwc.y-0.net/ygwc.php
+2 http://zafir.gratishost.com/gwc/bazooka.php
 #
 # Keep these comments at the end
-# Last updated September 27, 2004
+# Last updated December 15, 2004
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
