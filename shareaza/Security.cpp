@@ -972,9 +972,11 @@ void  CSecureRule::MaskFix()
 		}
 	}
 
+	DWORD nTempMask = nOldMask;
+
 	for ( int nBits = 0 ; nBits < 32 ; nBits++ )	// get upper contiguous bits from subnet mask
 	{
-		if( nOldMask & 0x80000000 )					// check the high bit
+		if( nTempMask & 0x80000000 )					// check the high bit
 		{
 			nNewMask >>= 1;							// shift mask down
 			nNewMask |= 0x80000000;					// put the bit on
@@ -983,32 +985,14 @@ void  CSecureRule::MaskFix()
 		{
 			break;									// found a 0 so ignore the rest
 		}
-		nOldMask <<= 1;
+		nTempMask <<= 1;
+	}
+
+	if ( nNewMask != nOldMask )						// set rule to expire if mask is invalid
+	{
+		m_nExpire = srSession;
+		return;
 	}
 
 	nNetwork &= nNewMask;		// do the & now so we don't have to each time there's a match	
-
-	for ( int nByte = 0 ; nByte < 4 ; nByte++ )		// convert the dwords back to byte arrays
-	{
-		BYTE nMaskByte = 0;
-		BYTE nNetByte = 0;
-		for ( int nBits = 0 ; nBits < 8 ; nBits++ )
-		{
-			nNetByte <<= 1;
-			if( nNetwork & 0x80000000 )
-			{
-				nNetByte |= 1;
-			}
-			nNetwork <<= 1;
-
-			nMaskByte <<= 1;
-			if( nNewMask & 0x80000000 )
-			{
-				nMaskByte |= 1;
-			}
-			nNewMask <<= 1;
-		}
-		m_nIP[ nByte ] = nNetByte;
-		m_nMask[ nByte ] = nMaskByte;
-	}
 }
