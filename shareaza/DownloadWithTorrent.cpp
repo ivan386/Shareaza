@@ -146,6 +146,7 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
 	if ( ! m_pTorrent.IsAvailable() ) return TRUE;
+	if ( m_bDiskFull ) return FALSE;
 	
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 ) ChokeTorrent( tNow );
 	
