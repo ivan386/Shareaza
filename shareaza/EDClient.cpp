@@ -91,6 +91,8 @@ CEDClient::CEDClient()
 	m_pUpload		= NULL;
 	m_bSeeking		= FALSE;
 	m_nRunExCookie	= 0;
+
+	m_bOpenChat		= FALSE;
 	
 	m_mInput.pLimit		= &Settings.Bandwidth.Request;
 	m_mOutput.pLimit	= &Settings.Bandwidth.Request;
@@ -347,6 +349,7 @@ BOOL CEDClient::OnRun()
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake )
 		{
+			// Handshake timeout
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT, (LPCTSTR)m_sAddress );
 			NotifyDropped();
 			Close();
@@ -355,9 +358,16 @@ BOOL CEDClient::OnRun()
 	}
 	else
 	{
-		if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic &&
+		if ( m_bOpenChat )
+		{
+			// Open a chat window.
+			if ( Settings.Community.ChatEnable ) ChatCore.OnED2KMessage( this, NULL );
+			m_bOpenChat = FALSE;
+		}
+		else if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic &&
 			 tNow - m_mOutput.tLast > Settings.Connection.TimeoutTraffic )
 		{
+			// Connection closed (Inactive)
 			theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_CLOSED, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
@@ -1199,17 +1209,17 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 {
 	DWORD nMessageLength;
 
-	//Check packet has message length
+	// Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
 	{
 		theApp.Message( MSG_ERROR, _T("Empty message packet recieved from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 
-	//Read message length
+	// Read message length
 	nMessageLength = pPacket->ReadShortLE();
 
-	//Validate message length
+	// Validate message length
 	if ( ( nMessageLength < 1 ) || ( nMessageLength > 500 ) || ( nMessageLength != pPacket->GetRemaining() ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid message packet recieved from %s"), (LPCTSTR)m_sAddress );
@@ -1220,12 +1230,12 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	// Check if chat is enabled
 	if ( Settings.Community.ChatEnable )	// Chat is enabled- accept/open a chat window.
 	{	
-		//ChatCore.OnED2KMessage( this, pPacket );
+		ChatCore.OnED2KMessage( this, pPacket );
 	}
 	else									// Chat is disabled- don't open a chat window. 
 	{	
 		CString sMessage;
-		//Read in message
+		// Read in message
 		if ( m_bEmUnicode )
 			sMessage = pPacket->ReadStringUTF8( nMessageLength );
 		else

@@ -26,6 +26,8 @@
 
 #include "Connection.h"
 
+class CEDPacket;
+class CEDClient;
 class CG2Packet;
 class CGProfile;
 class CChatFrame;
@@ -45,7 +47,8 @@ public:
 	GGUID		m_pGUID;
 public:
 	int			m_nState;
-	BOOL		m_bG2;
+	PROTOCOLID	m_nProtocol;
+	BOOL		m_bUnicode;		// ED2K Client in UTF-8 format
 	BOOL		m_bOld;
 	BOOL		m_bMustPush;
 	DWORD		m_tPushed;
@@ -61,6 +64,7 @@ public:
 	void			Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
+	void			OnED2KMessage(CEDPacket* pPacket);
 	virtual void	AttachTo(CConnection* pConnection);
 	BOOL			SendPush(BOOL bAutomatic);
 	BOOL			OnPush(GGUID* pGUID, CConnection* pConnection);
@@ -81,10 +85,15 @@ protected:
 	virtual BOOL	OnHeadersComplete();
 protected:
 	BOOL	ReadHandshake();
+	BOOL	ReadPacketsED2K();
+	BOOL	SendPacketsED2K();
 	BOOL	ReadText();
 	BOOL	ReadPackets();
 	void	PostOpenWindow();
 protected:
+
+	BOOL	SendChatMessage(CEDPacket* pPacket);
+	BOOL	OnChatMessage(CEDPacket* pPacket);
 	BOOL	OnEstablished();
 	BOOL	OnText(const CString& str);
 	BOOL	OnPacket(CG2Packet* pPacket);

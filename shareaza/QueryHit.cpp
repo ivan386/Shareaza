@@ -526,6 +526,9 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 			if ( pFirstHit ) pLastHit->m_pNext = pHit;
 			else pFirstHit = pHit;
 			pLastHit = pHit;
+
+			// Enable chat for ed2k hits
+			pHit->m_bChat = TRUE;
 			
 			pHit->m_pVendor = VendorCache.m_pED2K;
 			if ( ! pHit->ReadEDPacket( pPacket, pServer ) ) break;
@@ -552,6 +555,9 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 			else pFirstHit = pHit;
 			pLastHit = pHit;
 			
+			// Enable chat for ed2k hits
+			pHit->m_bChat = TRUE;
+
 			pHit->m_bED2K = TRUE;
 			pHit->m_pED2K = pHash;
 			pHit->m_pVendor = VendorCache.m_pED2K;
@@ -559,6 +565,9 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 			pHit->Resolve();
 		}
 	}
+
+	// Enable chat for ed2k hits
+	//pFirstHit->m_bChat = TRUE;
 	
 	// CheckBogus( pFirstHit );
 	

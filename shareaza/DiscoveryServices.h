@@ -78,9 +78,9 @@ protected:
 	void				AddDefaults();
 	int					ExecuteBootstraps(int nCount);
 	int					ExecuteWebCache();
-	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
 	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
+	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
 	BOOL				RequestWebCache(CDiscoveryService* pService, int nMode);
 	void				StopWebRequest();
 protected:

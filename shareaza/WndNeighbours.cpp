@@ -436,7 +436,7 @@ void CNeighboursWnd::OnNeighboursChat()
 			if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
 			{
 				ChatWindows.OpenPrivate( pNeighbour->m_bGUID ? &pNeighbour->m_pGUID : NULL,
-					&pNeighbour->m_pHost );
+					&pNeighbour->m_pHost, FALSE, pNeighbour->m_nProtocol );
 			}
 		}
 	}

@@ -489,7 +489,7 @@ void CBaseMatchWnd::OnSearchChat()
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
 		ChatWindows.OpenPrivate( &pHit->m_pClientID,
-			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TS_TRUE );
+			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TS_TRUE, pHit->m_nProtocol );
 	}
 }
 

@@ -81,6 +81,8 @@ public:
 	CUploadTransferED2K*	m_pUpload;
 	BOOL					m_bSeeking;
 	DWORD					m_nRunExCookie;
+
+	BOOL		m_bOpenChat;
 	
 // Operations
 public:
@@ -98,6 +100,7 @@ public:
 	CString	GetSourceURL();
 	void	WritePartStatus(CEDPacket* pPacket, CDownload* pDownload);
 	BOOL	SeekNewDownload(CDownloadSource* pExcept = NULL);
+	inline  void OpenChat() { m_bOpenChat = TRUE; }
 protected:
 	void	DeriveVersion();
 	BOOL	OnLoggedIn();

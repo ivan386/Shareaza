@@ -341,7 +341,10 @@ BOOL CUploadTransferED2K::OnRequestParts(CEDPacket* pPacket)
 		{
 			// Valid (or null) request
 			if ( nOffset[0][nRequest] < nOffset[1][nRequest] )
+			{
+				// Add non-null ranges to the list
 				AddRequest( nOffset[0][nRequest], nOffset[1][nRequest] - nOffset[0][nRequest] );
+			}
 		}
 		else
 		{

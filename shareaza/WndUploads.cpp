@@ -457,7 +457,7 @@ void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 {
 	Prepare();
 	
-	pCmdUI->Enable( Settings.Community.ChatEnable && ( m_bSelHttp || m_bSelSourceExtended ) );
+	pCmdUI->Enable( Settings.Community.ChatEnable ); //&& ( m_bSelHttp || m_bSelSourceExtended ) );
 }
 
 void CUploadsWnd::OnUploadsChat() 
@@ -470,7 +470,7 @@ void CUploadsWnd::OnUploadsChat()
 		
 		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
 		{
-			ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost );
+			ChatWindows.OpenPrivate( NULL, &pFile->GetActive()->m_pHost, FALSE, pFile->GetActive()->m_nProtocol );
 		}
 	}
 }

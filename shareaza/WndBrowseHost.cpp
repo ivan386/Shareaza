@@ -242,7 +242,7 @@ void CBrowseHostWnd::OnSearchChat()
 	if ( m_pBrowser != NULL )
 	{
 		ChatWindows.OpenPrivate( &m_pBrowser->m_pClientID,
-			&m_pBrowser->m_pAddress, m_pBrowser->m_nPort, m_pBrowser->m_bMustPush );
+			&m_pBrowser->m_pAddress, m_pBrowser->m_nPort, m_pBrowser->m_bMustPush, m_pBrowser->m_nProtocol );
 	}
 }
 

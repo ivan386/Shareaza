@@ -21,8 +21,11 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "ChatCore.h"
+#include "EDClient.h"
 #include "ChatSession.h"
+#include "ChatCore.h"
+#include "Buffer.h"
+
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -73,12 +76,15 @@ BOOL CChatCore::Check(CChatSession* pSession) const
 //////////////////////////////////////////////////////////////////////
 // CChatCore accept new connections
 
-void CChatCore::OnAccept(CConnection* pConnection)
+void CChatCore::OnAccept(CConnection* pConnection, PROTOCOLID nProtocol)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return;
 	
 	CChatSession* pSession = new CChatSession();
+
+	pSession->m_nProtocol = nProtocol;
+
 	pSession->AttachTo( pConnection );
 }
 
@@ -94,6 +100,71 @@ BOOL CChatCore::OnPush(GGUID* pGUID, CConnection* pConnection)
 	}
 	
 	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CChatCore ED2K chat handling
+
+void CChatCore::OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket)
+{
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return;
+	
+	CChatSession* pSession = FindSession(pClient);
+
+	pSession->OnED2KMessage( pPacket );
+}
+
+CChatSession* CChatCore::FindSession(CEDClient* pClient)
+{
+	CChatSession* pSession;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		pSession = GetNext( pos );
+
+		if ( ( ( ! pSession->m_bGUID ) || ( pSession->m_pGUID == pClient->m_pGUID ) ) &&
+			 ( pSession->m_pHost.sin_addr.S_un.S_addr == pClient->m_pHost.sin_addr.S_un.S_addr ) &&
+			 ( pSession->m_nProtocol == PROTOCOL_ED2K ) )
+
+		{
+
+			// Update details
+			pSession->m_bGUID		= pClient->m_bGUID;
+			pSession->m_pGUID		= pClient->m_pGUID;
+			pSession->m_pHost		= pClient->m_pHost;
+			pSession->m_sAddress	= pClient->m_sAddress;
+			pSession->m_sUserNick	= pClient->m_sNick;
+			pSession->m_sUserAgent	= pClient->m_sUserAgent;
+			pSession->m_bUnicode	= pClient->m_bEmUnicode;
+			return pSession;
+		}
+	}
+
+	pSession = new CChatSession();
+
+	Add( pSession );
+	pSession->m_hSocket		= INVALID_SOCKET;			// Should always remain invalid- has no real connection
+	pSession->m_nState		= cssActive;
+	pSession->m_bConnected	= TRUE;
+	pSession->m_tConnected	= GetTickCount();
+
+	// Set details
+	pSession->m_bGUID		= pClient->m_bGUID;
+	pSession->m_pGUID		= pClient->m_pGUID;
+	pSession->m_pHost		= pClient->m_pHost;
+	pSession->m_sAddress	= pClient->m_sAddress;
+	pSession->m_sUserNick	= pClient->m_sNick;
+	pSession->m_sUserAgent	= pClient->m_sUserAgent;
+	pSession->m_bUnicode	= pClient->m_bEmUnicode;
+	pSession->m_nProtocol	= PROTOCOL_ED2K;
+
+	// Make new input and output buffer objects
+	DWORD nLimit = 0;
+	pSession->m_pInput		= new CBuffer( &nLimit );
+	pSession->m_pOutput		= new CBuffer( &nLimit );
+
+	return pSession;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -25,6 +25,10 @@
 #include "ChatSession.h"
 #include "CtrlChatFrame.h"
 #include "CtrlPrivateChatFrame.h"
+#include "Buffer.h"
+#include "EDClient.h"
+#include "EDClients.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -114,7 +118,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush)
+CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol)
 {
 	SOCKADDR_IN pHost;
 	
@@ -122,12 +126,15 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WO
 	pHost.sin_addr		= *pAddress;
 	pHost.sin_port		= htons( nPort );
 	
-	return OpenPrivate( pGUID, &pHost, bMustPush );
+	return OpenPrivate( pGUID, &pHost, bMustPush, nProtocol );
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
+CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol)
 {
 	CPrivateChatFrame* pFrame = NULL;
+
+	if ( ( nProtocol == PROTOCOL_BT ) || ( nProtocol == PROTOCOL_FTP ) )
+		return NULL;
 	
 	if ( ! MyProfile.IsValid() )
 	{
@@ -143,17 +150,31 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 	
 	if ( pFrame == NULL )
 	{
+		if ( nProtocol == PROTOCOL_ED2K )
+		{
+			// Find (or create) an EDClient
+			CSingleLock pLock( &Transfers.m_pSection );
+			if ( ! pLock.Lock( 250 ) ) return NULL;
+			CEDClient* pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, NULL, 0, pGUID );
+			// Have it connect (if it isn't)
+			if ( ! pClient->m_bConnected ) pClient->Connect();
+			// Tell it to start a chat session as soon as it's able
+			pClient->OpenChat();
+			pLock.Unlock();
+			return NULL;
+		}
+
 		pFrame = new CPrivateChatFrame();
-		pFrame->Initiate( pGUID, pHost, bMustPush );
+		pFrame->Initiate( pGUID, pHost, bMustPush );	
 	}
-	
+
 	pFrame->PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
 	
 	CWnd* pParent = pFrame->GetParent();
 	if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
 	pParent->BringWindowToTop();
 	pParent->SetForegroundWindow();
-	
+
 	return pFrame;
 }
 

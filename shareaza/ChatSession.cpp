@@ -1,9 +1,9 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2004/11/17 14:41:17 $"
-//	Revision:		"$Revision: 1.7 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/01/06 04:04:05 $"
+//	Revision:		"$Revision: 1.8 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -26,13 +26,18 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "ChatCore.h"
-#include "ChatSession.h"
 #include "GProfile.h"
 #include "G2Packet.h"
+#include "EDPacket.h"
+#include "EDClient.h"
+#include "EDClients.h"
+#include "Transfers.h"
 #include "Network.h"
 #include "Buffer.h"
 #include "XML.h"
+
+#include "ChatCore.h"
+#include "ChatSession.h"
 
 #include "ChatWindows.h"
 #include "CtrlChatFrame.h"
@@ -57,7 +62,7 @@ CChatSession::CChatSession(CChatFrame* pFrame)
 	m_bGUID		= FALSE;
 	
 	m_nState	= cssNull;
-	m_bG2		= FALSE;
+	m_nProtocol = PROTOCOL_NULL;
 	m_bOld		= FALSE;
 	m_bMustPush	= FALSE;
 	m_tPushed	= 0;
@@ -110,10 +115,18 @@ void CChatSession::Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 
 BOOL CChatSession::Connect()
 {
-	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
+	CSingleLock pLock1( &ChatCore.m_pSection, TRUE );
+
+	// ED2K Clients have their connection controlled by ED2KClient. (One connection used for many things)
+	if ( m_nProtocol == PROTOCOL_ED2K ) 
+	{
+		return TRUE;
+	}
+		
 	
+	// If we are already connected/handshaking/connecting, don't try again.
 	if ( m_nState > cssNull ) return FALSE;
-	
+
 	if ( m_bMustPush )
 	{
 		if ( ! SendPush( FALSE ) )
@@ -149,14 +162,36 @@ TRISTATE CChatSession::GetConnectedState() const
 }
 
 //////////////////////////////////////////////////////////////////////
+// CChatSession handle an incoming ED2K Message
+
+void CChatSession::OnED2KMessage(CEDPacket* pPacket)
+{
+	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
+
+	// Open a window (if one is not already open)
+	PostOpenWindow();
+
+	// Put the packet into the input buffer so it can be 'recieved' (and displayed) later.
+	if ( pPacket && m_pInput ) pPacket->ToBuffer( m_pInput );
+
+	// If this client wasn't active, it is now.
+	if ( m_nState != cssActive )
+	{
+		StatusMessage( 2, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sUserNick );
+		m_nState = cssActive;
+		m_tConnected = GetTickCount();		
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
 // CChatSession attach to (accept) an incoming connection
 
 void CChatSession::AttachTo(CConnection* pConnection)
-{
+{	
 	CConnection::AttachTo( pConnection );
-	
+
 	m_nState = cssRequest1;
-	ChatCore.Add( this );
+	ChatCore.Add( this );	
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -165,6 +200,8 @@ void CChatSession::AttachTo(CConnection* pConnection)
 BOOL CChatSession::SendPush(BOOL bAutomatic)
 {
 	if ( ! m_bGUID ) return FALSE;
+
+	if ( m_nProtocol == PROTOCOL_ED2K ) return FALSE;
 	
 	if ( Network.SendPush( &m_pGUID, 0 ) )
 	{
@@ -187,6 +224,7 @@ BOOL CChatSession::OnPush(GGUID* pGUID, CConnection* pConnection)
 	if ( m_tPushed == 0 ) return FALSE;
 	if ( ! m_bGUID || m_pGUID != *pGUID ) return FALSE;
 	if ( m_nState > cssConnecting ) return FALSE;
+	if ( m_nProtocol == PROTOCOL_ED2K ) return FALSE;
 	
 	if ( m_nState > cssNull ) Close();
 	
@@ -204,6 +242,9 @@ BOOL CChatSession::OnPush(GGUID* pGUID, CConnection* pConnection)
 
 void CChatSession::Close()
 {
+	// ED2K Clients have their connection controlled by ED2KClient. 
+	if ( m_nProtocol == PROTOCOL_ED2K ) return;
+
 	CSingleLock pLock( &ChatCore.m_pSection );
 	pLock.Lock( 250 );
 	
@@ -224,22 +265,29 @@ void CChatSession::Close()
 
 BOOL CChatSession::OnConnected()
 {
-	CConnection::OnConnected();
-	
 	StatusMessage( 0, IDS_CHAT_CONNECTED );
-	
-	m_pOutput->Print( "CHAT CONNECT/0.2\r\n" );
-	m_pOutput->Print( "Accept: text/plain,application/x-gnutella2\r\n" );
-	m_pOutput->Print( "User-Agent: " );
-	m_pOutput->Print( Settings.SmartAgent( Settings.General.UserAgent ) );
-	m_pOutput->Print( "\r\n" );
-	if ( m_bInitiated ) SendMyAddress();
-	m_pOutput->Print( "\r\n" );
-	
-	m_nState		= cssRequest2;
-	m_tConnected	= GetTickCount();
-	
-	OnWrite();
+
+	if ( m_nProtocol == PROTOCOL_ED2K ) 
+	{
+		// ED2K connections aren't handled here- they are in ED2KClient
+	}
+	else
+	{
+		CConnection::OnConnected();
+
+		m_pOutput->Print( "CHAT CONNECT/0.2\r\n" );
+		m_pOutput->Print( "Accept: text/plain,application/x-gnutella2\r\n" );
+		m_pOutput->Print( "User-Agent: " );
+		m_pOutput->Print( Settings.SmartAgent( Settings.General.UserAgent ) );
+		m_pOutput->Print( "\r\n" );
+		if ( m_bInitiated ) SendMyAddress();
+		m_pOutput->Print( "\r\n" );
+		
+		m_nState		= cssRequest2;
+		m_tConnected	= GetTickCount();
+		
+		OnWrite();
+	}
 	
 	return TRUE;
 }
@@ -268,8 +316,14 @@ void CChatSession::OnDropped(BOOL bError)
 // CChatSession run handler
 
 BOOL CChatSession::OnRun()
-{
-	if ( m_nState > cssNull && m_nState < cssActive )
+{		
+	if ( m_nProtocol == PROTOCOL_ED2K )
+	{
+		// ed2k chat sessions don't have real connections, ED2K Client just puts the packets into
+		// the buffer.
+		return ( ReadPacketsED2K() && SendPacketsED2K() );
+	}
+	else if ( m_nState > cssNull && m_nState < cssActive )
 	{
 		DWORD nDelay = GetTickCount() - m_tConnected;
 		
@@ -281,7 +335,7 @@ BOOL CChatSession::OnRun()
 			return FALSE;
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -290,6 +344,9 @@ BOOL CChatSession::OnRun()
 
 BOOL CChatSession::OnRead()
 {
+	// ED2K connections aren't handled here, this shouldn't ever be called for ed2k sessions
+	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE; 
+
 	CConnection::OnRead();
 	
 	switch ( m_nState )
@@ -304,7 +361,7 @@ BOOL CChatSession::OnRead()
 		return ReadHeaders();
 	case cssHandshake:
 	case cssActive:
-		if ( m_bG2 )
+		if ( m_nProtocol == PROTOCOL_G2 )
 			return ReadPackets();
 		else
 			return ReadText();
@@ -319,7 +376,7 @@ BOOL CChatSession::OnRead()
 BOOL CChatSession::ReadHandshake()
 {
 	CString strLine;
-	
+
 	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 	
@@ -365,6 +422,8 @@ BOOL CChatSession::ReadHandshake()
 
 BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 {
+	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+
 	theApp.Message( MSG_DEBUG, _T("CHAT HEADER: %s: %s: %s"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
 	
@@ -374,7 +433,8 @@ BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
 	{
-		m_bG2 |= ( strValue.Find( _T("application/x-gnutella2") ) >= 0 );
+		if ( strValue.Find( _T("application/x-gnutella2") ) >= 0 )
+			m_nProtocol = PROTOCOL_G2;
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Nickname") ) == 0 )
 	{
@@ -406,7 +466,7 @@ BOOL CChatSession::OnHeadersComplete()
 	{
 		m_pOutput->Print( "CHAT/0.2 200 OK\r\n" );
 		
-		if ( m_bG2 )
+		if ( m_nProtocol == PROTOCOL_G2 )
 		{
 			m_pOutput->Print( "Accept: application/x-gnutella2\r\n" );
 			m_pOutput->Print( "Content-Type: application/x-gnutella2\r\n" );
@@ -454,9 +514,11 @@ BOOL CChatSession::OnHeadersComplete()
 
 BOOL CChatSession::OnEstablished()
 {
+	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+
 	m_tConnected = GetTickCount();
 	
-	if ( m_bG2 )
+	if (  m_nProtocol == PROTOCOL_G2  )
 	{
 		StatusMessage( 0, IDS_CHAT_HANDSHAKE_G2 );
 		Send( CG2Packet::New( G2_PACKET_PROFILE_CHALLENGE ) );
@@ -474,11 +536,185 @@ BOOL CChatSession::OnEstablished()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CChatSession ED2K packet interface
+
+// The ED2K packets are put into the input/output buffers, then handled by ReadPacketsED2K() and
+// SendPacketsED2K(). Those functions are called by the OnRun(), since there isn't a valid
+// connection/socket associated with an ED2K client chat session. (It's handled by the EDClient)
+
+BOOL CChatSession::ReadPacketsED2K()
+{
+	BOOL bSuccess = TRUE;
+	CEDPacket* pPacket;
+
+	ASSERT( m_pInput != NULL );
+	
+	while ( pPacket = CEDPacket::ReadBuffer( m_pInput, ED2K_PROTOCOL_EMULE ) )
+	{
+		try
+		{
+			// Note: This isn't a "real" packet parser. Message packets are simply dumped into 
+			// the input buffer by the EDClient, so all packets should be valid ED2K chat messages.
+			if ( ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY ) &&
+				( pPacket->m_nType == ED2K_C2C_MESSAGE ) )
+			{
+				bSuccess = OnChatMessage( pPacket );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, _T("Unrecognised packet type recieved during chat") );
+			}
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+			if ( ! m_bGUID ) bSuccess = FALSE;
+		}
+		
+		pPacket->Release();
+		if ( ! bSuccess ) break;
+	}
+	
+	return bSuccess;
+}
+
+BOOL CChatSession::SendPacketsED2K()
+{
+	CEDPacket* pPacket;
+
+	ASSERT( m_pOutput != NULL );
+
+	while ( pPacket = CEDPacket::ReadBuffer( m_pOutput, ED2K_PROTOCOL_EMULE ) )
+	{
+		ASSERT ( pPacket != NULL );
+
+		// Send the message to the appropriate ED2K Client
+		if ( SendChatMessage ( pPacket ) )
+		{
+			// Packet was sent (or exired and should be removed from the queue). 
+			// Release it and continue processing other packets.
+			pPacket->Release();
+		}
+		else
+		{
+			// The packet could not be sent. Either a lock couldn't be made, or the
+			// client is currently connecting.
+
+			// Put the packet back into the buffer until we are ready to deal with it
+			pPacket->ToBuffer( m_pOutput );
+			// We're done with the packet (for now), so release it.
+			pPacket->Release();
+			// Exit this function now. We can't do anything futher, so would get stuck in a loop
+			return TRUE;
+		}
+	}
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CChatSession ED2K packet handlers
+
+BOOL CChatSession::SendChatMessage(CEDPacket* pPacket)
+{
+	// Lock the transfers while we send a message (We need the EDClient)
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
+	// Try to find an ed2k client
+	CEDClient* pClient = EDClients.GetByIP( &m_pHost.sin_addr );
+
+	if ( ( pClient ) && ( pClient->m_pGUID == m_pGUID ) )	// Found a client
+	{	
+		
+		if ( pClient->IsOnline() )	// We found a client that's ready to go
+		{	
+
+			// If this client wasn't active, it is now.
+			if ( m_nState != cssActive )
+			{
+				StatusMessage( 2, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sUserNick );
+				m_nState = cssActive;
+				m_tConnected = GetTickCount();		
+			}
+				
+			// Send the packet to the ed2k client, and report the packet should be removed
+			pClient->Send ( pPacket, FALSE );
+			return TRUE;
+		}
+		else if ( ( m_nState != cssConnecting ) && ( pClient->Connect() ) )	// We found a client we need to connect to
+		{	
+			// Set the 'connection' state while we wait for EDClient to do it's job
+			m_nState = cssConnecting;
+			m_tConnected = GetTickCount();	
+			StatusMessage( 0, IDS_CHAT_CONNECTING_TO, (LPCTSTR)pClient->m_sAddress );
+			// Return false to out the packet back into the buffer until we're ready to send it
+			return FALSE;
+		}
+		else							
+		{	// We found a client but couldn't start a connection.
+
+			if ( m_nState == cssConnecting )		// If we are connecting
+			{
+				// Check time-out
+				if ( ( GetTickCount() - m_tConnected ) >= Settings.Connection.TimeoutConnect )
+				{
+					// We've timed out. Display an error and drop the message
+					StatusMessage( 1, IDS_CHAT_CANT_CONNECT, (LPCTSTR)pClient->m_sAddress );
+					m_nState = cssNull;
+					return TRUE;
+				}
+				else
+				{
+					// Waiting to connect. Put the packet back into the buffer and try later.
+					return FALSE;
+				}
+			}
+			else									// We can't connect
+			{
+				// There is a problem.  Inform the user and drop the message.
+				StatusMessage( 1, IDS_CHAT_CANT_CONNECT, (LPCTSTR)pClient->m_sAddress );
+				m_nState = cssNull;
+				return TRUE;
+			}
+		}					
+	}
+	else // We don't seem to have a client that matches. 	
+	{	
+		// Inform the user and drop the message.
+		StatusMessage( 1, IDS_CHAT_DROPPED );
+		m_nState = cssNull;
+		return TRUE;
+	}
+}
+
+BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
+{
+	DWORD nMessageLength;
+	CString sMessage;
+
+	// Note: The message packet has already been validated by the EDClient.
+
+	// Read message length
+	nMessageLength = pPacket->ReadShortLE();
+
+	// Read in message
+	if ( m_bUnicode )
+		sMessage = pPacket->ReadStringUTF8( nMessageLength );
+	else
+		sMessage = pPacket->ReadString( nMessageLength );
+
+	// Display message
+	if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnRemoteMessage( FALSE, sMessage.GetBuffer() );
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CChatSession text interface
 
 void CChatSession::Print(LPCTSTR pszString)
 {
-	ASSERT( ! m_bG2 );
+	ASSERT( m_nProtocol != PROTOCOL_G2  );
 	ASSERT( m_nState >= cssHandshake );
 	
 	m_pOutput->Print( pszString );
@@ -540,7 +776,7 @@ BOOL CChatSession::OnText(const CString& str)
 
 void CChatSession::Send(CG2Packet* pPacket, BOOL bRelease)
 {
-	ASSERT( m_bG2 );
+	ASSERT( m_nProtocol == PROTOCOL_G2 );
 	ASSERT( pPacket != NULL );
 	ASSERT( m_nState >= cssHandshake );
 	
@@ -853,8 +1089,8 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
 	
 	if ( m_nState != cssActive ) return FALSE;
-	
-	if ( m_bG2 )
+
+	if ( m_nProtocol == PROTOCOL_G2 )
 	{
 		CG2Packet* pPacket = CG2Packet::New( "CMSG", TRUE );
 		
@@ -865,8 +1101,38 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 		
 		Send( pPacket, TRUE );
 	}
+	else if ( m_nProtocol == PROTOCOL_ED2K )
+	{
+		// Limit outgoing ed2k messages to 400 characters
+		CString strMessage = pszText;
+		strMessage = strMessage.Left( 400 );
+
+		// Create an ed2k packet holding the message
+		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_MESSAGE, ED2K_PROTOCOL_EDONKEY );
+
+		if ( m_bUnicode )
+		{
+			pPacket->WriteShortLE( pPacket->GetStringLenUTF8( pszText ) );
+			pPacket->WriteStringUTF8( pszText, FALSE );
+		}
+		else
+		{
+			pPacket->WriteShortLE( pPacket->GetStringLen( strMessage ) );
+			pPacket->WriteString( strMessage, FALSE );
+		}
+
+		// A few asserts for debug purposes
+		ASSERT( m_nProtocol == PROTOCOL_ED2K );
+		ASSERT( pPacket != NULL );
+		ASSERT( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY );
+
+		// Put the packet into the output buffer
+		pPacket->ToBuffer( m_pOutput );
+		pPacket->Release();
+	}
 	else
 	{
+
 		CString str;
 		
 		if ( ! m_bOld ) str += _T("MESSAGE ");
@@ -973,7 +1239,13 @@ void CChatSession::OnCloseWindow()
 {
 	m_pWndPrivate = NULL;
 	m_pWndPublic = NULL;
-	
+
 	Close();
+
+	if ( m_nProtocol ==  PROTOCOL_ED2K )
+	{
+		if ( m_pProfile != NULL ) delete m_pProfile;
+		delete this;
+	}
 }
 

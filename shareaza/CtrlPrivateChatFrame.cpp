@@ -178,16 +178,15 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 	
 	if ( bConnected != TS_TRUE )
 	{
-		if ( bConnected == TS_FALSE )
+		if ( ( m_pSession->m_nProtocol == PROTOCOL_ED2K ) || ( bConnected != TS_FALSE ) )
+		{
+			m_pSession->StatusMessage( 1, IDS_CHAT_NOT_CONNECTED_2 );
+		}
+		else
 		{
 			m_pSession->StatusMessage( 1, IDS_CHAT_NOT_CONNECTED_1 );
 			PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
 		}
-		else
-		{
-			m_pSession->StatusMessage( 1, IDS_CHAT_NOT_CONNECTED_2 );
-		}
-		
 		return;
 	}
 	

@@ -106,9 +106,11 @@ int CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 	return nCount;
 }
 
+//////////////////////////////////////////////////////////////////////
+// CDiscoveryServices Check we have the minimum number of services
 
 BOOL CDiscoveryServices::EnoughServices() const
-{	//Check we have the minimum number of services
+{
 	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
 	int nG1Count = 0, nG2Count = 0;					// Protocols
 	
@@ -503,11 +505,12 @@ BOOL CDiscoveryServices::Update()
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute
 
+// Called when trying to connect to a network. Makes sure you have hosts available to connect to.
+// Be very careful not to be agressive here. Should never query server.met files, because of the
+// load it could create.
+
 BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 {
-//********** Debug stuff- remove
-theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::Execute") );
-//********
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
@@ -523,11 +526,11 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::Execute") );
 	}
 	
 	m_tExecute = time( NULL );
-	int nCount = 0;
+	int nCount;
 	
 	if ( ! bSecondary ) // If this is a manual or 'on connect' query
 	{
-		nCount += ExecuteBootstraps( Settings.Discovery.BootstrapCount );
+		nCount = ExecuteBootstraps( Settings.Discovery.BootstrapCount );
 		
 		if ( Settings.Gnutella2.EnableToday && HostCache.Gnutella2.CountHosts() < 20 )
 		{	// Query a G2 service if G2 is enabled and we don't have enough G2 hosts
@@ -554,7 +557,7 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::Execute") );
 	}
 	else				// A general request. (We have to be careful not to be too agressive here.)
 	{
-		nCount += ExecuteWebCache();
+		nCount = ExecuteWebCache();
 	}
 	
 	return nCount > 0;
@@ -566,7 +569,7 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::Execute") );
 BOOL CDiscoveryServices::ExecuteDonkey()
 {
 	// Warning: This function will query all known MET files until a working one is found.
-	// Be very careful where this is called!
+	// Be very careful where this is called! (Quickstart Wizard only))
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
@@ -632,6 +635,9 @@ void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* pAddress)
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute a random webcache service
 
+// Called by Execute() when trying to connect to a network. 
+// Should only query G1/G2  webcaches, not ed2k server.met files
+
 int CDiscoveryServices::ExecuteWebCache()
 {
 //********** Debug stuff- remove
@@ -642,20 +648,20 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::ExecuteWebCache") );
 	if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )	// G1 + G2 are active
 	{
 		// Select which protocol should be requested
-		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) || ( HostCache.Gnutella2.CountHosts() < HostCache.Gnutella1.CountHosts() ) )
+		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) || ( HostCache.Gnutella2.CountHosts() <= HostCache.Gnutella1.CountHosts() ) )
 			nProtocol = PROTOCOL_G2;
 		else
 			nProtocol = PROTOCOL_G1;
 	}
-	else if ( Settings.Gnutella2.EnableToday )	// Only G2
+	else if ( Settings.Gnutella2.EnableToday )								// Only G2
 	{
 		nProtocol = PROTOCOL_G2;	
 	}
-	else if ( Settings.Gnutella1.EnableToday )	// Only G1
+	else if ( Settings.Gnutella1.EnableToday )								// Only G1
 	{
 		nProtocol = PROTOCOL_G1;	
 	}
-	else 										// No webcache access needed
+	else 															// No webcache access needed
 	{
 		return 0;
 	}
@@ -665,7 +671,98 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::ExecuteWebCache") );
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDiscoveryServices select a random webcache
+// CDiscoveryServices RequestRandomService
+
+// Execute a random service (of any type) for any given protocol. Used to find more
+// hosts (to connect to a network).
+
+BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
+{
+
+
+//********** Debug stuff- remove
+if ( nProtocol == PROTOCOL_G2 ) theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService (G2)") );
+else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService") );
+//********
+
+	CSingleLock pLock( &Network.m_pSection );	// Note: This shouldn't be necessary, since the
+	if ( ! pLock.Lock( 250 ) ) return FALSE;	// calling functions should lock...
+
+	CDiscoveryService* pService = GetRandomService( nProtocol );
+		
+	if ( pService )
+	{
+		theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_QUERY, (LPCTSTR)pService->m_sAddress );
+		m_nLastQueryProtocol = nProtocol;
+
+		if ( pService->m_nType == CDiscoveryService::dsServerMet )
+		{
+			if ( RequestWebCache( pService, wcmServerMet ) ) return TRUE;
+		}
+		else
+		{
+			if ( RequestWebCache( pService, wcmHosts ) ) return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDiscoveryServices GetRandomService 
+
+// Selects a random discovery service of any type for any given protocol. Called by 
+// RequestRandomService(), and used when finding more hosts (to connect to a network).
+
+CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
+{
+	CPtrArray pServices;
+	DWORD tNow = time( NULL );
+
+	// Loops through all services
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDiscoveryService* pService = GetNext( pos );
+
+		// If this one hasn't been recently accessed
+		if ( tNow - pService->m_tAccessed > pService->m_nAccessPeriod )
+		{
+			// Then add it to the possible list (if it's of the right sort)
+			switch ( nProtocol )
+			{
+				case PROTOCOL_G1:
+					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) )
+						pServices.Add( pService );
+					break;
+				case PROTOCOL_G2:
+					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) )
+						pServices.Add( pService );
+					break;
+				case PROTOCOL_ED2K:
+					if ( pService->m_nType == CDiscoveryService::dsServerMet )
+						pServices.Add( pService );
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	// Select a random service from the list of possible ones.
+	if ( pServices.GetSize() > 0 )	// If the list of possible ones isn't empty
+	{
+		// return a random service
+		srand( GetTickCount() );
+		return (CDiscoveryService*)pServices.GetAt( rand() % pServices.GetSize() );
+	}
+	else							// else (No services available)
+	{
+		// return NULL to indicate none available
+		return NULL;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDiscoveryServices select a random webcache (For updates, etc)
 
 CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude, BOOL bForUpdate)
 {	// Select a random webcache (G1/G2 only)
@@ -719,91 +816,6 @@ else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::GetRandomWebCache") );
 	else
 	{
 		// return null to indicate none available
-		return NULL;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices RequestRandomService
-
-BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
-{	// Execute a random service (of any type) for any given protocol
-
-
-//********** Debug stuff- remove
-if ( nProtocol == PROTOCOL_G2 ) theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService (G2)") );
-else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService") );
-//********
-
-	CSingleLock pLock( &Network.m_pSection );	// Note: This shouldn't be necessary, since the
-	if ( ! pLock.Lock( 250 ) ) return FALSE;	// calling functions should lock...
-
-	CDiscoveryService* pService = GetRandomService( nProtocol );
-		
-	if ( pService )
-	{
-		theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_QUERY, (LPCTSTR)pService->m_sAddress );
-		m_nLastQueryProtocol = nProtocol;
-
-		if ( pService->m_nType == CDiscoveryService::dsServerMet )
-		{
-			if ( RequestWebCache( pService, wcmServerMet ) ) return TRUE;
-		}
-		else
-		{
-			if ( RequestWebCache( pService, wcmHosts ) ) return TRUE;
-		}
-	}
-	return FALSE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices GetRandomService 
-
-CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
-{	// Select a random discovery service of any type for any given protocol
-	CPtrArray pServices;
-	DWORD tNow = time( NULL );
-
-	// Loops through all services
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CDiscoveryService* pService = GetNext( pos );
-
-		// If this one hasn't been recently accessed
-		if ( tNow - pService->m_tAccessed > pService->m_nAccessPeriod )
-		{
-			// Then add it to the possible list (if it's of the right sort)
-			switch ( nProtocol )
-			{
-				case PROTOCOL_G1:
-					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella1 ) )
-						pServices.Add( pService );
-					break;
-				case PROTOCOL_G2:
-					if ( ( pService->m_nType == CDiscoveryService::dsWebCache ) && ( pService->m_bGnutella2 ) )
-						pServices.Add( pService );
-					break;
-				case PROTOCOL_ED2K:
-					if ( pService->m_nType == CDiscoveryService::dsServerMet )
-						pServices.Add( pService );
-					break;
-				default:
-					break;
-			}
-		}
-	}
-
-	// Select a random service from the list of possible ones.
-	if ( pServices.GetSize() > 0 )	// If the list of possible ones isn't empty
-	{
-		// return a random service
-		srand( GetTickCount() );
-		return (CDiscoveryService*)pServices.GetAt( rand() % pServices.GetSize() );
-	}
-	else							// else (No services available)
-	{
-		// return NULL to indicate none available
 		return NULL;
 	}
 }

@@ -24,6 +24,8 @@
 #include "Settings.h"
 #include "CtrlChatFrame.h"
 #include "RichElement.h"
+#include "EDClients.h"
+#include "EDPacket.h"
 #include "ChatWindows.h"
 #include "ChatCore.h"
 #include "ChatSession.h"
@@ -517,7 +519,7 @@ void CChatFrame::OnChatTimestamp()
 
 void CChatFrame::OnUpdateChatConnect(CCmdUI* pCmdUI) 
 {
-	BOOL bState = m_pSession != NULL && m_pSession->GetConnectedState() == TS_FALSE;
+	BOOL bState = ( ( m_pSession != NULL ) && ( m_pSession->GetConnectedState() == TS_FALSE ) );
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) ) pItem->Show( bState );
 	pCmdUI->Enable( bState );
 }
@@ -536,7 +538,9 @@ void CChatFrame::OnChatConnect()
 
 void CChatFrame::OnUpdateChatDisconnect(CCmdUI* pCmdUI) 
 {
-	BOOL bState = m_pSession != NULL && m_pSession->GetConnectedState() != TS_FALSE;
+	BOOL bState = ( m_pSession != NULL ) && 
+				  ( m_pSession->GetConnectedState() != TS_FALSE ) &&
+				  ( m_pSession->m_nProtocol != PROTOCOL_ED2K );
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) ) pItem->Show( bState );
 	pCmdUI->Enable( bState );
 }
