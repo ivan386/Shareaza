@@ -271,35 +271,39 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	if ( nSpeed > 256 && theApp.m_bNT && !theApp.m_bLimitedConnections )
 	{
-		Settings.Downloads.MaxFiles			= 32;
-		Settings.Downloads.MaxTransfers		= 128;
-		Settings.Downloads.MaxFileTransfers	= 8;
+		Settings.Downloads.MaxFiles				= 32;
+		Settings.Downloads.MaxTransfers			= 128;
+		Settings.Downloads.MaxFileTransfers		= 8;
+		Settings.Downloads.MaxConnectingSources	= 40;
 	}
 	else if ( nSpeed > 80 && theApp.m_bNT )
 	{
-		Settings.Downloads.MaxFiles			= 16;
-		Settings.Downloads.MaxTransfers		= 64;
-		Settings.Downloads.MaxFileTransfers	= 6;
+		Settings.Downloads.MaxFiles				= 16;
+		Settings.Downloads.MaxTransfers			= 64;
+		Settings.Downloads.MaxFileTransfers		= 6;
+		Settings.Downloads.MaxConnectingSources	= 30;
 	}
 	else
 	{
-		Settings.Downloads.MaxFiles			= 8;
-		Settings.Downloads.MaxTransfers		= 32;
-		Settings.Downloads.MaxFileTransfers	= 4;
+		Settings.Downloads.MaxFiles				= 8;
+		Settings.Downloads.MaxTransfers			= 32;
+		Settings.Downloads.MaxFileTransfers		= 4;
+		Settings.Downloads.MaxConnectingSources	= 20;
 	}
 	
 	UploadQueues.CreateDefault();
 
 	if ( theApp.m_bLimitedConnections ) 
 	{	//Window XP Service Pack 2
-		theApp.Message( MSG_ERROR, _T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced.") );
-		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 2000 );
+		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
+		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 1000 );
 		Settings.Gnutella.ConnectFactor			= min( Settings.Downloads.ConnectThrottle, 2 );
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;
 		Settings.Gnutella1.EnableToday			= FALSE;
 		Settings.Downloads.MaxFileSearches		= 1;
-		//Settings.Connection.TimeoutConnect		= 30000;
+		Settings.Downloads.MaxConnectingSources	= 8;
+		Settings.Connection.TimeoutConnect		= 30000;
 		Settings.Connection.TimeoutHandshake	= 60000;
 		Settings.Connection.RequireForTransfers	= TRUE;
 
