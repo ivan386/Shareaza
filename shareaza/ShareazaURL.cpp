@@ -405,6 +405,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	CString strURL( pszURL ), strPart;
 	int nSep;
 	
+	// Name
 	nSep = strURL.Find( '|' );
 	if ( nSep < 0 ) return FALSE;
 	strPart	= strURL.Left( nSep );
@@ -414,6 +415,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	SafeString( m_sName );
 	if ( m_sName.IsEmpty() ) return FALSE;
 	
+	// Size
 	nSep = strURL.Find( '|' );
 	if ( nSep < 0 ) return FALSE;
 	strPart	= strURL.Left( nSep );
@@ -422,19 +424,58 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	if ( _stscanf( strPart, _T("%I64i"), &m_nSize ) != 1 ) return FALSE;
 	m_bSize = TRUE;
 	
+	// Hash
 	nSep = strURL.Find( '|' );
 	if ( nSep < 0 ) return FALSE;
 	strPart	= strURL.Left( nSep );
 	strURL	= strURL.Mid( nSep + 1 );
 	
 	m_bED2K = CED2K::HashFromString( strPart, &m_pED2K );
-	
+
+	// URL is valid
 	m_nAction = uriDownload;
+
+	// AICH hash (if present)
+	nSep = strURL.Find( '|' );
+	if ( nSep < 0 ) return TRUE;
+	if ( nSep > 32 )
+	{
+		strPart	= strURL.Left( nSep );
+		strURL	= strURL.Mid( nSep + 1 );
+
+		// Read AICH hash here
+
+		nSep = strURL.Find( '|' );
+		if ( nSep < 0 ) return TRUE;
+	}
+
+	// Source (Starts with |/|sources,
+	strPart	= strURL.Left( nSep );
+	strURL	= strURL.Mid( nSep + 1 );
+	if ( nSep != 1 ) return TRUE;
+	if ( strPart != _T("/") ) return TRUE;
+
+	nSep = strURL.Find( ',' );
+	if ( nSep < 0 ) return TRUE;
+	strPart	= strURL.Left( nSep );
+	strURL	= strURL.Mid( nSep + 1 );
+
+	if ( _tcsncmp( strPart, _T("sources"), 7 ) != 0 ) return TRUE;
+
+	nSep = strURL.Find( '|' );
+	if ( nSep < 0 ) return TRUE;
+	strPart	= strURL.Left( nSep );
+	strURL	= strURL.Mid( nSep + 1 );
+
+	// Now we have the source in x.x.x.x:port format
+	// theApp.Message(MSG_DEFAULT, strPart);
+
 	
 	return TRUE;
 }
 
 // ed2k://|file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370|/
+// ed2k://|file|Shareaza_2.1.0.0.exe|3304944|A63D221505E99043B7E7308C67F81986|h=XY5FGKFVGJFYWMOBR5XS44YCEPXSL2JZ|/|sources,1.2.3.4:5555|/
 
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse eDonkey2000 server URL
