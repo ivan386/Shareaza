@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,1
- PRODUCTVERSION 2,0,0,1
+ FILEVERSION 2,0,0,4
+ PRODUCTVERSION 2,0,0,4
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 1"
+            VALUE "FileVersion", "2, 0, 0, 4"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 1"
+            VALUE "ProductVersion", "2, 0, 0, 4"
         END
     END
     BLOCK "VarFileInfo"
@@ -4580,6 +4580,7 @@ BEGIN
     IDS_SEARCH_ACTIVE       "Shareaza is actively searching the network..."
     IDS_SEARCH_CLEAR_PREVIOUS 
                             "You are about to start a new search.  Would you like to clear the results of your previous search?"
+    IDS_SEARCH_PANEL_SEARCHING "Searching..."
 END
 
 STRINGTABLE 
@@ -4710,8 +4711,6 @@ END
 STRINGTABLE 
 BEGIN
     IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
-    IDS_NETWORK_CHANGE_AGENT 
-                            "Changing the user agent string is strongly discouraged, and may interfere with the formation of an efficient network structure.  Please do not change it without very good reason.  Are you sure you want to change it?"
     IDS_NETWORK_FORCE_HUB   "Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"
     IDS_NETWORK_DISABLE_G1  "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"
     IDS_NETWORK_DISABLE_G2  "Gnutella2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"
