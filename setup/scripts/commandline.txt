@@ -3,7 +3,7 @@ Setup and repair command-line parameters:
 
 /SILENT						automatic mode
 /VERYSILENT					hidden mode
-/LOG						create logfile in user's TEMP folder
+/LOG="[path\filename]"				create logfile in specified folder
 /NOCANCEL					disable cancel button
 /NORESTART					do not reboot
 /RESTARTEXITCODE=[exit code]			exit code if reboot needed
@@ -24,7 +24,7 @@ Uninstall command-line parameters:
 
 /SILENT						automatic mode
 /VERYSILENT					hidden mode
-/LOG						create logfile in user's TEMP folder
+/LOG="[path\filename]"				create logfile in specified folder
 
 example ini file:
 
