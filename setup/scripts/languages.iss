@@ -153,6 +153,7 @@ icons_license=License
 icons_uninstall=Uninstall
 icons_downloads=Downloads
 dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -170,6 +171,7 @@ nl.icons_license=Gebruiksovereenkomst
 nl.icons_uninstall=Verwijderen
 nl.icons_downloads=Downloads
 nl.dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installatie verder kan gaan?
+nl.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -187,6 +189,7 @@ lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Pağalinti
 lt.icons_downloads=Atsisiuntimai
 lt.dialog_shutdown=„%1“ ğiuo metu dirba. Ar norite nutraukti „%1“ darbà, tam kad bûtø galima tæsti ádiegimà?
+lt.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -204,6 +207,7 @@ de.icons_license=Lizenz
 de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
 de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren?
+de.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Peles
@@ -221,6 +225,7 @@ pt.icons_license=Licença
 pt.icons_uninstall=Desintalar
 pt.icons_downloads=Downloads
 pt.dialog_shutdown=O %1 está sendo executado. Você gostaria que o %1 fosse fechado para que a instalação continue?
+pt.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -238,6 +243,7 @@ it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
 it.dialog_shutdown=%1 è attualmente in esecuzione. Vuoi che %1 sia chiuso così l'installazione può continuare?
+it.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -255,6 +261,7 @@ no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
 no.dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
+no.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
@@ -272,6 +279,7 @@ af.icons_license=Lisensie-ooreenkoms
 af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
 af.dialog_shutdown=%1 is op die oomblik besig om te loop. Wil jy graag %1 sluit sodat die installasie kan voortgaan?
+af.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
@@ -289,6 +297,7 @@ br.icons_license=Licença
 br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 br.dialog_shutdown=Você deseja fechar o %1?
+br.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
@@ -306,6 +315,7 @@ fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
 fr.dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre?
+fr.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -323,6 +333,7 @@ es.icons_license=Licencia
 es.icons_uninstall=Desinstalar
 es.icons_downloads=Descargas
 es.dialog_shutdown=%1 se encuentra ejecutándose. ¿Deseas que %1 sea cerrado para que la instalación pueda continuar?
+es.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóğêè
@@ -340,6 +351,7 @@ ru.icons_license=Ëèöåíçèÿ
 ru.icons_uninstall=Äåèíñòàëëÿöèÿ
 ru.icons_downloads=Çàãğóçêè
 ru.dialog_shutdown=%1 â äàííûé ìîìåíò ğàáîòàåò. Õîòèòå ëè çàâåğøèòü ğàáîòó %1, ÷òîáû ïğîäîëæèòü óñòàíîâêó?
+ru.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
@@ -357,6 +369,7 @@ gr.icons_license=¢äåéá
 gr.icons_uninstall=ÁğåãêáôÜóôáóç
 gr.icons_downloads=Êáôİâáóìá
 gr.dialog_shutdown=Ôï %1 áêüìá ôñİ÷åé. Èİëåôå íá ôåñìáôßóåôå ôçí ëåéôïõñãåßá ôïõ %1 ãéá íá óõíå÷éóôåß ç åãêáôÜóôáóç?
+gr.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Hungarian
 hu.components_plugins=Pluginek
 hu.components_skins=Kinézetek
@@ -374,6 +387,7 @@ hu.icons_license=Licensz
 hu.icons_uninstall=Törlés
 hu.icons_downloads=Letöltések
 hu.dialog_shutdown=A %1 jelenleg fut. Be akarod zárni a programot, hogy a telepítés folytatódhasson?
+hu.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Chinese Simp
 chs.components_plugins=²å¼ş
 chs.components_skins=Æ¤·ô
@@ -391,6 +405,7 @@ chs.icons_license=Ğí¿É
 chs.icons_uninstall=Ğ¶ÔØ
 chs.icons_downloads=ÏÂÔØ
 chs.dialog_shutdown=%1 ÕıÔÚÔËĞĞ¡£ÄúÏ£Íû¹Ø±Õ %1 ÒÔ±ã¼ÌĞø°²×°Âğ£¿
+chs.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 ; Swedish
 sv.components_skins=Skinn
 sv.components_languages=Språk
@@ -407,3 +422,4 @@ sv.icons_license=Licens
 sv.icons_uninstall=Avinstallera
 sv.icons_downloads=Nedladdningar
 sv.dialog_shutdown=%1 körs för tillfället. Vill du att %1 ska stängas ned så att installationen kan fortsätta?
+sv.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
