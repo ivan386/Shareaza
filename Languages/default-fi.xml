@@ -353,7 +353,7 @@
                <separator/>
                <button id="ID_BROWSE_LAUNCH" text="Selaa käyttäjää"/>
                <button id="ID_NEIGHBOURS_CHAT" text="Keskustele käyttäjän kanssa"/>
-               <button id="ID_SECURITY_BAN" text="Ban Host"/>
+               <button id="ID_SECURITY_BAN" text="Torju käyttäjä"/>
                <rightAlign/>
                <button id="ID_NETWORK_G2" text="Gnutella2"/>
                <button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
@@ -493,7 +493,7 @@
                        <item id="ID_TAB_TRANSFERS" text="_Siirrot"/>
                        <item id="ID_TAB_NETWORK" text="_Verkko"/>
                        <separator/>
-                       <item id="ID_VIEW_SECURITY" text="_Turavallisuus"/>
+                       <item id="ID_VIEW_SECURITY" text="_Turvallisuus"/>
                        <item id="ID_VIEW_HOSTS" text="_Välityspalvelimet"/>
                        <separator/>
                        <menu text="A_dvanced">
@@ -781,7 +781,7 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-       <menu text="_Web Services">
+       <menu text="_Web palvelut">
        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <item id="ID_SEARCH_COPY" text="Kopioi _URL..."/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
@@ -804,7 +804,7 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
@@ -848,7 +848,7 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
@@ -874,7 +874,7 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
@@ -1067,7 +1067,7 @@
                <separator/>
                <item id="ID_LIBRARY_DELETE" text="_Poista"/>
                <separator/>
-               <menu text="S_earch For">
+               <menu text="_Hae">
                        <item id="ID_SEARCH_FOR_THIS" text="Tämä tiedosto"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia tiedostoja"/>
                        <separator/>
@@ -1075,14 +1075,14 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Lataa Meta-tiedot"/>
                        <separator/>
                        <item id="ID_LIBRARY_URL" text=""/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
-               <menu text="O_rganise">
+               <menu text="_Järjestele">
                        <item id="ID_LIBRARY_RENAME" text="_Nimeä tiedosto"/>
                        <item id="ID_LIBRARY_MOVE" text="_Siirrä tiedostot..."/>
                        <item id="ID_LIBRARY_COPY" text="_Kopioi tiedostot..."/>
@@ -1099,7 +1099,7 @@
                <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="_Poista"/>
                <separator/>
-               <menu text="S_earch For">
+               <menu text="_Hae">
                        <item id="ID_SEARCH_FOR_THIS" text="Tämä tiedosto"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia tiedostoja"/>
                        <separator/>
@@ -1107,14 +1107,14 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
                        <separator/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                        <item id="ID_LIBRARY_CREATETORRENT" text="Luo torrent tiedosto"/>
                </menu>
-               <menu text="O_rganise">
+               <menu text="_Järjestele">
                        <item id="ID_LIBRARY_RENAME" text="_Nimeä tiedosto"/>
                        <item id="ID_LIBRARY_MOVE" text="_Siirrä tiedostot..."/>
                        <item id="ID_LIBRARY_COPY" text="_Kopioi tiedostot..."/>
@@ -1133,7 +1133,7 @@
                <separator/>
                <item id="ID_LIBRARY_DELETE" text="_Poista"/>
                <separator/>
-               <menu text="S_earch For">
+               <menu text="_Hae">
                        <item id="ID_SEARCH_FOR_THIS" text="Tämä tiedosto"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia tiedostoja"/>
                        <separator/>
@@ -1141,14 +1141,14 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
                        <separator/>
                        <item id="ID_LIBRARY_URL" text=""/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
-               <menu text="O_rganise">
+               <menu text="_Järjestele">
                        <item id="ID_LIBRARY_RENAME" text="_Nimeä tiedosto"/>
                        <item id="ID_LIBRARY_UNLINK" text="_Poista tiedosto"/>
                        <separator/>
@@ -1167,7 +1167,7 @@
                <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="_Poista"/>
                <separator/>
-               <menu text="S_earch For">
+               <menu text="_Hae">
                        <item id="ID_SEARCH_FOR_THIS" text="Tämä tiedosto"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Samankaltaisia tiedostoja"/>
                        <separator/>
@@ -1175,14 +1175,14 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Musiikkia samasta albumista"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Jaksoja samasta sarjasta"/>
                </menu>
-               <menu text="_Web Services">
+               <menu text="_Web palvelut">
                        <item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
                        <separator/>
                        <item id="ID_LIBRARY_CREATETORRENT" text="Luo torrent tiedosto"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
-               <menu text="O_rganise">
+               <menu text="_Järjestele">
                        <item id="ID_LIBRARY_UNLINK" text="_Poista tiedosto"/>
                        <separator/>
                        <item id="ID_LIBRARY_RENAME" text="_Nimeä tiedosto"/>
@@ -1205,7 +1205,7 @@
                <menu text="Soittolista">
                        <item id="ID_MEDIA_PREVIOUS" text="_Edellinen"/>
                        <item id="ID_MEDIA_NEXT" text="_Seuraava"/>
-                       <item id="ID_MEDIA_RANDOM" text="_Random"/>
+                       <item id="ID_MEDIA_RANDOM" text="_Satunnais toisto"/>
                        <item id="ID_MEDIA_REPEAT" text="_Jatkuva toisto"/>
                        <separator/>
                        <item id="ID_MEDIA_PLAYLIST" text="Näytä _soittolista"/>
@@ -1341,7 +1341,7 @@
                <item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
                <separator/>
                <item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
-               <item id="ID_SEARCHMONITOR_CLEAR" text="_Pyyhi puskuri"/>
+               <item id="ID_SEARCHMONITOR_CLEAR" text="_Pyyhi puskurimuisti"/>
        </menu>
        <!-- GRAPH/TRAFFIC WINDOW -->
        <menu name="CTrafficWnd">
@@ -1712,7 +1712,7 @@
                        </style>
                </styles>
 
-               <text format="b">Tervetuloa Shareaza:n asetuksiin</text>
+               <text format="b">Tervetuloa Shareazan asetuksiin</text>
                <newline gap="16"/>
 
                <text>
@@ -1861,186 +1861,190 @@
        <document name="DownloadHelp.Select">
                <text format="b">Ole hyvä, valitse lataus</text>
                <newline gap="8"/>
-               <text>Voit käyttää tätät komentoa saadaksesi apua ja tietoja latauksesta. 
+               <text>Voit käyttää tätä komentoa saadaksesi apua ja tietoja latauksesta. 
                Valitset vain latauksen ja valitse tämän komennon uudestaan.</text>
        </document>
 
        <document name="DownloadHelp.Completed">
                <text format="b">Tämä lataus on valmis</text>
                <newline gap="8"/>
-               <text>Shareaza on lopettanut tämän tiedoston latauksen ja se on tarkistanut että se on
+               <text>Shareaza on lopettanut tämän tiedoston latauksen ja tarkistanut että se on 
                100% virheetön.  Se on myös siirtänyt tiedoston lataus (downloads) kansioon.</text>
        </document>
 
        <document name="DownloadHelp.Moving">
                <text format="b">Tätä latausta siirretään</text>
                <newline gap="8"/>
-               <text>Shareaza on lopettanut tämän tiedoston latauksen ja se on tarkistanut että se on
+               <text>Shareaza on lopettanut tämän tiedoston latauksen ja tarkistanut että se on 
                virheetön.  Tällä hetekellä sitä siirretään ja/tai puretaan lataus (downloads) kansioon.</text>
        </document>
 
        <document name="DownloadHelp.Paused">
                <text format="b">Tämä lataus on pysäytetty</text>
                <newline gap="8"/>
-               <text>Olet pysäyttänyt tämän latauksen.  Jos haluat jatkaa latausta niin voit
-               klikata tästä </text><text format="b">Jatka latausta </text><text>komentoa.</text>
+               <text>Olet pysäyttänyt tämän latauksen.  Jos haluat jatkaa latausta niin voit 
+               klikata tästä ja valita </text><text format="b">Jatka latausta </text><text>komentoa.</text>
        </document>
 
        <document name="DownloadHelp.DiskFull">
                <text format="b">Levyasema on täynnä</text>
                <newline gap="8"/>
-               <text>Shareaza on pysäyttänyt tämän latauksen automaattisesti koska kovalevysi
-               näyttää olevan täynnä, tai ladattua tiedostoa ei voida kirjoittaa.  Jos haluat
-               jatkaa latausta, ole hyvä ja vapauta levytilaa kovalevyssäsi ja/tai tarkista
-               että tilapäinen (incomplete) kansio on käytettävissä, ja jatka latausta sen jälkeen.</text>
+               <text>Shareaza on pysäyttänyt tämän latauksen automaattisesti koska kovalevysi 
+               näyttää olevan täynnä, tai ladattua tiedostoa ei voida kirjoittaa levylle.  Jos haluat 
+               jatkaa latausta, ole hyvä ja vapauta levytilaa kovalevyssäsi ja/tai tarkista 
+               että tilapäinen (incomplete) kansio on käytettävissä, jotta latausta voitaisiin jatkaa.</text>
        </document>
 
        <document name="DownloadHelp.Verifying">
-               <text format="b">This Download is Verifying</text>
+               <text format="b">Tätä latausta varmennetaan</text>
                <newline gap="8"/>
-               <text>This download has finished, and Shareaza is now checking it to ensure
-               that it is exactly the same as the original file.  If any damaged parts are
-               found, Shareaza will repair them automatically.</text>
+               <text>Tämä lataus on suoritettu loppuun ja Shareaza tarkistaa sitä jotta tiedosto 
+               olisi varmasti samanlainen kuin alkuperäinen tiedosto. Jos vaurioituneita osia löydetään 
+               , Shareaza korjaa ne automaaattisesti.</text>
        </document>
 
        <document name="DownloadHelp.Downloading">
-               <text format="b">This Download is Active!</text>
+               <text format="b">Tämä lataus on aktiivinen!</text>
                <newline gap="8"/>
-               <text>This download is currently in progress.  If it is downloading too slowly,
-               you could try searching the network for more sources with the </text>
-               <text format="b">Find More Sources </text><text>command.  If the speed does not
-               improve it may be due to limited upload speeds of the users you are downloading
-               from.  Download speed usually increases over time.</text>
+               <text>Lataus on käynnissä parasta aikaa.  Jos lataaminen on liian hidasta, 
+               voit yrittää etsiä verkosta lisää lähteitä </text>
+               <text format="b">Etsi enemmän lähteitä </text><text>komennolla.  Jos nopeus ei siitä huolimatta 
+               kasva, niin se voi johtua siitä että ladattavan henkilön siirtonopeus (Upload) on rajoitettu.
+               Latauksen nopeus kasvaa yleensä ajan mittaan.</text>
        </document>
 
        <document name="DownloadHelp.Pending">
-               <text format="b">This Download is Pending</text>
+               <text format="b">Tämä lataus on vireillä</text>
                <newline gap="8"/>
-               <text>This download is waiting for some of your other downloads to complete.
-               Your download settings limit the number of downloads which may be active at
-               any given time, to ensure that each download gets a good share of the available
-               bandwidth.  You can change these settings via Tools, Shareaza Settings.</text>
+               <text>Tämä lataus odottaa jotta joku muista latauksistasi tulisi valmiiksi. 
+               Latausasetuksissasi yhtäaikaisten latausten määrää kerralla on rajoitettu, 
+               jotta varmistetaan se että jokaista lataustasi voidaan myös jakaa kunnolla saatavilla olevan 
+               kaistanlevyiden mukaan. Voit muuttaa näitä asetuksia "Työkalut > Shareaza asetukset" kohdasta.</text>
        </document>
 
        <document name="DownloadHelp.Searching">
-               <text format="b">This Download is Searching</text>
+               <text format="b">Latauksen tiedostoa haetaan</text>
                <newline gap="8"/>
-               <text>There are no known sources for this download, so Shareaza is searching
-               all connected P2P networks for new sources.  Once sources are found, the
-               download will start automatically.  Shareaza searches for sources automatically,
-               however you can speed up the process using the </text>
-               <text format="b">Find More Sources </text><text>command.</text>
+               <text>Lataukselle ei ole saatavissa lähteitä joten Shareaza yrittää etsiä uusia 
+               lähteitä yhteydessä olevista P2P verkoista. Jos ja kun lähde on löydetään latausta 
+               jatketaan automaattisesti. Shareaza hakee lähteitä automaattisesti. Voit siitä huolimatta 
+               nopeuttaa hakutuloksien etsimistä käyttämällä </text>
+               <text format="b">Etsi enemmän lähteitä </text><text>komentoa.</text>
                <newline gap="8"/>
-               <text>Unfortunately in many cases there may be no users online who have the
-               file you are looking for.  The only course of action here is to wait for
-               someone to come online, or cancel it and try to find a similar file which is
-               more widely available.</text>
+				<text>Valitettavasti monessa tapauksessa online-tilassa olevilta käyttäjiltä ei löydy 
+				lataamasi tiedostoa.  Ainoa mitä voit tehdä tässä tapauksessa on odottaa jotta 
+ 				joku tiedoston omaava tulisi online tilaan, tai peruuttaa lataus ja etsiä vastaavaa 
+				tiedostoa joka olisi saatavilla paremmin.
+               </text>
        </document>
 
        <document name="DownloadHelp.Creating">
-               <text format="b">This Download is Creating</text>
+               <text format="b">This file is Creating</text>
                <newline gap="8"/>
-               <text>Shareaza is pre-allocating a file in which to store this download, to
+               <text>Shareaza is pre-allocating a file in which to store this download, to 
                save time later.</text>
        </document>
 
        <document name="DownloadHelp.Tracker">
-               <text format="b">BitTorrent Tracker Down</text>
+               <text format="b">BitTorrent trackkeri alhaalla</text>
                <newline gap="8"/>
-               <text>The BitTorrent tracker server for this download appears to be
-               down or malfunctioning.  Shareaza is unable to contact it to receive
-               a list of downloader peers.</text>
+               <text>BitTorrent trackkeri serveri tälle lataukselle näyttää olevan alhaalla 
+               tai se on epäkunnossa.  Shareaza ei saa yhteyttä vastaanottaakseen listaa 
+               latauksen jakajista.</text>
        </document>
 
        <!-- General help documents -->
 
        <document name="GeneralHelp.DiskSpace">
-               <text format="b">Disk Space is Low</text>
+               <text format="b">Levytila on vähissä</text>
                <newline gap="8"/>
-               <text>The amount of free space on one or more drives used by Shareaza is low.</text>
+               <text>Käytettävissä oleva levytila on vähissä yhdessä tai useammassa kovalevyssä.</text>
                <newline gap="8"/>
-               <text>You should always attempt to keep a reasonable amount of disk space free. Programs
-               can become unstable if the drives become full, and temporary files may be lost. You should
-               run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+               <text>Sinulla pitäisi olla tarpeellinen määrä vapaata levytilaa. Ohjelma voi tulla 
+				epävakaaksi jos levyasemat tulevat täyteen ja väliaikaiset tiedostot voivat kadota. 
+				On suositeltavaa että ajat Disk Clean-Up, poistat turhia tiedostoja tai poistat ohjelmia 
+				joita et enää käytä.
+				</text>
        </document>
 
        <document name="GeneralHelp.XPsp2">
-                <text format="b">Windows XP Service Pack 2 detected</text>
+                <text format="b">Tunnistettu Windows XP Service Pack 2</text>
               <newline gap="8"/>
-                <text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
-                that applications can attempt at once.</text>
+                <text>Shareaza on tunnistanut Windows XP Service Pack 2. Tämä rajoittaa yhteyksien määrää 
+                niin että ohjelma voi ottaa niitä yhden kerralla.</text>
                 <newline gap="8"/>
-                <text>Shareaza has limited network connections and set appropriate default values to
-                ensure proper operation, however performance may be reduced. Please visit the Shareaza
-                forums for further imformation, and up to date news.</text>
+                <text>Shareaza on rajoittanut verkon oletus yhteyksiä asianmukaisiksi varmistaakseen 
+                toimivuuden, joka tapauksessa nopeus tulee tippumaan hieman. Ole hyvä ja käy Shareazan 
+                foorumeilla saadaksesi lisätietoja ja viimeisimmät uutiset.</text>
        </document>
 
        <!-- Search help documents -->
 
       <document name="SearchHelp.BadSearch">
-             <text format="b">Please re-phrase the search</text>
+             <text format="b">Ole hyvä ja kirjoita haku uudelleen</text>
              <newline gap="8"/>
-             <text>This search is poorly formatted, and may not function correctly.
-             Searches should include several terms where possible, and should specify a schema
-             (file type). Furthermore, searches must not be limited to numbers or negative
-             terms only, and you should avoid overly general queries.</text>
+             <text>Haku on väärin muotoiltu ja se hankaloittaa hakua. 
+             Haussa tulisi sisältää useita eri avainsanoja jos se on mahdollista ja sinun tulisi tarkentaa 
+             millä tiedostotyypillä haluat hakea tiedostoja. Vältä myös hakuja jotka rajoittavat liikaa 
+             hakutulosten syntymistä ja vältä samalla myös liian yleisiä hakusanoja.</text>
              <newline gap="8"/>
-             <text> Most clients on the network will ignore a search for
-             all MP3 files, for example, because it is not specific
-             enough and would generate too many results.</text>
+             <text> Monet pääteohjelmat P2P verkoissa hylkäävät haut 
+             kaikkien MP3 tiedostojen kohdalla jos niitä ei olla tarkennettu 
+			tarpeeksi hyvin ja joista näin ollen tulisi liikaa hakutuloksia.</text>
       </document>
 
 <!-- Share help documents -->
 
        <document name="ShareHelp.AlreadyShared">
-              <text format="b">Already Shared</text>
+              <text format="b">Tämä on jo jaettuna</text>
               <newline gap="8"/>
-              <text>The folder you have selected is already being shared as part of an existing share.</text>
+              <text>Kansio jonka olet valinnut on jo valittu jaettavaksi yhdessä muiden jakokansioiden kanssa.</text>
               <newline gap="8"/>
               <text> %s </text>
       </document>
 
        <document name="ShareHelp.BadShare">
-               <text format="b">This folder should not be shared</text>
+               <text format="b">Tämä kansiota ei tulisi jakaa</text>
                <newline gap="8"/>
-               <text>This folder is (or contains) a system folder. Sharing this folder is not
-               recommended, since most of the files in it are of no use to other people.</text>
+               <text>Tämä kansio on (tai sisältää) käyttöjärjestelmän tietoja. 
+				Tämän kansion jakaminen ei ole suositeltavaa, koska useat siellä olevat 
+				tiedostot ovat sellaisia joita muut eivät voi käyttää.</text>
                <newline gap="8"/>
-               <text>Folders such as the Windows directory, Program Files, and similar folders
-               do not usually contain files suitable for sharing. Any files of interest would be in
-              sub-folders located </text><text format="i"> inside </text><text> these
-               folders. Please share those instead.</text>
-              <newline gap="8"/>
-              <text>The Shareaza 'incomplete' folder should also not be shared through the
-             library, since attempting to hash downloads in progress may impact on
-              performance.</text>
+               <text>Kansio kuten Windows hakemisto, Ohjelmatiedostot ja muut vastaavat kansiot
+				eivät muutenkaan sisällä yleensä hyväksyttyjä tiedostotyyppejä. 
+				Mitä tahansa niitä tiedostoja jotka sijaitsevat niiden kansioiden </text>
+				<text format="i"> sisällä </text><text> ei tulisi jakaa.</text>
+				<newline gap="8"/>
+				<text>Shareaza 'incomplete' kansio tulisi myös olla jaettavien erotettuna
+				muista kansioista kuten	kirjatosta. Muuten se latauksen nopeus ja tehokkuus 
+				voi pienentyä latausten turhan kuormituksen (haut yms)takia.</text>
  </document>
 
 </documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-       <tip id="ID_BROWSE_FILES" message="View the user's shared files"/>
-       <tip id="ID_BROWSE_LAUNCH" message="Browse the selected user's profile and shared files."/>
-       <tip id="ID_BROWSE_PROFILE" message="Browse the user's profile."/>
-       <tip id="ID_BROWSE_REFRESH" message="Refresh the list of files available on this host."/>
-       <tip id="ID_BROWSE_STOP" message="Stop browsing files on this host."/>
-       <tip id="ID_CHAT_BOLD" message="Apply bold formatting (Ctrl+B)"/>
-       <tip id="ID_CHAT_BROWSE" message="Browse the user's profile and shared files."/>
-       <tip id="ID_CHAT_CLEAR" message="Clear the message text in this window."/>
-       <tip id="ID_CHAT_COLOUR" message="Select a text colour (Ctrl+K)"/>
-       <tip id="ID_CHAT_CONNECT" message="Connect to the chat session."/>
-       <tip id="ID_CHAT_DISCONNECT" message="Disconnect the chat session."/>
+       <tip id="ID_BROWSE_FILES" message="Näytä käyttäjän jaetut tiedostot"/>
+       <tip id="ID_BROWSE_LAUNCH" message="Selaa käyttäjän profiilia ja jaettuja tiedostoja."/>
+       <tip id="ID_BROWSE_PROFILE" message="Selaa käyttäjän profiilia."/>
+       <tip id="ID_BROWSE_REFRESH" message="Päivitä jaettujen tiedotojen lista tältä käyttäjältä."/>
+       <tip id="ID_BROWSE_STOP" message="Lopeta tiedostojan selaus tältä käyttäjältä."/>
+       <tip id="ID_CHAT_BOLD" message="Lisää lihavointi (Ctrl+B)"/>
+       <tip id="ID_CHAT_BROWSE" message="Selaa käyttäjän profiilia ja jaettuja tiedostoja."/>
+       <tip id="ID_CHAT_CLEAR" message="Tyhjennä viestit tästä ikkunasta."/>
+       <tip id="ID_CHAT_COLOUR" message="Valitse tekstin väri (Ctrl+K)"/>
+       <tip id="ID_CHAT_CONNECT" message="Yhdistä aloittaksesi keskustelu."/>
+       <tip id="ID_CHAT_DISCONNECT" message="Katkaise keskustelu."/>
        <tip id="ID_CHAT_EMOTICONS" message="Insert an emoticon."/>
-       <tip id="ID_CHAT_ITALIC" message="Apply italic formatting (Ctrl+I)"/>
-       <tip id="ID_CHAT_PRIORITY" message="Grant upload priority to this user."/>
-       <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/>
-       <tip id="ID_CHAT_TIMESTAMP" message="Show the time when each message was received."/>
-       <tip id="ID_CHAT_UNDERLINE" message="Apply underline formatting (Ctrl+U)"/>
-       <tip id="ID_CHILD_CLOSE" message="Close the active window."/>
-       <tip id="ID_CHILD_MAXIMISE" message="Enlarge the active window to fill the window."/>
-       <tip id="ID_CHILD_MINIMISE" message="Minimise the selected window to the tab bar."/>
-       <tip id="ID_CHILD_RESTORE" message="Open the selected window."/>
+       <tip id="ID_CHAT_ITALIC" message="Lisää kursivointi (Ctrl+I)"/>
+       <tip id="ID_CHAT_PRIORITY" message="Korota siirron prioriteettia tämän käyttäjän osalta."/>
+       <tip id="ID_CHAT_SEND_FILE" message="Lähetä käyttäjälle tiedosto..."/>
+       <tip id="ID_CHAT_TIMESTAMP" message="Näytä viestien saapumisaika."/>
+       <tip id="ID_CHAT_UNDERLINE" message="Lisää alleviivaus (Ctrl+U)"/>
+       <tip id="ID_CHILD_CLOSE" message="Sulje aktiivinen ikkuna."/>
+       <tip id="ID_CHILD_MAXIMISE" message="Suurenna aktiivinen ikkuna täyttääksesi koko ikkuna."/>
+       <tip id="ID_CHILD_MINIMISE" message="Pienennä valittu ikkuna välilehdeksi."/>
+       <tip id="ID_CHILD_RESTORE" message="Avaa valittu ikkuna."/>
        <tip id="ID_DISCOVERY_ADD" message="Add a new discovery service..."/>
        <tip id="ID_DISCOVERY_ADVERTISE" message="Advertise the selected GWebCache service to a random existing GWebCache."/>
        <tip id="ID_DISCOVERY_BROWSE" message="Browse statistics for the selected GWebCache service on the Web."/>
@@ -2051,196 +2055,196 @@
        <tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey2000 Server.met services in the Discovery window."/>
        <tip id="ID_DISCOVERY_WEBCACHE" message="Show GWebCache services in the Discovery window."/>
        <tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Cancel and remove all downloads in this group."/>
-       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Create a new download group..."/>
-       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pause all downloads in this group."/>
-       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Edit the properties of the selected download group."/>
-       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Remove the selected download group."/>
-       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Resume all downloads in this group."/>
-       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="Show or hide the download group bar."/>
-       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatically clear downloads which have been completed."/>
-       <tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
-       <tip id="ID_DOWNLOADS_CLEAR" message="Clear/remove the selected download(s)."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Remove the selected download(s) from the list."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Clear downloads which have been completed."/>
-       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Cancel the selected incomplete download(s)."/>
-       <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Clear downloads which have been paused."/>
-       <tip id="ID_DOWNLOADS_COPY" message="Copy the URI of the selected file."/>
-       <tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
-       <tip id="ID_DOWNLOADS_ENQUEUE" message="Add the selected download(s) to your media playlist."/>
-       <tip id="ID_DOWNLOADS_FILE_DELETE" message="Delete the selected completed file(s)."/>
-       <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Show downloads which are active."/>
+       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Luo uusi lataus-ryhmä..."/>
+       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pysäytä jokainen lataus tästä ryhmästä."/>
+       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Muokkaa valitun lataus-ryhmän asetuksia."/>
+       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Poista valittu lataus-ryhmä."/>
+       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Jatka jokaista latausta tässä ryhmässä."/>
+       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="Näytä tai piilota lataus-ryhmä välilehtenä."/>
+       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Tyhjennä automaattisesti valmiit lataukset tästä listasta."/>
+       <tip id="ID_DOWNLOADS_BOOST" message="Nopeuta latauksen nopeutta poistamalla valitulta tiedostolta yleiset kaistanrajoitukset."/>
+       <tip id="ID_DOWNLOADS_CLEAR" message="Pyyhi/poista valitut tiedostot."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Poista valittu lataus tästä listasta."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Tyhjennä valmiit lataukset tästä listasta."/>
+       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Peruuta keskeneräinen lataus."/>
+       <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Pyyhi lataukset jotka on pysäytettynä."/>
+       <tip id="ID_DOWNLOADS_COPY" message="Kopioi URL valitusta tiedostosta."/>
+       <tip id="ID_DOWNLOADS_EDIT" message="Näytä lisävalinnat lataus näkymästä..."/>
+       <tip id="ID_DOWNLOADS_ENQUEUE" message="Lisää valittu lataus media soittolistaan."/>
+       <tip id="ID_DOWNLOADS_FILE_DELETE" message="Poista valmis tiedosto koneeltasi."/>
+       <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Näytä lataukset jotka ovat aktiivisia."/>
        <tip id="ID_DOWNLOADS_FILTER_ALL" message="Näytä kaikki lataukset."/>
-       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Choose which types of downloads to show and which types to hide in this view."/>
-       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Show downloads which are paused."/>
-       <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Show downloads which are waiting in queues."/>
-       <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Show downloads which are waiting for sources."/>
-       <tip id="ID_DOWNLOADS_HELP" message="View help information on this download..."/>
-       <tip id="ID_DOWNLOADS_LAUNCH" message="Preview the selected file(s) in place."/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Open or play the selected file(s)."/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
-       <tip id="ID_DOWNLOADS_MONITOR" message="Open a download monitor window for this download..."/>
-       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="Move the selected download(s) down the priority list."/>
-       <tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
-       <tip id="ID_DOWNLOADS_PAUSE" message="Pause the selected download(s)."/>
-       <tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
-       <tip id="ID_DOWNLOADS_RESUME" message="Resume the selected download(s)."/>
-       <tip id="ID_DOWNLOADS_SETTINGS" message="Configure download settings..."/>
-       <tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
-       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
-       <tip id="ID_DOWNLOADS_SOURCES" message="Search for more sources for the selected download(s)."/>
-       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
-       <tip id="ID_DOWNLOADS_URL" message="Add a source URL to the selected download..."/>
-       <tip id="ID_HELP_ABOUT" message="Display the Shareaza about dialog..."/>
-       <tip id="ID_HELP_FAQ" message="Visit the Shareaza Users Guide."/>
-       <tip id="ID_HELP_FIREWALLS" message="Get help configuring your router or firewall."/>
-       <tip id="ID_HELP_FORUMS" message="Visit the Shareaza Discussion Forums."/>
-       <tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
-       <tip id="ID_HELP_WEB_1" message="Visit Zeropaid.com"/>
-       <tip id="ID_HELP_WEB_2" message="Visit P2PForums.com"/>
-       <tip id="ID_HELP_WEB_3" message="Visit Slyck.com"/>
-       <tip id="ID_HELP_WEB_4" message="Visit NapJunk.net"/>
-       <tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
-       <tip id="ID_HITMONITOR_PAUSE" message="Pause hit monitoring."/>
-       <tip id="ID_HITMONITOR_SEARCH" message="Search the network for the selected term."/>
-       <tip id="ID_HOSTCACHE_CONNECT" message="Connect to the selected host(s)."/>
-       <tip id="ID_HOSTCACHE_DISCONNECT" message="Disconnect from the selected neighbour(s)."/>
-       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Show eDonkey2000 servers."/>
-       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey2000 &quot;server.met&quot; file..."/>
-       <tip id="ID_HOSTCACHE_G1_CACHE" message="Show Gnutella1 cached hosts."/>
-       <tip id="ID_HOSTCACHE_G2_CACHE" message="Show Gnutella2 cached hosts."/>
+       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Valitse mitkä lataustyypit näytetään ja mitkä piilotetaan tässä näkymässä."/>
+       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Näytä lataukset jotka on pysäytetty."/>
+       <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Näytä lataukset jotka odottavat jonotuslistassa."/>
+       <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Näytä lataukset jotka odottavat lähteitä."/>
+       <tip id="ID_DOWNLOADS_HELP" message="Näytä lisätietoja tästä latauksesta..."/>
+       <tip id="ID_DOWNLOADS_LAUNCH" message="Esikatsele valittu tiedosto."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Avaa tai toista valittu tiedosto."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview valitulle lataukselle."/>
+       <tip id="ID_DOWNLOADS_MONITOR" message="Avaa lataus monitori tästä latauksesta..."/>
+       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="Alenna tämän latauksen pioriteettia."/>
+       <tip id="ID_DOWNLOADS_MOVE_UP" message="Korota tämän latauksen pioriteettia."/>
+       <tip id="ID_DOWNLOADS_PAUSE" message="Pysäytä lataus väliaikaisesti."/>
+       <tip id="ID_DOWNLOADS_RATE" message="Arvostele latausen laatu."/>
+       <tip id="ID_DOWNLOADS_RESUME" message="Jatka latausta."/>
+       <tip id="ID_DOWNLOADS_SETTINGS" message="Säädä latausasetuksia..."/>
+       <tip id="ID_DOWNLOADS_SHARE" message="Jaa tätä latausta puolueettomasti muille käyttäjille."/>
+       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Näytä lähteet joihin juuri nyt ei saada yhteyttä."/>
+       <tip id="ID_DOWNLOADS_SOURCES" message="Etsi lataukselle enemmän lähteitä."/>
+       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="Näytä tietoja valitusta BitTorrent latauksesta..."/>
+       <tip id="ID_DOWNLOADS_URL" message="Lisää lähde URL valittuun lataukseen..."/>
+       <tip id="ID_HELP_ABOUT" message="Näytä ''Tietoja Shareazasta'' ikkuna."/>
+       <tip id="ID_HELP_FAQ" message="Tutustu Shareaza käyttöohjeisiin."/>
+       <tip id="ID_HELP_FIREWALLS" message="Hanki tietoja miten säädät reitittimesi tai palomuurin."/>
+       <tip id="ID_HELP_FORUMS" message="Tutustu Shareaza Discussion foorumiin."/>
+       <tip id="ID_HELP_HOMEPAGE" message="Tutustu Shareaza.com kotisivuihin."/>
+       <tip id="ID_HELP_WEB_1" message="Tutustu Zeropaid.com sivustoon"/>
+       <tip id="ID_HELP_WEB_2" message="Tutustu P2PForums.com sivustoon"/>
+       <tip id="ID_HELP_WEB_3" message="Tutustu Slyck.com sivustoon"/>
+       <tip id="ID_HELP_WEB_4" message="Tutustu NapJunk.net sivustoon"/>
+       <tip id="ID_HITMONITOR_CLEAR" message="Tyhjennä hit monitorin puskurimuisti."/>
+       <tip id="ID_HITMONITOR_PAUSE" message="Pysäytä hit monitori."/>
+       <tip id="ID_HITMONITOR_SEARCH" message="Etsi verkosta valituilla termeillä."/>
+       <tip id="ID_HOSTCACHE_CONNECT" message="Yhdistä valittuun palvelimeen."/>
+       <tip id="ID_HOSTCACHE_DISCONNECT" message="Katkaise valitusta lähikoneesta."/>
+       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Näytä eDonkey2000 serverit."/>
+       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Lataa eDonkey2000 &quot;server.met&quot; tiedosto..."/>
+       <tip id="ID_HOSTCACHE_G1_CACHE" message="Näytä Gnutella1 välityspalvelimet."/>
+       <tip id="ID_HOSTCACHE_G2_CACHE" message="Näytä Gnutella2 välityspalvelimet."/>
        <tip id="ID_HOSTCACHE_G2_HORIZON" message="Show Gnutella2 horizon hubs."/>
-       <tip id="ID_HOSTCACHE_IMPORT" message="Import a list of known hosts, such as a &quot;server.met&quot; file..."/>
-       <tip id="ID_HOSTCACHE_PRIORITY" message="Try to connect to this server before other servers."/>
-       <tip id="ID_HOSTCACHE_REMOVE" message="Remove the selected hosts from the host cache."/>
-       <tip id="ID_LIBRARY_ADD" message="Add a new folder to your library..."/>
-       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Delete the selected album folder."/>
-       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Open the selected album folder."/>
-       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="View and edit the properties of the selected album folder..."/>
-       <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
+       <tip id="ID_HOSTCACHE_IMPORT" message="Tuo lista tiedossa olevista palvelmista, esim. &quot;server.met&quot; tiedosto..."/>
+       <tip id="ID_HOSTCACHE_PRIORITY" message="Yritä yhdistää tähän serveriin ennen muita servereitä."/>
+       <tip id="ID_HOSTCACHE_REMOVE" message="Poista valitusta palvelimesta välitystiedot."/>
+       <tip id="ID_LIBRARY_ADD" message="Lisää uusi kansio kirjastoosi..."/>
+       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Poista valitun albumin kansio."/>
+       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Avaa valitun albumin kansio."/>
+       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Katso ja muokkaa asetuksia valitun albumin kansiosta..."/>
+       <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Lataa metatiedot valituista tiedostoista Bitzi(TM) kautta..."/>
        <tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
-       <tip id="ID_LIBRARY_COLUMNS" message="Select metadata columns to be displayed..."/>
-       <tip id="ID_LIBRARY_COPY" message="Copy the selected files to another library folder..."/>
-       <tip id="ID_LIBRARY_CREATETORRENT" message="Create a .torrent for this file to upload to a website."/>
-       <tip id="ID_LIBRARY_DELETE" message="Delete the selected files permenantly."/>
-       <tip id="ID_LIBRARY_ENQUEUE" message="Add the selected file(s) to your media playlist."/>
-       <tip id="ID_LIBRARY_EXPLORE" message="Open the selected folder(s)."/>
-       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
-       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
-       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
-       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
-       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="View and edit the properties of all files in the selected folder(s)..."/>
-       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Apply common metadata from the album folder to all of its files."/>
-       <tip id="ID_LIBRARY_FOLDER_NEW" message="Create a new album folder here..."/>
-       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="View and edit the properties of the selected album folder..."/>
-       <tip id="ID_LIBRARY_FOLDERS" message="Manage the physical folders in your library..."/>
-       <tip id="ID_LIBRARY_HASH_PRIORITY" message="Boost the speed of file scanning and hashing."/>
+       <tip id="ID_LIBRARY_COLUMNS" message="Valitse metatietojen palstat jotka näytetään..."/>
+       <tip id="ID_LIBRARY_COPY" message="Kopio valitut tiedostot toiseen kansioon kirjastossasi..."/>
+       <tip id="ID_LIBRARY_CREATETORRENT" message="Luo .torrent tälle tiedostolle jakaaksesi sitä websivuilla."/>
+       <tip id="ID_LIBRARY_DELETE" message="Poista valitut tiedostot peruuttamattomasti."/>
+       <tip id="ID_LIBRARY_ENQUEUE" message="Lisää valittu tiedosto soittolistaasi."/>
+       <tip id="ID_LIBRARY_EXPLORE" message="Avaa valittu kansio."/>
+       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Vie valitun albumin kansio kokoelma-tiedostoksi..."/>
+       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Lataa kaikki tiedostot valitusta kokoelmasta."/>
+       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Lisää valitun albumin tiedostot soittolistaan."/>
+       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Vie valitut albumikansiot kokoelma-tiedostoksi..."/>
+       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Katso ja muokkaa albumin tiedostojen tietoja..."/>
+       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Lisää yleisiä metatietoja albumi kansioista kaikkiin näihin tiedostoihin."/>
+       <tip id="ID_LIBRARY_FOLDER_NEW" message="Luo uusi albumi kansio tähän..."/>
+       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Katso ja muokkaa albumin tietoja..."/>
+       <tip id="ID_LIBRARY_FOLDERS" message="Järjestä fyysiset kansiot kirjastossasi..."/>
+       <tip id="ID_LIBRARY_HASH_PRIORITY" message="Nopeuta tiedostojen skannausta ja koodausta."/>
        <!--<tip id="ID_LIBRARY_JIGLE" message="Query the Jigle database for information on the selected file on the web."/>-->
-       <tip id="ID_LIBRARY_LAUNCH" message="Open or play the selected file(s)."/>
-       <tip id="ID_LIBRARY_MOVE" message="Move the selected files to another library folder..."/>
-       <tip id="ID_LIBRARY_PANEL" message="Show or hide the library detail panel."/>
-       <tip id="ID_LIBRARY_PARENT" message="Move up to the parent folder."/>
-       <tip id="ID_LIBRARY_PROPERTIES" message="View and edit the properties of the selected files..."/>
-       <tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
-       <tip id="ID_LIBRARY_REFRESH" message="Refresh the library view."/>
-       <tip id="ID_LIBRARY_REMOVE" message="Remove the selected shared folders."/>
-       <tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
-       <tip id="ID_LIBRARY_SCAN" message="Scan the selected folders or files for changes."/>
-       <tip id="ID_LIBRARY_SEARCH" message="Search your file library..."/>
-       <tip id="ID_LIBRARY_SEARCH_QUICK" message="Search your file library..."/>
-       <tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
-       <tip id="ID_LIBRARY_SELECT_ALL" message="Select and view all folders in your library."/>
-       <tip id="ID_LIBRARY_SHARED_FILE" message="Share or unshare the selected files."/>
-       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Share or unshare the selected folder(s)."/>
-       <tip id="ID_LIBRARY_TREE_PHYSICAL" message="View the physical folders in your library."/>
-       <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organise your library."/>
-       <tip id="ID_LIBRARY_UNLINK" message="Remove the select files from the current album folder."/>
-       <tip id="ID_LIBRARY_URL" message="Copy the URI of the selected file."/>
-       <tip id="ID_LIBRARY_VIEW" message="Select a library view..."/>
-       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Show an album view" tip="Album View"/>
-       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Collection View"/>
-       <tip id="ID_LIBRARY_VIEW_DETAIL" message="Show file name, details and metadata" tip="Detail View"/>
-       <tip id="ID_LIBRARY_VIEW_HOME" message="Library home page view" tip="Home View"/>
-       <tip id="ID_LIBRARY_VIEW_ICON" message="Show files as icons" tip="Icon View"/>
-       <tip id="ID_LIBRARY_VIEW_LIST" message="Show files in a horizontal list" tip="List View"/>
-       <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Show thumbnails for files" tip="Thumbnail View"/>
-       <tip id="ID_LIBRARY_VIEW_TILE" message="Show a list of album folders." tip="Tile View"/>
-       <tip id="ID_MEDIA_ADD" message="Add a media file to the playlist..."/>
-       <tip id="ID_MEDIA_ADD_FOLDER" message="Add a folder of media files to the playlist..."/>
-       <tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
-       <tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
-       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="Use the video's default aspect ratio."/>
-       <tip id="ID_MEDIA_CLEAR" message="Clear (empty) the playlist."/>
-       <tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
-       <tip id="ID_MEDIA_FULLSCREEN" message="Toggle full-screen video mode."/>
-       <tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
-       <tip id="ID_MEDIA_NEXT" message="Skip ahead to the next file in the current playlist." tip="Next File"/>
-       <tip id="ID_MEDIA_OPEN" message="Open and play a media file or playlist..."/>
-       <tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="Pause"/>
-       <tip id="ID_MEDIA_PLAY" message="Start playing the current media file." tip="Play"/>
-       <tip id="ID_MEDIA_PLAYLIST" message="Show or hide the playlist editor."/>
-       <tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="Previous File"/>
-       <tip id="ID_MEDIA_RANDOM" message="Toggle random (shuffle) mode in the current playlist."/>
-       <tip id="ID_MEDIA_REMOVE" message="Remove the selected media file from the playlist."/>
-       <tip id="ID_MEDIA_REPEAT" message="Repeat the current media file."/>
-       <tip id="ID_MEDIA_SAVE" message="Save the current playlist to a file..."/>
-       <tip id="ID_MEDIA_SELECT" message="Select and play this file."/>
-       <tip id="ID_MEDIA_SETTINGS" message="Display the media settings page..."/>
-       <tip id="ID_MEDIA_SIZE_DISTORT" message="Stretch the video to fill the window, potentially distorting it."/>
-       <tip id="ID_MEDIA_SIZE_FILL" message="Choose the best size for the video based on its aspect ratio."/>
-       <tip id="ID_MEDIA_SIZE_ONE" message="Show the video at its original (natural) size."/>
-       <tip id="ID_MEDIA_SIZE_THREE" message="Show the video at triple its original (natural) size."/>
-       <tip id="ID_MEDIA_SIZE_TWO" message="Show the video at double its original (natural) size."/>
-       <tip id="ID_MEDIA_STATUS" message="Show or hide the media status line."/>
-       <tip id="ID_MEDIA_STOP" message="Stop playing the media file." tip="Stop"/>
-       <tip id="ID_MEDIA_VIS" message="Select an audio visualisation plugin..."/>
-       <tip id="ID_MEDIA_ZOOM" message="Adjust video zoom and aspect ratio settings."/>
-       <tip id="ID_MONITOR_CLOSE" message="Close the monitor window."/>
-       <tip id="ID_NEIGHBOURS_CHAT" message="Open a chat session with the selected user."/>
-       <tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
-       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Disconnect the selected neighbour(s)."/>
-       <tip id="ID_NEIGHBOURS_SETTINGS" message="Configure network settings..."/>
+       <tip id="ID_LIBRARY_LAUNCH" message="Avaa tai toista valittu tiedosto."/>
+       <tip id="ID_LIBRARY_MOVE" message="Siirrä valittu tiedosto toiseen kirjaston kansioon..."/>
+       <tip id="ID_LIBRARY_PANEL" message="Näytä tai piilota kirjaston tiedot paneeli."/>
+       <tip id="ID_LIBRARY_PARENT" message="Siirry ylös, edelliseen kansioon."/>
+       <tip id="ID_LIBRARY_PROPERTIES" message="Katso ja muokkaa tietoja valitusta tiedostosta..."/>
+       <tip id="ID_LIBRARY_REBUILD" message="Uudelleenkirjoita metatiedot ja koodaa ne valituille kansioille tai tiedostoille."/>
+       <tip id="ID_LIBRARY_REFRESH" message="Päivitä kirjaston näkymä."/>
+       <tip id="ID_LIBRARY_REMOVE" message="Poista valittu tiedosto jaetusta kansiosta."/>
+       <tip id="ID_LIBRARY_RENAME" message="Nimeä uudelleen valittu tiedosto."/>
+       <tip id="ID_LIBRARY_SCAN" message="Skannaa kansiot ja tiedostot muutosten takia."/>
+       <tip id="ID_LIBRARY_SEARCH" message="Hae tiedosto kirjastostasi..."/>
+       <tip id="ID_LIBRARY_SEARCH_QUICK" message="Pikahae tiedosto kirjastostasi..."/>
+       <tip id="ID_LIBRARY_SEED_TORRENT" message="Jaa valitut Torrentit Bittorrentilla."/>
+       <tip id="ID_LIBRARY_SELECT_ALL" message="Valitse ja katso kaikki kansiot kirjastossasi."/>
+       <tip id="ID_LIBRARY_SHARED_FILE" message="Jaa tai poista jako valitusta tiedostosta."/>
+       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Jaa tai poista jako valittu kansio."/>
+       <tip id="ID_LIBRARY_TREE_PHYSICAL" message="Katso fyysinen kansio kirjastossasi."/>
+       <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Järjestele kirjastosi."/>
+       <tip id="ID_LIBRARY_UNLINK" message="Poista valittu tiedosto nykyisestä albumi kansioista."/>
+       <tip id="ID_LIBRARY_URL" message="Kopioi URL valitusta tiedostosta."/>
+       <tip id="ID_LIBRARY_VIEW" message="Valitse kirjaston näkymä..."/>
+       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Näytä albumi näkymä" tip="Albumi näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Näytä kokoelma näkymä" tip="Kokoelma näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_DETAIL" message="Näytä tiedostonimi, tiedot ja metatiedot" tip="Tiedot näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_HOME" message="Kirjaston kotisivu näkymä" tip="Koti näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_ICON" message="Näytä tiedostot kuvakkeina" tip="Kuvake näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_LIST" message="Näytä tiedostot horisontaalisessa listassa" tip="Lista näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Näytä näytekuvat tiedostoista" tip="Näytekuva näkymä"/>
+       <tip id="ID_LIBRARY_VIEW_TILE" message="Näytä listä albumi kansioista." tip="Vierekkäin näkymä"/>
+       <tip id="ID_MEDIA_ADD" message="Lisää mediatiedosto soittolistaan..."/>
+       <tip id="ID_MEDIA_ADD_FOLDER" message="Lisää kansio jossa on mediatiedostoja soittolistaan..."/>
+       <tip id="ID_MEDIA_ASPECT_16_9" message="Lukikse video 16:9 kuvasuhteeseen, suositeltavaa elokuviin."/>
+       <tip id="ID_MEDIA_ASPECT_4_3" message="Lukikse video 4:3 kuvasuhteeseen, suositeltavaa televisiohjelmiin."/>
+       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="Käytä videoiden omia kuvasuhteita."/>
+       <tip id="ID_MEDIA_CLEAR" message="Tyhjennä (poista) soittolista."/>
+       <tip id="ID_MEDIA_CLOSE" message="Sulje nykyinen mediatiedosto, vapautaaksesi muistia."/>
+       <tip id="ID_MEDIA_FULLSCREEN" message="Siirry kokoruudun videotilaan."/>
+       <tip id="ID_MEDIA_MUTE" message="Mykistä audion toisto"/>
+       <tip id="ID_MEDIA_NEXT" message="Siirry suoraan seuraavaan tiedostoon soittolistassa." tip="Seuraava tiedosto"/>
+       <tip id="ID_MEDIA_OPEN" message="Avaa ja toista mediatiedosto tai soittolista..."/>
+       <tip id="ID_MEDIA_PAUSE" message="Pysäytä mediatiedoston toisto." tip="Pysäytä"/>
+       <tip id="ID_MEDIA_PLAY" message="Aloita nykyisen tiedoston toisto." tip="Toista"/>
+       <tip id="ID_MEDIA_PLAYLIST" message="Näytä tai piilota soittolistan editori."/>
+       <tip id="ID_MEDIA_PREVIOUS" message="Palaa edelliseen tiedostoon soittolistassa." tip="Edellinen tiedosto"/>
+       <tip id="ID_MEDIA_RANDOM" message="Kytke satunnoiastoisto tila soittolistasssa."/>
+       <tip id="ID_MEDIA_REMOVE" message="Poista valittu tiedosto soittolistalta."/>
+       <tip id="ID_MEDIA_REPEAT" message="Toista uudelleen mediatiedosto."/>
+       <tip id="ID_MEDIA_SAVE" message="Tallenna bykyinen soittolista tiedostoksi..."/>
+       <tip id="ID_MEDIA_SELECT" message="Valitse ja toisto tämä tiedosto."/>
+       <tip id="ID_MEDIA_SETTINGS" message="Näytä median asetukset..."/>
+       <tip id="ID_MEDIA_SIZE_DISTORT" message="Venytä viden kuvaa niin että se täyttää kokonaan ikkunan, voi vääristää kuvaa huomattavasti."/>
+       <tip id="ID_MEDIA_SIZE_FILL" message="Valitse paras kuvan koko perustuen videon kuvasuhteeseen."/>
+       <tip id="ID_MEDIA_SIZE_ONE" message="Näytä video alkuperäisessä koossa."/>
+       <tip id="ID_MEDIA_SIZE_THREE" message="Näytä video kolminkertaisena alkuperäiseen kokoon nähden."/>
+       <tip id="ID_MEDIA_SIZE_TWO" message="Näytä video kaksinkertaisena alkuperäiseen kokoon nähden."/>
+       <tip id="ID_MEDIA_STATUS" message="Näytä tai piilota median tilarivi."/>
+       <tip id="ID_MEDIA_STOP" message="Lopeta median toisto." tip="Lopeta"/>
+       <tip id="ID_MEDIA_VIS" message="Valitse audio visualisointi plugin..."/>
+       <tip id="ID_MEDIA_ZOOM" message="Säädä videon zoomausta ja kuvasuhteen asetuksia."/>
+       <tip id="ID_MONITOR_CLOSE" message="Sulje monitori ikkuna."/>
+       <tip id="ID_NEIGHBOURS_CHAT" message="Avaa keskusteluhetki valitun käyttäjän kanssa."/>
+       <tip id="ID_NEIGHBOURS_COPY" message="Kopioi URL saadaksesi yhteys valittuun palvelimeen."/>
+       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Katkaise valitut lähikoneet."/>
+       <tip id="ID_NEIGHBOURS_SETTINGS" message="Muokkaa verkkoasetuksia..."/>
        <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Open a new Packet Dump window monitoring this neighbour."/>
        <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Open a new Packet Dump window monitoring incoming traffic from this neighbour."/>
        <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
-       <tip id="ID_NETWORK_AUTO_CLOSE" message="Automatically close Shareaza when transfers have completed."/>
+       <tip id="ID_NETWORK_AUTO_CLOSE" message="Sulje Shareaza automattisesti kun lataukset ovat valmiita."/>
        <tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
-       <tip id="ID_NETWORK_CONNECT" message="Connect to the network."/>
-       <tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
-       <tip id="ID_NETWORK_DISCONNECT" message="Disconnect from the network."/>
-       <tip id="ID_NETWORK_ED2K" message="Connect to the eDonkey2000 network."/>
-       <tip id="ID_NETWORK_EXIT" message="Exit Shareaza"/>
-       <tip id="ID_NETWORK_G1" message="Connect to the original Gnutella network."/>
-       <tip id="ID_NETWORK_G2" message="Connect to the Gnutella2 network (highly recommended)."/>
-       <tip id="ID_NETWORK_SEARCH" message="Start a new search of the network..."/>
-       <tip id="ID_SEARCH_CHAT" message="Open a chat session with the selected user."/>
-       <tip id="ID_SEARCH_CLEAR" message="Clear the search results."/>
-       <tip id="ID_SEARCH_COLUMNS" message="Select metadata columns to be displayed..."/>
-       <tip id="ID_SEARCH_COPY" message="Copy the URI of the selected file."/>
-       <tip id="ID_SEARCH_DETAILS" message="Display detailed information on the selected file."/>
-       <tip id="ID_SEARCH_DOWNLOAD" message="Download the selected file(s)."/>
-       <tip id="ID_SEARCH_DOWNLOADNOW" message="Download the selected file(s) with priority."/>
-       <tip id="ID_SEARCH_FILTER" message="Filter the search results by certain words and conditions..."/>
-       <tip id="ID_SEARCH_FILTER_RAW" message="Filter the search results by certain words and conditions..."/>
-       <tip id="ID_SEARCH_FILTER_REMOVE" message="Remove filtering from the results."/>
-       <tip id="ID_SEARCH_FOR_ALBUM" message="Search for music files in the same album as the selected file."/>
-       <tip id="ID_SEARCH_FOR_ARTIST" message="Search for music files by the same artist as the selected file."/>
-       <tip id="ID_SEARCH_FOR_SERIES" message="Search for video files in the same series as the selected file."/>
-       <tip id="ID_SEARCH_FOR_SIMILAR" message="Search for files which are similar to the selected file."/>
-       <tip id="ID_SEARCH_FOR_THIS" message="Search for other copies of the selected file."/>
-       <tip id="ID_SEARCH_GROUPED" message="Group the results by file."/>
-       <tip id="ID_SEARCH_MERGE" message="Merge the selected file groups."/>
-       <tip id="ID_SEARCH_PANEL" message="Display the quick search panel on the left of the Search window."/>
-       <tip id="ID_SEARCH_SEARCH" message="Search the network again..."/>
-       <tip id="ID_SEARCH_STOP" message="Stop receiving results in this window."/>
-       <tip id="ID_SEARCHMONITOR_CLEAR" message="Clear the search monitor buffer."/>
-       <tip id="ID_SEARCHMONITOR_PAUSE" message="Pause search monitoring."/>
-       <tip id="ID_SECURITY_ADD" message="Add a new rule to the security chain..."/>
-       <tip id="ID_SECURITY_BAN" message="Ban the selected host for the duration of this session."/>
-       <tip id="ID_SECURITY_EDIT" message="Edit the selected security rule..."/>
-       <tip id="ID_SECURITY_EXPORT" message="Export the selected security rules to a file..."/>
-       <tip id="ID_SECURITY_IMPORT" message="Import security rules from a file..."/>
-       <tip id="ID_SECURITY_MOVE_DOWN" message="Move the selected security rules down the precedence list."/>
-       <tip id="ID_SECURITY_MOVE_UP" message="Move the selected security rules up the precedence list."/>
+       <tip id="ID_NETWORK_CONNECT" message="Yhdistä verkkoon."/>
+       <tip id="ID_NETWORK_CONNECT_TO" message="Yhdistä palvelimelle manuaalisesti..."/>
+       <tip id="ID_NETWORK_DISCONNECT" message="Katkaise yhteys verkosta."/>
+       <tip id="ID_NETWORK_ED2K" message="Yhdistä eDonkey2000 verkkoon."/>
+       <tip id="ID_NETWORK_EXIT" message="Sulje Shareaza"/>
+       <tip id="ID_NETWORK_G1" message="Yhdistä alkuperäiseen Gnutella verkkoon."/>
+       <tip id="ID_NETWORK_G2" message="Yhdistä Gnutella2 verkkoon (erittäin suositeltavaa)."/>
+       <tip id="ID_NETWORK_SEARCH" message="Aloita verkosta uusi haku..."/>
+       <tip id="ID_SEARCH_CHAT" message="Avaa keskusteluhetki valitn käyttäjän kanssa."/>
+       <tip id="ID_SEARCH_CLEAR" message="Tyhjennä hakutulokset."/>
+       <tip id="ID_SEARCH_COLUMNS" message="Näytä metatiedot palstan näkymät..."/>
+       <tip id="ID_SEARCH_COPY" message="Kopioi URL valitusta tiedostosta."/>
+       <tip id="ID_SEARCH_DETAILS" message="Näytä yksityiskohtaiset tiedot valitusta tiedostosta."/>
+       <tip id="ID_SEARCH_DOWNLOAD" message="Lataa valittu tiedosto."/>
+       <tip id="ID_SEARCH_DOWNLOADNOW" message="Lataa valitut tiedostot ensisijaisesti (pioriteetillä)."/>
+       <tip id="ID_SEARCH_FILTER" message="Suodata hakutuloksia tietyillä sanoilla ja ehdoilla..."/>
+       <tip id="ID_SEARCH_FILTER_RAW" message="Suodata hakutuloksia tietyillä sanoilla ja ehdoilla..."/>
+       <tip id="ID_SEARCH_FILTER_REMOVE" message="Poista suodatus hakutuloksesta."/>
+       <tip id="ID_SEARCH_FOR_ALBUM" message="Hae musiikkitiedostoja samalta albumilta."/>
+       <tip id="ID_SEARCH_FOR_ARTIST" message="Hae musiikkitiedostoja samalta artistilta."/>
+       <tip id="ID_SEARCH_FOR_SERIES" message="Hae videotiedostoja samasta sarjasta."/>
+       <tip id="ID_SEARCH_FOR_SIMILAR" message="Hae tiedostoja jotka ovat samankaltaisia."/>
+       <tip id="ID_SEARCH_FOR_THIS" message="Hae eri kopioita valitusta tiedostosta."/>
+       <tip id="ID_SEARCH_GROUPED" message="Ryhmittele tulokset tiedostojen mukaan."/>
+       <tip id="ID_SEARCH_MERGE" message="Yhdistä valitut tiedostot ryhmäksi."/>
+       <tip id="ID_SEARCH_PANEL" message="Näytä pikahaku hakuikkunan vasemmalla puolella."/>
+       <tip id="ID_SEARCH_SEARCH" message="Hae verkosta uudelleen..."/>
+       <tip id="ID_SEARCH_STOP" message="Lopeta hakutulosten vastaanotto tässä ikkunassa."/>
+       <tip id="ID_SEARCHMONITOR_CLEAR" message="Tyhjennä hakumonitorin välimuisti."/>
+       <tip id="ID_SEARCHMONITOR_PAUSE" message="Pysäytä hakumonitori."/>
+       <tip id="ID_SECURITY_ADD" message="Lisää uusi sääntö turvallisuus ketjuun..."/>
+       <tip id="ID_SECURITY_BAN" message="Torju valittu isäntä tämän session ajaksi."/>
+       <tip id="ID_SECURITY_EDIT" message="Muokkaa turvallisuus sääntöjä..."/>
+       <tip id="ID_SECURITY_EXPORT" message="Vie turvallisuus säännöt tiedostoksi..."/>
+       <tip id="ID_SECURITY_IMPORT" message="Tuo tarvallisuus säännöt tiedostosta..."/>
+       <tip id="ID_SECURITY_MOVE_DOWN" message="Siirrä valittu turvallisuus sääntöä alas listan arvojäjestyksessä."/>
+       <tip id="ID_SECURITY_MOVE_UP" message="Siirrä valittu turvallisuus sääntöä ylös listan arvojäjestyksessä."/>
        <tip id="ID_SECURITY_POLICY_ACCEPT" message="Set the default security policy to allow all hosts."/>
        <tip id="ID_SECURITY_POLICY_DENY" message="Set the default security policy to deny all hosts."/>
        <tip id="ID_SECURITY_REMOVE" message="Remove the selected security rules."/>
@@ -2340,13 +2344,13 @@
        <string id="WINDOW_MEDIA" value="Mediasoitin"/>
        <string id="WINDOW_SEARCHPAD" value="Haku"/>
        <string id="WINDOW_HELP" value="Shareaza Help"/>
-       <string id="8000" value="Shareaza Settings"/>
-       <string id="8001" value="Welcome to Shareaza"/>
-       <string id="8002" value="File Properties"/>
-       <string id="8003" value="Edit My Profile"/>
-       <string id="8004" value="!Welcome to Shareaza (version) !\n.\nShareaza is completely free software.\nPlease use it responsibly and respect intellectual property law.\n."/>
+       <string id="8000" value="Shareaza asetukset"/>
+       <string id="8001" value="Tervetuloa Shareazaan"/>
+       <string id="8002" value="Tiedoston asetukset"/>
+       <string id="8003" value="Muokkaa profiilini"/>
+       <string id="8004" value="!Tervetuloa Shareaza (version) !\n.\nShareaza is completely free software.\nPlease use it responsibly and respect intellectual property law.\n."/>
        <string id="8005" value=" (closing after transfers)"/>
-       <string id="8006" value="You're not connected.  Click the Connect button to get started."/>
+       <string id="8006" value="Et ole yhteydessä. Klikkaa Yhdistä nappia aloittaaksesi."/>
        <string id="8007" value="There are no active searches.  Click here to search for files."/>
        <string id="8008" value="Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."/>
        <string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
@@ -2363,7 +2367,7 @@
        <string id="8070" value="Yhdistetään..."/>
        <string id="8071" value="Yhdistettynä"/>
        <string id="8072" value="Disconnect"/>
-       <string id="8096" value="Tämä alue näyttää lisätietoja tiedostostasi minkä olet valinnut."/>
+       <string id="8096" value="Tämä alue näyttää lisätietoja tiedostosta jonka valitset."/>
        <string id="8097" value="One source is available (%s).  "/>
        <string id="8098" value="%i sources are available (%s).  "/>
        <string id="8099" value="There is one review."/>
@@ -2375,20 +2379,20 @@
        <string id="8105" value="Unable to download preview content from &quot;%s&quot;."/>
        <string id="8128" value="Click here to search again"/>
        <string id="8129" value="Hakua ei ole aloitettu vielä tässä ikkunassa."/>
-       <string id="8130" value="Shareaza is searching the network..."/>
-       <string id="8131" value="The network has not returned any matches yet."/>
+       <string id="8130" value="Shareaza hakee verkosta..."/>
+       <string id="8131" value="Verkosta ei ole vielä löytynyt yhtään hakutulosta..."/>
        <string id="8132" value="Some results are available, but were filtered out."/>
-       <string id="8133" value="Shareaza is actively searching the network..."/>
-       <string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
-       <string id="8141" value="Show the Search Panel"/>
-       <string id="8142" value="Hide the Search Panel"/>
+       <string id="8133" value="Shareaza hakee parasta aikaa verkosta..."/>
+       <string id="8134" value="Olet aloittamassa uutta hakua.  Haluatko pyyhkiä edellisen haun tulokset?"/>
+       <string id="8141" value="Näytä the haku palkki"/>
+       <string id="8142" value="Piilota the haku palkki"/>
        <string id="8143" value="Haetaan..."/>
        <string id="8144" value="Aloita haku"/>
        <string id="8145" value="Hae enemmän"/>
        <string id="8146" value="Stop"/>
        <string id="8147" value="Any File Type"/>
        <string id="8148" value="Kirjoita hakusanat tähän:"/>
-       <string id="8149" value="Etsimäsi tiedostotyypit:"/>
+       <string id="8149" value="Etsimäsi tiedostotyyppi:"/>
        <string id="8150" value="Haetaan:"/>
        <string id="8151" value="Found:"/>
        <string id="8152" value="%lu hubs, %lu leaves"/>
@@ -2409,7 +2413,7 @@
        <string id="8167" value="Kaikki verkot"/>
        <string id="8176" value="Search Shareaza"/>
        <string id="8177" value="Kirjoita hakusanoja etsiäksesi:"/>
-       <string id="8178" value="Minkä tiedostyypin haluat?"/>
+       <string id="8178" value="Minkä tiedostotyypin haluat?"/>
        <string id="8179" value="(Tyhjennä hakuhistoria)"/>
        <string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
        <string id="8224" value="Shareaza is downloading:"/>
@@ -2665,8 +2669,8 @@
        <string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
        <string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
        <string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
-       <string id="16408" value="Copy &amp;URI"/>
-       <string id="16409" value="Export &amp;URIs..."/>
+       <string id="16408" value="Kopio &amp;URL"/>
+       <string id="16409" value="Vie &amp;URL..."/>
        <string id="16448" value="Connected to %s, handshaking..."/>
        <string id="16449" value="Now chatting with %s (%s)."/>
        <string id="16450" value="Connection to %s closed."/>
@@ -3319,8 +3323,8 @@
        <dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Import eDonkey2000 Downloads">
                <control/>
                <control caption="Shareaza has detected that you have another eDonkey2000 program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"/>
-               <control caption="Yes"/>
-               <control caption="No|Cancel"/>
+               <control caption="Kyllä"/>
+               <control caption="Ei|Peruuta"/>
                <control/>
                <control caption="Sulje"/>
        </dialog>
@@ -3401,13 +3405,13 @@
                <control/>
                <control caption="_Select:"/>
                <control caption="Other Gnutella users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC."/>
-               <control caption="_Browse..."/>
+               <control caption="_Selaa..."/>
                <control caption="_Poista"/>
        </dialog>
 
        <dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Favourites">
                <control/>
-               <control caption="_Edit:"/>
+               <control caption="_Muokkaa:"/>
                <control caption="Title:"/>
                <control/>
                <control caption="URL:"/>
@@ -3427,7 +3431,7 @@
                <control caption="_Gnutella Globally Unique Identification Certificate:"/>
                <control caption="GUID:"/>
                <control/>
-               <control caption="Created:"/>
+               <control caption="Luotu:"/>
                <control/>
                <control caption="Generate New"/>
        </dialog>
@@ -3440,7 +3444,7 @@
                <control caption="Network _Protocol:"/>
                <control/>
                <control caption="_Suppress Ultrapeer"/>
-               <control caption="Connect"/>
+               <control caption="Yhdistä"/>
                <control caption="Peruuta"/>
        </dialog>
 
@@ -3461,26 +3465,26 @@
                <control caption="Peruuta"/>
        </dialog>
 
-       <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filter Matches">
-               <control caption="Only show matches which include the _words:"/>
+       <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Suodattimen tulokset">
+               <control caption="Näytä vain tulokset jotka sisältävät _sanat:"/>
                <control/>
-               <control caption="( you can also exclude words with -word )"/>
-               <control caption="And are of _size (KB):"/>
-               <control caption="Minimum:"/>
+               <control caption="( voit myös lisätä poissulkevia sanoja kirjoittamalla -sana )"/>
+               <control caption="Joiden _koko on (KB):"/>
+               <control caption="Minimi:"/>
                <control/>
-               <control caption="Maximum:"/>
+               <control caption="Maksimi:"/>
                <control/>
-               <control caption="With at least:"/>
+               <control caption="Vähintään:"/>
                <control/><control/>
-               <control caption="sources."/>
-               <control caption="_Hide:"/>
-               <control caption="Busy hosts"/>
-               <control caption="Firewalled/push hosts"/>
-               <control caption="Unstable hosts"/>
-               <control caption="Non-matching files"/>
-               <control caption="Files you have already"/>
-               <control caption="Bogus results"/>
-               <control caption="Filter"/>
+               <control caption="lähdettä."/>
+               <control caption="_Piilota:"/>
+               <control caption="Varatut käyttäjät"/>
+               <control caption="Palomuuratut lähteet"/>
+               <control caption="Epävakaat palvelimet"/>
+               <control caption="Ei-täsmälliset tiedostot"/>
+               <control caption="Tiedostot jotka sinulla on"/>
+               <control caption="Epätarkat hakutulokset"/>
+               <control caption="Suodata"/>
                <control caption="Peruuta"/>
        </dialog>
 
@@ -3658,7 +3662,7 @@
                <control caption="Peruuta"/>
        </dialog>
 
-       <dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copy URI">
+       <dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopioi URL">
                <control/>
                <control caption="You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"/>
                <control/><control/><control/>
@@ -3666,7 +3670,7 @@
                <control caption="Peruuta"/>
        </dialog>
 
-       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Export URIs">
+       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Vie URL">
                <control/>
                <control caption="You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"/>
                <control/>
@@ -3770,19 +3774,19 @@
                <control/>
        </dialog>
 
-       <dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Delete File">
-               <control caption="Are you sure that you want to delete:"/>
+       <dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Poista tiedosto">
+               <control caption="Haluatko varmasti poistaa:"/>
                <control/>
-               <control caption="Delete"/>
-               <control caption="Delete All"/>
+               <control caption="Poista"/>
+               <control caption="Poista kaikki"/>
                <control caption="Peruuta"/>
                <control/>
-               <control caption="Shareaza can remember this file and warn you if you come across it again in another search.  Please select the reason for deleting this file:"/>
-               <control caption="I don't want to add a comment."/>
-               <control caption="This file is named incorrectly, and could be misleading."/>
-               <control caption="This file is of very poor quality."/>
-               <control caption="This file is a fake, or is corrupt or somehow unusable."/>
-               <control caption="You can type a short note describing why this file is bad:"/>
+               <control caption="Shareaza muistaa tämän tiedoston ja se voi varoittaa muita käyttäjiä tästä tiedostosta.  Ole hyvä ja valitse syy miksi poistit tiedoston:"/>
+               <control caption="Ei kommentoitavaa."/>
+               <control caption="Tiedosto on nimetty huolimattomasti ja se voi olla harhaanjohtava."/>
+               <control caption="Tiedoston laatu on todella heikko."/>
+               <control caption="Tiedosto on tekaistu, viallinen tai muuten toimimaton!"/>
+               <control caption="Voit halutessasi kirjoittaa lyhyen kuvauksen miksi tämä tiedosto ei ollut mieluinen:"/>
                <control/>
        </dialog>
 
@@ -3895,7 +3899,7 @@
         <column from="Progress" to="Edistyminen"/>
         <column from="Speed" to="Nopeus"/>
         <column from="Status" to="Tila"/>
-        <column from="Client" to=""/>
+        <column from="Client" to="Pääteohjelma"/>
         <column from="Downloaded" to="Ladattu"/>
            <column from="Complete" to="Valmis"/>
     </list>
@@ -3905,7 +3909,7 @@
         <column from="Size" to="Koko"/>
         <column from="Progress" to="Edistyminen"/>
         <column from="Speed" to="Nopeus"/>
-        <column from="Client" to=""/>
+        <column from="Client" to="Pääteohjelma"/>
     </list>
     <list name="CNeighboursWnd">
         <column from="Address" to="Osoite"/>
@@ -3917,7 +3921,7 @@
         <column from="Flow" to=""/>
         <column from="Leaves" to=""/>
         <column from="Mode" to="Tila"/>
-        <column from="Client" to="Client"/>
+        <column from="Client" to="Pääteohjelma"/>
         <column from="Name" to="Nimi"/>
     </list>
     <list name="CSecurityWnd">
@@ -3931,7 +3935,7 @@
     <list name="CHostCacheWnd">
         <column from="Address" to="Osoite"/>
         <column from="Port" to="Portti"/>
-        <column from="Client" to=""/>
+        <column from="Client" to="Pääteohjelma"/>
         <column from="Last Seen" to="Viimeksi nähty"/>
         <column from="Name" to="Nimi"/>
         <column from="Description" to="Kuvaus"/>
@@ -3967,9 +3971,9 @@
         <column from="Size" to="Koko"/>
         <column from="Rating" to="Pisteytys"/>
            <column from="Status" to="Tila"/>
-        <column from="Host/Count" to=""/>
+        <column from="Host/Count" to="Isäntä/Määrä"/>
         <column from="Speed" to="Nopeus"/>
-        <column from="Client" to=""/>
+        <column from="Client" to="Pääteohjelma"/>
     </list>
     <list name="CUploadQueueList">
         <column from="Name" to="Nimi"/>
