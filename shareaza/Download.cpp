@@ -570,7 +570,7 @@ BOOL CDownload::Save(BOOL bFlush)
 	
 	{
 		BYTE pBuffer[ 65536 ];
-		CArchive ar( &pFile, CArchive::store, 4096, pBuffer );
+		CArchive ar( &pFile, CArchive::store, sizeof( pBuffer ), pBuffer );
 		Serialize( ar, 0 );
 		ar.Close();
 	}
