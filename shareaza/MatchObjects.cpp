@@ -1192,7 +1192,7 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	
 	if ( bLocked ) pLock1.Unlock();
 	
-	if ( ! m_bDownload && ! m_bExisting && ( m_bSHA1 || m_bTiger ) )
+	if ( ! m_bDownload && ! m_bExisting && ( m_bSHA1 || m_bTiger || m_bED2K ) )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
 		
@@ -1203,6 +1203,10 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 				m_bDownload = TRUE;
 			}
 			else if ( m_bTiger && Downloads.FindByTiger( &m_pTiger ) != NULL )
+			{
+				m_bDownload = TRUE;
+			}
+			else if ( m_bED2K && Downloads.FindByED2K( &m_pED2K ) != NULL )
 			{
 				m_bDownload = TRUE;
 			}
