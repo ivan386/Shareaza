@@ -134,7 +134,7 @@ void CSecurityWnd::OnDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CSecurityWnd operations
 
-void CSecurityWnd::Update(int nColumn)
+void CSecurityWnd::Update(int nColumn, BOOL bSort)
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	CLiveList pLiveList( 6 );
@@ -144,8 +144,6 @@ void CSecurityWnd::Update(int nColumn)
 	pDefault->Set( 1, Security.m_bDenyPolicy ? _T("Deny") : _T("Accept") );
 	pDefault->Set( 3, _T("X") );
 	pDefault->m_nImage = Security.m_bDenyPolicy ? 2 : 1;
-
-	tLastUpdate = GetTickCount();
 
 	Security.Expire();
 
@@ -217,10 +215,9 @@ void CSecurityWnd::Update(int nColumn)
 		SetWindowLong( m_wndList.GetSafeHwnd(), GWL_USERDATA, 0 - nColumn - 1 );
 	}
 
-	if ( pLiveList.Apply( &m_wndList ) )
-	{
-		CLiveList::Sort( &m_wndList, -1 );
-	}
+	pLiveList.Apply( &m_wndList, bSort );
+
+	tLastUpdate = GetTickCount();				// Update time after it's done doing its work
 }
 
 CSecureRule* CSecurityWnd::GetItem(int nItem)
@@ -247,10 +244,18 @@ void CSecurityWnd::OnSize(UINT nType, int cx, int cy)
 void CSecurityWnd::OnTimer(UINT nIDEvent) 
 {
 	DWORD tTicks = GetTickCount();
+	DWORD tDelay = 2 * Security.GetCount();		// Delay based on size of list
 
-	if( ( tTicks - tLastUpdate ) > 20000 )
+	if ( ( tTicks - tLastUpdate ) > tDelay )
 	{
-		Update();
+		if ( tDelay < 2000 )
+		{
+			Update();							// Sort if list is under 1000
+		}
+		else
+		{
+			Update( -1, FALSE );				// Otherwise just refresh values
+		}
 	}
 }
 

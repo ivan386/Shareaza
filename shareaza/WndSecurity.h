@@ -46,7 +46,7 @@ protected:
 
 // Operations
 public:
-	void			Update(int nColumn = -1);
+	void			Update(int nColumn = -1, BOOL bSort = TRUE);
 	CSecureRule*	GetItem(int nItem);
 
 // Overrides
