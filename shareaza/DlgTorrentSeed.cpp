@@ -158,7 +158,7 @@ void CTorrentSeedDlg::OnSeed()
 		else
 		{
 			CString strFormat, strMessage;
-			strFormat.LoadString( IDS_BT_SEED_ALREADY );
+			LoadString(strFormat, IDS_BT_SEED_ALREADY );
 			strMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
 			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 			EndDialog( IDOK );
@@ -167,7 +167,7 @@ void CTorrentSeedDlg::OnSeed()
 	else
 	{
 		CString strFormat, strMessage;
-		strFormat.LoadString( IDS_BT_SEED_PARSE_ERROR );
+		LoadString(strFormat, IDS_BT_SEED_PARSE_ERROR );
 		strMessage.Format( strFormat, (LPCTSTR)m_sTorrent );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		EndDialog( IDOK );
@@ -249,7 +249,7 @@ void CTorrentSeedDlg::RunSingleFile()
 	if ( m_sTarget.IsEmpty() || GetFileAttributes( m_sTarget ) == 0xFFFFFFFF )
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_SOURCE_LOST );
+		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_pFiles[0].m_sPath );
 		PostMessage( WM_TIMER, 2 );
 		return;
@@ -337,7 +337,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 	if ( hTarget == INVALID_HANDLE_VALUE )
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_SOURCE_LOST );
+		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_sTarget );
 		return FALSE;
 	}	
@@ -387,7 +387,7 @@ HANDLE CTorrentSeedDlg::CreateTarget()
 	if ( hTarget == INVALID_HANDLE_VALUE )
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_CREATE_FAIL );
+		LoadString(strFormat, IDS_BT_SEED_CREATE_FAIL );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_sTarget );
 	}
 	
@@ -424,7 +424,7 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 		if ( hSource == INVALID_HANDLE_VALUE )
 		{
 			CString strFormat;
-			strFormat.LoadString( IDS_BT_SEED_SOURCE_LOST );
+			LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
 			m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
 			return FALSE;
 		}
@@ -437,7 +437,7 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 		{
 			CloseHandle( hSource );
 			CString strFormat;
-			strFormat.LoadString( IDS_BT_SEED_SOURCE_SIZE );
+			LoadString(strFormat, IDS_BT_SEED_SOURCE_SIZE );
 			m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath,
 				(LPCTSTR)Settings.SmartVolume( pFile->m_nSize, FALSE ),
 				(LPCTSTR)Settings.SmartVolume( nSize, FALSE ) );
@@ -502,7 +502,7 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 	else
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_COPY_FAIL );
+		LoadString(strFormat, IDS_BT_SEED_COPY_FAIL );
 		m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
 		return FALSE;
 	}
@@ -516,7 +516,7 @@ BOOL CTorrentSeedDlg::VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath)
 		if ( m_pInfo.FinishBlockTest( m_nBlockNumber++ ) ) return TRUE;
 		
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_VERIFY_FAIL );
+		LoadString(strFormat, IDS_BT_SEED_VERIFY_FAIL );
 		m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
 		return FALSE;
 	}
@@ -536,7 +536,7 @@ BOOL CTorrentSeedDlg::VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath)
 			if ( ! m_pInfo.FinishBlockTest( m_nBlockNumber++ ) )
 			{
 				CString strFormat;
-				strFormat.LoadString( IDS_BT_SEED_VERIFY_FAIL );
+				LoadString(strFormat, IDS_BT_SEED_VERIFY_FAIL );
 				m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
 				return FALSE;
 			}
@@ -560,7 +560,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) != NULL )
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_ALREADY );
+		LoadString(strFormat, IDS_BT_SEED_ALREADY );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
 		return FALSE;
 	}
@@ -577,7 +577,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	else
 	{
 		CString strFormat;
-		strFormat.LoadString( IDS_BT_SEED_ERROR );
+		LoadString(strFormat, IDS_BT_SEED_ERROR );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
 		return FALSE;
 	}
