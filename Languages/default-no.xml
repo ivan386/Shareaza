@@ -2675,6 +2675,7 @@
 	<string id="16373" value="Delvise filer"/>
 	<string id="16374" value="Ny kø"/>
 	<string id="16375" value="Delvis"/>
+	<string id="16376" value="Fullstendige filer"/>
 	<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 	<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
 	<string id="16386" value="Endrer metadata til %i filer."/>
