@@ -15,7 +15,7 @@ Name: "no"; MessagesFile: "compiler:Default.isl,setup\isl\norwegian.isl"; Licens
 Name: "af"; MessagesFile: "compiler:Default.isl,setup\isl\african.isl"; LicenseFile: "setup/license/african.rtf"
 Name: "br"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-braz.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"; LicenseFile: "setup/license/default.rtf"
-Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
 
 [Files]
 ; Install default remote
@@ -68,7 +68,7 @@ Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestNam
 ; French
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Components: language
 ; Spanish
-Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
+Source: "setup\license\spanish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
