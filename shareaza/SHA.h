@@ -49,6 +49,7 @@ public:
 	static CString	HashToHexString(const SHA1* pHash, BOOL bURN = FALSE);
 	static BOOL		HashFromString(LPCTSTR pszHash, SHA1* pHash);
 	static BOOL		HashFromURN(LPCTSTR pszHash, SHA1* pHash);
+	static BOOL		IsNull(SHA1* pHash);
 protected:
 //	void			Compile();			we don't need this anymore
 };

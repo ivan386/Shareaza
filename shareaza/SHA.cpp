@@ -191,9 +191,12 @@ CString CSHA::HashToHexString(const SHA1* pHashIn, BOOL bURN)
 
 BOOL CSHA::HashFromString(LPCTSTR pszHash, SHA1* pHashIn)
 {
-	if ( ! pszHash || _tcslen( pszHash ) < 32 ) return FALSE;
+	if ( ! pszHash || _tcslen( pszHash ) < 32 ) return FALSE;  //Invalid hash
 
-	LPBYTE pHash = (LPBYTE)pHashIn;
+	if ( _tcsnicmp(pszHash, _T("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"), 32 ) == 0 ) return FALSE; //Bad hash
+
+	SHA1 Hash;
+	LPBYTE pHash = (LPBYTE)&Hash;
 	DWORD nBits	= 0;
 	int nCount	= 0;
 
@@ -218,6 +221,8 @@ BOOL CSHA::HashFromString(LPCTSTR pszHash, SHA1* pHashIn)
 
 		nBits <<= 5;
 	}
+
+	*pHashIn = Hash;
 
 	return TRUE;
 }
@@ -251,3 +256,14 @@ BOOL CSHA::HashFromURN(LPCTSTR pszHash, SHA1* pHashIn)
 	return FALSE;
 }
 
+
+BOOL CSHA::IsNull(SHA1* pHash)
+{
+	SHA1 Blank;
+
+	ZeroMemory( &Blank, sizeof(SHA1) );
+
+	if ( *pHash == Blank ) return TRUE;
+
+	return FALSE;
+}
