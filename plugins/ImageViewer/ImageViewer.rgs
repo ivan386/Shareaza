@@ -1,0 +1,60 @@
+HKCR
+{
+	Shareaza.ImageViewerPlugin.1 = s 'Shareaza Image Viewer Plugin'
+	{
+		CLSID = s '{2EE9D739-7726-41cf-8F18-4B1B8763BC63}'
+	}
+	Shareaza.ImageViewerPlugin = s 'Shareaza Image Viewer Plugin'
+	{
+		CurVer = s 'Shareaza.ImageViewerPlugin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2EE9D739-7726-41cf-8F18-4B1B8763BC63} = s 'Shareaza Image Viewer Plugin'
+		{
+			ProgID = s 'Shareaza.ImageViewerPlugin.1'
+			VersionIndependentProgID = s 'Shareaza.ImageViewerPlugin'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove General
+					{
+						val 'Shareaza Image Viewer' = s '{2EE9D739-7726-41cf-8F18-4B1B8763BC63}'
+					}
+				}
+			}
+		}
+	}
+}
+
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					val '{2EE9D739-7726-41cf-8F18-4B1B8763BC63}' = d 1
+				}
+			}
+		}
+	}
+}
