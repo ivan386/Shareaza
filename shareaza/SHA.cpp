@@ -89,7 +89,6 @@ void CSHA::Add(LPCVOID pData, DWORD nLength)
 void CSHA::Finish()
 {
 	unsigned int bits[2], index = 0;
-	byte bit[8];
 	// Save number of bits
 	_asm
 	{

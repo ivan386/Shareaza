@@ -716,7 +716,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		
 		ar >> m_bSHA1;
 		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
-		if ( nVersion >= 8 ) ar >> m_bTiger; else m_bSHA1 = FALSE;
+		if ( nVersion >= 8 ) ar >> m_bTiger; else m_bTiger = FALSE;
 		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
 		if ( nVersion >= 11 ) ar >> m_bMD5; else m_bMD5 = FALSE;
 		if ( m_bMD5 ) ar.Read( &m_pMD5, sizeof(MD5) );
