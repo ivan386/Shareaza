@@ -50,6 +50,7 @@ public:
 	BOOL	m_bStartup;
 	BOOL	m_bPromptURLs;
 	BOOL	m_bHideSearch;
+	BOOL	m_bAdultFilter;
 	CSpinButtonCtrl	m_wndTipSpin;
 	CListCtrl	m_wndTips;
 	CSliderCtrl	m_wndTipAlpha;

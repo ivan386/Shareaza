@@ -1283,7 +1283,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,160,WS_GROUP
+    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,172,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
                     140,10
@@ -1302,8 +1302,8 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,95,140,10
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,110,140,10
-    LTEXT           "Show rates in:",IDC_STATIC,15,142,50,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,70,142,80,55,CBS_DROPDOWNLIST | 
+    LTEXT           "Show rates in:",IDC_STATIC,15,155,50,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_RATES_IN_BYTES,70,155,80,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
@@ -1328,6 +1328,8 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
     CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,140,10
+    CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,140,140,10
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 292, 148

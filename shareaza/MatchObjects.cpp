@@ -712,6 +712,8 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		pHit->m_sSpeed = Settings.SmartVolume( pHit->m_nSpeed, TRUE, TRUE );
 	else
 		pHit->m_sSpeed.Empty();
+
+	if ( AdultFilter.IsFiltered( pHit->m_sName ) ) return FALSE;
 	
 	return ( pHit->m_bFiltered = TRUE );
 }

@@ -302,6 +302,8 @@
 #define IDC_PROGRESS_FILE               1105
 #define IDC_DOWNLOAD_GRAPH              1105
 #define IDC_HIDE_SEARCH                 1106
+#define IDC_ADULT_FILTER                1107
+#define IDC_HIDE_SEARCH2                1107
 #define IDC_IP_1                        1108
 #define IDC_IP_2                        1109
 #define IDC_IP_3                        1110
@@ -1498,7 +1500,7 @@
 #define ID_TOOLS_MERCORA                33116
 #define ID_HELP_FIREWALLS               33117
 #define ID_TOOLS_SEEDTORRENT            33118
-#define ID_HELP_SECURITY				33119
+#define ID_HELP_SECURITY                33119
 
 // Next default values for new objects
 // 
