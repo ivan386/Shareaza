@@ -37,7 +37,7 @@ static char THIS_FILE[]=__FILE__;
 
 LPBYTE CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest)
 {
-	*pnOutput = nSuggest ? nSuggest : nInput * 2;
+	*pnOutput = nSuggest ? nSuggest : compressBound( nInput );
 	
 	BYTE* pBuffer = new BYTE[ *pnOutput ];
 	
