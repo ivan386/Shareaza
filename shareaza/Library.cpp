@@ -273,6 +273,12 @@ BOOL CLibrary::Load()
 	{
 		CreateDirectory( Settings.Downloads.CompletePath, NULL );
 		LibraryFolders.AddFolder( Settings.Downloads.CompletePath );
+
+		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
+
+		//CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+		//LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	}
 	
 	LibraryFolders.CreateAlbumTree();
