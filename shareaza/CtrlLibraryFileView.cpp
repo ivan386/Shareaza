@@ -97,6 +97,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_SEARCH_FOR_SERIES, OnSearchForSeries)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_CREATETORRENT, OnUpdateLibraryCreateTorrent)
 	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
+	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REBUILD_ANSI, OnUpdateLibraryRebuildAnsi)
+	ON_COMMAND(ID_LIBRARY_REBUILD_ANSI, OnLibraryRebuildAnsi)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -509,6 +511,25 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 			ShellExecute( GetSafeHwnd(), _T("open"), Settings.BitTorrent.TorrentCreatorPath, sCommandLine, NULL, SW_SHOWNORMAL );
 		
 		}
+
+	}
+}
+
+void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( GetSelectedCount() == 1 );
+}
+
+void CLibraryFileView::OnLibraryRebuildAnsi() 
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	
+	if ( CLibraryFile* pFile = GetSelectedFile() )
+	{
+		pLock.Unlock();
+
+		// Do stuff here
+		Beep( 500, 500 );
 
 	}
 }

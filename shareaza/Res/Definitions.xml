@@ -314,6 +314,7 @@
 	<command code="33108" id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION"/>
 	<command code="33109" id="ID_LIBRARY_EXPORT_COLLECTION"/>
 	<command code="33110" id="ID_LIBRARY_SEED_TORRENT"/>
+	<command code="33111" id="ID_LIBRARY_REBUILD_ANSI"/>
 	<command code="33112" id="ID_DOWNLOADS_EDIT"/>
 	<command code="33113" id="ID_MEDIA_MUTE"/>
 	<command code="33114" id="ID_WINDOW_REMOTE"/>

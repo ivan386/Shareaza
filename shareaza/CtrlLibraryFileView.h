@@ -102,8 +102,8 @@ protected:
 	afx_msg void OnSearchForSeries();
 	afx_msg void OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryCreateTorrent();
-	//afx_msg void OnUpdateLibraryJigle(CCmdUI* pCmdUI);
-	//afx_msg void OnLibraryJigle();
+	afx_msg void OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryRebuildAnsi();
 	//}}AFX_MSG
 	
 	DECLARE_MESSAGE_MAP()

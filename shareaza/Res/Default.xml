@@ -1091,6 +1091,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -1159,6 +1160,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -2304,7 +2306,7 @@
 		<image id="ID_TOOLS_WIZARD"/>
 		<image id="ID_TOOLS_SETTINGS" id1="ID_NEIGHBOURS_SETTINGS" id2="ID_DOWNLOADS_SETTINGS" id3="ID_UPLOADS_SETTINGS" id4="ID_MEDIA_SETTINGS" id4="ID_UPLOADS_EDIT_QUEUE"/>
 		<image id="ID_TOOLS_DOWNLOAD"/>
-		<image id="ID_TOOLS_LANGUAGE"/>
+		<image id="ID_TOOLS_LANGUAGE" id1="ID_LIBRARY_REBUILD_ANSI"/>
 		<!-- Messy Now -->
 		<image/>
 		<image id="ID_TAB_HOME" id1="ID_LIBRARY_VIEW_HOME"/>
