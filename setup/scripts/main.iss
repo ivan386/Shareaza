@@ -433,6 +433,16 @@ Begin
       FirewallProfile.AuthorizedApplications.Add(FirewallObject);
     End;
   End;
+  if CurStep=ssInstall then begin
+    if not IsTaskSelected('firewall') then begin
+      if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
+        InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+        FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+        FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+        FirewallProfile.AuthorizedApplications.Remove(InstallFolder);
+      End;
+    End;
+  End;
 End;
 
 #expr SaveToFile("..\builds\Preprocessed.iss")
