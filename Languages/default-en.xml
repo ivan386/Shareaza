@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.18"
+		version="2.1.0.21"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3199,30 +3199,30 @@
 		<control caption="Configure Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2 Network (recommended):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2 Network:"/>
+		<control caption="(G2 recommended)"/>
 		<control caption="Connect to Gnutella2 today"/>
+		<control caption="Mode:"/>
+		<control caption="Optimal|Leaf|Hub"/>
+		<control caption="G_2 Connections:"/>
+		<control caption="Leaf to Hub:"/>
+		<control/><control/>
+		<control caption="Hub to Leaf:"/>
+		<control/><control/>
+		<control caption="Hub to Hub:"/>
+		<control/><control/>
 		<control caption="Gnutella1 Network:"/>
-		<control caption="Connect to Gnutella1 today"/>
 		<control caption="Always connect to Gnutella1"/>
-		<control caption="_Hub Election:"/>
-		<control caption="Allow this node to become a Hub"/>
-		<control caption="Force this node to be a Hub"/>
-		<control caption="Allow this node to become a Leaf"/>
-		<control caption="Accept only Hub connections"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Leaf to Hub:"/>
+		<control caption="Connect to Gnutella1 today"/>
+		<control caption="Mode:"/>
+		<control caption="Optimal|Leaf|Ultrapeer"/>
+		<control caption="G_1 Connections:"/>
+		<control caption="Leaf to Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Hub to Leaf:"/>
+		<control caption="Ultrapeer to Leaf:"/>
 		<control/><control/>
-		<control caption="Hub to Hub:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Leaf to Hub:"/>
-		<control/><control/>
-		<control caption="Hub to Leaf:"/>
-		<control/><control/>
-		<control caption="Hub to Hub:"/>
+		<control caption="Peer to Peer:"/>
 		<control/><control/>
 		<control caption="_Link Compression:"/>
 		<control caption="Hub to Leaf"/>
