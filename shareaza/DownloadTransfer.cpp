@@ -78,6 +78,8 @@ CDownloadTransfer::~CDownloadTransfer()
 
 void CDownloadTransfer::Close(TRISTATE bKeepSource)
 {
+	SetState( dtsNull );
+
 	CTransfer::Close();
 	
 	if ( m_pSource != NULL )
