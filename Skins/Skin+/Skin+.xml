@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Body element, don't touch -->
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+
+<!-- MANIFEST -->
+<manifest	name="Skin+"
+			author="ogg123"
+			description="+"
+			link="http://www.shareaza.com/"
+			email="contact@shareaza.com"
+			version="2.36"
+			type="Skin"
+			language="en"
+			/>
+
+
+<!-- TOOLBAR DEFINITIONS (only edit/remove to change the layout of buttons within the gui) -->
+<toolbars>
+	<!-- MAIN WINDOW -->
+	<toolbar name="CMainWnd.Windowed">
+		<button id="ID_NETWORK_CONNECT" text="Connect"/>
+		<button id="ID_NETWORK_DISCONNECT"/>
+		<separator/>
+		<button id="ID_TAB_HOME"/>
+		<button id="ID_VIEW_SYSTEM"/>
+		<button id="ID_VIEW_NEIGHBOURS"/>
+		<button id="ID_VIEW_DOWNLOADS"/>
+		<button id="ID_VIEW_UPLOADS"/>
+		<button id="ID_VIEW_LIBRARY"/>
+		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_VIEW_SECURITY"/>
+		<button id="ID_VIEW_HOSTS"/>
+		<button id="ID_VIEW_DISCOVERY"/>
+		<button id="ID_VIEW_TRAFFIC"/>
+		<button id="ID_VIEW_PACKETS"/>
+		<button id="ID_VIEW_SEARCH_MONITOR"/>
+		<button id="ID_VIEW_RESULTS_MONITOR"/>
+		<separator/>
+		<button id="ID_TOOLS_SETTINGS"/>
+		<button id="ID_TOOLS_DOWNLOAD"/>
+		<separator/>
+		<button id="ID_WINDOW_CASCADE"/>
+		<button id="ID_WINDOW_TILE_HORZ"/>
+		<button id="ID_WINDOW_TILE_VERT"/>
+		<separator/>
+		<button id="ID_NETWORK_SEARCH" text="New Search"/>
+	</toolbar>
+	<!-- SEARCH WINDOW -->
+	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse"/>
+		<separator/>
+		<label text="Filter:" tip="Type some words to filter the results with"/>
+		<control id="107" width="130"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
+		<separator/>
+		<button id="ID_SEARCH_SEARCH" text="Search Again..."/>
+		<button id="ID_SEARCH_STOP" text="Stop"/>
+		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Search Bar"/>
+		<button id="ID_SEARCH_DETAILS" text="Details"/>
+	</toolbar>
+	<toolbar name="CSearchWnd.Panel">
+		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse"/>
+		<separator/>
+		<label text="Filter:" tip="Type some words to filter the results with"/>
+		<control id="107" width="130"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
+		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Search Bar"/>
+		<button id="ID_SEARCH_DETAILS" text="Details"/>
+	</toolbar>
+	<!-- BROWSE HOST WINDOW -->
+	<toolbar name="CBrowseHostWnd">
+		<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
+		<button id="ID_SEARCH_CHAT" text="Chat to User"/>	
+		<separator/>
+		<label text="Filter:" tip="Type some words to filter the results with"/>
+		<control id="107" width="130"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
+		<separator/>
+		<button id="ID_BROWSE_STOP" text="Stop"/>
+		<button id="ID_BROWSE_REFRESH" text="Refresh"/>
+		<separator/>
+		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
+	</toolbar>
+	<!-- DOWNLOADS WINDOW -->
+	<toolbar name="CDownloadsWnd">
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Open File"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Open File"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancel File"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Clear File"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Delete File"/>
+		<separator/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Add Torrent"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Show Monitor"/>
+		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Show Torrent"/>
+		<rightAlign/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Clear Completed"/>
+		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filter"/>
+	</toolbar>
+	<!-- UPLOADS WINDOW -->
+	<toolbar name="CUploadsWnd">
+		<button id="ID_UPLOADS_LAUNCH" text="Open File"/>
+		<button id="ID_UPLOADS_CLEAR" text="Cancel File"/>
+		<separator/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
+		<button id="ID_UPLOADS_CHAT" text="Chat to User"/>
+		<button id="ID_SECURITY_BAN" text="Ban User"/>
+		<rightAlign/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Clear Completed"/>
+		<button id="ID_UPLOADS_FILTER_MENU" text="Filter"/>
+	</toolbar>
+	<!-- LIBRARY FRAME -->
+	<toolbar name="CLibraryHeaderBar.Physical">
+		<button id="ID_LIBRARY_VIEW" text="View"/>
+		<button id="ID_LIBRARY_PANEL" text="Details"/>
+		<button id="ID_LIBRARY_PARENT" text="Up"/>
+	</toolbar>
+	<toolbar name="CLibraryHeaderBar.Virtual">
+		<button id="ID_LIBRARY_VIEW" text="View"/>
+		<button id="ID_LIBRARY_PANEL" text="Details"/>
+		<button id="ID_LIBRARY_PARENT" text="Up"/>
+	</toolbar>
+	<!-- LIBRARY VIEWS -->
+	<toolbar name="CLibraryHomeView.Virtual">
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Create New Folder..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Folder"/>
+		<RightAlign/>
+		<label text="Find:" tip="Type some words to search your library"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK"/>
+	</toolbar>
+	<toolbar name="CLibraryHomeView.Physical">
+		<button id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
+		<button id="ID_LIBRARY_ADD" text="Add Folder..."/>
+		<RightAlign/>
+		<label text="Find:" tip="Type some words to search your library"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK"/>
+	</toolbar>
+	<toolbar name="CLibraryTileView.Virtual">
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Create New Folder..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Delete Folder"/>
+		<RightAlign/>
+		<label text="Find:" tip="Type some words to search your library"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Physical">
+		<button id="ID_LIBRARY_LAUNCH" text="Open File"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
+		<button id="ID_LIBRARY_DELETE" text="Delete File"/>
+		<RightAlign/>
+		<label text="Find:" tip="Type some words to search your library"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Virtual">
+		<button id="ID_LIBRARY_LAUNCH" text="Open File"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
+		<RightAlign/>
+		<label text="Find:" tip="Type some words to search your library"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK"/>
+	</toolbar>
+	<!-- MEDIA WINDOW -->
+	<toolbar name="CMediaFrame">
+		<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
+		<separator/>
+		<button id="ID_MEDIA_PLAY"/>
+		<button id="ID_MEDIA_PAUSE"visible="false"/>
+		<button id="ID_MEDIA_STOP"/>
+		<button id="ID_MEDIA_PREVIOUS"/>
+		<button id="ID_MEDIA_NEXT"/>
+		<button id="ID_MEDIA_OPEN"/>
+		<separator/>
+		<label text="Position:" tip="Seek to a position in the media file"/>
+		<control id="117" width="190" height="22"/>
+		<label text="Speed:" tip="Adjust the speed of the media file"/>
+		<control id="118" width="50" height="22"/>
+		<label text="Volume:" tip="Adjust the audio volume"/>
+		<control id="119" width="50" height="22"/>
+		<separator/>
+		<button id="ID_MEDIA_FULLSCREEN"/>
+		<button id="ID_MEDIA_ZOOM"/>
+		<button id="ID_MEDIA_VIS"/>
+	</toolbar>
+	<toolbar name="CMediaList">
+		<button id="ID_MEDIA_ADD"/>
+		<button id="ID_MEDIA_REMOVE"/>
+		<button id="ID_MEDIA_CLEAR"/>
+	</toolbar>
+	<!-- NEIGHBOURS WINDOW -->
+	<toolbar name="CNeighboursWnd">
+		<button id="ID_NETWORK_CONNECT_TO" text="Connect To"/>
+		<button id="ID_NEIGHBOURS_DISCONNECT" text="Disconnect"/>
+		<separator/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
+		<button id="ID_SECURITY_BAN" text="Ban User"/>
+		<separator/>
+		<button id="ID_NETWORK_G2" text="Gnutella2"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+	</toolbar>
+</toolbars>
+
+
+<!-- MENU DEFINITIONS (only edit/remove to change the layout of buttons within the gui) -->
+<menus>
+	<!-- MAIN WINDOW MENU BAR -->
+	<menu name="CMainWnd.Tabbed" type="bar">
+		<menu text="_Network">
+			<item id="ID_NETWORK_CONNECT" text="_Connect" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
+			<separator/>
+			<menu text="Choose _Networks">
+			<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
+			<item id="ID_NETWORK_ED2K" text="Connect to _Edonkey2000"/>
+			<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+			</menu>
+			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
+			<separator/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
+			<item id="ID_NETWORK_EXIT" text="E_xit"/>
+		</menu>
+		<menu text="_View">
+			<item id="ID_TAB_HOME" text="_Home"/>
+			<item id="ID_TAB_LIBRARY" text="_Library"/>
+			<item id="ID_TAB_MEDIA" text="_Media Player"/>
+			<item id="ID_TAB_SEARCH" text="_Search"/>
+			<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
+			<item id="ID_TAB_NETWORK" text="_Network"/>
+			<separator/>
+			<menu text="A_dvanced">
+				<item id="ID_VIEW_SECURITY" text="Se_curity" shortcut="F7"/>
+				<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
+				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
+				<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="F10"/>
+				<separator/>
+				<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
+				<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
+				<item id="ID_VIEW_RESULTS_MONITOR" text="H_it Monitor" shortcut="Ctrl+F3"/>
+			</menu>
+			<separator/>
+			<item id="ID_VIEW_BASIC" text="_Normal Mode"/>
+			<item id="ID_VIEW_TABBED" text="_Power Mode"/>
+			<item id="ID_VIEW_WINDOWED" text="_Windowed Mode"/>
+		</menu>
+		<menu text="_Tools">
+			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Download Magnet | Torrent..."/>
+			<separator/>
+			<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Choose a _Language..."/>
+			<item id="ID_TOOLS_PROFILE" text="Edit My _Profile..."/>
+			<item id="ID_TOOLS_WIZARD" text="QuickStart _Wizard..."/>
+			<separator/>
+			<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..."/>
+		</menu>
+		<menu text="_Window">
+			<item id="ID_WINDOW_NAVBAR" text="Show _Navigation Bar"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Show _Tool Bar"/>
+			<item id="ID_WINDOW_TABBAR" text="Show Tab _Bar"/>
+			<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
+			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
+		</menu>
+		<menu text="_Help">
+			<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
+			<item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+			<separator/>
+			<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+			<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+			<item id="ID_HELP_WEB_3" text="Slyck.com"/>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
+		</menu>
+	</menu>
+	<!-- VIEW POPUP -->
+	<menu name="CMainWnd.View.Tabbed">
+		<item id="ID_TAB_HOME" text="_Home"/>
+		<item id="ID_TAB_LIBRARY" text="_Library"/>
+		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_SEARCH" text="_Search"/>
+		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
+		<item id="ID_TAB_NETWORK" text="_Network"/>
+	</menu>
+	<!-- HOME MENU -->
+	<menu name="CHomeWnd.Tabbed">
+		<item id="ID_TAB_HOME" text="_Home"/>
+		<item id="ID_TAB_LIBRARY" text="_Library"/>
+		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_SEARCH" text="_Search"/>
+		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
+		<item id="ID_TAB_NETWORK" text="_Network"/>
+	</menu>
+	<!-- SEARCH WINDOW -->
+	<menu name="CSearchWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
+		<separator/>
+		<menu text="_User Services">
+			<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
+			<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
+			<item id="ID_SECURITY_BAN" text="_Ban User"/>
+		</menu>
+		<menu text="_Search For">
+			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+		</menu>
+		<menu text="_Web Services">
+			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="_Remove Filter"/>
+		<separator/>
+		<item id="ID_SEARCH_CLEAR" text="C_lear All Results"/>
+	</menu>
+	<!-- BROWSE HOST WINDOW -->
+	<menu name="CBrowseHostWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
+		<separator/>
+		<menu text="_User Services">
+			<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
+		</menu>
+		<menu text="_Search For">
+			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+		</menu>
+		<menu text="_Web Services">
+			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="R_emove Filter"/>
+	</menu>
+	<!-- DOWNLOADS WINDOW -->
+	<menu name="CDownloadsWnd.Download">
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview File"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR" text="_Cancel"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="_Pause"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
+		<separator/>
+		<menu text="_Download">
+			<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_MOVE_UP" text="Move _Up"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
+		</menu>
+		<menu text="_Advanced">
+			<item id="ID_DOWNLOADS_COPY" text="_Copy URI"/>
+			<item id="ID_DOWNLOADS_URL" text="_Add Source..."/>
+			<separator/>
+			<item id="ID_DOWNLOADS_EDIT" text="Advanced _Edit..."/>
+		</menu>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Clear Co_mpleted"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Auto Clear"/>
+	</menu>
+	<menu name="CDownloadsWnd.Source">
+		<item id="ID_TRANSFERS_CONNECT" text="_Access"/>
+		<item id="ID_TRANSFERS_FORGET" text="_Forget"/>
+		<item id="ID_TRANSFERS_DISCONNECT" text="_Disconnect"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Chat to User"/>
+	</menu>
+	<menu name="CDownloadsWnd.Completed">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open File"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
+		<item id="ID_DOWNLOADS_CLEAR" text="_Clear File"/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Clear Completed"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Auto Clear"/>
+	</menu>
+	<!-- LIBRARY FRAME -->
+	<menu name="CLibraryTree.Physical">
+		<item id="ID_LIBRARY_EXPLORE" text="_Explore"/>
+		<item id="ID_LIBRARY_REMOVE" text="_Remove"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Shared"/>
+		<separator/>
+		<item id="ID_LIBRARY_SCAN" text="S_can"/>
+		<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
+		<item id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
+	</menu>
+	<menu name="CLibraryTree.Virtual">
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Play Album"/>
+		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
+		<separator/>
+		<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
+		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Export Collection..."/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDER_NEW" text="_New Folder..."/>
+		<item id="ID_LIBRARY_ADD" text="_Add Folder..."/>
+                                <separator/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="F_older Properties"/>
+	</menu>
+	<!-- LIBRARY VIEWS -->
+	<menu name="CLibraryFileView.Physical">
+		<item id="ID_LIBRARY_LAUNCH" text="_Open or Play"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Add to Pla_ylist"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
+		<separator/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
+		<separator/>
+		<menu text="O_rganise">
+			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
+			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
+		</menu>
+		<menu text="S_earch For">
+			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+		</menu>
+		<menu text="_Web Services">
+			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create Torrent File"/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
+	</menu>
+	<menu name="CLibraryFileView.Virtual">
+		<item id="ID_LIBRARY_LAUNCH" text="_Open or Play"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Add to Pla_ylist"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
+		<separator/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
+`		<separator/>
+		<menu text="O_rganise">
+			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
+			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
+			<separator/>
+			<item id="ID_LIBRARY_UNLINK" text="Remove _Files"/>
+		</menu>
+		<menu text="S_earch For">
+			<item id="ID_SEARCH_FOR_THIS" text="This File"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Similar Files"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Music by the same Artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
+		</menu>
+		<menu text="_Web Services">
+			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create Torrent File"/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="File _Properties"/>
+	</menu>
+	<!-- MEDIA WINDOW -->
+	<menu name="CMediaFrame">
+		<item id="ID_MEDIA_PLAY" text="_Play"/>
+		<item id="ID_MEDIA_PAUSE" text="Pa_use"/>
+		<item id="ID_MEDIA_STOP" text="_Stop"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="_Open Media File..."/>
+		<item id="ID_MEDIA_CLOSE" text="_Close Media Files"/>
+		<separator/>
+		<menu text="Playlist">
+			<item id="ID_MEDIA_RANDOM" text="_Random"/>
+			<item id="ID_MEDIA_REPEAT" text="R_epeat"/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="Show Playlist"/>
+		</menu>
+		<menu text="Video Si_ze">
+			<item id="ID_MEDIA_FULLSCREEN" text="_Full Screen"/>
+			<separator/>
+			<item id="ID_MEDIA_SIZE_ONE" text="_Original Size"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="_Double Size"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="_Triple Size"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="_Largest"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Fill Window"/>
+			<separator/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Default _Aspect"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 Ratio (TV)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Film)"/>
+		</menu>
+		<menu text="Settings">
+			<item id="ID_MEDIA_STATUS" text="Show _Status Line"/>
+			<item id="ID_MEDIA_VIS" text="Choose _Visualisation..."/>
+			<separator/>
+			<item id="ID_MEDIA_SETTINGS" text="_Media Settings..."/>
+		</menu>
+	</menu>
+	<menu name="CMediaList">
+		<item id="ID_MEDIA_ADD" text="_Add File..."/>
+		<item id="ID_MEDIA_REMOVE" text="_Remove File"/>
+		<item id="ID_MEDIA_CLEAR" text="_Clear Playlist"/>
+		<separator/>
+		<item id="ID_MEDIA_RANDOM" text="Random"/>
+		<item id="ID_MEDIA_REPEAT" text="Repeat"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="_Open Playlist..."/>
+		<item id="ID_MEDIA_SAVE" text="_Save Playlist..."/>
+	</menu>
+	<!-- SYSTEM WINDOW -->
+	<menu name="CSystemWnd">
+		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
+		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
+		<separator/>
+		<item id="ID_SYSTEM_CLEAR" text="Clear _Buffer"/>
+	</menu>
+	<!-- NEIGHBOURS WINDOW -->
+	<menu name="CNeighboursWnd">
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Disconnect"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Copy _URI"/>
+		<separator/>
+		<menu text="_User Services">
+			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+			<item id="ID_NEIGHBOURS_CHAT" text="_Chat to User"/>
+			<item id="ID_SECURITY_BAN" text="B_an User"/>
+		</menu>
+		<menu text="_Networks">
+			<item id="ID_NETWORK_CONNECT" text="_Connect"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
+			<separator/>
+			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
+			<item id="ID_NETWORK_ED2K" text="_Edonkey2000"/>
+			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+		</menu>
+		<menu text="_Monitor">
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="View _Incoming Traffic"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="View _Outgoing Traffic"/>
+		</menu>
+	</menu>
+</menus>
+
+</skin>
