@@ -315,13 +315,14 @@ void CShakeNeighbour::SendPublicHeaders()
 	}
 	else
 	{
+		/*
 		if ( 1 )	//Add proper G2 detection here
 		{
 			if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 			{
 				m_pOutput->Print( "X-Ultrapeer: True\r\n" );
 			}
-			else if ( Settings.Gnutella2.ClientMode != MODE_HUB ) //( Settings.Gnutella.LeafEnable )
+			else if ( Settings.Gnutella2.ClientMode != MODE_HUB )
 			{
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 			}
@@ -336,6 +337,15 @@ void CShakeNeighbour::SendPublicHeaders()
 			{
 				m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 			}
+		}
+		*/
+		if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
+		{
+			m_pOutput->Print( "X-Ultrapeer: True\r\n" );
+		}
+		else if ( Settings.Gnutella2.ClientMode != MODE_HUB && Settings.Gnutella1.ClientMode != MODE_ULTRAPEER )
+		{
+			m_pOutput->Print( "X-Ultrapeer: False\r\n" );
 		}
 	}
 }
