@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,4
- PRODUCTVERSION 2,1,0,4
+ FILEVERSION 2,1,0,5
+ PRODUCTVERSION 2,1,0,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 4"
+            VALUE "FileVersion", "2, 1, 0, 5"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 4"
+            VALUE "ProductVersion", "2, 1, 0, 5"
         END
     END
     BLOCK "VarFileInfo"
@@ -962,6 +962,8 @@ IDB_NAVBAR_IMAGE        BITMAP                  "Res\\Navbar.bmp"
 IDB_NAVBAR_ALPHA        BITMAP                  "Res\\NavbarAlpha.bmp"
 IDB_REMOTE_SKIN         BITMAP                  "Res\\RemoteWnd.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
+IDB_SCHEDULER_HEADER    BITMAP                  "Res\\Scheduler.bmp"
+IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3006,6 +3008,27 @@ BEGIN
     GROUPBOX        "Default Tracker:",IDC_STATIC,5,180,270,33,WS_GROUP
 END
 
+IDD_SETTINGS_SCHEDULER DIALOGEX 0, 0, 282, 220
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Scheduler"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "&Options:",IDC_STATIC,5,165,270,45
+    CONTROL         "Enable Scheduler",IDC_SCHEDULER_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,176,250,15
+    GROUPBOX        "Key:",IDC_STATIC,5,112,270,52
+    RTEXT           "Sun",IDC_STATIC,2,26,15,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Mon",IDC_STATIC,2,36,15,8
+    RTEXT           "Tue",IDC_STATIC,2,46,15,8
+    RTEXT           "Wed",IDC_STATIC,2,56,15,8
+    RTEXT           "Thu",IDC_STATIC,2,66,15,8
+    RTEXT           "Fri",IDC_STATIC,2,76,15,8
+    RTEXT           "Sat",IDC_STATIC,2,86,15,8
+    LTEXT           "Do not connect",IDC_STATIC,47,121,163,8
+    LTEXT           "Connect at 50% of capacity",IDC_STATIC,47,136,163,8
+    LTEXT           "Connect at full speed",IDC_STATIC,47,150,163,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3640,6 +3663,14 @@ BEGIN
     END
 
     IDD_SETTINGS_BITTORRENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 213
+    END
+
+    IDD_SETTINGS_SCHEDULER, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 275

@@ -8027,6 +8027,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PageSettingsScheduler.cpp">
+			</File>
+			<File
 				RelativePath="PageSettingsSkins.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -8661,6 +8664,9 @@
 						PreprocessorDefinitions=""
 						BrowseInformation="1"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Scheduler.cpp">
 			</File>
 			<File
 				RelativePath="Schema.cpp">
@@ -12205,6 +12211,9 @@
 				RelativePath="PageSettingsRich.h">
 			</File>
 			<File
+				RelativePath=".\PageSettingsScheduler.h">
+			</File>
+			<File
 				RelativePath="PageSettingsSkins.h">
 			</File>
 			<File
@@ -12266,6 +12275,9 @@
 			</File>
 			<File
 				RelativePath="RouteCache.h">
+			</File>
+			<File
+				RelativePath=".\Scheduler.h">
 			</File>
 			<File
 				RelativePath="Schema.h">
@@ -12698,6 +12710,9 @@
 				RelativePath=".\Res\RemoteWnd.bmp">
 			</File>
 			<File
+				RelativePath=".\Res\Scheduler.bmp">
+			</File>
+			<File
 				RelativePath="Res\Search.ico">
 			</File>
 			<File
@@ -12753,6 +12768,9 @@
 			</File>
 			<File
 				RelativePath="Res\TaskPanelFooter.bmp">
+			</File>
+			<File
+				RelativePath=".\Res\TimeSlices.bmp">
 			</File>
 			<File
 				RelativePath="Res\Traffic.ico">

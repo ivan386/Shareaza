@@ -51,6 +51,7 @@
 #include "MD5.h"
 #include "SHA.h"
 #include "TigerTree.h"
+#include "Scheduler.h"
 
 #include "WndMain.h"
 #include "WndSystem.h"
@@ -120,7 +121,7 @@ BOOL CShareazaApp::InitInstance()
 		AfxOleInit();
 		AfxEnableControlContainer();
 	
-	CSplashDlg* dlgSplash = new CSplashDlg( 17, bSilentTray );
+	CSplashDlg* dlgSplash = new CSplashDlg( 18, bSilentTray );
 	
 	dlgSplash->Step( _T("Winsock") );
 		WSADATA wsaData;
@@ -153,6 +154,8 @@ BOOL CShareazaApp::InitInstance()
 	dlgSplash->Step( _T("Security Services") );
 		Security.Load();
 		AdultFilter.Load();
+	dlgSplash->Step( _T("Scheduler") );
+		Schedule.Load();
 	dlgSplash->Step( _T("Download Manager") );
 		Downloads.Load();
 	dlgSplash->Step( _T("Upload Manager") );

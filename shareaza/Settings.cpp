@@ -350,6 +350,10 @@ void CSettings::Setup()
 	Add( _T("Remote.Enable"), &Remote.Enable, FALSE );
 	Add( _T("Remote.Username"), &Remote.Username, _T("") );
 	Add( _T("Remote.Password"), &Remote.Password, _T("") );
+
+	Add( _T("Scheduler.Enable"), &Scheduler.Enable, FALSE );
+	Add( _T("Scheduler.LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50 );
+	Add( _T("Scheduler.AllowHub"), &Scheduler.AllowHub, TRUE );
 }
 
 

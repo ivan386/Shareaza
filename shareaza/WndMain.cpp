@@ -44,6 +44,7 @@
 #include "BTInfo.h"
 #include "Skin.h"
 #include "SkinWindow.h"
+#include "Scheduler.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -720,6 +721,10 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	// Menu Bar
 	
 	if ( m_wndMenuBar.IsWindowVisible() == FALSE ) ShowControlBar( &m_wndMenuBar, TRUE, FALSE );
+
+	// Scheduler
+	
+	if ( Settings.Scheduler.Enable ) Schedule.Update();
 	
 	// Update messages
 	

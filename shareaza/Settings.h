@@ -402,6 +402,13 @@ public:
 		CString		Username;
 		CString		Password;
 	} Remote;
+
+	struct sScheduler
+	{
+		BOOL		Enable;						//Enable the scheduler
+		DWORD		LimitedBandwidth;			//% of bandwidth to use in limited mode
+		BOOL		AllowHub;					//Allow hub mode while scheduler is active
+	} Scheduler;
 	
 	struct sLive
 	{

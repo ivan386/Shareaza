@@ -35,6 +35,7 @@
 #include "PageSettingsDownloads.h"
 #include "PageSettingsUploads.h"
 #include "PageSettingsRemote.h"
+#include "PageSettingsScheduler.h"
 #include "PageSettingsNetworks.h"
 #include "PageSettingsGnutella.h"
 #include "PageSettingsDonkey.h"
@@ -115,6 +116,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	CDownloadsSettingsPage	pDownloads;
 	CUploadsSettingsPage	pUploads;
 	CRemoteSettingsPage		pRemote;
+	CSchedulerSettingsPage	pScheduler;
 	CNetworksSettingsPage	gNetworks;
 	CGnutellaSettingsPage	pGnutella;
 	CDonkeySettingsPage		pDonkey;
@@ -137,6 +139,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddPage( &pRemote );
 	if ( bAdvanced ) 
 	{
+		AddPage( &pScheduler );
 		AddGroup( &gNetworks );
 		AddPage( &pGnutella );
 		AddPage( &pDonkey );
