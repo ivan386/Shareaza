@@ -45,7 +45,7 @@ public:
             range_.first = ~0ULL - 1000;
             range_.second = ~0ULL;
             CString errorMsg;
-            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor - begin: %u64 - end: %u64" ),
+            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor - begin: %I64u - end: %I64u" ),
                 begin, end );
             theApp.Message( MSG_ERROR, errorMsg );
         }
@@ -62,7 +62,7 @@ public:
             range_.first = ~0ULL - 1000;
             range_.second = ~0ULL;
             CString errorMsg;
-            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor (pair) - begin: %u64 - end: %u64" ),
+            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor (pair) - begin: %I64u - end: %I64u" ),
                 begin, end );
             theApp.Message( MSG_ERROR, errorMsg );
         }
@@ -80,7 +80,7 @@ public:
             range_.first = ~0ULL - 1000;
             range_.second = ~0ULL;
             CString errorMsg;
-            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor (conversion) - begin: %u64 - end: %u64" ),
+            errorMsg.Format( _T( "FF::SimpleFragment - invalid args in c'tor (resize) - begin: %I64u - end: %I64u" ),
                 begin, end );
             theApp.Message( MSG_ERROR, errorMsg );
         }

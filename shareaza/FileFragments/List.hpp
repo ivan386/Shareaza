@@ -303,8 +303,8 @@ List< FragmentT, ContainerT >::insert(
         CString errorMsg;
         errorMsg.Format(
             _T( "FF::SimpleFragmentList - invalid arg for insert - " )
-            _T( "List - size: %u64 - limit: %u64 - sum: %u64 - " )
-            _T( "Fragment - begin: %u64 - end: %u64" ), size(), limit(), sumLength(),
+            _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
+            _T( "Fragment - begin: %I64u - end: %I64u" ), size(), limit(), sumLength(),
             insertFragment.begin, insertFragment.end );
         theApp.Message( MSG_ERROR, errorMsg );
         return 0;
@@ -359,8 +359,8 @@ List< FragmentT, ContainerT >::erase(
         CString errorMsg;
         errorMsg.Format(
             _T( "FF::SimpleFragmentList - invalid arg for erase - " )
-            _T( "List - size: %u64 - limit: %u64 - sum: %u64 - " )
-            _T( "Fragment - begin: %u64 - end: %u64" ), size(), limit(), sumLength(),
+            _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
+            _T( "Fragment - begin: %I64i - end: %I64u" ), size(), limit(), sumLength(),
             eraseFragment.begin, eraseFragment.end );
         theApp.Message( MSG_ERROR, errorMsg );
         return 0;
