@@ -25,6 +25,7 @@
 #include "ShellIcons.h"
 #include "DlgTorrentTracker.h"
 #include "BENode.h"
+#include "Skin.h"
 
 
 #ifdef _DEBUG
@@ -93,7 +94,8 @@ BOOL CTorrentTrackerDlg::OnInitDialog()
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 80, -1 );
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 80, 0 );
-	
+	Skin.Translate( _T("CTorrentTrackerList"), m_wndFiles.GetHeaderCtrl() );
+
 	for ( int nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
 	{
 		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles + nFile;
