@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Musiek Kunstenaar</title>
                <title language="chs">音乐艺术家</title>
                <title language="de">Musiker</title>
-               <title language="es-mx">Artista de Música</title>
+               <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
                <title language="hu">Előadó</title>
                <title language="lt">Muzikantas</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Naam</title>
                        <title language="chs">名称</title>
                        <title language="de">Name</title>
-                       <title language="es-mx">Nombre</title>
+                       <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
                        <title language="hu">Név</title>
                        <title language="lt">Pavadinimas</title>
@@ -49,7 +49,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-mx">Descripción</title>
+                       <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
@@ -61,7 +61,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Versamelaar</title>
                        <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
-                       <title language="es-mx">Colector</title>
+                       <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="lt">Kolekcionierius</title>
@@ -73,7 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-mx">Comentarios</title>
+                       <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
@@ -100,7 +100,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">{name} - Diskografie</title>
                <title language="chs">{name} - 分类</title>
                <title language="de">{name}</title>
-               <title language="es-mx">{name}</title>
+               <title language="es">{name}</title>
                <title language="fr">{name} - Discographie</title>
                <title language="hu">{name} - Diszkográfia</title>
                <title language="lt">{name} diskografija</title>
@@ -110,7 +110,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
                <subtitle language="chs">这个文件夹中包括您所有的音乐，按 {name}。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene tu música por {name}</subtitle>
+               <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
                <subtitle language="hu">Ez a mappa az összes zenédet tartalmazza {name} szerint rendezve.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa&#160;„{name}“&#160;muzika.</subtitle>

@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Video:TV Programme</title>
                <title language="chs">视频: 电视演出</title>
                <title language="de">Video:Fernsehserien</title>
-               <title language="es-mx">Video: Shows de TV</title>
+               <title language="es">Video: Shows de TV</title>
                <title language="fr">Vidéo:Séries</title>
                <title language="hu">Videó: TV műsorok</title>
                <title language="lt">Video:TV programos</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -53,7 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">TV Programme</title>
                <title language="chs">电视演出</title>
                <title language="de">Fernsehserien</title>
-               <title language="es-mx">Shows de TV</title>
+               <title language="es">Shows de TV</title>
                <title language="fr">Séries</title>
                <title language="hu">TV műsorok</title>
                <title language="lt">TV programos</title>
@@ -63,7 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat 'n lys van die TV reekse wat jy in jou biblioteek het.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您库中的电视系列。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Fernsehserien in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
+               <subtitle language="es">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient la liste des séries de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa a TV sorozatokat tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos TV serialų sąrašas.</subtitle>

@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Algemeen:Alle Lêers</title>
                <title language="chs">总体: 全部文件</title>
                <title language="de">Allgemein:Alle Dateien</title>
-               <title language="es-mx">General: Todos los archivos</title>
+               <title language="es">General: Todos los archivos</title>
                <title language="fr">Général:Tous les fichiers</title>
                <title language="hu">Általános: minden fájl</title>
                <title language="lt">Bendra:Visos bylos</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -50,7 +50,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Alle Lêers</title>
                <title language="chs">所有文件</title>
                <title language="de">Alle Dateien</title>
-               <title language="es-mx">Todos los archivos</title>
+               <title language="es">Todos los archivos</title>
                <title language="fr">Tous les fichiers</title>
                <title language="hu">Minden fájl</title>
                <title language="lt">Visos bylos</title>
@@ -60,7 +60,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="chs">这个文件夹包含收藏中所有文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos bylos.</subtitle>

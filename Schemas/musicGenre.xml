@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Musiek Genre</title>
                <title language="chs">音乐流派</title>
                <title language="de">Musikgenre</title>
-               <title language="es-mx">Género de Música</title>
+               <title language="es">Género de Música</title>
                <title language="fr">Genre musical</title>
                <title language="hu">Zene műfaj</title>
                <title language="lt">Muzikos stilius</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -49,7 +49,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-mx">Descripción</title>
+                       <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
@@ -61,7 +61,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Versamelaar</title>
                        <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
-                       <title language="es-mx">Colector</title>
+                       <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="lt">Kolekcionierius</title>
@@ -73,7 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-mx">Comentarios</title>
+                       <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
@@ -94,7 +94,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">{name} Musiek</title>
                <title language="chs">{name} 音乐</title>
                <title language="de">{name} Musik</title>
-               <title language="es-mx">{name} Música</title>
+               <title language="es">{name} Música</title>
                <title language="fr">Musique {name}</title>
                <title language="hu">{name} Zene</title>
                <title language="lt">{name} muzika</title>
@@ -104,7 +104,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="chs">这个文件夹中所有音乐按照 {name} 流派排序。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene musica que es del Género {name}</subtitle>
+               <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa a(z) {name} műfaj zenéit tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>

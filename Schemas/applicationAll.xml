@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Program:Alle Programme</title>
                <title language="chs">应用程序: 所有应用程序</title>
                <title language="de">Anwendung:Alle Anwendungen</title>
-               <title language="es-mx">Aplicación: Todas los programas</title>
+               <title language="es">Aplicación: Todas los programas</title>
                <title language="fr">Application:Toutes les applications</title>
                <title language="hu">Program: minden program</title>
                <title language="lt">Programa:Visos programos</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -53,7 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Alle Programme</title>
                <title language="chs">所有应用程序</title>
                <title language="de">Alle Anwendungen</title>
-               <title language="es-mx">Todas las aplicaciones</title>
+               <title language="es">Todas las aplicaciones</title>
                <title language="fr">Toutes les applications</title>
                <title language="hu">Minden program</title>
                <title language="lt">Visos programos</title>
@@ -63,7 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
                <subtitle language="chs">这个文件夹包含收藏中所有应用文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Anwendungen in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-mx">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
+               <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa minden programfájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>

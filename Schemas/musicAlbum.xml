@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Musiek Album</title>
                <title language="chs">音乐专集</title>
                <title language="de">Musikalbum</title>
-               <title language="es-mx">Album de Música</title>
+               <title language="es">Album de Música</title>
                <title language="fr">Album Musical</title>
                <title language="hu">Zenei album</title>
                <title language="lt">Muzikinis albumas</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -51,7 +51,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Kunstenaar</title>
                        <title language="chs">艺术家</title>
                        <title language="de">Künstler</title>
-                       <title language="es-mx">Artista</title>
+                       <title language="es">Artista</title>
                        <title language="fr">Artiste</title>
                        <title language="hu">Előadó</title>
                        <title language="lt">Atlikėjas/Menininkas</title>
@@ -65,7 +65,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Genre</title>
                        <title language="chs">流派</title>
                        <title language="de">Genre</title>
-                       <title language="es-mx">Género</title>
+                       <title language="es">Género</title>
                        <title language="fr">Genre</title>
                        <title language="hu">Műfaj</title>
                        <title language="lt">Žanras/Stilius</title>
@@ -77,7 +77,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Snitte</title>
                        <title language="chs">Tracks</title>
                        <title language="de">Tracks</title>
-                       <title language="es-mx">Pista</title>
+                       <title language="es">Pista</title>
                        <title language="fr">Pistes</title>
                        <title language="hu">Szám</title>
                        <title language="lt">Takelių</title>
@@ -89,7 +89,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Skywe</title>
                        <title language="chs">碟片</title>
                        <title language="de">Disks</title>
-                       <title language="es-mx">Disco</title>
+                       <title language="es">Disco</title>
                        <title language="fr">Disques</title>
                        <title language="hu">Lemez</title>
                        <title language="lt">Plokštelių</title>
@@ -101,7 +101,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">CD Maatskappy</title>
                        <title language="chs">标签</title>
                        <title language="de">Etikett</title>
-                       <title language="es-mx">Etiqueta</title>
+                       <title language="es">Etiqueta</title>
                        <title language="fr">Étiquette</title>
                        <title language="hu">Címke</title>
                        <title language="lt">Etiketė</title>
@@ -113,7 +113,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Bron</title>
                        <title language="chs">源</title>
                        <title language="de">Source</title>
-                       <title language="es-mx">Fuente</title>
+                       <title language="es">Fuente</title>
                        <title language="fr">Source</title>
                        <title language="hu">Forrás</title>
                        <title language="lt">Šaltinis</title>
@@ -125,7 +125,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Tipe</title>
                        <title language="chs">类型</title>
                        <title language="de">Art</title>
-                       <title language="es-mx">Arte</title>
+                       <title language="es">Arte</title>
                        <title language="fr">Type</title>
                        <title language="hu">Típus</title>
                        <title language="lt">Tipas</title>
@@ -137,7 +137,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Totale Tydsduur</title>
                        <title language="chs">总时间</title>
                        <title language="de">Gesamtdauer</title>
-                       <title language="es-mx">Tiempo Total</title>
+                       <title language="es">Tiempo Total</title>
                        <title language="fr">Durée totale</title>
                        <title language="hu">Teljes idő</title>
                        <title language="lt">Bendra trukmė</title>
@@ -149,7 +149,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Taal</title>
                        <title language="chs">语言</title>
                        <title language="de">Sprache</title>
-                       <title language="es-mx">Lenguaje</title>
+                       <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
                        <title language="hu">Nyelv</title>
                        <title language="lt">Kalba</title>
@@ -161,7 +161,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Volledigheid</title>
                        <title language="chs">完全</title>
                        <title language="de">Vollständigkeit</title>
-                       <title language="es-mx">Lo completo</title>
+                       <title language="es">Lo completo</title>
                        <title language="fr">Perfection</title>
                        <title language="hu">Teljesség</title>
                        <title language="lt">Pilnumas</title>
@@ -173,7 +173,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Enkodeerder Gebruik</title>
                        <title language="chs">使用编码</title>
                        <title language="de">Benutzter Encoder</title>
-                       <title language="es-mx">Encoder Usado</title>
+                       <title language="es">Encoder Usado</title>
                        <title language="fr">Encodeur Utilisé</title>
                        <title language="hu">Kódoló használva</title>
                        <title language="lt">Naudotas koduoklis</title>
@@ -185,7 +185,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Bistempo</title>
                        <title language="chs">比特率</title>
                        <title language="de">Bitrate</title>
-                       <title language="es-mx">Bitrate</title>
+                       <title language="es">Bitrate</title>
                        <title language="fr">Fréquence</title>
                        <title language="hu">Bitráta</title>
                        <title language="lt">Bitratas</title>
@@ -197,7 +197,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Klanktempo</title>
                        <title language="chs">样品分级</title>
                        <title language="de">Abtastrate</title>
-                       <title language="es-mx">Sample Rate</title>
+                       <title language="es">Sample Rate</title>
                        <title language="fr">Echantillonage</title>
                        <title language="hu">Mintavétel</title>
                        <title language="lt">Išrankos dažnis</title>
@@ -209,7 +209,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-mx">Descripción</title>
+                       <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
@@ -221,7 +221,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Versamelaar</title>
                        <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
-                       <title language="es-mx">Colector</title>
+                       <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="lt">Kolekcionierius</title>
@@ -233,7 +233,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Kwaliteit Notas</title>
                        <title language="chs">质量说明项</title>
                        <title language="de">Qualitätshinweise</title>
-                       <title language="es-mx">Notas de Calidad</title>
+                       <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="lt">Apie kokybę</title>
@@ -245,7 +245,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Verspreider</title>
                        <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
-                       <title language="es-mx">Distribuidor</title>
+                       <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
                        <title language="hu">Árusító</title>
                        <title language="lt">Distributorius</title>
@@ -257,7 +257,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Verspreider Skakel</title>
                        <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
-                       <title language="es-mx">Link del Distribuidor</title>
+                       <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
                        <title language="hu">Árusító linkje</title>
                        <title language="lt">Distrib. nuoroda</title>
@@ -269,7 +269,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Uitgewers Groep</title>
                        <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
-                       <title language="es-mx">Release Group</title>
+                       <title language="es">Release Group</title>
                        <title language="fr">Groupe de release</title>
                        <title language="hu">Kiadó csapat</title>
                        <title language="lt">Leidimo grupė</title>
@@ -281,7 +281,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Uitgewers Skakel</title>
                        <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
-                       <title language="es-mx">Release Group Link</title>
+                       <title language="es">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
                        <title language="hu">Kiadó csapat linkje</title>
                        <title language="lt">Leid. gr. nuoroda</title>
@@ -293,7 +293,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Jaar</title>
                        <title language="chs">年份</title>
                        <title language="de">Jahr</title>
-                       <title language="es-mx">Año</title>
+                       <title language="es">Año</title>
                        <title language="fr">Année</title>
                        <title language="hu">Év</title>
                        <title language="lt">Metai</title>
@@ -305,7 +305,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Skakel</title>
                        <title language="chs">链接</title>
                        <title language="de">Link</title>
-                       <title language="es-mx">Link</title>
+                       <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="hu">Link</title>
                        <title language="lt">Nuoroda</title>

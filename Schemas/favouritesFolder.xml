@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Gunstelinge:Gunstelinge</title>
                <title language="chs">最爱:最爱</title>
                <title language="de">Favoriten:Favoriten</title>
-               <title language="es-mx">Favoritos: Favoritos</title>
+               <title language="es">Favoritos: Favoritos</title>
                <title language="fr">Favoris:Favoris</title>
                <title language="hu">Kedvencek: kedvencek</title>
                <title language="lt">Mėgiamybės:Mėgiamybės</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -49,7 +49,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Beskrywing</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
-                       <title language="es-mx">Descripción</title>
+                       <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="hu">Leírás</title>
                        <title language="lt">Aprašas</title>
@@ -62,7 +62,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">My Gunsteling Lêers</title>
                <title language="chs">我的最爱文件</title>
                <title language="de">Favoriten</title>
-               <title language="es-mx">Mis Archivos Favoritos</title>
+               <title language="es">Mis Archivos Favoritos</title>
                <title language="fr">Mes fichiers favoris</title>
                <title language="hu">Kedvenc fájlok</title>
                <title language="lt">Mano mėgiamos bylos</title>
@@ -72,7 +72,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
                <subtitle language="chs">这个文件夹中的文件都是Shareaza推荐给其它浏览您的收藏的用户。</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
+               <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
                <subtitle language="hu">Ez a mappa a kedvenc fájljaidat tartalmazza, amit a Shareaza ajánlani fog a fájllistádat lekérőknek.</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, kurias&#160;„Shareaza“&#160;rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>

@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Musiek:Volgens Album</title>
                <title language="chs">音乐: 按专辑</title>
                <title language="de">Musik:Nach Album</title>
-               <title language="es-mx">Música: Por Album</title>
+               <title language="es">Música: Por Album</title>
                <title language="fr">Musique:Par Album</title>
                <title language="hu">Zene: album szerint</title>
                <title language="lt">Muzika:Pagal albumus</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -53,7 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Musiek Volgens Album</title>
                <title language="chs">音乐-按-专辑</title>
                <title language="de">Musik nach Album</title>
-               <title language="es-mx">Música por Album</title>
+               <title language="es">Música por Album</title>
                <title language="fr">Musique par album</title>
                <title language="hu">Zene album szerint</title>
                <title language="lt">Muzika pagal albumus</title>
@@ -63,7 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您库中的专辑。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Alben in ihrere Bibliothek.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
+               <subtitle language="es">Esta carpeta contiene los albums que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient tous les albums musicaux de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa az albumokat tartalmazza.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>

@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Prent:My Prente</title>
                <title language="chs">影集: 我的图片</title>
                <title language="de">Bild:Eigene Bilder</title>
-               <title language="es-mx">Imagen: Mis imágenes</title>
+               <title language="es">Imagen: Mis imágenes</title>
                <title language="fr">Image:Mes images</title>
                <title language="hu">Kép: saját képek</title>
                <title language="lt">Paveikslėlis:Mano paveikslėliai</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -53,7 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Welkom by My Prente!</title>
                <title language="chs">欢迎来到我的图片！</title>
                <title language="de">Willkommen bei Eigene Bilder!</title>
-               <title language="es-mx">Bienvenido a Mis Imágenes!</title>
+               <title language="es">Bienvenido a Mis Imágenes!</title>
                <title language="fr">Bienvenue dans Mes images!</title>
                <title language="hu">Üdvözöllek a Saját Képekben!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano paveikslėliuose“!</title>
@@ -63,7 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="chs">这些文件夹包括所有的收藏中的图片，按相册进行编制。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Bilder in ihrer Bibliothek, geordnet nach Album. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
-               <subtitle language="es-mx">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
+               <subtitle language="es">Estas carpetas contienen todas tus imágenes de tu librería, organizadas por album. Abre una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque, organisées par album.  Ouvrez un sous-dossier pour continuer.</subtitle>
                <subtitle language="hu">Ez a mappa az összes kéet tartalmazza, albumokra bontva.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos paveikslėliai, surūšiuoti pagal albumus. Tęskite atverdami žemiau esantį katalogą.</subtitle>

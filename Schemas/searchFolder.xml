@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Soek:Soekresultate</title>
                <title language="chs">搜索: 搜索结果</title>
                <title language="de">Suche:Suchergebnisse</title>
-               <title language="es-mx">Buscar: Resultados de busqueda</title>
+               <title language="es">Buscar: Resultados de busqueda</title>
                <title language="fr">Recherche:Résultats de recherche</title>
                <title language="hu">Keresési eredmények</title>
                <title language="lt">Paieška:Radiniai</title>
@@ -33,7 +33,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -45,7 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Tyd</title>
                        <title language="chs">时间</title>
                        <title language="de">Zeit</title>
-                       <title language="es-mx">Tiempo</title>
+                       <title language="es">Tiempo</title>
                        <title language="fr">Temps</title>
                        <title language="hu">Idő</title>
                        <title language="lt">Laikas</title>
@@ -57,7 +57,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Datum</title>
                        <title language="chs">日期</title>
                        <title language="de">Datum</title>
-                       <title language="es-mx">Fecha</title>
+                       <title language="es">Fecha</title>
                        <title language="fr">Date</title>
                        <title language="hu">Dátom</title>
                        <title language="lt">Data</title>
@@ -69,7 +69,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Inhoud</title>
                        <title language="chs">内容</title>
                        <title language="de">Inhalt</title>
-                       <title language="es-mx">Contenido</title>
+                       <title language="es">Contenido</title>
                        <title language="fr">Contenu</title>
                        <title language="hu">Tartalom</title>
                        <title language="lt">Turinys</title>
@@ -85,7 +85,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Soek vir " {content} "</title>
                <title language="chs">按 "{content}" 搜索</title>
                <title language="de">Suche nach "{content}"</title>
-               <title language="es-mx">Busca por "{contenido}</title>
+               <title language="es">Busca por "{contenido}</title>
                <title language="fr">Recherche de "{content}"</title>
                <title language="hu">Keresés "{content}"</title>
                <title language="lt">&#160;„{content}“&#160;radiniai</title>
@@ -95,7 +95,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
                <subtitle language="chs">这个文件夹包括匹配您搜索的 {content}</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
+               <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
                <subtitle language="hu">Ezek a mappák egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
                <subtitle language="lt">&#160;Šiame kataloge yra bylos, surastos pagal ieškinį&#160;„{content}“.</subtitle>

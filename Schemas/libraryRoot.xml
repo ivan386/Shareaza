@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Algemeen:My Shareaza Biblioteek</title>
                <title language="chs">总体: 我的Shareaza收藏</title>
                <title language="de">Allgemein:Shareaza Bibliothek</title>
-               <title language="es-mx">General: Mi Librería Shareaza de Archivos</title>
+               <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
                <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
@@ -34,7 +34,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -46,7 +46,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Eienaar</title>
                        <title language="chs">所有者</title>
                        <title language="de">Besitzer</title>
-                       <title language="es-mx">Dueño</title>
+                       <title language="es">Dueño</title>
                        <title language="fr">Propriétaire</title>
                        <title language="hu">Tulajdonos</title>
                        <title language="lt">Savininkas</title>
@@ -58,7 +58,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Kommentaar</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
-                       <title language="es-mx">Comentarios</title>
+                       <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="lt">Komentarai</title>
@@ -74,7 +74,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Welkom by Jou Biblioteek!</title>
                <title language="chs">欢迎来到您的库！</title>
                <title language="de">Willkommen in ihrere Bibliothek!</title>
-               <title language="es-mx">Bienvenido a Mi Librería!</title>
+               <title language="es">Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
                <title language="hu">Üdvözöllek a Saját könyvtárban!</title>
                <title language="lt">Sveiki apsilankę&#160;savo kolekcijoje!</title>
@@ -84,7 +84,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="chs">您总共有 {totalFiles} 个文件，共计 {totalVolume} 在您的库中。</subtitle>
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
-               <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
+               <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}. </subtitle>

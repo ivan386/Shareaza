@@ -20,7 +20,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Boek:Alle Boeke</title>
                <title language="chs">书籍: 所有书籍</title>
                <title language="de">Buch:Alle Bücher</title>
-               <title language="es-mx">Libro: Todos los libros</title>
+               <title language="es">Libro: Todos los libros</title>
                <title language="fr">Livre:Tous les livres</title>
                <title language="hu">Könyv: minden könyv</title>
                <title language="lt">Knyga:Visos knygos</title>
@@ -37,7 +37,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="af">Titel</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
-                       <title language="es-mx">Título</title>
+                       <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="hu">Cím</title>
                        <title language="lt">Pavadinimas</title>
@@ -53,7 +53,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="af">Alle Boeke</title>
                <title language="chs">所有书籍</title>
                <title language="de">Alle Bücher</title>
-               <title language="es-mx">Todos los libros</title>
+               <title language="es">Todos los libros</title>
                <title language="fr">Tous les livres</title>
                <title language="hu">Minden könyv</title>
                <title language="lt">Visos knygos</title>
@@ -63,7 +63,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="af">Hierdie gids bevat alle boeke in jou biblioteek.</subtitle>
                <subtitle language="chs">这个文件夹包含收藏中所有书籍。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bücher in ihrer Bibliothek.</subtitle>
-               <subtitle language="es-mx">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les livres de votre bibliothèque.</subtitle>
                <subtitle language="hu">Ez a mappa minden könyvfájlt tartalmaz a könyvtárban.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos knygos.</subtitle>
