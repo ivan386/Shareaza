@@ -208,14 +208,21 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CDownloadEditDlg::OnTorrentInfo()
 {
+	int nStart;
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	
 	if ( ! Downloads.Check( m_pDownload ) ) return;
 	if ( ! m_pDownload->m_pTorrent.IsAvailable() ) return;
 	
-	CTorrentTrackerDlg dlg( m_pDownload );
+	nStart = m_pDownload->m_nStartTorrentDownloads;
+	CTorrentTrackerDlg dlg( &m_pDownload->m_pTorrent, &nStart );
 	pLock.Unlock();
 	dlg.DoModal();
+
+	if ( pLock.Lock(250) )
+	{
+		if ( Downloads.Check( m_pDownload ) ) m_pDownload->m_nStartTorrentDownloads = nStart;
+	}
 }
 
 void CDownloadEditDlg::OnErase()

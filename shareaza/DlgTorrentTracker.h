@@ -34,7 +34,7 @@ class CTorrentTrackerDlg : public CSkinDialog
 {
 // Construction
 public:
-	CTorrentTrackerDlg(CDownload* pDown, CWnd* pParent = NULL);
+	CTorrentTrackerDlg(CBTInfo* pDown, int* pStart, CWnd* pParent = NULL);
 
 // Dialog Data
 public:

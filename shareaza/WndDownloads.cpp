@@ -1087,16 +1087,22 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 		
 		if ( pDownload->m_bSelected && pDownload->m_pTorrent.IsAvailable() )
 		{
-			//CTorrentTrackerDlg dlg( &pDownload->m_pTorrent );
-			CTorrentTrackerDlg dlg( pDownload );
+			int nStart = pDownload->m_nStartTorrentDownloads;
+			CTorrentTrackerDlg dlg( &pDownload->m_pTorrent, &nStart );
+
 			
 			pLock.Unlock();
 			dlg.DoModal();
 			pLock.Lock();
-			
-			if ( dlg.m_pInfo.IsAvailable() && Downloads.Check( pDownload ) )
+
+			if ( Downloads.Check( pDownload ) )
 			{
-				pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
+				pDownload->m_nStartTorrentDownloads = nStart;
+
+				if ( dlg.m_pInfo.IsAvailable() )
+				{
+					pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
+				}
 			}
 			
 			break;

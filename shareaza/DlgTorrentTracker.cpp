@@ -47,17 +47,17 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentTrackerDlg dialog
 
-CTorrentTrackerDlg::CTorrentTrackerDlg(CDownload* pDown, CWnd* pParent) : CSkinDialog(CTorrentTrackerDlg::IDD, pParent)
+CTorrentTrackerDlg::CTorrentTrackerDlg(CBTInfo* pInfo, int* pStart, CWnd* pParent) : CSkinDialog(CTorrentTrackerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CTorrentTrackerDlg)
 	m_sName = _T("");
 	m_sTracker = _T("");
 	//}}AFX_DATA_INIT
 
-	m_pInfo.Copy( &(pDown->m_pTorrent) );
+	m_pInfo.Copy( pInfo );
 	m_pInfo.m_bValid = FALSE;
 
-	m_pStartTorrentDownloads = &(pDown->m_nStartTorrentDownloads);
+	m_pStartTorrentDownloads = pStart;
 }
 
 void CTorrentTrackerDlg::DoDataExchange(CDataExchange* pDX)
