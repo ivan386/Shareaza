@@ -201,6 +201,8 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 {
 	CPrivateChatFrame* pFrame = NULL;
 
+	ASSERT ( pHost != NULL );
+
 	if ( ( nProtocol == PROTOCOL_BT ) || ( nProtocol == PROTOCOL_FTP ) )
 		return NULL;
 
@@ -215,6 +217,8 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 
 	if ( nProtocol == PROTOCOL_ED2K )
 	{
+		CEDClient* pClient;
+
 		// ED2K chats are handled by the EDClient section. (Transfers)
 
 		// First, check if it's a low ID user on another server. 
@@ -231,7 +235,10 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 250 ) ) return NULL;
 		// Find (or create) an EDClient
-		CEDClient* pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, &pServer->sin_addr, pServer->sin_port, pGUID );
+		if ( pServer )
+			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, &pServer->sin_addr, pServer->sin_port, pGUID );
+		else
+			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, pHost->sin_port, NULL, 0, pGUID );
 		// If we weren't able to create a client (Low-id and no server), then exit.
 		if ( ! pClient ) return NULL;
 		// Have it connect (if it isn't)
