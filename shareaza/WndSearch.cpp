@@ -440,23 +440,34 @@ void CSearchWnd::OnSearchSearch()
 
 	//** The 'Search More' situation   (ToDo: Detect if search changed and skip)
 	POSITION pos = m_pSearches.GetTailPosition();
-	if( (!m_bPaused) && m_bWaitMore && pos )
+	if( (!m_bPaused) && pos )
 	{
-		//Re-activate search window
-		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
 		pSearch = (CManagedSearch*)m_pSearches.GetPrev(pos);
-		pSearch->m_bActive = TRUE;
-		m_bWaitMore = FALSE;
-		m_bUpdate = TRUE;
+		
+		if( m_bWaitMore )
+		{
+			//Re-activate search window
+			theApp.Message( MSG_DEBUG, _T("Resuming Search") );
+			pSearch->m_bActive = TRUE;
+			m_bWaitMore = FALSE;
+			m_bUpdate = TRUE;
 
-		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
-		m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
+			//Resume G2 search
+			m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
+			m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
 
-		//Resume ED2K search
-		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
-		pSearch->m_tLastED2K = GetTickCount();
-
+			//Resume ED2K search
+			m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
+			pSearch->m_tLastED2K = GetTickCount();
+		}
+		else
+		{
+			//Pause search
+			theApp.Message( MSG_DEBUG, _T("Pausing Search") );
+			pSearch->m_bActive = FALSE;
+			m_bWaitMore = TRUE; 
+			m_bUpdate = TRUE;
+		}
 		return;
 	}
 	//** End of 'Search More'
