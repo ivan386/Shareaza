@@ -1546,6 +1546,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\DownloadTransferFTP.cpp">
+			</File>
+			<File
 				RelativePath="DownloadTransferHTTP.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -11938,6 +11941,9 @@
 			</File>
 			<File
 				RelativePath="DownloadTransferED2K.h">
+			</File>
+			<File
+				RelativePath=".\DownloadTransferFTP.h">
 			</File>
 			<File
 				RelativePath="DownloadTransferHTTP.h">

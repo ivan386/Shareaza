@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,97
- PRODUCTVERSION 2,1,0,97
+ FILEVERSION 2,1,0,98
+ PRODUCTVERSION 2,1,0,98
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 97"
+            VALUE "FileVersion", "2, 1, 0, 98"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 97"
+            VALUE "ProductVersion", "2, 1, 0, 98"
         END
     END
     BLOCK "VarFileInfo"
@@ -4430,6 +4430,10 @@ BEGIN
     IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
     IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
     IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
 END
 
@@ -5302,6 +5306,10 @@ BEGIN
                             "Would you like to prevent this collection from prompting you to download anything else?"
     IDS_LIBRARY_COPYURI     "Copy &URI"
     IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
 END
 
@@ -5626,6 +5634,10 @@ BEGIN
     ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
     ID_HELP_SECURITY        "Help protecting your system from hostile programs"
+END
+
+STRINGTABLE 
+BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
 END
 
