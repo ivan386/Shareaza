@@ -4797,7 +4797,6 @@ BEGIN
     IDS_DLM_NO_SOURCES      "No sources"
     IDS_DLM_OPEN_OPEN       "Open"
     IDS_DLM_OPEN_PREVIEW    "Preview"
-    IDS_DLM_VOLUME          "%s of %s (%.2f%%)"
     IDS_DLM_TOTAL_SPEED     "Total transfer speed:"
     IDS_DLM_ESTIMATED_TIME  "Estimated time remaining:"
     IDS_DLM_VOLUME_DOWNLOADED "Volume downloaded:"
@@ -4925,7 +4924,6 @@ END
 STRINGTABLE 
 BEGIN
     IDS_TIP_NA              "N/A"
-    IDS_TIP_NOFN            "%i of %i"
     IDS_TIP_LOCATION        "Location"
     IDS_TIP_TYPE            "Type"
     IDS_TIP_SIZE            "Size"
@@ -5209,7 +5207,6 @@ STRINGTABLE
 BEGIN
     IDS_DLM_MOVING          "Shareaza is moving the download:"
     IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
-    IDS_DLM_UPLOADED        "%s of %s (%.2f%%)"
     IDS_DLM_VOLUME_UPLOADED "Upload ratio:"
 END
 
@@ -5335,6 +5332,7 @@ STRINGTABLE
 BEGIN
     IDS_GENERAL_NOURNAVAILABLE "No URN available"
     IDS_GENERAL_CLOSE       "Close"
+    IDS_GENERAL_OF          "of"
 END
 
 STRINGTABLE 

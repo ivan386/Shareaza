@@ -717,7 +717,6 @@
 #define IDS_DLM_NO_SOURCES              8231
 #define IDS_DLM_OPEN_OPEN               8232
 #define IDS_DLM_OPEN_PREVIEW            8233
-#define IDS_DLM_VOLUME                  8234
 #define IDS_DLM_TOTAL_SPEED             8235
 #define IDS_DLM_ESTIMATED_TIME          8236
 #define IDS_DLM_VOLUME_DOWNLOADED       8237
@@ -725,7 +724,6 @@
 #define IDS_DLM_COMPLETED_WORD          8239
 #define IDS_DLM_MOVING                  8240
 #define IDS_DLM_VERIFY                  8241
-#define IDS_DLM_UPLOADED                8242
 #define IDS_DLM_VOLUME_UPLOADED         8243
 #define IDS_LIBHEAD_HOME                8288
 #define IDS_LIBHEAD_EXPLORE_FOLDER      8289
@@ -736,7 +734,6 @@
 #define IDS_LIBPANEL_RECENT_ADDITIONS   8294
 #define IDS_LIBPANEL_RATE_FILE          8295
 #define IDS_TIP_NA                      8304
-#define IDS_TIP_NOFN                    8305
 #define IDS_TIP_LOCATION                8306
 #define IDS_TIP_TYPE                    8307
 #define IDS_TIP_SIZE                    8308
@@ -1167,6 +1164,7 @@
 #define IDS_REMOTE_UNAVAILABLE          19002
 #define IDS_GENERAL_NOURNAVAILABLE      20000
 #define IDS_GENERAL_CLOSE               20001
+#define IDS_GENERAL_OF                  20002
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102
