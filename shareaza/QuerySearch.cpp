@@ -296,24 +296,62 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 
 CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 {
+	BOOL bUTF8, bGetS2;
+
 	CEDPacket* pPacket = NULL;
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
 
-	BOOL bUTF8 = bUDP || ( nServerFlags & ED2K_SERVER_TCP_UNICODE );
+
+	if ( bUDP )
+	{
+		bUTF8 = nServerFlags & ED2K_SERVER_UDP_UNICODE;
+		bGetS2 = nServerFlags & ED2K_SERVER_UDP_GETSOURCES2;
+	}
+	else
+	{
+		bUTF8 = nServerFlags & ED2K_SERVER_TCP_UNICODE;
+		bGetS2 = nServerFlags & ED2K_SERVER_TCP_GETSOURCES2;
+	}
 	
 	if ( m_bED2K )
 	{
 		if( m_bWantDN && Settings.eDonkey.MagnetSearch )
-		{			// We need the size- do a search by magnet (hash)
+		{			
+			// We need the size- do a search by magnet (hash)
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 			pPacket->WriteByte( 1 );
 			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ), bUTF8 );
 		}
 		else
-		{			// Don't need the size- Find more sources
-			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
-			pPacket->Write( &m_pED2K, sizeof(MD4) );
+		{			
+			// Don't need the size- use GETSOURCES
+
+			// For newer servers, send the file size if it's valid (and not over 4GB)
+			if ( ( bGetS2 ) && ( m_nMinSize == m_nMaxSize ) && ( m_nMaxSize < 0xFFFFFFFF ) )
+			{
+				// Newer server, send size as well as hash. May send multiple hash/sz in one packet.
+				if ( bUDP )
+				{
+					// Remote server (UDP)
+					pPacket = CEDPacket::New( ED2K_C2SG_GETSOURCES2 );
+					pPacket->Write( &m_pED2K, sizeof(MD4) );
+					pPacket->WriteLongLE( (DWORD)m_nMaxSize );
+				}
+				else
+				{
+					// Local server (TCP).
+					pPacket = CEDPacket::New( ED2K_C2S_GETSOURCES );
+					pPacket->Write( &m_pED2K, sizeof(MD4) );
+					pPacket->WriteLongLE( (DWORD)m_nMaxSize );
+				}
+			}
+			else
+			{
+				// Old style GetSources. One hash only, with no size attached
+				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
+				pPacket->Write( &m_pED2K, sizeof(MD4) );
+			}
 		}
 	}
 	else if ( m_bBTH )
@@ -324,8 +362,9 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	{
 		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 		
-		if ( m_nMinSize > 0 || m_nMaxSize < SIZE_UNKNOWN )
+		if ( m_nMinSize > 0 || m_nMaxSize < 0xFFFFFFFF )
 		{
+			// Add size limits to search (if available)
 			pPacket->WriteByte( 0 );		// Boolean AND (min/max) / (name/type)
 			pPacket->WriteByte( 0 );
 			
@@ -346,16 +385,17 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );
 		}
-		
 
 		if ( ( m_pSchema == NULL ) || ( ! m_pSchema->m_sDonkeyType.GetLength() ) )
-		{	// ed2k search without file type
+		{	
+			// ed2k search without file type
 			// Name / Key Words
 			pPacket->WriteByte( 1 );		
 			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 		}
 		else
-		{	// ed2k search including file type
+		{	
+			// ed2k search including file type
 			pPacket->WriteByte( 0 );		// Boolean AND (name/type)
 			pPacket->WriteByte( 0 );
 
@@ -679,6 +719,7 @@ BOOL CQuerySearch::CheckValid()
 
 			 _tcsicmp( *m_pWordPtr, _T("mpg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("avi") ) == 0 ||
+			 _tcsicmp( *m_pWordPtr, _T("mkv") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("wmv") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("mov") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("ogm") ) == 0 ||
