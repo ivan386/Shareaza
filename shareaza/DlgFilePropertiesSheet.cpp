@@ -93,20 +93,46 @@ int CFilePropertiesSheet::DoModal(int nPage)
 	CFileSharingPage	pSharing;
 	CFileSourcesPage	pSources;
 		
+	CString strTabLabel;
+		
 	switch ( m_pList.GetCount() )
 	{
 	case 0:
 		return IDCANCEL;
 	case 1:
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_GENERAL );
+		pGeneral.m_psp.dwFlags |= PSP_USETITLE;
+		pGeneral.m_psp.pszTitle = strTabLabel;
 		AddPage( &pGeneral );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_METADATA );
+		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
+		pMetadata.m_psp.pszTitle = strTabLabel;
 		AddPage( &pMetadata );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_COMMENTS );
+		pComments.m_psp.dwFlags |= PSP_USETITLE;
+		pComments.m_psp.pszTitle = strTabLabel;
 		AddPage( &pComments );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SHARING );
+		pSharing.m_psp.dwFlags |= PSP_USETITLE;
+		pSharing.m_psp.pszTitle = strTabLabel;
 		AddPage( &pSharing );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SOURCES );
+		pSources.m_psp.dwFlags |= PSP_USETITLE;
+		pSources.m_psp.pszTitle = strTabLabel;
 		AddPage( &pSources );
 		break;
 	default:
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_METADATA );
+		pMetadata.m_psp.dwFlags |= PSP_USETITLE;
+		pMetadata.m_psp.pszTitle = strTabLabel;
 		AddPage( &pMetadata );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_COMMENTS );
+		pComments.m_psp.dwFlags |= PSP_USETITLE;
+		pComments.m_psp.pszTitle = strTabLabel;
 		AddPage( &pComments );
+		LoadString( strTabLabel, IDS_PROPERTY_PAGE_SHARING );
+		pSharing.m_psp.dwFlags |= PSP_USETITLE;
+		pSharing.m_psp.pszTitle = strTabLabel;
 		AddPage( &pSharing );
 		if ( nPage == 1 ) nPage = 0;
 		else if ( nPage == 2 ) nPage = 1;
