@@ -80,7 +80,7 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	CWaitCursor pCursor;
 
-	SkinMe( _T("CLanguageDlg"), ID_TOOLS_LANGUAGE );
+	//SkinMe( _T("CLanguageDlg"), ID_TOOLS_LANGUAGE );
 
 	m_hArrow	= theApp.LoadStandardCursor( IDC_ARROW );
 	m_hHand		= theApp.LoadCursor( IDC_HAND );
@@ -119,25 +119,24 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	rc.bottom += ( nLanguagesToDisplay ) * ITEM_HEIGHT;
 
+	SCROLLINFO pScroll;
+	ZeroMemory( &pScroll, sizeof(pScroll) );
+	pScroll.cbSize	= sizeof(pScroll);
+	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
+	pScroll.nMin	= 0;
+	pScroll.nMax	= m_pPaths.GetSize(); 
+	pScroll.nPage	= nLanguagesToDisplay + 1;
+	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
-	if ( m_pSkin )
-		m_pSkin->CalcWindowRect( &rc );
-	else
+	//if ( m_pSkin )
+	//	m_pSkin->CalcWindowRect( &rc );
+	//else
 		CalcWindowRect( &rc, adjustBorder );
 
 	rc.OffsetRect(	GetSystemMetrics( SM_CXSCREEN ) / 2 -  rc.Width() / 2 - rc.left,
 					GetSystemMetrics( SM_CYSCREEN ) / 2 - rc.Height() / 2 - rc.top );
 	
 	SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height() , 0 );
-
-	SCROLLINFO pScroll;
-	ZeroMemory( &pScroll, sizeof(pScroll) );
-	pScroll.cbSize	= sizeof(pScroll);
-	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
-	pScroll.nMin	= 0;
-	pScroll.nMax	= m_pPaths.GetSize(); 
-	pScroll.nPage	= nLanguagesToDisplay + 1;
-	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	SetTimer( 1, 100, NULL );
 	
