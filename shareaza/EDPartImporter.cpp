@@ -1,9 +1,9 @@
 //
 // EDPartImporter.cpp
 //
-//	Date:			"$Date: 2005/03/22 22:00:12 $"
-//	Revision:		"$Revision: 1.7 $"
-//	Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/04/06 11:18:51 $"
+//	Revision:		"$Revision: 1.8 $"
+//	Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -306,7 +306,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	if ( ! pData.Open( strPath, CFile::modeRead ) ) return FALSE;
 	pData.GetStatus( pStatus );
 	pData.Close();
-	if ( nDate != mktime( pStatus.m_mtime.GetLocalTm( NULL ) ) )
+	if ( nDate > mktime( pStatus.m_mtime.GetLocalTm( NULL ) ) )
 	{
 		Message( IDS_ED2K_EPI_FILE_OLD );
 		return FALSE;
@@ -336,7 +336,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	pDownload->m_sRemoteName	= strName;
 	pDownload->m_sLocalName		= strTarget;
 		
-	pDownload->m_pFile->m_oFList.clear();
+	pDownload->m_pFile->m_oFList.swap( FF::SimpleFragmentList( nSize ) );
 	
 	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
 	{
