@@ -615,7 +615,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	pPacket->Write( m_pDownload->m_oED2K );
 	Send( pPacket );
 	
-	if ( m_pDownload->GetSourceCount() < 500 && m_pClient->m_bEmule && Network.IsListening() )
+	if ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted && m_pClient->m_bEmule && Network.IsListening() )
 	{
 		pPacket = CEDPacket::New( ED2K_C2C_REQUESTSOURCES, ED2K_PROTOCOL_EMULE );
 		pPacket->Write( m_pDownload->m_oED2K );

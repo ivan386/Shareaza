@@ -322,6 +322,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.ShowMonitorURLs"), &Downloads.ShowMonitorURLs, TRUE );
 	Add( _T("Downloads.SortColumns"), &Downloads.SortColumns, FALSE );
 	Add( _T("Downloads.SortSources"), &Downloads.SortSources, TRUE );
+	Add( _T("Downloads.SourcesWanted"), &Downloads.SourcesWanted, 500 );
 
 	Add( _T("Uploads.MaxPerHost"), &Uploads.MaxPerHost, 2 );
 	Add( _T("Uploads.FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 2560 );
