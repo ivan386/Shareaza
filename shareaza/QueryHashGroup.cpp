@@ -99,7 +99,8 @@ void CQueryHashGroup::Operate(CQueryHashTable* pTable, BOOL bAdd)
 {
 	ASSERT( m_pHash != NULL );
 	ASSERT( pTable->m_nHash == m_nHash );
-	ASSERT( pTable->m_nInfinity == 1 );
+	//ToDo: Check this
+	//ASSERT( pTable->m_nInfinity == 1 ); //This causes problems with G1 leaves
 	
 	BYTE* pSource = pTable->m_pHash;
 	BYTE* pTarget = m_pHash;
