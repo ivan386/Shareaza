@@ -156,6 +156,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
+	if ( pDownload->m_nTorrentUploaded )
+	{
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
+
 	m_sz.cy += TIP_RULE;
 	AddSize( pDC, m_sSize, 80 );
 	AddSize( pDC, m_sType, 80 );
@@ -227,7 +232,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	
 	DrawRule( pDC, &pt );
 	
-	CString strFormat, strETA, strSpeed, strVolume, strSources;
+	CString strFormat, strETA, strSpeed, strVolume, strSources, strTorrentUpload;
 	
 	int nSourceCount	= pDownload->GetSourceCount();
 	int nTransferCount	= pDownload->GetTransferCount();
@@ -299,6 +304,19 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	{
 		LoadString( strVolume, IDS_TIP_NA );
 	}
+
+	if ( pDownload->m_nTorrentUploaded )
+	{
+		LoadString( strFormat, IDS_DLM_UPLOADED );
+		strTorrentUpload.Format( strFormat,
+			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
+			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
+			pDownload->GetRatio() * 100.0f );
+	}
+	else
+	{
+		LoadString( strTorrentUpload, IDS_TIP_NA );
+	}
 	
 	LoadString( strFormat, IDS_DLM_TOTAL_SPEED );
 	DrawText( pDC, &pt, strFormat, 3 );
@@ -312,6 +330,15 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	DrawText( pDC, &pt, strFormat, 3 );
 	DrawText( pDC, &pt, strVolume, m_nStatWidth );
 	pt.y += TIP_TEXTHEIGHT;
+
+	if ( pDownload->m_nTorrentUploaded )
+	{
+		LoadString( strFormat, IDS_DLM_VOLUME_UPLOADED );
+		DrawText( pDC, &pt, strFormat, 3 );
+		DrawText( pDC, &pt, strTorrentUpload, m_nStatWidth );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+
 	LoadString( strFormat, IDS_DLM_NUMBER_OF_SOURCES );
 	DrawText( pDC, &pt, strFormat, 3 );
 	DrawText( pDC, &pt, strSources, m_nStatWidth );
