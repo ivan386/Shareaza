@@ -71,6 +71,7 @@
 	<command code="32830" id="ID_DOWNLOADS_LAUNCH"/>
 	<command code="32831" id="ID_DOWNLOADS_CLEAR"/>
 	<command code="32832" id="ID_DOWNLOADS_PAUSE"/>
+	<command code="32833" id="ID_DOWNLOADS_VIEW_REVIEWS"/>
 	<command code="32834" id="ID_LIBRARY_EXPLORE"/>
 	<command code="32835" id="ID_LIBRARY_SCAN"/>
 	<command code="32836" id="ID_LIBRARY_SHARED_FILE"/>

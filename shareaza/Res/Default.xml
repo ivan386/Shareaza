@@ -854,6 +854,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
@@ -870,6 +871,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
@@ -2235,7 +2237,7 @@
 		<image id="ID_SEARCH_COPY" id1="ID_DOWNLOADS_COPY"/>
 		<image id="ID_SEARCH_CHAT"/>
 		<image id="ID_SEARCH_FILTER"/>
-		<image id="ID_SEARCH_COLUMNS"/>
+		<image id="ID_SEARCH_COLUMNS" id1="ID_DOWNLOADS_VIEW_REVIEWS"/>
 		<image id="ID_SEARCH_SEARCH"/>
 		<image id="ID_SEARCH_CLEAR"/>
 		<image id="ID_SEARCH_STOP"/>
