@@ -219,12 +219,12 @@ pt.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so 
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
-it.components_languages=Lingua
+it.components_languages=Lingue
 it.tasks_allusers=Tutti gli utenti
 it.tasks_selectusers=Installa %1 per:
 it.tasks_currentuser=Solo %1
 it.tasks_multisetup=Abilita supporto multi utente
-it.tasks_firewall=Add an exception to the Windows Firewall
+it.tasks_firewall=Aggiungi un'eccezione a Windows Firewall
 it.run_skinexe=Stò installando le skin...
 it.reg_incomingchat=Messaggio di chat in arrivo
 it.reg_apptitle=Shareaza, il programma definitivo di P2P
