@@ -383,19 +383,19 @@ BOOL CED2K::HashFromURN(LPCTSTR pszHash, MD4* pHash)
 
 	int nLen = _tcslen( pszHash );
 
-	if ( nLen >= 9 + 32 && _tcsncmp( pszHash, _T("urn:ed2k:"), 9 ) == 0 )
+	if ( nLen >= 9 + 32 && _tcsnicmp( pszHash, _T("urn:ed2k:"), 9 ) == 0 )
 	{
 		return HashFromString( pszHash + 9, pHash );
 	}
-	else if ( nLen >= 5 + 32 && _tcsncmp( pszHash, _T("ed2k:"), 5 ) == 0 )
+	else if ( nLen >= 5 + 32 && _tcsnicmp( pszHash, _T("ed2k:"), 5 ) == 0 )
 	{
 		return HashFromString( pszHash + 5, pHash );
 	}
-	else if ( nLen >= 13 + 32 && _tcsncmp( pszHash, _T("urn:ed2khash:"), 13 ) == 0 )
+	else if ( nLen >= 13 + 32 && _tcsnicmp( pszHash, _T("urn:ed2khash:"), 13 ) == 0 )
 	{
 		return HashFromString( pszHash + 13, pHash );
 	}
-	else if ( nLen >= 9 + 32 && _tcsncmp( pszHash, _T("ed2khash:"), 9 ) == 0 )
+	else if ( nLen >= 9 + 32 && _tcsnicmp( pszHash, _T("ed2khash:"), 9 ) == 0 )
 	{
 		return HashFromString( pszHash + 9, pHash );
 	}

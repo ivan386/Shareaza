@@ -679,27 +679,27 @@ BOOL CTigerNode::HashFromURN(LPCTSTR pszHash, TIGEROOT* pTiger)
 
 	int nLen = _tcslen( pszHash );
 
-	if ( nLen >= 16+39 && _tcsncmp( pszHash, _T("urn:tree:tiger/:"), 16 ) == 0 )
+	if ( nLen >= 16+39 && _tcsnicmp( pszHash, _T("urn:tree:tiger/:"), 16 ) == 0 )
 	{
 		return HashFromString( pszHash + 16, pTiger );
 	}
-	else if ( nLen >= 12+39 && _tcsncmp( pszHash, _T("tree:tiger/:"), 12 ) == 0 )
+	else if ( nLen >= 12+39 && _tcsnicmp( pszHash, _T("tree:tiger/:"), 12 ) == 0 )
 	{
 		return HashFromString( pszHash + 12, pTiger );
 	}
-	else if ( nLen >= 15+39 && _tcsncmp( pszHash, _T("urn:tree:tiger:"), 15 ) == 0 )
+	else if ( nLen >= 15+39 && _tcsnicmp( pszHash, _T("urn:tree:tiger:"), 15 ) == 0 )
 	{
 		return HashFromString( pszHash + 15, pTiger );
 	}
-	else if ( nLen >= 11+39 && _tcsncmp( pszHash, _T("tree:tiger:"), 11 ) == 0 )
+	else if ( nLen >= 11+39 && _tcsnicmp( pszHash, _T("tree:tiger:"), 11 ) == 0 )
 	{
 		return HashFromString( pszHash + 11, pTiger );
 	}
-	else if ( nLen >= 85 && _tcsncmp( pszHash, _T("urn:bitprint:"), 13 ) == 0 )
+	else if ( nLen >= 85 && _tcsnicmp( pszHash, _T("urn:bitprint:"), 13 ) == 0 )
 	{
 		return HashFromString( pszHash + 46, pTiger );
 	}
-	else if ( nLen >= 81 && _tcsncmp( pszHash, _T("bitprint:"), 9 ) == 0 )
+	else if ( nLen >= 81 && _tcsnicmp( pszHash, _T("bitprint:"), 9 ) == 0 )
 	{
 		return HashFromString( pszHash + 42, pTiger );
 	}

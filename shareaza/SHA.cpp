@@ -229,23 +229,22 @@ BOOL CSHA::HashFromString(LPCTSTR pszHash, SHA1* pHashIn)
 BOOL CSHA::HashFromURN(LPCTSTR pszHash, SHA1* pHashIn)
 {
 	if ( pszHash == NULL ) return FALSE;
-
 	int nLen = _tcslen( pszHash );
 
-	if ( nLen >= 41 && _tcsncmp( pszHash, _T("urn:sha1:"), 9 ) == 0 )
+	if ( nLen >= 41 && _tcsnicmp( pszHash, _T("urn:sha1:"), 9 ) == 0 )
 	{
 		return HashFromString( pszHash + 9, pHashIn );
 	}
-	else if ( nLen >= 37 && _tcsncmp( pszHash, _T("sha1:"), 5 ) == 0 )
+	else if ( nLen >= 37 && _tcsnicmp( pszHash, _T("sha1:"), 5 ) == 0 )
 	{
 		return HashFromString( pszHash + 5, pHashIn );
 	}
-	else if ( nLen >= 85 && _tcsncmp( pszHash, _T("urn:bitprint:"), 13 ) == 0 )
+	else if ( nLen >= 85 && _tcsnicmp( pszHash, _T("urn:bitprint:"), 13 ) == 0 )
 	{
 		// 13 + 32 + 1 + 39
 		return HashFromString( pszHash + 13, pHashIn );
 	}
-	else if ( nLen >= 81 && _tcsncmp( pszHash, _T("bitprint:"), 9 ) == 0 )
+	else if ( nLen >= 81 && _tcsnicmp( pszHash, _T("bitprint:"), 9 ) == 0 )
 	{
 		return HashFromString( pszHash + 9, pHashIn );
 	}

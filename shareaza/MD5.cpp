@@ -147,11 +147,11 @@ BOOL CMD5::HashFromURN(LPCTSTR pszHash, MD5* pMD5)
 	
 	int nLen = _tcslen( pszHash );
 	
-	if ( nLen >= 8 + 32 && _tcsncmp( pszHash, _T("urn:md5:"), 8 ) == 0 )
+	if ( nLen >= 8 + 32 && _tcsnicmp( pszHash, _T("urn:md5:"), 8 ) == 0 )
 	{
 		return HashFromString( pszHash + 8, pMD5 );
 	}
-	else if ( nLen >= 4 + 32 && _tcsncmp( pszHash, _T("md5:"), 4 ) == 0 )
+	else if ( nLen >= 4 + 32 && _tcsnicmp( pszHash, _T("md5:"), 4 ) == 0 )
 	{
 		return HashFromString( pszHash + 4, pMD5 );
 	}

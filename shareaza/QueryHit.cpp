@@ -770,7 +770,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		LPCTSTR pszSep = _tcschr( pszData, 0x1C );
 		int nLength = pszSep ? pszSep - pszData : _tcslen( pszData );
 		
-		if ( _tcsncmp( pszData, _T("urn:"), 4 ) == 0 )
+		if ( _tcsnicmp( pszData, _T("urn:"), 4 ) == 0 )
 		{
 			m_bSHA1		|= CSHA::HashFromURN( pszData, &m_pSHA1 );
 			m_bTiger	|= CTigerNode::HashFromURN( pszData, &m_pTiger );

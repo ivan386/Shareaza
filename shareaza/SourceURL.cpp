@@ -142,7 +142,7 @@ BOOL CSourceURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsncmp( pszURL, _T("ed2kftp://"), 10 ) != 0 ) return FALSE;
+	if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) != 0 ) return FALSE;
 	
 	CString strURL = pszURL + 10;
 	BOOL bPush = FALSE;
@@ -201,7 +201,7 @@ BOOL CSourceURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CSourceURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsncmp( pszURL, _T("btc://"), 6 ) != 0 ) return FALSE;
+	if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) != 0 ) return FALSE;
 	
 	CString strURL = pszURL + 6;
 	BOOL bPush = FALSE;
