@@ -127,10 +127,16 @@ void CDownload::Resume()
 	m_tReceived	= GetTickCount();
 	m_bTorrentTrackerError = FALSE;
 
-	if( m_bBTH && ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) )
-		SetStartTimer();
-	else if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-		SetStartTimer();
+	if( m_bBTH )
+	{
+		if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents ) 
+			SetStartTimer();
+	}
+	else
+	{
+		if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+			SetStartTimer();
+	}
 
 	SetModified();
 	CloseTorrentUploads();
