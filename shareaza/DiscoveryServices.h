@@ -50,6 +50,12 @@ protected:
 	DWORD				m_tExecute;
 	BOOL				m_bFirstTime;
 	BOOL				m_bForG2;
+	int					m_nCacheType;
+
+	enum
+	{
+		wcNull, wcForG2, wcForG1, wcForBoth
+	};
 	
 // Operations
 public:
@@ -58,7 +64,7 @@ public:
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
 	int					GetCount(int nType = 0) const;
 	int					GetGnutella2Count() const;
-	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, BOOL bG2 = FALSE);
+	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, int nCacheType = wcForBoth);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
 	void				Remove(CDiscoveryService* pService);
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
@@ -104,7 +110,8 @@ public:
 	int			m_nType;
 	CString		m_sAddress;
 public:
-	BOOL		m_bGnutella2;
+	BOOL		m_bGnutella2;			// Webcache supports Gnutella 2
+	BOOL		m_bGnutella1;			// Webcache supports Gnutella
 	DWORD		m_tCreated;
 	DWORD		m_tAccessed;
 	DWORD		m_nAccesses;
@@ -114,7 +121,7 @@ public:
 	DWORD		m_nFailures;
 	DWORD		m_nAccessPeriod;
 	DWORD		m_nUpdatePeriod;
-		
+
 	enum
 	{
 		dsNull, dsGnutella, dsWebCache, dsServerMet

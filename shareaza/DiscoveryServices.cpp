@@ -54,6 +54,7 @@ CDiscoveryServices::CDiscoveryServices()
 	m_tExecute		= 0;
 	m_bFirstTime	= TRUE;
 	m_bForG2		= TRUE;
+	m_nCacheType	= NULL;
 }
 
 CDiscoveryServices::~CDiscoveryServices()
@@ -113,7 +114,7 @@ int CDiscoveryServices::GetGnutella2Count() const
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices list modification
 
-CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, BOOL bG2)
+CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, int nCacheType)
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return NULL;
@@ -158,8 +159,22 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, BOOL b
 		if ( pService == NULL ) return NULL;
 	}
 	
-	if ( bG2 ) pService->m_bGnutella2 = TRUE;
-	
+	switch( nCacheType )
+	{
+	case wcForG2:
+		pService->m_bGnutella2 = TRUE;
+		pService->m_bGnutella1 = FALSE;
+		break;
+	case wcForG1:
+		pService->m_bGnutella2 = FALSE;
+		pService->m_bGnutella1 = TRUE;
+		break;
+	case wcForBoth:
+		pService->m_bGnutella2 = TRUE;
+		pService->m_bGnutella1 = TRUE;
+		break;
+	}
+
 	return Add( pService );
 }
 
@@ -286,7 +301,7 @@ BOOL CDiscoveryServices::Save()
 
 void CDiscoveryServices::Serialize(CArchive& ar)
 {
-	int nVersion = 5;
+	int nVersion = 6;
 	
 	if ( ar.IsStoring() )
 	{
@@ -304,7 +319,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 		Clear();
 		
 		ar >> nVersion;
-		if ( nVersion != 5 ) return;
+		if ( nVersion != 6 ) return;
 		
 		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
@@ -346,11 +361,13 @@ void CDiscoveryServices::AddDefaults()
 
 				switch( cType )
 				{
-				case '1': Add( strService, CDiscoveryService::dsWebCache, FALSE );	//G1 service
+				case '1': Add( strService, CDiscoveryService::dsWebCache, wcForG1 );	//G1 service
 					break;
-				case '2': Add( strService, CDiscoveryService::dsWebCache, TRUE );	//G2 service
+				case '2': Add( strService, CDiscoveryService::dsWebCache, wcForG2 );	//G2 service
 					break;
-				case 'D': Add( strService, CDiscoveryService::dsServerMet, FALSE );	//eDonkey service
+				case 'M': Add( strService, CDiscoveryService::dsWebCache, wcForBoth );	//Multinetwork service
+					break;
+				case 'D': Add( strService, CDiscoveryService::dsServerMet, wcNull );	//eDonkey service
 					break;
 				case '#': //Comment line
 					break;
@@ -378,7 +395,7 @@ void CDiscoveryServices::AddDefaults()
 				Add( strService,
 				( _tcsistr( strService, _T("server.met") ) == NULL ?
 				CDiscoveryService::dsWebCache : CDiscoveryService::dsServerMet ),
-				TRUE ); // ( _tcsistr( strService, _T("GWC2") ) != NULL || _tcsistr( strService, _T("g2cache") ) != NULL ) );
+				wcForBoth ); // ( _tcsistr( strService, _T("GWC2") ) != NULL || _tcsistr( strService, _T("g2cache") ) != NULL ) );
 			}
 		}
 	}
@@ -557,7 +574,12 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(BOOL bWorkingOnly, CDis
 				{
 					if ( ! bForUpdate || tNow - pService->m_tUpdated > pService->m_nUpdatePeriod )
 					{
-						if ( pService->m_bGnutella2 )
+						if ( pService->m_bGnutella1 && pService->m_bGnutella2 )
+						{
+							pVersion1.Add( pService );
+							pVersion2.Add( pService );
+						}
+						else if ( pService->m_bGnutella2 )
 						{
 							pVersion2.Add( pService );
 						}
@@ -780,7 +802,6 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 				HostCache.Gnutella1.Add( strLine, tSeen );
 			
 			m_pWebCache->OnHostAdd();
-			m_pWebCache->m_bGnutella2 = TRUE;
 			bSuccess = TRUE;
 			nIPs ++;
 		}
@@ -788,8 +809,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		{
 			// URL ADDRESS AT: strLine.Mid( 2 )
 			// CORRECT (REQUESTED) NETWORK
-			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache, m_bForG2 );
-			m_pWebCache->m_bGnutella2 = TRUE;
+			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache, wcForBoth );
+
 			m_bFirstTime = FALSE;
 			bSuccess = TRUE;
 		}
@@ -799,7 +820,6 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			
 			// Don't count as success if it's only informational
 			// bSuccess = TRUE; 
-			m_pWebCache->m_bGnutella2 = TRUE;
 			
 			if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 			{
@@ -814,12 +834,34 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			if ( _tcsistr( strLine, _T("ERROR") ) != NULL )
 			{
 				// ERROR CONDITION
+				if ( m_bForG2 )
+				{
+					m_pWebCache->m_bGnutella1 = TRUE;
+					m_pWebCache->m_bGnutella2 = FALSE;
+				}
+				else
+				{
+					m_pWebCache->m_bGnutella1 = FALSE;
+					m_pWebCache->m_bGnutella2 = TRUE;
+				}
+
 				return FALSE;
 			}
 		}
 		else if ( _tcsistr( strLine, _T("ERROR") ) != NULL )
 		{
 			// ERROR CONDITION
+			if ( m_bForG2 )
+			{
+				m_pWebCache->m_bGnutella1 = TRUE;
+				m_pWebCache->m_bGnutella2 = FALSE;
+			}
+			else
+			{
+				m_pWebCache->m_bGnutella1 = FALSE;
+				m_pWebCache->m_bGnutella2 = TRUE;
+			}
+
 			return FALSE;
 		}
 		else if ( _stscanf( strLine, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
@@ -828,13 +870,15 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			HostCache.Gnutella1.Add( strLine );
 			m_pWebCache->OnHostAdd();
 			m_pWebCache->m_bGnutella2 = FALSE;
+			m_pWebCache->m_bGnutella1 = TRUE;
 			bSuccess = TRUE;
 		}
 		else
 		{
 			// Plain URL, WRONG NETWORK
-			Add( strLine.SpanExcluding( _T(" ") ), CDiscoveryService::dsWebCache, FALSE );
+			Add( strLine.SpanExcluding( _T(" ") ), CDiscoveryService::dsWebCache, wcForG1 );
 			m_pWebCache->m_bGnutella2 = FALSE;
+			m_pWebCache->m_bGnutella1 = TRUE;
 			m_bFirstTime = FALSE;
 		}
 	}
@@ -1064,6 +1108,7 @@ CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress)
 {
 	m_nType			= nType;
 	m_bGnutella2	= FALSE;
+	m_bGnutella1	= FALSE;
 	m_tCreated		= (DWORD)time( NULL );
 	m_tAccessed		= 0;
 	m_nAccesses		= 0;
@@ -1094,11 +1139,13 @@ void CDiscoveryService::Remove()
 
 void CDiscoveryService::Serialize(CArchive& ar, int nVersion)
 {
+
 	if ( ar.IsStoring() )
 	{
 		ar << m_nType;
 		ar << m_sAddress;
 		ar << m_bGnutella2;
+		ar << m_bGnutella1;
 		ar << m_tCreated;
 		ar << m_tAccessed;
 		ar << m_nAccesses;
@@ -1114,6 +1161,7 @@ void CDiscoveryService::Serialize(CArchive& ar, int nVersion)
 		ar >> m_nType;
 		ar >> m_sAddress;
 		ar >> m_bGnutella2;
+		ar >> m_bGnutella1;
 		ar >> m_tCreated;
 		ar >> m_tAccessed;
 		ar >> m_nAccesses;
