@@ -12495,6 +12495,9 @@
 				RelativePath="Res\BannerMark.bmp">
 			</File>
 			<File
+				RelativePath=".\Res\Bittorrent.ico">
+			</File>
+			<File
 				RelativePath="Res\Browse.ico">
 			</File>
 			<File
