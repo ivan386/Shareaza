@@ -2041,6 +2041,18 @@ right quote	&#147;
 		<text>Tėvai turėtų visada prižiūrėti, kaip vaikai naudojasi internetu (įskaitant P2P bylų mainais).</text>
 	</document>
 
+	<document name="GeneralHelp.BadTorrentEncoding">
+		<text format="b">Ši torrent byla turi koduotės klaidų</text>
+		<newline gap="8"/>
+		<text>Windows pranešė, jog iškoduojant šios torrent bylos tekstą, aptikta vertimo klaida. Gali būti, kad
+		ši byla sugadinta arba tiesiog neteisingai užkoduota. Torrent parsisiuntimas greičiausiai nenukentės,
+		bet kai kurie bylų vardai gali būti neteisingi.</text>
+		<newline gap="8"/>
+		<text>Dauguma torrent bylų kūrimo programų turėtų leisti pataisyti šią torrent bylą. Pataisymas garantuotų,
+		kad ji deramai dirbs visose BitTorrent programose. Apsilankykite Shareaza forumuose, jei Jums reikalinga
+		papildoma pagalba.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch">
@@ -2053,6 +2065,16 @@ right quote	&#147;
 		<newline gap="8"/>
 		<text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą,
 		nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch2">
+		<text format="b">Perfrazuokite ieškinį</text>
+		<newline gap="8"/>
+		<text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai. Ieškiniuose turėtų būti
+		minimalus skaičius teisingų raidžių/ženklų, kad būtų galima pradėti paiešką.</text>
+		<newline gap="8"/>
+		<text>Jei atliekate paiešką pagal bylų plėtinius ar naudojate skaičius, Jūs privalote užklausoje nurodyti
+		taip pat ir papildomas sąlygas.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
