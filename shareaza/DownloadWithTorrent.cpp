@@ -91,6 +91,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsLoading() && m_pTorrent.IsAvailable() )
 	{
 		m_bBTH = TRUE;
+		m_bBTHTrusted = TRUE;
 		m_pBTH = m_pTorrent.m_pInfoSHA1;
 	}
 
@@ -172,8 +173,6 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
 		{
 			GenerateTorrentDownloadID();
-			//if ( ! GenerateTorrentDownloadID() );
-			//	InitialiseTorrentDownload();
 
 			m_bTorrentRequested	= TRUE;
 			m_bTorrentStarted	= FALSE;
@@ -211,7 +210,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 
 	for ( nByte = 0 ; nByte < 20 ; nByte++ )
 	{
-		if ( m_pPeerID.n[ nByte ]	!= 0 ) 
+		if ( m_pPeerID.n[ nByte ] != 0 ) 
 		{
 			theApp.Message( MSG_ERROR, _T("Attmepted to re-create an in-use peer ID") );
 			return FALSE;
@@ -525,7 +524,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sLocalName = pszTarget;
 	SetModified();
 	
-	m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
+	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); //Give tracker 30 seconds to respond
 	m_bTorrentRequested	= TRUE;
 	m_bTorrentStarted	= FALSE;
 	CBTTrackerRequest::SendStarted( this );	
