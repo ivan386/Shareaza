@@ -3952,5 +3952,15 @@ Other:
                Sie sollten das "Datenträger bereinigen" Dienstprogramm ausführen, nicht benötigte Dateien löschen,
                oder nicht mehr benötigte Anwendungen deinstallieren.</text>
 		</document>
+		
+		<document name="GeneralHelp.XPsp2">
+	 	 <text format="b">Windows XP Service Pack 2</text>
+	     <newline gap="8"/>
+		 <text>Sie haben Windows XP Service Pack 2 installiert. Service Pack 2 beschränkt die Anzahl der Verbindungen die ein Programm gleichzeitig aufbauen kann.</text>
+		 <newline gap="8"/>
+		 <text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindugen beschränkt und andere Parameter entsprechend eingestellt, 
+		 die Geschwindigkeit kann dadurch jedoch reduziert sein. Bitte besuchen Sie das 
+		 Shareaza Forum für weitere Informationen und aktuelle Neuigkeiten.</text>
+	</document>
 	</documents>
 </skin>
