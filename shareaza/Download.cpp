@@ -581,7 +581,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	30
+#define DOWNLOAD_SER_VERSION	31
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {
@@ -610,7 +610,7 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 		SerializeOld( ar, nVersion );
 		return;
 	}
-	
+			
 	CDownloadWithExtras::Serialize( ar, nVersion );
 	
 	if ( ar.IsStoring() )

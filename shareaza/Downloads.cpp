@@ -228,29 +228,34 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	
 	if ( pURL->m_bSHA1 )
 	{
-		pDownload->m_bSHA1 = TRUE;
-		pDownload->m_pSHA1 = pURL->m_pSHA1;
+		pDownload->m_bSHA1			= TRUE;
+		pDownload->m_pSHA1			= pURL->m_pSHA1;
+		pDownload->m_bSHA1Trusted	= TRUE;
 	}
 	if ( pURL->m_bTiger )
 	{
-		pDownload->m_bTiger = TRUE;
-		pDownload->m_pTiger = pURL->m_pTiger;
+		pDownload->m_bTiger			= TRUE;
+		pDownload->m_pTiger			= pURL->m_pTiger;
+		pDownload->m_bTigerTrusted	= TRUE;
 	}
 	if ( pURL->m_bMD5 )
 	{
-		pDownload->m_bMD5 = TRUE;
-		pDownload->m_pMD5 = pURL->m_pMD5;
+		pDownload->m_bMD5			= TRUE;
+		pDownload->m_pMD5			= pURL->m_pMD5;
+		pDownload->m_bMD5Trusted	= TRUE;
 	}
 	if ( pURL->m_bED2K )
 	{
-		pDownload->m_bED2K = TRUE;
-		pDownload->m_pED2K = pURL->m_pED2K;
+		pDownload->m_bED2K			= TRUE;
+		pDownload->m_pED2K			= pURL->m_pED2K;
+		pDownload->m_bED2KTrusted	= TRUE;
 		pDownload->Share( TRUE );
 	}
 	if ( pURL->m_bBTH )
 	{
-		pDownload->m_bBTH = TRUE;
-		pDownload->m_pBTH = pURL->m_pBTH;
+		pDownload->m_bBTH			= TRUE;
+		pDownload->m_pBTH			= pURL->m_pBTH;
+		pDownload->m_bBTHTrusted	= TRUE;
 		pDownload->Share( TRUE );
 	}
 	

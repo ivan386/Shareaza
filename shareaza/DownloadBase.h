@@ -44,14 +44,19 @@ public:
 public:
 	BOOL		m_bSHA1;
 	SHA1		m_pSHA1;
+	BOOL		m_bSHA1Trusted;
 	BOOL		m_bTiger;
 	TIGEROOT	m_pTiger;
+	BOOL		m_bTigerTrusted;
 	BOOL		m_bMD5;
 	MD5			m_pMD5;
+	BOOL		m_bMD5Trusted;
 	BOOL		m_bED2K;
 	MD4			m_pED2K;
+	BOOL		m_bED2KTrusted;
 	BOOL		m_bBTH;
 	SHA1		m_pBTH;
+	BOOL		m_bBTHTrusted;
 protected:
 	CDownloadTask*	m_pTask;
 	

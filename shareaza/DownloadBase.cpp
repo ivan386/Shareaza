@@ -42,14 +42,19 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadBase::CDownloadBase()
 {
-	m_nCookie	= 1;
-	m_nSize		= SIZE_UNKNOWN;
-	m_bSHA1		= FALSE;
-	m_bTiger	= FALSE;
-	m_bMD5		= FALSE;
-	m_bED2K		= FALSE;
-	m_bBTH		= FALSE;
-	m_pTask		= NULL;
+	m_nCookie		= 1;
+	m_nSize			= SIZE_UNKNOWN;
+	m_bSHA1			= FALSE;
+	m_bSHA1Trusted	= FALSE;
+	m_bTiger		= FALSE;
+	m_bTigerTrusted	= FALSE;
+	m_bMD5			= FALSE;
+	m_bMD5Trusted	= FALSE;
+	m_bED2K			= FALSE;
+	m_bED2KTrusted	= FALSE;
+	m_bBTH			= FALSE;
+	m_bBTHTrusted	= FALSE;
+	m_pTask			= NULL;
 }
 
 CDownloadBase::~CDownloadBase()
@@ -101,12 +106,19 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		
 		ar << m_bSHA1;
 		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
+		ar << m_bSHA1Trusted;
+
 		ar << m_bTiger;
 		if ( m_bTiger ) ar.Write( &m_pTiger, sizeof(TIGEROOT) );
+		ar << m_bTigerTrusted;
+
 		ar << m_bMD5;
 		if ( m_bMD5 ) ar.Write( &m_pMD5, sizeof(MD5) );
+		ar << m_bMD5Trusted;
+
 		ar << m_bED2K;
 		if ( m_bED2K ) ar.Write( &m_pED2K, sizeof(MD4) );
+		ar << m_bED2KTrusted;
 	}
 	else
 	{
@@ -125,11 +137,18 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		
 		ar >> m_bSHA1;
 		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
+		if ( nVersion >= 31 ) ar >> m_bSHA1Trusted;
+
 		ar >> m_bTiger;
 		if ( m_bTiger ) ar.Read( &m_pTiger, sizeof(TIGEROOT) );
+		if ( nVersion >= 31 ) ar >> m_bTigerTrusted;
+
 		if ( nVersion >= 22 ) ar >> m_bMD5;
 		if ( m_bMD5 ) ar.Read( &m_pMD5, sizeof(MD5) );
+		if ( nVersion >= 31 ) ar >> m_bMD5Trusted;
+
 		if ( nVersion >= 13 ) ar >> m_bED2K;
 		if ( m_bED2K ) ar.Read( &m_pED2K, sizeof(MD4) );
+		if ( nVersion >= 31 ) ar >> m_bED2KTrusted;
 	}
 }
