@@ -1670,7 +1670,7 @@
                <text>Når og hvordan du vil bruke Shareaza media senter.</text>
                <newline gap="10"/>
 
-               <link target="raza:page:CCommunitySettingsPage" format="b">Min status:</link>
+               <link target="raza:page:CCommunitySettingsPage" format="b">Min profil:</link>
                <gap size="4"/>
                <text>Din profil. Egenskaper for chat og meldinger.</text>
                <newline gap="10"/>
@@ -2893,7 +2893,7 @@
                <control caption="Skjul Søkepanel ved søk"/>
        </dialog>
 
-       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
+       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mine filer">
                <control caption="_Egenskaper:"/>
                <control caption="Husk mappe visning"/>
                <control caption="Vern Mine filer"/>
@@ -2935,7 +2935,7 @@
                <control/>
        </dialog>
 
-       <dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Fellesskap">
+       <dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Min profil">
                <control caption="Min profil:"/>
                <control caption="Du kan bruke din Gnutella bruker profil til å dele informasjon om deg selv, dine interesser og anbefale filer og web-sider med andre."/>
                <control caption="Endre min profil"/>
@@ -2943,7 +2943,7 @@
                <control caption="Skru på peer to peer chat med kompatible klienter"/>
        </dialog>
 
-       <dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+       <dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Internett">
                <control caption="_Bruk av peer to peer linker:"/>
                <control caption="Bruk Shareaza til å åpne denne typen linker:"/>
                <control caption="Magnet ( magnet: )"/>
@@ -2988,26 +2988,25 @@
 </dialog>
 
        <dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Nedlastninger">
-               <control caption="Lagre _Ferdige filer her:"/>
-               <control/><control/>
-               <control caption="Lagre _Uferdige filer her:"/>
-               <control/><control/>
-               <control caption="_Antall nedlastninger:"/>
-               <control caption="Maks filer:"/>
-               <control/><control/>
-               <control caption="Maks overføringer:"/>
-               <control/><control/>
-               <control caption="Overføringer per fil:"/>
-               <control/><control/>
-               <control caption="_Båndbredde:"/>
-               <control caption="Grense:"/>
-               <control/>
-               <control caption="_Antall i kø:"/>
-               <control caption="Verifiser filenes integritet"/>
-               <control caption="Forsiktig (sikker) start"/>
-               <control caption="Last ned metadata med filene"/>
-               <control caption="Bruk TigerTree"/>
-       </dialog>
+<control caption="Lagre _Ferdige filer her:"/>
+<control/><control/>
+<control caption="Lagre _Uferdige filer her:"/>
+<control/><control/>
+<control caption="_Antall nedlastninger:"/>
+<control caption="Maks filer:"/>
+<control/><control/>
+<control caption="Maks overføringer:"/>
+<control/><control/>
+<control caption="Overføringer per fil:"/>
+<control/><control/>
+<control caption="_Båndbredde:"/>
+<control caption="Grense:"/>
+<control/>
+<control caption="_Antall i kø:"/>
+<control/><control/>
+<control caption="_Valg:"/>
+<control caption="Last bare opp og ned, til nettverk som er tilkoblet."/>
+</dialog>
 
        <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Opplastninger">
                <control caption="_Valg:"/>
