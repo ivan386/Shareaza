@@ -214,7 +214,8 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 {
 	CPoint pt( 0, 0 );
-	CString str;
+	CString str, strOf;
+	LoadString( strOf, IDS_GENERAL_OF );
 	
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
@@ -308,8 +309,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		
 		strSpeed = Settings.SmartVolume( pDownload->GetAverageSpeed() * 8, FALSE, TRUE );
 		
-		LoadString( strFormat, IDS_TIP_NOFN );
-		strSources.Format( strFormat, nTransferCount, nSourceCount );
+		strSources.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
 	}
 	else if ( nSourceCount )
 	{
@@ -326,10 +326,9 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	
 	if ( pDownload->IsStarted() )
 	{
-		LoadString( strFormat, IDS_DLM_VOLUME );
-		strVolume.Format( strFormat,
+		strVolume.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
-			(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
+			strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
 			pDownload->GetProgress() * 100.0f );
 	}
 	else
@@ -339,16 +338,15 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( pDownload->m_nTorrentUploaded )
 	{
-		LoadString( strFormat, IDS_DLM_UPLOADED );
-		strTorrentUpload.Format( strFormat,
+		strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
+			strOf, 
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
 			pDownload->GetRatio() * 100.0f );
 	}
 	else
 	{
-		LoadString( strFormat, IDS_DLM_UPLOADED );
-		strTorrentUpload.Format( strFormat, _T("0"),
+		strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"), _T("0"), strOf,
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0f );
 	}
 	
@@ -578,9 +576,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 		
 		if ( nLimit > 0 )
 		{
-			strSpeed.Format( _T("%s of %s"),
+			CString strOf;
+			LoadString( strOf, IDS_GENERAL_OF );
+			strSpeed.Format( _T("%s %s %s"),
 				(LPCTSTR)Settings.SmartVolume( pSource->m_pTransfer->GetMeasuredSpeed() * 8, FALSE, TRUE ),
-				(LPCTSTR)Settings.SmartVolume( nLimit * 8, FALSE, TRUE ) );
+				strOf, (LPCTSTR)Settings.SmartVolume( nLimit * 8, FALSE, TRUE ) );
 		}
 		else
 		{

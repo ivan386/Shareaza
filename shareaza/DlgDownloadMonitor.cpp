@@ -267,7 +267,9 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 	
 	BOOL bCompleted	= m_pDownload->IsCompleted();
 	DWORD nSpeed	= m_pDownload->GetMeasuredSpeed() * 8;
-	CString strText, strFormat;
+	CString strText, strFormat, strOf;
+
+	LoadString( strOf, IDS_GENERAL_OF );
 	
 	m_pItem->Add( nSpeed );
 	m_pGraph->m_nUpdates++;
@@ -275,8 +277,8 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 	
 	if ( m_pDownload->IsStarted() )
 	{
-		strText.Format( _T("%.1f%% of %s : Shareaza"),
-			m_pDownload->GetProgress() * 100, (LPCTSTR)m_pDownload->m_sRemoteName );
+		strText.Format( _T("%.1f%% %s %s : Shareaza"),
+			m_pDownload->GetProgress() * 100, strOf, (LPCTSTR)m_pDownload->m_sRemoteName );
 	}
 	else
 	{
@@ -387,7 +389,7 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 		strText = Settings.SmartVolume( m_pDownload->GetAverageSpeed() * 8, FALSE, TRUE );
 		Update( &m_wndSpeed, strText );
 
-		strText.Format( _T("%i of %i"), nTransferCount, nSourceCount );
+		strText.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
 		Update( &m_wndSources, strText );
 	}
 	else if ( nSourceCount )
@@ -411,10 +413,9 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 
 	if ( m_pDownload->IsStarted() )
 	{
-		LoadString( strFormat, IDS_DLM_VOLUME );
-		strText.Format( strFormat,
+		strText.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
-			(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
+			strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
 			m_pDownload->GetProgress() * 100.0f );
 		Update( &m_wndVolume, strText );
 	}
