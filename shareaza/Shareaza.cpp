@@ -346,12 +346,16 @@ void CShareazaApp::InitResources()
     
 		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress( 
 			m_hUser32, "MonitorFromRect" ); 
+
+		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress( 
+			m_hUser32, "MonitorFromWindow" ); 
 	}
 	else
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
 		m_pfnGetMonitorInfoA = NULL; 
         m_pfnMonitorFromRect = NULL; 
+		m_pfnMonitorFromWindow = NULL;
 	}
 	
 	m_gdiFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,

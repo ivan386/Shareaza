@@ -256,7 +256,7 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 		MONITORINFO oMonitor;
 		ZeroMemory( &oMonitor, sizeof(oMonitor) );
 		oMonitor.cbSize = sizeof(oMonitor);
-		theApp.m_pfnGetMonitorInfoA( MonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
 
 		if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
 			lpwndpos->x = oMonitor.rcWork.left;
