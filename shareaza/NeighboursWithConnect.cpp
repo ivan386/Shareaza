@@ -223,6 +223,19 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 	//
+
+	//Check the G2 hub settings
+	if ( Settings.Gnutella2.NumPeers < 4 )
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G2 hub to hub") );
+		return FALSE;
+	}
+	if ( Settings.Gnutella2.NumLeafs < 50 )
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 50x G2 hub to leaf") );
+		return FALSE;
+	}
+	//
 	
 	//Check if hub mode is forced in the G2 settings.
 	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
@@ -254,19 +267,6 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		if ( Settings.Connection.OutSpeed < 200 )
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
-			return FALSE;
-		}
-		//
-		
-		//Check the G2 hub settings
-		if ( Settings.Gnutella2.NumPeers < 4 )
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G2 hub to hub") );
-			return FALSE;
-		}
-		if ( Settings.Gnutella2.NumLeafs < 20 )
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 20x G2 hub to leaf") );
 			return FALSE;
 		}
 		//
