@@ -319,12 +319,12 @@ void CDownloadTask::RunCopyTorrent()
 	
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 
-	/*//Check for multi-torrent space available here?
+	// Check for space before copying torrent
 	if ( ! Downloads.IsSpaceAvailable( (QWORD)m_pTorrent.m_nTotalSize ) )
 	{
 		m_bSuccess = FALSE;
 		return;
-	}*/
+	}
 	
 	QWORD nOffset = 0;
 	

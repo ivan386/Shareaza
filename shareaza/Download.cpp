@@ -420,7 +420,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CANT_MOVE,
 			(LPCTSTR)GetDisplayName(), (LPCTSTR)pTask->m_sPath );
 		
-		if ( m_pTorrent.IsAvailable() && m_pTorrent.m_nFiles > 1 )
+		if ( m_pTorrent.IsAvailable() )
 		{
 			m_bDiskFull = TRUE;
 			return;
