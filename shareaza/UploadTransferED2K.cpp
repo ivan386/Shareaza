@@ -184,8 +184,8 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 			Close();
 			return FALSE;
 		}
-		else if ( tNow > m_tRanking && tNow - m_tRanking >= 60 * 1000 )	//If client hasn't had an update recently
-		{	//Then send them one. (Note: Updates are only sent if queue rank has changed)
+		else if ( tNow > m_tRanking && tNow - m_tRanking >= Settings.eDonkey.QueueRankThrottle )	// If client hasn't had an update recently
+		{	// Then send them one. (Note: Updates are only sent if queue rank has changed)
 			if ( ! SendRanking() ) return FALSE;
 		}
 	}

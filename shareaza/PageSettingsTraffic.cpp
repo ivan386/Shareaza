@@ -147,19 +147,21 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
 	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
 	
+	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
+	AddSetting( &Settings.eDonkey.QueueRankThrottle, 1000, 60, 600, _T(" s") );
+	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 500, 5000, _T(" ms") );
+	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.RequestPipe, 1, 1, 10 );
-	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
 	AddSetting( &Settings.eDonkey.RequestSize, 1024, 10, 1000, _T(" KB") );
 	AddSetting( &Settings.eDonkey.FrameSize, 1024, 1, 500, _T(" KB") );
 	AddSetting( &Settings.eDonkey.ReAskTime, 60, 20, 360, _T(" m") );
 	AddSetting( &Settings.eDonkey.DequeueTime, 60, 2, 512, _T(" m") );
-	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
-	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	
 	//AddSetting( &Settings.BitTorrent.AdvancedInterface, 1, 0, 1 );
 	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );

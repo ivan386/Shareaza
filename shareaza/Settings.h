@@ -295,6 +295,8 @@ public:
 		BOOL		ServerWalk;
 		DWORD		QueryGlobalThrottle;
 		DWORD		QueryServerThrottle;
+		DWORD		QueueRankThrottle;
+		DWORD		PacketThrottle;
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;
@@ -303,9 +305,9 @@ public:
 		DWORD		ReAskTime;
 		DWORD		DequeueTime;
 		BOOL		ExtendedRequest;
-		BOOL		MagnetSearch;
+		BOOL		MagnetSearch;				// Search for magnets over ed2k (lower server load)
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
-		BOOL		TagNames;
+		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k
 	} eDonkey;
 	
 	struct sBitTorrent
