@@ -1,4 +1,7 @@
-Use Inno Setup 5.0.2 or higher + Inno Setup PreProcessor
+You can download Inno Setup 5 here:
+http://files.jrsoftware.org/is/5/
+You'll also need to install the PreProcessor:
+http://files.jrsoftware.org/ispack/
 
 Compile procedure for Shareaza:
 1)	Place Shareaza.exe in \setup\builds\
