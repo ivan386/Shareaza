@@ -76,6 +76,7 @@ CMatchList::CMatchList()
 	m_nItems			= 0;
 	m_nFilteredFiles	= 0;
 	m_nFilteredHits		= 0;
+	m_nGnutellaHits		= 0;
 	m_nED2KHits			= 0;
 	
 	m_nBuffer	= 0;
@@ -303,7 +304,17 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				m_nItems -= nHadCount;
 				m_nFilteredFiles --;
 				m_nFilteredHits -= nHadFiltered;
-				if(pHit->m_nProtocol==PROTOCOL_ED2K) m_nED2KHits-= nHadFiltered;
+
+				switch ( pHit->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					m_nGnutellaHits -= nHadFiltered;
+					break;
+				case PROTOCOL_ED2K:
+					m_nED2KHits -= nHadFiltered;
+					break;
+				}
 			}
 		}
 		else
@@ -367,7 +378,17 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			m_nFilteredFiles ++;
 			m_nFilteredHits += pFile->m_nFiltered;
 
-			if(pHit->m_nProtocol==PROTOCOL_ED2K) m_nED2KHits+= pFile->m_nFiltered;
+			switch ( pHit->m_nProtocol )
+			{
+			case PROTOCOL_G1:
+			case PROTOCOL_G2:
+				m_nGnutellaHits += pFile->m_nFiltered;
+				break;
+			case PROTOCOL_ED2K:
+				m_nED2KHits += pFile->m_nFiltered;
+				break;
+			}
+
 
 		}
 		

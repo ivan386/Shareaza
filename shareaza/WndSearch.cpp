@@ -439,7 +439,7 @@ void CSearchWnd::OnUpdateSearchSearch(CCmdUI* pCmdUI)
 	// pCmdUI->Enable( Network.IsWellConnected() );
 	//pCmdUI->Enable( TRUE );
 
-	if( (m_bPaused) || ( m_bWaitMore ) )
+	if( ( m_bPaused ) || ( m_bWaitMore ) )
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );
@@ -465,7 +465,7 @@ void CSearchWnd::OnSearchSearch()
 		m_bWaitMore = FALSE;
 
 		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nFilteredHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
+		m_nMaxResults = m_pMatches->m_nGnutellaHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
 		m_nMaxQueryCount = pSearch->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
 
 		//Resume ED2K search
@@ -493,10 +493,6 @@ void CSearchWnd::OnSearchSearch()
 			m_bUpdate = TRUE;
 			PostMessage( WM_TIMER, 2 );
 			pLock.Unlock();
-
-			m_nMaxResults		= 0;
-			m_nMaxED2KResults	= 0;
-			m_nMaxQueryCount	= 0;
 		}
 	}
 	
@@ -563,11 +559,11 @@ void CSearchWnd::OnSearchClear()
 	m_bUpdate = TRUE;
 	PostMessage( WM_TIMER, 2 );
 	
-	OnSearchStop();
-
 	m_nMaxResults		= 0;
 	m_nMaxED2KResults	= 0;
 	m_nMaxQueryCount	= 0;
+
+	OnSearchStop();
 }
 
 void CSearchWnd::OnUpdateSearchStop(CCmdUI* pCmdUI) 
@@ -677,9 +673,9 @@ void CSearchWnd::ExecuteSearch()
 			pManaged->Stop();
 			pManaged->Start();
 
-			m_nMaxResults		+= (DWORD)min( 300, Settings.Gnutella.MaxResults );
-			m_nMaxED2KResults	+= (DWORD)min( 201, Settings.eDonkey.MaxResults );
-			m_nMaxQueryCount	+= (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
+			m_nMaxResults		= m_pMatches->m_nGnutellaHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
+			m_nMaxED2KResults	= m_pMatches->m_nED2KHits + (DWORD)min( 201, Settings.eDonkey.MaxResults );
+			m_nMaxQueryCount	= pManaged->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
 
 			m_wndPanel.ShowSearch( pManaged );
 
@@ -827,7 +823,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 				theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
 			}
 
-			if ( !m_bWaitMore&& ( (m_pMatches->m_nFilteredHits - m_pMatches->m_nED2KHits) >= m_nMaxResults ) )
+			if ( !m_bWaitMore && ( m_pMatches->m_nGnutellaHits >= m_nMaxResults ) )
 			{
 				m_bWaitMore = TRUE;
 				pManaged->m_bActive = FALSE;
