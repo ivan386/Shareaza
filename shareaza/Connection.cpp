@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2004/11/17 14:43:51 $"
-//	Revision:		"$Revision: 1.6 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2004/11/24 07:27:30 $"
+//	Revision:		"$Revision: 1.7 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -50,6 +50,7 @@ static char THIS_FILE[]=__FILE__;
 // Make a new CConnection object
 CConnection::CConnection()
 {
+	// Initialize member variables with null or default values
 	m_hSocket		= INVALID_SOCKET;	// Set the actual Windows socket to the invalid value
 	m_pInput		= NULL;				// Null pointers to input and output CBuffer objects
 	m_pOutput		= NULL;
@@ -73,19 +74,18 @@ CConnection::~CConnection()
 //////////////////////////////////////////////////////////////////////
 // CConnection connect to
 
-// Call to connect this CConnection object to a remote computer on the Internet
-// Takes pHost, a pointer to a SOCKADDR_IN structure, which is MFC's way of holding an IP address
-// Returns the result of the next ConnectTo method
+// Connect this CConnection object to a remote computer on the Internet
+// Takes pHost, a pointer to a SOCKADDR_IN structure, which is MFC's way of holding an IP address and port number
+// Returns true if connected
 BOOL CConnection::ConnectTo(SOCKADDR_IN* pHost)
 {
 	// Call the next ConnectTo method, and return the result
 	return ConnectTo( &pHost->sin_addr, htons( pHost->sin_port ) );
 }
 
-// Call to connect this CConnection object to a remote computer on the Internet
-// Takes pAddress, a pointer to an MFC IN_ADDR structure which is Windows Socket's way of holding an IP address
-// Takes nPort, the port number that goes along with this IP address
-// Return true if connected, false if not connected
+// Connect this CConnection object to a remote computer on the Internet
+// Takes pAddress, a Windows Sockets structure that holds an IP address, and takes the port number seprately
+// Returns true if connected
 BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 {
 	// Check inputs
@@ -285,7 +285,7 @@ void CConnection::Close()
 // CConnection run function
 
 // Talk to the other computer, write the output buffer to the socket and read from the socket to the input buffer
-// Return true if this worked, false if we've lost the connection or something
+// Return true if this worked, false if we've lost the connection
 BOOL CConnection::DoRun()
 {
 	// If this socket is invalid, call OnRun and return the result (do)
@@ -486,6 +486,7 @@ _ignore:	inc		ebx
 		{
 			// Use the same place in the array as before
 			m_mInput.pHistory[ m_mInput.nPosition ] += nTotal;
+
 		}
 		else // It's been more than a tenth of a second since we last recorded a read
 		{
