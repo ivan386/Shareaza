@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Norwegian Skin File -->
 
@@ -16,7 +16,7 @@
 		description="Shareaza Default Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.21"
+		version="2.1.0.25"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -3308,7 +3308,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Egenskaper opplastings kø">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Egenskaper opplastings kø">
 		<control caption="_Navn:"/>
 		<control/>
 		<control caption="_Kriterier:"/>
@@ -3340,6 +3340,7 @@
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
+		<control caption="Belønn opplastere"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
@@ -4011,6 +4012,7 @@
 		<column from="Progress" to="Fremdrift"/>
 		<column from="Speed" to="Hastighet"/>
 		<column from="Client" to="Klient"/>
+		<column from="Rating" to="Karakter"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresse"/>
