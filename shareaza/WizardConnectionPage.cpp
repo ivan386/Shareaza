@@ -235,7 +235,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	}
 	
 	Settings.Connection.InSpeed		= nSpeed;
-	//Settings.Connection.OutSpeed	= nSpeed == 56 ? 32 : nSpeed;
+
 	if( nSpeed <= 56 )
 		Settings.Connection.OutSpeed = 32;			// Dial up modem
 	else if( nSpeed <= 128 )
@@ -253,8 +253,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * 0.9 );
 	Settings.Bandwidth.Uploads >>= 3;
 	Settings.Bandwidth.Uploads *= 1024;
-	
-
 	
 	if ( nSpeed > 750 )
 	{
@@ -318,8 +316,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Gnutella1.EnableToday			= FALSE;
 		Settings.Downloads.MaxFileSearches		= 2;
 		Settings.Downloads.MaxConnectingSources	= 8;
-		Settings.Connection.TimeoutConnect		= 30000;
-		Settings.Connection.TimeoutHandshake	= 60000;
+		//Settings.Connection.TimeoutConnect	= 30000;
+		//Settings.Connection.TimeoutHandshake	= 60000;
 		Settings.Connection.RequireForTransfers	= TRUE;
 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
