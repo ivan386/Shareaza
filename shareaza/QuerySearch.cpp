@@ -651,12 +651,15 @@ BOOL CQuerySearch::CheckValid()
 	
 	if ( m_nWords == 1 )
 	{
+		if ( _tcslen( *m_pWordPtr) < 3 ) return FALSE;
+
 		if ( _tcsicmp( *m_pWordPtr, _T("mp3") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("ogg") ) == 0 ||
 
 			 _tcsicmp( *m_pWordPtr, _T("jpg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("gif") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("png") ) == 0 ||
+			 _tcsicmp( *m_pWordPtr, _T("bmp") ) == 0 ||
 
 			 _tcsicmp( *m_pWordPtr, _T("mpg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("avi") ) == 0 ||
@@ -664,6 +667,7 @@ BOOL CQuerySearch::CheckValid()
 			 _tcsicmp( *m_pWordPtr, _T("mov") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("ogm") ) == 0 ||
 
+			 _tcsicmp( *m_pWordPtr, _T("dvd") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("mpeg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("divx") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("xvid") ) == 0 ||
