@@ -39,8 +39,8 @@ public:
 // Attributes
 public:
 	SHA1					m_pGUID;
-	BOOL					m_bExtended;		//Send extened details (User name, exact version, etc)
-	BOOL					m_bExchange;		//Exchange other info (with extended client)
+	BOOL					m_bExtended;		// Send extended details (User name, exact version, etc. For G2 capable clients)
+	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 public:
 	CUploadTransferBT*		m_pUpload;
 	CDownload*				m_pDownload;
@@ -65,14 +65,15 @@ protected:
 	virtual BOOL	OnRead();
 protected:
 	void			SendHandshake(BOOL bPart1, BOOL bPart2);
-	BOOL			OnHandshake1();
-	BOOL			OnHandshake2();
+	BOOL			OnHandshake1();								// First part of handshake
+	BOOL			OnHandshake2();								// Second part- Peer ID
+	BOOL			OnNoHandshake2();							// If no peer ID is recieved
 	BOOL			OnOnline();
 	BOOL			OnPacket(CBTPacket* pPacket);
-	void			SendBeHandshake();
-	BOOL			OnBeHandshake(CBTPacket* pPacket);
+	void			SendBeHandshake();							// Send extended client handshake
+	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process extended client handshake
 	BOOL			OnSourceRequest(CBTPacket* pPacket);
-	void			DetermineUserAgent();
+	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
 
 public:
 	inline BOOL IsOnline() const { return m_bOnline; }

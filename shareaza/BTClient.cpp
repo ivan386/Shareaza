@@ -269,7 +269,16 @@ BOOL CBTClient::OnRead()
 		if ( bSuccess && m_bShake && m_pInput->m_nLength >= sizeof(SHA1) )
 		{
 			bSuccess = OnHandshake2();
-		}
+		}/*
+		else if ( bSuccess && m_bShake )
+		{
+			DWORD tNow = GetTickCount();
+			if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake / 2 )
+			{
+				theApp.Message( MSG_ERROR,  _T("No peer-id recieved, forcing connection") );
+				bSuccess = OnNoHandshake2();
+			}
+		}*/
 	}
 	
 	return bSuccess;
@@ -300,12 +309,13 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 }
 
 BOOL CBTClient::OnHandshake1()
-{
+{	//First part of the handshake
 	ASSERT( ! m_bOnline );
 	ASSERT( ! m_bShake );
 	
 	LPBYTE pIn = m_pInput->m_pBuffer;
 	
+	// Read in the BT protocol header
 	if ( memcmp( pIn, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) != 0 )
 	{
 		ASSERT( FALSE );
@@ -315,44 +325,46 @@ BOOL CBTClient::OnHandshake1()
 	
 	pIn += BT_PROTOCOL_HEADER_LEN + 8;
 	
+	// Read in the file ID
 	SHA1 pFileHash = *(SHA1*)pIn;
 	pIn += sizeof(SHA1);
 	
 	m_pInput->Remove( BT_PROTOCOL_HEADER_LEN + 8 + sizeof(SHA1) );
 	
-	if ( m_bInitiated )
+	if ( m_bInitiated )		// If we initiated the connection
 	{
 		ASSERT( m_pDownload != NULL );
 		ASSERT( m_pDownloadTransfer != NULL );
 		
 		if ( pFileHash != m_pDownload->m_pBTH || m_pDownload->IsShared() == FALSE )
-		{
+		{	//Display and error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
 		else if ( ! m_pDownload->IsTrying() )
-		{
+		{	//Display and error and exit
 			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested an inactive Torrent") );
 			Close();
 			return FALSE;
 		}
 	}
-	else
+	else					// If we didn't initiate the connection
 	{
 		ASSERT( m_pDownload == NULL );
 		ASSERT( m_pDownloadTransfer == NULL );
 		
+		// Find the requested file
 		m_pDownload = Downloads.FindByBTH( &pFileHash, TRUE );
 		
-		if ( m_pDownload == NULL )
-		{
+		if ( m_pDownload == NULL )				// If we can't find the file
+		{	//Display and error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
-		else if ( ! m_pDownload->IsTrying() )
-		{
+		else if ( ! m_pDownload->IsTrying() )	// If the file isn't active
+		{	//Display and error and exit
 			m_pDownload = NULL;
 			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested inactive Torrent") );
 			Close();
@@ -360,10 +372,13 @@ BOOL CBTClient::OnHandshake1()
 		}
 	}
 	
+	// Verify a download and hash
 	ASSERT( m_pDownload != NULL );
 	ASSERT( m_pDownload->m_pBTH == pFileHash );
 	
-	if ( ! m_bInitiated ) SendHandshake( TRUE, FALSE );
+	// If we didn't start the connection, then send a handshake
+	if ( ! m_bInitiated ) SendHandshake( TRUE, TRUE );
+	//if ( ! m_bInitiated ) SendHandshake( TRUE, FALSE ); //We send both parts here now
 	
 	m_bShake = TRUE;
 	
@@ -371,7 +386,7 @@ BOOL CBTClient::OnHandshake1()
 }
 
 BOOL CBTClient::OnHandshake2()
-{
+{	// Second part of the handshake - Peer ID
 	m_pGUID = *(SHA1*)m_pInput->m_pBuffer;
 	m_pInput->Remove( sizeof(SHA1) );
 	
@@ -431,6 +446,55 @@ BOOL CBTClient::OnHandshake2()
 	m_bOnline = TRUE;
 	
 	DetermineUserAgent();
+	
+	//This is done in Handshake1 now (Due to glitches in other clients)
+	//if ( ! m_bInitiated ) SendHandshake( FALSE, TRUE );
+	
+	return OnOnline();
+}
+
+BOOL CBTClient::OnNoHandshake2()
+{	// If the other client didn't send a peer ID
+	ZeroMemory( m_pGUID.b, 20 );
+	
+	ASSERT( m_pDownload != NULL );
+	
+	if ( m_bInitiated )
+	{
+		ASSERT( m_pDownloadTransfer != NULL );
+		CopyMemory( &m_pDownloadTransfer->m_pSource->m_pGUID, &m_pGUID, 16 );
+		
+		/*
+
+		//ToDo: This seems to trip when it shouldn't. Should be investigated...
+		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
+		{
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+		*/
+	}
+	else if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
+	{
+		ASSERT( m_pDownloadTransfer == NULL );
+		
+		
+		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
+		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
+		if ( m_pDownloadTransfer == NULL )
+		{
+			m_pDownload = NULL;
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+	}
+	
+	ASSERT( m_pUpload == NULL );
+	m_pUpload = new CUploadTransferBT( this, m_pDownload );
+	
+	m_bOnline = TRUE;
 	
 	if ( ! m_bInitiated ) SendHandshake( FALSE, TRUE );
 	
@@ -637,10 +701,10 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 // CBTClient advanced handshake
 
 void CBTClient::SendBeHandshake()
-{
+{	// Send extended handshake for (G2 capable clients)
 	CBENode pRoot;
 	
-	CString strNick = MyProfile.GetNick().Left( 255 ); //Truncate to 255 characters
+	CString strNick = MyProfile.GetNick().Left( 255 ); // Truncate to 255 characters
 	if ( strNick.GetLength() ) pRoot.Add( "nickname" )->SetString( strNick );
 
 	
@@ -656,7 +720,7 @@ void CBTClient::SendBeHandshake()
 }
 
 BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
-{
+{	// On extended handshake (for G2 capable clients)
 	if ( pPacket->GetRemaining() > 1024 ) return TRUE;
 	
 	CBuffer pInput;
