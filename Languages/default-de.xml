@@ -2313,9 +2313,9 @@ Other:
 		<string id="16364" value="Fertige Uploads" />
 		<string id="16365" value="Sind Sie sicher, dass Sie alle Downlaods in dieser Gruppe abbrechen möchten?" />
 		<string id="16366" value="Warteschlange"/>
-		<string id="16367" value="eDonkey Kern"/>
+		<string id="16367" value="eDonkey"/>
 		<string id="16368" value="eDonkey unvollständig"/>
-		<string id="16369" value="eDonkey Wächter"/>
+		<string id="16369" value="eDonkey Guard"/>
 		<string id="16370" value="Kleine Dateien"/>
 		<string id="16371" value="Mittelgroße Dateien"/>
 		<string id="16372" value="Große Dateien"/>
@@ -2323,7 +2323,7 @@ Other:
 		<string id="16374" value="Neue Warteschlange"/>
 		<string id="16375" value="Unvollständig"/>
 		<string id="16376" value="Vollständige Dateien"/>
-		<string id="16377" value="HTTP Wächter"/>
+		<string id="16377" value="HTTP Guard"/>
 		<string id="17216" value="Verbindung zu eDonkey Server &quot;%s&quot; herstellen..." />
 		<string id="17217" value="Mit eDoneky Server %s verbunden, handshaking..." />
 		<string id="17218" value="ED2K[%s] %s" />
