@@ -181,12 +181,20 @@ BOOL CEDNeighbour::OnConnected()
 	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
+
+//Strange- if ED2K_SERVER_TCP_NEWTAGS is included, you get no search results?
+CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | /*ED2K_SERVER_TCP_NEWTAGS |*/ ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
+
+
+
+
+/*
 #ifdef _UNICODE
 	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
 #else
 	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS ).Write( pPacket );
 #endif
-	
+	*/
 	m_nState = nrsHandshake1;
 	Send( pPacket );
 	
@@ -291,7 +299,7 @@ BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 ) return TRUE;
 	
-	CString	strMessage = pPacket->ReadEDString( ( m_nFlags & ED2K_SERVER_TCP_DEFLATE ) );
+	CString	strMessage = pPacket->ReadEDString( ( m_nFlags & ED2K_SERVER_TCP_UNICODE ) );
 	
 	while ( strMessage.GetLength() > 0 )
 	{
@@ -350,9 +358,10 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 		}
 	}
 
-	//CString strServerFlags;
-	//strServerFlags.Format( _T("Server Flags: Zlib: %d NetTags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_NEWTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
-	//theApp.Message( MSG_DEFAULT, strServerFlags );
+	CString strServerFlags;
+	strServerFlags.Format( _T("Server Flags: Zlib: %d New Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_NEWTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
+	theApp.Message( MSG_DEFAULT, strServerFlags );
+	
 	
 	return TRUE;
 }
@@ -681,7 +690,7 @@ void CEDNeighbour::SendSharedFiles()
 		}
 	}
 	pLock1.Unlock();
-	
+
 	*(DWORD*)pPacket->m_pBuffer = nCount;	// Correct the number of files sent
 	
 	if ( m_nFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();	// ZLIB compress if available

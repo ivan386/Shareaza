@@ -992,6 +992,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 
 BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
+	CString strLength(_T("")), strBitrate(_T("")), strCodec(_T(""));
 	m_bED2K = TRUE;
 	pPacket->Read( &m_pED2K, sizeof(MD4) );
 	
@@ -1017,7 +1018,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE && pTag.m_nType == ED2K_TAG_INT )
 		{
-			//theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
+			theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
 		}
 		else if ( pTag.m_nKey == ED2K_FT_SOURCES && pTag.m_nType == ED2K_TAG_INT )
 		{
@@ -1031,9 +1032,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		{
 			if ( ! pTag.m_nValue ) //If there are no complete sources
 			{
-				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );
 				//Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
 				m_nPartial = (DWORD)m_nSize >> 2;
+				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );				
 			}
 			else
 			{
@@ -1041,30 +1042,36 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			}
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH && pTag.m_nType == ED2K_TAG_INT )
-		{
-			//The length (play time) as a DWORD
-			//pTag.m_nValue
+		{	//Length- new style (DWORD)
+			strLength.Format( _T("%lu"), pTag.m_nValue );
+theApp.Message( MSG_SYSTEM,_T("length as a DWORD"));
 		}
-		else if ( pTag.m_nKey == 0 && pTag.m_sKey == _T("length") && pTag.m_nType == ED2K_TAG_STRING )
-		{
-			//The length- as a string. x:x:x, x:x or x
-			//pTag.m_sValue
+		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE && pTag.m_nType == ED2K_TAG_INT ) )
+		{	//Bitrate- new style
+			strBitrate.Format( _T("%lu"), pTag.m_nValue );
+theApp.Message( MSG_SYSTEM,_T("Bitrate - new"));
 		}
-		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE && pTag.m_nType == ED2K_TAG_INT ) ||
-				  ( pTag.m_nKey == 0 && pTag.m_sKey == _T("bitrate") && pTag.m_nType == ED2K_TAG_INT ) )
-		{
-			//The bitrate of the file
-			//pTag.m_nValue
+		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC && pTag.m_nType == ED2K_TAG_STRING ) )
+		{	//Codec - new style
+			strCodec = pTag.m_sValue;
+theApp.Message( MSG_SYSTEM,_T("Codec - new"));
+
+		}/*
+		//Note: Ignore these keys for now. They seem to have a lot of bad values....
+		else if ( pTag.m_nKey == 0&& pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("length")  )
+		{	//Length- old style (As a string- x:x:x, x:x or x)
+			strLength = pTag.m_sValue 
 		}
-		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC && pTag.m_nType == ED2K_TAG_STRING ) ||
-				   ( pTag.m_nKey == 0 && pTag.m_sKey == _T("codec") && pTag.m_nType == ED2K_TAG_STRING ) )
-		{
-			//The codec of the file
-			//pTag.m_sValue
+		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey == _T("bitrate") ) )
+		{	//Bitrate- old style			
+			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
-		else
+		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("codec") ) )
+		{	//Codec - old style
+			strCodec = pTag.m_sValue;
+		}*/
+		else	//*** Debug check. Remove this when it's working
 		{
-			//*** Temp debug stuff
 			CString s;
 			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
 			theApp.Message( MSG_SYSTEM, s );
@@ -1074,6 +1081,87 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			else
 				s.Format ( _T("Value: %d"), pTag.m_nValue);
 			theApp.Message( MSG_SYSTEM, s );
+		}
+	}
+
+	// Verify and set metadata
+	CString strType;
+
+	// Check we have a valid name
+	if ( m_sName.GetLength() )
+	{
+		int nExtPos = m_sName.ReverseFind( '.' );
+		if ( nExtPos > 0 ) 
+		{
+			strType = m_sName.Mid( nExtPos );
+			strType = CharLower( strType.GetBuffer() );
+		}
+	}
+
+	// If we can determine type, we can add metadata
+	if ( strType.GetLength() )
+	{
+		// Determine type
+		// Note: Maybe should use library plug in for this?
+		if ( strType == _T(".mp3") ||  strType == _T(".ogg") ||  strType == _T(".wav") ||  strType == _T(".mid") ||
+			 strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") || strType == _T(".ra"))
+		{	// Audio
+			m_sSchemaURI = CSchema::uriVideo;
+
+			// Add metadata
+			if ( strLength.GetLength() )
+			{
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
+				m_pXML->AddAttribute( _T("length"), strLength );
+			}
+			if ( strBitrate.GetLength() )
+			{
+				m_sSchemaURI = CSchema::uriVideo;
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
+				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
+			}/*
+			if ( strCodec.GetLength() )
+			{
+				m_sSchemaURI = CSchema::uriVideo;
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
+				m_pXML->AddAttribute( _T("codec"), strCodec );
+			}*/
+		}
+		else if ( strType == _T(".avi") || strType == _T(".mpg") || strType == _T(".mpeg") || strType == _T(".ogm") || strType == _T(".mkv") ||
+				  strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") || strType == _T(".rm") )
+		{	// Video
+			m_sSchemaURI = CSchema::uriVideo;
+			
+			// Add metadata
+			if ( strLength.GetLength() )
+			{
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
+				m_pXML->AddAttribute( _T("length"), strLength );
+			}/*
+			if ( strBitrate.GetLength() )
+			{
+				m_sSchemaURI = CSchema::uriVideo;
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
+				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
+			}*/
+			if ( strCodec.GetLength() )
+			{
+				m_sSchemaURI = CSchema::uriVideo;
+				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
+				m_pXML->AddAttribute( _T("codec"), strCodec );
+			}
+		}
+		else if ( strType == _T(".exe") || strType == _T(".dll") || strType == _T(".iso") || strType == _T(".bin") || strType == _T(".cue") )
+		{	// Application
+			m_sSchemaURI = CSchema::uriApplication;
+		}
+		else if ( strType == _T(".jpg") || strType == _T(".jpeg") || strType == _T(".gif") || strType == _T(".png") || strType == _T(".bmp") )
+		{	// Image
+			m_sSchemaURI = CSchema::uriImage;
+		}
+		else if ( strType == _T(".pdf") || strType == _T(".doc") || strType == _T(".txt") || strType == _T(".xls") )
+		{	// Document
+			m_sSchemaURI = CSchema::uriBook;
 		}
 	}
 	
