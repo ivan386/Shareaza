@@ -56,6 +56,7 @@ public:
 	BOOL		m_bRotate;
 	DWORD		m_nRotateTime;
 	DWORD		m_nRotateChunk;
+	BOOL		m_bRewardUploaders;
 public:
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;

@@ -62,6 +62,7 @@ public:
 	BOOL	m_bPartial;
 	BOOL	m_bProtocols;
 	BOOL	m_bRotate;
+	BOOL	m_bReward;
 	int		m_nRotateTime;
 	int		m_nTransfersMax;
 	int		m_nTransfersMin;

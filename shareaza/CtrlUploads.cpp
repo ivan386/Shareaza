@@ -35,6 +35,8 @@
 #include "Skin.h"
 #include "CtrlUploads.h"
 
+#include "Downloads.h"
+
 IMPLEMENT_DYNAMIC(CUploadsCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CUploadsCtrl, CWnd)
@@ -68,6 +70,7 @@ END_MESSAGE_MAP()
 #define UPLOAD_COLUMN_PROGRESS	3
 #define UPLOAD_COLUMN_SPEED		4
 #define UPLOAD_COLUMN_CLIENT	5
+#define UPLOAD_COLUMN_RATING	6
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -115,6 +118,8 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( UPLOAD_COLUMN_PROGRESS, _T("Progress"), LVCFMT_CENTER, 130 );
 	InsertColumn( UPLOAD_COLUMN_SPEED, _T("Speed"), LVCFMT_CENTER, 80 );
 	InsertColumn( UPLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 100 );
+	InsertColumn( UPLOAD_COLUMN_RATING, _T("Rating"), LVCFMT_CENTER, 0 );
+	
 	
 	LoadColumnState();
 	
@@ -985,6 +990,9 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 			
 		case UPLOAD_COLUMN_CLIENT:
 			if ( pTransfer != NULL ) strText = pTransfer->m_sUserAgent;
+			break;
+		case UPLOAD_COLUMN_RATING:
+			strText.Format(_T("%d"), pTransfer->m_nUserRating );
 			break;
 		}
 		

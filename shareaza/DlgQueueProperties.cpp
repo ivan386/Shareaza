@@ -67,6 +67,7 @@ CQueuePropertiesDlg::CQueuePropertiesDlg(CUploadQueue* pQueue, BOOL bEnable, CWn
 	m_bPartial = FALSE;
 	m_bProtocols = FALSE;
 	m_bRotate = FALSE;
+	m_bReward = FALSE;
 	m_nRotateTime = 0;
 	m_nTransfersMax = 0;
 	m_nTransfersMin = 0;
@@ -107,6 +108,7 @@ void CQueuePropertiesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ROTATE_TIME, m_nRotateTime);
 	DDX_Text(pDX, IDC_TRANSFERS_MAX, m_nTransfersMax);
 	DDX_Text(pDX, IDC_TRANSFERS_MIN, m_nTransfersMin);
+	DDX_Check(pDX, IDC_REWARD_ENABLE, m_bReward);
 	DDX_Check(pDX, IDC_MATCH_CHECK, m_bMatch);
 	DDX_Text(pDX, IDC_MATCH_TEXT, m_sMatch);
 	DDX_Check(pDX, IDC_ENABLE, m_bEnable);
@@ -188,6 +190,8 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	
 	m_bRotate		= m_pQueue->m_bRotate;
 	m_nRotateTime	= m_pQueue->m_nRotateTime;
+
+	m_bReward		= m_pQueue->m_bRewardUploaders;
 	
 	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
 	DWORD nLimit = Settings.Bandwidth.Uploads;
@@ -380,6 +384,8 @@ void CQueuePropertiesDlg::OnOK()
 	m_pQueue->m_nRotateTime		= max(30, m_nRotateTime );
 	
 	m_pQueue->m_nBandwidthPoints = m_wndBandwidthSlider.GetPos();
+
+	m_pQueue->m_bRewardUploaders = m_bReward;
 	
 	CSkinDialog::OnOK();
 }

@@ -574,6 +574,7 @@
 #define IDC_QUEUES                      1315
 #define IDC_BANDWIDTH_POINTS            1315
 #define IDC_QUEUE_NEW                   1316
+#define IDC_REWARD_ENABLE               1316
 #define IDC_QUEUE_EDIT                  1317
 #define IDC_MATCH_CHECK                 1317
 #define IDC_QUEUE_DELETE                1318
@@ -630,7 +631,7 @@
 #define IDC_COLLECTIONS_FOLDER          1381
 #define IDC_COLLECTIONS_BROWSE          1382
 #define IDC_TORRENTS_FOLDER             1383
-#define IDC_TORRENTS_BROWSE             1384          
+#define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENT_LINKS_SPIN          1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
 #define IDC_TORRENT_ENDGAME             1387

@@ -33,6 +33,7 @@
 
 #include "SharedFile.h"
 #include "Download.h"
+#include "Downloads.h"
 
 #include "TigerTree.h"
 #include "SHA.h"
@@ -62,11 +63,13 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	m_bLive			= TRUE;
 	m_nRequests		= 0;
 	m_nUploaded		= 0;
+	m_nUserRating	= 0;
 	
 	m_tRotateTime	= 0;
 	m_tAverageTime	= 0;
 	m_nAveragePos	= 0;
 	ZeroMemory( m_nAverageRate, sizeof(m_nAverageRate) );
+	m_tRatingTime	= 0;
 	
 	Uploads.Add( this );
 }
@@ -196,8 +199,10 @@ void CUploadTransfer::SetSpeedLimit(DWORD nLimit)
 BOOL CUploadTransfer::OnRun()
 {
 	DWORD tNow = GetTickCount();
+
 	LongTermAverage( tNow );
 	RotatingQueue( tNow );
+	CalculateRating( tNow );
 	return CTransfer::OnRun();
 }
 
@@ -287,14 +292,20 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 {
 	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
 	
-	if ( m_pQueue != NULL && UploadQueues.Check( m_pQueue ) &&
+	if ( m_pQueue != NULL && UploadQueues.Check( m_pQueue ) &&	//Is this queue able to rotate?
 		 m_pQueue->m_bRotate && m_pQueue->IsActive( this ) )
 	{
-		if ( m_tRotateTime == 0 )
+		DWORD tRotationLength = m_pQueue->m_nRotateTime * 1000;
+
+		// High ranked users can get a longer rotate time
+		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) ) 
+			tRotationLength << 1;			
+
+		if ( m_tRotateTime == 0 )	//If the upload hasn't started yet
 		{
-			if ( m_nState == upsUploading ) m_tRotateTime = tNow;
+			if ( m_nState == upsUploading ) m_tRotateTime = tNow; //Set the upload as having started
 		}
-		else if ( tNow - m_tRotateTime >= m_pQueue->m_nRotateTime * 1000 )
+		else if ( tNow - m_tRotateTime >= tRotationLength )	//Otherwise check if it should rotate
 		{
 			m_tRotateTime = 0;
 			
@@ -310,6 +321,34 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 	{
 		m_tRotateTime = 0;
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CUploadTransfer calculate rating
+
+void CUploadTransfer::CalculateRating(DWORD tNow)
+{	//calculate a download rating for this transfer / user
+	if ( tNow > m_tRatingTime + 15000 ) //Recalculate rating every 15 seconds
+	{
+		QWORD nDownloaded = Downloads.GetAmountDownloadedFrom( &(m_pHost.sin_addr) );
+		m_tRatingTime = tNow;
+		if ( nDownloaded > 128 * 1024)	//They have uploaded to us. (Transfers < 128k are ignored)
+		{
+			if ( nDownloaded > m_nUploaded ) //If they have sent more to us than we have to them
+				m_nUserRating = 1;				//They get the highest rating
+			else
+				m_nUserRating = 2;				//Otherwise, #2. (still known sharer)
+		}
+		else							//They have not uploaded to us.
+		{
+			if ( m_nUploaded < 4*1024*1024 ) //If they have not gotten at least 4MB
+				m_nUserRating = 3;				//They are a new user- give uncertain rating 
+			else
+				m_nUserRating = 4;				//Else, probably not uploading to us.
+		}
+	}
+
+	//ToDo: Maybe add a 'remote client' class to retain transfer stats for an hour or so?
 }
 
 //////////////////////////////////////////////////////////////////////

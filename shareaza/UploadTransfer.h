@@ -51,6 +51,7 @@ public:
 	CTransferFile*	m_pDiskFile;	// Disk file
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
+	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 public:
 	BOOL			m_bSHA1;		// Hash of requested file
 	SHA1			m_pSHA1;		// ..
@@ -77,6 +78,7 @@ protected:
 	DWORD			m_tAverageTime;
 	int				m_nAveragePos;
 	DWORD			m_nAverageRate[ULA_SLOTS];
+	DWORD			m_tRatingTime;	//When rating was last calculated
 	
 // Operations
 public:
@@ -97,6 +99,7 @@ protected:
 protected:
 	void		LongTermAverage(DWORD tNow);
 	void		RotatingQueue(DWORD tNow);
+	void		CalculateRating(DWORD tNow);
 	void		ClearHashes();
 	BOOL		HashesFromURN(LPCTSTR pszURN);
 	void		ClearRequest();

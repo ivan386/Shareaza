@@ -56,6 +56,7 @@ CUploadQueue::CUploadQueue()
 	m_bRotate			= FALSE;
 	m_nRotateTime		= 300;
 	m_nRotateChunk		= 0;
+	m_bRewardUploaders	= FALSE;
 	
 	m_bExpanded			= TRUE;
 	m_bSelected			= FALSE;
@@ -164,6 +165,9 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 	
 	if ( GetQueueRemaining() > 0 || bForce )
 	{
+		//Id reward is on, only queue known sharers in the last position
+		if ( ( m_bRewardUploaders ) && ( pUpload->m_nUserRating > 2  ) && ( GetQueueRemaining() == 1 ) ) return FALSE;
+
 		m_pQueued.Add( pUpload );
 		pUpload->m_pQueue = this;
 		
@@ -451,6 +455,7 @@ void CUploadQueue::Serialize(CArchive& ar, int nVersion)
 		ar << m_bRotate;
 		ar << m_nRotateTime;
 		ar << m_nRotateChunk;
+		ar << m_bRewardUploaders;
 		
 		ar << m_bExpanded;
 	}
@@ -486,6 +491,8 @@ void CUploadQueue::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bRotate;
 		ar >> m_nRotateTime;
 		ar >> m_nRotateChunk;
+
+		if ( nVersion >= 5 ) ar >> m_bRewardUploaders;
 		
 		if ( nVersion >= 4 ) ar >> m_bExpanded;
 	}

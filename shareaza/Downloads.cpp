@@ -588,6 +588,7 @@ CDownload* CDownloads::FindByBTH(const SHA1* pBTH, BOOL bSharedOnly) const
 	return NULL;
 }
 
+
 //////////////////////////////////////////////////////////////////////
 // CDownloads serialization ID
 
@@ -692,6 +693,24 @@ BOOL CDownloads::Reorder(CDownload* pDownload, CDownload* pBefore)
 	DownloadGroups.IncBaseCookie();
 	
 	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloads find amount downloaded from a user
+
+QWORD CDownloads::GetAmountDownloadedFrom(IN_ADDR* pAddress)
+{
+	QWORD nTotal = 0;
+
+	if ( pAddress == NULL ) return 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+
+		nTotal += pDownload->GetAmountDownloadedFrom(pAddress);
+	}
+	return nTotal;
 }
 
 //////////////////////////////////////////////////////////////////////

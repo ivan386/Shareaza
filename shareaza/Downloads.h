@@ -87,6 +87,7 @@ public:
 	CDownload*	FindByBTH(const SHA1* pHash, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindBySID(DWORD nSerID) const;
 	DWORD		GetFreeSID();
+	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress);
 	DWORD		GetBandwidth() const;
 public:
 	void		Load();

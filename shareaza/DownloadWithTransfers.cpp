@@ -113,6 +113,22 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
 }
 
 //////////////////////////////////////////////////////////////////////
+// GetAmountDownloadedFrom total volume from an IP
+
+QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* pAddress) const
+{
+	QWORD nTotal = 0;
+	
+	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+	{	
+		if ( pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr )
+			nTotal += pTransfer->m_nDownloaded;
+	}
+
+	return nTotal;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers consider starting more transfers
 
 BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
