@@ -769,8 +769,8 @@ const CLowerCaseTable ToLowerCase;
 void ToLower(CString& strSource)
 {
 	const int nLength = strSource.GetLength();
-	const LPTSTR str = strSource.GetBuffer();
-	std::transform( &str[ 0 ], &str[ nLength ], &str[ 0 ], ToLowerCase );
+	const LPTSTR str = strSource.GetBuffer() + nLength;
+	for ( int i = -nLength; i; ++i ) str[ i ] = ToLowerCase( str[ i ] );
 	strSource.ReleaseBuffer( nLength );
 }
 
