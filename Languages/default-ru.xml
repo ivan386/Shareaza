@@ -8,11 +8,11 @@
 
 <!-- Manifest -->
 <manifest	name="Русский"
-		author="dAbserver & Rolandas Rudomanskis"
+		author="dAbserver &amp; Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.25"
+		version="2.1.0.58"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -91,11 +91,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Ещё..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_SEARCH" text="Искать ещё..."/>
+		<button id="ID_SEARCH_STOP" text="Остановка поиска"/>
+		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
 		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
-		<separator/>
-		<button id="ID_SEARCH_SEARCH" text="Искать снова..."/>
-		<button id="ID_SEARCH_STOP" text="Стоп"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
 		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
@@ -425,12 +425,13 @@
 			<item id="ID_TAB_SEARCH" text="_Поиск"/>
 			<item id="ID_TAB_TRANSFERS" text="_Загрузки"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
-			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
-			<separator/>
 			<menu text="_Опытным">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
 				<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
+				<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
+				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
@@ -878,15 +879,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отмена"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
@@ -909,9 +910,9 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит пропускной способности"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
+		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
-		<separator/>
+		<separator/> -->
 		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -929,9 +930,9 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
@@ -942,9 +943,9 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Возобновить все"/>
@@ -973,9 +974,9 @@
 	<menu name="CUploadsWnd.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>	-->
 	</menu>
 	<menu name="CUploadsWnd">
 		<item id="ID_UPLOADS_START" text="_Начать сейчас"/>
@@ -985,8 +986,8 @@
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
 		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
+		<!-- <item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>	-->
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Показывать все"/>
@@ -1921,6 +1922,17 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">Эта загрузка в ожидании</text>
 		<newline gap="8"/>
+		<text>Ожидается пока кто-нибудь начнет выгрузку.
+		Shareaza готова начать загрузку этого файла, но никто в данный момент его не выгружает. 
+		Вы, наверное, ждете в очередях других пользователей, так что загрузка файла может 
+		начаться в любое время. Вы можете увидеть, под каким номером стоите у них в очереди, при  
+		просмотре каждого источника. Если Вы тоже обмениваетесь файлами, Ваши шансы, что загрузка
+		начнеться быстрее, будут велики.</text>
+	</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">Эта загрузка в очереди</text>
+		<newline gap="8"/>
 		<text>Эта загрузка ждет завершения Ваших некоторых других загрузок.
 		Кол-во одновременных загрузок ограничиваются в установках Shareaza, для того чтобы
 		быть уверенными в том, что каждая загрузка получает хорошую долю пропускной
@@ -2372,9 +2384,11 @@
 	<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
 	<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с www.shareaza.com."/>
 	<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"/>
-	<string id="8062" value="Режим узла с %lu хостом(ами).  %s в местном хранилище."/>
-	<string id="8063" value="Соединено. %s в местном хранилище."/>
-	<string id="8064" value="Соединено с %lu хостом(ами).  %s в местном хранилище."/>
+	<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
+	<string id="8061" value="Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
+	<string id="8062" value="Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."/>
+	<string id="8063" value="Соединено. %s в собсвенном хранилище."/>
+	<string id="8064" value="Соединено с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8065" value="Подключаюсь к сети..."/>
 	<string id="8066" value="Нет соединения с сетью."/>
 	<string id="8067" value="%s вход. : %s исход. [З:%i/В:%i]"/>
@@ -2485,6 +2499,12 @@
 	<string id="8328" value="Общий размер:"/>
 	<string id="8329" value="Вашего хранилища"/>
 	<string id="8330" value="папка"/>
+	<string id="8331" value="Этот источник сейчас занят"/>
+	<string id="8332" value="Этот источник находится за брандмауэром"/>
+	<string id="8333" value="Этот источник может выгружать нестабильно"/>
+	<string id="8334" value="Источники этого файла сейчас заняты"/>
+	<string id="8335" value="Источники этого файла находятся за брандмауэром"/>
+	<string id="8336" value="Источники этого файла могут выгружать нестабильно"/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
 	<string id="16066" value="Закрытие ядра сети Shareaza..."/>
@@ -2675,6 +2695,7 @@
 	<string id="16374" value="Новая очередь"/>
 	<string id="16375" value="Частичные"/>
 	<string id="16376" value="Полные файлы"/>
+	<string id="16377" value="Охраняющяя HTTP"/>
 	<string id="16384" value="Уверены, что хотите открыть файл «%s» ?\n\nНекоторые файлы могут причинить вред для вашего компьютера.  Удостоверьтесь, что это за файл прежде чем открывать его."/>
 	<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
 	<string id="16386" value="Правка мета данных %i файлов."/>
@@ -2983,7 +3004,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="Основное">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Основное">
 		<control caption="_Интерфейс пользователя:"/>
 		<control caption="Соединяться с сетями при старте"/>
 		<control caption="Запуск Shareaza вместе с Windows"/>
@@ -3007,13 +3028,15 @@
 		<control caption="Обычное действие|Отправить в трей"/>
 		<control caption="Скрыть панель поиска начав поиск"/>
 		<control caption="Фильтровать содерж. для взрослых"/>
+		<control caption="Авто-очистка в окне загрузок"/>
+		<control caption="Авто-очистка в окне выгрузок"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Хранилище">
 		<control caption="_Опции:"/>
 		<control caption="Запоминать вид папок"/>
 		<control caption="Следить за папками хранил."/>
-		<control/>
+		<control caption="Быстрое хеш-ние (ЦПУ нагр.)"/>
 		<control caption="Фильтр объектов по типу"/>
 		<control/>
 		<control caption="Разделяемые видны другим"/>
@@ -3130,8 +3153,7 @@
 		<control caption="Разрешить предв. просмотр"/>
 		<control caption="Удалять ID3 теги из mp3"/>
 		<control caption="Лимит на уник. хост:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="_Юзер-Агент фильтр:"/>
 		<control/>
 		<control caption="+"/>
@@ -3935,7 +3957,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="Обозреватель BitTorrent трекера">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Подробная информация BitTorrent">
 		<control caption="Torrent _информация:"/>
 		<control caption="Имя:"/>
 		<control/>
@@ -3951,6 +3973,9 @@
 		<control caption="_Обновить"/>
 		<control/>
 		<control caption="Закрыть"/>
+		<control caption="Когда необходимо|Когда соотношение выше 100%|Никогда"/>
+		<control caption="Начать новые пересылки:"/>
+		<control caption="Пересылки:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Свойства группы загрузки">
