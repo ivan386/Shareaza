@@ -1314,22 +1314,26 @@ void CMatchFile::Added(CQueryHit* pHit)
 	else
 		m_sSpeed.Empty();
 	
-	if ( pHit->m_bPush == TS_FALSE )
-		m_bPush = TS_FALSE;
-	else if ( pHit->m_bPush == TS_TRUE && m_bPush == TS_UNKNOWN )
-		m_bPush = TS_TRUE;
+	if ( pHit->GetSources() > 0 )
+	{
+		if ( pHit->m_bPush == TS_FALSE )
+			m_bPush = TS_FALSE;
+		else if ( pHit->m_bPush == TS_TRUE && m_bPush == TS_UNKNOWN )
+			m_bPush = TS_TRUE;
+		
+		if ( pHit->m_bBusy == TS_FALSE )
+			m_bBusy = TS_FALSE;
+		else if ( pHit->m_bBusy == TS_TRUE && m_bBusy == TS_UNKNOWN )
+			m_bBusy = TS_TRUE;
+		
+		if ( pHit->m_bStable == TS_TRUE )
+			m_bStable = TS_TRUE;
+		else if ( pHit->m_bStable == TS_FALSE && m_bStable == TS_UNKNOWN )
+			m_bStable = TS_FALSE;
+		
+		m_bPreview |= pHit->m_bPreview;
+	}
 	
-	if ( pHit->m_bBusy == TS_FALSE )
-		m_bBusy = TS_FALSE;
-	else if ( pHit->m_bBusy == TS_TRUE && m_bBusy == TS_UNKNOWN )
-		m_bBusy = TS_TRUE;
-	
-	if ( pHit->m_bStable == TS_TRUE )
-		m_bStable = TS_TRUE;
-	else if ( pHit->m_bStable == TS_FALSE && m_bStable == TS_UNKNOWN )
-		m_bStable = TS_FALSE;
-	
-	m_bPreview |= pHit->m_bPreview;
 	m_bCollection |= ( pHit->m_bCollection && ! pHit->m_bBogus );
 	
 	if ( pHit->m_nRating )
