@@ -825,8 +825,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 	
 	if ( theApp.GetProfileInt( _T(""), _T("DialogScan"), FALSE ) )
 	{
-		USES_CONVERSION;
-		LPCSTR pszOutput;
+		//USES_CONVERSION;
+		//LPCSTR pszOutput;
 		CFile pFile;
 		
 		if ( pFile.Open( _T("\\Dialog.xml"), CFile::modeReadWrite ) )
@@ -837,7 +837,48 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 		{
 			return FALSE;
 		}
+
+		#ifdef _UNICODE
+		pFile.Write( "<dialog name=\"", 14 );
+
+		int nBytes = WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), NULL, 0, NULL, NULL );
+		LPSTR pBytes = new CHAR[nBytes];
+		WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), pBytes, nBytes, NULL, NULL );
+		pFile.Write( pBytes, nBytes );
+		delete [] pBytes;
+
+		pFile.Write( "\" cookie=\"", 10 );
+
+		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
+		pBytes = new CHAR[nBytes];
+		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
+		pFile.Write( pBytes, nBytes );
+		delete [] pBytes;
+
+		pFile.Write( "\" caption=\"", 11 );
+		pDialog->GetWindowText( strCaption );
+
+		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
+		pBytes = new CHAR[nBytes];
+		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
+		pFile.Write( pBytes, nBytes );
+		delete [] pBytes;
+
+		pFile.Write( "\">\r\n", 4 );
+
+		#else
+		pFile.Write( "<dialog name=\"", 14 );
+		pFile.Write( strName, strlen(strName) );
+		pFile.Write( "\" cookie=\"", 10 );
+		pFile.Write( strCaption, strlen(strCaption) );
+		pFile.Write( "\" caption=\"", 11 );
+		pDialog->GetWindowText( strCaption );
+		pFile.Write( strCaption, strlen(strCaption) );
+		pFile.Write( "\">\r\n", 4 );
+		#endif
 		
+
+		/*
 		pFile.Write( "<dialog name=\"", 14 );
 		pszOutput = T2A(strName);
 		pFile.Write( pszOutput, strlen(pszOutput) );
@@ -849,6 +890,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 		pszOutput = T2A(strCaption);
 		pFile.Write( pszOutput, strlen(pszOutput) );
 		pFile.Write( "\">\r\n", 4 );
+		*/
 		
 		for ( pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 		{
@@ -868,8 +910,19 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 				Replace( strCaption, _T("&"), _T("_") );
 				Replace( strCaption, _T("\""), _T("&quot;") );
 				pFile.Write( "\t<control caption=\"", 19 );
-				pszOutput = T2A(strCaption);
-				pFile.Write( pszOutput, strlen(pszOutput) );
+
+				//pszOutput = T2A(strCaption);
+				//pFile.Write( pszOutput, strlen(pszOutput) );
+				#ifdef _UNICODE
+				int nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
+				LPSTR pBytes = new CHAR[nBytes];
+				WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
+				pFile.Write( pBytes, nBytes );
+				delete [] pBytes;
+				#else
+				pFile.Write( strCaption, strlen(strCaption) );
+				#endif
+
         		pFile.Write( "\"/>\r\n", 5 );
 			}
 			else
