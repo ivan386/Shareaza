@@ -152,7 +152,7 @@ void CSearchMonitorWnd::OnSearchMonitorSearch()
 	{
 		CQuerySearch* pSearch = new CQuerySearch();
 		pSearch->m_sSearch = m_wndList.GetItemText( nItem, 0 );
-		pSearch->OpenWindow();
+		if ( pSearch->OpenWindow() == NULL ) delete pSearch;
 	}
 }
 
