@@ -218,6 +218,7 @@ void CDownload::StopTrying()
 	if ( m_bBTH ) CloseTorrent();
 	CloseTransfers();
 	CloseFile();
+	StopSearch();
 	SetModified();
 }
 
@@ -291,46 +292,45 @@ BOOL CDownload::IsShared() const
 void CDownload::OnRun()
 {
 	DWORD tNow = GetTickCount();
-	
-	if ( m_bDiskFull && ! m_bPaused ) Pause();
 
-	if( IsTrying() )
-	{	//This download is trying to download
+	if ( ! m_bPaused )
+	{
+		if ( m_bDiskFull  ) Pause();
+		else if ( IsTrying() )
+		{	//This download is trying to download
 
-		//'Dead download' check- if download appears dead, give up and allow another to start.
-		if ( ( !IsCompleted() ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )	
-		{	//If it's not complete, and we've been trying for at least 3 hours
+			//'Dead download' check- if download appears dead, give up and allow another to start.
+			if ( ( ! m_bComplete ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )	
+			{	//If it's not complete, and we've been trying for at least 3 hours
 
-			DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
+				DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
 
-			if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
-			{	//And have had no new data for 5-14 hours	
+				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
+				{	//And have had no new data for 5-14 hours	
 
-				if( m_bBTH )	//If it's a torrent
-				{
-					if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
-					{	//If there are other torrents that could start
-						StopTrying();		//Give up for now, try again later
-						return;
+					if( m_bBTH )	//If it's a torrent
+					{
+						if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
+						{	//If there are other torrents that could start
+							StopTrying();		//Give up for now, try again later
+							return;
+						}
+					}
+					else			//It's a regular download
+					{
+						if( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+						{	//If there are other downloads that could try
+							StopTrying();		//Give up for now, try again later
+							return;
+						}
 					}
 				}
-				else			//It's a regular download
-				{
-					if( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-					{	//If there are other downloads that could try
-						StopTrying();		//Give up for now, try again later
-						return;
-					}
-				}
-			}
-		}	//End of 'dead download' check
+			}	//End of 'dead download' check
 
-		if ( RunTorrent( tNow ) )
-		{
-			RunSearch( tNow );
-			
-			if ( m_bPaused == FALSE )
+			if ( RunTorrent( tNow ) )
 			{
+				RunSearch( tNow );
+				
 				if ( m_bSeeding )
 				{
 					RunValidation( TRUE );
@@ -354,19 +354,19 @@ void CDownload::OnRun()
 				}
 			}
 		}
-	}
-	else if (! m_bPaused )
-	{	//If this download isn't trying to download, see if it can try
-		if( m_bBTH )
-		{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-			if( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
-				SetStartTimer();
-		}
-		else
-		{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
-			//has sources and is ready to go.	
-			if( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-				SetStartTimer();
+		else if ( ! m_bComplete )
+		{	//If this download isn't trying to download, see if it can try
+			if( m_bBTH )
+			{	//Torrents only try when 'ready to go'. (Reduce tracker load)
+				if( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
+					SetStartTimer();
+			}
+			else
+			{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
+				//has sources and is ready to go.	
+				if( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+					SetStartTimer();
+			}
 		}
 	}
 	
