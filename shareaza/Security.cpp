@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1109,7 +1109,8 @@ void CAdultFilter::Load()
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord = pWords.GetNext( pos );
-			strWord = CharLower( strWord.GetBuffer() );
+			CharLower( strWord.GetBuffer() );
+			strWord.ReleaseBuffer();
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1151,7 +1152,8 @@ void CAdultFilter::Load()
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord = pWords.GetNext( pos );
-			strWord = CharLower( strWord.GetBuffer() );
+			CharLower( strWord.GetBuffer() );
+			strWord.ReleaseBuffer();
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
@@ -1330,7 +1332,8 @@ void CMessageFilter::Load()
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord = pWords.GetNext( pos );
-			strWord = CharLower( strWord.GetBuffer() );
+			CharLower( strWord.GetBuffer() );
+			strWord.ReleaseBuffer();
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}

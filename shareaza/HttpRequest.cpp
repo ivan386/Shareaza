@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -170,7 +170,8 @@ CString CHttpRequest::GetHeader(LPCTSTR pszName)
 	if ( IsPending() ) return strOut;
 	
 	strIn = pszName;
-	strIn = CharLower( strIn.GetBuffer() );
+	CharLower( strIn.GetBuffer() );
+	strIn.ReleaseBuffer();
 	m_pResponseHeaders.Lookup( strIn, strOut );
 	
 	return strOut;
@@ -387,7 +388,8 @@ void CHttpRequest::RunResponse(HINTERNET hURL)
 		{
 			CString strValue, strName = strHeader.Left( nColon );
 			strName.Trim(); 
-			strName = CharLower( strName.GetBuffer() );
+			CharLower( strName.GetBuffer() );
+			strName.ReleaseBuffer();
 			
 			while ( m_pResponseHeaders.Lookup( strName, strValue ) ) strName += _T('_');
 

@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,7 +78,8 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 	int nExtPos = strPath.ReverseFind( '.' );
 	if ( nExtPos > 0 ) strType = strPath.Mid( nExtPos );
 	
-	strType = CharLower( strType.GetBuffer() );
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 	
 	if ( strType == _T(".mp3") )
 	{
@@ -1440,7 +1441,8 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		CString strValue	= strComment.Mid( nEquals + 1 );
 		
 		strKey.TrimLeft(); strKey.TrimRight(); 
-		strKey = CharUpper( strKey.GetBuffer() );
+		CharUpper( strKey.GetBuffer() );
+		strKey.ReleaseBuffer();
 
 		strValue.TrimLeft(); strValue.TrimRight();
 		if ( strValue.IsEmpty() ) continue;
@@ -1698,7 +1700,8 @@ BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
 		
 		if ( strKey.GetLength() && strValue.GetLength() )
 		{
-			strKey = CharLower( strKey.GetBuffer() );
+			CharLower( strKey.GetBuffer() );
+			strKey.ReleaseBuffer();
 			
 			if ( strKey == _T("title") )
 			{
@@ -1965,7 +1968,8 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		CString strKey = strLine.SpanExcluding( _T(" \t") );
 		strLine = strLine.Mid( strKey.GetLength() );
 		strLine.TrimLeft();
-		strKey = CharLower( strKey.GetBuffer() );
+		CharLower( strKey.GetBuffer() );
+		strKey.ReleaseBuffer();
 		
 		if ( strLine.GetLength() >= 2 &&
 			 strLine.GetAt( 0 ) == '(' &&
@@ -2304,13 +2308,15 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 			case 2: // unknown data
 			break;
 			case 3: // redirection url
-				strLine = CharLower( strLine.GetBuffer() );
+				CharLower( strLine.GetBuffer() );
+				strLine.ReleaseBuffer();
 				if ( strLine.Left( 7 ) == _T("ms-its:") )
 				{
 					nPos = strLine.Find( _T("::"), 7 );
 					strTemp = _tcsrchr( pszPath, '\\' );
 					strTemp = strTemp.Mid( 1 );
-					strTemp = CharLower( strTemp.GetBuffer() );
+					CharLower( strTemp.GetBuffer() );
+					strTemp.ReleaseBuffer();
 					if ( strLine.Mid( 7, nPos - 7 ).Trim() != strTemp )
 						bCorrupted = TRUE; // it requires additional file
 				}
@@ -2321,7 +2327,8 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 				if ( strLine.IsEmpty() ) break;
 				nPos = strLine.Find( ',' );
 				strTemp = strLine.Left( nPos );
-				strTemp = CharLower( strTemp.GetBuffer() );
+				CharLower( strTemp.GetBuffer() );
+				strTemp.ReleaseBuffer();
 				if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 &&
 					 strTemp != _T("arial") && strTemp != _T("tahoma") &&
 					 strTemp != _T("times new roman") && strTemp != _T("verdana") &&

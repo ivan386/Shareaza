@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -318,7 +318,8 @@ IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID
 	
 	IImageServicePlugin* pService = NULL;
 	CString strType( pszType );
-	strType = CharLower( strType.GetBuffer() );
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 	
 	if ( m_pService.Lookup( strType, (void*&)pService ) )
 	{

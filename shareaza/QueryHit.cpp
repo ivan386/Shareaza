@@ -1130,7 +1130,8 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		if ( nExtPos > 0 ) 
 		{
 			strType = m_sName.Mid( nExtPos );
-			strType = CharLower( strType.GetBuffer() );
+			CharLower( strType.GetBuffer() );
+			strType.ReleaseBuffer();
 		}
 	}
 

@@ -1,7 +1,7 @@
 //
 // VendorCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -229,7 +229,8 @@ BOOL CVendor::LoadFrom(CXMLElement* pXML)
 		else if ( pKey->IsNamed( _T("capability") ) )
 		{
 			CString strCap = pKey->GetAttributeValue( _T("name") );
-			strCap = CharLower( strCap.GetBuffer() );
+			CharLower( strCap.GetBuffer() );
+			strCap.ReleaseBuffer(); 
 
 			BOOL bValue = TRUE;
 			

@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -146,7 +146,8 @@ BOOL CRemote::OnHeadersComplete()
 	m_sHandshake = m_sHandshake.Mid( 4 ).SpanExcluding( _T(" \t") );
 	
 	CString strPath = m_sHandshake.SpanExcluding( _T("?&") );
-	strPath = CharLower( strPath.GetBuffer() );
+	CharLower( strPath.GetBuffer() );
+	strPath.ReleaseBuffer();
 	
 	m_sRedirect.Empty();
 	m_sHeader.Empty();
@@ -238,7 +239,8 @@ BOOL CRemote::CheckCookie()
 		if ( m_pHeaderName.GetAt( nHeader ).CompareNoCase( _T("Cookie") ) == 0 )
 		{
 			CString strValue( m_pHeaderValue.GetAt( nHeader ) );
-			strValue = CharLower( strValue.GetBuffer() );
+			CharLower( strValue.GetBuffer() );
+			strValue.ReleaseBuffer();
 			
 			int nPos = strValue.Find( _T("shareazaremote=") );
 			
@@ -282,7 +284,8 @@ void CRemote::Prepare(LPCTSTR pszPrefix)
 void CRemote::Add(LPCTSTR pszKey, LPCTSTR pszValue)
 {
 	CString strKey( pszKey );
-	strKey = CharLower( strKey.GetBuffer() );
+	CharLower( strKey.GetBuffer() );
+	strKey.ReleaseBuffer();
 	m_pKeys.SetAt( strKey, pszValue );
 }
 
@@ -333,7 +336,8 @@ void CRemote::Output(LPCTSTR pszName)
 		
 		strKey.TrimLeft();
 		strKey.TrimRight();
-		strKey = CharLower( strKey.GetBuffer() );
+		CharLower( strKey.GetBuffer() );
+		strKey.ReleaseBuffer();
 		
 		if ( strKey.IsEmpty() )
 		{
@@ -844,7 +848,8 @@ void CRemote::PageDownloads()
 		if ( GetKey( _T("modify_id") ) == str )
 		{
 			CString str( GetKey( _T("modify_action") ) );
-			str = CharLower( str.GetBuffer() );
+			CharLower( str.GetBuffer() );
+			str.ReleaseBuffer();
 			
 			if ( str == _T("expand") && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
@@ -1000,7 +1005,8 @@ void CRemote::PageDownloads()
 				if ( GetKey( _T("modify_id") ) == str )
 				{
 					str = GetKey( _T("modify_action") );
-					str = CharLower( str.GetBuffer() );
+					CharLower( str.GetBuffer() );
+					str.ReleaseBuffer();
 					
 					if ( str == _T("access") )
 					{

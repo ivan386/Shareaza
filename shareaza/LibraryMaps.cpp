@@ -1,7 +1,7 @@
 //
 // LibraryMaps.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -127,7 +127,8 @@ CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly, 
 	CString strName( pszName );
 	
 	CQuickLock oLock( Library.m_pSection );
-	strName = CharLower( strName.GetBuffer() );
+	CharLower( strName.GetBuffer() );
+	strName.ReleaseBuffer();
 	
 	if ( m_pNameMap.Lookup( strName, (CObject*&)pFile ) && ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 	{

@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -805,7 +805,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_pSource->SetGnutella( 1 );
 		
 		m_bQueueFlag = TRUE;
-		strValue = CharLower( strValue.GetBuffer() );
+		CharLower( strValue.GetBuffer() );
+		strValue.ReleaseBuffer();
 		
 		int nPos = strValue.Find( _T("position=") );
 		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%i"), &m_nQueuePos );

@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -186,14 +186,16 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 {
 	CString strPathLC( pszPath );
-	strPathLC = CharLower( strPathLC.GetBuffer() );
+	CharLower( strPathLC.GetBuffer() );
+	strPathLC.ReleaseBuffer();
 	
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 		
 		CString strOldLC( pFolder->m_sPath );
-		strOldLC = CharLower( strOldLC.GetBuffer() );
+		CharLower( strOldLC.GetBuffer() );
+		strOldLC.ReleaseBuffer();
 		
 		if ( strPathLC.GetLength() > strOldLC.GetLength() )
 		{

@@ -1,7 +1,7 @@
 //
 // RichDocument.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -324,13 +324,15 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap, int nGrou
 		if ( strTemp.GetLength() ) _stscanf( strTemp, _T("%i"), &pElement->m_nGroup );
 		
 		strTemp = pXML->GetAttributeValue( _T("format") );
-		strTemp = CharLower( strTemp.GetBuffer() );
+		CharLower( strTemp.GetBuffer() );
+		strTemp.ReleaseBuffer();
 		if ( strTemp.Find( 'b' ) >= 0 )	pElement->m_nFlags |= retfBold;
 		if ( strTemp.Find( 'i' ) >= 0 )	pElement->m_nFlags |= retfItalic;
 		if ( strTemp.Find( 'u' ) >= 0 )	pElement->m_nFlags |= retfUnderline;
 		
 		strTemp = pXML->GetAttributeValue( _T("align") );
-		strTemp = CharLower( strTemp.GetBuffer() );
+		CharLower( strTemp.GetBuffer() );
+		strTemp.ReleaseBuffer(); 
 		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
 		
 		strTemp = pXML->GetAttributeValue( _T("colour") );
@@ -389,7 +391,8 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		if ( ! pXML->IsNamed( _T("style") ) ) continue;
 		
 		CString strName = pXML->GetAttributeValue( _T("name") );
-		strName = CharLower( strName.GetBuffer() );
+		CharLower( strName.GetBuffer() );
+		strName.ReleaseBuffer();
 		
 		CString strFontFace = _T("Tahoma");
 		int nFontSize = 12;

@@ -1,7 +1,7 @@
 //
 // LibraryDictionary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -127,19 +127,31 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
 			{
 				strWord = strPhrase.Mid( nStart, nPos - nStart );
-				if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+				if ( bLowercase ) 
+				{
+					CharLower( strWord.GetBuffer() );
+					strWord.GetBuffer();
+				}
 				ProcessWord( pFile, strWord, bAdd );
 				nCount++;
 				
 				if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
 				{
 					strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-					if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+					if ( bLowercase ) 
+					{
+						CharLower( strWord.GetBuffer() );
+						strWord.GetBuffer();
+					}
 					ProcessWord( pFile, strWord, bAdd );
 					nCount++;
 					
 					strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-					if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+					if ( bLowercase ) 
+					{
+						CharLower( strWord.GetBuffer() );
+						strWord.GetBuffer();
+					}
 					ProcessWord( pFile, strWord, bAdd );
 					nCount++;
 				}
@@ -151,19 +163,31 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 	if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
 	{
 		strWord = strPhrase.Mid( nStart, nPos - nStart );
-		if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+		if ( bLowercase ) 
+		{
+			CharLower( strWord.GetBuffer() );
+			strWord.GetBuffer();
+		}
 		ProcessWord( pFile, strWord, bAdd );
 		nCount++;
 		
 		if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
 		{
 			strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-			if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+			if ( bLowercase ) 
+			{
+				CharLower( strWord.GetBuffer() );
+				strWord.GetBuffer();
+			}
 			ProcessWord( pFile, strWord, bAdd );
 			nCount++;
 			
 			strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-			if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
+			if ( bLowercase ) 
+			{
+				CharLower( strWord.GetBuffer() );
+				strWord.GetBuffer();
+			}
 			ProcessWord( pFile, strWord, bAdd );
 			nCount++;
 		}

@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -353,7 +353,8 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			if ( hBitmap == NULL ) return FALSE;
 			
 			str = pGroup->GetAttributeValue( _T("type") );
-			str = CharLower( str.GetBuffer() );
+			CharLower( str.GetBuffer() );
+			str.ReleaseBuffer();
 			
 			if ( str == _T("watermark") || str == _T("water") )
 			{
@@ -825,7 +826,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	if ( m_bCaption )
 	{
 		pWnd->GetWindowText( strCaption );
-		if ( m_bCaptionCaps ) strCaption = CharUpper( strCaption.GetBuffer() );
+		if ( m_bCaptionCaps )
+		{
+			CharUpper( strCaption.GetBuffer() );
+			strCaption.ReleaseBuffer();
+		}
 	}
 	
 	if ( m_bAnchor[ SKINANCHOR_ICON ] )

@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -330,7 +330,8 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 		if ( pElement->IsNamed( _T("object") ) )
 		{
 			CString strType = pElement->GetAttributeValue( _T("type") );
-			strType = CharLower( strType.GetBuffer() );
+			CharLower( strType.GetBuffer() );
+			strType.ReleaseBuffer();
 			
 			if ( strType == _T("file") )
 				m_nType = stFile;
@@ -338,7 +339,8 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 				m_nType = stFolder;
 			
 			strType = pElement->GetAttributeValue( _T("availability") );
-			strType = CharLower( strType.GetBuffer() );
+			CharLower( strType.GetBuffer() );
+			strType.ReleaseBuffer();
 			
 			if ( strType == _T("system") )
 				m_nAvailability = saSystem;
@@ -506,7 +508,8 @@ void CSchema::LoadDescriptorTypeFilter(CXMLElement* pElement)
 		if ( pType->GetName().CompareNoCase( _T("type") ) == 0 )
 		{
 			CString strType = pType->GetAttributeValue( _T("extension"), _T("") );
-			strType = CharLower( strType.GetBuffer() );
+			CharLower( strType.GetBuffer() );
+			strType.ReleaseBuffer();
 
 			m_sTypeFilter += _T("|.");
 			m_sTypeFilter += strType;

@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -158,7 +158,8 @@ CString CLibraryFile::GetSearchName() const
 		str = m_pFolder->m_sPath.Mid( nBase + 1 ) + '\\' + m_sName;
 	}
 	
-	str = CharLower( str.GetBuffer() );
+	CharLower( str.GetBuffer() );
+	str.ReleaseBuffer();
 	return str;
 }
 

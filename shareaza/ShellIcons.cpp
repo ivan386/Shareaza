@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,7 +119,8 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	if ( m_i16.m_hImageList == NULL ) Clear();
 
 	CString strType( pszType );
-	strType = CharLower( strType.GetBuffer() );
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 
 	HICON hIcon = NULL;
 	int nIndex;

@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -321,7 +321,8 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		else if ( pSub->IsNamed( _T("manifest") ) )
 		{
 			CString strType = pSub->GetAttributeValue( _T("type") );
-			strType = CharLower( strType.GetBuffer() );
+			CharLower( strType.GetBuffer() );
+			strType.ReleaseBuffer();
 			
 			if ( strType == _T("language") )
 			{
@@ -1146,7 +1147,8 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 		CString strName		= pXML->GetAttributeValue( _T("name") );
 		CString strValue	= pXML->GetAttributeValue( _T("value") );
-		strName = CharLower( strName.GetBuffer() );
+		CharLower( strName.GetBuffer() );
+		strName.ReleaseBuffer();
 
 		COLORREF* pColour;
 

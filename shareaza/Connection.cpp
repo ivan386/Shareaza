@@ -1,11 +1,11 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/03/03 10:55:02 $"
-//	Revision:		"$Revision: 1.14 $"
+//	Date:			"$Date: 2005/03/11 18:02:00 $"
+//	Revision:		"$Revision: 1.15 $"
 //  Last change by:	"$Author: mogthecat $"
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -875,11 +875,13 @@ BOOL CConnection::IsAgentBlocked()
 
 	// Get the list of blocked programs, and make a copy here of it all in lowercase letters
 	CString strBlocked = Settings.Uploads.BlockAgents;
-	strBlocked = CharLower( strBlocked.GetBuffer() );
+	CharLower( strBlocked.GetBuffer() );
+	strBlocked.ReleaseBuffer();
 
 	// Get the name of the program running on the other side of the connection, and make it lowercase also
 	CString strAgent = m_sUserAgent;
-	strAgent = CharLower( strAgent.GetBuffer() );
+	CharLower( strAgent.GetBuffer() );
+	strAgent.ReleaseBuffer();
 
 	// Loop through the list of programs to block
 	for ( strBlocked += '|' ; strBlocked.GetLength() ; )

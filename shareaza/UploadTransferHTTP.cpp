@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -214,7 +214,8 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
 	{
-		strValue = CharLower( strValue.GetBuffer() );
+		CharLower( strValue.GetBuffer() );
+		strValue.ReleaseBuffer();
 		if ( strValue.Find( _T("application/x-gnutella-packets") ) >= 0 ) m_bHostBrowse = 1;
 		if ( strValue.Find( _T("application/x-gnutella2") ) >= 0 ) m_bHostBrowse = 2;
 		if ( strValue.Find( _T("application/x-shareaza") ) >= 0 ) m_bHostBrowse = 2;

@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -350,7 +350,8 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	
 	int nExtPos = m_sSourceName.ReverseFind( '.' );
 	if ( nExtPos > 0 ) strType = m_sSourceName.Mid( nExtPos );
-	strType = CharLower( strType.GetBuffer() );
+	CharLower( strType.GetBuffer() );
+	strType.ReleaseBuffer();
 	
 	if ( ! LoadPlugin( strType ) ) return FALSE;
 	

@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -597,7 +597,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-#define DOWNLOAD_SER_VERSION	31
+#define DOWNLOAD_SER_VERSION	32
 
 void CDownload::Serialize(CArchive& ar, int nVersion)
 {

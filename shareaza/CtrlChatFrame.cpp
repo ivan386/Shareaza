@@ -1,7 +1,7 @@
 //
 // CtrlChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -303,7 +303,8 @@ BOOL CChatFrame::IsInRange(LPCTSTR pszToken)
 	if ( nStart <= 0 ) return FALSE;
 	if ( nStart < strRange.GetLength() ) strRange = strRange.Left( nStart );
 	
-	strRange = CharLower( strRange.GetBuffer() );
+	CharLower( strRange.GetBuffer() );
+	strRange.ReleaseBuffer();
 	strRange.MakeReverse();
 	strToken.Format( _T("]%s["), pszToken );
 	nStart = strRange.Find( strToken );
@@ -389,7 +390,8 @@ void CChatFrame::OnLocalText(LPCTSTR pszText)
 	if ( *pszText == '/' )
 	{
 		CString strCommand = CString( pszText ).SpanExcluding( _T(" \t") );
-		strCommand = CharLower( strCommand.GetBuffer() );
+		CharLower( strCommand.GetBuffer() );
+		strCommand.ReleaseBuffer();
 		
 		if ( strCommand == _T("/me") )
 		{
