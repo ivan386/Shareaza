@@ -2061,6 +2061,7 @@ Other:
 		<string id="16525" value="Geroutete Gnutella Pakete" />
 		<string id="16526" value="Verworfene Gnutella Pakete" />
 		<string id="16527" value="Verlorene Gnutella Pakete" />
+		<string id="8062" value="Hub Modus mit %lu Leafs.  %s in ihrer Bibliothek."/>
 		<string id="8063" value="Verbunden. %s in lokaler Bibliothek." />
 		<string id="8064" value="Verbunden mit %lu Host(s), %s in der lokalen Bibliothek." />
 		<string id="8065" value="Verbindung mit dem Netzwerk herstellen..." />
