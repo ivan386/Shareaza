@@ -518,6 +518,7 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 {
 	if ( pszName == NULL ) return FALSE;
 	
+	if (pBar->m_hWnd)
 	for ( CWnd* pChild = pBar->GetWindow( GW_CHILD ) ; pChild ; pChild = pChild->GetNextWindow() )
 	{
 		pChild->ShowWindow( SW_HIDE );

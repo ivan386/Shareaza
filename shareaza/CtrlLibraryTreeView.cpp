@@ -289,7 +289,7 @@ void CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
 	if ( bChanged )
 	{
 		UpdateScroll();
-		Invalidate();
+		if (m_hWnd) Invalidate();
 		NotifySelection();
 	}
 }

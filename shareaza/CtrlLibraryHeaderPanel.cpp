@@ -122,7 +122,7 @@ int CLibraryHeaderPanel::Update()
 		dc.SelectObject( pFont );
 	}
 	
-	Invalidate();
+	if (m_hWnd) Invalidate();
 
 	int nHeight = m_pMetadata.GetCount() * 12 + 8;
 
@@ -154,6 +154,7 @@ void CLibraryHeaderPanel::OnSkinChange()
 
 CAlbumFolder* CLibraryHeaderPanel::GetSelectedAlbum() const
 {
+	if (!m_hWnd) return Library.GetAlbumRoot();
 	CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
 	ASSERT_KINDOF(CLibraryFrame, pFrame );
 

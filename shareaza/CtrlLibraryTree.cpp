@@ -403,6 +403,7 @@ BOOL CLibraryTreeCtrl::CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL b
 
 void CLibraryTreeCtrl::NotifySelection()
 {
+	if (!m_hWnd) return;
 	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), LTN_SELCHANGED };
 	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
 }

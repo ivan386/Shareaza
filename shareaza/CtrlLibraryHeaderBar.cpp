@@ -78,7 +78,7 @@ void CLibraryHeaderBar::Update(CLibraryView* pView)
 		m_nImage	= nImage;
 		m_sTitle	= strTitle;
 
-		Invalidate();
+		if (m_hWnd) Invalidate();
 	}
 	
 	if ( pView != m_pLastView && ( m_pLastView = pView ) )

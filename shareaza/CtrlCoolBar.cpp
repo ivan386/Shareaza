@@ -308,7 +308,7 @@ void CCoolBarCtrl::OnUpdated()
 	{
 		CSize czLast = m_czLast;
 		
-		if ( CalcFixedLayout( FALSE, TRUE ) != czLast )
+		if ( CalcFixedLayout( FALSE, TRUE ) != czLast && m_hWnd)
 		{
 			CMDIFrameWnd* pOwner = (CMDIFrameWnd*)GetOwner();
 
@@ -322,7 +322,7 @@ void CCoolBarCtrl::OnUpdated()
 		}
 	}
 	
-	Invalidate();
+	if (m_hWnd) Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
