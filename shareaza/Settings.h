@@ -415,6 +415,7 @@ public:
 	struct sLive
 	{
 		BOOL		DiskWarning;				//Has the user been warned of low disk space?
+		BOOL		AdultWarning;				//Has the user been warned about the adult filter?
 		DWORD		BandwidthScale;				//Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;

@@ -379,6 +379,7 @@ CSettings::CSettings()
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
 	Live.DiskWarning		= FALSE;
+	Live.AdultWarning		= FALSE;
 
 	Setup();
 

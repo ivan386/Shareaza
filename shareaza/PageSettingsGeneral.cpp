@@ -149,8 +149,12 @@ void CGeneralSettingsPage::OnOK()
 {
 	UpdateData();
 
-	if ( ( Settings.Search.AdultFilter == FALSE ) && ( m_bAdultFilter == TRUE ) )
+	if ( ( Settings.Search.AdultFilter == FALSE ) && ( m_bAdultFilter == TRUE ) 
+		&& ( Settings.Live.AdultWarning == FALSE ) )
+	{
+		Settings.Live.AdultWarning = TRUE;
 		CHelpDlg::Show( _T("GeneralHelp.AdultFilter") );
+	}
 	
 	Settings.SetStartup( m_bStartup );
 	Settings.Connection.AutoConnect		= m_bAutoConnect;
