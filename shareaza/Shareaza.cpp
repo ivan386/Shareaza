@@ -947,3 +947,33 @@ CString	TimeToString(FILETIME* pTime)
 
 	return str;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// Automatic dropdown list width adjustment (to fit translations)
+// Use in ON_CBN_DROPDOWN events
+
+void RecalcDropWidth(CComboBox* pWnd)
+{
+    // Reset the dropped width
+    int nNumEntries = pWnd->GetCount();
+    int nWidth = 0;
+    CString str;
+
+    CClientDC dc( pWnd );
+    int nSave = dc.SaveDC();
+    dc.SelectObject( pWnd->GetFont() );
+
+    int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
+    for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
+    {
+        pWnd->GetLBText( nEntry, str );
+        int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
+        nWidth = max( nWidth, nLength );
+    }
+    
+    // Add margin space to the calculations
+    nWidth += dc.GetTextExtent( _T("0") ).cx;
+
+    dc.RestoreDC( nSave );
+    pWnd->SetDroppedWidth( nWidth );
+}

@@ -1,7 +1,7 @@
 //
 // PageSettingsGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,6 +37,8 @@ IMPLEMENT_DYNCREATE(CGeneralSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CGeneralSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CGeneralSettingsPage)
+	ON_CBN_DROPDOWN(IDC_CLOSE_MODE, OnDropdownCloseMode)
+	ON_CBN_DROPDOWN(IDC_TRAY_MINIMISE, OnDropdownTrayMinimise)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -91,6 +93,8 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TIP_ALPHA, m_wndTipAlpha);
 	DDX_Text(pDX, IDC_TIP_DELAY, m_nTipDelay);
 	DDX_Check(pDX, IDC_HIGHLIGHT_NEW, m_bHighlightNew);
+	DDX_Control(pDX, IDC_CLOSE_MODE, m_wndCloseMode);
+	DDX_Control(pDX, IDC_TRAY_MINIMISE, m_wndTrayMinimise);
 	//}}AFX_DATA_MAP
 }
 
@@ -210,3 +214,13 @@ void CGeneralSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
+
+void CGeneralSettingsPage::OnDropdownCloseMode()
+{
+	RecalcDropWidth( &m_wndCloseMode );
+}
+
+void CGeneralSettingsPage::OnDropdownTrayMinimise()
+{
+	RecalcDropWidth( &m_wndTrayMinimise );
+}

@@ -1,7 +1,7 @@
 //
 // PageSettingsGeneral.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +56,8 @@ public:
 	CSpinButtonCtrl	m_wndTipSpin;
 	CListCtrl	m_wndTips;
 	CSliderCtrl	m_wndTipAlpha;
+	CComboBox	m_wndCloseMode;
+	CComboBox	m_wndTrayMinimise;
 	DWORD	m_nTipDelay;
 	BOOL	m_bHighlightNew;
 	//}}AFX_DATA
@@ -76,6 +78,8 @@ public:
 protected:
 	//{{AFX_MSG(CGeneralSettingsPage)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDropdownCloseMode();
+	afx_msg void OnDropdownTrayMinimise();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

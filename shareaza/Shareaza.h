@@ -108,6 +108,8 @@ CString	TimeToString(DWORD tVal);
 BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
+void RecalcDropWidth(CComboBox* pWnd);
+
 #ifdef _DEBUG
 #define MLOG(x) theApp.Message( MSG_DEBUG, x )
 #else
