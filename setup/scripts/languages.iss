@@ -15,6 +15,7 @@ Name: "no"; MessagesFile: "compiler:Default.isl,setup\isl\norwegian.isl"; Licens
 Name: "af"; MessagesFile: "compiler:Default.isl,setup\isl\african.isl"; LicenseFile: "setup/license/african.rtf"
 Name: "br"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-braz.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/default.rtf"
 
 [Files]
 ; Install default remote
@@ -40,6 +41,8 @@ Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereado
 Source: "Remote-localized\portuguese\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: br; Components: language
 ; French
 Source: "Remote-localized\french\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Components: language
+; Spanish
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -64,6 +67,8 @@ Source: "setup\license\african.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: br; Components: language
 ; French
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fr; Components: language
+; Spanish
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: es; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -208,4 +213,18 @@ fr.reg_apptitle=Shareaza Ultimate File Sharing
 fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
+; Spanish
+es.components_plugins=Plugins
+es.components_skins=Skins
+es.components_languages=Lenguages
+es.tasks_allusers=Todos los usuarios
+es.tasks_selectusers=Instalar %1 para:
+es.tasks_currentuser=%1 solamente
+es.tasks_multisetup=Habilitar soporte multi-usuario
+es.run_skinexe=Instalando Skin...
+es.reg_incomingchat=Hay un mensaje de chat entrante
+es.reg_apptitle=Shareaza Ultimate File Sharing
+es.icons_license=Licencia
+es.icons_uninstall=Desinstalar
+es.icons_downloads=Descargas
 
