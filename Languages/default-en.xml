@@ -16,7 +16,7 @@
 			description="Shareaza Default English Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.0.4"
+			version="2.0.0.20"
 			type="Language"
 			language="en"
 			prompt="Click here to select English as your natural language."
@@ -781,15 +781,15 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodes in the same Series"/>
 		</menu>
-		<menu text="_Web Services">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
+	<menu text="_Web Services">
+	<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
@@ -830,9 +830,8 @@
 		</menu>
 		<menu text="_Web File Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -1054,7 +1053,7 @@
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
-	<menu name="CLibraryTileView.Virtual">
+	     <menu name="CLibraryTileView">
 		<item id="ID_LIBRARY_ALBUM_OPEN" text="_Open"/>
 		<item id="ID_LIBRARY_ALBUM_DELETE" text="_Delete"/>
 		<separator/>
@@ -1078,11 +1077,10 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1111,9 +1109,10 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<separator/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1144,11 +1143,10 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1179,9 +1177,10 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
-			<separator/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_UNLINK" text="Remove _Files"/>
@@ -1639,6 +1638,22 @@
 		</para>
 	</document>
 
+	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="TorrentsNone" format="b">No seeding torrents</text>
+			<text id="TorrentsOne" format="b">1 seeding torrent</text>
+			<text id="TorrentsMany" format="b">%i seeding torrents</text>
+			<newline gap="4"/>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
+		</para>
+
+	</document>
+
 	<!-- Settings Pages -->
 
 	<document name="CGeneralSettingsGroup" title="General" leftMargin="8" topMargin="8">
@@ -1939,6 +1954,19 @@
 		a list of downloader peers.</text>
 	</document>
 
+	<!-- General help documents -->
+
+	<document name="GeneralHelp.DiskSpace">
+	<text format="b">Disk Space is Low</text>
+	<newline gap="8"/>
+	<text>The amount of free space on one or more drives used by Shareaza is low.</text>
+	<newline gap="8"/>
+	<text>You should always attempt to keep a reasonable amount of disk space free.
+	Programs can become unstable if the drives become full, and temporary files may be
+	lost. You should run a disk clean-up, delete unwanted files, or un-install software
+	you no longer need.</text>
+  </document>
+
 	<!-- Search help documents -->
 
 <document name="SearchHelp.BadSearch">
@@ -1952,87 +1980,36 @@
     <text> Most clients on the network will ignore a search for
         all MP3 files, for example, because it is not specific
         enough and would generate too many results.</text>
-</document>
-</documents>
+ </document>
 
-<!-- Navigation Bar -->
-<windowSkins>
-	<windowSkin>
-		<image type="image" language="en" res="241"/>
-		<image type="alpha" language="en" res="246"/>
-		<target window="CMainTabBarCtrl.Basic"/>
-		<anchors>
-			<anchor name="Background"				rect="0,0,470,44"/>
-			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
-			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
-			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
-		</parts>
-	</windowSkin>
-	<windowSkin>
-		<image type="image" language="en" res="241"/>
-		<image type="alpha" language="en" res="246"/>
-		<target window="CMainTabBarCtrl"/>
-		<anchors>
-			<anchor name="Background"				rect="0,0,574,44"/>
-			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
-			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
-			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-			<anchor name="_ID_TAB_NETWORK"			rect="464,1,102,38"/>
-		</anchors>
-		<parts>
-			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
-			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
-			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
-			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
-			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
-			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
-			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
-			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
-			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
-			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
-			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
-			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
-			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
-			<part name="_ID_TAB_NETWORK.Up"			rect="450,0,108,38"/>
-			<part name="_ID_TAB_NETWORK.Checked"	rect="450,38,102,38"/>
-			<part name="_ID_TAB_NETWORK.Hover"		rect="450,38,102,38"/>
-			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
-		</parts>
-	</windowSkin>
-</windowSkins>
+<!-- Share help documents -->
+
+	<document name="ShareHelp.AlreadyShared">
+	<text format="b">Already Shared</text>
+	<newline gap="8"/>
+	<text>The folder you have selected is already being shared as part of an
+	existing share.</text>
+	<newline gap="8"/>
+	<text> %s </text>
+ </document>
+
+	<document name="ShareHelp.BadShare">
+	<text format="b">This folder should not be shared</text>
+	<newline gap="8"/>
+	<text>This folder is (or contains) a system folder. Sharing this folder is not
+	recommended, since most of the files in it are of no use to other people.</text>
+	<newline gap="8"/>
+	<text>Folders such as the Windows directory, Program Files, and similar folders
+	do not usually contain files suitable for sharing. Any files of interest would be in
+	sub-folders located </text><text format="i"> inside </text><text> these
+	folders. Please share those instead.</text>
+	<newline gap="8"/>
+	<text>The Shareaza 'incomplete' folder should also not be shared through the
+	library, since attempting to hash downloads in progress may impact on
+	performance.</text>
+ </document>
+
+</documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
@@ -2062,6 +2039,7 @@
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
 	<tip id="ID_NETWORK_SEARCH" message="Start a new search of the network..."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Download the selected file(s)."/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="Download the selected file(s) with priority."/>
 	<tip id="ID_SEARCH_SEARCH" message="Search the network again..."/>
 	<tip id="ID_SEARCH_FILTER" message="Filter the search results by certain words and conditions..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Remove filtering from the results."/>
@@ -2107,6 +2085,7 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Display legend."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Select and configure items to graph..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Clear the traffic graph."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed a torrent"/>
 	<tip id="ID_TOOLS_WIZARD" message="Open the Shareaza QuickStart wizard..."/>
 	<tip id="ID_CHILD_RESTORE" message="Open the selected window."/>
 	<tip id="ID_CHILD_CLOSE" message="Close the active window."/>
@@ -2166,7 +2145,7 @@
 	<tip id="ID_DISCOVERY_BROWSE" message="Browse statistics for the selected GWebCache service on the Web."/>
 	<tip id="ID_BROWSE_STOP" message="Stop browsing files on this host."/>
 	<tip id="ID_BROWSE_REFRESH" message="Refresh the list of files available on this host."/>
-	<tip id="ID_BROWSE_LAUNCH" message="Browse the select user's profile and shared files."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Browse the selected user's profile and shared files."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
 	<tip id="ID_TAB_HOME" message="Return to the Shareaza Home page"/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
@@ -2313,6 +2292,7 @@
 	<tip id="ID_UPLOADS_FILTER_MENU" message="Choose which types of uploads to show and which types to hide in this view."/>
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Cancel the selected incomplete download(s)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Remove the selected download(s) from the list."/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="Create a .torrent for this file to upload to a website."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Show or hide the navigation bar."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Collection View"/>
@@ -2324,7 +2304,9 @@
 	<tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
 	<tip id="ID_WINDOW_REMOTE" message="Show or hide the Shareaza Remote Control"/>
 	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Show BitTorrent uploads."/>
+	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_HELP_FIREWALLS" message="Get help configuring your router or firewall."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
 	<tip id="ID_WINDOW_CASCADE" message="Expand all open windows to fill the screen."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
@@ -2364,6 +2346,7 @@
 	<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
+    <string id="8063" value="Connected. %s in local library."/>
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
 	<string id="8065" value="Connecting to the network..."/>
 	<string id="8066" value="Not connected to the network."/>
@@ -2392,7 +2375,7 @@
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
 	<string id="8143" value="Searching..."/>
 	<string id="8144" value="Start Search"/>
-	<string id="8145" value="Search Again"/>
+	<string id="8145" value="Search More"/>
 	<string id="8146" value="Stop"/>
 	<string id="8147" value="Any File Type"/>
 	<string id="8148" value="Type your search here:"/>
@@ -2455,7 +2438,7 @@
 	<string id="8310" value="%i upload slots, %i waiting in queue"/>
 	<string id="8311" value="You already have this file in your library."/>
 	<string id="8312" value="You already have this file on your download list."/>
-	<string id="8313" value="This file appear to be spam."/>
+	<string id="8313" value="This file appears to be spam."/>
 	<string id="8314" value="You have downloaded and deleted this file before."/>
 	<string id="8315" value="Blacklisted: "/>
 	<string id="16064" value="Starting Shareaza network core..."/>
@@ -2697,6 +2680,10 @@
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
 	<string id="16771" value="You already have the file &quot;%s&quot; in your library.  Do you want to download it anyway?"/>
+	<string id="16772" value="Host:"/>
+	<string id="16773" value="Port:"/>
+	<string id="16774" value="&amp;Connect"/>
+	<string id="16775" value="&amp;Browse"/>
 	<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 	<string id="16801" value="Please choose the type of Internet connection you are using before continuing."/>
 	<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -2711,7 +2698,6 @@
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
 	<string id="16867" value="Discovery service &quot;%s&quot; failed, fail count %i."/>
 	<string id="16868" value="Discovery service &quot;%s&quot; has failed %i times, removing."/>
-	<string id="16869" value="http://gwc.isuldor.com/g2only/cache.asp\nhttp://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi"/>
 	<string id="16870" value="Sending GWebCache update to service &quot;%s&quot;..."/>
 	<string id="16871" value="Submitting GWebCache &quot;%s&quot; to a random GWebCache..."/>
 	<string id="16928" value="Initiating a connection to %s to browse user..."/>
@@ -2736,6 +2722,8 @@
 	<string id="16995" value="The file may be damaged, or you may not have the necessary codecs to play it."/>
 	<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 	<string id="16997" value="There is no file playing.  Double-click a media file in your library to play it."/>
+	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/> <!-- on one line -->
+	<string id="16999" value="P L A Y L I S T"/>
 	<string id="17024" value="Initiating a connection to %s..."/>
 	<string id="17025" value="Unable to create a connection to %s."/>
 	<string id="17026" value="Requesting a firewalled push connection from %s..."/>
@@ -2830,6 +2818,10 @@
 	<string id="18508" value="Dropping download source %s for &quot;%s&quot; because queue position %i is too high."/>
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
+	<string id="19000" value="Remote access is disabled."/>
+    <string id="19001" value="You must choose a username and password."/>
+    <string id="19002" value="Unable to accept connections, URL unavailable."/>
+	<string id="20000" value="No URN available"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2868,7 +2860,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBu" caption="Library">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
@@ -2892,6 +2884,8 @@
 		<control/>
 		<control caption="_Add"/>
 		<control caption="_Remove"/>
+		<control caption="Store _Collections Here:"/>
+		<control/><control/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
@@ -3085,6 +3079,23 @@
 		<control caption="Download eDonkey2000 serverlist from the web:"/>
 		<control caption="Download..."/>
 	</dialog>
+
+<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
+	<control caption="_Store Torrents Here:"/>
+	<control/><control/>
+	<control caption="_Download Connections:"/>
+	<control/><control/>
+	<control caption="Client connections"/>
+	<control caption="_Interface:"/>
+	<control caption="Display additional BitTorrent interface elements"/>
+	<control caption="_EndGame:"/>
+	<control caption="Enable EndGame mode when completing torrents"/>
+	<control caption="_Torrent Creator"/>
+	<control caption="Tracker:"/>
+	<control/><control/><control/><control/><control/>
+	<control caption="Torrents at once"/>
+	<control caption="_Default Tracker:"/>
+</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
@@ -3749,7 +3760,7 @@
 	</dialog>
 
 	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent Tracker Viewer">
-	    <control caption="TTorrent _Information:"/>
+	    <control caption="Torrent _Information:"/>
 	    <control caption="Name:"/>
 	    <control/>
 	    <control caption="Tracker:"/>
@@ -3798,13 +3809,13 @@
 	</dialog>
 </dialogs>
 
-
 <!-- Columns Definitions -->
 <listColumns>
     <list name="CLibraryWnd">
         <column from="File" to=""/>
         <column from="Type" to=""/>
         <column from="Size" to=""/>
+	    <column from="Folder" to=""/>
         <column from="Hits" to=""/>
         <column from="Uploads" to=""/>
         <column from="Modified" to=""/>
@@ -3816,6 +3827,8 @@
         <column from="Speed" to=""/>
         <column from="Status" to=""/>
         <column from="Client" to=""/>
+        <column from="Downloaded" to=""/>
+	    <column from="Complete" to=""/>
     </list>
     <list name="CUploadCtrl">
         <column from="Uploaded File" to=""/>
@@ -3884,6 +3897,7 @@
         <column from="Type" to=""/>
         <column from="Size" to=""/>
         <column from="Rating" to=""/>
+	    <column from="Status" to=""/>
         <column from="Host/Count" to=""/>
         <column from="Speed" to=""/>
         <column from="Client" to=""/>
