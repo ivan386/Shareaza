@@ -12,7 +12,7 @@
                        description="Shareaza Default Russian Skin File"
                        link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
                        email="dabserver@mail.ru"
-                       version="2.0.5.0"
+                       version="2.1.0.1"
                        type="Language"
                        language="ru"
                        prompt="&#160;&#1065;&#1077;&#1083;&#1082;&#1085;&#1080;&#1090;&#1077;&#160;&#1079;&#1076;&#1077;&#1089;&#1100;&#160;&#1076;&#1083;&#1103;&#160;&#1089;&#1084;&#1077;&#1085;&#1099;&#160;&#1103;&#1079;&#1099;&#1082;&#1072;&#160;&#1085;&#1072;&#160;&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;&#160;(&#1086;&#1090;&#160;dAbserver)"
@@ -1050,7 +1050,7 @@
                        <item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
                        <separator/>
-                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исолниеля"/>
+                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
                </menu>
@@ -1082,7 +1082,7 @@
                        <item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
                        <separator/>
-                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исолниеля"/>
+                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
                </menu>
@@ -1116,7 +1116,7 @@
                        <item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
                        <separator/>
-                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исолниеля"/>
+                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
                </menu>
@@ -1150,7 +1150,7 @@
                        <item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
                        <separator/>
-                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исолниеля"/>
+                       <item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
                </menu>
@@ -2423,7 +2423,6 @@
        <string id="8231" value="Нет источников"/>
        <string id="8232" value="Открыть"/>
        <string id="8233" value="Предпросмотр"/>
-       <string id="8234" value="%s|%s|%.2f%%"/>
        <string id="8235" value="Скорость передачи:"/>
        <string id="8236" value="Примерно осталось:"/>
        <string id="8237" value="Загрузили|Всего|%:"/>
@@ -2431,7 +2430,6 @@
        <string id="8239" value="Завершено"/>
        <string id="8240" value="Shareaza перемещает загрузку:"/>
        <string id="8241" value="Shareaza проверяет загрузку на ошибки:"/>
-       <string id="8242" value="%s из %s (%.2f%%)"/>
        <string id="8243" value="Соотношение:"/>
        <string id="8288" value="Обзор Вашего Shareaza хранилища"/>
        <string id="8289" value="Просматривается "/>
@@ -2442,7 +2440,6 @@
        <string id="8294" value="Недавние дополнения"/>
        <string id="8295" value="Оценить файл"/>
        <string id="8304" value="Н/Д"/>
-       <string id="8305" value="%i из %i"/>
        <string id="8306" value="Путь"/>
        <string id="8307" value="Тип"/>
        <string id="8308" value="Разм."/>
@@ -2858,6 +2855,7 @@
        <string id="19001" value="Вы должны выбрать имя пользователя и пароль."/>
        <string id="19002" value="Невозможно принять соединений, ссылка недоступна."/>
        <string id="20000" value="Нет доступных ссылок"/>
+       <string id="20002" value="из"/>
        <string id="20100" value="Соединение"/>
        <string id="20101" value="Запрос"/>
        <string id="20102" value="Ответ"/>
