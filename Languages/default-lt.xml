@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.102"
+		version="2.1.0.111"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -797,7 +797,7 @@ right quote	&#147;
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti dabar"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
@@ -825,6 +825,7 @@ right quote	&#147;
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
 		<separator/>
@@ -842,6 +843,7 @@ right quote	&#147;
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti _dabar"/>
 		<item id="ID_SEARCH_COPY" text="Kopijuoti _nuorodą"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
@@ -910,6 +912,7 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Kopijos peržiūra"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="P_eržvelgti įvertinimus"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Tęsti"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="_Stabdyti"/>
@@ -1127,8 +1130,7 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Perdaryti _meta duomenis"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Pasirinkti _stulpelius..."/>
 		<separator/>
@@ -1197,8 +1199,7 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Perdaryti _meta duomenis"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Pasirinkti _stulpelius..."/>
 		<separator/>
@@ -2211,8 +2212,7 @@ right quote	&#147;
 	<tip id="ID_LIBRARY_PARENT" message="Eiti į aukštesnį aplanką."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Peržiūrėti ir taisyti pasirinktų bylų ypatybes..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar bylų meta duomenis ir maišas."/>
-	<!-- Add the following line if you need it -->
-	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Perdaryti meta duomenis lietuvių kalba."/>
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Perdaryti meta duomenis kita kalba."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
 	<tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą bylą."/>
@@ -4063,6 +4063,19 @@ right quote	&#147;
 		<control caption="  Netikrinti naujesnių versijų"/>
 		<control caption="Neatnaujinti"/>
 	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Atsisiuntimų įvertinimai">
+		<control/>
+		<control caption="Gerai"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Meta duomenų lokalizavimas">
+		<control caption="Gerai"/>
+		<control caption="Atšaukti"/>
+		<control caption="Pasirinkite perkodavimo būdą (kalbų grupę)"/>
+		<control caption="Arabų|Baltų|Centrinės Europos|Kinų supaprastinta|Kinų tradicininė|Kirilica|Graikų|Hebrajų|Japonų|Korėjiečių|Tai|Turkų|Vietnamiečių"/>
+	</dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4178,6 +4191,12 @@ right quote	&#147;
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Bylos vardas"/>
 		<column from="Size" to="Dydis"/>
+	</list>
+	<list name="CReviewList">
+		<column from="User" to="Vartotojas"/>
+		<column from="Rating" to="Įvertinimas"/>
+		<column from="Comments" to="Komentarai"/>
+		<column from="Order" to="Eilė"/>
 	</list>
 </listColumns>
 </skin>
