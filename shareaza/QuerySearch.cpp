@@ -771,43 +771,46 @@ BOOL CQuerySearch::CheckValid()
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
 	{
-		if (	_tcsicmp( m_pWordPtr[nCount], _T("mp3") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("ogg") ) == 0 ||
+		AfxMessageBox( m_pWordPtr[nCount] );
 
-				_tcsicmp( m_pWordPtr[nCount], _T("jpg") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("gif") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("png") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("bmp") ) == 0 ||
+		if (	_tcsnicmp( m_pWordPtr[nCount], _T("mp3"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("ogg"),  m_pWordLen[nCount] ) == 0 ||
 
-				_tcsicmp( m_pWordPtr[nCount], _T("mpg") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("avi") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("mkv") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("wmv") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("mov") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("ogm") ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("jpg"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("gif"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("png"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("bmp"),  m_pWordLen[nCount] ) == 0 ||
 
-				_tcsicmp( m_pWordPtr[nCount], _T("exe") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("zip") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("rar") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("iso") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("bin") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("cue") ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("mpg"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("avi"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("mkv"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("wmv"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("mov"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("ogm"),   m_pWordLen[nCount] ) == 0 ||
 
-				_tcsicmp( m_pWordPtr[nCount], _T("dvd") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("mpeg") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("divx") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("xvid") ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("exe"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("zip"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("rar"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("iso"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("bin"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("cue"),   m_pWordLen[nCount] ) == 0 ||
 
-				_tcsicmp( m_pWordPtr[nCount], _T("xxx") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("sex") ) == 0 ||
-				_tcsicmp( m_pWordPtr[nCount], _T("fuck") ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("dvd"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("mpeg"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("divx"),  m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("xvid"),  m_pWordLen[nCount] ) == 0 ||
+
+				_tcsnicmp( m_pWordPtr[nCount], _T("xxx"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("sex"),   m_pWordLen[nCount] ) == 0 ||
+				_tcsnicmp( m_pWordPtr[nCount], _T("fuck"),  m_pWordLen[nCount] ) == 0 ||
 				
-				_tcsicmp( m_pWordPtr[nCount], _T("torrent") ) == 0 )
+				_tcsnicmp( m_pWordPtr[nCount], _T("torrent"), 7 ) == 0 )
 		{
 			// Common term. Don't count it.
 		}
 		else
 		{
+			Beep(500,500);
 			// Valid search term - add to list of valid words.
 			nValidWords++;
 			nValidCharacters += m_pWordLen[nCount];
