@@ -1,0 +1,56 @@
+                <table width="95%" align="center" cellspacing="0" cellpadding="0">
+                       <tr>
+                               <td align="center">
+                                       <table width="100%" cellspacing="0">
+                                               <tr>
+                                                       <td class="tabedg">&nbsp;</td>
+                                                       <td class="tab">Pradžia</td>
+                                                       <td class="tabfil">&nbsp;</td>
+                                                       <td class="tab">Paieška</td>
+                                                       <td class="tabfil">&nbsp;</td>
+                                                       <td class="tab">Atsisiuntimai</td>
+                                                       <td class="tabfil">&nbsp;</td>
+                                                       <td class="tab">Išsiuntimai</td>
+                                                       <td class="tabfil">&nbsp;</td>
+                                                       <td class="tab">Tinklai</td>
+                                                       <td class="tabedg">&nbsp;</td>
+                                               </tr>
+                                       </table>
+                               </td>
+                       </tr>
+                       <tr>
+                               <td class="frame">
+                                       <div>
+                                               Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga</b>.</b>
+                                               Jei ši „Shareaza“ kopija veikia jūsų kompiuteryje, įveskite savo
+                                               nuotolinės prieigos vartotojo vardą bei slaptažodį ir paspauskite <b>Įėjimas</b>.
+                                       </div>
+                                       <%? failure %>
+                                       <div align="center" style="color: red; font-weight: bold;">
+                                               <br>
+                                               Suvestas vartotojo vardas ar slaptažodis yra neteisingas.
+                                               <br>
+                                               Bandykite dar kartą.
+                                       </div>
+                                       <%?%>
+                                       <form method="get">
+                                       <input type="hidden" name="submit" value="1">
+                                       <table align="center">
+                                               <tr>
+                                                       <td>Vartotojo vardas:</td>
+                                                       <td><input type="text" name="username" size="20"></td>
+                                               </tr>
+                                               <tr>
+                                                       <td>Slaptažodis:</td>
+                                                       <td><input type="password" name="password" size="20" ID="Text1"></td>
+                                               </tr>
+                                               <tr>
+                                                       <td colspan="2" align="center">
+                                                               <input type="submit" value="Įėjimas">
+                                                       </td>
+                                               </tr>
+                                       </table>
+                                       </form>
+                               </td>
+                       </tr>
+               </table>
