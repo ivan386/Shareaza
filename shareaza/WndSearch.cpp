@@ -438,25 +438,28 @@ void CSearchWnd::OnSearchSearch()
 	
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
-	//********** The 'Search More' situation
-	//ToDo: Detect if search has changed and skip this
+	//** The 'Search More' situation   (ToDo: Detect if search changed and skip)
 	POSITION pos = m_pSearches.GetTailPosition();
 	if( (!m_bPaused) && m_bWaitMore && pos )
 	{
-		m_bWaitMore = FALSE;
+		//Re-activate search window
+		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
 		pSearch = (CManagedSearch*)m_pSearches.GetPrev(pos);
 		pSearch->m_bActive = TRUE;
-		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
+		m_bWaitMore = FALSE;
+		m_bUpdate = TRUE;
 
+		//Resume G2 search
 		m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
 		m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
 
-		//m_nMaxED2KResults = m_pMatches->m_nED2KHits + 100; // ??? Is search more allowed on ed2k?
+		//Resume ED2K search
+		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
+		pSearch->m_tLastED2K = GetTickCount();
 
-		m_bUpdate = TRUE;
 		return;
 	}
-	//**********
+	//** End of 'Search More'
 	
 	if ( m_pMatches->m_nFiles > 0 )
 	{
@@ -757,6 +760,11 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 			
 			if ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults )
 			{
+				if( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
+				{						
+					m_bWaitMore = TRUE;
+					pManaged->m_bActive = FALSE;
+				}
 				pManaged->m_tLastED2K = 0xFFFFFFFF;
 				theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
 			}
