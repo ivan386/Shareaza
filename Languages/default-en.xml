@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.111"
+		version="2.1.0.114"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3018,6 +3018,13 @@
 	<string id="20204" value="Thursday"/>
 	<string id="20205" value="Friday"/>
 	<string id="20206" value="Saturday"/>
+	<string id="20210" value="(No Rating)"/>
+	<string id="20211" value="Fake / Corrupt"/>
+	<string id="20212" value="Poor"/>
+	<string id="20213" value="Avarage"/>
+	<string id="20214" value="Good"/>
+	<string id="20215" value="Very Good"/>
+	<string id="20216" value="Excellent"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

@@ -20,8 +20,8 @@ right quote	&#147;
 		author="Rolandas Rudomanskis"
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
-		email="rrol2002(at)hotmail.com"
-		version="2.1.0.111"
+		email="rrol2002(at)hotmail(dot)com"
+		version="2.1.0.114"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3032,6 +3032,13 @@ right quote	&#147;
 	<string id="20204" value="Ketvirtadienis"/>
 	<string id="20205" value="Penktadienis"/>
 	<string id="20206" value="Šeštadienis"/>
+	<string id="20210" value="(Be įvertinimo)"/>
+	<string id="20211" value="Klastotė / Sugadinta"/>
+	<string id="20212" value="Prasta"/>
+	<string id="20213" value="Vidutinė"/>
+	<string id="20214" value="Gera"/>
+	<string id="20215" value="Labai gera"/>
+	<string id="20216" value="Puiki"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

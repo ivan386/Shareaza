@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.111"
+		version="2.1.0.114"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3012,6 +3012,13 @@
 	<string id="20204" value="Четверг"/>
 	<string id="20205" value="Пятница"/>
 	<string id="20206" value="Суббота"/>
+	<string id="20210" value="(Без оценки)"/>
+	<string id="20211" value="Фальшивка / Испорчен"/>
+	<string id="20212" value="Плохой"/>
+	<string id="20213" value="Средний"/>
+	<string id="20214" value="Хороший"/>
+	<string id="20215" value="Очень хороший"/>
+	<string id="20216" value="Отменный"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
