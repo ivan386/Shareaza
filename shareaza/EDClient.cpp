@@ -1134,7 +1134,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
 			{
 				// Create the comments packet
-				pComment = CEDPacket::New( ED2K_C2C_FILEDESC );
+				pComment = CEDPacket::New( ED2K_C2C_FILEDESC, ED2K_PROTOCOL_EMULE  );
 				pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
 				pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
 				m_bCommentSent = TRUE;
@@ -1145,7 +1145,11 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 		// Send reply
 		Send( pReply );
 		// Send comments / rating
-		if ( pComment ) Send( pComment );
+		if ( pComment ) 
+		{
+			theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), m_sAddress );
+			Send( pComment );
+		}
 
 		return TRUE;
 	}
