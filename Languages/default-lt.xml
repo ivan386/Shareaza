@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.5.2"
+                        version="2.1.0.1"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2426,7 +2426,6 @@ right quote    &#147;
        <string id="8231" value="Šaltinių nėra"/>
        <string id="8232" value="Atverti"/>
        <string id="8233" value="Peržiūra"/>
-       <string id="8234" value="%s iš %s (%.2f%%)"/>
        <string id="8235" value="Visuminė sparta:"/>
        <string id="8236" value="Apytiksl. likę laiko:"/>
        <string id="8237" value="Atsisiunt. apimtis:"/>
@@ -2434,7 +2433,6 @@ right quote    &#147;
        <string id="8239" value="Baigta"/>
        <string id="8240" value="„Shareaza“ perkelia parsisiųstą bylą:"/>
        <string id="8241" value="„Shareaza“ ieško klaidų parsisiųstoje byloje:"/>
-       <string id="8242" value="%s iš %s (%.2f%%)"/>
        <string id="8243" value="Išsiųsta apimtis:"/>
        <string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
        <string id="8289" value="Naršomas "/>
@@ -2445,7 +2443,6 @@ right quote    &#147;
        <string id="8294" value="Paskutiniai papildymai"/>
        <string id="8295" value="Įvertinti šią bylą"/>
        <string id="8304" value="Nežinoma"/>
-       <string id="8305" value="%i iš %i"/>
        <string id="8306" value="Vieta"/>
        <string id="8307" value="Tipas"/>
        <string id="8308" value="Dydis"/>
@@ -2861,6 +2858,7 @@ right quote    &#147;
        <string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
        <string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
        <string id="20000" value="Nėra universalių šaltinių vardų."/>
+       <string id="20002" value="iš"/>
        <string id="20100" value="Jungiamasi"/>
        <string id="20101" value="Užklausiama"/>
        <string id="20102" value="Atsakas"/>
