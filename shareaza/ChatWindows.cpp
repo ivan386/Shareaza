@@ -118,6 +118,24 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 	return NULL;
 }
 
+CPrivateChatFrame* CChatWindows::FindED2KFrame(IN_ADDR* pAddress)
+{
+	CString strID =  inet_ntoa( *pAddress );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CPrivateChatFrame* pFrame = reinterpret_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		
+		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
+		{
+			if ( ( pFrame->m_pSession == NULL ) && ( strID == pFrame->m_sNick ) )
+				return pFrame;
+		}
+	}
+	
+	return NULL;
+}
+
 CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol)
 {
 	SOCKADDR_IN pHost;
@@ -161,7 +179,21 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 			// Tell it to start a chat session as soon as it's able
 			pClient->OpenChat();
 			pLock.Unlock();
-			return NULL;
+			// return NULL;
+
+			pFrame = new CPrivateChatFrame();
+			CWnd* pParent = pFrame->GetParent();
+			if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
+			pParent->BringWindowToTop();
+			pParent->SetForegroundWindow();
+
+			CString strMessage, strConnecting;
+			LoadString( strConnecting, IDS_CHAT_CONNECTING_TO );
+			pFrame->m_sNick = inet_ntoa( pHost->sin_addr );
+			strMessage.Format( strConnecting, pFrame->m_sNick );
+			pFrame->OnStatusMessage( 0, strMessage );
+
+			return pFrame;
 		}
 
 		pFrame = new CPrivateChatFrame();

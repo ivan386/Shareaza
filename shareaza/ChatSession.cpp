@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/01/06 04:04:05 $"
-//	Revision:		"$Revision: 1.8 $"
+//	Date:			"$Date: 2005/01/08 05:19:19 $"
+//	Revision:		"$Revision: 1.9 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -1103,7 +1103,7 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		// Limit outgoing ed2k messages to 400 characters
+		// Limit outgoing ed2k messages to 400 characters, just in case
 		CString strMessage = pszText;
 		strMessage = strMessage.Left( 400 );
 
@@ -1130,7 +1130,7 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 		pPacket->ToBuffer( m_pOutput );
 		pPacket->Release();
 	}
-	else
+	else // PROTOCOL_G1
 	{
 
 		CString str;
@@ -1206,6 +1206,11 @@ void CChatSession::OnOpenWindow()
 	{
 		m_pWndPrivate = ChatWindows.FindPrivate( &m_pHost.sin_addr );
 	}
+
+	if ( ( m_pWndPrivate == NULL ) && ( m_nProtocol == PROTOCOL_ED2K ) )
+	{
+		m_pWndPrivate = ChatWindows.FindED2KFrame( &m_pHost.sin_addr );
+	}
 	
 	if ( m_pWndPrivate == NULL )
 	{
@@ -1242,7 +1247,7 @@ void CChatSession::OnCloseWindow()
 
 	Close();
 
-	if ( m_nProtocol ==  PROTOCOL_ED2K )
+	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
 		if ( m_pProfile != NULL ) delete m_pProfile;
 		delete this;

@@ -48,6 +48,7 @@ public:
 public:
 	CPrivateChatFrame*	FindPrivate(GGUID* pGUID);
 	CPrivateChatFrame*	FindPrivate(IN_ADDR* pAddress);
+	CPrivateChatFrame*  FindED2KFrame(IN_ADDR* pAddress);
 	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_G2);
 	CPrivateChatFrame*	OpenPrivate(GGUID* pGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_G2);
 protected:

@@ -188,6 +188,8 @@ BOOL CChatFrame::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
+		if ( ! m_pSession ) return TRUE;
+
 		if ( pMsg->wParam == VK_RETURN )
 		{
 			m_wndEdit.GetWindowText( m_sCurrent );
@@ -382,7 +384,7 @@ void CChatFrame::OnStatusMessage(int nFlags, LPCTSTR pszText)
 
 void CChatFrame::OnLocalText(LPCTSTR pszText)
 {
-	if ( pszText == NULL || *pszText == 0 ) return;
+	if ( pszText == NULL || *pszText == 0 || ! m_pSession ) return;
 	
 	if ( *pszText == '/' )
 	{
@@ -442,6 +444,8 @@ void CChatFrame::OnUpdateChatBold(CCmdUI* pCmdUI)
 
 void CChatFrame::OnChatBold() 
 {
+	if ( ! m_pSession ) return;
+
 	if ( IsInRange( _T("b") ) )
 		InsertText( _T("[/b]") );
 	else
@@ -455,6 +459,8 @@ void CChatFrame::OnUpdateChatItalic(CCmdUI* pCmdUI)
 
 void CChatFrame::OnChatItalic() 
 {
+	if ( ! m_pSession ) return;
+
 	if ( IsInRange( _T("i") ) )
 		InsertText( _T("[/i]") );
 	else
@@ -468,6 +474,8 @@ void CChatFrame::OnUpdateChatUnderline(CCmdUI* pCmdUI)
 
 void CChatFrame::OnChatUnderline() 
 {
+	if ( ! m_pSession ) return;
+
 	if ( IsInRange( _T("u") ) )
 		InsertText( _T("[/u]") );
 	else
@@ -476,6 +484,8 @@ void CChatFrame::OnChatUnderline()
 
 void CChatFrame::OnChatColour() 
 {
+	if ( ! m_pSession ) return;
+
 	CColorDialog dlg( 0, CC_ANYCOLOR | CC_FULLOPEN );
 	if ( dlg.DoModal() != IDOK ) return;
 	
@@ -488,6 +498,8 @@ void CChatFrame::OnChatColour()
 
 void CChatFrame::OnChatEmoticons() 
 {
+	if ( ! m_pSession ) return;
+
 	m_pIconMenu = Emoticons.CreateMenu();
 	
 	UINT nID = m_wndToolBar.ThrowMenu( ID_CHAT_EMOTICONS, m_pIconMenu, this, TRUE );
@@ -519,7 +531,9 @@ void CChatFrame::OnChatTimestamp()
 
 void CChatFrame::OnUpdateChatConnect(CCmdUI* pCmdUI) 
 {
-	BOOL bState = ( ( m_pSession != NULL ) && ( m_pSession->GetConnectedState() == TS_FALSE ) );
+	BOOL bState = ( ( m_pSession != NULL ) && 
+					( m_pSession->GetConnectedState() == TS_FALSE )  &&
+					( m_pSession->m_nProtocol != PROTOCOL_ED2K ) );
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) ) pItem->Show( bState );
 	pCmdUI->Enable( bState );
 }
