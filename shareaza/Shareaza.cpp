@@ -97,20 +97,30 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	if ( AfxMessageBox( _T("Warning: This is an alpha test version of Shareaza. It may have serious bugs, and is not for general use.\nIf you continue, you may experience system instability, lose downloads, etc. Do you wish to continue?"), MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
-		return FALSE;
 
-
-/*
-	//Beta expiry. Remember to update the time, and remove this section for final releases.
-	if((DWORD)CTime::GetCurrentTime().GetTime() >= 0x41000000) 
+	// ***********
+	// Beta expiry. Remember to re-compile to update the time, and remove this 
+	// section for final releases and public betas.
+	COleDateTime tCompileTime; 
+	tCompileTime.ParseDateTime( _T(__DATE__) );
+	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
+	COleDateTimeSpan tTimeOut( 10, 0, 0, 0);
+	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_BETA_EXPIRED);
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		return FALSE;
 	}
-*/
+
+	// Alpha warning. Remember to re-compile to update the time, and remove this 
+	// section for final releases and public betas.
+	if ( AfxMessageBox( _T("Warning: This is an alpha test version of Shareaza. It may have serious bugs, and is not for general use.\nIf you continue, you may experience system instability, lose downloads, etc. Do you wish to continue?"), MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
+		return FALSE;
+
+	// ***********
+
+
 
 	// Enable3dControls();
 	SetRegistryKey( _T("Shareaza") );
