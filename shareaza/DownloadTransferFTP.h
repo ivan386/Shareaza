@@ -23,6 +23,8 @@
 
 #include "Handshakes.h"
 
+// Note: ftp active mode code was commented out
+
 class CDownloadTransferFTP : public CDownloadTransfer
 {
 public:
@@ -48,22 +50,23 @@ protected:
 		CFTPLIST() {}
 		virtual ~CFTPLIST() {}
 
-		virtual void Close()
+/*		virtual void Close()
 		{
-//			Handshakes.Remove( this );
+			Handshakes.Remove( this );
 			CTransfer::Close();
-		}
+		}*/
+
 		virtual BOOL ConnectTo(SOCKADDR_IN* pHost)
 		{
 			m_sData.Empty ();
 			return CConnection::ConnectTo( pHost );
 		}
 
-		virtual void AttachTo(CConnection* pConnection)
+/*		virtual void AttachTo(CConnection* pConnection)
 		{
 			m_sData.Empty ();
 			CTransfer::AttachTo( pConnection );
-		}
+		}*/
 
 		virtual BOOL OnRead()
 		{
@@ -106,18 +109,21 @@ protected:
 
 		inline bool Split(CString& in, TCHAR token, CString& out) const
 		{
-			in = in.Trim (_T(" \t\r\n"));
-			if (!in.GetLength ()) {
-				out.Empty ();
+			in = in.Trim( _T(" \t\r\n") );
+			if ( !in.GetLength() )
+			{
+				out.Empty();
 				return false;
 			}
-			int p = in.ReverseFind (token);
-			if (p != -1) {
-				out = in.Mid (p + 1);
-				in = in.Mid (0, p);
-			} else {
+			int p = in.ReverseFind( token );
+			if ( p != -1)
+			{
+				out = in.Mid( p + 1 );
+				in = in.Mid( 0, p );
+			} else
+			{
 				out = in;
-				in.Empty ();
+				in.Empty();
 			}
 			return true;
 		}
@@ -135,11 +141,11 @@ protected:
 			m_pOwner = pOwner;
 		}
 
-		virtual void Close()
+/*		virtual void Close()
 		{
-//			Handshakes.Remove( this );
+			Handshakes.Remove( this );
 			CTransfer::Close();
-		}
+		}*/
 
 		virtual BOOL ConnectTo(SOCKADDR_IN* pHost)
 		{
@@ -148,12 +154,12 @@ protected:
 			return CConnection::ConnectTo( pHost );
 		}
 
-		virtual void AttachTo(CConnection* pConnection)
+/*		virtual void AttachTo(CConnection* pConnection)
 		{
 			m_tContent = GetTickCount();
 			m_nTotal = 0;
 			CTransfer::AttachTo( pConnection );
-		}
+		}*/
 
 		virtual BOOL OnRead()
 		{
@@ -170,7 +176,7 @@ protected:
 					m_pOwner->m_nDownloaded += nLength;
 					// Measuring speed
 					DWORD nCurrent = GetTickCount();
-					if (nCurrent - m_tContent != 0) {
+					if ( nCurrent - m_tContent != 0) {
 						m_pOwner->m_pSource->m_nSpeed =
 							(DWORD) ( ( ( m_pInput->m_nLength + m_nTotal ) /
 							( nCurrent - m_tContent ) ) * 1000 );
@@ -181,7 +187,8 @@ protected:
 					m_pInput->Clear();
 					if ( m_pOwner->m_nPosition >= m_pOwner->m_nLength )
 					{
-						m_pOwner->m_pSource->AddFragment( m_pOwner->m_nOffset, m_pOwner->m_nLength );
+						m_pOwner->m_pSource->AddFragment( m_pOwner->m_nOffset,
+							m_pOwner->m_nLength );
 						Close();
 					}
 				}
@@ -194,16 +201,23 @@ protected:
 	protected:
 		CDownloadTransferFTP* m_pOwner;	// Owner object
 		DWORD m_tContent;				// Last Recieve time
-		QWORD m_nTotal;					// Recieved bytes from m_tContent time
+		QWORD					m_nTotal;	// Recieved bytes by m_tContent time
 	};
 
 	enum FTP_STATES {
+		// Initial state
 		ftpConnecting,
+		// Authenticating
 		ftpUSER, ftpPASS,
+		// File size getting via SIZE: TYPE I -> SIZE
 		ftpSIZE_TYPE, ftpSIZE,
+		// File size getting via LIST: TYPE A -> PASV or PORT -> LIST
 		ftpLIST_TYPE, ftpLIST_PASVPORT, ftpLIST,
+		// Intermediate state
 		ftpDownloading,
+		// Downloading: TYPE I -> PASV or PORT -> REST -> RETR
 		ftpRETR_TYPE, ftpRETR_PASVPORT, ftpRETR_REST, ftpRETR,
+		// Aborting after each transfer (for some strange FTP servers)
 		ftpABOR
 	};
 
@@ -212,7 +226,10 @@ protected:
 	CFTPLIST		m_LIST;			// FTP "LIST" helper object
 	CFTPRETR		m_RETR;			// FTP "RETR" helper object
 	BOOL			m_bPassive;		// Passive or Active FTP mode
+	BOOL			m_bSizeChecked;	// File size flag
 
+	// Connecting or file size getting or download starting
 	BOOL			StartNextFragment();
-	BOOL			SendCommand (LPCTSTR args = NULL);
+	// Sending command to FTP server
+	BOOL			SendCommand(LPCTSTR args = NULL);
 };
