@@ -993,6 +993,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
 	CString strLength(_T("")), strBitrate(_T("")), strCodec(_T(""));
+	DWORD nLength = 0;
 	m_bED2K = TRUE;
 	pPacket->Read( &m_pED2K, sizeof(MD4) );
 	
@@ -1047,7 +1048,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH )//&& pTag.m_nType == ED2K_TAG_INT )
 		{	//Length- new style (DWORD)
-			strLength.Format( _T("%lu"), pTag.m_nValue );
+			nLength = pTag.m_nValue;				
 		}
 		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )//&& pTag.m_nType == ED2K_TAG_INT ) )
 		{	//Bitrate- new style
@@ -1060,7 +1061,22 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		//Note: Maybe ignore these keys? They seem to have a lot of bad values....
 		else if ( pTag.m_nKey == 0&& pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("length")  )
 		{	//Length- old style (As a string- x:x:x, x:x or x)
-			strLength = pTag.m_sValue;
+			DWORD nSecs = 0, nMins = 0, nHours = 0;
+
+			if ( pTag.m_sValue.GetLength() < 3 )
+			{
+				_stscanf( pTag.m_sValue, _T("%i"), &nSecs );
+			}
+			else if ( pTag.m_sValue.GetLength() < 6 )
+			{
+				_stscanf( pTag.m_sValue, _T("%i:%i"), &nMins, &nSecs );
+			}
+			else 
+			{
+				_stscanf( pTag.m_sValue, _T("%i:%i:%i"), &nHours, &nMins, &nSecs );
+			}
+
+			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);
 		}
 		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey == _T("bitrate") ) )
 		{	//Bitrate- old style			
@@ -1110,8 +1126,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			m_sSchemaURI = CSchema::uriAudio;
 
 			// Add metadata
-			if ( strLength.GetLength() )
+			if ( nLength > 0 )
 			{
+				strLength.Format( _T("%lu"), nLength );
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
 				m_pXML->AddAttribute( _T("seconds"), strLength );
 			}
@@ -1133,8 +1150,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			m_sSchemaURI = CSchema::uriVideo;
 			
 			// Add metadata
-			if ( strLength.GetLength() )
+			if ( nLength > 0 )
 			{
+				strLength.Format( _T("%lu"), nLength / 60 );
 				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
 				m_pXML->AddAttribute( _T("minutes"), strLength );
 			}/*

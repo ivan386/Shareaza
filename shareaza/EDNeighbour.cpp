@@ -610,7 +610,7 @@ void CEDNeighbour::SendSharedFiles()
 					// Initialise variables
 					DWORD nTags;
 					CString strType(_T("")), strCodec(_T(""));
-					DWORD nBitrate = 0;
+					DWORD nBitrate = 0, nLength = 0;
 
 					// Send the file hash to the ed2k server
 					pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
@@ -640,7 +640,6 @@ void CEDNeighbour::SendSharedFiles()
 
 					// First, figure out what tags should be sent.
 					nTags = 2; // File name and size are always present
-
 					if ( pFile->m_pSchema != NULL )	// We need a schema to have extended details
 					{
 						// Do we have a file type?
@@ -652,24 +651,40 @@ void CEDNeighbour::SendSharedFiles()
 
 						//Does this server support the new tags?
 						if ( m_nFlags & ED2K_SERVER_TCP_SMALLTAGS )	
-						{
-							// Bitrate
+						{					
 							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )	//If it's an audio file
 							{
+								// Bitrate
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )	//And has a bitrate
 								{	//Read in the bitrate
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%lu"), &nBitrate );
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
 									if ( nBitrate ) nTags ++;
+								}
+
+								// Length
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ).GetLength() )	//And has seconds
+								{	//Read in the no. seconds
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%i"), &nLength );
+									if ( nLength ) nTags ++;
 								}
 							}
 
-							// Codec
+							
 							if ( pFile->IsSchemaURI( CSchema::uriVideo ) )	//If it's a video file
 							{
+								// Codec
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("codec") ).GetLength() )	//And has a codec
 								{
 									strCodec = pFile->m_pMetadata->GetAttributeValue( _T("codec") );
 									if ( strCodec.GetLength() ) nTags ++;
+								}
+
+								// Length
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )	//And has minutes
+								{	//Read in the no. seconds
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%lu"), &nLength );
+									nLength *= 60;	//Convert to seconds
+									if ( nLength ) nTags ++;
 								}
 							}
 						}
@@ -687,6 +702,8 @@ void CEDNeighbour::SendSharedFiles()
 					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nFlags );
 					// Send the bitrate to the ed2k server
 					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket, m_nFlags );
+					// Send the length to the ed2k server
+					if ( nLength )	CEDTag( ED2K_FT_LENGTH, nLength ).Write( pPacket, m_nFlags );
 					// Send the codec to the ed2k server
 					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, m_nFlags );
 
