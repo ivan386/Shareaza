@@ -374,9 +374,12 @@ void CQueuePropertiesDlg::OnOK()
 			m_pQueue->m_nProtocols = 0;
 	}
 	
-	m_pQueue->m_bEnable			= m_bEnable;
+	if ( ( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) )
+		m_pQueue->m_nCapacity		= min( m_nCapacity, 4096 );		
+	else
+		m_pQueue->m_nCapacity		= min( m_nCapacity, 64 );
 	
-	m_pQueue->m_nCapacity		= m_nCapacity;
+	m_pQueue->m_bEnable			= m_bEnable;
 	m_pQueue->m_nMinTransfers	= max( 1, m_nTransfersMin );
 	m_pQueue->m_nMaxTransfers	= max( m_nTransfersMin, m_nTransfersMax );
 	
