@@ -102,12 +102,13 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndType.SetItemData( 2, 128 );
 	m_wndType.SetItemData( 3, 256);
 	m_wndType.SetItemData( 4, 512);
-	m_wndType.SetItemData( 5, 1536 );
-	m_wndType.SetItemData( 6, 1544 );
-	m_wndType.SetItemData( 7, 45000 );
-	m_wndType.SetItemData( 8, 100000 );
-	m_wndType.SetItemData( 9, 155000 );
-	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (1.5M); Cable Modem/SDSL; T3; LAN; OC3;
+	m_wndType.SetItemData( 5, 768);
+	m_wndType.SetItemData( 6, 1536 );
+	m_wndType.SetItemData( 7, 1544 );
+	m_wndType.SetItemData( 8, 45000 );
+	m_wndType.SetItemData( 9, 100000 );
+	m_wndType.SetItemData(10, 155000 );
+	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); Cable Modem/SDSL; T3; LAN; OC3;
 	
 	CString strSpeed;
 	strSpeed.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
@@ -247,11 +248,13 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Connection.InSpeed		= nSpeed;
 	//Settings.Connection.OutSpeed	= nSpeed == 56 ? 32 : nSpeed;
 	if( nSpeed <= 56 )
-		Settings.Connection.OutSpeed = 32;
+		Settings.Connection.OutSpeed = 32;			//Dial up modem
+	else if( nSpeed <= 700 )
+		Settings.Connection.OutSpeed = nSpeed / 4;	//4:1 ADSL
 	else if( nSpeed <= 1536 )
-		Settings.Connection.OutSpeed = nSpeed / 4;
+		Settings.Connection.OutSpeed = nSpeed / 6;	//6:1 ADSL
 	else
-		Settings.Connection.OutSpeed = nSpeed;
+		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, etc
 
 
 	
