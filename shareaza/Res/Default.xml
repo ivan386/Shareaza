@@ -1979,8 +1979,8 @@
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 detected</text>
 		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
-		that applications can attempt at once.</text>
+		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of
+		connections that applications can attempt at once.</text>
 		<newline gap="8"/>
 		<text>Shareaza has limited network connections and set appropriate default values to 
 		ensure proper operation, however performance may be reduced. Please visit the Shareaza 
@@ -1990,10 +1990,23 @@
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
-		<text>Please note that (as with any automated filter) it may not be 100% effective at screening
-		content. It is designed simply to filter out excess unwanted results, rather than as a 100% safe block.</text>
+		<text>Please note that (as with any automated filter) it may not be 100% effective at
+		screening content. It is designed simply to filter out excess unwanted results, rather than 
+		as a 100% safe block.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
+		<text>Children's Internet use (including P2P file sharing) should always be under parental 			supervision.</text>
+	</document>
+
+	<document name="GeneralHelp.BadTorrentEncoding">
+		<text format="b">This torrent appears to have an encoding error</text>
+		<newline gap="8"/>
+		<text>Windows has reported a translation fault while decoding text in this torrent. It is
+		possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+		still download properly, although some file names could be incorrect.</text>
+		<newline gap="8"/>
+		<text>Most torrent creation programs should allow you to repair this torrent, which
+		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums if 
+		you require additional help.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -2009,6 +2022,16 @@
 		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
 		because it is not specific enough and would generate too many results.</text>
 	</document>
+
+	<document name="SearchHelp.BadSearch2">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search is poorly formatted, and may not function correctly. All searches need
+		a minimum number of valid, alphabetic characters to be able to start.</text>
+		<newline gap="8"/>
+		<text>While common file extentions and numbers can be searched for, you must enter other terms
+		as well when creating the search.</text>
+	</document>
 	
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
@@ -2017,7 +2040,7 @@
 		content, and this has been turned off in the settings. You should either re-phrase the 
 		search, or disable the filter.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult 		content filter.</text>
 	</document>
 
 	<!-- Share help documents -->
