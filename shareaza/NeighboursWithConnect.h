@@ -49,10 +49,10 @@ public:
 	BOOL	IsG1Leaf();									//Check if this node is a G1 Leaf
 	BOOL	IsG1Ultrapeer();							//Check if this node is a G1 Ultrapeer
 	DWORD	IsG1UltrapeerCapable(BOOL bDebug = FALSE);	//Check if this node can be a G1 Ultrapeer
-	//Either
-	BOOL	NeedMoreHubs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more hubs for the specified protocol
-	BOOL	NeedMoreLeafs(TRISTATE bG2 = TS_UNKNOWN);	//Does this node need more leaves for the specified protocol
-	BOOL	IsHubLoaded(TRISTATE bG2 = TS_UNKNOWN);		//Is this hub/up at more than 3/4 capacity? (Unused?)
+	//Either protocol
+	BOOL	NeedMoreHubs(PROTOCOLID nProtocol);			//Does this node need more hubs for the specified protocol
+	BOOL	NeedMoreLeafs(PROTOCOLID nProtocol);		//Does this node need more leaves for the specified protocol
+	BOOL	IsHubLoaded(PROTOCOLID nProtocol);			//Is this hub/up at more than 3/4 capacity? (Unused?)
 public:
 	virtual void	OnRun();
 protected:

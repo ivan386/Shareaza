@@ -458,7 +458,7 @@ BOOL CShakeNeighbour::ReadResponse()
 			DelayClose( IDS_HANDSHAKE_IAMLEAF );
 			return FALSE;
 		}
-		else if ( ! Neighbours.NeedMoreHubs( TS_FALSE ) )
+		else if ( ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
 		{
 			DelayClose( IDS_HANDSHAKE_SURPLUS );
 			return FALSE;
@@ -740,9 +740,9 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			m_nNodeType = ntHub;
 		}
 		
-		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( TS_TRUE ) &&
-			 ! Neighbours.NeedMoreLeafs( TS_TRUE ) ) ||
-			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( TS_TRUE ) ) )
+		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) &&
+			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") );
 			DelayClose( IDS_HANDSHAKE_SURPLUS );
@@ -769,7 +769,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			SendHostHeaders();
 
 			if ( m_nNodeType != ntLeaf &&
-				 Neighbours.NeedMoreHubs( TS_TRUE ) )
+				 Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
 			{
 				if ( Settings.Gnutella2.ClientMode != MODE_LEAF )
 				{
@@ -912,9 +912,9 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			m_nNodeType = ntHub;
 		}
 		
-		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( TS_FALSE ) &&
-			 ! Neighbours.NeedMoreLeafs( TS_FALSE ) ) ||
-			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( TS_FALSE ) ) )
+		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) &&
+			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) )
 		{
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") );
 			DelayClose( IDS_HANDSHAKE_SURPLUS );
@@ -940,7 +940,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			SendPrivateHeaders();
 			SendHostHeaders();
 
-			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( TS_FALSE ) )
+			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
 			{
 				if ( Settings.Gnutella1.ClientMode != MODE_LEAF )
 				{

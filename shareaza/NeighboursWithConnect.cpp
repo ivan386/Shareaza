@@ -130,11 +130,7 @@ CNeighbour* CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 
 void CNeighboursWithConnect::PeerPrune(PROTOCOLID nProtocol)
 {	//This function trims PEERS after you get a HUB. (eg: You have been demoted to a leaf for this protocol)
-	BOOL bNeedMore;
-	if ( nProtocol == PROTOCOL_G2 )
-		bNeedMore = NeedMoreHubs( TRUE );
-	else
-		bNeedMore = NeedMoreHubs( FALSE );
+	BOOL bNeedMore = NeedMoreHubs( nProtocol );
 	
 	for ( POSITION pos = GetIterator() ; pos ; )				//Loop through all neighbours
 	{	
@@ -152,6 +148,20 @@ void CNeighboursWithConnect::PeerPrune(PROTOCOLID nProtocol)
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithConnect hub states
+/*
+BOOL CNeighboursWithConnect::IsLeaf(PROTOCOLID nProtocol)
+{
+	ASSERT ( nProtocol==PROTOCOL_G1 ||  nProtocol==PROTOCOL_G2 );
+	return Network.m_bEnabled && GetCount( nProtocol, nrsConnected, ntHub ) > 0;
+}
+
+BOOL CNeighboursWithConnect::IsHub(PROTOCOLID nProtocol)
+{
+	ASSERT ( nProtocol==PROTOCOL_G1 ||  nProtocol==PROTOCOL_G2 );
+	return Network.m_bEnabled && GetCount( nProtocol, nrsConnected, ntLeaf ) > 0;
+}
+*/
+
 
 BOOL CNeighboursWithConnect::IsG2Leaf()
 {
@@ -617,7 +627,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithConnect connection capacity
 
-BOOL CNeighboursWithConnect::NeedMoreHubs(TRISTATE bG2)
+BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
 {
 	if ( ! Network.IsConnected() ) return FALSE;
 	
@@ -633,15 +643,15 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(TRISTATE bG2)
 		}
 	}
 	
-	switch ( bG2 )
+	switch ( nProtocol )
 	{
-	case TS_UNKNOWN://Do we need more hubs/UPs on either protocol?
+	case PROTOCOL_NULL:	//Do we need more hubs/UPs on either protocol?
 		return ( ( Settings.Gnutella1.EnableToday ) && ( ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ) ) ||
 				 ( Settings.Gnutella2.EnableToday ) && ( ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ) ) );
-	case TS_FALSE:	//Do we need more Gnutella 1 Ultrapeers?
+	case PROTOCOL_G1:	//Do we need more Gnutella 1 Ultrapeers?
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers );
-	case TS_TRUE:	//Do we need more Gnutella 2 Hubs?
+	case PROTOCOL_G2:	//Do we need more Gnutella 2 Hubs?
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers );
 	default:
@@ -649,7 +659,7 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(TRISTATE bG2)
 	}
 }
 
-BOOL CNeighboursWithConnect::NeedMoreLeafs(TRISTATE bG2)
+BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 {
 	if ( ! Network.IsConnected() ) return FALSE;
 	
@@ -665,15 +675,15 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(TRISTATE bG2)
 		}
 	}
 	
-	switch ( bG2 )
+	switch ( nProtocol )
 	{
-	case TS_UNKNOWN://Do we need more Leafs of either sort?
+	case PROTOCOL_NULL:	//Do we need more Leafs of either sort?
 		return ( ( ( Settings.Gnutella1.EnableToday ) && ( ( nConnected[1] ) < Settings.Gnutella1.NumLeafs ) ) ||
 				 ( ( Settings.Gnutella2.EnableToday ) && ( ( nConnected[2] ) < Settings.Gnutella2.NumLeafs ) ) );
-	case TS_FALSE:	//Do we need more Gnutella 1 Leafs?
+	case PROTOCOL_G1:	//Do we need more Gnutella 1 Leafs?
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) < Settings.Gnutella1.NumLeafs;
-	case TS_TRUE:	//Do we need more Gnutella 2 Leafs?
+	case PROTOCOL_G2:	//Do we need more Gnutella 2 Leafs?
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[2] ) < Settings.Gnutella2.NumLeafs;
 	default:
@@ -681,7 +691,7 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(TRISTATE bG2)
 	}
 }
 
-BOOL CNeighboursWithConnect::IsHubLoaded(TRISTATE bG2)
+BOOL CNeighboursWithConnect::IsHubLoaded(PROTOCOLID nProtocol)
 {
 	int nConnected[4] = { 0, 0, 0, 0 };
 	
@@ -695,14 +705,14 @@ BOOL CNeighboursWithConnect::IsHubLoaded(TRISTATE bG2)
 		}
 	}
 	
-	switch ( bG2 )
+	switch ( nProtocol )
 	{
-	case TS_UNKNOWN:
+	case PROTOCOL_NULL:
 		return ( nConnected[1] + nConnected[2] ) >= ( Settings.Gnutella1.NumLeafs + Settings.Gnutella2.NumLeafs ) * 3 / 4;
-	case TS_FALSE:
+	case PROTOCOL_G1:
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) > Settings.Gnutella1.NumLeafs * 3 / 4;
-	case TS_TRUE:
+	case PROTOCOL_G2:
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[2] ) > Settings.Gnutella2.NumLeafs * 3 / 4;
 	default:

@@ -557,7 +557,7 @@ void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* pAddress)
 
 int CDiscoveryServices::ExecuteWebCache()
 {
-	m_bForG2 = Neighbours.NeedMoreHubs( TS_TRUE );
+	m_bForG2 = Neighbours.NeedMoreHubs( PROTOCOL_G2 );
 
 	CDiscoveryService* pService = GetRandomWebCache( FALSE, 0, 0 );
 	if ( pService == NULL ) 

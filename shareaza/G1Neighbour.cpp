@@ -287,8 +287,8 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, GGUID* pGUID)
 {
 	if ( m_nNodeType == ntLeaf && pGUID != NULL ) return FALSE;
 
-	BOOL bNeedPeers =	Neighbours.NeedMoreHubs( TS_FALSE ) ||
-						Neighbours.NeedMoreLeafs( TS_FALSE );
+	BOOL bNeedPeers =	Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ||
+						Neighbours.NeedMoreLeafs( PROTOCOL_G1 );
 
 	if ( ! dwNow ) dwNow = GetTickCount();
 
