@@ -70,6 +70,8 @@ CEDNeighbour::~CEDNeighbour()
 	{
 		delete (GGUID*)m_pQueries.GetNext( pos );
 	}
+
+	if ( m_pMoreResultsGUID != NULL ) delete m_pMoreResultsGUID;
 }
 
 //////////////////////////////////////////////////////////////////////

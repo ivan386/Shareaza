@@ -330,7 +330,11 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch, pPacket, TRUE ) )
 		{
 			// Reset the last "search more" sent to this neighbour (if applicable)
-			pNeighbour->m_pMoreResultsGUID = NULL;
+			if ( pNeighbour->m_pMoreResultsGUID != NULL )
+			{
+				delete pNeighbour->m_pMoreResultsGUID;
+				pNeighbour->m_pMoreResultsGUID = NULL;
+			}
 			m_tMoreResults = 0;
 
 			//Display message in system window
