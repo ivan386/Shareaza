@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
    ================================================================
-   | NucleoX 2.3 by ogg123  <oggvorbis123@hotmail.com> |
+   | NucleoX 2.4 by ogg123  <oggvorbis123@hotmail.com> |
    ================================================================
    | You may edit this, and re-distribute, but please leave all
    | commenting attached; you see.... I finally cleaned it up!  :p
@@ -16,7 +16,7 @@
 			author="ogg123"
 			description="Thanks Agneva, for your incredible suite!  Visit www.agneva.com."
 			link="http://www.shareaza.com/"
-			version="2.3"
+			version="2.4"
 			type="Skin"
 			language="en"
 			/>
@@ -48,8 +48,9 @@
 		<colour name="TaskBox.Caption.Back"         value="151515"/>
 		<colour name="TaskBox.Caption.Text"         value="000000"/>
 		<colour name="TaskBox.Primary.Text"         value="000000"/>
-		<colour name="TaskBox.Caption.Hover"        value="505050"/>
+		<colour name="TaskBox.Caption.Hover"        value="FFFFFF"/>
 		<colour name="TaskBox.Client"               value="FEFEFE"/>
+        	<colour name="Banner.back"		        value="9BB9F0"/>
 </colourScheme>
 
 
@@ -249,7 +250,7 @@
 			<anchor name="Icon" rect="4,2,16,16"/>
 		</anchors>
 
-		<caption rect="24,0,-82,20" fontFace="Arial" fontSize="10" colour="000000" inactivecolour="000000"/>
+		<caption rect="26,0,-82,20" fontFace="Hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000" outlinecolour="E3E3E3"/>
 
 	</windowSkin>
 
@@ -270,7 +271,7 @@
 			<anchor name="Icon" rect="4,3,16,16"/>
 		</anchors>
 
-		<caption rect="24,0,-82,20" fontFace="Arial" fontSize="10" colour="000000" inactivecolour="000000"/>
+		<caption rect="26,1,-82,20" fontFace="Hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000" outlinecolour="E3E3E3"/>
 
 	</windowSkin>
 
@@ -291,17 +292,95 @@
 		<parts>
 			<part name="TopLeft" rect="1,1,11,21"/>
 			<part name="Top" rect="11,1,10,21"/>
-			<part name="TopRight" rect="56,1,37,21"/>
-			<part name="CloseHover" rect="56,23,37,21"/>
+			<part name="TopRight" rect="41,1,52,21"/>
+			<part name="CloseHover" rect="41,23,52,21"/>
 		</parts>
 
 		<anchors>
 			<anchor name="Icon" rect="4,2,16,16"/>
-			<anchor name="Close" rect="-37,0,27,21"/>
+			<anchor name="Close" rect="-52,0,27,21"/>
 		</anchors>
 
-		<caption rect="24,0,-82,20" fontFace="Arial" fontSize="10" colour="000000" inactivecolour="000000"/>
+		<caption rect="26,0,-82,20" fontFace="Hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000" outlinecolour="E3E3E3"/>
 
+	</windowSkin>
+
+
+	<!-- Navigation Bar -->
+	<windowSkin>
+		<image type="image" path="NavBarImage.bmp"/>
+		<target window="CMainTabBarCtrl.Basic"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"			rect="0,0,92,27"/>
+			<part name="_ID_TAB_HOME.Hover"		rect="0,27,92,27"/>
+			<part name="_ID_TAB_HOME.Down"		rect="0,54,92,27"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="0,81,92,27"/>
+			<part name="_ID_TAB_LIBRARY.Up"		rect="92,0,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Hover"		rect="92,27,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Down"		rect="92,54,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	rect="92,81,77,27"/>
+			<part name="_ID_TAB_MEDIA.Up"			rect="169,0,77,27"/>
+			<part name="_ID_TAB_MEDIA.Hover"		rect="169,27,77,27"/>
+			<part name="_ID_TAB_MEDIA.Down"		rect="169,54,77,27"/>
+			<part name="_ID_TAB_MEDIA.Checked"		rect="169,81,77,27"/>
+			<part name="_ID_TAB_SEARCH.Up"		rect="246,0,77,27"/>
+			<part name="_ID_TAB_SEARCH.Hover"		rect="246,27,77,27"/>
+			<part name="_ID_TAB_SEARCH.Down"		rect="246,54,77,27"/>
+			<part name="_ID_TAB_SEARCH.Checked"		rect="246,81,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Up"		rect="323,0,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	rect="323,27,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Down"		rect="323,54,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	rect="323,81,77,27"/>
+		</parts>
+		<anchors>
+			<anchor name="Background"			rect="0,0,418,32"/>
+			<anchor name="_ID_TAB_HOME"			rect="0,0,92,27"/>
+			<anchor name="_ID_TAB_LIBRARY"		rect="93,0,77,27"/>
+			<anchor name="_ID_TAB_MEDIA"			rect="171,0,77,27"/>
+			<anchor name="_ID_TAB_SEARCH"			rect="249,0,77,27"/>
+			<anchor name="_ID_TAB_TRANSFERS"		rect="327,0,77,27"/>
+		</anchors>
+	</windowSkin>
+
+
+	<windowSkin>
+		<image type="image" path="NavBarImage.bmp"/>
+		<target window="CMainTabBarCtrl"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"			rect="0,0,92,27"/>
+			<part name="_ID_TAB_HOME.Hover"		rect="0,27,92,27"/>
+			<part name="_ID_TAB_HOME.Down"		rect="0,54,92,27"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="0,81,92,27"/>
+			<part name="_ID_TAB_LIBRARY.Up"		rect="92,0,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Hover"		rect="92,27,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Down"		rect="92,54,77,27"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	rect="92,81,77,27"/>
+			<part name="_ID_TAB_MEDIA.Up"			rect="169,0,77,27"/>
+			<part name="_ID_TAB_MEDIA.Hover"		rect="169,27,77,27"/>
+			<part name="_ID_TAB_MEDIA.Down"		rect="169,54,77,27"/>
+			<part name="_ID_TAB_MEDIA.Checked"		rect="169,81,77,27"/>
+			<part name="_ID_TAB_SEARCH.Up"		rect="246,0,77,27"/>
+			<part name="_ID_TAB_SEARCH.Hover"		rect="246,27,77,27"/>
+			<part name="_ID_TAB_SEARCH.Down"		rect="246,54,77,27"/>
+			<part name="_ID_TAB_SEARCH.Checked"		rect="246,81,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Up"		rect="323,0,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	rect="323,27,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Down"		rect="323,54,77,27"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	rect="323,81,77,27"/>
+			<part name="_ID_TAB_NETWORK.Up"		rect="400,0,77,27"/>
+			<part name="_ID_TAB_NETWORK.Hover"		rect="400,27,77,27"/>
+			<part name="_ID_TAB_NETWORK.Down"		rect="400,54,77,27"/>
+			<part name="_ID_TAB_NETWORK.Checked"	rect="400,81,77,27"/>
+		</parts>
+		<anchors>
+			<anchor name="Background"			rect="0,0,495,32"/>
+			<anchor name="_ID_TAB_HOME"			rect="0,0,92,27"/>
+			<anchor name="_ID_TAB_LIBRARY"		rect="93,0,77,27"/>
+			<anchor name="_ID_TAB_MEDIA"			rect="171,0,77,27"/>
+			<anchor name="_ID_TAB_SEARCH"			rect="249,0,77,27"/>
+			<anchor name="_ID_TAB_TRANSFERS"		rect="327,0,77,27"/>
+			<anchor name="_ID_TAB_NETWORK"		rect="405,0,77,27"/>
+		</anchors>
 	</windowSkin>
 </windowSkins>
 

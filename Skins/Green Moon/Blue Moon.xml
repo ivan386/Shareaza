@@ -50,6 +50,7 @@
 		<colour name="TaskBox.Primary.Text"         value="FFFFFF"/>
 		<colour name="TaskBox.Caption.Hover"        value="2AA6FF"/>
 		<colour name="TaskBox.Client"               value="FEFEFE"/>
+        	<colour name="Banner.back"		        value="363636"/>
 </colourScheme>
 
 
