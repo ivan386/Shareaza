@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/23 18:22:22 $"
-//	Revision:		"$Revision: 1.16 $"
+//	Date:			"$Date: 2005/03/23 18:59:15 $"
+//	Revision:		"$Revision: 1.17 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -455,7 +455,7 @@ BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			int nPort = GNUTELLA_DEFAULT_PORT;
 			
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 && nPort != 0 )
+			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 && nPort != 0 )
 			{
 				m_pHost.sin_port = htons( nPort );
 			}

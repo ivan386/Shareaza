@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/03/10 07:39:32 $"
-//	Revision:		"$Revision: 1.28 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/03/23 18:59:24 $"
+//	Revision:		"$Revision: 1.29 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1008,7 +1008,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{
-				strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0f );
+				strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0 );
 			}
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );

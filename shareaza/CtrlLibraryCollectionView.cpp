@@ -295,7 +295,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Detect(BSTR sURN, BSTR *ps
 		if ( CDownload* pDownload = Downloads.FindByURN( CString( sURN ) ) )
 		{
 			CString str;
-			str.Format( _T("%.2f%%"), pDownload->GetProgress() * 100 );
+			str.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0 );
 			str.SetSysString( psState );
 		}
 		else

@@ -312,9 +312,9 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	{
 		LoadString( str, IDS_NEIGHBOUR_RATIO );
 		DrawText( pDC, &pt, str, 8 );
-		if ( nCompIn > 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0f ); else str.Empty();
+		if ( nCompIn > 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0 ); else str.Empty();
 		DrawText( pDC, &pt, str, 128 );
-		if ( nCompOut > 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0f ); else str.Empty();
+		if ( nCompOut > 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0 ); else str.Empty();
 		DrawText( pDC, &pt, str, 128 + 80 );
 		pt.y += TIP_TEXTHEIGHT;
 	}

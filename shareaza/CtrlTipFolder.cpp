@@ -77,7 +77,7 @@ BOOL CFolderTipCtrl::OnPrepare()
 	
 	LoadString( strText, IDS_TIP_LIBRARY_PERCENT );
 	m_sPercentage.Format( _T("%.2f%% %s"),
-		(double)pFolder->m_nVolume / (double)nTotal * 100.0f, strText );
+		100.0 * pFolder->m_nVolume / nTotal, strText );
 	
 	CalcSizeHelper();
 	

@@ -278,7 +278,7 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 	if ( m_pDownload->IsStarted() )
 	{
 		strText.Format( _T("%.1f%% %s %s : Shareaza"),
-			m_pDownload->GetProgress() * 100, strOf, (LPCTSTR)m_pDownload->m_sRemoteName );
+			m_pDownload->GetProgress() * 100.0, strOf, (LPCTSTR)m_pDownload->m_sRemoteName );
 	}
 	else
 	{
@@ -417,7 +417,7 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 		strText.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
 			strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
-			m_pDownload->GetProgress() * 100.0f );
+			m_pDownload->GetProgress() * 100.0 );
 		Update( &m_wndVolume, strText );
 	}
 	else

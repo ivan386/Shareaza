@@ -131,7 +131,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(SOCKADDR_IN* pAddress)
 	// For High ID clients
 	CString strHighID;
 
-	strHighID.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), pAddress->sin_port );
+	strHighID.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), pAddress->sin_port );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -156,7 +156,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 	if ( ( nClientID > 0 ) && ( nClientID < 16777216 ) )  // ED2K Low ID
 	{
 		CString strLowID;
-		strLowID.Format( _T("%lu@%s:%i"),
+		strLowID.Format( _T("%u@%s:%hu"),
 		nClientID,
 		(LPCTSTR)CString( inet_ntoa( pServerAddress->sin_addr ) ),
 		pServerAddress->sin_port );
@@ -276,14 +276,14 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(GGUID* pGUID, SOCKADDR_IN* pHost, B
 		// Set name (Also used to match incoming connection)
 		if ( bMustPush && pServer ) // Firewalled user (Low ID)
 		{
-			pFrame->m_sNick.Format( _T("%lu@%s:%i"),
+			pFrame->m_sNick.Format( _T("%lu@%s:%hu"),
 			pHost->sin_addr.S_un.S_addr,
 			(LPCTSTR)CString( inet_ntoa( pServer->sin_addr ) ),
 			pServer->sin_port );
 		}
 		else	// Regular user (High ID)
 		{
-			pFrame->m_sNick.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), pHost->sin_port );
+			pFrame->m_sNick.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), pHost->sin_port );
 		}
 
 		// Open window

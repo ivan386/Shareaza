@@ -43,11 +43,11 @@ static char THIS_FILE[]=__FILE__;
 
 inline void MakePORTArgs (const SOCKADDR_IN& host, CString& strValue)
 {
-	strValue.Format( _T("%d,%d,%d,%d,%d,%d"),
-		host.sin_addr.S_un.S_un_b.s_b1,
-		host.sin_addr.S_un.S_un_b.s_b2,
-		host.sin_addr.S_un.S_un_b.s_b3,
-		host.sin_addr.S_un.S_un_b.s_b4,
+	strValue.Format( _T("%u,%u,%u,%u,%hu,%hu"),
+		unsigned( host.sin_addr.S_un.S_un_b.s_b1 ),
+		unsigned( host.sin_addr.S_un.S_un_b.s_b2 ),
+		unsigned( host.sin_addr.S_un.S_un_b.s_b3 ),
+		unsigned( host.sin_addr.S_un.S_un_b.s_b4 ),
 		host.sin_port & 0xff,
 		(host.sin_port >> 8) & 0xff );
 }
@@ -359,9 +359,9 @@ BOOL CDownloadTransferFTP::OnRead()
 
 BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 {
-	theApp.Message( MSG_DEBUG, _T("%ls >> %ls: %ls"),
+	theApp.Message( MSG_DEBUG, _T("%s >> %s: %s"),
 		(LPCTSTR) m_sAddress, (LPCTSTR) strHeader, (LPCTSTR) strValue );
-	TRACE( _T("%ls >> %ls: %ls\n"),
+	TRACE( _T("%s >> %s: %s\n"),
 		(LPCTSTR) m_sAddress, (LPCTSTR) strHeader, (LPCTSTR) strValue );
 
 	m_pSource->SetLastSeen();
@@ -765,8 +765,8 @@ BOOL CDownloadTransferFTP::SendCommand (LPCTSTR args)
 		return TRUE;
 	}
 	
-	theApp.Message( MSG_DEBUG, _T("%ls << %ls"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
-	TRACE( _T("%ls << %ls\n"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
+	theApp.Message( MSG_DEBUG, _T("%s << %s"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
+	TRACE( _T("%s << %s\n"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
 
 	m_tRequest = GetTickCount();
 	m_pOutput->Clear ();

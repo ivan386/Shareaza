@@ -118,7 +118,7 @@ BOOL CProfileProfilePage::OnInitDialog()
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
 				m_sLocLatitude.Format( nValue >= 0 ?
-					_T("%.2f° N") : _T("%.2f° S"), (float)fabs( nValue ) );
+					_T("%.2f° N") : _T("%.2f° S"), double( fabs( nValue ) ) );
 			}
 			
 			str = pCoordinates->GetAttributeValue( _T("longitude") );
@@ -126,7 +126,7 @@ BOOL CProfileProfilePage::OnInitDialog()
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
 				m_sLocLongitude.Format( nValue >= 0 ? _T("%.1f° E") : _T("%.1f° W"),
-					(float)fabs( nValue ) );
+					double( fabs( nValue ) ) );
 			}
 		}
 	}
@@ -197,10 +197,10 @@ void CProfileProfilePage::OnCloseUpCity()
 	if ( ! pCity ) return;
 
 	m_sLocLatitude.Format( pCity->m_nLatitude >= 0 ? _T("%.2f° N") : _T("%.2f° S"),
-		(float)fabs( pCity->m_nLatitude ) );
+		double( fabs( pCity->m_nLatitude ) ) );
 
 	m_sLocLongitude.Format( pCity->m_nLongitude >= 0 ? _T("%.1f° E") : _T("%.1f° W"),
-		(float)fabs( pCity->m_nLongitude ) );
+		double( fabs( pCity->m_nLongitude ) ) );
 
 	GetDlgItem( IDC_LOC_LAT )->SetWindowText( m_sLocLatitude );
 	GetDlgItem( IDC_LOC_LONG )->SetWindowText( m_sLocLongitude );
@@ -286,14 +286,14 @@ void CProfileProfilePage::OnOK()
 			if ( _stscanf( m_sLocLatitude, _T("%f"), &nValue ) == 1 )
 			{
 				if ( m_sLocLatitude.Find( 'S' ) >= 0 ) nValue *= -1;
-				strValue.Format( _T("%f"), nValue );
+				strValue.Format( _T("%f"), double( nValue ) );
 				pCoordinates->AddAttribute( _T("latitude"), strValue );
 			}
 			
 			if ( _stscanf( m_sLocLongitude, _T("%f"), &nValue ) == 1 )
 			{
 				if ( m_sLocLongitude.Find( 'W' ) >= 0 ) nValue *= -1;
-				strValue.Format( _T("%f"), nValue );
+				strValue.Format( _T("%f"), double( nValue ) );
 				pCoordinates->AddAttribute( _T("longitude"), strValue );
 			}
 

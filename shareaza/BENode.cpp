@@ -364,7 +364,7 @@ int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 	int nLen = 0;
 	
 	pInput[ nSeek ] = 0;
-	if ( sscanf( (LPCSTR)pInput, "%lu", &nLen ) != 1 ) AfxThrowUserException();
+	if ( sscanf( (LPCSTR)pInput, "%i", &nLen ) != 1 ) AfxThrowUserException();
 	pInput[ nSeek ] = ':';
 	INC( nSeek + 1 );
 	

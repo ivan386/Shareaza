@@ -83,7 +83,7 @@ UINT CCoolInterface::NameToID(LPCTSTR pszName)
 {
 	UINT nID = 0;
 	if ( m_pNameMap.Lookup( pszName, (void*&)nID ) ) return nID;
-	if ( _stscanf( pszName, _T("%lu"), &nID ) == 1 ) return nID;
+	if ( _stscanf( pszName, _T("%u"), &nID ) == 1 ) return nID;
 	return 0;
 }
 

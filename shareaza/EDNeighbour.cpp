@@ -734,7 +734,7 @@ void CEDNeighbour::SendSharedFiles()
 								{	
 									double nMins;
 									//Read in the no. seconds
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3f"), &nMins );
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3lf"), &nMins );
 									nLength = (DWORD)( nMins * (double)60 );	//Convert to seconds
 									if ( nLength ) nTags ++;
 								}

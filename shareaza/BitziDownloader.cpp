@@ -314,7 +314,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 	if ( ! HttpQueryInfo( m_hRequest, HTTP_QUERY_STATUS_CODE, szStatusCode,
 		&nStatusLen, NULL ) ) return FALSE;
 
-	_stscanf( szStatusCode, _T("%lu"), &nStatusCode );
+	_stscanf( szStatusCode, _T("%u"), &nStatusCode );
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 
 	LPBYTE pResponse = NULL;
@@ -447,11 +447,11 @@ CXMLElement* CBitziDownloader::ImportData(CSchema* pSchema)
 
 				if ( nValue == (double)( (int)nValue ) )
 				{
-					strValue.Format( _T("%li"), (int)nValue );
+					strValue.Format( _T("%i"), (int)nValue );
 				}
 				else
 				{
-					strValue.Format( _T("%lf"), nValue );
+					strValue.Format( _T("%f"), nValue );
 				}
 			}
 		}

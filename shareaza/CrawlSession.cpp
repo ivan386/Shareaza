@@ -304,7 +304,7 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 
 		theApp.Message( MSG_TEMP, _T("CRAWL: Found %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f :"),
 			(LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ), bHub ? _T("hub") : _T("leaf"),
-			nLeafs, (LPCTSTR)strNick, nLatitude, nLongitude );
+			nLeafs, (LPCTSTR)strNick, double( nLatitude ), double( nLongitude ) );
 	}
 	else
 	{
@@ -327,6 +327,6 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 		
 		theApp.Message( MSG_TEMP, _T("CRAWL:    %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f"),
 			(LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ), bHub ? _T("hub") : _T("leaf"),
-			nLeafs, (LPCTSTR)strNick, nLatitude, nLongitude );
+			nLeafs, (LPCTSTR)strNick, double( nLatitude ), double( nLongitude ) );
 	}
 }

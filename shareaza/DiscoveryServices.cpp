@@ -1012,7 +1012,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			if ( nBreak > 0 )
 			{
 				int nSeconds = 0;
-				_stscanf( strLine.Mid( nBreak + 1 ), _T("%lu"), &nSeconds );
+				_stscanf( strLine.Mid( nBreak + 1 ), _T("%i"), &nSeconds );
 				nSeconds = max( 0, min( 18000, nSeconds ) );
 				strLine = strLine.Left( nBreak );
 				tSeen = time( NULL ) - nSeconds;
@@ -1045,7 +1045,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			
 			if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 			{
-				_stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &m_pWebCache->m_nAccessPeriod );
+				_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nAccessPeriod );
 			}
 			else if ( strLine == _T("i|force|remove") || _tcsnicmp( strLine, _T("i|update|warning|bad url"), 24 ) == 0 )
 			{
@@ -1130,7 +1130,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 	{
 		if ( ! Network.IsListening() ) return TRUE;
 
-		strURL.Format( _T("%s?update=1&ip=%s:%lu&x.leaves=%lu"),
+		strURL.Format( _T("%s?update=1&ip=%s:%hu&x.leaves=%i"),
 			(LPCTSTR)m_pWebCache->m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
@@ -1199,11 +1199,11 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		}
 		else if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 		{
-			_stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &m_pWebCache->m_nAccessPeriod );
+			_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nAccessPeriod );
 		}
 		else if ( _tcsnicmp( strLine, _T("i|update|period|"), 16 ) == 0 )
 		{
-			_stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &m_pWebCache->m_nUpdatePeriod );
+			_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nUpdatePeriod );
 		}
 		else if ( strLine == _T("i|force|remove") )
 		{
@@ -1239,7 +1239,7 @@ BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 	if ( ! HttpQueryInfo( m_hRequest, HTTP_QUERY_STATUS_CODE, szStatusCode,
 		&nStatusLen, NULL ) ) return FALSE;
 	
-	_stscanf( szStatusCode, _T("%lu"), &nStatusCode );
+	_stscanf( szStatusCode, _T("%u"), &nStatusCode );
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 	
 	DWORD nRemaining, nResponse = 0;

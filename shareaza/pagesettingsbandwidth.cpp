@@ -221,7 +221,7 @@ CString CBandwidthSettingsPage::ToString(DWORD nSpeed, BOOL bUnlimited, BOOL bUn
 	{
 		float nValue = (float)nSpeed / 1024.0f;
 		if ( ! m_bBytes ) nValue *= 8.0f;
-		str.Format( _T("%.1f"), nValue );
+		str.Format( _T("%.1f"), double( nValue ) );
 
 		if ( bUnit ) str += ( m_bBytes ) ? _T(" KB/s") : _T(" Kb/s");
 	}

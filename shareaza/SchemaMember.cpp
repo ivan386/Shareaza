@@ -126,7 +126,7 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 		{
 			DWORD nRate = 0;
 			_stscanf( strValue, _T("%lu"), &nRate );
-			strValue.Format( _T("%.1f kHz"), (float)nRate / 1000 );
+			strValue.Format( _T("%.1f kHz"), nRate / 1000.0 );
 		}
 	}
 	

@@ -350,7 +350,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		strVolume.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
 			strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
-			pDownload->GetProgress() * 100.0f );
+			pDownload->GetProgress() * 100.0 );
 	}
 	else
 	{
@@ -363,12 +363,12 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
 			strOf, 
 			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
-			pDownload->GetRatio() * 100.0f );
+			pDownload->GetRatio() * 100.0 );
 	}
 	else
 	{
 		strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"), _T("0"), strOf,
-			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0f );
+			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0 );
 	}
 	
 	//Draw the pop-up box

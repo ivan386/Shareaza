@@ -817,13 +817,13 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		DWORD nLimit;
 		
 		nPos = strValue.Find( _T("pollmin=") );
-		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%lu"), &nLimit ) == 1 )
+		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%u"), &nLimit ) == 1 )
 		{
 			m_nRetryDelay = max( m_nRetryDelay, nLimit * 1000 + 3000  );
 		}
 		
 		nPos = strValue.Find( _T("pollmax=") );
-		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%lu"), &nLimit ) == 1 )
+		if ( nPos >= 0 && _stscanf( strValue.Mid( nPos + 8 ), _T("%u"), &nLimit ) == 1 )
 		{
 			m_nRetryDelay = min( m_nRetryDelay, nLimit * 1000 - 8000 );
 		}
@@ -850,7 +850,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		int nLimit = 0;
 		
-		if ( _stscanf( strValue, _T("%lu"), &nLimit ) != 1 )
+		if ( _stscanf( strValue, _T("%i"), &nLimit ) != 1 )
 		{
 			Downloads.SetPerHostLimit( &m_pHost.sin_addr, nLimit );
 		}

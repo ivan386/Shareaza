@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/03/22 22:00:11 $"
-//	Revision:		"$Revision: 1.16 $"
+//	Date:			"$Date: 2005/03/23 18:59:19 $"
+//	Revision:		"$Revision: 1.17 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -810,7 +810,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			// Read the number after the colon into nPort
 			int nPort = GNUTELLA_DEFAULT_PORT; // Start out nPort as the default value, 6346
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 // Make sure 1 number was found
+			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 // Make sure 1 number was found
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
 				// Save the found port number in m_pHost

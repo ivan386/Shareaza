@@ -90,7 +90,7 @@ void CBrowseHeaderCtrl::Update(CHostBrowser* pBrowser)
 	if ( nProgress > 0.0f && nProgress < 1.0f )
 	{
 		nProgress *= 100.0f;
-		strItem.Format( _T(" (%.1f%%)"), nProgress );
+		strItem.Format( _T(" (%.1f%%)"), double( nProgress ) );
 		strValue += strItem;
 	}
 	
