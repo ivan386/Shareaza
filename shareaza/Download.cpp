@@ -325,7 +325,7 @@ void CDownload::OnRun()
 	{	//If this download isn't trying to download, see if it can try
 		if(m_bBTH)
 		{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-			if( Downloads.GetTryingCount( TRUE ) <= Settings.BitTorrent.DownloadTorrents )
+			if( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
 				SetStartTimer();
 		}
 		else
