@@ -1,7 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Spanish Schemas File translated by Help
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -14,6 +17,9 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <titles>
                <title language="en">Document:All Documents</title>
                <title language="de">Dokumente:Alle Dokumente</title>
+               <title language="es">Documento:Todos Los Documentos</title>
+               <title language="hu">Dokumentum: Minden dokumentum</title>
+               <title language="it">Documento:Tutti i documenti</title>
                <title language="lt">Dokumentas:Visi documentai</title>
                <title language="nl">Documenten:Alle Documenten</title>
                <title language="no">Dokument: Alle dokumenter</title>
@@ -50,12 +56,18 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <headerContent version="1.0">
                <title language="en">All Documents</title>
                <title language="de">Alle Dokumente</title>
+               <title language="es">Todos Los Documentos</title>
+               <title language="hu">Minden dokumentum</title>
+               <title language="it">Tutti i documenti</title>
                <title language="lt">Visi dokumentai</title>
                <title language="nl">Alle documenten</title>
                <title language="no">Alle dokumenter</title>
                <title language="ru">&#160;Все документы</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
+               <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
+               <subtitle language="hu">Ez a mappa az összes dokumentumodat tartalmazza.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutti i documenti della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt</subtitle>

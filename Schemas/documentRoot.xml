@@ -1,7 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Spanish Schemas File translated by Help
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
@@ -14,6 +17,9 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <titles>
                <title language="en">Document:My Documents</title>
                <title language="de">Dokumente:Meine Dokumente</title>
+               <title language="es">Documento:Mis Documentos</title>
+               <title language="hu">Dokumentum: saját okumentumok</title>
+               <title language="it">Documento:Documenti</title>
                <title language="lt">Dokumentas:Mano dokumentai</title>
                <title language="nl">Document:Mijn Documenten</title>
                <title language="no">Dokument: Mine dokumenter</title>
@@ -48,12 +54,18 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
        <headerContent version="1.0">
                <title language="en">Welcome to My Documents!</title>
                <title language="de">Willkommen zu Meine Dokumente!</title>
+               <title language="es">¡Bienvenido a Mis documentos!</title>
+               <title language="hu">Üdvözöllek a Saját okumentumokban!</title>
+               <title language="it">Benvenuto nei Documenti!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
                <title language="nl">Welkom in Mijn Documenten!</title>
                <title language="no">Velkommen til Mine dokumenter!</title>
                <title language="ru">&#160;Добро пожаловать в&#160;Ваши документы!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
+               <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
+               <subtitle language="hu">Ez a mappa tartalmazza a dokumentumaidat.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze mappen bevinden zich al je documenten.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine dokumenter</subtitle>
