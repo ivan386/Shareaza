@@ -164,6 +164,11 @@ void CLibraryTipCtrl::OnCalcSize(CDC* pDC)
 		AddSize( pDC, m_sTTH );
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
+	if ( m_sED2K.GetLength() )
+	{
+		AddSize( pDC, m_sED2K );
+		m_sz.cy += TIP_TEXTHEIGHT;
+	}
 
 	m_sz.cy += TIP_RULE;
 
@@ -199,6 +204,11 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 	if ( m_sTTH.GetLength() )
 	{
 		DrawText( pDC, &pt, m_sTTH );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+	if ( m_sED2K.GetLength() )
+	{
+		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 
