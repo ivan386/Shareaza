@@ -531,7 +531,7 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 			pHit->m_bChat = TRUE;
 			
 			pHit->m_pVendor = VendorCache.m_pED2K;
-			if ( ! pHit->ReadEDPacket( pPacket, pServer ) ) break;
+			if ( ! pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags ) ) break;
 			pHit->Resolve();
 
 			if( pHit->m_bPush == TS_TRUE )
