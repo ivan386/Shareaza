@@ -12,7 +12,7 @@
                        version="2.1.0.120"
                        type="Language"
                        language="gr"
-                       prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα."
+                       prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
                        />
 
 <!-- Toolbar Definitions -->
@@ -72,7 +72,7 @@
                <button id="ID_SEARCH_PANEL" text="Δείξε την έρευνα"/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="130"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -83,7 +83,7 @@
                <button id="ID_SEARCH_PANEL" text="Δείξε τα αποτελέσματα"/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="160"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -97,7 +97,7 @@
                <button id="ID_SEARCH_PANEL" text="Δείξε τα αποτελέσματα"/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="150"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -116,7 +116,7 @@
                <separator/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="160"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -129,7 +129,7 @@
                <separator/>
                <button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="160"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -197,12 +197,12 @@
                <button id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που μοιράζεις..."/>
        </toolbar>
        <toolbar name="CLibraryHeaderBar.Physical">
-               <button id="ID_LIBRARY_VIEW" text="Επισκόπηση"/>
+               <button id="ID_LIBRARY_VIEW" text="Επιλογές"/>
                <button id="ID_LIBRARY_PANEL" text="Δείξε λεπτομέρειες"/>
                <button id="ID_LIBRARY_PARENT" text="Επάνω"/>
        </toolbar>
        <toolbar name="CLibraryHeaderBar.Virtual">
-               <button id="ID_LIBRARY_VIEW" text="Επισκόπηση"/>
+               <button id="ID_LIBRARY_VIEW" text="Επιλογές"/>
                <button id="ID_LIBRARY_PANEL" text="Δείξε λεπτομέρειες"/>
                <button id="ID_LIBRARY_PARENT" text="Επάνω"/>
        </toolbar>
@@ -362,7 +362,7 @@
                <button id="ID_HITMONITOR_PAUSE" text="Παύση"/>
                <button id="ID_SEARCH_CLEAR" text="Καθάρισε"/>
                <rightAlign/>
-               <label text="Filter:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+               <label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
                <control id="107" width="160"/>
                <button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
        </toolbar>
@@ -480,7 +480,7 @@
                        <item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _μετά την μεταφορά"/>
                        <item id="ID_NETWORK_EXIT" text="Έξοδος"/>
                </menu>
-               <menu text="_Επισκόπηση">
+               <menu text="_Επιλογές">
                        <item id="ID_TAB_HOME" text="_Αρχική Σελίδα"/>
                        <item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
                        <item id="ID_TAB_MEDIA" text="_Μέσο αναπαραγωγής"/>
@@ -1488,24 +1488,24 @@
         <newline gap="18" indent="0"/>
 
                <icon res="236" width="32" height="32"/><gap size="8"/>
-               <heading align="middle">Π Ρ Ο Σ Α Ρ Μ Ο Γ Η Τ Ο Υ &#160; S H A R E A Z A</heading>
+               <heading align="middle">Π Ρ Ο Σ Α Ρ Μ Ο Γ Η &#160;  Τ Ο Υ &#160; S H A R E A Z A</heading>
                <newline gap="12" indent="42"/>
 
                <icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
                <gap size="8"/>
                <link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Θέματα</link>
-               <text align="middle">&#160;- Άλλαξτε την όψη του Shareaza</text>
+               <text align="middle">&#160;- Αλλάξτε την όψη του Shareaza</text>
                <newline gap="8"/>
 
                <icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
                <gap size="8"/>
-               <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Settings Wizard</link>
-               <text align="middle">&#160;- Άλλαξτε τις επιλογές του Shareaza</text>
+               <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Ρυθμίσεις Επιλογών</link>
+               <text align="middle">&#160;- Αλλάξτε τις επιλογές του Shareaza</text>
                <newline gap="8"/>
 
                <icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
                <gap size="8"/>
-               <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
+               <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Γρήγορη Βοήθεια</link>
                <text align="middle">&#160;- Πάρτε μια βασική βοήθεια για το πως να χρησιμοποιήσετε το Shareaza</text>
                <newline gap="18" indent="0"/>
 
@@ -1945,7 +1945,7 @@
 		Οι επιλογές σας μειώνουν τα αρχεία που μπορούν να είναι ενεργά σε μια
 		χρονική στιγμή,, tγια να βεβαιωθεί ότι το κάθε αρχείο που κατεβαίνει πέρνει καλό
 		bandwidth.  Μπορείς να αλλάξεις αυτές τις επιλογές απο τα Εργαλεία, Οι επιλογές του shareaza
-		Εναλλακτικά, μπορείς να αρχίσεις αυτό το αρχείο χειροκίνητα με το κουμπί ξανα άρχισε you may manually start this download with the resume command.</text>
+		Εναλλακτικά, μπορείς να αρχίσεις αυτό το αρχείο χειροκίνητα με το κουμπί ξανα άρχισε το αρχείο .</text>
        </document>
 
           <document name="DownloadHelp.Searching">
@@ -2023,7 +2023,7 @@
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
-		<text format="b">Adult content filter enabled</text>
+		<text format="b">Το Φίλτρο για ενηλίκους έχει ενεργοποιηθεί</text>
 		<newline gap="8"/>
 		<text>Παρακαλώ προσέξτε ότι (όπως γίνετε με τα περισσότερα αυτοματοποιημένα φίλτρα) ίσως να μην είναι 100% αποτελεσματικά στον διαχωρισμό των
 		λέξεων. Σχεδιάστηκε απλά για να φιλτράρει υπερβολικά ανεπιθύμητα αποτελέσματα, παρά να είναι 100% ασφαλές το μπλοκάρισμα.</text>
@@ -2125,7 +2125,7 @@
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
        <tip id="ID_BROWSE_FILES" message="Δες τα αρχεία που μοιράζετε ο χρήστης"/>
-       <tip id="ID_BROWSE_LAUNCH" message="Ερεύνησε το προφιλ και τα ααρχεία που μοιράζετε ο χρήστης."/>
+       <tip id="ID_BROWSE_LAUNCH" message="Ερεύνησε το προφιλ και τα αρχεία που μοιράζετε ο χρήστης."/>
        <tip id="ID_BROWSE_PROFILE" message="Κοίτα το προφίλ του χρήστη."/>
        <tip id="ID_BROWSE_REFRESH" message="Ανανέωσε την λίστα με τα διαθέσιμα αρχεία απο τον συγκεκριμένο host."/>
        <tip id="ID_BROWSE_STOP" message="Σταμάτα να κατεβάζεις αρχεία απο τον συγκεκριμένο host."/>
@@ -2363,7 +2363,7 @@
        <tip id="ID_TOOLS_DOWNLOAD" message="Άρχισε να κατεβάζεις ένα νέο αρχείο ή BitTorrent torrent..."/>
        <tip id="ID_TOOLS_LANGUAGE" message="Διάλεξε την γλώσσα που θέλεις το Shareaza να χρησιμοποιήσει..."/>
        <tip id="ID_TOOLS_MERCORA" message="Άρχισε ένα P2P Radio"/>
-       <tip id="ID_TOOLS_PROFILE" message="Επεξεργάσου τοπροφίλ σου..."/>
+       <tip id="ID_TOOLS_PROFILE" message="Επεξεργάσου το προφίλ σου..."/>
        <tip id="ID_TOOLS_RESKIN" message="Ξαναφόρτωσε και χρησιμοποίησε το τρέχων skin."/>
        <tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
        <tip id="ID_TOOLS_SETTINGS" message="Άλλαξε τις επιλογές του Shareaza..."/>
@@ -2448,7 +2448,7 @@
 	<string id="8001" value="Καλώς ήρθατε στο Shareaza"/>
 	<string id="8002" value="Ιδιότητες του αρχείου"/>
 	<string id="8003" value="Επεξεργασία του προφίλ μου"/>
-	<string id="8004" value="!Καλώς ήρθατε στο Shareaza (version) !\n.\nΤο Shareaza είναι ένα εντελός ελεύθερο προοιόν.\nΠαρακαλώ χρησιμοποιήστε υπεύθυνα και σεβαστείτε τους νόμους περι πνευματικής ιδιοκτησίας.\n.."/>
+	<string id="8004" value="!Καλώς ήρθατε στο Shareaza (version) !\n.\nΤο Shareaza είναι ένα εντελώς ελεύθερο προοιόν.\nΠαρακαλώ χρησιμοποιήστε υπεύθυνα και σεβαστείτε τους νόμους περι πνευματικής ιδιοκτησίας.\n.."/>
 	<string id="8005" value="(Κλείσιμο μετά τις μεταφορές)"/>
 	<string id="8006" value="YΔεν είστε συνδεδεμένοι.  Πατήστε το κουμπί Σύνδεση για να αρχίσετε."/>
 	<string id="8007" value="Δεν υπάρχουν ενεργές αναζητήσεις.  Πατήστε εδώ για να ψάξετε για αρχεία."/>
@@ -2519,7 +2519,7 @@
        <string id="8177" value="Βάλε μερικές λέξεις για να ψάξεις:"/>
        <string id="8178" value="Τι είδους αρχείο είναι?"/>
        <string id="8179" value="(Καθάρισε το ιστορικό έρευνας)"/>
-       <string id="8180" value="File size must be"/>
+       <string id="8180" value="Το μέγεθος πρέπει να είναι"/>
        <string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
        <string id="8208" value="Το Shareaza δημιουργεί hashes για %i αρχείο(α):"/>
        <string id="8224" value="Το Shareaza κατεβάζει:"/>
@@ -3029,7 +3029,7 @@
        <string id="20106" value="Metadata"/>
        <string id="20107" value="Αποσχολημένο"/>
        <string id="20108" value="Enqueue"/>
-       <string id="20109" value="Queued"/>
+       <string id="20109" value="Εν αναμονή"/>
        <string id="20110" value="Άγνωστο"/>
        <string id="20111" value="Ολοκληρωμένο"/>
        <string id="20112" value="Seeding"/>
@@ -3079,7 +3079,7 @@
                <control/>
                <control caption="OK"/>
                <control caption="Ακύρωση"/>
-               <control caption="Apply"/>
+               <control caption="Εφαρμογή"/>
                <control/>
        </dialog>
 
@@ -3594,12 +3594,12 @@
                <control/>
                <control caption="Πόλη:"/>
                <control/>
-               <control caption="_Mapping:"/>
-               <control caption="Γεωγραφικό πλάτος:"/>
+               <control caption="_Χαρτογράφιση:"/>
+               <control caption="Πλάτος:"/>
                <control/>
-               <control caption="Γεωγραφικό μήκος:"/>
+               <control caption="Μήκος:"/>
                <control/>
-               <control caption="_Ενδιαφέρόντα:"/>
+               <control caption="_Ενδιαφέροντα:"/>
                <control/>
                <control caption="&lt; Εισαγωγή"/>
                <control caption="Απομάκρυνση &gt;"/>
