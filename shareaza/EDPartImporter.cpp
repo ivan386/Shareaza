@@ -289,7 +289,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		(LPCTSTR)strName,
 		(LPCTSTR)Settings.SmartVolume( nSize, FALSE ) );
 	
-	if ( ! Downloads.IsSpaceAvailable( nSize ) )
+	if ( ! Downloads.IsSpaceAvailable( nSize, Downloads.dlPathIncomplete ) )
 	{
 		Message( IDS_ED2K_EPI_DISK_SPACE );
 		return FALSE;

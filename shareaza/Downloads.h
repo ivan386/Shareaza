@@ -56,7 +56,12 @@ protected:
 	CPtrList		m_pList;
 	CMapPtrToPtr	m_pHostLimits;
 	int				m_nRunCookie;
-	
+public:
+	enum
+	{
+		dlPathNull, dlPathComplete, dlPathIncomplete
+	};
+
 // Operations
 public:
 	CDownload*	Add();
@@ -98,7 +103,7 @@ public:
 	void		OnQueryHits(CQueryHit* pHits);
 	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);
 	void		SetPerHostLimit(IN_ADDR* pAddress, int nLimit);
-	BOOL		IsSpaceAvailable(QWORD nVolume);
+	BOOL		IsSpaceAvailable(QWORD nVolume, int nPath = dlPathNull);
 protected:
 	void		UpdateAllows(BOOL bNew);
 	BOOL		AllowMoreDownloads() const;

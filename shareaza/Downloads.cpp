@@ -795,7 +795,7 @@ void CDownloads::SetPerHostLimit(IN_ADDR* pAddress, int nLimit)
 //////////////////////////////////////////////////////////////////////
 // CDownloads disk space helper
 
-BOOL CDownloads::IsSpaceAvailable(QWORD nVolume)
+BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 {
 	QWORD nMargin = 10485760;
 	
@@ -811,29 +811,43 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume)
 		{
 			ULARGE_INTEGER nFree, nNull;
 			
-			if ( (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.IncompletePath, &nFree, &nNull, &nNull ) )
+			if ( ( ! nPath || nPath == dlPathIncomplete ) && (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.IncompletePath, &nFree, &nNull, &nNull ) )
 			{
 				if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-				
-				if ( (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.CompletePath, &nFree, &nNull, &nNull ) )
-				{
-					if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-				}
-				
-				return TRUE;
 			}
+
+			if ( ( ! nPath || nPath == dlPathComplete ) && (*pfnGetDiskFreeSpaceEx)( Settings.Downloads.CompletePath, &nFree, &nNull, &nNull ) )
+			{
+				if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
+			}
+
+			return TRUE;
 		}
 	}
-	
-	CString str = Settings.Downloads.IncompletePath.SpanExcluding( _T("\\") ) + '\\';
+
 	DWORD nSPC, nBPS, nFree, nTotal;
-	
-	if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
+	if ( ! nPath || nPath == dlPathIncomplete )
 	{
-		QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;
-		if ( nBytes < nVolume + nMargin ) return FALSE;
-	}
+		CString str = Settings.Downloads.IncompletePath.SpanExcluding( _T("\\") ) + '\\';
 	
+		if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
+		{
+			QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;
+			if ( nBytes < nVolume + nMargin ) return FALSE;
+		}
+	}
+
+	if ( ! nPath || nPath == dlPathComplete )
+	{
+		CString str = Settings.Downloads.CompletePath.SpanExcluding( _T("\\") ) + '\\';
+	
+		if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
+		{
+			QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;
+			if ( nBytes < nVolume + nMargin ) return FALSE;
+		}
+	}
+
 	return TRUE;
 }
 

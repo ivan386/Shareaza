@@ -320,7 +320,7 @@ void CDownloadTask::RunCopyTorrent()
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 
 	// Check for space before copying torrent
-	if ( ! Downloads.IsSpaceAvailable( (QWORD)m_pTorrent.m_nTotalSize ) )
+	if ( ! Downloads.IsSpaceAvailable( (QWORD)m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) )
 	{
 		m_bSuccess = FALSE;
 		return;

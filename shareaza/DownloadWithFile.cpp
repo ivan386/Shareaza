@@ -73,7 +73,7 @@ BOOL CDownloadWithFile::OpenFile()
 		if ( m_pFile->Open( m_sLocalName ) ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sLocalName );
 	}
-	else if ( ! Downloads.IsSpaceAvailable( m_nSize ) )
+	else if ( ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISK_SPACE,
 			(LPCTSTR)m_sRemoteName,
