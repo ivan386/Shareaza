@@ -197,7 +197,7 @@ br.icons_downloads=Downloads
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
-fr.components_languages=Langages
+fr.components_languages=Langues
 fr.tasks_allusers=Tous les utilisateurs
 fr.tasks_selectusers=Installer %1 pour:
 fr.tasks_currentuser=%1 seulement
