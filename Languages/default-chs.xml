@@ -3634,7 +3634,7 @@
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="我的评价">
 		<control caption="我的评级"/>
 		<control caption="我对此文件的评级:"/>
-		<control/>
+		<control caption="(未评级)|假的/损坏/误导|差的|一般|不错|很好|极棒"/>
 		<control caption="我的评价和注释"/>
 		<control/><control/>
 	</dialog>
