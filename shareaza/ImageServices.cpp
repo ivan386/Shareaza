@@ -341,7 +341,8 @@ IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID
 		{
 			CLSID* pCopy = new CLSID;
 			*pCopy = pCLSID;
-			m_pCLSID.SetAt( strType, pCopy );
+			delete m_pCLSID[ strType ];
+			m_pCLSID[ strType ] = pCopy;
 			if ( ppCLSID != NULL ) *ppCLSID = pCopy;
 		}
 		
