@@ -27,6 +27,7 @@ UninstallIconFile=setup\misc\uninstall.ico
 SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
 WizardImageFile=setup\misc\sidebar.bmp
+WizardSmallImageFile=setup\misc\corner.bmp
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
