@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,6 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Image:All Images</title>
                <title language="af">Prent:Alle Prente</title>
                <title language="ar">&#160;صورة&#160;:&#160;جميع&#160;الصور</title>
+               <title language="ch">&#160;影集:&#160;所有图片</title>
                <title language="de">Bild:Alle Bilder</title>
                <title language="es">Imagen: Todas las Imágenes</title>
                <title language="fr">Image:Toutes les images</title>
@@ -42,6 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
+                       <title language="ch">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -61,6 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">All Images</title>
                <title language="af">Alle Prente</title>
                <title language="ar">&#160;جميع&#160;الصور</title>
+               <title language="ch">&#160;所有图片</title>
                <title language="de">Alle Bilder</title>
                <title language="es">Todas las imágenes</title>
                <title language="fr">Toutes les images</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains every image file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle prentlêers in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;ملفات&#160;الصور&#160;في&#160;المكتبة.</subtitle>
+               <subtitle language="ch">&#160;这个文件夹包含收藏中所有的图片文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bilder in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>

@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,6 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Book:My Books</title>
                <title language="af">Boek:My Boeke</title>
                <title language="ar">&#160;كتاب&#160;:&#160;كتابي&#160;الخاص</title>
+               <title language="ch">&#160;书籍:&#160;我的书籍</title>
                <title language="de">Buch:Eigene Bücher</title>
                <title language="es">Libro: Todos mis libros</title>
                <title language="fr">Livres:Mes livres</title>
@@ -42,6 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
+                       <title language="ch">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -61,6 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Welcome to My Books!</title>
                <title language="af">Welkom by My Boeke!</title>
                <title language="ar">&#160;مرحبا&#160;بك&#160;في&#160;كتبي&#160;الخاصة!</title>
+               <title language="ch">&#160;欢迎来到我的应用程序！</title>
                <title language="de">Willkommen bei Eigene Bücher!</title>
                <title language="es">Bienvenido a Mis Libros!</title>
                <title language="fr">Bienvenue dans Mes livres!</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">These folders contain all of your books.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;ملفات&#160;الكتب&#160;في&#160;المكتبة.</subtitle>
+               <subtitle language="ch">&#160;这些文件夹包含所有您的书籍。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Bücher.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>

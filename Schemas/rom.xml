@@ -5,6 +5,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -23,6 +24,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">ROM Image</title>
                <title language="af">ROM / CD Afdruk</title>
                <title language="ar">&#160;ROM&#160;Image</title>
+               <title language="ch">&#160;ROM&#160;镜像</title>
                <title language="de">ROM Image</title>
                <title language="es">ROM Image</title>
                <title language="fr">Image ROM</title>
@@ -40,6 +42,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
+                       <title language="ch">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -56,6 +59,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Company</title>
                        <title language="af">Maatskappy</title>
                        <title language="ar">&#160;الشركة</title>
+                       <title language="ch">&#160;公司</title>
                        <title language="de">Firma</title>
                        <title language="es">Compañia</title>
                        <title language="fr">Compagnie</title>
@@ -72,6 +76,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">System</title>
                        <title language="af">Stelsel</title>
                        <title language="ar">&#160;نظام&#160;</title>
+                       <title language="ch">&#160;系统</title>
                        <title language="de">System</title>
                        <title language="es">Sistema</title>
                        <title language="fr">Système</title>
@@ -87,6 +92,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
                        <title language="ar">&#160;سنة</title>
+                       <title language="ch">&#160;年份</title>
                        <title language="de">Jahr</title>
                        <title language="es">Año</title>
                        <title language="fr">Année</title>
@@ -102,6 +108,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
                        <title language="ar">&#160;النوع</title>
+                       <title language="ch">&#160;类型</title>
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
@@ -117,6 +124,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
                        <title language="ar">&#160;اللغة</title>
+                       <title language="ch">&#160;语言</title>
                        <title language="de">Sprache</title>
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
@@ -132,6 +140,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Rating</title>
                        <title language="af">Gradering</title>
                        <title language="ar">&#160;التقدير</title>
+                       <title language="ch">&#160;分级</title>
                        <title language="de">FSK</title>
                        <title language="es">Rating</title>
                        <title language="fr">Estimation</title>
@@ -147,6 +156,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Price</title>
                        <title language="af">Prys</title>
                        <title language="ar">&#160;السعر</title>
+                       <title language="ch">&#160;价格</title>
                        <title language="de">Preis</title>
                        <title language="es">Precio</title>
                        <title language="fr">Prix</title>
@@ -162,6 +172,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="ar">&#160;الرابط</title>
+                       <title language="ch">&#160;链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
@@ -177,6 +188,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="ar">&#160;التعليقات</title>
+                       <title language="ch">&#160;注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>

@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,6 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Book:All Books</title>
                <title language="af">Boek:Alle Boeke</title>
                <title language="ar">&#160;كتب&#160;:&#160;جميع&#160;الكتب</title>
+               <title language="ch">&#160;书籍:&#160;所有书籍</title>
                <title language="de">Buch:Alle Bücher</title>
                <title language="es">Libro: Todos los libros</title>
                <title language="fr">Livre:Tous les livres</title>
@@ -42,6 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
+                       <title language="ch">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -61,6 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">All Books</title>
                <title language="af">Alle Boeke</title>
                <title language="ar">&#160;جميع&#160;الكتب</title>
+               <title language="ch">&#160;所有书籍</title>
                <title language="de">Alle Bücher</title>
                <title language="es">Todos los libros</title>
                <title language="fr">Tous les livres</title>
@@ -74,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains every book in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle boeke in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;ملفات&#160;الكتب&#160;في&#160;المكتبة.</subtitle>
+               <subtitle language="ch">&#160;这个文件夹包含收藏中所有书籍。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Bücher in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos tus libros en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les livres de votre bibliothèque.</subtitle>

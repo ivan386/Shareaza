@@ -4,6 +4,7 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
+Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,6 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Search:Search Results</title>
                <title language="af">Soek:Soekresultate</title>
                <title language="ar">&#160;بحث:&#160;نتائج&#160;البحث</title>
+               <title language="ch">&#160;搜索:&#160;搜索结果</title>
                <title language="de">Suche:Suchergebnisse</title>
                <title language="es">Buscar: Resultados de busqueda</title>
                <title language="fr">Recherche:Résultats de recherche</title>
@@ -38,6 +40,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
+                       <title language="ch">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -53,6 +56,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Time</title>
                        <title language="af">Tyd</title>
                        <title language="ar">&#160;الوقت</title>
+                       <title language="ch">&#160;时间</title>
                        <title language="de">Zeit</title>
                        <title language="es">Tiempo</title>
                        <title language="fr">Temps</title>
@@ -68,6 +72,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Date</title>
                        <title language="af">Datum</title>
                        <title language="ar">&#160;تاريخ</title>
+                       <title language="ch">&#160;日期</title>
                        <title language="de">Datum</title>
                        <title language="es">Fecha</title>
                        <title language="fr">Date</title>
@@ -83,6 +88,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Content</title>
                        <title language="af">Inhoud</title>
                        <title language="ar">&#160;المحتوى</title>
+                       <title language="ch">&#160;内容</title>
                        <title language="de">Inhalt</title>
                        <title language="es">Contenido</title>
                        <title language="fr">Contenu</title>
@@ -102,6 +108,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Search for "{content}"</title>
                <title language="af">Soek vir " {content} "</title>
                <title language="ar">&#160;بحث&#160;لــ&#160;"{content}"</title>
+               <title language="ch">&#160;按&#160;"{content}" 搜索</title>
                <title language="de">Suche nach "{content}"</title>
                <title language="es">Busca por "{contenido}</title>
                <title language="fr">Recherche de "{content}"</title>
@@ -115,6 +122,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
                <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;الملفات&#160;التي&#160;جرى&#160;البحث&#160;عنها&#160;"{content}"</subtitle>
+               <subtitle language="ch">&#160;这个文件夹包括匹配您搜索的&#160;{content}</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
