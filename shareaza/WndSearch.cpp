@@ -476,6 +476,7 @@ void CSearchWnd::OnSearchSearch()
 			pSearch->m_nPriority = CManagedSearch::spMedium;
 	
 		m_bUpdate = TRUE;
+		UpdateMessages();
 		return;
 	}
 	//End of 'Search More'
