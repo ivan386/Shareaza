@@ -62,6 +62,7 @@ protected:
 	//{{AFX_MSG(CIdentityProfilePage)
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
+	void GetGenderTranslations(CString& pMale, CString& pFemale);
 
 	DECLARE_MESSAGE_MAP()
 

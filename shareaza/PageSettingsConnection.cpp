@@ -98,6 +98,15 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 	
+	CString strAutomatic = GetInOutHostTranslation();
+	CComboBox* pOutHost = (CComboBox*) GetDlgItem( IDC_OUTBOUND_HOST );
+
+	// update all dropdowns
+	m_wndInHost.DeleteString( 0 );
+	m_wndInHost.AddString( strAutomatic );
+	pOutHost->DeleteString( 0 );
+	pOutHost->AddString( strAutomatic );
+
 	m_bCanAccept			= ! Settings.Connection.Firewalled;
 	m_sInHost				= Settings.Connection.InHost;
 	m_nInPort				= Settings.Connection.InPort;
@@ -109,8 +118,8 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_nTimeoutConnection	= Settings.Connection.TimeoutConnect / 1000;
 	m_nTimeoutHandshake		= Settings.Connection.TimeoutHandshake / 1000;
 
-	if ( m_sInHost.IsEmpty() ) m_sInHost = _T("Automatic");
-	if ( m_sOutHost.IsEmpty() ) m_sOutHost = _T("Automatic");
+	if ( m_sInHost.IsEmpty() ) m_sInHost = strAutomatic;
+	if ( m_sOutHost.IsEmpty() ) m_sOutHost = strAutomatic;
 
 	m_bInRandom = ( m_nInPort == 0 );
 
@@ -128,7 +137,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 
 	UpdateData( FALSE );
 	
-	m_wndInBind.EnableWindow( m_sInHost != _T("Automatic") );
+	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
 
 	return TRUE;
 }
@@ -145,8 +154,11 @@ DWORD CConnectionSettingsPage::ParseSpeed(LPCTSTR psz)
 
 void CConnectionSettingsPage::OnEditChangeInboundHost() 
 {
+	CString strAutomatic = GetInOutHostTranslation();
+
 	UpdateData();
-	m_wndInBind.EnableWindow( m_sInHost != _T("Automatic") );
+
+	m_wndInBind.EnableWindow( m_sInHost != strAutomatic );
 }
 
 void CConnectionSettingsPage::OnCloseUpInboundHost() 
@@ -206,8 +218,12 @@ void CConnectionSettingsPage::OnOK()
 {
 	UpdateData();
 	
-	if ( m_sInHost.CompareNoCase( _T("Automatic") ) == 0 ) m_sInHost.Empty();
-	if ( m_sOutHost.CompareNoCase( _T("Automatic") ) == 0 ) m_sOutHost.Empty();
+	CString strAutomatic = GetInOutHostTranslation();
+
+	if ( m_sInHost.CompareNoCase( strAutomatic ) == 0 ) 
+		m_sInHost.Empty();
+	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 ) 
+		m_sOutHost.Empty();
 	
 	Settings.Connection.Firewalled			= ! m_bCanAccept;
 	Settings.Connection.InHost				= m_sInHost;
@@ -224,3 +240,17 @@ void CConnectionSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
+CString CConnectionSettingsPage::GetInOutHostTranslation() 
+{
+	CString strAutomatic, strInCombo, strOutCombo, strNew;
+
+	LoadString( strAutomatic, IDS_SETTINGS_AUTOMATIC_IP );
+
+	m_wndInHost.GetLBText( 0, strInCombo );
+	CComboBox* pOutHost = (CComboBox*) GetDlgItem( IDC_OUTBOUND_HOST );
+	pOutHost->GetLBText( 0, strOutCombo );
+
+	// get non-english string if any
+	strNew = strInCombo.CompareNoCase( _T("Automatic") ) == 0 ? strOutCombo : strInCombo;
+	return strAutomatic.CompareNoCase( _T("Automatic") ) == 0 ? strNew : strAutomatic;
+}

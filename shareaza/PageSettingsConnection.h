@@ -62,6 +62,7 @@ public:
 
 	CString	FormatSpeed(DWORD nSpeed);
 	DWORD	ParseSpeed(LPCTSTR psz);
+	CString GetInOutHostTranslation();
 
 // Overrides
 public:

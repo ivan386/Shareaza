@@ -951,17 +951,42 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos && pWnd ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		
+	
 		if ( pXML->IsNamed( _T("control") ) )
 		{
 			strCaption = pXML->GetAttributeValue( _T("caption") );
 			Replace( strCaption, _T("{n}"), _T("\r\n") );
 			
 			if ( strCaption.GetLength() )
-			{
-				int nPos = strCaption.Find( '_' );
-				if ( nPos >= 0 ) strCaption.SetAt( nPos, '&' );
-				pWnd->SetWindowText( strCaption );
+			{	
+				TCHAR szClass[3] = { 0, 0, 0 };
+				GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
+
+				if ( (CString) szClass != "Co" )
+				{
+					int nPos = strCaption.Find( '_' );
+					if ( nPos >= 0 ) strCaption.SetAt( nPos, '&' );
+					pWnd->SetWindowText( strCaption );
+				}
+				else
+				{
+					CStringArray pItems;
+					CString strTemp;
+					int nNum;
+
+					Split( strCaption, _T("|"), pItems, TRUE );
+					CComboBox* pCombo = (CComboBox*) pWnd;
+					nNum = pCombo->GetCount();
+					if ( nNum == pItems.GetSize() ) 
+					{
+						for ( int nCount = 0; nCount < nNum; nCount++ )
+						{
+							pCombo->DeleteString( 0 );
+							strTemp = pItems.GetAt( nCount );
+							pCombo->AddString( (LPCTSTR) strTemp );
+						}
+					}
+				}
 			}
 			
 			pWnd = pWnd->GetNextWindow();

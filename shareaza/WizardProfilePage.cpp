@@ -86,8 +86,9 @@ BOOL CWizardProfilePage::OnInitDialog()
 	
 	for ( int nAge = 13 ; nAge < 110 ; nAge++ )
 	{
-		CString str;
-		str.Format( _T(" %i year old"), nAge );
+		CString str, strYearsOld;
+		LoadString( strYearsOld, IDS_WIZARD_YEARS_OLD );
+		str.Format( _T(" %i ") + strYearsOld, nAge );
 		m_wndAge.SetItemData( m_wndAge.AddString( str ), nAge );
 	}
 	

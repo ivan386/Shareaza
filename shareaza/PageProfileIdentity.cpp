@@ -25,6 +25,7 @@
 #include "GProfile.h"
 #include "XML.h"
 #include "PageProfileIdentity.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -96,11 +97,31 @@ BOOL CIdentityProfilePage::OnInitDialog()
 
 	if ( CXMLElement* pVitals = MyProfile.GetXML( _T("vitals") ) )
 	{
-		m_sGender	= pVitals->GetAttributeValue( _T("gender") );
-		m_sAge		= pVitals->GetAttributeValue( _T("age") );
+		m_sAge = pVitals->GetAttributeValue( _T("age") );
 
-		if ( m_sGender.CompareNoCase( _T("male") ) &&
-			 m_sGender.CompareNoCase( _T("female") ) ) m_sGender.Empty();
+		CString strGenderMale, strGenderFemale;
+		GetGenderTranslations( strGenderMale, strGenderFemale );
+
+		m_sGender = pVitals->GetAttributeValue( _T("gender") );
+
+		if ( m_sGender.GetLength() ) 
+		{
+			CComboBox* pGender = (CComboBox*) GetDlgItem( IDC_PROFILE_GENDER );
+			if ( m_sGender.CompareNoCase( _T("male") ) == 0 )
+			{
+				int nIndex = pGender->SelectString( 1, (LPCTSTR) strGenderMale );
+				ASSERT(nIndex != CB_ERR);
+			}
+			else if ( m_sGender.CompareNoCase( _T("female") ) == 0 )
+			{
+				int nIndex = pGender->SelectString( 2, (LPCTSTR) strGenderFemale );
+				ASSERT(nIndex != CB_ERR);
+			}
+			else
+				m_sGender.Empty();
+		}
+		else 
+			m_sGender.Empty();
 
 		int nAge = 0;
 
@@ -156,12 +177,14 @@ void CIdentityProfilePage::OnOK()
 			m_sAge.Format( _T("%lu"), nAge );
 		else
 			m_sAge.Empty();
-		
-		if ( m_sGender.CompareNoCase( _T("male") ) &&
-			 m_sGender.CompareNoCase( _T("female") ) ) m_sGender.Empty();
-		
-		if ( m_sGender.GetLength() )
-			pVitals->AddAttribute( _T("gender"), m_sGender );
+
+		CString strGenderMale, strGenderFemale;
+		GetGenderTranslations( strGenderMale, strGenderFemale );
+
+		if ( m_sGender.CompareNoCase( strGenderMale ) == 0 || m_sGender.CompareNoCase( _T("male") ) == 0 )
+			pVitals->AddAttribute( _T("gender"), _T("Male") );
+		else if ( m_sGender.CompareNoCase( strGenderFemale ) == 0 || m_sGender.CompareNoCase( _T("female") ) == 0 )
+			pVitals->AddAttribute( _T("gender"), _T("Female") );
 		else
 			pVitals->DeleteAttribute( _T("gender") );
 
@@ -172,5 +195,41 @@ void CIdentityProfilePage::OnOK()
 		
 		if ( pVitals->GetElementCount() == 0 &&
 			 pVitals->GetAttributeCount() == 0 ) pVitals->Delete();
+	}
+}
+
+void CIdentityProfilePage::GetGenderTranslations(CString& pMale, CString& pFemale)
+{
+	// Using data from CBrowseHostProfile.1 translation since the control in the dialog 
+	// may change its order and it does not have its identifier.
+
+	BOOL bCollected = FALSE;
+
+	CXMLElement* pXML = Skin.GetDocument( _T("CBrowseHostProfile.1") );
+
+	for ( POSITION pos = pXML->GetElementIterator() ; pos && ! bCollected ; )
+	{
+		CXMLElement* pGroups = pXML->GetNextElement( pos );
+		if ( pGroups->IsNamed( _T("group") ) && pGroups->GetAttributeValue( _T("id") ) == "3" ) {
+			for ( POSITION pos = pGroups->GetElementIterator() ; pos && ! bCollected ; )
+			{
+				CXMLElement* pText = pGroups->GetNextElement( pos );
+				if ( pText->IsNamed( _T("text") ) )
+				{
+					CString strTemp;
+					strTemp = pText->GetAttributeValue( _T("id") );
+					if ( strTemp.CompareNoCase( _T("gendermale") ) == 0 )
+					{
+						pMale = pText->GetValue();
+						bCollected = pFemale.IsEmpty() ? FALSE : TRUE;
+					}
+					if ( strTemp.CompareNoCase( _T("genderfemale") ) == 0 )
+					{
+						pFemale = pText->GetValue();
+						bCollected = pMale.IsEmpty() ? FALSE : TRUE;
+					}
+				}
+			}
+		}
 	}
 }

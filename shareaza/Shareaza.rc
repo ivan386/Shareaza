@@ -4692,6 +4692,8 @@ BEGIN
                             "Please type the bandwidth limit you wish to set in the form ""123 kb/s"" for kilobits per second, or ""123 KB/s"" for kilobytes per second."
     IDS_PROFILE_NO_VITALS   "You have not selected your age and gender.  Are you sure you want to continue without doing this?"
     IDS_WIZARD_EXIT         "E&xit"
+    IDS_WIZARD_YEARS_OLD    "year old"
+    IDS_SETTINGS_AUTOMATIC_IP "Automatic"
 END
 
 STRINGTABLE 
