@@ -128,7 +128,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( DOWNLOAD_COLUMN_STATUS, _T("Status"), LVCFMT_CENTER, 80 );
 	InsertColumn( DOWNLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 80 );
 	InsertColumn( DOWNLOAD_COLUMN_DOWNLOADED, _T("Downloaded"), LVCFMT_CENTER, 0 );
-	InsertColumn( DOWNLOAD_COLUMN_PERCENTAGE, _T("Complete"), LVCFMT_CENTER, 0 );
+	InsertColumn( DOWNLOAD_COLUMN_PERCENTAGE, _T("Complete"), LVCFMT_CENTER, 60 );
 	
 	Skin.Translate( _T("CDownloadCtrl"), &m_wndHeader );
 	LoadColumnState();
@@ -847,7 +847,12 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	else if ( pDownload->m_bSelected )
 		dc.SetTextColor( CoolInterface.m_crText );
 	else if ( pDownload->m_bVerify == TS_TRUE )
-		dc.SetTextColor( RGB( 0, 127, 0 ) );
+	{
+		if( pDownload->m_bBTH && ( pDownload->m_nTorrentUploaded < pDownload->m_nSize ) )
+			dc.SetTextColor( CoolInterface.m_crText );
+		else
+			dc.SetTextColor( RGB( 0, 127, 0 ) );
+	}
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
 	
@@ -950,7 +955,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{
-				strText.Format( _T("%i%%"), ((int) ( (double)(pDownload->GetVolumeComplete() ) / (double)(pDownload->m_nSize) * 100 )) );
+				strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0f );
 			}
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
