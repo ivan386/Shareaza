@@ -384,44 +384,51 @@ End;
 
 Procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
+  InstallFolder: string;
+  FirewallManager: Variant;
+  FirewallProfile: Variant;
   Wnd: HWND;
 Begin
-  if CurUninstallStep = usUninstall then
+  if CurUninstallStep = usUninstall then begin
+    if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
+      InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+      FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+      FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+      FirewallProfile.AuthorizedApplications.Remove(InstallFolder);
+    End;
     Wnd := FindWindowByClassName('ShareazaMainWnd');
-    if Wnd <> 0 then
+    if Wnd <> 0 then begin
       SendMessage(Wnd, WM_CLOSE, 0, 0);
       while Wnd <> 0 do
         begin
           Sleep(100);
           Wnd := FindWindowByClassName('ShareazaMainWnd');
-        End
+        End;
+    End;
+  End;
 End;
 
-Procedure RegisterFirewall();
+Procedure CurStepChanged(CurStep: TSetupStep);
 var
   InstallFolder: string;
   FirewallObject: Variant;
   FirewallManager: Variant;
   FirewallProfile: Variant;
 Begin
-  if IsTaskSelected('firewall') then begin
-    FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
-    InstallFolder := ExpandConstant('{app}\Shareaza.exe');
-    FirewallObject.ProcessImageFileName := InstallFolder;
-    FirewallObject.Name := 'Shareaza';
-    FirewallObject.Scope := NET_FW_SCOPE_ALL;
-    FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
-    FirewallObject.Enabled := True;
-    FirewallManager := CreateOleObject('HNetCfg.FwMgr');
-    FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
-    FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+  if CurStep=ssPostInstall then begin
+    if IsTaskSelected('firewall') then begin
+      FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
+      InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+      FirewallObject.ProcessImageFileName := InstallFolder;
+      FirewallObject.Name := 'Shareaza';
+      FirewallObject.Scope := NET_FW_SCOPE_ALL;
+      FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
+      FirewallObject.Enabled := True;
+      FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+      FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+      FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+    End;
   End;
 End;
-
-procedure CurStepChanged(CurStep: TSetupStep);
-Begin
-  if CurStep=ssPostInstall then RegisterFirewall;
-End;
-  
 
 #expr SaveToFile("..\builds\Preprocessed.iss")
