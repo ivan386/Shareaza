@@ -2917,7 +2917,7 @@
 	<string id="17477" value="В BitTorrent паре с %s получен ответ с неправильным файлом."/>
 	<string id="17478" value="В BitTorrent  паре с %s получен запрос на неизвестный файл."/>
 	<string id="17479" value="Установлено BitTorrent соединение с партнером %s для пересылки «%s»."/>
-	<string id="17480" value="BitTorrent соединение с партнером %s потерено."/>
+	<string id="17480" value="BitTorrent соединение с партнером %s потеряно."/>
 	<string id="17481" value="Получен файл-дескриптор BitTorrent'а: «%s»"/>
 	<string id="17482" value="Невозможно разобрать файл BitTorrent'а «%s», полученный методом упреждающей выборки ."/>
 	<string id="17483" value="Сообщение ошибки от BitTorrent трекера для файла «%s» : «%s»."/>
