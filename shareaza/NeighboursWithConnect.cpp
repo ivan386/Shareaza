@@ -648,9 +648,8 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(TRISTATE bG2)
 	switch ( bG2 )
 	{
 	case TS_UNKNOWN://Do we need more hubs/UPs on either protocol?
-		//return ( nConnected[1] + nConnected[2] ) < ( IsLeaf() ? Settings.Gnutella1.NumHubs + Settings.Gnutella2.NumHubs : Settings.Gnutella1.NumPeers + Settings.Gnutella2.NumPeers );
-		return ( ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ) ||
-				 ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ) );
+		return ( ( Settings.Gnutella1.EnableToday ) && ( ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers ) ) ||
+				 ( Settings.Gnutella2.EnableToday ) && ( ( nConnected[2] ) < ( IsG2Leaf() ? Settings.Gnutella2.NumHubs : Settings.Gnutella2.NumPeers ) ) );
 	case TS_FALSE:	//Do we need more Gnutella 1 Ultrapeers?
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) < ( IsG1Leaf() ? Settings.Gnutella1.NumHubs : Settings.Gnutella1.NumPeers );
@@ -680,12 +679,13 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(TRISTATE bG2)
 	
 	switch ( bG2 )
 	{
-	case TS_UNKNOWN:
-		return ( nConnected[1] + nConnected[2] ) < Settings.Gnutella1.NumLeafs + Settings.Gnutella2.NumLeafs;
-	case TS_FALSE:
+	case TS_UNKNOWN://Do we need more Leafs of either sort?
+		return ( ( ( Settings.Gnutella1.EnableToday ) && ( ( nConnected[1] ) < Settings.Gnutella1.NumLeafs ) ) ||
+				 ( ( Settings.Gnutella2.EnableToday ) && ( ( nConnected[2] ) < Settings.Gnutella2.NumLeafs ) ) );
+	case TS_FALSE:	//Do we need more Gnutella 1 Leafs?
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) < Settings.Gnutella1.NumLeafs;
-	case TS_TRUE:
+	case TS_TRUE:	//Do we need more Gnutella 2 Leafs?
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[2] ) < Settings.Gnutella2.NumLeafs;
 	default:

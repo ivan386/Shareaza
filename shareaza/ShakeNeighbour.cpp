@@ -663,8 +663,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			{
 				m_nNodeType = ntLeaf;
 			}
-			else if (	m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_TRUE
-						/* && Network.NeedMoreHubs() */ )
+			else if (	m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_TRUE ) // && Network.NeedMoreHubs() )
 			{
 				m_nNodeType = ntNode;
 			}
