@@ -3299,7 +3299,7 @@
 
        <dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Добро пожаловать в Shareaza [5 из 7]">
                <control caption="Shareaza  будет ещё дружелюбней, если каждый укажет несколько деталей о себе."/>
-               <control caption="Моё имя (ник) будет:"/>
+               <control caption="Мой ник будет:"/>
                <control/>
                <control caption="и мне (я):"/>
                <control/><control/>
@@ -3371,7 +3371,7 @@
                <control/>
                <control caption="AOL имя (ник):"/>
                <control/>
-               <control caption="Jubber ИД:"/>
+               <control caption="Jabber ИД:"/>
                <control/>
        </dialog>
 
@@ -3452,7 +3452,7 @@
                <control caption="Загрузить"/>
                <control caption="Отмена"/>
                <control caption="Shareaza может загружать файлы из вэб'а (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey2000, mP2P)."/>
-               <control caption="Shareaza может загружать и BitTorrent файлы. Torrent представляет собой xyz.torrent файл или HTTP ссылка на '.torrent' файл.  Для загрузки HTTP Torrent ссылки введите её выше.  Если у Вас уже есть '.torrent' файл, нажмите кнопку"/>
+               <control caption="Shareaza может загружать и BitTorrent файлы. Torrent представляет собой xyz.torrent файл или HTTP ссылку на '.torrent' файл.  Для загрузки HTTP Torrent ссылки введите её выше.  Если у Вас уже есть '.torrent' файл, нажмите кнопку"/>
                <control caption="Открыть _Torrent..."/>
        </dialog>
 
