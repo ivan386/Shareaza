@@ -368,7 +368,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	if ( ! pSource->m_bPushOnly )
 	{
 		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
-		if ( !( pSource->m_pAddress.S_un.S_addr & 0xFF000000 ) )
+		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 )
 		{
 			delete pSource;
 			return FALSE;
@@ -383,6 +383,15 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 				delete pSource;
 				return FALSE;
 			}
+		}
+	}
+	else
+	{
+		//Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		if ( pSource->m_pServerAddress.S_un.S_un_b.s_b1 == 0 )
+		{
+			delete pSource;
+			return FALSE;
 		}
 	}
 
@@ -407,7 +416,6 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	
 	m_nSourceCount ++;
 	
-	//if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 	{
 		pSource->m_pPrev = m_pSourceLast;
 		pSource->m_pNext = NULL;
@@ -421,22 +429,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		{
 			m_pSourceFirst = m_pSourceLast = pSource;
 		}
-	}/*
-	else
-	{
-		pSource->m_pPrev = NULL;
-		pSource->m_pNext = m_pSourceFirst;
-		
-		if ( m_pSourceFirst != NULL )
-		{
-			m_pSourceFirst->m_pPrev = pSource;
-			m_pSourceFirst = pSource;
-		}
-		else
-		{
-			m_pSourceFirst = m_pSourceLast = pSource;
-		}
-	}*/
+	}
 	
 	SetModified();
 	
