@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/03/11 01:12:59 $"
-//	Revision:		"$Revision: 1.13 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/03/11 14:46:50 $"
+//	Revision:		"$Revision: 1.14 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -529,10 +529,20 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 	// Count only selected mp3's which have no custom metadata in XML format
 	while ( m_posSel )
 	{
-		// Lookup locks and unlocks library
-		CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) );
-		if ( pFile->m_sName.Right(3).MakeLower() != _T("mp3") ||
-			 !pFile->m_bMetadataAuto ) nSelected--;
+		// Lookup locks library if it finds a file
+		CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ), TRUE );
+
+		if ( pFile )
+		{
+			CString strExtention = pFile->m_sName.Right(3);
+			CharLower( strExtention.GetBuffer() );
+			strExtention.ReleaseBuffer();
+
+			if ( ( strExtention != _T("mp3") ) || ( ! pFile->m_bMetadataAuto ) )
+				nSelected--;
+
+			Library.Unlock();
+		}
 	}
 	pCmdUI->Enable( nSelected > 0 );
 }
@@ -542,45 +552,25 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 	CDecodeMetadataDlg dlg;
 
 	CSingleLock pLock( &Library.m_pSection, TRUE );
-	
+
 	StartSelectedFileLoop();
 
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
 	{
-		if ( pFile->m_sName.Right(3).MakeLower() == _T("mp3") &&
-			 pFile->m_bMetadataAuto ) dlg.AddFile( pFile );
+		CString strExtention = pFile->m_sName.Right(3);
+		CharLower( strExtention.GetBuffer() );
+		strExtention.ReleaseBuffer();
+
+		if ( ( strExtention == _T("mp3") ) && ( pFile->m_bMetadataAuto ) )
+			dlg.AddFile( pFile );
+
 	}
 
-		pLock.Unlock();
+	pLock.Unlock();
 
 	if ( dlg.m_pFiles.GetCount() ) dlg.DoModal();
 }
 
-/*
-void CLibraryFileView::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( GetSelectedCount() == 1 );
-}
-
-void CLibraryFileView::OnLibraryJigle() 
-{
-	CSingleLock pLock( &Library.m_pSection, TRUE );
-	
-	if ( CLibraryFile* pFile = GetSelectedFile() )
-	{
-		CString strED2K;
-		if ( pFile->m_bED2K ) strED2K = CED2K::HashToString( &pFile->m_pED2K );
-		pLock.Unlock();
-		
-		if ( strED2K.GetLength() )
-		{
-			CString strURL;
-			strURL.Format( _T("http://jigle.com/search?p=ed2k%%3A%s&v=1"), (LPCTSTR)strED2K );
-			ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
-		}
-	}
-}
-*/
 
 void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI) 
 {
