@@ -177,7 +177,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		}
 		else
 		{	//Collection IS NOT already in the library.
-			
+
 			//Create and share the collection folder
 			CreateDirectory( Settings.Downloads.CollectionPath, NULL );
 			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
@@ -206,13 +206,22 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 			else	
 			{	//Was not able to copy collection to the collection folder
 
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
-				{	//Collection was already there. (Same name- assumed the same. ToDo: Check SHA1 or similar)
-					//Re-mount the collection
-					LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
-					//Display the collection
-					pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-					Library.Unlock();
+				if( GetLastError() == ERROR_FILE_EXISTS )
+				{	//File of this name already exists
+
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
+					{	//Collection was already there. (Same name- assumed the same. ToDo: Check SHA1 or similar)
+						//Re-mount the collection
+						LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
+						//Display the collection
+						pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
+						Library.Unlock();
+					}
+					else
+					{	//File of this name exists in the folder, but does not appear in the 
+						//library. Most likely cause- Still adding the directory. Do nothing.
+
+					}
 				}
 				else		
 				{	//Unknown reason- Display an error message
