@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.25"
+		version="2.1.0.42"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -1921,6 +1921,17 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">This Download is Pending</text>
 		<newline gap="8"/>
+		<text>This download is waiting for someone to start uploading.
+		Shareaza is ready to start downloading this file, but no-one is sending it at
+		the moment. You are probably waiting in other user's queues, and the download
+		may start transfering at any time. You can examine the individual sources to 
+		see each queue you are waiting in. If you are sharing files yourself, it may
+		improve the chances of a download transfer starting quickly.</text>
+	</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">This Download is Queued</text>
+		<newline gap="8"/>
 		<text>This download is waiting for some of your other downloads to complete.
 		Your download settings limit the number of downloads which may be active at
 		any given time, to ensure that each download gets a good share of the available
@@ -2373,6 +2384,8 @@
 	<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone."/>
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
+	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
+	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8063" value="Connected. %s in local library."/>
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
