@@ -2,8 +2,8 @@
   <!-- 
 	Name:		Shareaza OS
 	Author:		RocketX
-	Version:	1.3
-	Released:	Sep. 22, 2004
+	Version:	1.31
+	Released:	Dec. 02, 2004
 	-->
   <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0"> 
     <manifest
@@ -11,7 +11,7 @@
 		author="RocketX"
 		link="http://www.shareaza.com/"
 		Description="Skin based on the Shareaza Website"
-		version="1.3"
+		version="1.31"
 		type="Skin"
 		language="en" />
     <fonts> 
@@ -1093,10 +1093,10 @@
         </anchors>
       </windowSkin>
       <!-- end navbar language for pt-br -->
-      <!-- navbar language for chs -->
+      <!-- navbar language for cn -->
       <windowSkin> 
-        <image type="image" language="chs" path="sos_navbar_chs.bmp"/>
-        <image type="watermark" language="chs" path="sos_navbarbg.bmp"/>
+        <image type="image" language="cn" path="sos_navbar_cn.bmp"/>
+        <image type="watermark" language="cn" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
         <target window="CMainTabBarCtrl.Windowed"/>
         <parts> 
@@ -1136,8 +1136,8 @@
         </anchors>
       </windowSkin>
       <windowSkin> 
-        <image type="image" language="chs" path="sos_navbar_chs.bmp"/>
-        <image type="watermark" language="chs" path="sos_navbarbg.bmp"/>
+        <image type="image" language="cn" path="sos_navbar_cn.bmp"/>
+        <image type="watermark" language="cn" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts> 
           <part name="_ID_TAB_HOME.Up"	 rect="0,0,81,29"/>
@@ -1639,5 +1639,94 @@
         </anchors>
       </windowSkin>
       <!-- end navbar language for gr -->
+	<!-- navbar language for sv -->
+	<windowSkin>
+		<image type="image" language="sv" path="sos_navbar_sv.bmp"/>
+		<image type="watermark" language="sv" path="sos_navbarbg.bmp"/>
+		<target window="CMainTabBarCtrl"/>
+		<target window="CMainTabBarCtrl.Windowed"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"	 rect="0,0,72,29"/>
+			<part name="_ID_TAB_HOME.Checked"	 rect="0,28,72,29"/>
+			<part name="_ID_TAB_HOME.Hover"	 rect="0,28,72,29"/>
+			<part name="_ID_TAB_HOME.Down"	 rect="0,0,72,29"/>
+		
+			<part name="_ID_TAB_LIBRARY.Up"	 rect="72,0,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	 rect="72,28,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Hover"	 rect="72,28,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Down"	 rect="72,0,105,29"/>
+		
+			<part name="_ID_TAB_MEDIA.Up"	 rect="177,0,79,29"/>
+			<part name="_ID_TAB_MEDIA.Checked"	 rect="177,28,79,29"/>
+			<part name="_ID_TAB_MEDIA.Hover"	 rect="177,28,79,29"/>
+			<part name="_ID_TAB_MEDIA.Down"	 rect="177,0,79,29"/>
+		
+			<part name="_ID_TAB_SEARCH.Up"	 rect="256,0,64,29"/>
+			<part name="_ID_TAB_SEARCH.Checked"	 rect="256,28,64,29"/>
+			<part name="_ID_TAB_SEARCH.Hover"	 rect="256,28,64,29"/>
+			<part name="_ID_TAB_SEARCH.Down"	 rect="256,0,64,29"/>
+		
+			<part name="_ID_TAB_TRANSFERS.Up"	 rect="320,0,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	 rect="320,28,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	 rect="320,28,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Down"	 rect="320,0,141,29"/>
+		
+			<part name="_ID_TAB_NETWORK.Up"	 rect="461,0,97,29"/>
+			<part name="_ID_TAB_NETWORK.Checked"	 rect="461,28,97,29"/>
+			<part name="_ID_TAB_NETWORK.Hover"	 rect="461,28,97,29"/>
+			<part name="_ID_TAB_NETWORK.Down"	 rect="461,0,97,29"/>
+		
+		</parts>
+		<anchors>
+			<anchor name="Background"	rect="15,0,582,38"/>
+			<anchor name="_ID_TAB_HOME"	rect="15,2,72,29"/>
+			<anchor name="_ID_TAB_LIBRARY"	rect="87,2,105,29"/>
+			<anchor name="_ID_TAB_MEDIA"	rect="192,2,79,29"/>
+			<anchor name="_ID_TAB_SEARCH"	rect="271,2,64,29"/>
+			<anchor name="_ID_TAB_TRANSFERS"	rect="335,2,141,29"/>
+			<anchor name="_ID_TAB_NETWORK"	rect="476,2,97,29"/>
+		</anchors>
+		</windowSkin>
+		<windowSkin>
+		<image type="image" language="sv" path="sos_navbar_sv.bmp"/>
+		<image type="watermark" language="sv" path="sos_navbarbg.bmp"/>
+		<target window="CMainTabBarCtrl.Basic"/>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"	 rect="0,0,72,29"/>
+			<part name="_ID_TAB_HOME.Checked"	 rect="0,28,72,29"/>
+			<part name="_ID_TAB_HOME.Hover"	 rect="0,28,72,29"/>
+			<part name="_ID_TAB_HOME.Down"	 rect="0,0,72,29"/>
+		
+			<part name="_ID_TAB_LIBRARY.Up"	 rect="72,0,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	 rect="72,28,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Hover"	 rect="72,28,105,29"/>
+			<part name="_ID_TAB_LIBRARY.Down"	 rect="72,0,105,29"/>
+		
+			<part name="_ID_TAB_MEDIA.Up"	 rect="177,0,79,29"/>
+			<part name="_ID_TAB_MEDIA.Checked"	 rect="177,28,79,29"/>
+			<part name="_ID_TAB_MEDIA.Hover"	 rect="177,28,79,29"/>
+			<part name="_ID_TAB_MEDIA.Down"	 rect="177,0,79,29"/>
+		
+			<part name="_ID_TAB_SEARCH.Up"	 rect="256,0,64,29"/>
+			<part name="_ID_TAB_SEARCH.Checked"	 rect="256,28,64,29"/>
+			<part name="_ID_TAB_SEARCH.Hover"	 rect="256,28,64,29"/>
+			<part name="_ID_TAB_SEARCH.Down"	 rect="256,0,64,29"/>
+		
+			<part name="_ID_TAB_TRANSFERS.Up"	 rect="320,0,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	 rect="320,28,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	 rect="320,28,141,29"/>
+			<part name="_ID_TAB_TRANSFERS.Down"	 rect="320,0,141,29"/>
+		
+		</parts>
+		<anchors>
+			<anchor name="Background"	rect="15,0,485,38"/>
+			<anchor name="_ID_TAB_HOME"	rect="15,2,72,29"/>
+			<anchor name="_ID_TAB_LIBRARY"	rect="87,2,105,29"/>
+			<anchor name="_ID_TAB_MEDIA"	rect="192,2,79,29"/>
+			<anchor name="_ID_TAB_SEARCH"	rect="271,2,64,29"/>
+			<anchor name="_ID_TAB_TRANSFERS"	rect="335,2,141,29"/>
+		</anchors>
+	</windowSkin>
+	<!-- end navbar language for sv -->
     </windowSkins>
   </skin>
