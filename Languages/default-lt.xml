@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.0.4"
+                        version="2.0.0.28"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -116,10 +116,10 @@ right quote    &#147;
        <toolbar name="CBrowseHeaderCtrl">
             <button id="ID_BROWSE_PROFILE" text="Profilis"/>
             <button id="ID_BROWSE_FILES" text="Bendrintos bylos"/>
-          </toolbar>
-          <toolbar name="CBrowseTree.Top">
-                   <button id="ID_LIBRARY_TREE_PHYSICAL" text="Aplankai"/>
-                   <button id="ID_LIBRARY_TREE_VIRTUAL" text="Katalogai"/>
+       </toolbar>
+       <toolbar name="CBrowseTree.Top">
+            <button id="ID_LIBRARY_TREE_PHYSICAL" text="Aplankai"/>
+            <button id="ID_LIBRARY_TREE_VIRTUAL" text="Katalogai"/>
        </toolbar>
        <toolbar name="CBrowseHostWnd.Basic">
                <button id="ID_SEARCH_DOWNLOAD" text="Parsisiųsti bylą"/>
@@ -704,6 +704,23 @@ right quote    &#147;
                <item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
                <item id="ID_NETWORK_EXIT" text="Išeiti"/>
        </menu>
+       <!--  Shareaza Remote -->
+       <menu name="CRemoteWnd">
+               <item id="ID_TRAY_OPEN" text="_Atverti Shareaza" />
+               <separator/>
+               <item id="ID_NETWORK_SEARCH" text="Nauja pai_eška..." />
+               <item id="ID_TOOLS_DOWNLOAD" text="Atsisiųsti bylą..." />
+               <separator/>
+               <item id="ID_MEDIA_PLAY" text="_Groti bylą" />
+               <item id="ID_MEDIA_PAUSE" text="_Pristabdyti" />
+               <item id="ID_MEDIA_STOP" text="_Stabdyti" />
+               <separator/>
+               <item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis" />
+               <item id="ID_MEDIA_NEXT" text="Toles_nis takelis" />
+               <separator/>
+               <item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus" />
+               <item id="ID_NETWORK_EXIT" text="Išeiti" />
+      </menu>
        <!-- HOME MENU -->
        <menu name="CHomeWnd.Basic">
                <item id="ID_TAB_HOME" text="_Pradžia"/>
@@ -756,7 +773,7 @@ right quote    &#147;
        </menu>
        <!-- SEARCH WINDOW -->
        <menu name="CSearchWnd.Basic">
-               <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti šitą"/>
+               <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
                <separator/>
                <item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
                <item id="ID_SEARCH_CHAT" text="_Kalbėtis su vartotoju"/>
@@ -770,12 +787,13 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <separator/>
                        <item id="ID_SEARCH_COPY" text="Kopijuoti _URI..."/>
+
                </menu>
        </menu>
        <menu name="CSearchWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="_Parsisiųsti"/>
+               <item id="ID_SEARCH_DOWNLOADNOW" text="Parsisiųsti dabar"/>
                <item id="ID_SEARCH_COPY" text="Kopijuoti _URI"/>
                <separator/>
                <item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
@@ -792,6 +810,7 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+
                </menu>
                <separator/>
                <item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -815,8 +834,8 @@ right quote    &#147;
                </menu>
                <menu text="_Bylos aprašas internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <separator/>
                        <item id="ID_SEARCH_COPY" text="Kopijuoti _URI..."/>
+
                </menu>
        </menu>
        <menu name="CBrowseHostWnd">
@@ -835,6 +854,7 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+
                </menu>
                <separator/>
                <item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -860,6 +880,7 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+
                </menu>
                <separator/>
                <item id="ID_SEARCH_FILTER" text="_Filtruoti radinius..."/>
@@ -887,7 +908,7 @@ right quote    &#147;
        </menu>
        <menu name="CDownloadsWnd.Download">
                <item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
-               <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Gudri peržiūra"/>
+               <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Kopijos peržiūra"/>
                <item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="_Tęsti"/>
@@ -994,6 +1015,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_UPLOADS_FILTER_ACTIVE" text="Rodyti _aktyvius"/>
                <item id="ID_UPLOADS_FILTER_QUEUED" text="Rodyti _esančius eilėje"/>
+		       <item id="ID_UPLOADS_FILTER_TORRENT" text="Rodyti BitTorrent"/>
                <item id="ID_UPLOADS_FILTER_HISTORY" text="Rodyti ž_urnalą"/>
        </menu>
        <!-- LIBRARY FRAME -->
@@ -1059,10 +1081,10 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+			     <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
                        <separator/>
-                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
-                       <separator/>
-                       <item id="ID_LIBRARY_URL" text="Kopijuoti _URI"/>
+			     <item id="ID_LIBRARY_URL" text=""/>
+
                </menu>
                <menu text="_Organizuoti">
                        <item id="ID_LIBRARY_RENAME" text="_Pervadinti bylą"/>
@@ -1078,7 +1100,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_LIBRARY_SHARED_FILE" text="_Bendrinta"/>
                <separator/>
-               <item id="ID_LIBRARY_URL" text="Kopijuoti _URI"/>
+               <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="_Trinti"/>
                <separator/>
                <menu text="_Ieškoti">
@@ -1090,9 +1112,11 @@ right quote    &#147;
                        <item id="ID_SEARCH_FOR_SERIES" text="Epizodų iš to pačio serialo"/>
                </menu>
                <menu text="P_aslaugos internete">
-                       <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <separator/>
+			     <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
+                       <separator/>
+
+                       <item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent bylą"/>
                </menu>
                <menu text="_Organizuoti">
                        <item id="ID_LIBRARY_RENAME" text="_Pervadinti bylą"/>
@@ -1123,14 +1147,14 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <separator/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
                        <separator/>
-                       <item id="ID_LIBRARY_URL" text="Kopijuoti _URI"/>
+                       <item id="ID_LIBRARY_URL" text=""/>
+
                </menu>
                <menu text="_Organizuoti">
                        <item id="ID_LIBRARY_RENAME" text="_Pervadinti bylą"/>
-                       <item id="ID_LIBRARY_UNLINK" text="_Trini nuorodas"/>
+                       <item id="ID_LIBRARY_UNLINK" text="_Trinti nuorodas"/>
                        <separator/>
                        <item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
                        <item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
@@ -1144,7 +1168,7 @@ right quote    &#147;
                <separator/>
                <item id="ID_LIBRARY_SHARED_FILE" text="_Bendrinta"/>
                <separator/>
-               <item id="ID_LIBRARY_URL" text="Kopijuoti _URI"/>
+               <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="_Trinti"/>
                <separator/>
                <menu text="_Ieškoti">
@@ -1157,8 +1181,9 @@ right quote    &#147;
                </menu>
                <menu text="P_aslaugos internete">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
-                       <separator/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
+                       <separator/>
+                       <item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent bylą"/>
                </menu>
                <menu text="_Organizuoti">
                        <item id="ID_LIBRARY_UNLINK" text="_Trinti nuorodas"/>
@@ -1389,23 +1414,6 @@ right quote    &#147;
                <item id="ID_CHAT_TIMESTAMP" text="Rodyti _laiką"/>
                <item id="ID_CHAT_CLEAR" text="_Valyti langą"/>
        </menu>
-       <!--  Shareaza Remote -->
-       <menu name="CRemoteWnd">
-               <item id="ID_TRAY_OPEN" text="_Atverti Shareaza" />
-               <separator/>
-               <item id="ID_NETWORK_SEARCH" text="Nauja pai_eška..." />
-               <item id="ID_TOOLS_DOWNLOAD" text="Atsisiųsti bylą..." />
-               <separator/>
-               <item id="ID_MEDIA_PLAY" text="_Groti bylą" />
-               <item id="ID_MEDIA_PAUSE" text="_Pristabdyti" />
-               <item id="ID_MEDIA_STOP" text="_Stabdyti" />
-               <separator/>
-               <item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis" />
-               <item id="ID_MEDIA_NEXT" text="Toles_nis takelis" />
-               <separator/>
-               <item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus" />
-               <item id="ID_NETWORK_EXIT" text="Išeiti" />
-      </menu>
 </menus>
 
        <!-- Watermarks -->
@@ -1632,6 +1640,22 @@ right quote    &#147;
                        <text id="UploadedOne">Jūs išsiuntėte 1 bylą (%s).</text>
                        <text id="UploadedMany">Jūs išsiuntėte %i bylų(-as) (%s).</text>
                </para>
+	</document>
+
+	<document name="CHomeTorrentsBox" title="Torrent bylos" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="TorrentsNone" format="b">Torrent neskleidžiami</text>
+			<text id="TorrentsOne" format="b">Skleidžiama 1 byla</text>
+			<text id="TorrentsMany" format="b">Skleidžiamos %i bylos(-ų)</text>
+			<newline gap="4"/>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Skleisti torrent</link>
+		</para>
+
        </document>
 
        <!-- Settings Pages -->
@@ -1725,7 +1749,6 @@ right quote    &#147;
                <gap size="4"/>
                <text>Rinkitės ir konfigūruokite lygiaverčio susijungimo tinklus, prie kurių „Shareaza“ jungsis.</text>
                <newline gap="10"/>
-
 
        </document>
 
@@ -1934,6 +1957,19 @@ right quote    &#147;
                partnerių sąrašo.</text>
        </document>
 
+	<!-- General help documents -->
+	
+	<document name="GeneralHelp.DiskSpace">
+		<text format="b">Diske trūksta vietos</text>
+		<newline gap="8"/>
+		<text>Viename ar keliuose diskiniuose kaupikliuose, kuriuos naudoja „Shareaza“, trūksta laisvos vietos.</text>
+		<newline gap="8"/>
+		<text>Jūs turėtumėte prižiūrėti, kad diskuose būtų pakankamai laisvos vietos. 
+		Jei diskiniai kaupikliai užsipildys, programos gali imti dirbti nestabiliai, o laikinosios bylos gali būti 
+		prarastos. Jums reikėtų atlikti disko valymą, ištrinti nereikalingas bylas ar pašalinti programinę 
+		įrangą, kuri jums daugiau nereikalinga.</text>
+	</document>
+
        <!-- Search help documents -->
 
        <document name="SearchHelp.BadSearch">
@@ -1941,11 +1977,38 @@ right quote    &#147;
                <newline gap="8"/>
                <text>Šis ieškinys yra prastai suformatuotas ir gali veikti neteisingai.
                Ieškiniuose turėtų būti keli žodžiai, jei tai įmanoma, ir turėtų būti nurodyta schema
-               (bylos tipas). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai
+               (bylos plėtinys). Be to, ieškiniuose neturėtų būti vien tik skaičiai arba neigimo žodžiai
                (su minusu priekyje), taip pat jūs turėtumėte vengti per daug ilgų bendrinių užklausų.</text>
                <newline gap="8"/>
-               <text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą, nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
+               <text>Pavyzdžiui, dauguma tinklo klientų ignoruos visų MP3 bylų paieškos užklausą, 
+               nes ji butų nepakankamai konkreti ir duotų per daug radinių.</text>
        </document>
+
+	<!-- Share help documents -->
+	
+	<document name="ShareHelp.AlreadyShared">
+		<text format="b">Jau yra bendrintas</text>
+		<newline gap="8"/>
+		<text>Aplankas, kurį Jūs pasirinkote, jau yra bendrintas kaip dalis kito bendrinto ištekliaus.</text>
+		<newline gap="8"/>
+		<text>„%s“</text>
+	</document>
+
+	<document name="ShareHelp.BadShare">
+		<text format="b">Šio aplanko nereikėtų bendrinti</text>
+		<newline gap="8"/>
+		<text>Šis aplankas yra sisteminis ar turi savyje tokį aplanką. Bendrinti šį aplanką 
+		nepatariama, nes bylos, esančios jame, daugumai žmonių bus nenaudingos.</text>
+		<newline gap="8"/>
+		<text>Tokie aplankai, kaip „Windows“ katalogas, „Program Files“ ir panašūs aplankai, 
+		paprastai neturi tinkamų bendrinimui bylų. Tik šių aplankų </text><text format="i"> poaplankiuose </text><text> 
+		yra dominančių bylų. Taigi, bendrinkite poaplankius.</text>
+		<newline gap="8"/>
+		<text>„Shareaza“ programos „incomplete“ aplanko irgi nereikėtų bendrinti savo 
+		kolekcijoje, nes bandymai skaičiuoti parsisiunčiamų bylų maišas gali pakenkti 
+		našumui.</text>
+	</document>
+	
 </documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -1976,6 +2039,7 @@ right quote    &#147;
        <tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
        <tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
        <tip id="ID_SEARCH_DOWNLOAD" message="Parsisiųsti pasirinktą bylą(-as)."/>
+       <tip id="ID_SEARCH_DOWNLOADNOW" message="Parsisiųsti pasirinktą bylą(-as) su prioritetu."/>
        <tip id="ID_SEARCH_SEARCH" message="Ieškoti tinkle dar kartą..."/>
        <tip id="ID_SEARCH_FILTER" message="Filtruoti radinius pagal tam tikrus žodžius ir sąlygas..."/>
        <tip id="ID_SEARCH_FILTER_REMOVE" message="Pašalinti filtrą nuo radinių."/>
@@ -2021,6 +2085,7 @@ right quote    &#147;
        <tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
        <tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Išvalyti duomenų srauto grafiką."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Sukurkite šiai bylai .torrent."/>
        <tip id="ID_TOOLS_WIZARD" message="Paleisti „Shareaza“ nuostatų vedlį..."/>
        <tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
        <tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
@@ -2207,7 +2272,7 @@ right quote    &#147;
        <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey2000 „server.met“ bylą..."/>
        <tip id="ID_DISCOVERY_SERVERMET" message="Rodyti eDonkey2000 Server.met tarnybas paslaugų radimo tarnybų lange."/>
        <tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
-       <tip id="ID_NETWORK_G1" message="Jungtis prie originalaus pradinio Gnutella tinklo."/>
+       <tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
        <tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey2000 tinklo."/>
 
        <tip id="ID_HOSTCACHE_PRIORITY" message="Mėginti jungtis prie šito serverio, prieš jungiantis prie kitų."/>
@@ -2227,6 +2292,7 @@ right quote    &#147;
        <tip id="ID_UPLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo išsiunčiamas bylas rodyti, o kurių nerodyti."/>
        <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigtos siųstis bylos(-ų) parsisiuntimą."/>
        <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą bylą(-as) iš sąrašo."/>
+	   <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
        <tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
        <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
        <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
@@ -2234,10 +2300,12 @@ right quote    &#147;
        <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio bylą..."/>
        <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio bylą..."/>
        <tip id="ID_LIBRARY_SEED_TORRENT" message="Pradėti skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
        <tip id="ID_DOWNLOADS_EDIT" message="Rodyti bylos išplėstinės taisos langą..."/>
        <tip id="ID_MEDIA_MUTE" message="Nutildyti garsą"/>
        <tip id="ID_WINDOW_REMOTE" message="Rodyti ar paslėpti „Shareaza“ nuotolinio valdymo pultelį"/>
        <tip id="ID_UPLOADS_FILTER_TORRENT" message="Rodyti BitTorrent išsiuntimus."/>
+       <tip id="ID_TOOLS_MERCORA" message="Paleisti P2P radiją"/>
        <tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
        <tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
        <tip id="ID_WINDOW_TILE_HORZ" message="Išdėstyti atvertus langus iš kairės į dešinę, neuždengiant vienas kito."/>
@@ -2278,6 +2346,8 @@ right quote    &#147;
        <string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
        <string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš www.shareaza.com."/>
        <string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
+       <string id="8062" value="Mazgo veiksena su %lu kaimynais(-u). %s vietinėje kolekcijoje."/>
+       <string id="8063" value="Prisijungta. Jūsų kolekcijoje yra %s."/>
        <string id="8064" value="Prisijungta prie %lu kaimynų(-o). %s vietinėje kolekcijoje."/>
        <string id="8065" value="Jungiamasi prie tinklo..."/>
        <string id="8066" value="Neprisijungta prie tinklo."/>
@@ -2304,6 +2374,8 @@ right quote    &#147;
        <string id="8132" value="Radinių yra, bet jie buvo nufiltruoti."/>
        <string id="8133" value="„Shareaza“ aktyviai ieško tinkle..."/>
        <string id="8134" value="Jūs mėginate pradėti naują paiešką. Ar norite išvalyti ankstesnės paieškos radinius?"/>
+       <string id="8141" value="Rodyti paieškos skydelį"/>
+       <string id="8142" value="Paslėpti paieškos skydelį"/>
        <string id="8143" value="Ieškoma..."/>
        <string id="8144" value="Ieškoti"/>
        <string id="8145" value="Ieškoti dar"/>
@@ -2372,6 +2444,13 @@ right quote    &#147;
        <string id="8313" value="Ši byla, atrodo, yra reklaminė šiukšlė."/>
        <string id="8314" value="Jūs anksčiau buvote parsisiuntę šią bylą ir ją ištrynėte."/>
        <string id="8315" value="Įtraukta į juodajį sąrašą: "/>
+       <string id="8320" value="Būklė:"/>
+       <string id="8321" value="Sparta:"/>
+       <string id="8322" value="URL adresas:"/>
+       <string id="8323" value="Vart. agentas:"/>
+       <string id="8324" value="Neaktyvus"/>
+       <string id="8325" value="Aktyvus"/>
+       <string id="8326" value="Sekantis eilėje"/>
        <string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
        <string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
        <string id="16066" value="Stabdomas „Shareaza“ tinklo branduolys..."/>
@@ -2574,6 +2653,8 @@ right quote    &#147;
        <string id="16405" value="Ar norite parsisiųsti šią bylą?\n\n„%s“\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
        <string id="16406" value="Ar norite parsisiųsti visas bylas iš šio rinkinio?\n\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."/>
        <string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
+       <string id="16408" value="Kopijuoti &amp;URI"/>
+       <string id="16409" value="Eksportuoti &amp;URIs..."/>
        <string id="16448" value="Susijungta su %s, sveikinamasi..."/>
        <string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
        <string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -2611,6 +2692,20 @@ right quote    &#147;
        <string id="16769" value="Neįmanoma išnagrinėti URL: „Shareaza“ nesupranta šio adreso."/>
        <string id="16770" value="Neįmanoma parodyti URL veiksmo dialogo lango, nes „Shareaza“ yra užimta."/>
        <string id="16771" value="Jūs jau turite bylą „%s“ savo kolekcijoje. Ar vis tiek norite ją parsisiųsti?"/>
+       <string id="16772" value="Adresatas:"/>
+       <string id="16773" value="Prievadas:"/>
+       <string id="16774" value="&amp;Jungtis"/>
+       <string id="16775" value="&amp;Naršyti"/>
+       <string id="16776" value="Pridėti"/>
+       <string id="16777" value="Vardas:"/>
+       <string id="16778" value="URL adr.:"/>
+       <string id="16779" value="Tipas:"/>
+       <string id="16780" value="Nenurodyta"/>
+       <string id="16781" value="Užklausiama..."/>
+       <string id="16782" value="Sėkmė!"/>
+       <string id="16783" value="Baigta, paspauskite „Užverti“"/>
+       <string id="16784" value="&amp;Užverti"/>
+       <string id="16785" value="(Be muzikos vaizdo)"/>
        <string id="16800" value="Jūs nenurodėte ryšio spartos. Prieš tęsdami, pasirinkite arba savo interneto susijungimo tipą, arba susijungimo spartą."/>
        <string id="16801" value="Pasirinkite interneto susijungimo tipą, prieš tęsdami toliau."/>
        <string id="16802" value="Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"/>
@@ -2620,12 +2715,12 @@ right quote    &#147;
        <string id="16806" value="Jūs nurodėte, jog norite paruošti prievado nukreipimą į savo NAT maršrutizatorių ar užkardą.\n\nSukonfigūruokite savo tinklą TCP prievado %i nukreipimui į savo vietinį kompiuterį."/>
        <string id="16807" value="Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."/>
        <string id="16808" value="Jūs nenurodėte savo amžiaus ir lyties. Ar tikrai norite tęsti be šių duomenų?"/>
+       <string id="16809" value="B&amp;aigti"/>
        <string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
        <string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
        <string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
        <string id="16867" value="Užklausa į paslaugų radimo tarnybą „%s“ nesėkminga, nepavyko %i kartų."/>
        <string id="16868" value="Nesėkmingų užklausų į paslaugų radimo tarnybą „%s“ skaičius - %i kartų, tarnyba pašalinama."/>
-
        <string id="16870" value="Siunčiamas GWebCache atnaujinimas į „%s“ tarnybą..."/>
        <string id="16871" value="Siunčiama GWebCache „%s“ atsitiktinai parinktai GWebCache..."/>
        <string id="16928" value="Užmezgamas ryšys su %s vartotojo duomenims gauti..."/>
@@ -2650,6 +2745,8 @@ right quote    &#147;
        <string id="16995" value="Byla turbūt sugadinta arba Jūs galbūt neturite reikiamo šios bylos grojimui kodeko."/>
        <string id="16996" value="Dalies šios bylos neįmanoma atlikti. Jums reikėtų parsisiųsti papildomų kodekų."/>
        <string id="16997" value="Jokia byla negrojama. Grojimui spragtelkite grotuvo bylą savo kolekcijoje."/>
+       <string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; J &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; I &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M &#160; &#160; A"/>
+       <string id="16999" value="G R O J A R A Š T I S"/>
        <string id="17024" value="Užmezgamas ryšys su %s..."/>
        <string id="17025" value="Neįmanoma užmegzti ryšio su %s."/>
        <string id="17026" value="Prašoma užmegzti raginantį (push) ryšį per užkardą su adresatu %s..."/>
@@ -2744,9 +2841,39 @@ right quote    &#147;
        <string id="18508" value="Šaltinis %s bylai „%s“ atmetamas, nes eilės numeris (%i) yra per didelis."/>
        <string id="18509" value="Negalima nustatyti, kad šios bylos parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamai bylai negali būti atlikta patikra."/>
        <string id="18510" value="Ar tikrai norite nustatyti, kad šios bylos parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrima visa byla, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
-       <string id="61440" value="Atverti"/>
-       <string id="61441" value="Išsaugoti kaip"/>
-       <string id="61442" value="Visos bylos (*.*)"/>
+       <string id="19000" value="Nuotolinė prieiga neįgalinta."/>
+       <string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
+       <string id="19002" value="Neįmanoma priimti susijungimų, URL nepasiekiamas."/>
+       <string id="20000" value="Nėra universalių šaltinių vardų."/>
+       <string id="20100" value="Jungiamasi"/>
+       <string id="20101" value="Užklausiama"/>
+       <string id="20102" value="Atsakas"/>
+       <string id="20103" value="Siunčiama"/>
+       <string id="20104" value="Dryžinė maiša"/>
+       <string id="20105" value="Maišos rinkinys"/>
+       <string id="20106" value="Meta duomenys"/>
+       <string id="20107" value="Užsiėmęs"/>
+       <string id="20108" value="Stojama eilėn"/>
+       <string id="20109" value="Eilėje"/>
+       <string id="20110" value="Nežinoma"/>
+       <string id="20111" value="Baigta"/>
+       <string id="20112" value="Skleidžiama"/>
+       <string id="20113" value="Perkeliama"/>
+       <string id="20114" value="Pristabdyta"/>
+       <string id="20115" value="Bylos klaida"/>
+       <string id="20116" value="Neįmanoma perkelti"/>
+       <string id="20117" value="Patikra"/>
+       <string id="20118" value="Aktyvus"/>
+       <string id="20119" value="Laukiama"/>
+       <string id="20120" value="Ieškoma"/>
+       <string id="20121" value="Creating"/>
+       <string id="20122" value="Torrent"/>
+       <string id="20123" value="Seklys atsijungęs"/>
+       <string id="20124" value="(Nėra šaltinių)"/>
+       <string id="20125" value="Patikrinta"/>
+       <string id="20126" value="Nepatikrinta"/>
+       <string id="20127" value="šaltinis"/>
+       <string id="20128" value="šaltiniai"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2761,7 +2888,7 @@ right quote    &#147;
 
        <dialog name="CGeneralSettingsGroup" cookie="" caption="Bendra"/>
 
-       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="Bendra">
+       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Bendra">
                <control caption="_Vartotojo sąsaja:"/>
                <control caption="Paleidus „Shareaza“, jungtis prie tinklo"/>
                <control caption="Paleisti „Shareaza“ startuojant Windows"/>
@@ -2783,14 +2910,15 @@ right quote    &#147;
                <control/>
                <control caption="Kai paspaudžiu sutraukti:"/>
                <control/>
+               <control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
        </dialog>
 
-       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBu" caption="Kolekcija">
+       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
                <control caption="Pa_rinktys:"/>
                <control caption="Prisiminti aplankų peržiūros būdą"/>
                <control caption="Stebėti kolekcijos katalogus"/>
                <control caption="Laikyti šaltinių pakaitalų tinklelį"/>
-               <control caption="Filtruoti pagal prievardžius"/>
+               <control caption="Filtruoti pagal plėtinius"/>
                <control caption="Saugoti maišos vientisumą"/>
                <control caption="Leisti peržiūrėti bendrintas bylas"/>
                <control caption="Paskutinės _bylos:"/>
@@ -2809,13 +2937,15 @@ right quote    &#147;
                <control/>
                <control caption="_Pridėti"/>
                <control caption="Š_alinti"/>
+               <control caption="_Laikyti rinkinius čia:"/>
+               <control/><control/>
        </dialog>
 
        <dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Grotuvas">
                <control caption="Pa_rinktys:"/>
                <control caption="Naudoti „Shareaza“ grotuvą žemiau pateiktų bylų tipams GROTI"/>
                <control caption="... taip pat ĮTRAUKIANT į grojaraščio eilę"/>
-               <control caption="Bylų _tipai:"/>
+               <control caption="_Bylų plėtiniai:"/>
                <control/>
                <control caption="_Pridėti"/>
                <control caption="Š_alinti"/>
@@ -2846,7 +2976,7 @@ right quote    &#147;
                <control/>
                <control caption="_Pridėti"/>
                <control caption="Š_alinti"/>
-               <control caption="Parsisiuntimų tvarkytuvė mėgins parsiųsti tik tas bylas, kurių tipai čia išvardinti. Kitų tipų bylos bus tvarkomos Jūsų naršykle. „Shareaza“ turi veikti prieš siunčiantis bylas."/>
+               <control caption="Parsisiuntimų tvarkytuvė mėgins parsiųsti tik tas bylas, kurių plėtiniai čia išvardinti. Kitų plėtinių bylos bus tvarkomos Jūsų naršykle. „Shareaza“ turi veikti prieš siunčiantis bylas."/>
        </dialog>
 
        <dialog name="CInternetSettingsGroup" caption="Internetas"/>
@@ -2946,8 +3076,8 @@ right quote    &#147;
                <control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga bylų kolekcija."/>
                <control caption="Jungtis prie eDonkey2000"/>
                <control caption="Konfigūruoti eDonkey2000"/>
-               <control caption="Pirminis originalus Gnutella tinklas:"/>
-               <control caption="Nors pirminis originalus Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+               <control caption="Pirminis Gnutella tinklas:"/>
+               <control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
                <control caption="Jungtis prie Gnutella"/>
                <control caption="Konfigūruoti Gnutella1"/>
        </dialog>
@@ -3001,6 +3131,23 @@ right quote    &#147;
                <control caption="Importuoti..."/>
                <control caption="eDonkey2000 serverių sąrašo parsisiuntimas iš interneto:"/>
                <control caption="Parsisiųsti..."/>
+       </dialog>
+
+       <dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
+               <control caption="_Laikyti torrent bylas čia:"/>
+               <control/><control/>
+               <control caption="_Atsisiuntimų susijungimai:"/>
+               <control/><control/>
+               <control caption="Klientų susijungimų"/>
+               <control caption="_Sąsaja:"/>
+               <control caption="Rodyti papildomus BitTorrent sąsajos elementus"/>
+               <control caption="_EndGame (paspartinimas):"/>
+               <control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis bylas"/>
+               <control caption="_Torrent bylų kūrimo programa"/>
+               <control caption="Seklys:"/>
+               <control/><control/><control/><control/><control/>
+               <control caption="Torrent bylų per kartą"/>
+               <control caption="_Numatytasis seklys:"/>
        </dialog>
 
        <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolai">
@@ -3144,13 +3291,13 @@ right quote    &#147;
        </dialog>
 
        <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Sveiki! Čia „Shareaza“ [6 iš 7]">
-               <control caption="„Shareaza“ - tai bendros paskirties bylų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Čia Jūs galite pasirinkti, prie kurių P2P tinklų norite jungtis, o po to - derinti kiekvieną tinklą atskirai."/>
+               <control caption="„Shareaza“ - tai bendros paskirties bylų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Pasirinkite, prie kurių P2P tinklų norite jungtis, o po to derinkite kiekvieną tinklą atskirai."/>
                <control caption="Jungtis prie Gnutella2 (Labai rekomenduojama)"/>
                <control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
                <control caption="Jungtis prie eDonkey2000"/>
                <control caption="eDonkey2000 tinklas - tai populiarus tinklas su serveriais. Nors neturi tiek galimybių kaip Gnutella2, eDonkey2000 tinkle yra įspūdinga bylų kolekcija."/>
-               <control caption="Jungtis prie pradinio originalaus Gnutella"/>
-               <control caption="Nors pirminis originalus Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
+               <control caption="Jungtis prie pirminio Gnutella"/>
+               <control caption="Nors pirminis Gnutella tinklas turi mažiau galimybių, nei Gnutella2, ir mažiau bylų, nei eDonkey2000, šis tinklas pasilieka vertingu ištekliumi."/>
        </dialog>
 
        <dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 dalinių bylų importas">
@@ -3288,7 +3435,7 @@ right quote    &#147;
                <control caption="_Parsisiųsti"/>
                <control caption="_Atšaukti"/>
                <control caption="„Shareaza“ gali parsiųsti bylas iš žiniatinklio (HTTP) ir automatiškai surasti ir parsisiųsti P2P nuorodas (Magnet, Gnutella, eDonkey2000, mP2P)."/>
-               <control caption="Jūs taip pat galite parsisiųsti BitTorrent bylas. Tai gali būti byla su .torrent prievardžiu arba HTTP nuoroda į tokią bylą. Torrent atsisiuntimui įterpkite nukopijuotą nuorodą į aukščiau esantį langelį. Jei Jūs jau turite .torrent bylą, spauskite „Atverti Torrent:“"/>
+               <control caption="Jūs taip pat galite parsisiųsti BitTorrent bylas. Tai gali būti byla su .torrent plėtiniu arba HTTP nuoroda į tokią bylą. Torrent atsisiuntimui įterpkite nukopijuotą nuorodą į aukščiau esantį langelį. Jei Jūs jau turite .torrent bylą, spauskite „Atverti Torrent:“"/>
                <control caption="Atverti _Torrent..."/>
        </dialog>
 
@@ -3355,7 +3502,7 @@ right quote    &#147;
                <control caption="Bylos savybės"/>
                <control caption="Vieta:"/>
                <control/>
-               <control caption="Tipas:"/>
+               <control caption="Plėtinys:"/>
                <control/>
                <control caption="Modifikuota:"/>
                <control/>
@@ -3657,7 +3804,7 @@ right quote    &#147;
 
        <dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Atverti Torrent bylą">
               <control/>
-              <control caption="Jūs noėjote atverti BitTorrent tinklo torrent bylą. Ar parsisiųsti jos turinį ar pradėti skleisti?"/>
+              <control caption="Jūs norėjote atverti BitTorrent tinklo torrent bylą. Ar parsisiųsti jos turinį ar pradėti skleisti?"/>
               <control caption="Siųstis"/>
               <control caption="Skleisti"/>
               <control caption="Atšaukti"/>
@@ -3719,9 +3866,9 @@ right quote    &#147;
 <listColumns>
     <list name="CLibraryWnd">
         <column from="File" to="Byla"/>
-        <column from="Type" to="Tipas"/>
+        <column from="Type" to="Plėtinys"/>
         <column from="Size" to="Dydis"/>
-        <column from="Folder" to="Katalogas"/>
+        <column from="Folder" to="Aplankas"/>
         <column from="Hits" to="Kreipinių"/>
         <column from="Uploads" to="Išsiųsta"/>
         <column from="Modified" to="Pakeista"/>
@@ -3733,6 +3880,8 @@ right quote    &#147;
         <column from="Speed" to="Sparta"/>
         <column from="Status" to="Būklė"/>
         <column from="Client" to="Klientas"/>
+        <column from="Downloaded" to="Parsisiųsta"/>
+        <column from="Complete" to="Baigta"/>
     </list>
     <list name="CUploadCtrl">
         <column from="Remote User" to="Nutolęs vartotojas"/>
@@ -3795,7 +3944,7 @@ right quote    &#147;
     </list>
     <list name="CMatchCtrl">
         <column from="File" to="Byla"/>
-        <column from="Type" to="Tipas"/>
+        <column from="Type" to="Plėtinys"/>
         <column from="Size" to="Dydis"/>
         <column from="Rating" to="Įvertinimas"/>
         <column from="Host/Count" to="Adresatas/Kiekis"/>
