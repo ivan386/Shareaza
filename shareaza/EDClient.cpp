@@ -43,6 +43,7 @@
 
 #include "ChatCore.h"
 #include "Security.h"
+#include "UploadQueues.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1055,7 +1056,8 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	pReply->Write( &m_pUpMD4, sizeof(MD4) );
 	m_bUpMD4 = TRUE;
 	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE ) )
+	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE );
+	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 	{
 		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
 		Library.Unlock();
