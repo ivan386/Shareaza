@@ -40,6 +40,7 @@ public:
 // Attributes
 public:
 	PROTOCOLID		m_nMode;
+	BOOL			m_bAllowUpdates;
 protected:
 	CCoolBarCtrl	m_wndToolBar;
 	CListCtrl		m_wndList;
@@ -50,7 +51,7 @@ protected:
 
 // Operations
 public:
-	void			Update();
+	void			Update(BOOL bForce = FALSE);
 	CHostCacheHost*	GetItem(int nItem);
 	virtual void	OnSkinChange();
 	
@@ -71,6 +72,7 @@ protected:
 	afx_msg void OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult);
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
 	afx_msg void OnUpdateHostCacheConnect(CCmdUI* pCmdUI);
 	afx_msg void OnHostCacheConnect();
 	afx_msg void OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI);
