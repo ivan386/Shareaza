@@ -423,16 +423,36 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket)
 		*pRelay++ = 0;
 		*pRelay++ = 'R'; *pRelay++ = 'E'; *pRelay++ = 'L';
 		*pRelay++ = 'A'; *pRelay++ = 'Y';
-		
+
+		CPtrArray pG2Nodes;
+	
 		for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 		{
-			CG2Neighbour* pNeighbour = (CG2Neighbour*)Neighbours.GetNext( pos );
+			CG2Neighbour* pNeighbour = (CG2Neighbour*)Neighbours.GetNext( pos );		
 			
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G2 &&
-				 pNeighbour != this )
+			if (	pNeighbour->m_nState == nrsConnected &&
+					pNeighbour->m_nProtocol == PROTOCOL_G2 &&
+					pNeighbour != this)
 			{
-				pNeighbour->Send( pPacket, FALSE );
-			}
+				pG2Nodes.Add( pNeighbour );		
+ 			}
+		}
+      
+		int nRelayTo = Settings.Gnutella2.PingRelayLimit;
+
+		int nCount = pG2Nodes.GetCount();
+
+		for ( int nCur = 0; (nCur < nCount && nCur < nRelayTo); nCur++ )
+		{
+			int nRand = rand() % pG2Nodes.GetCount();	
+
+			CG2Neighbour* pNeighbour = (CG2Neighbour*)pG2Nodes.GetAt( nRand );
+			// Remove this debug message later
+			theApp.Message( MSG_DEBUG, _T("Ping Relay iteration %i picked random index %i as %s"), 
+			nCur, nRand, (LPCTSTR)pNeighbour->m_sAddress  );
+
+			pNeighbour->Send( pPacket, FALSE );
+			pG2Nodes.RemoveAt( nRand );
 		}
 	}
 	
