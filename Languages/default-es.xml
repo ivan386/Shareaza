@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Shareaza Spanish Skin File -->
 <!-- This is the first version to introduce full unicode (UTF-8) encoding -->
-<skin xmlns="http://www.shareaza.com/scheMás/Skin.xsd" version="1.0">
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 
     <!-- Manifest -->
