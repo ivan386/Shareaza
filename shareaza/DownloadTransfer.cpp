@@ -165,8 +165,9 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		LoadString( strOf, IDS_GENERAL_OF );
 		if ( ! bLong )
 		{
-			str.Format( m_nQueueLen ? _T("Q %i %s %i") : _T("Q #%i"),
-				m_nQueuePos, strOf, m_nQueueLen );
+			LoadString( str, IDS_STATUS_Q );
+			str.Format( m_nQueueLen ? _T("%s %i %s %i") : _T("%s #%i"),
+				str, m_nQueuePos, strOf, m_nQueueLen );
 		}
 		else if ( m_sQueueName.GetLength() )
 		{

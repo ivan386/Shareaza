@@ -146,9 +146,9 @@ CString CDownloadTransferBT::GetStateText(BOOL bLong)
 	if ( m_nState == dtsTorrent )
 	{
 		CString str;
-		if ( ! m_bInterested ) str = _T("Uninterested");
-		else if ( m_bChoked ) str = _T("Choked");
-		else str = _T("Requesting");
+		if ( ! m_bInterested ) LoadString( str, IDS_STATUS_UNINTERESTED );
+		else if ( m_bChoked ) LoadString( str, IDS_STATUS_CHOKED );
+		else LoadString( str, IDS_STATUS_REQUESTING );
 		return str;
 	}
 	return CDownloadTransfer::GetStateText( bLong );

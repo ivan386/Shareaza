@@ -5204,8 +5204,6 @@ BEGIN
     IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
     IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
     IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
-    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
-    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
     IDS_DOWNLOAD_CLEAR_GROUP 
                             "Are you sure you want to cancel/abort every download in this group?"
 END
@@ -5476,6 +5474,11 @@ BEGIN
     IDS_STATUS_VERIFIED     "Verified"
     IDS_STATUS_UNVERIFIED   "Unverified"
     IDS_STATUS_SOURCE       "source"
+    IDS_STATUS_UNINTERESTED "Uninterested"
+    IDS_STATUS_CHOKED       "Choked"
+    IDS_STATUS_NEXT         "Next"
+    IDS_STATUS_Q            "Q"
+
 END
 
 STRINGTABLE 
@@ -5511,6 +5514,22 @@ BEGIN
     IDS_NEIGHBOUR_ED2K_SERVER "eDonkey2000 Server"
     IDS_NEIGHBOUR_ED2K_LOWID "eDonkey2000 (LowID)"
     IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
+    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
+    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
+    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
+    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
+    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
+    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
+    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
+    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
+    IDS_UPLOAD_QUEUE_NEW    "New Queue"
+    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
+    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
 END
 
 #endif    // English (Australia) resources
