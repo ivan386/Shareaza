@@ -218,10 +218,10 @@ Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
-Type: files; Name: "{userdesktop}\Shareaza.lnk"
+Type: files; Name: "{userdesktop}\Shareaza.lnk"; Tasks: not desktopicon
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
 Type: filesandordirs; Name: "{userprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"
-Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza.lnk"
+Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza.lnk"; Tasks: not quicklaunch
 
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Remote"
