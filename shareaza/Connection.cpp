@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/02/25 09:06:38 $"
-//	Revision:		"$Revision: 1.13 $"
+//	Date:			"$Date: 2005/03/03 10:55:02 $"
+//	Revision:		"$Revision: 1.14 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -913,9 +913,6 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	// If the input character pointer points to null or points to the null terminator, just return the blank output string
 	if ( pszInputT == NULL || *pszInputT == 0 ) return strOutput;
 
-// If we are compiling this project in Unicode, include these lines of code in the program
-#ifdef _UNICODE
-
 	// Map the wide character string to a new character set
 	int nUTF8 = WideCharToMultiByte(
 		CP_UTF8,	// Translate using UTF-8, the default encoding for Unicode
@@ -939,15 +936,6 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	// Set the null terminator in pszUTF8 to right where you think it should be, and point a new character pointer at it
 	pszUTF8[ nUTF8 - 1 ] = 0;
 	LPCSTR pszInput = pszUTF8;
-
-// If we are not compiling in Unicode, include these lines instead
-#else
-
-	// We can just point the new character pointer at the text this method was given
-	LPCSTR pszInput = pszInputT;
-
-// Go back to compiling all the lines
-#endif
 
 	// Get the character buffer inside the output string, specifying how much larger to make it
 	LPTSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) * 3 + 1 ); // Times 3 in case every character gets encoded
@@ -975,14 +963,9 @@ CString CConnection::URLEncode(LPCTSTR pszInputT)
 	*pszOutput = 0;
 	strOutput.ReleaseBuffer(); // This closes the string so Windows can again start managing its memory for us
 
-// If we are compiling this project in Unicode, include these lines of code in the program
-#ifdef _UNICODE
-
 	// Free the memory we allocated with the new keyword above
 	delete [] pszUTF8;
 
-// Go back to compiling all the lines
-#endif
 
 	// Return the URL-encoded, %20-filled text
 	return strOutput;
@@ -1016,16 +999,11 @@ CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 	CString strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 	
-#ifdef _UNICODE
 	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
 	LPSTR pszBytes = new CHAR[ _tcslen( pszInput ) + 1 ];
 
 	// Point the output string pointer at this array
 	LPSTR pszOutput = pszBytes;
-#else
-	// Open the output string for direct editing, making sure its buffer will be long enough to hold the input string
-	LPSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) );
-#endif
 	
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
@@ -1064,8 +1042,6 @@ CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 	// Cap off the output text with a null terminator
 	*pszOutput = 0;
 
-
-#ifdef _UNICODE
 	// Copy the text from pszBytes into strOutput, converting it into Unicode
 	int nLength = MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, NULL, 0 );
 	MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, strOutput.GetBuffer( nLength ), nLength );
@@ -1075,10 +1051,6 @@ CString CConnection::URLDecodeANSI(LPCTSTR pszInput)
 
 	// Free the memory we allocated above
 	delete [] pszBytes;
-#else
-	// Close the output string, we are done editing its buffer directly
-	strOutput.ReleaseBuffer();
-#endif
 
 	// Return the output string
 	return strOutput;
@@ -1093,16 +1065,11 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 	CString strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 	
-#ifdef _UNICODE
 	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
 	LPTSTR pszBytes = new TCHAR[ _tcslen( pszInput ) + 1 ];
 
 	// Point the output string pointer at this array
 	LPTSTR pszOutput = pszBytes;
-#else
-	// Open the output string for direct editing, making sure its buffer will be long enough to hold the input string
-	LPTSTR pszOutput = strOutput.GetBuffer( strlen( pszInput ) );
-#endif
 	
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
