@@ -381,9 +381,9 @@ void CDiscoveryServices::AddDefaults()
 		}
 		catch ( CException* pException )
 		{
+			pFile.Close();
 			pException->Delete();
 		}
-		pFile.Close();
 	}
 	else                //If file can't be used, drop back to the the in-built list
 	{
