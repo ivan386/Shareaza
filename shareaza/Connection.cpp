@@ -464,7 +464,7 @@ BOOL CConnection::OnWrite()
 void CConnection::Measure()
 {
 	DWORD tCutoff		= GetTickCount() - METER_PERIOD;
-	DWORD* pInHistory	= m_mInput.pHistory;
+/*	DWORD* pInHistory	= m_mInput.pHistory;
 	DWORD* pInTime		= m_mInput.pTimes;
 	DWORD* pOutHistory	= m_mOutput.pHistory;
 	DWORD* pOutTime		= m_mOutput.pTimes;
@@ -480,7 +480,31 @@ void CConnection::Measure()
 	}
 	
 	m_mInput.nMeasure	= nInput * 1000 / METER_PERIOD;
-	m_mOutput.nMeasure	= nOutput * 1000 / METER_PERIOD;
+	m_mOutput.nMeasure	= nOutput * 1000 / METER_PERIOD;*/
+	__asm
+	{
+		mov		ebx, this
+		mov		edx, tCutoff
+		xor		eax, eax
+		xor		esi, esi
+		mov		ecx, -METER_LENGTH
+_loop:	cmp		edx, [ebx + CConnection::m_mInput.pTimes+ecx*4+(METER_LENGTH-1)*4]
+		jnbe	_ignoreIn
+		add		eax, [ebx + CConnection::m_mInput.pHistory+ecx*4+(METER_LENGTH-1)*4]
+_ignoreIn:cmp	edx, [ebx + CConnection::m_mOutput.pTimes+ecx*4+(METER_LENGTH-1)*4]
+		jnbe	_ignoreOut
+		add		esi, [ebx + CConnection::m_mOutput.pHistory+ecx*4+(METER_LENGTH-1)*4]
+_ignoreOut:inc	ecx
+		jnz		_loop
+		xor		edx, edx
+		mov		ecx, METER_PERIOD / 1000
+		div		ecx
+		mov		[ebx + CConnection::m_mInput.nMeasure], eax
+		xor		edx, edx
+		mov		eax, esi
+		div		ecx
+		mov		[ebx + CConnection::m_mOutput.nMeasure], eax
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
