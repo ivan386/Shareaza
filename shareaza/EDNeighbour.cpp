@@ -165,6 +165,12 @@ BOOL CEDNeighbour::OnRun()
 
 BOOL CEDNeighbour::OnConnected()
 {
+	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
+							( ( theApp.m_nVersion[1] & 0x7F ) << 17 ) | 
+							( ( theApp.m_nVersion[2] & 0x7F ) << 10 ) |
+							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
+							( ( theApp.m_nVersion[3] & 0x7F )       ) );
+
 	theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );
 	
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_LOGINREQUEST );
@@ -176,23 +182,26 @@ BOOL CEDNeighbour::OnConnected()
 	
 	pPacket->WriteLongLE( m_nClientID );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
-	pPacket->WriteLongLE( 4 );
+
+	pPacket->WriteLongLE( 5 );	// Number of tags
 	
+	// Tags sent to the server
+
+	// User name
 	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
+	// Version ('ed2k version')
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
+	// Port
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
-
-//Strange- if ED2K_SERVER_TCP_NEWTAGS is included, you get no search results?
-CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
-
-
-/*
+	// Software Version ('eMule Version').	
+	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
+	// Flags indicating capability
 #ifdef _UNICODE
-	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
 #else
-	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS ).Write( pPacket );
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_SMALLTAGS ).Write( pPacket );
 #endif
-	*/
+
 	m_nState = nrsHandshake1;
 	Send( pPacket );
 	
@@ -278,12 +287,6 @@ BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 		return OnFoundSources( pPacket );
 	default:
 		{
-
-			Beep(500, 500);
-
-			if (pPacket->m_nType == ED2K_PROTOCOL_PACKED)
-				Beep(800, 800);
-
 		pPacket->Debug( _T("Unknown") );
 		break;
 		}
@@ -685,8 +688,7 @@ void CEDNeighbour::SendSharedFiles()
 									double nMins;
 									//Read in the no. seconds
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3f"), &nMins );
-
-									nLength = (DWORD)( nMins * 60 );	//Convert to seconds
+									nLength = (DWORD)( nMins * (double)60 );	//Convert to seconds
 									if ( nLength ) nTags ++;
 								}
 							}
