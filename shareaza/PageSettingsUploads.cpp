@@ -179,13 +179,15 @@ void CUploadsSettingsPage::UpdateQueues()
 
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
 
+		// If this queue is for ed2k only and we have to be connected to upload
 		if ( ( ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 ) && ( Settings.Connection.RequireForTransfers ) )
-		{
+		{	// Then the queue is inactive if we haven't got ed2k enabled
 			bDonkeyOnlyDisabled = !( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday );
 		}
 
+		// If the queue is inactive and we're in basic GUI mode
 		if( ( bDonkeyOnlyDisabled ) && (Settings.General.GUIMode == GUI_BASIC) )
-			continue;
+			continue;	// Skip drawing this queue
 
 		CLiveItem* pItem = pQueues.Add( pQueue );
 		

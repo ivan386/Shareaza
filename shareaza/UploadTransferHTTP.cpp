@@ -658,16 +658,15 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		if ( ( nPosition = UploadQueues.GetPosition( this, TRUE ) ) >= 0 )
 		{
 			ASSERT( m_pQueue != NULL );
-			//ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) );
 
-			//***Tempt debug check- the assertion was failing...
+			// If the queue can't accept this file
 			if( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) )
-			{
-				AfxMessageBox(m_sFileName, MB_OK);
-				AfxMessageBox(m_sAddress, MB_OK);
-				ASSERT( FALSE );
+			{	// This is probably a partial that has completed
+				theApp.Message( MSG_DEFAULT, _T("File queue error- Partial may have recently completed") );
+
+				// Might as well allow the upload... so don't do anything.
+				//ASSERT( FALSE );
 			}
-			//***
 
 			
 			if ( nPosition == 0 )
