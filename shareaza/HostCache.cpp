@@ -926,7 +926,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, DWORD(60) );
+		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, DWORD(90) );
 	}
 	
 	return FALSE;

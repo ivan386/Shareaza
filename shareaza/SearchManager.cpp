@@ -104,7 +104,7 @@ CManagedSearch* CSearchManager::Find(GGUID* pGUID)
 void CSearchManager::OnRun()
 {
 	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastTick < Settings.Gnutella2.QueryGlobalThrottle ) return;
+	if ( tNow - m_tLastTick < max( Settings.Gnutella2.QueryGlobalThrottle, DWORD(125) ) ) return;
 	m_tLastTick = tNow;
 
 	if ( ! Network.IsWellConnected() ) return;
