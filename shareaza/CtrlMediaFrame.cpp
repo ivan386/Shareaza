@@ -303,9 +303,9 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		oMonitor.cbSize = sizeof(oMonitor);
 		GetMonitorInfo( MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
 		
-		SetWindowPos( &wndTopMost, oMonitor.rcWork.left, oMonitor.rcWork.top,
-			oMonitor.rcWork.right - oMonitor.rcWork.left,
-			oMonitor.rcWork.bottom - oMonitor.rcWork.top, SWP_FRAMECHANGED|SWP_SHOWWINDOW );
+		SetWindowPos( &wndTopMost, oMonitor.rcMonitor.left, oMonitor.rcMonitor.top,
+			oMonitor.rcMonitor.right - oMonitor.rcMonitor.left,
+			oMonitor.rcMonitor.bottom - oMonitor.rcMonitor.top, SWP_FRAMECHANGED|SWP_SHOWWINDOW );
 		
 		SetTimer( 2, 50, NULL );
 	}
