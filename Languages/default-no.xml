@@ -16,7 +16,7 @@
 		description="Shareaza Default Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.18"
+		version="2.1.0.21"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -3199,30 +3199,30 @@
 		<control caption="Gnutella1 innstillinger"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2-nettverket (anbefalt):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2-nettverket:"/>
+		<control caption="(G2 anbefalt)"/>
 		<control caption="Koble til Gnutella2 i dag"/>
+		<control caption="Modus:"/>
+		<control caption="Optimal|Leaf|Hub"/>
+		<control caption="G_2-tilkoblinger:"/>
+		<control caption="Leaf til Hub:"/>
+		<control/><control/>
+		<control caption="Hub til Leaf:"/>
+		<control/><control/>
+		<control caption="Hub til Hub:"/>
+		<control/><control/>
 		<control caption="Gnutella1-nettverket:"/>
-		<control caption="Koble til Gnutella1 i dag"/>
 		<control caption="Koble alltid til Gnutella1"/>
-		<control caption="_Hubvalg:"/>
-		<control caption="La denne noden bli en Hub"/>
-		<control caption="Gjør denne noden til en Hub"/>
-		<control caption="La denne noden bli et Leaf"/>
-		<control caption="Godta bare Hub-koblinger"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Leaf til Hub:"/>
+		<control caption="Koble til Gnutella1 i dag"/>
+		<control caption="Modus:"/>
+		<control caption="Optimal|Leaf|Ultrapeer"/>
+		<control caption="G_1-tilkoblinger:"/>
+		<control caption="Leaf til Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Hub til Leaf:"/>
+		<control caption="Ultrapeer til Leaf:"/>
 		<control/><control/>
-		<control caption="Hub til Hub:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Leaf til Hub:"/>
-		<control/><control/>
-		<control caption="Hub til Leaf:"/>
-		<control/><control/>
-		<control caption="Hub til Hub:"/>
+		<control caption="Peer til Peer:"/>
 		<control/><control/>
 		<control caption="_Linkkompressjon:"/>
 		<control caption="Hub til Leaf"/>
@@ -3250,21 +3250,23 @@
 		<control caption="Last ned..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="Lagre Torrenter her:"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+		<control caption="Grensesnitt:"/>
+		<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
+		<control caption="Nedlastingskoblinger:"/>
 		<control/><control/>
-		<control caption="_Last ned koblinger:"/>
+		<control caption="_Lag Torrent"/>
 		<control/><control/>
 		<control caption="Klienttilkoblinger"/>
-		<control caption="Grensesnitt:"/>
-		<control caption="Vis flere BitTorrent grensesnitts elementer"/>
 		<control caption="_EndGame:"/>
 		<control caption="Skru på EndGame modus ved komplette torrenter"/>
-		<control caption="_Lag Torrent"/>
-		<control caption="Tracker:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="Samtidige torrenter"/>
+		<control caption="Lagre Torrenter her:"/>
+		<control/><control/>
+		<control caption="Program for å lage torrenter"/>
+		<control/><control/>
 		<control caption="_Standard Tracker:"/>
+		<control caption="Tracker:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoller">
@@ -4080,6 +4082,18 @@
 		<column from="Bandwidth" to="Båndbredde"/>
 		<column from="Transfers" to="Overføring"/>
 		<column from="Order" to="Rekkefølge"/>
+	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to="Innstilling"/>
+		<column from="Value" to="Verdi"/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to="Navn"/>
+		<column from="URL" to=""/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to=""/>
+		<column from="Expires" to="Utløper"/>
 	</list>
 </listColumns>
 </skin>

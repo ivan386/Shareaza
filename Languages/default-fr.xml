@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.18"
+		version="2.1.0.21"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -1752,7 +1752,7 @@ Other:
 		<gap size="4"/>
 		<text>Capacité des envois, mise en queue, bannissement, timeouts et requêtes spéciales.</text>
 		<newline gap="10"/>
-		
+
 		<link target="raza:page:CRemoteSettingsPage" format="b">Accès à distance:</link>
 		<gap size="4"/>
 		<text>Configurer le contrôle à distance de Shareaza à partir d'un navigateur web.</text>
@@ -1957,7 +1957,7 @@ Other:
 		<text>Vous devriez essayer de garder une quantité raisonnable d'espace disque libre.
 		Les programmes peuvent devenir instables si les disques deviennent pleins, et les fichiers temporaires peuvent ête perdus. Vous devriez éxecuter un nettoyage du disque-dur, effacer des fichiers inutiles, ou désinstaller des programmes dont vous n'avez plus l'utilité.</text>
 	</document>
-  
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 détecté</text>
 		<newline gap="8"/>
@@ -2377,8 +2377,8 @@ Other:
 	<string id="8132" value="Quelques résultats sont disponibles, mais ils ont été filtrés."/>
 	<string id="8133" value="Shareaza recherche activement le réseau..."/>
 	<string id="8134" value="Vous êtes sur le point de commencer une nouvelle recherche.  Voulez-vous nettoyer les résultats de votre précédente recherche?"/>
-    <string id="8135" value="Pas de métadonnée"/> 
-    <string id="8136" value="Recherche texte plat"/> 
+    <string id="8135" value="Pas de métadonnée"/>
+    <string id="8136" value="Recherche texte plein"/>
 	<string id="8141" value="Afficher le panneau de recharche"/>
 	<string id="8142" value="Masquer le panneau de recherche"/>
 	<string id="8143" value="Recherche..."/>
@@ -2641,16 +2641,16 @@ Other:
 	<string id="16363" value="Envois torrent"/>
 	<string id="16364" value="Envois complétés"/>
 	<string id="16365" value="Êtes-vous certain de vouloir annuler tous les téléchargements dans ce groupe?"/>
-	<string id="16366" value="Queue"/> 
-    <string id="16367" value="eDonkey Core"/> 
-    <string id="16368" value="eDonkey Partiels"/> 
-    <string id="16369" value="eDonkey Garde"/> 
-    <string id="16370" value="Fichiers petits"/> 
-    <string id="16371" value="Fichiers moyens"/> 
-    <string id="16372" value="Fichiers larges"/> 
-    <string id="16373" value="Fichiers partiels"/> 
-    <string id="16374" value="Nouvelle queue"/> 
-    <string id="16375" value="Partiel"/> 
+	<string id="16366" value="Queue"/>
+    <string id="16367" value="eDonkey Core"/>
+    <string id="16368" value="eDonkey Partiels"/>
+    <string id="16369" value="eDonkey Garde"/>
+    <string id="16370" value="Fichiers petits"/>
+    <string id="16371" value="Fichiers moyens"/>
+    <string id="16372" value="Fichiers larges"/>
+    <string id="16373" value="Fichiers partiels"/>
+    <string id="16374" value="Nouvelle queue"/>
+    <string id="16375" value="Partiel"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnêes de %i fichiers, voulez-vous continuer?"/>
 	<string id="16386" value="Edition des métadonnêes de %i fichiers."/>
@@ -2738,8 +2738,8 @@ Other:
 	<string id="16807" value="Merci de taper la limite de bande passante que vous voulez appliquer sous la forme &quot;123 kb/s&quot; pour kilobits par seconde, ou &quot;123 KB/s&quot; pour kilobytes par seconde."/>
 	<string id="16808" value="Vous n'avez pas sélectionné votre genre ou votre âge.  Êtes-vous certain de vouloir continuer sans le faire?"/>
 	<string id="16809" value="&amp;Quitter"/>
-	<string id="16810" value="ans"/> 
-    <string id="16811" value="Automatique"/> 
+	<string id="16810" value="ans"/>
+    <string id="16811" value="Automatique"/>
 	<string id="16864" value="Interroge l'hôte du service Discovery..."/>
 	<string id="16865" value="Interroge le service Discovery &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
@@ -2934,10 +2934,10 @@ Other:
 	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
 	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
 	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
-    <string id="20133" value="Non intéressé"/> 
-    <string id="20134" value="Obstrué"/> 
-    <string id="20135" value="Suivant"/> 
-    <string id="20136" value="Q"/> 
+    <string id="20133" value="Non intéressé"/>
+    <string id="20134" value="Obstrué"/>
+    <string id="20135" value="Suivant"/>
+    <string id="20136" value="Q"/>
 	<string id="20200" value="Dimanche"/>
 	<string id="20201" value="Lundi"/>
 	<string id="20202" value="Mardi"/>
@@ -3176,30 +3176,30 @@ Other:
 		<control caption="Configurer Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Réseau Gnutella2 (recommandé):"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Réseau Gnutella2:"/>
+		<control caption="(G2 recommandé)"/>
 		<control caption="Se connecter à Gnutella2 aujourd'hui"/>
+		<control caption="Mode:"/>
+        <control caption="Optimal|Leaf|Hub"/>
+        <control caption="Connexions G_2:"/>
+		<control caption="Leaf à Hub:"/>
+		<control/><control/>
+		<control caption="Hub à Leaf:"/>
+		<control/><control/>
+		<control caption="Hub à Hub:"/>
+		<control/><control/>
 		<control caption="Réseau Gnutella1:"/>
-		<control caption="Connexion à Gnutella1 aujourd'hui"/>
 		<control caption="Toujours se connecter à Gnutella1"/>
-		<control caption="Élection du _Hub:"/>
-		<control caption="Autoriser à devenir un Hub"/>
-		<control caption="Forcer à être un Hub"/>
-		<control caption="Autoriser à devenir un Leaf"/>
-		<control caption="Connexions uniq. aux Hubs"/>
-		<control caption="Gnutella-G_2:"/>
-		<control caption="Leaf à Hub:"/>
+		<control caption="Connexion à Gnutella1 aujourd'hui"/>
+		<control caption="Mode:"/>
+        <control caption="Optimal|Leaf|Ultrapeer"/>
+        <control caption="Connexions G_1:"/>
+		<control caption="Leaf à Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Hub à Leaf:"/>
+		<control caption="Ultrapeer à Leaf:"/>
 		<control/><control/>
-		<control caption="Hub à Hub:"/>
-		<control/><control/>
-		<control caption="Gnutella-G_1:"/>
-		<control caption="Leaf à Hub:"/>
-		<control/><control/>
-		<control caption="Hub à Leaf:"/>
-		<control/><control/>
-		<control caption="Hub à Hub:"/>
+		<control caption="Peer à Peer:"/>
 		<control/><control/>
 		<control caption="Compression de _lien:"/>
 		<control caption="Hub à Leaf"/>
@@ -3227,21 +3227,23 @@ Other:
 		<control caption="Télécharger..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="_Stocker les Torrents ici:"/>
-		<control/><control/>
-		<control caption="_Connexions de téléchargement:"/>
-		<control/><control/>
-		<control caption="Connexions de client"/>
-		<control caption="_Interface:"/>
-		<control caption="Afficher les éléments d'interface BitTorrent additionnels"/>
-		<control caption="_EndGame:"/>
-		<control caption="Activer le mode Endgame lors de la complétion des torrents"/>
-		<control caption="Créateur de _torrent"/>
-		<control caption="Tracker:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="Torrents à la fois"/>
-		<control caption="Tracker par _défaut:"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+	    <control caption="_Interface:"/>
+        <control caption="Afficher les éléments d'interface BitTorrent additionnels"/>
+        <control caption="Connexions de _Téléchargement:"/>
+        <control/><control/>
+        <control caption="Torrents à la fois"/>
+        <control/><control/>
+        <control caption="Connexions de client"/>
+        <control caption="_EndGame:"/>
+        <control caption="Activer le mode Endgame lors de la complétion des torrents"/>
+        <control caption="_Stocker les Torrents ici:"/>
+        <control/><control/>
+        <control caption="Créateur de _torrent"/>
+        <control/><control/>
+        <control caption="Tracker par _défaut:"/>
+        <control caption="Tracker:"/>
+        <control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocoles">
@@ -3345,9 +3347,9 @@ Other:
 		<control caption="Pour des performances optimales, Shareaza doit en connaitre un peu plus sur votre connexion à internet."/>
 		<control caption="&#160;( merci de sélectionner )| J'utilise Internet depuis ma maison| J'utilise Internet depuis la LAN d'une université| J'utilise Internet depuis la LAN d'un bureau| J'utilise Internet depuis un hôtel ou un aéroport"/>
 		<control caption="Votre réseau est-il protégé par un firewall (pare-feu) ou un routeur NAT ?"/>
-		<control caption="&#160;Non, Je PEUX accepter toutes les connexions entrantes| Oui, donc je ne PEUX PAS accepter de connexions entrantes depuis Internet| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall (pare-feu)"/>
+		<control caption="&#160;Non, Je PEUX accepter toutes les connexions entrantes| Oui, donc je ne PEUX PAS accepter les connexions entrantes| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall"/>
 		<control caption="Votre connexion personnelle est-elle protégée par un firewall (pare-feu) ou un routeur NAT ?"/>
-		<control caption="&#160;Non, j'ai un ACCES COMPLET à Internet| Oui, mais je vais configurer le port de Shareaza| Oui, donc je ne PEUX PAS accepter de connexions entrantes depuis Internet| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall (pare-feu)"/>
+		<control caption="&#160;Non, j'ai un ACCES COMPLET à Internet| Oui, mais je vais configurer le port de Shareaza| Oui, donc je ne PEUX PAS accepter de connexions entrantes| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon firewall"/>
 		<control caption="Si vous connaissez la vitesse de votre connexion Internet, sélectionnez la meilleure option ci-dessous:"/>
 		<control caption="| Modem Dial up| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Modem Cable/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="OU, choisissez:"/>
@@ -3379,8 +3381,8 @@ Other:
 		<control caption="J'utilise le nom:"/>
 		<control/>
 		<control caption="et Je suis:"/>
-		<control caption="&#160;(choisir)"/> 
-        <control caption="&#160;(choisir)| un garçon| une fille| un homme| une femme"/> 
+		<control caption="&#160;(choisir)"/>
+        <control caption="&#160;(choisir)| un garçon| une fille| un homme| une femme"/>
 		<control caption="résidant:"/>
 		<control/><control/>
 	</dialog>
@@ -3717,7 +3719,7 @@ Other:
 		<control caption="Action:"/>
 		<control caption="Aucune|Accepter|Refuser"/>
 		<control caption="Expire:"/>
-		<control caption="Jamais (Indéfini)|A la fin de la session|Après:"/> 
+		<control caption="Jamais (Indéfini)|A la fin de la session|Après:"/>
         <control/>
 		<control caption="d"/>
 		<control/>
@@ -3742,7 +3744,7 @@ Other:
 		<control/>
 		<control caption="Vous pouvez copier une URI de cet objet dans différents formats. Veuillez choisir le format à utiliser en cliquant sur une des URIs ci-dessous:"/>
 		<control/><control/><control/>
-		<control caption="_M'inclure comme source fixé dans l'URI"/>
+		<control caption="_M'inclure comme source fixe dans l'URI"/>
 		<control caption="Annuler"/>
 	</dialog>
 
@@ -3942,8 +3944,8 @@ Other:
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Sélectionner la visualisation">
 		<control/>
 		<control caption="Sélectionner une visualisation audio dans la liste:"/>
-		<control/> 
-        <control caption="Affichage en bas|Affichage taille complète|Affichage large|Affichage moyen|Affichage petit"/> 
+		<control/>
+        <control caption="Affichage en bas|Affichage taille complète|Affichage large|Affichage moyen|Affichage petit"/>
 		<control caption="Configurer..."/>
 		<control caption="OK"/>
 		<control caption="Annuler"/>
@@ -4058,6 +4060,18 @@ Other:
 		<column from="Bandwidth" to="Bande passante"/>
 		<column from="Transfers" to="Transferts"/>
 		<column from="Order" to="Ordre"/>
+	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to="Réglage"/>
+		<column from="Value" to="Valeur"/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to="Nom"/>
+		<column from="URL" to=""/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to=""/>
+		<column from="Expires" to=""/>
 	</list>
 </listColumns>
 </skin>
