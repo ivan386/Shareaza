@@ -722,7 +722,6 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	m_nIndex	= pPacket->ReadLongLE();
 	m_bSize		= TRUE;
 	m_nSize		= pPacket->ReadLongLE();
-	strData		= pPacket->ReadString();
 
 	if ( Settings.Gnutella1.QueryHitUTF8 ) //Support UTF-8 Query
 	{
@@ -732,6 +731,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	{
 		m_sName	= pPacket->ReadString();
 	}
+
+	strData		= pPacket->ReadString();
 	
 	if ( m_sName.GetLength() > 160 )
 	{
