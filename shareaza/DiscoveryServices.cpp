@@ -232,6 +232,7 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 		{
 			// It's a new service, but we don't want more. We should delete it.
 			delete pService;
+			theApp.Message( MSG_DEBUG, _T("Maximum discovery service count reached- %s not added"), pService->m_sAddress );
 			return NULL;
 		}
 		else
@@ -518,9 +519,10 @@ BOOL CDiscoveryServices::Update()
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute
 
-// Called when trying to connect to a network. Makes sure you have hosts available to connect to.
-// Be very careful not to be agressive here. Should never query server.met files, because of the
-// load it could create.
+// This is called when trying to connect to a network, and at intervals while connected. 
+// Makes sure you have hosts available to connect to. Be very careful not to be agressive here. 
+// You should never query server.met files, because of the load it would create.
+// This is public, and will be called quite regularly.
 
 BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 {
@@ -557,7 +559,7 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 		else if ( Settings.eDonkey.EnableToday && HostCache.eDonkey.CountHosts() < 1 )
 		{
 			// Auto querying a server.met is probably a bad idea- they can be very large and
-			// there are only a limited number. Best to do it only manually...
+			// there are only a limited number of them. Best to do it only manually...
 			//if ( RequestRandomService( PROTOCOL_ED2K ) ) nCount++;
 		}
 		*/
@@ -579,10 +581,12 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute eDonkey2000
 
+// This is called when setting up/installing the program.
+// Warning: This function will query all known MET files until a working one is found.
+// Be very careful where this is called! (Quickstart Wizard *only*)
+// This is public, and should be called once per install.
 BOOL CDiscoveryServices::ExecuteDonkey()
 {
-	// Warning: This function will query all known MET files until a working one is found.
-	// Be very careful where this is called! (Quickstart Wizard only))
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
@@ -653,9 +657,6 @@ void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* pAddress)
 
 int CDiscoveryServices::ExecuteWebCache()
 {
-//********** Debug stuff- remove
-theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::ExecuteWebCache") );
-//********
 	PROTOCOLID nProtocol = PROTOCOL_NULL;
 	// Select the network protocol we want to request hosts from
 	if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )	// G1 + G2 are active
@@ -691,15 +692,8 @@ theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::ExecuteWebCache") );
 
 BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 {
-
-
-//********** Debug stuff- remove
-if ( nProtocol == PROTOCOL_G2 ) theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService (G2)") );
-else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestRandomService") );
-//********
-
-	CSingleLock pLock( &Network.m_pSection );	// Note: This shouldn't be necessary, since the
-	if ( ! pLock.Lock( 250 ) ) return FALSE;	// calling functions should lock...
+	//CSingleLock pLock( &Network.m_pSection );	// Note: This shouldn't be necessary, since the
+	//if ( ! pLock.Lock( 250 ) ) return FALSE;	// calling functions should lock...
 
 	CDiscoveryService* pService = GetRandomService( nProtocol );
 		
@@ -782,11 +776,6 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 	CPtrArray pWebCaches;
 	DWORD tNow = time( NULL );
 
-//********** Debug stuff- remove
-if ( nProtocol == PROTOCOL_G2 ) theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::GetRandomWebCache (G2)") );
-else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::GetRandomWebCache") );
-//********
-	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDiscoveryService* pService = GetNext( pos );
@@ -838,13 +827,6 @@ else theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::GetRandomWebCache") );
 
 BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode)
 {
-
-//********** Debug stuff- remove
-theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RequestWebCache ") );
-if ( m_nLastQueryProtocol == PROTOCOL_G2 )
-theApp.Message( MSG_SYSTEM, _T("(m_nLastQueryProtocol = G2) ") );
-//********
-
 	StopWebRequest();
 	
 	if ( pService != NULL )
@@ -985,13 +967,6 @@ void CDiscoveryServices::OnRun()
 
 BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 {
-
-//********** Debug stuff- remove
-theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RunWebCacheGet ") );
-if ( m_nLastQueryProtocol == PROTOCOL_G2 )
-theApp.Message( MSG_SYSTEM, _T("(m_nLastQueryProtocol = G2) ") );
-//********
-
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	CString strURL, strOutput;
 	
@@ -1145,13 +1120,6 @@ theApp.Message( MSG_SYSTEM, _T("(m_nLastQueryProtocol = G2) ") );
 
 BOOL CDiscoveryServices::RunWebCacheUpdate()
 {
-
-//********** Debug stuff- remove
-theApp.Message( MSG_SYSTEM, _T("CDiscoveryServices::RunWebCacheUpdate ") );
-if ( m_nLastUpdateProtocol == PROTOCOL_G2 )
-theApp.Message( MSG_SYSTEM, _T("(m_nLastUpdateProtocol = G2) ") );
-//********
-
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	CString strURL, strOutput;
 
