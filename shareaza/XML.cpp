@@ -279,7 +279,7 @@ void CXMLNode::Serialize(CArchive& ar)
 void CXMLNode::UniformString(CString& str)
 {
 	// non-alphanumeric characters which will not be ignored
-	static LPCTSTR pszOK = _T("'-&/,;#");
+	static LPCTSTR pszOK = _T("'-&/,;#()");
 
 	str.TrimLeft();
 	str.TrimRight();
