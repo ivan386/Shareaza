@@ -2547,7 +2547,7 @@ Other:
 	<string id="16288" value="Questionne pour plus de sources pour le téléchargement &quot;%s&quot; sur %i connections(s)..."/>
 	<string id="16289" value="Envoie une requête &quot;push&quot; pour le téléchargement &quot;%s&quot;..."/>
 	<string id="16290" value="L'hôte de téléchargement %s a répondu avec un fragment différent mais utile (%lu-%lu) de &quot;%s&quot;."/>
-	<string id="16291" value="Déplacé vers &quot;%s&quot;."/>
+	<string id="16291" value="Déplacé &quot;%s&quot; vers &quot;%s&quot;, téléchargement complété."/>
 	<string id="16292" value="Ne peut déplacer le téléchargement vers &quot;%s&quot;.  Vérifiez que ce fichier n'est pas utilisé et que votre dossier de téléchargement existe et est écrivable."/>
 	<string id="16293" value="Résolution de &quot;%s&quot; pour le téléchargement de &quot;%s&quot;..."/>
 	<string id="16294" value="Impossible de résoudre &quot;%s&quot;."/>
@@ -2866,11 +2866,7 @@ Other:
 <string id="20125" value="Vérifié"/>
 <string id="20126" value="Non vérifié"/>
 <string id="20127" value="source"/>
-<string id="20128" value="sources"/> <!-- numbers 21, 31, ... -->
-<string id="20129" value="sources"/> <!-- tens -->
-<string id="20130" value="sources"/> <!-- from 11 to 19 -->
-<string id="20131" value="sources"/> <!-- from 2 to 4 -->
-<string id="20132" value="sources"/> <!-- from 5 to 9 -->
+<string id="20128" value="sources"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
