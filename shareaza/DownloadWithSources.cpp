@@ -248,7 +248,8 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	
 	if ( m_pFailedSources.Find( pszURL ) != NULL ) return FALSE;
 	
-	if ( m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
+	if ( m_oSHA1.IsValid () && pURL.m_oSHA1.IsValid () &&
+		m_oSHA1 != pURL.m_oSHA1 ) return FALSE;
 	
 	if ( m_sRemoteName.IsEmpty() && _tcslen( pszURL ) > 9 )
 	{
