@@ -413,9 +413,9 @@ BOOL CBTClient::OnHandshake2()
 	{
 		ASSERT( m_pDownloadTransfer == NULL );
 		
-		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
-		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
 		
+		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
+		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
 		if ( m_pDownloadTransfer == NULL )
 		{
 			m_pDownload = NULL;
@@ -528,11 +528,11 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[2] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[6] == '-' )
 	{	//BitTorrent
-		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1], m_pGUID.b[3], m_pGUID.b[5]);
+		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
 	{	//BitComet
-		m_sUserAgent.Format( _T("BitComet %i"), m_pGUID.b[5]);
+		m_sUserAgent.Format( _T("BitComet %i"), m_pGUID.b[5] - '0' );
 	}
 	else
 	{	//Unknown peer ID string
