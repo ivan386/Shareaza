@@ -47,42 +47,52 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define Z_TIMER		200
-
+// Set Z_TIMER to 1/5th of a second
+#define Z_TIMER 200
 
 //////////////////////////////////////////////////////////////////////
 // CNeighbour construction
 
+// Make a new CNeighbour object for a certain network
+// Takes a protocol ID, like PROTOCOL_G1
 CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 {
-	m_nProtocol		= nProtocol;
-	m_nState		= nrsNull;
-	m_pVendor		= NULL;
-	m_bGUID			= FALSE;
-	m_pProfile		= NULL;
-	
-	m_bAutomatic	= FALSE;
-	m_bShake06		= TRUE;
-	m_bShareaza		= FALSE;
-	m_nNodeType		= ntNode;
-	m_bQueryRouting	= FALSE;
+	// Copy the given network protocol into this new object
+	m_nProtocol		= nProtocol;	// nProtocol is like PROTOCOL_ED2K
+
+	// Set null and default values for connection state, software vendor, guid, and user profile
+	m_nState		= nrsNull;		// No state now, will be connecting or closing later
+	m_pVendor		= NULL;			// We don't know what brand software the remote computer is running yet
+	m_bGUID			= FALSE;		// There is no GUID stored here yet
+	m_pProfile		= NULL;			// No profile on the person running the remote computer yet
+
+	// Set handshake values to defaults
+	m_bAutomatic	= FALSE;		// Automatic setting used to maintain the connection
+	m_bShake06		= TRUE;			// Expect the remote computer to be using the current Gnutella 0.6 protocol
+	m_bShareaza		= FALSE;		// Expect the remote computer to not be running Shareaza
+	m_nNodeType		= ntNode;		// This connection is just to a node to start out, later it might be a hub or a leaf
+	m_bQueryRouting	= FALSE;		// Don't start query routing or pong caching yet
 	m_bPongCaching	= FALSE;
-	m_bVendorMsg	= FALSE;
-	m_bGGEP			= FALSE;
-	
-	m_tLastQuery	= 0;
+	m_bVendorMsg	= FALSE;		// We haven't gotten a vendor message header in the handshake yet
+	m_bGGEP			= FALSE;		// The remote computer hasn't told us it supports the GGEP block yet
+
+	// Zero tick count times
+	m_tLastQuery	= 0;			// We'll set these to the current tick count when we get a query or packet
 	m_tLastPacket	= 0;
-	
+
+	// Zero packet and file counts
 	m_nInputCount	= m_nOutputCount = 0;
 	m_nDropCount	= 0;
 	m_nLostCount	= 0;
 	m_nOutbound		= 0;
 	m_nFileCount	= 0;
 	m_nFileVolume	= 0;
-	
+
+	// The local and remote query tables aren't set up yet, make the pointers to them start out null
 	m_pQueryTableLocal	= NULL;
 	m_pQueryTableRemote	= NULL;
-	
+
+	// Null pointers and zero counts for zlib compression
 	m_pZInput			= NULL;
 	m_pZOutput			= NULL;
 	m_nZInput			= 0;
@@ -91,42 +101,59 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_pZSOutput			= NULL;
 	m_bZFlush			= FALSE;
 	m_tZOutput			= 0;
+
+	// This guid of the last search will be used to get more results, but we don't have one at the start
+	m_pMoreResultsGUID	= NULL;
 }
 
+// Make a new CNeighbour object, copying values from a base one
+// Takes a protocol ID and a base neighbour to copy information from
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 {
+	// Calls CConection::AttachTo, treating CNeighbour* pBase as class* CConnection
 	AttachTo( pBase );
-	
+
+	// Copy the values from pBase into this CNeighbour object
 	CopyMemory( &m_zStart, &pBase->m_zStart, (LPBYTE)&m_zEnd - (LPBYTE)&m_zStart );
-	
-	m_nState		= nrsConnected;
-	m_nProtocol		= nProtocol;
-	m_tConnected	= GetTickCount();
+
+	// Set some custom values for the new CNeighbour object
+	m_nState		= nrsConnected;		// Set the state of this neighbour to connected
+	m_nProtocol		= nProtocol;		// Store the given protocol in the object
+	m_tConnected	= GetTickCount();	// Set Connected and LastPacket with the current time
 	m_tLastPacket	= m_tConnected;
-	
+
+	// If this connected computer is sending and receiving Gnutella2 packets, it will also support query routing
 	if ( m_bQueryRouting )
 	{
+		// Make two new QueryHashTable objects, one for the local table, and one for the remote one for
 		m_pQueryTableLocal	= new CQueryHashTable();
 		m_pQueryTableRemote	= new CQueryHashTable();
 	}
-	
+
+	// Call CNeighboursBase::Add to keep track of this newly created CNeighbours object
 	Neighbours.Add( this, FALSE );
 }
 
+// Delete this CNeighbour object
 CNeighbour::~CNeighbour()
 {
-	if ( z_streamp pStream = (z_streamp)m_pZSOutput )
+	// If m_pZSOutput isn't NULL, we are probably in the middle of a zlib compression operation
+	if ( z_streamp pStream = (z_streamp)m_pZSOutput ) // This is correctly assignment, not comparison, in an if statement
 	{
+		// End the compression and delete the pStream object
 		deflateEnd( pStream );
 		delete pStream;
 	}
-	
+
+	// Same thing, except for decompressing input
 	if ( z_streamp pStream = (z_streamp)m_pZSInput )
 	{
+		// End the decompression and delete the pStream object
 		inflateEnd( pStream );
 		delete pStream;
 	}
-	
+
+	// If any of these objects exist, delete them
 	if ( m_pProfile )			delete m_pProfile;
 	if ( m_pZOutput )			delete m_pZOutput;
 	if ( m_pZInput )			delete m_pZInput;
@@ -137,68 +164,101 @@ CNeighbour::~CNeighbour()
 //////////////////////////////////////////////////////////////////////
 // CNeighbour close
 
+// Close the connection to the remote computer
+// Takes the reason we're closing the connection, IDS_CONNECTION_CLOSED by default
 void CNeighbour::Close(UINT nError)
 {
+	// Make sure that the socket stored in this CNeighbour object is valid
 	ASSERT( m_hSocket != INVALID_SOCKET );
-	
+
+	// If nError is the default closed or a result of peer pruning, we're closing the connection voluntarily
 	BOOL bVoluntary = ( nError == IDS_CONNECTION_CLOSED || nError == IDS_CONNECTION_PEERPRUNE );
-	
+
+	// Remove this neighbour from the list of them
 	Neighbours.Remove( this );
-	
+
+	// Actually close the socket connection to the remote computer
 	CConnection::Close();
-	
+
+	// If this Close method was called with an error, among which IDS_CONNECTION_CLOSED counts
 	if ( nError )
 	{
+		// Report a voluntary default close, or an error
 		theApp.Message( bVoluntary ? MSG_DEFAULT : MSG_ERROR, nError, (LPCTSTR)m_sAddress );
 	}
-	
+
+	// Delete this CNeighbour object, calling its destructor right now
 	delete this;
 }
 
+// Close the connection, but not until we've written the buffered outgoing data first
+// Takes the reason we're closing the connection, or 0 by default
 void CNeighbour::DelayClose(UINT nError)
 {
+	// If this method got passed a close reason error, report it
 	if ( nError ) theApp.Message( MSG_ERROR, nError, (LPCTSTR)m_sAddress );
+
+	// Change this object's state to closing
 	m_nState = nrsClosing;
+
+	// Have the connection object write all the outgoing data soon
 	QueueRun();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighbour send
 
+// Send a packet to the remote computer (do)
+// Takes the packet, bRelease to release it, and bBuffered
 BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 {
+	// If we should release the packet, call its release method (do)
 	if ( bRelease ) pPacket->Release();
+
+	// Always return false (do)
 	return FALSE;
 }
 
+// SendQuery does nothing but return false (do)
 BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
+	// Just return false (do)
 	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighbour run event handler
 
+// Check the connection hasn't gone silent too long, and send a query patch table if necessary
+// Returns true if the connection is still open and there was no error sending the patch table
 BOOL CNeighbour::OnRun()
 {
+	// Get the tick count right now
 	DWORD tNow = GetTickCount();
-	
+
+	// If it's been awhile since the last packet came in through this connection
 	if ( tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic * 3 )
 	{
+		// Close the connection, citing traffic timeout as the reason, and return false
 		Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
 		return FALSE;
 	}
-	
+
+	// If the remote computer is a hub or a Gnutella2 node
 	if ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) )
 	{
+		// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)
 		if ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie )
 		{
-			if ( tNow - QueryHashMaster.m_nCookie > 30000 ||
-				 QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||
-				 m_pQueryTableLocal->m_bLive == FALSE )
+			// And (do)
+			if ( tNow - QueryHashMaster.m_nCookie > 30000 ||							// It's been more than 3 seconds since the master cookie (do)
+				 QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||	// Or, the master cookie is a minute older than the local one (do)
+				 m_pQueryTableLocal->m_bLive == FALSE )									// Or, the local query table is not live (do)
 			{
+				// Then send the connected computer a query hash table patch
 				if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
 				{
+					// There was an error, record it
 					theApp.Message( MSG_SYSTEM, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
 						m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
 						m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
@@ -206,142 +266,192 @@ BOOL CNeighbour::OnRun()
 			}
 		}
 	}
-	
+
+	// Report success
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighbour close event handler
 
+// Call when the connection has been dropped
+// Logs the error with some statistics about how long it was quiet
 void CNeighbour::OnDropped(BOOL bError)
 {
-	DWORD nTime1 = ( GetTickCount() - m_tConnected ) / 1000;
-	DWORD nTime2 = ( GetTickCount() - m_tLastPacket ) / 1000;
-	
+	// Find out how many seconds it's been since this neighbour connected, and since it received the last packet
+	DWORD nTime1 = ( GetTickCount() - m_tConnected ) / 1000;	// Time since connected in seconds
+	DWORD nTime2 = ( GetTickCount() - m_tLastPacket ) / 1000;	// Time since last packet received in seconds
+
+	// Report these times in a message about the connection being dropped
 	theApp.Message( MSG_DEBUG, _T("Dropped neighbour %s (%s), conn: %.2i:%.2i, packet: %.2i:%.2i"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent,
 		nTime1 / 60, nTime1 % 60, nTime2 / 60, nTime2 % 60 );
-	
+
+	// Close the connection, citing the reason as dropped
 	Close( IDS_CONNECTION_DROPPED );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighbour compressed read and write handlerss
 
+// Read data waiting in the socket into the input buffer, and decompress it into the zlib input buffer
+// Return false if error
 BOOL CNeighbour::OnRead()
 {
+	// Read the bytes waiting in our end of the socket into the input buffer
 	CConnection::OnRead();
-	
+
+	// If compression is off, we're done, return true now
+	// Otherwise, compression is on, the bytes we read into the input buffer are compressed, and we have to decompress them
 	if ( m_pZInput == NULL || m_pInput->m_nLength == 0 ) return TRUE;
-	
-	BOOL bNew = ( m_pZSInput == NULL );
-	
-	if ( bNew ) m_pZSInput = new z_stream;
-	z_streamp pStream = (z_streamp)m_pZSInput;
-	
+
+	// Start or continue using zlib with m_pZSInput and pStream pointers
+	BOOL bNew = ( m_pZSInput == NULL );			// If the zlib input pointer is null, make bNew true, otherwise it's false
+	if ( bNew ) m_pZSInput = new z_stream;		// If the zlib input pointer is null, make a new z_stream
+	z_streamp pStream = (z_streamp)m_pZSInput;	// Cast the pointer as a z_streamp and call that pStream
+
+	// If we are starting to use zlib now
 	if ( bNew )
 	{
+		// Zero the z_stream structure and set it up for decompression
 		ZeroMemory( pStream, sizeof(z_stream) );
-		
 		if ( inflateInit( pStream ) != Z_OK )
 		{
+			// There was an error setting up zlib, clean up and leave now
 			delete pStream;
 			delete m_pZInput;
 			m_pZInput = NULL;
 			m_pZSInput = NULL;
-			return TRUE;
+			return TRUE; // Report success anyway
 		}
 	}
-	
-	while ( m_pInput->m_nLength || m_pZInput->m_nLength == m_pZInput->m_nBuffer || pStream->avail_out == 0 )
+
+	// Loop until there is no more data for zlib to decompress
+	while ( m_pInput->m_nLength ||							// While the input buffer has data in it
+			m_pZInput->m_nLength == m_pZInput->m_nBuffer || // Or the zlib buffer length is the same as the buffer (do)
+			pStream->avail_out == 0 )						// Or there is no more data availiable for zlib to decompress
 	{
+		// Make sure the zlib buffer holds at least 1 KB (do)
 		m_pZInput->EnsureBuffer( 1024 );
-		
-		pStream->next_in	= m_pInput->m_pBuffer;
-		pStream->avail_in	= m_pInput->m_nLength;
-		pStream->next_out	= m_pZInput->m_pBuffer + m_pZInput->m_nLength;
-		pStream->avail_out	= m_pZInput->m_nBuffer - m_pZInput->m_nLength;
-		
-		inflate( pStream, Z_SYNC_FLUSH );
-		
-		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInput->m_nLength )
+
+		// Tell zlib where the compressed data is, how much is there, where it can output bytes, and how much space it has there
+		pStream->next_in	= m_pInput->m_pBuffer;							// Point zlib at the start of the input buffer
+		pStream->avail_in	= m_pInput->m_nLength;							// Give it the entire block there
+		pStream->next_out	= m_pZInput->m_pBuffer + m_pZInput->m_nLength;	// Have it put decompressed bytes in the empty space of the ZInput buffer
+		pStream->avail_out	= m_pZInput->m_nBuffer - m_pZInput->m_nLength;	// This is how much space is left there
+
+		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
+		inflate( pStream, Z_SYNC_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
+
+		// Zlib decompressed something
+		if ( pStream->avail_in >= 0 && pStream->avail_in < m_pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
 		{
-			m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in );
+			// Remove the portion in the start of the input buffer that zlib decompressed
+			m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in ); // nLength - avail_in is the size of the block that zlib decompressed
 		}
-		
-		DWORD nBlock = ( m_pZInput->m_nBuffer - m_pZInput->m_nLength ) - pStream->avail_out;
-		
+
+		// Calculate the size of nBlock, the block of data in ZInput that Zlib just decompressed
+		DWORD nBlock = ( m_pZInput->m_nBuffer - m_pZInput->m_nLength ) - pStream->avail_out; // Buffer size minus previous length and current empty space
+
+		// Record tha this many more bytes are stored in the ZInput buffer
 		m_pZInput->m_nLength += nBlock;
+
+		// Add this number of bytes to the zlib count
 		m_nZInput += nBlock;
-		
+
+		// If Zlib didn't decompress anything, leave the loop
 		if ( ! nBlock ) break;
 	}
-	
+
+	// Report success
 	return TRUE;
 }
 
+// Compress data and send it to the connected computer
+// Return false if error
 BOOL CNeighbour::OnWrite()
 {
-	if ( m_pZOutput == NULL ) return CConnection::OnWrite();
-	
-	BOOL bNew = ( m_pZSOutput == NULL );
-	
-	if ( bNew ) m_pZSOutput = new z_stream;
+	// If we're not sending compressed data to the remote computer, just call CConnection::OnWrite to send the output buffer
+	if ( m_pZOutput == NULL ) return CConnection::OnWrite(); // Return the result and leave now
+
+	// Start or continue using zlib with m_pZSInput and pStream pointers
+	BOOL bNew = ( m_pZSOutput == NULL );		// Make bNew true if zlib compression isn't setup yet
+	if ( bNew ) m_pZSOutput = new z_stream;		// Create a new z_stream structure and point m_pZSOutput and pStream at it
 	z_streamp pStream = (z_streamp)m_pZSOutput;
 	
+	// If we are starting to use zlib now
 	if ( bNew )
 	{
+		// Zero the z_stream structure and set it up for compression
 		ZeroMemory( pStream, sizeof(z_stream) );
-		
 		if ( deflateInit( pStream, 6 ) != Z_OK )
 		{
+			// There was an error setting up zlib, clean up and leave now
 			delete pStream;
 			delete m_pZOutput;
 			m_pZOutput = NULL;
 			m_pZSOutput = NULL;
-			return TRUE;
+			return TRUE; // Report success anyway
 		}
 	}
-	
+
+	// If there is data in the output buffer already
 	if ( m_pOutput->m_nLength ) 
 	{
+		// Send it to the other computer
 		CConnection::OnWrite();
-		if ( m_pOutput->m_nLength ) return TRUE;
+		if ( m_pOutput->m_nLength ) return TRUE; // Return true if there is still more to send after this (do)
 	}
-	
+
+	// If it's been more than 2 seconds since we've flushed the compressed output buffer to the remote computer, set the flag to do it next
 	DWORD tNow = GetTickCount();
-	
 	if ( tNow - m_tZOutput >= Z_TIMER ) m_bZFlush = TRUE;
-	
-	while ( ( m_pZOutput->m_nLength && ! m_pOutput->m_nLength ) || pStream->avail_out == 0 )
+
+	// Loop until all the data in ZOutput has been compressed into Output
+	while ( ( m_pZOutput->m_nLength && ! m_pOutput->m_nLength )	// ZOutput has data to compress and Output is empty
+		|| pStream->avail_out == 0 )							// Or, zlib says it has no more room left (do)
 	{
+		// Make sure the output buffer is 1 KB (do)
 		m_pOutput->EnsureBuffer( 1024 );
-		
-		pStream->next_in	= m_pZOutput->m_pBuffer;
+
+		// Tell zlib where the data to compress is, and where it should put the compressed data
+		pStream->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput
 		pStream->avail_in	= m_pZOutput->m_nLength;
-		pStream->next_out	= m_pOutput->m_pBuffer + m_pOutput->m_nLength;
+		pStream->next_out	= m_pOutput->m_pBuffer + m_pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
 		pStream->avail_out	= m_pOutput->m_nBuffer - m_pOutput->m_nLength;
-		
-		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : 0 );
-		
+
+		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
+		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : 0 ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
+
+		// Add the number of uncompressed bytes that zlib compressed to the m_nZOutput count
 		m_nZOutput += m_pZOutput->m_nLength - pStream->avail_in;
+
+		// Remove the chunk that zlib compressed from the start of ZOutput
 		m_pZOutput->Remove( m_pZOutput->m_nLength - pStream->avail_in );
-		
+
+		// Set nOutput to the size of the new compressed block in the output buffer between the data already there, and the empty space afterwards
 		int nOutput = ( m_pOutput->m_nBuffer - m_pOutput->m_nLength ) - pStream->avail_out;
-		
+
+		// Zlib compressed something
 		if ( nOutput )
 		{
+			// Add the new block to the length, and record when this happened
 			m_pOutput->m_nLength += nOutput;
 			m_tZOutput = tNow;
+
+		// Zlib didn't compress anything, and the flush flag is true
 		}
 		else if ( m_bZFlush )
 		{
+			// Make the flush flag false
 			m_bZFlush = FALSE;
 		}
-		
+
+		// Send the contents of the output buffer to the remote computer
 		CConnection::OnWrite();
 	}
-	
+
+	// Report success
 	return TRUE;
 }
 
@@ -352,7 +462,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 {
 	CQueryHit* pHits = NULL;
 	int nHops = 0;
-	
+
 	if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 	{
 		pHits = CQueryHit::FromPacket( (CG1Packet*)pPacket, &nHops );
@@ -438,20 +548,35 @@ BOOL CNeighbour::OnCommonQueryHash(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNeighbour compression statistics
 
+// Calculate the average compression rate in either direction for this connection
+// Takes pointers to numbers to write the answers in
 void CNeighbour::GetCompression(float* pnInRate, float* pnOutRate)
 {
+	// Set the compression ratios to -1 to indicate that compression is off
 	*pnInRate = -1; *pnOutRate = -1;
-	
+
+	// If there is a buffer for decompressing read data and a count of bytes have been decompressed
 	if ( m_pZInput != NULL && m_nZInput > 0.)
 	{
-		*pnInRate = 1.0f - (float)m_mInput.nTotal / (float)m_nZInput;
+		// Calculate the compression rate of the data coming in
+		*pnInRate = 1.0f				// 1 minus, so if there were 80 compressed bytes that inflated to 100, its 1 - (80 / 100) = .2
+			- (float)m_mInput.nTotal	// The total number of compressed bytes the bandwidth meter has counted come in from the socket
+			/ (float)m_nZInput;			// Divided by the total number of not compressed bytes that OnRead has decompressed into the m_nZInput buffer
+
+		// Keep the rate between 0 and 1
 		if ( *pnInRate < 0 ) *pnInRate = 0;
 		else if ( *pnInRate > 1 ) *pnInRate = 1;
 	}
-	
+
+	// If there is a buffer for compressing data to write and a count of bytes have been compressed
 	if ( m_pZOutput != NULL && m_mOutput.nTotal > 0.)
 	{
-		*pnOutRate = 1.0f - (float)m_mOutput.nTotal / (float)m_nZOutput;
+		// Calculate the compressing rate of the data going out
+		*pnOutRate = 1.0f				// 1 minus, so if there were 100 bytes that deflated down to 70, its 1 - (70 / 100) = .3
+			- (float)m_mOutput.nTotal	// The total number of compressed bytes the bandwidth meter has counted go out through the socket
+			/ (float)m_nZOutput;		// Divided by the total number of not compressed bytes that OnWrite has compressed from the m_nZOutput buffer
+
+		// Keep the rate between 0 and 1
 		if ( *pnOutRate < 0 ) *pnOutRate = 0;
 		else if ( *pnOutRate > 1 ) *pnOutRate = 1;
 	}
