@@ -136,7 +136,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	AddBox( &m_boxDownloads );
 	AddBox( &m_boxLibrary );
 	AddBox( &m_boxConnection );
-	if ( GetSystemMetrics( SM_CYSCREEN ) > 600 ) 
+	if ( ! Settings.Interface.LowResMode ) 
 	{
 		AddBox( &m_boxUploads );
 		if(Settings.BitTorrent.AdvancedInterface) AddBox( &m_boxTorrents );
