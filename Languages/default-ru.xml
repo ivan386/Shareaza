@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.101"
+		version="2.1.0.102"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -980,11 +980,6 @@
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
 	</menu>
-	<menu name="CUploadsWnd.Queue.Basic">
-		<item id="ID_UPLOADS_HELP" text="_Справка..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
-	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Настройка очереди"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
@@ -1106,6 +1101,8 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Переделать мета данные"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
@@ -1174,6 +1171,8 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Переделать мета данные"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
@@ -1650,7 +1649,14 @@
 			<text id="TorrentsOne" format="b">Распространяется 1 торрент</text>
 			<text id="TorrentsMany" format="b">Распространяются %i торренты(ов)</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Распространять %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Распространять другой торрент</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Распространять торрент</link>
+			</group>
 		</para>
 
 	</document>
@@ -2179,13 +2185,14 @@
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Вид и правка свойств помеченной папки альбома..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Управление физическими папками Вашего хранилища..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Ускорить процесс сканирования хеширования файлов."/>
-	<!--<tip id="ID_LIBRARY_JIGLE" message="Запрашивать базу данных Jigle в Интернете для получения информации о помеченном файле."/>-->
 	<tip id="ID_LIBRARY_LAUNCH" message="Открыть или проигрывать помеченный файл(ы)."/>
 	<tip id="ID_LIBRARY_MOVE" message="Переместить помеченные файлы в другую папку хранилища..."/>
 	<tip id="ID_LIBRARY_PANEL" message="Показывать или скрывать панель подробностей файлов."/>
 	<tip id="ID_LIBRARY_PARENT" message="Переместиться вверх в родиельскую папку."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Обзор и правка свойств помеченных файлов..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
+	<!-- Add the following line if you need it -->
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Переделать мета данные в русский язык."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Удалить помеченные разделяемые папки."/>
 	<tip id="ID_LIBRARY_RENAME" message="Переименовать помеченный файл."/>
@@ -3915,8 +3922,7 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Загрузить Server.met файл">
 		<control/>
 		<control caption="Вы можете загрузить eDonkey2000 server.met файл из вэба, чтобы обновить Ваш список серверов."/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 	</dialog>
