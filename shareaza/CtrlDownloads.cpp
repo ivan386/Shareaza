@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/03/23 18:59:24 $"
-//	Revision:		"$Revision: 1.29 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/04/06 14:43:45 $"
+//	Revision:		"$Revision: 1.30 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -259,7 +259,7 @@ BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
 	}
 	else if ( pDownload->GetSourceCount() > 0 )
 	{
-		if ( pDownload->IsStarted() )
+		if ( pDownload->IsDownloading() )
 		{
 			return ( ( nFilterMask & DLF_ACTIVE ) == 0 );
 		}
