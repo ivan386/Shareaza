@@ -3119,7 +3119,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,100,49,50,14
     LTEXT           "Please select the method of re-encoding:",IDC_STATIC,7,
                     7,172,18
-    COMBOBOX        IDC_CODEPAGES,7,26,172,16,CBS_DROPDOWNLIST | WS_VSCROLL | 
+    COMBOBOX        IDC_CODEPAGES,7,26,172,141,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
 END
 
