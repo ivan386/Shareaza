@@ -62,7 +62,7 @@ CAlbumFolder::CAlbumFolder(CAlbumFolder* pParent, LPCTSTR pszSchemaURI, LPCTSTR 
 		if ( m_pSchema != NULL )
 		{
 			int nColon = m_pSchema->m_sTitle.Find( ':' );
-			if ( nColon >= 0 ) m_sName = m_pSchema->m_sTitle.Mid( nColon + 1 );
+			if ( nColon >= 0 ) m_sName = m_pSchema->m_sTitle.Mid( nColon + 1 ).Trim();
 		}
 		
 		if ( m_sName.IsEmpty() ) m_sName = _T("New Folder");
