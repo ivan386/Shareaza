@@ -122,7 +122,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	}
 	
 	int nTransfers = GetTransferCount( dtsDownloading );
-	if ( m_bBTH && nTransfers > 40 ) return FALSE;
+	if ( m_bBTH && ( nTransfers > Settings.BitTorrent.DownloadConnections ) ) return FALSE;
 	
 	if ( nTransfers < Settings.Downloads.MaxFileTransfers &&
 		 ( ! Settings.Downloads.StaggardStart ||
