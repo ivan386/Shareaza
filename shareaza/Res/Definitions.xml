@@ -54,7 +54,6 @@
 	<command code="32809" id="ID_SEARCH_SEARCH"/>
 	<command code="32810" id="ID_SEARCH_FILTER"/>
 	<command code="32811" id="ID_SEARCH_FILTER_REMOVE"/>
-	<command code="32812" id="ID_SEARCH_GROUPED"/>
 	<command code="32813" id="ID_HITMONITOR_CLEAR"/>
 	<command code="32814" id="ID_SEARCHMONITOR_PAUSE"/>
 	<command code="32815" id="ID_HITMONITOR_PAUSE"/>
@@ -135,7 +134,6 @@
 	<command code="32912" id="ID_SECURITY_MOVE_UP"/>
 	<command code="32913" id="ID_SECURITY_MOVE_DOWN"/>
 	<command code="32914" id="ID_SECURITY_BAN"/>
-	<command code="32916" id="ID_UPLOADS_GROUP"/>
 	<command code="32918" id="ID_TAB_NETWORK"/>
 	<command code="32919" id="ID_TAB_LIBRARY"/>
 	<command code="32920" id="ID_TAB_TRANSFERS"/>
@@ -162,7 +160,6 @@
 	<command code="32944" id="ID_DOWNLOADS_BOOST"/>
 	<command code="32946" id="ID_TAB_HOME"/>
 	<command code="32947" id="ID_DOWNLOADS_LAUNCH_COPY"/>
-	<command code="32948" id="ID_SEARCH_MERGE"/>
 	<command code="32949" id="ID_DOWNLOADS_MONITOR"/>
 	<command code="32950" id="ID_LIBRARY_SELECT_ALL"/>
 	<command code="32951" id="ID_SECURITY_EXPORT"/>

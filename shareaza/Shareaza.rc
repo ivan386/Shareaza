@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,5
- PRODUCTVERSION 2,1,0,5
+ FILEVERSION 2,1,0,6
+ PRODUCTVERSION 2,1,0,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 5"
+            VALUE "FileVersion", "2, 1, 0, 6"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 5"
+            VALUE "ProductVersion", "2, 1, 0, 6"
         END
     END
     BLOCK "VarFileInfo"
@@ -872,7 +872,6 @@ BEGIN
         MENUITEM "&Filter Results...",          ID_SEARCH_FILTER_RAW
         MENUITEM "Show &Panel",                 ID_SEARCH_PANEL
         MENUITEM "Show &Details",               ID_SEARCH_DETAILS
-        MENUITEM "Merge Results",               ID_SEARCH_MERGE
     END
     POPUP "Library"
     BEGIN
@@ -4435,7 +4434,6 @@ BEGIN
     ID_SEARCH_SEARCH        "Search the network again..."
     ID_SEARCH_FILTER        "Filter the search results by certain words and conditions..."
     ID_SEARCH_FILTER_REMOVE "Remove filtering from the results."
-    ID_SEARCH_GROUPED       "Group the results by file."
     ID_HITMONITOR_CLEAR     "Clear the hit monitor buffer."
     ID_SEARCHMONITOR_PAUSE  "Pause search monitoring."
     ID_HITMONITOR_PAUSE     "Pause hit monitoring."
@@ -4612,7 +4610,6 @@ BEGIN
     ID_SECURITY_MOVE_UP     "Move the selected security rules up the precedence list."
     ID_SECURITY_MOVE_DOWN   "Move the selected security rules down the precedence list."
     ID_SECURITY_BAN         "Ban the selected host for the duration of this session."
-    ID_UPLOADS_GROUP        "Group uploads by connection (host)."
     ID_TAB_NETWORK          "See how well you are connected to the Network."
     ID_TAB_LIBRARY          "View and manage your local content library."
     ID_TAB_TRANSFERS        "Monitor uploads and downloads you are performing."
@@ -4752,7 +4749,6 @@ BEGIN
     ID_DOWNLOADS_BOOST      "Boost the performance of the selected download by removing bandwidth limits."
     ID_TAB_HOME             "Return to the Shareaza Home page"
     ID_DOWNLOADS_LAUNCH_COPY "SmartPreview the selected download(s)."
-    ID_SEARCH_MERGE         "Merge the selected file groups."
     ID_DOWNLOADS_MONITOR    "Open a download monitor window for this download..."
     ID_LIBRARY_SELECT_ALL   "Select and view all folders in your library."
     ID_SECURITY_EXPORT      "Export the selected security rules to a file..."

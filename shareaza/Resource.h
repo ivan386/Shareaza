@@ -1235,7 +1235,6 @@
 #define ID_SEARCH_SEARCH                32809
 #define ID_SEARCH_FILTER                32810
 #define ID_SEARCH_FILTER_REMOVE         32811
-#define ID_SEARCH_GROUPED               32812
 #define ID_HITMONITOR_CLEAR             32813
 #define ID_SEARCHMONITOR_PAUSE          32814
 #define ID_HITMONITOR_PAUSE             32815
@@ -1316,7 +1315,6 @@
 #define ID_SECURITY_MOVE_UP             32912
 #define ID_SECURITY_MOVE_DOWN           32913
 #define ID_SECURITY_BAN                 32914
-#define ID_UPLOADS_GROUP                32916
 #define ID_TAB_NETWORK                  32918
 #define ID_TAB_LIBRARY                  32919
 #define ID_TAB_TRANSFERS                32920
@@ -1343,7 +1341,6 @@
 #define ID_DOWNLOADS_BOOST              32944
 #define ID_TAB_HOME                     32946
 #define ID_DOWNLOADS_LAUNCH_COPY        32947
-#define ID_SEARCH_MERGE                 32948
 #define ID_DOWNLOADS_MONITOR            32949
 #define ID_LIBRARY_SELECT_ALL           32950
 #define ID_SECURITY_EXPORT              32951
