@@ -2161,6 +2161,7 @@ right quote	&#147;
 	<tip id="ID_DOWNLOADS_SOURCES" message="Ieškoti daugiau šaltinių pasirinktai siunčiamai bylai(-oms)."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Peržiūrėti pasirinktos bylos BitTorrent informaciją..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinktos bylos..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Peržvelgti pasirinktos bylos įvertinimus."/>
 	<tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
 	<tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
 	<tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
@@ -4194,7 +4195,7 @@ right quote	&#147;
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Vartotojas"/>
-		<column from="Rating" to="Įvertinimas"/>
+		<column from="Rating" to="Įverinimas"/>
 		<column from="Comments" to="Komentarai"/>
 		<column from="Order" to="Eilė"/>
 	</list>
