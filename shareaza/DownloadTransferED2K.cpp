@@ -659,7 +659,16 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	//Send ed2k file request
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
-	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 ) m_pClient->WritePartStatus( pPacket, m_pDownload );
+
+	CString st = m_pClient->m_sAddress + _T(" ") + m_pClient->m_sNick;
+	theApp.Message( MSG_DEFAULT, st );
+	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 )
+	{
+		m_pClient->WritePartStatus( pPacket, m_pDownload );
+		theApp.Message( MSG_ERROR, _T("**** WritePartStatus() called") );
+	}
+	else
+		theApp.Message( MSG_ERROR, _T("---- WritePartStatus() NOT called") );
 	/*
 	//We don't have any need to do this- it's not very useful (or accurate). Raza only offers extended request V1
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 2 ) 

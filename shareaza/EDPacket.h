@@ -294,9 +294,10 @@ public:
 #define ED2K_ST_MAXUSERS			0x87
 
 #define ED2K_CT_NAME				0x01
-#define ED2K_CT_VERSION				0x11
 #define	ED2K_CT_PORT				0x0F
+#define ED2K_CT_VERSION				0x11
 #define ED2K_CT_FLAGS				0x20	//Tell server about compression, new tags, unicode
+#define	ED2K_CT_SOFTWAREVERSION		0xFB	//Version of the program.
 
 #define ED2K_FT_FILENAME			0x01
 #define ED2K_FT_FILESIZE			0x02
@@ -327,3 +328,5 @@ public:
 #define ED2K_ET_COMMENTS			0x24
 #define ED2K_ET_EXTENDEDREQUEST		0x25
 #define ED2K_ET_COMPATIBLECLIENT	0x26
+
+#define SHAREAZA_COMPATIBLECLIENT_ID 14 //Temp change to test stuff... should be 4

@@ -60,6 +60,7 @@ public:
 	BOOL		m_bEmDeflate;
 	int			m_nEmVersion;
 	int			m_nEmCompatible;
+	DWORD		m_nSoftwareVersion;
 public:
 	BOOL		m_bLogin;
 	BOOL		m_bUpMD4;
