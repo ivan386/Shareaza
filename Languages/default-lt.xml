@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.3.8"
+                        version="2.0.4.0"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -559,7 +559,7 @@ right quote    &#147;
        </menu>
        <menu name="CMainWnd.Windowed" type="bar">
                <menu text="_Tinklas">
-                       <item id="ID_NETWORK_SEARCH" text="Nauja pa_ieška..." shortcut="Ctrl+I"/>
+                       <item id="ID_NETWORK_SEARCH" text="Nauja pa_ieška..." shortcut="Ctrl+S"/>
                        <separator/>
                        <item id="ID_NETWORK_CONNECT" text="Jun_gtis" shortcut="Ctrl+G"/>
                        <item id="ID_NETWORK_DISCONNECT" text="_Atsijungti"/>
@@ -2026,8 +2026,8 @@ right quote    &#147;
 <commandTips>
        <tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
        <tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
-       <tip id="ID_NETWORK_CONNECT" message="Jungtis prie tinklo."/>
-       <tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklo."/>
+       <tip id="ID_NETWORK_CONNECT" message="Jungtis prie tinklo"/>
+       <tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklo"/>
        <tip id="ID_TOOLS_SETTINGS" message="Konfigūruoti „Shareaza“ nuostatas..."/>
        <tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
        <tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
@@ -2061,7 +2061,7 @@ right quote    &#147;
        <tip id="ID_SEARCHMONITOR_CLEAR" message="Išvalyti paieškos užklausų monitoriaus buferį."/>
        <tip id="ID_SEARCH_COPY" message="Nukopijuoti pasirinktos bylos URI."/>
        <tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
-       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo horizontaliuosius mazgus."/>
+       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
        <tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
        <tip id="ID_HOSTCACHE_G1_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
        <tip id="ID_SEARCH_COLUMNS" message="Pasirinkti meta duomenų stulpelius, kuriuos rodyti..."/>
