@@ -760,5 +760,30 @@ void CUploadQueues::Validate()
 			pQueue->m_bRewardUploaders	= TRUE;
 		}
 	}
+
+	if ( SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, TRUE ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, TRUE ) == NULL &&
+		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, TRUE ) == NULL )
+	{
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HTTP_GUARD );
+		CUploadQueue* pQueue		= Create( strQueueName );
+		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMaxTransfers		= 5;
+		pQueue->m_bRotate			= TRUE;
+		
+		if ( Settings.Connection.OutSpeed > 100 )
+		{
+			pQueue->m_nBandwidthPoints	= 30;
+			pQueue->m_nCapacity			= 10;
+			pQueue->m_nRotateTime		= 10*60;
+		}
+		else
+		{
+			pQueue->m_nBandwidthPoints	= 20;
+			pQueue->m_nCapacity			= 5;
+			pQueue->m_nRotateTime		= 30*60;
+		}
+	}
 }
 
