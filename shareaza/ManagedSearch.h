@@ -53,8 +53,9 @@ public:
 	DWORD			m_nHubs;
 	DWORD			m_nLeaves;
 	DWORD			m_nHits;
-	DWORD			m_tLastED2K;
-	DWORD			m_nQueryCount;
+	DWORD			m_tLastED2K;				// Time an ed2k server was last searched
+	DWORD			m_tMoreResults;				// Time more results were requested from an ed2k server
+	DWORD			m_nQueryCount;				// Total Gnutella2 queries sent
 protected:
 	CMapPtrToPtr	m_pNodes;
 	DWORD			m_tExecute;

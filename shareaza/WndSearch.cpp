@@ -473,6 +473,7 @@ void CSearchWnd::OnSearchSearch()
 		//Resume ED2K search
 		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
 		pSearch->m_tLastED2K = GetTickCount();
+		pSearch->m_tMoreResults = 0;
 
 		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
 			pSearch->m_nPriority = CManagedSearch::spMedium;
@@ -818,7 +819,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
 			m_bUpdate = TRUE;
 			
-			if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && (pManaged->m_tLastED2K != 0xFFFFFFFF) )
+			if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )
 			{
 				if( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
 				{						

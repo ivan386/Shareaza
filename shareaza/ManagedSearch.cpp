@@ -61,6 +61,7 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
 	m_nLeaves		= 0;
 	m_nHits			= 0;
 	m_tLastED2K		= 0;
+	m_tMoreResults	= 0;
 	m_nQueryCount	= 0;
 
 }
@@ -125,10 +126,11 @@ void CManagedSearch::Start()
 	CSingleLock pLock( &SearchManager.m_pSection );
 	pLock.Lock( 1000 );
 	
-	m_tStarted	= time( NULL );
-	m_tExecute	= 0;
-	m_tLastED2K	= 0;
-	m_nQueryCount=0;
+	m_tStarted		= time( NULL );
+	m_tExecute		= 0;
+	m_tLastED2K		= 0;
+	m_tMoreResults	= 0;
+	m_nQueryCount	= 0;
 	
 	m_pNodes.RemoveAll();
 	
@@ -272,22 +274,27 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				nFrequency = 86400;
 			
-			if ( tSecs - nPeriod < nFrequency ) //If we've queried this neighbour 'recently'
+			if ( tSecs - nPeriod < nFrequency ) // If we've queried this neighbour 'recently'
 			{
-				//Request more ed2k results (if appropriate)
-				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && ( pNeighbour->m_pMoreResultsGUID != NULL ) )
-				{								//If it's an ed2k server and more results are available
-					if ( m_pSearch->m_pGUID == *pNeighbour->m_pMoreResultsGUID )
-					{							//And this search is the one with results waiting
-						//Request more results
+				// Request more ed2k results (if appropriate)
+				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && ( pNeighbour->m_pMoreResultsGUID != NULL ) ) // If it's an ed2k server and has more results
+				{	
+					if ( ( m_pSearch->m_pGUID == *pNeighbour->m_pMoreResultsGUID ) && // and this search is the one with results waiting
+						( m_tMoreResults + 10000 < tTicks ) )		// and we've waited a little while (to ensure the search is still active)
+					{
+						// Request more results
 						pNeighbour->Send( CEDPacket::New(  ED2K_C2S_MORERESULTS ) );
 						((CEDNeighbour*)pNeighbour)->m_pQueries.AddTail( pNeighbour->m_pMoreResultsGUID );
+						// Reset "more results" indicator
 						pNeighbour->m_pMoreResultsGUID = NULL;
-						//theApp.Message( MSG_DEBUG, _T("Asking ed2k neighbour for additional search results") );
+						// Set timer
+						m_tMoreResults = tTicks;
+						// Display message in system window
+						theApp.Message( MSG_DEBUG, _T("Asking ed2k neighbour for additional search results") );
 					}
 				}
 
-				//Don't search this neighbour again.
+				// Don't search this neighbour again.
 				continue; 
 			}
 		}
@@ -322,15 +329,15 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		
 		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch, pPacket, TRUE ) )
 		{
+			// Reset the last "search more" sent to this neighbour (if applicable)
 			pNeighbour->m_pMoreResultsGUID = NULL;
+			m_tMoreResults = 0;
 
+			//Display message in system window
 			theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
-				m_pSearch->m_sSearch.GetLength()
-					? (LPCTSTR)m_pSearch->m_sSearch
-					: _T("URN"),
+				m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
 				(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
 		}
-		
 		pPacket->Release();
 		
 		nCount++;
