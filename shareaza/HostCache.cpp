@@ -489,6 +489,19 @@ void CHostCacheList::OnFailure(IN_ADDR* pAddress, WORD nPort)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CHostCacheList count
+
+DWORD CHostCacheList::CountHosts() const
+{
+	DWORD nCount = 0;
+
+	for ( CHostCacheHost* pHost = GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
+		nCount++;
+
+	return ( nCount );
+}
+
+//////////////////////////////////////////////////////////////////////
 // CHostCacheList query acknowledgement prune
 
 void CHostCacheList::PruneByQueryAck()

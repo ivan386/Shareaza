@@ -58,6 +58,7 @@ public:
 	BOOL			Check(CHostCacheHost* pHost) const;
 	void			Remove(CHostCacheHost* pHost);
 	void			OnFailure(IN_ADDR* pAddress, WORD nPort);
+	DWORD			CountHosts() const;
 	void			PruneByQueryAck();
 	void			Clear();
 	void			Serialize(CArchive& ar, int nVersion);
