@@ -1,8 +1,8 @@
 //
 // EDPartImporter.cpp
 //
-//	Date:			"$Date: 2005/04/06 11:18:51 $"
-//	Revision:		"$Revision: 1.8 $"
+//	Date:			"$Date: 2005/04/06 12:36:51 $"
+//	Revision:		"$Revision: 1.9 $"
 //	Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -207,7 +207,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	{
 		pED2K.FromRoot( &pMD4 );
 	}
-	else if ( nParts > 1 )
+	else if ( nParts > 0 )
 	{
 		MD4* pHashset = new MD4[ nParts ];
 		pFile.Read( pHashset, sizeof(MD4) * nParts );
