@@ -18,6 +18,7 @@ Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"; LicenseFi
 Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
 Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"; LicenseFile: "setup/license/russian.rtf"
 Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
+Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/default.rtf"
 
 [Files]
 ; Install default remote
@@ -49,6 +50,8 @@ Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereado
 Source: "Remote-localized\Russian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Components: language
 ; Greek
 Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
+; Hungarian
+Source: "Remote-localized\hungarian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -79,6 +82,8 @@ Source: "setup\license\spanish.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\russian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Components: language
 ; Greek
 Source: "setup\license\greek.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
+; Hungarian
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -98,10 +103,6 @@ icons_license=License
 icons_uninstall=Uninstall
 icons_downloads=Downloads
 dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
-virus_warning=Virus Warning
-av_question=Do you have a AntiVirus program installed ?
-virus_message1=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs.
-virus_message2=You can find list of good virus scanners and other security tips to protect your computer by following this link:
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -282,4 +283,19 @@ gr.icons_license=Άδεια
 gr.icons_uninstall=Απεγκατάσταση
 gr.icons_downloads=Κατέβασμα
 gr.dialog_shutdown=Θέλετε να τερματίσετε την λειτουργία του %1?
+; Hungarian
+hu.components_plugins=Plugins
+hu.components_skins=Skins
+hu.components_languages=Languages
+hu.tasks_allusers=All users
+hu.tasks_selectusers=Install %1 for:
+hu.tasks_currentuser=%1 only
+hu.tasks_multisetup=Enable multi-user support
+hu.run_skinexe=Running skin installation...
+hu.reg_incomingchat=Incoming chat message
+hu.reg_apptitle=Shareaza Ultimate File Sharing
+hu.icons_license=License
+hu.icons_uninstall=Uninstall
+hu.icons_downloads=Downloads
+hu.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
 
