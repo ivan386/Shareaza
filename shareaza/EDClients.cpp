@@ -206,7 +206,7 @@ CEDClient* CEDClients::GetByGUID(GGUID* pGUID)
 BOOL CEDClients::Merge(CEDClient* pClient)
 {
 	ASSERT( pClient != NULL );
-	
+
 	for ( CEDClient* pOther = m_pFirst ; pOther ; pOther = pOther->m_pEdNext )
 	{
 		if ( pOther != pClient && pOther->Equals( pClient ) )
@@ -254,7 +254,7 @@ void CEDClients::OnRun()
 {
 	// Delay to keep ed2k transfers under 10 KB/s per source
 	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastRun < 1000 ) return;
+	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle ) return;
 	m_tLastRun = tNow;
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
