@@ -459,6 +459,9 @@ void CSearchWnd::OnSearchSearch()
 			//Resume ED2K search
 			m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
 			pSearch->m_tLastED2K = GetTickCount();
+
+			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0x8000 )
+				pSearch->m_nPriority = 1; //spMedium;
 		}
 		else
 		{
