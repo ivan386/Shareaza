@@ -8,6 +8,7 @@ AppName=Shareaza
 AppPublisher=Shareaza Development Team
 AppReadmeFile={app}\Uninstall\readme.txt
 DefaultDirName={pf}\Shareaza
+DirExistsWarning=yes
 DefaultGroupName=Shareaza
 DisableFinishedPage=yes
 DisableReadyPage=yes
@@ -55,6 +56,7 @@ Source: "setup\builds\zlib.dll"; DestDir: "{sys}"; Flags: regserver noregerror o
 
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Components: mainfiles; MinVersion: 4.0,0
+Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerror overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension; Components: mainfiles; MinVersion: 4.0,0
 
 ; Main files
 Source: "setup\builds\zlib.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles
