@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 3 September 2004 vir Shareaza 2.0.3 Beta -->
+<!-- Shareaza Afrikaanse Omslaglêer - Weergawe: 4 September 2004 vir Shareaza 2.0.3 Beta -->
 
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
@@ -2267,7 +2267,6 @@
 	<tip id="ID_NETWORK_G2" message="Konnekteer aan die Gnutella2 netwerk (word sterk aanbeveel)."/>
 	<tip id="ID_NETWORK_G1" message="Konnekteer aan die oorspronklike Gnutella netwerk."/>
 	<tip id="ID_NETWORK_ED2K" message="Konnekteer aan die eDonkey2000 netwerk."/>
-
 	<tip id="ID_HOSTCACHE_PRIORITY" message="Probeer aan hierdie bediener konnekteer voor ander bedieners."/>
 	<tip id="ID_VIEW_BASIC" message="Gebruik Shareaza in Normale modus."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Deursoek jou lêerbiblioteek..."/>
@@ -2293,7 +2292,7 @@
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids as 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksporteer die geselekteerde albumgids na 'n versamelingslêer..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
-    <tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
+    	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Vertoon die gevorderde aflaaiverstellings-koppelvlak..."/>
 	<tip id="ID_MEDIA_MUTE" message="Maak die volume stil"/>
 	<tip id="ID_WINDOW_REMOTE" message="Vertoon of verwyder die Shareaza Afstandbeheer"/>
@@ -2340,7 +2339,7 @@
 	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode is beëindig. Laai asseblief die volle, offisiële weergawe af vanaf www.shareaza.com."/>
 	<string id="8011" value="Om die aansig te verander mag sommige van die oop vensters dalk gesluit word.  Wil jy nou verander?"/>
 	<string id="8062" value="Hub modus met %lu kliënt(e).  %s in lokale biblioteek."/>
-    <string id="8063" value="Gekonnekteer. %s in lokale biblioteek."/>
+    	<string id="8063" value="Gekonnekteer. %s in lokale biblioteek."/>
 	<string id="8064" value="Gekonnekteer aan %lu gashere.  %s in lokale biblioteek."/>
 	<string id="8065" value="Besig om aan die netwerk te konnekteer..."/>
 	<string id="8066" value="Nie gekonnekteer aan die netwerk nie."/>
@@ -2417,8 +2416,8 @@
 	<string id="8239" value="Voltooi"/>
 	<string id="8240" value="Shareaza verskuif die lêer:"/>
 	<string id="8241" value="Shareaza kontroleer die aflaai vir foute:"/>
-    <string id="8242" value="%s of %s (%.2f%%)"/>
-    <string id="8243" value="Volume uploaded:"/>
+    	<string id="8242" value="%s van %s (%.2f%%)"/>
+    	<string id="8243" value="Hoeveelheid opgelaai:"/>
 	<string id="8288" value="Besig om deur jou Shareaza Biblioteek te blaai"/>
 	<string id="8289" value="Blaai deur&#160;"/>
 	<string id="8290" value="Besig om deur die inhoud van %i gidse te blaai"/>
@@ -2439,14 +2438,14 @@
 	<string id="8313" value="Hierdie lêer blyk gemorspos te wees."/>
 	<string id="8314" value="Jy het voorheen hierdie lêer afgelaai en geskrap."/>
 	<string id="8315" value="Op die swartlys:"/>
-    <string id="8316" value="Treflaaie"/>
-    <string id="8317" value="Oplaaie"/>
-    <string id="8318" value="%lu vandag, %lu in totaal"/>
-    <string id="8320" value="Status:"/>
-    <string id="8321" value="Spoed:"/>
-    <string id="8322" value="URL:"/>
-    <string id="8323" value="Gebruikersagent:"/>
-    <string id="8324" value="Nie Aktief"/>
+    	<string id="8316" value="Treflaaie"/>
+    	<string id="8317" value="Oplaaie"/>
+    	<string id="8318" value="%lu vandag, %lu in totaal"/>
+    	<string id="8320" value="Status:"/>
+    	<string id="8321" value="Spoed:"/>
+    	<string id="8322" value="URL:"/>
+    	<string id="8323" value="Gebruikersagent:"/>
+    	<string id="8324" value="Nie Aktief"/>
    	<string id="8325" value="Aktief"/>
    	<string id="8326" value="Volgende in Lyn"/>
 	<string id="16064" value="Shareaza netwerkkern word geïnisieer..."/>
@@ -2652,8 +2651,8 @@
 	<string id="16405" value="Wil jy hierdie lêer aflaai?\r\n\r\n&quot;%s&quot;\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16406" value="Wil jy alle lêers in hierdie versameling aflaai?\r\n\r\nKies Kanselleer om enige verdere vrae te stop."/>
 	<string id="16407" value="Wil jy hierdie versameling verhoed om jou te vra om enigeiets anders af te laai?"/>
-    <string id="16408" value="Kopieer &amp;URI"/>
-    <string id="16409" value="Voer &amp;URI's Uit..."/>
+    	<string id="16408" value="Kopieer &amp;URI"/>
+    	<string id="16409" value="Voer &amp;URI's Uit..."/>
 	<string id="16448" value="Gekonnekteer aan %s, besig om blad te skud..."/>
 	<string id="16449" value="Nou besig om met %s (%s) te gesels."/>
 	<string id="16450" value="Konneksie aan %s gesluit."/>
@@ -2695,16 +2694,16 @@
 	<string id="16773" value="Poort:"/>
 	<string id="16774" value="&amp;Konnekteer"/>
 	<string id="16775" value="&amp;Blaai Deur"/>
-    <string id="16776" value="Voeg By"/>
-    <string id="16777" value="Lêernaam:"/>
-    <string id="16778" value="URL:"/>
-    <string id="16779" value="Tipe:"/>
-    <string id="16780" value="Nie Gespesifiseer"/>
-    <string id="16781" value="Stuur versoek..."/>
-    <string id="16782" value="Sukses!"/>
-    <string id="16783" value="Voltooi, kliek Maak Toe"/>
-    <string id="16784" value="&amp;Maak Toe"/>
-    <string id="16785" value="(Geen Visualisering)"/>
+    	<string id="16776" value="Voeg By"/>
+    	<string id="16777" value="Lêernaam:"/>
+    	<string id="16778" value="URL:"/>
+    	<string id="16779" value="Tipe:"/>
+    	<string id="16780" value="Nie Gespesifiseer"/>
+    	<string id="16781" value="Stuur versoek..."/>
+    	<string id="16782" value="Sukses!"/>
+    	<string id="16783" value="Voltooi, kliek Maak Toe"/>
+    	<string id="16784" value="&amp;Maak Toe"/>
+    	<string id="16785" value="(Geen Visualisering)"/>
 	<string id="16800" value="Jy het nog nie 'n konneksie-spoed gespesifiseer nie.  Voor jy aangaan, selekteer asseblief jou internet konneksietipe, of sleutel 'n konneksiespoed in."/>
 	<string id="16801" value="Kies asseblief die tipe internet konneksie wat jy gebruik, voor jy aangaan."/>
 	<string id="16802" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
@@ -2714,7 +2713,7 @@
 	<string id="16806" value="Jy het aangedui dat jy poort-aanstuur wil opstel op jou NAT roeteerder of netskans.\n\nStel asseblief jou netwerk om TCP poort %i aan te stuur na jou lokale rekenaar."/>
 	<string id="16807" value="Tik asseblief die bandwydte limiet wat jy wil hê, in die vorm &quot;123 kb/s&quot; vir kilobits per sekonde, of &quot;123 KB/s&quot; vir kilobytes per sekonde."/>
 	<string id="16808" value="Jy het nie jou ouderdom en geslag geselekteer nie. Is jy seker jy wil voortgaan sonder om dit te doen?"/>
-    <string id="16809" value="Maak &amp;Toe"/>
+    	<string id="16809" value="Maak &amp;Toe"/>
 	<string id="16864" value="Navraag word gedoen by gasheer-ontdekkingsdiens..."/>
 	<string id="16865" value="Navraag word gedoen by gasheer-ontdekkingsdiens &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaksie suksesvol (&quot;%s&quot;)."/>
@@ -2873,10 +2872,10 @@
 	<string id="20126" value="Nie Gekontroleer"/>
 	<string id="20127" value="bron"/>
 	<string id="20128" value="bronne"/> <!-- numbers 21, 31, ... --> 
-    <string id="20129" value="bronne"/> <!-- tens --> 
-    <string id="20130" value="bronne"/> <!-- from 11 to 19 --> 
-    <string id="20131" value="bronne"/> <!-- from 2 to 4 --> 
-    <string id="20132" value="bronne"/> <!-- from 5 to 9 --> 
+    	<string id="20129" value="bronne"/> <!-- tens --> 
+    	<string id="20130" value="bronne"/> <!-- from 11 to 19 --> 
+    	<string id="20131" value="bronne"/> <!-- from 2 to 4 --> 
+    	<string id="20132" value="bronne"/> <!-- from 5 to 9 --> 
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3874,7 +3873,7 @@
 		<column from="Folder" to="Gids"/>
 		<column from="Hits" to="Treflaaie"/>
 		<column from="Uploads" to="Oplaaie"/>
-	    <column from="Modified" to="Verander"/>
+	    	<column from="Modified" to="Verander"/>
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Lêernaam"/>
@@ -3883,8 +3882,8 @@
 		<column from="Speed" to="Spoed"/>
 		<column from="Status" to="Status"/>
 		<column from="Client" to="Kliënt"/>
-        <column from="Downloaded" to="Afgelaai"/>
-	    <column from="Complete" to="Voltooi"/>
+        	<column from="Downloaded" to="Afgelaai"/>
+	    	<column from="Complete" to="Voltooi"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Gebruiker"/>
@@ -3901,7 +3900,7 @@
 		<column from="Packets" to="Pakkies"/>
 		<column from="Bandwidth" to="Bandwydte"/>
 		<column from="Total" to="Totaal"/>
-        <column from="Flow" to="Vloei"/>
+        	<column from="Flow" to="Vloei"/>
 		<column from="Leaves" to="Kliënte"/>
 		<column from="Mode" to="Tipe"/>
 		<column from="Client" to="Program"/>
@@ -3911,7 +3910,7 @@
 		<column from="Address / Content" to="Adres / Inhoud"/>
 		<column from="Action" to="Aksie"/>
 		<column from="Expires" to="Verval"/>
-        <column from="Precedence" to="Volgorde"/>
+        	<column from="Precedence" to="Volgorde"/>
 		<column from="Hits" to="Treflaaie"/>
 		<column from="Comment" to="Kommentaar"/>
 	</list>
@@ -3938,14 +3937,14 @@
 		<column from="Address" to="Adres"/>
 		<column from="Protocol" to="Protokol"/>
 		<column from="Type" to="Tipe"/>
-        <column from="T/H" to="T/H"/>
-        <column from="Hex" to="Hex"/>
-        <column from="ASCII" to="ASCII"/>
-        <column from="G1-ID" to="G1-ID"/>
+        	<column from="T/H" to="T/H"/>
+        	<column from="Hex" to="Hex"/>
+        	<column from="ASCII" to="ASCII"/>
+        	<column from="G1-ID" to="G1-ID"/>
 	</list>
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="Soek"/>
-        <column from="URN" to="URN"/>
+        	<column from="URN" to="URN"/>
 		<column from="Schema" to="Skema"/>
 	</list>
 	<list name="CMatchCtrl">

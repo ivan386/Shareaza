@@ -16,7 +16,7 @@
 			description="Shareaza Default Arabic Skin File"
 			link="http://www.shareaza.com/"
 			email="lazorde_sa@hotmail.com"
-			version="2.0.2.11"
+			version="2.0.3.8"
 			type="Language"
 			language="ar"
 			prompt="هنا اضغط العربية للغة."
@@ -294,7 +294,7 @@
 		<button id="ID_MEDIA_PAUSE" text="ايقاف مؤقت" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="ايقاف"/>
 		<separator/>
-		<label text="Seek:" tip="Seek to a position in the media file"/>
+		<label text="مسار العرض:" tip="انقل الؤشر الى المكان الذي تريد البدا منه"/>
 		<control id="117" width="190" height="22"/>
 		<label text="الصوت:" tip="ضبط التحكم بالصوت"/>
 		<control id="119" width="50" height="22"/>
@@ -311,9 +311,9 @@
 		<button id="ID_MEDIA_PAUSE" text="ايقاف مؤقت" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="ايقاف"/>
 		<separator/>
-		<label text="Seek:" tip="Seek to a position in the media file"/>
+		<label text="مسار العرض:" tip="انقل الؤشر الى المكان الذي تريد البدا منه"/>
 		<control id="117" width="190" height="22"/>
-		<label text="Speed:" tip="Adjust the speed of the media file"/>
+		<label text="السرعة:" tip="التحكم بسرعة قرائة ملف الوسائط المتعددة"/>
 		<control id="118" width="40" height="22"/>
 		<label text="الصوت:" tip="ضبط التحكم بالصوت"/>
 		<control id="119" width="50" height="22"/>
@@ -1330,7 +1330,7 @@
 			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
-		<menu text="_Monitor">
+		<menu text="_شاشة">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
 			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="View _Incoming Traffic"/>
 			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="View _Outgoing Traffic"/>
@@ -1656,7 +1656,7 @@
 
 	<!-- Settings Pages -->
 
-	<document name="CGeneralSettingsGroup" title="General" leftMargin="8" topMargin="8">
+	<document name="CGeneralSettingsGroup" title="الاعدادات العامة" leftMargin="8" topMargin="8">
 
 		<styles>
 			<style name="default">
@@ -1741,9 +1741,9 @@
 		<text>Upload capacity, queuing, banning, timeouts and special requests.</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CNetworksSettingsPage" format="b">شبكات:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">التحكم عن بعد:</link>
 		<gap size="4"/>
-		<text>Select and configure the peer-to-peer networks you would like Shareaza to connect to.</text>
+		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
 
 	</document>
@@ -2223,12 +2223,12 @@
 	<tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
 	<tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
 	<tip id="ID_MEDIA_SELECT" message="اختر و شغل هذا الملف."/>
-	<tip id="ID_MEDIA_ADD" message="Add a media file to the playlist..."/>
-	<tip id="ID_MEDIA_REMOVE" message="Remove the selected media file from the playlist."/>
-	<tip id="ID_MEDIA_CLEAR" message="Clear (empty) the playlist."/>
-	<tip id="ID_MEDIA_SAVE" message="Save the current playlist to a file..."/>
-	<tip id="ID_MEDIA_PLAYLIST" message="Show or hide the playlist editor."/>
-	<tip id="ID_LIBRARY_VIEW_TILE" message="عرض قائمة مجلدات الالبوم." tip="Tile View"/>
+	<tip id="ID_MEDIA_ADD" message="اضف ملف في قائمة التشغيل..."/>
+	<tip id="ID_MEDIA_REMOVE" message="حذف الملف المحدد في قائمة التشغيل."/>
+	<tip id="ID_MEDIA_CLEAR" message="تنظيف ( حذف ) جميع الموجود في قائمة التشغيل."/>
+	<tip id="ID_MEDIA_SAVE" message="حفظ قائمة التشغيل في ملف..."/>
+	<tip id="ID_MEDIA_PLAYLIST" message="عرض او اخفاء محرر قائمة التشغيل."/>
+	<tip id="ID_LIBRARY_VIEW_TILE" message="عرض قائمة مجلدات الالبوم." tip="مجموع العرض"/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="افتح مجلد الالبوم."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="حذف مجلد الالبوم المختار."/>
@@ -2361,18 +2361,18 @@
 	<string id="8070" value="اتصال..."/>
 	<string id="8071" value="متصل"/>
 	<string id="8072" value="قطع الاتصال"/>
-	<string id="8096" value="This area shows more information about files you select."/>
-	<string id="8097" value="One source is available (%s).  "/>
-	<string id="8098" value="%i sources are available (%s).  "/>
-	<string id="8099" value="There is one review."/>
-	<string id="8100" value="There are %i reviews."/>
-	<string id="8101" value="%s writes:"/>
+	<string id="8096" value="هذه المنطقة تعرض المزيد من المعلومات حول الملف المحدد."/>
+	<string id="8097" value="مصدر واحد متوفر (%s).  "/>
+	<string id="8098" value="%i المصادر متوفرة (%s).  "/>
+	<string id="8099" value="هناك مراجعة واحدة."/>
+	<string id="8100" value="مراجعات %i هنالك."/>
+	<string id="8101" value="%s يكتب:"/>
 	<string id="8102" value="%s rates this file:"/>
 	<string id="8103" value="إنقر للإستعراض"/>
 	<string id="8104" value="الإستعراض..."/>
 	<string id="8105" value="Unable to download preview content from &quot;%s&quot;."/>
 	<string id="8128" value="اضغط هنا للبحث مره اخرى"/>
-	<string id="8129" value="No searches have been started in this window yet."/>
+	<string id="8129" value="لا يوجد عمليات بحث بدات في هذه النافذه حتى الان."/>
 	<string id="8130" value="Shareaza is searching the network..."/>
 	<string id="8131" value="The network has not returned any matches yet."/>
 	<string id="8132" value="Some results are available, but were filtered out."/>
@@ -2386,15 +2386,15 @@
 	<string id="8146" value="ايقاف"/>
 	<string id="8147" value="اي نوع من الملفات"/>
 	<string id="8148" value="نوع البحث هنا:"/>
-	<string id="8149" value="Look for this type of file:"/>
+	<string id="8149" value="إبحث عن هذا النوع من الملف:"/>
 	<string id="8150" value="بحث:"/>
 	<string id="8151" value="ايجاد:"/>
 	<string id="8152" value="%lu hubs, %lu leaves"/>
-	<string id="8153" value="Not currently searching"/>
-	<string id="8154" value="No files found"/>
+	<string id="8153" value="لا يفتّش حاليا"/>
+	<string id="8154" value="لا يوجد ملفات"/>
 	<string id="8155" value="%lu file in %lu hit|%lu file in %lu hits|%lu files in %lu hits"/>
 	<string id="8156" value="بحث"/>
-	<string id="8157" value="Results"/>
+	<string id="8157" value="النتائج"/>
 	<string id="8158" value="ازالة"/>
 	<string id="8159" value="متقدم..."/>
 	<string id="8160" value="Establishing a connection to host..."/>
@@ -2403,12 +2403,12 @@
 	<string id="8163" value="Downloading browse response (%2.f%%)..."/>
 	<string id="8164" value="Unable to connect to host to browse user."/>
 	<string id="8165" value="Unable to download file listing.  This host may not support browsing."/>
-	<string id="8166" value="Search on this network:"/>
+	<string id="8166" value="البحث في هذه الشبكة:"/>
 	<string id="8167" value="جميع الشبكات"/>
 	<string id="8176" value="Shareaza بحث "/>
-	<string id="8177" value="Type some keywords to search for:"/>
-	<string id="8178" value="What type of file is it?"/>
-	<string id="8179" value="(Clear Search History)"/>
+	<string id="8177" value="اكتب الكلمة المراد البحث عنها:"/>
+	<string id="8178" value="ماهو نوع الملف؟"/>
+	<string id="8179" value="(مسح البحث المؤقت)"/>
 	<string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
 	<string id="8224" value="Shareaza is downloading:"/>
 	<string id="8225" value="This download is paused:"/>
@@ -2424,19 +2424,19 @@
 	<string id="8235" value="Total transfer speed:"/>
 	<string id="8236" value="Estimated time remaining:"/>
 	<string id="8237" value="Volume downloaded:"/>
-	<string id="8238" value="Number of sources:"/>
+	<string id="8238" value="عدد المصادر:"/>
 	<string id="8239" value="مكمل"/>
 	<string id="8240" value="Shareaza is moving the download:"/>
 	<string id="8241" value="Shareaza is checking the download for errors:"/>
       <string id="8242" value="%s of %s (%.2f%%)"/>
       <string id="8243" value="Volume uploaded:"/>
-	<string id="8288" value="Exploring Your Shareaza Library"/>
-	<string id="8289" value="Exploring "/>
+	<string id="8288" value="Shareaza استكشف مكتبة"/>
+	<string id="8289" value="الإستكشاف"/>
 	<string id="8290" value="Exploring the contents of %i folders"/>
 	<string id="8291" value="Multiple folders"/>
-	<string id="8292" value="%i files selected"/>
-	<string id="8293" value="No files are selected"/>
-	<string id="8294" value="Recent Additions"/>
+	<string id="8292" value="%i الملف المحدد"/>
+	<string id="8293" value="لم يتم تحديد الملفات"/>
+	<string id="8294" value="الإضافات الأخيرة"/>
 	<string id="8295" value="Rate this file"/>
 	<string id="8304" value="N/A"/>
 	<string id="8305" value="%i of %i"/>
@@ -2449,10 +2449,10 @@
 	<string id="8312" value="You already have this file on your download list."/>
 	<string id="8313" value="This file appears to be spam."/>
 	<string id="8314" value="You have downloaded and deleted this file before."/>
-	<string id="8315" value="Blacklisted: "/>
+	<string id="8315" value="مدرج في القائمة السوداء: "/>
     <string id="8316" value="Hits"/>
     <string id="8317" value="رفع الملفات"/>
-    <string id="8318" value="%lu today, %lu total"/>
+    <string id="8318" value="%lu اليوم, %lu المجموع"/>
     <string id="8320" value="الحالة:"/>
     <string id="8321" value="السرعة:"/>
     <string id="8322" value="الرابط:"/>
@@ -3689,7 +3689,7 @@
 		<control caption="_البحث عن ملف"/>
 		<control caption="الغاء"/>
 		<control caption="_تذكر اختياري في المرة القادمة"/>
-		<control caption="Open a download _monitor window"/>
+		<control caption="شاشة التحميل _افتح نافذة "/>
 		<control caption="You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."/>
 	</dialog>
 
@@ -3732,10 +3732,10 @@
 		<control caption="موافق"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Existing File">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="ايجاد ملف">
 		<control/><control/><control/><control/>
-		<control caption="You already have this file in your file library.  What would you like to do?"/>
-		<control caption="Show me the file in my library"/>
+		<control caption="هذا الملف موجود فعلاً في المكتبة . ماذا تريد انت تعمل ؟"/>
+		<control caption="اعرض لي الملف في المكتبة"/>
 		<control caption="حمل الملف مرة اخرى"/>
 		<control caption="لا تحمل هذا الملف"/>
 		<control caption="موافق"/>
@@ -3743,12 +3743,12 @@
 		<control caption="سبق وان حملت وحذفت هذا الملف من قبل.  ماذا تريد ان تفعل?"/>
 	</dialog>
 
-	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
+	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="زر الاغلاق">
 		<control/>
-		<control caption="This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:"/>
-		<control caption="Minimise to the tray area"/>
-		<control caption="Shut down Shareaza immediately"/>
-		<control caption="Shut down Shareaza after any downloads and uploads finish"/>
+		<control caption="هذه اول مره تضغط على زر الاغلاق . رجاء اختر ماذا تريد انت تعمل لكي يتم تطبيقه على جميع الاحوال:"/>
+		<control caption="تصغير البرنامج في الاسفل مع امكانية استرجاعه"/>
+		<control caption="حالاً Shareaza ايقاف تشغيل "/>
+		<control caption="بعد الانتهاء من تحميل الملفات او الانتهاء من رفع الملفات Shareaza  ايقاف "/>
 		<control caption="موافق"/>
 		<control caption="الغاء"/>
 	</dialog>
@@ -3769,23 +3769,23 @@
 	</dialog>
 
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="حذف ملف">
-		<control caption="Are you sure that you want to delete:"/>
+		<control caption="أنت متأكّد بأنك تريد الحذف:"/>
 		<control/>
 		<control caption="حذف"/>
 		<control caption="حذف الكل"/>
 		<control caption="الغاء"/>
 		<control/>
-		<control caption="Shareaza can remember this file and warn you if you come across it again in another search.  Please select the reason for deleting this file:"/>
-		<control caption="I don't want to add a comment."/>
-		<control caption="This file is named incorrectly, and could be misleading."/>
-		<control caption="This file is of very poor quality."/>
-		<control caption="This file is a fake, or is corrupt or somehow unusable."/>
-		<control caption="You can type a short note describing why this file is bad:"/>
+		<control caption="يمكن للاشيرازا ان يتذكر هذا الملف ويحذرك اذا صادفة في البحث مرة اخرى . رجاء اختر سبب لحذف هذا الملف:"/>
+		<control caption="لا اريد إضافة اي تعليق."/>
+		<control caption="هذا الملف يسمى باسم خطاء . ويمكن ان يكون مظلل."/>
+		<control caption="هذا الملف من النوعية الرديئة جدا."/>
+		<control caption="هذا الملف يوجود به مشاكل او غير صالح للاستعمال."/>
+		<control caption="بامكانك كتابة ملاحظة صغيرة تصف لماذا الملف سيئ:"/>
 		<control/>
 	</dialog>
 
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="تصدير مجلد">
-		<control caption="This feature is used to export the contents of an album folder as a rich collection file."/>
+		<control caption="هذه المميزة تستخدم  لتصدير محتويات حافظة الالبوم."/>
 		<control caption="تصدير..."/>
 		<control caption="الغاء"/>
 	</dialog>

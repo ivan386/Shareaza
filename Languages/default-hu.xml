@@ -16,7 +16,7 @@
                        description="Shareaza Default Hungarian Skin File"
                        link="http://www.shareaza.com/"
                        email="yuri1 (at) freemail (dot) hu"
-                       version="2.0.2.16"
+                       version="2.0.3.8"
                        type="Language"
                        language="hu"
                        prompt="Kattints ide a magyar nyelvhez."
@@ -1442,7 +1442,7 @@
 
                <group id="1">
                        <icon res="130" width="32" height="32"/><gap size="8"/>
-                       <heading align="middle">K A P C S O L Ó D J</heading>
+                       <heading align="middle">K A P C S O L Ó D J !</heading>
                        <newline gap="8" indent="42"/>
                        <text>Üdvözöllek a Shareazában! &#160;Jelenleg egyik p2p hálózathoz sem csatlakoztál. &#160;</text>
                        <link target="raza:command:ID_NETWORK_CONNECT">Az indításhoz kattints ide.</link>
@@ -1463,13 +1463,13 @@
                        <newline gap="8" indent="42"/>
                        <text id="Upgrade"/>
                        <newline gap="6"/>
-                       <link target="raza:upgrade">Kattints ide a frissítéshez</link>
+                       <link target="raza:upgrade">Kattints ide a frissítéshez.</link>
                        <newline gap="18" indent="0"/>
                </group>
 
                <group id="4">
                        <icon res="252" width="32" height="32"/><gap size="8"/>
-                       <heading align="middle">F I G Y E L E M &#160; - &#160; T Ű Z F A L L A L &#160; V A G Y &#160; V É D V E</heading>
+                       <heading align="middle">F I G Y E L E M &#160; - &#160; T Ű Z F A L L A L &#160; V A G Y &#160; V É D V E !</heading>
                        <newline gap="8" indent="42"/>
                        <text colour="FF0000">A Shareaza észlelte, hogy egy NAT router vagy tűzfal mögött vagy
                        és ezért nem tudsz bejövő kapcsolatokat fogadni az Internetről (passzív kapcsolat). &#160;</text>
@@ -1480,7 +1480,7 @@
                </group>
 
                <icon res="254" width="32" height="32"/><gap size="8"/>
-               <heading align="middle" colour="6060FF">H A L L G A S S &#160; Z E N É T</heading>
+               <heading align="middle" colour="6060FF">H A L L G A S S &#160; Z E N É T !</heading>
                <newline gap="8" indent="42"/>
                <bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
                <newline gap="18" indent="0"/>
@@ -1492,19 +1492,19 @@
                <icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
                <gap size="8"/>
                <link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Kinézetek</link>
-               <text align="middle">&#160;- Változtasd meg a Shareaza kinézetét</text>
+               <text align="middle">&#160;- Változtasd meg a Shareaza kinézetét.</text>
                <newline gap="8"/>
 
                <icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
                <gap size="8"/>
                <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Gyors beállítás</link>
-               <text align="middle">&#160;- Shareaza beállítások egyszerűen</text>
+               <text align="middle">&#160;- Shareaza beállítások egyszerűen.</text>
                <newline gap="8"/>
 
                <icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
                <gap size="8"/>
                <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Súgó</link>
-               <text align="middle">&#160;- Segítség a program használatához</text>
+               <text align="middle">&#160;- Segítség a program használatához.</text>
                <newline gap="18" indent="0"/>
 
                <group id="5">
@@ -1679,7 +1679,7 @@
 
                <link target="raza:page:CGeneralSettingsPage" format="b">Általános:</link>
                <gap size="4"/>
-               <text>Felhasználói felület, gyorstippek, tálca, sebességkijelzés, stb. beállításai.</text>
+               <text>Felhasználói felület, gyorstippek, tálca, stb. beállításai.</text>
                <newline gap="10"/>
 
                <link target="raza:page:CLibrarySettingsPage" format="b">Könyvtár:</link>
@@ -1694,12 +1694,12 @@
 
                <link target="raza:page:CCommunitySettingsPage" format="b">Közösség:</link>
                <gap size="4"/>
-               <text>Saát profil beállítása, chat és üzenetküldő beállítások.</text>
+               <text>Saját profil beállítása, chat és üzenetküldő beállítások.</text>
                <newline gap="10"/>
 
                <link target="raza:page:CWebSettingsPage" format="b">Web:</link>
                <gap size="4"/>
-               <text>A Shareaza integrálása a böngészőbe, hogy az p2p linkeket is tudjon fogadni.</text>
+               <text>P2P linkek és letöltésmenedzser.</text>
                <newline gap="10"/>
 
        </document>
@@ -1741,9 +1741,9 @@
                <text>Feltöltési sebesség, korlátozások, letiltások.</text>
                <newline gap="10"/>
 
-               <link target="raza:page:CNetworksSettingsPage" format="b">Hálózatok:</link>
+               <link target="raza:page:CNetworksSettingsPage" format="b">Távoli elérés:</link>
                <gap size="4"/>
-               <text>p2p hálózatok beállításai.</text>
+               <text>A távoli használat beállításai.</text>
                <newline gap="10"/>
 
        </document>
@@ -1753,7 +1753,7 @@
        <document name="CBrowseHostProfile.1">
 
                <heading id="Nick"/>
-               <heading> profilja</heading>
+               <heading></heading>
                <newline gap="8"/>
 
                <group id="1">
@@ -1772,7 +1772,7 @@
 
                <group id="3">
                        <newline gap="8" indent="0"/>
-                       <text format="b">Demográfiai</text>
+                       <text format="b">Nem, kor:</text>
                        <newline gap="2" indent="8"/>
                        <text id="GenderMale">Férfi</text>
                        <text id="GenderFemale">Nő</text>
@@ -2024,7 +2024,7 @@
 <commandTips>
        <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
        <tip id="ID_NETWORK_EXIT" message="Kilépés a Shareazából."/>
-       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz."/>
+       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz"/>
        <tip id="ID_NETWORK_DISCONNECT" message="Lekapcsolódik a hálózatról."/>
        <tip id="ID_TOOLS_SETTINGS" message="A Shareaza beállításai..."/>
        <tip id="ID_VIEW_SYSTEM" message="A RENDSZER ablak elrejtése, mutatása."/>
@@ -2131,7 +2131,7 @@
        <tip id="ID_SECURITY_MOVE_DOWN" message="A kiválasztott szabály lejjebb tolása az elsőbbségi listán."/>
        <tip id="ID_SECURITY_BAN" message="A kiválasztott kiszolgáló letiltása egy időre."/>
        <tip id="ID_UPLOADS_GROUP" message="A feltöltések kapcsolat alapján való rendezése."/>
-       <tip id="ID_TAB_NETWORK" message="Hálózati adatok ellenőrzése"/>
+       <tip id="ID_TAB_NETWORK" message="Hálózati adatok ellenőrzése."/>
        <tip id="ID_TAB_LIBRARY" message="A könyvtár rendezése."/>
        <tip id="ID_TAB_TRANSFERS" message="Fel- és letöltések figyelése."/>
        <tip id="ID_TAB_CONNECT" message="Le- és felkapcsolódás a hálózatokra."/>
@@ -2237,7 +2237,7 @@
        <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Minden fájl hozzáadása a lejátszólistához."/>
        <tip id="ID_LIBRARY_ALBUM_DELETE" message="Törli a kiválasztott mappát."/>
        <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="A kiválasztott mappa tulajdonságainak szerkesztése..."/>
-       <tip id="ID_TAB_SEARCH" message="Keresést indít letölthető fájlok után"/>
+       <tip id="ID_TAB_SEARCH" message="Keresést indít letölthető fájlok után."/>
        <tip id="ID_LIBRARY_FOLDERS" message="A valós mappák rendezése..."/>
        <tip id="ID_TOOLS_PROFILE" message="Saját profil szerkesztése..."/>
        <tip id="ID_BROWSE_PROFILE" message="A felhasználó profiljának böngészése."/>
@@ -2336,7 +2336,7 @@
        <string id="WINDOW_TRAFFIC" value="Grafikon"/>
        <string id="WINDOW_CHAT" value="Chat"/>
        <string id="WINDOW_SECURITY" value="Biztonság"/>
-       <string id="WINDOW_DISCOVERY" value="Szerverkereső szolg."/>
+       <string id="WINDOW_DISCOVERY" value="Szerverkereső szolgáltatás"/>
        <string id="WINDOW_BROWSEHOST" value="Böngészés"/>
        <string id="WINDOW_HOME" value="Shareaza kezdőlap"/>
        <string id="WINDOW_MEDIA" value="Médialejátszó"/>
@@ -2759,7 +2759,7 @@
        <string id="16995" value="A fájl vagy hibás vagy nincsenek feltelepítve a megfelelő kodekek."/>
        <string id="16996" value="A fájl részletét nem lehet lejátszani, nincsenek feltelepítve a megfelelő kodekek."/>
        <string id="16997" value="Nincs semmilyen lejátszás folyamatban. Kattints duplán egy médiafájlra a könyvtárból a lejátszáshoz."/>
-       <string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; É &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; L&#160; &#160; E &#160; &#160; J &#160; &#160; Á &#160; &#160; T &#160; &#160; S &#160; &#160; Z &#160; &#160; Ó"/>
+       <string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; É &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; L &#160; &#160; E &#160; &#160; J &#160; &#160; Á &#160; &#160; T &#160; &#160; S &#160; &#160; Z &#160; &#160; Ó"/>
        <string id="16999" value="L E J Á T S Z Ó L I S T A"/>
        <string id="17024" value="Kapcsolódás inicializálása: %s..."/>
        <string id="17025" value="Nem lehet kapcsolatot létrehozni: %s."/>
@@ -3001,7 +3001,7 @@
        <dialog name="CInternetSettingsGroup" caption="Internet"/>
 
        <dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Kapcsolat">
-               <control caption="Bejövő(letöltés):"/>
+               <control caption="Bejövő (letöltés):"/>
                <control caption="Címek:"/>
                <control/>
                <control caption="Port:"/>
@@ -3010,7 +3010,7 @@
                <control caption="Sebesség:"/>
                <control/>
                <control caption="Kapcsolódás kényszerítése"/>
-               <control caption="Kimenő(feltöltés):"/>
+               <control caption="Kimenő (feltöltés):"/>
                <control caption="Címek:"/>
                <control/>
                <control caption="Sebesség:"/>
@@ -3051,7 +3051,7 @@
                <control caption="Félig letöltött fájlok megosztása"/>
                <control caption="Megosztás korl. hubmódban"/>
                <control caption="Előnézetek megosztása"/>
-               <control caption="ID3 Tag eltávolítása"/>
+               <control caption="Metadata adatok eltávolítása"/>
                <control caption="Kapcsolatok száma:"/>
                <control/>
                <control/>
@@ -3093,11 +3093,11 @@
                <control caption="Részletes beállítás"/>
                <control caption="eDonkey2000:"/>
                <control caption="Az eDonkey2000 egy népszerű kliens-szerver rendszerű hálózat. Nincs annyi szolgáltatása, mint a G2-nek, de gyakorlatilag minden megtalálható rajta."/>
-               <control caption="Kapcsolódás az eDonkey2000-hez"/>
+               <control caption="Kapcsolódás az eDonkey2000-hez (eD2k)"/>
                <control caption="Részletes beállítás"/>
-               <control caption="Original Gnutella Network:"/>
+               <control caption="Gnutella1:"/>
                <control caption="A G2 elődje. Kevesebb fájlt tartalmaz, mint az eD2k, de azért sokminden megtalálható rajta."/>
-               <control caption="Kapcsolódás a Gnutella1-hez"/>
+               <control caption="Kapcsolódás a Gnutella1-hez (G1)"/>
                <control caption="Részletes beállítás"/>
        </dialog>
 
@@ -3170,7 +3170,7 @@
 </dialog>
 
        <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokollok">
-               <control caption="A Shareaza Protokollrendszere:"/>
+               <control caption="A Shareaza protokollrendszere:"/>
                <control/>
        </dialog>
 
@@ -3179,7 +3179,7 @@
                <control caption="Kinézet adatai:"/>
                <control caption="Név:"/>
                <control caption="..."/>
-               <control caption="Készítette:"/>
+               <control caption="Készítő:"/>
                <control caption="..."/>
                <control caption="Leírás:"/>
                <control/>
@@ -3246,7 +3246,7 @@
                <control caption="Köszöntelek a Shareazában!"/>
                <control caption="Ha még nem ismered aShareazát és/vagy nem használtál más p2p programot, akkor itt egyszerűen elvégezheted a fonos beállításokat."/>
                <control caption="De, ha inkább részletesen akarod beállítani a programot, menj az Eszközök menü Beállítások pontjára. A Kilépés gombbal bármikor abbahagyhatod a munkát."/>
-               <control caption="Ezeket kell beállítanod:"/>
+               <control caption="Ezek a feladatok:"/>
                <control/>
                <control caption="Milyen internetkapcsolatod van?"/>
                <control/>
@@ -3383,10 +3383,10 @@
                <control/>
                <control caption="Város:"/>
                <control/>
-               <control caption="Térkép:"/>
-               <control caption="Szélességi fok:"/>
+               <control caption="Térkép (fokok):"/>
+               <control caption="Szélességi:"/>
                <control/>
-               <control caption="Hosszúsági fok:"/>
+               <control caption="Hosszúsági:"/>
                <control/>
                <control caption="Érdeklődési kör:"/>
                <control/>
@@ -3449,7 +3449,7 @@
 
        <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Torrent vagy fájl letöltése">
                <control/><control/>
-               <control caption="Írd ide a letölteni való fájl elérési útvonalát és nyomj Entert."/>
+               <control caption="Írd ide a letöltendő fájl elérési útvonalát és nyomj Entert."/>
                <control/>
                <control caption="Letöltés"/>
                <control caption="Mégse"/>
@@ -3719,7 +3719,7 @@
                <control/>
                <control caption="Tudtad, hogy a Shareaza egy teljesen ingyenes termék?"/>
                <control caption="A Shareaza SEMMILYEN &quot;kémprogramot&quot;, &quot;reklámot&quot; és hasonló programot NEM tartalmaz. SEMMILYEN &quot;popup ablak&quot; NEM található benne.{n}{n}Ha mégis megjelenne ilyesmi, akkor az nem a Shareazától származik!"/>
-               <control caption="Ellenben más programok tartalmazhatnak reklámot és/vagy kémprogramot. Ha ilyenekkel találkozol, futtass le egy Reklám- és kémprogramölő programot."/>
+               <control caption="Ellenben más programok tartalmazhatnak reklámot és/vagy kémprogramot. Ha ilyenekkel találkozol, futtass le egy reklám- és kémprogramölő programot."/>
                <control caption="Soha nem kell pénzt kiadnod a Shareazáért. Innen letöltető ingyen: www.shareaza.com. Ha valahol fizettél a Shareazáért, akkor biztosan átvágtak és kérd vissza a pénzedet."/>
                <control caption="A Shareaza tiszteli a felhasználóit!"/>
                <control caption="www.shareaza.com"/>
@@ -3729,10 +3729,10 @@
        <dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Terjesztés">
                <control/>
                <control caption="Terjeszd az igét!"/>
-               <control caption="Reméljük, hogy örömmel használja a Shareazát. Szerintünk a Shareaza jelenleg a legjobb fájlmegosztó a piacon."/>
+               <control caption="Reméljük, hogy örömmel használod a Shareazát. Szerintünk a Shareaza jelenleg a legjobb fájlmegosztó program a piacon."/>
                <control caption="Sajnos sokan nem tudják, miből maradnak ki!"/>
-               <control caption="Ezért, ha ismernek valakit, akinek esetleg pont egy ilyen programra lenne szüksége, meséljék el, hogy milyen remek a Shareaza."/>
-               <control caption="Nem fog köszönet nélkül maradni!"/>
+               <control caption="Ezért, ha ismersz valakit, akinek pont egy ilyen programra lenne szüksége, nyugodtan ajánld neki a Shareazát."/>
+               <control caption="Nem fogsz köszönet nélkül maradni!"/>
                <control caption="www.shareaza.com"/>
                <control caption="OK"/>
        </dialog>
