@@ -181,7 +181,11 @@ BOOL CEDNeighbour::OnConnected()
 	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
+#ifdef _UNICODE
 	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS | ED2K_SERVER_TCP_UNICODE ).Write( pPacket );
+#else
+	CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | ED2K_SERVER_TCP_NEWTAGS ).Write( pPacket );
+#endif
 	
 	m_nState = nrsHandshake1;
 	Send( pPacket );
