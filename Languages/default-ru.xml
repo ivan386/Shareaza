@@ -3111,18 +3111,18 @@
                <control caption="Позволить стать ветвью"/>
                <control caption="Соединяться только с узлом"/>
                <control caption="Gnutella-G_2:"/>
-               <control caption="Ветвь к узлу:"/>
+               <control caption="Узлов к ветви:"/>
                <control/><control/>
-               <control caption="Узел к ветви:"/>
+               <control caption="Ветвей к узлу:"/>
                <control/><control/>
-               <control caption="Узел к узлу:"/>
+               <control caption="Узлов к узлу:"/>
                <control/><control/>
                <control caption="Gnutella-G_1:"/>
-               <control caption="Ветвь к узлу:"/>
+               <control caption="Узлов к ветви:"/>
                <control/><control/>
-               <control caption="Узел к ветви:"/>
+               <control caption="Ветвей к узлу:"/>
                <control/><control/>
-               <control caption="Узел к узлу:"/>
+               <control caption="Узлов к узлу:"/>
                <control/><control/>
                <control caption="_Компрессия в каналах связи:"/>
                <control caption="Узел к ветви"/>
