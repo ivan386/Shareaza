@@ -4,15 +4,15 @@
 					<table width="100%" cellspacing="0">
 						<tr>
 							<td class="tabedg">&nbsp;</td>
-							<td class="tab">Home</td>
+							<td class="tab">Lar</td>
 							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Search</td>
+							<td class="tab">Pesquisar</td>
 							<td class="tabfil">&nbsp;</td>
 							<td class="tab">Downloads</td>
 							<td class="tabfil">&nbsp;</td>
 							<td class="tab">Uploads</td>
 							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Networks</td>
+							<td class="tab">Rede</td>
 							<td class="tabedg">&nbsp;</td>
 						</tr>
 					</table>
@@ -21,32 +21,32 @@
 			<tr>
 				<td class="frame">
 					<div>
-						Welcome to <b>Shareaza Remote Access</b>.</b>
-						If this copy of Shareaza is running on your PC, please
-						type your remote access username and password, then click <b>Login</b>.
+						Bem-vindo ao <b>Acesso Remoto do Shareaza.</b>
+						Se esta cópia do Shareaza est&#225; rodando em seu PC, por favor
+						digite o seu nome de usu&#225;rio e senha de acesso, e ent&#227;o clique em <b>Fazer Login</b>.
 					</div>
 					<%? failure %>
 					<div align="center" style="color: red; font-weight: bold;">
 						<br>
-						The username and password you typed were incorrect.
+						O nome de usu&#225;rio e senha digitados est&#227;o incorretos.
 						<br>
-						Please try again.
+						Por favor tente novamente.
 					</div>
 					<%?%>
-					<form method="get">
+					<form method="get" action="">
 					<input type="hidden" name="submit" value="1">
 					<table align="center">
 						<tr>
-							<td>Username:</td>
+							<td>Nome de usu&#225;rio:</td>
 							<td><input type="text" name="username" size="20"></td>
 						</tr>
 						<tr>
-							<td>Password:</td>
+							<td>Senha:</td>
 							<td><input type="password" name="password" size="20" ID="Text1"></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-								<input type="submit" value="Login">
+								<input type="submit" value="Fazer Login">
 							</td>
 						</tr>
 					</table>
