@@ -25,6 +25,7 @@
 #include "Network.h"
 #include "Handshakes.h"
 #include "PageSettingsRemote.h"
+#include "SHA.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,7 +38,7 @@ IMPLEMENT_DYNAMIC(CRemoteSettingsPage, CSettingsPage)
 BEGIN_MESSAGE_MAP(CRemoteSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_REMOTE_ENABLE, OnBnClickedRemoteEnable)
 	ON_EN_CHANGE(IDC_REMOTE_USERNAME, OnBnClickedRemoteEnable)
-	ON_EN_CHANGE(IDC_REMOTE_PASSWORD, OnBnClickedRemoteEnable)
+	ON_EN_CHANGE(IDC_REMOTE_PASSWORD, OnNewPassword)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
@@ -76,12 +77,37 @@ BOOL CRemoteSettingsPage::OnInitDialog()
 	
 	m_bEnable	= m_bOldEnable		= Settings.Remote.Enable;
 	m_sUsername	= m_sOldUsername	= Settings.Remote.Username;
-	m_sPassword	= m_sOldPassword	= Settings.Remote.Password;
+	m_sOldPassword	= Settings.Remote.Password;
+	if( Settings.Remote.Password.GetLength() > 0 ) m_sPassword	= _T("      ");
+	else m_sPassword = _T("");
 	
 	UpdateData( FALSE );
 	OnBnClickedRemoteEnable();
 	
 	return TRUE;
+}
+
+void CRemoteSettingsPage::OnNewPassword()
+{
+	UpdateData();
+
+	if( m_sPassword.GetLength() < 3 )	//Password too short
+	{
+		Settings.Remote.Password = _T("");
+	}
+	else if( m_sPassword == _T("      ") ) //Password hasn't been edited. (?)
+	{
+		//Settings.Remote.Password = m_sOldPassword;
+	}
+	else								//Hash and store new password
+	{
+		CSHA pSHA1;
+		pSHA1.Add( m_sPassword, m_sPassword.GetLength() );
+		pSHA1.Finish();
+		Settings.Remote.Password = pSHA1.GetHashString( FALSE );
+	}
+
+	OnBnClickedRemoteEnable();
 }
 
 void CRemoteSettingsPage::OnBnClickedRemoteEnable()
@@ -90,14 +116,14 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 	
 	Settings.Remote.Enable		= m_bEnable;
 	Settings.Remote.Username	= m_sUsername;
-	Settings.Remote.Password	= m_sPassword;
+	//Settings.Remote.Password	= m_sPassword;
 	
 	m_wndUsername.EnableWindow( m_bEnable );
 	m_wndPassword.EnableWindow( m_bEnable );
 	
 	CString strURL;
 	
-	if ( m_bEnable && ! m_sUsername.IsEmpty() && ! m_sPassword.IsEmpty() )
+	if ( m_bEnable && ! m_sUsername.IsEmpty() && ! Settings.Remote.Password.IsEmpty() )
 	{
 		if ( Network.IsListening() )
 		{

@@ -55,6 +55,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnNewPassword();
 	afx_msg void OnBnClickedRemoteEnable();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
