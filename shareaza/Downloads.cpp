@@ -385,7 +385,9 @@ int CDownloads::GetSeedCount() const
 		CDownload* pDownload = GetNext( pos );
 		
 		if ( pDownload->IsSeeding() )
-				nCount++;
+			nCount++;		//Manually seeded Torrent
+		else if ( pDownload->IsCompleted() && pDownload->m_bBTH && pDownload->IsFullyVerified() )
+			nCount++;		//Torrent that has completed
 	}
 	
 	return nCount;
