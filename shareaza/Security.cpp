@@ -1338,9 +1338,9 @@ void CMessageFilter::Load()
 
 BOOL CMessageFilter::IsBlockedED2K( LPCTSTR pszText )
 {
-#define NUM_STRINGS 3
+#define NUM_STRINGS 4
 
-	CString ED2KBlock[NUM_STRINGS] = {_T("Your client is connecting too fast"),_T("Join the L33cher Team"),_T("Your client is making too many connections") };
+	CString ED2KBlock[NUM_STRINGS] = {_T("Your client is connecting too fast"),_T("Join the L33cher Team"),_T("Your client is making too many connections"),_T("AUTOMATED MESSAGE") };
 
 	if ( Settings.Community.ChatFilter && pszText )
 	{
