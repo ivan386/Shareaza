@@ -446,6 +446,19 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 	return nCount;
 }
 
+int CDownloads::GetConnectingTransferCount() const
+{
+	int nCount = 0;
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+		
+		nCount += pDownload->GetTransferCount( dtsConnecting );
+	}
+	
+	return nCount;
+}
 
 void CDownloads::Remove(CDownload* pDownload)
 {

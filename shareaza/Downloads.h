@@ -74,6 +74,7 @@ public:
 	int			GetCount(BOOL bActiveOnly = FALSE) const;
 	int			GetTransferCount() const;
 	int			GetTryingCount(BOOL bTorrentsOnly = FALSE) const;
+	int			GetConnectingTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;
 	BOOL		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
