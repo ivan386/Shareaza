@@ -42,6 +42,7 @@ void CSettings::Setup()
 	Add( _T(".Path"), &General.Path, General.Path );
 	Add( _T(".Debug"), &General.Debug, FALSE );
 	Add( _T(".DebugLog"), &General.DebugLog, FALSE );
+	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
 	Add( _T("Settings.GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings.CloseMode"), &General.CloseMode, 0 );
 	Add( _T("Settings.TrayMinimise"), &General.TrayMinimise, FALSE );
@@ -240,7 +241,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 60 );
-	Add( _T("eDonkey.RequeryDelay"), &eDonkey.RequeryDelay, 45*60 );
+	//Add( _T("eDonkey.RequeryDelay"), &eDonkey.RequeryDelay, 45*60 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
 	Add( _T("eDonkey.RequestSize"), &eDonkey.RequestSize, 180*1024/2 );

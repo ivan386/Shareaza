@@ -95,6 +95,15 @@ BOOL CShareazaApp::InitInstance()
 		
 		return FALSE;
 	}
+
+	//Beta expiry. Remember to update the time, and remove this section for final releases.
+	if((DWORD)CTime::GetCurrentTime().GetTime() >= 0x41000000) 
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_BETA_EXPIRED);
+		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
+		//return FALSE;
+	}
 	
 	// Enable3dControls();
 	SetRegistryKey( _T("Shareaza") );
@@ -161,9 +170,8 @@ BOOL CShareazaApp::InitInstance()
 	dlgSplash->Step( _T("IPC") );
 		DDEServer.Create();
 		IEProtocol.Create();
-	
+
 	dlgSplash->Step( _T("Upgrade Manager") );
-	
 	if ( VersionChecker.NeedToCheck() ) VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
 	
 	pCursor.Restore();

@@ -259,10 +259,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				nFrequency *= ( m_nPriority + 1 );
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
-			{
-				nFrequency = Settings.eDonkey.RequeryDelay;
-				nFrequency *= ( m_nPriority + 1 );
-			}
+				nFrequency = 86400;
 			
 			if ( tSecs - nPeriod < nFrequency ) continue;
 		}

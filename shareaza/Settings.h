@@ -38,6 +38,7 @@ public:
 		CString		Path;
 		BOOL		Debug;
 		BOOL		DebugLog;
+		BOOL		UpdateCheck;
 		INT			GUIMode;
 		BOOL		CloseMode;
 		BOOL		TrayMinimise;
@@ -279,7 +280,7 @@ public:
 		BOOL		ServerWalk;
 		DWORD		QueryGlobalThrottle;
 		DWORD		QueryServerThrottle;
-		DWORD		RequeryDelay;
+		//DWORD		RequeryDelay;
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;

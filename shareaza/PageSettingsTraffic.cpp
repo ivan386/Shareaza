@@ -86,6 +86,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	AddSetting( &Settings.General.Debug, 1, 0, 1 );
 	AddSetting( &Settings.General.DebugLog, 1, 0, 1 );
+	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
 	
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
 	AddSetting( &Settings.Connection.TimeoutTraffic, 1000, 10, 60*60, _T(" s") );
@@ -140,7 +141,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 500, 20000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
-	AddSetting( &Settings.eDonkey.RequeryDelay, 60, 35, 2048, _T(" m") );
+	//AddSetting( &Settings.eDonkey.RequeryDelay, 60, 35, 2048, _T(" m") );
 	AddSetting( &Settings.eDonkey.RequestPipe, 1, 1, 10 );
 	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
 	AddSetting( &Settings.eDonkey.RequestSize, 1024, 10, 1000, _T(" KB") );

@@ -300,7 +300,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
 	
-	if ( m_bED2K && ! m_bWantDN )
+	if ( m_bED2K )
 	{
 		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
 		pPacket->Write( &m_pED2K, sizeof(MD4) );

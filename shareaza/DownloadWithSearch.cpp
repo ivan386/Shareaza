@@ -164,19 +164,16 @@ void CDownloadWithSearch::PrepareSearch()
 	{
 		pSearch->m_bED2K = TRUE;
 		pSearch->m_pED2K = m_pED2K;
+		m_pSearch->m_bAllowED2K = TRUE;
+	}
+	else
+	{
+		m_pSearch->m_bAllowED2K = FALSE;
 	}
 	if ( m_bBTH )
 	{
 		pSearch->m_bBTH = TRUE;
 		pSearch->m_pBTH = m_pBTH;
-		
-		// TODO: This is a very dirty hack to pass BT searches, remove it
-		
-		if ( pSearch->m_sSearch.IsEmpty() )
-		{
-			pSearch->m_sSearch = _T("BTIH");
-			pSearch->BuildWordList();
-		}
 	}
 	
 	pSearch->m_bWantURL	= TRUE;
