@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CIconButtonCtrl, CWnd)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDBLCLK()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONUP()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_WM_ENABLE()
@@ -176,6 +178,16 @@ void CIconButtonCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 void CIconButtonCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
+}
+
+void CIconButtonCtrl::OnRButtonDown(UINT nFlags, CPoint point)
+{
+
+}
+
+void CIconButtonCtrl::OnRButtonUp(UINT nFlags, CPoint point)
+{
+
 }
 
 /////////////////////////////////////////////////////////////////////////////

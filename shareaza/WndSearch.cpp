@@ -576,7 +576,6 @@ void CSearchWnd::OnSearchStop()
 {
 	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
 	{
-		theApp.Message( MSG_DEFAULT, _T("shifty!") );
 		if( ( !m_bPaused ) && ( !m_bWaitMore ) )
 		{	//Pause search
 			POSITION pos = m_pSearches.GetTailPosition();
