@@ -442,7 +442,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		switch ( pTag.m_nKey )
 		{
 		case ED2K_ST_SERVERNAME:
-			// if ( pTag.m_nType == ED2K_TAG_STRING ) // "Short strings" may be possible..
+			// if ( pTag.m_nType == ED2K_TAG_STRING ) // "Short strings" may be possible...
 			m_sServerName = pTag.m_sValue;
 			break;
 		case ED2K_ST_DESCRIPTION:
@@ -454,20 +454,6 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			theApp.Message( MSG_ERROR, _T("Unrecognised tag in ED2K server Ident") );
 			//****************Debug only
 		}
-		/*
-		if ( pTag.Check( ED2K_ST_SERVERNAME, ED2K_TAG_STRING ) )
-		{
-			m_sServerName = pTag.m_sValue;
-		}
-		else if ( pTag.Check( ED2K_ST_DESCRIPTION, ED2K_TAG_STRING ) )
-		{
-			strDescription = pTag.m_sValue;
-		}
-		else if ( pTag.Check( ED2K_ST_MAXUSERS, ED2K_TAG_INT ) )
-		{
-			m_nUserLimit = pTag.m_nValue;
-		}
-		*/
 	}
 	
 	if ( (DWORD&)m_pGUID == 0x2A2A2A2A )
@@ -511,7 +497,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	}
 	
 	GGUID* pGUID		= (GGUID*)m_pQueries.RemoveHead();
-	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, pGUID, m_nFlags );
+	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, m_nFlags, pGUID );
 	
 	if ( pHits == NULL )
 	{
@@ -631,7 +617,7 @@ void CEDNeighbour::SendSharedFiles()
 		
 		if ( pFile->IsShared() && pFile->m_bED2K )	//If file is shared and has an ed2k hash
 		{
-			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( nCount < 100 ) || ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
+			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( nCount < 100 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
@@ -727,7 +713,7 @@ void CEDNeighbour::SendSharedFiles()
 					// Send the file name to the ed2k server
 					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, m_nFlags );
 					// Send the file size to the ed2k server
-					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pPacket, m_nFlags );
+					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket, m_nFlags );
 					// Send the file type to the ed2k server
 					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nFlags );
 					// Send the bitrate to the ed2k server
