@@ -789,7 +789,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			{
 				_stscanf( (LPCTSTR)strLine + 16, _T("%lu"), &m_pWebCache->m_nAccessPeriod );
 			}
-			else if ( strLine == _T("i|force|remove") )
+			else if ( strLine == _T("i|force|remove") || _tcsnicmp( strLine, _T("i|update|warning|bad url"), 24 ) == 0 )
 			{
 				m_pWebCache->Remove();
 				return FALSE;
