@@ -285,8 +285,8 @@ StatusUninstalling=Verwijderen van %1...
 
 NameAndVersion=%1 versie %2
 AdditionalIcons=Extra snelkoppelingen:
-CreateDesktopIcon=Maak een snelkoppeling op het &bureaublad
-CreateQuickLaunchIcon=Maak een snelkoppeling op de &Snel starten werkbalk
+CreateDesktopIcon=Toon een snelkoppeling op het &bureaublad
+CreateQuickLaunchIcon=Toon een snelkoppeling op de &Snel Starten werkbalk
 ProgramOnTheWeb=%1 op het Web
 UninstallProgram=Verwijder %1
 LaunchProgram=&Start %1
