@@ -173,8 +173,9 @@ CDownload* CDownloads::Add(CMatchFile* pFile)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 	
-	if ( pDownload->GetSourceCount() == 0 ||
-		 ( pDownload->m_bED2K && ! pDownload->m_bSHA1 ) )
+	if ( ( (pDownload->GetSourceCount() == 0 ) ||
+		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
+		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->FindMoreSources();
 	}
@@ -271,8 +272,12 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 	
-	if ( pURL->m_nAction != CShareazaURL::uriSource )
-		pDownload->FindMoreSources();
+	if( ( pDownload->m_bBTH && ( GetActiveTorrentCount() < Settings.BitTorrent.DownloadTorrents ) ) ||
+		( ! pDownload->m_bBTH && ( GetCount(TRUE) < Settings.Downloads.MaxFiles ) ) )
+	{
+		if ( pURL->m_nAction != CShareazaURL::uriSource )
+			pDownload->FindMoreSources();
+	}
 	
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
@@ -357,6 +362,23 @@ int CDownloads::GetSeedCount() const
 		CDownload* pDownload = GetNext( pos );
 		
 		if ( pDownload->IsSeeding() )
+				nCount++;
+	}
+	
+	return nCount;
+}
+
+int CDownloads::GetActiveTorrentCount() const
+{
+	int nCount = 0;
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+		
+		if ( pDownload->IsDownloading() && pDownload->m_bBTH &&
+			! pDownload->IsSeeding()	&& ! pDownload->IsCompleted() &&
+			! pDownload->IsMoving()		&& ! pDownload->IsPaused() )
 				nCount++;
 	}
 	

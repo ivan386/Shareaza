@@ -132,7 +132,7 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	ZeroMemory( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 	SetModified();
 	
-	CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+	CreateDirectory( Settings.Downloads.TorrentPath, NULL );//Create/set up torrents folder
 	LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	pTorrent->SaveTorrentFile( Settings.Downloads.TorrentPath );
 	Settings.BitTorrent.AdvancedInterface = TRUE;

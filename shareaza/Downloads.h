@@ -70,6 +70,7 @@ public:
 	void		CloseTransfers();
 public:
 	int			GetSeedCount() const;
+	int			GetActiveTorrentCount() const;
 	int			GetCount(BOOL bActiveOnly = FALSE) const;
 	int			GetTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;
