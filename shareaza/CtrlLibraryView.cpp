@@ -86,7 +86,8 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 	
 	if ( nCount == 1 )
 	{
-		for ( CLibraryTreeItem* pItem = GetFolderSelection() ; pItem->m_pParent ;
+        CLibraryTreeItem* pItem = GetFolderSelection();
+		for ( ; pItem->m_pParent ;
 			pItem = pItem->m_pParent )
 		{
 			if ( str.GetLength() ) str = '\\' + str;

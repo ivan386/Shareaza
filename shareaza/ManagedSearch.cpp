@@ -452,7 +452,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD tTicks, DWORD tSecs)
 				return TRUE;
 			}
 		}
-		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5, 5*60 ) )
+		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5, DWORD(5*60) ) )
 		{
 			// Timing wise, we can request a query key now -- but first we must figure
 			// out who should be the receiver

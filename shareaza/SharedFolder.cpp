@@ -176,7 +176,7 @@ int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 	
 	if ( bRecursive )
 	{
-		for ( pos = GetFolderIterator() ; pos ; )
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			GetNextFolder( pos )->GetFileList( pList, bRecursive );
 		}
@@ -195,7 +195,7 @@ int CLibraryFolder::GetSharedCount() const
 		if ( pFile->IsShared() ) nCount++;
 	}
 	
-	for ( pos = GetFolderIterator() ; pos ; )
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		nCount += GetNextFolder( pos )->GetSharedCount();
 	}
@@ -213,7 +213,7 @@ void CLibraryFolder::Clear()
 		delete GetNextFolder( pos );
 	}
 	
-	for ( pos = GetFileIterator() ; pos ; )
+	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		delete GetNextFile( pos );
 	}
@@ -245,7 +245,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		
 		ar.WriteCount( GetFileCount() );
 
-		for ( pos = GetFileIterator() ; pos ; )
+		for ( POSITION pos = GetFileIterator() ; pos ; )
 		{
 			GetNextFile( pos )->Serialize( ar, nVersion );
 		}
@@ -282,7 +282,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_nVolume	+= pFolder->m_nVolume;
 		}
 
-		for ( nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFile* pFile = new CLibraryFile( this );
 			pFile->Serialize( ar, nVersion );
@@ -457,7 +457,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		}
 	}
 	
-	for ( pos = GetFileIterator() ; pos ; )
+	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = GetNextFile( pos );
 		
@@ -529,7 +529,8 @@ BOOL CLibraryFolder::CheckMonitor()
 
 void CLibraryFolder::Scan()
 {
-	for ( CLibraryFolder* pFolder = this ; pFolder->m_pParent ; pFolder = pFolder->m_pParent );
+    CLibraryFolder* pFolder = this;
+	for ( ; pFolder->m_pParent ; pFolder = pFolder->m_pParent );
 	if ( pFolder ) pFolder->m_bMonitor = FALSE;
 	Library.m_pWakeup.SetEvent();
 }
@@ -561,7 +562,7 @@ void CLibraryFolder::OnDelete()
 		GetNextFolder( pos )->OnDelete();
 	}
 	
-	for ( pos = GetFileIterator() ; pos ; )
+	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		GetNextFile( pos )->OnDelete();
 	}

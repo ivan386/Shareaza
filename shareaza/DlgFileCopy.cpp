@@ -221,7 +221,8 @@ void CFileCopyDlg::StopOperation()
 
 	m_bThread = FALSE;
 
-	for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 100;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 

@@ -115,7 +115,7 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_bPaused		= FALSE;
 
 	for ( int nType = 0 ; nType < G1_PACKTYPE_MAX ; nType++ ) m_bTypeG1[ nType ] = TRUE;
-	for ( nType = 0 ; nType < 16 ; nType++ ) m_bTypeG2[ nType ] = TRUE;
+	for ( int nType = 0 ; nType < 16 ; nType++ ) m_bTypeG2[ nType ] = TRUE;
 
 	SetTimer( 2, 500, NULL );
 
@@ -351,7 +351,7 @@ void CPacketWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 
 	pTypes2.CreatePopupMenu();
 
-	for ( nType = 0 ; m_pszG2[ nType ] ; nType++ )
+	for ( int nType = 0 ; m_pszG2[ nType ] ; nType++ )
 	{
 		if ( m_bTypeG2[ nType ] )
 			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, CString( m_pszG2[ nType ] ) );

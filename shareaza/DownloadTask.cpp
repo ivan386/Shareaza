@@ -370,7 +370,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 	
 	while ( nLength )
 	{
-		DWORD nBuffer	= (DWORD)min( nLength, BUFFER_SIZE );
+		DWORD nBuffer	= (DWORD)min( nLength, QWORD(BUFFER_SIZE) );
 		DWORD nSuccess	= 0;
 		DWORD tStart	= GetTickCount();
 		
@@ -388,7 +388,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 		
 		if ( m_pEvent != NULL ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50 ) );
+		Sleep( min( tStart, DWORD(50) ) );
 		if ( m_pEvent != NULL ) break;
 	}
 	

@@ -370,8 +370,8 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 					
 					if ( rcClient.Height() < nHeight )
 					{
-						rcClient.bottom = min( GetSystemMetrics( SM_CYSCREEN ) - 1,
-							rcClient.top + nHeight );
+						rcClient.bottom = min( LONG(GetSystemMetrics( SM_CYSCREEN ) - 1),
+							LONG(rcClient.top + nHeight) );
 						
 						::MoveWindow( hWnd, rcClient.left, rcClient.top,
 							rcClient.Width(), rcClient.Height(), TRUE );

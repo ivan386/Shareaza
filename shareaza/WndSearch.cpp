@@ -467,8 +467,8 @@ void CSearchWnd::OnSearchSearch()
 		m_bWaitMore = FALSE;
 
 		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nGnutellaHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
-		m_nMaxQueryCount = pSearch->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
+		m_nMaxResults = m_pMatches->m_nGnutellaHits + (DWORD)min( DWORD(300), Settings.Gnutella.MaxResults );
+		m_nMaxQueryCount = pSearch->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, DWORD(10000) );
 
 		//Resume ED2K search
 		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
@@ -680,9 +680,9 @@ void CSearchWnd::ExecuteSearch()
 			pManaged->Stop();
 			pManaged->Start();
 		
-			m_nMaxResults		= m_pMatches->m_nGnutellaHits + (DWORD)min( 300, Settings.Gnutella.MaxResults );
+			m_nMaxResults		= m_pMatches->m_nGnutellaHits + (DWORD)min( DWORD(300), Settings.Gnutella.MaxResults );
 			m_nMaxED2KResults	= m_pMatches->m_nED2KHits + (DWORD)min( 201, Settings.eDonkey.MaxResults );
-			m_nMaxQueryCount	= pManaged->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, 10000 );
+			m_nMaxQueryCount	= pManaged->m_nQueryCount + (DWORD)min( Settings.Gnutella2.QueryLimit, DWORD(10000) );
 
 			m_wndPanel.ShowSearch( pManaged );
 

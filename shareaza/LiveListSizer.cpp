@@ -91,7 +91,8 @@ BOOL CLiveListSizer::Resize(int nWidth, BOOL bScale)
 
 	LV_COLUMN pColumn;
 	pColumn.mask = LVCF_WIDTH;
-	for ( int nColumn = 0 ; m_pCtrl->GetColumn( nColumn, &pColumn ) ; nColumn++ );
+    int nColumn = 0;
+	for ( ; m_pCtrl->GetColumn( nColumn, &pColumn ) ; nColumn++ );
 
 	if ( nColumn != m_nColumns )
 	{

@@ -409,7 +409,7 @@ void CMatchCtrl::UpdateScroll(DWORD nScroll)
 	{
 		CRect rcCol;
 		Header_GetItemRect( m_wndHeader.GetSafeHwnd(), nColumn, &rcCol );
-		nColumnWidth = max( nColumnWidth, rcCol.right );
+		nColumnWidth = max( nColumnWidth, int(rcCol.right) );
 	}
 	
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -593,7 +593,7 @@ void CMatchCtrl::OnPaint()
 	
 	INT nZeroInt, nColWidth;
 	GetScrollRange( SB_HORZ, &nZeroInt, &nColWidth );
-	rcClient.right = max( rcClient.right, nColWidth );
+	rcClient.right = max( rcClient.right, LONG(nColWidth) );
 	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	
@@ -606,7 +606,8 @@ void CMatchCtrl::OnPaint()
 	CMatchFile** ppFile = m_pMatches->m_pFiles + m_nTopIndex;
 	BOOL bFocus = ( GetFocus() == this );
 	
-	for (	DWORD nIndex = m_nTopIndex ;
+    DWORD nIndex = m_nTopIndex;
+	for (	;
 			nIndex < m_pMatches->m_nFiles && rcItem.top < rcClient.bottom ;
 			nIndex++, ppFile++ )
 	{
@@ -1683,7 +1684,7 @@ void CMatchCtrl::DoDelete()
 		}
 	}
 	
-	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = (CQueryHit*)m_pMatches->m_pSelectedHits.GetNext( pos );
 		m_pMatches->Select( NULL, pHit, FALSE );

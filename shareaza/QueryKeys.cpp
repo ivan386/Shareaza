@@ -52,7 +52,7 @@ CQueryKeys::CQueryKeys()
 	
 	BYTE* pFill = (BYTE*)m_pTable;
 	
-	for ( nCount = m_nTable ; nCount ; nCount-- )
+	for ( DWORD nCount = m_nTable ; nCount ; nCount-- )
 	{
 		*pFill++ = (BYTE)( rand() & 0xFF );
 		*pFill++ = (BYTE)( rand() & 0xFF );

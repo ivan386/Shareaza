@@ -65,6 +65,21 @@
 #define BIF_NEWDIALOGSTYLE	0x0040
 #define OFN_ENABLESIZING	0x00800000
 
+#undef NULL
+#undef min
+#undef max
+
+//
+// Standard headers
+//
+
+#include <algorithm>
+#undef NULL
+
+const int NULL = 0;
+using std::min;
+using std::max;
+
 //
 // 64-bit type
 //

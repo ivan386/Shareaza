@@ -195,7 +195,8 @@ BOOL CG1Neighbour::ProcessPackets()
 {
 	CBuffer* pInput = m_pZInput ? m_pZInput : m_pInput;
 	
-	for ( BOOL bSuccess = TRUE ; bSuccess ; )
+    BOOL bSuccess = TRUE;
+	for ( ; bSuccess ; )
 	{
 		GNUTELLAPACKET* pPacket = (GNUTELLAPACKET*)pInput->m_pBuffer;
 		if ( pInput->m_nLength < sizeof(*pPacket) ) break;
@@ -506,7 +507,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 	
 	BYTE nHops = pPacket->m_nHops + 1;
-	nHops = min( nHops, PONG_NEEDED_BUFFER - 1 );
+	nHops = min( nHops, BYTE(PONG_NEEDED_BUFFER - 1) );
 	
 	if ( ! bLocal ) Neighbours.OnG1Pong( this, (IN_ADDR*)&nAddress, nPort, nHops + 1, nFiles, nVolume );
 	

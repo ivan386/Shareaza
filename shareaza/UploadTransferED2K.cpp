@@ -64,8 +64,6 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( 
 	m_sNick			= m_pClient->m_sNick;
 	
 	m_tRanking		= 0;
-	m_pRequested	= NULL;
-	m_pServed		= NULL;
 	
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 }
@@ -73,8 +71,6 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( 
 CUploadTransferED2K::~CUploadTransferED2K()
 {
 	ASSERT( m_pClient == NULL );
-	ASSERT( m_pRequested == NULL );
-	ASSERT( m_pServed == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -248,11 +244,9 @@ void CUploadTransferED2K::OnDropped(BOOL bError)
 		
 		m_tRequest = GetTickCount();
 		
-		m_pRequested->DeleteChain();
-		m_pRequested = NULL;
+		m_oRequested.clear();
 		
-		m_pServed->DeleteChain();
-		m_pServed = NULL;
+		m_oServed.clear();
 	}
 	else
 	{
@@ -380,11 +374,9 @@ void CUploadTransferED2K::Cleanup(BOOL bDequeue)
 	
 	ClearRequest();
 	
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
+	m_oRequested.clear();
 	
-	m_pServed->DeleteChain();
-	m_pServed = NULL;
+	m_oServed.clear();
 	
 	m_pBaseFile	= NULL;
 	m_nState	= upsReady;
@@ -407,12 +399,12 @@ void CUploadTransferED2K::AddRequest(QWORD nOffset, QWORD nLength)
 {
 	ASSERT( m_pBaseFile != NULL );
 	
-	for ( CFileFragment* pFragment = m_pRequested ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset == nOffset && pFragment->m_nLength == nLength ) return;
-	}
-	
-	m_pRequested = CFileFragment::New( NULL, m_pRequested, nOffset, nLength );
+    FF::SimpleFragment oRequest( nOffset, nOffset + nLength );
+
+    if ( ::std::find( m_oRequested.begin(), m_oRequested.end(), oRequest ) == m_oRequested.end() )
+    {
+        m_oRequested.pushBack( oRequest );
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -491,28 +483,21 @@ BOOL CUploadTransferED2K::StartNextRequest()
 	ASSERT( m_nState == upsUploading || m_nState == upsRequest );
 	ASSERT( m_pDiskFile != NULL );
 	
-	while ( m_pRequested != NULL && m_nLength == SIZE_UNKNOWN )
+	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-		CFileFragment* pFragment = m_pRequested;
-		m_pRequested = pFragment->m_pNext;
-		
-		for ( CFileFragment* pOld = m_pServed ; pOld ; pOld = pOld->m_pNext )
-		{
-			if ( pOld->m_nOffset == pFragment->m_nOffset && pOld->m_nLength == pFragment->m_nLength ) break;
-		}
-		
-		if ( pOld == NULL &&
-			 pFragment->m_nOffset < m_nFileSize &&
-			 pFragment->m_nOffset + pFragment->m_nLength <= m_nFileSize )
-		{
-			m_nOffset	= pFragment->m_nOffset;
-			m_nLength	= pFragment->m_nLength;
-			m_nPosition	= 0;
-		}
-		
-		pFragment->DeleteThis();
+        if ( ::std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() )
+            == m_oServed.end()
+            // This should be redundant (Camper)
+            && m_oRequested.begin()->begin() < m_nFileSize
+            && m_oRequested.begin()->end() <= m_nFileSize )
+        {
+            m_nOffset = m_oRequested.begin()->begin();
+            m_nLength = m_oRequested.begin()->length();
+            m_nPosition = 0;
+        }
+        m_oRequested.popFront();
 	}
-	
+
 	if ( m_nLength < SIZE_UNKNOWN )
 	{
 		m_nState	= upsUploading;
@@ -545,7 +530,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	ASSERT( m_nPosition < m_nLength );
 	
 	QWORD nChunk = m_nLength - m_nPosition;
-	nChunk = min( nChunk, Settings.eDonkey.FrameSize );
+	nChunk = min( nChunk, QWORD(Settings.eDonkey.FrameSize) );
 	
 #if 0
 	// Use packet form
@@ -613,7 +598,7 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_FINISHED,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
-	m_pServed = CFileFragment::New( NULL, m_pServed, m_nOffset, m_nLength );
+    m_oServed.pushBack( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
 	m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 	m_nLength = SIZE_UNKNOWN;
 	

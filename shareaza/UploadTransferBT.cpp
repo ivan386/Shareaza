@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include <algorithm>
 #include "Shareaza.h"
 #include "Settings.h"
 #include "BTClient.h"
@@ -60,9 +61,6 @@ CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload) :
 	m_bChoked			= TRUE;
 	m_nRandomUnchoke	= 0;
 	
-	m_pRequested		= NULL;
-	m_pServed			= NULL;
-	
 	RequestPartial( m_pDownload );
 	m_pDownload->AddUpload( this );
 }
@@ -71,8 +69,6 @@ CUploadTransferBT::~CUploadTransferBT()
 {
 	ASSERT( m_pClient == NULL );
 	ASSERT( m_pDownload == NULL );
-	ASSERT( m_pRequested == NULL );
-	ASSERT( m_pServed == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -83,10 +79,8 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	if ( m_bChoked == bChoke ) return;
 	m_bChoked = bChoke;
 	
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
-	m_pServed->DeleteChain();
-	m_pServed = NULL;
+	m_oRequested.clear();
+	m_oServed.clear();
 	
 	if ( bChoke ) m_nState = upsReady;
 	
@@ -113,10 +107,8 @@ void CUploadTransferBT::Close(BOOL bMessage)
 	if ( m_pDownload != NULL ) m_pDownload->RemoveUpload( this );
 	m_pDownload = NULL;
 	
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
-	m_pServed->DeleteChain();
-	m_pServed = NULL;
+	m_oRequested.clear();
+	m_oServed.clear();
 	
 	CUploadTransfer::Close( bMessage );
 }
@@ -197,14 +189,10 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 		return FALSE;
 	}
 	
-	for ( CFileFragment* pFragment = m_pRequested ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset == nOffset && pFragment->m_nLength == nLength ) return TRUE;
-	}
+    if ( ::std::find_first_of( m_oRequested.begin(), m_oRequested.end(), m_oServed.begin(), m_oServed.end() )
+        != m_oRequested.end() ) return TRUE;
 	
-	CFileFragment* pNew = CFileFragment::New( NULL, m_pRequested, nOffset, nLength );
-	if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = pNew;
-	m_pRequested = pNew;
+    m_oRequested.pushBack( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 	
 	if ( m_nState == upsReady )
 	{
@@ -227,7 +215,7 @@ BOOL CUploadTransferBT::OnCancel(CBTPacket* pPacket)
 	
 	nOffset += nIndex * m_pDownload->m_pTorrent.m_nBlockSize;
 	
-	CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
+    m_oRequested.erase( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 	
 	return TRUE;
 }
@@ -262,27 +250,19 @@ BOOL CUploadTransferBT::ServeRequests()
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->m_pOutput->m_nLength > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
 	
-	while ( m_pRequested != NULL && m_nLength == SIZE_UNKNOWN )
+	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
-		CFileFragment* pFragment = m_pRequested;
-		m_pRequested = pFragment->m_pNext;
-		if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = NULL;
-		
-		for ( CFileFragment* pOld = m_pServed ; pOld ; pOld = pOld->m_pNext )
-		{
-			if ( pOld->m_nOffset == pFragment->m_nOffset && pOld->m_nLength == pFragment->m_nLength ) break;
-		}
-		
-		if ( pOld == NULL &&
-			 pFragment->m_nOffset < m_nFileSize &&
-			 pFragment->m_nOffset + pFragment->m_nLength <= m_nFileSize )
-		{
-			m_nOffset	= pFragment->m_nOffset;
-			m_nLength	= pFragment->m_nLength;
-			m_nPosition	= 0;
-		}
-		
-		pFragment->DeleteThis();
+        if ( ::std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() )
+            == m_oServed.end()
+            // This should be redundant (Camper)
+            && m_oRequested.begin()->begin() < m_nFileSize
+            && m_oRequested.begin()->end() <= m_nFileSize )
+        {
+            m_nOffset = m_oRequested.begin()->begin();
+            m_nLength = m_oRequested.begin()->length();
+            m_nPosition = 0;
+        }
+        m_oRequested.popFront();
 	}
 	
 	if ( m_nLength < SIZE_UNKNOWN )
@@ -315,7 +295,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_pDownload->m_nTorrentUploaded += m_nLength;
 		Statistics.Current.Uploads.Volume += ( m_nLength / 1024 );
 		
-		m_pServed = CFileFragment::New( NULL, m_pServed, m_nOffset, m_nLength );
+        m_oServed.pushBack( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
 		m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 		
 		m_nState	= upsUploading;

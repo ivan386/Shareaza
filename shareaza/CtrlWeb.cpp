@@ -229,7 +229,8 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 	CPoint ptScreen( *pPoint );
 	ptScreen.Offset( 2, 2 );
 	
-	for ( CWnd* pChild = this ; ; )
+    CWnd* pChild = this;
+	for ( ; ; )
 	{
 		CPoint ptClient( ptScreen );
 		pChild->ScreenToClient( &ptClient );

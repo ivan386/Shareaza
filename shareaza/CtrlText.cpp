@@ -274,7 +274,7 @@ void CTextCtrl::OnPaint()
 	rcLine.bottom += ( m_nTotal - m_nPosition ) * m_cCharacter.cy;
 	rcLine.top = rcLine.bottom - m_cCharacter.cy;
 
-	for ( nLine = m_pLines.GetSize() - 1 ; nLine >= 0 && rcLine.bottom > 0 ; nLine-- )
+	for ( int nLine = m_pLines.GetSize() - 1 ; nLine >= 0 && rcLine.bottom > 0 ; nLine-- )
 	{
 		CTextLine* pLine = (CTextLine*)m_pLines.GetAt( nLine );
 

@@ -52,6 +52,7 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadSource construction
 
 CDownloadSource::CDownloadSource(CDownload* pDownload)
+: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 }
@@ -89,9 +90,6 @@ void CDownloadSource::Construct(CDownload* pDownload)
 	m_tAttempt		= 0;
 	m_nFailures		= 0;
 
-	m_pPastFragment	= NULL;
-	m_pAvailable	= NULL;
-	
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_tLastSeen );
@@ -99,14 +97,15 @@ void CDownloadSource::Construct(CDownload* pDownload)
 
 CDownloadSource::~CDownloadSource()
 {
-	m_pPastFragment->DeleteChain();
-	m_pAvailable->DeleteChain();
+//	m_pPastFragment->DeleteChain();
+//	m_pAvailable->DeleteChain();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from a query hit
 
 CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
+: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -145,6 +144,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 // CDownloadSource construction from eDonkey source transfer
 
 CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, GGUID* pGUID)
+: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -174,6 +174,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, DWORD nClientID, WORD nCl
 // CDownloadSource construction from BitTorrent
 
 CDownloadSource::CDownloadSource(CDownload* pDownload, SHA1* pGUID, IN_ADDR* pAddress, WORD nPort)
+: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -201,6 +202,7 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, SHA1* pGUID, IN_ADDR* pAd
 // CDownloadSource construction from URL
 
 CDownloadSource::CDownloadSource(CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1, BOOL bHashAuth, FILETIME* pLastSeen)
+: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -287,12 +289,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar << m_bReadContent;
 		ar.Write( &m_tLastSeen, sizeof(FILETIME) );
 		
-		ar.WriteCount( m_pPastFragment->GetCount() );
-		
-		for ( CFileFragment* pFragment = m_pPastFragment ; pFragment ; pFragment = pFragment->m_pNext )
-		{
-			pFragment->Serialize( ar );
-		}
+        SerializeOut2( ar, m_oPastFragments );
 	}
 	else if ( nVersion >= 21 )
 	{
@@ -322,13 +319,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bReadContent;
 		ar.Read( &m_tLastSeen, sizeof(FILETIME) );
 		
-		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
-		{
-			CFileFragment* pNew = CFileFragment::New( NULL, m_pPastFragment );
-			pNew->Serialize( ar, nVersion >= 29 );
-			if ( m_pPastFragment != NULL ) m_pPastFragment->m_pPrevious = pNew;
-			m_pPastFragment = pNew;
-		}
+        SerializeIn2( ar, m_oPastFragments, nVersion );
 
 		// Should probably save this instead...
 		if ( _tcsncmp( m_sServer, _T("Shareaza"), 8 ) == 0 )
@@ -372,26 +363,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar.Read( &m_pGUID, sizeof(GGUID) );
 		m_bGUID = m_pGUID != (GGUID&)GUID_NULL;
 		
-		if ( nVersion >= 20 )
-		{
-			for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
-			{
-				CFileFragment* pNew = CFileFragment::New( NULL, m_pPastFragment );
-				pNew->Serialize( ar, FALSE );
-				if ( m_pPastFragment != NULL ) m_pPastFragment->m_pPrevious = pNew;
-				m_pPastFragment = pNew;
-			}
-		}
-		else if ( nVersion >= 5 )
-		{
-			while ( ar.ReadCount() )
-			{
-				CFileFragment* pNew = CFileFragment::New( NULL, m_pPastFragment );
-				pNew->Serialize( ar, FALSE );
-				if ( m_pPastFragment != NULL ) m_pPastFragment->m_pPrevious = pNew;
-				m_pPastFragment = pNew;
-			}
-		}
+        SerializeIn2( ar, m_oPastFragments, nVersion );
 		
 		ResolveURL();
 	}
@@ -663,7 +635,7 @@ BOOL CDownloadSource::CheckDonkey(CEDClient* pClient)
 void CDownloadSource::AddFragment(QWORD nOffset, QWORD nLength, BOOL bMerge)
 {
 	m_bReadContent = TRUE;
-	CFileFragment::AddMerge( &m_pPastFragment, nOffset, nLength );
+    m_oPastFragments.insert( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 	m_pDownload->SetModified();
 }
 
@@ -672,16 +644,11 @@ void CDownloadSource::AddFragment(QWORD nOffset, QWORD nLength, BOOL bMerge)
 
 void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
 {
-	if ( m_pAvailable != NULL )
-	{
-		m_pAvailable->DeleteChain();
-		m_pAvailable = NULL;
-	}
+    m_oAvailable.clear();
 	
 	if ( ! pszRanges || ! *pszRanges ) return;
 	if ( _tcsnicmp( pszRanges, _T("bytes"), 5 ) ) return;
 	
-	CFileFragment* pPrevious = NULL;
 	CString strRanges( pszRanges + 6 );
 	
 	for ( strRanges += ',' ; strRanges.GetLength() ; )
@@ -695,12 +662,13 @@ void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
 		
 		QWORD nFirst = 0, nLast = 0;
 		
+        // ??????????????? nLast == nFirst has special meaning ?
 		if ( _stscanf( strRange, _T("%I64i-%I64i"), &nFirst, &nLast ) == 2 && nLast > nFirst )
 		{
-			CFileFragment* pFragment = CFileFragment::New( pPrevious, NULL, nFirst, nLast + 1 - nFirst );
-			if ( ! m_pAvailable ) m_pAvailable = pFragment;
-			if ( pPrevious ) pPrevious->m_pNext = pFragment;
-			pPrevious = pFragment;
+            if( nLast < m_oAvailable.limit() ) // Sanity check
+            {
+                m_oAvailable.insert( FF::SimpleFragment( nFirst, nLast + 1 ) );
+            }
 		}
 	}
 	
@@ -712,14 +680,11 @@ void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
 
 BOOL CDownloadSource::HasUsefulRanges() const
 {
-	if ( m_pAvailable == NULL ) return m_pDownload->IsRangeUseful( 0, m_pDownload->m_nSize );
-	
-	for ( CFileFragment* pFragment = m_pAvailable ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( m_pDownload->IsRangeUseful( pFragment->m_nOffset, pFragment->m_nLength ) ) return TRUE;
-	}
-	
-	return FALSE;
+	if ( m_oAvailable.empty() )
+    {
+        return m_pDownload->IsRangeUseful( 0, m_pDownload->m_nSize );
+    }
+    return m_pDownload->AreRangesUseful( m_oAvailable );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -736,15 +701,8 @@ BOOL CDownloadSource::TouchedRange(QWORD nOffset, QWORD nLength) const
 		}
 	}
 	
-	for (	CFileFragment* pFragment = m_pPastFragment ; pFragment ;
-			pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset >= nOffset + nLength ) continue;
-		if ( pFragment->m_nOffset + pFragment->m_nLength <= nOffset ) continue;
-		return TRUE;
-	}
-	
-	return FALSE;
+    return overlaps( m_oPastFragments,
+        FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -756,4 +714,3 @@ int CDownloadSource::GetColour()
 	m_nColour = m_pDownload->GetSourceColour();
 	return m_nColour;
 }
-

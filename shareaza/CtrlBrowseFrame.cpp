@@ -321,7 +321,7 @@ BOOL CBrowseFrameCtrl::DoSizeTree()
 		nSplit += nOffset;
 		
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
+		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
 		
 		if ( nSplit < 8 )
 			nSplit = 0;
@@ -489,7 +489,7 @@ void CBrowseFrameCtrl::SelectTree(CBrowseTreeItem* pItem, CQueryHit* pHit)
 	
 	CBrowseTreeItem** ppChild = pItem->m_pList;
 	
-	for ( nIndex = pItem->m_nCount ; nIndex ; nIndex--, ppChild++ )
+	for ( DWORD nIndex = pItem->m_nCount ; nIndex ; nIndex--, ppChild++ )
 	{
 		SelectTree( *ppChild, pHit );
 	}

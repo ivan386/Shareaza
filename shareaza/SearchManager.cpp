@@ -294,5 +294,5 @@ WORD CSearchManager::OnQueryStatusRequest(GGUID* pGUID)
 	CManagedSearch* pSearch = Find( pGUID );
 	if ( pSearch == NULL ) return 0xFFFF;
 	
-	return (WORD)min( 0xFFFE, pSearch->m_nHits );
+	return (WORD)min( DWORD(0xFFFE), pSearch->m_nHits );
 }

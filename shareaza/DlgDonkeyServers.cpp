@@ -128,7 +128,8 @@ void CDonkeyServersDlg::OnTimer(UINT nIDEvent)
 	
 	if ( m_hThread != NULL )
 	{
-		for ( int nAttempt = 5 ; nAttempt > 0 ; nAttempt-- )
+        int nAttempt = 5;
+		for ( ; nAttempt > 0 ; nAttempt-- )
 		{
 			DWORD nCode;
 
@@ -195,7 +196,7 @@ void CDonkeyServersDlg::OnRun()
 		
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, 1024 );
+			DWORD nBuffer = min( nRemaining, DWORD(1024) );
 			InternetReadFile( hRequest, pBuffer, nBuffer, &nBuffer );
 			pFile.Write( pBuffer, nBuffer );
 			nRemaining -= nBuffer;

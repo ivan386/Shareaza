@@ -563,7 +563,7 @@ void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 			
 			if ( pElement->m_nType != retGap )
 			{
-				nLineHeight = max( nLineHeight, pFrag->m_sz.cy );
+				nLineHeight = max( nLineHeight, int(pFrag->m_sz.cy) );
 				pLine.AddTail( pFrag );
 			}
 			
@@ -617,7 +617,7 @@ void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 					pszLast = pszWord;
 					
 					pt.x += pFrag->m_sz.cx;
-					nLineHeight = max( nLineHeight, pFrag->m_sz.cy );
+					nLineHeight = max( nLineHeight, int(pFrag->m_sz.cy) );
 					
 					m_pFragments.Add( pFrag );
 					pLine.AddTail( pFrag );

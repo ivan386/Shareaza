@@ -246,7 +246,8 @@ void CLibraryMetaPanel::OnDestroy()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 	
-	for ( int nAttempt = 5 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 5;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 		

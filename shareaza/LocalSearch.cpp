@@ -161,7 +161,8 @@ int CLocalSearch::ExecuteSharedFiles(int nMaximum)
 		
 		CreatePacket( nInThisPacket );
 		
-		for ( int nHitA = 0, nHitB = 0 ; nHitA < nInThisPacket ; nHitA++ )
+        int nHitB = 0;
+		for ( int nHitA = 0 ; nHitA < nInThisPacket ; nHitA++ )
 		{
 			CLibraryFile* pFile = (CLibraryFile*)pFiles->RemoveHead();
 			if ( AddHit( pFile, nHitB ) ) nHitB ++;
@@ -209,7 +210,7 @@ BOOL CLocalSearch::AddHitG1(CLibraryFile* pFile, int nIndex)
 	// Gnutella some protection against 'extreme' settings (if only to reduce un-necessary traffic.)
 	
 	m_pPacket->WriteLongLE( pFile->m_nIndex );
-	m_pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), 0xFFFFFFFF ) );
+	m_pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), QWORD(0xFFFFFFFF) ) );
 	m_pPacket->WriteString( pFile->m_sName );
 	
 	if ( pFile->m_bSHA1 )
@@ -1038,7 +1039,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 	
 	pPacket->WritePacket( "FILES", pFolder->GetFileCount() * 4 );
 	
-	for ( pos = pFolder->GetFileIterator() ; pos ; )
+	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = pFolder->GetNextFile( pos );
 		pPacket->WriteLongBE( pFile->m_nIndex );
@@ -1085,7 +1086,7 @@ CG2Packet* CLocalSearch::FolderToPacket(CLibraryFolder* pFolder)
 	
 	pPacket->WritePacket( "FILES", pFolder->GetFileCount() * 4 );
 	
-	for ( pos = pFolder->GetFileIterator() ; pos ; )
+	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = pFolder->GetNextFile( pos );
 		pPacket->WriteLongBE( pFile->m_nIndex );

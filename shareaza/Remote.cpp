@@ -887,7 +887,7 @@ void CRemote::PageDownloads()
 		
 		CDownloadGroup* pGroup = NULL;
 		
-		for ( posGroup = DownloadGroups.GetIterator() ; posGroup != NULL ; )
+		for ( POSITION posGroup = DownloadGroups.GetIterator() ; posGroup != NULL ; )
 		{
 			pGroup = DownloadGroups.GetNext( posGroup );
 			if ( pGroup->m_bRemoteSelected && pGroup->Contains( pDownload ) ) break;

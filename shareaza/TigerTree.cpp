@@ -94,12 +94,12 @@ void CTigerTree::SetupAndAllocate(DWORD nHeight, QWORD nLength)
 	
 	if ( nActualHeight > nHeight )
 	{
-		for ( nStep = nActualHeight - nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
+		for ( DWORD nStep = nActualHeight - nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
 	
 	m_nNodeCount = 1;
 	
-	for ( nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
+	for ( DWORD nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
 	
 	m_nNodeBase	= ( m_nNodeCount / 2 );
 	m_nBaseUsed	= (DWORD)( nCount / m_nBlockCount );
@@ -122,11 +122,11 @@ void CTigerTree::SetupParameters(QWORD nLength)
 	
 	if ( nActualHeight > m_nHeight )
 	{
-		for ( nStep = nActualHeight - m_nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
+		for ( DWORD nStep = nActualHeight - m_nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
 	
 	m_nNodeCount = 1;
-	for ( nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
+	for ( DWORD nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
 	
 	m_nNodeBase = ( m_nNodeCount-- / 2 );
 	
@@ -258,7 +258,7 @@ void CTigerTree::AddToFile(LPCVOID pInput, DWORD nLength)
 	
 	while ( nLength > 0 )
 	{
-		DWORD nBlock = min( nLength, BLOCK_SIZE );
+		DWORD nBlock = min( nLength, DWORD(BLOCK_SIZE) );
 		
 		Tiger( pBlock, (WORD64)nBlock, m_pStackTop->value );
 		m_pStackTop ++;
@@ -351,7 +351,7 @@ void CTigerTree::AddToTest(LPCVOID pInput, DWORD nLength)
 	
 	while ( nLength > 0 )
 	{
-		DWORD nBlock = min( nLength, BLOCK_SIZE );
+		DWORD nBlock = min( nLength, DWORD(BLOCK_SIZE) );
 		
 		Tiger( pBlock, (WORD64)nBlock, m_pStackTop->value );
 		m_pStackTop ++;
@@ -459,7 +459,7 @@ BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, QWORD nLen
 	DWORD nRowPos = 0, nRowCount = 1;
 	m_nHeight = 0;
 	
-	for ( nStep = 0 ; nStep < m_nNodeCount && nInput > 0 ; nStep++ )
+	for ( DWORD nStep = 0 ; nStep < m_nNodeCount && nInput > 0 ; nStep++ )
 	{
 		if ( m_pNode[ nStep ].bValid )
 		{

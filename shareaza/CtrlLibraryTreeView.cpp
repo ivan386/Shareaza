@@ -140,7 +140,8 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 
 		CLibraryTreeItem** pChild = m_pRoot->m_pList;
 		
-		for ( int nChild = m_pRoot->m_nCount ; nChild ; nChild--, pChild++ )
+        int nChild = m_pRoot->m_nCount;
+		for ( ; nChild ; nChild--, pChild++ )
 		{
 			CLibraryFolder* pOld = (*pChild)->m_pPhysical;
 
@@ -253,7 +254,8 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 		
 		CLibraryTreeItem** pChild = pItem->m_pList;
 		
-		for ( int nChild = pItem->m_nCount ; nChild ; nChild--, pChild++ )
+        int nChild = pItem->m_nCount;
+		for ( ; nChild ; nChild--, pChild++ )
 		{
 			CLibraryFolder* pOld = (*pChild)->m_pPhysical;
 
@@ -355,7 +357,8 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 		
 		CLibraryTreeItem** pChild = pItem->m_pList;
 		
-		for ( int nChild = pItem->m_nCount ; nChild ; nChild--, pChild++ )
+        int nChild = pItem->m_nCount;
+		for ( ; nChild ; nChild--, pChild++ )
 		{
 			CAlbumFolder* pOld = (*pChild)->m_pVirtual;
 			

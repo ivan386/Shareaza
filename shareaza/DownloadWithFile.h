@@ -25,10 +25,9 @@
 #pragma once
 
 #include "DownloadWithTransfers.h"
+#include "FileFragments.hpp"
 
 class CFragmentedFile;
-class CFileFragment;
-
 
 class CDownloadWithFile : public CDownloadWithTransfers
 {
@@ -51,10 +50,11 @@ public:
 	DWORD			GetTimeRemaining() const;
 	CString			GetDisplayName() const;
 public:
-	CFileFragment*	GetFirstEmptyFragment() const;
-	CFileFragment*	GetPossibleFragments(CFileFragment* pAvailable, QWORD* pnLargestOffset = NULL, QWORD* pnLargestLength = NULL);
+    const FF::SimpleFragmentList& GetEmptyFragmentList() const;
+    FF::SimpleFragmentList GetPossibleFragments(const FF::SimpleFragmentList& oAvailable, FF::SimpleFragment& oLargest);
 	BOOL			GetFragment(CDownloadTransfer* pTransfer);
 	BOOL			IsPositionEmpty(QWORD nOffset);
+    BOOL            AreRangesUseful(const FF::SimpleFragmentList& oAvailable);
 	BOOL			IsRangeUseful(QWORD nOffset, QWORD nLength);
 	virtual CString	GetAvailableRanges() const;
 	BOOL			ClipUploadRange(QWORD nOffset, QWORD& nLength) const;

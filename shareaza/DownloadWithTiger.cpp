@@ -405,14 +405,17 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		DWORD nRetry = 0xFFFFFFFF;
 		QWORD nPrevious = 0;
 		
-		for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
-		{
-			if ( pFragment->m_nOffset - nPrevious >= nBlockSize )
+        for ( FF::SimpleFragmentList::ConstIterator pFragment
+            = m_pFile->GetEmptyFragmentList().begin();
+            pFragment != m_pFile->GetEmptyFragmentList().end();
+            ++pFragment )
+        {
+			if ( pFragment->begin() - nPrevious >= nBlockSize )
 			{
 				DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
 				nPrevious = nBlockSize * (QWORD)nBlock + nBlockSize;
 				
-				for ( ; nPrevious <= pFragment->m_nOffset ; nBlock ++, nPrevious += nBlockSize )
+				for ( ; nPrevious <= pFragment->begin() ; nBlock ++, nPrevious += nBlockSize )
 				{
 					if ( pBlockPtr[ nBlock ] == TS_UNKNOWN )
 					{
@@ -428,7 +431,7 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 				if ( nTarget != 0xFFFFFFFF ) break;
 			}
 			
-			nPrevious = pFragment->m_nOffset + pFragment->m_nLength;
+			nPrevious = pFragment->end();
 		}
 		
 		if ( m_nSize > nPrevious && nTarget == 0xFFFFFFFF )
@@ -495,7 +498,7 @@ void CDownloadWithTiger::ContinueValidation()
 	
 	for ( int nRound = bDone ? 10 : 2 ; nRound > 0 && m_nVerifyLength > 0 ; nRound-- )
 	{
-		DWORD nChunk	= (DWORD)min( m_nVerifyLength, Transfers.m_nBuffer );
+		DWORD nChunk	= (DWORD)min( DWORD(m_nVerifyLength), Transfers.m_nBuffer );
 		LPBYTE pChunk	= Transfers.m_pBuffer;
 		
 		if ( m_pFile != NULL )
@@ -528,7 +531,7 @@ void CDownloadWithTiger::ContinueValidation()
 
 void CDownloadWithTiger::FinishValidation()
 {
-	CFileFragment* pCorrupted = NULL;
+    FF::SimpleFragmentList oCorrupted( m_nSize );
 	
 	if ( m_nVerifyHash == HASH_TIGERTREE )
 	{
@@ -540,10 +543,10 @@ void CDownloadWithTiger::FinishValidation()
 		else
 		{
 			m_pTigerBlock[ m_nVerifyBlock ] = TS_FALSE;
-			
-			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTigerSize;
-			pCorrupted->m_nLength	= min( m_nTigerSize, m_nSize - pCorrupted->m_nOffset );
+
+            QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(m_nTigerSize);
+            oCorrupted.insert( oCorrupted.end(), FF::SimpleFragment( nOffset,
+                ::std::min( nOffset + m_nTigerSize, m_nSize ) ) );
 		}
 	}
 	else if ( m_nVerifyHash == HASH_ED2K )
@@ -557,9 +560,9 @@ void CDownloadWithTiger::FinishValidation()
 		{
 			m_pHashsetBlock[ m_nVerifyBlock ] = TS_FALSE;
 			
-			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * ED2K_PART_SIZE;
-			pCorrupted->m_nLength	= min( ED2K_PART_SIZE, m_nSize - pCorrupted->m_nOffset );
+            QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(ED2K_PART_SIZE);
+            oCorrupted.insert( oCorrupted.end(), FF::SimpleFragment( nOffset,
+                ::std::min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
 		}
 	}
 	else if ( m_nVerifyHash == HASH_TORRENT )
@@ -575,30 +578,29 @@ void CDownloadWithTiger::FinishValidation()
 		{
 			m_pTorrentBlock[ m_nVerifyBlock ] = TS_FALSE;
 			
-			pCorrupted = CFileFragment::New();
-			pCorrupted->m_nOffset	= (QWORD)m_nVerifyBlock * (QWORD)m_nTorrentSize;
-			pCorrupted->m_nLength	= min( m_nTorrentSize, m_nSize - pCorrupted->m_nOffset );
+            QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(m_nTorrentSize);
+            oCorrupted.insert( oCorrupted.end(), FF::SimpleFragment( nOffset,
+                ::std::min( nOffset + m_nTorrentSize, m_nSize ) ) );
 		}
 	}
 	
-	if ( pCorrupted != NULL && m_pFile != NULL )
+	if ( !oCorrupted.empty() && m_pFile != NULL )
 	{
 		if ( m_pTigerBlock != NULL )
-			SubtractHelper( &pCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
+			SubtractHelper( oCorrupted, m_pTigerBlock, m_nTigerBlock, m_nTigerSize );
 		if ( m_pHashsetBlock != NULL )
-			SubtractHelper( &pCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
+			SubtractHelper( oCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
 		if ( m_pTorrentBlock != NULL )
-			SubtractHelper( &pCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
+			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
 		
-		for ( CFileFragment* pRange = pCorrupted ; pRange ; pRange = pRange->m_pNext )
+        for ( FF::SimpleFragmentList::ConstIterator pRange = oCorrupted.begin();
+            pRange != oCorrupted.end(); ++pRange )
 		{
-			m_pFile->InvalidateRange( pRange->m_nOffset, pRange->m_nLength );
-			RemoveOverlappingSources( pRange->m_nOffset, pRange->m_nLength );
+			m_pFile->InvalidateRange( pRange->begin(), pRange->length() );
+			RemoveOverlappingSources( pRange->begin(), pRange->length() );
 		}
 		
-		pCorrupted->DeleteChain();
-	}
-	
+    }
 	m_nVerifyHash	= HASH_NULL;
 	m_nVerifyBlock	= 0xFFFFFFFF;
 	m_nVerifyCookie++;
@@ -606,15 +608,15 @@ void CDownloadWithTiger::FinishValidation()
 	SetModified();
 }
 
-void CDownloadWithTiger::SubtractHelper(CFileFragment** ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize)
+void CDownloadWithTiger::SubtractHelper(FF::SimpleFragmentList& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize)
 {
 	QWORD nOffset = 0;
 	
-	while ( nBlock-- && *ppCorrupted )
+	while ( nBlock-- && !ppCorrupted.empty() )
 	{
 		if ( *pBlock++ == TS_TRUE )
 		{
-			CFileFragment::Subtract( ppCorrupted, nOffset, nSize );
+            ppCorrupted.erase( FF::SimpleFragment( nOffset, ::std::min( nOffset + nSize, m_nSize ) ) );
 		}
 		
 		nOffset += nSize;

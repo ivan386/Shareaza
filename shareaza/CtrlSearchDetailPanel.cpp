@@ -253,7 +253,8 @@ void CSearchDetailPanel::OnDestroy()
 	{
 		m_pWakeup.SetEvent();
 		
-		for ( int nAttempt = 10 ; nAttempt > 0 ; nAttempt-- )
+        int nAttempt = 10;
+		for ( ; nAttempt > 0 ; nAttempt-- )
 		{
 			DWORD nCode;
 			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;

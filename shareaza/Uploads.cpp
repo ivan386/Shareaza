@@ -176,7 +176,7 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 	{
 		CUploadTransfer* pNewest = NULL;
 		
-		for ( pos = GetIterator() ; pos ; )
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CUploadTransfer* pUpload = GetNext( pos );
 			

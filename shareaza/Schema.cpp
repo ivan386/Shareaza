@@ -105,12 +105,12 @@ void CSchema::Clear()
 		delete GetNextMember( pos );
 	}
 
-	for ( pos = m_pContains.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pContains.GetHeadPosition() ; pos ; )
 	{
 		delete (CSchemaChild*)m_pContains.GetNext( pos );
 	}
 
-	for ( pos = m_pBitziMap.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pBitziMap.GetHeadPosition() ; pos ; )
 	{
 		delete (CSchemaBitzi*)m_pBitziMap.GetNext( pos );
 	}
@@ -455,7 +455,7 @@ void CSchema::LoadDescriptorMembers(CXMLElement* pElement)
 	
 	if ( bPrompt ) return;
 	
-	for ( pos = GetMemberIterator() ; pos ; )
+	for ( POSITION pos = GetMemberIterator() ; pos ; )
 	{
 		GetNextMember( pos )->m_bPrompt = TRUE;
 	}

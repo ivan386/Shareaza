@@ -432,7 +432,7 @@ void CUploadQueue::RescaleBandwidth()
 	
 	double nScale = (double)nTotal / (double)nAllocated;
 	
-	for ( pos = m_pActive.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pActive.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pActive = (CUploadTransfer*)m_pActive.GetNext( pos );
 		pActive->SetSpeedLimit( (DWORD)( nScale * pActive->m_nBandwidth ) );

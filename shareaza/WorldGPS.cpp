@@ -126,7 +126,7 @@ BOOL CWorldGPS::LoadFrom(CXMLElement* pRoot)
 	m_pCountry = new CWorldCountry[ m_nCountry ];
 	m_nCountry = 0;
 
-	for ( pos = pRoot->GetElementIterator() ; pos ; )
+	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pElement = pRoot->GetNextElement( pos );
 		if ( pElement->IsNamed( _T("country") ) )
@@ -210,7 +210,7 @@ BOOL CWorldCountry::LoadFrom(CXMLElement* pRoot)
 	m_pCity = new CWorldCity[ m_nCity ];
 	m_nCity = 0;
 
-	for ( pos = pRoot->GetElementIterator() ; pos ; )
+	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pElement = pRoot->GetNextElement( pos );
 		if ( pElement->IsNamed( _T("city") ) )

@@ -99,7 +99,8 @@ void CLibraryHistoryPanel::Update()
 		CLibraryRecent* pRecent = LibraryHistory.GetNext( pos );
 		if ( ! pRecent->m_pFile ) continue;
 		
-		for ( int nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
+        int nItem = m_pList.GetSize() - 1;
+		for ( ; nItem >= 0 ; nItem-- )
 		{
 			Item* pItem = (Item*)m_pList.GetAt( nItem );
 			if ( pItem->m_pRecent == pRecent ) break;

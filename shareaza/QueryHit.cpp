@@ -638,7 +638,7 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 	
 	if ( nBogus < 2 ) return FALSE;
 	
-	for ( pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
+	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
 	{
 		pHit->m_bBogus = TRUE;
 	}

@@ -261,7 +261,7 @@ void CRouteCacheTable::Remove(CNeighbour* pNeighbour)
 
 void CRouteCacheTable::Resize(DWORD nSize)
 {
-	nSize = min( max( nSize, MIN_BUFFER_SIZE ), MAX_BUFFER_SIZE );
+	nSize = min( max( nSize, DWORD(MIN_BUFFER_SIZE) ), DWORD(MAX_BUFFER_SIZE) );
 	nSize = ( ( nSize + BUFFER_BLOCK_SIZE - 1 ) / BUFFER_BLOCK_SIZE * BUFFER_BLOCK_SIZE );
 
 	if ( nSize != m_nBuffer )

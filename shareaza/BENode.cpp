@@ -286,7 +286,8 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 	{
 		INC( 1 );
 		
-		for ( DWORD nSeek = 1 ; nSeek < 40 ; nSeek++ )
+        DWORD nSeek = 1;
+		for ( ; nSeek < 40 ; nSeek++ )
 		{
 			if ( nSeek >= nInput ) AfxThrowUserException();
 			if ( pInput[nSeek] == 'e' ) break;
@@ -352,7 +353,8 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 
 int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 {
-	for ( DWORD nSeek = 1 ; nSeek < 32 ; nSeek++ )
+    DWORD nSeek = 1;
+    for ( ; nSeek < 32 ; nSeek++ )
 	{
 		if ( nSeek >= nInput ) AfxThrowUserException();
 		if ( pInput[ nSeek ] == ':' ) break;

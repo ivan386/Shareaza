@@ -83,11 +83,11 @@ void CPacket::Seek(DWORD nPosition, int nRelative)
 {
 	if ( nRelative == seekStart )
 	{
-		m_nPosition = max( 0, min( m_nLength, nPosition ) );
+		m_nPosition = max( DWORD(0), min( m_nLength, nPosition ) );
 	}
 	else
 	{
-		m_nPosition = max( 0, min( m_nLength, m_nLength - nPosition ) );
+		m_nPosition = max( DWORD(0), min( m_nLength, m_nLength - nPosition ) );
 	}
 }
 
@@ -110,7 +110,8 @@ CString CPacket::ReadString(DWORD nMaximum)
 	LPCSTR pszInput	= (LPCSTR)m_pBuffer + m_nPosition;
 	LPCSTR pszScan	= pszInput;
 
-	for ( DWORD nLength = 0 ; nLength < nMaximum ; nLength++ )
+    DWORD nLength = 0;
+	for ( ; nLength < nMaximum ; nLength++ )
 	{
 		m_nPosition++;
 		if ( ! *pszScan++ ) break;
@@ -167,7 +168,8 @@ CString CPacket::ReadStringUTF8(DWORD nMaximum)
 	LPCSTR pszInput	= (LPCSTR)m_pBuffer + m_nPosition;
 	LPCSTR pszScan	= pszInput;
 
-	for ( DWORD nLength = 0 ; nLength < nMaximum ; nLength++ )
+    DWORD nLength = 0;
+	for ( ; nLength < nMaximum ; nLength++ )
 	{
 		m_nPosition++;
 		if ( ! *pszScan++ ) break;
@@ -241,7 +243,7 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 	
 	if ( m_nLength + nLength > m_nBuffer )
 	{
-		m_nBuffer += max( nLength, PACKET_GROW );
+		m_nBuffer += max( nLength, DWORD(PACKET_GROW) );
 		LPBYTE pNew = new BYTE[ m_nBuffer ];
 		CopyMemory( pNew, m_pBuffer, m_nLength );
 		if ( m_pBuffer ) delete [] m_pBuffer;

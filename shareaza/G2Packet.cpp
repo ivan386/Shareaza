@@ -94,7 +94,8 @@ CG2Packet* CG2Packet::New(BYTE* pSource)
 	}
 	
 	nTypeLen++;
-	for ( LPSTR pszType = pPacket->m_sType ; nTypeLen-- ;  ) *pszType++ = (CHAR)*pSource++;
+    LPSTR pszType = pPacket->m_sType;
+	for ( ; nTypeLen-- ;  ) *pszType++ = (CHAR)*pSource++;
 	*pszType++ = 0;
 	
 	pPacket->Write( pSource, nLength );
@@ -113,7 +114,7 @@ CG2Packet* CG2Packet::New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL)
 	
 	pHeader.m_pGUID		= pWrap->m_pGUID;
 	pHeader.m_nType		= pWrap->m_nType;
-	pHeader.m_nTTL		= min( pWrap->m_nTTL, nMinTTL );
+	pHeader.m_nTTL		= min( pWrap->m_nTTL, BYTE(nMinTTL) );
 	pHeader.m_nHops		= pWrap->m_nHops;
 	pHeader.m_nLength	= (LONG)pWrap->m_nLength;
 	
@@ -335,7 +336,8 @@ CString CG2Packet::ReadString(DWORD nMaximum)
 	LPCSTR pszScan	= pszInput;
 	BOOL bEncoded	= FALSE;
 
-	for ( DWORD nLength = 0 ; nLength < nMaximum ; nLength++ )
+    DWORD nLength = 0;
+	for ( ; nLength < nMaximum ; nLength++ )
 	{
 		m_nPosition++;
 		if ( ! *pszScan ) break;
@@ -448,7 +450,8 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 	LPCTSTR pszScan = pszString;
 	BOOL bPlain = TRUE;
 	
-	for ( int nLength = 0 ; *pszScan ; nLength++ )
+    int nLength = 0;
+	for ( ; *pszScan ; nLength++ )
 	{
 		if ( ( *pszScan++ ) & 0x80 ) bPlain = FALSE;
 	}

@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include <limits>
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Download.h"
@@ -58,8 +59,6 @@ CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource) : CDownlo
 	m_tSources		= 0;
 	m_tRanking		= 0;
 	m_pAvailable	= NULL;
-	m_pRequested	= NULL;
-	m_nRequested	= 0;
 	m_bUDP			= FALSE;
 	
 	m_pInflatePtr		= NULL;
@@ -294,8 +293,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	
 	if ( nBlocks == (DWORD)( ( m_pDownload->m_nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE ) )
 	{
-		m_pSource->m_pAvailable->DeleteChain();
-		m_pSource->m_pAvailable = NULL;
+        m_pSource->m_oAvailable.clear();
 		
 		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 		m_pAvailable = new BYTE[ nBlocks ];
@@ -313,7 +311,8 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 					QWORD nTo = nFrom + ED2K_PART_SIZE;
 					nTo = min( nTo, m_pDownload->m_nSize );
 					
-					CFileFragment::AddMerge( &m_pSource->m_pAvailable, nFrom, nTo - nFrom );
+                    m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
+                        FF::SimpleFragment( nFrom, nTo ) );
 					m_pAvailable[ nBlock ] = TRUE;
 				}
 			}
@@ -321,8 +320,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	}
 	else if ( nBlocks == 0 )
 	{
-		m_pSource->m_pAvailable->DeleteChain();
-		m_pSource->m_pAvailable = NULL;
+		m_pSource->m_oAvailable.clear();
 		
 		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 		m_pAvailable = NULL;
@@ -494,8 +492,7 @@ BOOL CDownloadTransferED2K::OnSendingPart(CEDPacket* pPacket)
 	BOOL bUseful = m_pDownload->SubmitData( nOffset,
 		pPacket->m_pBuffer + pPacket->m_nPosition, nLength );
 	
-	CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
-	m_nRequested = m_pRequested->GetCount();
+    m_oRequested.erase( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 	
 	m_pSource->AddFragment( nOffset, nLength,
 		( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
@@ -589,8 +586,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 				
 				BOOL bUseful = m_pDownload->SubmitData( nOffset, pBuffer, nLength );
 				
-				CFileFragment::Subtract( &m_pRequested, nOffset, nLength );
-				m_nRequested = m_pRequested->GetCount();
+                m_oRequested.erase( FF::SimpleFragment( nOffset, nLength ) );
 				
 				m_pSource->AddFragment( nOffset, nLength,
 					( nOffset % ED2K_PART_SIZE ) ? TRUE : FALSE );
@@ -745,30 +741,28 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 	ASSERT( m_nState == dtsDownloading );
 	ASSERT( m_pClient != NULL );
 	
-	if ( m_nRequested >= (int)Settings.eDonkey.RequestPipe ) return TRUE;
+	if ( m_oRequested.size() >= (int)Settings.eDonkey.RequestPipe ) return TRUE;
 	
-	CFileFragment* pPossible = m_pDownload->GetFirstEmptyFragment()->CreateCopy();
+    FF::SimpleFragmentList oPossible( m_pDownload->GetEmptyFragmentList() );
 	
-	for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && pPossible ; pTransfer = pTransfer->m_pDlNext )
+	for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
 	{
-		pTransfer->SubtractRequested( &pPossible );
+		pTransfer->SubtractRequested( oPossible );
 	}
 	
-	while ( m_nRequested < (int)Settings.eDonkey.RequestPipe )
+	while ( m_oRequested.size() < (int)Settings.eDonkey.RequestPipe )
 	{
 		QWORD nOffset, nLength;
 		
-		if ( SelectFragment( pPossible, &nOffset, &nLength ) )
+		if ( SelectFragment( oPossible, nOffset, nLength ) )
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.eDonkey.RequestSize, FALSE );
 			
-			CFileFragment::Subtract( &pPossible, nOffset, nLength );
+            FF::SimpleFragment Selected( nOffset, nOffset + nLength );
+            oPossible.erase( Selected );
 			
-			CFileFragment* pRequest = CFileFragment::New( NULL, m_pRequested, nOffset, nLength );
-			if ( m_pRequested != NULL ) m_pRequested->m_pPrevious = pRequest;
-			m_pRequested = pRequest;
-			m_nRequested ++;
-			
+            m_oRequested.pushBack( Selected );
+
 			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_REQUESTPARTS );
 			pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 			pPacket->WriteLongLE( (DWORD)nOffset );
@@ -792,9 +786,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		}
 	}
 	
-	pPossible->DeleteChain();
-	
-	if ( m_nRequested > 0 ) return TRUE;
+	if ( !m_oRequested.empty() ) return TRUE;
 	
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
 	
@@ -806,9 +798,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 
 void CDownloadTransferED2K::ClearRequests()
 {
-	m_pRequested->DeleteChain();
-	m_pRequested = NULL;
-	m_nRequested = 0;
+	m_oRequested.clear();
 	
 	if ( z_streamp pStream = (z_streamp)m_pInflatePtr )
 	{
@@ -822,100 +812,27 @@ void CDownloadTransferED2K::ClearRequests()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K fragment selector
 
-BOOL CDownloadTransferED2K::SelectFragment(CFileFragment* pPossible, QWORD* pnOffset, QWORD* pnLength)
+BOOL CDownloadTransferED2K::SelectFragment(const FF::SimpleFragmentList& oPossible, QWORD& nOffset, QWORD& nLength)
 {
-	ASSERT( pnOffset != NULL && pnLength != NULL );
-	
-	if ( pPossible == NULL ) return FALSE;
-	
-	CFileFragment* pComplete = NULL;
-	DWORD nBlock;
-	
-	for ( ; pPossible ; pPossible = pPossible->m_pNext )
-	{
-		if ( pPossible->m_nOffset % ED2K_PART_SIZE )
-		{
-			// the start of a block is complete, but part is missing
-			
-			nBlock = (DWORD)( pPossible->m_nOffset / ED2K_PART_SIZE );
-			
-			if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
-			{
-				*pnOffset = pPossible->m_nOffset;
-				*pnLength = ED2K_PART_SIZE * (QWORD)nBlock + ED2K_PART_SIZE - *pnOffset;
-				*pnLength = min( *pnLength, pPossible->m_nLength );
-				ASSERT( *pnLength <= ED2K_PART_SIZE );
-				
-				pComplete->DeleteChain();
-				return TRUE;
-			}
-		}
-		else if (	( pPossible->m_nLength % ED2K_PART_SIZE ) &&
-					( pPossible->m_nOffset + pPossible->m_nLength < m_pDownload->m_nSize ) )
-		{
-			// the end of a block is complete, but part is missing
-			
-			nBlock = (DWORD)( ( pPossible->m_nOffset + pPossible->m_nLength ) / ED2K_PART_SIZE );
-			
-			if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
-			{
-				*pnOffset = ED2K_PART_SIZE * (QWORD)nBlock;
-				*pnLength = pPossible->m_nOffset + pPossible->m_nLength - *pnOffset;
-				ASSERT( *pnLength <= ED2K_PART_SIZE );
-				
-				pComplete->DeleteChain();
-				return TRUE;
-			}
-		}
-		else
-		{
-			// this fragment contains one or more aligned empty blocks
-			
-			nBlock = (DWORD)( pPossible->m_nOffset / ED2K_PART_SIZE );
-			*pnLength = pPossible->m_nLength;
-			ASSERT( *pnLength != 0 );
-			
-			for ( ; ; nBlock ++, *pnLength -= ED2K_PART_SIZE )
-			{
-				if ( m_pAvailable == NULL || m_pAvailable[ nBlock ] )
-				{
-					pComplete = CFileFragment::New( NULL, pComplete, (QWORD)nBlock, 0 );
-				}
-				
-				if ( *pnLength <= ED2K_PART_SIZE ) break;
-			}
-		}
-	}
-	
-	if ( CFileFragment* pRandom = pComplete->GetRandom() )
-	{
-		*pnOffset = pRandom->m_nOffset * ED2K_PART_SIZE;
-		*pnLength = ED2K_PART_SIZE;
-		*pnLength = min( *pnLength, m_pDownload->m_nSize - *pnOffset );
-		ASSERT( *pnLength <= ED2K_PART_SIZE );
-		
-		pComplete->DeleteChain();
-		return TRUE;
-	}
-	else
-	{
-		ASSERT( pComplete == NULL );
-		return FALSE;
-	}
+    FF::SimpleFragment oSelection( selectBlock( oPossible,
+        ED2K_PART_SIZE, m_pAvailable ) );
+
+    if ( oSelection.end() == ::std::numeric_limits< FF::SimpleFragment::SizeType >::max() ) return FALSE;
+
+    nOffset = oSelection.begin();
+    nLength = oSelection.length();
+
+    return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K subtract requested fragments
 
-BOOL CDownloadTransferED2K::SubtractRequested(CFileFragment** ppFragments)
+BOOL CDownloadTransferED2K::SubtractRequested(FF::SimpleFragmentList& ppFragments)
 {
-	if ( m_nState == dtsDownloading )
-	{
-		if ( m_nRequested != 0 ) CFileFragment::Subtract( ppFragments, m_pRequested );
-		return TRUE;
-	}
-	
-	return FALSE;
+	if ( m_nState != dtsDownloading ) return FALSE;
+	ppFragments.erase( m_oRequested.begin(), m_oRequested.end() );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

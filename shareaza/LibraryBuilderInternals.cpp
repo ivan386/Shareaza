@@ -488,15 +488,17 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		}
 		else
 		{
-		for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
-		{
-			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
-			if ( pszOutput[ nOut ] == 0 ) break;
-		}
+            DWORD nOut = 0;
+		    for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
+		    {
+			    pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
+			    if ( pszOutput[ nOut ] == 0 ) break;
+		    }
 			strValue.ReleaseBuffer( nOut );
 		}
 #else
-		for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
+        DWORD nOut = 0;
+		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
         {
             pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar ];
             if ( pszOutput[ nOut ] == 0 ) break;
@@ -513,7 +515,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		if ( pBuffer[0] == 0xFF && pBuffer[1] == 0xFE )
 		{
 			pBuffer += 2;
-			for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
+            DWORD nOut = 0;
+			for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
 			{
 				pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+0 ] | ( (TCHAR)pBuffer[ nChar*2+1 ] << 8 );
 				if ( pszOutput[ nOut ] == 0 ) break;
@@ -523,7 +526,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		else if ( pBuffer[0] == 0xFE && pBuffer[1] == 0xFF )
 		{
 			pBuffer += 2;
-			for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
+            DWORD nOut = 0;
+			for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
 			{
 				pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+1 ] | ( (TCHAR)pBuffer[ nChar*2+0 ] << 8 );
 				if ( pszOutput[ nOut ] == 0 ) break;
@@ -541,7 +545,8 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		nLength = nLength / 2;
 		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
 		
-		for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
+        DWORD nOut = 0;
+		for ( DWORD nChar = 0 ; nChar < nLength ; nChar++, nOut++ )
 		{
 			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+1 ] | ( (TCHAR)pBuffer[ nChar*2+0 ] << 8 );
 			if ( pszOutput[ nOut ] == 0 ) break;
@@ -1355,7 +1360,8 @@ BOOL CLibraryBuilderInternals::ReadMPEG( HANDLE hFile)
 	
 	DWORD nHeader = 0;
 	
-	for ( DWORD nSeek = 8192 ; nSeek > 0 ; nSeek--, nHeader <<= 8 )
+    DWORD nSeek = 8192;
+	for ( ; nSeek > 0 ; nSeek--, nHeader <<= 8 )
 	{
 		DWORD nRead = 0;
 		ReadFile( hFile, &nHeader, 1, &nRead, NULL );
@@ -1866,7 +1872,8 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		
 		if ( strLine.GetAt( 17 ) == 'n' )
 		{
-			for ( LPCTSTR pszInt = strLine ; *pszInt == '0' ; pszInt++ );
+            LPCTSTR pszInt = strLine;
+			for ( ; *pszInt == '0' ; pszInt++ );
 			
 			if ( *pszInt != 0 )
 			{

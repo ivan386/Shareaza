@@ -857,7 +857,7 @@ void CNeighboursWithConnect::Maintain()
 	//Set numbers of neighbours (ED2K)
 	if ( Settings.eDonkey.EnableToday )
 	{
-		nLimit[ PROTOCOL_ED2K ][ ntHub ] = min( 1, Settings.eDonkey.NumServers );
+		nLimit[ PROTOCOL_ED2K ][ ntHub ] = min( DWORD(1), Settings.eDonkey.NumServers );
 	}
 	
 	nCount[ PROTOCOL_G1 ][0] += nCount[ PROTOCOL_NULL ][0];

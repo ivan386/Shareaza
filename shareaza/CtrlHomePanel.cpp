@@ -688,7 +688,8 @@ void CHomeLibraryBox::Update()
 		CLibraryRecent* pRecent = LibraryHistory.GetNext( pos );
 		if ( pRecent->m_pFile == NULL ) continue;
 		
-		for ( int nItem = m_pList.GetSize() - 1 ; nItem >= 0 ; nItem-- )
+        int nItem = m_pList.GetSize() - 1;
+		for ( ; nItem >= 0 ; nItem-- )
 		{
 			Item* pItem = (Item*)m_pList.GetAt( nItem );
 			if ( pItem->m_pRecent == pRecent ) break;
@@ -1115,7 +1116,7 @@ void CHomeConnectionBox::Setup()
 	
 	pMap.Lookup( _T("EDServers"), (void*&)m_pdCount[PROTOCOL_ED2K][ntHub] );
 	
-	for ( nP = 0 ; nP < 4 ; nP++ )
+	for ( int nP = 0 ; nP < 4 ; nP++ )
 	{
 		for ( int nT = 0 ; nT < 3 ; nT++ )
 		{

@@ -104,7 +104,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 		m_wndFilterList.AddString( m_pGroup->m_pFilters.GetNext( pos ) );
 	}
 	
-	for ( pos = SchemaCache.GetIterator() ; pos ; )
+	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 		

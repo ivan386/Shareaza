@@ -958,8 +958,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 		}
 		
-		nTextLeft	= min( nTextLeft, rcCell.left );
-		nTextRight	= max( nTextRight, rcCell.right );
+		nTextLeft	= min( nTextLeft, int(rcCell.left) );
+		nTextRight	= max( nTextRight, int(rcCell.right) );
 		
 		if ( pColumn.lParam == DOWNLOAD_COLUMN_PROGRESS ) continue;
 		
@@ -1004,7 +1004,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
 }
@@ -1135,8 +1135,8 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 		}
 		
-		nTextLeft	= min( nTextLeft, rcCell.left );
-		nTextRight	= max( nTextRight, rcCell.right );
+		nTextLeft	= min( nTextLeft, int(rcCell.left) );
+		nTextRight	= max( nTextRight, int(rcCell.right) );
 		
 		if ( pColumn.lParam == DOWNLOAD_COLUMN_PROGRESS ) continue;
 		
@@ -1181,7 +1181,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( int(rcRow.right), nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 	}
 }

@@ -202,7 +202,7 @@ void CWindowManager::Close()
 		pClose.AddTail( GetNext( pos ) );
 	}
 	
-	for ( pos = pClose.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = pClose.GetHeadPosition() ; pos ; )
 	{
 		CChildWnd* pChild = (CChildWnd*)pClose.GetNext( pos );
 		pChild->DestroyWindow();

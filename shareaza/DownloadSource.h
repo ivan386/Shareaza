@@ -24,12 +24,12 @@
 
 #pragma once
 
+#include "FileFragments.hpp"
+
 class CDownload;
 class CDownloadTransfer;
 class CQueryHit;
-class CFileFragment;
 class CEDClient;
-
 
 class CDownloadSource
 {
@@ -82,8 +82,8 @@ public:
 	int					m_nColour;
 	DWORD				m_tAttempt;
 	int					m_nFailures;
-	CFileFragment*		m_pAvailable;
-	CFileFragment*		m_pPastFragment;
+    FF::SimpleFragmentList m_oAvailable;
+    FF::SimpleFragmentList m_oPastFragments;
 
 // Operations
 public:

@@ -500,11 +500,11 @@ void CSettings::Load()
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
-	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, 5*60 );
-	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, 45*60 );
-	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
-	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, 45*60 );
-	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 45*60 );
+	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(5*60) );
+	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, DWORD(45*60) );
+	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, DWORD(1000) );
+	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, DWORD(45*60) );
+	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, DWORD(45*60) );
 	Downloads.ConnectThrottle	= max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 
 	// Set client links
@@ -593,7 +593,7 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 26 )
 	{
-		Downloads.ConnectThrottle = max( Downloads.ConnectThrottle, 200 );
+		Downloads.ConnectThrottle = max( Downloads.ConnectThrottle, DWORD(200) );
 		Downloads.MaxTransfers = min( Downloads.MaxTransfers, 128 );
 	}
 	
@@ -732,7 +732,8 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 	LV_COLUMN pColumn;
 	
 	pColumn.mask = LVCF_FMT;
-	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
+    int nColumns = 0;
+	for ( ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 	
 	CString strOrdering, strWidths, strItem;
 	BOOL bSuccess = FALSE;
@@ -775,7 +776,8 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	LV_COLUMN pColumn;
 	
 	pColumn.mask = LVCF_FMT;
-	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
+    int nColumns = 0;
+	for ( ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 	
 	UINT* pOrdering = new UINT[ nColumns ];
 	ZeroMemory( pOrdering, nColumns * sizeof(UINT) );

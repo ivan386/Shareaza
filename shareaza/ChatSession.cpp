@@ -1,9 +1,9 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/02/17 00:36:42 $"
-//	Revision:		"$Revision: 1.11 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/02/20 11:59:49 $"
+//	Revision:		"$Revision: 1.12 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -793,7 +793,8 @@ void CChatSession::Send(CG2Packet* pPacket, BOOL bRelease)
 
 BOOL CChatSession::ReadPackets()
 {
-	for ( BOOL bSuccess = TRUE ; bSuccess && m_pInput->m_nLength ; )
+    BOOL bSuccess = TRUE;
+	for ( ; bSuccess && m_pInput->m_nLength ; )
 	{
 		BYTE nInput = *( m_pInput->m_pBuffer );
 		

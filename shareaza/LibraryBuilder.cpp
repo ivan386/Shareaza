@@ -174,7 +174,8 @@ void CLibraryBuilder::StopThread()
 	
 	m_bThread = FALSE;
 	
-	for ( int nAttempt = 20 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 20;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
@@ -374,7 +375,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 	
 	for ( QWORD nLength = nFileSize ; nLength > 0 ; )
 	{
-		DWORD nBlock	= (DWORD)min( nLength, 20480 );
+		DWORD nBlock	= (DWORD)min( nLength, QWORD(20480) );
 		DWORD nTime		= GetTickCount();
 		
 		ReadFile( hFile, m_pBuffer, nBlock, &nBlock, NULL );
@@ -389,7 +390,7 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 		if ( ! m_bPriority && ! bPriority )
 		{
 			if ( nBlock == 20480 ) m_nHashSleep = ( GetTickCount() - nTime ) * 2;
-			m_nHashSleep = max( m_nHashSleep, 20 );
+			m_nHashSleep = max( m_nHashSleep, DWORD(20) );
 			Sleep( m_nHashSleep );
 		}
 		

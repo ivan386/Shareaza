@@ -104,8 +104,10 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 			 != nBaseAddress + pBFH.bfOffBits ) return E_FAIL;
 	}
 	
-	for ( UINT nInPitch = nWidth * pBIH.biBitCount / 8 ; nInPitch & 3 ; ) nInPitch++;
-	for ( UINT nOutPitch = nWidth * 3 ; nOutPitch & 3 ; ) nOutPitch++;
+    UINT nInPitch = nWidth * pBIH.biBitCount / 8;
+	for ( ; nInPitch & 3 ; ) nInPitch++;
+    UINT nOutPitch = nWidth * 3;
+	for ( ; nOutPitch & 3 ; ) nOutPitch++;
 
 	pRowBuf	= new BYTE[ nInPitch ];
 
@@ -250,8 +252,10 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 		nMemory -= pBFH.bfOffBits;
 	}
 	
-	for ( UINT nInPitch = nWidth * pBIH.biBitCount / 8 ; nInPitch & 3 ; ) nInPitch++;
-	for ( UINT nOutPitch = nWidth * 3 ; nOutPitch & 3 ; ) nOutPitch++;
+    UINT nInPitch = nWidth * pBIH.biBitCount / 8;
+	for ( ; nInPitch & 3 ; ) nInPitch++;
+    UINT nOutPitch = nWidth * 3;
+	for ( ; nOutPitch & 3 ; ) nOutPitch++;
 	
 	UINT nArray = nOutPitch * (UINT)nHeight;
 	

@@ -253,13 +253,13 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP subtract pending requests
 
-BOOL CDownloadTransferFTP::SubtractRequested(CFileFragment** ppFragments)
+BOOL CDownloadTransferFTP::SubtractRequested(FF::SimpleFragmentList& ppFragments)
 {
 	if ( m_nOffset < SIZE_UNKNOWN && m_nLength < SIZE_UNKNOWN )
 	{
 		if ( m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
-			CFileFragment::Subtract( ppFragments, m_nOffset, m_nLength );
+            ppFragments.erase( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
 			return TRUE;
 		}
 	}

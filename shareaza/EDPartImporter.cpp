@@ -1,9 +1,9 @@
 //
 // EDPartImporter.cpp
 //
-//	Date:			"$Date: 2005/01/09 10:35:31 $"
-//	Revision:		"$Revision: 1.5 $"
-//	Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/02/20 11:59:51 $"
+//	Revision:		"$Revision: 1.6 $"
+//	Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -336,11 +336,9 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	pDownload->m_sRemoteName	= strName;
 	pDownload->m_sLocalName		= strTarget;
 		
-	pDownload->m_pFile->m_nTotal		= nSize;
-	pDownload->m_pFile->m_nRemaining	= 0;
-	pDownload->m_pFile->m_nFragments	= 0;
+	pDownload->m_pFile->m_oFList.clear();
 	
-	for ( nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
+	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
 	{
 		WORD nPart = pGapIndex.GetAt( nGap );
 		DWORD nStart = 0, nStop = 0;
@@ -348,22 +346,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		pGapStart.Lookup( nPart, (void*&)nStart );
 		pGapStop.Lookup( nPart, (void*&)nStop );
 		
-		CFileFragment* pFragment = CFileFragment::New( NULL, NULL, nStart, nStop - nStart );
-		
-		if ( pDownload->m_pFile->m_pFirst == NULL )
-		{
-			pDownload->m_pFile->m_pFirst = pFragment;
-			pDownload->m_pFile->m_pLast = pFragment;
-		}
-		else
-		{
-			pDownload->m_pFile->m_pLast->m_pNext = pFragment;
-			pFragment->m_pPrevious = pDownload->m_pFile->m_pLast;
-			pDownload->m_pFile->m_pLast = pFragment;
-		}
-		
-		pDownload->m_pFile->m_nFragments ++;
-		pDownload->m_pFile->m_nRemaining += pFragment->m_nLength;
+        pDownload->m_pFile->m_oFList.insert( FF::SimpleFragment( nStart, nStop ) );
 	}
 	
 	if ( pED2K.IsAvailable() )
@@ -382,7 +365,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	Transfers.m_pSection.Unlock();
 	
 	Message( IDS_ED2K_EPI_FILE_CREATED,
-		(LPCTSTR)Settings.SmartVolume( pDownload->m_pFile->m_nRemaining, FALSE ) );
+		(LPCTSTR)Settings.SmartVolume( pDownload->m_pFile->m_oFList.sumLength(), FALSE ) );
 	
 	return TRUE;
 }

@@ -124,7 +124,7 @@ void CAlbumTipCtrl::OnCalcSize(CDC* pDC)
 	m_pMetadata.ComputeWidth( pDC, m_nKeyWidth, nValueWidth );
 
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, m_nKeyWidth + nValueWidth + 102 );
+	m_sz.cx = max( m_sz.cx, LONG(m_nKeyWidth + nValueWidth + 102) );
 	m_sz.cy += max( nMetaHeight, 96 );
 }
 

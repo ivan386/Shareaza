@@ -92,7 +92,8 @@ void CHubHorizonPool::Clear()
 
 CHubHorizonHub* CHubHorizonPool::Add(IN_ADDR* pAddress, WORD nPort)
 {
-	for ( CHubHorizonHub* pHub = m_pActive ; pHub ; pHub = pHub->m_pNext )
+    CHubHorizonHub* pHub = m_pActive;
+	for ( ; pHub ; pHub = pHub->m_pNext )
 	{
 		if ( pHub->m_pAddress.S_un.S_addr == pAddress->S_un.S_addr )
 		{

@@ -752,6 +752,12 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 				ar >> m_nUserCount;
 				if ( nVersion >= 8 ) ar >> m_nUserLimit;
 				if ( nVersion >= 9 ) ar >> m_bPriority;
+				if ( nVersion >= 10 )
+				{
+					ar >> m_nFileLimit;
+					ar >> m_nTCPFlags;
+					ar >> m_nUDPFlags;
+				}
 			}
 		}
 		
@@ -920,7 +926,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, 60 );
+		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, DWORD(60) );
 	}
 	
 	return FALSE;

@@ -35,7 +35,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(CFileFragment** ppFragments);
+    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnConnected();
@@ -90,7 +90,8 @@ protected:
 			CString in( m_sData ), out;
 			for( int n = 0; Split( in, _T(' '), out ); ++n )
 			{
-				for( int i = 0; i < out.GetLength(); ++i )
+                int i = 0;
+				for( ; i < out.GetLength(); ++i )
 					if ( !isdigit( out [i] ) )
 						break;
 				if( i == out.GetLength() && out [0] != _T('0') && n != 2 )

@@ -264,7 +264,8 @@ void CHomeSearchCtrl::OnSearchCreate()
 	
 	int nCount = theApp.GetProfileInt( _T("Search"), _T("Recent.Count"), 0 );
 	
-	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
+    int nItem = 0;
+	for ( ; nItem < nCount ; nItem++ )
 	{
 		strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
 		

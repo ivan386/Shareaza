@@ -172,6 +172,9 @@
 				RuntimeLibrary="1"
 				BufferSecurityCheck="TRUE"
 				DefaultCharIsUnsigned="TRUE"
+				TreatWChar_tAsBuiltInType="TRUE"
+				ForceConformanceInForLoopScope="TRUE"
+				RuntimeTypeInfo="FALSE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/Shareaza.pch"
@@ -191,7 +194,8 @@
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories=".\asm"
-				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib uafxcwd.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -233,15 +237,17 @@
 			ConfigurationType="1"
 			UseOfMFC="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
+			CharacterSet="1"
+			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="1"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
-				OptimizeForProcessor="0"
+				OmitFramePointers="TRUE"
+				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories=".\zlib"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
@@ -251,6 +257,9 @@
 				EnableFunctionLevelLinking="TRUE"
 				EnableEnhancedInstructionSet="0"
 				DefaultCharIsUnsigned="TRUE"
+				TreatWChar_tAsBuiltInType="TRUE"
+				ForceConformanceInForLoopScope="TRUE"
+				RuntimeTypeInfo="FALSE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile=".\Release/Shareaza.pch"
@@ -279,6 +288,7 @@
 				GenerateMapFile="TRUE"
 				MapFileName=".\Release/Shareaza.map"
 				SubSystem="2"
+				OptimizeReferences="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -2043,41 +2053,6 @@
 			</File>
 			<File
 				RelativePath="FileExecutor.cpp">
-				<FileConfiguration
-					Name="ASCII Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ASCII Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="FileFragment.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
 					<Tool
@@ -11994,9 +11969,6 @@
 				RelativePath="FileExecutor.h">
 			</File>
 			<File
-				RelativePath="FileFragment.h">
-			</File>
-			<File
 				RelativePath="FragmentBar.h">
 			</File>
 			<File
@@ -12908,6 +12880,35 @@
 				<File
 					RelativePath="PageSettingsWeb.h">
 				</File>
+			</Filter>
+			<Filter
+				Name="File fragments"
+				Filter="">
+				<File
+					RelativePath=".\FileFragments.hpp">
+				</File>
+				<Filter
+					Name="Detail"
+					Filter="">
+					<File
+						RelativePath=".\filefragments\Compatibility.hpp">
+					</File>
+					<File
+						RelativePath=".\filefragments\Exception.hpp">
+					</File>
+					<File
+						RelativePath=".\filefragments\Fragment.hpp">
+					</File>
+					<File
+						RelativePath=".\filefragments\List.hpp">
+					</File>
+					<File
+						RelativePath=".\filefragments\PayloadTraits.hpp">
+					</File>
+					<File
+						RelativePath=".\filefragments\Queue.hpp">
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

@@ -213,7 +213,8 @@ void CPluginsSettingsPage::OnOK()
 
 void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int nImage, TRISTATE bEnabled, LPVOID pPlugin)
 {
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+    int nItem = 0;
+	for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		LPVOID pExisting = (LPVOID)m_wndList.GetItemData( nItem );
 		CString strExisting = m_wndList.GetItemText( nItem, 0 );

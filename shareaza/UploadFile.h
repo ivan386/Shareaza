@@ -24,9 +24,8 @@
 
 #pragma once
 
+#include "FileFragments.hpp"
 class CUploadTransfer;
-class CFileFragment;
-
 
 class CUploadFile
 {
@@ -45,7 +44,7 @@ public:
 	QWORD			m_nSize;
 public:
 	DWORD			m_nRequests;
-	CFileFragment*	m_pFragments;
+    FF::SimpleFragmentList m_oFragments;
 public:
 	BOOL			m_bSelected;
 protected:

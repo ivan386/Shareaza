@@ -257,7 +257,7 @@ int CAlbumFolder::GetSharedCount() const
 		if ( pFile->IsShared() ) nCount++;
 	}
 	
-	for ( pos = GetFolderIterator() ; pos ; )
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		nCount += GetNextFolder( pos )->GetSharedCount();
 	}
@@ -283,7 +283,7 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile)
 		GetNextFolder( pos )->OnFileDelete( pFile );
 	}
 	
-	if ( pos = m_pFiles.Find( pFile ) )
+	if ( POSITION pos = m_pFiles.Find( pFile ) )
 	{
 		m_pFiles.RemoveAt( pos );
 		m_nUpdateCookie++;
@@ -331,7 +331,7 @@ int CAlbumFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 	
 	if ( bRecursive )
 	{
-		for ( pos = GetFolderIterator() ; pos ; )
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			GetNextFolder( pos )->GetFileList( pList, bRecursive );
 		}

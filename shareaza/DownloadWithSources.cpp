@@ -98,7 +98,7 @@ int CDownloadWithSources::GetED2KCompleteSourceCount() const
 		if ( ( ! pSource->m_bPushOnly ) && //Push sources can't be counted since you often cannot reach them
 			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	//This source is probably dead
 			 ( pSource->m_nProtocol == PROTOCOL_ED2K ) && //Only counting ed2k sources
-			 ( pSource->m_pAvailable == NULL ) ) //Only counting complete sources
+             ( pSource->m_oAvailable.empty() ) ) //Only counting complete sources
 			
 		{
 			nCount++;
@@ -325,7 +325,8 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 	
 	strURLs += ',';
 	
-	for ( int nCount = 0 ; ; )
+    int nCount = 0;
+	for ( ; ; )
 	{
 		int nPos = strURLs.Find( ',' );
 		if ( nPos < 0 ) break;
@@ -349,7 +350,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 				bSeen = TimeFromString( strTime, &tSeen );
 			}
 			
-			for ( nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
+			for ( int nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
 			{
 				if ( strURL[ nScan ] == '`' ) strURL.SetAt( nScan, ',' );
 			}

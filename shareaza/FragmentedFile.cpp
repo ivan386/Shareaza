@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,15 +40,8 @@ static char THIS_FILE[]=__FILE__;
 // CFragmentedFile construction
 
 CFragmentedFile::CFragmentedFile()
-{
-	m_pFile			= NULL;
-	m_nTotal		= 0;
-	m_nRemaining	= 0;
-	m_nUnflushed	= 0;
-	m_nFragments	= 0;
-	m_pFirst		= NULL;
-	m_pLast			= NULL;
-}
+: m_pFile( NULL ), m_nUnflushed( 0 ), m_oFList( 0 )
+{ }
 
 CFragmentedFile::~CFragmentedFile()
 {
@@ -60,19 +53,18 @@ CFragmentedFile::~CFragmentedFile()
 
 BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 {
-	if ( m_pFile != NULL || m_nTotal > 0 ) return FALSE;
+	if ( m_pFile != NULL || m_oFList.limit() > 0 ) return FALSE;
 	if ( nLength == 0 ) return FALSE;
 	
 	m_pFile = TransferFiles.Open( pszFile, TRUE, TRUE );
 	if ( m_pFile == NULL ) return FALSE;
-	
-	m_nRemaining = m_nTotal = nLength;
-	m_nFragments = 1;
-	
-	m_pFirst = m_pLast = CFileFragment::New( NULL, NULL, 0, m_nTotal );
+
+    m_oFList.swap( FF::SimpleFragmentList( nLength ) );
+
+    m_oFList.insert( FF::SimpleFragment( 0, nLength ) );
 	
 	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
-		 m_nRemaining >= Settings.Downloads.SparseThreshold * 1024 )
+		 nLength >= Settings.Downloads.SparseThreshold * 1024 )
 	{
 		DWORD dwOut = 0;
 		HANDLE hFile = m_pFile->GetHandle( TRUE );
@@ -92,7 +84,7 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 
 BOOL CFragmentedFile::Open(LPCTSTR pszFile)
 {
-	if ( m_pFile != NULL || m_nTotal == 0 ) return FALSE;
+	if ( m_pFile != NULL || m_oFList.limit() == 0 ) return FALSE;
 	
 	m_pFile = TransferFiles.Open( pszFile, TRUE, FALSE );
 	
@@ -132,11 +124,9 @@ void CFragmentedFile::Close()
 void CFragmentedFile::Clear()
 {
 	Close();
-	
-	m_pFirst->DeleteChain();
-	
-	m_nTotal = m_nRemaining = m_nUnflushed = m_nFragments = 0;
-	m_pFirst = m_pLast = NULL;
+
+    m_oFList.swap( FF::SimpleFragmentList( 0 ) );
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -144,11 +134,9 @@ void CFragmentedFile::Clear()
 
 BOOL CFragmentedFile::MakeComplete()
 {
-	if ( m_nTotal == 0 || m_nRemaining == 0 ) return FALSE;
-	
-	m_pFirst->DeleteChain();
-	m_nRemaining = m_nFragments = 0;
-	m_pFirst = m_pLast = NULL;
+	if ( m_oFList.empty() ) return FALSE;
+
+    m_oFList.clear();
 	
 	if ( m_pFile != NULL )
 	{
@@ -156,8 +144,8 @@ BOOL CFragmentedFile::MakeComplete()
 		
 		if ( hFile != INVALID_HANDLE_VALUE )
 		{
-			DWORD nSizeHigh	= (DWORD)( m_nTotal >> 32 );
-			DWORD nSizeLow	= (DWORD)( m_nTotal & 0xFFFFFFFF );
+			DWORD nSizeHigh	= (DWORD)( m_oFList.limit() >> 32 );
+			DWORD nSizeLow	= (DWORD)( m_oFList.limit() & 0xFFFFFFFF );
 			SetFilePointer( hFile, nSizeLow, (PLONG)&nSizeHigh, FILE_BEGIN );
 			SetEndOfFile( hFile );
 		}
@@ -173,76 +161,14 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
-		ar << m_nTotal;
-		ar << m_nRemaining;
-		ar << m_nFragments;
-		
-		for ( CFileFragment* pFragment = m_pFirst ; pFragment ; )
-		{
-			pFragment->Serialize( ar );
-			pFragment = pFragment->m_pNext;
-		}
+        SerializeOut1( ar, m_oFList );
 	}
 	else
 	{
-		ASSERT( m_nTotal == 0 );
+		ASSERT( m_oFList.limit() == 0 );
 		
-		if ( nVersion >= 29 )
-		{
-			ar >> m_nTotal;
-			ar >> m_nRemaining;
-		}
-		else
-		{
-			DWORD nInt32;
-			ar >> nInt32; m_nTotal = nInt32;
-			ar >> nInt32; m_nRemaining = nInt32;
-		}
-		
-		ar >> m_nFragments;
-		
-		CFileFragment* pPrevious = NULL;
-		
-		for ( DWORD nFragment = 0 ; nFragment < m_nFragments ; nFragment++ )
-		{
-			m_pLast = CFileFragment::New( pPrevious );
-						
-			if ( pPrevious ) pPrevious->m_pNext = m_pLast;
-			else m_pFirst = m_pLast;
-			pPrevious = m_pLast;
-			
-			m_pLast->Serialize( ar, nVersion >= 29 );
-		}
+        SerializeIn1( ar, m_oFList, nVersion );
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CFragmentedFile simple fragment operations
-
-void CFragmentedFile::SetEmptyFragments(CFileFragment* pInput)
-{
-	m_pFirst->DeleteChain();
-	
-	m_pFirst		= m_pLast = pInput;
-	m_nFragments	= 0;
-	m_nRemaining	= 0;
-	
-	for ( ; pInput ; pInput = pInput->m_pNext )
-	{
-		m_nFragments ++;
-		m_nRemaining += pInput->m_nLength;
-		m_pLast = pInput;
-	}
-}
-
-CFileFragment* CFragmentedFile::CopyFreeFragments() const
-{
-	return m_pFirst->CreateCopy();
-}
-
-CFileFragment* CFragmentedFile::CopyFilledFragments() const
-{
-	return m_pFirst->CreateInverse( m_nTotal );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -250,85 +176,17 @@ CFileFragment* CFragmentedFile::CopyFilledFragments() const
 
 BOOL CFragmentedFile::IsPositionRemaining(QWORD nOffset) const
 {
-	if ( m_nRemaining == 0 || m_nFragments == 0 ) return FALSE;
-	if ( nOffset >= m_nTotal ) return FALSE;
-	
-	for ( CFileFragment* pFragment = m_pFirst ; pFragment ; )
-	{
-		if ( nOffset >= pFragment->m_nOffset && nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-			return TRUE;
-		
-		pFragment = pFragment->m_pNext;
-	}
-	
-	return FALSE;
+    return hasPosition( m_oFList, nOffset );
 }
 
 BOOL CFragmentedFile::DoesRangeOverlap(QWORD nOffset, QWORD nLength) const
 {
-	if ( m_nRemaining == 0 || m_nFragments == 0 ) return FALSE;
-	if ( nLength == 0 ) return FALSE;
-	
-	for ( CFileFragment* pFragment = m_pFirst ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( nOffset <= pFragment->m_nOffset &&
-			 nOffset + nLength >= pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			if ( pFragment->m_nLength ) return TRUE;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			return TRUE;
-		}
-		else if (	nOffset + nLength > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			if ( nLength - ( pFragment->m_nOffset - nOffset ) ) return TRUE;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			if ( pFragment->m_nOffset + pFragment->m_nLength - nOffset ) return TRUE;
-		}
-	}
-	
-	return FALSE;
+    return overlaps( m_oFList, FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 
 QWORD CFragmentedFile::GetRangeOverlap(QWORD nOffset, QWORD nLength) const
 {
-	if ( m_nRemaining == 0 || m_nFragments == 0 ) return 0;
-	if ( nLength == 0 ) return 0;
-	
-	QWORD nOverlap = 0;
-	
-	for ( CFileFragment* pFragment = m_pFirst ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( nOffset <= pFragment->m_nOffset &&
-			 nOffset + nLength >= pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			nOverlap += pFragment->m_nLength;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			nOverlap += nLength;
-			break;
-		}
-		else if (	nOffset + nLength > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			nOverlap += nLength - ( pFragment->m_nOffset - nOffset );
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			nOverlap += pFragment->m_nOffset + pFragment->m_nLength - nOffset;
-		}
-	}
-	
-	return nOverlap;
+    return overlappingSum( m_oFList, FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -337,93 +195,30 @@ QWORD CFragmentedFile::GetRangeOverlap(QWORD nOffset, QWORD nLength) const
 BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
 {
 	if ( m_pFile == NULL ) return FALSE;
-	if ( m_nRemaining == 0 || m_nFragments == 0 ) return FALSE;
 	if ( nLength == 0 ) return TRUE;
-	
+
+    FF::SimpleFragment oMatch( nOffset, nOffset + nLength );
+    FF::SimpleFragmentList::ConstIteratorPair
+        pMatches = m_oFList.overlappingRange( oMatch );
+    if ( pMatches.first == pMatches.second ) return FALSE;
+
 	QWORD nResult, nProcessed = 0;
-	
-	for ( CFileFragment* pFragment = m_pFirst ; pFragment ; )
-	{
-		CFileFragment* pNext = pFragment->m_pNext;
 
-		if ( nOffset <= pFragment->m_nOffset &&
-			 nOffset + nLength >= pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			LPBYTE pSource = (LPBYTE)pData + ( pFragment->m_nOffset - nOffset );
-			
-			if ( ! m_pFile->Write( pFragment->m_nOffset, pSource, pFragment->m_nLength, &nResult ) ) return FALSE;
-						
-			nProcessed		+= pFragment->m_nLength;
-			m_nRemaining	-= pFragment->m_nLength;
-			
-			if ( pFragment->m_pPrevious )
-				pFragment->m_pPrevious->m_pNext = pNext;
-			else
-				m_pFirst = pNext;
+    for ( ; pMatches.first != pMatches.second; ++pMatches.first )
+    {
+        QWORD nStart = std::max( pMatches.first->begin(), oMatch.begin() );
+        nResult = std::min( pMatches.first->end(), oMatch.end() ) - nStart;
 
-			if ( pNext )
-				pNext->m_pPrevious = pFragment->m_pPrevious;
-			else
-				m_pLast = pFragment->m_pPrevious;
-			
-			pFragment->DeleteThis();
-			m_nFragments --;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			if ( ! m_pFile->Write( nOffset, pData, nLength, &nResult ) ) return FALSE;
-			
-			nProcessed		+= nLength;
-			m_nRemaining	-= nLength;
-			
-			CFileFragment* pNew = CFileFragment::New( pFragment, pNext );
-			pNew->m_nOffset	= nOffset + nLength;
-			pNew->m_nLength	= pFragment->m_nOffset + pFragment->m_nLength - pNew->m_nOffset;
-			
-			pFragment->m_nLength	= nOffset - pFragment->m_nOffset;
-			pFragment->m_pNext		= pNew;
-			
-			if ( pNext )
-				pNext->m_pPrevious = pNew;
-			else
-				m_pLast = pNew;
-			
-			m_nFragments++;
-			
-			break;
-		}
-		else if (	nOffset + nLength > pFragment->m_nOffset &&
-					nOffset + nLength < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			LPBYTE pSource	= (LPBYTE)pData + ( pFragment->m_nOffset - nOffset );
-			QWORD nFragment	= nLength - ( pFragment->m_nOffset - nOffset );
-			
-			if ( ! m_pFile->Write( pFragment->m_nOffset, pSource, nFragment, &nResult ) ) return FALSE;
-			
-			nProcessed		+= nFragment;
-			m_nRemaining	-= nFragment;
-			
-			pFragment->m_nOffset	+= nFragment;
-			pFragment->m_nLength	-= nFragment;
-		}
-		else if (	nOffset > pFragment->m_nOffset &&
-					nOffset < pFragment->m_nOffset + pFragment->m_nLength )
-		{
-			QWORD nFragment	= pFragment->m_nOffset + pFragment->m_nLength - nOffset;
-			
-			if ( ! m_pFile->Write( nOffset, pData, nFragment, &nResult ) ) return FALSE;
-			
-			nProcessed		+= nFragment;
-			m_nRemaining	-= nFragment;
-			
-			pFragment->m_nLength	-= nFragment;
-		}
-		
-		pFragment = pNext;
+        const char* pSource
+            = static_cast< const char* >( pData ) + nStart - oMatch.begin();
+
+        if ( !m_pFile->Write( nStart, pSource, nResult, &nResult ) ) return FALSE;
+
+        nProcessed += nResult;
 	}
 	
 	m_nUnflushed += nProcessed;
+    m_oFList.erase( oMatch );
 	return nProcessed > 0;
 }
 
@@ -448,10 +243,5 @@ BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength)
 
 QWORD CFragmentedFile::InvalidateRange(QWORD nOffset, QWORD nLength)
 {
-	CFileFragment* pFull = CopyFilledFragments();
-	QWORD nCount = CFileFragment::Subtract( &pFull, nOffset, nLength );
-	SetEmptyFragments( pFull->CreateInverse( m_nTotal ) );
-	pFull->DeleteChain();
-	
-	return nCount;
+    return m_oFList.insert( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }

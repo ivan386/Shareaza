@@ -291,7 +291,7 @@ BOOL CBrowseTreeCtrl::Highlight(CBrowseTreeItem* pItem)
 	
 	CollapseRecursive( m_pRoot );
 	
-	for ( pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
+	for ( CBrowseTreeItem* pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
 	{
 		pParent->m_bContract1 = pParent->m_bContract2;
 	}
@@ -907,7 +907,8 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 	
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = new CBrowseTreeItem( this );
 	
-	for ( int nFirst = 0, nLast = m_nCount - 1 ; nLast >= nFirst ; )
+    int nFirst = 0;
+	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
 		int nMiddle = ( nFirst + nLast ) >> 1;
 		
@@ -945,7 +946,8 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 	
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = pNewItem;
 	
-	for ( int nFirst = 0, nLast = m_nCount - 1 ; nLast >= nFirst ; )
+    int nFirst = 0;
+	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
 		int nMiddle = ( nFirst + nLast ) >> 1;
 		

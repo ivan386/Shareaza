@@ -122,33 +122,23 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 			if ( GetFileAttributes( m_sTargetName ) == 0xFFFFFFFF ) break;
 		}
 	}
-	
-	if ( CFileFragment* pFragment = m_pDownload->GetFirstEmptyFragment() )
-	{
-		QWORD nLast = 0;
-		
-		for ( ; pFragment ; pFragment = pFragment->m_pNext )
-		{
-			if ( pFragment->m_nOffset > nLast )
-			{
-				m_pRanges.Add( (DWORD)nLast );
-				m_pRanges.Add( (DWORD)( pFragment->m_nOffset - nLast ) );
-			}
-			
-			nLast = pFragment->m_nOffset + pFragment->m_nLength;
-		}
-		
-		if ( m_pDownload->m_nSize > nLast )
-		{
-			m_pRanges.Add( (DWORD)nLast );
-			m_pRanges.Add( (DWORD)( m_pDownload->m_nSize - nLast ) );
-		}
-		
-		if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
-		{
-			while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
-		}
-	}
+
+    if ( !m_pDownload->GetEmptyFragmentList().empty() )
+    {
+        FF::SimpleFragmentList oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
+
+        for ( FF::SimpleFragmentList::ConstIterator pFragment
+            = oRanges.begin(); pFragment != oRanges.end(); ++pFragment )
+	    {
+		    m_pRanges.Add( DWORD( pFragment->begin() ) );
+		    m_pRanges.Add( DWORD( pFragment->length() ) );
+	    }
+    		
+	    if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
+	    {
+		    while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
+	    }
+    }
 }
 
 BOOL CFilePreviewDlg::Create()
@@ -287,7 +277,8 @@ void CFilePreviewDlg::OnDestroy()
 {
 	if ( m_hThread != NULL )
 	{
-		for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+        int nAttempt = 100;
+		for ( ; nAttempt > 0 ; nAttempt-- )
 		{
 			DWORD nCode;
 			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
@@ -429,7 +420,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 	
 	BYTE* pData = new BYTE[ BUFFER_SIZE ];
 	
-	for ( nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
+	for ( int nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
 	{
 		DWORD nOffset = m_pRanges.GetAt( nRange );
 		DWORD nLength = m_pRanges.GetAt( nRange + 1 );
@@ -439,7 +430,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 		
 		while ( nLength )
 		{
-			DWORD nChunk = min( BUFFER_SIZE, nLength );
+			DWORD nChunk = min( DWORD(BUFFER_SIZE), nLength );
 			
 			ReadFile( hFile, pData, nChunk, &nChunk, NULL );
 			

@@ -346,7 +346,7 @@ BOOL CLibraryTreeCtrl::Highlight(CLibraryTreeItem* pItem)
 	
 	CollapseRecursive( m_pRoot );
 	
-	for ( pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
+	for ( CLibraryTreeItem* pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
 	{
 		pParent->m_bContract1 = pParent->m_bContract2;
 	}
@@ -988,7 +988,7 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 
 	CFont* pOldFont = (CFont*)dcDrag.SelectObject( &CoolInterface.m_fntNormal );
 
-	for (	pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
+	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
 		GetRect( pItem, &rcOne );
 		CRect rcDummy;
@@ -1071,7 +1071,8 @@ CLibraryTreeItem* CLibraryTreeItem::Add(LPCTSTR pszName)
 
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = new CLibraryTreeItem( this );
 	
-	for ( int nFirst = 0, nLast = m_nCount - 1 ; nLast >= nFirst ; )
+    int nFirst = 0;
+	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
 		int nMiddle = ( nFirst + nLast ) >> 1;
 

@@ -25,6 +25,7 @@
 #pragma once
 
 #include "UploadTransfer.h"
+#include "FileFragments.hpp"
 
 class CBTClient;
 class CBTPacket;
@@ -46,9 +47,9 @@ public:
 	BOOL			m_bChoked;
 	int				m_nRandomUnchoke;
 	DWORD			m_tRandomUnchoke;
-public:
-	CFileFragment*	m_pRequested;
-	CFileFragment*	m_pServed;
+private:
+    FF::SimpleFragmentQueue m_oRequested;
+    FF::SimpleFragmentQueue m_oServed;
 	
 // Operations
 public:

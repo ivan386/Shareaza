@@ -350,7 +350,7 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
 		pClone->m_pAttributes.SetAt( strName, pAttribute );
 	}
 
-	for ( pos = GetElementIterator() ; pos ; )
+	for ( POSITION pos = GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pElement = GetNextElement( pos );
 		pClone->m_pElements.AddTail( pElement->Clone( pClone ) );
@@ -403,7 +403,8 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline)
 {
 	strXML += '<' + m_sName;
 	
-	for ( POSITION pos = GetAttributeIterator() ; pos ; )
+    POSITION pos = GetAttributeIterator();
+	for ( ; pos ; )
 	{
 		strXML += ' ';
 		CXMLAttribute* pAttribute = GetNextAttribute( pos );
@@ -734,7 +735,7 @@ void CXMLElement::AddRecursiveWords(CString& strWords)
 		strWords += pAttribute->GetValue();
 	}
 
-	for ( pos = GetElementIterator() ; pos ; )
+	for ( POSITION pos = GetElementIterator() ; pos ; )
 	{
 		GetNextElement( pos )->AddRecursiveWords( strWords );
 	}
@@ -766,7 +767,7 @@ void CXMLElement::Serialize(CArchive& ar)
 
 		ar.WriteCount( GetElementCount() );
 
-		for ( pos = GetElementIterator() ; pos ; )
+		for ( POSITION pos = GetElementIterator() ; pos ; )
 		{
 			GetNextElement( pos )->Serialize( ar );
 		}
@@ -783,7 +784,7 @@ void CXMLElement::Serialize(CArchive& ar)
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
 
-		for ( nCount = (int)ar.ReadCount() ; nCount > 0 ; nCount-- )
+		for ( int nCount = (int)ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CXMLElement* pElement = new CXMLElement( this );
 			pElement->Serialize( ar );

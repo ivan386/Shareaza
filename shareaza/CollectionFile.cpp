@@ -259,7 +259,7 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 		if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pNode->SetName( strName.Mid( 2 ) );
 	}
 	
-	for ( pos = pCore->GetAttributeIterator() ; pos ; )
+	for ( POSITION pos = pCore->GetAttributeIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pCore->GetNextAttribute( pos );
 		CString strName = pNode->GetName();

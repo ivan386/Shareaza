@@ -57,7 +57,7 @@ CMatchListView::CMatchListView(LPCTSTR pszName, CMatchList* pList)
 		m_pSelection.AddTail( m_pList->m_pSelectedFiles.GetNext( pos ) );
 	}
 	
-	for ( pos = m_pList->m_pSelectedHits.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pList->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		m_pSelection.AddTail( m_pList->m_pSelectedHits.GetNext( pos ) );
 	}

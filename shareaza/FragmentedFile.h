@@ -1,7 +1,7 @@
 //
 // FragmentedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,11 +24,10 @@
 
 #pragma once
 
-#include "FileFragment.h"
+#include "FileFragments.hpp"
 
 class CTransferFile;
 class CEDPartImporter;
-
 
 class CFragmentedFile
 {
@@ -40,13 +39,10 @@ public:
 // Attributes
 protected:
 	CTransferFile*	m_pFile;
-	QWORD			m_nTotal;
-	QWORD			m_nRemaining;
 	QWORD			m_nUnflushed;
-protected:
-	DWORD			m_nFragments;
-	CFileFragment*	m_pFirst;
-	CFileFragment*	m_pLast;
+
+private:
+    FF::SimpleFragmentList m_oFList;
 	
 // Operations
 public:
@@ -58,9 +54,6 @@ public:
 	BOOL			MakeComplete();
 	void			Serialize(CArchive& ar, int nVersion);
 public:
-	void			SetEmptyFragments(CFileFragment* pInput);
-	CFileFragment*	CopyFreeFragments() const;
-	CFileFragment*	CopyFilledFragments() const;
 	BOOL			IsPositionRemaining(QWORD nOffset) const;
 	BOOL			DoesRangeOverlap(QWORD nOffset, QWORD nLength) const;
 	QWORD			GetRangeOverlap(QWORD nOffset, QWORD nLength) const;
@@ -72,37 +65,37 @@ public:
 public:
 	inline BOOL IsValid() const
 	{
-		return ( this != NULL ) && ( m_nTotal > 0 );
+		return m_oFList.limit() > 0; // && this != NULL
 	}
 	
 	inline BOOL IsOpen() const
 	{
-		return ( this != NULL ) && ( m_pFile != NULL );
+		return m_pFile != NULL;// && this != NULL
 	}
-	
+
 	inline QWORD GetTotal() const
 	{
-		return m_nTotal;
+		return m_oFList.limit();
 	}
 	
 	inline QWORD GetRemaining() const
 	{
-		return m_nRemaining;
+		return m_oFList.sumLength();
 	}
 	
 	inline QWORD GetCompleted() const
 	{
-		return IsValid() ? m_nTotal - m_nRemaining : 0;
+		return m_oFList.missing();
 	}
 	
-	inline CFileFragment* GetFirstEmptyFragment() const
-	{
-		return m_pFirst;
-	}
+    const FF::SimpleFragmentList& GetEmptyFragmentList() const
+    {
+        return m_oFList;
+    }
 	
 	inline QWORD GetEmptyFragmentCount() const
 	{
-		return m_nFragments;
+		return m_oFList.size();
 	}
 	
 	inline BOOL IsFlushNeeded() const

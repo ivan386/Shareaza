@@ -303,7 +303,7 @@ BOOL CGGEPItem::ReadFrom(CGGEPBlock* pBlock, BYTE nFlags)
 	
 	m_nLength = 0;
 	
-	for ( i = 0 ; i < 3 ; i++ )
+	for ( BYTE i = 0 ; i < 3 ; i++ )
 	{
 		if ( ! pBlock->m_nInput ) return FALSE;
 		nLen = pBlock->ReadByte();

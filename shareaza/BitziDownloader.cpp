@@ -115,7 +115,8 @@ void CBitziDownloader::Stop()
 	
 	if ( m_hThread == NULL ) return;
 
-	for ( int nAttempt = 5 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 5;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 
@@ -219,7 +220,7 @@ void CBitziDownloader::OnRun()
 		if ( m_pXML ) delete m_pXML;
 		m_pXML = NULL;
 
-		Sleep( min( m_nDelay, 500 ) );
+		Sleep( min( m_nDelay, DWORD(500) ) );
 	}
 
 	if ( m_hSession != NULL && ! m_bFinished ) InternetCloseHandle( m_hSession );
@@ -506,7 +507,7 @@ BOOL CBitziDownloader::MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput)
 		if ( pTarget == NULL ) pOutput->AddElement( pElement->Clone() );
 	}
 
-	for ( pos = pInput->GetAttributeIterator() ; pos ; )
+	for ( POSITION pos = pInput->GetAttributeIterator() ; pos ; )
 	{
 		CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
 		CXMLAttribute* pTarget		= pOutput->GetAttribute( pAttribute->GetName() );

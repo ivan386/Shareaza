@@ -25,11 +25,10 @@
 #pragma once
 
 #include "Transfer.h"
+#include "FileFragments.hpp"
 
 class CDownload;
 class CDownloadSource;
-class CFileFragment;
-
 
 class CDownloadTransfer : public CTransfer
 {
@@ -66,7 +65,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(CFileFragment** ppFragments) = 0;
+    virtual BOOL	SubtractRequested(FF::SimpleFragmentList& ppFragments) = 0;
 	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength) { return FALSE; }
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();

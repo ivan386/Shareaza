@@ -76,7 +76,7 @@ private:
 	BOOL	FindNewValidationBlock(int nHash);
 	void	ContinueValidation();
 	void	FinishValidation();
-	void	SubtractHelper(CFileFragment** ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
+    void	SubtractHelper(FF::SimpleFragmentList& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
 public:
 	virtual CString	GetAvailableRanges() const;
 	virtual void	ResetVerification();

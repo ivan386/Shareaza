@@ -273,7 +273,7 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 
 	if ( pRect->Height() <= TOP_MARGIN ) return;
 
-	DWORD nScale = max( m_nScale, MIN_GRID_SIZE_HORZ );
+	DWORD nScale = max( m_nScale, DWORD(MIN_GRID_SIZE_HORZ) );
 	DWORD nCount = pRect->Width() / nScale + 1;
 	DWORD nTimeB = nScale / m_nScale;
 
@@ -303,7 +303,7 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 
 	int nOldY = pRect->bottom;
 
-	for ( nPos = 1 ; ; nPos++ )
+	for ( DWORD nPos = 1 ; ; nPos++ )
 	{
 		int nY = pRect->bottom - nScale * nPos * ( pRect->Height() - TOP_MARGIN ) / m_nMaximum;
 		if ( nY < 0 || nY >= nOldY - 4 ) break;

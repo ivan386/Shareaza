@@ -372,8 +372,14 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 
 	CString strServerFlags;
-	strServerFlags.Format( _T("Server Flags: Zlib: %d Short Tags: %d Unicode: %d GetSources2: %d (64): %d  (128): %d"), 
-		m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE, m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nTCPFlags & ED2K_SERVER_TCP_UNICODE, m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2, m_nTCPFlags & 0x00000040, m_nTCPFlags & 0x00000080  );
+	strServerFlags.Format(
+        _T( "Server Flags: Zlib: %d Short Tags: %d Unicode: %d GetSources2: %d (64): %d  (128): %d" ), 
+		m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE,
+        m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS,
+        m_nTCPFlags & ED2K_SERVER_TCP_UNICODE,
+        m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
+        m_nTCPFlags & 0x00000040,
+        m_nTCPFlags & 0x00000080 );
 	theApp.Message( MSG_DEBUG, strServerFlags );//debug
 	
 	

@@ -283,7 +283,7 @@ void CDownloadGroups::Serialize(CArchive& ar)
 		
 		ar.WriteCount( GetCount() );
 		
-		for ( pos = GetIterator() ; pos ; )
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CDownloadGroup* pGroup = GetNext( pos );
 			

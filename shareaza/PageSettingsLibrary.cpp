@@ -287,7 +287,7 @@ void CLibrarySettingsPage::OnOK()
 	
 	Settings.Library.PrivateTypes.Empty();
 
-	for ( nItem = 0 ; nItem < m_wndPrivateList.GetCount() ; nItem++ )
+	for ( int nItem = 0 ; nItem < m_wndPrivateList.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndPrivateList.GetLBText( nItem, str );

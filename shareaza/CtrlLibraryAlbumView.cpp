@@ -223,7 +223,8 @@ BOOL CLibraryAlbumView::Select(DWORD nObject)
 	
 	CLibraryAlbumTrack** pList = m_pList + m_nCount - 1;
 	
-	for ( int nItem = m_nCount ; nItem ; nItem--, pList-- )
+    int nItem = m_nCount;
+	for ( ; nItem ; nItem--, pList-- )
 	{
 		CLibraryAlbumTrack* pTrack = *pList;
 		if ( pTrack->m_nIndex == nObject ) break;
@@ -897,7 +898,7 @@ CImageList* CLibraryAlbumView::CreateDragImage(const CPoint& ptMouse)
 	
 	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
 	
-	for ( pos = m_pSelTrack.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pSelTrack.GetHeadPosition() ; pos ; )
 	{
 		CLibraryAlbumTrack* pTrack = (CLibraryAlbumTrack*)m_pSelTrack.GetNext( pos );
 		GetItemRect( pTrack, &rcOne );

@@ -377,7 +377,7 @@ void CMatchTipCtrl::LoadFromFile()
 	
 	if ( m_pSchema != NULL )
 	{
-		for ( pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
+		for ( CQueryHit* pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
 			if ( pHit->m_pXML && m_pSchema->CheckURI( pHit->m_sSchemaURI ) )
 			{
@@ -732,7 +732,7 @@ CSize CMatchTipCtrl::ComputeSize()
 		m_pMetadata.ComputeWidth( &dc, m_nKeyWidth, nValueWidth );
 		
 		if ( m_nKeyWidth ) m_nKeyWidth += TIP_MARGIN;
-		sz.cx = max( sz.cx, m_nKeyWidth + nValueWidth );
+		sz.cx = max( sz.cx, LONG(m_nKeyWidth + nValueWidth) );
 		sz.cy += TIP_TEXTHEIGHT * m_pMetadata.GetCount();
 	}
 

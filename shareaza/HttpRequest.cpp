@@ -272,7 +272,8 @@ void CHttpRequest::Cancel()
 	{
 		ASSERT( GetCurrentThread() != m_hThread );
 		
-		for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+        int nAttempt = 100;
+		for ( ; nAttempt > 0 ; nAttempt-- )
 		{
 			DWORD nCode = 0;
 			if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;
@@ -355,7 +356,8 @@ void CHttpRequest::RunResponse(HINTERNET hURL)
 	if ( m_pResponse != NULL ) delete m_pResponse;
 	m_pResponse = new CBuffer();
 	
-	for ( DWORD nRemaining ; InternetQueryDataAvailable( hURL, &nRemaining, 0, 0 ) && nRemaining > 0 && ! m_bCancel ; )
+    DWORD nRemaining;
+	for ( ; InternetQueryDataAvailable( hURL, &nRemaining, 0, 0 ) && nRemaining > 0 && ! m_bCancel ; )
 	{
 		m_pResponse->EnsureBuffer( nRemaining );
 		if ( ! InternetReadFile( hURL, m_pResponse->m_pBuffer + m_pResponse->m_nLength,
@@ -410,7 +412,8 @@ void CHttpRequest::CloseThread(HANDLE* phThread, LPCTSTR pszName)
 {
 	if ( *phThread == NULL ) return;
 	
-	for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 100;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 		if ( ! GetExitCodeThread( *phThread, &nCode ) ) break;

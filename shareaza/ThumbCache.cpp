@@ -173,7 +173,8 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFil
 	
 	THUMB_INDEX* pIndex = m_pIndex;
 	
-	for ( DWORD nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
+    DWORD nCount = m_nIndex;
+	for ( ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex ) break;
 	}
@@ -213,7 +214,8 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 	
 	THUMB_INDEX* pIndex = m_pIndex;
 	
-	for ( DWORD nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
+    DWORD nCount = m_nIndex;
+	for ( ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex ) break;
 	}

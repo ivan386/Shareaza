@@ -134,7 +134,7 @@ CQuerySearch::~CQuerySearch()
 CG1Packet* CQuerySearch::ToG1Packet()
 {
 	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_QUERY,
-		min( Settings.Gnutella1.SearchTTL, 4 ), &m_pGUID );
+		min( Settings.Gnutella1.SearchTTL, DWORD(4) ), &m_pGUID );
 	
 	WORD nFlags = G1_QF_TAG | G1_QF_BIN_HASH | G1_QF_DYNAMIC;
 	if ( ! Network.IsListening() ) nFlags |= G1_QF_FIREWALLED;
@@ -379,7 +379,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 			
 			// Size limit (max)
 			pPacket->WriteByte( 3 );		
-			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, 0xFFFFFFFF ) );
+			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, QWORD(0xFFFFFFFF) ) );
 			pPacket->WriteByte( 2 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );

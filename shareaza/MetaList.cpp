@@ -215,8 +215,8 @@ void CMetaList::ComputeWidth(CDC* pDC, int& nKeyWidth, int& nValueWidth)
 		CSize szKey			= pDC->GetTextExtent( pItem->m_sKey + ':' );
 		CSize szValue		= pDC->GetTextExtent( pItem->m_sValue );
 
-		nKeyWidth			= max( nKeyWidth, szKey.cx );
-		nValueWidth			= max( nValueWidth, szValue.cx );
+		nKeyWidth			= max( nKeyWidth, int(szKey.cx) );
+		nValueWidth			= max( nValueWidth, int(szValue.cx) );
 	}
 }
 

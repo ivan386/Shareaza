@@ -236,7 +236,8 @@ BOOL CG2Neighbour::ProcessPackets()
 {
 	CBuffer* pInput = m_pZInput ? m_pZInput : m_pInput;
 	
-	for ( BOOL bSuccess = TRUE ; bSuccess && pInput->m_nLength ; )
+    BOOL bSuccess = TRUE;
+	for ( ; bSuccess && pInput->m_nLength ; )
 	{
 		BYTE nInput = *(pInput->m_pBuffer);
 		

@@ -553,7 +553,8 @@ BOOL CHostBrowser::ReadContent()
 
 BOOL CHostBrowser::StreamPacketsG1()
 {
-	for ( BOOL bSuccess = TRUE ; bSuccess ; )
+    BOOL bSuccess = TRUE;
+	for ( ; bSuccess ; )
 	{
 		GNUTELLAPACKET* pPacket = (GNUTELLAPACKET*)m_pBuffer->m_pBuffer;
 		if ( m_pBuffer->m_nLength < sizeof(*pPacket) ) break;

@@ -256,7 +256,8 @@ void CShareManagerDlg::OnOK()
 	{
 		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
 		
-		for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+        int nItem = 0;
+		for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
 		{
 			CString strFolder = m_wndList.GetItemText( nItem, 0 );
 			if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;

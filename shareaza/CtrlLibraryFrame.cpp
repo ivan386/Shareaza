@@ -129,7 +129,7 @@ CLibraryFrame::~CLibraryFrame()
 		delete (CLibraryView*)m_pViews.GetNext( pos );
 	}
 	
-	for ( pos = m_pPanels.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pPanels.GetHeadPosition() ; pos ; )
 	{
 		delete (CLibraryPanel*)m_pPanels.GetNext( pos );
 	}
@@ -559,7 +559,7 @@ BOOL CLibraryFrame::DoSizeTree()
 		nSplit += nOffset;
 		
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
+		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
 		
 		if ( nSplit < 8 )
 			nSplit = 0;

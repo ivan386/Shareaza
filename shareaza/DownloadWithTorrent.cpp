@@ -422,7 +422,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	{
 		nTotalRandom = rand() % nTotalRandom;
 		
-		for ( pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 		{
 			CUploadTransferBT* pTransfer = (CUploadTransferBT*)m_pTorrentUploads.GetNext( pos );
 			if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;
@@ -490,7 +490,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 		pSelected.AddTail( pBest->m_pClient );
 	}
 	
-	for ( pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransferBT* pTransfer = (CUploadTransferBT*)m_pTorrentUploads.GetNext( pos );
 		if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;

@@ -254,7 +254,7 @@ void CRemoteWnd::OnSkinChange()
 		return;
 	}
 	
-	for ( pos = m_pSkin->m_pAnchorList.GetStartPosition() ; pos ; )
+	for ( POSITION pos = m_pSkin->m_pAnchorList.GetStartPosition() ; pos ; )
 	{
 		CRect* prcAnchor;
 		CString strAnchor;

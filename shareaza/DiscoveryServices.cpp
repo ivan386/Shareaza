@@ -890,7 +890,8 @@ void CDiscoveryServices::StopWebRequest()
 	
 	if ( m_hThread == NULL ) return;
 	
-	for ( int nAttempt = 10 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 10;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 
@@ -1329,7 +1330,7 @@ BOOL CDiscoveryServices::RunServerMet()
 	{
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, 1024 );
+			DWORD nBuffer = min( nRemaining, DWORD(1024) );
 			InternetReadFile( m_hRequest, pBuffer, nBuffer, &nBuffer );
 			pFile.Write( pBuffer, nBuffer );
 			nRemaining -= nBuffer;
@@ -1369,7 +1370,7 @@ CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress)
 	m_nUpdates		= 0;
 	m_nFailures		= 0;
 	m_nHosts		= 0;
-	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, 1800 );
+	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, DWORD(1800) );
 	m_nUpdatePeriod	= Settings.Discovery.DefaultUpdate;
 	
 	if ( pszAddress != NULL ) m_sAddress = pszAddress;

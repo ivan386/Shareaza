@@ -147,7 +147,8 @@ void CWizardNetworksPage::DoDonkeyImport()
 		NULL
 	};
 	
-	for ( int nFolder = 0, nCount = 0 ; pszFolders[ nFolder ] ; nFolder++ )
+    int nCount = 0;
+	for ( int nFolder = 0 ; pszFolders[ nFolder ] ; nFolder++ )
 	{
 		strFolder = pszFolders[ nFolder ];
 		Replace( strFolder, _T("<%PROGRAMFILES%>"), strPrograms );

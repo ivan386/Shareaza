@@ -207,7 +207,7 @@ CXMLElement* CCollectionExportDlg::CopyMetadata(CXMLElement* pMetadata)
 		pNode->SetName( _T("s:") + pNode->GetName() );
 	}
 	
-	for ( pos = pMetadata->GetAttributeIterator() ; pos ; )
+	for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
 		pNode->SetName( _T("s:") + pNode->GetName() );

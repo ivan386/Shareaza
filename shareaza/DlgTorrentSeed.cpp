@@ -367,7 +367,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 	
 	for ( m_nVolume = 0 ; m_nVolume < m_nTotal ; )
 	{
-		DWORD nBuffer	= (DWORD)min( ( m_nTotal - m_nVolume ), BUFFER_SIZE );
+		DWORD nBuffer	= (DWORD)min( ( m_nTotal - m_nVolume ), QWORD(BUFFER_SIZE) );
 		DWORD tStart	= GetTickCount();
 		
 		ReadFile( hTarget, pBuffer, nBuffer, &nBuffer, NULL );
@@ -379,7 +379,7 @@ BOOL CTorrentSeedDlg::VerifySingle()
 		
 		if ( m_bCancel ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50 ) );
+		Sleep( min( tStart, DWORD(50) ) );
 		if ( m_bCancel ) break;
 	}
 	
@@ -422,7 +422,7 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 	m_nBlockNumber	= 0;
 	m_nBlockLength	= m_pInfo.m_nBlockSize;
 	
-	for ( nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
+	for ( int nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
 	{
 		CBTInfo::CBTFile* pFile = &m_pInfo.m_pFiles[ nFile ];
 		CString strSource = FindFile( pFile );
@@ -473,7 +473,7 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 	
 	while ( nLength )
 	{
-		DWORD nBuffer	= (DWORD)min( nLength, BUFFER_SIZE );
+		DWORD nBuffer	= (DWORD)min( nLength, QWORD(BUFFER_SIZE) );
 		DWORD nSuccess	= 0;
 		DWORD tStart	= GetTickCount();
 		
@@ -502,7 +502,7 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 		
 		if ( m_bCancel ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50 ) );
+		Sleep( min( tStart, DWORD(50) ) );
 		if ( m_bCancel ) break;
 	}
 	

@@ -231,7 +231,8 @@ void CChatCore::StopThread()
 	
 	m_pWakeup.SetEvent();
 	
-	for ( int nAttempt = 5 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 5;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 		if ( ! GetExitCodeThread( m_hThread, &nCode ) ) break;

@@ -85,12 +85,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
 	if ( Downloads.Check( (CDownload*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownload*)m_pContext );
-		m_sz.cx = max( m_sz.cx, 400 );
+		m_sz.cx = max( m_sz.cx, LONG(400) );
 	}
 	else if ( Downloads.Check( (CDownloadSource*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownloadSource*)m_pContext );
-		m_sz.cx = max( m_sz.cx, 400 );
+		m_sz.cx = max( m_sz.cx, LONG(400) );
 	}
 }
 
@@ -577,14 +577,14 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 		CSize szKey			= pDC->GetTextExtent( strName + ':' );
 		CSize szValue		= pDC->GetTextExtent( strValue );
 
-		m_nHeaderWidth		= max( m_nHeaderWidth, szKey.cx );
-		nValueWidth			= max( nValueWidth, szValue.cx );
+		m_nHeaderWidth		= max( m_nHeaderWidth, int(szKey.cx) );
+		nValueWidth			= max( nValueWidth, int(szValue.cx) );
 				
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
+	m_sz.cx = max( m_sz.cx, LONG(m_nHeaderWidth + nValueWidth) );
 }
 
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)

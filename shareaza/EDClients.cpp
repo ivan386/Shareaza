@@ -406,7 +406,8 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	if ( pServer->m_sName.GetLength() )
 		theApp.Message( MSG_DEFAULT, _T("Server status received from %s"), pServer->m_sName );
 	else
-		theApp.Message( MSG_DEFAULT, _T("Server status received from %s"), (LPCTSTR)CString( inet_ntoa( m_pLastServer ) ) );
+		theApp.Message( MSG_DEFAULT, _T("Server status received from %s"),
+            (LPCTSTR)CString( inet_ntoa( m_pLastServer ) ) );
 
 	// Read in the status packet
 	nLen = pPacket->GetRemaining();
@@ -550,4 +551,3 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		m_tLastServerStats = tNow;
 	}
 }
-

@@ -119,7 +119,8 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 	CString strWord;
 	int nCount = 0;
 	
-	for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+    int nStart = 0, nPos = 0;
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
 	{
 		if ( ! IsCharacter( *pszPtr ) )
 		{
@@ -251,7 +252,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 	}
 	
 	//Add sha1/ed2k hashes to hash table
-	for ( pos = LibraryMaps.GetFileIterator() ; pos ; )
+	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 		

@@ -148,7 +148,7 @@ void CQueryHashMaster::Build()
 	
 	if ( Transfers.m_pSection.Lock( 100 ) )
 	{
-		for ( pos = Downloads.GetIterator() ; pos ; )
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
 			

@@ -145,12 +145,14 @@ BOOL CQueryHashTable::Merge(CQueryHashTable* pSource)
 		
 		if ( m_nHash > pSource->m_nHash )
 		{
-			for ( DWORD nIterate = pSource->m_nHash ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
+            DWORD nIterate = pSource->m_nHash;
+			for ( ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
 			if ( nIterate != m_nHash ) return FALSE;
 		}
 		else if ( m_nHash < pSource->m_nHash )
 		{
-			for ( DWORD nIterate = m_nHash ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
+            DWORD nIterate = m_nHash;
+			for ( ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
 			if ( nIterate != pSource->m_nHash ) return FALSE;
 		}
 		
@@ -178,7 +180,7 @@ BOOL CQueryHashTable::Merge(CQueryHashTable* pSource)
 				}
 			}
 			
-			for ( nSample = 0 ; nSample < nDestScale ; nSample++, nDest++ )
+			for ( int nSample = 0 ; nSample < nDestScale ; nSample++, nDest++ )
 			{
 				if ( ! bValue && ( *pDestPtr & nDestMask ) )
 				{
@@ -238,12 +240,14 @@ BOOL CQueryHashTable::Merge(CQueryHashGroup* pSource)
 		
 		if ( m_nHash > pSource->m_nHash )
 		{
-			for ( DWORD nIterate = pSource->m_nHash ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
+            DWORD nIterate = pSource->m_nHash;
+			for ( ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
 			if ( nIterate != m_nHash ) return FALSE;
 		}
 		else if ( m_nHash < pSource->m_nHash )
 		{
-			for ( DWORD nIterate = m_nHash ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
+            DWORD nIterate = m_nHash;
+			for ( ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
 			if ( nIterate != pSource->m_nHash ) return FALSE;
 		}
 		
@@ -260,7 +264,7 @@ BOOL CQueryHashTable::Merge(CQueryHashGroup* pSource)
 				if ( *pSourcePtr++ ) bValue = FALSE;
 			}
 			
-			for ( nSample = 0 ; nSample < nDestScale ; nSample++, nDest++ )
+			for ( int nSample = 0 ; nSample < nDestScale ; nSample++, nDest++ )
 			{
 				if ( ! bValue && ( *pDestPtr & nDestMask ) )
 				{
@@ -500,7 +504,8 @@ BOOL CQueryHashTable::PatchToOldShareaza(CQueryHashTable* pTarget, CNeighbour* p
 
 		BYTE nMask = 1;
 
-		for ( DWORD nCount = 0 ; nCount < nPacketSize ; nCount++, nPosition++ )
+        DWORD nCount = 0;
+		for ( ; nCount < nPacketSize ; nCount++, nPosition++ )
 		{
 			BYTE nPatch = ( *pHashT & nMask ) != ( *pHashS & nMask ) ? 7 : 0;
 
@@ -798,7 +803,8 @@ int CQueryHashTable::AddPhrase(LPCTSTR pszPhrase)
 	LPCTSTR pszPtr = pszPhrase;
 	int nCount = 0;
 	
-	for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+    int nStart = 0, nPos = 0;
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
 	{
 		if ( ! IsCharacter( *pszPtr ) )
 		{
@@ -883,7 +889,8 @@ BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase)
 	BOOL bNegate	= FALSE;
 	BOOL bSpace		= TRUE;
 
-	for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+    int nStart = 0, nPos = 0;
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
 	{
 		if ( IsCharacter( *pszPtr ) )
 		{

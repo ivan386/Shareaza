@@ -151,7 +151,7 @@ void CDownloadTabBar::UpdateGroups(int nCookie)
 	
 	BOOL bFoundHot = ( m_pHot == NULL );
 	
-	for ( pos = DownloadGroups.GetIterator() ; pos ; )
+	for ( POSITION pos = DownloadGroups.GetIterator() ; pos ; )
 	{
 		CDownloadGroup* pGroup = DownloadGroups.GetNext( pos );
 		m_pItems.AddTail( new TabItem( pGroup, nCookie ) );
@@ -203,7 +203,7 @@ CDownloadTabBar::TabItem* CDownloadTabBar::HitTest(const CPoint& point, CRect* p
 	
 	CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
 	rcItem.right = ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3;
-	rcItem.right = min( rcItem.right, m_nMaximumWidth );
+	rcItem.right = min( rcItem.right, LONG(m_nMaximumWidth) );
 	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
@@ -262,7 +262,7 @@ void CDownloadTabBar::DoPaint(CDC* pDC)
 	{
 		CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
 		rcItem.right = ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3;
-		rcItem.right = min( rcItem.right, m_nMaximumWidth );
+		rcItem.right = min( rcItem.right, LONG(m_nMaximumWidth) );
 		
 		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{

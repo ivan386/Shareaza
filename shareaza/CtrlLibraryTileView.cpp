@@ -815,7 +815,7 @@ CImageList* CLibraryTileView::CreateDragImage(const CPoint& ptMouse)
 
 	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
 
-	for ( pos = m_pSelTile.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pSelTile.GetHeadPosition() ; pos ; )
 	{
 		CLibraryTileItem* pTile = (CLibraryTileItem*)m_pSelTile.GetNext( pos );
 		GetItemRect( pTile, &rcOne );

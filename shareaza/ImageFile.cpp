@@ -355,7 +355,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 		BYTE* pRow = m_pImage + nInPitch * nFirst;
 		pColPtr = pColInfo;
 
-		for ( nX = 0 ; nX < nNewWidth ; nX++, pColPtr++ )
+		for ( int nX = 0 ; nX < nNewWidth ; nX++, pColPtr++ )
 		{
 			BYTE* pIn = pRow + *pColPtr++;
 /*

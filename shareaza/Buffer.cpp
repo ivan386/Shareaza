@@ -195,7 +195,8 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 	strLine.Empty();
 	if ( ! m_nLength ) return FALSE;
 	
-	for ( DWORD nLength = 0 ; nLength < m_nLength ; nLength++ )
+    DWORD nLength = 0;
+	for ( ; nLength < m_nLength ; nLength++ )
 	{
 		if ( m_pBuffer[ nLength ] == '\n' ) break;
 	}

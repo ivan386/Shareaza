@@ -209,7 +209,8 @@ BOOL CLibraryThumbView::Select(DWORD nObject)
 	
 	CLibraryThumbItem** pList = m_pList + m_nCount - 1;
 
-	for ( int nItem = m_nCount ; nItem ; nItem--, pList-- )
+    int nItem = m_nCount;
+	for ( ; nItem ; nItem--, pList-- )
 	{
 		CLibraryThumbItem* pThumb = *pList;
 		if ( pThumb->m_nIndex == nObject ) break;
@@ -807,7 +808,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 
 	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
 
-	for ( pos = m_pSelThumb.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = m_pSelThumb.GetHeadPosition() ; pos ; )
 	{
 		CLibraryThumbItem* pThumb = (CLibraryThumbItem*)m_pSelThumb.GetNext( pos );
 		GetItemRect( pThumb, &rcOne );
@@ -869,7 +870,8 @@ void CLibraryThumbView::StopThread()
 	
 	m_bThread = FALSE;
 	
-	for ( int nAttempt = 100 ; nAttempt > 0 ; nAttempt-- )
+    int nAttempt = 100;
+	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode;
 
@@ -967,7 +969,7 @@ void CLibraryThumbView::OnRun()
 		pLock.Lock();
 		
 		pList = m_pList;
-		for ( nItem = m_nCount ; nItem ; nItem--, pList++ )
+		for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
 		{
 			if ( (*pList)->m_nIndex == nIndex )
 			{
@@ -1014,7 +1016,7 @@ void CLibraryThumbView::OnRun()
 			
 			while ( tDelay && m_bThread )
 			{
-				DWORD tNow = min( tDelay, 50 );
+				DWORD tNow = min( tDelay, DWORD(50) );
 				tDelay -= tNow;
 				Sleep( tNow );
 			}
@@ -1151,7 +1153,7 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 		int nSaveX		= rcThumb.right;
 		int nSaveY		= rcThumb.bottom;
 		int nHeight		= pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_CALCRECT|DT_NOPREFIX );
-		rcThumb.bottom	= min( nSaveY, rcThumb.top + nHeight + 2 );
+		rcThumb.bottom	= min( LONG(nSaveY), rcThumb.top + nHeight + 2 );
 		rcThumb.right	= nSaveX;
 		pDC->FillSolidRect( &rcThumb, pDC->GetBkColor() );
 		pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX );

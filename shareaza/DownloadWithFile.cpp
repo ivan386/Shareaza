@@ -234,52 +234,44 @@ CString CDownloadWithFile::GetDisplayName() const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get the first empty fragment
 
-CFileFragment* CDownloadWithFile::GetFirstEmptyFragment() const
+const FF::SimpleFragmentList& CDownloadWithFile::GetEmptyFragmentList() const
 {
-	return m_pFile ? m_pFile->GetFirstEmptyFragment() : NULL;
+    static const FF::SimpleFragmentList dummy( 0 );
+    return m_pFile ? m_pFile->GetEmptyFragmentList() : dummy;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get a list of possible download fragments
 
-CFileFragment* CDownloadWithFile::GetPossibleFragments(CFileFragment* pAvailable, QWORD* pnLargestOffset, QWORD* pnLargestLength)
+FF::SimpleFragmentList CDownloadWithFile::GetPossibleFragments(
+    const FF::SimpleFragmentList& oAvailable, FF::SimpleFragment& oLargest)
 {
-	if ( ! PrepareFile() ) return NULL;
+	if ( !PrepareFile() ) return FF::SimpleFragmentList( oAvailable.limit() );
+    FF::SimpleFragmentList oPossible( oAvailable );
+
+    if( oAvailable.empty() )
+    {
+        oPossible = m_pFile->GetEmptyFragmentList();
+    }
+    else
+    {
+        // ToDo: add a function to FF::detail::List<...> to do that more efficiently
+        FF::SimpleFragmentList tmp( inverse( m_pFile->GetEmptyFragmentList() ) );
+        oPossible.erase( tmp.begin(), tmp.end() );
+    }
 	
-	CFileFragment* pPossible;
-	
-	if ( pAvailable != NULL )
+    if ( oPossible.empty() ) return oPossible;
+
+    oLargest = *largestFragment( oPossible );
+
+	for ( CDownloadTransfer* pTransfer = GetFirstTransfer();
+        !oPossible.empty() && pTransfer;
+        pTransfer = pTransfer->m_pDlNext )
 	{
-		pPossible = m_pFile->GetFirstEmptyFragment();
-		pPossible = pPossible->CreateAnd( pAvailable );
-	}
-	else
-	{
-		pPossible = m_pFile->CopyFreeFragments();
-	}
-	
-	if ( pPossible == NULL ) return NULL;
-	
-	if ( pnLargestOffset && pnLargestLength )
-	{
-		if ( CFileFragment* pLargest = pPossible->GetLargest() )
-		{
-			*pnLargestOffset = pLargest->m_nOffset;
-			*pnLargestLength = pLargest->m_nLength;
-		}
-		else
-		{
-			ASSERT( FALSE );
-			return NULL;
-		}
+		pTransfer->SubtractRequested( oPossible );
 	}
 	
-	for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer && pPossible ; pTransfer = pTransfer->m_pDlNext )
-	{
-		pTransfer->SubtractRequested( &pPossible );
-	}
-	
-	return pPossible;
+	return oPossible;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -289,28 +281,26 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 {
 	if ( ! PrepareFile() ) return NULL;
 	
-	QWORD nLargestOffset = SIZE_UNKNOWN, nLargestLength = SIZE_UNKNOWN;
+    FF::SimpleFragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
+
+    FF::SimpleFragmentList oPossible = GetPossibleFragments(
+        pTransfer->m_pSource->m_oAvailable, oLargest );
 	
-	CFileFragment* pPossible = GetPossibleFragments(
-		pTransfer->m_pSource->m_pAvailable,
-		&nLargestOffset, &nLargestLength );
-	
-	if ( nLargestOffset == SIZE_UNKNOWN )
+	if ( oLargest.begin() == SIZE_UNKNOWN )
 	{
-		ASSERT( pPossible == NULL );
+		ASSERT( oPossible.empty() );
 		return FALSE;
 	}
 	
-	if ( pPossible != NULL )
+	if ( !oPossible.empty() )
 	{
-		CFileFragment* pRandom = pPossible;
-		pRandom = pPossible->GetRandom( TRUE );
-		if ( pRandom == NULL ) return FALSE;
+        FF::SimpleFragmentList::ConstIterator pRandom
+            = oPossible.begin()->begin() == 0
+                ? oPossible.begin()
+                : randomFragment( oPossible );
 		
-		pTransfer->m_nOffset = pRandom->m_nOffset;
-		pTransfer->m_nLength = pRandom->m_nLength;
-		
-		pPossible->DeleteChain();
+		pTransfer->m_nOffset = pRandom->begin();
+		pTransfer->m_nLength = pRandom->length();
 		
 		return TRUE;
 	}
@@ -323,11 +313,11 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 			if ( pOther->m_bRecvBackwards )
 			{
 				if ( pOther->m_nOffset + pOther->m_nLength - pOther->m_nPosition
-					 != nLargestOffset + nLargestLength ) continue;
+					 != oLargest.end() ) continue;
 			}
 			else
 			{
-				if ( pOther->m_nOffset + pOther->m_nPosition != nLargestOffset ) continue;
+				if ( pOther->m_nOffset + pOther->m_nPosition != oLargest.begin() ) continue;
 			}
 			
 			pExisting = pOther;
@@ -336,38 +326,38 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 		
 		if ( pExisting == NULL )
 		{
-			pTransfer->m_nOffset = nLargestOffset;
-			pTransfer->m_nLength = nLargestLength;
+			pTransfer->m_nOffset = oLargest.begin();
+			pTransfer->m_nLength = oLargest.length();
 			return TRUE;
 		}
 		
-		if ( nLargestLength < 32 ) return FALSE;
+		if ( oLargest.length() < 32 ) return FALSE;
 		
 		DWORD nOldSpeed	= pExisting->GetAverageSpeed();
 		DWORD nNewSpeed	= pTransfer->GetAverageSpeed();
-		QWORD nLength	= nLargestLength / 2;
+		QWORD nLength	= oLargest.length() / 2;
 		
 		if ( nOldSpeed > 5 && nNewSpeed > 5 )
 		{
-			nLength = (QWORD)( (double)nLargestLength * nNewSpeed / ( nNewSpeed + nOldSpeed ) );
-			nLength = min( nLength, nLargestLength );
+			nLength = (QWORD)( (double)oLargest.length() * nNewSpeed / ( nNewSpeed + nOldSpeed ) );
+			nLength = min( nLength, oLargest.length() );
 			
-			if ( nLargestLength > 102400 )
+			if ( oLargest.length() > 102400 )
 			{
-				nLength = max( nLength, 51200 );
-				nLength = min( nLength, nLargestLength - 51200 );
+				nLength = max( nLength, 51200ULL );
+				nLength = min( nLength, oLargest.length() - 51200ULL );
 			}
 		}
 		
 		if ( pExisting->m_bRecvBackwards )
 		{
-			pTransfer->m_nOffset		= nLargestOffset;
+			pTransfer->m_nOffset		= oLargest.begin();
 			pTransfer->m_nLength		= nLength;
 			pTransfer->m_bWantBackwards	= FALSE;
 		}
 		else
 		{
-			pTransfer->m_nOffset		= nLargestOffset + nLargestLength - nLength;
+			pTransfer->m_nOffset		= oLargest.end() - nLength;
 			pTransfer->m_nLength		= nLength;
 			pTransfer->m_bWantBackwards	= TRUE;
 		}
@@ -388,10 +378,17 @@ BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile check if a range would "help"
 
+BOOL CDownloadWithFile::AreRangesUseful(const FF::SimpleFragmentList& oAvailable)
+{
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+    return overlaps( m_pFile->GetEmptyFragmentList(), oAvailable );
+}
+
 BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return 0;
-	return m_pFile->DoesRangeOverlap( nOffset, nLength );
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+    return overlaps( m_pFile->GetEmptyFragmentList(),
+        FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -400,36 +397,26 @@ BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 CString CDownloadWithFile::GetAvailableRanges() const
 {
 	CString strRange, strRanges;
-	QWORD nLast = 0;
 	
 	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return strRanges;
 	
-	for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset > nLast )
-		{
-			if ( strRanges.IsEmpty() )
-				strRanges = _T("bytes ");
-			else
-				strRanges += ',';
-			
-			strRange.Format( _T("%I64i-%I64i"), nLast, pFragment->m_nOffset - 1 );
-			strRanges += strRange;
-		}
-		
-		nLast = pFragment->m_nOffset + pFragment->m_nLength;
-	}
-	
-	if ( m_nSize > nLast )
-	{
+    const FF::SimpleFragmentList oAvailable = inverse( m_pFile->GetEmptyFragmentList() );
+
+    for( FF::SimpleFragmentList::ConstIterator pFragment = oAvailable.begin();
+        pFragment != oAvailable.end(); ++pFragment )
+    {
 		if ( strRanges.IsEmpty() )
+        {
 			strRanges = _T("bytes ");
+        }
 		else
+        {
 			strRanges += ',';
+        }
 		
-		strRange.Format( _T("%I64i-%I64i"), nLast, m_nSize - 1 );
+		strRange.Format( _T("%I64i-%I64i"), pFragment->begin(), pFragment->end() - 1 );
 		strRanges += strRange;
-	}
+    }
 	
 	return strRanges;
 }
@@ -444,19 +431,20 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 	
 	if ( m_pFile->IsPositionRemaining( nOffset ) ) return FALSE;
 	
-	for ( CFileFragment* pFragment = m_pFile->GetFirstEmptyFragment() ; pFragment ; pFragment = pFragment->m_pNext )
-	{
-		if ( pFragment->m_nOffset > nOffset )
-		{
-			if ( nOffset + nLength <= pFragment->m_nOffset ) return TRUE;
-			nLength = pFragment->m_nOffset - nOffset;
-			return ( nLength > 0 );
-		}
-	}
-	
-	if ( nLength > m_nSize - nOffset ) nLength = m_nSize - nOffset;
-	
-	return ( nLength > 0 );
+    if ( nOffset + nLength > m_nSize ) nLength = m_nSize - nOffset;
+
+    FF::SimpleFragmentList::ConstIteratorPair match
+        = m_pFile->GetEmptyFragmentList().overlappingRange(
+            FF::SimpleFragment( nOffset, nOffset + nLength ) );
+
+    if ( match.first != match.second )
+    {
+        if ( match.first->begin() <= nOffset ) return ( nLength = 0 ) > 0;
+        nLength = match.first->end() - nOffset;
+        return TRUE;
+    }
+
+    return nLength > 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -466,20 +454,15 @@ BOOL CDownloadWithFile::GetRandomRange(QWORD& nOffset, QWORD& nLength) const
 {
 	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
 	
-	CFileFragment* pFilled = m_pFile->CopyFilledFragments();
-	
-	if ( CFileFragment* pRandom = pFilled->GetRandom() )
-	{
-		nOffset = pRandom->m_nOffset;
-		nLength = pRandom->m_nLength;
-		pFilled->DeleteChain();
-		return TRUE;
-	}
-	else
-	{
-		pFilled->DeleteChain();
-		return FALSE;
-	}
+    if ( m_pFile->GetEmptyFragmentList().missing() == 0 ) return FALSE;
+
+    FF::SimpleFragmentList oFilled = inverse( m_pFile->GetEmptyFragmentList() );
+    FF::SimpleFragmentList::ConstIterator pRandom = randomFragment( oFilled );
+
+    nOffset = pRandom->begin();
+    nLength = pRandom->length();
+
+    return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -106,7 +106,8 @@ BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL 
 {
 	ASSERT( m_pBuffer != NULL );
 	
-	for ( int nPart = 0 ; nPart < m_nCount ; nPart++ )
+    int nPart = 0;
+	for ( ; nPart < m_nCount ; nPart++ )
 	{
 		if ( m_pLocked[ nPart ] < 0xFFFFFFFF )
 		{

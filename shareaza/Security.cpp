@@ -587,7 +587,8 @@ void CSecureRule::SetContentWords(const CString& strContent)
 	int nTotalLength	= 3;
 	CStringList pWords;
 
-	for ( int nStart = 0, nPos = 0 ; *pszContent ; nPos++, pszContent++ )
+    int nStart = 0, nPos = 0;
+	for ( ; *pszContent ; nPos++, pszContent++ )
 	{
 		if ( *pszContent == ' ' || *pszContent == '\t' )
 		{
@@ -1081,7 +1082,8 @@ void CAdultFilter::Load()
 		int nWordLen = 3;
 		CStringList pWords;
 			
-		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+        int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == ' ' )
 			{
@@ -1123,7 +1125,8 @@ void CAdultFilter::Load()
 		int nWordLen = 3;
 		CStringList pWords;
 			
-		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+        int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == ' ' )
 			{
@@ -1230,7 +1233,7 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 		// Check dubious words
 		if ( m_pszDubiousWords )
 		{
-			int nDubiousWords = 0, nWordsPermitted = min( (_tcslen( pszText ) / 8 ), 4 );
+			int nDubiousWords = 0, nWordsPermitted = min( (_tcslen( pszText ) / 8 ), size_t(4) );
 
 			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
 			{
@@ -1301,7 +1304,8 @@ void CMessageFilter::Load()
 		int nWordLen = 3;
 		CStringList pWords;
 			
-		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+        int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == '|' )
 			{

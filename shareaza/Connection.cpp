@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/02/18 01:42:34 $"
-//	Revision:		"$Revision: 1.9 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/02/20 11:59:50 $"
+//	Revision:		"$Revision: 1.10 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -452,7 +452,7 @@ _ignore:	inc		ebx
 	while ( nLimit )
 	{
 		// Set nLength to nLimit or 4 KB, whichever is smaller
-		int nLength = min( ( nLimit & 0xFFFFF ), TEMP_BUFFER );
+		int nLength = min( ( nLimit & 0xFFFFF ), DWORD(TEMP_BUFFER) );
 
 		// Read the bytes from the socket
 		nLength = recv(		// nLength is the number of bytes we received from the socket

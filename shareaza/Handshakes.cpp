@@ -181,7 +181,8 @@ void CHandshakes::Disconnect()
 		m_pWakeup.SetEvent();
 
 		// Loop 10 times
-		for ( int nAttempt = 10 ; nAttempt > 0 ; nAttempt-- )
+		int nAttempt = 10;
+        for ( ; nAttempt > 0 ; nAttempt-- )
 		{
 			// Stay in the loop while the thread is still active
 			DWORD nCode;

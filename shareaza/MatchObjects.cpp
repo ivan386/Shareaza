@@ -400,7 +400,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 
 void CMatchList::InsertSorted(CMatchFile* pFile)
 {
-	for ( int nFirst = 0, nLast = m_nFiles - 1 ; nLast >= nFirst ; )
+    int nFirst = 0;
+	for ( int nLast = m_nFiles - 1 ; nLast >= nFirst ; )
 	{
 		DWORD nMiddle = ( nFirst + nLast ) >> 1;
 
@@ -605,7 +606,8 @@ void CMatchList::Filter()
 
 		CStringList pWords;
 		
-		for ( int nStart = 0, nPos = 0 ; *pszPtr ; nPos++, pszPtr++ )
+        int nStart = 0, nPos = 0;
+		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == '\"' || ( ! bQuote && ( *pszPtr == ' ' || *pszPtr == '\t' || *pszPtr == '-' ) ) )
 			{
@@ -1560,7 +1562,8 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 		ar.WriteCount( m_nTotal );
 		CPtrArray pHits;
 		
-		for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+        CQueryHit* pHit = m_pHits;
+		for ( ; pHit ; pHit = pHit->m_pNext )
 		{
 			pHits.Add( pHit );
 		}

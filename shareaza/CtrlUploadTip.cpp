@@ -144,16 +144,16 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 		CSize szKey			= pDC->GetTextExtent( strName + ':' );
 		CSize szValue		= pDC->GetTextExtent( strValue );
 		
-		m_nHeaderWidth		= max( m_nHeaderWidth, szKey.cx );
-		nValueWidth			= max( nValueWidth, szValue.cx );
+		m_nHeaderWidth		= max( m_nHeaderWidth, int(szKey.cx) );
+		nValueWidth			= max( nValueWidth, int(szValue.cx) );
 		
 		m_sz.cy += TIP_TEXTHEIGHT;
 	}
 	
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
+	m_sz.cx = max( m_sz.cx, LONG(m_nHeaderWidth + nValueWidth) );
 	
-	m_sz.cx = max( m_sz.cx, 320 );
+	m_sz.cx = max( m_sz.cx, LONG(320) );
 }
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)

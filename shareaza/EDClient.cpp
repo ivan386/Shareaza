@@ -1437,7 +1437,7 @@ void CEDClient::WritePartStatus(CEDPacket* pPacket, CDownload* pDownload)
 			for ( DWORD nBit = 0 ; nBit < 8 && nPart < nParts ; nBit++, nPart++ )
 			{
 				QWORD nOffset = nPart * ED2K_PART_SIZE;
-				QWORD nLength = min( ED2K_PART_SIZE, pDownload->m_nSize - nOffset );
+				QWORD nLength = min( QWORD(ED2K_PART_SIZE), pDownload->m_nSize - nOffset );
 				
 				if ( pDownload->IsRangeUseful( nOffset, nLength ) == FALSE )
 				{

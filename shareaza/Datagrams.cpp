@@ -141,7 +141,7 @@ BOOL CDatagrams::Listen()
 	
 	CDatagramIn* pDGI = m_pInputBuffer;
 	
-	for ( nPos = m_nInputBuffer ; nPos ; nPos--, pDGI++ )
+	for ( DWORD nPos = m_nInputBuffer ; nPos ; nPos--, pDGI++ )
 	{
 		pDGI->m_pNextHash = ( nPos == 1 ) ? NULL : ( pDGI + 1 );
 	}
@@ -152,7 +152,7 @@ BOOL CDatagrams::Listen()
 	
 	CDatagramOut* pDGO = m_pOutputBuffer;
 	
-	for ( nPos = m_nOutputBuffer ; nPos ; nPos--, pDGO++ )
+	for ( DWORD nPos = m_nOutputBuffer ; nPos ; nPos--, pDGO++ )
 	{
 		pDGO->m_pNextHash = ( nPos == 1 ) ? NULL : ( pDGO + 1 );
 	}
@@ -435,7 +435,8 @@ BOOL CDatagrams::TryWrite()
 	
 	while ( nLimit > 0 )
 	{
-		for ( CDatagramOut* pDG = m_pOutputFirst ; pDG ; pDG = pDG->m_pPrevTime )
+        CDatagramOut* pDG = m_pOutputFirst;
+		for ( ; pDG ; pDG = pDG->m_pPrevTime )
 		{
 			BYTE* pPacket;
 			DWORD nPacket;
@@ -676,7 +677,8 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 	
 	CDatagramIn** pHash = m_pInputHash + ( nHash & HASH_MASK );
 	
-	for ( CDatagramIn* pDG = *pHash ; pDG ; pDG = pDG->m_pNextHash )
+    CDatagramIn* pDG = *pHash;
+	for ( ; pDG ; pDG = pDG->m_pNextHash )
 	{
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
 				pDG->m_pHost.sin_port == pHost->sin_port &&

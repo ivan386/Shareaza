@@ -96,7 +96,8 @@ int CEmoticons::Lookup(LPCTSTR pszText, int nLen) const
 		((LPTSTR)pszText)[ nLen ] = 0;
 	}
 	
-	for ( LPCTSTR pszToken = m_pTokens ; *pszToken ; nIndex++ )
+    LPCTSTR pszToken = m_pTokens;
+	for ( ; *pszToken ; nIndex++ )
 	{
 		if ( _tcscmp( pszToken, pszText ) == 0 )
 		{
@@ -263,7 +264,7 @@ void CEmoticons::BuildTokens()
 	ASSERT( m_pTokens == NULL );
 	LPTSTR pszOut = m_pTokens = new TCHAR[ nLength ];
 	
-	for ( nIndex = 0 ; nIndex < m_pIndex.GetSize() ; nIndex++ )
+	for ( int nIndex = 0 ; nIndex < m_pIndex.GetSize() ; nIndex++ )
 	{
 		_tcscpy( pszOut, m_pIndex.GetAt( nIndex ) );
 		pszOut += m_pIndex.GetAt( nIndex ).GetLength() + 1;
