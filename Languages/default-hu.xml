@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.25"
+version="2.1.0.42"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -100,7 +100,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_BROWSE_LAUNCH" text="Fájllista és profil"/>
                <separator/>
                <button id="ID_SEARCH_SEARCH" text="Keresés újra..."/>
-               <button id="ID_SEARCH_STOP" text="Stop"/>
+               <button id="ID_SEARCH_STOP" text="Állj"/>
                <separator/>
                <button id="ID_SEARCH_PANEL" text="Keresés mutatása"/>
                <button id="ID_SEARCH_DETAILS" text="Részletek"/>
@@ -132,7 +132,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_SEARCH_DOWNLOAD" text="Fájl letöltése"/>
                <button id="ID_SEARCH_CHAT" text="Chat"/>
                <separator/>
-               <button id="ID_BROWSE_STOP" text="Stop"/>
+               <button id="ID_BROWSE_STOP" text="Állj"/>
                <button id="ID_BROWSE_REFRESH" text="Frissítés"/>
                <separator/>
                <button id="ID_SEARCH_DETAILS" text="Részletek"/>
@@ -1590,7 +1590,7 @@ prompt="Kattints ide a magyar nyelvhez."
 
                <icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
                <text group="20" align="middle" format="b">Gnutella2: </text>
-               <text group="21" align="middle">Lekapcsolódás</text>
+               <text group="21" align="middle">Lekapcsolódva</text>
                <text group="22" align="middle">Kapcsolódás...</text>
                <text group="23" align="middle">Kapcsolódva</text>
                <text group="24" align="middle" id="G2Hubs">%i hub</text>
@@ -1599,14 +1599,14 @@ prompt="Kattints ide a magyar nyelvhez."
 
                <icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
                <text group="30" align="middle" format="b">eDonkey: </text>
-               <text group="31" align="middle">Lekapcsolódás</text>
+               <text group="31" align="middle">Lekapcsolódva</text>
                <text group="32" align="middle">Kapcsolódás...</text>
                <text group="33" align="middle">Kapcsolódva</text>
                <newline group="30" gap="2"/>
 
                <icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
                <text group="10" align="middle" format="b">Gnutella1: </text>
-               <text group="11" align="middle">Lekapcsolódás</text>
+               <text group="11" align="middle">Lekapcsolódva</text>
                <text group="12" align="middle">Kapcsolódás...</text>
                <text group="13" align="middle">Kapcsolódva</text>
                <newline group="10" gap="2"/>
@@ -1922,8 +1922,19 @@ prompt="Kattints ide a magyar nyelvhez."
        <document name="DownloadHelp.Pending">
                <text format="b">A letöltés függőben van</text>
                <newline gap="8"/>
+               <text>A fájl feltöltésre vár.
+               A Shareaza készen áll a letöltésre, de még senki nem küldi a fájl adatit.
+               Valószínűleg másoknál sorbanállsz ezért a fájlért. A letöltés bármelyik percben elkezdődhet.
+               Lehetőséged van megnézni, hogy hányadik vagy a sorban.
+               Ha magad is megosztasz fájlokat, nagyobb eséllyel kerülhetsz sorra,
+               mint aki nem oszt meg semmit.</text>
+       </document>
+
+       <document name="DownloadHelp.Queued">
+               <text format="b">A letöltés sorbanáll</text>
+               <newline gap="8"/>
                <text>A letöltés más letöltések befejezésére vár.
-              A letöltési beállításokban limitálva van az egyszerre letölthető fájlok száma. Így
+               A letöltési beállításokban limitálva van az egyszerre letölthető fájlok száma. Így
                minden fájl megfelelő sebességben részesül.
                Ezt megváltoztathatod a "Beállítások"-ban.</text>
        </document>
@@ -1933,7 +1944,8 @@ prompt="Kattints ide a magyar nyelvhez."
                <newline gap="8"/>
                <text>Nincs ismert forrás a letöltéshez.
                Ezért a Shareaza automatikusan keres az elérhető
-               hálózatokon. Felgyorsíthatod a keresést a </text>
+               hálózatokon. Felgyorsíthatod a keresést a
+       </text>
                <text format="b">Több forrás keresése </text><text>gombbal.</text>
                <newline gap="8"/>
                <text>A legtöbb esetben nem fog találni forrásokat,
@@ -2257,7 +2269,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_SEARCHMONITOR_CLEAR" message="Törli az összes keresési bejegyzést."/>
        <tip id="ID_SEARCHMONITOR_PAUSE" message="Keresések megfigelésének leállítása."/>
        <tip id="ID_SECURITY_ADD" message="Új szabály hozzáadása..."/>
-       <tip id="ID_SECURITY_BAN" message="A kiválasztott kiszolgáló letiltása egy időre."/>
+       <tip id="ID_SECURITY_BAN" message="A kiválasztott felhasználó letiltása egy időre."/>
        <tip id="ID_SECURITY_EDIT" message="A kiválasztott biztonsági szabály szerkesztése..."/>
        <tip id="ID_SECURITY_EXPORT" message="Biztonsági szabályok exportálása..."/>
        <tip id="ID_SECURITY_IMPORT" message="Biztonsági szabályok importálása..."/>
@@ -2278,14 +2290,14 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_TAB_NETWORK" message="Hálózati adatok ellenőrzése."/>
        <tip id="ID_TAB_SEARCH" message="Keresést indít letölthető fájlok után."/>
        <tip id="ID_TAB_TRANSFERS" message="Fel- és letöltések figyelése."/>
-       <tip id="ID_TOOLS_DOWNLOAD" message="Új fájl vagy Torent letöltése..."/>
+       <tip id="ID_TOOLS_DOWNLOAD" message="Új fájl vagy torrent letöltése..."/>
        <tip id="ID_TOOLS_LANGUAGE" message="Válaszd ki a neked legmegfelelőbb nyelvet..."/>
        <tip id="ID_TOOLS_MERCORA" message="P2P Rádió indítása"/>
        <tip id="ID_TOOLS_PROFILE" message="Saját profil szerkesztése..."/>
        <tip id="ID_TOOLS_RESKIN" message="A jelenlegi kinézet újratöltése és alkalmazása."/>
        <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése."/>
        <tip id="ID_TOOLS_SETTINGS" message="A Shareaza beállításai..."/>
-       <tip id="ID_TOOLS_SKIN" message="Más kinézet választása a Shareazának..."/>
+       <tip id="ID_TOOLS_SKIN" message="A Shareaza kinézetének megváltoztatása..."/>
        <tip id="ID_TOOLS_WIZARD" message="Shareaza Gyors beállítások megnyitása..."/>
        <tip id="ID_TRAFFIC_AXIS" message="A függőleges tengelyt jeleníti meg."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Grafikon törlése."/>
@@ -2371,8 +2383,10 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8007" value="Nincsen aktív keresés. Kattints ide a fájlok kereséséhez."/>
        <string id="8008" value="A Shareaza letöltötte a legújabb, Shareaza (%s) verziót. Szeretnéd most frissíteni a proramot?\n\nHa igen, a Shareaza bezárja magát a telepítés idejére."/>
        <string id="8009" value="Biztos, hogy törölni akarod a &quot;%s&quot; kinézetet? Ezt már nem lehet később visszavonni."/>
-       <string id="8010" value="Ez a Shareaza béta verziója. Töltsd le a legújabb kész vertiót a www.shareaza.com -ról."/>
+       <string id="8010" value="Ez a Shareaza béta verziója. Töltsd le a legújabb stabil verziót a www.shareaza.com -ról."/>
        <string id="8011" value="A kinézet megváltoztatása bezár minden nyitott ablakot. Most akarod megvátoztatni?"/>
+       <string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
+       <string id="8061" value="Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
        <string id="8062" value="Hub mód %lu szomszéddal.  %s a helyi könyvtárban."/>
        <string id="8063" value="Kapcsolódva. %s a helyi könyvtárban."/>
        <string id="8064" value="Kapcsolódva vagy %lu szomszéddal.  %s a megosztásod mérete."/>
@@ -2384,7 +2398,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8070" value="Kapcsolódás..."/>
        <string id="8071" value="Kapcsolódva"/>
        <string id="8072" value="Lekapcsolódás"/>
-       <string id="8096" value="Több információt tudhatsz meg kiválasztott fájlról."/>
+       <string id="8096" value="Több információt tudhatsz meg itt a kiválasztott fájlról."/>
        <string id="8097" value="Egy forrás elérhető (%s).  "/>
        <string id="8098" value="%i forrás elérhető (%s).  "/>
        <string id="8099" value="Egy megjegyzés."/>
@@ -2395,7 +2409,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8104" value="Előnézet..."/>
        <string id="8105" value="&quot;%s&quot;: Innen nem lehet letölteni az előnézeti adatokat."/>
        <string id="8128" value="Kattints ide az újrakereséshez"/>
-       <string id="8129" value="Még nem volt egy keresés sem lefuttatva ebben az ablakban."/>
+       <string id="8129" value="Még nem volt keresés lefuttatva ebben az ablakban."/>
        <string id="8130" value="Keresés folyamatban..."/>
        <string id="8131" value="Még nincs semmi eredmény."/>
        <string id="8132" value="Néhány találat van, de ki lettek szűrve."/>
@@ -2423,7 +2437,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8158" value="Töröl"/>
        <string id="8159" value="Fejlett..."/>
        <string id="8160" value="Kapcsolat létrehozása..."/>
-       <string id="8161" value="Kapcsolatkérés, kapcsolódásra várok..."/>
+       <string id="8161" value="Viszontválaszra várok..."/>
        <string id="8162" value="Kapcsolódva, fájllista lekérése..."/>
        <string id="8163" value="Fájllista letöltése (%2.f%%)..."/>
        <string id="8164" value="Nem lehetett kapcsolatot létesíteni a fájllista letöltéséhez."/>
@@ -2566,16 +2580,16 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16264" value="Kapcsolódás letöltéshez: %s port %i, hohy letöltse: &quot;%s&quot;..."/>
        <string id="16265" value="Nem lehet a letöltési kiszolgálóhoz kapcsolódni: %s."/>
        <string id="16266" value="Letöltési kapcsolat létrehozva: %s."/>
-       <string id="16267" value="Letöltési töredék kérése (%I64i-%I64i) a(z) &quot;%s&quot;: %s."/>
+       <string id="16267" value="Letöltési töredék kérése (%I64i-%I64i) a(z) &quot;%s&quot; fájlban: %s."/>
        <string id="16268" value="Nincs több letöltési töredék, kapcsolat bezárása: %s."/>
        <string id="16269" value="Töredék rövidítve, Kapcsolat bezázása %s."/>
        <string id="16270" value="Letöltési kérelem időtúllépés, kapcsolat bezárása: %s."/>
        <string id="16271" value="Letöltési kapcsolat bezárása a forgalom hiánya miatt: %s."/>
-       <string id="16272" value="%s. Nincs meg neki ez a fájl: &quot;%s&quot;."/>
-       <string id="16273" value="%s. Egy érvénytelen HTTP választ adott."/>
-       <string id="16274" value="%s. Ezzel válaszolt: %s (%s)."/>
+       <string id="16272" value="%s nincs meg neki ez a fájl: &quot;%s&quot;."/>
+       <string id="16273" value="%s egy érvénytelen HTTP választ adott."/>
+       <string id="16274" value="%s ezzel válaszolt: %s (%s)."/>
        <string id="16275" value="%s szerint a(z) &quot;%s&quot; fájlnak más URN címe van, megszakítás."/>
-       <string id="16276" value="%s's szerint a(z) &quot;%s&quot; fájlnak más a mérete, megszakítás."/>
+       <string id="16276" value="%s szerint a(z) &quot;%s&quot; fájlnak más a mérete, megszakítás."/>
        <string id="16277" value="%s egy használhatatlan részét küldte el a(z) &quot;%s&quot; fájlnak, várakozás."/>
        <string id="16278" value="A letöltési kapcsolat megszakadt: %s."/>
        <string id="16279" value="Letöltési tartalom vétele: %s (%s)."/>
@@ -2690,8 +2704,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16395" value="A letöltési mappa &quot;%s&quot;, nincs a könyvtárban.\n\nHa belerakon, könnyebb lesz rendezni a letöltéseidet és kihasználhatod a Shareaza lehetőségeit, mint: letöltés-ellenőrzés és automata frissítés. A könyvtárban lévő letöltött fájlok nem feltétlenül vannak megosztva: kiválaszthatod, hogy melyiket akarod megosztani vagy sem.\n\nHozzá akarod adni a letöltési mappát a könyvtárhoz?"/>
        <string id="16396" value="A letöltési mappa hozzá lett adva a könyvárhoz. Meg is akarod osztani?"/>
        <string id="16397" value="Biztos akarod törölni  albummappá(k)at (%i db)?\n\nEz nem fogja törölni az albumban lévő fájlokat csak magát az albumot."/>
-       <string id="16398" value="Nem lehet átnevezni ezt: \n\n%s\ erre: \n%s"/>
-       <string id="16399" value="Nem leht törölni:\n\n%s"/>
+       <string id="16398" value="Nem lehet átnevezni: \n\n%s\ erre: \n%s"/>
+       <string id="16399" value="Nem lehet törölni:\n\n%s"/>
        <string id="16400" value="Ez a fájl már létezik:\n\n%s\n\nFelülírod?"/>
        <string id="16401" value="Minden fájltípus mutatása"/>
        <string id="16402" value="A Shareaza egy gyűjteményfájlt kapott:\n\n&quot;%s&quot;\n\nEz nem tűnik valós gyűjteményfájlnak."/>
@@ -2804,7 +2818,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="17029" value="Viszontválasz nem volt, lehet nem támogatja a chatet."/>
        <string id="17030" value="Viszontválasz megkapva, chat protokoll verzió: %s."/>
        <string id="17031" value="Profilinformációk kicserélése..."/>
-       <string id="17032" value="Hitelesített felhasználó "/>
+       <string id="17032" value="Hitelesített felhasználó"/>
        <string id="17033" value="Privát beszélgetés kezdeményezése..."/>
        <string id="17034" value="Privát beszélgetés engedélyezve, jelenleg vele beszélsz: %s."/>
        <string id="17035" value="%s nem fogad privát beszélgetést, bocsesz."/>
@@ -2857,7 +2871,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="17223" value="eDonkey2000 szerver, %s megtagadta a kapcsolódást."/>
        <string id="17224" value="Viszontválasz közbeni hiba az eDonkey2000 klienssel: %s."/>
        <string id="17225" value="eDonkey2000 kapcsolat vége: %s."/>
-       <string id="17226" value="Hibásan formázott eDonkey2000 csomagoz kaptam: %s (id=%x)."/>
+       <string id="17226" value="Hibásan formázott eDonkey2000 csomagot kaptam: %s (id=%x)."/>
        <string id="17227" value="%s a bejövő kapcsolat egy eDonkey2000 kliens link."/>
        <string id="17228" value="eDonkey2000 hash elküldése: &quot;%s&quot; ide: %s..."/>
        <string id="17229" value="eDonkey2000 klienskapcsolat bezárása tétlenség miatt: %s."/>
@@ -2934,7 +2948,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="20105" value="Hash érték"/>
        <string id="20106" value="Metadata"/>
        <string id="20107" value="Elfoglalt"/>
-       <string id="20108" value="Várakozási sorba kerül"/>
+       <string id="20108" value="Sorbanállás"/>
        <string id="20109" value="Sorbanáll"/>
        <string id="20110" value="Ismeretlen"/>
        <string id="20111" value="Kész"/>
@@ -3121,7 +3135,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Maximum sorbanállás:"/>
                <control/><control/>
                <control caption="Opciók:"/>
-               <control caption="Csak a kapcsolatban lévő hálózatokon van forgalom."/>
+               <control caption="Csak a kapcsolatban lévő hálózatokon van forgalom"/>
        </dialog>
 
        <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Feltöltések">
@@ -3854,7 +3868,7 @@ prompt="Kattints ide a magyar nyelvhez."
 
        <dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Bezárás gomb">
                <control/>
-               <control caption="Ez az első alkalom, hogy a Bezárás gombra kattintottál. Ezentul mit csináljon a Shareaza?"/>
+               <control caption="Ez az első alkalom, hogy a Bezárás gombra kattintottál. Ezentúl mit csináljon a Shareaza?"/>
                <control caption="Leküldés a tálcára (az óra mellé)"/>
                <control caption="Bezárás azonnal"/>
                <control caption="A fel- és letöltések befejezése után bezárás"/>
@@ -4013,7 +4027,7 @@ prompt="Kattints ide a magyar nyelvhez."
         <column from="Progress" to="Állapot"/>
         <column from="Speed" to="Sebesség"/>
         <column from="Client" to="Kliensprogram"/>
-               <column from="Rating" to="Osztályozás"/>
+        <column from="Rating" to="Osztályzat"/>
     </list>
     <list name="CNeighboursWnd">
         <column from="Address" to="Cím"/>
@@ -4073,7 +4087,7 @@ prompt="Kattints ide a magyar nyelvhez."
         <column from="File" to="Fájl"/>
         <column from="Type" to="Típus"/>
         <column from="Size" to="Méret"/>
-        <column from="Rating" to="Jegy"/>
+        <column from="Rating" to="Osztályzat"/>
         <column from="Status" to="Státusz"/>
         <column from="Host/Count" to="IP/Források"/>
         <column from="Speed" to="Sebesség"/>
@@ -4085,18 +4099,18 @@ prompt="Kattints ide a magyar nyelvhez."
         <column from="Bandwidth" to="Sávszél"/>
         <column from="Transfers" to="Forgalom"/>
         <column from="Order" to="Sorrend"/>
-       </list>
-       <list name="CAdvancedSettingsList">
-               <column from="Setting" to="Beállítás"/>
-               <column from="Value" to="Érték"/>
-       </list>
-       <list name="CFavouritesProfileList">
-               <column from="Name" to="Név"/>
-               <column from="URL" to=""/>
-       </list>
-       <list name="CFileSourcesPageList">
-               <column from="URL" to=""/>
-               <column from="Expires" to="Lejárat"/>
     </list>
+    <list name="CAdvancedSettingsList">
+        <column from="Setting" to="Beállítás"/>
+        <column from="Value" to="Érték"/>
+    </list>
+    <list name="CFavouritesProfileList">
+        <column from="Name" to="Név"/>
+        <column from="URL" to=""/>
+    </list>
+    <list name="CFileSourcesPageList">
+         <column from="URL" to=""/>
+         <column from="Expires" to="Lejárat"/>
+</list>
 </listColumns>
 </skin>
