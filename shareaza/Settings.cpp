@@ -184,6 +184,7 @@ void CSettings::Setup()
 	Add( _T("Discovery.BootstrapCount"), &Discovery.BootstrapCount, 10 );
 	Add( _T("Discovery.G2DAddress"), &Discovery.G2DAddress, _T("stats.shareaza.com:6446") );
 	Add( _T("Discovery.G2DRetryAfter"), &Discovery.G2DRetryAfter, 0 );
+	Add( _T("Discovery.CacheCount"), &Discovery.CacheCount, 35 );
 	
 	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 5 );
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );

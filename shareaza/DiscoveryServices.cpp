@@ -82,7 +82,7 @@ BOOL CDiscoveryServices::Check(CDiscoveryService* pService, int nType) const
 	return ( nType < 0 ) || ( pService->m_nType == nType );
 }
 
-int CDiscoveryServices::GetCount(int nType, BOOL G2Only) const
+int CDiscoveryServices::GetCount(int nType, int nOnlyNet) const
 {
 	//if ( nType == CDiscoveryService::dsNull ) return m_pList.GetCount();
 
@@ -94,7 +94,9 @@ int CDiscoveryServices::GetCount(int nType, BOOL G2Only) const
 		ptr = GetNext( pos );
 		if ( ( nType == CDiscoveryService::dsNull ) || ( ptr->m_nType == nType ) )//If we're counting all types, or it matches
 		{
-			if ( ! G2Only || ptr->m_bGnutella2 )//If we're counting all services or it supports G2
+			if ( ( ! nOnlyNet ) || ( nOnlyNet == G2Only && ptr->m_bGnutella2 ) 
+				|| ( nOnlyNet == G1Only && ptr->m_bGnutella1 ) )//Which service(s) to count
+
 				nCount++;
 		}
 	}
@@ -109,6 +111,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, int nC
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return NULL;
+
 	
 	CString strAddress( pszAddress );
 	
@@ -176,6 +179,12 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 		pService->m_bGnutella2 = TRUE;
 		pService->m_bGnutella1 = TRUE;
 	}
+
+	//Stop if we already have enough caches
+	if ( GetCount( CDiscoveryService::dsWebCache, G2Only ) >= Settings.Discovery.CacheCount 
+		&& GetCount( CDiscoveryService::dsWebCache, G1Only ) >= Settings.Discovery.CacheCount 
+		&& pService->m_nType != CDiscoveryService::dsServerMet ) return NULL;
+
 	if ( pService && m_pList.Find( pService ) == NULL ) m_pList.AddTail( pService );
 	return pService;
 }
@@ -269,9 +278,9 @@ BOOL CDiscoveryServices::Load()
 	pFile.Close();
 	
 	//Check we have the minimum number of services (in case of file corruption, etc)
-	if ( ( GetCount(CDiscoveryService::dsWebCache, FALSE)  < 4 ) ||	//At least 4 webcaches
-		 ( GetCount(CDiscoveryService::dsWebCache, TRUE)   < 3 ) ||	//At least 3 that support G2
-		 ( GetCount(CDiscoveryService::dsServerMet, FALSE) < 1 )  )	//And at leasr 1 server.met
+	if ( ( GetCount(CDiscoveryService::dsWebCache, NullOnly)  < 4 ) ||	//At least 4 webcaches
+		 ( GetCount(CDiscoveryService::dsWebCache, G2Only)   < 3 ) ||	//At least 3 that support G2
+		 ( GetCount(CDiscoveryService::dsServerMet, NullOnly) < 1 )  )	//And at least 1 server.met
 	{
 		AddDefaults();	// Re-add the default list
 		Save();			// And save it

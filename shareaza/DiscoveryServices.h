@@ -56,13 +56,18 @@ protected:
 	{
 		wcNull, wcForG2, wcForG1, wcForBoth
 	};
-	
+	enum
+	{
+		NullOnly, G2Only, G1Only
+	};
+
+
 // Operations
 public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
-	int					GetCount(int nType = 0, BOOL bG2Only = FALSE) const;
+	int					GetCount(int nType = 0, int nOnlyNet = 0) const;
 	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, int nCacheType = wcForBoth);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
 	void				Remove(CDiscoveryService* pService);

@@ -208,6 +208,7 @@ public:
 		DWORD		BootstrapCount;
 		CString		G2DAddress;
 		DWORD		G2DRetryAfter;
+		int		CacheCount;			//Limits ability to learn new caches
 	} Discovery;
 	
 	struct sGnutella
