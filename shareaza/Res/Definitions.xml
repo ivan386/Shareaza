@@ -83,8 +83,10 @@
 	<command code="32844" id="ID_UPLOADS_DISCONNECT"/>
 	<command code="32845" id="ID_UPLOADS_CLEAR_COMPLETED"/>
 	<command code="32846" id="ID_UPLOADS_CLEAR"/>
+	<command code="32847" id="ID_UPLOADS_EDIT_QUEUE"/>
 	<command code="32848" id="ID_TRANSFERS_DISCONNECT"/>
 	<command code="32849" id="ID_TRANSFERS_FORGET"/>
+	<command code="32850" id="ID_UPLOADS_HELP"/>
 	<command code="32851" id="ID_HELP_HOMEPAGE"/>
 	<command code="32852" id="ID_HELP_WEB_1"/>
 	<command code="32853" id="ID_HELP_WEB_2"/>
