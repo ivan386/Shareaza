@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.cq-keda.com/shareaza"
 		email="shareaza(AT)163(DOT)com"
-		version="2.1.0.10"
+		version="2.1.0.25"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -462,6 +462,7 @@
 			<item id="ID_HELP_FAQ" text="指南(_G)"/>
 			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
 			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
@@ -547,6 +548,7 @@
 			<item id="ID_HELP_FAQ" text="指南(_G)"/>
 			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
 			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
@@ -626,6 +628,7 @@
 			<item id="ID_HELP_FAQ" text="指南(_G)"/>
 			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
 			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
@@ -1737,9 +1740,10 @@
 		<gap size="4"/>
 		<text>上传兼容性，队列，禁止用户，超时和特殊请求。</text>
 		<newline gap="10"/>
-		<link target="raza:page:CNetworksSettingsPage" format="b">网络:</link>
+
+		<link target="raza:page:CRemoteSettingsPage" format="b">远程:</link>
 		<gap size="4"/>
-		<text>选择和配置你希望 Shareaza 要进行连接的网络。</text>
+		<text>设置通过网页浏览器远程控制 Shareaza 的功能。</text>
 		<newline gap="10"/>
 
 	</document>
@@ -2323,26 +2327,26 @@
 
 <!-- Localised Strings -->
 <strings>
-	<string id="128" value="Shareaza"/>
-	<string id="129" value="系统"/>
-	<string id="130" value="邻居"/>
-	<string id="131" value="数据包转储"/>
-	<string id="132" value="主机缓存"/>
-	<string id="133" value="搜索监视器"/>
-	<string id="134" value="搜索"/>
-	<string id="135" value="命中监视器"/>
-	<string id="136" value="下载"/>
-	<string id="137" value="收藏"/>
-	<string id="138" value="上传"/>
-	<string id="139" value="图表"/>
-	<string id="140" value="聊天"/>
-	<string id="141" value="安全"/>
-	<string id="142" value="探索服务"/>
-	<string id="143" value="浏览"/>
-	<string id="144" value="Shareaza 首页"/>
-	<string id="145" value="媒体播放器"/>
-	<string id="146" value="搜索"/>
-	<string id="147" value="Shareaza 帮助"/>
+	<string id="WINDOW_MAIN" value="Shareaza"/>
+	<string id="WINDOW_SYSTEM" value="系统"/>
+	<string id="WINDOW_NEIGHBOURS" value="邻居"/>
+	<string id="WINDOW_PACKET" value="数据包转储"/>
+	<string id="WINDOW_HOSTCACHE" value="主机缓存"/>
+	<string id="WINDOW_SEARCHMONITOR" value="搜索监视器"/>
+	<string id="WINDOW_SEARCH" value="搜索"/>
+	<string id="WINDOW_HITMONITOR" value="命中监视器"/>
+	<string id="WINDOW_DOWNLOADS" value="下载"/>
+	<string id="WINDOW_LIBRARY" value="收藏"/>
+	<string id="WINDOW_UPLOADS" value="上传"/>
+	<string id="WINDOW_TRAFFIC" value="图表"/>
+	<string id="WINDOW_CHAT" value="聊天"/>
+	<string id="WINDOW_SECURITY" value="安全"/>
+	<string id="WINDOW_DISCOVERY" value="探索服务"/>
+	<string id="WINDOW_BROWSEHOST" value="浏览"/>
+	<string id="WINDOW_HOME" value="Shareaza 首页"/>
+	<string id="WINDOW_MEDIA" value="媒体播放器"/>
+	<string id="WINDOW_SEARCHPAD" value="搜索"/>
+	<string id="WINDOW_HELP" value="Shareaza 帮助"/>
 	<string id="8000" value="Shareaza 设置"/>
 	<string id="8001" value="欢迎来到 Shareaza"/>
 	<string id="8002" value="文件属性"/>
@@ -2383,6 +2387,8 @@
 	<string id="8132" value="某些结果可用，但已被过滤。"/>
 	<string id="8133" value="Shareaza 正积极地搜索网络..."/>
 	<string id="8134" value="立即开始新的搜索。确定要清除之前的搜索吗？"/>
+	<string id="8135" value="无 Metadata"/>
+	<string id="8136" value="纯文字搜索"/>
 	<string id="8141" value="显示搜索面板"/>
 	<string id="8142" value="隐藏搜索面板"/>
 	<string id="8143" value="搜索中..."/>
@@ -2425,7 +2431,6 @@
 	<string id="8231" value="没有资源"/>
 	<string id="8232" value="打开"/>
 	<string id="8233" value="预览"/>
-	<string id="8234" value="%s 于 %s (%.2f%%)"/>
 	<string id="8235" value="总体传送速度:"/>
 	<string id="8236" value="估计剩余时间:"/>
 	<string id="8237" value="完成下载数量:"/>
@@ -2433,7 +2438,6 @@
 	<string id="8239" value="完成"/>
 	<string id="8240" value="Shareaza 正在移动下载:"/> 
 	<string id="8241" value="Shareaza 正在检测下载的错误:"/>
-	<string id="8242" value="%s 于 %s (%.2f%%)"/>
 	<string id="8243" value="已上传数量:"/>
 	<string id="8288" value="正在浏览您的 Shareaza 收藏"/>
 	<string id="8289" value="浏览 "/>
@@ -2444,7 +2448,6 @@
 	<string id="8294" value="最近添加文件"/>
 	<string id="8295" value="为此文件评级"/>
 	<string id="8304" value="N/A"/>
-	<string id="8305" value="%i 于 %i"/>
 	<string id="8306" value="地址"/>
 	<string id="8307" value="类型"/>
 	<string id="8308" value="大小"/>
@@ -2648,6 +2651,16 @@
 	<string id="16363" value="Torrent 上传"/>
 	<string id="16364" value="已完成上传"/>
 	<string id="16365" value="您确定要取消/放弃此组中的每个下载项吗？"/>
+	<string id="16366" value="队列"/>
+	<string id="16367" value="eDonkey 内核"/>
+	<string id="16368" value="eDonkey 部分"/>
+	<string id="16369" value="eDonkey 向导"/>
+	<string id="16370" value="小型文件"/>
+	<string id="16371" value="中型文件"/>
+	<string id="16372" value="大型文件"/>
+	<string id="16373" value="部分文件"/>
+	<string id="16374" value="新建队列"/>
+	<string id="16375" value="部分"/>
 	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 	<string id="16385" value="您将修改 %i 文件的 Metadata，确定要继续吗？"/>
 	<string id="16386" value="正在修改 %i 的 Metadata。"/>
@@ -2735,6 +2748,8 @@
 	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千 bit 每秒，或 &quot;123 KB/s&quot; 千 byte 每秒。"/>
 	<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
 	<string id="16809" value="退出(_X)"/>
+	<string id="16810" value="岁"/>
+	<string id="16811" value="自动"/>
 	<string id="16864" value="正在查询主机探索服务..."/>
 	<string id="16865" value="正在查询探索服务 &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache 交易成功 (&quot;%s&quot;)。"/>
@@ -2929,6 +2944,10 @@
 	<string id="20130" value="个资源"/> <!-- 从 11 至 19 -->
 	<string id="20131" value="个资源"/> <!-- 从 2 至 4 -->
 	<string id="20132" value="个资源"/> <!-- 从 5 至 9 -->
+	<string id="20133" value="无所需部分"/>
+	<string id="20134" value="通道已满"/>
+	<string id="20135" value="下一个"/>
+	<string id="20136" value="队列"/>
 	<string id="20200" value="星期天"/>
 	<string id="20201" value="星期一"/>
 	<string id="20202" value="星期二"/>
@@ -3097,8 +3116,7 @@
 		<control caption="共享预览文件"/>
 		<control caption="创建动态预览"/>
 		<control caption="对每个用户进行限制:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="用户代理过滤(_U):"/>
 		<control/>
 		<control caption="+"/>
@@ -3167,30 +3185,30 @@
 		<control caption="配置 Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2 网络(推荐)"/>
-		<control caption="连接到 Gnutella2 今天"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2 网络:"/>
+		<control caption="(G2 推荐)"/>
+		<control caption="今天连接到 Gnutella2"/>
+		<control caption="模式:"/>
+		<control caption="最优|Leaf|Hub"/>
+		<control caption="G2 连接(_2):"/>
+		<control caption="Leaf 到 Hub:"/>
+		<control/><control/>
+		<control caption="Hub 到 Leaf:"/>
+		<control/><control/>
+		<control caption="Hub 到 Hub:"/>
+		<control/><control/>
 		<control caption="Gnutella1 网络:"/>
-		<control caption="连接到 Gnutella1 今天"/>
 		<control caption="总是连接到 Gnutella1"/>
-		<control caption="Hub 选举(_H):"/>
-		<control caption="允许此节点成为 Hub"/>
-		<control caption="强制此节点成为 Hub"/>
-		<control caption="允许此节点成为 Leaf"/>
-		<control caption="只接受 Hub 连接"/>
-		<control caption="Gnutella-G2(_2):"/>
-		<control caption="Leaf 到 Hub:"/>
+		<control caption="今天连接到 Gnutella1"/>
+		<control caption="模式:"/>
+		<control caption="最优|Leaf|Ultrapeer"/>
+		<control caption="G1 连接(_1):"/>
+		<control caption="Leaf 到 Ultrapeer:"/>
 		<control/><control/>
-		<control caption="Hub 到 Leaf:"/>
+		<control caption="Ultrapeer 到 Leaf:"/>
 		<control/><control/>
-		<control caption="Hub 到 Hub:"/>
-		<control/><control/>
-		<control caption="Gnutella-G1(_1):"/>
-		<control caption="Leaf 到 Hub:"/>
-		<control/><control/>
-		<control caption="Hub 到 Leaf:"/>
-		<control/><control/>
-		<control caption="Hub 到 Hub:"/>
+		<control caption="Peer 到 Peer:"/>
 		<control/><control/>
 		<control caption="链接压缩方式(_L):"/>
 		<control caption="Hub 到 Leaf"/>
@@ -3218,21 +3236,23 @@
 		<control caption="下载..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
-		<control caption="在这里保存 Torrent(_S):"/>
-		<control/><control/>
-		<control caption="下载连接(_D):"/>
-		<control/><control/>
-		<control caption="个客户端连接"/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
 		<control caption="界面(_I):"/>
 		<control caption="显示 BitTorrent 额外的界面元素"/>
+		<control caption="下载连接(_D):"/>
+		<control/><control/>
+		<control caption="个 Torrents 一次"/>
+		<control/><control/>
+		<control caption="个客户端连接"/>
 		<control caption="最终阶段(_E):"/>
 		<control caption="在完成 Torrent 时启用最终阶段模式"/>
+		<control caption="在这里保存 Torrent(_S):"/>
+		<control/><control/>
 		<control caption="Torrent 制作工具(_T)"/>
-		<control caption="Tracker:"/>
-		<control/><control/><control/><control/><control/>
-		<control caption="个 Torrents 一次"/>
+		<control/><control/>
 		<control caption="默认 Tracker(_D):"/>
+		<control caption="Tracker:"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="协议">
@@ -3274,7 +3294,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="上传队列属性">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="上传队列属性">
 		<control caption="名称(_N):"/>
 		<control/>
 		<control caption="项目条件(_E):"/>
@@ -3306,6 +3326,7 @@
 		<control/><control/>
 		<control caption="确定"/>
 		<control caption="取消"/>
+		<control caption="奖励上传者"/>
 	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="欢迎来到 Shareaza">
@@ -3333,14 +3354,14 @@
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="欢迎使用 Shareaza [7 之 3]">
-		<control caption="为获得最佳效果，Shareaza必须知道您的互联网连接。"/>
-		<control/>
+		<control caption="为获得最佳效果，Shareaza 必须知道您的互联网连接。"/>
+		<control caption="&#160;(请选择)| 我在家中使用互联网| 我通过大学的局域网连接到互联网| 我通过办公室中的局域网连接到互联网| 我在旅馆或机场使用互联网"/>
 		<control caption="您的网络是否被防火墙保护，或者使用了 NAT 路由？"/>
-		<control/>
+		<control caption="&#160;是，我可以接受所有传入连接| 不，我无法从互联网上接受传入连接| 我不知道，请自动选择防火墙状态"/>
 		<control caption="您的互联网连接是否有防火墙保护，或者使用了 NAT 路由器？"/>
-		<control/>
+		<control caption="&#160;是，我可以完全访问互联网| 不，但我将为 Shareaza 设置端口映射| 不，所以我无法从互联网接受传入连接| 我不知道，请自动选择防火墙状态"/>
 		<control caption="如果您知道互联网连接速度，请在下面做出选择:"/>
-		<control/>
+		<control caption="| 调制解调器拨号| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="或选择:"/>
 		<control/>
 	</dialog>
@@ -3370,7 +3391,8 @@
 		<control caption="我使用的名称:"/>
 		<control/>
 		<control caption="并且我是:"/>
-		<control/><control/>
+		<control caption="&#160;(选择)"/>
+		<control caption="&#160;(选择)| 男孩| 女孩| 男人| 女人"/>
 		<control caption="来自于:"/>
 		<control/><control/>
 	</dialog>
@@ -3429,7 +3451,7 @@
 		<control caption="真实姓名:"/>
 		<control/><control/>
 		<control caption="基本信息(_V):"/>
-		<control/>
+		<control caption="|男|女"/>
 		<control caption="性别:"/>
 		<control/>
 		<control caption="年龄:"/>
@@ -3441,7 +3463,7 @@
 		<control caption="主要地址:"/>
 		<control/>
 		<control caption="即时消息(_I):"/>
-		<control caption="MSN:"/>
+		<control caption="MSN/.NET Passport:"/>
 		<control/>
 		<control caption="Yahoo ID:"/>
 		<control/>
@@ -3543,7 +3565,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
-		<control caption="( 排除文字的方式为 &quot;－文字&quot; )"/>
+		<control caption="( 排除文字的方式为“－文字”)"/>
 		<control caption="以及大小(_S):"/>
 		<control caption="最小:"/>
 		<control/>
@@ -3701,7 +3723,7 @@
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="安全策略">
 		<control caption="规则(_R):"/>
 		<control caption="类型:"/>
-		<control/>
+		<control caption="网络 (IP) 地址|内容过滤"/>
 		<control caption="注释:"/>
 		<control/>
 		<control caption="网络地址(_N):"/>
@@ -3715,9 +3737,10 @@
 		<control caption="完全匹配"/>
 		<control caption="选项(_O):"/>
 		<control caption="操作:"/>
-		<control/>
+		<control caption="无|接受|拒绝"/>
 		<control caption="过期:"/>
-		<control/><control/>
+		<control caption="从不 (不确定)|在任务结束时|后于:"/>
+		<control/>
 		<control caption="天"/>
 		<control/>
 		<control caption="时"/>
@@ -3837,8 +3860,7 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="下载 Server.met 文件">
 		<control/>
 		<control caption="您能从网络上下载 eDonkey2000 server.met 文件来刷新您的本地服务器列表。"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="确定"/>
 		<control caption="取消"/>
 	</dialog>
@@ -3941,7 +3963,8 @@
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="选择视觉效果">
 		<control/>
 		<control caption="从此列表中选择一个音频的视觉效果:"/>
-		<control/><control/>
+		<control/>
+		<control caption="页脚显示|完全显示|放大显示|中等显示|缩小显示"/>
 		<control caption="设置(_S)..."/>
 		<control caption="确定"/>
 		<control caption="取消"/>
@@ -3985,6 +4008,7 @@
 		<column from="Progress" to="进程"/>
 		<column from="Speed" to="速度"/>
 		<column from="Client" to="客户端"/>
+		<column from="Rating" to="比率"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="地址"/>
@@ -4056,6 +4080,18 @@
 		<column from="Bandwidth" to="带宽"/>
 		<column from="Transfers" to="传送"/>
 		<column from="Order" to="顺序"/>
+	</list>
+	<list name="CAdvancedSettingsList">
+		<column from="Setting" to="设置"/>
+		<column from="Value" to="数值"/>
+	</list>
+	<list name="CFavouritesProfileList">
+		<column from="Name" to="名称"/>
+		<column from="URL" to="链接"/>
+	</list>
+	<list name="CFileSourcesPageList">
+		<column from="URL" to="链接"/>
+		<column from="Expires" to="过期"/>
 	</list>
 </listColumns>
 </skin>
