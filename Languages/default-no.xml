@@ -1646,7 +1646,7 @@
                <para align="center">
                        <text id="TorrentsNone" format="b">Seeder ingen torrent'er</text>
                        <text id="TorrentsOne" format="b">Seeder 1 torrent</text>
-                       <text id="TorrentsMany" format="b">Sedder %i torrent'er</text>
+                       <text id="TorrentsMany" format="b">Seeder %i torrent'er</text>
                        <newline gap="4"/>
                        <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed en torrent</link>
                </para>
