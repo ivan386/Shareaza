@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "Downloads.h"
+#include "Download.h"
 #include "Transfers.h"
 #include "Security.h"
 #include "ChatWindows.h"
@@ -300,12 +301,21 @@ void CBaseMatchWnd::OnSearchDownload()
 	{
 		CMatchFile* pFile = (CMatchFile*)pFiles.GetNext( pos );
 		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile );
+
 	}
 	
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = (CQueryHit*)pHits.GetNext( pos );
-		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit );
+		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) 
+		{
+			CDownload *pDownload = Downloads.Add( pHit );
+			// Send any reviews to the download, so they can be viewed later
+			if ( pDownload && ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() ) )
+			{
+				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+			}
+		}
 	}
 	
 	pMultiLock.Unlock();

@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -346,6 +346,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.SortColumns"), &Downloads.SortColumns, TRUE );
 	Add( _T("Downloads.SortSources"), &Downloads.SortSources, TRUE );
 	Add( _T("Downloads.SourcesWanted"), &Downloads.SourcesWanted, 500 );
+	Add( _T("Downloads.MaxReviews"), &Downloads.MaxReviews, 64 );
 
 	Add( _T("Uploads.MaxPerHost"), &Uploads.MaxPerHost, 2 );
 	Add( _T("Uploads.FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 2560 );

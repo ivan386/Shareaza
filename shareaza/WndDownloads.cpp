@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,7 @@
 #include "WndUploads.h"
 #include "WndBrowseHost.h"
 #include "DlgDownload.h"
+#include "DlgDownloadReviews.h"
 #include "DlgDownloadEdit.h"
 #include "DlgSettingsManager.h"
 #include "DlgTorrentTracker.h"
@@ -82,6 +83,8 @@ BEGIN_MESSAGE_MAP(CDownloadsWnd, CPanelWnd)
 	ON_COMMAND(ID_DOWNLOADS_CLEAR, OnDownloadsClear)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_LAUNCH, OnUpdateDownloadsLaunch)
 	ON_COMMAND(ID_DOWNLOADS_LAUNCH, OnDownloadsLaunch)
+	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_VIEW_REVIEWS, OnUpdateDownloadsViewReviews)
+	ON_COMMAND(ID_DOWNLOADS_VIEW_REVIEWS, OnDownloadsViewReviews)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_SOURCES, OnUpdateDownloadsSources)
 	ON_COMMAND(ID_DOWNLOADS_SOURCES, OnDownloadsSources)
 	ON_COMMAND(ID_DOWNLOADS_CLEAR_COMPLETED, OnDownloadsClearCompleted)
@@ -428,7 +431,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
 	m_bSelHttpSource = m_bSelDonkeySource = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
-	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
+	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	BOOL bFirstShare = TRUE;
@@ -477,6 +480,8 @@ void CDownloadsWnd::Prepare()
 				m_bSelShareState = FALSE;
 				m_bSelShareConsistent = FALSE;
 			}
+			if ( pDownload->GetReviewCount() > 0 )
+				m_bSelHasReviews = TRUE;
 		}
 		
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
@@ -683,9 +688,37 @@ void CDownloadsWnd::OnDownloadsClearComplete()
 	Update();
 }
 
+
+void CDownloadsWnd::OnUpdateDownloadsViewReviews(CCmdUI* pCmdUI) 
+{
+	Prepare();
+
+	pCmdUI->Enable( m_bSelHasReviews );
+}
+
+void CDownloadsWnd::OnDownloadsViewReviews() 
+{
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	
+	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+		if ( pDownload->m_bSelected && ( pDownload->GetReviewCount() >= 0 ) ) 
+		{
+			// Make sure data is locked while initialising the dialog
+			CDownloadReviewDlg dlg( NULL, pDownload );
+			pLock.Unlock();
+
+			dlg.DoModal();
+			return;
+		}
+	}
+}
+
 void CDownloadsWnd::OnUpdateDownloadsLaunch(CCmdUI* pCmdUI) 
 {
 	Prepare();
+
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
 		pcCmdUI->Show( m_bSelStartedAndNotMoving || ! m_bSelCompleted );
 	pCmdUI->Enable( m_bSelCompleted || m_bSelStartedAndNotMoving );

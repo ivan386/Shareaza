@@ -95,6 +95,7 @@ CEDClient::CEDClient()
 	m_nRunExCookie	= 0;
 
 	m_bOpenChat		= FALSE;
+	m_bCommentSent	= FALSE;
 	
 	m_mInput.pLimit		= &Settings.Bandwidth.Request;
 	m_mOutput.pLimit	= &Settings.Bandwidth.Request;
@@ -586,7 +587,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			if ( m_pDownload != NULL ) m_pDownload->OnRankingInfo( pPacket );
 			return TRUE;
 		case ED2K_C2C_FILEDESC:
-			//if ( m_pDownload != NULL ) m_pDownload->OnFileComment( pPacket );
+			if ( m_pDownload != NULL ) m_pDownload->OnFileComment( pPacket );
 			return TRUE;
 
 		case ED2K_C2C_REQUESTSOURCES:
@@ -786,7 +787,14 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_UNKNOWN3:
 			break;
 		default:
-			theApp.Message( MSG_DEBUG, _T("Unrecognised packet in CEDClient::OnHello") );
+			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) )
+			{
+				// No idea what this means. Probably from the eDonkey client.
+			}
+			else
+			{
+				theApp.Message( MSG_DEBUG, _T("Unrecognised packet in CEDClient::OnHello") );
+			}
 		}
 	}
 	
@@ -811,11 +819,10 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	if ( pPacket->GetRemaining() >= 4 )
 	{
 		// We can use it to ID clients
-		if ( pPacket->ReadLongLE() == 0x4B444C4D )
-		{
-			// MLDonkey
-			m_nEmCompatible = 10;
-		}
+		DWORD nValue = pPacket->ReadLongLE();
+		
+		// MLDonkey
+		if ( nValue == 0x4B444C4D ) m_nEmCompatible = 10;
 	}
 	
 
@@ -850,16 +857,16 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 	pPacket->WriteByte( 0x01 );		// eMule protocol
 	
 	// Write number of tags
-	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 6 : 5 );
+	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 7 : 6 );
 
 	// Write tags
 	CEDTag( ED2K_ET_COMPATIBLECLIENT, ED2K_COMPATIBLECLIENT_ID ).Write( pPacket );
 	CEDTag( ED2K_ET_COMPRESSION, ED2K_VERSION_COMPRESSION ).Write( pPacket );
 	CEDTag( ED2K_ET_SOURCEEXCHANGE, ED2K_VERSION_SOURCEEXCHANGE ).Write( pPacket );
-	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, ED2K_VERSION_EXTENDEDREQUEST ).Write( pPacket ); //Extended request version 1
 	CEDTag( ED2K_ET_UDPVER, ED2K_VERSION_UDP ).Write( pPacket );
 	CEDTag( ED2K_ET_UDPPORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
-//	CEDTag( ED2K_ET_COMMENTS, 1 ).Write( pPacket );	
+	CEDTag( ED2K_ET_COMMENTS, ED2K_VERSION_COMMENTS ).Write( pPacket );	
+	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, ED2K_VERSION_EXTENDEDREQUEST ).Write( pPacket );
 	Send( pPacket );
 }
 
@@ -898,32 +905,34 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			return FALSE;
 		}
 		
-		if ( pTag.m_nType != ED2K_TAG_INT ) continue;
-		
 		switch ( pTag.m_nKey )
 		{
 		case ED2K_ET_COMPRESSION:
-			m_bEmDeflate = pTag.m_nValue;
+			 m_bEmDeflate = pTag.m_nValue;
 			break;
 		case ED2K_ET_UDPPORT:
-			m_nUDP = (WORD)pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_nUDP = (WORD)pTag.m_nValue;
 			break;
 		case ED2K_ET_UDPVER:
-			m_bEmUDPVersion = (WORD)pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmUDPVersion = (WORD)pTag.m_nValue;
 			break;
 		case ED2K_ET_SOURCEEXCHANGE:
-			m_bEmSources = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmSources = pTag.m_nValue;
 			break;
 		case ED2K_ET_COMMENTS:
-			m_bEmComments = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmComments = pTag.m_nValue;
 			break;
 		case ED2K_ET_EXTENDEDREQUEST:
-			m_bEmRequest = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmRequest = pTag.m_nValue;
 			break;
 		case ED2K_ET_COMPATIBLECLIENT:
-			m_nEmCompatible = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_nEmCompatible = pTag.m_nValue;
 			break;
 		case ED2K_ET_FEATURES:		// We don't use these
+			break;
+		case ED2K_CT_MODVERSION:	// Some clients send this here
+			if ( m_nEmCompatible == ED2K_CLIENT_UNKNOWN )
+				m_nEmCompatible = ED2K_CLIENT_MOD;
 			break;
 		}
 	}
@@ -1019,6 +1028,8 @@ void CEDClient::DeriveSoftwareVersion()
 //This is the older style of IDing a client
 void CEDClient::DeriveVersion()
 {
+	if ( m_nSoftwareVersion ) return;
+
 	if ( m_pGUID.n[5] == 13 && m_pGUID.n[14] == 110 )
 	{
 		m_bEmule = TRUE;
@@ -1069,11 +1080,14 @@ void CEDClient::DeriveVersion()
 		case 20:
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
+		case ED2K_CLIENT_MOD:	// (Did not send a compatible client ID, but did send a MOD tag)
+			m_sUserAgent.Format( _T("eMule mod") );
+			break;
 		case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
 			if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )
 				m_sUserAgent.Format( _T("Pruna") );
 			else
-				m_sUserAgent.Format( _T("Unidentified"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+				m_sUserAgent.Format( _T("Unidentified") );
 			break;
 		default:	// (Sent a compatible client ID, but we don't recognise it)
 			m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
@@ -1087,6 +1101,7 @@ void CEDClient::DeriveVersion()
 
 BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 {
+	CEDPacket* pComment = NULL;
 	if ( pPacket->GetRemaining() < sizeof(MD4) )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
@@ -1102,9 +1117,30 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE );
 	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 	{
+		// Create the reply packet
 		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
+
+		// If we have not sent comments yet, and this client supports comments
+		if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) )
+		{ 
+			// If there's comments in the library
+			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
+			{
+				// Create the comments packet
+				pComment = CEDPacket::New( ED2K_C2C_FILEDESC );
+				pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
+				pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
+				m_bCommentSent = TRUE;
+			}
+		}
+
 		Library.Unlock();
+
+		// Send reply
 		Send( pReply );
+		// Send comments / rating
+		if ( pComment ) Send( pComment );
+
 		return TRUE;
 	}
 	else if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )

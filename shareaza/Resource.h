@@ -155,6 +155,8 @@
 #define IDD_DOWNLOAD_EDIT               248
 #define IDD_SETTINGS_REMOTE             249
 #define IDD_SETTINGS_SCHEDULER          250
+#define IDD_DOWNLOAD1                   251
+#define IDD_DOWNLOAD_REVIEWS            251
 #define IDI_FIREWALLED                  252
 #define IDI_MERCORA                     254
 #define IDR_MERCORA_BUTTON              255
@@ -654,6 +656,8 @@
 #define IDC_TORRENT_CLEAR_SPIN          1396
 #define IDC_G1_CLIENTMODE               1396
 #define IDC_G2_CLIENTMODE               1397
+#define IDC_REVIEWS                     1397
+#define IDC_REVIEW_FILENAME             1398
 #define IDC_SCHEDULER_ENABLE            1400
 #define IDC_SCHEDULER_LIMITED           1401
 #define IDC_SCHEDULER_LIMITED_SPIN      1402
@@ -1305,6 +1309,13 @@
 #define IDS_DAY_THURSDAY                20204
 #define IDS_DAY_FRIDAY                  20205
 #define IDS_DAY_SATURDAY                20206
+#define IDS_RATING_NORATING             20210
+#define IDS_RATING_1                    20211
+#define IDS_RATING_2                    20212
+#define IDS_RATING_3                    20213
+#define IDS_RATING_4                    20214
+#define IDS_RATING_5                    20215
+#define IDS_RATING_6                    20216
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
@@ -1352,6 +1363,7 @@
 #define ID_DOWNLOADS_LAUNCH             32830
 #define ID_DOWNLOADS_CLEAR              32831
 #define ID_DOWNLOADS_PAUSE              32832
+#define ID_DOWNLOADS_VIEW_REVIEWS       32833
 #define ID_LIBRARY_EXPLORE              32834
 #define ID_LIBRARY_SCAN                 32835
 #define ID_LIBRARY_SHARED_FILE          32836
@@ -1617,7 +1629,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33121
-#define _APS_NEXT_CONTROL_VALUE         1397
+#define _APS_NEXT_CONTROL_VALUE         1399
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

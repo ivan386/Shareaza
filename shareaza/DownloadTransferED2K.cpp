@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -429,6 +429,35 @@ BOOL CDownloadTransferED2K::OnRankingInfo(CEDPacket* pPacket)
 	SetQueueRank( m_nQueuePos );
 	
 	return TRUE;
+}
+
+BOOL CDownloadTransferED2K::OnFileComment(CEDPacket* pPacket)
+{
+	BYTE nFileRating;
+	DWORD nLength;
+	CString sFileComment;
+
+	// Read in the file rating
+	nFileRating = pPacket->ReadByte();
+
+	nLength = pPacket->ReadLongLE();
+	if ( nLength > 0 ) 
+	{
+		if ( nLength > ED2K_COMMENT_MAX ) nLength = ED2K_COMMENT_MAX;
+
+		// Read in comment
+		if ( m_pClient && m_pClient->m_bEmUnicode )
+			sFileComment = pPacket->ReadStringUTF8( nLength );
+		else
+			sFileComment = pPacket->ReadString( nLength );
+	}
+
+	if ( m_pDownload && m_pClient )
+	{
+		return m_pDownload->AddReview( &m_pClient->m_pHost.sin_addr, 3, nFileRating, m_pClient->m_sNick, sFileComment );
+	}
+
+	return FALSE;
 }
 
 BOOL CDownloadTransferED2K::OnStartUpload(CEDPacket* pPacket)

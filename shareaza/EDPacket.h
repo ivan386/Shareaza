@@ -365,18 +365,20 @@ public:
 // Client ID
 #define ED2K_COMPATIBLECLIENT_ID	0x4
 
-// "Unknown" client ID for compatible client variable
+// "Unknown" and "Unknown mod" client ID for compatible client variable
 #define ED2K_CLIENT_UNKNOWN			0xFF
+#define ED2K_CLIENT_MOD				0xFE
 
 // Shareaza's advertised capabilities / feature versions
-#define ED2K_VERSION_UDP			0x02
 #define ED2K_VERSION_COMPRESSION	0x01
+#define ED2K_VERSION_UDP			0x02
 #define ED2K_VERSION_SOURCEEXCHANGE	0x02
+#define ED2K_VERSION_COMMENTS		0x01
 #define ED2K_VERSION_EXTENDEDREQUEST 0x01
 // Things that aren't supported
 #define ED2K_VERSION_AICH			0x00
 #define ED2K_VERSION_SECUREID		0x00
-#define ED2K_VERSION_COMMENTS		0x00
+
 
 
 

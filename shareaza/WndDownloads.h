@@ -1,7 +1,7 @@
 //
 // WndDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,6 +81,7 @@ protected:
 	BOOL			m_bSelDonkeySource;
 	BOOL			m_bSelSourceAcceptConnections;
 	BOOL			m_bSelSourceExtended;
+	BOOL			m_bSelHasReviews;
 
 // Overrides
 public:
@@ -104,6 +105,8 @@ protected:
 	afx_msg void OnDownloadsClear();
 	afx_msg void OnUpdateDownloadsLaunch(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadsLaunch();
+	afx_msg void OnUpdateDownloadsViewReviews(CCmdUI* pCmdUI);
+	afx_msg void OnDownloadsViewReviews();
 	afx_msg void OnUpdateDownloadsSources(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadsSources();
 	afx_msg void OnDownloadsClearCompleted();

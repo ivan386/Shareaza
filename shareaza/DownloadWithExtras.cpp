@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "Transfers.h"
 #include "DownloadWithExtras.h"
 #include "DlgFilePreview.h"
@@ -39,13 +40,17 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadWithExtras::CDownloadWithExtras()
 {
-	m_pMonitorWnd = NULL;
-	m_pPreviewWnd = NULL;
+	m_pMonitorWnd	= NULL;
+	m_pPreviewWnd	= NULL;
+	m_pReviewFirst	= NULL;
+	m_pReviewLast	= NULL;
+	m_nReviewCount	= 0;
 }
 
 CDownloadWithExtras::~CDownloadWithExtras()
 {
 	DeletePreviews();
+	DeleteReviews();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -118,6 +123,75 @@ void CDownloadWithExtras::DeletePreviews()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownloadWithExtras review file management
+
+BOOL CDownloadWithExtras::AddReview(in_addr *pIP, int nClientID, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment)
+{
+	// If we have too may reviews, then exit
+	if ( m_nReviewCount > Settings.Downloads.MaxReviews ) 
+	{
+		theApp.Message( MSG_DEBUG, _T("Maximum number of reviews reached") );
+		return FALSE;
+	}
+
+	// If we already have a review from this IP, then exit
+	if ( FindReview( pIP ) ) 
+	{
+		theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
+		return FALSE;
+	}
+
+	// Add the review
+	CDownloadReview* pReview = new CDownloadReview(pIP, nClientID, nRating, pszUserName, pszComment);
+	m_nReviewCount++;
+
+	pReview->m_pPrev = m_pReviewLast;
+	pReview->m_pNext = NULL;
+		
+	if ( m_pReviewLast != NULL )
+	{
+		m_pReviewLast->m_pNext = pReview;
+		m_pReviewLast = pReview;
+	}
+	else
+	{
+		m_pReviewFirst = m_pReviewLast = pReview;
+	}
+
+	return TRUE;
+}
+
+void CDownloadWithExtras::DeleteReviews()
+{
+	CDownloadReview *pNext = NULL, *pReview = m_pReviewFirst;
+
+	while ( pReview )
+	{
+		pNext = pReview->m_pNext;
+		delete pReview;
+		pReview = pNext;
+	}
+
+	m_pReviewFirst	= NULL;
+	m_pReviewLast	= NULL;
+	m_nReviewCount	= 0;
+}
+
+CDownloadReview* CDownloadWithExtras::FindReview(in_addr *pIP) const
+{
+	CDownloadReview *pReview = m_pReviewFirst;
+
+	while ( pReview )
+	{
+		if ( pReview->m_pUserIP.S_un.S_addr == pIP->S_un.S_addr )
+			return pReview;
+		pReview = pReview->m_pNext;
+	}
+
+	return NULL;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras monitor window
 
 void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
@@ -166,3 +240,38 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 		}
 	}
 }
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadReview construction
+
+CDownloadReview::CDownloadReview()
+{
+	m_pNext			= NULL;
+	m_pPrev			= NULL;
+
+	m_nUserPicture	= 0;
+	m_nFileRating	= 0;
+}
+
+CDownloadReview::CDownloadReview(in_addr *pIP, int nUserPicture, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment)
+{
+	m_pNext			= NULL;
+	m_pPrev			= NULL;
+
+	m_pUserIP		= *pIP;
+	m_nUserPicture	= nUserPicture;
+	m_sUserName		= pszUserName;
+	m_nFileRating	= nRating;
+
+	m_sFileComments = pszComment;
+
+	if ( m_sUserName.IsEmpty() ) m_sUserName = inet_ntoa( *pIP );
+}
+
+CDownloadReview::~CDownloadReview()
+{
+	// If a preview pic or any other dynamically added item is ever added to the review, remember 
+	// to delete it here.
+
+}
+

@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -390,6 +390,7 @@ public:
 		BOOL		SortColumns;				// Allow user to sort downloads by clicking column headers
 		BOOL		SortSources;				// Automatically sort sources (Status, protocol, queue)
 		int			SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k/BT)
+		int			MaxReviews;					// Maximum number of reviews to store per download
 	} Downloads;
 	
 	struct sUploads

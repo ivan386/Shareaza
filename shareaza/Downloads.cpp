@@ -1,7 +1,7 @@
 //
 // Downloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,6 +154,12 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
 			pDownload->AddSourceHit( pHit );
+
+			// Send any reviews to the download, so they can be viewed later
+			if ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() )
+			{
+				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
+			}
 		}
 		
 		pDownload->Resume();
@@ -174,6 +180,12 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 			if ( pHit != pFile->m_pBest )
 			{
 				pDownload->AddSourceHit( pHit, TRUE );
+			}
+
+			// Send any reviews to the download, so they can be viewed later
+			if ( pHit->m_nRating || ! pHit->m_sComments.IsEmpty() )
+			{
+				pDownload->AddReview( &pHit->m_pAddress, 2, pHit->m_nRating, pHit->m_sNick, pHit->m_sComments );
 			}
 		}
 		

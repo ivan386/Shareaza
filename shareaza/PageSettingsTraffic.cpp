@@ -1,7 +1,7 @@
 //
 // PageSettingsTraffic.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -219,6 +219,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.Metadata, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.SortColumns, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.SortSources, 1, 0, 1 );
+	AddSetting( &Settings.Downloads.MaxReviews, 1, 0, 256 );
 	
 	AddSetting( &Settings.Uploads.FreeBandwidthValue, 128, 0, 4096, _T(" Kb/s") );
 	AddSetting( &Settings.Uploads.FreeBandwidthFactor, 1, 0, 100, _T("%") );

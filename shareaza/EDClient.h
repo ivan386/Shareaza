@@ -83,6 +83,7 @@ public:
 	DWORD					m_nRunExCookie;
 
 	BOOL		m_bOpenChat;
+	BOOL		m_bCommentSent;
 	
 // Operations
 public:
