@@ -203,6 +203,7 @@ Type: filesandordirs; Name: "{userprograms}\Shareaza"
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{app}\Remote"
+Type: files; Name: "{app}\TorrentWizard.exe"
 
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
