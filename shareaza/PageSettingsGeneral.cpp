@@ -120,7 +120,8 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	
 	m_wndTips.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, rc.right, 0 );
 	m_wndTips.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES, LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES );
+		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP, 
+		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP );
 	
 	if ( CSchema* pSchema = SchemaCache.Get( CSchema::uriSearchFolder ) )
 	{
