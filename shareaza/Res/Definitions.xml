@@ -290,7 +290,7 @@
 	<command code="33080" id="ID_NETWORK_G2"/>
 	<command code="33081" id="ID_NETWORK_G1"/>
 	<command code="33082" id="ID_NETWORK_ED2K"/>
-	<command code="33083" id="ID_LIBRARY_JIGLE"/>
+	<!--<command code="33083" id="ID_LIBRARY_JIGLE"/>-->
 	<command code="33084" id="ID_HOSTCACHE_PRIORITY"/>
 	<command code="33085" id="ID_VIEW_BASIC"/>
 	<command code="33086" id="ID_LIBRARY_SEARCH_QUICK"/>

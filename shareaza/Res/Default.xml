@@ -746,7 +746,7 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>
+			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 			<separator/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		</menu>
