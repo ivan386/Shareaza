@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="dabserver@mail.ru"
-		version="2.1.0.4"
+		version="2.1.0.13"
 		type="Language"
 		language="ru"
 		prompt="&#160;&#1065;&#1077;&#1083;&#1082;&#1085;&#1080;&#1090;&#1077;&#160;&#1079;&#1076;&#1077;&#1089;&#1100;&#160;&#1076;&#1083;&#1103;&#160;&#1089;&#1084;&#1077;&#1085;&#1099;&#160;&#1103;&#1079;&#1099;&#1082;&#1072;&#160;&#1085;&#1072;&#160;&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;&#160;(&#1086;&#1090;&#160;dAbserver)"
@@ -2796,6 +2796,17 @@
 	<string id="17041" value="Не могу послать сообщение, соединение пока не установлено."/>
 	<string id="17042" value="Вы ещё не заполнили своего профиля пользователя.  Вы должны его заполнить, прежде чем беседовать с другими пользователями.\n\nХотите ли заполнить свой профиль сейчас?"/>
 	<string id="17043" value="Предоставлен приоритет загрузки для хоста %s."/>
+	<string id="17120" value="Разъединяется"/>
+	<string id="17121" value="Неизвестно"/>
+	<string id="17122" value="G1 участник"/>
+	<string id="17123" value="G1 ведущий"/>
+	<string id="17124" value="G1 ветвь"/>
+	<string id="17125" value="G2 участник"/>
+	<string id="17126" value="G2 узел"/>
+	<string id="17127" value="G2 ветвь"/>
+	<string id="17128" value="eDonkey2000 сервер"/>
+	<string id="17129" value="eDonkey2000 (низкий ID)"/>
+	<string id="17130" value="eDonkey2000 (высокий ID)"/>
 	<string id="17216" value="Инициализация соединения с eDonkey2000 сервером %s..."/>
 	<string id="17217" value="Соединение с eDonkey2000 сервером %s установлено, посылаю подтверждение..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
@@ -3108,7 +3119,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Планировщик">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Планировщик">
 		<control caption="_Опции:"/>
 		<control caption="_Включить планировщик"/>
 		<control/><control/>
@@ -3125,6 +3136,9 @@
 		<control caption="Лимитированное соединение"/>
 		<control caption="Соедин. с полной скоростью"/>
 		<control caption="% полосы пропуск. при лимите"/>
+		<control/>
+		<control caption="Справка"/>
+		<control caption="Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.&#13;&#10;&#13;&#10;Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
@@ -3484,7 +3498,7 @@
 		<control/><control/>
 		<control caption="Протокол _сети:"/>
 		<control/>
-		<control caption="Подавить _равного"/>
+		<control caption="Подавить _ведущего"/>
 		<control caption="Соединиться"/>
 		<control caption="Отмена"/>
 	</dialog>
