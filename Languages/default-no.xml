@@ -1736,7 +1736,7 @@
 
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Nedlastinger:</link>
 		<gap size="4"/>
-		<text>Endre nedlastingskapasiteten og hvor de skal lagres.</text>
+		<text>Nedlastingshastighet, planlegging, godkjennelse, tidsavbrudd og annet.</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CUploadsSettingsPage" format="b">Opplastinger:</link>
@@ -2011,7 +2011,7 @@
 		ment kun for voksne. Dette forhindres av et filter for voksent innhold, som finnes under Innstilinger.
 		Forandre søketeksten eller skru av filteret for voksent innhold.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
+		<text>For å skru av filteret, gå til Verktøy &gt; Instillinger &gt; Generelt og fjern haken for filteret.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2165,9 +2165,9 @@
 	<tip id="ID_LIBRARY_PARENT" message="Gå et steg tilbake."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Vis og endre egenskapene til valgte filer..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Oppdater metadata og hash, til valgte mapper eller filer."/>
-	<tip id="ID_LIBRARY_REFRESH" message="Refresh the library view."/>
-	<tip id="ID_LIBRARY_REMOVE" message="Remove the selected shared folders."/>
-	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
+	<tip id="ID_LIBRARY_REFRESH" message="Oppdater biblioteket."/>
+	<tip id="ID_LIBRARY_REMOVE" message="Fjern de valgte mappene."/>
+	<tip id="ID_LIBRARY_RENAME" message="Gi den valgte filen nytt navn."/>
 	<tip id="ID_LIBRARY_SCAN" message="Skann valgte mappe eller filer etter forandringer."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Søk etter filmappe..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Søk gjennom Mine filer..."/>
@@ -2827,7 +2827,7 @@
 	<string id="17109" value="Inngående"/>
 	<string id="17110" value="Utgående"/>
 	<string id="17111" value="I øyeblikket:"/>
-	<string id="17112" value="Total:"/>
+	<string id="17112" value="Totalt:"/>
 	<string id="17113" value="Kompressjon:"/>
 	<string id="17114" value="Rate:"/>
 	<string id="17115" value="Redusere"/>
@@ -3002,9 +3002,9 @@
 		<control/>
 		<control caption="_Systemfeltet:"/>
 		<control caption="Når jeg trykker lukk:"/>
-		<control/>
+		<control caption="Spør meg|Avslutt umiddelbart|Minimer til systemfelt|Avslutt etter overføringer"/>
 		<control caption="Når jeg trykker minimer:"/>
-		<control/>
+		<control caption="Normal|Minimer til systemfeltet"/>
 		<control caption="Skjul søkepanel ved søk"/>
 		<control caption="Ved søk, filtrer vekk innhold for voksne"/>
 	</dialog>
@@ -3635,7 +3635,7 @@
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Min karakter">
 		<control caption="Mine karakter"/>
 		<control caption="Karakter:"/>
-		<control/>
+		<control caption="(Ingen karakter)|Falsk/Korrupt/Missvisende|Dårlig|Moddels|God|Veldig god|Utmerket"/>
 		<control caption="Mine karakter og kommentarer"/>
 		<control/><control/>
 	</dialog>
