@@ -214,6 +214,8 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 {
+	if ( pService == NULL ) return NULL; // Can't add a null
+
 	// If it's a webcache with no protocols set, assume it's for both.
 	if ( ( pService->m_bGnutella2 == FALSE ) && ( pService->m_bGnutella1 == FALSE ) && ( pService->m_nType == CDiscoveryService::dsWebCache ) )
 	{		
@@ -225,12 +227,22 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 	if ( ( pService->m_bGnutella2 && ( GetCount( PROTOCOL_G2 ) >= Settings.Discovery.CacheCount ) ) ||
 		 ( pService->m_bGnutella1 && ( GetCount( PROTOCOL_G1 ) >= Settings.Discovery.CacheCount ) ) )
 	{
-		delete pService;
-		return NULL;
+		// Check if the service is already in the list.
+		if ( m_pList.Find( pService ) == NULL )
+		{
+			// It's a new service, but we don't want more. We should delete it.
+			delete pService;
+			return NULL;
+		}
+		else
+		{
+			// We already had this service on the list. Do nothing.
+			return pService;
+		}
 	}
 
-	// Add the service to the list
-	if ( pService && m_pList.Find( pService ) == NULL ) m_pList.AddTail( pService );
+	// Add the service to the list if it's not there already
+	if ( m_pList.Find( pService ) == NULL ) m_pList.AddTail( pService );
 	return pService;
 }
 
