@@ -357,7 +357,7 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	
 	int nExtPos = m_sSourceName.ReverseFind( '.' );
 	if ( nExtPos > 0 ) strType = m_sSourceName.Mid( nExtPos );
-	strType.MakeLower();
+	strType = CharLower( strType.GetBuffer() );
 	
 	if ( ! LoadPlugin( strType ) ) return FALSE;
 	

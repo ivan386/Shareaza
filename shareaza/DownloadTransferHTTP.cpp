@@ -805,7 +805,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_pSource->SetGnutella( 1 );
 		
 		m_bQueueFlag = TRUE;
-		strValue.MakeLower();
+		strValue = CharLower( strValue.GetBuffer() );
 		
 		int nPos = strValue.Find( _T("position=") );
 		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%i"), &m_nQueuePos );

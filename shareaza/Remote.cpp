@@ -146,7 +146,7 @@ BOOL CRemote::OnHeadersComplete()
 	m_sHandshake = m_sHandshake.Mid( 4 ).SpanExcluding( _T(" \t") );
 	
 	CString strPath = m_sHandshake.SpanExcluding( _T("?&") );
-	strPath.MakeLower();
+	strPath = CharLower( strPath.GetBuffer() );
 	
 	m_sRedirect.Empty();
 	m_sHeader.Empty();
@@ -238,7 +238,7 @@ BOOL CRemote::CheckCookie()
 		if ( m_pHeaderName.GetAt( nHeader ).CompareNoCase( _T("Cookie") ) == 0 )
 		{
 			CString strValue( m_pHeaderValue.GetAt( nHeader ) );
-			strValue.MakeLower();
+			strValue = CharLower( strValue.GetBuffer() );
 			
 			int nPos = strValue.Find( _T("shareazaremote=") );
 			
@@ -282,7 +282,7 @@ void CRemote::Prepare(LPCTSTR pszPrefix)
 void CRemote::Add(LPCTSTR pszKey, LPCTSTR pszValue)
 {
 	CString strKey( pszKey );
-	strKey.MakeLower();
+	strKey = CharLower( strKey.GetBuffer() );
 	m_pKeys.SetAt( strKey, pszValue );
 }
 
@@ -333,7 +333,7 @@ void CRemote::Output(LPCTSTR pszName)
 		
 		strKey.TrimLeft();
 		strKey.TrimRight();
-		strKey.MakeLower();
+		strKey = CharLower( strKey.GetBuffer() );
 		
 		if ( strKey.IsEmpty() )
 		{
@@ -844,7 +844,7 @@ void CRemote::PageDownloads()
 		if ( GetKey( _T("modify_id") ) == str )
 		{
 			CString str( GetKey( _T("modify_action") ) );
-			str.MakeLower();
+			str = CharLower( str.GetBuffer() );
 			
 			if ( str == _T("expand") && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
@@ -975,7 +975,7 @@ void CRemote::PageDownloads()
 				if ( GetKey( _T("modify_id") ) == str )
 				{
 					str = GetKey( _T("modify_action") );
-					str.MakeLower();
+					str = CharLower( str.GetBuffer() );
 					
 					if ( str == _T("access") )
 					{

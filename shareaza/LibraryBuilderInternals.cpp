@@ -77,7 +77,7 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 	int nExtPos = strPath.ReverseFind( '.' );
 	if ( nExtPos > 0 ) strType = strPath.Mid( nExtPos );
 	
-	strType.MakeLower();
+	strType = CharLower( strType.GetBuffer() );
 	
 	if ( strType == _T(".mp3") )
 	{
@@ -1686,7 +1686,7 @@ BOOL CLibraryBuilderInternals::ReadAPE( HANDLE hFile)
 		
 		if ( strKey.GetLength() && strValue.GetLength() )
 		{
-			strKey.MakeLower();
+			strKey = CharLower( strKey.GetBuffer() );
 			
 			if ( strKey == _T("title") )
 			{
@@ -1944,7 +1944,7 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		CString strKey = strLine.SpanExcluding( _T(" \t") );
 		strLine = strLine.Mid( strKey.GetLength() );
 		strLine.TrimLeft();
-		strKey.MakeLower();
+		strKey = CharLower( strKey.GetBuffer() );
 		
 		if ( strLine.GetLength() >= 2 &&
 			 strLine.GetAt( 0 ) == '(' &&

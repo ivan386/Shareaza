@@ -70,7 +70,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 	if ( nExt >= 2 )
 	{
 		CString sExtention = m_sFilename.Mid( nExt );
-		sExtention.MakeLower();
+		sExtention = CharLower( sExtention.GetBuffer() );
 
 		if( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
 		{

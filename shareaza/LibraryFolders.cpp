@@ -184,14 +184,14 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 {
 	CString strPathLC( pszPath );
-	strPathLC.MakeLower();
+	strPathLC = CharLower( strPathLC.GetBuffer() );
 	
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 		
 		CString strOldLC( pFolder->m_sPath );
-		strOldLC.MakeLower();
+		strOldLC = CharLower( strOldLC.GetBuffer() );
 		
 		if ( strPathLC.GetLength() >= strOldLC.GetLength() )
 		{

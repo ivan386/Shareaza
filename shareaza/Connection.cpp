@@ -650,10 +650,10 @@ BOOL CConnection::IsAgentBlocked()
 	if ( Settings.Uploads.BlockAgents.IsEmpty() ) return FALSE;
 	
 	CString strBlocked = Settings.Uploads.BlockAgents;
-	strBlocked.MakeLower();
+	strBlocked = CharLower( strBlocked.GetBuffer() );
 	
 	CString strAgent = m_sUserAgent;
-	strAgent.MakeLower();
+	strAgent = CharLower( strAgent.GetBuffer() );
 	
 	for ( strBlocked += '|' ; strBlocked.GetLength() ; )
 	{

@@ -318,7 +318,7 @@ IImageServicePlugin* CImageServices::GetService(LPCTSTR pszFile, CLSID** ppCLSID
 	
 	IImageServicePlugin* pService = NULL;
 	CString strType( pszType );
-	strType.MakeLower();
+	strType = CharLower( strType.GetBuffer() );
 	
 	if ( m_pService.Lookup( strType, (void*&)pService ) )
 	{

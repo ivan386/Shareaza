@@ -140,7 +140,8 @@ void CWebSettingsPage::OnExtAdd()
 	CString strType;
 	m_wndExtensions.GetWindowText( strType );
 
-	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
+	strType = CharLower( strType.GetBuffer() );
+	strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
 	if ( m_wndExtensions.FindString( -1, strType ) >= 0 ) return;

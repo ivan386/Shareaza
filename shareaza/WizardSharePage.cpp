@@ -197,13 +197,13 @@ void CWizardSharePage::OnShareAdd()
 	pMalloc->Free( pPath );
 
 	CString strPathLC( szPath );
-	strPathLC.MakeLower();
+	strPathLC = CharLower( strPathLC.GetBuffer() );
 
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
 	CString strGeneralPathLC = Settings.General.Path;
 	CString strUserPathLC = Settings.General.UserPath;
-	strIncompletePathLC.MakeLower();
-	strGeneralPathLC.MakeLower();
+	strIncompletePathLC = CharLower( strIncompletePathLC.GetBuffer() );
+	strGeneralPathLC = CharLower( strGeneralPathLC.GetBuffer() );
 
 	if ( strPathLC == _T( "" ) ||
 		 strPathLC == _T( "c:\\" ) ||
@@ -223,7 +223,7 @@ void CWizardSharePage::OnShareAdd()
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
-		strOldLC.MakeLower();
+		strOldLC = CharLower( strOldLC.GetBuffer() );
 		
 		if ( strPathLC == strOldLC )
 		{

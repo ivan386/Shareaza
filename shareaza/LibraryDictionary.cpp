@@ -123,19 +123,19 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 			if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
 			{
 				strWord = strPhrase.Mid( nStart, nPos - nStart );
-				if ( bLowercase ) strWord.MakeLower();
+				if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 				ProcessWord( pFile, strWord, bAdd );
 				nCount++;
 				
 				if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
 				{
 					strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-					if ( bLowercase ) strWord.MakeLower();
+					if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 					ProcessWord( pFile, strWord, bAdd );
 					nCount++;
 					
 					strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-					if ( bLowercase ) strWord.MakeLower();
+					if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 					ProcessWord( pFile, strWord, bAdd );
 					nCount++;
 				}
@@ -147,19 +147,19 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 	if ( nStart < nPos && IsWord( strPhrase, nStart, nPos - nStart ) )
 	{
 		strWord = strPhrase.Mid( nStart, nPos - nStart );
-		if ( bLowercase ) strWord.MakeLower();
+		if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 		ProcessWord( pFile, strWord, bAdd );
 		nCount++;
 		
 		if ( nPos - nStart >= 5 && Settings.Library.PartialMatch )
 		{
 			strWord = strPhrase.Mid( nStart, nPos - nStart - 1 );
-			if ( bLowercase ) strWord.MakeLower();
+			if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 			ProcessWord( pFile, strWord, bAdd );
 			nCount++;
 			
 			strWord = strPhrase.Mid( nStart, nPos - nStart - 2 );
-			if ( bLowercase ) strWord.MakeLower();
+			if ( bLowercase ) strWord = CharLower( strWord.GetBuffer() );
 			ProcessWord( pFile, strWord, bAdd );
 			nCount++;
 		}

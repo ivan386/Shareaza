@@ -166,7 +166,8 @@ void CLibrarySettingsPage::OnSafeAdd()
 	CString strType;
 	m_wndSafeList.GetWindowText( strType );
 
-	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
+	strType = CharLower( strType.GetBuffer() );
+	strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
 	if ( m_wndSafeList.FindStringExact( -1, strType ) >= 0 ) return;
@@ -197,7 +198,8 @@ void CLibrarySettingsPage::OnPrivateAdd()
 	CString strType;
 	m_wndPrivateList.GetWindowText( strType );
 
-	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
+	strType = CharLower( strType.GetBuffer() );
+	strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
 	if ( m_wndPrivateList.FindStringExact( -1, strType ) >= 0 ) return;

@@ -84,7 +84,7 @@ BOOL CDownloadWithExtras::CanPreview()
 	if ( pszType == NULL ) return FALSE;
 	
 	CString strType( pszType );
-	strType.MakeLower();
+	strType = CharLower( strType.GetBuffer() );
 	
 	CLSID pCLSID;
 	return Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID );

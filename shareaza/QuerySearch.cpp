@@ -903,8 +903,9 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 void CQuerySearch::BuildWordList()
 {
 	m_nWords = 0;
-	
-	m_sSearch.MakeLower();
+
+	m_sSearch = CharLower( m_sSearch.GetBuffer() );
+
 	AddStringToWordList( m_sSearch );
 	
 	if ( m_pXML == NULL ) return;
@@ -921,7 +922,7 @@ void CQuerySearch::BuildWordList()
 				{
 					if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
 					{
-						pAttribute->m_sValue.MakeLower();
+						pAttribute->m_sValue = CharLower( pAttribute->m_sValue.GetBuffer() );
 						AddStringToWordList( pAttribute->m_sValue );
 					}
 				}
@@ -932,7 +933,7 @@ void CQuerySearch::BuildWordList()
 			for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
 			{
 				CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
-				pAttribute->m_sValue.MakeLower();
+				pAttribute->m_sValue = CharLower( pAttribute->m_sValue.GetBuffer() );
 				AddStringToWordList( pAttribute->m_sValue );
 			}
 		}

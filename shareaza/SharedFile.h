@@ -126,7 +126,7 @@ public:
 	inline CString GetNameLC() const
 	{
 		CString str = m_sName;
-		str.MakeLower();
+		str = CharLower( str.GetBuffer() );
 		return str;
 	}
 	

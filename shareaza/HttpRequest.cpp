@@ -170,7 +170,7 @@ CString CHttpRequest::GetHeader(LPCTSTR pszName)
 	if ( IsPending() ) return strOut;
 	
 	strIn = pszName;
-	strIn.MakeLower();
+	strIn = CharLower( strIn.GetBuffer() );
 	m_pResponseHeaders.Lookup( strIn, strOut );
 	
 	return strOut;
@@ -383,7 +383,8 @@ void CHttpRequest::RunResponse(HINTERNET hURL)
 		if ( nColon > 0 )
 		{
 			CString strValue, strName = strHeader.Left( nColon );
-			strName.Trim(); strName.MakeLower();
+			strName.Trim(); 
+			strName = CharLower( strName.GetBuffer() );
 			
 			while ( m_pResponseHeaders.Lookup( strName, strValue ) ) strName += _T('_');
 

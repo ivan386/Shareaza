@@ -158,7 +158,7 @@ CString CLibraryFile::GetSearchName() const
 		str = m_pFolder->m_sPath.Mid( nBase + 1 ) + '\\' + m_sName;
 	}
 	
-	str.MakeLower();
+	str = CharLower( str.GetBuffer() );
 	return str;
 }
 

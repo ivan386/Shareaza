@@ -119,7 +119,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	if ( m_i16.m_hImageList == NULL ) Clear();
 
 	CString strType( pszType );
-	strType.MakeLower();
+	strType = CharLower( strType.GetBuffer() );
 
 	HICON hIcon = NULL;
 	int nIndex;

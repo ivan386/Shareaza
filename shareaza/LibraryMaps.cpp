@@ -130,7 +130,7 @@ CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, BOOL bLockOnSucces
 	CString strName( pszName );
 	
 	Library.Lock();
-	strName.MakeLower();
+	strName = CharLower( strName.GetBuffer() );
 	
 	if ( m_pNameMap.Lookup( strName, (CObject*&)pFile ) && ( ! bSharedOnly || pFile->IsShared() ) && ( ! bAvailableOnly || pFile->IsAvailable() ) )
 	{

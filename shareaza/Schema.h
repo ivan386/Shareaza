@@ -142,7 +142,7 @@ public:
 		CString strExt = _T("|");
 		strExt += pszExt;
 		strExt += '|';
-		strExt.MakeLower();
+		strExt = CharLower( strExt.GetBuffer() );
 
 		return m_sTypeFilter.Find( strExt ) >= 0;
 	}

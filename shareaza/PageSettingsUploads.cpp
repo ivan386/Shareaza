@@ -227,7 +227,8 @@ void CUploadsSettingsPage::OnAgentAdd()
 	CString strType;
 	m_wndAgentList.GetWindowText( strType );
 
-	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
+	strType = CharLower( strType.GetBuffer() );
+	strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
 	if ( m_wndAgentList.FindString( -1, strType ) >= 0 ) return;

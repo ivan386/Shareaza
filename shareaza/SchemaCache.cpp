@@ -72,11 +72,11 @@ int CSchemaCache::Load()
 		if ( pSchema->Load( strPath ) )
 		{
 			CString strURI( pSchema->m_sURI );
-			strURI.MakeLower();
+			strURI = CharLower( strURI.GetBuffer() );
 			m_pURIs.SetAt( strURI, pSchema );
 			
 			CString strName( pSchema->m_sSingular );
-			strName.MakeLower();
+			strName = CharLower( strName.GetBuffer() );
 			m_pNames.SetAt( strName, pSchema );
 		}
 		else
