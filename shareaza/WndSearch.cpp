@@ -41,6 +41,7 @@
 #include "DlgNewSearch.h"
 #include "DlgHitColumns.h"
 #include "DlgHelp.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -664,7 +665,11 @@ void CSearchWnd::ExecuteSearch()
 	
 	if ( pManaged )
 	{
-		if(pManaged->m_pSearch->CheckValid())
+		if ( AdultFilter.IsFiltered( pManaged->m_pSearch->m_sSearch ) )
+		{
+			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+		}
+		else if ( pManaged->m_pSearch->CheckValid() )
 		{
 			m_bPaused			= FALSE;
 			m_tSearch			= GetTickCount();

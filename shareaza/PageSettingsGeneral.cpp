@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "PageSettingsGeneral.h"
+#include "DlgHelp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -147,6 +148,9 @@ void CGeneralSettingsPage::Add(LPCTSTR pszName, BOOL bState)
 void CGeneralSettingsPage::OnOK() 
 {
 	UpdateData();
+
+	if ( ( Settings.Search.AdultFilter == FALSE ) && ( m_bAdultFilter == TRUE ) )
+		CHelpDlg::Show( _T("GeneralHelp.AdultFilter") );
 	
 	Settings.SetStartup( m_bStartup );
 	Settings.Connection.AutoConnect		= m_bAutoConnect;
