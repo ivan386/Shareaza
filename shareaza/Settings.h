@@ -300,6 +300,7 @@ public:
 		DWORD		DequeueTime;
 		BOOL		ExtendedRequest;
 		BOOL		MagnetSearch;
+		DWORD		MinServerFileSize;			//Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;
 	} eDonkey;
 	
