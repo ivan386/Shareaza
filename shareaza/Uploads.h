@@ -84,6 +84,11 @@ public:
 		return GetCount( NULL, -2 );
 	}
 
+	inline int GetTorrentTransferCount() const
+	{
+		return GetTorrentCount( -2 );
+	}
+
 	inline int GetTorrentUploadCount() const
 	{
 		return GetTorrentCount( -3 );
