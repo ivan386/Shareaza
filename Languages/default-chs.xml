@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.118"
+		version="2.1.0.120"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -2003,6 +2003,26 @@
 		不再需要的程序。</text>
 	</document>
 
+	<document name="GeneralHelp.DiskWriteFail">
+		<text format="b">所需目录不可写</text>
+		<newline gap="8"/>
+		<text>Shareaza 所需要的磁盘或目录无法写入。</text>
+		<newline gap="8"/>
+		<text>网络驱动器可能已经断开，或者您没有写入到选定目录
+		的权限。请检查目录和权限，或更改临时文件夹的位置。</text>
+	</document>
+
+	<document name="GeneralHelp.ConnectionFail">
+		<text format="b">Internet 连接已丢失</text>
+		<newline gap="8"/>
+		<text>系统报告无可用的 Internet 连接。</text>
+		<newline gap="8"/>
+		<text>可能是因为调制解调器或路由已丢失，这意味这将无法访问互联网。
+		您可能需要手动重新连接或重置您的连接。</text>
+		<newline gap="8"/>
+		<text>Shareaza 已停止连接，以防止丢失已存入缓存的主机。</text>
+	</document>
+
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">检测到 Windows XP Service Pack 2</text>
 		<newline gap="8"/>
@@ -2047,15 +2067,29 @@
 		因为这样定义地太过宽泛而产生过多的结果。</text>
 	</document>
 
-	<document name="SearchHelp.BadSearch2"> 
-		<text format="b">请重新措词</text> 
+	<document name="SearchHelp.BadSearch2">
+		<text format="b">请重新措词</text>
 		<newline gap="8"/> 
 		<text>此搜索格式不正确，可能无法正常工作。
-		所有的搜索启动需要达到最小字母、字符数的要求。</text> 
+		所有的搜索启动需要达到最小字母、字符数的要求。</text>
 		<newline gap="8"/> 
 		<text>虽然可以搜索通常文件的扩展名和数字，但在创建搜索时，
-		您必须同时输入其他项目进行配合。</text> 
-	</document> 
+		您必须同时输入其他项目进行配合。</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">请重新措词</text>
+		<newline gap="8"/>
+		<text>此搜索可能只包含通常的文件扩展名，或没有可搜索的词。</text>
+		<newline gap="8"/> 
+		<text>如果您设置搜索存在困难，请记住它和进行网页搜索非常类似:
+		指定一些最具有唯一性的名称、标题和关键词。</text>
+		<newline gap="8"/> 
+		<text>常规的条件无法进行有效的搜索并且可能导致
+		较差的搜索性能，如在搜索时使用较高的带宽。</text>
+		<newline gap="8"/>
+		<text>进一步的帮助可以参考 Shareaza 的网页。</text>
+	</document>
 
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">这一搜索不能启动</text>
@@ -2414,6 +2448,9 @@
 	<string id="WINDOW_SEARCHPAD" value="搜索"/>
 	<string id="WINDOW_HELP" value="Shareaza 帮助"/>
 	<string id="7000" value="您确定要删除这一过滤吗？"/>
+	<string id="7001" value="&amp;构架s"/>
+	<string id="7002" value="多重数值"/>
+	<string id="7003" value="多重"/>
 	<string id="8000" value="Shareaza 设置"/>
 	<string id="8001" value="欢迎来到 Shareaza"/>
 	<string id="8002" value="文件属性"/>
@@ -2476,7 +2513,7 @@
 	<string id="8156" value="搜索"/>
 	<string id="8157" value="结果"/>
 	<string id="8158" value="清除"/>
-	<string id="8159" value="高级..."/>
+	<string id="8159" value="高级"/>
 	<string id="8160" value="正在建立到主机的连接..."/>
 	<string id="8161" value="发送获取请求，等待连接..."/>
 	<string id="8162" value="连接完毕，请求浏览..."/>
@@ -2489,6 +2526,8 @@
 	<string id="8177" value="输入要搜索的关键词:"/>
 	<string id="8178" value="要搜索什么类型的文件？"/>
 	<string id="8179" value="(清除搜索历史记录)"/>
+	<string id="8180" value="文件大小必须为"/>
+	<string id="8181" value="&#160;到"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza 正在为 %i 个文件创建 Hash 值:"/>
 	<string id="8224" value="Shareaza 正在下载:"/>
 	<string id="8225" value="此下载已暂停:"/>
@@ -4171,7 +4210,7 @@
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="搜索"/>
 		<column from="URN" to="URN"/>
-		<column from="Schema" to="结构"/>
+		<column from="Schema" to="构架"/>
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="文件"/>
