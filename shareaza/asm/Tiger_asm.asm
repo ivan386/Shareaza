@@ -21,25 +21,21 @@
 ;
 ; #####################################################################################################################
 ;
-; Tiger_asm - Implementation of Tiger for x86 - use together with TigerTree.cppmp86p
+; Tiger_asm - Implementation of Tiger for x86 
 ;
-; created              7.7.2004         by Camper
+; created				4.7.2004		by Camper			thetruecamper at gmx dot net
 ;
-; modified             20.7.2004        by Camper
-;
-; The integration into other projects than Shareaza is expressivly encouraged. Feel free to contact me about it.
+; modified				2.9.2004		by Camper			ICQ # 105491945
 ;
 ; #####################################################################################################################
 
                         .586p
-                        .model      flat, C 
+                        .model      flat, stdcall 
                         option      casemap:none                    ; case sensitive
                         option      prologue:none                   ; we generate our own entry/exit code
                         option      epilogue:none
 
 ; #####################################################################################################################
-
-USEMMX                  equ         0                               ; include MMX code path ? - slower than normal p5 - not fixed
 
 m_nState0               equ         0
 m_nState1               equ         8
@@ -48,7 +44,6 @@ m_nState2               equ         16
                         .data
 
                         ALIGN       16
-
 T1                      dq          002AAB17CF7E90C5EH   ;   0
                         dq          0AC424B03E243A8ECH   ;   1
                         dq          072CD5BE30DD5FCD3H   ;   2
@@ -1074,12 +1069,33 @@ T4                      dq          05B0E608526323C55H   ; 768
                         dq          0C83223F1720AEF96H   ; 1022
                         dq          0C3A0396F7363A51FH   ; 1023
 
-                        ALIGN       16                              ; need alignment for sse2
+                        ALIGN       16								; need alignment for sse2
 const_A5A5A5A5A5A5A5A5  dq          0A5A5A5A5A5A5A5A5H
-                        ALIGN       16
+                        dq          0A5A5A5A5A5A5A5A5H
 const_0123456789ABCDEF  dq          00123456789ABCDEFH
-                        ALIGN       16
+                        dq          00123456789ABCDEFH
 const_FFFFFFFFFFFFFFFF  dq          0FFFFFFFFFFFFFFFFH
+                        dq          0FFFFFFFFFFFFFFFFH
+                        ALIGN       16
+Init0                   dq          00123456789ABCDEFH
+Init1                   dq          0FEDCBA9876543210H
+Init2                   dq          0F096A5B4C3B2E187H
+                        ALIGN       16
+BlockFinish             db          0, 1, 54 dup (0)
+						dq			1025*8							; Length
+TreeHash				db          1, 24 dup (0), 24 dup (0), 1, 6 dup (0)
+                        dq          49*8
+                        .data?
+
+;_x                      dq          8 dup (?)                       ; we use a buffer which allows static addresses for x[i], that also allows write access
+;_t                      dq          ?                               ; this also means that the function isn't save for re-entry, in order to make it save
+;_aa                     dq          ?                               ; for multi-threading a separate function for each instance is needed
+;_bb                     dq          ?
+;_cc                     dq          ?
+;_Length                 dd          ?
+
+                        ALIGN       16
+;_xx                     dq          16 dup (?)
 
                         .code
 
@@ -1145,15 +1161,8 @@ SHR64                   MACRO       reg_h:REQ, reg_l:REQ, s:REQ                 
                         ENDM
 
 SHL64                   MACRO       reg_h:REQ, reg_l:REQ, s:REQ                         ; shl   reg_h:reg_l, s
-                        IF          s eq 2
-                        add         reg_l, reg_l
-                        adc         reg_h, reg_h
-                        add         reg_l, reg_l                                        ; high latencies for SHL on P4...
-                        adc         reg_h, reg_h                                        ; using add for s=3 increases
-                        ELSE                                                            ; execution time
                         shld        reg_h, reg_l, s
                         shl         reg_l, s
-                        ENDIF
                         ENDM
 
 NOT64                   MACRO       reg_h:REQ, reg_l:REQ                                ; not   reg_h:reg_l
@@ -1162,26 +1171,25 @@ NOT64                   MACRO       reg_h:REQ, reg_l:REQ                        
                         ENDM
 
 LOADX                   MACRO       reg_h:REQ, reg_l:REQ, count                         ; mov   reg_h:reg_l, x[count]
-                        LOAD64RM    reg_h, reg_l, _x+count*8
-                        ENDM
+						LOAD64RM	reg_h, reg_l, __xx+count*8
+						ENDM
 
 STOREX                  MACRO       reg_h:REQ, reg_l:REQ, count                         ; mov   x[count], reg_h:reg_l
-                        LOAD64MR    _x+count*8, reg_h, reg_l
+                        LOAD64MR    __xx+count*8, reg_h, reg_l
                         ENDM
 
-XORX                    MACRO       reg_h:REQ, reg_l:REQ, count                         ; xor   reg_h:reg_l, x[count]
-                        XOR64RM     reg_h, reg_l, _x+count*8
-                        ENDM
+XORX					MACRO       reg_h:REQ, reg_l:REQ, count                         ; mov   reg_h:reg_l, x[count]
+						XOR64RM		reg_h, reg_l, __xx+count*8
+						ENDM
 
-
-TIGERRND                MACRO       count:REQ,mulval:REQ
+TIGERRND                MACRO       count:REQ, mulval:REQ
 ; c = c ^ _x[count]
 ; a = a - (T1[( c_l    &0ffh)*8]^T2[((c_l>>16)&0ffh)*8)^T3[( c_h    &0ffh)*8]^T4[((c_h>>16)&0ffh)*8]
 ; b = b + (T4[((c_l>>8)&0ffh)*8]^T3[((c_l>>24)&0ffh)*8)^T2[((c_h>>8)&0ffh)*8]^T1[((c_h>>24)&0ffh)*8]
 ; b = b * mul
                         XORX        c_h, c_l, count
 
-                        LOAD64MR    _t, b_h, b_l                                        ; we need another 64-bit register for temp storage
+						LOAD64MR	__bb, b_h, b_l										; we need another 64-bit register for temp storage
 
                         mov         reg_temp, c_l
                         and         reg_temp, 0ffh
@@ -1199,8 +1207,8 @@ TIGERRND                MACRO       count:REQ,mulval:REQ
                         XOR64RM     b_h, b_l, T4+reg_temp*8
                         SUB64       a_h, a_l, b_h, b_l
 
-                        LOAD64RM    b_h, b_l, _t
-                        LOAD64MR    _t, a_h, a_l
+                        LOAD64RM    b_h, b_l, __bb
+                        LOAD64MR    __aa, a_h, a_l
 
                         mov         reg_temp, c_l
                         and         reg_temp, 0ff00h
@@ -1219,11 +1227,11 @@ TIGERRND                MACRO       count:REQ,mulval:REQ
                         shr         reg_temp, 24
                         XOR64RM     a_h, a_l, T1+reg_temp*8
                         ADD64       b_h, b_l, a_h, a_l
-
+                        
                         LOAD64      a_h, a_l, b_h, b_l
                         IF          mulval eq 5
-                        SHL64       b_h, b_l, 2
-                        ADD64       b_h, b_l, a_h, a_l
+                        SHL64		b_h, b_l, 2
+                        ADD64		b_h, b_l, a_h, a_l
                         ELSEIF      mulval eq 7
                         SHL64       b_h, b_l, 3
                         SUB64       b_h, b_l, a_h, a_l
@@ -1234,12 +1242,8 @@ TIGERRND                MACRO       count:REQ,mulval:REQ
                         .ERR        'invalid mul value in TIGERRND'
                         ENDIF
 
-                        LOAD64RM    a_h, a_l, _t
+                        LOAD64RM    a_h, a_l, __aa
 
-                        ENDM
-
-ROTATEVARS              MACRO
-;tempa=a;a=b;b=c;c=tempa
 reg_t                   textequ     a_l
 a_l                     textequ     b_l
 b_l                     textequ     c_l
@@ -1248,33 +1252,13 @@ reg_t                   textequ     a_h
 a_h                     textequ     b_h
 b_h                     textequ     c_h
 c_h                     textequ     reg_t
-                        ENDM
-
-TIGERROUND              MACRO       mulval:REQ
-
-count                   =           0
-                        REPEAT      8
-                        TIGERRND    count, mulval
-count                   =           count + 1
-                        ROTATEVARS
-                        ENDM
-                        ENDM
-
-TIGERSAVEVARS           MACRO
-                        LOAD64MR    _aa, a_h, a_l
-                        LOAD64MR    _bb, b_h, b_l
-                        LOAD64MR    _cc, c_h, c_l
-                        ENDM
-
-TIGERRESTOREVARS        MACRO
-                        LOAD64RM    a_h, a_l, _aa
-                        LOAD64RM    b_h, b_l, _bb
-                        LOAD64RM    c_h, c_l, _cc
-                        ENDM
+						ENDM
 
 TIGERKEYSCHEDULE        MACRO
 
-                        TIGERSAVEVARS
+                        LOAD64MR    __aa, a_h, a_l
+                        LOAD64MR    __bb, b_h, b_l
+                        LOAD64MR    __cc, c_h, c_l
 
 ; x[0] = x[0] - x[7]^0A5A5A5A5A5A5A5A5H
                         LOADX       c_h, c_l, 7
@@ -1367,345 +1351,636 @@ TIGERKEYSCHEDULE        MACRO
 
 ; x[7] = x[7] - x[6]^0123456789ABCDEFH
                         XOR64       c_h, c_l, 01234567H, 89ABCDEFH
-                        SUB64MR     _x+7*8, c_h, c_l
+                        SUB64MR     __xx+7*8, c_h, c_l
 
-                        TIGERRESTOREVARS
+                        LOAD64RM    a_h, a_l, __aa
+                        LOAD64RM    b_h, b_l, __bb
+                        LOAD64RM    c_h, c_l, __cc
                         
                         ENDM
 
                         ALIGN       16
 
-TigerTree_Tiger_p5      PROC        PUBLIC  _Data:DWORD, _State:DWORD
+TigerTree_Tiger_p5		PROC
 ; Compiles a Block of 8 64-bit words that can be found at _Data
-                        pusha
+__cc					textequ		<esp+108>
+__bb					textequ		<esp+100>
+__aa					textequ		<esp+92>
+__Digest				textequ		<esp+68>
+__xx					textequ		<esp+4>
+						LOAD64RM	c_h, c_l, reg_temp+1*8
+						LOAD64RM	a_h, a_l, reg_temp+2*8
+						STOREX		b_h, b_l, 0
+						STOREX		c_h, c_l, 1
+						STOREX		a_h, a_l, 2
+						LOAD64RM	b_h, b_l, reg_temp+3*8
+						LOAD64RM	c_h, c_l, reg_temp+4*8
+						LOAD64RM	a_h, a_l, reg_temp+5*8
+						STOREX		b_h, b_l, 3
+						STOREX		c_h, c_l, 4
+						STOREX		a_h, a_l, 5
+						LOAD64RM	b_h, b_l, reg_temp+6*8
+						LOAD64RM	c_h, c_l, reg_temp+7*8
+						STOREX		b_h, b_l, 6
+						STOREX		c_h, c_l, 7
 
-__Data                  textequ     <[esp+36+96]>
-__State                 textequ     <[esp+40+96]>                        
-_x                      textequ     <esp+32>
-_t                      textequ     <esp+24>
-_aa                     textequ     <esp+16>
-_bb                     textequ     <esp+8>
-_cc                     textequ     <esp>
-                        sub         esp, 96
-                        mov         reg_temp, __Data
-count                   =           0
-                        REPEAT      8
-                        LOAD64RM    a_h, a_l, reg_temp+count*8
-                        STOREX      a_h, a_l, count
-count                   =           count + 1
-                        ENDM
+                        LOAD64RM    a_h, a_l, __Digest+m_nState0
+                        LOAD64RM    b_h, b_l, __Digest+m_nState1
+                        LOAD64RM    c_h, c_l, __Digest+m_nState2
 
-                        mov         reg_temp, __State
-                        LOAD64RM    a_h, a_l, reg_temp+m_nState0
-                        LOAD64RM    b_h, b_l, reg_temp+m_nState1
-                        LOAD64RM    c_h, c_l, reg_temp+m_nState2
-
-                        TIGERROUND  5
+						TIGERRND	0, 5
+						TIGERRND	1, 5
+						TIGERRND	2, 5
+						TIGERRND	3, 5
+						TIGERRND	4, 5
+						TIGERRND	5, 5
+						TIGERRND	6, 5
+						TIGERRND	7, 5
                         TIGERKEYSCHEDULE
-                        TIGERROUND  7
+						TIGERRND	0, 7
+						TIGERRND	1, 7
+						TIGERRND	2, 7
+						TIGERRND	3, 7
+						TIGERRND	4, 7
+						TIGERRND	5, 7
+						TIGERRND	6, 7
+						TIGERRND	7, 7
                         TIGERKEYSCHEDULE
-                        TIGERROUND  9
+						TIGERRND	0, 9
+						TIGERRND	1, 9
+						TIGERRND	2, 9
+						TIGERRND	3, 9
+						TIGERRND	4, 9
+						TIGERRND	5, 9
+						TIGERRND	6, 9
+						TIGERRND	7, 9
 
-                        mov         reg_temp, __State
-                        XOR64MR     reg_temp+m_nState0, a_h, a_l
-                        SUB64RM     b_h, b_l, reg_temp+m_nState1
-                        LOAD64MR    reg_temp+m_nState1, b_h, b_l
-                        ADD64MR     reg_temp+m_nState2, c_h, c_l
+                        SUB64RM     b_h, b_l, __Digest+m_nState1
+                        XOR64MR     __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        ADD64MR     __Digest+m_nState2, c_h, c_l
 
-                        add         esp, 96
-                        popa
                         ret
 
 TigerTree_Tiger_p5      ENDP
 
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; end of pure p5 code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
+a_l						textequ		<eax>
+a_h						textequ		<edx>
+b_l						textequ		<ebx>
+b_h						textequ		<ecx>
+c_l						textequ		<esi>
+c_h						textequ		<edi>
+reg_temp				textequ		<ebp>
 
-                        IF          USEMMX eq 1
-
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; start of MMX code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-
-                        .mmx
-
-reg_accu                textequ     <eax>
-reg_temp1               textequ     <esi>
-reg_temp2               textequ     <edi>
-reg_temp3               textequ     <ebx>
-reg_temp4               textequ     <ecx>
-
-mmx_a                   textequ     <mm0>                                               ; use this registers in RND
-mmx_b                   textequ     <mm1>
-mmx_c                   textequ     <mm2>
-mmx_temp1               textequ     <mm3>
-mmx_temp2               textequ     <mm4>
-mmx_temp3               textequ     <mm5>
-
-mmx_0                   textequ     <mm0>                                               ; keyschedule
-mmx_1                   textequ     <mm1>
-mmx_2                   textequ     <mm2>
-mmx_3                   textequ     <mm3>
-mmx_4                   textequ     <mm4>
-mmx_5                   textequ     <mm5>
-mmx_6                   textequ     <mm6>
-mmx_7                   textequ     <mm7>
-
-ADD64MMX                MACRO       reg1:REQ, reg2:REQ, temp:REQ                        ; add   reg1, reg2
-                        xor         reg_accu, reg_accu
-                        movd        reg_temp3, reg1                                     ; get the lower dword
-                        movd        reg_temp4, reg2
-                        paddd       reg1, reg2
-                        add         reg_temp3, reg_temp4                                ; now the carry-flag signals overflow
-                        adc         reg_accu, reg_accu                                  ; reg_accu = CF
-                        movd        temp, reg_accu
-                        psllq       temp, 32                                            ; move carry to high order dword
-                        paddd       reg1, temp
-                        ENDM
-
-SUB64MMX                MACRO       reg1:REQ, reg2:REQ, temp:REQ                        ; sub   reg1, reg2
-                        xor         reg_accu, reg_accu
-                        movd        reg_temp3, reg1                                     ; get lower dword
-                        movd        reg_temp4, reg2
-                        psubd       reg1, reg2
-                        sub         reg_temp3, reg_temp4
-                        adc         reg_accu, reg_accu                                  ; reg_accu = CF
-                        movd        temp, reg_accu
-                        psllq       temp, 32
-                        psubd       reg1, temp
-                        ENDM
-
-TIGERRNDMMX             MACRO       count:REQ,mulval:REQ
-; c = c ^ _x[count]
-; a = a - (T1[( c_l    &0ffh)*8]^T2[((c_l>>16)&0ffh)*8)^T3[( c_h    &0ffh)*8]^T4[((c_h>>16)&0ffh)*8]
-; b = b + (T4[((c_l>>8)&0ffh)*8]^T3[((c_l>>24)&0ffh)*8)^T2[((c_h>>8)&0ffh)*8]^T1[((c_h>>24)&0ffh)*8]
-; b = b * mul
-                        pxor        mmx_c, qword ptr [_x+count*8]
-
-                        movd        reg_temp1, mmx_c
-                        movq        mmx_temp1, mmx_c
-                        mov         reg_temp2, reg_temp1
-                        and         reg_temp1, 0ffh
-                        psrlq       mmx_temp1, 32
-                        and         reg_temp2, 0ff0000h
-                        movd        reg_temp3, mmx_temp1
-                        movq        mmx_temp2, qword ptr [T1+reg_temp1*8]
-                        shr         reg_temp2, 16
-                        mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp2*8]
-                        and         reg_temp3, 0ffh
-                        and         reg_temp4, 0ff0000h
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp3*8]
-                        shr         reg_temp4, 16
-                        pxor        mmx_temp2, qword ptr [T4+reg_temp4*8]
-                        SUB64MMX    mmx_a, mmx_temp2, mmx_temp3
-                        
-                        movd        reg_temp1, mmx_c
-                        mov         reg_temp2, reg_temp1
-                        and         reg_temp1, 0ff00h
-                        movd        reg_temp3, mmx_temp1
-                        and         reg_temp2, 0ff000000h
-                        shr         reg_temp1, 8
-                        movq        mmx_temp2, qword ptr [T4+reg_temp1*8]
-                        shr         reg_temp2, 24
-                        mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp2*8]
-                        and         reg_temp3, 0ff00h
-                        and         reg_temp4, 0ff000000h
-                        shr         reg_temp3, 8
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp3*8]
-                        shr         reg_temp4, 24
-                        pxor        mmx_temp2, qword ptr [T1+reg_temp4*8]
-                        ADD64MMX    mmx_b, mmx_temp2, mmx_temp3
-
-                        movq        mmx_temp1, mmx_b
-                        IF          mulval eq 5
-                        psllq       mmx_b, 2
-                        ADD64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSEIF      mulval eq 7
-                        psllq       mmx_b, 3
-                        SUB64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSEIF      mulval eq 9
-                        psllq       mmx_b, 3
-                        ADD64MMX    mmx_b, mmx_temp1, mmx_temp3
-                        ELSE
-                        .ERR        'invalid mul value in TIGERRNDMMX'
-                        ENDIF
-
-                        ENDM
-
-ROTATEVARSMMX           MACRO
-;tempa=a;a=b;b=c;c=tempa
-reg_t                   textequ     mmx_a
-mmx_a                   textequ     mmx_b
-mmx_b                   textequ     mmx_c
-mmx_c                   textequ     reg_t
-                        ENDM
-
-TIGERROUNDMMX           MACRO       mulval:REQ
-count                   =           0
-                        REPEAT      8
-                        TIGERRNDMMX count, mulval
-count                   =           count + 1
-                        ROTATEVARSMMX
-                        ENDM
-                        ENDM
-
-TIGERSAVEVARSMMX        MACRO
-                        movq        _aa, mmx_a
-                        movq        _bb, mmx_b
-                        movq        _cc, mmx_c
-                        ENDM
-
-TIGERRESTOREVARSMMX     MACRO
-                        movq        mmx_a, _aa
-                        movq        mmx_b, _bb
-                        movq        mmx_c, _cc
-                        ENDM
-
-LOADXMMX                MACRO       reg:REQ, count:REQ
-                        movq        reg, qword ptr [_x+count*8]
-                        ENDM
-
-STOREXMMX               MACRO       reg:REQ, count:REQ
-                        movq        qword ptr [_x+count*8], reg
-                        ENDM
-
-TIGERKEYSCHEDULEMMX     MACRO
-
-                        TIGERSAVEVARSMMX
-
-                        LOADXMMX    mmx_7, 7
-                        LOADXMMX    mmx_0, 0
-                        pxor        mmx_7, const_A5A5A5A5A5A5A5A5
-                        LOADXMMX    mmx_1, 1
-                        SUB64MMX    mmx_0, mmx_7, mmx_6
-                        pxor        mmx_1, mmx_0
-                        LOADXMMX    mmx_2, 2
-                        ADD64MMX    mmx_2, mmx_1, mmx_6
-                        STOREXMMX   mmx_1, 1
-                        pxor        mmx_1, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_3, 3
-                        psllq       mmx_1, 19
-                        pxor        mmx_1, mmx_2
-                        LOADXMMX    mmx_4, 4
-                        SUB64MMX    mmx_3, mmx_1, mmx_6
-                        pxor        mmx_4, mmx_3
-                        LOADXMMX    mmx_5, 5
-                        ADD64MMX    mmx_5, mmx_4, mmx_6
-                        STOREXMMX   mmx_4, 4
-                        pxor        mmx_4, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_6, 6
-                        psrlq       mmx_4, 23
-                        pxor        mmx_4, mmx_5
-                        LOADXMMX    mmx_7, 7
-                        SUB64MMX    mmx_6, mmx_4, mmx_1
-                        pxor        mmx_7, mmx_6
-                        ADD64MMX    mmx_0, mmx_7, mmx_1
-                        STOREXMMX   mmx_7, 7
-                        pxor        mmx_7, const_FFFFFFFFFFFFFFFF                       ; not
-                        psllq       mmx_7, 19
-                        STOREXMMX   mmx_0, 0                                            ; we start to save results
-                        pxor        mmx_0, mmx_7
-                        LOADXMMX    mmx_1, 1
-                        SUB64MMX    mmx_1, mmx_0, mmx_7
-                        STOREXMMX   mmx_1, 1
-                        pxor        mmx_2, mmx_1
-                        ADD64MMX    mmx_3, mmx_2, mmx_1
-                        STOREXMMX   mmx_2, 2
-                        pxor        mmx_2, const_FFFFFFFFFFFFFFFF                       ; not
-                        LOADXMMX    mmx_4, 4
-                        psrlq       mmx_2, 23
-                        STOREXMMX   mmx_3, 3
-                        pxor        mmx_3, mmx_2
-                        SUB64MMX    mmx_4, mmx_3, mmx_1
-                        pxor        mmx_5, mmx_4
-                        STOREXMMX   mmx_4, 4
-                        ADD64MMX    mmx_6, mmx_5, mmx_1
-                        STOREXMMX   mmx_6, 6
-                        pxor        mmx_6, const_0123456789ABCDEF
-                        LOADXMMX    mmx_7, 7
-                        STOREXMMX   mmx_5, 5
-                        SUB64MMX    mmx_7, mmx_6, mmx_1
-                        STOREXMMX   mmx_7, 7
-
-                        TIGERRESTOREVARSMMX
-                        
-                        ENDM
-
-                        ALIGN       16
-
-TigerTree_Tiger_MMX     PROC        PUBLIC  _Data:DWORD, _State:DWORD
-; Compiles a Block of 8 64-bit words that can be found at _Data
+TigerTree_Tiger_p5_1	PROC		PUBLIC _State:DWORD, _Data:DWORD
+___Data					textequ		<[ebp+40]>
+___State				textequ		<[ebp+36]>
                         pusha
-
-__Data                  textequ     <[esp+36]>
-__State                 textequ     <[esp+40]>
-
-                        mov         reg_temp1, __Data
-                        movq        mmx_0, qword ptr [reg_temp1+0*8]
-                        movq        mmx_1, qword ptr [reg_temp1+1*8]
-                        movq        mmx_2, qword ptr [reg_temp1+2*8]
-                        movq        mmx_3, qword ptr [reg_temp1+3*8]
-                        movq        mmx_4, qword ptr [reg_temp1+4*8]
-                        movq        mmx_5, qword ptr [reg_temp1+5*8]
-                        movq        mmx_6, qword ptr [reg_temp1+6*8]
-                        movq        mmx_7, qword ptr [reg_temp1+7*8]
-                        STOREXMMX   mmx_0, 0
-                        STOREXMMX   mmx_1, 1
-                        STOREXMMX   mmx_2, 2
-                        STOREXMMX   mmx_3, 3
-                        STOREXMMX   mmx_4, 4
-                        STOREXMMX   mmx_5, 5
-                        STOREXMMX   mmx_6, 6
-                        STOREXMMX   mmx_7, 7
-
-                        mov         reg_temp1, __State
-                        movq        mmx_a, qword ptr [reg_temp1+m_nState0]
-                        movq        mmx_b, qword ptr [reg_temp1+m_nState1]
-                        movq        mmx_c, qword ptr [reg_temp1+m_nState2]
- 
-                        TIGERROUNDMMX 5
-                        TIGERKEYSCHEDULEMMX
-                        TIGERROUNDMMX 7
-                        TIGERKEYSCHEDULEMMX
-                        TIGERROUNDMMX 9
-
-                        mov         reg_temp1, __State
-                        pxor        mmx_a, qword ptr [reg_temp1+m_nState0]
-                        movq        qword ptr [reg_temp1+m_nState0], mmx_a
-                        movq        mmx_temp1, qword ptr [reg_temp1+m_nState1]
-                        SUB64MMX    mmx_b, mmx_temp1, mmx_temp2
-                        movq        qword ptr [reg_temp1+m_nState1], mmx_b
-                        movq        mmx_temp1, qword ptr [reg_temp1+m_nState2]
-                        ADD64MMX    mmx_c, mmx_temp1, mmx_temp2
-                        movq        qword ptr [reg_temp1+m_nState2], mmx_c
-
-                        emms                                                    ; clear FPU state
+                        mov			ebp, esp
+                        sub			esp, 120
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+116]>
+__Data					textequ		<[esp+112]>
+__cc					textequ		<esp+104>
+__bb					textequ		<esp+96>
+__aa					textequ		<esp+88>
+__Digest				textequ		<esp+64>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			esp, ebp
+                        mov			ebp, ___State
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
                         popa
-                        ret
+                        ret 8
+TigerTree_Tiger_p5_1	ENDP
 
-TigerTree_Tiger_MMX     ENDP
+TigerTree_Tiger_p5_2	PROC		PUBLIC _State1:DWORD, _Data1:DWORD, _State2:DWORD, _Data2:DWORD
+___Data2				textequ		<[ebp+48]>
+___State2				textequ		<[ebp+44]>
+___Data1				textequ		<[ebp+40]>
+___State1				textequ		<[ebp+36]>
+                        pusha
+                        mov			ebp, esp
+                        sub			esp, 120
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+116]>
+__Data					textequ		<[esp+112]>
+__cc					textequ		<esp+104>
+__bb					textequ		<esp+96>
+__aa					textequ		<esp+88>
+__Digest				textequ		<esp+64>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data1
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			ebp, ___State1
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        mov			ebp, __Frame
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data2
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			esp, ebp
+                        mov			ebp, ___State2
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        popa
+                        ret 16
+TigerTree_Tiger_p5_2	ENDP
 
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; end of MMX code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
+TigerTree_Tiger_p5_3	PROC		PUBLIC _State1:DWORD, _Data1:DWORD, _State2:DWORD, _Data2:DWORD, _State3:DWORD, _Data3:DWORD
+___Data3				textequ		<[ebp+56]>
+___State3				textequ		<[ebp+52]>
+___Data2				textequ		<[ebp+48]>
+___State2				textequ		<[ebp+44]>
+___Data1				textequ		<[ebp+40]>
+___State1				textequ		<[ebp+36]>
+                        pusha
+                        mov			ebp, esp
+                        sub			esp, 120
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+116]>
+__Data					textequ		<[esp+112]>
+__cc					textequ		<esp+104>
+__bb					textequ		<esp+96>
+__aa					textequ		<esp+88>
+__Digest				textequ		<esp+64>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data1
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			ebp, ___State1
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        mov			ebp, __Frame
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data2
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			ebp, ___State2
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        mov			ebp, __Frame
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov         reg_temp, ___Data3
+                        mov         b_l, [reg_temp]
+                        mov         b_h, [reg_temp+3]
+                        dec         reg_temp
+                        shl         b_l, 8                          ; pad 'zero' byte
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        REPEAT      15                              ; normal rounds
+                        mov         reg_temp, __Data
+                        add         reg_temp, 64
+                        LOAD64RM    b_h, b_l, [reg_temp]
+                        mov         __Data, reg_temp
+                        call        TigerTree_Tiger_p5
+                        ENDM
+                        mov         ebx, 100h
+                        mov         a_l, __Data
+                        mov         reg_temp, offset BlockFinish
+                        xor         b_h, b_h
+                        mov         bl, byte ptr [a_l+64]
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, b_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			esp, ebp
+                        mov			ebp, ___State3
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        popa
+                        ret 24
+TigerTree_Tiger_p5_3	ENDP
 
-                        ENDIF
+TigerTree_Tiger_p5_Var	PROC		PUBLIC _State:DWORD, _Data:DWORD, _nLength:DWORD
+___nLength				textequ		<[ebp+44]>
+___Data					textequ		<[ebp+40]>
+___State				textequ		<[ebp+36]>
+                        pusha
+                        mov			ebp, esp
+                        mov			ecx, ___nLength
+                        sub			esp, 124
+                        and			esp, 0ffffff80h
+__nLength				textequ		<[esp+120]>
+__Frame					textequ		<[esp+116]>
+__Data					textequ		<[esp+112]>
+__cc					textequ		<esp+104>
+__bb					textequ		<esp+96>
+__aa					textequ		<esp+88>
+__Digest				textequ		<esp+64>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+						mov			reg_temp, ___Data
+						mov			__nLength, ecx
 
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; start of SSE2 code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
 
-                        .mmx
+						mov			ecx, __nLength
+                        sub         ecx, 63
+                        jb          no_full_buffer
+						dec			reg_temp
+                        mov         __Data, reg_temp
+                        mov         __nLength, ecx
+                        mov         b_l, [reg_temp+1]
+                        mov         b_h, [reg_temp+4]
+                        shl         b_l, 8
+                        call        TigerTree_Tiger_p5
+                        mov         reg_temp, __Data
+                        mov         ecx, __nLength
+                        add         reg_temp, 64
+                        sub         ecx, 64
+                        jb          end_of_block
+@@:                     mov         __nLength, ecx
+                        mov         __Data, reg_temp
+                        LOAD64RM    b_h, b_l, reg_temp
+                        call        TigerTree_Tiger_p5
+                        mov         reg_temp, __Data
+                        mov         ecx, __nLength
+                        add         reg_temp, 64
+                        sub         ecx, 64
+                        jnb         @B
+end_of_block:           add         ecx, 9
+                        jz          no_zero_fill
+                        jc          two_buffers
+                        mov         edx, ecx
+                        mov         esi, reg_temp
+                        mov         edi, __xx
+                        add         ecx, 64-9
+                        jz          @F
+                        rep movsb
+@@:                     mov         ecx, edx
+                        neg         ecx
+                        mov         byte ptr [edi], 1
+                        xor			eax, eax
+                        inc         edi
+                        rep stosb
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        call        TigerTree_Tiger_p5
+                        jmp         get_out
+no_zero_fill:           mov         edx, ecx
+                        mov         esi, reg_temp
+                        mov         edi, __xx
+                        mov         ecx, 13
+                        rep movsd
+                        movsw
+                        movsb
+                        mov         byte ptr [edi], 1
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        call        TigerTree_Tiger_p5
+                        jmp         get_out
+two_buffers:            mov         esi, reg_temp
+                        mov         edi, __xx
+                        add         ecx, 64-9
+                        rep movsb
+                        lea         ecx, [__xx+64]
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        xor         eax, eax
+                        sub         ecx, edi
+                        jz          @F
+                        rep stosb
+@@:                     mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        call        TigerTree_Tiger_p5
+                        xor         eax, eax
+                        lea			edi, [__xx+8]
+                        mov         ecx, 12
+                        rep stosd
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        xor         ebx, ebx
+                        inc         eax
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        xor         b_l, b_l
+                        xor         b_h, b_h
+                        call        TigerTree_Tiger_p5
+                        jmp         get_out
+no_full_buffer:         add         ecx, 9
+                        jz          no_zero_fill2
+                        jc          two_buffers2
+                        mov         edx, ecx
+                        mov         esi, reg_temp
+                        lea         edi, [__xx+1]
+                        add         ecx, 63-9
+                        jz          @F
+                        rep movsb
+@@:                     mov         ecx, edx
+                        neg         ecx
+                        xor         eax, eax
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        rep stosb
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        and         b_l, 0ffffff00h
+                        call        TigerTree_Tiger_p5
+                        jmp         get_out
+no_zero_fill2:          mov         edx, ecx
+                        mov         esi, reg_temp
+                        lea         edi, [__xx+1]
+                        mov         ecx, 13
+                        rep movsd
+                        movsw
+                        mov         byte ptr [edi], 1
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        and         bl, 0ffffff00h
+                        call        TigerTree_Tiger_p5
+                        jmp         get_out
+two_buffers2:           mov         esi, reg_temp
+                        lea         edi, [__xx+1]
+                        add         ecx, 63-9
+                        rep movsb
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        xor         eax, eax
+                        lea			ecx, [__xx+64]
+                        sub         ecx, edi
+                        jz          @F
+                        rep stosb
+@@:                     mov         reg_temp, __xx
+                        LOAD64RM    b_h, b_l, __xx
+                        and         b_l, 0ffffff00h
+                        call        TigerTree_Tiger_p5
+                        xor         eax, eax
+                        lea         edi, [__xx+8]
+                        mov         ecx, 12
+                        rep stosd
+                        mov			ebp, __Frame
+                        mov         eax, ___nLength
+                        xor         ebx, ebx
+                        inc         eax
+                        shl         eax, 3
+                        STOREX		ebx, eax, 7
+                        mov         reg_temp, __xx
+                        xor         b_l, b_l
+                        xor         b_h, b_h
+                        call        TigerTree_Tiger_p5
+get_out:				mov			ebp, __Frame
+						LOAD64RM	a_h, a_l, __Digest+m_nState0
+						LOAD64RM	b_h, b_l, __Digest+m_nState1
+						LOAD64RM	c_h, c_l, __Digest+m_nState2
+						mov			esp, ebp
+						mov			ebp, ___State
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+						popa
+                        ret 12
+TigerTree_Tiger_p5_Var	ENDP
+
+TigerTree_Tiger_p5_Node	PROC		PUBLIC _State:DWORD, _Hash1:DWORD, Hash2:DWORD
+__Hash2					textequ		<[ebp+44]>
+__Hash1					textequ		<[ebp+40]>
+__State					textequ		<[ebp+36]>
+                        pusha
+                        mov			ebp, esp
+                        sub			esp, 116
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+112]>
+__cc					textequ		<esp+104>
+__bb					textequ		<esp+96>
+__aa					textequ		<esp+88>
+__Digest				textequ		<esp+64>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+                        mov			reg_temp, __Hash1
+                        LOAD64RM	b_h, b_l, reg_temp+m_nState0
+                        LOAD64RM	c_h, c_l, reg_temp+m_nState1
+                        LOAD64RM	a_h, a_l, reg_temp+m_nState2
+                        mov			ebp, __Frame
+                        mov			dword ptr [__xx], 1
+                        LOAD64MR	__xx+1, b_h, b_l
+                        LOAD64MR	__xx+9, c_h, c_l
+                        LOAD64MR	__xx+17, a_h, a_l
+                        mov			reg_temp, __Hash2
+                        LOAD64RM	b_h, b_l, reg_temp+m_nState0
+                        LOAD64RM	c_h, c_l, reg_temp+m_nState1
+                        LOAD64RM	a_h, a_l, reg_temp+m_nState2
+                        LOAD64MR	__xx+25, b_h, b_l
+                        LOAD64MR	__xx+33, c_h, c_l
+                        LOAD64MR	__xx+41, a_h, a_l
+                        mov			dword ptr [__xx+49], 1
+                        mov			dword ptr [__xx+52], 0
+                        mov			dword ptr [__xx+56], 49*8
+                        mov			dword ptr [__xx+60], 0
+						LOAD64		a_h, a_l, 001234567H, 089ABCDEFH
+						LOAD64		b_h, b_l, 0FEDCBA98H, 076543210H
+						LOAD64		c_h, c_l, 0F096A5B4H, 0C3B2E187H
+                        LOAD64MR    __Digest+m_nState0, a_h, a_l
+                        LOAD64MR    __Digest+m_nState1, b_h, b_l
+                        LOAD64MR    __Digest+m_nState2, c_h, c_l
+                        mov			ebp, __xx
+						LOAD64RM	b_h, b_l, __xx
+                        call        TigerTree_Tiger_p5
+                        mov			ebp, __Frame
+                        LOAD64RM	a_h, a_l, __Digest+m_nState0
+                        LOAD64RM	b_h, c_l, __Digest+m_nState1
+                        LOAD64RM	c_h, c_l, __Digest+m_nState2
+                        mov			esp, ebp
+                        mov			ebp, __State
+                        LOAD64MR	ebp+m_nState0, a_h, a_l
+                        LOAD64MR	ebp+m_nState1, b_h, b_l
+                        LOAD64MR	ebp+m_nState2, c_h, c_l
+                        popa
+                        ret 12
+TigerTree_Tiger_p5_Node	ENDP
+
                         .xmm
 
 reg_temp1               textequ     <eax>
 reg_temp2               textequ     <ebx>
-reg_temp3               textequ     <ecx>
-reg_temp4               textequ     <edx>
-reg_temp5               textequ     <esi>
+reg_temp3               textequ     <edx>
+reg_temp4               textequ     <edi>
+reg_temp5               textequ     <ecx>
+reg_temp6               textequ     <esi>
+reg_temp7               textequ     <ebp>
 
 mmx_a                   textequ     <mm0>
 mmx_b                   textequ     <mm1>
@@ -1755,20 +2030,20 @@ TIGERRNDSSE2            MACRO       count:REQ,mulval:REQ
                         XORXSSE2    mmx_c, count
 
                         movd        reg_temp1, mmx_c
-                        pshufw      mmx_temp1, mmx_c, 4EH
+                        pshufw      mmx_temp1, mmx_c, 01001110b
                         mov         reg_temp2, reg_temp1
                         and         reg_temp1, 0ffh
                         movd        reg_temp3, mmx_temp1
                         and         reg_temp2, 0ff0000h
-                        movq        mmx_temp2, qword ptr [T1+reg_temp1*8]
+                        movq        mmx_temp2, [T1+reg_temp1*8]
                         shr         reg_temp2, 16
                         mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp2*8]
+                        pxor        mmx_temp2, [T2+reg_temp2*8]
                         and         reg_temp3, 0ffh
                         and         reg_temp4, 0ff0000h
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp3*8]
+                        pxor        mmx_temp2, [T3+reg_temp3*8]
                         shr         reg_temp4, 16
-                        pxor        mmx_temp2, qword ptr [T4+reg_temp4*8]
+                        pxor        mmx_temp2, [T4+reg_temp4*8]
                         psubq       mmx_a, mmx_temp2
                         
                         movd        reg_temp1, mmx_c
@@ -1777,16 +2052,16 @@ TIGERRNDSSE2            MACRO       count:REQ,mulval:REQ
                         movd        reg_temp3, mmx_temp1
                         and         reg_temp2, 0ff000000h
                         shr         reg_temp1, 8
-                        movq        mmx_temp2, qword ptr [T4+reg_temp1*8]
+                        movq        mmx_temp2, [T4+reg_temp1*8]
                         shr         reg_temp2, 24
                         mov         reg_temp4, reg_temp3
-                        pxor        mmx_temp2, qword ptr [T3+reg_temp2*8]
+                        pxor        mmx_temp2, [T3+reg_temp2*8]
                         and         reg_temp3, 0ff00h
                         and         reg_temp4, 0ff000000h
                         shr         reg_temp3, 8
-                        pxor        mmx_temp2, qword ptr [T2+reg_temp3*8]
+                        pxor        mmx_temp2, [T2+reg_temp3*8]
                         shr         reg_temp4, 24
-                        pxor        mmx_temp2, qword ptr [T1+reg_temp4*8]
+                        pxor        mmx_temp2, [T1+reg_temp4*8]
                         paddq       mmx_b, mmx_temp2
 
                         movq        mmx_temp1, mmx_b
@@ -1802,25 +2077,11 @@ TIGERRNDSSE2            MACRO       count:REQ,mulval:REQ
                         ELSE
                         .ERR        'invalid mul value in TIGERRNDSSE2'
                         ENDIF
-
-                        ENDM
-
-ROTATEVARSSSE2          MACRO
-;tempa=a;a=b;b=c;c=tempa
 reg_t                   textequ     mmx_a
 mmx_a                   textequ     mmx_b
 mmx_b                   textequ     mmx_c
 mmx_c                   textequ     reg_t
-                        ENDM
 
-TIGERROUNDSSE2          MACRO       mulval:REQ
-
-count                   =           0
-                        REPEAT      8
-                        TIGERRNDSSE2 count, mulval
-count                   =           count + 1
-                        ROTATEVARSSSE2
-                        ENDM
                         ENDM
 
 TIGERKEYSCHEDULESSE2    MACRO
@@ -1872,48 +2133,1269 @@ TIGERKEYSCHEDULESSE2    MACRO
 
                         ALIGN       16
 
-TigerTree_Tiger_SSE2    PROC        PUBLIC  _Data:DWORD, _State:DWORD
-; Compiles a Block of 8 64-bit words that can be found at _Data
-                        pusha
+TigerTree_Tiger_SSE2    PROC
+; Compiles a Block of 8 64-bit words that can be found at reg_temp7
+; first 16 bytes loaded in xmm0
+; State at [reg_temp6]
+; mmx_a, mmx_b, mmx_c are initialized with State values
 
-__Data                  textequ     <[esp+36]>
-__State                 textequ     <[esp+40]>
+                        movdqu      xmm2, [reg_temp7+2*8]
+                        movdqu      xmm4, [reg_temp7+4*8]
+                        movdqu      xmm6, [reg_temp7+6*8]
+                        pshufd      xmm1, xmm0, 01001110b
+                        pshufd      xmm3, xmm2, 01001110b
+                        pshufd      xmm5, xmm4, 01001110b
+                        pshufd      xmm7, xmm6, 01001110b
 
-                        mov         reg_temp5, __Data
-                        movdqu      xmm0, [reg_temp5]                        ; we can't guaranty alignment
-                        pshufd      xmm1, xmm0, 4EH
-                        movdqu      xmm2, [reg_temp5+2*8]
-                        pshufd      xmm3, xmm2, 4EH
-                        movdqu      xmm4, [reg_temp5+4*8]
-                        pshufd      xmm5, xmm4, 4EH
-                        movdqu      xmm6, [reg_temp5+6*8]
-                        pshufd      xmm7, xmm6, 4EH
-
-                        mov         reg_temp5, __State
-                        movq        mmx_a, qword ptr [reg_temp5+m_nState0]
-                        movq        mmx_b, qword ptr [reg_temp5+m_nState1]
-                        movq        mmx_c, qword ptr [reg_temp5+m_nState2]
-
-                        TIGERROUNDSSE2 5
+                        TIGERRNDSSE2	0, 5
+                        TIGERRNDSSE2	1, 5
+                        TIGERRNDSSE2	2, 5
+                        TIGERRNDSSE2	3, 5
+                        TIGERRNDSSE2	4, 5
+                        TIGERRNDSSE2	5, 5
+                        TIGERRNDSSE2	6, 5
+                        TIGERRNDSSE2	7, 5
                         TIGERKEYSCHEDULESSE2
-                        TIGERROUNDSSE2 7
+                        TIGERRNDSSE2	0, 7
+                        TIGERRNDSSE2	1, 7
+                        TIGERRNDSSE2	2, 7
+                        TIGERRNDSSE2	3, 7
+                        TIGERRNDSSE2	4, 7
+                        TIGERRNDSSE2	5, 7
+                        TIGERRNDSSE2	6, 7
+                        TIGERRNDSSE2	7, 7
                         TIGERKEYSCHEDULESSE2
-                        TIGERROUNDSSE2 9
+                        TIGERRNDSSE2	0, 9
+                        TIGERRNDSSE2	1, 9
+                        TIGERRNDSSE2	2, 9
+                        TIGERRNDSSE2	3, 9
+                        TIGERRNDSSE2	4, 9
+                        TIGERRNDSSE2	5, 9
+                        TIGERRNDSSE2	6, 9
+                        TIGERRNDSSE2	7, 9
 
-                        pxor        mmx_a, qword ptr [reg_temp5+m_nState0]
-                        movq        qword ptr [reg_temp5+m_nState0], mmx_a
-                        psubq       mmx_b, qword ptr [reg_temp5+m_nState1]
-                        movq        qword ptr [reg_temp5+m_nState1], mmx_b
-                        paddq       mmx_c, qword ptr [reg_temp5+m_nState2]
-                        movq        qword ptr [reg_temp5+m_nState2], mmx_c
-
-                        popa
+                        pxor        mmx_a, [reg_temp6+m_nState0]
+                        psubq       mmx_b, [reg_temp6+m_nState1]
+                        paddq       mmx_c, [reg_temp6+m_nState2]
+                        movq        [reg_temp6+m_nState0], mmx_a
+                        movq        [reg_temp6+m_nState1], mmx_b
+                        movq        [reg_temp6+m_nState2], mmx_c
+ 
                         ret
 
 TigerTree_Tiger_SSE2    ENDP
 
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-; end of SSE2 code
-; ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
+TigerTree_Tiger_SSE2_1	PROC		PUBLIC _State:DWORD, _Data:DWORD
+__Data                  textequ     <[esp+40]>
+__State                 textequ     <[esp+36]>
+                        pusha
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __Data
+                        movq        mmx_a, Init0
+                        movq        mmx_b, Init1
+                        movq        mmx_c, Init2
+                        movq        [reg_temp6+m_nState0], mmx_a
+                        movq        [reg_temp6+m_nState1], mmx_b
+                        movq        [reg_temp6+m_nState2], mmx_c
+                        movdqu      xmm0, [reg_temp7]
+                        dec         reg_temp7
+                        pslldq      xmm0, 1                         ; pad 'zero' byte
+                        call        TigerTree_Tiger_SSE2
+                        REPEAT      15                              ; normal rounds
+                        add         reg_temp7, 64
+                        movdqu      xmm0, [reg_temp7]
+                        call        TigerTree_Tiger_SSE2
+                        ENDM
+                        mov         eax, 100h
+                        mov         al, byte ptr [reg_temp7+64]
+                        movd        xmm0, eax
+                        mov         reg_temp7, offset BlockFinish
+                        call        TigerTree_Tiger_SSE2
+                        popa
+                        emms
+                        ret 8
+TigerTree_Tiger_SSE2_1	ENDP
+
+TigerTree_Tiger_SSE2_Var PROC		PUBLIC _State:DWORD, _Data:DWORD, _nLength:DWORD
+__State                 textequ     <[ebp+36]>
+__Data                  textequ     <[ebp+40]>
+__nLength               textequ     <[ebp+44]>
+                        pusha
+						mov			ebp, esp
+                        sub			esp, 68
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+64]>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+                        mov			ecx, __nLength
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __Data
+                        movq        mmx_a, Init0
+                        movq        mmx_b, Init1
+                        movq        mmx_c, Init2
+                        movq        [reg_temp6+m_nState0], mmx_a
+                        movq        [reg_temp6+m_nState1], mmx_b
+                        movq        [reg_temp6+m_nState2], mmx_c
+                        sub         ecx, 63
+                        jb          no_full_buffer
+                        movdqu      xmm0, [reg_temp7]
+                        dec         reg_temp7
+                        pslldq      xmm0, 1
+                        call        TigerTree_Tiger_SSE2
+                        add         reg_temp7, 64
+                        sub         ecx, 64
+                        jb          end_of_block
+@@:                     movdqu      xmm0, [reg_temp7]
+                        call        TigerTree_Tiger_SSE2
+                        add         reg_temp7, 64
+                        sub         ecx, 64
+                        jnb         @B
+end_of_block:           add         ecx, 9
+                        jz          no_zero_fill
+                        jc          two_buffers
+                        mov         edx, ecx
+                        mov         esi, reg_temp7
+                        mov         edi, __xx
+                        add         ecx, 64-9
+                        jz          @F
+                        rep movsb
+@@:                     mov         ecx, edx
+                        neg         ecx
+                        xor         eax, eax
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        rep stosb
+                        mov			ebp, __Frame
+                        mov         eax, __nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        mov         [__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        jmp         get_out
+no_zero_fill:           mov         edx, ecx
+                        mov         esi, reg_temp7
+                        mov			ebp, __Frame
+                        mov         edi, __xx
+                        mov         ecx, 13
+                        rep movsd
+                        movsw
+                        movsb
+                        mov         byte ptr [edi], 1
+                        mov         eax, __nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        mov			[__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        jmp         get_out
+two_buffers:            mov         esi, reg_temp7
+                        mov			ebp, __Frame
+                        mov         edi, __xx
+                        add         ecx, 64-9
+                        rep movsb
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        xor         eax, eax
+                        lea         ecx, [__xx+64]
+                        sub         ecx, edi
+                        jz          @F
+                        rep stosb
+@@:                     mov         reg_temp6, __State
+						mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        xor         eax, eax
+                        mov			ebp, __Frame
+                        mov         edi, __xx
+                        mov         ecx, 14
+                        rep stosd
+                        mov         eax, __nLength
+                        xor         ebx, ebx
+                        inc         eax
+                        shl         eax, 3
+                        mov         [__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+						mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        jmp         get_out
+no_full_buffer:         mov         byte ptr [__xx], 0
+                        add         ecx, 9
+                        jz          no_zero_fill2
+                        jc          two_buffers2
+                        mov         edx, ecx
+                        mov         esi, reg_temp7
+                        lea         edi, [__xx+1]
+                        add         ecx, 63-9
+                        jz          @F
+                        rep movsb
+@@:						mov			ebp, __Frame
+						mov         ecx, edx
+                        neg         ecx
+                        xor         eax, eax
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        rep stosb
+                        mov         eax, __nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        mov         [__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        jmp         get_out
+no_zero_fill2:          mov         edx, ecx
+                        mov         esi, reg_temp7
+                        mov			ebp, __Frame
+                        lea         edi, [__xx+1]
+                        mov         ecx, 13
+                        rep movsd
+                        movsw
+                        mov         byte ptr [edi], 1
+                        mov         eax, __nLength
+                        inc         eax
+                        xor         ebx, ebx
+                        shl         eax, 3
+                        mov         [__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+                        mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        jmp         get_out
+two_buffers2:           mov         esi, reg_temp7
+                        mov			ebp, __Frame
+                        lea         edi, [__xx+1]
+                        add         ecx, 63-9
+                        rep movsb
+                        mov         byte ptr [edi], 1
+                        inc         edi
+                        xor         eax, eax
+                        lea         ecx, [__xx+64]
+                        sub         ecx, edi
+                        jz          @F
+                        rep stosb
+@@:						mov         reg_temp6, __State
+						mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+                        mov			ebp, __Frame
+                        xor         eax, eax
+                        mov         edi, __xx
+                        mov         ecx, 14
+                        rep stosd
+                        mov         eax, __nLength
+                        xor         ebx, ebx
+                        inc         eax
+                        shl         eax, 3
+                        mov         [__xx+56], eax
+                        mov         [__xx+60], ebx
+                        mov         reg_temp6, __State
+						mov         reg_temp7, __xx
+                        movdqa      xmm0, [__xx]
+                        call        TigerTree_Tiger_SSE2
+get_out:                mov			esp, __Frame
+						popa
+						emms
+                        ret 12
+TigerTree_Tiger_SSE2_Var ENDP
+
+TigerTree_Tiger_SSE2_Node PROC		PUBLIC _State:DWORD, _Hash1:DWORD, Hash2:DWORD
+__Hash2					textequ		<[ebp+44]>
+__Hash1					textequ		<[ebp+40]>
+__State					textequ		<[ebp+36]>
+                        pusha
+                        mov			ebp, esp
+                        sub			esp, 68
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+64]>
+__xx					textequ		<esp>
+						mov			__Frame, ebp
+						mov			reg_temp6, __State
+                        mov			ebx, __Hash1
+                        mov			ecx, __Hash2
+                        mov			reg_temp7, __xx
+                        movdqu		xmm0, [ebx+m_nState0]
+                        movq		mm2, [ebx+m_nState2]
+                        movdqu		xmm3, [ecx+m_nState0]
+                        movq		mm5, [ecx+m_nState2]
+                        mov			dword ptr [__xx], 1
+                        movdqu		[__xx+1], xmm0
+                        movq		[__xx+17], mm2
+                        movdqu		[__xx+25], xmm3
+                        movq		[__xx+41], mm5
+                        mov			dword ptr [__xx+49], 1
+                        mov			dword ptr [__xx+52], 0
+                        mov			dword ptr [__xx+56], 49*8
+                        mov			dword ptr [__xx+60], 0
+                        movdqa		xmm0, [__xx]
+                        movq        mmx_a, Init0
+                        movq        mmx_b, Init1
+                        movq        mmx_c, Init2
+                        movq        [reg_temp6+m_nState0], mmx_a
+                        movq        [reg_temp6+m_nState1], mmx_b
+                        movq        [reg_temp6+m_nState2], mmx_c
+                        call        TigerTree_Tiger_SSE2
+                        mov			esp, __Frame
+                        popa
+                        emms
+                        ret 12
+TigerTree_Tiger_SSE2_Node ENDP
+
+TIGERRNDSSE2_2          MACRO       count:REQ,mulval:REQ
+; c = c ^ _x[count]
+; a = a - (T1[( c_l    &0ffh)*8]^T2[((c_l>>16)&0ffh)*8)^T3[( c_h    &0ffh)*8]^T4[((c_h>>16)&0ffh)*8]
+; b = b + (T4[((c_l>>8)&0ffh)*8]^T3[((c_l>>24)&0ffh)*8)^T2[((c_h>>8)&0ffh)*8]^T1[((c_h>>24)&0ffh)*8]
+; b = b * mul
+
+                        pxor        mmx_c1, [__xx+count*16]
+                        pxor        mmx_c2, [__xx+count*16+8]
+
+                        movd        reg_temp1, mmx_c1
+                        pshufw      mmx_temp1, mmx_c1, 4EH
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ffh
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff0000h
+                        movq        mmx_temp2, [T1+reg_temp1*8]
+                        shr         reg_temp2, 16
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, [T2+reg_temp2*8]
+                        and         reg_temp3, 0ffh
+                        and         reg_temp4, 0ff0000h
+                        pxor        mmx_temp2, [T3+reg_temp3*8]
+                        shr         reg_temp4, 16
+                        pxor        mmx_temp2, [T4+reg_temp4*8]
+                        psubq       mmx_a1, mmx_temp2
+                        
+                        movd        reg_temp1, mmx_c1
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ff00h
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff000000h
+                        shr         reg_temp1, 8
+                        movq        mmx_temp2, [T4+reg_temp1*8]
+                        shr         reg_temp2, 24
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, [T3+reg_temp2*8]
+                        and         reg_temp3, 0ff00h
+                        and         reg_temp4, 0ff000000h
+                        shr         reg_temp3, 8
+                        pxor        mmx_temp2, [T2+reg_temp3*8]
+                        shr         reg_temp4, 24
+                        pxor        mmx_temp2, [T1+reg_temp4*8]
+                        paddq       mmx_b1, mmx_temp2
+
+                        movq        mmx_temp1, mmx_b1
+                        IF          mulval eq 5
+                        psllq       mmx_b1, 2
+                        paddq       mmx_b1, mmx_temp1
+                        ELSEIF      mulval eq 7
+                        psllq       mmx_b1, 3
+                        psubq       mmx_b1, mmx_temp1
+                        ELSEIF      mulval eq 9
+                        psllq       mmx_b1, 3
+                        paddq       mmx_b1, mmx_temp1
+                        ELSE
+                        .ERR        'invalid mul value in TIGERRNDSSE2_2'
+                        ENDIF
+
+                        movd        reg_temp1, mmx_c2
+                        pshufw      mmx_temp1, mmx_c2, 4EH
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ffh
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff0000h
+                        movq        mmx_temp2, [T1+reg_temp1*8]
+                        shr         reg_temp2, 16
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, [T2+reg_temp2*8]
+                        and         reg_temp3, 0ffh
+                        and         reg_temp4, 0ff0000h
+                        pxor        mmx_temp2, [T3+reg_temp3*8]
+                        shr         reg_temp4, 16
+                        pxor        mmx_temp2, [T4+reg_temp4*8]
+                        psubq       mmx_a2, mmx_temp2
+                        
+                        movd        reg_temp1, mmx_c2
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ff00h
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff000000h
+                        shr         reg_temp1, 8
+                        movq        mmx_temp2, [T4+reg_temp1*8]
+                        shr         reg_temp2, 24
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, [T3+reg_temp2*8]
+                        and         reg_temp3, 0ff00h
+                        and         reg_temp4, 0ff000000h
+                        shr         reg_temp3, 8
+                        pxor        mmx_temp2, [T2+reg_temp3*8]
+                        shr         reg_temp4, 24
+                        pxor        mmx_temp2, [T1+reg_temp4*8]
+                        paddq       mmx_b2, mmx_temp2
+
+                        movq        mmx_temp1, mmx_b2
+                        IF          mulval eq 5
+                        psllq       mmx_b2, 2
+                        paddq       mmx_b2, mmx_temp1
+                        ELSEIF      mulval eq 7
+                        psllq       mmx_b2, 3
+                        psubq       mmx_b2, mmx_temp1
+                        ELSEIF      mulval eq 9
+                        psllq       mmx_b2, 3
+                        paddq       mmx_b2, mmx_temp1
+                        ELSE
+                        .ERR        'invalid mul value in TIGERRNDSSE2_2'
+                        ENDIF
+
+reg_t                   textequ     mmx_a1
+mmx_a1                  textequ     mmx_b1
+mmx_b1                  textequ     mmx_c1
+mmx_c1                  textequ     reg_t
+reg_t                   textequ     mmx_a2
+mmx_a2                  textequ     mmx_b2
+mmx_b2                  textequ     mmx_c2
+mmx_c2                  textequ     reg_t
+                        ENDM
+
+TIGERKEYSCHEDULESSE2_2  MACRO
+
+                        pxor        xmm_7, const_A5A5A5A5A5A5A5A5
+                        psubq       xmm_0, xmm_7
+                        movdqa      xmm_7, [__xx+7*16]
+                        pxor        xmm_1, xmm_0
+                        movdqa      [__xx+1*16], xmm_1
+                        paddq       xmm_2, xmm_1
+                        pxor        xmm_1, const_FFFFFFFFFFFFFFFF            ; not
+                        psllq       xmm_1, 19
+                        pxor        xmm_1, xmm_2
+                        psubq       xmm_3, xmm_1
+                        movdqa      xmm_1, [__xx+1*16]
+                        pxor        xmm_4, xmm_3
+                        movdqa      [__xx+4*16], xmm_4
+                        paddq       xmm_5, xmm_4
+                        pxor        xmm_4, const_FFFFFFFFFFFFFFFF            ; not
+                        psrlq       xmm_4, 23
+                        pxor        xmm_4, xmm_5
+                        psubq       xmm_6, xmm_4
+                        movdqa      xmm_4, [__xx+4*16]
+                        pxor        xmm_7, xmm_6
+                        movdqa      [__xx+7*16], xmm7
+                        paddq       xmm_0, xmm_7
+                        movdqa      [__xx+0*16], xmm0
+                        pxor        xmm_7, const_FFFFFFFFFFFFFFFF            ; not
+                        psllq       xmm_7, 19
+                        pxor        xmm_7, xmm_0
+                        psubq       xmm_1, xmm_7
+                        movdqa      [__xx+1*16], xmm_1
+                        movdqa      xmm_7, [__xx+7*16]
+                        pxor        xmm_2, xmm_1
+                        movdqa      [__xx+2*16], xmm_2
+                        paddq       xmm_3, xmm_2
+                        movdqa      [__xx+3*16], xmm_3
+                        pxor        xmm_2, const_FFFFFFFFFFFFFFFF            ; not
+                        psrlq       xmm_2, 23
+                        pxor        xmm_2, xmm_3
+                        psubq       xmm_4, xmm_2
+                        movdqa      [__xx+4*16], xmm_4
+                        pxor        xmm_5, xmm_4
+                        movdqa      [__xx+5*16], xmm_5
+                        paddq       xmm_6, xmm_5
+                        movdqa      [__xx+6*16], xmm_6
+                        pxor        xmm_6, const_0123456789ABCDEF
+                        psubq       xmm_7, xmm_6
+                        movdqa      [__xx+7*16], xmm_7
+; valid: 0, 1, 3, 4, 5, 7 - invalid: 2, 6
+                        ENDM
+
+                        ALIGN       16
+
+reg_temp1               textequ     <eax>
+reg_temp2               textequ     <ebx>
+reg_temp3               textequ     <edx>
+reg_temp4               textequ     <edi>
+reg_temp5               textequ     <ecx>
+reg_temp6               textequ     <esi>
+reg_temp7               textequ     <ebp>
+
+mmx_a1                  textequ     <mm0>
+mmx_b1                  textequ     <mm1>
+mmx_c1                  textequ     <mm2>
+mmx_a2                  textequ     <mm3>
+mmx_b2                  textequ     <mm4>
+mmx_c2                  textequ     <mm5>
+mmx_temp1               textequ     <mm6>
+mmx_temp2               textequ     <mm7>
+
+xmm_0                   textequ     <xmm0>
+xmm_1                   textequ     <xmm1>
+xmm_2                   textequ     <xmm2>
+xmm_3                   textequ     <xmm3>
+xmm_4                   textequ     <xmm4>
+xmm_5                   textequ     <xmm5>
+xmm_6                   textequ     <xmm6>
+xmm_7                   textequ     <xmm7>
+
+TigerTree_Tiger_SSE2_2T	PROC
+; Data streams at reg_temp7 and reg_temp6
+; first dqwords loaded in xmm_0 and xmm_7
+; mmx_a1 - mmx_c2 initialized
+__Digest2				textequ		<esp+156>
+__Digest1				textequ		<esp+132>
+__xx					textequ		<esp+4>
+                        pshufd      xmm_1, xmm_0, 01001110b					; abcd ---> cdab
+                        shufpd      xmm_0, xmm_7, 0                         ; abcdefgh/xxxxmnop  --->  efghmnop
+                        shufpd      xmm_1, xmm_7, 2                         ; abcdefgh/xxxxmnop  --->  abcdmnop
+                        movdqu		xmm_2, [reg_temp7+2*8]
+                        movdqu		xmm_4, [reg_temp7+4*8]
+                        movdqu		xmm_6, [reg_temp7+6*8]
+                        movdqu      xmm_7, [reg_temp7+2*8]
+                        pshufd      xmm_3, xmm_2, 01001110b
+                        pshufd		xmm_5, xmm_4, 01001110b
+                        pshufd      xmm_7, xmm_6, 01001110b
+                        movhps		xmm_2, [reg_temp6+2*8]
+                        movhps		xmm_3, [reg_temp6+3*8]
+                        movhps		xmm_4, [reg_temp6+4*8]
+                        movhps		xmm_5, [reg_temp6+5*8]
+                        movhps		xmm_6, [reg_temp6+6*8]
+                        movhps		xmm_7, [reg_temp6+7*8]
+						movdqa      [__xx+0*16], xmm_0
+                        movdqa      [__xx+1*16], xmm_1
+                        movdqa      [__xx+2*16], xmm_2
+                        movdqa      [__xx+3*16], xmm_3
+                        movdqa      [__xx+4*16], xmm_4
+                        movdqa      [__xx+5*16], xmm_5
+                        movdqa      [__xx+6*16], xmm_6
+                        movdqa      [__xx+7*16], xmm_7
+                        TIGERRNDSSE2_2		0, 5
+                        TIGERRNDSSE2_2		1, 5
+                        TIGERRNDSSE2_2		2, 5
+                        TIGERRNDSSE2_2		3, 5
+                        TIGERRNDSSE2_2		4, 5
+                        TIGERRNDSSE2_2		5, 5
+                        TIGERRNDSSE2_2		6, 5
+                        TIGERRNDSSE2_2		7, 5
+                        TIGERKEYSCHEDULESSE2_2
+                        TIGERRNDSSE2_2		0, 7
+                        TIGERRNDSSE2_2		1, 7
+                        TIGERRNDSSE2_2		2, 7
+                        TIGERRNDSSE2_2		3, 7
+                        TIGERRNDSSE2_2		4, 7
+                        TIGERRNDSSE2_2		5, 7
+                        TIGERRNDSSE2_2		6, 7
+                        TIGERRNDSSE2_2		7, 7
+                        movdqa      xmm_2, [__xx+2*16]
+                        movdqa      xmm_6, [__xx+6*16]
+                        TIGERKEYSCHEDULESSE2_2
+                        TIGERRNDSSE2_2		0, 9
+                        TIGERRNDSSE2_2		1, 9
+                        TIGERRNDSSE2_2		2, 9
+                        TIGERRNDSSE2_2		3, 9
+                        TIGERRNDSSE2_2		4, 9
+                        TIGERRNDSSE2_2		5, 9
+                        TIGERRNDSSE2_2		6, 9
+                        TIGERRNDSSE2_2		7, 9
+                        pxor        mmx_a1, [__Digest1+m_nState0]
+                        psubq       mmx_b1, [__Digest1+m_nState1]
+                        paddq       mmx_c1, [__Digest1+m_nState2]
+                        pxor        mmx_a2, [__Digest2+m_nState0]
+                        psubq       mmx_b2, [__Digest2+m_nState1]
+                        paddq       mmx_c2, [__Digest2+m_nState2]
+                        movq        [__Digest1+m_nState0], mmx_a1
+                        movq        [__Digest1+m_nState1], mmx_b1
+                        movq        [__Digest1+m_nState2], mmx_c1
+                        movq        [__Digest2+m_nState0], mmx_a2
+                        movq        [__Digest2+m_nState1], mmx_b2
+                        movq        [__Digest2+m_nState2], mmx_c2
+						ret
+TigerTree_Tiger_SSE2_2T	ENDP
+
+TigerTree_Tiger_SSE2_2	PROC		PUBLIC _State1:DWORD, _Data1:DWORD, _State2:DWORD, _Data2:DWORD
+__Data2					textequ		<[esp+48]>
+__State2				textequ		<[esp+44]>
+__Data1					textequ		<[esp+40]>
+__State1				textequ		<[esp+36]>
+                        pusha
+                        mov			reg_temp7, __Data1
+                        mov			reg_temp6, __Data2
+                        mov			reg_temp5, esp
+                        sub			esp, 180
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+176]>
+__Digest2				textequ		<esp+152>
+__Digest1				textequ		<esp+128>
+__xx					textequ		<esp>
+						mov			__Frame, reg_temp5
+                        movq        mmx_a1, Init0
+                        movq        mmx_b1, Init1
+                        movq        mmx_c1, Init2
+                        movq        [__Digest1+m_nState0], mmx_a1
+                        movq        [__Digest1+m_nState1], mmx_b1
+                        movq        [__Digest1+m_nState2], mmx_c1
+                        movq        [__Digest2+m_nState0], mmx_a1
+                        movq        [__Digest2+m_nState1], mmx_b1
+                        movq        [__Digest2+m_nState2], mmx_c1
+                        movq        mmx_a2, mmx_a1
+                        movq        mmx_b2, mmx_b1
+                        movq        mmx_c2, mmx_c1
+                        movdqu      xmm0, [reg_temp7]
+                        movdqu      xmm7, [reg_temp6]
+                        pslldq      xmm0, 1
+                        pslldq      xmm7, 1
+                        dec         reg_temp7
+                        dec         reg_temp6
+                        call        TigerTree_Tiger_SSE2_2T
+                        REPEAT      15
+                        add         reg_temp7, 64
+                        add         reg_temp6, 64
+                        movdqu      xmm0, [reg_temp7]
+                        movdqu      xmm7, [reg_temp6]
+                        call        TigerTree_Tiger_SSE2_2T
+                        ENDM
+                        mov         eax, 100h
+                        mov         ebx, 100h
+                        mov         al, byte ptr [reg_temp7+64]
+                        mov         bl, byte ptr [reg_temp6+64]
+                        mov         reg_temp7, offset BlockFinish
+                        mov         reg_temp6, offset BlockFinish
+                        movd        xmm0, eax
+                        movd        xmm7, ebx
+                        call        TigerTree_Tiger_SSE2_2T
+                        mov			esp, __Frame
+                        mov			reg_temp1, __State1
+                        mov			reg_temp2, __State2
+                        movq        [reg_temp1+m_nState0], mmx_a1
+                        movq        [reg_temp1+m_nState1], mmx_b1
+                        movq        [reg_temp1+m_nState2], mmx_c1
+                        movq        [reg_temp2+m_nState0], mmx_a2
+                        movq        [reg_temp2+m_nState1], mmx_b2
+                        movq        [reg_temp2+m_nState2], mmx_c2
+                        popa
+                        emms
+                        ret 16
+TigerTree_Tiger_SSE2_2	ENDP
+
+reg_temp1               textequ     <eax>
+reg_temp2               textequ     <ebx>
+reg_temp3               textequ     <edx>
+reg_temp4               textequ     <edi>
+reg_temp5               textequ     <ecx>
+reg_temp6               textequ     <esi>
+reg_temp7               textequ     <ebp>
+
+mmx_a1                  textequ     <mm0>
+mmx_b1                  textequ     <mm1>
+mmx_c1                  textequ     <mm2>
+mmx_a2                  textequ     <mm3>
+mmx_b2                  textequ     <mm4>
+mmx_c2                  textequ     <mm5>
+mmx_temp1               textequ     <mm6>
+mmx_temp2               textequ     <mm7>
+
+xmm_0                   textequ     <xmm0>
+xmm_1                   textequ     <xmm1>
+xmm_2                   textequ     <xmm2>
+xmm_3                   textequ     <xmm3>
+xmm_4                   textequ     <xmm4>
+xmm_5                   textequ     <xmm5>
+xmm_6                   textequ     <xmm6>
+xmm_7                   textequ     <xmm7>
+
+a_l                     textequ     <eax>
+a_h                     textequ     <edx>
+b_l                     textequ     <ebx>
+b_h                     textequ     <ecx>
+c_l                     textequ     <esi>
+c_h                     textequ     <edi>
+reg_temp                textequ     <ebp>
+
+LOAD64                  MACRO       reg1_h:REQ, reg1_l:REQ, reg2_h:REQ, reg2_l:REQ      ; mov   reg1_h:reg1_l, reg2_h:reg2_l
+                        mov         reg1_l, reg2_l
+                        mov         reg1_h, reg2_h
+                        ENDM
+LOAD64RM                MACRO       reg_h:REQ, reg_l:REQ, mem:REQ                       ; mov   reg_h:reg_l, mem
+                        LOAD64      reg_h, reg_l, dword ptr [mem+4], dword ptr [mem]
+                        ENDM
+LOAD64MR                MACRO       mem:REQ, reg_h:REQ, reg_l:REQ                       ; mov   mem, reg_h:reg_l
+                        LOAD64      dword ptr [mem+4], dword ptr [mem], reg_h, reg_l
+                        ENDM
+
+ADD64                   MACRO       reg1_h:REQ, reg1_l:REQ, reg2_h:REQ, reg2_l:REQ      ; add   reg1_h:reg1_l, reg2_h:reg2_l
+                        add         reg1_l, reg2_l
+                        adc         reg1_h, reg2_h
+                        ENDM
+ADD64RM                 MACRO       reg_h:REQ, reg_l:REQ, mem:REQ                       ; add   reg_h:reg_l, mem
+                        ADD64       reg_h, reg_l, dword ptr [mem+4], dword ptr [mem]
+                        ENDM
+ADD64MR                 MACRO       mem:REQ, reg_h:REQ, reg_l:REQ                       ; add   mem, reg_h:reg_l
+                        ADD64       dword ptr [mem+4], dword ptr [mem], reg_h, reg_l
+                        ENDM
+
+SUB64                   MACRO       reg1_h:REQ, reg1_l:REQ, reg2_h:REQ, reg2_l:REQ      ; sub   reg1_h:reg1_l, reg2_h:reg2_l
+                        sub         reg1_l, reg2_l
+                        sbb         reg1_h, reg2_h
+                        ENDM
+SUB64RM                 MACRO       reg_h:REQ, reg_l:REQ, mem:REQ                       ; sub   reg_h:reg_l, mem
+                        SUB64       reg_h, reg_l, dword ptr [mem+4], dword ptr [mem]
+                        ENDM
+SUB64MR                 MACRO       mem:REQ, reg_h:REQ, reg_l:REQ                       ; sub   mem, reg_h:reg_l
+                        SUB64       dword ptr [mem+4], dword ptr [mem], reg_h, reg_l
+                        ENDM
+
+XOR64                   MACRO       reg1_h:REQ, reg1_l:REQ, reg2_h:REQ, reg2_l:REQ      ; xor   reg1_h:reg1_l, reg2_h:reg2_l
+                        xor         reg1_l, reg2_l
+                        xor         reg1_h, reg2_h
+                        ENDM
+XOR64RM                 MACRO       reg_h:REQ, reg_l:REQ, mem:REQ                       ; xor   reg_h:reg_l, mem
+                        XOR64       reg_h, reg_l, dword ptr [mem+4], dword ptr [mem]
+                        ENDM
+XOR64MR                 MACRO       mem:REQ, reg_h:REQ, reg_l:REQ                       ; xor   mem, reg_h:reg_l
+                        XOR64       dword ptr [mem+4], dword ptr [mem], reg_h, reg_l
+                        ENDM
+
+SHR64                   MACRO       reg_h:REQ, reg_l:REQ, s:REQ                         ; shr   reg_h:reg_l, s
+                        shrd        reg_l, reg_h, s
+                        shr         reg_h, s
+                        ENDM
+
+SHL64                   MACRO       reg_h:REQ, reg_l:REQ, s:REQ                         ; shl   reg_h:reg_l, s
+                        IF          s eq 2
+                        add         reg_l, reg_l
+                        adc         reg_h, reg_h
+                        add         reg_l, reg_l                                        ; high latencies for SHL on P4...
+                        adc         reg_h, reg_h                                        ; using add for s=3 increases
+                        ELSE                                                            ; execution time
+                        shld        reg_h, reg_l, s
+                        shl         reg_l, s
+                        ENDIF
+                        ENDM
+
+NOT64                   MACRO       reg_h:REQ, reg_l:REQ                                ; not   reg_h:reg_l
+                        not         reg_l
+                        not         reg_h
+                        ENDM
+
+LOADX                   MACRO       reg_h:REQ, reg_l:REQ, count                         ; mov   reg_h:reg_l, x[count]
+                        LOAD64RM    reg_h, reg_l, __x+count*8
+                        ENDM
+
+STOREX                  MACRO       reg_h:REQ, reg_l:REQ, count                         ; mov   x[count], reg_h:reg_l
+                        LOAD64MR    __x+count*8, reg_h, reg_l
+                        ENDM
+
+XORX                    MACRO       reg_h:REQ, reg_l:REQ, count                         ; xor   reg_h:reg_l, x[count]
+                        XOR64RM     reg_h, reg_l, __x+count*8
+                        ENDM
+
+TIGERRNDSSE2_3          MACRO       count:REQ,mulval:REQ
+; c = c ^ _x[count]
+; a = a - (T1[( c_l    &0ffh)*8]^T2[((c_l>>16)&0ffh)*8)^T3[( c_h    &0ffh)*8]^T4[((c_h>>16)&0ffh)*8]
+; b = b + (T4[((c_l>>8)&0ffh)*8]^T3[((c_l>>24)&0ffh)*8)^T2[((c_h>>8)&0ffh)*8]^T1[((c_h>>24)&0ffh)*8]
+; b = b * mul
+
+                        LOAD64RM    c_h, c_l, __cc
+                        pxor        mmx_c1, [__xx+count*16]
+                        XORX        c_h, c_l, count
+                        pxor        mmx_c2, [__xx+count*16+8]
+                        mov         a_l, c_l
+                        mov         a_h, c_l
+						movq        mmx_temp2, [__aa]
+                        and         a_l, 0ffh
+                        and         a_h, 0ff0000h
+                        movq        mmx_temp1, [T1+a_l*8]
+                        shr         a_h, 16
+                        mov         b_l, c_h
+                        pxor        mmx_temp1, [T2+a_h*8]
+                        mov         b_h, c_h
+                        and         b_l, 0ffh
+                        pxor        mmx_temp1, [T3+b_l*8]
+                        and         b_h, 0ff0000h
+                        shr         b_h, 16
+                        pxor        mmx_temp1, [T4+b_h*8]
+                        mov         a_l, c_l
+                        mov         a_h, c_l
+                        psubq       mmx_temp2, mmx_temp1
+                        mov         b_l, c_h
+                        mov         b_h, c_h
+                        movq        [__aa], mmx_temp2
+                        and         a_l, 0ff00h
+                        and         a_h, 0ff000000h
+                        shr         a_l, 8
+                        shr         a_h, 24
+                        movq        mmx_temp1, [T4+a_l*8]
+                        and         b_l, 0ff00h
+                        and         b_h, 0ff000000h
+                        pxor        mmx_temp1, [T3+a_h*8]
+                        shr         b_l, 8
+                        shr         b_h, 24
+                        pxor        mmx_temp1, [T2+b_l*8]
+                        pxor        mmx_temp1, [T1+b_h*8]
+						paddq       mmx_temp1, [__bb]
+                        movq        mmx_temp2, mmx_temp1
+                        LOAD64MR    __cc, c_h, c_l
+
+                        IF          mulval eq 5
+                        psllq       mmx_temp1, 2
+                        paddq       mmx_temp1, mmx_temp2
+                        ELSEIF      mulval eq 7
+                        psllq       mmx_temp1, 3
+                        psubq       mmx_temp1, mmx_temp2
+                        ELSEIF      mulval eq 9
+                        psllq       mmx_temp1, 3
+                        paddq       mmx_temp1, mmx_temp2
+                        ELSE
+                        .ERR        'invalid mul value in TIGERRNDSSE2_3'
+                        ENDIF
+                        movq        [__bb], mmx_temp1
+
+                        movd        reg_temp1, mmx_c1
+                        pshufw      mmx_temp1, mmx_c1, 4EH
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ffh
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff0000h
+                        movq        mmx_temp2, qword ptr [T1+reg_temp1*8]
+                        shr         reg_temp2, 16
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, qword ptr [T2+reg_temp2*8]
+                        and         reg_temp3, 0ffh
+                        and         reg_temp4, 0ff0000h
+                        pxor        mmx_temp2, qword ptr [T3+reg_temp3*8]
+                        shr         reg_temp4, 16
+                        pxor        mmx_temp2, qword ptr [T4+reg_temp4*8]
+                        psubq       mmx_a1, mmx_temp2
+                        
+                        movd        reg_temp1, mmx_c1
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ff00h
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff000000h
+                        shr         reg_temp1, 8
+                        movq        mmx_temp2, qword ptr [T4+reg_temp1*8]
+                        shr         reg_temp2, 24
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, qword ptr [T3+reg_temp2*8]
+                        and         reg_temp3, 0ff00h
+                        and         reg_temp4, 0ff000000h
+                        shr         reg_temp3, 8
+                        pxor        mmx_temp2, qword ptr [T2+reg_temp3*8]
+                        shr         reg_temp4, 24
+                        pxor        mmx_temp2, qword ptr [T1+reg_temp4*8]
+                        paddq       mmx_b1, mmx_temp2
+
+                        movq        mmx_temp1, mmx_b1
+                        IF          mulval eq 5
+                        psllq       mmx_b1, 2
+                        paddq       mmx_b1, mmx_temp1
+                        ELSEIF      mulval eq 7
+                        psllq       mmx_b1, 3
+                        psubq       mmx_b1, mmx_temp1
+                        ELSEIF      mulval eq 9
+                        psllq       mmx_b1, 3
+                        paddq       mmx_b1, mmx_temp1
+                        ELSE
+                        .ERR        'invalid mul value in TIGERRNDSSE2_3'
+                        ENDIF
+
+                        movd        reg_temp1, mmx_c2
+                        pshufw      mmx_temp1, mmx_c2, 4EH
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ffh
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff0000h
+                        movq        mmx_temp2, qword ptr [T1+reg_temp1*8]
+                        shr         reg_temp2, 16
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, qword ptr [T2+reg_temp2*8]
+                        and         reg_temp3, 0ffh
+                        and         reg_temp4, 0ff0000h
+                        pxor        mmx_temp2, qword ptr [T3+reg_temp3*8]
+                        shr         reg_temp4, 16
+                        pxor        mmx_temp2, qword ptr [T4+reg_temp4*8]
+                        psubq       mmx_a2, mmx_temp2
+                        
+                        movd        reg_temp1, mmx_c2
+                        mov         reg_temp2, reg_temp1
+                        and         reg_temp1, 0ff00h
+                        movd        reg_temp3, mmx_temp1
+                        and         reg_temp2, 0ff000000h
+                        shr         reg_temp1, 8
+                        movq        mmx_temp2, qword ptr [T4+reg_temp1*8]
+                        shr         reg_temp2, 24
+                        mov         reg_temp4, reg_temp3
+                        pxor        mmx_temp2, qword ptr [T3+reg_temp2*8]
+                        and         reg_temp3, 0ff00h
+                        and         reg_temp4, 0ff000000h
+                        shr         reg_temp3, 8
+                        pxor        mmx_temp2, qword ptr [T2+reg_temp3*8]
+                        shr         reg_temp4, 24
+                        pxor        mmx_temp2, qword ptr [T1+reg_temp4*8]
+                        paddq       mmx_b2, mmx_temp2
+
+                        movq        mmx_temp1, mmx_b2
+                        IF          mulval eq 5
+                        psllq       mmx_b2, 2
+                        paddq       mmx_b2, mmx_temp1
+                        ELSEIF      mulval eq 7
+                        psllq       mmx_b2, 3
+                        psubq       mmx_b2, mmx_temp1
+                        ELSEIF      mulval eq 9
+                        psllq       mmx_b2, 3
+                        paddq       mmx_b2, mmx_temp1
+                        ELSE
+                        .ERR        'invalid mul value in TIGERRNDSSE2_3'
+                        ENDIF
+
+reg_t                   textequ     a_l
+a_l                     textequ     b_l
+b_l                     textequ     c_l
+c_l                     textequ     reg_t
+reg_t                   textequ     a_h
+a_h                     textequ     b_h
+b_h                     textequ     c_h
+c_h                     textequ     reg_t
+reg_t                   textequ     __aa
+__aa					textequ		__bb
+__bb					textequ		__cc
+__cc					textequ     reg_t
+reg_t                   textequ     mmx_a1
+mmx_a1                  textequ     mmx_b1
+mmx_b1                  textequ     mmx_c1
+mmx_c1                  textequ     reg_t
+reg_t                   textequ     mmx_a2
+mmx_a2                  textequ     mmx_b2
+mmx_b2                  textequ     mmx_c2
+mmx_c2                  textequ     reg_t
+                        ENDM
+
+TIGERKEYSCHEDULESSE2_3  MACRO
+                        LOADX       c_h, c_l, 7
+                        pxor        xmm_7, const_A5A5A5A5A5A5A5A5
+                        LOADX       a_h, a_l, 0
+                        psubq       xmm_0, xmm_7
+                        XOR64       c_h, c_l, 0A5A5A5A5H, 0A5A5A5A5H
+                        movdqa      xmm_7, [__xx+7*16]
+                        SUB64       a_h, a_l, c_h, c_l
+                        pxor        xmm_1, xmm_0
+                        LOADX       b_h, b_l, 1
+                        STOREX      a_h, a_l, 0
+                        movdqa      [__xx+1*16], xmm_1
+                        XOR64       b_h, b_l, a_h, a_l
+                        paddq       xmm_2, xmm_1
+                        LOADX       c_h, c_l, 2
+                        STOREX      b_h, b_l, 1
+                        pxor        xmm_1, const_FFFFFFFFFFFFFFFF            ; not
+                        ADD64       c_h, c_l, b_h, b_l
+                        psllq       xmm_1, 19
+                        STOREX      c_h, c_l, 2
+                        pxor        xmm_1, xmm_2
+                        NOT64       b_h, b_l
+                        psubq       xmm_3, xmm_1
+                        SHL64       b_h, b_l, 19
+                        movdqa      xmm_1, [__xx+1*16]
+                        XOR64       c_h, c_l, b_h, b_l
+                        pxor        xmm_4, xmm_3
+                        LOADX       a_h, a_l, 3
+                        movdqa      [__xx+4*16], xmm_4
+                        SUB64       a_h, a_l, c_h, c_l
+                        paddq       xmm_5, xmm_4
+                        LOADX       b_h, b_l, 4
+                        STOREX      a_h, a_l, 3
+                        pxor        xmm_4, const_FFFFFFFFFFFFFFFF            ; not
+                        XOR64       b_h, b_l, a_h, a_l
+                        psrlq       xmm_4, 23
+                        LOADX       c_h, c_l, 5
+                        pxor        xmm_4, xmm_5
+                        STOREX      b_h, b_l, 4
+                        psubq       xmm_6, xmm_4
+                        ADD64       c_h, c_l, b_h, b_l
+                        STOREX      c_h, c_l, 5
+                        movdqa      xmm_4, [__xx+4*16]
+                        NOT64       b_h, b_l
+                        pxor        xmm_7, xmm_6
+                        SHR64       b_h, b_l, 23
+                        movdqa      [__xx+7*16], xmm7
+                        XOR64       c_h, c_l, b_h, b_l
+                        paddq       xmm_0, xmm_7
+                        LOADX       a_h, a_l, 6
+                        movdqa      [__xx+0*16], xmm0
+                        SUB64       a_h, a_l, c_h, c_l
+                        LOADX       b_h, b_l, 7
+                        STOREX      a_h, a_l, 6
+                        pxor        xmm_7, const_FFFFFFFFFFFFFFFF            ; not
+                        XOR64       b_h, b_l, a_h, a_l
+                        psllq       xmm_7, 19
+                        LOADX       c_h, c_l, 0
+                        pxor        xmm_7, xmm_0
+                        STOREX      b_h, b_l, 7
+                        ADD64       c_h, c_l, b_h, b_l
+                        psubq       xmm_1, xmm_7
+                        STOREX      c_h, c_l, 0
+                        movdqa      [__xx+1*16], xmm_1
+                        NOT64       b_h, b_l
+                        movdqa      xmm_7, [__xx+7*16]
+                        SHL64       b_h, b_l, 19
+                        pxor        xmm_2, xmm_1
+                        XOR64       c_h, c_l, b_h, b_l
+                        LOADX       a_h, a_l, 1
+                        movdqa      [__xx+2*16], xmm_2
+                        SUB64       a_h, a_l, c_h, c_l
+                        paddq       xmm_3, xmm_2
+                        LOADX       b_h, b_l, 2
+                        STOREX      a_h, a_l, 1
+                        movdqa      [__xx+3*16], xmm_3
+                        XOR64       b_h, b_l, a_h, a_l
+                        pxor        xmm_2, const_FFFFFFFFFFFFFFFF            ; not
+                        LOADX       c_h, c_l, 3
+                        psrlq       xmm_2, 23
+                        STOREX      b_h, b_l, 2
+                        pxor        xmm_2, xmm_3
+                        ADD64       c_h, c_l, b_h, b_l
+                        psubq       xmm_4, xmm_2
+                        STOREX      c_h, c_l, 3
+                        movdqa      [__xx+4*16], xmm_4
+                        NOT64       b_h, b_l
+                        pxor        xmm_5, xmm_4
+                        SHR64       b_h, b_l, 23
+                        movdqa      [__xx+5*16], xmm_5
+                        XOR64       c_h, c_l, b_h, b_l
+                        paddq       xmm_6, xmm_5
+                        LOADX       a_h, a_l, 4
+                        movdqa      [__xx+6*16], xmm_6
+                        SUB64       a_h, a_l, c_h, c_l
+                        LOADX       b_h, b_l, 5
+                        pxor        xmm_6, const_0123456789ABCDEF
+                        XOR64       b_h, b_l, a_h, a_l
+                        psubq       xmm_7, xmm_6
+                        LOADX       c_h, c_l, 6
+                        movdqa      [__xx+7*16], xmm_7
+                        ADD64       c_h, c_l, b_h, b_l
+                        STOREX      a_h, a_l, 4
+                        STOREX      b_h, b_l, 5
+                        STOREX      c_h, c_l, 6
+                        XOR64       c_h, c_l, 01234567H, 89ABCDEFH
+                        SUB64MR     __x+7*8, c_h, c_l
+; valid: 0, 1, 3, 4, 5, 7 - invalid: 2, 6, reload before next schedule
+                        ENDM
+
+                        ALIGN       16
+
+TigerTree_Tiger_SSE2_3T	PROC
+; reg_temp6, reg_temp7, reg_temp5 point to data1, data2, data3 resp.
+; first 8 loaded in xmm0, xmm7, xmm2
+; store_aa, store_bb, store_cc, mmx_a1 - mmx_c2 and states initialized
+__cc					textequ		<esp+284>
+__bb					textequ		<esp+276>
+__aa					textequ		<esp+268>
+__Digest3				textequ		<esp+244>
+__Digest2				textequ		<esp+220>
+__Digest1				textequ		<esp+196>
+__x						textequ		<esp+132>
+__xx					textequ		<esp+4>
+                        movdqu      xmm_3, [reg_temp5+2*8]
+                        movdqu      xmm_4, [reg_temp5+4*8]
+                        movdqu      xmm_6, [reg_temp5+6*8]
+                        movdqa      [__x], xmm_2
+                        movdqa      [__x+2*8], xmm_3
+                        movdqa      [__x+4*8], xmm_4
+                        movdqa      [__x+6*8], xmm_6
+						pshufd		xmm_1, xmm_0, 01001110b					; abcd ---> cdab
+                        shufpd      xmm_0, xmm_7, 0                         ; abcdefgh/xxxxmnop  --->  efghmnop
+                        shufpd      xmm_1, xmm_7, 2                         ; abcdefgh/xxxxmnop  --->  abcdmnop
+                        movdqu		xmm_2, [reg_temp6+2*8]
+                        movdqu		xmm_4, [reg_temp6+4*8]
+                        movdqu		xmm_6, [reg_temp6+6*8]
+                        movdqu      xmm_7, [reg_temp7+2*8]
+                        pshufd      xmm_3, xmm_2, 01001110b
+                        pshufd		xmm_5, xmm_4, 01001110b
+                        pshufd      xmm_7, xmm_6, 01001110b
+                        movhps		xmm_2, [reg_temp7+2*8]
+                        movhps		xmm_3, [reg_temp7+3*8]
+                        movhps		xmm_4, [reg_temp7+4*8]
+                        movhps		xmm_5, [reg_temp7+5*8]
+                        movhps		xmm_6, [reg_temp7+6*8]
+                        movhps		xmm_7, [reg_temp7+7*8]
+                        movdqa      [__xx+0*16], xmm_0
+                        movdqa      [__xx+1*16], xmm_1
+                        movdqa      [__xx+2*16], xmm_2
+                        movdqa      [__xx+3*16], xmm_3
+                        movdqa      [__xx+4*16], xmm_4
+                        movdqa      [__xx+5*16], xmm_5
+                        movdqa      [__xx+6*16], xmm_6
+                        movdqa      [__xx+7*16], xmm_7
+						TIGERRNDSSE2_3	0, 5
+						TIGERRNDSSE2_3	1, 5
+						TIGERRNDSSE2_3	2, 5
+						TIGERRNDSSE2_3	3, 5
+						TIGERRNDSSE2_3	4, 5
+						TIGERRNDSSE2_3	5, 5
+						TIGERRNDSSE2_3	6, 5
+						TIGERRNDSSE2_3	7, 5
+                        TIGERKEYSCHEDULESSE2_3
+						TIGERRNDSSE2_3	0, 7
+						TIGERRNDSSE2_3	1, 7
+						TIGERRNDSSE2_3	2, 7
+						TIGERRNDSSE2_3	3, 7
+						TIGERRNDSSE2_3	4, 7
+						TIGERRNDSSE2_3	5, 7
+						TIGERRNDSSE2_3	6, 7
+						TIGERRNDSSE2_3	7, 7
+                        movdqa      xmm_2, [__xx+2*16]
+                        movdqa      xmm_6, [__xx+6*16]
+                        TIGERKEYSCHEDULESSE2_3
+						TIGERRNDSSE2_3	0, 9
+						TIGERRNDSSE2_3	1, 9
+						TIGERRNDSSE2_3	2, 9
+						TIGERRNDSSE2_3	3, 9
+						TIGERRNDSSE2_3	4, 9
+						TIGERRNDSSE2_3	5, 9
+						TIGERRNDSSE2_3	6, 9
+						TIGERRNDSSE2_3	7, 9
+                        pxor        mmx_a1, [__Digest1+m_nState0]
+                        psubq       mmx_b1, [__Digest1+m_nState1]
+                        paddq       mmx_c1, [__Digest1+m_nState2]
+                        pxor        mmx_a2, [__Digest2+m_nState0]
+                        psubq       mmx_b2, [__Digest2+m_nState1]
+                        paddq       mmx_c2, [__Digest2+m_nState2]
+                        movq        [__Digest1+m_nState0], mmx_a1
+                        movq        [__Digest1+m_nState1], mmx_b1
+                        movq        [__Digest1+m_nState2], mmx_c1
+                        movq        [__Digest2+m_nState0], mmx_a2
+                        movq        [__Digest2+m_nState1], mmx_b2
+                        movq        [__Digest2+m_nState2], mmx_c2
+						movq		mmx_temp1, [__aa]
+						movq		mmx_temp2, [__bb]
+                        pxor        mmx_temp1, [__Digest3+m_nState0]
+                        psubq       mmx_temp2, [__Digest3+m_nState1]
+						movq		[__aa], mmx_temp1
+						movq		[__bb], mmx_temp2
+                        movq        [__Digest3+m_nState0], mmx_temp1
+                        movq        [__Digest3+m_nState1], mmx_temp2
+						movq		mmx_temp1, [__cc]
+						paddq		mmx_temp1, [__Digest3+m_nState2]
+						movq        [__cc], mmx_temp1
+                        movq        [__Digest3+m_nState2], mmx_temp1
+                        ret
+TigerTree_Tiger_SSE2_3T	ENDP
+
+TigerTree_Tiger_SSE2_3	PROC		PUBLIC _State1:DWORD, _Data1:DWORD, _State2:DWORD, _Data2:DWORD, _State3:DWORD, _Data3:DWORD
+___Data3				textequ     <[esp+56]>
+___State3				textequ     <[esp+52]>
+___Data2				textequ     <[esp+48]>
+___State2				textequ     <[esp+44]>
+___Data1				textequ     <[esp+40]>
+___State1				textequ     <[esp+36]>
+                        pusha
+                        mov			reg_temp6, ___Data1
+                        mov			reg_temp7, ___Data2
+                        mov			reg_temp5, ___Data3
+                        mov			reg_temp1, esp
+                        sub			esp, 304
+                        and			esp, 0ffffff80h
+__Frame					textequ		<[esp+300]>
+__Data3					textequ		<[esp+296]>
+__Data2					textequ		<[esp+292]>
+__Data1					textequ		<[esp+288]>
+__cc					textequ		<esp+280>
+__bb					textequ		<esp+272>
+__aa					textequ		<esp+264>
+__Digest3				textequ		<esp+240>
+__Digest2				textequ		<esp+216>
+__Digest1				textequ		<esp+192>
+__x						textequ		<esp+128>
+__xx					textequ		<esp>
+						mov			__Frame, reg_temp1
+                        movq        mmx_a1, Init0
+                        movq        mmx_b1, Init1
+                        movq        mmx_c1, Init2
+                        movq        mmx_a2, mmx_a1
+                        movq        mmx_b2, mmx_b1
+                        movq        mmx_c2, mmx_c1
+                        movq        [__Digest1+m_nState0], mmx_a1
+                        movq        [__Digest1+m_nState1], mmx_b1
+                        movq        [__Digest1+m_nState2], mmx_c1
+                        movq        [__Digest2+m_nState0], mmx_a1
+                        movq        [__Digest2+m_nState1], mmx_b1
+                        movq        [__Digest2+m_nState2], mmx_c1
+                        movq        [__Digest3+m_nState0], mmx_a1
+                        movq        [__Digest3+m_nState1], mmx_b1
+                        movq        [__Digest3+m_nState2], mmx_c1
+                        movq        [__aa], mmx_a1
+                        movq        [__bb], mmx_b1
+                        movq        [__cc], mmx_c1
+                        movdqu      xmm0, [reg_temp6]
+                        movdqu      xmm7, [reg_temp7]
+                        movdqu      xmm2, [reg_temp5]
+                        dec         reg_temp5
+                        dec         reg_temp6
+                        dec         reg_temp7
+                        pslldq      xmm2, 1
+                        pslldq      xmm0, 1
+                        pslldq      xmm7, 1
+                        mov			__Data1, reg_temp6
+                        mov			__Data2, reg_temp7
+                        mov			__Data3, reg_temp5
+                        call        TigerTree_Tiger_SSE2_3T
+                        REPEAT      15
+                        mov         reg_temp6, __Data1
+                        mov         reg_temp7, __Data2
+                        mov         reg_temp5, __Data3
+                        add         reg_temp6, 64
+                        add         reg_temp7, 64
+                        add         reg_temp5, 64
+                        mov         __Data1, reg_temp6
+                        mov         __Data2, reg_temp7
+                        mov         __Data3, reg_temp5
+                        movdqu      xmm0, [reg_temp6]
+                        movdqu      xmm7, [reg_temp7]
+                        movdqu      xmm2, [reg_temp5]
+                        call        TigerTree_Tiger_SSE2_3T
+                        ENDM
+                        mov         reg_temp6, __Data1
+                        mov         reg_temp7, __Data2
+                        mov         reg_temp5, __Data3
+                        mov         eax, 100h
+                        mov         ebx, 100h
+                        mov         edx, 100h
+                        mov         al, byte ptr [reg_temp6+64]
+                        mov         bl, byte ptr [reg_temp7+64]
+                        mov         dl, byte ptr [reg_temp5+64]
+                        mov         reg_temp6, offset BlockFinish
+                        mov         reg_temp7, offset BlockFinish
+                        mov         reg_temp5, offset BlockFinish
+                        movd        xmm0, eax
+                        movd        xmm7, ebx
+                        movd        xmm2, edx
+                        call        TigerTree_Tiger_SSE2_3T
+                        movdqa		xmm0, [__Digest3+m_nState0]
+                        mov			esp, __Frame
+                        mov         reg_temp6, ___State1
+                        mov         reg_temp7, ___State2
+                        mov         reg_temp5, ___State3
+                        movq		[reg_temp6+m_nState0], mmx_a1		; still valid from last call
+                        movq		[reg_temp6+m_nState1], mmx_b1
+                        movq		[reg_temp6+m_nState2], mmx_c1
+                        movq		[reg_temp7+m_nState0], mmx_a2
+                        movq		[reg_temp7+m_nState1], mmx_b2
+                        movq		[reg_temp7+m_nState2], mmx_c2
+                        movdqu		[reg_temp5+m_nState0], xmm0
+                        movq		[reg_temp5+m_nState2], mmx_temp1
+                        popa
+                        ret 24
+TigerTree_Tiger_SSE2_3	ENDP
 
                 end
