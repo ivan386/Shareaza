@@ -64,11 +64,12 @@ BOOL CDDEServer::Create()
 	USES_CONVERSION;
 	DWORD dwFilterFlags = 0;
 	UINT uiResult;
-	
-	uiResult = DdeInitializeA( &m_hInstance, DDECallback, dwFilterFlags, 0 );
+
+	uiResult = DdeInitialize( &m_hInstance, DDECallback, dwFilterFlags, 0 );
 	if ( uiResult != DMLERR_NO_ERROR ) return FALSE;
 	
-	m_hszService = DdeCreateStringHandleA( m_hInstance, T2CA( (LPCTSTR)m_sService ), CP_WINANSI );
+	m_hszService = DdeCreateStringHandle( m_hInstance, (LPCTSTR)m_sService, CP_WINUNICODE );
+
 	
     DdeNameService( m_hInstance, m_hszService, NULL, DNS_REGISTER );
 	
@@ -134,21 +135,15 @@ CString CDDEServer::StringFromHsz(HSZ hsz)
 {
 	CString str;
 
-	DWORD nLen = DdeQueryStringA( m_hInstance, hsz, NULL, 0, CP_WINANSI );
+	DWORD nLen = DdeQueryString( m_hInstance, hsz, NULL, 0, CP_WINUNICODE );
 	if ( nLen == 0 ) return str;
-	
-#ifdef _UNICODE
-	LPSTR pBuf = new CHAR[ nLen + 1 ];
-	DdeQueryStringA( m_hInstance, hsz, pBuf, nLen + 1, CP_WINANSI );
-	int nWide = MultiByteToWideChar( CP_ACP, 0, pBuf, nLen, NULL, 0 );
-	MultiByteToWideChar( CP_ACP, 0, pBuf, nLen, str.GetBuffer( nWide ), nWide );
-	str.ReleaseBuffer( nWide );
+
+	LPTSTR pBuf = new TCHAR[ nLen + 1 ];
+	DdeQueryString( m_hInstance, hsz, pBuf, nLen + 1, CP_WINUNICODE );
+	pBuf[nLen] = 0;
+
+	str = pBuf;
 	delete [] pBuf;
-#else
-	LPTSTR pBuf = str.GetBuffer( nLen );
-	DdeQueryStringA( m_hInstance, hsz, pBuf, nLen + 1, CP_WINANSI );
-	str.ReleaseBuffer( nLen );
-#endif
 	
 	return str;
 }
@@ -226,17 +221,26 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData, HDDEDATA* phResult)
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 {
 	CString str;
-	
-#ifdef _UNICODE
-	int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, NULL, 0 );
-	MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength,
-		str.GetBuffer( nWide ), nWide );
-	str.ReleaseBuffer( nWide );
-#else
-	CopyMemory( str.GetBuffer( (int)nLength ), pData, nLength );
-	str.ReleaseBuffer( (int)nLength );
-#endif
-	
+
+	if ( theApp.m_bNT )
+	{
+		// Copy data info a buffer
+		LPWSTR pszData = new WCHAR[ nLength + 1 ];
+		CopyMemory( pszData, pData, nLength );
+		// Ensure it has a null terminator
+		pszData[ nLength ] = 0;
+		// Assign it to the Cstring and remove buffer
+		str = pszData;
+		delete [] pszData;
+	}
+	else
+	{
+		// Windows 9x will return the data as an ASCII string. (even though UNICODE was specified)
+		int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, NULL, 0 );
+		MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, str.GetBuffer( nWide ), nWide );
+		str.ReleaseBuffer( nWide );
+	}
+
 	return Execute( pszTopic, str );
 }
 

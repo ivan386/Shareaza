@@ -69,24 +69,50 @@ BOOL CDownloadDlg::OnInitDialog()
 	
 	if ( OpenClipboard() )
 	{
-		if ( HGLOBAL hData = GetClipboardData( CF_TEXT ) )
+		CString strClipboard;
+
+		if ( theApp.m_bNT )
 		{
-			DWORD nData = GlobalSize( hData );
-			LPVOID pData = GlobalLock( hData );
-			
-			LPSTR pszData = new CHAR[ nData + 1 ];
-			CopyMemory( pszData, pData, nData );
-			pszData[ nData ] = 0;
-			CString str = pszData;
-			delete [] pszData;
-			
-			GlobalUnlock( hData );
-			
-			str.Trim( _T(" \t\r\n") );
-			CShareazaURL pURL;
-			if( pURL.Parse( str ) )
+			// These OSes can handle unicode file names
+			if ( HGLOBAL hData = GetClipboardData( CF_UNICODETEXT ) )
 			{
-				m_sURL = str;
+				DWORD nData = GlobalSize( hData );
+				LPVOID pData = GlobalLock( hData );
+				
+				LPTSTR pszData = new TCHAR[ nData + 1 ];
+				CopyMemory( pszData, pData, nData );
+				pszData[ nData ] = 0;
+				strClipboard = pszData;
+				delete [] pszData;
+				GlobalUnlock( hData );
+			}
+		}
+		else
+		{
+			// We need to have the file "%" encoded to display the names. 
+			if ( HGLOBAL hData = GetClipboardData( CF_TEXT ) )
+			{
+				DWORD nData = GlobalSize( hData );
+				LPVOID pData = GlobalLock( hData );
+				
+				LPSTR pszData = new CHAR[ nData + 1 ];
+				CopyMemory( pszData, pData, nData );
+				pszData[ nData ] = 0;
+				strClipboard = pszData;
+				delete [] pszData;
+				GlobalUnlock( hData );
+			}	
+		}
+			
+		// If we had something in the clipboard, see if it's a valid URL
+		if ( ! strClipboard.IsEmpty() )
+		{
+			strClipboard.Trim( _T(" \t\r\n") );
+					
+			CShareazaURL pURL;
+			if( pURL.Parse( strClipboard ) )
+			{
+				m_sURL = strClipboard;
 				UpdateData( FALSE );
 				OnChangeURL();
 			}
