@@ -869,26 +869,20 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 
 void CDownloads::OnRun()
 {
-	CSingleLock pLock( &Transfers.m_pSection );
-	
 	DWORD nActiveDownloads	= 0;
 	DWORD nActiveTransfers	= 0;
 	DWORD nTotalTransfers	= 0;
 	DWORD nTotalBandwidth	= 0;
-	
-	m_nValidation = 0;
-	m_nRunCookie ++;
-	
-	while ( TRUE )
+
 	{
-		BOOL bWorked = FALSE;
-		pLock.Lock();
+		CTransfers::Lock oLock;
+
+		m_nValidation = 0;
+		++m_nRunCookie;
 		
-		for ( POSITION pos = GetIterator() ; pos ; )
+		for ( POSITION pos = GetIterator(); pos; )
 		{
 			CDownload* pDownload = GetNext( pos );
-			if ( pDownload->m_nRunCookie == m_nRunCookie ) continue;
-			
 			pDownload->m_nRunCookie = m_nRunCookie;
 			pDownload->OnRun();
 			
@@ -922,15 +916,9 @@ void CDownloads::OnRun()
 				nActiveDownloads ++;
 				nTotalTransfers += nTemp;
 			}
-			
-			bWorked = TRUE;
-			break;
 		}
-		
-		pLock.Unlock();
-		if ( ! bWorked ) break;
 	}
-	
+
 	m_nTransfers = nActiveTransfers;
 	m_nBandwidth = nTotalBandwidth;
 	
