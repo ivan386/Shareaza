@@ -191,11 +191,6 @@ BOOL CShareazaApp::InitInstance()
 	
 	dlgSplash->Hide();
 	m_bLive = TRUE;
-
-	if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
-	{
-		CHelpDlg::Show( _T("GeneralHelp.DiskSpace") );
-	}
 	
 	return TRUE;
 }

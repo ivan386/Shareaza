@@ -378,6 +378,7 @@ CSettings::CSettings()
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
+	Live.DiskWarning		= FALSE;
 
 	Setup();
 

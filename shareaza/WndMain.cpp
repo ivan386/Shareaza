@@ -45,6 +45,7 @@
 #include "Skin.h"
 #include "SkinWindow.h"
 #include "Scheduler.h"
+#include "DlgHelp.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -665,6 +666,8 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 
 void CMainWnd::OnTimer(UINT nIDEvent) 
 {
+	static DWORD tLastCheck = 0;
+
 	// Fix resource handle
 	
 	if ( AfxGetResourceHandle() != m_hInstance )
@@ -725,6 +728,24 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	// Scheduler
 	
 	if ( Settings.Scheduler.Enable ) Schedule.Update();
+
+	// Disk space check
+
+	if ( Settings.Live.DiskWarning == FALSE )
+	{
+		DWORD tTicks = GetTickCount();
+
+		if ( tTicks - tLastCheck > 5 * 60 * 1000 )  //Run once every 5 minutes
+		{
+			tLastCheck = tTicks;
+
+			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
+			{
+				CHelpDlg::Show( _T("GeneralHelp.DiskSpace") );
+				Settings.Live.DiskWarning = TRUE;
+			}
+		}
+	}
 	
 	// Update messages
 	
