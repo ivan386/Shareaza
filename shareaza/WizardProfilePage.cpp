@@ -311,5 +311,5 @@ LRESULT CWizardProfilePage::OnWizardNext()
 	
 	MyProfile.Save();
 	
-	return ( (Settings.Connection.InSpeed > 128) && (theApp.m_bNT) && (!Settings.Connection.Firewalled) ) ? 0 : IDD_WIZARD_FINISHED;
+	return ( (Settings.Connection.InSpeed > 128) && (theApp.m_bNT) && (!Settings.Connection.Firewalled) && (!theApp.m_bLimitedConnections) ) ? 0 : IDD_WIZARD_FINISHED;
 }

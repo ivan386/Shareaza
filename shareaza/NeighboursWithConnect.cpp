@@ -453,11 +453,18 @@ void CNeighboursWithConnect::Maintain()
 		
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
 		{
+			//If connections are limited (XP sp2), then don't try to connect to G1 until G2 is ok.
+			if ( (nProtocol == PROTOCOL_G1) && (Settings.Downloads.MaxConnectingSources < 10) )
+			{
+				if ( (nCount[ PROTOCOL_G2 ][ ntHub ] == 0) && (Settings.Gnutella2.EnableToday == TRUE) )
+					return;
+			}
+
 			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
 			
 			int nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
 			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : 2;
-			nAttempt = min(nAttempt, Settings.Downloads.MaxConnectingSources); //Required for WinXP sp2
+			nAttempt = min(nAttempt, (Settings.Downloads.MaxConnectingSources - 2) ); //Helps XP sp2
 			
 			if ( nProtocol == PROTOCOL_ED2K )
 			{
