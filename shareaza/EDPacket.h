@@ -331,12 +331,18 @@ public:
 #define ED2K_ET_EXTENDEDREQUEST		0x25
 #define ED2K_ET_COMPATIBLECLIENT	0x26
 
+// Client ID
+#define ED2K_COMPATIBLECLIENT_ID	0x14 // Temp change to test stuff... should be 4
 
-//Shareaza's advertised capabilities / feature versions
+// Shareaza's advertised capabilities / feature versions
 #define ED2K_VERSION_UDP			0x02
 #define ED2K_VERSION_COMPRESSION	0x01
 #define ED2K_VERSION_SOURCEEXCHANGE	0x02
 #define ED2K_VERSION_EXTENDEDREQUEST 0x01
+// Things that aren't supported
+#define ED2K_VERSION_AICH			0x00
+#define ED2K_VERSION_SECUREID		0x00
+#define ED2K_VERSION_COMMENTS		0x00
 
-#define ED2K_COMPATIBLECLIENT_ID	0x14 // Temp change to test stuff... should be 4
+
 

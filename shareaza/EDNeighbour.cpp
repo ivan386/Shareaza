@@ -606,7 +606,7 @@ void CEDNeighbour::SendSharedFiles()
 		
 		if ( pFile->IsShared() && pFile->m_bED2K )	//If file is shared and has an ed2k hash
 		{
-			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
+			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( nCount < 100 ) || ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, FALSE ) ) // Check if a queue exists
 				{

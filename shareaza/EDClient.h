@@ -54,13 +54,23 @@ public:
 	CString		m_sNick;
 	int			m_nVersion;
 	BOOL		m_bEmule;
-	BOOL		m_bEmSources;
-	BOOL		m_bEmComments;
-	BOOL		m_bEmRequest;
-	BOOL		m_bEmDeflate;
+
 	int			m_nEmVersion;
 	int			m_nEmCompatible;
 	DWORD		m_nSoftwareVersion;
+public:	//Client capabilities
+	BOOL		m_bEmAICH;			// Not supported
+	BOOL		m_bEmUnicode;
+	BOOL		m_bEmUDPVersion;
+	BOOL		m_bEmDeflate;
+	BOOL		m_bEmSecureID;		// Not supported
+	BOOL		m_bEmSources;
+	BOOL		m_bEmRequest;
+	BOOL		m_bEmComments;		// Not supported over ed2k
+	BOOL		m_bEmPeerCache;		// Not supported
+	BOOL		m_bEmBrowse;		// Not supported over ed2k
+	BOOL		m_bEmMultiPacket;	// Not supported
+	BOOL		m_bEmPreview;		// Not supported over ed2k
 public:
 	BOOL		m_bLogin;
 	BOOL		m_bUpMD4;

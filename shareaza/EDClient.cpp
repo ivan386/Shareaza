@@ -41,6 +41,8 @@
 #include "UploadTransferED2K.h"
 #include "SourceURL.h"
 
+#include "ChatWindows.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -61,15 +63,27 @@ CEDClient::CEDClient()
 	m_nClientID		= 0;
 	m_nUDP			= 0;
 	
+	// Client ID and version
 	m_bEmule		= FALSE;
-	m_bEmSources	= FALSE;
-	m_bEmComments	= FALSE;
-	m_bEmRequest	= FALSE;
-	m_bEmDeflate	= FALSE;
 	m_nEmVersion	= 0;
 	m_nEmCompatible	= 0;
 	m_nSoftwareVersion=0;
+
+	// Client capabilities
+	m_bEmAICH		= FALSE;		// Not supported
+	m_bEmUnicode	= FALSE;
+	m_bEmUDPVersion	= FALSE;
+	m_bEmDeflate	= FALSE;
+	m_bEmSecureID	= FALSE;		// Not supported
+	m_bEmSources	= FALSE;
+	m_bEmRequest	= FALSE;
+	m_bEmComments	= FALSE;		// Not supported over ed2k
+	m_bEmPeerCache	= FALSE;		// Not supported
+	m_bEmBrowse		= FALSE;		// Not supported over ed2k
+	m_bEmMultiPacket= FALSE;		// Not supported
+	m_bEmPreview	= FALSE;		// Not supported over ed2k
 	
+	// Misc stuff
 	m_bLogin		= FALSE;
 	m_bUpMD4		= FALSE;
 	
@@ -593,9 +607,10 @@ void CEDClient::SendHello(BYTE nType)
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 
-	// 3 - Software Version. Note we're likely to corrupt the beta number, since 
-	//		there's only 3 bits available, but it's the least important anyway.
-	//		Note: Including this stops the remote client sending the eMuleInfo packet...	
+	// 3 - Software Version. 
+	//		Note we're likely to corrupt the beta number, since there's only 3 bits available, 
+	//		but it's the least important anyway.
+	//		Note: Including this stops the remote client sending the eMuleInfo packet.
 	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
 							( ( theApp.m_nVersion[1] & 0x7F ) << 17 ) | 
 							( ( theApp.m_nVersion[2] & 0x7F ) << 10 ) |
@@ -605,10 +620,19 @@ void CEDClient::SendHello(BYTE nType)
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
 	// 4 - Feature Versions. 
-	nVersion = ( ( ED2K_VERSION_UDP << 24) |
-				 ( ED2K_VERSION_COMPRESSION << 20) |
-				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |
-				 ( ED2K_VERSION_EXTENDEDREQUEST << 8) );
+	nVersion = ( ( ED2K_VERSION_AICH << 29) | // AICH
+				 //( TRUE << 28) | // Unicode
+				 ( ED2K_VERSION_UDP << 24) | // UDP version
+				 ( ED2K_VERSION_COMPRESSION << 20) | // Compression
+			     ( ED2K_VERSION_SECUREID << 16) | // Secure ID
+				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) | // Source exchange
+				 ( ED2K_VERSION_EXTENDEDREQUEST << 8) | // Extended requests
+				 ( ED2K_VERSION_COMMENTS << 4) | // Comments
+				 ( FALSE << 3) | // Peer Cache
+				 ( TRUE << 2) | // No browse
+				 ( FALSE << 1) | // Multipacket
+				 ( FALSE ) );// Preview
+
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
@@ -695,10 +719,18 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			if ( pTag.m_nType == ED2K_TAG_INT ) 
 			{
 				m_bEmule = TRUE;
+				m_bEmAICH		= (pTag.m_nValue >> 29) & 0x07;
+				m_bEmUnicode	= (pTag.m_nValue >> 28) & 0x01;
+				m_bEmUDPVersion	= (pTag.m_nValue >> 24) & 0x0F;
 				m_bEmDeflate	= (pTag.m_nValue >> 20) & 0x0F;
+				m_bEmSecureID	= (pTag.m_nValue >> 16) & 0x0F;
 				m_bEmSources	= (pTag.m_nValue >> 12) & 0x0F;
 				m_bEmRequest	= (pTag.m_nValue >> 8 ) & 0x0F;
 				m_bEmComments	= (pTag.m_nValue >> 4 ) & 0x0F;
+				m_bEmPeerCache	= (pTag.m_nValue >> 3 ) & 0x01;
+				m_bEmBrowse		=!(pTag.m_nValue >> 2 ) & 0x01;
+				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
+				m_bEmPreview	= (pTag.m_nValue) & 0x01;
 			}
 			break;
 		case ED2K_CT_SOFTWAREVERSION:
@@ -812,6 +844,15 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		
 		switch ( pTag.m_nKey )
 		{
+		case ED2K_ET_COMPRESSION:
+			m_bEmDeflate = pTag.m_nValue;
+			break;
+		case ED2K_ET_UDPPORT:
+			m_nUDP = (WORD)pTag.m_nValue;
+			break;
+		case ED2K_ET_UDPVER:
+			m_bEmUDPVersion = (WORD)pTag.m_nValue;
+			break;
 		case ED2K_ET_SOURCEEXCHANGE:
 			m_bEmSources = pTag.m_nValue;
 			break;
@@ -820,12 +861,6 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			break;
 		case ED2K_ET_EXTENDEDREQUEST:
 			m_bEmRequest = pTag.m_nValue;
-			break;
-		case ED2K_ET_COMPRESSION:
-			m_bEmDeflate = pTag.m_nValue;
-			break;
-		case ED2K_ET_UDPPORT:
-			m_nUDP = (WORD)pTag.m_nValue;
 			break;
 		case ED2K_ET_COMPATIBLECLIENT:
 			m_nEmCompatible = pTag.m_nValue;
@@ -1174,7 +1209,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 
 
 	//Read in message
-	//if ( unicode )
+	//if ( m_bEmUnicode )
 	//	sMessage = pPacket->ReadStringUTF8( nMessageLength );
 	//else
 		sMessage = pPacket->ReadString( nMessageLength );
@@ -1182,6 +1217,11 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	// Check if chat is enabled
 	if ( Settings.Community.ChatEnable )
 	{	// Chat is enabled- we should open a chat window
+/*
+		CPrivateChatFrame* pChatWindow;
+	
+		pChatWindow = ChatWindows.OpenPrivate( &m_pGUID, &m_pHost, CEDPacket::IsLowID( m_nClientID ) );
+*/
 		theApp.Message( MSG_DEFAULT, _T("Message from %s recieved, opening chat window."), (LPCTSTR)m_sAddress );
 
 		theApp.Message( MSG_DEFAULT, sMessage ); //***temp- open chat window instead
