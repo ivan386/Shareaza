@@ -109,7 +109,9 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	CString strUserAgent = Settings.SmartAgent( Settings.General.UserAgent );
 	Replace( strUserAgent, _T("Shareaza"), _T("RAZA") );
 	m_pRequest.SetUserAgent( strUserAgent );
-	
+
+	//m_pRequest.AddHeader( _T("Cache-Control"), _T("no-cache") ); // Shouldn't be needed
+
 	BTClients.Add( this );
 	CreateThread();
 }
@@ -252,6 +254,8 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 {
 	CString strError;
+
+	// Check for failure
 	if ( CBENode* pError = pRoot->GetNode( "failure reason" ) )
 	{
 		strError = pError->GetString();
@@ -261,6 +265,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 		return FALSE;
 	}
 	
+	// Get the interval (next tracker contact)
 	CBENode* pInterval = pRoot->GetNode( "interval" );
 	if ( ! pInterval->IsType( CBENode::beInt ) ) 
 	{
@@ -270,12 +275,14 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 	int nInterval = (int)(DWORD)pInterval->GetInt();
 
+	// Verify interval is valid
 	nInterval = max( nInterval, 60*2 );
 	nInterval = min( nInterval, 60*60 );
 	
 	m_pDownload->m_tTorrentTracker = GetTickCount() + 1000 * nInterval;
 	m_pDownload->m_bTorrentStarted = TRUE;
 	
+	// Get list of peers
 	CBENode* pPeers = pRoot->GetNode( "peers" );
 	int nCount = 0;
 	
@@ -332,8 +339,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	m_pDownload->OnTrackerEvent( TRUE );
 
 	theApp.Message( MSG_DEFAULT, IDS_BT_TRACK_SUCCESS,
-		(LPCTSTR)m_pDownload->GetDisplayName(), nCount );
-	
+		(LPCTSTR)m_pDownload->GetDisplayName(), nCount );	
 	return TRUE;
 }
 
