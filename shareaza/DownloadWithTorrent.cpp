@@ -212,7 +212,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	{
 		if ( m_pPeerID.n[ nByte ] != 0 ) 
 		{
-			theApp.Message( MSG_ERROR, _T("Attmepted to re-create an in-use peer ID") );
+			theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use peer ID") );
 			return FALSE;
 		}
 	}
