@@ -457,6 +457,7 @@ void CNeighboursWithConnect::Maintain()
 			
 			int nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
 			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : 2;
+			nAttempt = min(nAttempt, Settings.Downloads.MaxConnectingSources); //Required for WinXP sp2
 			
 			if ( nProtocol == PROTOCOL_ED2K )
 			{
