@@ -184,9 +184,8 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 			Close();
 			return FALSE;
 		}
-		else if ( tNow > m_tRanking && tNow - m_tRanking >= 5000 )
-		{
-			m_tRanking = GetTickCount();
+		else if ( tNow > m_tRanking && tNow - m_tRanking >= 10000 )	//If client hasn't had an update recently
+		{	//Then send them one. (Note: Updates are only sent if queue rank has changed)
 			if ( ! SendRanking() ) return FALSE;
 		}
 	}
@@ -618,18 +617,21 @@ BOOL CUploadTransferED2K::SendRanking()
 	int nPosition = UploadQueues.GetPosition( this, TRUE );
 	
 	if ( nPosition < 0 )
-	{
+	{	//Invalid queue position
 		Cleanup();
 		Close( TRUE );
 		return FALSE;
 	}
 	
-	if ( m_nRanking == nPosition ) return TRUE;
+	//If queue ranking hasn't changed, don't send (unless specifically requested: m_nRanking set to -1)
+	if ( m_nRanking == nPosition ) return TRUE;	
+	//Update the 'ranking sent' variables
 	m_nRanking = nPosition;
+	m_tRanking = GetTickCount();
 	
 	if ( nPosition == 0 )
-	{
-		m_tRequest = GetTickCount();
+	{	//Ready to start uploading
+		m_tRequest = m_tRanking;
 		
 		if ( m_pClient->IsOnline() )
 		{
@@ -643,7 +645,7 @@ BOOL CUploadTransferED2K::SendRanking()
 		}
 	}
 	else if ( m_pClient->IsOnline() )
-	{
+	{	//Upload is queued
 		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
 		
 		if ( UploadQueues.Check( m_pQueue ) )
@@ -658,7 +660,7 @@ BOOL CUploadTransferED2K::SendRanking()
 		m_nState = upsQueued;
 		
 		if ( m_pClient->m_bEmule )
-		{
+		{	//eMule queue ranking
 			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANKING, ED2K_PROTOCOL_EMULE );
 			pPacket->WriteShortLE( nPosition );
 			pPacket->WriteShortLE( 0 );
@@ -667,7 +669,7 @@ BOOL CUploadTransferED2K::SendRanking()
 			Send( pPacket );
 		}
 		else
-		{
+		{	//older eDonkey style
 			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANK );
 			pPacket->WriteLongLE( nPosition );
 			Send( pPacket );
