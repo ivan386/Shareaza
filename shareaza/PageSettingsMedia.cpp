@@ -133,7 +133,8 @@ void CMediaSettingsPage::OnMediaAdd()
 {
 	UpdateData();
 
-	m_sType = CharLower( m_sType.GetBuffer() );
+	CharLower( m_sType.GetBuffer() );
+	m_sType.ReleaseBuffer();
 	m_sType.TrimLeft();
 	m_sType.TrimRight();
 	if ( m_sType.IsEmpty() ) return;
