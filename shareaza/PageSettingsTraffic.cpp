@@ -188,6 +188,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.ConnectThrottle, 1, 0, 5000, _T(" ms") );
 	AddSetting( &Settings.Downloads.PushTimeout, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Downloads.StarveTimeout, 60, 45, 1440, _T(" m") );
+	AddSetting( &Settings.Downloads.StarveGiveUp, 1, 3, 120, _T(" h") );
 	AddSetting( &Settings.Downloads.ChunkSize, 1024, 0, 10240, _T(" KB") );
 	AddSetting( &Settings.Downloads.ChunkStrap, 1024, 0, 10240, _T(" KB") );
 	AddSetting( &Settings.Downloads.AllowBackwards, 1, 0, 1 );

@@ -300,7 +300,7 @@ void CDownload::OnRun()
 	if( IsTrying() )
 	{	//This download is trying to download
 
-		DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + 3;
+		DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
 		//'Dead download' check- if download appears dead, give up and allow another to start.
 		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 )  )	
 		{	//If it's not complete, and have had no new data for 3-12 hours	

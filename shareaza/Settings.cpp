@@ -291,6 +291,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
 	Add( _T("Downloads.SearchPeriod"), &Downloads.SearchPeriod, 120000 );
 	Add( _T("Downloads.StarveTimeout"), &Downloads.StarveTimeout, 2700 );
+	Add( _T("Downloads.StarveGiveUp"), &Downloads.StarveGiveUp, 3 );
 	Add( _T("Downloads.RetryDelay"), &Downloads.RetryDelay, 10*60000 );
 	Add( _T("Downloads.PushTimeout"), &Downloads.PushTimeout, 45000 );
 	Add( _T("Downloads.StaggardStart"), &Downloads.StaggardStart, FALSE );

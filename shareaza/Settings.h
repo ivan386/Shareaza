@@ -34,12 +34,12 @@ public:
 public:
 	struct sGeneral
 	{
-		CString		Path;
-		CString		UserPath;
+		CString		Path;						//Installlation path for Shareaza
+		CString		UserPath;					//Path for user data. (May be the same as above for single user installs)
 		BOOL		Debug;
 		BOOL		DebugLog;
 		BOOL		UpdateCheck;
-		DWORD		DiskSpaceWarning;
+		DWORD		DiskSpaceWarning;			//Value at which to warn the user about low disk space
 		INT			GUIMode;
 		BOOL		CloseMode;
 		BOOL		TrayMinimise;
@@ -155,13 +155,13 @@ public:
 		BOOL		InBind;
 		DWORD		InSpeed;
 		DWORD		OutSpeed;
-		BOOL		IgnoreLocalIP;
-		BOOL		IgnoreOwnIP;
+		BOOL		IgnoreLocalIP;				//Ingnore all 'local' (LAN) IPs
+		BOOL		IgnoreOwnIP;				//Do not accept any ports on your external IP as a source
 		DWORD		TimeoutConnect;
 		DWORD		TimeoutHandshake;
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
-		BOOL		RequireForTransfers;
+		BOOL		RequireForTransfers;		//Only upload/download to connected networks
 		BOOL		AsyncIO;
 	} Connection;
 
@@ -285,7 +285,6 @@ public:
 		BOOL		ServerWalk;
 		DWORD		QueryGlobalThrottle;
 		DWORD		QueryServerThrottle;
-		//DWORD		RequeryDelay;
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;
@@ -300,10 +299,10 @@ public:
 	
 	struct sBitTorrent
 	{
-		BOOL		AdvancedInterface;
-		CString		TorrentCreatorPath;
+		BOOL		AdvancedInterface;			//Display BT 'extras' (Seed Torrent box, etc)
+		CString		TorrentCreatorPath;			//Location of the program used to create .torrent files
 		CString		DefaultTracker;
-		DWORD		DefaultTrackerPeriod;
+		DWORD		DefaultTrackerPeriod;		//Delay between tracker contact attempts if one is not specified by tracker
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
 		DWORD		RequestPipe;
@@ -312,55 +311,56 @@ public:
 		DWORD		RandomPeriod;
 		DWORD		SourceExchangePeriod;
 		int			UploadCount;
-		int			DownloadConnections;
-		int			DownloadTorrents;
-		BOOL		Endgame;
+		int			DownloadConnections;		//Number active torrent connections allowed
+		int			DownloadTorrents;			//Number of torrents to download at once
+		BOOL		Endgame;					//Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
 	} BitTorrent;
 
 	struct sDownloads
 	{
-		CString		IncompletePath;
-		CString		CompletePath;
-		CString		TorrentPath;
-		CString		CollectionPath;
+		CString		IncompletePath;				//Where incomplete downloads are stored
+		CString		CompletePath;				//Where downloads are moved when they complete
+		CString		TorrentPath;				//Where .torrent files are stored
+		CString		CollectionPath;				//Where .collection and .co files are stored
 		DWORD		BufferSize;
-		DWORD		SparseThreshold;
-		INT			MaxFiles;
-		INT			MaxTransfers;
-		INT			MaxFileTransfers;
-		INT			MaxFileSearches;
-		INT			MaxConnectingSources;
-		INT			MinSources;
-		DWORD		ConnectThrottle;
-		INT			QueueLimit;
+		DWORD		SparseThreshold;			//NTFS 'sparse files' are not used on files below this size. (0 = Disable)
+		INT			MaxFiles;					//How many files download at once
+		INT			MaxTransfers;				//How many total tranfers take place
+		INT			MaxFileTransfers;			//How mnay transfers are allowed per file
+		INT			MaxFileSearches;			//Number number of files over the download limit that prepare to start. (Search, etc)
+		INT			MaxConnectingSources;		//The maximum number of sources that can be in the 'connecting' state. (Important for XPsp2)
+		INT			MinSources;					//The minimum number of sources a download has before Shareaza regards it as having a problem
+		DWORD		ConnectThrottle;			//Delay between download attempts. (Very important for routers)
+		INT			QueueLimit;					//Longest queue to wait in. (0 to disable. This should be >800 or 0 to get good performance from ed2k)
 		DWORD		SearchPeriod;
 		DWORD		StarveTimeout;
+		DWORD		StarveGiveUp;				//How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
 		BOOL		StaggardStart;
-		BOOL		AllowBackwards;
+		BOOL		AllowBackwards;				//Permit download to run in reverse when appropriate
 		DWORD		ChunkSize;
 		DWORD		ChunkStrap;
 		BOOL		Metadata;
 		BOOL		VerifyFiles;
 		BOOL		VerifyTiger;
 		BOOL		VerifyED2K;
-		BOOL		NeverDrop;
+		BOOL		NeverDrop;					//Do not drop bad sources (may pollute source list with many dead sources)
 		BOOL		RequestHash;
 		BOOL		RequestHTTP11;
 		BOOL		RequestURLENC;
 		DWORD		SaveInterval;
 		BOOL		FlushSD;
 		BOOL		ShowSources;
-		BOOL		ShowPercent;
+		BOOL		ShowPercent;				//Display small green % complete bar on progress graphic
 		BOOL		ShowGroups;
 		BOOL		AutoExpand;
 		BOOL		AutoClear;
 		DWORD		ClearDelay;
 		DWORD		FilterMask;
 		BOOL		ShowMonitorURLs;
-		BOOL		SortColumns;
-		BOOL		SortSources;
+		BOOL		SortColumns;				//Allow user to sort downloads by clicking column headers
+		BOOL		SortSources;				//Automatically sort sources (Status, protocol, queue)
 	} Downloads;
 	
 	struct sUploads
@@ -399,7 +399,7 @@ public:
 	
 	struct sLive
 	{
-		DWORD		BandwidthScale;
+		DWORD		BandwidthScale;				//Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
 		BOOL		FirstRun;
