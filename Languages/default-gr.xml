@@ -147,7 +147,7 @@
                <separator/>
                <button id="ID_DOWNLOADS_MONITOR" text="Δείξε την οθόνη"/>
                <rightAlign/>
-               <button id="ID_TOOLS_DOWNLOAD" text="Πρόσθεσε/κατέβασεTorrent..."/>
+               <button id="ID_TOOLS_DOWNLOAD" text="Πρόσθεσε/κατέβασε Torrent..."/>
                <button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Καθάρισε τα ολοκληρωμένα αρχεία"/>
        </toolbar>
        <toolbar name="CDownloadsWnd">
@@ -302,7 +302,7 @@
        </toolbar>
        <toolbar name="CMediaFrame">
                <button id="ID_MEDIA_PLAY" text="Παίξε"/>
-               <button id="ID_MEDIA_PAUSE" text="Παύση" visible="Λάθος"/>
+               <button id="ID_MEDIA_PAUSE" text="Παύση" visible="false"/>
                <button id="ID_MEDIA_STOP" text="Διακοπή"/>
                <separator/>
                <label text="Seek:" tip="Αναζήτησε μια θέση στο video"/>
@@ -1433,7 +1433,7 @@
 
                <group id="2">
                        <icon res="134" width="32" height="32"/><gap size="8"/>
-                       <heading align="middle">Ψ Α Ξ Τ Ε &#160; ΤΟ S H A R E A Z A</heading>
+                       <heading align="middle">Ψ Α Ξ Τ Ε &#160; Τ Ο &#160; S H A R E A Z A</heading>
                        <newline gap="8" indent="42"/>
                        <anchor id="SearchBox" width="256" height="80"/>
                        <newline gap="12" indent="0"/>
@@ -1468,7 +1468,7 @@
         <newline gap="18" indent="0"/>
 
                <icon res="236" width="32" height="32"/><gap size="8"/>
-               <heading align="middle">Π Ρ Ο Σ Α Ρ Μ Ο Γ Η ΤΟΥ &#160; S H A R E A Z A</heading>
+               <heading align="middle">Π Ρ Ο Σ Α Ρ Μ Ο Γ Η Τ Ο Υ &#160; S H A R E A Z A</heading>
                <newline gap="12" indent="42"/>
 
                <icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
