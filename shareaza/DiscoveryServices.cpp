@@ -330,17 +330,31 @@ void CDiscoveryServices::AddDefaults()
 			CString strService;
 			CString strLine;
 			CBuffer pBuffer;
+			TCHAR cType;
 
 			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
 			pBuffer.m_nLength = (DWORD)pFile.GetLength();
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 			pFile.Close();
 
-			while ( pBuffer.ReadLine( strService ) )
+			while ( pBuffer.ReadLine( strLine ) )
 			{
-				Add( strService,( _tcsistr( strService, _T(".met") ) == NULL ?
-					CDiscoveryService::dsWebCache : CDiscoveryService::dsServerMet ),
-					TRUE ); // ( _tcsistr( strService, _T("GWC2") ) != NULL || _tcsistr( strService, _T("g2cache") ) != NULL ) );
+				if ( strLine.GetLength() < 7 ) continue; //Blank comment line
+
+				cType = strLine.GetAt( 0 );
+				strService = strLine.Right( strLine.GetLength() - 2 );
+
+				switch( cType )
+				{
+				case '1': Add( strService, CDiscoveryService::dsWebCache, FALSE );	//G1 service
+					break;
+				case '2': Add( strService, CDiscoveryService::dsWebCache, TRUE );	//G2 service
+					break;
+				case 'D': Add( strService, CDiscoveryService::dsServerMet, FALSE );	//eDonkey service
+					break;
+				case '#': //Comment line
+					break;
+				}
 			}
 		}
 		catch ( CException* pException )
