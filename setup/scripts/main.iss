@@ -331,13 +331,13 @@ var
 Begin
   if CurUninstallStep = usUninstall then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
-  if Wnd <> 0 then
+    if Wnd <> 0 then
       SendMessage(Wnd, WM_CLOSE, 0, 0);
-  while Wnd <> 0 do
-      begin
-        Sleep(100);
-        Wnd := FindWindowByClassName('ShareazaMainWnd');
-      End
+      while Wnd <> 0 do
+        begin
+          Sleep(100);
+          Wnd := FindWindowByClassName('ShareazaMainWnd');
+        End
 End;
 
 
