@@ -293,14 +293,15 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( theApp.m_bLimitedConnections ) 
 	{	//Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced.") );
-		Settings.Downloads.ConnectThrottle	= max( Settings.Downloads.ConnectThrottle, 2000 );
-		Settings.Gnutella.ConnectFactor		= min( Settings.Downloads.ConnectThrottle, 2 );
-		Settings.Gnutella2.NumHubs			= min( Settings.Gnutella2.NumHubs, 2 );
-		Settings.Gnutella1.EnableAlways		= FALSE;
-		Settings.Gnutella1.EnableToday		= FALSE;
-		Settings.Downloads.MaxFileSearches	= 1;
-		//Settings.Connection.TimeoutConnect	= 30000;
-		Settings.Connection.TimeoutHandshake= 60000;
+		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 2000 );
+		Settings.Gnutella.ConnectFactor			= min( Settings.Downloads.ConnectThrottle, 2 );
+		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
+		Settings.Gnutella1.EnableAlways			= FALSE;
+		Settings.Gnutella1.EnableToday			= FALSE;
+		Settings.Downloads.MaxFileSearches		= 1;
+		//Settings.Connection.TimeoutConnect		= 30000;
+		Settings.Connection.TimeoutHandshake	= 60000;
+		Settings.Connection.RequireForTransfers	= TRUE;
 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 	}

@@ -192,7 +192,7 @@ BOOL CNetworksSettingsPage::OnSetActive()
 void CNetworksSettingsPage::OnG2Enable() 
 {
 	UpdateData();
-	
+
 	if ( ! m_bG2Enable )
 	{
 		CString strMessage;
@@ -238,6 +238,15 @@ void CNetworksSettingsPage::OnG1Enable()
 void CNetworksSettingsPage::OnEd2kEnable() 
 {
 	UpdateData();
+
+	if ( (m_bEDEnable) && ( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_BANDWIDTH_LOW );
+		AfxMessageBox( strMessage, MB_OK );
+		m_bEDEnable = FALSE;
+		UpdateData( FALSE );
+	}
 	
 	CDonkeySettingsPage* ppDonkey =
 		(CDonkeySettingsPage*)GetPage( RUNTIME_CLASS(CDonkeySettingsPage) );

@@ -123,7 +123,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	
 	SkinMe( _T("CQueuePropertiesDlg"), ID_VIEW_UPLOADS );
 	
-	m_wndTransfersMin.SetRange( 1, 512 );
+	m_wndTransfersMin.SetRange( 1, 128 );
 	m_wndTransfersMax.SetRange( 1, 512 );
 	m_wndRotateTimeSpin.SetRange( 30, 15 * 60 );
 	
@@ -376,7 +376,7 @@ void CQueuePropertiesDlg::OnOK()
 	m_pQueue->m_nMaxTransfers	= max( m_nTransfersMin, m_nTransfersMax );
 	
 	m_pQueue->m_bRotate			= m_bRotate;
-	m_pQueue->m_nRotateTime		= m_nRotateTime;
+	m_pQueue->m_nRotateTime		= max(30, m_nRotateTime );
 	
 	m_pQueue->m_nBandwidthPoints = m_wndBandwidthSlider.GetPos();
 	

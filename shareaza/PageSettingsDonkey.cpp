@@ -119,12 +119,22 @@ BOOL CDonkeySettingsPage::OnSetActive()
 
 void CDonkeySettingsPage::OnEnableToday() 
 {
+	UpdateData( TRUE );
+
+	if ( (m_bEnableToday) && ( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_BANDWIDTH_LOW );
+		AfxMessageBox( strMessage, MB_OK );
+		m_bEnableToday = FALSE;
+		UpdateData( FALSE );
+	}
+
 	CNetworksSettingsPage* ppNetworks =
 		(CNetworksSettingsPage*)GetPage( RUNTIME_CLASS(CNetworksSettingsPage) );
 	
 	if ( ppNetworks->GetSafeHwnd() != NULL )
 	{
-		UpdateData( TRUE );
 		ppNetworks->UpdateData( TRUE );
 		ppNetworks->m_bEDEnable = m_bEnableToday;
 		ppNetworks->UpdateData( FALSE );
@@ -175,8 +185,8 @@ void CDonkeySettingsPage::OnOK()
 {
 	UpdateData();
 	
-	Settings.eDonkey.EnableToday	= m_bEnableToday || m_bEnableAlways;
-	Settings.eDonkey.EnableAlways	= m_bEnableAlways;
+	Settings.eDonkey.EnableAlways	= m_bEnableAlways && ( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) );
+	Settings.eDonkey.EnableToday	= m_bEnableToday || Settings.eDonkey.EnableAlways;
 	Settings.eDonkey.MaxLinks		= m_nLinks;
 	Settings.eDonkey.ServerWalk		= m_bServerWalk;
 	Settings.eDonkey.MaxResults		= m_nResults;
