@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.102"
+		version="2.1.0.111"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -826,6 +826,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="下载(_D)"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="立即下载(_N)"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="与用户聊天(_C)"/>
 		<separator/>
@@ -843,6 +844,7 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="下载(_D)"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="立即下载(_N)"/>
 		<item id="ID_SEARCH_COPY" text="复制 URI(_U)"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="与用户聊天(_C)"/>
@@ -895,6 +897,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="查看评价(_V)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="续传(_R)"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="暂停(_A)"/>
@@ -911,6 +914,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="加入播放列表(_Y)"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="查看评价(_V)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="续传(_R)"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="暂停(_A)"/>
@@ -1097,6 +1101,7 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据(_L)"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="属性(_P)"/>
 	</menu>
@@ -1128,8 +1133,7 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="重建元数据"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
@@ -1165,6 +1169,7 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据(_L)"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="属性(_P)"/>
 	</menu>
@@ -1198,8 +1203,7 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="重建元数据"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
@@ -2139,6 +2143,7 @@
 	<tip id="ID_DOWNLOADS_SOURCES" message="为选定的文件搜索更多的资源。"/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="查看选定 BitTorrent 下载的信息..."/>
 	<tip id="ID_DOWNLOADS_URL" message="添加一个资源链接到选定的下载..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="查看选定下载的评价"/>
 	<tip id="ID_HELP_ABOUT" message="显示 Shareaza 关于对话框..."/>
 	<tip id="ID_HELP_FAQ" message="访问 Shareaza 用户指南。"/>
 	<tip id="ID_HELP_FIREWALLS" message="获取配置您的路由器或防火墙的帮助。"/>
@@ -2190,7 +2195,6 @@
 	<tip id="ID_LIBRARY_PARENT" message="上移至父级文件夹。"/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="查看和编辑选定文件的属性..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="重建元数据和 Hash 选定文件夹或文件。"/>
-	<!-- Add the following line if you need it -->
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="使用您的本地语言重建元数据。"/>
 	<tip id="ID_LIBRARY_REFRESH" message="刷新收藏视图。"/>
 	<tip id="ID_LIBRARY_REMOVE" message="移除选定的文件夹。"/>
@@ -2508,7 +2512,7 @@
 	<string id="8320" value="状态:"/>
 	<string id="8321" value="速度:"/>
 	<string id="8322" value="链接:"/>
-	<string id="8323" value="用户代理:"/>
+	<string id="8323" value="客户端:"/>
 	<string id="8324" value="停止"/>
 	<string id="8325" value="活动"/>
 	<string id="8326" value="下一个"/>
@@ -3174,7 +3178,7 @@
 		<control caption="去除标记元数据"/>
 		<control caption="对每个用户进行限制:"/>
 		<control/><control/>
-		<control caption="用户代理过滤(_U):"/>
+		<control caption="客户端过滤(_U):"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
@@ -4042,6 +4046,19 @@
 		<control caption="不要检测新版本"/>
 		<control caption="不要升级"/>
 	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="下载评价">
+		<control/>
+		<control caption="确定"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="元数据本地化">
+		<control caption="确定"/>
+		<control caption="取消"/>
+		<control caption="请选择重新编码的方式"/>
+		<control caption="阿拉伯文|波罗的海文|中欧|简体中文|繁体中文|西里尔文|希腊文|希伯来文|日文|韩文|泰文|土耳其文|越南文"/>
+	</dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4160,6 +4177,12 @@
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="文件名"/>
 		<column from="Size" to="大小"/>
+	</list>
+	<list name="CReviewList">
+		<column from="User" to="用户"/>
+		<column from="Rating" to="评级"/>
+		<column from="Comments" to="注释"/>
+		<column from="Order" to="等级"/>
 	</list>
 </listColumns>
 </skin>
