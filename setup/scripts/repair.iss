@@ -59,6 +59,7 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Plugins"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\Shareaza.exe"
+Type: files; Name: "{app}\skin.exe"
 
 [Files]
 ; Copy installer stored in uninstall dir to temp location to avoid "in-use" error
