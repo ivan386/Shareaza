@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,45
- PRODUCTVERSION 2,1,0,45
+ FILEVERSION 2,1,0,46
+ PRODUCTVERSION 2,1,0,46
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 45"
+            VALUE "FileVersion", "2, 1, 0, 46"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 45"
+            VALUE "ProductVersion", "2, 1, 0, 46"
         END
     END
     BLOCK "VarFileInfo"
@@ -1302,8 +1302,8 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,95,140,10
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,110,140,10
-    LTEXT           "Show rates in:",IDC_STATIC,15,155,50,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,70,155,80,55,CBS_DROPDOWNLIST | 
+    LTEXT           "Show rates in:",IDC_STATIC,15,186,50,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_RATES_IN_BYTES,70,186,80,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
@@ -1330,6 +1330,10 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,140,10
     CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,140,140,10
+    CONTROL         "Auto-clean downloads window",IDC_CLEAR_DOWNLOADS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,155,140,10
+    CONTROL         "Auto-clean uploads window",IDC_CLEAR_UPLOADS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,170,140,10
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 292, 148

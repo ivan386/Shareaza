@@ -58,6 +58,8 @@ CGeneralSettingsPage::CGeneralSettingsPage() : CSettingsPage(CGeneralSettingsPag
 	m_bPromptURLs = FALSE;
 	m_bHideSearch = FALSE;
 	m_bAdultFilter = FALSE;
+	m_bClearDownloads = FALSE;
+	m_bClearUploads = FALSE;
 	m_nTipDelay = 0;
 	m_bHighlightNew = FALSE;
 	//}}AFX_DATA_INIT
@@ -82,6 +84,8 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_PROMPT_URLS, m_bPromptURLs);
 	DDX_Check(pDX, IDC_HIDE_SEARCH, m_bHideSearch);
 	DDX_Check(pDX, IDC_ADULT_FILTER, m_bAdultFilter);
+	DDX_Check(pDX, IDC_CLEAR_DOWNLOADS, m_bClearDownloads);
+	DDX_Check(pDX, IDC_CLEAR_UPLOADS, m_bClearUploads);
 	DDX_Control(pDX, IDC_TIP_DELAY_SPIN, m_wndTipSpin);
 	DDX_Control(pDX, IDC_TIP_DISPLAY, m_wndTips);
 	DDX_Control(pDX, IDC_TIP_ALPHA, m_wndTipAlpha);
@@ -108,6 +112,8 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_bPromptURLs			= ! Settings.General.AlwaysOpenURLs;
 	m_bHideSearch			= Settings.Search.HideSearchPanel;
 	m_bAdultFilter			= Settings.Search.AdultFilter;
+	m_bClearDownloads		= Settings.Downloads.AutoClear;
+	m_bClearUploads			= Settings.Uploads.AutoClear;
 	
 	m_bRatesInBytes			= Settings.General.RatesInBytes
 							+ Settings.General.RatesUnit * 2;
@@ -185,6 +191,8 @@ void CGeneralSettingsPage::OnOK()
 	Settings.General.AlwaysOpenURLs		= ! m_bPromptURLs;
 	Settings.Search.HideSearchPanel		= m_bHideSearch;
 	Settings.Search.AdultFilter			= m_bAdultFilter;
+	Settings.Downloads.AutoClear		= m_bClearDownloads;
+	Settings.Uploads.AutoClear			= m_bClearUploads;
 	
 	Settings.General.RatesInBytes		= m_bRatesInBytes % 2;
 	Settings.General.RatesUnit			= m_bRatesInBytes / 2;

@@ -308,7 +308,9 @@
 #define IDC_HIDE_SEARCH                 1106
 #define IDC_ADULT_FILTER                1107
 #define IDC_IP_1                        1108
+#define IDC_CLEAR_DOWNLOADS             1108
 #define IDC_IP_2                        1109
+#define IDC_CLEAR_UPLOADS               1109
 #define IDC_IP_3                        1110
 #define IDC_IP_4                        1111
 #define IDC_MASK_1                      1112

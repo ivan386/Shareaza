@@ -157,6 +157,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
 	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
 	
 	//AddSetting( &Settings.BitTorrent.AdvancedInterface, 1, 0, 1 );
