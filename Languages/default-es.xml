@@ -10,7 +10,7 @@
                        description="Traducción de Shareaza al Español Internacional"
                        link="http://www.shareaza.com/"
                        email="lccolunga@hotmail.com"
-                       version="2.1.0.0"
+                       version="2.1.0.4"
                        type="Language"
                        language="es"
                        prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -450,8 +450,9 @@
                     <item id="ID_HELP_FAQ" text="Guía de _Usuarios Shareaza"/>
                     <item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
                     <item id="ID_HELP_FIREWALLS" text="_Ayuda de Router"/>
+                    <item id="ID_HELP_SECURITY" text="Se_curity Help"/>
                     <separator/>
-                       <menu text="_Websites">
+                    <menu text="_Websites">
                     <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
                     <separator/>
                     <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -535,6 +536,7 @@
                        <item id="ID_HELP_FAQ" text="Guía _Usuarios Shareaza"/>
                        <item id="ID_HELP_FORUMS" text="Foros _Shareaza"/>
                        <item id="ID_HELP_FIREWALLS" text="_Ayuda Router"/>
+                       <item id="ID_HELP_SECURITY" text="Se_curity Help"/>
             <separator/>
                        <menu text="_Websites">
             <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -614,6 +616,7 @@
                        <item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
                        <item id="ID_HELP_FIREWALLS" text="_Router Help"/>
+                       <item id="ID_HELP_SECURITY" text="Se_curity Help"/>
                        <separator/>
           <menu text="_Websites">
             <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -1968,6 +1971,16 @@
             , de todas maneras el rendimiento es un poco Más bajo. Por favor visita los
               foros de Shareaza para más información, y noticias nuevas..</text>
        </document>
+    <document name="GeneralHelp.AdultFilter">
+        <text format="b">Habilitado filtro de contenido solo apto para adultos</text>
+        <newline gap="8"/>
+        <text>Por favor recuerda (como cualquier filtro automatico) puede que no sea 100% efectivo al bloquear contenido. 
+        Es diseñado simplemente para eliminar resultados no deseados, 
+        no un bloqueo 100% seguro.</text>
+        <newline gap="8"/>
+        <text>Si un niño esta usando Internet (incluyendo P2P) 
+        debe tener supervisión de padres.</text>
+    </document>
 
     <!-- Search help documents -->
 
@@ -1982,6 +1995,16 @@
         <text> Casi todos los clientes de la red van a ignorar la busuqeda
         todos los archivos MP3, por ejemplo, porque no es muy especifico
         y puede hacer deMásiados resultados.</text>
+    </document>
+    <document name="SearchHelp.AdultSearch">
+        <text format="b">Esta busqueda no puede ser empezada</text>
+        <newline gap="8"/>
+        <text>Esta busqueda pudiera dar un número elevado de archivos con contenido para adultos, 
+        esto puede ser deshabilitado en las opciones. Debes volver a dar otro nombre a la busqueda
+        search, o desabilitar el filtro.</text>
+        <newline gap="8"/>
+        <text>Para deshabilitar el filtro, ve a Herramientas &gt; Configurar &gt; 
+        General y desabilita "Filtro de contenido para adultos".</text>
     </document>
 
     <!-- Share help documents -->
@@ -2089,6 +2112,7 @@
        <tip id="ID_HELP_FIREWALLS" message="Consigue ayuda para configurar tu Router Y/O Firewall."/>
        <tip id="ID_HELP_FORUMS" message="Visitar las foros de Shareaza, para soporte técnico y discusiones."/>
        <tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.com."/>
+       <tip id="ID_HELP_SECURITY" message="Ayuda protegiendo tu sistema de programas hostiles"/>
        <tip id="ID_HELP_WEB_1" message="Visitar Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Visitar P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Visitar Slyck.com"/>
@@ -2221,8 +2245,6 @@
        <tip id="ID_SEARCH_FOR_SERIES" message="Buscar por archivos de video de la misma serie como el archivo seleccionado."/>
        <tip id="ID_SEARCH_FOR_SIMILAR" message="Buscar Archivos Similares al seleccionado."/>
        <tip id="ID_SEARCH_FOR_THIS" message="Buscar por otras copias del archivo seleccionado."/>
-       <tip id="ID_SEARCH_GROUPED" message="Agrupar resultados por archivo."/>
-       <tip id="ID_SEARCH_MERGE" message="Unir grupos."/>
        <tip id="ID_SEARCH_PANEL" message="Mostrar el panel de búsqueda a la izquierda."/>
        <tip id="ID_SEARCH_SEARCH" message="Hacer una nueva búsqueda de este archivo"/>
        <tip id="ID_SEARCH_STOP" message="Parar la búsqueda."/>
@@ -2281,7 +2303,6 @@
        <tip id="ID_UPLOADS_FILTER_MENU" message="Eliga que tipos de subidas desea poder y qué tipos deseas ocultar."/>
        <tip id="ID_UPLOADS_FILTER_QUEUED" message="Mostrar las subidas que estan en cola."/>
        <tip id="ID_UPLOADS_FILTER_TORRENT" message="Mostrar las subidas BitTorrent."/>
-       <tip id="ID_UPLOADS_GROUP" message="Agrupar subidas."/>
        <tip id="ID_UPLOADS_LAUNCH" message="Abrir el archivo seleccionado."/>
        <tip id="ID_UPLOADS_SETTINGS" message="Configurar opciones de subidas..."/>
        <tip id="ID_UPLOADS_START" message="Empezar con prioridad."/>
@@ -2416,7 +2437,6 @@
        <string id="8231" value="No hay fuentes"/>
        <string id="8232" value="Abrir"/>
        <string id="8233" value="Vista Previa"/>
-       <string id="8234" value="%s de %s (%.2f%%)"/>
        <string id="8235" value="Velocidad total de transferencia:"/>
        <string id="8236" value="Tiempo estimado para que la descarga termine:"/>
        <string id="8237" value="Volumen Descargado:"/>
@@ -2424,7 +2444,6 @@
        <string id="8239" value="Completado"/>
        <string id="8240" value="Shareaza está moviendo el archivo descargado:"/>
        <string id="8241" value="Shareaza está verificando el archivo descargado:"/>
-       <string id="8242" value="%s de %s (%.2f%%)"/>
        <string id="8243" value="Volumen Subido:"/>
        <string id="8288" value="Explorando Mi Colección de Shareaza"/>
        <string id="8289" value="Explorando "/>
@@ -2435,7 +2454,6 @@
        <string id="8294" value="Adicciones Recientes"/>
        <string id="8295" value="Dar rating a archivo"/>
        <string id="8304" value="N/A"/>
-       <string id="8305" value="%i de %i"/>
        <string id="8306" value="Locación"/>
        <string id="8307" value="Tipo"/>
        <string id="8308" value="Tamaño"/>
@@ -2851,6 +2869,7 @@
        <string id="19001" value="Debes elegir un nombre de usuario y contraseña."/>
        <string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
        <string id="20000" value="No hay URN disponible"/>
+       <string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
        <string id="20100" value="Conectando"/>
        <string id="20101" value="Pidiendo"/>
        <string id="20102" value="Respuesta"/>
@@ -2898,7 +2917,7 @@
 
     <dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 
-    <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="General">
+    <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="General">
         <control caption="Interfaz de usuario:"/>
         <control caption="Conectar al iniciar Shareaza"/>
         <control caption="Iniciar Shareaza con Windows"/>
@@ -2921,6 +2940,7 @@
                <control caption="Cuando oprimo minimizar:"/>
         <control/>
         <control caption="Esconder la side bar al buscar"/>
+        <control caption="Filtrar contenido para adultos en las busquedas"/>
     </dialog>
 
        <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mi Colección">
