@@ -4,7 +4,7 @@ D http://www.edonkey2000.com/server.met
 D http://www.emule-inside.net/server.met
 D http://web2k2.vivelared.com/server.met
 2 http://bazooka.stealthspy.net/g2/bazooka.php
-2 http://bazooka1.serveM http.com/g2/bazooka.php
+2 http://bazooka1.servehttp.com/g2/bazooka.php
 M http://bobsmith.is-a-geek.org/index.cgi
 2 http://diabolo.mine.nu/g2/bazooka.php
 2 http://g2.djdan.pointclark.net/g2/bazooka.php
@@ -20,7 +20,6 @@ M http://g2cache.theg2.net/gwcache/lynnx.asp
 2 http://members.lycos.nl/fcemoerbeke/g2/bazooka.php
 2 http://mitglied.lycos.de/warylogman/g2/bazooka.php
 M http://terrorist.host.sk/gnutella-cache/gwcii.php
-2 http://www.beathell.com/g2/bazooka.php
 2 http://www.empireniteclub.com/g2/bazooka.php
 2 http://www.goeg.dk/Bazooka/g2/bazooka.php
 2 http://www.kuwaitcontact.com/g2/bazooka.php
@@ -39,7 +38,7 @@ M http://bobsmith-gwc.kicks-ass.org/
 M http://gwebcache.squinky.gotdns.com/perlgcache.cgi
 #
 # Keep these comments at the end
-# Last updated September 25, 2004
+# Last updated September 27, 2004
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
