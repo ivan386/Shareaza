@@ -383,7 +383,7 @@ void CMatchTipCtrl::LoadFromFile()
 	else if ( m_pFile->m_bDownload || m_pFile->m_pBest->m_bDownload )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_DOWNLOAD );
-		m_crStatus = RGB( 0, 128, 0 );
+		m_crStatus = RGB( 0, 0, 160 );
 	}
 	else if ( m_pFile->m_pBest->m_bBogus || ! m_pFile->m_bOneValid )
 	{

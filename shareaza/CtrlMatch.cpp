@@ -685,13 +685,18 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 0, 255 ), 25 );
 	}
 	
+	if ( pFile->m_bExisting == 1 )
+	{
+		crText = RGB( 0, 127, 0 );
+	}
+	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) )
+	{
+		crText = RGB( 0, 0, 160 );
+	}
+
 	if ( bSelected )
 	{
 		crBack = CoolInterface.m_crBackSel;
-	}
-	else if ( pFile->m_bDownload || ( pHit && pHit->m_bDownload ) || pFile->m_bExisting == 1 )
-	{
-		crText = RGB( 0, 127, 0 );
 	}
 	else if ( ( pHit && ( pHit->m_bBogus || pHit->m_sURL.IsEmpty() || ! pHit->m_bMatched ) ) ||
 				pFile->m_bExisting == 2 || ( ! pHit && ! pFile->m_bOneValid ) ||
