@@ -1,5 +1,4 @@
 ; WARNING: Compile repair.iss first!
-; If it exists, I didn't finish that yet. :-)
 
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
@@ -11,7 +10,6 @@ AppReadmeFile={app}\Uninstall\readme.txt
 DefaultDirName={pf}\Shareaza
 DefaultGroupName=Shareaza
 DisableFinishedPage=yes
-DisableProgramGroupPage=yes
 DisableReadyPage=yes
 OutputDir=setup\builds
 SolidCompression=yes
@@ -28,9 +26,15 @@ SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
 WizardImageFile=setup\misc\sidebar.bmp
 WizardSmallImageFile=setup\misc\corner.bmp
+AppModifyPath="{app}\Uninstall\repair.exe"
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
+
+; links to website for software panel
+AppPublisherURL=http://www.shareaza.com/?id=home
+AppSupportURL=http://www.shareaza.com/?id=support
+AppUpdatesURL=http://www.shareaza.com/?id=download
 
 [Components]
 ; Ask user wich components to install
@@ -65,6 +69,9 @@ Source: "Schemas\*.ico"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwrit
 Source: "Schemas\*.xml"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles
 Source: "Schemas\*.xsd"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: mainfiles
 
+; Copy repair installer
+Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremovereadonly sortfilesbyextension onlyifdoesntexist; Components: mainfiles
+
 ; Plugins
 Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; Components: plugins
 
@@ -93,6 +100,11 @@ Source: "Languages\*.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversio
 ; These need to be copied to {app}\Data
 Source: "{app}\*.dat"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
 Source: "{app}\*.xml"; DestDir: "{app}\Data"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist
+
+; Copy installer into download and uninstall dir
+Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: currentuser
+Source: "{srcexe}"; DestDir: "{ini:{param:Settings|}\settings.ini,Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: allusers
+Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles
 
 [Icons]
 ; Shareaza icon
@@ -144,12 +156,12 @@ Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 [Dirs]
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{commonappdata}\Shareaza\Incomplete}"; Flags: uninsalwaysuninstall; Tasks: allusers
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{commonappdata}\Shareaza\Torrents}"; Flags: uninsalwaysuninstall; Tasks: allusers
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}"; Flags: uninsalwaysuninstall; Tasks: currentuser
-Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{commonappdata}\Shareaza\Collections}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{userappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:Settings|}\settings.ini,Locations,IncompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|{commonappdata}\Shareaza\Incomplete}}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:Settings|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{userappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:Settings|}\settings.ini,Locations,TorrentPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|{commonappdata}\Shareaza\Torrents}}"; Flags: uninsalwaysuninstall; Tasks: allusers
+Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{userappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: currentuser
+Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|{commonappdata}\Shareaza\Collections}}"; Flags: uninsalwaysuninstall; Tasks: allusers
 
 [InstallDelete]
 ; Clean up old files from Shareaza
@@ -173,6 +185,3 @@ Type: files; Name: "{app}\Data\*.xml"
 #include "settings.iss"
 ; Pull in version-specific keys
 #include "version.iss"
-; Pull in keys common to main and repair installer
-; #include "common.iss" Note: Not finished yet
-
