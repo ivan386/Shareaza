@@ -169,7 +169,7 @@ void CLibrarySettingsPage::OnSafeAdd()
 	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
-	if ( m_wndSafeList.FindString( -1, strType ) >= 0 ) return;
+	if ( m_wndSafeList.FindStringExact( -1, strType ) >= 0 ) return;
 
 	m_wndSafeList.AddString( strType );
 	m_wndSafeList.SetWindowText( _T("") );
@@ -200,7 +200,7 @@ void CLibrarySettingsPage::OnPrivateAdd()
 	strType.MakeLower(); strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
 
-	if ( m_wndPrivateList.FindString( -1, strType ) >= 0 ) return;
+	if ( m_wndPrivateList.FindStringExact( -1, strType ) >= 0 ) return;
 
 	m_wndPrivateList.AddString( strType );
 	m_wndPrivateList.SetWindowText( _T("") );
