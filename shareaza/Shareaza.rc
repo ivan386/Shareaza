@@ -3012,7 +3012,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Scheduler"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,5,155,151,56
+    GROUPBOX        "&Options:",IDC_STATIC,3,155,154,56
     CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,164,144,15
     EDITTEXT        IDC_SCHEDULER_LIMITED,10,181,29,12,ES_AUTOHSCROLL | 
@@ -3023,14 +3023,14 @@ BEGIN
     CONTROL         " &Restrict networks when limited",
                     IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
                     WS_GROUP | WS_TABSTOP,10,195,142,15
-    GROUPBOX        "Key:",IDC_STATIC,5,104,151,49
-    RTEXT           "Sun",IDC_STATIC,2,26,15,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Mon",IDC_STATIC,2,36,15,8
-    RTEXT           "Tue",IDC_STATIC,2,46,15,8
-    RTEXT           "Wed",IDC_STATIC,2,56,15,8
-    RTEXT           "Thu",IDC_STATIC,2,66,15,8
-    RTEXT           "Fri",IDC_STATIC,2,76,15,8
-    RTEXT           "Sat",IDC_STATIC,2,86,15,8
+    GROUPBOX        "Key:",IDC_STATIC,3,104,154,49
+    RTEXT           "Sun",IDC_STATIC,0,26,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Mon",IDC_STATIC,0,36,21,8
+    RTEXT           "Tue",IDC_STATIC,0,46,21,8
+    RTEXT           "Wed",IDC_STATIC,0,56,21,8
+    RTEXT           "Thu",IDC_STATIC,0,66,21,8
+    RTEXT           "Fri",IDC_STATIC,0,76,21,8
+    RTEXT           "Sat",IDC_STATIC,0,86,21,8
     LTEXT           "Do not connect",IDC_STATIC,36,114,116,8
     LTEXT           "Limited connection",IDC_STATIC,36,126,116,8
     LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,116,8
@@ -3039,9 +3039,9 @@ BEGIN
     EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
                     ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
                     WS_TABSTOP,WS_EX_TRANSPARENT
-    GROUPBOX        "Help",IDC_STATIC,159,104,116,107,0,WS_EX_RIGHT
+    GROUPBOX        "Help",IDC_STATIC,159,104,118,107,0,WS_EX_RIGHT
     LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",
-                    IDC_STATIC,167,112,99,94
+                    IDC_STATIC,167,112,101,94
 END
 
 

@@ -123,7 +123,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 	GetClientRect( &rc );
 
 	rc.top += 10 + HEADING_HEIGHT;
-	rc.left += 30;
+	rc.left += 34;
 
 
 	rc.bottom = rc.top + ( 7 * 16 );
@@ -226,12 +226,12 @@ void CSchedulerSettingsPage::OnPaint()
 	GetClientRect( &rc );
 
 	rc.top += 10;
-	rc.left += 30;
+	rc.left += 34;
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
 
 	CBitmap* pOldBmp = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( rc.left, rc.top, 384, HEADING_HEIGHT, &mdc, 0, 0, SRCCOPY );
+	dc.BitBlt( rc.left, rc.top, 386, HEADING_HEIGHT, &mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBmp );
 	mdc.DeleteDC();
 	rc.top += HEADING_HEIGHT;
@@ -250,7 +250,7 @@ void CSchedulerSettingsPage::OnPaint()
 	}
 
 	//Draw the border of the box
-	dc.Draw3dRect( 29, 9, 385, 145, RGB( 0, 0, 0 ), RGB( 0, 0, 0 ) );
+	dc.Draw3dRect( 33, 9, 385, 145, RGB( 0, 0, 0 ), RGB( 0, 0, 0 ) );
 
 	//Draw the schedule time slices for the 'key'
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_OFF, dc.GetSafeHdc(),
