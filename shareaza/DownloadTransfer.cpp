@@ -215,7 +215,7 @@ void CDownloadTransfer::SetState(int nState)
 			if ( m_pSource->m_nSortOrder >= 13 )
 			{	//Don't bother wasting CPU sorting 'dead' sources- Simply send to bottom.
 				m_pDownload->SortSource( m_pSource, FALSE );
-				m_pSource->m_nSortOrder = 0xFFFF;
+				m_pSource->m_nSortOrder = 0xFFFFFFFF;
 			}
 			else
 			{	//All other sources should be properly sorted
