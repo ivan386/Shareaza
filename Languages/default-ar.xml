@@ -16,7 +16,7 @@
 			description="Shareaza Default Arabic Skin File"
 			link="http://www.shareaza.com/"
 			email="lazorde_sa@hotmail.com"
-			version="2.0.3.8"
+			version="2.1.0.10"
 			type="Language"
 			language="ar"
 			prompt="هنا اضغط العربية للغة."
@@ -456,6 +456,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza مستخدمي _دليل"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _منتديات"/>
             <item id="ID_HELP_FIREWALLS" text="_طلب المساعده"/>
+            <item id="ID_HELP_SECURITY" text="مس_اعدة الامن"/>
 			<separator/>
 			<menu text="_المواقع">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -541,6 +542,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza مستخدمي _دليل"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _منتديات"/>
             <item id="ID_HELP_FIREWALLS" text="_طلب المساعده"/>
+            <item id="ID_HELP_SECURITY" text="مس_اعدة الامن"/>
 			<separator/>
 			<menu text="_المواقع">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -620,6 +622,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza مستخدمي _دليل"/>
 			<item id="ID_HELP_FORUMS" text="Shareaza _منتديات"/>
             <item id="ID_HELP_FIREWALLS" text="_طلب المساعده"/>
+            <item id="ID_HELP_SECURITY" text="مس_اعدة الامن"/>
 			<separator/>
 			<menu text="_المواقع">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -1972,6 +1975,15 @@
 		 forums for further imformation, and up to date news.</text>
 	</document>
 
+	<document name="GeneralHelp.AdultFilter">
+		<text format="b">Adult content filter enabled</text>
+		<newline gap="8"/>
+		<text>Please note that (as with any automated filter) it may not be 100% effective at screening
+		content. It is designed simply to filter out excess unwanted results, rather than as a 100% safe block.</text>
+		<newline gap="8"/>
+		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
+	</document>
+	
 	<!-- Search help documents -->
 
       <document name="SearchHelp.BadSearch">
@@ -1987,6 +1999,16 @@
              enough and would generate too many results.</text>
       </document>
 
+	<document name="SearchHelp.AdultSearch">
+		<text format="b">This search cannot be started</text>
+		<newline gap="8"/>
+		<text>The specified search would probably return a large number of results with adult
+		content, and this has been turned off in the settings. You should either re-phrase the
+		search, or disable the filter.</text>
+		<newline gap="8"/>
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
+	</document>
+	
 <!-- Share help documents -->
 
 	<document name="ShareHelp.AlreadyShared">
@@ -2079,6 +2101,7 @@
 	<tip id="ID_TRANSFERS_DISCONNECT" message="قطع الاتصال عند الانتهاء من تحميل الملف المحدد."/>
 	<tip id="ID_TRANSFERS_FORGET" message="قطع وتجاهل اتصال مصدر التحميل المحدد."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com قم بزيارة موقع."/>
+	<tip id="ID_HELP_SECURITY" message="ساعد على حماية نظامك من البرامج العدائية">	
 	<tip id="ID_HELP_WEB_1" message="قم بزياره Zeropaid.com"/>
 	<tip id="ID_HELP_WEB_2" message="قم بزياره P2PForums.com"/>
 	<tip id="ID_HELP_WEB_3" message="قم بزياره Slyck.com"/>
@@ -2111,10 +2134,8 @@
 	<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
 	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
 	<tip id="ID_VIEW_SECURITY" message="اظهار او اخفاء نافذة الامن."/>
-	<tip id="ID_SECURITY_EDIT" message="تحرير القاعدة الامنية المحددة..."/>
 	<tip id="ID_SECURITY_REMOVE" message="حذف قواعد الامن المحددة."/>
 	<tip id="ID_SECURITY_RESET" message="Reset the hit counts on the selected rules."/>
-	<tip id="ID_SECURITY_ADD" message="اضف قاعدة جديدة لسلسلة الامن..."/>
 	<tip id="ID_SECURITY_POLICY_ACCEPT" message="ضع سياسة الأمن الأصلية للسماح لكلّ المضيّفون."/>
 	<tip id="ID_SECURITY_POLICY_DENY" message="ضع سياسة الأمن الأصلية لحرمان كلّ المضيّفون."/>
 	<tip id="ID_LIBRARY_REFRESH" message="تحديث عرض المكتبة."/>
@@ -2126,7 +2147,10 @@
 	<tip id="ID_SECURITY_MOVE_UP" message="Move the selected security rules up the precedence list."/>
 	<tip id="ID_SECURITY_MOVE_DOWN" message="Move the selected security rules down the precedence list."/>
 	<tip id="ID_SECURITY_BAN" message="حظر المضيف المحدد اثناء هذه الجلسة."/>
-	<tip id="ID_UPLOADS_GROUP" message="Group uploads by connection (host)."/>
+	<tip id="ID_SECURITY_EDIT" message="تحرير القاعدة الامنية المحددة..."/>
+	<tip id="ID_SECURITY_ADD" message="اضف قاعدة جديدة لسلسلة الامن..."/>
+	<tip id="ID_SECURITY_EXPORT" message="تصدير شروط الامن المحددة من الملف المختار..."/>
+	<tip id="ID_SECURITY_IMPORT" message="استيراد شروط الامن من الملف ..."/>
 	<tip id="ID_TAB_NETWORK" message="شاهد السيرفرات التي تعمل الان."/>
 	<tip id="ID_TAB_LIBRARY" message="مشاهده وادارة المكتبة."/>
 	<tip id="ID_TAB_TRANSFERS" message="شاهد الملفات التي تقوم الان بتحميلها او رفعها."/>
@@ -2153,11 +2177,8 @@
 	<tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
 	<tip id="ID_TAB_HOME" message="الرئيسية Shareaza عد إلى صفحة"/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
-	<tip id="ID_SEARCH_MERGE" message="Merge the selected file groups."/>
 	<tip id="ID_DOWNLOADS_MONITOR" message="افتح شاشة التحميل لهذا الملف..."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="حدد و شاهد جيمع المجلدات في المكتبة."/>
-	<tip id="ID_SECURITY_EXPORT" message="تصدير شروط الامن المحددة من الملف المختار..."/>
-	<tip id="ID_SECURITY_IMPORT" message="استيراد شروط الامن من الملف ..."/>
 	<tip id="ID_SEARCH_FILTER_RAW" message="فرز نتائج البحث ببعض الكلمات و الشروط..."/>
 	<tip id="ID_SEARCH_PANEL" message="ايقاف عرض لوحة البحث في نافذه البحث."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Record a timestamp for each line."/>
@@ -2855,6 +2876,7 @@
     <string id="19001" value="You must choose a username and password."/>
     <string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
+	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
 	<string id="20100" value="اتصال"/>
 	<string id="20101" value="طلب"/>
 	<string id="20102" value="رد"/>
@@ -2888,6 +2910,13 @@
 	<string id="20130" value="المصادر"/> <!-- from 11 to 19 -->
 	<string id="20131" value="المصادر"/> <!-- from 2 to 4 -->
 	<string id="20132" value="المصادر"/> <!-- from 5 to 9 -->
+	<string id="20200" value="الاحد"/>
+	<string id="20201" value="الاثنين"/>
+	<string id="20202" value="الثلاثاء"/>
+	<string id="20203" value="الاربعاء"/>
+	<string id="20204" value="الخميس"/>
+	<string id="20205" value="الجمعة"/>
+	<string id="20206" value="السبت"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3078,6 +3107,25 @@
 	    <control/>
 	    <control caption="اختر كلمة المرور:"/>
 	    <control/>
+
+	</dialog>
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+		<control caption="_خصائص:"/>
+		<control caption="_تفعيل Scheduler"/>
+		<control/><control/>
+		<control caption="_حدد الشبكات المحدودة"/>
+		<control caption="المفتاح:"/>
+		<control caption="الاح"/>
+		<control caption="الاثن"/>
+		<control caption="الث"/>
+		<control caption="الارب"/>
+		<control caption="الخم"/>
+		<control caption="الجم"/>
+		<control caption="الس"/>
+		<control caption="لا تتصل"/>
+		<control caption="اتصال نحدود"/>
+		<control caption="اتصل باقصى سرعة"/>
+		<control caption="% اس_تهلاك تحت الحد"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="شبكات">
