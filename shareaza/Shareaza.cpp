@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -782,8 +782,8 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 	{
 		while ( TRUE )
 		{
-			WCHAR s[2] = {*start, 0};
-			WCHAR p[2] = {*pszPattern, 0};
+			register WCHAR s[2] = {*start, 0};
+			register WCHAR p[2] = {*pszPattern, 0};
 			CharUpper(s);
 			CharUpper(p);
 			if ( s[0] == p[0] ) break;
@@ -798,8 +798,8 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 
 		while ( TRUE )
 		{
-			WCHAR s[2] = {*sptr, 0};
-			WCHAR p[2] = {*pptr, 0};
+			register WCHAR s[2] = {*sptr, 0};
+			register WCHAR p[2] = {*pptr, 0};
 			CharUpper(s);
 			CharUpper(p);
 			if ( s[0] != p[0] ) break;
@@ -827,8 +827,8 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 	{
 		while ( TRUE )
 		{
-			WCHAR s[2] = {*start, 0};
-			WCHAR p[2] = {*pszPattern, 0};
+			register WCHAR s[2] = {*start, 0};
+			register WCHAR p[2] = {*pszPattern, 0};
 			CharUpper(s);
 			CharUpper(p);
 			if ( s[0] == p[0] ) break;
@@ -844,8 +844,8 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, DWORD plen)
 
 		while ( TRUE )
 		{
-			WCHAR s[2] = {*sptr, 0};
-			WCHAR p[2] = {*pptr, 0};
+			register WCHAR s[2] = {*sptr, 0};
+			register WCHAR p[2] = {*pptr, 0};
 			CharUpper(s);
 			CharUpper(p);
 			if ( s[0] != p[0] ) break;
