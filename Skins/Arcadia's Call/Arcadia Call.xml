@@ -44,7 +44,7 @@
 		<colour name="Dialog.Back"                  value="DBDBDB"/>
 		<colour name="ToolTip.Back"                 value="DBDBDB"/>
 		<colour name="ToolTip.Text"                 value="000000"/>
-		<colour name="TaskPanel.Back"               value="D8D8D8"/>
+		<colour name="TaskPanel.Back"               value="D3D3D3"/>
 		<colour name="TaskBox.Caption.Back"         value="151515"/>
 		<colour name="TaskBox.Caption.Text"         value="000000"/>
 		<colour name="TaskBox.Primary.Text"         value="000000"/>
@@ -62,7 +62,6 @@
 		<watermark target="CMainWnd.Toolbar" path="Toolbar2.bmp"/>
 		<watermark target="CMonitorBar" path="Toolbar2.bmp"/>
 		<watermark target="CSearchWnd.Panel.Toolbar" path="SearchToolbar.bmp"/>
-		<watermark target="CSearchPanel" path="SearchPanel.bmp"/>
 		<watermark target="CHomeBox" path="InfoBox.bmp"/>
 		<watermark target="CHomeDownloadsBox.Caption" path="InfoBox.bmp"/>
 		<watermark target="CHomeLibraryBox.Caption" path="InfoBox.bmp"/>
@@ -78,10 +77,8 @@
 <windowSkins>
 	<!-- MAIN WINDOW -->
 	<windowSkin>
-	
 		<image path="MainWindow.bmp"/>
-		<target window="CMainWnd"/>
-						
+		<target window="CMainWnd"/>			
 		<parts>
 			<part name="TopLeft"        rect="26,3,117,28"/>
 			<part name="TopLeftIA"        rect="26,35,117,28"/>
@@ -114,16 +111,13 @@
 		</anchors>
 			
 		<maximiseCrop rect="0,0,0,0"/>
-
 	</windowSkin>
 
 
 	<!-- DOWNLOAD MONITOR WINDOW -->
 	<windowSkin>
-	
 		<image path="MainWindow.bmp"/>
-		<target window="CDownloadMonitorDlg"/>
-						
+		<target window="CDownloadMonitorDlg"/>				
 		<parts>
 			<part name="TopLeft"        rect="26,131,227,28"/>
 			<part name="TopLeftIA"        rect="26,163,227,28"/>
@@ -156,17 +150,14 @@
 		</anchors>
 			
 		<caption align="center"  rect="17,4,201,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="F8F8F8"/>		
-
 	</windowSkin>
 
 
 	<!-- SETTINGS & DIALOGS (pop-up) WINDOWS -->
 	<windowSkin>
-	
 		<image path="MainWindow.bmp"/>
 		<target window="CSettingsSheet"/>
 		<target window="CDialog"/>
-
 		<parts>
 			<part name="TopLeft"        rect="26,67,197,28"/>
 			<part name="TopLeftIA"        rect="26,99,197,28"/>
@@ -193,16 +184,13 @@
 		</anchors>
 
 		<caption align="center" rect="16,4,172,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="F8F8F8"/>	
-
 	</windowSkin>
 
 
 	<!-- CHILD WINDOW (pop-ups that stay within the main window) -->
 	<windowSkin>
-	
 		<image path="MainWindow.bmp"/>
-		<target window="CChildWnd"/>
-				
+		<target window="CChildWnd"/>	
 		<parts>
 			<part name="TopLeft"        rect="26,67,197,28"/>
 			<part name="TopLeftIA"        rect="26,99,197,28"/>
@@ -235,13 +223,11 @@
 		</anchors>
 			
 		<caption align="center" rect="16,4,172,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="F8F8F8"/>		
-
 	</windowSkin>
 
 
 	<!-- WINDOW PANELS -->
 	<windowSkin>
-
 		<image path="WindowPanel.bmp"/>
 		<target window="CHomeWnd.Panel"/>
 		<target window="CLibraryWnd.Panel"/>
@@ -255,17 +241,13 @@
 		</parts>
 
 		<caption align="center"  rect="10,0,108,20" fontFace="hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000"/>
-
-
 	</windowSkin>
 
 
 	<windowSkin>
-
 		<image path="WindowPanel.bmp"/>
 		<target window="CUploadsWnd.Panel"/>
 		<target window="CSystemWnd.Panel"/>
-
 		<parts>
 			<part name="TopLeft" rect="1,22,129,22"/>
 			<part name="Top" rect="130,22,10,22"/>
@@ -273,12 +255,10 @@
 		</parts>
 
 		<caption align="center"  rect="10,1,108,20" fontFace="hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000"/>
-
 	</windowSkin>
 
 
 	<windowSkin>
-
 		<image path="WindowPanel.bmp"/>
 		<target window="CMediaWnd.Panel"/>
 		<target window="CSearchWnd.Panel"/>
@@ -302,16 +282,13 @@
 		</anchors>
 
 		<caption align="center"  rect="10,0,108,20" fontFace="hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000"/>
-
 	</windowSkin>
 
 
 	<windowSkin>
-
 		<image path="WindowPanel.bmp"/>
 		<target window="CDiscoveryWnd.Panel"/>
 		<target window="CBrowseHostWnd.Panel"/>
-
 		<parts>
 			<part name="TopLeft" rect="1,1,149,21"/>
 			<part name="Top" rect="150,1,10,21"/>
@@ -325,10 +302,7 @@
 		</anchors>
 
 		<caption align="center"  rect="10,0,138,20" fontFace="hooge 05_53" fontSize="8" colour="000000" inactivecolour="000000"/>
-
 	</windowSkin>
-
-
 </windowSkins>
 
 
@@ -975,5 +949,4 @@
 		</menu>
 	</menu>
 </menus>
-
 </skin>
