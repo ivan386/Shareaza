@@ -26,7 +26,7 @@ OBJ =	lib/unzip/ioapi.o \
 LIB = -lgdi32 -lcomctl32 ../zlib/libzdll.a
 BIN = ../bin/skin.exe
 
-CFLAGS  = -Os -DZLIB_DLL -DNOCRYPT -DWIN32 -I../zlib -Ilib/unzip
+CFLAGS  = -Os -DNOCRYPT -DWIN32 -I../zlib -Ilib/unzip
 LFLAGS  = -s -mwindows
 RCFLAGS = --input-format rc --output-format coff
 
