@@ -139,7 +139,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddPage( &pGnutella );
 	AddPage( &pDonkey );
 	AddPage( &pTorrent );
-	AddPage( &pProtocols );
+	if ( bAdvanced ) AddPage( &pProtocols );
 	AddGroup( &pSkins );
 	AddGroup( &pPlugins );
 	if ( bAdvanced ) AddGroup( &pAdvanced );
