@@ -1855,8 +1855,16 @@ BOOL CLibraryBuilderInternals::ReadPDF( HANDLE hFile, LPCTSTR pszPath)
 		}
 	}
 	
-	if ( ReadLine( hFile ) != _T("trailer") ) return FALSE;
-	if ( ReadLine( hFile ) != _T("<<") ) return FALSE;
+	if ( ReadLine( hFile ) != _T("trailer") ) 
+	{
+			delete [] pOffset;
+			return FALSE;
+	}
+	if ( ReadLine( hFile ) != _T("<<") ) 
+	{
+			delete [] pOffset;
+			return FALSE;
+	}
 	
 	for ( nOffset = 0 ; ; )
 	{
@@ -2232,6 +2240,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 	UINT nCodePage = CP_ACP;
 	DWORD nCwc;
 	UINT charSet = DEFAULT_CHARSET;
+	BOOL bHasTitle = FALSE;
 
 	// Find default ANSI codepage for given LCID
 	DWORD nLength = GetLocaleInfo( nLCID, LOCALE_IDEFAULTANSICODEPAGE, NULL, 0 );
@@ -2247,7 +2256,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 	}
 	SetFilePointer( hFile, nPos, NULL, FILE_BEGIN );
 
-	for ( int nCount = 1 ; nCount < 5 ; nCount++ ) // nCount may be up to 6
+	for ( int nCount = 1 ; nCount < 5 && !bCorrupted ; nCount++ ) // nCount may be up to 6
 	{
 		// Unknown data
 		ReadFile( hFile, &nData, sizeof(nData), &nRead, NULL );
@@ -2263,7 +2272,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 		ReadFile( hFile, szMetadata, nData, &nRead, NULL );
 		if ( nRead != nData ) bCorrupted = TRUE;
 
-		if ( nCount == 2 || nCount == 3 ) 
+		if ( nCount == 2 ) 
 		{
 			delete [] szMetadata;
 			continue;
@@ -2288,27 +2297,68 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 			break;
 			case 2: // unknown data
 			break;
-			case 3: // redirection url -- do we need such files?
-					// then set this file to bogus and remove condition to skip 
-					// nCount == 3
+			case 3: // redirection url
+				strLine = CharLower( strLine.GetBuffer() );
+				if ( strLine.Left( 7 ) == _T("ms-its:") )
+				{
+					nPos = strLine.Find( _T("::"), 7 );
+					strTemp = _tcsrchr( pszPath, '\\' );
+					strTemp = strTemp.Mid( 1 );
+					strTemp = CharLower( strTemp.GetBuffer() );
+					if ( strLine.Mid( 7, nPos - 7 ).Trim() != strTemp )
+						bCorrupted = TRUE; // it requires additional file
+				}
+				else if ( strLine.Left( 7 ) == _T("http://") )
+					bCorrupted = TRUE; // redirects to external resource; may be dangerous
 			break;
 			case 4: // title
-				if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 )
+				if ( strLine.IsEmpty() ) break;
+				nPos = strLine.Find( ',' );
+				strTemp = strLine.Left( nPos );
+				strTemp = CharLower( strTemp.GetBuffer() );
+				if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 &&
+					 strTemp != _T("arial") && strTemp != _T("tahoma") &&
+					 strTemp != _T("times new roman") && strTemp != _T("verdana") &&
+					 strLine.CompareNoCase( _T("windows") ) != 0 )
+				{
+					bHasTitle = TRUE;
+					nPos = strLine.ReverseFind( '\\' ); // remove paths in title
+					strLine = strLine.Mid( nPos + 1 );
 					pXML->AddAttribute( _T("title"), strLine );
+				}
 			break;
 		}
 		delete [] szMetadata;
-		if ( bCorrupted ) return SubmitCorrupted();
+		if ( bCorrupted ) 
+		{
+			delete pXML;
+			return SubmitCorrupted();
+		}
+	}
+
+	if ( !bHasTitle ) 
+	{
+		delete pXML;
+		return FALSE;
 	}
 
 	pXML->AddAttribute( _T("format"), _T("Compiled HTML Help") );
 	if ( bBook )
 	{
 		pXML->AddAttribute( _T("back"), _T("Digital") );
-		return SubmitMetadata( CSchema::uriBook, pXML );
+		strTemp = CSchema::uriBook;
+	}
+	else
+		strTemp = CSchema::uriDocument;
+
+	if ( SubmitMetadata( strTemp, pXML ) )
+	{
+		if ( !pXML ) delete pXML; // sometimes the pointer is deleted after submit
+		return TRUE;
 	}
 	else
 	{
-		return SubmitMetadata( CSchema::uriDocument, pXML );
+		if ( !pXML ) delete pXML;
+		return FALSE;
 	}
 }
