@@ -6547,11 +6547,17 @@
 			<File
 				RelativePath=".\asm\MD4_asm.asm">
 				<FileConfiguration
+					Name="Unicode Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
-"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -6593,11 +6599,17 @@
 			<File
 				RelativePath=".\asm\MD5_asm.asm">
 				<FileConfiguration
+					Name="Unicode Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot;  /c /Cx /coff &quot;$(inputpath)&quot;
-"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -8923,11 +8935,17 @@
 			<File
 				RelativePath=".\asm\SHA_asm.asm">
 				<FileConfiguration
+					Name="Unicode Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
-"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -9469,11 +9487,17 @@
 			<File
 				RelativePath=".\asm\Tiger_asm.asm">
 				<FileConfiguration
+					Name="Unicode Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
-"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
 						Outputs="$(InputName).obj"/>
 				</FileConfiguration>
 			</File>
