@@ -129,7 +129,11 @@ BOOL CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) 
 							PostMessage(app,WM_COMMAND,32974,0);
 						}
 						else {
-							if (SetSkinAsDefault()) PostMessage(app,WM_COMMAND,32965,0);
+							if (SetSkinAsDefault()) {
+								PostMessage(app,WM_COMMAND,32959,0);
+								PostMessage(app,WM_COMMAND,32965,0);								
+								//PostMessage(app,WM_COMMAND,32959,0);
+							}
 						}
 						EndDialog(hwndDlg, 0);
 					}
