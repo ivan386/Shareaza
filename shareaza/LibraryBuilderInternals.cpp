@@ -50,8 +50,6 @@ CLibraryBuilderInternals::CLibraryBuilderInternals(CLibraryBuilder* pBuilder)
 
 CLibraryBuilderInternals::~CLibraryBuilderInternals()
 {
-	if ( theApp.GetProfileInt( _T("Library"), _T("MetadataANSI"), FALSE ) )
-	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 0 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -161,10 +159,11 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals submit metadata (threaded)
 
-BOOL CLibraryBuilderInternals::SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML)
+BOOL CLibraryBuilderInternals::SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
 	// Ignoring return value from submission
 	m_pBuilder->SubmitMetadata( pszSchemaURI, pXML );
+	if ( !pXML ) delete pXML;
 	return TRUE;
 }
 
@@ -768,7 +767,7 @@ BOOL CLibraryBuilderInternals::ReadVersion( LPCTSTR pszPath)
 	
 	delete [] pBuffer;
 
-	return SubmitMetadata( _T("http://www.shareaza.com/schemas/application.xsd"), pXML );
+	return SubmitMetadata( CSchema::uriApplication, pXML );
 }
 
 BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, BOOL bCommaToDot)
@@ -941,7 +940,7 @@ BOOL CLibraryBuilderInternals::ReadGIF( HANDLE hFile)
 	
 	pXML->AddAttribute( _T("colors"), _T("256") );
 	
-	return SubmitMetadata( _T("http://www.shareaza.com/schemas/image.xsd"), pXML );
+	return SubmitMetadata( CSchema::uriImage, pXML );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1017,7 +1016,7 @@ BOOL CLibraryBuilderInternals::ReadPNG( HANDLE hFile)
 		}
 	}
 	
-	return SubmitMetadata( _T("http://www.shareaza.com/schemas/image.xsd"), pXML );
+	return SubmitMetadata( CSchema::uriImage, pXML );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1059,7 +1058,7 @@ BOOL CLibraryBuilderInternals::ReadBMP( HANDLE hFile)
 		break;
 	}
 
-	return SubmitMetadata( _T("http://www.shareaza.com/schemas/image.xsd"), pXML );
+	return SubmitMetadata( CSchema::uriImage, pXML );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2379,14 +2378,5 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 	else
 		strTemp = CSchema::uriDocument;
 
-	if ( SubmitMetadata( strTemp, pXML ) )
-	{
-		if ( !pXML ) delete pXML; // sometimes the pointer is deleted after submit
-		return TRUE;
-	}
-	else
-	{
-		if ( !pXML ) delete pXML;
-		return FALSE;
-	}
+	return SubmitMetadata( strTemp, pXML );
 }

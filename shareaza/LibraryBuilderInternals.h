@@ -58,7 +58,7 @@ public:
 	void		LoadSettings();
 	BOOL		ExtractMetadata( CString& strPath, HANDLE hFile, SHA1* pSHA1);
 protected:
-	BOOL		SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement* pXML);
+	BOOL		SubmitMetadata( LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	BOOL		SubmitCorrupted();
 protected:		// ID3v1 and ID3v2 and MP3
 	BOOL		ReadID3v1( HANDLE hFile, CXMLElement* pXML = NULL);
