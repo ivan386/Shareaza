@@ -1871,7 +1871,17 @@
                harddisken er full, eller at filen ikke kan skrives til. Hvis du vil fortsette
                lag mer plass ved å rydde harddisken og/eller sjekk at Incomplete mappen ikke
                er skrivebeskyttet. Deretter kan du prøve å starte nedlastningen på ny.</text>
+       </document>
 
+       <document name="GeneralHelp.XPsp2"> 
+                 <text format="b">Windows XP Service Pack 2 oppdaget</text> 
+                 <newline gap="8"/> 
+                 <text>Shareaza har oppdaget Windows XP Service Pack 2. Dette setter restriksjoner på antall tilkoblinger
+                 et program kan åpne på en gang.</text> 
+                 <newline gap="8"/> 
+                 <text>Shareaza bruker derfor begrensede nettverkstilkoblinger med normale verdier for å 
+                 sikre pålitelig drift, men utnyttelsen kan være noe redusert. Vennligst besøk forumet til Shareaza 
+                 for mer informasjon, og up to date nyheter.</text> 
        </document>
 
        <document name="DownloadHelp.Verifying">
