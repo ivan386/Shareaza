@@ -60,6 +60,7 @@ public:
 	CEDClient*		GetByGUID(GGUID* pHash);
 	BOOL			Merge(CEDClient* pClient);
 	BOOL			IsFull(CEDClient* pCheckThis = NULL);
+	BOOL			IsOverloaded();
 public:
 	void			OnRun();
 	BOOL			OnAccept(CConnection* pConnection);

@@ -253,6 +253,19 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 	return ( nCount >= Settings.eDonkey.MaxLinks ) || ( pCheckThis != NULL );
 }
 
+BOOL CEDClients::IsOverloaded()
+{
+	int nCount = 0;
+
+	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
+	{
+		if ( pClient->m_hSocket != INVALID_SOCKET ) nCount++;
+	}
+	
+	return ( nCount >= ( Settings.eDonkey.MaxLinks + 20 ) );
+}
+
+
 //////////////////////////////////////////////////////////////////////
 // CEDClients run
 
