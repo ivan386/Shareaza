@@ -120,14 +120,14 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
-/*
+
 	if ( ( (pDownload->GetSourceCount() == 0 ) ||
 		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
-		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
+		   (GetTryingCount() < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->SetStartTimer();
 	}
-*/	
+	
 	
 	return pDownload;
 }
@@ -189,7 +189,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->FindMoreSources();
-		//pDownload->SetStartTimer();
+		pDownload->SetStartTimer();
 	}
 	
 	return pDownload;
@@ -287,7 +287,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	if( ( pDownload->m_bBTH && ( GetActiveTorrentCount() < Settings.BitTorrent.DownloadTorrents ) ) ||
 		( ! pDownload->m_bBTH && ( GetCount(TRUE) < Settings.Downloads.MaxFiles ) ) )
 	{
-		//pDownload->SetStartTimer();
+		pDownload->SetStartTimer();
 		if ( pURL->m_nAction != CShareazaURL::uriSource )
 			pDownload->FindMoreSources();
 	}
@@ -427,7 +427,7 @@ int CDownloads::GetTransferCount() const
 	
 	return nCount;
 }
-/*
+
 int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 {
 	int nCount = 0;
@@ -445,7 +445,7 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 	
 	return nCount;
 }
-*/
+
 
 void CDownloads::Remove(CDownload* pDownload)
 {

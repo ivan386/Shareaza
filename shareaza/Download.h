@@ -50,7 +50,8 @@ protected:
 	BOOL		m_bShared;
 	BOOL		m_bComplete;
 	DWORD		m_tSaved;
-	
+	DWORD		m_tBegan;	//The time when this download began trying to download (Started
+							//searching, etc) 0 means has not tried this session.
 // Operations
 public:
 	virtual void	Pause();
@@ -59,14 +60,17 @@ public:
 	virtual void	Boost();
 	virtual void	Share(BOOL bShared);
 	virtual BOOL	Rename(LPCTSTR pszName);
+	virtual void	SetStartTimer();
+	virtual DWORD	GetStartTimer() const;
 public:
-	virtual BOOL	IsStarted() const;
+	virtual BOOL	IsStarted() const;		//Has the download actually downloaded anything?
 	virtual BOOL	IsPaused() const;
-	virtual BOOL	IsDownloading() const;
+	virtual BOOL	IsDownloading() const;	//Is the download recieving data?
 	virtual BOOL	IsMoving() const;
 	virtual BOOL	IsCompleted() const;
 	virtual BOOL	IsBoosted() const;
 	virtual BOOL	IsShared() const;
+	virtual BOOL	IsTrying() const;		//Is the download currently trying to download?
 public:
 	BOOL			Load(LPCTSTR pszPath);
 	BOOL			Save(BOOL bFlush = FALSE);

@@ -18,7 +18,7 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
+ 
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -64,6 +64,7 @@ CDownload::CDownload()
 	m_bComplete		= FALSE;
 	m_tCompleted	= 0;
 	m_tSaved		= 0;
+	m_tBegan		= 0;
 	
 	DownloadGroups.Link( this );
 }
@@ -93,6 +94,7 @@ void CDownload::Pause()
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	
+	m_tBegan	= 0;
 	CloseTransfers();
 	CloseFile();
 	SetModified();
@@ -118,6 +120,7 @@ void CDownload::Resume()
 	m_bPaused	= FALSE;
 	m_bDiskFull	= FALSE;
 	m_tReceived	= GetTickCount();
+	m_tBegan	= GetTickCount();
 	m_bTorrentTrackerError = FALSE;
 	
 	SetModified();
@@ -191,6 +194,23 @@ BOOL CDownload::Rename(LPCTSTR pszName)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownload control : SetStartTimer
+
+void CDownload::SetStartTimer()
+{
+	m_tBegan = GetTickCount();
+	SetModified();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownload control : GetStartTimer
+
+DWORD CDownload::GetStartTimer() const
+{
+	return( m_tBegan );
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownload state checks
 
 BOOL CDownload::IsStarted() const
@@ -223,6 +243,11 @@ BOOL CDownload::IsBoosted() const
 	return m_bBoosted;
 }
 
+BOOL CDownload::IsTrying() const
+{
+	return ( m_tBegan != 0 );
+}
+
 BOOL CDownload::IsShared() const
 {
 #ifdef _DEBUG
@@ -240,34 +265,74 @@ void CDownload::OnRun()
 	DWORD tNow = GetTickCount();
 	
 	if ( m_bDiskFull && ! m_bPaused ) Pause();
-	
-	if ( RunTorrent( tNow ) )
-	{
-		RunSearch( tNow );
-		
-		if ( m_bPaused == FALSE )
+
+	if( IsTrying() )
+	{	//This download is trying to download
+
+		//** 'Dead download' check- if it appears dead, give up and allow another to start.
+		if ( ( GetTickCount() - GetStartTimer() ) > ( 8 * 60 * 60 * 1000 ) )	//If we've been searching for 6 hours
+		{												
+			if ( ( GetTickCount() - m_tReceived ) > ( 5 * 60 * 60 * 1000 ) )	//And had no new data for 5
+			{											
+				if( m_bBTH )	//If it's a torrent
+				{
+					if( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )	//If we are at max torrents
+					{
+						m_tBegan = 0; //Give up on this one for now, try again later
+						if ( m_bTorrentRequested ) CBTTrackerRequest::SendStopped( this );
+						CloseTorrentUploads();
+					}
+				}
+				else			//Regular download
+				{
+					m_tBegan = 0;	//Give up for now, try again later
+				}
+			}		
+		} 
+		//** End of 'dead download' check
+
+		if ( RunTorrent( tNow ) )
 		{
-			if ( m_bSeeding )
+			RunSearch( tNow );
+			
+			if ( m_bPaused == FALSE )
 			{
-				RunValidation( TRUE );
-			}
-			else if ( m_pFile != NULL )
-			{
-				RunValidation( FALSE );
-				
-				if ( RunFile( tNow ) )
+				if ( m_bSeeding )
 				{
-					if ( ValidationCanFinish() ) OnDownloaded();
+					RunValidation( TRUE );
 				}
-				else
+				else if ( m_pFile != NULL )
 				{
-					StartTransfersIfNeeded( tNow );
+					RunValidation( FALSE );
+					
+					if ( RunFile( tNow ) )
+					{
+						if ( ValidationCanFinish() ) OnDownloaded();
+					}
+					else
+					{
+						StartTransfersIfNeeded( tNow );
+					}
+				}
+				else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )
+				{
+					OnDownloaded();
 				}
 			}
-			else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )
-			{
-				OnDownloaded();
-			}
+		}
+	}
+	else	
+	{	//If this download isn't trying to download, see if it can try
+		if(m_bBTH)
+		{	//Torrents only try when 'ready to go'. (Reduce tracker load)
+			if( Downloads.GetTryingCount( TRUE ) <= Settings.BitTorrent.DownloadTorrents )
+				SetStartTimer();
+		}
+		else
+		{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
+			//has sources and is ready to go.	
+			if( Downloads.GetTryingCount( FALSE ) < Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches )
+				SetStartTimer();
 		}
 	}
 	

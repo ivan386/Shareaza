@@ -21,7 +21,7 @@
 
 #if !defined(AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_)
 #define AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_
-
+ 
 #pragma once
 
 class CDownload;
@@ -73,6 +73,7 @@ public:
 	int			GetActiveTorrentCount() const;
 	int			GetCount(BOOL bActiveOnly = FALSE) const;
 	int			GetTransferCount() const;
+	int			GetTryingCount(BOOL bTorrentsOnly = FALSE) const;
 	BOOL		Check(CDownloadSource* pSource) const;
 	BOOL		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
