@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Spanish Skin File -->
 <!-- This is the first version to introduce full unicode (UTF-8) encoding -->
 
@@ -9,7 +9,7 @@
                        description="Traducción de Shareaza al Español/Castellano"
                        link="http://www.shareaza.com/"
                        email="dague12@yahoo.com"
-                       version="1.9.2.5"
+                       version="2.0.0.13"
                        type="Language"
                        language="es"
                        prompt="Seleccione aquí para usar Shareaza en Español/Castellano."
@@ -1826,7 +1826,96 @@
                desconectado o tiene problemas.  Shareaza no lo puede contactar para
                recibir la información de la transferencia.</text>
        </document>
+       
+<!-- General help documents -->
+<document name="GeneralHelp.DiskSpace">
 
+    <text format="b">El Espacio de Disco es Bajo</text>
+
+    <newline gap="8"/>
+
+    <text>La cantidad de espacio disponible en uno o varios Discos es bajo.</text>
+
+    <newline gap="8"/>
+
+    <text>Tu siempre debes tener una cantidad considerable en el Disco Duro. 
+
+    Los programas se pueden hacer inestables cuando estan llenos, y los archivos temporales pueden ser
+
+    perdidos. Tu tienes que correr un "Disk Clean-Up", borrar archivos que ya no uses, o desistalar software
+
+    que ya no necesitas.</text>
+
+</document>
+<!-- Search help documents -->
+<document name="SearchHelp.BadSearch">
+
+    <text format="b">Por favor vuelve a reformular la busqueda</text>
+
+    <newline gap="8"/>
+
+    <text>Esta busqueda está mal formateada, y no funcionará correctamente. 
+
+    Las busquedas deben tener varios terminos como sea possible, y deben especificar una schema
+    (tipo de archivo). De todas maneras, las busquedas no deben ser limitadas a números o terminos negativos
+    , y debe evitar hacer muchos queries (busquedas.</text>
+
+    <newline gap="8"/>
+
+    <text> Casi todos los clientes de la red van a ignorar la busuqeda
+
+        todos los archivos MP3, por ejemplo, porque no es muy especifico
+
+        y puede hacer demasiados resultados.</text>
+</document>
+<!-- Share help documents -->
+
+    
+
+<document name="ShareHelp.AlreadyShared">
+
+    <text format="b">Already Shared</text>
+
+    <newline gap="8"/>
+
+    <text>The folder you have selected is already being shared as part of an 
+
+    existing share.</text>
+
+    <newline gap="8"/>
+
+    <text> %s </text>
+
+</document>
+
+
+
+<document name="ShareHelp.BadShare">
+
+    <text format="b">Esta carpeta no debe ser compartida</text>
+
+    <newline gap="8"/>
+
+    <text>Esta carpeta es(o contiene) una carpeta del sistema. Compartir esta carpeta no es 
+
+    recomendado, porque la mayoria de los archivos que estan aqui no son usados por otras personas.</text>
+
+    <newline gap="8"/>
+
+    <text>Carpetas como la carpeta de Windows, Archivos del Programa, y carpetas similares
+
+    no continen archivos suitables para compartir. Cualquier archivo de interés deberia estar localizado en un
+
+    sub-folder</text><text format="i"> adentro </text><text> estas 
+
+    carpetas . Por favor comparte estos en vez de los otros.</text>
+
+    <newline gap="8"/>
+
+    <text>Los archivos de Shareaza de la carpeta 'incomplete' no deben ser compartidos por la librería 
+    , porque cuando trates de hacer el hashing process vas a tener problemas en el rendimiento.</text>
+
+</document>
        </documents>
        <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
        <commandTips>
