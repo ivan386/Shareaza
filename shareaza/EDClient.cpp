@@ -1115,33 +1115,37 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	m_bUpMD4 = TRUE;
 	
 	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE );
-	if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
+	if ( pFile )
 	{
-		// Create the reply packet
-		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
+		if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) )
+		{
+			// Create the reply packet
+			pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
 
-		// If we have not sent comments yet, and this client supports comments
-		if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) )
-		{ 
-			// If there's comments in the library
-			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
-			{
-				// Create the comments packet
-				pComment = CEDPacket::New( ED2K_C2C_FILEDESC );
-				pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
-				pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
-				m_bCommentSent = TRUE;
+			// If we have not sent comments yet, and this client supports comments
+			if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) )
+			{ 
+				// If there's comments in the library
+				if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
+				{
+					// Create the comments packet
+					pComment = CEDPacket::New( ED2K_C2C_FILEDESC );
+					pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
+					pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
+					m_bCommentSent = TRUE;
+				}
 			}
-		}
+			Library.Unlock();
 
+			// Send reply
+			Send( pReply );
+			// Send comments / rating
+			if ( pComment ) Send( pComment );
+
+			return TRUE;
+		}
 		Library.Unlock();
 
-		// Send reply
-		Send( pReply );
-		// Send comments / rating
-		if ( pComment ) Send( pComment );
-
-		return TRUE;
 	}
 	else if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
 	{
