@@ -741,6 +741,8 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_VERSION:
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_nVersion = pTag.m_nValue;
 			break;
+		case ED2K_CT_MODVERSION:
+			break;
 		case ED2K_CT_UDPPORTS:
 			if ( pTag.m_nType == ED2K_TAG_INT )	m_nUDP = (WORD)(pTag.m_nValue & 0x0000FFFF);
 			break;
@@ -769,6 +771,15 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_nSoftwareVersion = pTag.m_nValue & 0x00FFFFFF;
 				m_nEmCompatible = pTag.m_nValue >> 24;
 			}
+			break;
+		case ED2K_CT_UNKNOWN1:
+			break;
+		case ED2K_CT_UNKNOWN2:
+			break;
+		case ED2K_CT_MOREFEATUREVERSIONS:
+			// This currently only holds the KAD version- We aren't interested in that.
+			break;
+		case ED2K_CT_UNKNOWN3:
 			break;
 		default:
 			theApp.Message( MSG_DEBUG, _T("Unrecognised packet in CEDClient::OnHello") );

@@ -311,9 +311,14 @@ public:
 #define	ED2K_CT_PORT				0x0F
 #define ED2K_CT_VERSION				0x11
 #define ED2K_CT_FLAGS				0x20	// Tell server about compression, new tags, unicode
+#define ED2K_CT_MODVERSION			0x55	// MOD version
 #define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
 #define	ED2K_CT_FEATUREVERSIONS		0xFA	// Tells extended features (like emule info)
 #define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
+#define	ED2K_CT_UNKNOWN1			0xFC	// ?
+#define	ED2K_CT_UNKNOWN2			0xFD	// ?
+#define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// KAD version (Unused)
+#define	ED2K_CT_UNKNOWN3			0xFF	// ?
 
 
 // File tags
