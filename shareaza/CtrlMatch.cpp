@@ -270,14 +270,15 @@ void CMatchCtrl::SetSortColumn(int nColumn, BOOL bDirection)
 
 void CMatchCtrl::SetMessage(UINT nMessageID, BOOL bLink)
 {
-	if ( nMessageID == m_nMessage && m_bSearchLink == bLink ) return;
+	CString strCurrentText;
+	Skin.LoadString( strCurrentText, m_nMessage );
+
+	if ( nMessageID == m_nMessage && m_bSearchLink == bLink && strCurrentText == m_sMessage ) return;
 	
 	m_bSearchLink = bLink;
 	
-	if ( m_nMessage = nMessageID )
-		Skin.LoadString( m_sMessage, m_nMessage );
-	else
-		m_sMessage.Empty();
+	m_nMessage = nMessageID;
+	m_sMessage = strCurrentText;
 	
 	if ( m_nCacheItems == 0 ) Invalidate();
 }
