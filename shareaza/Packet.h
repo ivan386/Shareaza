@@ -81,6 +81,11 @@ public:
 	virtual CString	ReadString(DWORD nMaximum = 0xFFFFFFFF);
 	virtual void	WriteString(LPCTSTR pszString, BOOL bNull = TRUE);
 	virtual int		GetStringLen(LPCTSTR pszString) const;
+
+	virtual CString	ReadStringUTF8(DWORD nMaximum = 0xFFFFFFFF);
+	virtual void	WriteStringUTF8(LPCTSTR pszString, BOOL bNull = TRUE);
+	virtual int		GetStringLenUTF8(LPCTSTR pszString) const;
+
 	LPBYTE			ReadZLib(DWORD nLength, DWORD* pnOutput, DWORD nSuggest = 0);
 	void			WriteZLib(LPCVOID pData, DWORD nLength);
 	BYTE*			WriteGetPointer(DWORD nLength, DWORD nOffset = 0xFFFFFFFF);

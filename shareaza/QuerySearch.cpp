@@ -294,11 +294,13 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to ED2K packet
 
-CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
+CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 {
 	CEDPacket* pPacket = NULL;
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
+
+	BOOL bUTF8 = ( ! bUDP ) && ( nServerFlags & ED2K_SERVER_TCP_UNICODE );
 	
 	if ( m_bED2K )
 	{
@@ -306,7 +308,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 		{			//We need the size- do a search by magnet (hash)
 			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
 			pPacket->WriteByte( 1 );
-			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ));
+			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ), bUTF8 );
 		}
 		else
 		{			//Don't need the size- Find more sources
@@ -347,7 +349,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 		if ( ( m_pSchema == NULL ) || ( ! m_pSchema->m_sDonkeyType.GetLength() ) )
 		{	//ed2k search without file type
 			pPacket->WriteByte( 1 );		// Name
-			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords );
+			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 		}
 		else
 		{	//ed2k search including file type
@@ -355,10 +357,10 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 			pPacket->WriteByte( 0 );
 
 			pPacket->WriteByte( 1 );		//name
-			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords );
+			pPacket->WriteEDString( m_sSearch.GetLength() ? m_sSearch : strWords, bUTF8 );
 
 			pPacket->WriteByte( 2 );		//metadata (type)
-			pPacket->WriteEDString( m_pSchema->m_sDonkeyType );
+			pPacket->WriteEDString( m_pSchema->m_sDonkeyType, bUTF8 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILETYPE );
 		}

@@ -80,8 +80,8 @@ public:
 	
 // Operations
 public:
-	CString				ReadEDString();
-	void				WriteEDString(LPCTSTR psz);
+	CString				ReadEDString(BOOL bUTF8 = FALSE);
+	void				WriteEDString(LPCTSTR psz, BOOL bUTF8 = FALSE);
 	BOOL				Deflate();
 	BOOL				InflateOrRelease(BYTE nEdProtocol);
 public:
@@ -220,9 +220,12 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_UDP_FILENOTFOUND		0x92
 #define ED2K_C2C_UDP_QUEUEFULL			0x93
 
-#define	ED2K_SERVER_TCP_DEFLATE		0x00000001
-#define	ED2K_SERVER_UDP_GETSOURCES	0x00000001
-#define	ED2K_SERVER_UDP_GETFILES	0x00000002
+#define	ED2K_SERVER_TCP_DEFLATE			0x01
+#define	ED2K_SERVER_TCP_NEWTAGS			0x08
+#define	ED2K_SERVER_TCP_UNICODE			0x10
+
+#define	ED2K_SERVER_UDP_GETSOURCES		0x01
+#define	ED2K_SERVER_UDP_GETFILES		0x02
 
 
 class CEDTag
@@ -249,8 +252,8 @@ public:
 // Operations
 public:
 	void	Clear();
-	void	Write(CEDPacket* pPacket);
-	BOOL	Read(CEDPacket* pPacket);
+	void	Write(CEDPacket* pPacket, BOOL bUTF8 = FALSE);
+	BOOL	Read(CEDPacket* pPacket, BOOL bUTF8 = FALSE);
 	BOOL	Read(CFile* pFile);
 	
 // Inlines
@@ -282,7 +285,7 @@ public:
 #define ED2K_CT_NAME				0x01
 #define ED2K_CT_VERSION				0x11
 #define	ED2K_CT_PORT				0x0F
-#define ED2K_CT_COMPRESSION			0x20
+#define ED2K_CT_FLAGS				0x20	//Tell server about compression, new tags, unicode
 
 #define ED2K_FT_FILENAME			0x01
 #define ED2K_FT_FILESIZE			0x02
@@ -298,9 +301,13 @@ public:
 #define ED2K_FT_SOURCES				0x15
 #define ED2K_FT_PERMISSIONS			0x16
 #define ED2K_FT_ULPRIORITY			0x17
+#define ED2K_FT_COMPLETESOURCES		0x30
 #define ED2K_FT_ATTRANSFERED		0x50
 #define ED2K_FT_ATREQUESTED			0x51
 #define ED2K_FT_ATACCEPTED			0x52
+#define ED2K_FT_LENGTH				0xD3
+#define ED2K_FT_BITRATE				0xD4
+#define ED2K_FT_CODEC				0xD5
 
 #define ED2K_ET_COMPRESSION			0x20
 #define ED2K_ET_UDPPORT				0x21

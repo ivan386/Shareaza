@@ -311,7 +311,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
-			pPacket = m_pSearch->ToEDPacket( FALSE );
+			pPacket = m_pSearch->ToEDPacket( FALSE, ((CEDNeighbour*)pNeighbour)->m_nFlags );
 		}
 		else
 		{
@@ -580,7 +580,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 			
 			if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 			{
-				pPacket = m_pSearch->ToEDPacket( TRUE );
+				pPacket = m_pSearch->ToEDPacket( TRUE, 0 );
 			}
 			else
 			{

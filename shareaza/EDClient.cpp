@@ -704,7 +704,7 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 	pPacket->WriteByte( 0x01 );		// eMule protocol
 	
 	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 6 : 5 );	// Tags
-	CEDTag( ED2K_ET_COMPATIBLECLIENT, 4 ).Write( pPacket );
+	CEDTag( ED2K_ET_COMPATIBLECLIENT, 14 ).Write( pPacket ); //Temp change to test stuff... 4
 	CEDTag( ED2K_ET_COMPRESSION, 1 ).Write( pPacket );
 	CEDTag( ED2K_ET_SOURCEEXCHANGE, 2 ).Write( pPacket );
 	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, 1 ).Write( pPacket ); //Extended request version 1

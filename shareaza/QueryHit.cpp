@@ -1002,7 +1002,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 	while ( nTags-- > 0 )
 	{
 		if ( pPacket->GetRemaining() < 1 ) return FALSE;
-		
+
 		CEDTag pTag;
 		if ( ! pTag.Read( pPacket ) ) return FALSE;
 		
@@ -1015,6 +1015,10 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			m_bSize = TRUE;
 			m_nSize = pTag.m_nValue;
 		}
+		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE && pTag.m_nType == ED2K_TAG_INT )
+		{
+			//theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
+		}
 		else if ( pTag.m_nKey == ED2K_FT_SOURCES && pTag.m_nType == ED2K_TAG_INT )
 		{
 			m_nSources = pTag.m_nValue;
@@ -1022,6 +1026,54 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 				m_bResolveURL = FALSE;
 			else
 				m_nSources--;
+		}
+		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES && pTag.m_nType == ED2K_TAG_INT )
+		{
+			if ( ! pTag.m_nValue ) //If there are no complete sources
+			{
+				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );
+				//Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
+				m_nPartial = (DWORD)m_nSize >> 2;
+			}
+			else
+			{
+				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports complete sources present.") );
+			}
+		}
+		else if ( pTag.m_nKey == ED2K_FT_LENGTH && pTag.m_nType == ED2K_TAG_INT )
+		{
+			//The length (play time) as a DWORD
+			//pTag.m_nValue
+		}
+		else if ( pTag.m_nKey == 0 && pTag.m_sKey == _T("length") && pTag.m_nType == ED2K_TAG_STRING )
+		{
+			//The length- as a string. x:x:x, x:x or x
+			//pTag.m_sValue
+		}
+		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE && pTag.m_nType == ED2K_TAG_INT ) ||
+				  ( pTag.m_nKey == 0 && pTag.m_sKey == _T("bitrate") && pTag.m_nType == ED2K_TAG_INT ) )
+		{
+			//The bitrate of the file
+			//pTag.m_nValue
+		}
+		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC && pTag.m_nType == ED2K_TAG_STRING ) ||
+				   ( pTag.m_nKey == 0 && pTag.m_sKey == _T("codec") && pTag.m_nType == ED2K_TAG_STRING ) )
+		{
+			//The codec of the file
+			//pTag.m_sValue
+		}
+		else
+		{
+			//*** Temp debug stuff
+			CString s;
+			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
+			theApp.Message( MSG_SYSTEM, s );
+
+			if ( pTag.m_nType == 2 )
+				s.Format ( _T("Value: %s"), pTag.m_sValue);
+			else
+				s.Format ( _T("Value: %d"), pTag.m_nValue);
+			theApp.Message( MSG_SYSTEM, s );
 		}
 	}
 	

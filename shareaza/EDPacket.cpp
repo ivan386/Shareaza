@@ -49,18 +49,31 @@ CEDPacket::~CEDPacket()
 //////////////////////////////////////////////////////////////////////
 // CEDPacket length prefixed strings
 
-CString CEDPacket::ReadEDString()
+CString CEDPacket::ReadEDString(BOOL bUTF8)
 {
 	int nLen = ReadShortLE();
-	return ReadString( nLen );
+	if ( bUTF8 )
+		return ReadStringUTF8( nLen );
+	else
+		return ReadString( nLen );
 }
 
-void CEDPacket::WriteEDString(LPCTSTR psz)
+void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUTF8)
 {
-	int nLen = GetStringLen( psz );
+	int nLen;
+	if ( bUTF8 )
+	{
+		nLen = GetStringLenUTF8( psz );
+		WriteShortLE( nLen );
+		WriteStringUTF8( psz, FALSE );
+	}
+	else
+	{
+		nLen = GetStringLen( psz );
+		WriteShortLE( nLen );
+		WriteString( psz, FALSE );
+	}
 	ASSERT( nLen <= 0xFFFF );
-	WriteShortLE( nLen );
-	WriteString( psz, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -294,13 +307,13 @@ void CEDTag::Clear()
 //////////////////////////////////////////////////////////////////////
 // CEDTag write to packet
 
-void CEDTag::Write(CEDPacket* pPacket)
+void CEDTag::Write(CEDPacket* pPacket, BOOL bUTF8)
 {
 	pPacket->WriteByte( m_nType );
 	
 	if ( int nKeyLen = m_sKey.GetLength() )
 	{
-		pPacket->WriteEDString( m_sKey );
+		pPacket->WriteEDString( m_sKey, bUTF8 );
 	}
 	else
 	{
@@ -310,7 +323,7 @@ void CEDTag::Write(CEDPacket* pPacket)
 	
 	if ( m_nType == ED2K_TAG_STRING )
 	{
-		pPacket->WriteEDString( m_sValue );
+		pPacket->WriteEDString( m_sValue, bUTF8 );
 	}
 	else if ( m_nType == ED2K_TAG_INT )
 	{
@@ -321,7 +334,7 @@ void CEDTag::Write(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CEDTag read from packet
 
-BOOL CEDTag::Read(CEDPacket* pPacket)
+BOOL CEDTag::Read(CEDPacket* pPacket, BOOL bUTF8)
 {
 	Clear();
 	
@@ -338,7 +351,10 @@ BOOL CEDTag::Read(CEDPacket* pPacket)
 	}
 	else if ( nLen > 1 )
 	{
-		m_sKey = pPacket->ReadString( nLen );
+		if ( bUTF8 )
+			m_sKey = pPacket->ReadStringUTF8( nLen );
+		else
+			m_sKey = pPacket->ReadString( nLen );
 	}
 	
 	if ( m_nType == ED2K_TAG_STRING )
@@ -346,7 +362,10 @@ BOOL CEDTag::Read(CEDPacket* pPacket)
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
 		nLen = pPacket->ReadShortLE();
 		if ( pPacket->GetRemaining() < nLen ) return FALSE;
-		m_sValue = pPacket->ReadString( nLen );
+		if ( bUTF8 )
+			m_sValue = pPacket->ReadStringUTF8( nLen );
+		else
+			m_sValue = pPacket->ReadString( nLen );
 	}
 	else if ( m_nType == ED2K_TAG_INT )
 	{

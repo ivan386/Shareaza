@@ -80,7 +80,7 @@ public:
 public:
 	CG1Packet*				ToG1Packet();
 	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey);
-	CEDPacket*				ToEDPacket(BOOL bUDP);
+	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
 	static CQuerySearch*	FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint = NULL);
 protected:
 	BOOL					ReadG1Packet(CPacket* pPacket);
