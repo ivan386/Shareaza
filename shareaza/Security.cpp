@@ -1097,6 +1097,7 @@ void CAdultFilter::Load()
 			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 			{
 				CString strWord = pWords.GetNext( pos );
+				strWord = CharLower( strWord.GetBuffer() );
 				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 				pszFilter += strWord.GetLength() + 1;
 			}
@@ -1137,6 +1138,7 @@ void CAdultFilter::Load()
 			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 			{
 				CString strWord = pWords.GetNext( pos );
+				strWord = CharLower( strWord.GetBuffer() );
 				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 				pszFilter += strWord.GetLength() + 1;
 			}
