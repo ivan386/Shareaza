@@ -1,0 +1,36 @@
+										<td class="tabsel">Nytt S&oslash;k
+										<td class="tabedg">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="frame">
+								<div>
+									For å starte et nytt s&oslash;k, skiv inn &oslash;nsket 
+                                    uttrykk i boksen nedenfor og klikk <b>Start S&oslash;k</b>.
+									&Oslash;nsker du &aring; begrense s&oslash;ket til en filtype, 
+                                    velg dette fra listen.
+								</div>
+								<form method="get" action="newsearch">
+								<table align="center">
+									<tr>
+										<td>S&oslash;k etter:</td>
+										<td><input type="text" name="search" size="30"></td>
+									</tr>
+									<tr>
+										<td>Filtype:</td>
+										<td>
+											<select name="schema">
+												<option>hvilken som helst</option>
+												<%= schema_option_list %>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center">
+											<input type="submit" value="Start S&oslash;k">
+										</td>
+									</tr>
+								</table>
+								</form>

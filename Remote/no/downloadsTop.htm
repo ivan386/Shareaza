@@ -1,0 +1,59 @@
+										<td class="tabedg">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="frame">
+								<table width="100%">
+									<tr>
+										<form method="get">
+											<input type="hidden" name="filter_set" value="1">
+											<td nowrap style="font-size: 7pt"><b>Filter:</b></td>
+											<td/>
+											<td><input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %>></td>
+											<td nowrap style="font-size: 7pt">
+                                            <label for="filter_active">Aktiv</label></td>
+											<td/>
+											<td><input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %>></td>
+											<td nowrap style="font-size: 7pt">
+                                            <label for="filter_queued">I k&oslash;</label></td>
+											<td/>
+											<td><input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %>></td>
+											<td nowrap style="font-size: 7pt">
+                                            <label for="filter_sources">Ingen 
+                                            Kilder</label></td>
+											<td/>
+											<td><input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %>></td>
+											<td nowrap style="font-size: 7pt">
+                                            <label for="filter_paused">Pause</label></td>
+											<td/>
+											<td><input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %>></td>
+											<td nowrap style="font-size: 7pt">
+                                            <label for="filter_show_all">Vis 
+                                            Alle Kilder</label></td>
+											<td/>
+											<td nowrap><input type="submit" value=" Set "></td>
+											<td width="100%"/>
+											<td nowrap align="right" style="font-size: 7pt">
+                                            <a href="?refresh=<%= random %>">
+                                            Oppdater siden</a></td>
+										</form>
+									</tr>
+								</table>
+								<br>
+								<table width="100%" cellspacing="0" style="border-collapse: collapse">
+									<tr>
+										<td class="viewheader">Nedlastet Fil</td>
+										<td class="viewheader" align="center">
+                                        St&oslash;rrelse</td>
+										<td class="viewheader" align="center">
+                                        Fremdrift</td>
+										<td class="viewheader" align="center">
+                                        Hastighet</td>
+										<td class="viewheader" align="center">
+                                        Kilder</td>
+										<td class="viewheader" align="center">Status</td>
+										<td class="viewheader" align="center">
+                                        Kontroll</td>
+									</tr>

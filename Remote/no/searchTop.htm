@@ -1,0 +1,27 @@
+										<td class="tab"><a href="?id=0">Nytt S&oslash;k</a></td>
+										<td class="tabedg">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="frame">
+								<table width="100%">
+									<tr>
+										<form method="get">
+											<input type="hidden" name="id" value="<%= search_id %>">
+											<input type="hidden" name="setfilter" value="1">
+											<td style="font-size: 7pt">Filter:</td>
+											<td><input type="text" name="filter" value="<%= search_filter %>" size="20"></td>
+											<td><input type="submit" value="Filter"></td>
+											<td style="font-size: 7pt" align="right" width="100%">
+												<a href="?id=<%= search_id %>&refresh=<%= random %>">
+                                                Oppdater siden</a> -
+<%? searching %> <a href="?id=<%= search_id %>&stop=1"><b>Stopp s&oslash;ket</b></a> -
+<%?%> <a href="?close=<%= search_id %>">Lukk s&oslash;ket</a>
+											</td>
+										</form>
+									</tr>
+								</table>
+								<table width="100%" cellspacing="0" style="border-collapse: collapse">
+									<tr>
