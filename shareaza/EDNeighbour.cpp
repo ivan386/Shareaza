@@ -465,7 +465,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			break;
 */
 		default:
-			theApp.Message( MSG_DEBUG, _T("Unrecognised tag in ED2K server Ident") );
+			theApp.Message( MSG_DEBUG, LPCTSTR( CString( _T("Unrecognised tag in ED2K server Ident") ) + m_sAddress ) );
 		}
 	}
 

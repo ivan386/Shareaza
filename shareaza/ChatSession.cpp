@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/23 18:59:15 $"
-//	Revision:		"$Revision: 1.17 $"
+//	Date:			"$Date: 2005/03/26 13:30:21 $"
+//	Revision:		"$Revision: 1.18 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -567,7 +567,7 @@ BOOL CChatSession::ReadPacketsED2K()
 			}
 			else
 			{
-				theApp.Message( MSG_ERROR, _T("Unrecognised packet type received during chat") );
+				theApp.Message( MSG_ERROR, LPCTSTR( CString( _T("Unrecognised packet type received during chat") ) + m_sAddress ) );
 			}
 		}
 		catch ( CException* pException )

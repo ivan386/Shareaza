@@ -799,7 +799,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			}
 			else
 			{
-				theApp.Message( MSG_DEBUG, _T("Unrecognised packet in CEDClient::OnHello") );
+				theApp.Message( MSG_DEBUG, LPCTSTR( CString( _T("Unrecognised packet in CEDClient::OnHello") ) + m_sAddress ) );
 			}
 		}
 	}
