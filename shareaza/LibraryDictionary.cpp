@@ -37,6 +37,8 @@
 #include "ED2K.h"
 #include "TigerTree.h"
 
+#include "UploadQueues.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -217,6 +219,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 	
 	m_pTable->Clear();
 	
+	//Add words to hash table
 	for ( POSITION pos = m_pWords.GetStartPosition() ; pos ; )
 	{
 		CLibraryWord* pWord;
@@ -225,27 +228,57 @@ BOOL CLibraryDictionary::BuildHashTable()
 		m_pWords.GetNextAssoc( pos, strWord, (void*&)pWord );
 		
 		CLibraryFile* pFileTemp = *(pWord->m_pList); 
-		// Check if the file is shared
-		if ( pFileTemp->IsShared() )
+
+		if ( pFileTemp->IsShared() )	// Check if the file is shared
 		{
-			m_pTable->AddString( strWord );
+			if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFileTemp, FALSE ) ) // Check if a queue exists
+			{
+				//Add the keywords to the table
+				m_pTable->AddString( strWord );
+/*
+				CString str;
+				str.Format( _T("Word Added: %s"), strWord );
+				theApp.Message( MSG_DEFAULT, str );
+			}
+			else
+			{
+				CString str;
+				str.Format( _T("Word not added: %s"), strWord );
+				theApp.Message( MSG_DEFAULT, str );
+*/
+			}
 		}
 	}
 	
+	//Add sha1/ed2k hashes to hash table
 	for ( pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
-
-		// Check if the file is shared
-		if (pFile->IsShared())
+		
+		if (pFile->IsShared())	// Check if the file is shared
 		{		
-			if ( pFile->m_bSHA1 )
+			if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, FALSE ) ) // Check if a queue exists
 			{
-				m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+				//Add the hashes to the table
+				if ( pFile->m_bSHA1 )
+				{
+					m_pTable->AddString( CSHA::HashToString( &pFile->m_pSHA1, TRUE ) );
+				}
+				if ( pFile->m_bED2K )
+				{
+					m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+				}
+/*
+				CString str;
+				str.Format( _T("File added: %s"), pFile->m_sName );
+				theApp.Message( MSG_DEFAULT, str );
 			}
-			if ( pFile->m_bED2K )
+			else
 			{
-				m_pTable->AddString( CED2K::HashToString( &pFile->m_pED2K, TRUE ) );
+				CString str;
+				str.Format( _T("File not added: %s"), pFile->m_sName );
+				theApp.Message( MSG_DEFAULT, str );
+*/
 			}
 		}
 	}
@@ -254,6 +287,13 @@ BOOL CLibraryDictionary::BuildHashTable()
 	
 	return TRUE;
 }
+
+void CLibraryDictionary::RebuildHashTable()	//Force table to re-build. (If queues changed, etc)
+{
+	m_bTable = FALSE;
+	BuildHashTable();
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary retreive hash table

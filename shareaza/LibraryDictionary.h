@@ -49,7 +49,8 @@ protected:
 public:
 	void				Add(CLibraryFile* pFile);
 	void				Remove(CLibraryFile* pFile);
-	BOOL				BuildHashTable();
+	BOOL				BuildHashTable();					//Build hash table if needed
+	void				RebuildHashTable();					//Force hash table to re-build
 	CQueryHashTable*	GetHashTable();
 	void				Clear();
 	CPtrList*			Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);

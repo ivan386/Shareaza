@@ -31,6 +31,8 @@
 #include "LiveList.h"
 #include "Skin.h"
 
+#include "LibraryDictionary.h"
+
 IMPLEMENT_DYNCREATE(CUploadsSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CUploadsSettingsPage, CSettingsPage)
@@ -146,6 +148,8 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_wndAgentRemove.EnableWindow( m_wndAgentList.GetCurSel() >= 0 );
 	m_wndQueueEdit.EnableWindow( m_wndQueues.GetSelectedCount() == 1 );
 	m_wndQueueDelete.EnableWindow( m_wndQueues.GetSelectedCount() > 0 );
+
+	m_bQueuesChanged = FALSE;
 	
 	return TRUE;
 }
@@ -270,6 +274,7 @@ void CUploadsSettingsPage::OnQueueNew()
 	
 	UploadQueues.Save();
 	UpdateQueues();
+	m_bQueuesChanged = TRUE;
 }
 
 void CUploadsSettingsPage::OnQueueEdit() 
@@ -284,6 +289,7 @@ void CUploadsSettingsPage::OnQueueEdit()
 	
 	UploadQueues.Save();
 	UpdateQueues();
+	m_bQueuesChanged = TRUE;
 }
 
 void CUploadsSettingsPage::OnQueueDelete() 
@@ -296,6 +302,7 @@ void CUploadsSettingsPage::OnQueueDelete()
 	
 	UploadQueues.Save();
 	UpdateQueues();
+	m_bQueuesChanged = TRUE;
 }
 
 void CUploadsSettingsPage::OnQueueDrop(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -375,5 +382,13 @@ void CUploadsSettingsPage::OnOK()
 		UploadQueues.CreateDefault();
 	else
 		UploadQueues.Validate();
+
+	if ( m_bQueuesChanged )
+	{
+		Beep(500,500);
+		// Changing queues might change what files are in the hash table
+		LibraryDictionary.RebuildHashTable(); 
+		// ED2k file list will automatically update on next server connection
+	}
 }
 

@@ -64,6 +64,8 @@ public:
 	int		GetTransferCount();
 	BOOL	IsTransferAvailable();
 	DWORD	GetDonkeyBandwidth();
+	BOOL	CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bNow);	//Can this file be uploaded with the current queue setup?
+
 public:
 	void	Clear();
 	BOOL	Load();

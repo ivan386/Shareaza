@@ -330,6 +330,29 @@ DWORD CUploadQueues::GetDonkeyBandwidth()
 	return nBandwidth;
 }
 
+BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bNow)
+{ 	// Can the specified file be uploaded with the current queue setup?
+
+	if ( pFile->m_nSize == 0 ) return FALSE;			//Don't bother with 0 byte files
+
+	CSingleLock pLock( &m_pSection, TRUE );
+	
+	for ( POSITION pos = GetIterator() ; pos ; )		//Check each queue
+	{
+		CUploadQueue* pQueue = GetNext( pos );
+		
+		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
+		{	// If this queue will accept this file
+			if ( ( ! bNow ) || ( pQueue->GetQueueRemaining() > 0 ) ) 
+			{	// And we don't care if there is space now, or the queue isn't full)
+				return TRUE; // Then this file can be uploaded
+			}
+		}
+	}
+
+	return FALSE;	//This file is not uploadable with the current queue setup
+}
+
 //////////////////////////////////////////////////////////////////////
 // CUploadQueues clear
 
