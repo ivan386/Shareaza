@@ -189,7 +189,7 @@ lt.icons_license=Licencinл sutartis
 lt.icons_uninstall=Paрalinti
 lt.icons_downloads=Atsisiuntimai
 lt.dialog_shutdown=Д%1У рiuo metu dirba. Ar norite nutraukti Д%1У darbа, tam kad bыtш galima tжsti бdiegimа?
-lt.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+lt.dialog_firewall=Ѕdiegimo programai nepavyko pridлti ДShareazaУ prie Windows ugniasienлs iрimиiш sаraрo.%nPridлkite ДShareazaУ б рб sаraра rankiniu bыdu.
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -351,7 +351,7 @@ ru.icons_license=Ћицензи€
 ru.icons_uninstall=ƒеинсталл€ци€
 ru.icons_downloads=«агрузки
 ru.dialog_shutdown=%1 в данный момент работает. ’отите ли завершить работу %1, чтобы продолжить установку?
-ru.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+ru.dialog_firewall=ѕрограмма установки не смогла добавить Shareaza в список исключений брадмауэра Windows.%nѕожалуйста, добавьте ее в этот список вручную.
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
