@@ -782,7 +782,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		{
 			// INFORMATIONAL
 			
-			bSuccess = TRUE;
+			// Don't count as success if it's only informational
+			// bSuccess = TRUE; 
 			m_pWebCache->m_bGnutella2 = TRUE;
 			
 			if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
