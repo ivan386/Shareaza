@@ -353,8 +353,7 @@ template < class Hash > inline void CManagedHash < Hash >::SerializeLoad(CArchiv
 
 template < class Hash > inline void CManagedHash < Hash >::operator = (const CManagedHash < Hash > &oHash)
 {
-	Hash::operator = ( oHash );
-	bValid = oHash.bValid;
+	if ( bValid = oHash.bValid ) Hash::operator = ( oHash );
 }
 
 template < class Hash > inline void CManagedHash < Hash >::operator = (const Hash &oHash)

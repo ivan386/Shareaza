@@ -389,8 +389,7 @@ void CUploadTransferED2K::Send(CEDPacket* pPacket, BOOL bRelease)
 void CUploadTransferED2K::AddRequest(QWORD nOffset, QWORD nLength)
 {
 	ASSERT( m_pBaseFile != NULL );
-	m_pRequested.Subtract( nOffset, nOffset + nLength );
-	m_pRequested.Add( nOffset, nOffset + nLength );
+	if ( ! m_pRequested.ContainsRange( nOffset, nOffset + nLength) ) m_pRequested.Add( nOffset, nOffset + nLength );
 }
 
 //////////////////////////////////////////////////////////////////////

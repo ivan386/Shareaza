@@ -256,10 +256,12 @@ BOOL CUploadTransferBT::ServeRequests()
 		if ( m_pDownload && m_pDownload->m_pFile && ! m_pDownload->m_bSeeding )
 		{
 			while ( ! ( m_pDownload->m_oVerified.ContainsRange( m_nOffset, m_nOffset + m_nLength ) ) )
-			{
-				if ( ! m_pRequested.GetFirst( m_nOffset, m_nLength ) )
+			{	// Is requested Part verified ?
+				if ( ! m_pRequested.GetFirst( m_nOffset, m_nLength ) )	// try to serve next request
 				{
-					SetChoke( TRUE );
+					SetChoke( TRUE );			// if there is none, set choke and get out
+					m_nState = upsRequest;
+					return FALSE;
 				}
 			}
 		}
