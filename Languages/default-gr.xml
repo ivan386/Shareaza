@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Greek Skin File -->
 <!-- Body element, don't touch -->
 
@@ -10,7 +10,7 @@
                        description="Shareaza Default Greek Skin File"
                        link="http://www.shareaza.com/"
                        email="contact@shareaza.com"
-                       version="2.0.5.0"
+                       version="2.0.0.33"
                        type="Language"
                        language="gr"
                        prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα."
@@ -31,7 +31,7 @@
        <toolbar name="CMainWnd.Tabbed">
                <button id="ID_TAB_CONNECT" text="Σύνδεση"/>
                <separator/>
-               <button id="ID_TAB_HOME" text="Σπίτι"/>
+               <button id="ID_TAB_HOME" text="Home"/>
                <button id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
                <button id="ID_TAB_MEDIA" text="Μέσο αναπαραγωγής"/>
                <button id="ID_TAB_SEARCH" text="Ερευνα"/>
@@ -517,7 +517,7 @@
                        <item id="ID_TOOLS_DOWNLOAD" text="_Πρόσθεσε/Torrent..."/>
                        <separator/>
                        <item id="ID_TOOLS_SKIN" text="Δίαλεξε S_kin..."/>
-                       <item id="ID_TOOLS_LANGUAGE" text="Δίλαεξε μια _γλώσσα..."/>
+                       <item id="ID_TOOLS_LANGUAGE" text="Διάλεξε μια _γλώσσα..."/>
                        <separator/>
                        <item id="ID_TOOLS_PROFILE" text="Επεξεργασία του  _προφίλ μου..."/>
                        <item id="ID_TOOLS_WIZARD" text="Γρήγορο _ξεκίνημα..."/>
@@ -888,7 +888,7 @@
                <item id="ID_DOWNLOADS_PAUSE" text="Διέκοψε_"/>
                <item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Διέγραψε"/>
                <separator/>
-               <item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
+               <item id="ID_DOWNLOADS_SOURCES" text="_Βρες περισσότερες πηγές"/>
                <separator/>
                <menu text="_Advanced">
                        <item id="ID_DOWNLOADS_SHARE" text="_Τα αρχεία που μοιράζεις"/>
@@ -902,7 +902,7 @@
                        <separator/>
                        <item id="ID_DOWNLOADS_MOVE_UP" text="Προχώρα _επάνω"/>
                        <item id="ID_DOWNLOADS_MOVE_DOWN" text="Προχώρα _κάτω"/>
-                       <item id="ID_DOWNLOADS_BOOST" text="_Αγνώισε το Bandwidth Limit"/>
+                       <item id="ID_DOWNLOADS_BOOST" text="_Αγνόησε το Bandwidth Limit"/>
                </menu>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Κ_αθάρισε τα ολοκληρωμένα αρχεία"/>
                <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Α_υτόματο καθάρισμα"/>
@@ -1422,7 +1422,7 @@
                        <heading align="middle">G E T &#160; C O N N E C T E D</heading>
                        <newline gap="8" indent="42"/>
                        <text>Καλώς ήρθατε στο Shareaza! &#160;Δεν είστε ακόμα συνδεδεμένοι σε κανένα peer to peer δίκτυο. &#160;</text>
-                       <link target="raza:command:ID_NETWORK_CONNECT">Πατίστε εδώ για να αρχίσετε!</link>
+                       <link target="raza:command:ID_NETWORK_CONNECT">Πατήστε εδώ για να αρχίσετε!</link>
                        <newline gap="18" indent="0"/>
                </group>
 
@@ -1557,7 +1557,7 @@
                        <para align="center">
                                <text format="b">Δεν συνδέθηκε</text>
                                <newline gap="4"/>
-                               <link target="raza:command:ID_NETWORK_CONNECT">Πατίστε εδώ για να συνδεθήτε</link>
+                               <link target="raza:command:ID_NETWORK_CONNECT">Πατήστε εδώ για να συνδεθήτε</link>
                        </para>
                </group>
 
@@ -1858,10 +1858,10 @@
        </document>
 
        <document name="DownloadHelp.Paused">
-               <text format="b">Αυτό το αρχείο έχει σταματίσει</text>
+               <text format="b">Αυτό το αρχείο έχει σταματήσει</text>
                <newline gap="8"/>
-               <text>Έχετε σταματίσει αυτό το αρχείο απο το να κατεβαίνει.  Αν θέλετε να το ξανα-αρχίσετε,
-               πατίστε στο </text><text format="b">Ξανά-άρχισε το κατέβασμα </text><text>command.</text>
+               <text>Έχετε σταματήσει αυτό το αρχείο απο το να κατεβαίνει.  Αν θέλετε να το ξανα-αρχίσετε,
+               πατήστε στο </text><text format="b">Ξανά-άρχισε το κατέβασμα </text><text>command.</text>
        </document>
 
        <document name="DownloadHelp.DiskFull">
