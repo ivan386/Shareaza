@@ -43,6 +43,7 @@ void CSettings::Setup()
 	Add( _T(".Debug"), &General.Debug, FALSE );
 	Add( _T(".DebugLog"), &General.DebugLog, FALSE );
 	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
+	Add( _T(".DiskSpaceWarning"), &General.DiskSpaceWarning, 500 );
 	Add( _T("Settings.GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings.CloseMode"), &General.CloseMode, 0 );
 	Add( _T("Settings.TrayMinimise"), &General.TrayMinimise, FALSE );
@@ -254,6 +255,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, FALSE );
 	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
 	
+	Add( _T("BitTorrent.AdvancedInterface"), &BitTorrent.AdvancedInterface, FALSE );
 	Add( _T("BitTorrent.DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000 );
 	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
 	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 45000 );
@@ -263,6 +265,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.RandomPeriod"), &BitTorrent.RandomPeriod, 30000 );
 	Add( _T("BitTorrent.SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10 );
 	Add( _T("BitTorrent.UploadCount"), &BitTorrent.UploadCount, 4 );
+	Add( _T("BitTorrent.DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
 	
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.Path + _T("\\Incomplete") );

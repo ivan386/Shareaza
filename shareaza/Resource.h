@@ -616,6 +616,10 @@
 #define IDC_REMOTE_USERNAME             1378
 #define IDC_REMOTE_PASSWORD             1379
 #define IDC_REMOTE_URL                  1380
+#define IDC_COLLECTIONS_FOLDER			1381
+#define IDC_COLLECTIONS_BROWSE          1382
+#define IDC_TORRENTS_FOLDER				1381
+#define IDC_TORRENTS_BROWSE				1382
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
 #define IDS_FILE_PROPERTIES             8002
@@ -657,7 +661,7 @@
 #define IDS_SEARCH                      8143
 #define IDS_SEARCH_PANEL_SEARCHING      8143
 #define IDS_SEARCH_PANEL_START          8144
-#define IDS_SEARCH_PANEL_AGAIN          8145
+#define IDS_SEARCH_PANEL_MORE           8145
 #define IDS_SEARCH_PANEL_STOP           8146
 #define IDS_SEARCH_PANEL_AFT            8147
 #define IDS_SEARCH_PANEL_INPUT_1        8148
@@ -750,7 +754,6 @@
 #define IDS_NETWORK_SECURITY_BLOCKED    16078
 #define IDS_NETWORK_DISCONNECT_CONFIRM  16079
 #define IDS_NETWORK_SEARCH_SENT         16081
-//#define IDS_NETWORK_CHANGE_AGENT        16082
 #define IDS_NETWORK_FORCE_HUB           16083
 #define IDS_NETWORK_DISABLE_G1          16084
 #define IDS_NETWORK_DISABLE_G2          16085
@@ -1376,7 +1379,7 @@
 #define ID_NETWORK_G2                   33080
 #define ID_NETWORK_G1                   33081
 #define ID_NETWORK_ED2K                 33082
-//#define ID_LIBRARY_JIGLE                33083
+#define ID_LIBRARY_JIGLE                33083
 #define ID_HOSTCACHE_PRIORITY           33084
 #define ID_VIEW_BASIC                   33085
 #define ID_LIBRARY_SEARCH_QUICK         33086
@@ -1407,15 +1410,16 @@
 #define ID_UPLOADS_FILTER_TORRENT       33115
 #define ID_TOOLS_MERCORA                33116
 #define ID_HELP_FIREWALLS               33117
+#define ID_TOOLS_SEEDTORRENT            33118
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
+#define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        263
-#define _APS_NEXT_COMMAND_VALUE         33118
+#define _APS_NEXT_COMMAND_VALUE         33120
 #define _APS_NEXT_CONTROL_VALUE         1382
-#define _APS_NEXT_SYMED_VALUE           101
+#define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

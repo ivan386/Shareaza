@@ -39,6 +39,7 @@ public:
 		BOOL		Debug;
 		BOOL		DebugLog;
 		BOOL		UpdateCheck;
+		DWORD		DiskSpaceWarning;
 		INT			GUIMode;
 		BOOL		CloseMode;
 		BOOL		TrayMinimise;
@@ -296,6 +297,7 @@ public:
 	
 	struct sBitTorrent
 	{
+		BOOL		AdvancedInterface;
 		DWORD		DefaultTrackerPeriod;
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
@@ -305,6 +307,7 @@ public:
 		DWORD		RandomPeriod;
 		DWORD		SourceExchangePeriod;
 		int			UploadCount;
+		int			DownloadConnections;
 		BOOL		Endgame;
 	} BitTorrent;
 
