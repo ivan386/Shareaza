@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.60"
+		version="2.1.0.70"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -931,9 +931,6 @@ right quote	&#147;
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Žem_yn"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Nepaisyti _greitaveikos limito"/>
 		</menu>
-		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
-		<separator/> -->
 		<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -951,9 +948,6 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Valyti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Šalinti _bylas"/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Valyti _sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="S_avaiminis valymas"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Atv_erti ar vykdyti"/>
@@ -965,14 +959,16 @@ right quote	&#147;
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
 		<item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti sąrašą"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Atverti"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _duomenys"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Nutraukti skleidimą"/>
+	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+		<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Tęsti visus"/>
@@ -998,23 +994,32 @@ right quote	&#147;
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Rodyti _grupes"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
-		<!-- <separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Leisti dabar"/>
 		<item id="ID_UPLOADS_CLEAR" text="Š_alinti"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Rodyti vartotojo duomenis"/>
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
 		<item id="ID_SECURITY_BAN" text="Užkirsti _vartotojo prieigą"/>
-		<!-- <separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Valyti _baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/> -->
+	</menu>
+	<menu name="CUploadsWnd.Queue.Basic">
+		<item id="ID_UPLOADS_HELP" text="Ži_nynas..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+	</menu>
+	<menu name="CUploadsWnd.Queue">
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Eilės nuostatos"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
+	</menu>
+	<menu name="CUploadsWnd.Nothing">
+		<item id="ID_UPLOADS_HELP" text="Ži_nynas..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Rodyti _viską"/>
@@ -1875,9 +1880,12 @@ right quote	&#147;
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">Pasirinkite parsisiunčiamą bylą</text>
+		<text format="b">Atsisiuntimų sritis</text>
 		<newline gap="8"/>
-		<text>Naudokitės šia komanda, kai norėsite gauti daugiau informacijos apie parsisiunčiamą bylą. Papraščiausiai
+		<text>Čia rodomos šiuo metu parsisiunčiamos bylos. Jūs galite peržiūrėti 
+		atskirus šaltinius, išskleidę kiekvienos bylos medį (paspaudę ant „+“ ženklelio iš kairės).</text>
+		<newline gap="8"/>
+		<text>Naudokitės šia komanda, ir kai norėsite gauti daugiau informacijos apie parsisiunčiamą bylą. Tiesiog
 		pasirinkite bylą ir pakartokite šią komandą dar kartą.</text>
 	</document>
 
@@ -1978,6 +1986,16 @@ right quote	&#147;
 		<text>BitTorrent serveris-seklys yra atsijungęs arba jo darbas yra sutrikęs.
 		„Shareaza“ negali susisiekti suo juo ir gauti is jo lygiaverčių susijungimo
 		partnerių sąrašo.</text>
+	</document>
+
+	<!-- Upload help documents -->
+	
+	<document name="UploadHelp">
+		<text format="b">Išsiuntimų sritis</text>
+		<newline gap="8"/>
+		<text>Čia rodomos eilės ir išsiuntimai. Jūs galite išskleisti kiekvienos eilės medį, 
+		paspaudę „+“ ženklelį iš kairės, ir galite filtruoti sąrašą, naudodamiesi įrankių juostos
+		mygtuku, esančiu dešinėje pusėje.</text>
 	</document>
 
 	<!-- General help documents -->
@@ -4107,10 +4125,10 @@ right quote	&#147;
 		<column from="Type" to="Plėtinys"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Rating" to="Įvertinimas"/>
+		<column from="Status" to="Būklė"/>
 		<column from="Host/Count" to="Adresatas/Kiekis"/>
 		<column from="Speed" to="Sparta"/>
 		<column from="Client" to="Klientas"/>
-		<column from="Status" to="Būklė"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Pavadinimas"/>
@@ -4130,6 +4148,10 @@ right quote	&#147;
 	<list name="CFileSourcesPageList">
 		<column from="URL" to="Nuoroda"/>
 		<column from="Expires" to="Nustoja galioti"/>
+	</list>
+	<list name="CTorrentTrackerList">
+		<column from="Filename" to="Bylos vardas"/>
+		<column from="Size" to="Dydis"/>
 	</list>
 </listColumns>
 </skin>
