@@ -21,7 +21,7 @@ Other:
 			description="Shareaza 2.0 German Skin File"
 			link="http://www.shareaza.com/"
 			email="jann_roeder@arcor.de"
-			version="2.0.2.2"
+			version="2.0.2.3"
 			type="Language"
 			language="de"
 			prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -773,6 +773,7 @@ Other:
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Herunterladen"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Jetzt herunterladen"/>
 		<item id="ID_SEARCH_COPY" text="_URI kopieren"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen"/>
@@ -1089,8 +1090,9 @@ Other:
 		</menu>
 		<menu text="_Web Dienste">
 		    <item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket anzeigen"/>
-		    <separator/>
 		    <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+		    <separator/>
+		    <item id="ID_LIBRARY_CREATETORRENT" text=".torrent Datei erstellen"/>
 		</menu>
 		<menu text="_Verwalten">
             <item id="ID_LIBRARY_RENAME" text="Datei _umbenennen"/>
@@ -1155,8 +1157,9 @@ Other:
 		</menu>
 		<menu text="_Web Dienste">
 		    <item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket anzeigen"/>
-		    <separator/>
 		    <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadaten suchen"/>
+		    <separator/>
+		    <item id="ID_LIBRARY_CREATETORRENT" text=".torrent Datei erstellen"/>
 		</menu>
 		<menu text="_Verwalten">
 			<item id="ID_LIBRARY_UNLINK" text="Datei(en) _entfernen"/>
@@ -1501,6 +1504,7 @@ Other:
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..." tip="Verbinden mit"/>
 	<tip id="ID_NETWORK_SEARCH" message="Eine neue Suche starten..." tip="Eine neue Suche starten"/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Die markierten(n) Datei(en) herunterladen."/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="Die markierte(n) Datei(en) mit Priorität herunterladen."/>
 	<tip id="ID_SEARCH_SEARCH" message="Erneut im Netzwerk suchen..." tip="Erneut im Netzwerk suchen"/>
 	<tip id="ID_SEARCH_FILTER" message="Die Suchergebnisse nach bestimmten Wörtern und Zuständen filtern..." tip="Die Suchergebnisse filtern"/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Den Filter von den Ergebnissen entfernen." tip="Filter entfernen"/>
@@ -1542,6 +1546,7 @@ Other:
 	<tip id="ID_SEARCH_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..." tip="Spalten auswählen"/>
 	<tip id="ID_DOWNLOADS_RESUME" message="Markierte(n) Download(s) fortsetzen." tip="Download fortsetzen"/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Beendete Downloads entfernen." tip="Beendete entfernen"/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="Eine .torrent für diese Datei erstellen, um sie auf eine Webseite hochzuladen."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Zusätzliche Quellen für den/die markierten Download(s) suchen." tip="Mehr Quellen"/>
 	<tip id="ID_DOWNLOADS_LAUNCH" message="Vorschau für die markierte(n) Datei(en) anzeigen." tip="Vorschau"/>
 	<tip id="ID_DOWNLOADS_CLEAR" message="Markierte(n) Download(s) entfernen." tip="Entfernen"/>
@@ -1561,6 +1566,7 @@ Other:
 	<tip id="ID_TRAFFIC_LEGEND" message="Legende anzeigen." tip="Legende anzeigen"/>
 	<tip id="ID_TRAFFIC_SETUP" message="Die zu überwachenden Elemente auswählen und konfigurieren..." tip="Diagramme auswählen"/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Das Traffic Diagramm löschen." tip="Diagramm löschen"/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Ein Torrent seeden"/>
 	<tip id="ID_TOOLS_WIZARD" message="Den Shareaza Schnellstart Assistent starten..." tip="Schnellstart Assistent"/>
 	<tip id="ID_CHILD_RESTORE" message="Das markierte Fenster öffnen."/>
 	<tip id="ID_CHILD_CLOSE" message="Das aktive Fenster schließen."/>
@@ -1620,8 +1626,8 @@ Other:
 	<tip id="ID_DISCOVERY_BROWSE" message="Die Statistik-Seite des markierten GWebCache service anzeigen." tip="Statistik anzeigen"/>
 	<tip id="ID_BROWSE_STOP" message="Durchsuchen dieses Hosts beenden." tip="Durchsuchen beenden"/>
 	<tip id="ID_BROWSE_REFRESH" message="Die Dateiliste erneut anfordern." tip="Aktualisieren"/>
-	<tip id="ID_BROWSE_LAUNCH" message="Die Dateien auf dem markierten Host durchsuchen." tip="Benutzer durchsuchen"/>
-	<tip id="ID_DOWNLOADS_BOOST" message="Die Geschwindigkeit des markierten Downloads erhöhen indem das Geschwindigkeitslimit aufgehoben wird." tip="Geschwindigkeitslimit aufheben"/>
+	<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen." tip="Benutzer durchsuchen"/>
+	<tip id="ID_DOWNLOADS_BOOST" message="Die Geschwindigkeit des markierten Downloads erhöhen, indem das Geschwindigkeitslimit aufgehoben wird." tip="Geschwindigkeitslimit aufheben"/>
 	<tip id="ID_TAB_HOME" message="Zur Shareaza Homepage zurückkehren" tip="Zur Shareaza Homepage zurückkehren"/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Eine Kopie der markierten Datei(en) als Vorschau anzeigen." tip="Kopie öffnen"/>
 	<tip id="ID_SEARCH_MERGE" message="Die markierten Dateigruppen zusammenfügen." tip="Ergebnisse zusammenführen"/>
@@ -1781,6 +1787,7 @@ Other:
 	<tip id="ID_MEDIA_MUTE" message="Audio wiedergabe stummschalten"/>
 	<tip id="ID_WINDOW_REMOTE" message="Die Shareaza Fernbedienung ein- oder ausblenden."/>
 	<tip id="ID_HELP_FIREWALLS" message="Finden Sie heraus wie Sie ihren Router/Firewall konfigurieren müssen."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Den markierten Torrent über BitTorretn seeden."/>
 </commandTips>
 
 <!-- Localised String Table -->
@@ -1989,6 +1996,7 @@ Other:
 	<string id="16525" value="Geroutete Gnutella Pakete"/>
 	<string id="16526" value="Verworfene Gnutella Pakete"/>
 	<string id="16527" value="Verlorene Gnutella Pakete"/>
+	<string id="8063" value="Verbunden. %s in lokaler Bibliothek."/>
 	<string id="8064" value="Verbunden mit %lu Host(s), %s in der lokalen Bibliothek."/>
 	<string id="8065" value="Verbindung mit dem Netzwerk herstellen..."/>
 	<string id="8066" value="Nicht mit dem Netzwerk verbunden."/>
@@ -2072,7 +2080,7 @@ Other:
 	<string id="16943" value="%s durchsuchen"/>
 	<string id="8143" value="Suchen..."/>
 	<string id="8144" value="Jetzt suchen"/>
-	<string id="8145" value="Erneut suchen"/>
+	<string id="8145" value="Weitersuchen"/>
 	<string id="8146" value="Stopp"/>
 	<string id="8147" value="Jeder Dateityp"/>
 	<string id="8148" value="Geben Sie hier ihre Suche ein:"/>
@@ -2284,6 +2292,10 @@ Other:
 	<string id="18508" value="Downloadquelle %s für &quot;%s&quot; entfernt, weil die Warteschlangenposition %i zu hoch ist."/>
 	<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree Volumen, ed2k hashset oder BitTorrent hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
 	<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehemen und reverifizieren wollen ?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die die sie nicht bestehen neu herunterladen."/>
+	<string id="19000" value="Remote access ist deaktiviert."/>
+	<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
+  	<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
+  	<string id="20000" value="Keine URN verfügbar."/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2322,7 +2334,7 @@ Other:
 		<control/>
 	</dialog>
 	
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBu" caption="Bibliothek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothek">
 		<control caption="_Optionen:"/>
 		<control caption="Ansichtoptionen speichern"/>
 		<control caption="Ordner überwachen"/>
@@ -2346,6 +2358,8 @@ Other:
 		<control/>
 		<control caption="_Hinzufügen"/>
 		<control caption="_Entfernen"/>
+        <control caption="_Kollektionen hier speichern:"/>
+        <control/><control/>
 	</dialog>
 	
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
@@ -3261,6 +3275,23 @@ Other:
 		<control caption="Nicht nach Updates suchen"/>
 		<control caption="Nicht updaten"/>
 	</dialog>
+	
+	<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu" caption="BitTorrent">
+		<control caption="Torrents hier _speichern:"/>
+		<control/><control/>
+		<control caption="_Download Verbindungen:"/>
+		<control/><control/>
+		<control caption="Client Verbindungen"/>
+		<control caption="_Benutzeroberfläche:"/>
+		<control caption="Zusätzliche BitTorrent Bedienelemente anzeigen"/>
+		<control caption="_End Game:"/>
+		<control caption="End Game Modus am Ende von Torrent Downloads aktivieren"/>
+		<control caption="_Torrent Creator"/>
+		<control caption="Tracker:"/>
+		<control/><control/><control/><control/><control/>
+		<control caption="Torrents gleichzeitig"/>
+		<control caption="S_tandard Tracker:"/>
+	</dialog>
 
 </dialogs>
 
@@ -3481,6 +3512,22 @@ Other:
 			<text id="UploadedOne">Sie haben 1 Datei (%s) hochgeladen.</text>
 			<text id="UploadedMany">Sie haben %i Dateien (%s) hochgeladen.</text>	
 		</para>
+	</document>
+	
+	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="TorrentsNone" format="b">Kein Torrent Seed</text>
+			<text id="TorrentsOne" format="b">1 Torrent Seed</text>
+			<text id="TorrentsMany" format="b">%i Torrent Seeds</text>
+			<newline gap="4"/>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein Torrent seeden</link>
+		</para>
+
 	</document>
 	
 	<!-- Settings Pages -->
@@ -3790,5 +3837,45 @@ Other:
 		ignorieren zum Beispiel Suchen nach allen MP3 Dateien.
 		</text>
 	</document>
+	
+	<!-- Share help documents -->
+
+	<document name="ShareHelp.AlreadyShared">
+		<text format="b">Bereits freigegeben</text>
+		<newline gap="8"/>
+		<text>Der markierte Ordner ist bereits als Teil einer existierenden Freigabe freigegeben.</text>
+		<newline gap="8"/>
+		<text> %s </text>
+	</document>
+
+	<document name="ShareHelp.BadShare">
+		<text format="b">Dieser Ordner sollte nicht freigegeben werden</text>
+		<newline gap="8"/>
+		<text>Dieser Ordner ist (oder enthält) ein Systemordner. Dieser Ordner sollte nicht freigegebenw erden, weil
+		meisten Dateien darin für andere Leute keinen Nutzen haben.</text>
+		<newline gap="8"/>
+		<text>Ordner wie das Windowsverzeichnis, Programme und ähnliche Ordner
+		enthalten normalerweise keine zur Freigabe geeigenten Dateien. Interessante Dateien befinden sich stets
+		</text><text format="i"> innerhalb </text><text> dieser
+		Ordner. Bitte geben Sie diese Ordner frei.</text>
+		<newline gap="8"/>
+		<text>Der Shareaza &quot;incomplete&quot; Ordner sollte auch nicht über die Bibliothek freigegeben werden,
+		weil der Versuch Dateien zu hashen, die gerade heruntergeladen werden, sich nagativ auf die Geschwindigkeit auswirkt.
+		</text>
+	</document>
+	
+	<!-- General help documents -->
+	
+	<document name="GeneralHelp.DiskSpace">
+		<text format="b">Wenig Speicherplatz</text>
+		<newline gap="8"/>
+		<text>Der freie Speicherplatz auf einem oder mehreren der Datenträger, die Shareaza benutzt ist gering.</text>
+		<newline gap="8"/>
+		<text>Sie sollten stets genügend Speicherplatz frei haben. 
+		Programme können instabil werden, wenn die Datenträger voll sind und temporäre Dateien könnten verlorengehen. 
+		Sie sollten das "Datenträger bereinigen" Dienstprogramm ausführen, nicht benötigte Dateien löschen,
+		oder nicht mehr benötigte Anwendungen deinstallieren.</text>
+	</document>
+	
 </documents>
 </skin>
