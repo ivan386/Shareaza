@@ -64,6 +64,7 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	m_nRequests		= 0;
 	m_nUploaded		= 0;
 	m_nUserRating	= 0;
+	m_bClientExtended= FALSE;
 	
 	m_tRotateTime	= 0;
 	m_tAverageTime	= 0;

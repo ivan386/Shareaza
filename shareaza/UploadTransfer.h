@@ -52,6 +52,7 @@ public:
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
+	BOOL			m_bClientExtended;// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 public:
 	BOOL			m_bSHA1;		// Hash of requested file
 	SHA1			m_pSHA1;		// ..

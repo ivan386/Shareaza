@@ -399,6 +399,7 @@ public:
 		BOOL		AutoClear;					//Automatically clear completed uploads ('Completed' queue)
 		DWORD		ClearDelay;					//Delay between auto-clears
 		DWORD		FilterMask;
+		int 		RewardQueuePercentage;		//The percentage of each reward queue reserved for uploaders
 	} Uploads;
 	
 	struct sRemote

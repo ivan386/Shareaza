@@ -163,30 +163,38 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 	ASSERT( pUpload != NULL );
 	ASSERT( pUpload->m_pQueue == NULL );
 	
-	if ( GetQueueRemaining() > 0 || bForce )
-	{
-		//If reward is on, only queue known sharers in the last position
-		if ( ( m_bRewardUploaders ) && ( pUpload->m_nUserRating > 2  ) && ( GetQueueRemaining() == 1 ) ) return FALSE;
+	
 
-		m_pQueued.Add( pUpload );
-		pUpload->m_pQueue = this;
-		
-		if ( bStart )
-		{
-			StartImpl( pUpload );
-			
-			if ( GetTransferCount() <= m_nMinTransfers )
-				SpreadBandwidth();
-			else
-				pUpload->m_nBandwidth = Settings.Bandwidth.Uploads / max( 1, m_nMinTransfers );
+	if ( ! bForce && ! bStart )	//If this upload isn't forced, check to see if it's valid to queue
+	{	
+		if ( m_bRewardUploaders && pUpload->m_nUserRating > 2  ) 
+		{	
+			//If reward is on, a non-sharer might not queue.
+			if( ( GetQueueCapacity() * Settings.Uploads.RewardQueuePercentage / 100 ) >= GetQueueRemaining() )
+				return FALSE;
 		}
+		else
+		{	
+			//If reward is off, or user is known to share, just check if the queue is full
+			if ( GetQueueRemaining() <= 0 )	
+				return FALSE;
+		}
+	}
+	
+	m_pQueued.Add( pUpload );
+	pUpload->m_pQueue = this;
 		
-		return TRUE;
-	}
-	else
+	if ( bStart )
 	{
-		return FALSE;
+		StartImpl( pUpload );
+			
+		if ( GetTransferCount() <= m_nMinTransfers )
+			SpreadBandwidth();
+		else
+			pUpload->m_nBandwidth = Settings.Bandwidth.Uploads / max( 1, m_nMinTransfers );
 	}
+		
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

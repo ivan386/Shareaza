@@ -351,6 +351,7 @@ void CSettings::Setup()
 	Add( _T("Uploads.AutoClear"), &Uploads.AutoClear, FALSE );
 	Add( _T("Uploads.ClearDelay"), &Uploads.ClearDelay, 30000 );
 	Add( _T("Uploads.FilterMask"), &Uploads.FilterMask, 0xFFFFFFFD );
+	Add( _T("Uploads.RewardQueuePercentage"), &Uploads.RewardQueuePercentage, 10 );
 	
 	Add( _T("Remote.Enable"), &Remote.Enable, FALSE );
 	Add( _T("Remote.Username"), &Remote.Username, _T("") );

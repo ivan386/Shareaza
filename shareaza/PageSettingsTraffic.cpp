@@ -223,6 +223,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Uploads.DynamicPreviews, 1, 0, 1 );
 	AddSetting( &Settings.Uploads.PreviewQuality, 1, 0, 100, _T("%") );
 	AddSetting( &Settings.Uploads.PreviewTransfers, 1, 1, 64 );
+	AddSetting( &Settings.Uploads.RewardQueuePercentage, 1, 0, 99, _T("%") );
 
 	AddSetting( &Settings.Interface.LowResMode, 1, 0, 1 );
 	
