@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.10"
+		version="2.1.0.13"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2797,6 +2797,17 @@
 	<string id="17041" value="Cannot send message, a connection has not been established yet."/>
 	<string id="17042" value="You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 	<string id="17043" value="Granted upload priority to host %s."/>
+	<string id="17120" value="Closing"/>
+	<string id="17121" value="Unknown"/>
+	<string id="17122" value="G1 Peer"/>
+	<string id="17123" value="G1 Ultrapeer"/>
+	<string id="17124" value="G1 Leaf"/>
+	<string id="17125" value="G2 Peer"/>
+	<string id="17126" value="G2 Hub"/>
+	<string id="17127" value="G2 Leaf"/>
+	<string id="17128" value="eDonkey2000 Server"/>
+	<string id="17129" value="eDonkey2000 (LowID)"/>
+	<string id="17130" value="eDonkey2000 (HighID)"/>
 	<string id="17216" value="Initiating connection to eDonkey2000 server at %s..."/>
 	<string id="17217" value="Connected to eDonkey2000 server %s, handshaking..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
@@ -3109,7 +3120,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="_Options:"/>
 		<control caption="_Enable Scheduler"/>
 		<control/><control/>
@@ -3125,7 +3136,10 @@
 		<control caption="Do not connect"/>
 		<control caption="Limited connection"/>
 		<control caption="Connect at full speed"/>
-		<control caption="% of _bandwith under limit"/>
+		<control caption="% of _bandwidth under limit"/>
+		<control/>
+		<control caption="Help"/>
+		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. &#13;&#10;&#13;&#10;&#13;&#10;Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
