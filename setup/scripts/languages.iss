@@ -102,7 +102,7 @@ reg_apptitle=Shareaza Ultimate File Sharing
 icons_license=License
 icons_uninstall=Uninstall
 icons_downloads=Downloads
-dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -147,7 +147,7 @@ de.reg_apptitle=Shareaza Ultimate File Sharing
 de.icons_license=Lizenz
 de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
-de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren ?
+de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren?
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Skins
@@ -162,7 +162,7 @@ pt.reg_apptitle=Shareaza Ultimate File Sharing
 pt.icons_license=License
 pt.icons_uninstall=Uninstall
 pt.icons_downloads=Downloads
-pt.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+pt.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -177,7 +177,7 @@ it.reg_apptitle=Shareaza, il programma definitivo di P2P
 it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
-it.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+it.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -192,7 +192,7 @@ no.reg_apptitle=Shareaza Ultimate File Sharing
 no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
-no.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+no.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
@@ -207,7 +207,7 @@ af.reg_apptitle=Shareaza Ultimate File Sharing
 af.icons_license=Lisensie-ooreenkoms
 af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
-af.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+af.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
@@ -237,7 +237,7 @@ fr.reg_apptitle=Shareaza Ultimate File Sharing
 fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
-fr.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+fr.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -252,7 +252,7 @@ es.reg_apptitle=Shareaza Ultimate File Sharing
 es.icons_license=Licencia
 es.icons_uninstall=Desinstalar
 es.icons_downloads=Descargas
-es.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+es.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóðêè
@@ -297,5 +297,5 @@ hu.reg_apptitle=Shareaza Ultimate File Sharing
 hu.icons_license=License
 hu.icons_uninstall=Uninstall
 hu.icons_downloads=Downloads
-hu.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue ?
+hu.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
 
