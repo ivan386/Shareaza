@@ -2468,7 +2468,7 @@
 	<string id="16072" value="Escuchando %s puerto %i para datos entrantes por el protocolo UDP."/>
 	<string id="16073" value="Resolviendo la ruta de &quot;%s&quot;..."/>
 	<string id="16074" value="No se pudo resolver host &quot;%s&quot;."/>
-	<string id="16075" value="Security manager denegó la conección de %s."/>
+	<string id="16075" value="Security manager denegó la conexión de %s."/>
 	<string id="16076" value="Security manager bloqueo conectarse a %s."/>
 	<string id="16077" value="La dirección %s ya esta bloqueada en tus reglas de seguridad."/>
 	<string id="16078" value="Agregar una regla de seguridad %s."/>
