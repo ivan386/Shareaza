@@ -1863,19 +1863,26 @@ BEGIN
     PUSHBUTTON      "Don't Upgrade",IDCANCEL,210,130,70,15
 END
 
-IDD_SETTINGS_COMMUNITY DIALOG  0, 0, 282, 220
+IDD_SETTINGS_COMMUNITY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Community"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "My &Profile:",IDC_STATIC,5,5,270,50
     LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",
                     IDC_STATIC,15,20,170,25
     PUSHBUTTON      "Edit My Profile",IDC_EDIT_PROFILE,195,25,70,15
-    GROUPBOX        "&Chat:",IDC_STATIC,5,60,270,45
+    GROUPBOX        "&Chat:",IDC_STATIC,5,60,270,101
     CONTROL         "Enable peer to peer chat with compatible clients",
                     IDC_CHAT_ENABLE,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,15,78,250,15
+                    WS_TABSTOP,15,75,250,15
+    CONTROL         "Enable chat on all networks",IDC_CHAT_ALLNETWORKS,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,94,
+                    250,15
+    CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,113,250,15
+    CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,132,250,15
 END
 
 IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 154

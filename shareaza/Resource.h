@@ -268,8 +268,11 @@
 #define IDC_INBOUND_RANDOM              1083
 #define IDC_CHAT_ENABLE                 1084
 #define IDC_RATES_IN_BYTES              1085
+#define IDC_CHAT_ALLNETWORKS            1085
+#define IDC_CHAT_FILTER                 1086
 #define IDC_EXPAND_MATCHES              1087
 #define IDC_CONNECTION_TYPE             1087
+#define IDC_CHAT_CENSOR                 1087
 #define IDC_CONNECTION_SPEED            1088
 #define IDC_SHARE_FOLDERS               1088
 #define IDC_SCHEMA_TYPES                1088
