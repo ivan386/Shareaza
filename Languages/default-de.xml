@@ -2422,7 +2422,7 @@ Other:
 		<control caption="_Optionen:"/>
 		<control caption="D_en Media Player benutzen um folgende Dateitypen wiederzugeben"/>
 		<control caption="_Die Shareaza Wiedergabeliste für folgende Dateitypen benutzen."/>
-		<control caption="Datei _Typen:"/>
+		<control caption="Datei_typen:"/>
 		<control/>
 		<control caption="_Hinzufügen"/>
 		<control caption="_Entfernen"/>
