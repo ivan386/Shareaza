@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Shareaza Spanish Skin File -->
 <!-- This is the first version to introduce full unicode (UTF-8) encoding -->
-<skin xmlns="http://www.shareaza.com/scheMás/Skin.xsd" version="1.0">
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
     <!-- Manifest -->
     <manifest       name="Español"
@@ -438,7 +438,7 @@
                     <item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo..."/>
                     <separator/>
                     <item id="ID_TOOLS_SKIN" text="Cambiar el S_kin..."/>
-                    <item id="ID_TOOLS_LANGUAGE" text="Cambiar el _Idioma..."/>
+                    <item id="ID_TOOLS_LANGUAGE" text="Idioma..."/>
                     <separator/>
                     <item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
                     <item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
@@ -516,7 +516,7 @@
             <item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
             <separator/>
             <item id="ID_TOOLS_SKIN" text="Elegir S_kin..."/>
-            <item id="ID_TOOLS_LANGUAGE" text="Elegir un _Lenguaje..."/>
+            <item id="ID_TOOLS_LANGUAGE" text="Idioma..."/>
             <separator/>
             <item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
             <item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
@@ -591,7 +591,8 @@
 			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
             <separator/>
 			<item id="ID_TOOLS_SKIN" text="Elegir S_kin..."/>
-            <item id="ID_TOOLS_LANGUAGE" text="Elegir un _Lenguaje..."/>
+            <item id="ID_TOOLS_LANGUAGE" text="Idiom
+a..."/>
             <separator/>
             <item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
             <separator/>
@@ -2369,10 +2370,10 @@
 	<string id="8105" value="No fue possible hacer la vista previa con &quot;%s&quot;."/>
 	<string id="8128" value="Haga click aquí para buscar de nuevo"/>
 	<string id="8129" value="No hay ninguna búsqueda iniciada en esta ventana, todavía."/>
-	<string id="8130" value="Shareaza esta buscando activamente en la red..."/>
+	<string id="8130" value="Shareaza está buscando activamente en la red..."/>
 	<string id="8131" value="La red no ha registrado ningún resultado todavía. Shareaza se mantendrá buscando hasta que cierres la búsqueda."/>
 	<string id="8132" value="Algunos resultados fueron encontrados, pero fueron filtrados porque son inseguros."/>
-	<string id="8133" value="Shareaza esta buscando activamente la red..."/>
+	<string id="8133" value="Shareaza está buscando activamente en la red..."/>
 	<string id="8134" value="Se va a iniciar una nueva búsqueda.  ¿Quieres borrar los resltados actuales?"/>
 	<string id="8141" value="Mostrar el panel de busqueda"/>
 	<string id="8142" value="Esconder el panel de busqueda"/>
@@ -2467,7 +2468,7 @@
 	<string id="16072" value="Escuchando %s puerto %i para datos entrantes por el protocolo UDP."/>
 	<string id="16073" value="Resolviendo la ruta de &quot;%s&quot;..."/>
 	<string id="16074" value="No se pudo resolver host &quot;%s&quot;."/>
-	<string id="16075" value="Security manager denegó la conección de %s."/>
+	<string id="16075" value="Security manager denegó la conexón de %s."/>
 	<string id="16076" value="Security manager bloqueo conectarse a %s."/>
 	<string id="16077" value="La dirección %s ya esta bloqueada en tus reglas de seguridad."/>
 	<string id="16078" value="Agregar una regla de seguridad %s."/>
@@ -3009,7 +3010,7 @@
 		<control caption="O_pciones:"/>
 		<control caption="Ignorar direcciones IP privadas/locales"/>
 		<control caption="_Timeouts:"/>
-		<control caption="Conección:"/>
+		<control caption="Conexión:"/>
 		<control/><control/>
 		<control caption="Handshake:"/>
 		<control/><control/>
