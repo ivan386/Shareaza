@@ -1,5 +1,4 @@
-; Version branding: Change this key on each release
-#define version "2.0.0.5"
+#define version GetFileVersion("..\builds\Shareaza.exe")
 
 [Setup]
 AppName=Shareaza
