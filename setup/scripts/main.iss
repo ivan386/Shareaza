@@ -53,12 +53,12 @@ Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 
 [Files]
 ; Install unicows.dll on Win 9X
-Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; MinVersion: 4.0,0
-Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerror overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension; MinVersion: 4.0,0
+Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension regserver; MinVersion: 4.0,0
 
 ; Main files
-Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -76,8 +76,8 @@ Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremov
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll"
-Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll"
+Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -264,6 +264,7 @@ Begin
     Wnd := FindWindowByClassName('ShareazaMainWnd');
   if Wnd <> 0 then
     SendMessage(Wnd, WM_CLOSE, 0, 0);
+    Sleep(1000)
 End;
 
 Function InitializeSetup: Boolean;
