@@ -53,7 +53,7 @@ Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerro
 
 ; Main files
 Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\1.dll"; DestDir: "{userappdata}\Shareaza\Plugins"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
@@ -64,8 +64,8 @@ Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: uninsremov
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "setup\plugins\*.dll"; DestDir: "{userappdata}\Shareaza\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll"
-Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{userappdata}\Shareaza\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll"
+Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
