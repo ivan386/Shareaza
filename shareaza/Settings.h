@@ -298,6 +298,7 @@ public:
 	struct sBitTorrent
 	{
 		BOOL		AdvancedInterface;
+		CString		TorrentCreatorPath;
 		CString		DefaultTracker;
 		DWORD		DefaultTrackerPeriod;
 		DWORD		LinkTimeout;
@@ -309,6 +310,7 @@ public:
 		DWORD		SourceExchangePeriod;
 		int			UploadCount;
 		int			DownloadConnections;
+		int			DownloadTorrents;
 		BOOL		Endgame;
 	} BitTorrent;
 
