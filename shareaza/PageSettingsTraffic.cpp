@@ -143,7 +143,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle, 1, 1, 60*1000, _T(" ms") );
 	AddSetting( &Settings.Gnutella2.QueryHostThrottle, 1, 1, 10*60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.RequeryDelay, 60, 45, 8*60, _T(" m") );
+	AddSetting( &Settings.Gnutella2.RequeryDelay, 60*60, 1, 24, _T(" h") );
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
 	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
 
