@@ -332,7 +332,7 @@ public:
 #define ED2K_ET_COMPATIBLECLIENT	0x26
 
 // Client ID
-#define ED2K_COMPATIBLECLIENT_ID	0x14 // Temp change to test stuff... should be 4
+#define ED2K_COMPATIBLECLIENT_ID	0x44 // Temp change to test stuff... should be 4
 
 // Shareaza's advertised capabilities / feature versions
 #define ED2K_VERSION_UDP			0x02
