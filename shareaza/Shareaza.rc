@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,107
- PRODUCTVERSION 2,1,0,107
+ FILEVERSION 2,1,0,109
+ PRODUCTVERSION 2,1,0,109
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 107"
+            VALUE "FileVersion", "2, 1, 0, 109"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 107"
+            VALUE "ProductVersion", "2, 1, 0, 109"
         END
     END
     BLOCK "VarFileInfo"
@@ -3093,6 +3093,22 @@ BEGIN
     LTEXT           "Save the current filter as",IDC_STATIC,7,7,81,8
 END
 
+IDD_DOWNLOAD_REVIEWS DIALOGEX 0, 0, 362, 202
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Download Reviews"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
+    DEFPUSHBUTTON   "OK",IDOK,305,181,50,14
+    CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | 
+                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,39,348,
+                    134
+    EDITTEXT        IDC_REVIEW_FILENAME,7,183,289,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,
+                    WS_EX_TRANSPARENT
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3752,6 +3768,14 @@ BEGIN
         RIGHTMARGIN, 198
         TOPMARGIN, 7
         BOTTOMMARGIN, 39
+    END
+
+    IDD_DOWNLOAD_REVIEWS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 355
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 195
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -5022,6 +5046,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_DOWNLOADS_PAUSE      "Pause the selected download(s)."
+    ID_DOWNLOADS_VIEW_REVIEWS "View reviews for the selected download"
     ID_LIBRARY_EXPLORE      "Open the selected folder(s)."
     ID_LIBRARY_SCAN         "Scan the selected folders or files for changes."
     ID_LIBRARY_SHARED_FILE  "Share or unshare the selected files."
@@ -5652,6 +5677,17 @@ BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RATING_NORATING     "(No Rating)"
+    IDS_RATING_1            "Fake / Corrupt"
+    IDS_RATING_2            "Poor"
+    IDS_RATING_3            "Average"
+    IDS_RATING_4            "Good"
+    IDS_RATING_5            "Very Good"
+    IDS_RATING_6            "Excellent"
 END
 
 #endif    // English (Australia) resources

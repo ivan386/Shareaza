@@ -8163,6 +8163,9 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\DlgDownloadReviews.cpp">
+				</File>
+				<File
 					RelativePath="DlgExistingFile.cpp">
 					<FileConfiguration
 						Name="ASCII Release|Win32">
@@ -12633,6 +12636,9 @@
 				</File>
 				<File
 					RelativePath="DlgDownloadMonitor.h">
+				</File>
+				<File
+					RelativePath=".\DlgDownloadReviews.h">
 				</File>
 				<File
 					RelativePath="DlgExistingFile.h">
