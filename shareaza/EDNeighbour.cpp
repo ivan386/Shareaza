@@ -435,8 +435,24 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 	while ( nTags-- > 0 && pPacket->GetRemaining() > 1 )
 	{
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket ) ) break;
+		if ( ! pTag.Read( pPacket, m_nFlags ) ) break;
 
+		switch ( pTag.m_nKey )
+		{
+		case ED2K_ST_SERVERNAME:
+			// if ( pTag.m_nType == ED2K_TAG_STRING ) // "Short strings" may be possible..
+			m_sServerName = pTag.m_sValue;
+			break;
+		case ED2K_ST_DESCRIPTION:
+			strDescription = pTag.m_sValue;
+			break;
+		case ED2K_ST_MAXUSERS:
+			m_nUserLimit = pTag.m_nValue;
+		default:
+			theApp.Message( MSG_ERROR, _T("Unrecognised tag in ED2K server Ident") );
+			//****************Debug only
+		}
+		/*
 		if ( pTag.Check( ED2K_ST_SERVERNAME, ED2K_TAG_STRING ) )
 		{
 			m_sServerName = pTag.m_sValue;
@@ -449,6 +465,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		{
 			m_nUserLimit = pTag.m_nValue;
 		}
+		*/
 	}
 	
 	if ( (DWORD&)m_pGUID == 0x2A2A2A2A )
