@@ -172,7 +172,7 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		}
 		else
 		{
-			str.Format( _T("%s: %i of %i"), strQ,
+			str.Format( m_nQueueLen ? _T("%s: %i of %i") : _T("%s: #%i"), strQ, 
 				m_nQueuePos, m_nQueueLen );
 		}
 		break;
