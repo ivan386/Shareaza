@@ -298,8 +298,8 @@ StatusUninstalling=Desinstalando o %1...
 
 NameAndVersion=%1 versão %2
 AdditionalIcons=Ícones adicionais:
-CreateDesktopIcon=Criar ícone na &Área de Trabalho
-CreateQuickLaunchIcon=Criar ícone na barra de Iniciação &Rápida
+CreateDesktopIcon=Mostrar um ícone na &área de trabalho
+CreateQuickLaunchIcon=Mostrar um ícone na barra de &Inicialização Rápida
 ProgramOnTheWeb=%1 na Web
 UninstallProgram=Desinstalar o %1
 LaunchProgram=Executar o %1
