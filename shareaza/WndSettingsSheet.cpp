@@ -26,8 +26,8 @@
 #include "WndSettingsPage.h"
 
 #include <afxpriv.h>
-// #include <../src/afximpl.h>
-#include "C:\Development\VisualStudio2003\Vc7\atlmfc\src\mfc\afximpl.h"
+#include <..\src\mfc\afximpl.h>
+//#include "C:\Development\VisualStudio2003\Vc7\atlmfc\src\mfc\afximpl.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
