@@ -28,7 +28,8 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OptimizeForWindowsApplication="TRUE"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA"
+				AdditionalIncludeDirectories=".\zlib"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -48,10 +49,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib"
+				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
 				OutputFile=".\Release/Shareaza.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories=".\asm"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Release/Shareaza.pdb"
 				GenerateMapFile="TRUE"
@@ -97,7 +99,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA"
+				AdditionalIncludeDirectories=".\zlib"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				RuntimeLibrary="3"
 				DefaultCharIsUnsigned="TRUE"
 				UsePrecompiledHeader="3"
@@ -114,10 +117,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib"
+				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib mswsock.lib"
 				OutputFile=".\Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories=".\asm"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -162,7 +166,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA"
+				AdditionalIncludeDirectories=".\zlib"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				BufferSecurityCheck="TRUE"
@@ -181,11 +186,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib"
 				OutputFile=".\Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories=".\asm\;.\zlib"
+				AdditionalLibraryDirectories=".\asm"
+				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -208,7 +214,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="3081"
-				AdditionalIncludeDirectories=".\zlib"/>
+				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -235,9 +241,10 @@
 				InlineFunctionExpansion="1"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
+				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories=".\zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="TRUE"
@@ -254,7 +261,8 @@
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="3"
+				CallingConvention="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -5712,6 +5720,24 @@
 				<File
 					RelativePath=".\zlib\adler32.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5720,6 +5746,24 @@
 				</File>
 				<File
 					RelativePath=".\zlib\compress.c">
+					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
@@ -5730,6 +5774,24 @@
 				<File
 					RelativePath=".\zlib\crc32.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5738,6 +5800,24 @@
 				</File>
 				<File
 					RelativePath=".\zlib\deflate.c">
+					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
@@ -5748,6 +5828,24 @@
 				<File
 					RelativePath=".\zlib\infback.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5756,6 +5854,24 @@
 				</File>
 				<File
 					RelativePath=".\zlib\inffast.c">
+					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
@@ -5766,6 +5882,24 @@
 				<File
 					RelativePath=".\zlib\inflate.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5774,6 +5908,24 @@
 				</File>
 				<File
 					RelativePath=".\zlib\inftrees.c">
+					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
@@ -5784,6 +5936,24 @@
 				<File
 					RelativePath=".\zlib\trees.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5793,6 +5963,24 @@
 				<File
 					RelativePath=".\zlib\uncompr.c">
 					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
@@ -5801,6 +5989,24 @@
 				</File>
 				<File
 					RelativePath=".\zlib\zutil.c">
+					<FileConfiguration
+						Name="ASCII Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ASCII Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32">
 						<Tool
