@@ -3,6 +3,7 @@
 <!--
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by Rolandas Rudomanskis
 -->
 
@@ -13,6 +14,7 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="en">Document:All Documents</title>
                <title language="lt">Dokumentas:Visi documentai</title>
                <title language="nl">Documenten:Alle Documenten</title>
+               <title language="no">Dokument: Alle dokumenter</title>
                <title language="ru">&#160;Документ:&#160;Все документы</title>
        </titles>
        <images>
@@ -47,10 +49,12 @@ Shareaza Russian Schemas File translated by Rolandas Rudomanskis
                <title language="en">All Documents</title>
                <title language="lt">Visi dokumentai</title>
                <title language="nl">Alle documenten</title>
+               <title language="no">Alle dokumenter</title>
                <title language="ru">&#160;Все документы</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
