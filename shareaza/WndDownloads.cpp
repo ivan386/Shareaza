@@ -328,6 +328,12 @@ void CDownloadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 			TrackPopupMenu( _T("CDownloadsWnd.Source"), point, ID_TRANSFERS_CONNECT );
 			return;
 		}
+		else if ( pDownload->IsSeeding() )
+		{
+			pLock.Unlock();
+			TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH );
+			return;
+		}
 		else if ( pDownload->IsCompleted() )
 		{
 			pLock.Unlock();

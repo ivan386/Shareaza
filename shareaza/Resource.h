@@ -1551,11 +1551,12 @@
 #define ID_NETWORK_G2                   33080
 #define ID_NETWORK_G1                   33081
 #define ID_NETWORK_ED2K                 33082
-#define ID_LIBRARY_JIGLE                33083
-#define ID_HOSTCACHE_PRIORITY           33084
-#define ID_VIEW_BASIC                   33085
-#define ID_LIBRARY_SEARCH_QUICK         33086
-#define ID_HELP_FORUMS                  33087
+#define ID_NETWORK_HTTP					33083
+#define ID_NETWORK_FTP                  33084
+#define ID_NETWORK_BT					33085
+#define ID_HOSTCACHE_PRIORITY           33086
+#define ID_VIEW_BASIC                   33087
+#define ID_LIBRARY_SEARCH_QUICK         33088
 #define ID_DOWNLOAD_GROUP_NEW           33089
 #define ID_DOWNLOAD_GROUP_REMOVE        33090
 #define ID_DOWNLOAD_GROUP_PROPERTIES    33091
@@ -1585,6 +1586,8 @@
 #define ID_HELP_FIREWALLS               33117
 #define ID_TOOLS_SEEDTORRENT            33118
 #define ID_HELP_SECURITY                33119
+#define ID_HELP_FORUMS                  33120
+
 
 // Next default values for new objects
 // 
@@ -1592,7 +1595,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
-#define _APS_NEXT_COMMAND_VALUE         33120
+#define _APS_NEXT_COMMAND_VALUE         33121
 #define _APS_NEXT_CONTROL_VALUE         1387
 #define _APS_NEXT_SYMED_VALUE           102
 #endif

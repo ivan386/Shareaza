@@ -751,7 +751,6 @@
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -773,7 +772,6 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -798,7 +796,6 @@
 		<menu text="_Web File Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -817,7 +814,6 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -843,7 +839,6 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
@@ -924,12 +919,18 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
 		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Clear"/> -->
+	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Resume All"/>
@@ -1047,7 +1048,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1078,7 +1078,6 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
 		</menu>
 		<menu text="O_rganise">
@@ -1113,7 +1112,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1147,7 +1145,6 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create .torrent File"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_UNLINK" text="Remove _Files"/>
@@ -1899,7 +1896,8 @@
 		<text>This download is waiting for some of your other downloads to complete.
 		Your download settings limit the number of downloads which may be active at
 		any given time, to ensure that each download gets a good share of the available
-		bandwidth.  You can change these settings via Tools, Shareaza Settings.</text>
+		bandwidth.  You can change these settings via Tools, Shareaza Settings.
+		Alternatively, you may manually start this download with the resume command.</text>
 	</document>
 	
 	<document name="DownloadHelp.Searching">
@@ -2327,6 +2325,9 @@
 		<image id="ID_NETWORK_G1"/>
 		<image id="ID_NETWORK_G2"/>
 		<image id="ID_NETWORK_ED2K"/>
+		<image id="ID_NETWORK_HTTP"/>
+		<image id="ID_NETWORK_FTP"/>
+		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
 	</bitmap>
 	<icon res="261" id="ID_TRAY_OPEN"/>
 	<icon res="203" id="ID_DOWNLOADS_MONITOR"/>
