@@ -385,7 +385,6 @@ void CUploadsSettingsPage::OnOK()
 
 	if ( m_bQueuesChanged )
 	{
-		Beep(500,500);
 		// Changing queues might change what files are in the hash table
 		LibraryDictionary.RebuildHashTable(); 
 		// ED2k file list will automatically update on next server connection
