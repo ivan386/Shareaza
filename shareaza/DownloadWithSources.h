@@ -51,6 +51,7 @@ public:
 public:
 	CString				GetSourceURLs(CStringList* pState, int nMaximum, BOOL bHTTP, CDownloadSource* pExcept);
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
+	int					GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
 	void				ClearSources();
 public:

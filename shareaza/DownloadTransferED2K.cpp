@@ -660,6 +660,13 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 ) m_pClient->WritePartStatus( pPacket, m_pDownload );
+	/*
+	//We don't have any need to this, so only offer extended request V1
+	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 2 ) 
+	{
+		pPacket->WriteShortLE( m_pDownload->GetED2KCompleteSourceCount() );
+	}
+	*/
 	Send( pPacket );
 	
 	//Send ed2k status request
@@ -668,7 +675,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	Send( pPacket );
 	
 	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&//We want more sources
-		 ( tNow > m_tSources ) && ( tNow - m_tSources > 15 * 60 * 1000 ) &&		//We have not asked for at least 15 minutes
+		 ( tNow > m_tSources ) && ( tNow - m_tSources > 30 * 60 * 1000 ) &&		//We have not asked for at least 30 minutes
 		 ( m_pClient->m_bEmule ) && ( Network.IsListening() ) )					//Remote client is eMule compatible and we are accepting packets
 	{
 		//Set 'last asked for sources' time

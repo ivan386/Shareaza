@@ -707,7 +707,7 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 	CEDTag( ED2K_ET_COMPATIBLECLIENT, 4 ).Write( pPacket );
 	CEDTag( ED2K_ET_COMPRESSION, 1 ).Write( pPacket );
 	CEDTag( ED2K_ET_SOURCEEXCHANGE, 2 ).Write( pPacket );
-	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, 1 ).Write( pPacket );
+	if ( Settings.eDonkey.ExtendedRequest ) CEDTag( ED2K_ET_EXTENDEDREQUEST, 1 ).Write( pPacket ); //Extended request version 1
 	CEDTag( ED2K_ET_UDPVER, 2 ).Write( pPacket );
 	CEDTag( ED2K_ET_UDPPORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 //	CEDTag( ED2K_ET_COMMENTS, 1 ).Write( pPacket );	
@@ -821,10 +821,10 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 2:
-			m_sUserAgent.Format( _T("xMule v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 3:
-			m_sUserAgent.Format( _T("aMule v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 4:
 			m_sUserAgent.Format( _T("Shareaza"), m_nEmVersion >> 4, m_nEmVersion & 15 );
