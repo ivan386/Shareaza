@@ -1,0 +1,3957 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- Shareaza Default test Skin File -->
+
+<!-- Body element, don't touch -->
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<!-- Manifest -->
+<manifest	name="Norwegian"
+			author="Tom Seland"
+			description="Shareaza Default test Skin File"
+			link="http://www.shareaza.com/"
+			email="contact@shareaza.com"
+			version="2.0"
+			type="Language"
+			language="no"
+			prompt="Klikk her for å velge Norsk som språk"
+			/>
+
+<!-- Toolbar Definitions -->
+<toolbars>
+	<!-- MAIN WINDOW -->
+	<toolbar name="CMainWnd.Basic">
+		<button id="ID_NETWORK_CONNECT" text="Koble til"/>
+		<separator/>
+		<button id="ID_TAB_HOME" text="Hjem"/>
+		<button id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<button id="ID_TAB_MEDIA" text="Media"/>
+		<button id="ID_TAB_SEARCH" text="Søk"/>
+		<button id="ID_TAB_TRANSFERS" text="Nedlastning"/>
+	</toolbar>
+	<toolbar name="CMainWnd.Tabbed">
+		<button id="ID_TAB_CONNECT" text="Koble til"/>
+		<separator/>
+		<button id="ID_TAB_HOME" text="Hjem"/>
+		<button id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<button id="ID_TAB_MEDIA" text="Media"/>
+		<button id="ID_TAB_SEARCH" text="Søk"/>
+		<button id="ID_TAB_TRANSFERS" text="Overføringer"/>
+		<button id="ID_TAB_NETWORK" text="Nettverk"/>
+	</toolbar>
+	<toolbar name="CMainWnd.Windowed">
+		<button id="ID_NETWORK_CONNECT" text="Koble til"/>
+		<button id="ID_NETWORK_DISCONNECT"/>
+		<separator/>
+		<button id="ID_VIEW_SYSTEM"/>
+		<button id="ID_VIEW_NEIGHBOURS"/>
+		<button id="ID_VIEW_DOWNLOADS"/>
+		<button id="ID_VIEW_UPLOADS"/>
+		<button id="ID_VIEW_LIBRARY"/>
+		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_VIEW_SECURITY"/>
+		<button id="ID_VIEW_HOSTS"/>
+		<button id="ID_VIEW_DISCOVERY"/>
+		<button id="ID_VIEW_TRAFFIC"/>
+		<button id="ID_VIEW_PACKETS"/>
+		<button id="ID_VIEW_SEARCH_MONITOR"/>
+		<button id="ID_VIEW_RESULTS_MONITOR"/>
+		<separator/>
+		<button id="ID_TOOLS_SETTINGS"/>
+		<button id="ID_TOOLS_DOWNLOAD"/>
+		<separator/>
+		<button id="ID_WINDOW_CASCADE"/>
+		<button id="ID_WINDOW_TILE_HORZ"/>
+		<button id="ID_WINDOW_TILE_VERT"/>
+		<separator/>
+		<button id="ID_NETWORK_SEARCH" text="Nytt søk"/>
+	</toolbar>
+	<!-- SEARCH WINDOW -->
+	<toolbar name="CSearchWnd.Panel.Basic">
+		<button id="ID_SEARCH_DOWNLOAD" text="Nedlastning"/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Vis søk"/>
+		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="130"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<toolbar name="CSearchWnd.Panel">
+		<button id="ID_SEARCH_DOWNLOAD" text="Nedlastning"/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Vis søk"/>
+		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="160"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_DOWNLOAD" text="Nedlastning"/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<separator/>
+		<button id="ID_SEARCH_SEARCH" text="Søk på ny..."/>
+		<button id="ID_SEARCH_STOP" text="Stopp"/>
+		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Vis søk"/>
+		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="150"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<!-- BROWSE HOST WINDOW -->
+	<toolbar name="CBrowseHeaderCtrl">
+		<button id="ID_BROWSE_PROFILE" text="Profil"/>
+		<button id="ID_BROWSE_FILES" text="Mine filer"/>
+	</toolbar>
+	<toolbar name="CBrowseHostWnd.Basic">
+		<button id="ID_SEARCH_DOWNLOAD" text="Last ned fil"/>
+		<button id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="160"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<toolbar name="CBrowseHostWnd">
+		<button id="ID_SEARCH_DOWNLOAD" text="Last ned fil"/>
+		<button id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<button id="ID_BROWSE_STOP" text="Stopp"/>
+		<button id="ID_BROWSE_REFRESH" text="Oppdater"/>
+		<separator/>
+		<button id="ID_SEARCH_DETAILS" text="Vis detaljer"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="160"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<!-- DOWNLOADS WINDOW -->
+	<toolbar name="CDownloadsWnd.Basic">
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
+		<separator/>
+		<button id="ID_DOWNLOADS_RESUME" text="Start nedlastning"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pause nedlastning"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt nedlastning"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern nedlastning"/>
+		<separator/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Vis monitor"/>
+		<rightAlign/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Legg til nedlastning/torrent..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+	</toolbar>
+	<toolbar name="CDownloadsWnd">
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
+		<separator/>
+		<button id="ID_DOWNLOADS_RESUME" text="Start nedlastning"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pause nedlastning"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt nedlastning"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern nedlastning"/>
+		<separator/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Vis monitor"/>
+		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<rightAlign/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Legg til nedlastning/torrent..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<separator/>
+		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtrer"/>
+	</toolbar>
+	<!-- UPLOADS WINDOW -->
+	<toolbar name="CUploadsWnd.Basic">
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<button id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
+		<rightAlign/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+	</toolbar>
+	<toolbar name="CUploadsWnd">
+		<button id="ID_UPLOADS_LAUNCH" text="Åpne eller spill av"/>
+		<separator/>
+		<button id="ID_UPLOADS_START" text="Start nå"/>
+		<button id="ID_UPLOADS_CLEAR" text="Fjern opplastning"/>
+		<separator/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<button id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
+		<button id="ID_SECURITY_BAN" text="Blokker bruker"/>
+		<rightAlign/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<separator/>
+		<button id="ID_UPLOADS_FILTER_MENU" text="Filtrer"/>
+	</toolbar>
+	<!-- LIBRARY FRAME -->
+	<toolbar name="CLibraryTree.Top">
+		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mapper"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organisert"/>
+	</toolbar>
+	<toolbar name="CLibraryTree.Virtual">
+		<button id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
+	</toolbar>
+	<toolbar name="CLibraryHeaderBar.Physical">
+		<button id="ID_LIBRARY_VIEW" text="Vis"/>
+		<button id="ID_LIBRARY_PANEL" text="Vis detaljer"/>
+		<button id="ID_LIBRARY_PARENT" text="Opp"/>
+	</toolbar>
+	<toolbar name="CLibraryHeaderBar.Virtual">
+		<button id="ID_LIBRARY_VIEW" text="Vis"/>
+		<button id="ID_LIBRARY_PANEL" text="Vis detaljer"/>
+		<button id="ID_LIBRARY_PARENT" text="Opp"/>
+	</toolbar>
+	<!-- LIBRARY VIEWS -->
+	<toolbar name="CLibraryHomeView.Physical">
+		<button id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryHomeView.Virtual">
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe"/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Slett mappe"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryTileView.Virtual">
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe"/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Slett mappe"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Physical.Basic">
+		<button id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Physical">
+		<button id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<separator/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+		<separator/>
+		<button id="ID_LIBRARY_MOVE" text="Flytt"/>
+		<button id="ID_LIBRARY_COPY" text="Kopier"/>
+		<button id="ID_LIBRARY_DELETE" text="Slett"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Virtual.Basic">
+		<button id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryFileView.Virtual">
+		<button id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<separator/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<toolbar name="CLibraryCollectionView.Virtual">
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<separator/>
+		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Last ned alle filene"/>
+		<rightAlign/>
+		<label text="Søk" tip="skriv inn søkeord og søk i mine filer"/>
+		<control id="108" width="120"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+	</toolbar>
+	<!-- MEDIA WINDOW -->
+	<toolbar name="CMediaFrame.Basic">
+		<button id="ID_MEDIA_PLAY" text="Spill av"/>
+		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Stopp"/>
+		<separator/>
+		<label text="Søk" tip="Søk til bestemt posisjon i mediafil"/>
+		<control id="117" width="190" height="22"/>
+		<label text="Volum:" tip="Juster volum"/>
+		<control id="119" width="50" height="22"/>
+		<separator/>
+		<button id="ID_MEDIA_OPEN" text="Åpne fil"/>
+		<rightAlign/>
+		<button id="ID_MEDIA_PREVIOUS" text="Tilbake"/>
+		<button id="ID_MEDIA_NEXT" text="Neste"/>
+		<separator/>
+		<button id="ID_MEDIA_PLAYLIST" text="Spilleliste"/>
+	</toolbar>
+	<toolbar name="CMediaFrame">
+		<button id="ID_MEDIA_PLAY" text="Spill av"/>
+		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Stopp"/>
+		<separator/>
+		<label text="Søk" tip="Søk til bestemt posisjon i mediafil"/>
+		<control id="117" width="190" height="22"/>
+		<label text="Hastighet" tip="Juster hastighet"/>
+		<control id="118" width="40" height="22"/>
+		<label text="Volum:" tip="Juster volum"/>
+		<control id="119" width="50" height="22"/>
+		<separator/>
+		<button id="ID_MEDIA_OPEN" text="Åpne"/>
+		<separator/>
+		<button id="ID_MEDIA_FULLSCREEN"/>
+		<button id="ID_MEDIA_ZOOM"/>
+		<button id="ID_MEDIA_VIS"/>
+		<rightAlign/>
+		<button id="ID_MEDIA_PREVIOUS"/>
+		<button id="ID_MEDIA_NEXT"/>
+		<separator/>
+		<button id="ID_MEDIA_PLAYLIST" text="Spilleliste"/>
+	</toolbar>
+	<toolbar name="CMediaList">
+		<button id="ID_MEDIA_ADD"/>
+		<button id="ID_MEDIA_REMOVE"/>
+		<rightAlign/>
+		<button id="ID_MEDIA_CLEAR" text="Oppdater"/>
+		<button id="ID_MEDIA_SAVE" text="Lagre"/>
+	</toolbar>
+	<!-- NEIGHBOURS WINDOW -->
+	<toolbar name="CNeighboursWnd.Basic">
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Chat med bruker"/>
+		<rightAlign/>
+		<button id="ID_NETWORK_G2" text="Gnutella2"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<separator/>
+		<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
+	</toolbar>
+	<toolbar name="CNeighboursWnd">
+		<button id="ID_NETWORK_CONNECT_TO" text="Koble til"/>
+		<button id="ID_NEIGHBOURS_DISCONNECT" text="Koble i fra"/>
+		<separator/>
+		<button id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Chat med bruker"/>
+		<button id="ID_SECURITY_BAN" text="Blokker host"/>
+		<rightAlign/>
+		<button id="ID_NETWORK_G2" text="Gnutella2"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<separator/>
+		<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
+	</toolbar>
+	<!-- HIT MONITOR WINDOW -->
+	<toolbar name="CHitMonitorWnd">
+		<button id="ID_SEARCH_DOWNLOAD" text="Nedlastning"/>
+		<button id="ID_HITMONITOR_SEARCH" text="Oppdater"/>
+		<separator/>
+		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
+		<button id="ID_SEARCH_CLEAR" text="Fjern"/>
+		<rightAlign/>
+		<label text="Filtrer" tip="Skriv inn ord som du vil filtrere ut"/>
+		<control id="107" width="160"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Mer..."/>
+	</toolbar>
+	<!-- HOST CACHE WINDOW -->
+	<toolbar name="CHostCacheWnd.Basic">
+		<button id="ID_HOSTCACHE_CONNECT" text="Koble til"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Koble i fra"/>
+		<button id="ID_HOSTCACHE_REMOVE" text="Fjern"/>
+	</toolbar>
+	<toolbar name="CHostCacheWnd">
+		<button id="ID_HOSTCACHE_CONNECT" text="Koble til"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Koble i fra"/>
+		<button id="ID_HOSTCACHE_REMOVE" text="Fjern"/>
+		<rightAlign/>
+		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 Cluster"/>
+		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Cache"/>
+		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 Cache"/>
+		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
+	</toolbar>
+	<!-- PRIVATE CHAT FRAME -->
+	<toolbar name="CPrivateChatFrame">
+		<button id="ID_CHAT_BOLD" text="B"/>
+		<button id="ID_CHAT_ITALIC" text="I"/>
+		<button id="ID_CHAT_UNDERLINE" text="U"/>
+		<button id="ID_CHAT_COLOUR" text="C"/>
+		<button id="ID_CHAT_EMOTICONS"/>
+		<separator/>
+		<button id="ID_CHAT_BROWSE" text="Utforsk bruker"/>
+		<!-- <button id="ID_CHAT_SEND_FILE" text="Send fil"/> -->
+		<button id="ID_CHAT_PRIORITY" text="Gi prioritet"/>
+		<separator/>
+		<button id="ID_CHAT_CONNECT" text="Koble til" visible="false"/>
+		<button id="ID_CHAT_DISCONNECT" text="Koble i fra"/>
+	</toolbar>
+</toolbars>
+
+<!-- Menu Definitions -->
+<menus>
+	<!-- MAIN WINDOW MENU BAR -->
+	<menu name="CMainWnd.Basic" type="bar">
+		<menu text="Nettverk">
+			<item id="ID_NETWORK_CONNECT" text="Koble til" shortcut="Ctrl+G"/>
+			<separator/>
+			<menu text="Velg nettverk">
+				<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+			</menu>
+			<separator/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
+			<item id="ID_NETWORK_EXIT" text="Avslutt"/>
+		</menu>
+		<menu text="_Vis">
+			<item id="ID_TAB_HOME" text="Hjem"/>
+			<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+			<item id="ID_TAB_MEDIA" text="Media player"/>
+			<item id="ID_TAB_SEARCH" text="Søk"/>
+			<item id="ID_TAB_TRANSFERS" text="Nedlastning"/>
+			<separator/>
+			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+			<separator/>
+			<menu text="Avansert">
+				<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
+				<item id="ID_VIEW_UPLOADS" text="Opplastning"/>
+			</menu>
+			<separator/>
+			<item id="ID_VIEW_BASIC" text="Normal Modus"/>
+			<item id="ID_VIEW_TABBED" text="Power Modus"/>
+		</menu>
+		<menu text="_Verktøy">
+			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil/torrent..."/>
+			<separator/>
+			<item id="ID_TOOLS_SKIN" text="Velg et skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Velg språk"/>
+			<separator/>
+			<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
+			<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
+			<separator/>
+			<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+		</menu>
+		<menu text="_Hjelp">
+			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+			<separator/>
+			<menu text="Websider">
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<separator/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
+			</menu>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
+		</menu>
+	</menu>
+	<menu name="CMainWnd.Tabbed" type="bar">
+		<menu text="Nettverk">
+			<item id="ID_NETWORK_CONNECT" text="Koble til" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="Koble i fra"/>
+			<separator/>
+			<menu text="Velg nettverk">
+				<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+			</menu>
+			<separator/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Koble til..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="Utforsk host..."/>
+			<separator/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
+			<item id="ID_NETWORK_EXIT" text="Avslutt"/>
+		</menu>
+		<menu text="_Vis">
+			<item id="ID_TAB_HOME" text="Hjem"/>
+			<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+			<item id="ID_TAB_MEDIA" text="Media player"/>
+			<item id="ID_TAB_SEARCH" text="Søk"/>
+			<item id="ID_TAB_TRANSFERS" text="Overføringer"/>
+			<item id="ID_TAB_NETWORK" text="Nettverk"/>
+			<separator/>
+			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+			<separator/>
+			<menu text="Avansert">
+				<item id="ID_VIEW_SYSTEM" text="System" shortcut="F11"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="Naboer" shortcut="F2"/>
+				<item id="ID_VIEW_DOWNLOADS" text="Nedlastninger" shortcut="F3"/>
+				<item id="ID_VIEW_UPLOADS" text="Opplastninger" shortcut="F4"/>
+				<item id="ID_VIEW_LIBRARY" text="Mine filer" shortcut="F5"/>
+				<item id="ID_VIEW_MEDIA" text="Media" shortcut="F6"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="Sikkerhet" shortcut="F7"/>
+				<item id="ID_VIEW_HOSTS" text="Host Cache" shortcut="F8"/>
+				<item id="ID_VIEW_DISCOVERY" text="Discovery" shortcut="F9"/>
+				<item id="ID_VIEW_TRAFFIC" text="Graf" shortcut="F10"/>
+				<separator/>
+				<item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
+				<item id="ID_VIEW_SEARCH_MONITOR" text="Søke monitor" shortcut="Ctrl+F2"/>
+				<item id="ID_VIEW_RESULTS_MONITOR" text="Treff monitor" shortcut="Ctrl+F3"/>
+			</menu>
+			<separator/>
+			<item id="ID_VIEW_BASIC" text="Normal Modus"/>
+			<item id="ID_VIEW_TABBED" text="Fane Modus"/>
+			<item id="ID_VIEW_WINDOWED" text="Vindu Modus"/>
+		</menu>
+		<menu text="_Verktøy">
+			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil/torrent..."/>
+			<separator/>
+			<item id="ID_TOOLS_SKIN" text="Velg et skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Velg språk"/>
+			<separator/>
+			<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
+			<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
+			<separator/>
+			<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+		</menu>
+		<menu text="_Vindu">
+			<item id="ID_WINDOW_NAVBAR" text="Vis navigasjonslinje"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Vis verktøyslinje"/>
+			<item id="ID_WINDOW_TABBAR" text="Vis ekstra linje"/>
+			<item id="ID_WINDOW_MONITOR" text="Vis monitor"/>
+			<item id="ID_WINDOW_REMOTE" text="Vis fjernkontroll"/>
+		</menu>
+		<menu text="_Hjelp">
+			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+			<separator/>
+			<menu text="Websider">
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<separator/>
+				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
+			</menu>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
+		</menu>
+	</menu>
+	<menu name="CMainWnd.Windowed" type="bar">
+		<menu text="Nettverk">
+			<item id="ID_NETWORK_SEARCH" text="Nytt søk..." shortcut="Ctrl+S"/>
+			<separator/>
+			<item id="ID_NETWORK_CONNECT" text="Koble til" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="Koble i fra"/>
+			<separator/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Koble til..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="Utforsk host..."/>
+			<separator/>
+			<menu text="Velg nettverk">
+				<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+				<item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+			</menu>
+			<separator/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
+			<item id="ID_NETWORK_EXIT" text="Avslutt"/>
+		</menu>
+		<menu text="_Vis">
+			<item id="ID_VIEW_SYSTEM" text="System" shortcut="F11"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="Naboer" shortcut="F2"/>
+			<item id="ID_VIEW_DOWNLOADS" text="Nedlastninger" shortcut="F3"/>
+			<item id="ID_VIEW_UPLOADS" text="Opplastninger" shortcut="F4"/>
+			<item id="ID_VIEW_LIBRARY" text="Mine filer" shortcut="F5"/>
+			<item id="ID_VIEW_MEDIA" text="Media" shortcut="F6"/>
+			<separator/>
+			<item id="ID_VIEW_SECURITY" text="Sikkerhet" shortcut="F7"/>
+			<item id="ID_VIEW_HOSTS" text="Host Cache" shortcut="F8"/>
+			<item id="ID_VIEW_DISCOVERY" text="Discovery" shortcut="F9"/>
+			<item id="ID_VIEW_TRAFFIC" text="Graf" shortcut="F10"/>
+			<separator/>
+			<item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
+			<item id="ID_VIEW_SEARCH_MONITOR" text="Søke monitor" shortcut="Ctrl+F2"/>
+			<item id="ID_VIEW_RESULTS_MONITOR" text="Hit Monitor" shortcut="Ctrl+F3"/>
+			<separator/>
+			<item id="ID_VIEW_BASIC" text="Normal Modus"/>
+			<item id="ID_VIEW_TABBED" text="Fane Modus"/>
+			<item id="ID_VIEW_WINDOWED" text="Vindu Modus"/>
+		</menu>
+		<menu text="_Verktøy">
+			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
+			<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil/torrent..."/>
+			<separator/>
+			<item id="ID_TOOLS_SKIN" text="Velg et skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Velg språk"/>
+			<separator/>
+			<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
+			<separator/>
+			<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
+			<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+		</menu>
+		<menu text="_Vindu">
+			<item id="ID_WINDOW_CASCADE" text="Full skjerm"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="Still opp vannrett"/>
+			<item id="ID_WINDOW_TILE_VERT" text="Still opp loddrett"/>
+			<separator/>
+			<item id="ID_WINDOW_NAVBAR" text="Vis navigasjonslinje"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Vis verktøyslinje"/>
+			<item id="ID_WINDOW_TABBAR" text="Vis ekstra linje"/>
+			<item id="ID_WINDOW_MONITOR" text="Vis monitor"/>
+			<item id="ID_WINDOW_REMOTE" text="Vis fjernkontroll"/>
+		</menu>
+		<menu text="_Hjelp">
+			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
+			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+			<separator/>
+			<menu text="Websider">
+				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
+				<separator/>
+				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
+			</menu>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
+		</menu>
+	</menu>
+	<!-- VIEW POPUP -->
+	<menu name="CMainWnd.View.Basic">
+		<item id="ID_TAB_HOME" text="Hjem"/>
+		<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<item id="ID_TAB_MEDIA" text="Media"/>
+		<item id="ID_TAB_SEARCH" text="Søk"/>
+		<item id="ID_TAB_TRANSFERS" text="Nedlastninger"/>
+		<separator/>
+		<menu text="Avansert">
+			<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
+			<item id="ID_VIEW_UPLOADS" text="Opplastninger"/>
+			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+		</menu>
+	</menu>
+	<menu name="CMainWnd.View.Tabbed">
+		<item id="ID_TAB_HOME" text="Hjem"/>
+		<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<item id="ID_TAB_MEDIA" text="Media"/>
+		<item id="ID_TAB_SEARCH" text="Søk"/>
+		<item id="ID_TAB_TRANSFERS" text="Overføringer"/>
+		<item id="ID_TAB_NETWORK" text="Nettverk"/>
+		<separator/>
+		<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Discovery"/>
+		<item id="ID_VIEW_TRAFFIC" text="Graf"/>
+		<separator/>
+		<item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Søke monitor"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Treff Monitor"/>
+	</menu>
+	<menu name="CMainWnd.View.Windowed">
+		<item id="ID_NETWORK_SEARCH" text="Nytt søk..."/>
+		<separator/>
+		<item id="ID_VIEW_SYSTEM" text="System"/>
+		<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
+		<item id="ID_VIEW_DOWNLOADS" text="Nedlastninger"/>
+		<item id="ID_VIEW_UPLOADS" text="Opplastninger"/>
+		<item id="ID_VIEW_LIBRARY" text="Mine filer"/>
+		<item id="ID_VIEW_MEDIA" text="Media player"/>
+		<separator/>
+		<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Discovery"/>
+		<item id="ID_VIEW_TRAFFIC" text="Graf"/>
+		<separator/>
+		<item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Søke monitor"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Treff Monitor"/>
+	</menu>
+	<!-- TRAY MENU -->
+	<menu name="CMainWnd.Tray">
+		<item id="ID_TRAY_OPEN" text="Åpne Shareaza"/>
+		<separator/>
+		<item id="ID_NETWORK_SEARCH" text="Nytt søk..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil..."/>
+		<separator/>
+		<item id="ID_MEDIA_PLAY" text="Spill av Media"/>
+		<item id="ID_MEDIA_PAUSE" text="Sett media på pause"/>
+		<item id="ID_MEDIA_STOP" text="Stopp Media"/>
+		<separator/>
+		<item id="ID_MEDIA_PREVIOUS" text="Tilbake"/>
+		<item id="ID_MEDIA_NEXT" text="Neste"/>
+		<separator/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
+		<item id="ID_NETWORK_EXIT" text="Avslutt"/>
+	</menu>
+	<!-- HOME MENU -->
+	<menu name="CHomeWnd.Basic">
+		<item id="ID_TAB_HOME" text="Hjem"/>
+		<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<item id="ID_TAB_MEDIA" text="Media"/>
+		<item id="ID_TAB_SEARCH" text="Søk"/>
+		<item id="ID_TAB_TRANSFERS" text="Nedlastninger"/>
+		<separator/>
+		<menu text="Avansert">
+			<item id="ID_VIEW_NEIGHBOURS" text="Naboer"/>
+			<item id="ID_VIEW_UPLOADS" text="Opplastninger"/>
+			<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+		</menu>
+	</menu>
+	<menu name="CHomeWnd.Tabbed">
+		<item id="ID_TAB_HOME" text="Hjem"/>
+		<item id="ID_TAB_LIBRARY" text="Mine filer"/>
+		<item id="ID_TAB_MEDIA" text="Media"/>
+		<item id="ID_TAB_SEARCH" text="Søk"/>
+		<item id="ID_TAB_TRANSFERS" text="Overføringer"/>
+		<item id="ID_TAB_NETWORK" text="Nettverk"/>
+		<separator/>
+		<item id="ID_VIEW_SECURITY" text="Sikkerhet"/>
+		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Discovery"/>
+		<item id="ID_VIEW_TRAFFIC" text="Graf"/>
+		<separator/>
+		<item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Søke monitor"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Treff Monitor"/>
+	</menu>
+	<!-- HOST CACHE WINDOW -->
+	<menu name="CHostCacheWnd">
+		<item id="ID_HOSTCACHE_CONNECT" text="Koble til nå"/>
+		<item id="ID_HOSTCACHE_DISCONNECT" text="Koble i fra"/>
+		<item id="ID_HOSTCACHE_PRIORITY" text="Prioritert server"/>
+		<separator/>
+		<item id="ID_HOSTCACHE_REMOVE" text="Fjern host(er)"/>
+		<separator/>
+		<menu text="_Filtrer">
+			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 Cluster"/>
+			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Cache"/>
+			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Cache"/>
+			<item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey servere"/>
+		</menu>
+		<separator/>
+		<item id="ID_HOSTCACHE_IMPORT" text="Åpne MET fil..."/>
+		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="Last ned MET..."/>
+	</menu>
+	<!-- SEARCH WINDOW -->
+	<menu name="CSearchWnd.Basic">
+		<item id="ID_SEARCH_DOWNLOAD" text="Last ned"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_SEARCH_COPY" text="Kopier URI..."/>
+		</menu>
+	</menu>
+	<menu name="CSearchWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="Last ned"/>
+		<item id="ID_SEARCH_COPY" text="Kopier URI"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<item id="ID_SECURITY_BAN" text="Blokker bruker"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="Fjern filter"/>
+		<item id="ID_SEARCH_CLEAR" text="Fjern resultatene"/>
+		<separator/>
+		<item id="ID_SEARCH_COLUMNS" text="Endre kolonnene..."/>
+	</menu>
+	<!-- BROWSE HOST WINDOW -->
+	<menu name="CBrowseHostWnd.Basic">
+		<item id="ID_SEARCH_DOWNLOAD" text="Last ned"/>
+		<separator/>
+		<item id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web fil Info">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_SEARCH_COPY" text="Kopier URI..."/>
+		</menu>
+	</menu>
+	<menu name="CBrowseHostWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="Last ned"/>
+		<item id="ID_SEARCH_COPY" text="Kopier URI"/>
+		<separator/>
+		<item id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="Fjern filter"/>
+		<separator/>
+		<item id="ID_SEARCH_COLUMNS" text="Endre kolonnene..."/>
+	</menu>
+	<!-- HIT MONITOR WINDOW -->
+	<menu name="CHitMonitorWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="Last ned"/>
+		<item id="ID_SEARCH_COPY" text="Kopier URI"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_SEARCH_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="Filtrer resultat..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="Fjern filter"/>
+		<separator/>
+		<item id="ID_HITMONITOR_PAUSE" text="Sett display på pause"/>
+		<item id="ID_HITMONITOR_CLEAR" text="Oppdater display"/>
+		<separator/>
+		<item id="ID_SEARCH_COLUMNS" text="Endre kolonnene..."/>
+	</menu>
+	<!-- DOWNLOADS WINDOW -->
+	<menu name="CDownloadsWnd.Download.Basic">
+		<item id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_RESUME" text="Start"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="Pause"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_SOURCES" text="Finn flere kilder"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
+	</menu>
+	<menu name="CDownloadsWnd.Download">
+		<item id="ID_DOWNLOADS_LAUNCH" text="Forhåndsvis"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Forhåndsvis kopi"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Legg til spilleliste"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_RESUME" text="Start"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="Pause"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Avbryt"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_SOURCES" text="Finn flere kilder"/>
+		<separator/>
+		<menu text="Avansert">
+			<item id="ID_DOWNLOADS_SHARE" text="Del fil"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
+			<item id="ID_DOWNLOADS_URL" text="Legg til kilde..."/>
+			<separator/>
+			<item id="ID_DOWNLOADS_MONITOR" text="Monitor vindu"/>
+			<item id="ID_DOWNLOADS_EDIT" text="Avansert redigering"/>
+			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info..."/>
+			<separator/>
+			<item id="ID_DOWNLOADS_MOVE_UP" text="Flytt opp"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytt ned"/>
+			<item id="ID_DOWNLOADS_BOOST" text="Ignorer hastighetsinnstillinger"/>
+		</menu>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
+	</menu>
+	<menu name="CDownloadsWnd.Source">
+		<item id="ID_TRANSFERS_CONNECT" text="Start"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_TRANSFERS_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<item id="ID_TRANSFERS_DISCONNECT" text="Koble i fra"/>
+		<item id="ID_TRANSFERS_FORGET" text="Glem det"/>
+	</menu>
+	<menu name="CDownloadsWnd.Completed.Basic">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Legg til spilleliste"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+	</menu>
+	<menu name="CDownloadsWnd.Completed">
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Legg til spilleliste"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
+		<item id="ID_DOWNLOADS_RATE" text="Gi karakter"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+	</menu>
+	<menu name="CDownloadTabBar">
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="Start alle"/>
+		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Pause alle"/>
+		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="Fjern alle"/>
+		<separator/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="Ny gruppe"/>
+		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="Fjern gruppe"/>
+		<separator/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Vis grupper"/>
+		<separator/>
+		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CDownloadsWnd.Filter">
+		<item id="ID_DOWNLOADS_FILTER_ALL" text="Vis alle"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Vis aktive"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Vis venter"/>
+		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Vis ingen kilder"/>
+		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Vis pausede"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Vis alle kilder"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Vis grupper"/>
+	</menu>
+	<!-- UPLOADS WINDOW -->
+	<menu name="CUploadsWnd.Basic">
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Auto fjern"/>
+	</menu>
+	<menu name="CUploadsWnd">
+		<item id="ID_UPLOADS_START" text="Start nå"/>
+		<item id="ID_UPLOADS_CLEAR" text="Fjern"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
+		<item id="ID_SECURITY_BAN" text="Blokker bruker"/>
+		<separator/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Auto fjern"/>
+	</menu>
+	<menu name="CUploadsWnd.Filter">
+		<item id="ID_UPLOADS_FILTER_ALL" text="Vis alle"/>
+		<separator/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Vis aktive"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Vis i kø"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Vis historie"/>
+	</menu>
+	<!-- LIBRARY FRAME -->
+	<menu name="CLibraryTree.Physical.Basic">
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="Delt"/>
+		<item id="ID_LIBRARY_REMOVE" text="Fjern"/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
+	</menu>
+	<menu name="CLibraryTree.Physical">
+		<item id="ID_LIBRARY_EXPLORE" text="Utforsk"/>
+		<item id="ID_LIBRARY_REMOVE" text="Fjern"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="Delt"/>
+		<separator/>
+		<item id="ID_LIBRARY_SCAN" text="Scan"/>
+		<item id="ID_LIBRARY_REBUILD" text="Oppdater"/>
+		<item id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryTree.Virtual.Basic">
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<item id="ID_LIBRARY_FOLDER_DELETE" text="Slett"/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryTree.Virtual">
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<item id="ID_LIBRARY_FOLDER_DELETE" text="Slett"/>
+		<separator/>
+		<item id="ID_LIBRARY_REBUILD" text="Oppdater"/>
+		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="Eksporter samling..."/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe..."/>
+		<separator/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Egenskaper"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<!-- LIBRARY VIEWS -->
+	<menu name="CLibraryTileView.Virtual">
+		<item id="ID_LIBRARY_ALBUM_OPEN" text="Åpne"/>
+		<item id="ID_LIBRARY_ALBUM_DELETE" text="Slett"/>
+		<separator/>
+		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryFileView.Physical.Basic">
+		<item id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="Delt"/>
+		<separator/>
+		<item id="ID_LIBRARY_DELETE" text="Slett"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="_Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Last ned metadata"/>
+			<separator/>
+			<item id="ID_LIBRARY_URL" text="Kopier URI"/>
+		</menu>
+		<menu text="Organisert">
+			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
+			<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
+			<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryFileView.Physical">
+		<item id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="Delt"/>
+		<separator/>
+		<item id="ID_LIBRARY_URL" text="Kopier URI"/>
+		<item id="ID_LIBRARY_DELETE" text="Slett"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Oppdater metadata"/>
+		</menu>
+		<menu text="Organisert">
+			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
+			<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
+			<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_COLUMNS" text="Velg kolonner"/>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryFileView.Virtual.Basic">
+		<item id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="Delt"/>
+		<separator/>
+		<item id="ID_LIBRARY_DELETE" text="Slett"/>
+		<separator/>
+		<menu text="S_øk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Oppdater metadata"/>
+			<separator/>
+			<item id="ID_LIBRARY_URL" text="Kopier URI"/>
+		</menu>
+		<menu text="Organisert">
+			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
+			<item id="ID_LIBRARY_UNLINK" text="Fjern filer"/>
+			<separator/>
+			<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
+			<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<menu name="CLibraryFileView.Virtual">
+		<item id="ID_LIBRARY_LAUNCH" text="Åpne / spill av"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Legg til spilleliste"/>
+		<separator/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="Delt"/>
+		<separator/>
+		<item id="ID_LIBRARY_URL" text="Kopier URI"/>
+		<item id="ID_LIBRARY_DELETE" text="Slett"/>
+		<separator/>
+		<menu text="Søk etter">
+			<item id="ID_SEARCH_FOR_THIS" text="Denne filen"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Lignende filer"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Musikk fra samme artist"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Musikk fra samme album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episode fra samme serie"/>
+		</menu>
+		<menu text="Web søk">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_JIGLE" text="Søk med Jigle Lookup"/>
+			<separator/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Oppdater metadata"/>
+		</menu>
+		<menu text="Organisert">
+			<item id="ID_LIBRARY_UNLINK" text="Fjern filer"/>
+			<separator/>
+			<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
+			<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
+			<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
+		</menu>
+		<separator/>
+		<item id="ID_LIBRARY_COLUMNS" text="Velg kolonner"/>
+		<separator/>
+		<item id="ID_LIBRARY_PROPERTIES" text="Egenskaper"/>
+	</menu>
+	<!-- MEDIA WINDOW -->
+	<menu name="CMediaFrame.Basic">
+		<item id="ID_MEDIA_PLAY" text="Spill av"/>
+		<item id="ID_MEDIA_PAUSE" text="Pause"/>
+		<item id="ID_MEDIA_STOP" text="Stopp"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="Åpne media fil..."/>
+		<separator/>
+		<menu text="Spilleliste">
+			<item id="ID_MEDIA_PREVIOUS" text="Tilbake"/>
+			<item id="ID_MEDIA_NEXT" text="Neste"/>
+			<item id="ID_MEDIA_RANDOM" text="Tilfeldig"/>
+			<item id="ID_MEDIA_REPEAT" text="Gjenta"/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="Vis spilleliste"/>
+		</menu>
+		<menu text="Video st_ørrelse">
+			<item id="ID_MEDIA_SIZE_ONE" text="Original størrelse"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Dobbel størrelse"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Trippel størrelse"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Størst"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="Fyll vindu"/>
+			<separator/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Orginal aspekt"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 Ratio (TV)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
+			<separator/>
+			<item id="ID_MEDIA_FULLSCREEN" text="Full skjerm"/>
+		</menu>
+		<menu text="Innstillinger">
+			<item id="ID_MEDIA_VIS" text="Velg effekter..."/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="Vis spilleliste"/>
+			<item id="ID_MEDIA_STATUS" text="Vis statuslinje"/>
+			<separator/>
+			<item id="ID_MEDIA_SETTINGS" text="Innstillinger for media..."/>
+		</menu>
+	</menu>
+	<menu name="CMediaFrame">
+		<item id="ID_MEDIA_PLAY" text="Spill av"/>
+		<item id="ID_MEDIA_PAUSE" text="Pause"/>
+		<item id="ID_MEDIA_STOP" text="Stopp"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="Åpne media fil..."/>
+		<item id="ID_MEDIA_CLOSE" text="Lukk fil"/>
+		<separator/>
+		<menu text="Spilleliste">
+			<item id="ID_MEDIA_PREVIOUS" text="Tilbake"/>
+			<item id="ID_MEDIA_NEXT" text="Neste"/>
+			<item id="ID_MEDIA_RANDOM" text="Tilfeldig"/>
+			<item id="ID_MEDIA_REPEAT" text="Gjenta"/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="Vis spilleliste"/>
+		</menu>
+		<menu text="Video st_ørrelse">
+			<item id="ID_MEDIA_SIZE_ONE" text="Original størrelse"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Dobbel størrelse"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Trippel størrelse"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Størst"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="Fyll vindu"/>
+			<separator/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Orginal aspekt"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 Ratio (TV)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
+			<separator/>
+			<item id="ID_MEDIA_FULLSCREEN" text="Full skjerm"/>
+		</menu>
+		<menu text="Innstillinger">
+			<item id="ID_MEDIA_VIS" text="Velg effekter..."/>
+			<separator/>
+			<item id="ID_MEDIA_PLAYLIST" text="Vis spilleliste"/>
+			<item id="ID_MEDIA_STATUS" text="Vis statuslinje"/>
+			<separator/>
+			<item id="ID_MEDIA_SETTINGS" text="Innstillinger for media..."/>
+		</menu>
+	</menu>
+	<menu name="CMediaFrame.Zoom">
+		<item id="ID_MEDIA_SIZE_ONE" text="Orginal størrelse"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="Dobbel størrelse"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="Trippel størrelse"/>
+		<item id="ID_MEDIA_SIZE_FILL" text="Størst"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="Fyll vindu"/>
+		<separator/>
+		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Orginal aspekt"/>
+		<item id="ID_MEDIA_ASPECT_4_3" text="4:3 Ratio (TV)"/>
+		<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
+	</menu>
+	<menu name="CMediaList">
+		<item id="ID_MEDIA_SELECT" text="Spill av"/>
+		<separator/>
+		<item id="ID_MEDIA_ADD" text="Legg til fil..."/>
+		<item id="ID_MEDIA_ADD_FOLDER" text="Legg til mappe..."/>
+		<item id="ID_MEDIA_REMOVE" text="Fjern"/>
+		<separator/>
+		<item id="ID_MEDIA_RANDOM" text="Tilfeldig modus"/>
+		<item id="ID_MEDIA_REPEAT" text="Gjenta modus"/>
+		<separator/>
+		<item id="ID_MEDIA_OPEN" text="Åpne spilleliste..."/>
+		<item id="ID_MEDIA_SAVE" text="Lagre spilleliste..."/>
+		<item id="ID_MEDIA_CLEAR" text="Fjern spilleliste"/>
+		<separator/>
+		<item id="ID_MEDIA_PLAYLIST" text="Vis spilleliste"/>
+	</menu>
+	<!-- SYSTEM WINDOW -->
+	<menu name="CSystemWnd">
+		<item id="ID_SYSTEM_VERBOSE" text="Vis alt modus"/>
+		<item id="ID_SYSTEM_TIMESTAMP" text="Tidsstempel"/>
+		<separator/>
+		<item id="ID_SYSTEM_CLEAR" text="Oppdater buffer"/>
+	</menu>
+	<!-- NEIGHBOURS WINDOW -->
+	<menu name="CNeighboursWnd.Basic">
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="Chat med bruker"/>
+		<separator/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="Koble i fra"/>
+		<separator/>
+		<item id="ID_NEIGHBOURS_COPY" text="Kopier URI"/>
+	</menu>
+	<menu name="CNeighboursWnd">
+		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="Chat med bruker"/>
+		<item id="ID_SECURITY_BAN" text="Blokker bruker"/>
+		<separator/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="Koble i fra"/>
+		<separator/>
+		<item id="ID_NEIGHBOURS_COPY" text="Kopier URI"/>
+		<separator/>
+		<menu text="Nettverk">
+			<item id="ID_NETWORK_CONNECT" text="Koble til"/>
+			<item id="ID_NETWORK_DISCONNECT" text="Koble i fra"/>
+			<separator/>
+			<item id="ID_NETWORK_G2" text="Gnutella2"/>
+			<item id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+		</menu>
+		<menu text="_Monitor">
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Vis all trafikk"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Vis innkommende trafikk"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Vis utgående trafikk"/>
+		</menu>
+	</menu>
+	<!-- SEARCH MONITOR WINDOW -->
+	<menu name="CSearchMonitorWnd">
+		<item id="ID_HITMONITOR_SEARCH" text="Søk etter dette"/>
+		<separator/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="Sett display på pause"/>
+		<item id="ID_SEARCHMONITOR_CLEAR" text="Oppdater buffer"/>
+	</menu>
+	<!-- GRAPH/TRAFFIC WINDOW -->
+	<menu name="CTrafficWnd">
+		<item id="ID_TRAFFIC_SETUP" text="Velg grafer..."/>
+		<separator/>
+		<item id="ID_TRAFFIC_GRID" text="Graf linjer"/>
+		<item id="ID_TRAFFIC_AXIS" text="Akser"/>
+		<item id="ID_TRAFFIC_LEGEND" text="Innformasjon"/>
+		<separator/>
+		<item id="ID_TRAFFIC_CLEAR" text="Fjern"/>
+		<separator/>
+		<item id="ID_TRAFFIC_WINDOW" text="Nytt vindu"/>
+	</menu>
+	<!-- SECURITY WINDOW -->
+	<menu name="CSecurityWnd">
+		<item id="ID_SECURITY_ADD" text="Legg til regel..."/>
+		<separator/>
+		<item id="ID_SECURITY_REMOVE" text="Fjern"/>
+		<item id="ID_SECURITY_RESET" text="Oppdater"/>
+		<separator/>
+		<item id="ID_SECURITY_MOVE_UP" text="Flytt opp"/>
+		<item id="ID_SECURITY_MOVE_DOWN" text="Flytt ned"/>
+		<separator/>
+		<item id="ID_SECURITY_IMPORT" text="Åpne..."/>
+		<item id="ID_SECURITY_EXPORT" text="Lagre..."/>
+		<separator/>
+		<menu text="Normal policy">
+			<item id="ID_SECURITY_POLICY_ACCEPT" text="Godta"/>
+			<item id="ID_SECURITY_POLICY_DENY" text="Avslå"/>
+		</menu>
+		<separator/>
+		<item id="ID_SECURITY_EDIT" text="Egenskaper"/>
+	</menu>
+	<!-- DISCOVERY SERVICES WINDOW -->
+	<menu name="CDiscoveryWnd">
+		<item id="ID_DISCOVERY_QUERY" text="Oppdater"/>
+		<item id="ID_DISCOVERY_ADVERTISE" text="Start"/>
+		<item id="ID_DISCOVERY_REMOVE" text="Fjern"/>
+		<separator/>
+		<item id="ID_DISCOVERY_BROWSE" text="Vis statistikk"/>
+		<separator/>
+		<item id="ID_DISCOVERY_GNUTELLA" text="Vis bootstraps"/>
+		<item id="ID_DISCOVERY_WEBCACHE" text="Vis GWebCaches"/>
+		<item id="ID_DISCOVERY_SERVERMET" text="Vis server.met's"/>
+		<separator/>
+		<item id="ID_DISCOVERY_ADD" text="Legg til service..."/>
+		<separator/>
+		<item id="ID_DISCOVERY_EDIT" text="Egenskaper"/>
+	</menu>
+	<!-- PRIVATE CHAT FRAME -->
+	<menu name="CPrivateChatFrame">
+		<item id="ID_CHAT_CONNECT" text="Koble til"/>
+		<item id="ID_CHAT_DISCONNECT" text="Koble i fra"/>
+		<separator/>
+		<item id="ID_CHAT_BROWSE" text="Utforsk bruker"/>
+		<item id="ID_CHAT_SEND_FILE" text="Send fil..."/>
+		<item id="ID_CHAT_PRIORITY" text="Gi prioritet"/>
+		<separator/>
+		<menu text="_Format">
+			<item id="ID_CHAT_BOLD" text="Fet"/>
+			<item id="ID_CHAT_ITALIC" text="Kursiv"/>
+			<item id="ID_CHAT_UNDERLINE" text="Understreking"/>
+			<item id="ID_CHAT_COLOUR" text="Farge"/>
+			<item id="ID_CHAT_EMOTICONS" text="Emoticons"/>
+		</menu>
+		<separator/>
+		<item id="ID_CHAT_TIMESTAMP" text="Tidsstempel"/>
+		<item id="ID_CHAT_CLEAR" text="Oppdater vindu"/>
+	</menu>
+</menus>
+
+<!-- Documents -->
+<documents>
+	
+	<!-- Home View -->
+
+    
+
+    <document name="CHomeViewCtrl" crBackground="FFFFFF" leftMargin="16" topMargin="0">
+
+        
+
+        <styles>
+
+            <style name="default">
+
+                <font face="Verdana" size="12"/>
+
+                <colours text="000000" link="0000FF" hover="FF0000"/>
+
+            </style>
+
+            <style name="heading">
+
+                <font face="Trebuchet MS" size="16" weight="800"/>
+
+                <colours text="800000"/>
+
+            </style>
+
+        </styles>
+
+        
+
+        <anchor id="Header" width="32" height="172"/>
+
+        <newline gap="0"/>
+
+        
+
+        <group id="1">
+
+            <icon res="130" width="32" height="32"/><gap size="8"/>
+
+            <heading align="middle">&#160; KOBLE TIL</heading>
+
+            <newline gap="8" indent="42"/>
+
+            <text>Velkommen til Shareaza! &#160;Du er ikke koblet til P2P nettverket. &#160;</text>
+
+            <link target="raza:command:ID_NETWORK_CONNECT">Klikk her for å starte!</link>
+
+            <newline gap="18" indent="0"/>
+
+        </group>
+
+        
+
+        <group id="2">
+
+            <icon res="134" width="32" height="32"/><gap size="8"/>
+
+            <heading align="middle">S Ø K &#160; M E D &#160; S H A R E A Z A</heading>
+
+            <newline gap="8" indent="42"/>
+
+            <anchor id="SearchBox" width="256" height="80"/>
+
+            <newline gap="12" indent="0"/>
+
+        </group>
+
+        
+
+        <group id="3">
+
+            <icon res="128" width="32" height="32"/><gap size="8"/>
+
+            <heading align="middle">O P P D A T E R I N G S &#160; V A R S E L</heading>
+
+            <newline gap="8" indent="42"/>
+
+            <text id="Oppdater"/>
+
+            <newline gap="6"/>
+
+            <link target="raza:upgrade">Klikk her for å oppdatere</link>
+
+            <newline gap="18" indent="0"/>
+
+        </group>
+
+        
+
+        <group id="4">
+
+            <icon res="252" width="32" height="32"/><gap size="8"/>
+
+            <heading align="middle">O B S &#160; - &#160; D U &#160; E R &#160; B A K &#160; E N &#160; B R A N N M U R</heading>
+
+            <newline gap="8" indent="42"/>
+
+            <text colour="FF0000">Shareaza har oppdaget at du er bak en NAT router eller brannmur,
+
+            og klarer ikke å motta tilkoblinger fra internett. &#160;</text>
+
+            <text colour="FF0000" format="b">Dette kan gi lav nedlastningshastighet.</text>
+
+            <newline gap="6"/>
+
+            <link target="raza:command:ID_HELP_FIREWALLS">Klikk her for å lære hvordan du skal sette opp routeren eller brannmuren din</link>
+
+            <newline gap="18" indent="0"/>
+
+        </group>
+
+        
+
+        <icon res="254" width="32" height="32"/><gap size="8"/>
+
+        <heading align="middle" colour="6060FF">L Y T T &#160; T I L &#160; M U S I K K</heading>
+
+        <newline gap="8" indent="42"/>
+
+        <bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
+
+        <newline gap="18" indent="0"/>
+
+        
+
+        <icon res="236" width="32" height="32"/><gap size="8"/>
+
+        <heading align="middle">M O D I F I S E R &#160; S H A R E A Z A</heading>
+
+        <newline gap="12" indent="42"/>
+
+        
+
+        <icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
+
+        <gap size="8"/>
+
+        <link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
+
+        <text align="middle">&#160;- Endre Shareaza's utseende</text>
+
+        <newline gap="8"/>
+
+        
+
+        <icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
+
+        <gap size="8"/>
+
+        <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Innstillingsveiviser</link>
+
+        <text align="middle">&#160;- Endre Shareaza's innstillinger</text>
+
+        <newline gap="8"/>
+
+        
+
+        <icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
+
+        <gap size="8"/>
+
+        <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hjelp</link>
+
+        <text align="middle">&#160;- Få grunnleggende hjelp til å bruke Shareaza</text>
+
+        <newline gap="18" indent="0"/>
+
+        
+
+        <group id="5">
+
+            <icon res="128" width="32" height="32"/><gap size="8"/>
+
+            <heading align="middle">F J E R N &#160; K O N S O L L E N &#160; E R &#160; P Å</heading>
+
+            <newline gap="8" indent="42"/>
+
+            <text>Shareaza Fjern Konsoll er skrudd på.   Kjør og kontroller Shareaza med internett leseren din her:</text>
+
+            <newline gap="6"/>
+
+            <link id="RemoteAccessURL1"/>
+
+            <text>&#160;- eller -&#160;</text>
+
+            <link id="RemoteAccessURL2"/>
+
+            <newline gap="16" indent="0"/>
+
+        </group>
+
+        
+
+    </document>
+
+
+__________________
+	
+	<document name="CHomeDownloadsBox" title="Mine nedlastninger" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<group id="1">
+				<text>Du laster ikke ned noen filer.</text>
+				<newline gap="4"/>
+			</group>
+			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Gå til nedlastninger</link>
+			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Gå til nedlastninger (1)</link>
+			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Gå til nedlastninger (%i)</link>
+		</para>
+	</document>
+
+	<document name="CHomeLibraryBox" title="Mine filer" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<group id="2">
+				<text>Du har ikke lastet ned noen nye filer i det siste.</text>
+				<newline gap="8"/>
+			</group>
+			<text id="LibraryFiles" format="b">%lu </text>
+			<text>filer, </text>
+			<text id="LibraryVolume" format="b">%s</text>
+			<newline gap="0"/>
+			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Gå til mine filer</link>
+			<group id="1">
+				<newline gap="8"/>
+				<text>Shareaza skanner og bearbeider </text>
+				<text id="LibraryHashRemaining" format="b">%lu </text>
+				<text>filene.</text>
+				<newline gap="8"/>
+			</group>
+			<group id="3">
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikk her for å hashe raskere</link>
+			</group>
+			<group id="4">
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikk her for å hashe seinere</link>
+			</group>
+		</para>
+	</document>
+
+	<document name="CHomeConnectionBox" title="Tilkobling" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<group id="1">
+			<para align="center">
+				<text format="b">Ikke koblet til</text>
+				<newline gap="4"/>
+				<link target="raza:command:ID_NETWORK_CONNECT">Klikk her for å koble til</link>
+			</para>
+		</group>
+		
+		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
+		<text group="20" align="middle" format="b">Gnutella2: </text>
+		<text group="21" align="middle">Ikke koblet til</text>
+		<text group="22" align="middle">Kobler til...</text>
+		<text group="23" align="middle">Koblet til</text>
+		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
+		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
+		<newline group="20" gap="2"/>
+		
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Ikke koblet til</text>
+		<text group="32" align="middle">Kobler til...</text>
+		<text group="33" align="middle">Koblet til</text>
+		<newline group="30" gap="2"/>
+		
+		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
+		<text group="10" align="middle" format="b">Gnutella1: </text>
+		<text group="11" align="middle">Koblet i fra</text>
+		<text group="12" align="middle">Kobler til...</text>
+		<text group="13" align="middle">Koblet til</text>
+		<newline group="10" gap="2"/>
+		
+		<group id="2">
+			<para align="center">
+				<newline gap="6"/>
+				<text>Du har vært koblet til i </text>
+				<text id="ConnectedHours" format="b">%i </text>
+				<text>timer og </text>
+				<text id="ConnectedMinutes" format="b">%i </text>
+				<text>minutter.</text>
+			</para>
+		</group>
+	</document>
+	
+	<document name="CHomeUploadsBox" title="Opplasting" leftMargin="6" topMargin="6">
+		<styles>
+			<style name="default">
+				<font face="Verdana" size="9"/>
+			</style>
+		</styles>
+		<para align="center">
+			<text id="UploadsNone" format="b">Ingen opplastinger</text>
+			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 aktiv opplasting</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i opplastinger</link>
+			
+			<newline gap="4"/>
+			
+			<text id="UploadedNone">Du har ikke opplastet noen filer i dag.</text>
+			<text id="UploadedOne">Du har opplastet 1 fil (%s).</text>
+			<text id="UploadedMany">Du har opplastet %i filer (%s).</text>
+		</para>
+	</document>
+	
+	<!-- Settings Pages -->
+
+	<document name="CGeneralSettingsGroup" title="Velkommen" leftMargin="8" topMargin="8">
+		
+		<styles>
+			<style name="default">
+				<colours link="000080"/>
+			</style>
+		</styles>
+		
+		<text format="b">Velkommen til Shareaza's innstillinger</text>
+		<newline gap="16"/>
+		
+
+		
+		<link target="raza:page:CGeneralSettingsPage" format="b">Generelt:</link>
+		<gap size="4"/>
+		<text>De vanligste innstillingene. Endre benevnelse, minimering, meldingsvinduer o.l.</text>
+		<newline gap="10"/>
+		
+		<link target="raza:page:CLibrarySettingsPage" format="b">Mine filer:</link>
+		<gap size="4"/>
+		<text>Innstillinger for Dine filer, organisering og filegenskaper.</text>
+		<newline gap="10"/>
+		
+		<link target="raza:page:CMediaSettingsPage" format="b">Media player:</link>
+		<gap size="4"/>
+		<text>Når og hvordan du vil bruke Shareaza media senter.</text>
+		<newline gap="10"/>
+		
+		<link target="raza:page:CCommunitySettingsPage" format="b">Min status:</link>
+		<gap size="4"/>
+		<text>Din profil. Egenskaper for chat og meldinger.</text>
+		<newline gap="10"/>
+
+		<link target="raza:page:CWebSettingsPage" format="b">Internett:</link>
+		<gap size="4"/>
+		<text>Endre Shareaza slik at du automatisk starter nedlastninger fra Internett explorer.</text>
+		<newline gap="10"/>
+	
+	</document>
+
+	<document name="CInternetSettingsGroup" title="Tilkobling" leftMargin="8" topMargin="8">
+		
+		<styles>
+			<style name="default">
+				<colours link="000080"/>
+			</style>
+		</styles>
+		
+		<text format="b">Velkommen til Shareaza's innstillinger</text>
+		
+        <newline gap="16"/>
+		
+		<text>Her kan du endre hvordan Shareaza arbeider med andre noder på nettverket</text>
+		
+		<newline gap="10"/>
+		
+		<link target="raza:page:CConnectionSettingsPage" format="b">Linjetype:</link>
+		<gap size="4"/>
+		<text>Din tilkoblings egenskaper og hastigheter.</text>
+		<newline gap="10"/>
+		
+		<link target="raza:page:CDownloadsSettingsPage" format="b">Nedlastninger:</link>
+		<gap size="4"/>
+		<text>Endre nedlastnings kapasiteten og hvor de skal lagres.</text>
+		<newline gap="10"/>
+		
+		<link target="raza:page:CUploadsSettingsPage" format="b">Opplastninger:</link>
+		<gap size="4"/>
+		<text>Endre opplastnings kapasiteten, køer, blokkeringer og andre innstillinger.</text>
+		<newline gap="10"/>
+
+		<link target="raza:page:CNetworksSettingsPage" format="b">Nettverk:</link>
+		<gap size="4"/>
+		<text>Velg hvordan og hvilke nettverk Shareaza skal koble seg opp til.</text>
+		<newline gap="10"/>
+		
+		
+	</document>
+			
+	<!-- Browse User Profile -->
+	
+	<document name="CBrowseHostProfile.1">
+		
+		<heading id="Nick"/>
+		<heading>'s Profil</heading>
+		<newline gap="8"/>
+		
+		<group id="1">
+			<newline gap="8" indent="0"/>
+			<text format="b">Navn</text>
+			<newline gap="2" indent="8"/>
+			<text id="FullName"/>
+		</group>
+		
+		<group id="2">
+			<newline gap="8" indent="0"/>
+			<text format="b">Sted</text>
+			<newline gap="2" indent="8"/>
+			<text id="FullLocation"/>
+		</group>
+		
+		<group id="3">
+			<newline gap="8" indent="0"/>
+			<text format="b">Personlige opplysninger</text>
+			<newline gap="2" indent="8"/>
+			<text id="GenderMale">Mann</text>
+			<text id="GenderFemale">Kvinne</text>
+			<text>, </text>
+			<text id="Alder"/>
+		</group>
+		
+		<group id="4">
+			<newline gap="8" indent="0"/>
+			<text format="b">Kontakt informasjon</text>
+			<newline gap="1" indent="8"/>
+		</group>
+		<group id="40">
+			<newline gap="1"/>
+			<icon res="265"/><gap size="5"/>
+			<link id="ContactEmail" align="middle"/>
+		</group>
+		<group id="44">
+			<newline gap="1"/>
+			<icon res="1007"/><gap size="5"/>
+			<link id="ContactMSN"/>
+		</group>
+		<group id="41">
+			<newline gap="1"/>
+			<icon res="206"/><gap size="5"/>
+			<link id="ContactYahoo"/>
+		</group>
+		<group id="42">
+			<newline gap="1"/>
+			<icon res="208"/><gap size="5"/>
+			<link id="ContactICQ"/>
+		</group>
+		<group id="43">
+			<newline gap="1"/>
+			<icon res="207"/><gap size="5"/>
+			<link id="ContactAOL"/>
+		</group>
+		<group id="44">
+			<newline gap="1"/>
+			<icon res="207"/><gap size="5"/>
+			<link id="ContactJabber"/>
+		</group>
+		
+		<group id="5">
+			<newline gap="8" indent="0"/>
+			<text format="b">Interesser</text>
+			<newline gap="2" indent="8"/>
+			<text id="Interests"/>
+		</group>
+		
+		<group id="6">
+			<newline gap="8" indent="0"/>
+			<text format="b">Hvem, hva, hvor</text>
+			<newline gap="2" indent="8"/>
+			<text id="BioText"/>
+		</group>
+		
+	</document>
+	
+	<document name="CBrowseHostProfile.2">
+		
+		<newline gap="40" indent="0"/>
+		<text format="b">Delte filer</text>
+		<newline gap="4" indent="8"/>
+		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
+		<link target="raza:command:ID_BROWSE_FILES" align="middle">Vis delte filer</link>
+		
+		<group id="2">
+			<newline gap="16" indent="0"/>
+			<text format="b">Online</text>
+			<newline gap="4" indent="8"/>
+			<icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
+			<gap size="5"/>
+			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat med bruker</link>
+		</group>
+		
+		<newline gap="16" indent="0"/>
+		<text format="b">Favoritt linker</text>
+		<newline gap="4" indent="8" id="Bookmarks"/>
+		
+		<newline gap="16" indent="0"/>
+		
+	</document>
+	
+	<!-- Download help documents -->
+	
+	<document name="DownloadHelp.Select">
+		<text format="b">Velg en nedlastning</text>
+		<newline gap="8"/>
+		<text>Du kan bruke denne kommandoen for å få informasjon om nedlastningen.
+		Velg en nedlastning og denne kommandoen en gang til.</text>
+	</document>
+	
+	<document name="DownloadHelp.Completed">
+		<text format="b">Denne nedlastningen er ferdig.</text>
+		<newline gap="8"/>
+		<text>Shareaza er ferdig med denne filen og har kontollert at den 
+		er 100%. Den er også flyttet til din nedlastningsmappe.</text>
+	</document>
+
+	<document name="DownloadHelp.Moving">
+		<text format="b">Denne filen flyttes</text>
+		<newline gap="8"/>
+		<text>Shareaza er ferdig med denne filen og har kontrollert at den er
+		korrekt.  Den blir nå flyttet og/eller pakket ut i din nedlastningsmappe.</text>
+	</document>
+	
+	<document name="DownloadHelp.Paused">
+		<text format="b">Denne filen er satt på pause</text>
+		<newline gap="8"/>
+		<text>Du har pauset denne filen. Hvis du ønsker å starte den kan du klikke
+		på </text><text format="b">Start</text><text>kommandoen.</text>
+	</document>
+	
+	<document name="DownloadHelp.DiskFull">
+		<text format="b">Harddisken er full</text>
+		<newline gap="8"/>
+		<text>Shareaza har pauset denne filen automatisk fordi det ser ut som at
+		harddisken er full, eller at filen ikke kan skrives til. Hvis du vil fortsette
+		lag mer plass ved å rydde harddisken og/eller sjekk at Incomplete mappen ikke
+		er skrivebeskyttet. Deretter kan du prøve å starte nedlastningen på ny.</text>
+
+	</document>
+	
+	<document name="DownloadHelp.Verifying">
+		<text format="b">Denne filen blir kontrollert</text>
+		<newline gap="8"/>
+		<text>Denne filen er ferdig, den blir nå kontrollert for å sjekke at den er
+		eksakt lik den orginale filen. Hvis det finnes noen ødelagte deler vil
+		Shareaza fikse det automatisk.</text>
+	</document>
+	
+	<document name="DownloadHelp.Downloading">
+		<text format="b">Denne filen er aktiv!</text>
+		<newline gap="8"/>
+		<text>Denne filen lastes ned. Hvis den har lav hastighet kan du søke etter
+		flere kilder med </text>
+		<text format="b">Finn flere kilder </text><text>kommandoen.  Hvis ikke dette 
+		hjelper kan det komme av begrensninger hos brukeren du laster ned fra.
+		Hastigheten øker vanligvis etter hvert.</text>
+	</document>
+	
+	<document name="DownloadHelp.Pending">
+		<text format="b">Denne filen venter</text>
+		<newline gap="8"/>
+		<text>Denne filen venter på at en av dine andre filer skal bli ferdig. 
+		Dine innstillinger begrenser antall aktive nedlastninger, for å gi dine 
+		aktive filer mest mulig nytte av båndredden. 
+		Du kan endre innstillingene via Verktøy, Innstillinger.</text>
+	</document>
+	
+	<document name="DownloadHelp.Searching">
+		<text format="b">Denne nedlastningen søker.</text>
+		<newline gap="8"/>
+		<text>Det er ingen kjente kilder til denne filen, så Shareaza søker alle 
+		nettverkene etter nye kilder. Når en kilde blir funnet vil nedlastningen 
+		automatisk starte.  Shareaza søker automatisk etter nye kilder. 
+		Men du kan hjelpe prosessen ved å bruke </text>
+		<text format="b">Finn flere kilder </text><text>kommandoen.</text>
+		<newline gap="8"/>
+		<text>Uheldigvis kan det noen ganger være at ingen andre brukere 
+		med filen du leter etter er online. Det eneste du da kan gjøre er å vente 
+		til noen kommer online. Eller du kan avbryte filen for å finne en liknende 
+		fil med flere kilder.</text>
+	</document>
+	
+	<document name="DownloadHelp.Creating">
+		<text format="b">Denne filen forarbeides</text>
+		<newline gap="8"/>
+		<text>Shareaza arbeider med å lage lagringsplass til denne filen, dette
+		gjøres for å spare tid seinere.</text>
+	</document>
+	
+	<document name="DownloadHelp.Tracker">
+		<text format="b">BitTorrent tracker nede.</text>
+		<newline gap="8"/>
+		<text>BitTorrent server for denne filen ser ut til å være
+		offline eller ødelagt. Shareaza klarer ikke å kontakte serveren
+		for å få en liste over kjente kilder.</text>
+	</document>
+	
+</documents>
+
+<!-- Navigation Bar -->
+<windowSkins>
+	<windowSkin>
+		<image type="image" language="en" res="241"/>
+		<image type="alpha" language="en" res="246"/>
+		<target window="CMainTabBarCtrl.Basic"/>
+		<anchors>
+			<anchor name="Background"				rect="0,0,470,44"/>
+			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
+			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
+			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
+			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
+			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
+		</anchors>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
+			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
+			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
+			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
+			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
+			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
+			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
+			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
+			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
+			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
+			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
+			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
+			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
+		</parts>
+	</windowSkin>
+	<windowSkin>
+		<image type="image" language="en" res="241"/>
+		<image type="alpha" language="en" res="246"/>
+		<target window="CMainTabBarCtrl"/>
+		<anchors>
+			<anchor name="Background"				rect="0,0,574,44"/>
+			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
+			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
+			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
+			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
+			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
+			<anchor name="_ID_TAB_NETWORK"			rect="464,1,102,38"/>
+		</anchors>
+		<parts>
+			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
+			<part name="_ID_TAB_HOME.Checked"		rect="0,38,80,38"/>
+			<part name="_ID_TAB_HOME.Hover"			rect="0,38,80,38"/>
+			<part name="_ID_TAB_HOME.Down"			rect="0,76,80,38"/>
+			<part name="_ID_TAB_LIBRARY.Up"			rect="80,0,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Checked"	rect="80,38,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Hover"		rect="80,38,90,38"/>
+			<part name="_ID_TAB_LIBRARY.Down"		rect="80,76,90,38"/>
+			<part name="_ID_TAB_MEDIA.Up"			rect="170,0,84,38"/>
+			<part name="_ID_TAB_MEDIA.Checked"		rect="170,38,84,38"/>
+			<part name="_ID_TAB_MEDIA.Hover"		rect="170,38,84,38"/>
+			<part name="_ID_TAB_MEDIA.Down"			rect="170,76,84,38"/>
+			<part name="_ID_TAB_SEARCH.Up"			rect="254,0,90,38"/>
+			<part name="_ID_TAB_SEARCH.Checked"		rect="254,38,90,38"/>
+			<part name="_ID_TAB_SEARCH.Hover"		rect="254,38,90,38"/>
+			<part name="_ID_TAB_SEARCH.Down"		rect="254,76,90,38"/>
+			<part name="_ID_TAB_TRANSFERS.Up"		rect="344,0,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
+			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
+			<part name="_ID_TAB_NETWORK.Up"			rect="450,0,108,38"/>
+			<part name="_ID_TAB_NETWORK.Checked"	rect="450,38,102,38"/>
+			<part name="_ID_TAB_NETWORK.Hover"		rect="450,38,102,38"/>
+			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
+		</parts>
+	</windowSkin>
+</windowSkins>
+
+<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<commandTips>
+	<tip id="ID_HELP_ABOUT" message="Viser Shareazas om dialog..."/>
+	<tip id="ID_NETWORK_EXIT" message="Avslutt Shareaza"/>
+	<tip id="ID_NETWORK_CONNECT" message="Koble til nettverket."/>
+	<tip id="ID_NETWORK_DISCONNECT" message="Koble i fra nettverket"/>
+	<tip id="ID_TOOLS_SETTINGS" message="Endre innstillingene..."/>
+	<tip id="ID_VIEW_SYSTEM" message="Vis eller skjul system vinduet."/>
+	<tip id="ID_VIEW_NEIGHBOURS" message="Vis eller skjul naboer vinduet."/>
+	<tip id="ID_HOSTCACHE_REMOVE" message="Fjern valgt host fra host cach listen."/>
+	<tip id="ID_NETWORK_CONNECT_TO" message="Manuelt koble til en host..."/>
+	<tip id="ID_NETWORK_SEARCH" message="Start et nytt søk på nettverket..."/>
+	<tip id="ID_SEARCH_DOWNLOAD" message="Last ned valgt fil(er)."/>
+	<tip id="ID_SEARCH_SEARCH" message="Søk på nettverket igjen..."/>
+	<tip id="ID_SEARCH_FILTER" message="Filtrer søkeresultatene ut fra valgte ord og egenskaper..."/>
+	<tip id="ID_SEARCH_FILTER_REMOVE" message="Fjern filteret fra resultatene."/>
+	<tip id="ID_SEARCH_GROUPED" message="Grupper resultatene etter type."/>
+	<tip id="ID_HITMONITOR_CLEAR" message="Oppdater hit-monitor bufferen."/>
+	<tip id="ID_SEARCHMONITOR_PAUSE" message="Sett monitoren på pause."/>
+	<tip id="ID_HITMONITOR_PAUSE" message="Sett hit-monitoren på pause."/>
+	<tip id="ID_VIEW_TRAFFIC" message="Vis eller skjul graf vinduet."/>
+	<tip id="ID_VIEW_LIBRARY" message="Vis eller skjul mine filer vinduet."/>
+	<tip id="ID_VIEW_DOWNLOADS" message="Vis eller skjul nedlastnings vinduet."/>
+	<tip id="ID_VIEW_UPLOADS" message="Vis eller skjul opplastnings vinduet."/>
+	<tip id="ID_VIEW_HOSTS" message="Vis eller skjul Host Cache vinduet."/>
+	<tip id="ID_VIEW_PACKETS" message="Vis eller skjul Packet Dump vinduet."/>
+	<tip id="ID_NEIGHBOURS_DISCONNECT" message="Koble i fra valgt nabo(er)."/>
+	<tip id="ID_SYSTEM_CLEAR" message="Oppdater staus loggen."/>
+	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Åpne et nytt Packet Dump vindu for å overvåke denne naboen."/>
+	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Åpne et nytt Packet Dump vindu for å overvåke innkommende trafikk til denne naboen."/>
+	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Åpne et nytt Packet Dump vindu for å overvåke utgående trafikk til denne naboen."/>
+	<tip id="ID_VIEW_SEARCH_MONITOR" message="Vis eller skjul søkemonitor vinduet."/>
+	<tip id="ID_VIEW_RESULTS_MONITOR" message="Vis eller skjul  hit-monitor vinduet."/>
+	<tip id="ID_HOSTCACHE_CONNECT" message="Koble til valgt host."/>
+	<tip id="ID_HOSTCACHE_DISCONNECT" message="Koble i fra valgt nabo."/>
+	<tip id="ID_TRANSFERS_DISCONNECT" message="Koble i fra valgt nedlastnings overføringer."/>
+	<tip id="ID_TRANSFERS_FORGET" message="Koble i fra og glem kildene til valgt nedlastning."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Besøk Shareazas nettsted."/>
+	<tip id="ID_HELP_WEB_1" message="Besøk Zeropaid.com"/>
+	<tip id="ID_HELP_WEB_2" message="Besøk P2PForums.com"/>
+	<tip id="ID_HELP_WEB_3" message="Besøk Slyck.com"/>
+	<tip id="ID_HELP_FAQ" message="Besøk Shareazas bruker guide."/>
+	<tip id="ID_SEARCH_CHAT" message="Start en samtale med valgt bruker."/>
+	<tip id="ID_TRAFFIC_GRID" message="Vis graf-linjer."/>
+	<tip id="ID_TRAFFIC_AXIS" message="Vis loddrett akse."/>
+	<tip id="ID_SEARCHMONITOR_CLEAR" message="Oppdater søkemonitor bufferen."/>
+	<tip id="ID_SEARCH_COPY" message="Kopier URI til valgt fil."/>
+	<tip id="ID_HITMONITOR_SEARCH" message="Søk på nettverket etter valgt uttrykk."/>
+	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Vis Gnutella2 horizon hubene."/>
+	<tip id="ID_HOSTCACHE_G2_CACHE" message="Vis Gnutella2 host'ene."/>
+	<tip id="ID_HOSTCACHE_G1_CACHE" message="Vis Gnutella1 host'ene."/>
+	<tip id="ID_SEARCH_COLUMNS" message="Velg hvilke metadata kolonner som skal vises..."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="Start valgt nedlastning(er)."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Fjern ferdige nedlastninger."/>
+	<tip id="ID_DOWNLOADS_SOURCES" message="Søk etter flere kilder til valgt nedlastning."/>
+	<tip id="ID_DOWNLOADS_LAUNCH" message="Forhåndsvis valgt fil."/>
+	<tip id="ID_DOWNLOADS_CLEAR" message="Fjern valgte nedlastning(er)."/>
+	<tip id="ID_DOWNLOADS_PAUSE" message="Sett valgt nedlastning på pause."/>
+	<tip id="ID_LIBRARY_EXPLORE" message="Åpne valgt mappe."/>
+	<tip id="ID_LIBRARY_SCAN" message="Scan valgt mappe eller filer etter forandringer."/>
+	<tip id="ID_LIBRARY_SHARED_FILE" message="Del eller ikke del valgte filer."/>
+	<tip id="ID_LIBRARY_REMOVE" message="Fjern de delte mappene"/>
+	<tip id="ID_LIBRARY_ADD" message="Legg til ny mappe i mine filer..."/>
+	<tip id="ID_LIBRARY_PROPERTIES" message="Vis og endre egenskapene til valgte filer..."/>
+	<tip id="ID_LIBRARY_COLUMNS" message="Velg hvilke metadata kolonner som skal vises."/>
+	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Fjern nedlastninger som er pauset."/>
+	<tip id="ID_UPLOADS_LAUNCH" message="Åpne valgte delte fil(er)."/>
+	<tip id="ID_UPLOADS_DISCONNECT" message="Koble i fra valgt opplastnings overføring(er)."/>
+	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Fjern opplastninger som er ferdige."/>
+	<tip id="ID_UPLOADS_CLEAR" message="Fjern valgte opplastning(er) fra listen."/>
+	<tip id="ID_TRAFFIC_LEGEND" message="Vis beskrivelse."/>
+	<tip id="ID_TRAFFIC_SETUP" message="Endre og velg hva som skal vises i grafen."/>
+	<tip id="ID_TRAFFIC_CLEAR" message="Rens trafikk grafen."/>
+	<tip id="ID_TOOLS_WIZARD" message="Åpne Shareaza's innstillingsveiviser..."/>
+	<tip id="ID_CHILD_RESTORE" message="Åpne valgt vindu."/>
+	<tip id="ID_CHILD_CLOSE" message="Lukk det aktive vinduet."/>
+	<tip id="ID_CHILD_MAXIMISE" message="Maksimer det aktive vinduet."/>
+	<tip id="ID_CHILD_MINIMISE" message="Minimer det valgte vinduet."/>
+	<tip id="ID_TRANSFERS_CHAT" message="Start en samtale med valgt bruker."/>
+	<tip id="ID_UPLOADS_CHAT" message="Start en samtale med valgt bruker."/>
+	<tip id="ID_SEARCH_CLEAR" message="Fjern søkeresultatene."/>
+	<tip id="ID_TRAY_OPEN" message="Åpne Shareaza vinduet."/>
+	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatisk lukk Shareaza når overføringene er ferdige."/>
+	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatisk fjern ferdige opplastninger."/>
+	<tip id="ID_LIBRARY_SEARCH" message="Søk etter filmappe..."/>
+	<tip id="ID_TRAFFIC_WINDOW" message="Åpne et nytt graf vindu..."/>
+	<tip id="ID_NEIGHBOURS_CHAT" message="Start en samtale med valgt bruker."/>
+	<tip id="ID_HELP_WEB_4" message="Besøk NapJunk.net"/>
+	<tip id="ID_SEARCH_STOP" message="Ikke motta flere resultat i dette vinduet."/>
+	<tip id="ID_TOOLS_DOWNLOAD" message="Last ned en ny fil eller torrent..."/>
+	<tip id="ID_DOWNLOADS_URL" message="Legg til en kilde URL til valgt nedlastning..."/>
+	<tip id="ID_LIBRARY_BITZI_WEB" message="Søk med Bitzi(TM) ticket for informasjon om valgt fil på nettet."/>
+	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Last ned metadata for valgte fil(er) fra Bitzi(TM)..."/>
+	<tip id="ID_VIEW_SECURITY" message="Vis eller skjul sikkerhetsvinduet."/>
+	<tip id="ID_SECURITY_EDIT" message="Endre valgt sikkerhets-regel."/>
+	<tip id="ID_SECURITY_REMOVE" message="Fjern valgte sikkerhets-regler."/>
+	<tip id="ID_SECURITY_RESET" message="Fjern treff resultat til valgte regler."/>
+	<tip id="ID_SECURITY_ADD" message="Legg til en ny regel til sikkerhetslisten."/>
+	<tip id="ID_SECURITY_POLICY_ACCEPT" message="Velg at normal sikkerhet skal godta alle host's."/>
+	<tip id="ID_SECURITY_POLICY_DENY" message="Velg at normal sikkerhet skal nekte alle host's."/>
+	<tip id="ID_LIBRARY_REFRESH" message="Oppdater."/>
+	<tip id="ID_LIBRARY_MOVE" message="Flytt valgte filer til en annen mappe..."/>
+	<tip id="ID_LIBRARY_COPY" message="Kopier valgte filer til en annen mappe..."/>
+	<tip id="ID_LIBRARY_DELETE" message="Slett valgte filer (permanent)."/>
+	<tip id="ID_LIBRARY_ENQUEUE" message="Legg til valgte filer i din spilleliste."/>
+	<tip id="ID_DOWNLOADS_ENQUEUE" message="Legg til valgte nedlastninger i din spilleliste."/>
+	<tip id="ID_SECURITY_MOVE_UP" message="Flytt valgte sikkerhetsregler opp i prioritetslisten."/>
+	<tip id="ID_SECURITY_MOVE_DOWN" message="Flytt valgte sikkerhetsregler ned i prioritetslisten."/>
+	<tip id="ID_SECURITY_BAN" message="Blokker valgt host til neste gang du starter Shareaza."/>
+	<tip id="ID_UPLOADS_GROUP" message="Grupper opplastninger per tilkobling (host)."/>
+	<tip id="ID_TAB_NETWORK" message="Se hvor godt du er koblet til nettverket"/>
+	<tip id="ID_TAB_LIBRARY" message="Se og organiser dine filer."/>
+	<tip id="ID_TAB_TRANSFERS" message="Se alle aktive opplastninger og nedlastninger."/>
+	<tip id="ID_TAB_CONNECT" message="Koble til eller koble i fra nettverket."/>
+	<tip id="ID_VIEW_TABBED" message="Bruk Shareaza i power modus (Hjem, Mine filer, Media, Overføringer, Nettverk)."/>
+	<tip id="ID_VIEW_WINDOWED" message="Bruk Shareaza i power vindu modus."/>
+	<tip id="ID_LIBRARY_URL" message="Kopier URI til valgt fil."/>
+	<tip id="ID_VIEW_DISCOVERY" message="Vis eller skjul discovery service vinduet."/>
+	<tip id="ID_DISCOVERY_EDIT" message="Vis egenskapene til valgt discovery service."/>
+	<tip id="ID_DISCOVERY_QUERY" message="Oppdater valgte discovery service nå."/>
+	<tip id="ID_DISCOVERY_REMOVE" message="Fjern valgte discovery service."/>
+	<tip id="ID_DISCOVERY_ADD" message="Legg til ny discovery service..."/>
+	<tip id="ID_DISCOVERY_GNUTELLA" message="Vis bootstrap service i discovery vinduet."/>
+	<tip id="ID_DISCOVERY_WEBCACHE" message="Vis GWebCache service i discovery vinduet."/>
+	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatisk fjern ferdige nedlastninger."/>
+	<tip id="ID_TRANSFERS_CONNECT" message="Prøv å laste ned fra valgt kilde."/>
+	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Vis kilder som for tiden ikke er i bruk."/>
+	<tip id="ID_SYSTEM_VERBOSE" message="Vis en detaljert system logg."/>
+	<tip id="ID_DISCOVERY_ADVERTISE" message="Kjør valgt GWebCache service mot en tilfeldig eksisterende GWebCache."/>
+	<tip id="ID_DISCOVERY_BROWSE" message="Utforsk statistikken til valgt GWebCache service på nettet."/>
+	<tip id="ID_BROWSE_STOP" message="Avslutt utforskning av denne host'en."/>
+	<tip id="ID_BROWSE_REFRESH" message="Oppdater listen over tilgjengelige filer på denne host'en."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Utforsk valgt brukers profil og delte filer."/>
+	<tip id="ID_DOWNLOADS_BOOST" message="Øk aktiviteten til den valgte nedlastningen ved å fjerne hastighetsgrensene."/>
+	<tip id="ID_TAB_HOME" message="Gå tilbake til hjem vinduet."/>
+	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Forhåndsvis en kopi av valgt nedlastning."/>
+	<tip id="ID_SEARCH_MERGE" message="Slå sammen valgte filgrupper."/>
+	<tip id="ID_DOWNLOADS_MONITOR" message="Åpne et monitor vindu for denne nedlastningen..."/>
+	<tip id="ID_LIBRARY_SELECT_ALL" message="Velg og se alle mappene i dine filer."/>
+	<tip id="ID_SECURITY_EXPORT" message="Lagre de valgte sikkerhetsreglene som en fil..."/>
+	<tip id="ID_SECURITY_IMPORT" message="Åpne lagrede sikkerhetsregler..."/>
+	<tip id="ID_SEARCH_FILTER_RAW" message="Filtrer søkeresultatene ut i fra valgte ord og egenskaper..."/>
+	<tip id="ID_SEARCH_PANEL" message="Vis søkepanelet på venstre side av søkeresultatene."/>
+	<tip id="ID_SYSTEM_TIMESTAMP" message="Lag tidsstempel for hver linje."/>
+	<tip id="ID_LIBRARY_LAUNCH" message="Åpne eller spill av valgte fil(er)."/>
+	<tip id="ID_NEIGHBOURS_COPY" message="Kopier URI for å koble til valgt host."/>
+	<tip id="ID_TOOLS_RESKIN" message="Oppdater og bruk valgt skin."/>
+	<tip id="ID_WINDOW_CASCADE" message="Maksimer alle vindu."/>
+	<tip id="ID_WINDOW_TILE_HORZ" message="Still opp vinduene side ved side vannrett"/>
+	<tip id="ID_WINDOW_TILE_VERT" message="Still opp vinduene side ved side Loddrett."/>
+	<tip id="ID_MONITOR_CLOSE" message="Lukk monitor vinduet."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="Vis eller skjul verktøylinjen."/>
+	<tip id="ID_WINDOW_TABBAR" message="Vis eller skjul ekstra linje."/>
+	<tip id="ID_WINDOW_MONITOR" message="Vis eller skjul monitor for båndbredde."/>
+	<tip id="ID_NETWORK_BROWSE_TO" message="Utforsk en bruker og vis profil og delte filer..."/>
+	<tip id="ID_TOOLS_SKIN" message="Velg et annet skin du vil bruke i Shareaza."/>
+	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Øk hastigheten på fil-scanningen og hashingen."/>
+	<tip id="ID_DOWNLOADS_FILE_DELETE" message="Slett valgte ferdige fil(er)."/>
+	<tip id="ID_LIBRARY_RENAME" message="Gi nytt navn til valgt fil."/>
+	<tip id="ID_UPLOADS_START" message="Start valgte opplastninger i kø."/>
+	<tip id="ID_DOWNLOADS_MOVE_UP" message="Flytt valgte nedlastning opp i prioritet."/>
+	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Flytt valgte nedlastning ned i prioritet."/>
+	<tip id="ID_TOOLS_LANGUAGE" message="Velg hvilket språk du vil bruke i Shareaza."/>
+	<tip id="ID_DOWNLOADS_SETTINGS" message="Endre nedlastnings innstillingene."/>
+	<tip id="ID_UPLOADS_SETTINGS" message="Endre opplastnings innstillingene."/>
+	<tip id="ID_DOWNLOADS_FILTER_ALL" message="Vis alle nedlastninger."/>
+	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Vis aktive nedlastninger."/>
+	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Vis nedlastninger som er i kø."/>
+	<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Vis nedlastninger som venter på kilder."/>
+	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Vis nedlastninger som er pauset."/>
+	<tip id="ID_NEIGHBOURS_SETTINGS" message="Endre nettverks innstillingene."/>
+	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Vis mappene slik de er på din maskin."/>
+	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Vis mappene organisert."/>
+	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Del eller ikke del valgt mappe(er)."/>
+	<tip id="ID_LIBRARY_VIEW" message="Velg visning..."/>
+	<tip id="ID_LIBRARY_VIEW_DETAIL" message="Vis fil -navn, -detaljer og metadata" tip="Detail View"/>
+	<tip id="ID_LIBRARY_VIEW_HOME" message="Vis hovedmappe." tip="Home View"/>
+	<tip id="ID_LIBRARY_VIEW_LIST" message="Vis alle filene i en vannrett liste." tip="List View"/>
+	<tip id="ID_LIBRARY_VIEW_ICON" message="Vis som ikoner." tip="Icon View"/>
+	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Vis som miniatyrbilder." tip="Thumbnail View"/>
+	<tip id="ID_LIBRARY_PARENT" message="Gå et steg tilbake."/>
+	<tip id="ID_LIBRARY_PANEL" message="Vis eller skjul mine filers detaljer"/>
+	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Vis og endre egenskapene til valgt mappe..."/>
+	<tip id="ID_LIBRARY_FOLDER_NEW" message="Lag en ny mappe her..."/>
+	<tip id="ID_LIBRARY_UNLINK" message="Fjern valgte filer fra denne mappen."/>
+	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Gi felles metadata til alle filene i denne mappen."/>
+	<tip id="ID_VIEW_MEDIA" message="Vis eller skjul media player vinduet."/>
+	<tip id="ID_TAB_MEDIA" message="Spill av lyd og videofiler fra mine filer."/>
+	<tip id="ID_MEDIA_OPEN" message="Åpne eller spill av en fil eller en spilleliste..."/>
+	<tip id="ID_MEDIA_CLOSE" message="Lukk denne filen, for å fri opp minne."/>
+	<tip id="ID_MEDIA_PLAY" message="Spill av denne filen." tip="Play"/>
+	<tip id="ID_MEDIA_STOP" message="Stopp avspillingen. " tip="Stopp"/>
+	<tip id="ID_MEDIA_PREVIOUS" message="Gå tilbake til forrige fil i denne spillelisten." tip="Tilbake"/>
+	<tip id="ID_MEDIA_NEXT" message="Gå til neste fil i denne spillelisten." tip="Neste"/>
+	<tip id="ID_MEDIA_SIZE_FILL" message="Velg den beste størrelsen basert på filens aspekt."/>
+	<tip id="ID_MEDIA_SIZE_DISTORT" message="Strekk videoen slik at den fyller vinduet, med noe forvrengning."/>
+	<tip id="ID_MEDIA_SIZE_ONE" message="Vis videoen i dens orginale størrelse."/>
+	<tip id="ID_MEDIA_SIZE_TWO" message="Vis videoen i dobbel størrelse av orginal."/>
+	<tip id="ID_MEDIA_SIZE_THREE" message="Vis videoen i trippel størrelse av orginal."/>
+	<tip id="ID_MEDIA_FULLSCREEN" message="Vis full skjerm modus."/>
+	<tip id="ID_MEDIA_RANDOM" message="Bruk tilfeldig (shuffle) modus i denne spillelisten."/>
+	<tip id="ID_MEDIA_REPEAT" message="Gjenta denne filen."/>
+	<tip id="ID_MEDIA_SETTINGS" message="Vis media innstillingene..."/>
+	<tip id="ID_MEDIA_PAUSE" message="Sett denne filen på pause." tip="Pause"/>
+	<tip id="ID_MEDIA_ZOOM" message="Juster zoom og aspekt innstillinger."/>
+	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Bruk videoens normale aspekt."/>
+	<tip id="ID_MEDIA_ASPECT_4_3" message="Sett videoen til 4:3 aspekt, passer til TV."/>
+	<tip id="ID_MEDIA_ASPECT_16_9" message="Sett videoen til 16:9 aspekt, passer til film. "/>
+	<tip id="ID_MEDIA_SELECT" message="Velg og spill av denne filen."/>
+	<tip id="ID_MEDIA_ADD" message="Legg til en fil i denne spillelisten..."/>
+	<tip id="ID_MEDIA_REMOVE" message="Fjern valgt fil fra spillelisten."/>
+	<tip id="ID_MEDIA_CLEAR" message="Tøm spillelisten."/>
+	<tip id="ID_MEDIA_SAVE" message="Lagre denne spillelisten..."/>
+	<tip id="ID_MEDIA_PLAYLIST" message="Vis eller skjul spilleliste-vinduet."/>
+	<tip id="ID_LIBRARY_VIEW_TILE" message="Vis en liste av mapper." tip="Liste"/>
+	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Åpne valgt mappe."/>
+	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Legg til alle filene i valgt mappe til din spilleliste."/>
+	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Slett valgt mappe."/>
+	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Vis og endre egenskapene til valgt mappe..."/>
+	<tip id="ID_TAB_SEARCH" message="Søk på nettverket etter filer å laste ned."/>
+	<tip id="ID_LIBRARY_FOLDERS" message="Velg hvilke mapper som skal deles."/>
+	<tip id="ID_TOOLS_PROFILE" message="Endre din bruker profil..."/>
+	<tip id="ID_BROWSE_PROFILE" message="Utforsk brukers profil."/>
+	<tip id="ID_BROWSE_FILES" message="Vis brukers delte filer."/>
+	<tip id="ID_MEDIA_VIS" message="Velg hvilke effekter som skal vises."/>
+	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Åpne eller spill av valgt fil(er)."/>
+	<tip id="ID_CHAT_CONNECT" message="Koble til chat."/>
+	<tip id="ID_CHAT_DISCONNECT" message="Koble i fra chat."/>
+	<tip id="ID_CHAT_BROWSE" message="Utforsk brukers profil og delte filer."/>
+	<tip id="ID_CHAT_COLOUR" message="Velg farge på tekst (Ctrl+K)"/>
+	<tip id="ID_CHAT_BOLD" message="Velg fet skrift (Ctrl+B)"/>
+	<tip id="ID_CHAT_ITALIC" message="Velg kursiv skrift (Ctrl+I)"/>
+	<tip id="ID_CHAT_UNDERLINE" message="Velg understreking (Ctrl+U)"/>
+	<tip id="ID_CHAT_SEND_FILE" message="Send en fil til bruker..."/>
+	<tip id="ID_CHAT_PRIORITY" message="Gi opplastnings prioritet til bruker."/>
+	<tip id="ID_CHAT_CLEAR" message="Fjern meldingsteksten fra dette vinduet."/>
+	<tip id="ID_CHAT_EMOTICONS" message="Sett inn et emoticon."/>
+	<tip id="ID_DOWNLOADS_SHARE" message="Del denne ufullstendige filen med andre brukere."/>
+	<tip id="ID_MEDIA_ADD_FOLDER" message="Legg filene fra en mappe til spillelisten..."/>
+	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Vis og endre egenskapene til alle filene i valgt mappe(er)..."/>
+	<tip id="ID_LIBRARY_REBUILD" message="Oppdater metadata og hash, til valgte mapper eller filer."/>
+	<tip id="ID_VIEW_HELP" message="Vis eller skjul hjelp vinduet."/>
+	<tip id="ID_TAB_HELP" message="Få hjelp til å bruke Shareaza."/>
+	<tip id="ID_DOWNLOADS_COPY" message="Kopier URI til valgt fil."/>
+	<tip id="ID_LIBRARY_VIEW_ALBUM" message="Vis album detaljer" tip="Album detaljer"/>
+	<tip id="ID_SEARCH_DETAILS" message="Vis detaljert informasjon til valgt fil."/>
+	<tip id="ID_UPLOADS_FILTER_ALL" message="Vis alle opplastninger."/>
+	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Vis alle opplastninger som er aktive."/>
+	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Vis opplastninger som venter i din kø."/>
+	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Vis opplastninger som ikke lenger er koblet til."/>
+	<tip id="ID_SEARCH_FOR_THIS" message="Søk etter andre kopier av valgt fil."/>
+	<tip id="ID_SEARCH_FOR_SIMILAR" message="Søk etter filer som er lik valgt fil."/>
+	<tip id="ID_SEARCH_FOR_ARTIST" message="Søk etter musikk fra samme artist som valgt fil."/>
+	<tip id="ID_SEARCH_FOR_ALBUM" message="Søk etter musikk fra samme album som valgt fil."/>
+	<tip id="ID_SEARCH_FOR_SERIES" message="Søk etter video-filer fra samme serie som valgt fil."/>
+	<tip id="ID_CHAT_TIMESTAMP" message="Vis tidspunkt for når hver melding ble mottatt."/>
+	<tip id="ID_MEDIA_STATUS" message="Vis eller skjul mediastatus linjen."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Vis eDonkey2000 servere."/>
+	<tip id="ID_HOSTCACHE_IMPORT" message="Åpne en liste med kjente hosts, som en &quot;server.met&quot; fil..."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Last ned en eDonkey2000 &quot;server.met&quot; fil..."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Vis eDonkey2000 server.met service i discovery vinduet."/>
+	<tip id="ID_NETWORK_G2" message="Koble til Gnutella2 nettverket (Høyst anbefalt)."/>
+	<tip id="ID_NETWORK_G1" message="Koble til det originale Gnutella nettverket."/>
+	<tip id="ID_NETWORK_ED2K" message="Koble til eDonkey2000 nettverket."/>
+	<tip id="ID_LIBRARY_JIGLE" message="Søk i Jigle databasen etter informasjon om den valgte filen (på nettet)."/>
+	<tip id="ID_HOSTCACHE_PRIORITY" message="Prøv å koble til denne serveren før de andre serverene."/>
+	<tip id="ID_VIEW_BASIC" message="Bruk Shareaza i normal modus."/>
+	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Søk gjennom Mine filer..."/>
+	<tip id="ID_HELP_FORUMS" message="Besøk Shareazas forum."/>
+	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Lag en ny nedlastnings-gruppe..."/>
+	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Fjern valgt nedlastnings-gruppe."/>
+	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Endre egenskapene til valgt nedlastnings-gruppe."/>
+	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Sett alle nedlastningene i denne gruppen på pause."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Start alle nedlastningene i denne gruppen."/>
+	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Avbryt og fjern alle nedlastningene i denne gruppen."/>
+	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Vis informasjon til valgt BitTorrent nedlastning..."/>
+	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Vis eller skjul nedlastnings-gruppe linjen."/>
+	<tip id="ID_DOWNLOADS_HELP" message="Vis hjelp informasjon til denne nedlastningen..."/>
+	<tip id="ID_DOWNLOADS_FILTER_MENU" message="Velg hvilke nedlastninger som skal vises og hvilke som ikke skal vises..."/>
+	<tip id="ID_UPLOADS_FILTER_MENU" message="Velg hvilke opplastning som skal vises og hvilke som ikke skal vises."/>
+	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Avbryt valgte ufullstendige nedlastning(er)."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Fjern valgte nedlastning(er) fra listen."/>
+	<tip id="ID_WINDOW_NAVBAR" message="Vis eller skjul navigasjonslinjen."/>
+	<tip id="ID_DOWNLOADS_RATE" message="Gi karakter til valgt nedlastning."/>
+	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Vis i grupper" tip="Vis i grupper"/>
+	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Last ned alle filene i valgt gruppe."/>
+	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Lagre valgt mappe som en gruppe-fil."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Lagre valgt mappe til en gruppe-fil..."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed valgt Torrent på BitTorrent."/>
+	<tip id="ID_DOWNLOADS_EDIT" message="Vis avansert redigering vinduet..."/>
+	<tip id="ID_MEDIA_MUTE" message="Demp lyd på avspilling."/>
+	<tip id="ID_WINDOW_REMOTE" message="Vis eller skjul Shareazas fjernkontroll."/>
+</commandTips>
+
+<!-- Localised Strings -->
+<strings>
+	<string id="WINDOW_MAIN" value="Shareaza"/>
+	<string id="WINDOW_SYSTEM" value="System"/>
+	<string id="WINDOW_NEIGHBOURS" value="Naboer"/>
+	<string id="WINDOW_PACKET" value="Packet Dump"/>
+	<string id="WINDOW_HOSTCACHE" value="Host Cache"/>
+	<string id="WINDOW_SEARCHMONITOR" value="Søkemonitor"/>
+	<string id="WINDOW_SEARCH" value="Søk"/>
+	<string id="WINDOW_HITMONITOR" value="Hit monitor"/>
+	<string id="WINDOW_DOWNLOADS" value="Nedlastninger"/>
+	<string id="WINDOW_LIBRARY" value="Mine filer"/>
+	<string id="WINDOW_UPLOADS" value="Opplastninger"/>
+	<string id="WINDOW_TRAFFIC" value="Graf"/>
+	<string id="WINDOW_CHAT" value="Chat"/>
+	<string id="WINDOW_SECURITY" value="Sikkerhet"/>
+	<string id="WINDOW_DISCOVERY" value="Discovery Services"/>
+	<string id="WINDOW_BROWSEHOST" value="Utforsk"/>
+	<string id="16064" value="Starter Shareazas nettverkskjerne..."/>
+	<string id="16065" value="Klarer ikke å binde %s port %i for innkommende koblinger. Innkommende koblinger kan ikke støttes."/>
+	<string id="16066" value="Skrur av Shareazas nettverkkjerne..."/>
+	<string id="16067" value="Koblet i fra nettverket."/>
+	<string id="16068" value="Godtar innkommende TCP koblinger på %s port %i."/>
+	<string id="16069" value="Utgående koblinger vil være fra %s port %i."/>
+	<string id="16070" value="Klarer ikke å avgjøre %s for utgående koblinger.  Utgående koblinger vil bruke normal grensesnitt."/>
+	<string id="16071" value="Blokkert av brannmur, Lytter ikke etter innkommende koblinger."/>
+	<string id="16072" value="Lytter etter UDP datagram på %s port %i."/>
+	<string id="16073" value="Fastsetter host &quot;%s&quot;..."/>
+	<string id="16074" value="Klarer ikke å fastsette host &quot;%s&quot;."/>
+	<string id="16075" value="Sikkerhetsinnstillingene nektet kobling fra %s."/>
+	<string id="16076" value="Sikkerhetsinnstillingene blokkerte kobling til %s."/>
+	<string id="16077" value="Adressen %s er allerede blokert i sikkerhetsreglene."/>
+	<string id="16078" value="La til ny sikkerhetsregel for å blokkere %s."/>
+	<string id="16079" value="Er du sikker på at du vil koble i fra?"/>
+	<string id="16128" value="Godta innkommende koblinger fra %s port %i."/>
+	<string id="16129" value="Starter en kobling til nabo på %s port %i..."/>
+	<string id="16130" value="Klarte ikke å starte kobling til nabo med %s."/>
+	<string id="16131" value="mistet kommunikasjon med koblingen på %s."/>
+	<string id="16132" value="Lukker kobling til nabo %s p.g.a. mangel av trafikk ."/>
+	<string id="16133" value="Etablerte kobling med nabo %s handshaking..."/>
+	<string id="16134" value="Kobling lukket med nabo %s."/>
+	<string id="16135" value="Klarte ikke å starte kobling til nabo med %s (avslått)."/>
+	<string id="16136" value="Nabo %s mistet koblingen uventet."/>
+	<string id="16137" value="Nekter dobbel kobling fra  %s."/>
+	<string id="16138" value="Allerede koblet til %s, vil ikke starte en ny kobling."/>
+	<string id="16139" value="Nabo %s Lukket koblingen (%i : %s)."/>
+	<string id="16140" value="Nabo %s indekserer koblingene (crawling)."/>
+	<string id="16141" value="Lukket kobling til nabo %s fordi det er ikke en hub."/>
+	<string id="16192" value="Nabo %s videresendte en overdreven stor packet, lukker kobling."/>
+	<string id="16193" value="Nabo %s videresendte en packet med zero TTL, ignorerer."/>
+	<string id="16194" value="Nabo %s videresendte en packet med overdrevet TTL, dropper pakke (TTL=%i, Hops=%i)."/>
+	<string id="16195" value="Nabo %s videresendte en ping packet med ugyldig lengde, ignorerer."/>
+	<string id="16196" value="Nabo %s videresendte en pong packet med ugyldig lengde, ignorerer."/>
+	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
+	<string id="16198" value="Leaf nabo %s videresender queries, lukker kobling."/>
+	<string id="16199" value="Nabo %s videresendte en ukjent packet (0x%.2x), ignorerer."/>
+	<string id="16200" value="Nabo %s videresendte et pong med ugyldig adresse data, ignorerer."/>
+	<string id="16201" value="Mottok et feil formatert query packet fra %s, ignorerer."/>
+	<string id="16202" value="Mottok et feil formatert query hit packet fra %s, ignorerer."/>
+	<string id="16203" value="Nabo %s videresendte et push packet med ugyldig lengde, ignorerer."/>
+	<string id="16144" value="Mistet handshake med %s."/>
+	<string id="16145" value="Gnutella kobling med nabo %s startet (G%i.%i : %s)."/>
+	<string id="16146" value="Handshake med %s feilet p.g.a ugyldige data på nettet."/>
+	<string id="16147" value="Lukker overskuddskobling fra %s med host hint (%s port %i)."/>
+	<string id="16148" value="Kobling til %s avvist (%s)."/>
+	<string id="16149" value="Gnutella 0.6 handshake med %s feilet, prøver 0.4."/>
+	<string id="16150" value="Lukker overskuddskobling fra %s."/>
+	<string id="16151" value="Nekter kobling fra %s fordi dette er en vernet leaf node."/>
+	<string id="16152" value="Hub nabo %s vil ikke godta oss som hub, lukker kobling."/>
+	<string id="16153" value="Tilkoblet nabo %s går tilbake til vernet leaf mode."/>
+	<string id="16154" value="Hub kobling startet, lukker peer kobling."/>
+	<string id="16155" value="kjører som hub for leaf naboer %s."/>
+	<string id="16156" value="Nabo %s vil være hub, lukker kobling."/>
+	<string id="16157" value="Nabo %s er ikke hub, lukker kobling."/>
+	<string id="16158" value="Gnutella][ kobling med nabo %s startet (%s)."/>
+	<string id="16159" value="Lukker kobling til non-Gnutella2 nabo %s."/>
+	<string id="16256" value="La til &quot;%s&quot; til nedlastnings kø med %i kilder."/>
+	<string id="16257" value="Ferdig med nedlastningen av &quot;%s&quot;."/>
+	<string id="16258" value="Pauser nedlastningen av &quot;%s&quot;."/>
+	<string id="16259" value="Starter nedlastningen av &quot;%s&quot;."/>
+	<string id="16260" value="Fjernet nedlastning &quot;%s&quot;."/>
+	<string id="16261" value="Lager fil &quot;%s&quot; for nedlastning."/>
+	<string id="16262" value="Klarte ikke å lage fil &quot;%s&quot; for nedlastning, avbryter."/>
+	<string id="16263" value="klarte ikke å åpne fil &quot;%s&quot; for nedlastning, avbryter."/>
+	<string id="16264" value="Starter en kobling til %s port %i for å laste ned &quot;%s&quot;..."/>
+	<string id="16265" value="Klarte ikke å koble til nedlastnings host %s."/>
+	<string id="16266" value="Nedlastnings kobling til %s startet."/>
+	<string id="16267" value="Forespør nedlastnings fragment (%I64i-%I64i) av &quot;%s&quot; from %s."/>
+	<string id="16268" value="Ingen flere nedlastnings fragment, lukker kobling til %s."/>
+	<string id="16269" value="Fragment forkortet, lukker kobling til %s."/>
+	<string id="16270" value="Nedlastnings forespørsel til %s timed out, lukker kobling."/>
+	<string id="16271" value="Lukker nedlastnings kobling %s p.g.a mangel på trafikk."/>
+	<string id="16272" value="Nedlastnings host %s har ikke filene &quot;%s&quot;."/>
+	<string id="16273" value="Nedlastnings host % svarte med et ugyldig HTTP svar."/>
+	<string id="16274" value="Nedlastnings host %s svarte med %s (%s)."/>
+	<string id="16275" value="Nedlastnings host %s's versjon av &quot;%s&quot; har forskjellig URN, avbryter."/>
+	<string id="16276" value="Nedlastnings host %s's versjon av &quot;%s&quot; har forskjellig lengde, avbryter."/>
+	<string id="16277" value="Nedlastnings host %s svarte med en ubrukelig byte range av &quot;%s&quot;, venter."/>
+	<string id="16278" value="Nedlastnings kobling til %s mistet."/>
+	<string id="16279" value="Mottar nedlastnings innhold fra host %s (%s)."/>
+	<string id="16280" value="Nedlastnings host %s er opptatt, prøver på ny om %i sekunder."/>
+	<string id="16281" value="Er du sikker på at du vil fjerne &quot;%s&quot;?\n\nNår en nedlastning er fjernet fra nedlastnings vinduet, kan den ikke startes på ny seinere."/>
+	<string id="16282" value="Avbryter nedlastning av &quot;%s&quot; fra %s (%s), nettverk skrudd av."/>
+	<string id="16283" value="Filen &quot;%s&quot; blir allerede lastet ned, legger til kilder."/>
+	<string id="16284" value="Mottok en ugyldig push kobling fra %s, lukker kobling."/>
+	<string id="16285" value="Mottok en unødvendig push kobling fra %s."/>
+	<string id="16286" value="Hosten %s hjelper aktivt nedlastning &quot;%s&quot;, godtar."/>
+	<string id="16287" value="Kan ikke finne flere kilder til nedlastning &quot;%s&quot; fordi det er ingen nettverkskoblinger."/>
+	<string id="16288" value="Søker etter flere kilder for nedlastning &quot;%s&quot; på %i koblingen(e)..."/>
+	<string id="16289" value="Sender push forespørsel for nedlastning &quot;%s&quot;..."/>
+	<string id="16290" value="Nedlastnings hosten %s svarte med en annen, men med brukende utvalg (%I64i-%I64i) of &quot;%s&quot;."/>
+	<string id="16291" value="Flyttet &quot;%s&quot; til &quot;%s&quot;, nedlastning ferdig."/>
+	<string id="16292" value="Kunne ikke flytte nedlastning &quot;%s&quot; til &quot;%s&quot;.  Sjekk at den uferdige filen ikke er i bruk og at nedlastnings mappen finns og ikke er skrivebeskyttet."/>
+	<string id="16293" value="Aksepterer &quot;%s&quot; å laste ned &quot;%s&quot;..."/>
+	<string id="16294" value="Klarte ikke å anerkjenne &quot;%s&quot;."/>
+	<string id="16295" value="Øker hastighet &quot;%s&quot; ved å fjerne hastighetsgrenser.."/>
+	<string id="16296" value="Har verifisert nedlastning &quot;%s&quot;."/>
+	<string id="16297" value="ADVARSEL: Nedlastning &quot;%s&quot; ikke verifisert, det kan være at dette ikke er den filen du ville ha!"/>
+	<string id="16298" value="Nedlastnings host %s er opptatt, venter i kø, i posisjon #%i of %i (&quot;%s&quot;)."/>
+	<string id="16299" value="Er du sikker på at du vil fjerne alle pausede nedlastninger?  Når en nedlastning blir fjernet kan den ikke startes på ny."/>
+	<string id="16300" value="Er du sikker på at du vil slette nedlastning &quot;%s&quot;?"/>
+	<string id="16301" value="Anmoder tiger tree kvantum for &quot;%s&quot; fra %s..."/>
+	<string id="16302" value="Nedlastnings host %s klarte ikke å tilfredstille tiger-tree anmodning."/>
+	<string id="16303" value="Mottar tiger-tree kvantum fra %s (%s)..."/>
+	<string id="16208" value="Mottar en uventet query routing table update fra nabo  %s."/>
+	<string id="16209" value="Nabo %s sendte en ugyldig query routing table update, dropper kobling."/>
+	<string id="16210" value="Nabo %s oppdaterte sin query routing table (%i bit = %lu[%i], %i%% full)."/>
+	<string id="16211" value="Nabo %s videresendte en push anmodning til en adresse bak brannmur, ignorerer."/>
+	<string id="16212" value="Nabo %s videresendte en extended packet som ikke er GGEP kodet."/>
+	<string id="16213" value="Sender query routing table til nabo %s (%i bit = %lu[%i], %i%% full)"/>
+	<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en.  Forsikre deg om at du vet hva filen er før du åpner den."/>
+	<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
+	<string id="16386" value="Endrer metadata til %i filer."/>
+	<string id="16387" value="Filen &quot;%s&quot; er ikke hash-et.  Vennligst vent til filen er hash-et og prøv på ny."/>
+	<string id="16388" value="Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\n\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen.  Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\n\nVil du fortsette?"/>
+	<string id="16389" value="Er du sikker på at du vil slette %i valgte fil(er) ?\n\nFilene vil bli sendt til din &quot;papirkurv&quot; hvis den er skrudd på."/>
+	<string id="16390" value="Du har ikke valgt en media player å sende filer i kø til.  Vil du velge en nå?\n\nShareaza kan sende navnet til filen ved hjelp av &quot;/Legg til&quot; kommandoen."/>
+	<string id="16391" value="Du er ikke koblet til nettverket."/>
+	<string id="16392" value="Klikk på Koble til knappen for å starte."/>
+	<string id="16393" value="Filen &quot;%s&quot; klarte ikke hash godkjennings-testen, og det kan være at det ikke er den filen du er ute etter.  Er du sikker på at du vil åpne den?"/>
+	<string id="16394" value="Vil du fjerne den &quot;potensielt usikkre&quot; egenskapen til denne filen?"/>
+	<string id="16395" value="Din nedlastnings mappe &quot;%s&quot; er ikke i mine filer ennå.\n\nÅ inkludere din nedlastnings mappe i mine filer gjør det lettere å se og organisere nye filer, dette lar deg også ta i bruk verifisering og automatisk oppdatering.  Å lagre filer i mine filer betyr ikke at du må dele dem: du kan selv velge om du vil dele dem eller ikke.\n\nVil du legge til din nedlastnings mappe i mine filer nå?"/>
+	<string id="16396" value="Din nedlastnings mappe er lagt til i mine filer.  Vil du dele den også?"/>
+	<string id="16397" value="Er du sikker på at du vil slette %i valgt mappe(r) ?\n\nDette sletter ikke filene, kun mappen(e) filene er i."/>
+	<string id="16398" value="Shareaza klarte ikke å endre navnet:\n\n%s\nto\n%s"/>
+	<string id="16399" value="Shareaza klarte ikke å slette filen:\n\n%s"/>
+	<string id="16320" value="Opplastnings host %s sente en ugyldig HTTP forespørsel."/>
+	<string id="16321" value="Starter en push kobling til %s. %s"/>
+	<string id="16322" value="Klarte ikke å koble til host %s med push."/>
+	<string id="16323" value="Opplastnings kobling til %s ble lukket."/>
+	<string id="16324" value="Mistet kontakt med opplastnings host %s."/>
+	<string id="16325" value="Opplastnings host %s sendte forespørsel etter et ukjent objekt &quot;%s&quot;."/>
+	<string id="16326" value="Opplastnings host %s sendte forespørsel etter &quot;%s&quot; med ulik SHA1."/>
+	<string id="16327" value="Avviser opplastning av &quot;%s&quot; til %s (%s), opptatt og klienten støtter ikke kø."/>
+	<string id="16328" value="Push kobling til %s startet, venter på handshake..."/>
+	<string id="16329" value="Kan ikke åpne &quot;%s&quot; for å laste opp til host %s, disk/fil feil."/>
+	<string id="16330" value="Sender opplastnings content range %I64i-%I64i fra &quot;%s&quot; til host %s (%s)."/>
+	<string id="16331" value="Ferdig med å laste opp del av &quot;%s&quot; til %s."/>
+	<string id="16332" value="Innkommende kobling fra %s er en HTTP opplastnings forespørsel."/>
+	<string id="16333" value="For opptatt til å laste opp &quot;%s&quot; til %s, satt i kø ved #%i av %i (&quot;%s&quot;)."/>
+	<string id="16334" value="Legacy push forespørsel fra %s forespurte en ukjent fil, kobler til likevel..."/>
+	<string id="16335" value="Fjernet opplastning av &quot;%s&quot; til %s."/>
+	<string id="8000" value="Innstillinger"/>
+	<string id="8001" value="Velkommen til Shareaza"/>
+	<string id="8002" value="Egenskaper"/>
+	<string id="8003" value="Endre min profil"/>
+	<string id="8004" value="!Velkommen til Shareaza (version) !\n.\nShareaza er helt gratis software.\nVennligst vis ansvar og respekt for materiell opphavsrett .\n."/>
+	<string id="8005" value=" (Avslutter etter overføring)"/>
+	<string id="8006" value="Du er ikke koblet til. Trykk på Koble til knappen for å starte."/>
+	<string id="8007" value="Det er ingen aktive søk.  Klikk her for å søke etter filer."/>
+	<string id="8008" value="Shareaza er ferdig med å laste ned den nyeste Shareaza versjonen (%s).  Vil du oppgradere nå?\n\nIf Du valgte JA, Shareaza lukkes for å fullføre oppgraderingen."/>
+	<string id="8009" value="Er du sikker på at du vil slette dette &quot;%s&quot; skinnet? Det kan ikke gjenopprettes ."/>
+	<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over.  Vennligst last ned den offisielle fullversjonen fra www.shareaza.com."/>
+	<string id="8011" value="Når du endrer utseende vil alle åpne vinduer lukkes.  Vil du endre nå?"/>
+	<string id="16448" value="Koblet til %s, handshaking..."/>
+	<string id="16449" value="Du chatter med %s (%s)."/>
+	<string id="16450" value="Kobling til %s lukket."/>
+	<string id="16451" value="Koblingen til %s mistet."/>
+	<string id="16452" value="Ukjent kommando &quot;%s&quot;."/>
+	<string id="16453" value="Kobler til %s for chat..."/>
+	<string id="16454" value="Godtok innkommende forespørsel fra %s, handshaking..."/>
+	<string id="16455" value="%s er kjent som %s."/>
+	<string id="16456" value="Klarte ikke å koble til host %s."/>
+	<string id="16457" value="Kobling avbrutt på grunn av ugyldig data på nettet."/>
+	<string id="16458" value="Mottok et ukjent svar: %s"/>
+	<string id="16459" value="Du er ikke koblet til."/>
+	<string id="16512" value="Total generisk mottaks båndbredde"/>
+	<string id="16513" value="Total generisk overførings båndbredde"/>
+	<string id="16514" value="Gnutella koblinger (Totalt)"/>
+	<string id="16515" value="Gnutella koblinger (Aktive)"/>
+	<string id="16516" value="Gnutella mottaks båndbredde"/>
+	<string id="16517" value="Gnutella overførings båndbredde"/>
+	<string id="16518" value="Download file count"/>
+	<string id="16519" value="Download transfer count"/>
+	<string id="16520" value="Nedlastnings båndbredde"/>
+	<string id="16521" value="Upload transfer count"/>
+	<string id="16522" value="Opplastnings båndbredde"/>
+	<string id="16523" value="Gnutella Packets mottatt"/>
+	<string id="16524" value="Gnutella Packets overført"/>
+	<string id="16525" value="Gnutella Packets routed"/>
+	<string id="16526" value="Gnutella Packets dropped"/>
+	<string id="16527" value="Gnutella Packets mistet"/>
+	<string id="8064" value="Koble til %lu nabo(er).  %s lokalt."/>
+	<string id="8065" value="Kobler til nettverket..."/>
+	<string id="8066" value="Ikke koblet til nettverket."/>
+	<string id="8067" value="%s inn : %s ut [D:%i/U:%i]"/>
+	<string id="8068" value="[H:%i] %s inn : %s ut [D:%i/U:%i]"/>
+	<string id="8069" value="Koble til"/>
+	<string id="8070" value="Kobler til..."/>
+	<string id="8071" value="Koblet til."/>
+	<string id="8072" value="Koble i fra"/>
+	<string id="16336" value="Opplastnings host %s er i blokkeringslisten, nekter forespørsel."/>
+	<string id="16337" value="Sender opplastnings headers fra &quot;%s&quot; til host %s (%s)."/>
+	<string id="16338" value="Opplastnings host %s spurte etter et ikke godkjent utvalg av filer &quot;%s&quot;."/>
+	<string id="16339" value="Sender normalt HTML svar til opplastnings host %s (%s)."/>
+	<string id="16340" value="Nektet utforsk bruker forespørsel fra %s."/>
+	<string id="16341" value="Opplastnings host %s (%s) sendte en utforsk forespørsel, svarer..."/>
+	<string id="16342" value="Lukker opplastnings kobling %s på grunn av mangel på trafikk."/>
+	<string id="16343" value="Lukker eldre opplastning til %s fordi den har koblet opp på ny."/>
+	<string id="16344" value="Nekter ny opplastning til %s fordi en tidligere kobling fortsatt venter."/>
+	<string id="16345" value="Stengte opplastning &quot;%s&quot; til %s fordi filen var slettet."/>
+	<string id="16346" value="Sender opplastning content range %I64i-%I64i fra partiell fil &quot;%s&quot; til host %s (%s)."/>
+	<string id="16347" value="Den ventende opplastningen %s sender for raske forespørsler, lukker kobling."/>
+	<string id="16348" value="Nekter push forespørsel til %s fordi den har for mange opplastnings koblinger."/>
+	<string id="16349" value="Laster opp tiger-tree data for &quot;%s&quot; til %s."/>
+	<string id="16350" value="Laster opp metadata for &quot;%s&quot; til %s."/>
+	<string id="16351" value="Nekter opplastning av &quot;%s&quot; til %s (%s), for mange samlet fra en host."/>
+	<string id="16528" value="Gnutella lokale forespørsler"/>
+	<string id="16532" value="Total TCP mottatt båndbredde"/>
+	<string id="16533" value="Total TCP overført bånbredde"/>
+	<string id="16534" value="Total UDP mottatt båndbredde"/>
+	<string id="16535" value="Total UDP overført båndbredde"/>
+	<string id="16768" value="Mottar URL &quot;%s&quot;"/>
+	<string id="16769" value="Kan ikke motta URL: Shareaza gjenkjenner ikke denne URL."/>
+	<string id="16770" value="Kan ikke vise URL  dialogen fordi Shareaza er opptatt."/>
+	<string id="16771" value="Du har allerede filen &quot;%s&quot; i mine filer. Vil du laste den ned likevel?"/>
+	<string id="16800" value="Du har ikke spesifisert tilkoblingshastigheten.  Før du fortsetter, vennligst velg din type internett tilkobling eller skriv inn tilkoblingshastigheten."/>
+	<string id="16801" value="Vennligst velg hvilken internett tilkobling du bruker før du fortsetter."/>
+	<string id="16802" value="Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"/>
+	<string id="16803" value="Mappen du deler er allerede delt gjennom en annen delt mappe:\n\n%s"/>
+	<string id="16804" value="Du har ikke valgt et navn i bruker profilen din.\n\nDet er en god ide å velge et spesielt navn slik at brukerne kan se hvem de er koblet til.\n\nEr du sikker på at du vil fortsette?"/>
+	<string id="16805" value="Du har ikke valgt hvor du er fra i bruker profilen din.\n\nDet er en god ide å velge hvor du er fra slik at andre kan se hvor de er koblet til.\n\nEr du sikker på at du vil fortsette uten å velge sted?"/>
+	<string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT router eller brannmur.\n\nVennligst sett opp nettverket til å forwarde TCP port %i til din lokale PC."/>
+	<string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
+	<string id="16864" value="Oppdaterer host discovery service..."/>
+	<string id="16865" value="Oppdaterer discovery service &quot;%s&quot;..."/>
+	<string id="16866" value="GWebCache overføring fullført (&quot;%s&quot;)."/>
+	<string id="16867" value="Discovery service &quot;%s&quot; feilet, feil count %i."/>
+	<string id="16868" value="Discovery service &quot;%s&quot; har feilet %i ganger, fjerner."/>
+	<string id="16869" value="http://gwc.isuldor.com/g2only/cache.asp\nhttp://gwc.fspn.cryptnet.net/gcache.cgi\nhttp://g2cache.theg2.net/gwcache/lynnx.asp\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi\nhttp://gwebcache.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://gwebcache2.jonatkins.com/cgi-bin/gwebcache.cgi\nhttp://www.gwc2.ip3.com/cgi-bin/gwc2/gcache.cgi"/>
+	<string id="16870" value="Sender GWebCache oppdatering til service &quot;%s&quot;..."/>
+	<string id="16871" value="Sender GWebCache &quot;%s&quot; til vilkårlig GWebCache..."/>
+	<string id="8128" value="Klikk her for å søke på ny."/>
+	<string id="8129" value="Det er ingen søk som er startet ennå."/>
+	<string id="8130" value="Shareaza søker på nettverket..."/>
+	<string id="8131" value="Det ble ikke funnet noe på nettverket."/>
+	<string id="8132" value="Det ble funnet noen filer, men de ble filtrert ut."/>
+	<string id="8133" value="Shareaza søker aktivt på nettverket..."/>
+	<string id="8134" value="Du skal til å starte et nytt søk. Vil du fjerne resultatene fra forrige søk?"/>
+	<string id="8160" value="Starter en kobling til host..."/>
+	<string id="8161" value="Sendte en push forespørsel, venter på kobling..."/>
+	<string id="8162" value="Tilkoblet, forespør utforskning..."/>
+	<string id="8163" value="Laster ned utforsknings forespørsel (%2.f%%)..."/>
+	<string id="8164" value="Klarte ikke å koble til host for å utforske bruker."/>
+	<string id="8165" value="Klarte ikke å laste ned liste over filer. Denne host-en støtter kanskje ikke utforskning."/>
+	<string id="8166" value="Søk på dette nettverket:"/>
+	<string id="8167" value="Alle nettverk"/>
+	<string id="16928" value="Starter en kobling til %s for å utforske bruker..."/>
+	<string id="16929" value="Klarte ikke å starte tilkobling til %s for å utforske bruker."/>
+	<string id="16930" value="Sendte en push forespørsel til %s for å utforske bruker."/>
+	<string id="16931" value="Klarte ikke å sende push forespørsel til %s for å utforske."/>
+	<string id="16932" value="Sendte utforsk bruker forespørsel til %s..."/>
+	<string id="16933" value="Utforsk host %s svarte med ugyldig HTTP."/>
+	<string id="16934" value="Utforsk host %s svarte med kode %s (%s)."/>
+	<string id="16935" value="Utforsk host %s svarte med ukjent respons, det kan være at utforskning ikke støttes."/>
+	<string id="16936" value="Mottar innhold fra utforskning av host %s (%s)"/>
+	<string id="16938" value="Feil koding i Gnutella packets fra utforskning av host %s."/>
+	<string id="16939" value="Ferdig å utforske bruker %s, %i filer funnet."/>
+	<string id="16940" value="Kobling til bruker %s ble lukket."/>
+	<string id="16941" value="Lukker kobling til bruker %s på grunn av mangel på trafikk."/>
+	<string id="16942" value="Lukker kobling til bruker %s."/>
+	<string id="16943" value="Utforsker %s"/>
+	<string id="144" value="Shareaza hjem"/>
+	<string id="145" value="Media player"/>
+	<string id="146" value="Søk"/>
+	<string id="147" value="Shareaza hjelp"/>
+	<string id="8144" value="Start søk"/>
+	<string id="8145" value="Søk på ny"/>
+	<string id="8146" value="stopp"/>
+	<string id="8147" value="Alle filtyper"/>
+	<string id="8148" value="Skriv inn søkeord her:"/>
+	<string id="8149" value="Søk etter denne typen fil:"/>
+	<string id="8150" value="Søker:"/>
+	<string id="8151" value="Funnet:"/>
+	<string id="8152" value="%lu hubs, %lu leaves"/>
+	<string id="8153" value="Søker ikke"/>
+	<string id="8154" value="Ingen filer funnet"/>
+	<string id="8155" value="%lu fil i %lu hit|%lu fil i %lu hits|%lu filer i %lu hits"/>
+	<string id="8156" value="Søk"/>
+	<string id="8157" value="Resultat"/>
+	<string id="8158" value="Fjern søk"/>
+	<string id="8159" value="Avansert..."/>
+	<string id="8224" value="Shareaza laster ned:"/>
+	<string id="8225" value="Denne nedlastningen er pauset:"/>
+	<string id="8226" value="Shareaza er ferdig med å laste ned:"/>
+	<string id="8227" value="%i timer og %i minutter"/>
+	<string id="8228" value="%i minutter og %i sekunder"/>
+	<string id="8229" value="%i sekunder"/>
+	<string id="8230" value="Shareaza søker etter kilder til:"/>
+	<string id="8231" value="Ingen kilder"/>
+	<string id="8232" value="Åpne"/>
+	<string id="8233" value="Forhåndsvis"/>
+	<string id="8234" value="%s av %s (%.2f%%)"/>
+	<string id="8235" value="Hastighet:"/>
+	<string id="8236" value="Estimert tid igjen:"/>
+	<string id="8237" value="Lastet ned:"/>
+	<string id="8238" value="Antall kilder:"/>
+	<string id="8239" value="Ferdig"/>
+	<string id="16081" value="Sender forespørsel for &quot;%s&quot; til %s."/>
+	<string id="16082" value="Endring av bruker agenten er ikke anbefalt.  Vennligst ikke endre noe uten god grunn. Er du sikker på at du vil endre?"/>
+	<string id="16083" value="Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \n\nHub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\n\nEr du helt sikker på at du vil gjøre dette?"/>
+	<string id="16084" value="Å skru av Gnutella-1 protokollen kan gi dårligere søkeresultat, hvis du er hub kan dette også påvirke andre på nettverket. Er du sikker på at du vil gjøre dette?"/>
+	<string id="16085" value="Gnutella2 er hovednettverket til Shareaza. Hvis du skrur det av kan det være at du får både lavere antall søkeresultat og lavere kvalitet på filene.  Er du sikker på at du vil gjøre dette?"/>
+	<string id="8288" value="Utforsker mine filer."/>
+	<string id="8289" value="Utforsker"/>
+	<string id="8290" value="Utforske innholdet i %i mapper"/>
+	<string id="8291" value="Flere mapper"/>
+	<string id="8292" value="%i filer valgt"/>
+	<string id="8293" value="Ingen filer valgt"/>
+	<string id="8294" value="Nye..."/>
+	<string id="8295" value="Gi filen karakter"/>
+	<string id="16992" value="Shareaza klarte ikke å starte plugin funksjonen for mediafiler.  Vennligst installer Shareaza på ny og kontroller at du har tilstrekkelige codec og drivere installert."/>
+	<string id="16993" value="Alle media filer|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Filer|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD lyd Tracks|*.cda|MIDI filer|*.mid;*.rmi;*.midi|Alle filer|*.*||"/>
+	<string id="16994" value="Klarte ikke å åpne media fil &quot;%s&quot;"/>
+	<string id="16995" value="Denne filen kan være ødelagt, eller så kan det være at du ikke har rett codec til å spille den av med."/>
+	<string id="16996" value="Deler av denne filen kunne ikke spilles av, du bør kanskje laste ned ekstra codec."/>
+	<string id="16997" value="Det er ingen filer som spilles av. dobbelt-klikk en av dine filer for å spille av."/>
+	<string id="8304" value="N/A"/>
+	<string id="8305" value="%i av %i"/>
+	<string id="8306" value="Sted"/>
+	<string id="8307" value="Type"/>
+	<string id="8308" value="Str"/>
+	<string id="8309" value="Delvis kilde (%.2f%% tilgjengelig)"/>
+	<string id="8310" value="%i opplastnings slots, %i venter i kø"/>
+	<string id="8311" value="Du har allerede denne filen."/>
+	<string id="8312" value="Du laster allerede ned denne filen."/>
+	<string id="8313" value="Denne filen ser ut til å være  spam."/>
+	<string id="8314" value="Du har lastet ned og slettet denne filen før."/>
+	<string id="8315" value="Svartelistet:"/>
+	<string id="16304" value="Nedlastnings hostens tiger-tree data er ugyldig eller ødelagt, ignorerer det."/>
+	<string id="16305" value="Nedlastnings hostens tiger-tree ligner ikke på ventet root verdi."/>
+	<string id="16306" value="Mottok tiger-tree innhold til &quot;%s&quot;, %i levels, minimalt akseptert del %s."/>
+	<string id="16307" value="Lukker nedlastnings kobling til %s, den er ikke lenger nødvendig."/>
+	<string id="16308" value="Nedlastnings host %s sendte ugyldige data, lukker kobling."/>
+	<string id="16309" value="Sender forespørsel etter metadata til &quot;%s&quot; fra %s..."/>
+	<string id="16310" value="Mottar tiger-tree data fra %s (%s)..."/>
+	<string id="16311" value="Sender forespørsel etter eDonkey2000 hashset for &quot;%s&quot; fra %s..."/>
+	<string id="16312" value="Mottok ugyldig eDonkey2000 hashset fra %s, dropper kilden."/>
+	<string id="16313" value="Mottok eDonkey2000 hashset for &quot;%s&quot;, minimalt akseptert del %s."/>
+	<string id="16314" value="Nedlastnings hostens eDonkey2000 hashset er korrupt eller ugyldig, dropper kilden."/>
+	<string id="16315" value="klarte ikke å starte inflate for nedlastning &quot;%s&quot;."/>
+	<string id="16316" value="Mistet kobling i kø for oppdatering fra eDonkey2000 nedlastnings host %s for fil &quot;%s&quot;."/>
+	<string id="16317" value="Blir i køen for &quot;%s&quot;."/>
+	<string id="16318" value="Det er ikke nok plass på pc-en til å laste ned &quot;%s&quot; (%s)."/>
+	<string id="16319" value="Dropper kilde %s (%s) etter å ha mottat ugyldige deler av &quot;%s&quot; (%I64i-%I64i)."/>
+	<string id="8176" value="Søk med Shareaza"/>
+	<string id="8177" value="Skriv inn hva du ønsker å lete etter:"/>
+	<string id="8178" value="Hva slags filtype er det?"/>
+	<string id="8179" value="(Fjern søke logg)"/>
+	<string id="16944" value="Fant %i delte filer i %s's mine filer."/>
+	<string id="17024" value="Starter kobling til %s..."/>
+	<string id="17025" value="Klarte ikke å starte kobling til %s."/>
+	<string id="17026" value="Sender forespørsel om brannmur push-kobling fra %s..."/>
+	<string id="17027" value="Godtok push kobling fra %s, handshaking..."/>
+	<string id="17028" value="Koblet til, handshaking..."/>
+	<string id="17029" value="Handshake feilet, det kan være at host-en ikke støtter chatting."/>
+	<string id="17030" value="Handshake ferdig, chat protokoll version %s."/>
+	<string id="17031" value="Utveksler profil informasjon..."/>
+	<string id="17032" value="Bekrefter bruker"/>
+	<string id="17033" value="Sender forespørsel om privat samtale med bruker..."/>
+	<string id="17034" value="Privat samtale godkjent, du snakker nå med %s."/>
+	<string id="17035" value="%s tar ikke imot private samtaler, sorry."/>
+	<string id="17036" value="%s er borte: %s"/>
+	<string id="17037" value="Koblingen til chatten mistet."/>
+	<string id="17038" value="Kobling lukket."/>
+	<string id="17039" value="Klarte ikke å motta en push kobling fra %s, ingen rute tilgjengelig."/>
+	<string id="17040" value="Kan ikke sende melding, du er ikke koblet til.  Shareaza prøver å koble til..."/>
+	<string id="17041" value="Kan ikke sende melding, har ikke koblet til ennå."/>
+	<string id="17042" value="Du har ikke fylt inn bruker profilen din ennå.  Du må ha en profil for å kunne chatte med andre brukere.\n\nVil du fylle inn profilen din nå?"/>
+	<string id="17043" value="Gir prioritet til host %s."/>
+	<string id="16400" value="Denne filen finnes allerede:\n\n%s\n\nVil du skrive over den?"/>
+	<string id="16401" value="Vis alle fil-typer"/>
+	<string id="16402" value="Shareaza mottok en samlings-fil:\r\n\r\n&quot;%s&quot;\r\n\r\nDette ser ikke ut som en gyldig samlings-fil."/>
+	<string id="16403" value="Shareaza har lagt samlings-filen &quot;%s&quot; til mine filer."/>
+	<string id="16404" value="Shareaza klarte ikke å legge inn samlings-filen &quot;%s&quot; ved å kopiere den til mappe &quot;%s&quot;."/>
+	<string id="16405" value="Vil du laste ned denne filen?\r\n\r\n&quot;%s&quot;\r\n\r\nVelg avbryt for å slippe flere spørsmål."/>
+	<string id="16406" value="Vil du laste ned alle filene i denne samlingen?\r\n\r\nVelg avbryt for å slippe flere spørsmål."/>
+	<string id="16407" value="Vil du sette en stopp på denne samlingen slik at du slipper flere spørsmål om å laste ned mer"/>
+	<string id="8208" value="Shareaza lager hash for %i fil(er):"/>
+	<string id="8096" value="Dette området viser mer informasjon om filene du velger."/>
+	<string id="8097" value="En kilde er tilgjengelig (%s).  "/>
+	<string id="8098" value="%i kilder er tilgjengelige (%s).  "/>
+	<string id="8099" value="Det finnes en anmeldelse."/>
+	<string id="8100" value="Det finnes %i anmeldelser."/>
+	<string id="8101" value="%s skriver:"/>
+	<string id="8102" value="%s karaktersetter denne filen:"/>
+	<string id="8103" value="Klikk for å forhåndsvise"/>
+	<string id="8104" value="Forhåndsviser..."/>
+	<string id="8105" value="Klarte ikke å laste ned forhåndsvisning fra &quot;%s&quot;."/>
+	<string id="16352" value="Laster opp forhåndsvisning av &quot;%s&quot; til %s."/>
+	<string id="16353" value="Nekter å laste opp forhånsvisning av &quot;%s&quot; til %s, for mange forhåndsvisnings koblinger."/>
+	<string id="16354" value="Opplastnings host %s forespurte forhåndsvisning av &quot;%s&quot;, men filen kan ikke forhånsvises."/>
+	<string id="16355" value="Setter opp dynamisk forhåndsvisning av &quot;%s&quot; for å laste opp til %s."/>
+	<string id="16356" value="Nekter utforsk forespørsel fra %s, for mange utforsk koblinger."/>
+	<string id="16357" value="Laster opp fil &quot;%s&quot; til host %s..."/>
+	<string id="16358" value="Opplastnings kobling til %s mistet, lagrer kø-posisjon."/>
+	<string id="16359" value="Offline opplastnings host %s mistet koblingen, fjernes."/>
+	<string id="16360" value="Nekter opplastning av &quot;%s&quot; til %s (%s), alle liknende køer er fulle."/>
+	<string id="16361" value="Nekter opplastning til %s (%s), nettverk skrudd av."/>
+	<string id="16362" value="eDonkey2000 opplastninger bør ikke avbrytes.  Er du sikker på at du vil avbryte denne opplastningen?"/>
+	<string id="17216" value="Starter kobling til eDonkey2000 server ved %s..."/>
+	<string id="17217" value="Koblet til eDonkey2000 server %s, handshaking..."/>
+	<string id="17218" value="ED2K[%s] %s"/>
+	<string id="17219" value="eDonkey2000 server %s nektet tilkobling."/>
+	<string id="17220" value="eDonkey2000 server %s online, klient ID er %lu."/>
+	<string id="17221" value="eDonkey2000 server %s endret klient ID-en fra %lu til %lu."/>
+	<string id="17222" value="eDonkey2000 server %s identifiserte seg som &quot;%s&quot;."/>
+	<string id="17223" value="eDonkey2000 server %s Nektet tilkobling."/>
+	<string id="17224" value="Feil ved handshake med eDonkey2000 klient %s."/>
+	<string id="17225" value="eDonkey2000 klient koblingen til %s ble lukket."/>
+	<string id="17226" value="Mottok ugyldig formatert eDonkey2000 packet fra %s (id=%x)."/>
+	<string id="17227" value="Innkommende kobling fra %s er en eDonkey2000 klient link."/>
+	<string id="17228" value="Sender eDonkey2000 hashset for &quot;%s&quot; til %s..."/>
+	<string id="17229" value="eDonkey2000 klient koblingen til %s var passiv, lukket."/>
+	<string id="17230" value="Starter en eDonkey2000 klient kobling til %s..."/>
+	<string id="17231" value="eDonkey2000 klienten %s har feil GUID, Avbryter handshake."/>
+	<string id="17232" value="Mistet kobling til eDonkey2000 klient %s."/>
+	<string id="17233" value="Mistet handshake med eDonkey2000 klient %s."/>
+	<string id="17234" value="Nekter eDonkey2000 klient linken fra %s fordi eDonkey2000 er skrudd av."/>
+	<string id="17472" value="Innkommende kobling fra %s er en BitTorrent kobling, forhandler..."/>
+	<string id="17473" value="Mistet kobling til BitTorrent klient %s."/>
+	<string id="17474" value="Mistet handshake med BitTorrent klient %s."/>
+	<string id="17475" value="Lukker BitTorrent kobling med %s på grunn av mangel på trafikk."/>
+	<string id="17476" value="BitTorrent kobling med %s feilet fordi kliente hadde en annen type GUID."/>
+	<string id="17477" value="BitTorrent koblingen med %s svarte med feil fil."/>
+	<string id="17478" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
+	<string id="17479" value="BitTorrent kobling med %s startet for &quot;%s&quot;."/>
+	<string id="17480" value="BitTorrent kobling med %s mistet."/>
+	<string id="17481" value="Mottok BitTorrent descriptor fil: &quot;%s&quot;"/>
+	<string id="17482" value="Klarer ikke å dele prefetched BitTorrent fil &quot;%s&quot;."/>
+	<string id="17483" value="Feil fra BitTorrent trackeren for &quot;%s&quot; : &quot;%s&quot;."/>
+	<string id="17484" value="Feil ved deling av BitTorrent tracker respons."/>
+	<string id="17485" value="Mottok BitTorrent tracker respons for &quot;%s&quot;, %i nye kilder."/>
+	<string id="17486" value="Starter en BitTorrent klient kobling med %s..."/>
+	<string id="17487" value="Startet BitTorrent kobling med %s, handshaking..."/>
+	<string id="8240" value="Shareaza flytter filen."/>
+	<string id="8241" value="Shareaza sjekker om det finnes feil på filen: "/>
+	<string id="17248" value="Starter eDonkey2000 partiell nedlastnings import prosess..."/>
+	<string id="17249" value="Prosess ferdig, %i partiell nedlastning importert uten feil."/>
+	<string id="17250" value="Scanner mappe: &quot;%s&quot;..."/>
+	<string id="17251" value=" Klarte ikke å importere filen."/>
+	<string id="17252" value=" Fant partiell fil &quot;%s&quot;, importerer..."/>
+	<string id="17253" value="  Klarte ikke å åpne .part fil &quot;%s&quot;."/>
+	<string id="17254" value="  Fant nedlastning &quot;%s&quot;, størrelse %s."/>
+	<string id="17255" value="  Nedlastnings data-filen er nyere enn .part filen, avbryter."/>
+	<string id="17256" value="  Kopierer &quot;%s&quot; til &quot;%s&quot;..."/>
+	<string id="17257" value=" Ferdig med å kopiere filen."/>
+	<string id="17258" value="  Shareaza's partielle nedlastning, %s gjenstår."/>
+	<string id="17259" value=" Denne filen finnes allerede i nedlastnings-listen."/>
+	<string id="17260" value=" Ikke nok plass på pc-en til å kopiere filen."/>
+	<string id="17488" value="Du har endret tracker URL-en til denne torrenten.  Er du sikker på at du vil lagre denne endringen?\n\nEn ugyldig tracker URL kan stoppe videre nedlastning."/>
+	<string id="17489" value="BitTorrent kobling med %s er utvidet protokoll, identifiserte &quot;%s&quot;."/>
+	<string id="17490" value="Mottok %i ny BitTorrent kilde fra %s."/>
+	<string id="17491" value="Denne torrenten &quot;%s&quot; er allerede i din nedlastnings-liste, og kan ikke seed-es."/>
+	<string id="17492" value="Feil ved åpning av torrent filen &quot;%s&quot;.  Dette kan være en ugyldig torrent."/>
+	<string id="17493" value="Klarte ikke å dele BitTorrent fil &quot;%s&quot;."/>
+	<string id="17494" value="Denne torrenten inneholder filen &quot;%s&quot;, men Shareaza klarer ikke å finne filen i mine filer.  Hvis mulig flytt filen til samme mappe som torrenten og prøv på ny."/>
+	<string id="17495" value="Denne torrenten inneholder filen &quot;%s&quot; som skulle vært %s, men versjonen av din fil er %s."/>
+	<string id="17496" value="Det skjedde en feil ved kopieringen fra &quot;%s&quot; til en BitTorrent delings-fil."/>
+	<string id="17497" value="Det skjedde en feil ved forsøk på å seede &quot;%s&quot;."/>
+	<string id="17498" value="Det ble funnet en feil i filen &quot;%s&quot;."/>
+	<string id="18496" value="Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastningen?"/>
+	<string id="18497" value="Du har skrevet inn en SHA1 verdi, men den er ugyldig.  Vennligst sjekk verdien og prøv på ny."/>
+	<string id="18498" value="Du har skrevet inn en root tiger-tree verdi, men den er ugyldig.  Vennligst sjekk verdien og prøv på ny."/>
+	<string id="18499" value="Du har skrevet inn en eDonkey2000 hash verdi, men den er ugyldig.  Vennligst sjekk verdien og prøv på ny."/>
+	<string id="18500" value="Du har gitt en SHA1 hash verdi som er forskjellig fra den som er assosiert med denne nedlastningen. Er du sikker på at du vil endre SHA1 hashen nå?"/>
+	<string id="18501" value="Du har gitt en root tiger-tree hash verdi som er forskjellig fra den som er assosiert med denne nedlastningen. Er du sikker på at du vil endre tiger-tree hashen nå?"/>
+	<string id="18502" value="Du har gitt en eDonkey2000 hash verdi som er forskjellig fra den som er assosiert med denne nedlastningen. Er du sikker på at du vil endre eDonkey2000 hashen nå?"/>
+	<string id="18503" value="Er du sikker på at du vil glemme nåværende verifisering posisjon?  All data som blir lastet ned vil bli sett på som usikkert og cachede hashtrees og hash-sets vil bli fjernet."/>
+	<string id="18504" value="Er du helt sikker på at du vil glemme alle kildene til denne nedlastningen?"/>
+	<string id="18505" value="Vennligst velg i hvilket omfang du vil slette.  &quot;Fra&quot; feltet er den første byten som skal slettes,  &quot;Siste&quot; feltet er den siste byten som skal slettes."/>
+	<string id="18506" value="Klarte ikke å slette valgt omfang av filen fordi ingen deler av omfanget er til stede."/>
+	<string id="18507" value="Slettet %I64i bytes fra nedlastningen."/>
+	<string id="18508" value="Lukker nedlastnings kilde %s for &quot;%s&quot; fordi kø posisjonen %i er for høy."/>
+	<string id="18509" value="Du kan ikke gå ut i fra at denne filen er ferdig og reverifisere den fordi du har ennå ingen partielle verifikasjons data, slik som tiger-tree innhold, eDonkey hashset eller BitTorrent hashset.  Uten verifikasjons-data kan ikke filen reverifiseres."/>
+	<string id="18510" value="Er du sikker på at du vil gå ut i fra at denne filen er ferdig og reverifisere den?  Hele filen vil betraktes, Shareaza vil godta deler som er verifiserte og laste ned nye deler for de som feilet verifiseringen."/>
+</strings>
+
+<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
+<dialogs>
+	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Innstillinger">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Angi"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generelt"/>
+	
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="Generelt">
+		<control caption="_User Interface:"/>
+		<control caption="Koble til automatisk når Shareaza startes"/>
+		<control caption="Start Shareaza når Windows starter"/>
+		<control caption="Vis nye søkeresultat med fet skrift"/>
+		<control caption="Utvid filer med flere kilder til vanligt"/>
+		<control caption="Gå til overføringsvindu ved nedlastning"/>
+		<control caption="Utvid nye nedlastninger til vanligt"/>
+		<control caption="Vis opplysninger før åpning av URL"/>
+		<control caption="Vis hastighet i:"/>
+		<control/>
+		<control caption="_Verktøytips:"/>
+		<control/>
+		<control caption="Forsinkelse (ms):"/>
+		<control/><control/>
+		<control caption="Bleking:"/>
+		<control/>
+		<control caption="_Systemfeltet:"/>
+		<control caption="Når jeg trykker lukk:"/>
+		<control/>
+		<control caption="Når jeg trykker minimer:"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBu" caption="Mine filer">
+		<control caption="_Valg:"/>
+		<control caption="Husk mappe visning"/>
+		<control caption="Overvåk mine mapper"/>
+		<control caption="oppretthold skiftende kilde mesh"/>
+		<control caption="Filtrer objekter etter filtype"/>
+		<control caption="behold hash integritet"/>
+		<control caption="La andre utforske mine filer"/>
+		<control caption="_Nye filer:"/>
+		<control caption="Husk:"/>
+		<control/>
+		<control/>
+		<control caption="filer"/>
+		<control caption="Opp til:"/>
+		<control/><control/>
+		<control caption="dager"/>
+		<control caption="Slett historie"/>
+		<control caption="_Sikre å åpne:"/>
+		<control/>
+		<control caption="_Legg til"/>
+		<control caption="_Fjern"/>
+		<control caption="_Aldri delt:"/>
+		<control/>
+		<control caption="_Legg til"/>
+		<control caption="_Fjern"/>
+	</dialog>
+	
+	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media player">
+		<control caption="_Valg:"/>
+		<control caption="Bruk Shareaza media player til å spille av disse filtypene"/>
+		<control caption="Bruk Shareaza media player til å sette i kø disse filtypene"/>
+		<control caption="Fil-typer:"/>
+		<control/>
+		<control caption="_Legg til"/>
+		<control caption="_Fjern"/>
+		<control caption="Legg til Visuell plugin:"/>
+		<control caption="_Velg plugin..."/>
+		<control caption="Media service _plugin:"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Fellesskap">
+		<control caption="Min profil:"/>
+		<control caption="Du kan bruke din Gnutella bruker profil til å dele informasjon om deg selv, dine interesser og anbefale filer og web-sider med andre."/>
+		<control caption="Endre min profil"/>
+		<control caption="_Chat:"/>
+		<control caption="Skru på peer to peer chat med kompatible klienter"/>
+	</dialog>
+	
+	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+		<control caption="_Bruk av peer to peer linker:"/>
+		<control caption="Bruk Shareaza til å åpne denne typen linker:"/>
+		<control caption="Magnet ( magnet: )"/>
+		<control caption="Gnutella ( gnutella: )"/>
+		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="Piolet ( mp2p: )"/>
+		<control caption="BitTorrent ( .torrent )"/>
+		<control caption="Nedlastnings guide:"/>
+		<control caption="Bruk Shareaza til alle mine nedlastninger fra nettet:"/>
+		<control/>
+		<control caption="_Legg til"/>
+		<control caption="_Fjern"/>
+		<control caption="Nedlastnings guiden vil bare laste ned filer i denne listen.  Andre filer vil bli åpnet i din internett browser.  Shareaza må være i gang for å kunne ta imot nedlastninger."/>
+	</dialog>
+	
+	<dialog name="CInternetSettingsGroup" caption="Internett"/>
+	
+	
+<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Linjetype">
+    <control caption="_Inngående Adresse:"/>
+    <control caption="Adresse:"/>
+    <control/>
+    <control caption="Port:"/>
+    <control/>
+    <control caption="Tilfeldig"/>
+    <control caption="Hastighet:"/>
+    <control/>
+    <control caption="Bind til denne adressen"/>
+    <control caption="_Utgående Adresse:"/>
+    <control caption="Adresse:"/>
+    <control/>
+    <control caption="Hastighet:"/>
+    <control/>
+    <control caption="E_genskaper:"/>
+    <control caption="Ignorer private/lokale IP adresser"/>
+    <control caption="_Tidsavbrudd:"/>
+    <control caption="Tilkobling:"/>
+    <control/><control/>
+    <control caption="Handshake:"/>
+    <control/><control/>
+    <control caption="Jeg kan motta innkommende tilkoblinger"/>
+</dialog>
+	
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Nedlastninger">
+		<control caption="Lagre _Ferdige filer her:"/>
+		<control/><control/>
+		<control caption="Lagre _Uferdige filer her:"/>
+		<control/><control/>
+		<control caption="_Antall nedlastninger:"/>
+		<control caption="Maks filer:"/>
+		<control/><control/>
+		<control caption="Maks overføringer:"/>
+		<control/><control/>
+		<control caption="Overføringer per fil:"/>
+		<control/><control/>
+		<control caption="_Båndbredde:"/>
+		<control caption="Grense:"/>
+		<control/>
+		<control caption="_Antall i kø:"/>
+		<control caption="Verifiser filenes integritet"/>
+		<control caption="Forsiktig (sikker) start"/>
+		<control caption="Last ned metadata med filene"/>
+		<control caption="Bruk TigerTree"/>
+	</dialog>
+	
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Opplastninger">
+		<control caption="_Valg:"/>
+		<control caption="Del nye partielle nedlastninger"/>
+		<control caption="Begrens deling i hub modus"/>
+		<control caption="Del forhåndsviste filer"/>
+		<control caption="Fjern kodet metadata"/>
+		<control caption="Kobling per host:"/>
+		<control/>
+		<control/>
+		<control caption="_Program filter:"/>
+		<control/>
+		<control caption="+"/>
+		<control caption="-"/>
+		<control caption="_Båndbredde:"/>
+		<control caption="Grense:"/>
+		<control/>
+		<control caption="Modus:"/>
+		<control/>
+		<control caption="_Køer:"/>
+		<control/>
+		<control caption="_Ny..."/>
+		<control caption="_Endre..."/>
+		<control caption="_Slett"/>
+		<control caption="(endringene skjer umiddelbart)"/>
+	</dialog>
+	
+	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Fjern Konsoll">
+    <control caption="_Guide:"/>
+    <control caption="Shareaza Fjern-konsoll gir deg muligheten til å kjøre og kontrollere Shareaza gjennom internett leseren din.  Du må kunne motta innkommende tilkoblinger for å bruke konsollen (sjekk oppsettet på routeren/brannmuren)."/>
+    <control caption="Skru på:"/>
+    <control caption="Skru på Shareaza Fjern-konsoll:"/>
+    <control caption="URL"/>
+    <control caption="Bruker:"/>
+    <control caption="Velg brukernavn:"/>
+    <control/>
+    <control caption="Velg et passord:"/>
+    <control/>
+</dialog>
+	
+	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Nettverk">
+		<control caption="Shareaza er et fildelingsprogram som kan koble seg opp til mange P2P nettverk på en gang. På denne siden kan du velge hvilke P2P nettverk du vil koble deg til, og justere innstillingene for hvert nettverk."/>
+		<control caption="Gnutella2 Nettverket:"/>
+		<control caption="Gnutella2 nettverket er Shareazas hovednettverk, det har flere egenskaper og gir mer enn andre P2P nett. Høyst anbefalt."/>
+		<control caption="Koble til Gnutella2 (G2)"/>
+		<control caption="Gnutella2 innstillinger"/>
+		<control caption="eDonkey2000 nettverket:"/>
+		<control caption="eDonkey2000 nettverket er et populært serverbasert nettverk. Det har ikke like mange egenskaper som Gnutella2, men eDonkey2000 inneholder veldig mange filer."/>
+		<control caption="Koble til eDonkey2000"/>
+		<control caption="eDonkey2000 innstillinger"/>
+		<control caption="Gnutella1 nettverket:"/>
+		<control caption="Selv om det opprinnelige Gnutella nettverket har færre egenskaper enn Gnutella2 og har færre filer enn eDonkey2000, er det fortsatt en verdifull resurs."/>
+		<control caption="Koble til Gnutella1"/>
+		<control caption="Gnutella1 innstillinger"/>
+	</dialog>
+	
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<control caption="Gnutella2 nettverket (anbefalt):"/>
+		<control caption="Koble til Gnutella2 i dag"/>
+		<control caption="Gnutella1 nettverket:"/>
+		<control caption="Koble til Gnutella1 i dag"/>
+		<control caption="Koble alltid til Gnutella1"/>
+		<control caption="_Hub valg:"/>
+		<control caption="La denne noden bli en Hub"/>
+		<control caption="Tving denne noden til å bli en Hub"/>
+		<control caption="La denne noden bli et Leaf"/>
+		<control caption="Godta bare Hub koblinger"/>
+		<control caption="Gnutella-G_2:"/>
+		<control caption="Leaf til Hub:"/>
+		<control/><control/>
+		<control caption="Hub til Leaf:"/>
+		<control/><control/>
+		<control caption="Hub til Hub:"/>
+		<control/><control/>
+		<control caption="Gnutella-G_1:"/>
+		<control caption="Leaf til Hub:"/>
+		<control/><control/>
+		<control caption="Hub til Leaf:"/>
+		<control/><control/>
+		<control caption="Hub til Hub:"/>
+		<control/><control/>
+		<control caption="_Link kompresjon:"/>
+		<control caption="Hub til Leaf"/>
+		<control caption="Leaf til Hub"/>
+		<control caption="Hub til Hub"/>
+	</dialog>
+
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+		<control caption="_eDonkey2000 nettverket:"/>
+		<control caption="Koble til eDonkey2000 i dag"/>
+		<control caption="Koble til automatisk hver gang"/>
+		<control caption="_Globalt søk:"/>
+		<control caption="Søk kjente fjern-servere i server cachen:"/>
+		<control caption="Stopp søket etter:"/>
+		<control/><control/>
+		<control caption="Søke resultater"/>
+		<control caption="_Klient link koblinger:"/>
+		<control caption="Koble til mer enn:"/>
+		<control/><control/>
+		<control caption="andre eDonkey klienter."/>
+		<control caption="eDonkey2000 _verktøy:"/>
+		<control caption="Importer uferdige nedlastninger fra eDonkey/eMule (.part):"/>
+		<control caption="Importer..."/>
+		<control caption="Last ned eDonkey2000 serverliste fra nettet:"/>
+		<control caption="Last ned..."/>
+	</dialog>
+	
+	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoller">
+		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Skins">
+		<control/>
+		<control caption="Skin informasjon:"/>
+		<control caption="Navn:"/>
+		<control caption="..."/>
+		<control caption="Skaper:"/>
+		<control caption="..."/>
+		<control caption="Beskrivelse:"/>
+		<control/>
+		<control caption="Slett"/>
+		<control caption="Installer..."/>
+		<control caption="Finn flere..."/>
+	</dialog>
+	
+	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Plugins">
+		<control/>
+		<control caption="Plugin informasjon:"/>
+		<control caption="Navn:"/>
+		<control caption="..."/>
+		<control caption="Beskrivelse:"/>
+		<control/>
+		<control caption="_Innstaller..."/>
+		<control caption="Flere..."/>
+	</dialog>
+	
+	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Avansert">
+		<control/>
+		<control caption="Egenskaper:"/>
+		<control caption="Verdi:"/>
+		<control/><control/>
+		<control caption="Beskrivelse:"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Egenskaper opplastnings kø">
+		<control caption="_Navn:"/>
+		<control/>
+		<control caption="_Kriterier:"/>
+		<control caption="Kun ufullstendige filer"/>
+		<control caption="Minimum kilde-fil størrelse:"/>
+		<control/>
+		<control caption="Maks kilde-fil størrelse:"/>
+		<control/>
+		<control caption="Merkede filer:"/>
+		<control/>
+		<control caption="Filnavn likhet:"/>
+		<control/>
+		<control caption="Protokoller:"/>
+		<control/>
+		<control caption="_Kapasitet:"/>
+		<control caption="Aktiver denne køen"/>
+		<control caption="Minimum antall overføringer:"/>
+		<control/><control/>
+		<control caption="Maks antall overføringer:"/>
+		<control/><control/>
+		<control caption="Maks antall ventende i kø:"/>
+		<control/><control/>
+		<control caption="_Service parameter:"/>
+		<control caption="Mettet båndbredde prosent:"/>
+		<control/>
+		<control caption="Opplastnings båndbredde for denne køen:"/>
+		<control/><control/>
+		<control caption="Roter etter N sekunder:"/>
+		<control/><control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
+		<control caption="Velkommen til Shareaza!"/>
+		<control caption="Hvis du ikke har brukt Shareaza eller et annen P2P program før, vil innstillingsveiviseren guide deg gjennom innstillingene ved hjelp av et par enkle steg."/>
+		<control caption="Hvis du er en mer avansert bruker, kan du endre innstillingene via Shareazas verktøy meny. Klikk avslutt for å lukke hjelperen når du ønsker det."/>
+		<control caption="Veviseren trenger å vite mer om:"/>
+		<control/>
+		<control caption="Hva slags internett tilkobling du har"/>
+		<control/>
+		<control caption="Hvilke filer du vil dele"/>
+		<control/>
+		<control caption="Hvilke P2P nettverk du vil koble til"/>
+		<control/>
+		<control caption="Hvordan du vil starte Shareaza"/>
+	</dialog>
+	
+	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Velkommen til Shareaza [2 of 7]">
+		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, så du kan selv velge det du liker best"/>
+		<control caption="Vennligst velg et av disse grensesnittene:"/>
+		<control caption="Normal Modus"/>
+		<control caption="Power Modus"/>
+		<control caption="Enkle menyer og store knapper.	Liknende andre fildelingsprogrammer."/>
+		<control caption="Power modus gir ekspertene mange ekstra kommandoer og vinduer o.l."/>
+	</dialog>
+	
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Velkommen til Shareaza [3 of 7]">
+		<control caption="For optimal utnyttelse, trenger Shareaza å vite litt om tilkoblingen din."/>
+		<control/>
+		<control caption="Er nettverket på skolen beskyttet av brannmur eller NAT router?"/>
+		<control/>
+		<control caption="Har du brannmur eller NAT router på tilkoblingen din"/>
+		<control/>
+		<control caption="Hvis du kjenner hastigheten på tilkoblingen din, velg den som passer best nedenfor."/>
+		<control/>
+		<control caption="Eller, Velg."/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Velkommen til Shareaza [4 of 7]">
+		<control caption="P2P nettverket er kun så godt som brukerne som gjør det.  Allt du kan laste ned blir delt av en annen bruker."/>
+		<control caption="Du trenger ikke å dele noe for å bruke Shareaza, men andre programmer kan reagere forskjellig på brukere som ikke deler."/>
+		<control caption="Vennligst velg hvilke mapper, hvis noen, du vil dele.  Klikk på Legg til knappen for å legge til en ny mappe."/>
+		<control/>
+		<control caption="_Legg til..."/>
+		<control caption="_Fjern"/>
+		<control caption="ADVARSEL: Deling av kopibeskyttet materiale er forbudt i de fleste land."/>
+	</dialog>
+	
+	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Scanner mappe...">
+		<control/>
+		<control caption="..."/>
+		<control caption="Filer:"/>
+		<control caption="0"/>
+		<control caption="Mengde:"/>
+		<control caption="0"/>
+		<control caption="Lukk"/>
+	</dialog>
+	
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Velkommen til Shareaza [5 of 7]">
+
+    <control caption="Shareaza er en mye vennligere plass å være når alle skriver inn et par detaljer om seg selv."/>
+
+    <control caption="Jeg bruker navnet:"/>
+
+    <control/>
+
+    <control caption="Og jeg er:"/>
+
+    <control/><control/>
+
+    <control caption="fra:"/>
+
+    <control/><control/>
+
+</dialog>
+	
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importer eDonkey2000 nedlastninger">
+		<control/>
+		<control caption="Shareaza har oppdaget at du har et annet eDonkey2000 program installert på pc-en.  Vil du importere uferdige nedlastninger til Shareaza?"/>
+		<control caption="Ja"/>
+		<control caption="Nei|Avbryt"/>
+		<control/>
+		<control caption="Lukk"/>
+	</dialog>
+	
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Velkommen til Shareaza [7 of 7]">
+		<control caption="Ferdig!  Shareaza er nå satt opp til å virke på din pc."/>
+		<control caption="Hvis du trenger å endre på innstillingene, kan du kjøre veiviseren på ny fra Verktøy menyen."/>
+		<control caption="Etter at du har lukket veiviseren ved å trykke på Ferdig, kan du koble til nettverkene du valgte og starte søk etter det du vil laste ned"/>
+		<control caption="Koble til nettverket når jeg lukker veiviseren"/>
+		<control caption="Koble til nettverket hver gang jeg starter Shareaza"/>
+		<control caption="Start Shareaza når Windows starter"/>
+		<control caption="Kos deg med Shareaza!"/>
+	</dialog>
+	
+	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Scanner mappe...">
+		<control/>
+		<control caption="..."/>
+		<control caption="Filer:"/>
+		<control caption="0"/>
+		<control caption="Mengde:"/>
+		<control caption="0"/>
+		<control caption="Lukk"/>
+	</dialog>
+	
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Endre min profil">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Angi"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identitet">
+		<control caption="_Navn:"/>
+		<control caption="Kallenavn:"/>
+		<control/>
+		<control caption="Ekte navn:"/>
+		<control/><control/>
+		<control caption="_Info:"/>
+		<control/>
+		<control caption="Kjønn:"/>
+		<control/>
+		<control caption="Alder:"/>
+		<control caption="La andre utforske min profil"/>
+	</dialog>
+	
+	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEd" caption="Kontakt">
+		<control caption="_E-post adresser:"/>
+		<control caption="Hoved:"/>
+		<control/>
+		<control caption="_Messenger:"/>
+		<control caption="MSN/.NET Passport:"/>
+		<control/>
+		<control caption="Yahoo ID:"/>
+		<control/>
+		<control caption="ICQ UIN:"/>
+		<control/>
+		<control caption="AOL kallenavn:"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profil">
+		<control caption="_Sted:"/>
+		<control caption="Land:"/>
+		<control/>
+		<control caption="By:"/>
+		<control/>
+		<control caption="_Koordinater"/>
+		<control caption="Breddegrad:"/>
+		<control/>
+		<control caption="Lengdegrad:"/>
+		<control/>
+		<control caption="_Interesser:"/>
+		<control/>
+		<control caption="&lt; Legg til"/>
+		<control caption="Fjern &gt;"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CBioProfilePage" cookie="Ed" caption="Beskrivelse">
+		<control/>
+	</dialog>
+	
+	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Bilde">
+		<control caption="_Forhåndsvis:"/>
+		<control/>
+		<control caption="_Velg:"/>
+		<control caption="Andre Gnutella brukere som utforsker din profil kan se ditt bilde.  Bildet bør være 128x128 pixels, og kan være hvilken som helst bilde-type fra din pc."/>
+		<control caption="_Utforsk..."/>
+		<control caption="_Fjern"/>
+	</dialog>
+	
+	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Favoritter">
+		<control/>
+		<control caption="_Endre:"/>
+		<control caption="Tittel:"/>
+		<control/>
+		<control caption="URL:"/>
+		<control/>
+		<control caption="Ny"/>
+		<control caption="Fjern"/>
+	</dialog>
+	
+	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Filer">
+		<control caption="_Favoritt filer:"/>
+		<control caption="Favoritt filene blir anbefalt til brukere som utforsker din profil.  Du kan gjøre filer til favoritter ved å legge dem i &quot;Favoritt&quot; mappen i mine filer."/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Sertifikat">
+		<control caption="Gnutella brukerne blir identifisert av et unikt kjennetegn og et tilsvarende offentlig og privat nøkkel par. Normalt er det ikke nødvendig å lage en ny ID, imidlertid har Shareazas brukere denne valgmuligheten."/>
+		<control caption="_Gnutellas Unike Identifiserings Sertifikat:"/>
+		<control caption="GUID:"/>
+		<control/>
+		<control caption="Lagt:"/>
+		<control/>
+		<control caption="Lag nytt"/>
+	</dialog>
+	
+	<dialog name="CLanguageDlg" cookie="" caption="Velg språk"/>
+	
+	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Koble Til|Utforsk host">
+		<control caption="Start en ny kobling til host eller server:|Utforsk denne host-en:"/>
+		<control/><control/>
+		<control caption="Nettverk _protokoll:"/>
+		<control/>
+		<control caption="_Reduser Ultrapeer"/>
+		<control caption="Koble til"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Last ned fil eller torrent">
+		<control/><control/>
+		<control caption="Å laste ned filer med Shareaza er lett.  Bare skriv inn URL eller URI som beskriver filen i vinduet under og trykk Enter."/>
+		<control/>
+		<control caption="Last ned"/>
+		<control caption="Avbryt"/>
+		<control caption="Shareaza kan laste ned filer fra nettet (HTTP), og automatisk søke og laste ned P2P linker (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza kan også laste ned BitTorrent filer.  En torrent kan bli beskrevet av en xyz.torrent fil, eller en HTTP link til .torrent filen.  For å laste ned en torrent HTTP link, lim den inn i vinduet over.  Hvis du allerede har en .torrent fil, Klikk Åpne Torrent:"/>
+		<control caption="Åpne _torrent..."/>
+	</dialog>
+	
+	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nytt søk|Søk på ny|Finn i mine filer">
+		<control/><control/>
+		<control caption="Søk"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtrer treff">
+		<control caption="Vis bare treff som inneholder _ordene:"/>
+		<control/>
+		<control caption="( du kan også fjerne ord, med  -ord )"/>
+		<control caption="Og har  _størrelse (KB):"/>
+		<control caption="Minimum:"/>
+		<control/>
+		<control caption="Maks:"/>
+		<control/>
+		<control caption="Minst"/>
+		<control/><control/>
+		<control caption="kilder."/>
+		<control caption="_Skjul:"/>
+		<control caption="Opptatt host"/>
+		<control caption="Bak brannmur/push hosts"/>
+		<control caption="Ustabile host-er"/>
+		<control caption="Ikke liknende filer"/>
+		<control caption="Filer du allerede har"/>
+		<control caption="Falske resultat"/>
+		<control caption="Filtrer"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Gruppe egenskaper">
+
+    <control caption="Navn:"/>
+
+    <control/><control/>
+
+    <control caption="Filter:"/>
+
+    <control/>
+
+    <control caption="Legg til"/>
+
+    <control caption="Fjern"/>
+
+    <control caption="OK"/>
+
+    <control caption="Avbryt"/>
+
+    <control caption="Ferdige filer i mappe:"/>
+
+    <control/>
+
+</dialog>
+	
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery service">
+		<control caption="Service _adresse:"/>
+		<control/>
+		<control caption="Discovery service type:"/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Nedlastning : Shareaza">
+		<control caption="Shareaza laster ned:"/>
+		<control caption="..."/>
+		<control/><control/><control/>
+		<control caption="Hastighet:"/>
+		<control caption="..."/>
+		<control caption="Gjenstående tid:"/>
+		<control caption="..."/>
+		<control caption="Lastet ned:"/>
+		<control caption="..."/>
+		<control caption="Antall kilder:"/>
+		<control caption="..."/>
+		<control caption="Lukk dette vinduet når filen er ferdig"/>
+		<control caption="Åpne filen"/>
+		<control caption="Vis mine filer"/>
+		<control caption="Stopp nedlastningen"/>
+		<control caption="Skjul"/>
+	</dialog>
+	
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent tracker info">
+
+    <control caption="Torrent _informasjon:"/>
+
+    <control caption="Navn:"/>
+
+    <control/>
+
+    <control caption="Tracker:"/>
+
+    <control/>
+
+    <control caption="_Nedlastninger:"/>
+
+    <control caption="Komplette (kilder):"/>
+
+    <control/>
+
+    <control caption="Uferdige:"/>
+
+    <control/>
+
+    <control caption="_Filer:"/>
+
+    <control/>
+
+    <control caption="Oppdater"/>
+
+    <control/>
+
+    <control caption="Lukk"/>
+
+</dialog>
+	
+	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Generelt">
+		<control caption="Universelt Resurs Navn (URN)"/>
+		<control/><control/><control/><control/>
+		<control caption="Egenskaper"/>
+		<control caption="Plassering:"/>
+		<control/>
+		<control caption="Type:"/>
+		<control/>
+		<control caption="Endret:"/>
+		<control/>
+		<control caption="Størrelse:"/>
+		<control/><control/><control/>
+	</dialog>
+	
+	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
+		<control/><control/>
+	</dialog>
+	
+	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Min karakter">
+		<control caption="Min karakter"/>
+		<control caption="Karakter:"/>
+		<control/>
+		<control caption="Min karakter og kommentarer"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Deling">
+		<control caption="Enkel deling"/>
+		<control caption="Del denne filen hvis mappen er delt"/>
+		<control caption="Start deling av denne filen:"/>
+		<control caption="Del denne filen med andre brukere"/>
+		<control caption="Opplastnings-kø karakteristikk"/>
+		<control/>
+		<control caption="Skal deles på nettverkene "/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Kilder">
+		<control caption="Kjente kilder"/>
+		<control caption="Legg til kilde"/>
+		<control/><control/>
+		<control caption="_Legg til"/>
+		<control caption="_Fjern"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopier filer|Flytt filer">
+		<control caption="Du har valgt %i file(r) som skal kopieres til denne mappen:"/>
+		<control/><control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control/>
+		<control caption="Klar..."/>
+		<control caption="Du har valgt %i file(r) som skal flyttes til mappe:"/>
+	</dialog>
+	
+	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Egenskaper for mappe">
+		<control caption="Tittel på mappe:"/>
+		<control/>
+		<control caption="Mappe type:"/>
+		<control/>
+		<control caption="Match alle"/>
+		<control caption="Kopier egenskapene til alle filene i denne mappen"/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Trafikk graf">
+		<control/>
+		<control caption="_Legg til..."/>
+		<control caption="_Endre..."/>
+		<control caption="_Fjern"/>
+		<control caption="_Vis:"/>
+		<control caption="Graf linjer"/>
+		<control caption="Vertikal akse"/>
+		<control caption="Forklaring"/>
+		<control caption="Frekvens:"/>
+		<control caption="Frekvens periode: "/>
+		<control/><control/>
+		<control caption="ms"/>
+		<control caption="_Navn:"/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Egenskaper">
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="_Kilde:"/>
+		<control/><control/>
+		<control caption="Parameter:"/>
+		<control caption="Enheter:"/>
+		<control/>
+		<control caption="_Visning:"/>
+		<control caption="Velg farge..."/>
+		<control/>
+		<control caption="_Fjern"/>
+	</dialog>
+	
+	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Velg kolonner fra skjema">
+		<control/><control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Velgt et skjema fra listen, deretter velg felt som skal vises som kolonner."/>
+	</dialog>
+	
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sikkerhetsregel">
+		<control caption="_Regel:"/>
+		<control caption="Type:"/>
+		<control/>
+		<control caption="Merknad:"/>
+		<control/>
+		<control caption="_Nettverk adresse:"/>
+		<control caption="IP adresse:"/>
+		<control/><control/><control/><control/>
+		<control caption="Nettmaske:"/>
+		<control/><control/><control/><control/>
+		<control caption="_Innholdsfilter:"/>
+		<control/>
+		<control caption="Match tilfeldig"/>
+		<control caption="Match alle"/>
+		<control caption="_Valg:"/>
+		<control caption="Reaksjon:"/>
+		<control/>
+		<control caption="Går ut:"/>
+		<control/><control/>
+		<control caption="d"/>
+		<control/>
+		<control caption="t"/>
+		<control/>
+		<control caption="m"/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Delte mapper">
+		<control/>
+		<control caption="Dette er en liste over mapper i mine filer.  Du kan legge til og fjerne mapper med knappene til høyre.  Når du legger til en mappe er den automatisk delt med andre brukere, men du kan skru av delingen hvis du vil."/>
+		<control/>
+		<control caption="_Legg til..."/>
+		<control caption="_Fjern"/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopier URI">
+		<control/>
+		<control caption="Du kan kopiere en URI til valgt objekt på flere forskjellige måter.  Vennligst velg en av URI typene du ønsker å bruke under:"/>
+		<control/><control/><control/>
+		<control caption="Inkluder _meg som en fast kilde i URL"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBums" caption="Eksporter URI">
+		<control/>
+		<control caption="Du har valgt %lu filer som skal eksporteres ved hjelp av Shareazas URI referanse.  Vennligst velg hvilket format URI, og klikk Lagre:"/>
+		<control/>
+		<control caption="Sett inn merke:"/>
+		<control/>
+		<control caption="Velg preset:"/>
+		<control/>
+		<control caption="Avbryt"/>
+		<control caption="Lagre..."/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareazas URI verktøy">
+		<control/>
+		<control caption="Du har klikket på en Shareaza URI som peker til innholdet på nettverket:"/>
+		<control caption="Du har klikket en Shareaza URL som vil koble deg til denne host-en eller denne server-en:"/>
+		<control caption="Du har klikket på en Shareaza URI som vil gi deg muligheten til å utforske filene på denne host-en:"/>
+		<control/><control/><control/><control/>
+		<control caption="Vennligst velg hvordan du vil Shareaza skal reagere:"/>
+		<control caption="_Last ned nå"/>
+		<control caption="_Søk etter fil"/>
+		<control caption="Avbryt"/>
+		<control caption="_Husk mitt valg neste gang"/>
+		<control caption="Åpne et nedlastnings _monitor vindu"/>
+		<control caption="Du har klikket på en Shareaza URI som vil legge til følgende Discovery Service i din Discovery Service cache."/>
+	</dialog>
+	
+	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Laster ned metadata...">
+		<control/>
+		<control caption="Shareaza prøver å laste ned metadata fra Bitzi(TM)..."/>
+		<control/>
+		<control caption="Avbryt"/>
+		<control/>
+		<control caption="www.bitzi.com"/>
+	</dialog>
+
+	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart forhåndsvisning...">
+		<control/>
+		<control caption="Shareaza lager en forhåndsvisning av filen:"/>
+		<control/><control/>
+		<control caption="(kopierer nedlastede deler til en ny forhåndsvisning)"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza respekterer sine brukere">
+		<control/>
+		<control caption="Visste du at Shareaza er et 100% gratis produkt?"/>
+		<control caption="Shareaza inneholder IKKE &quot;spyware&quot;, &quot;adware&quot; eller annet software. Det viser ingen reklamer eller &quot;popups&quot;,.{n}{n}Hvis du ser reklame eller &quot;popups&quot; når du bruker Shareaza, vær sikker det kommer IKKE fra Shareaza."/>
+		<control caption="Uheldigvis kommer mye programvare med uønsket adware eller spyware, så hvis du ser noe suspekt kan det være lurt å sjekke pc-en med et reklame eller spyware fjerningsprogram."/>
+		<control caption="Du skal ikke betale penger for Shareaza.  Shareaza kan lastes ned helt gratis på www.shareaza.com.  Hvis du har betalt noen for Shareaza, skal du kreve pengene tilbake øyeblikkelig."/>
+		<control caption="Shareaza respekterer sine brukere!"/>
+		<control caption="www.shareaza.com"/>
+		<control caption="Lukk"/>
+	</dialog>
+	
+	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Spre ryktet">
+		<control/>
+		<control caption="Hjelp oss å spre ryktet"/>
+		<control caption="Vi håper du syns Shareaza er et bra program.  Vi mener at det er det beste fildelingsprogrammet som finns."/>
+		<control caption="Uheldigvis, vet ikke alle fildelere hva de går glipp av!"/>
+		<control caption="Hvis du kjenner noen som vil like Shareaza, selv om de er nye brukere eller fortsatt bruker et annet middelmådig program. La dem få vite at det finns noe mye bedre?"/>
+		<control caption="De blir sikkert veldig takknemlige for at du reddet dem!"/>
+		<control caption="www.shareaza.com"/>
+		<control caption="OK"/>
+	</dialog>
+
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Laste ned fil på ny">
+		<control/><control/><control/><control/>
+		<control caption="Du har allerede denne filen i mine filer.  Hva vil du gjøre?"/>
+		<control caption="Vis filen i mine filer"/>
+		<control caption="Last ned filen på ny"/>
+		<control caption="Ikke last ned denne filen"/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Du har lastet ned og slettet denne filen før.  Hva vil du gjøre?"/>
+	</dialog>
+	
+	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Lukk knapp">
+		<control/>
+		<control caption="Dette er første gang du bruker Shareaza's lukk knapp.  Vennligst velg hva Shareaza skal gjøre når du trykker på lukk knappen fra nå av:"/>
+		<control caption="Minimer til systemfeltet"/>
+		<control caption="Lukk Shareaza umiddelbart"/>
+		<control caption="Lukk Shareaza etter nedlastning og opplastning er ferdige"/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Last ned server.met fil">
+		<control/>
+		<control caption="Du kan laste ned en eDonkey2000 server.met fil fra nettet for å oppdatere listen med servere."/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+
+	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza hjelp">
+		<control/>
+		<control caption="Lukk"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Slett fil">
+		<control caption="Er du sikker på at du vil slette:"/>
+		<control/>
+		<control caption="Slett"/>
+		<control caption="Slett alt"/>
+		<control caption="Avbryt"/>
+		<control/>
+		<control caption="Shareaza kan huske denne filen og varsle deg om du skulle komme over den på ny i et annet søk.  Vennligst velg hvorfor du vil slette denne filen:"/>
+		<control caption="Ingen kommentar."/>
+		<control caption="Denne filen har feil navn, og kan være missledende."/>
+		<control caption="Denne filen har veldig lav kvalitet."/>
+		<control caption="Denne filen er falsk, ødelagt eller ubrukelig."/>
+		<control caption="Du kan skrive en kort melding for å beskrive hvorfor denne filen er feil:"/>
+		<control/>
+	</dialog>
+	
+	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Eksporter mappe">
+		<control caption="Dette verktøyet kan eksportere hele album mapper som en collection fil."/>
+		<control caption="Eksporter.."/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStBuStEdStEdBuBuBuBu" caption="Endre nedlastning (Avansert)">
+		<control caption="OBS: Dette vinduet gir deg mulighet til å endre avanserte egenskaper ved en nedlastning og er ment for power brukere, filene kan bli ødelagte hvis du gjør noe feil."/>
+		<control caption="Fil_navn:"/>
+		<control/>
+		<control caption="_URNs:"/>
+		<control caption="SHA1:"/>
+		<control/>
+		<control caption="Tiger-Root:"/>
+		<control/>
+		<control caption="ED2K:"/>
+		<control/>
+		<control caption="_Funksjon:"/>
+		<control caption="Glem verifikasjonsstatus (start verifikasjon på ny)"/>
+		<control caption="Glem alle kjente kilder"/>
+		<control caption="Slett _data:"/>
+		<control caption="Slett bytes:"/>
+		<control/>
+		<control caption="til"/>
+		<control/>
+		<control caption="Slett"/>
+		<control caption="_Torrent info..."/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	
+	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Åpne torrent fil">
+
+    <control/>
+
+    <control caption="Du har åpnet en BitTorrent fil. Ønsker du å laste den ned på ny eller seed'e den?"/>
+
+    <control caption="Last ned"/>
+
+    <control caption="Seed"/>
+
+    <control caption="Avbryt"/>
+
+    <control caption="For å dele ferdige filer med BitTorrent må man seed'e. Når denne prosessen er ferdig vil filen bli lagt til i nedlastnings-listen."/>
+
+    <control/>
+</dialog>
+	
+	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Velg effekter">
+
+    <control/>
+
+    <control caption="Velg en audio-visuell effekt fra listen:"/>
+
+    <control/><control/>
+
+    <control caption="_Avansert"/>
+
+    <control caption="OK"/>
+
+    <control caption="Avbryt"/>
+
+</dialog>
+	
+
+</dialogs>
+
+<!-- Columns Definitions -->
+<listColumns>
+    <list name="CLibraryWnd">
+        <column from="File" to="Fil"/>
+        <column from="Type" to=""/>
+        <column from="Size" to="Størrelse"/>
+        <column from="Hits" to="Treff"/>
+        <column from="Uploads" to="Opplastninger"/>
+    </list>
+    <list name="CNeighboursWnd">
+        <column from="Address" to="Adresse"/>
+        <column from="Port" to="Port"/>
+        <column from="Time" to="Tid"/>
+        <column from="Packets" to="Packets"/>
+        <column from="Bandwidth" to="Båndbredde"/>
+        <column from="Total" to="Total"/>
+        <column from="Flow" to="Strøm"/>
+        <column from="Leaves" to="Kilder"/>
+        <column from="Mode" to="Modus"/>
+        <column from="Client" to="Klient"/>
+        <column from="Name" to="Navn"/>
+    </list>
+    <list name="CUploadCtrl">
+        <column from="Remote User" to="Bruker"/>
+        <column from="Uploaded File" to="Opplastet fil"/>
+        <column from="Size" to="Størrelse"/>
+        <column from="Progress" to="Fremdrift"/>
+        <column from="Queue" to="I kø"/>
+        <column from="Speed" to="Hastighet"/>
+        <column from="Client" to="Klient"/>
+    </list>
+    <list name="CDownloadCtrl">
+        <column from="Downloaded File" to="Nedlastet fil"/>
+        <column from="Size" to="Størrelse"/>
+        <column from="Progress" to="Fremdrift"/>
+        <column from="Speed" to="Hastighet"/>
+        <column from="Status" to=""/>
+        <column from="Client" to="Klient"/>
+        <column from="Order" to="Ordne"/>
+    </list>
+    <list name="CMatchCtrl">
+        <column from="File" to="Fil"/>
+        <column from="Type" to="Type"/>
+        <column from="Size" to="Størrelse"/>
+        <column from="Rating" to="Karakter"/>
+        <column from="Host/Count" to="Host/Antall"/>
+        <column from="Speed" to="Hastighet"/>
+        <column from="Client" to="Klient"/>
+    </list>
+    <list name="CDiscoveryWnd">
+        <column from="Address" to="Adresse"/>
+        <column from="Type" to=""/>
+        <column from="Last Access" to="Siste tilgang"/>
+        <column from="Hosts" to="Host"/>
+        <column from="Accesses" to="Tilgang"/>
+        <column from="Updates" to="Oppdatering"/>
+        <column from="Failures" to="Svikt"/>
+    </list>
+    <list name="CHostCacheWnd">
+        <column from="Address" to="Adresse"/>
+        <column from="Port" to="Port"/>
+        <column from="Client" to="Klient"/>
+        <column from="Last Seen" to="Sist sett"/>
+        <column from="Name" to="Navn"/>
+        <column from="Description" to="Beskrivelse"/>
+        <column from="CurUsers" to="Brukere"/>
+        <column from="MaxUsers" to="Max. brukere"/>
+    </list>
+    <list name="CSecurityWnd">
+        <column from="Address / Content" to="Adresse / Inn"/>
+        <column from="Action" to="Tiltak"/>
+        <column from="Expires" to="Går ut"/>
+        <column from="Hits" to="Treff"/>
+        <column from="Comment" to="Kommentar"/>
+    </list>
+    <list name="CUploadQueueList">
+        <column from="Name" to="Navn"/>
+        <column from="Criteria" to="Kriterier"/>
+        <column from="Bandwidth" to="Båndbredde"/>
+        <column from="Transfers" to="Overføring"/>
+    </list>
+</listColumns>
+
+</skin>
+
