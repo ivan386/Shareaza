@@ -23,7 +23,6 @@
 
 class CSettingsItem;
 
-
 class CSettings  
 {
 // Construction
@@ -325,6 +324,7 @@ public:
 		INT			MaxFiles;
 		INT			MaxTransfers;
 		INT			MaxFileTransfers;
+		INT			MaxFileSearches;
 		INT			MinSources;
 		DWORD		ConnectThrottle;
 		INT			QueueLimit;
@@ -438,7 +438,6 @@ protected:
 	void	Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault);
 	void	Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault);
 	void	SmartUpgrade();
-
 };
 
 extern CSettings Settings;

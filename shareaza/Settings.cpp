@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Schema.h"
 #include "Skin.h"
+#include "Registry.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -279,6 +280,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
 	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 128 );
 	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 8 );
+	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 4 );
 	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
 	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 200 );
 	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
@@ -337,6 +339,8 @@ void CSettings::Setup()
 	Add( _T("Remote.Username"), &Remote.Username, _T("") );
 	Add( _T("Remote.Password"), &Remote.Password, _T("") );
 }
+
+
 
 //////////////////////////////////////////////////////////////////////
 // CSettings construction
@@ -400,29 +404,30 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 
 void CSettings::Load()
 {
+	CRegistry Registry;
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = (Item*)m_pItems.GetNext( pos );
 		pItem->Load();
 	}
-	
-	if ( theApp.GetProfileInt( _T("Settings"), _T("FirstRun"), TRUE ) )
+
+	if ( Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("FirstRun"), TRUE ) )
 	{
 		Live.FirstRun = TRUE;
-		theApp.WriteProfileInt( _T("Settings"), _T("FirstRun"), FALSE );
+		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("FirstRun"), FALSE );
 	}
 	
 	SmartUpgrade();
-	
-	if ( theApp.GetProfileInt( _T("Settings"), _T("Running"), FALSE ) )
+
+	if ( Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("Running"), FALSE ) )
 	{
-		theApp.WriteProfileInt( _T("VersionCheck"), _T("NextCheck"), 0 );
+		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\VersionCheck"),  _T("NextCheck"), 0 );
 	}
 	else
 	{
-		theApp.WriteProfileInt( _T("Settings"), _T("Running"), TRUE );
+		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("Running"), TRUE );
 	}
-	
+
 	Gnutella1.EnableToday	= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday	= Gnutella2.EnableAlways;
 	eDonkey.EnableToday		= eDonkey.EnableAlways;
@@ -432,6 +437,7 @@ void CSettings::Load()
 
 void CSettings::Save(BOOL bShutdown)
 {
+	CRegistry Registry;
 	if ( Connection.TimeoutConnect == 0 ) return;
 	
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
@@ -439,9 +445,10 @@ void CSettings::Save(BOOL bShutdown)
 		Item* pItem = (Item*)m_pItems.GetNext( pos );
 		if ( pItem->m_sName != _T(".Path") ) pItem->Save();
 	}
-	
-	theApp.WriteProfileInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
-	theApp.WriteProfileInt( _T("Settings"), _T("Running"), bShutdown ? FALSE : TRUE );
+
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("SmartVersion"), SMART_VERSION );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"),  _T("Running"),  bShutdown ? FALSE : TRUE );
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -449,7 +456,9 @@ void CSettings::Save(BOOL bShutdown)
 
 void CSettings::SmartUpgrade()
 {
-	int nVersion = theApp.GetProfileInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
+	CRegistry Registry;
+	int nVersion = Registry.GetInt(  _T("Software\\Shareaza\\Shareaza\\Settings"), _T("SmartVersion"), SMART_VERSION );
+
 	
 	if ( nVersion < 20 )
 	{
@@ -578,22 +587,23 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 {
 	WINDOWPLACEMENT pPos;
 	CString strEntry;
+	CRegistry Registry;
 	
 	if ( pszName != NULL )
 		strEntry = pszName;
 	else
 		strEntry = pWindow->GetRuntimeClass()->m_lpszClassName;
 	
-	int nShowCmd = theApp.GetProfileInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
+	int nShowCmd = Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".ShowCmd"), -1 );
 	if ( nShowCmd == -1 ) return FALSE;
 	
 	ZeroMemory( &pPos, sizeof(pPos) );
 	pPos.length = sizeof(pPos);
-	
-	pPos.rcNormalPosition.left		= theApp.GetProfileInt( _T("Windows"), strEntry + _T(".Left"), 0 );
-	pPos.rcNormalPosition.top		= theApp.GetProfileInt( _T("Windows"), strEntry + _T(".Top"), 0 );
-	pPos.rcNormalPosition.right		= theApp.GetProfileInt( _T("Windows"), strEntry + _T(".Right"), 0 );
-	pPos.rcNormalPosition.bottom	= theApp.GetProfileInt( _T("Windows"), strEntry + _T(".Bottom"), 0 );
+
+	pPos.rcNormalPosition.left		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Left"), 0 );
+	pPos.rcNormalPosition.top		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Top"), 0 );
+	pPos.rcNormalPosition.right		= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Right"), 0 );
+	pPos.rcNormalPosition.bottom	= Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Bottom"), 0 );
 	
 	if ( pPos.rcNormalPosition.right && pPos.rcNormalPosition.bottom )
 	{
@@ -617,6 +627,7 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 {
 	WINDOWPLACEMENT pPos;
 	CString strEntry;
+	CRegistry Registry;
 
 	if ( pszName != NULL )
 		strEntry = pszName;
@@ -625,14 +636,15 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 
 	pWindow->GetWindowPlacement( &pPos );
 
-	theApp.WriteProfileInt( _T("Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
 
 	if ( pPos.showCmd != SW_SHOWNORMAL ) return;
 
-	theApp.WriteProfileInt( _T("Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
-	theApp.WriteProfileInt( _T("Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
-	theApp.WriteProfileInt( _T("Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
-	theApp.WriteProfileInt( _T("Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
+	Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -642,17 +654,18 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 {
 	LV_COLUMN pColumn;
 	pColumn.mask = LVCF_FMT;
+	CRegistry Registry;
 	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 
 	CString strOrdering, strWidths, strItem;
 	BOOL bSuccess = FALSE;
 
 	strItem.Format( _T("%s.Ordering"), pszName );
-	strOrdering = theApp.GetProfileString( _T("ListStates"), strItem, _T("") );
+	strOrdering = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, _T("") );
 	strItem.Format( _T("%s.Widths"), pszName );
-	strWidths = theApp.GetProfileString( _T("ListStates"), strItem, _T("") );
+	strWidths = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, _T("") );
 	strItem.Format( _T("%s.Sort"), pszName );
-	nSort = theApp.GetProfileInt( _T("ListStates"), strItem, nSort );
+	nSort = Registry.GetInt( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, nSort );
 
 	if ( strOrdering.GetLength() == nColumns * 2 &&
 		 strWidths.GetLength() == nColumns * 4 )
@@ -683,6 +696,7 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 {
 	LV_COLUMN pColumn;
 	pColumn.mask = LVCF_FMT;
+	CRegistry Registry;
 	for ( int nColumns = 0 ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 	
 	UINT* pOrdering = new UINT[ nColumns ];
@@ -704,11 +718,11 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	int nSort = GetWindowLong( pCtrl->GetSafeHwnd(), GWL_USERDATA );
 	
 	strItem.Format( _T("%s.Ordering"), pszName );
-	theApp.WriteProfileString( _T("ListStates"), strItem, strOrdering );
+	Registry.SetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, strOrdering);
 	strItem.Format( _T("%s.Widths"), pszName );
-	theApp.WriteProfileString( _T("ListStates"), strItem, strWidths );
+	Registry.SetString( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, strWidths);
 	strItem.Format( _T("%s.Sort"), pszName );
-	theApp.WriteProfileInt( _T("ListStates"), strItem, nSort );
+	Registry.SetInt( _T("Software\\Shareaza\\Shareaza\\ListStates"), strItem, nSort );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -893,41 +907,43 @@ CSettings::Item::Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* p
 
 void CSettings::Item::Load()
 {
+	CRegistry Registry;
 	int nPos = m_sName.Find( '.' );
 	if ( nPos < 0 ) return;
 
 	if ( m_pDword )
 	{
-		*m_pDword = theApp.GetProfileInt( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
+		*m_pDword = Registry.GetDword( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pDword );
 	}
 	else if ( m_pFloat )
 	{
-		CString str = theApp.GetProfileString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), _T("") );
-		if ( str.GetLength() ) _stscanf( str, _T("%lf"), m_pFloat );
+		*m_pFloat = Registry.GetFloat( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pFloat );
 	}
 	else
 	{
-		*m_pString = theApp.GetProfileString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
+		*m_pString = Registry.GetString( _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ) , m_sName.Mid( nPos + 1 ) , *m_pString );
 	}
+
 }
 
 void CSettings::Item::Save()
 {
+	CRegistry Registry;
 	int nPos = m_sName.Find( '.' );
 	if ( nPos < 0 ) return;
 
 	if ( m_pDword )
 	{
-		theApp.WriteProfileInt( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
+		Registry.SetInt(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ), *m_pDword);
 	}
 	else if ( m_pFloat )
 	{
 		CString str;
 		str.Format( _T("%e"), *m_pFloat );
-		theApp.WriteProfileString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), str );
+		Registry.SetString(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ), str);
 	}
 	else
 	{
-		theApp.WriteProfileString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
+		Registry.SetString(  _T("Software\\Shareaza\\Shareaza\\") + m_sName.Left( nPos ),  m_sName.Mid( nPos + 1 ),*m_pString );
 	}
 }
