@@ -193,13 +193,23 @@ CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 		CString strOldLC( pFolder->m_sPath );
 		strOldLC = CharLower( strOldLC.GetBuffer() );
 		
-		if ( strPathLC.GetLength() >= strOldLC.GetLength() )
+		if ( strPathLC.GetLength() > strOldLC.GetLength() )
 		{
-			if ( strPathLC.Left( strOldLC.GetLength() ) == strOldLC ) return pFolder;
+			int nLength = strOldLC.GetLength();
+			if ( strPathLC.Left( nLength ) == strOldLC && 
+				 strPathLC.GetAt( nLength + 1 ) == '\\' ) 
+				return pFolder;
 		}
 		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
 		{
-			if ( strOldLC.Left( strPathLC.GetLength() ) == strPathLC ) return pFolder;
+			int nLength = strPathLC.GetLength();
+			if ( strOldLC.Left( nLength ) == strPathLC && 
+				 strOldLC.GetAt( nLength + 1 ) == '\\' ) 
+				 return pFolder;
+		}
+		else
+		{
+			if ( strPathLC == strOldLC ) return pFolder;
 		}
 	}
 	
