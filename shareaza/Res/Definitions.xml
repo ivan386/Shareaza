@@ -65,6 +65,7 @@
 	<command code="32821" id="ID_HOSTCACHE_G2_CACHE"/>
 	<command code="32822" id="ID_HOSTCACHE_G1_CACHE"/>
 	<command code="32823" id="ID_SEARCH_COLUMNS"/>
+	<command code="32824" id="ID_SEARCH_DOWNLOADNOW"/>
 	<command code="32826" id="ID_DOWNLOADS_RESUME"/>
 	<command code="32828" id="ID_DOWNLOADS_CLEAR_COMPLETED"/>
 	<command code="32829" id="ID_DOWNLOADS_SOURCES"/>

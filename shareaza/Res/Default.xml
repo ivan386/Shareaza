@@ -752,6 +752,7 @@
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
@@ -2151,7 +2152,7 @@
 		<image id="ID_HOSTCACHE_CONNECT"/>
 		<image id="ID_HOSTCACHE_DISCONNECT"/>
 		<image id="ID_HOSTCACHE_REMOVE"/>
-		<image id="ID_SEARCH_DOWNLOAD"/>
+		<image id="ID_SEARCH_DOWNLOAD" id1="ID_SEARCH_DOWNLOADNOW"/>
 		<image id="ID_SEARCH_COPY" id1="ID_DOWNLOADS_COPY"/>
 		<image id="ID_SEARCH_CHAT"/>
 		<image id="ID_SEARCH_FILTER"/>
