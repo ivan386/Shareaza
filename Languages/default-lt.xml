@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.2.5"
+                        version="2.0.2.11"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -1901,17 +1901,6 @@ right quote    &#147;
                siuntimą.</text>
        </document>
 
-     <document name="GeneralHelp.XPsp2">
-                  <text format="b">Aptiktas Windows XP Service Pack 2</text>
-                   <newline gap="8"/>
-                   <text>„Shareaza“ aptiko Windows XP Service Pack 2. Šioje versijoje yra nustatytas susijungimų apribojimas
-                   visoms programoms.</text>
-                   <newline gap="8"/>
-                   <text>„Shareaza“ sumažino tinklo susijungimų skaičių ir nustatė tam tikras numatytąsias reikšmes,
-                   kad užtikrintų deramą veikimą, tačiau našumas gali sumažėti. Aplankykite „Shareaza“ forumus,
-                   jei reikalinga papildoma informacija ir norite sužinoti paskutines naujienas.</text>
-         </document>
-
        <document name="DownloadHelp.Verifying">
                <text format="b">Parsisiųstos bylos patikra</text>
                <newline gap="8"/>
@@ -1980,6 +1969,17 @@ right quote    &#147;
                prarastos. Jums reikėtų atlikti disko valymą, ištrinti nereikalingas bylas ar pašalinti programinę
                įrangą, kuri jums daugiau nereikalinga.</text>
        </document>
+
+     <document name="GeneralHelp.XPsp2">
+                  <text format="b">Aptiktas Windows XP Service Pack 2</text>
+                   <newline gap="8"/>
+                   <text>„Shareaza“ aptiko Windows XP Service Pack 2. Šioje versijoje yra nustatytas susijungimų apribojimas
+                   visoms programoms.</text>
+                   <newline gap="8"/>
+                   <text>„Shareaza“ sumažino tinklo susijungimų skaičių ir nustatė tam tikras numatytąsias reikšmes,
+                   kad užtikrintų deramą veikimą, tačiau našumas gali sumažėti. Aplankykite „Shareaza“ forumus,
+                   jei reikalinga papildoma informacija ir norite sužinoti paskutines naujienas.</text>
+         </document>
 
        <!-- Search help documents -->
 
@@ -2435,6 +2435,8 @@ right quote    &#147;
        <string id="8239" value="Baigta"/>
        <string id="8240" value="„Shareaza“ perkelia parsisiųstą bylą:"/>
        <string id="8241" value="„Shareaza“ ieško klaidų parsisiųstoje byloje:"/>
+       <string id="8242" value="%s iš %s (%.2f%%)"/>
+       <string id="8243" value="Išsiųsta:"/>
        <string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
        <string id="8289" value="Naršomas "/>
        <string id="8290" value="Naršomas %i aplankų turinys"/>
