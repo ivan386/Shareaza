@@ -50,6 +50,7 @@ CLibraryBuilderInternals::CLibraryBuilderInternals(CLibraryBuilder* pBuilder)
 
 CLibraryBuilderInternals::~CLibraryBuilderInternals()
 {
+	if ( theApp.GetProfileInt( _T("Library"), _T("MetadataANSI"), FALSE ) )
 	theApp.WriteProfileInt( _T("Library"), _T("MetadataANSI"), 0 );
 }
 
