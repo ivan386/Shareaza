@@ -168,7 +168,7 @@ void CTransfers::OnRun()
 {
 	while ( m_bThread )
 	{
-		Sleep( 10 );
+		Sleep( Settings.General.MinTransfersRest );
 		WaitForSingleObject( m_pWakeup, 50 );
 		
 		CTransfers::Lock(), EDClients.OnRun();

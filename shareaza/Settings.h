@@ -41,6 +41,7 @@ public:
 		DWORD		MaxDebugLogSize;			// Max size of the log file
 		BOOL		UpdateCheck;				// Does Shareaza check for new versions?
 		DWORD		DiskSpaceWarning;			// Value at which to warn the user about low disk space
+		DWORD		MinTransfersRest;			// For how long at least to suspend Transfers each round
 		INT			GUIMode;
 		BOOL		CloseMode;
 		BOOL		TrayMinimise;

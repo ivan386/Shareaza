@@ -48,6 +48,7 @@ void CSettings::Setup()
 	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
 	Add( _T(".HashIntegrity"), &General.HashIntegrity, TRUE );
 	Add( _T(".DiskSpaceWarning"), &General.DiskSpaceWarning, 500 );
+	Add( _T(".MinTransfersRest"), &General.MinTransfersRest, 15 );
 	Add( _T("Settings.GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings.CloseMode"), &General.CloseMode, 0 );
 	Add( _T("Settings.TrayMinimise"), &General.TrayMinimise, FALSE );
