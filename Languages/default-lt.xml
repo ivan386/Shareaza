@@ -3722,11 +3722,9 @@ right quote    &#147;
         <column from="Type" to="Tipas"/>
         <column from="Size" to="Dydis"/>
         <column from="Folder" to="Katalogas"/>
-        <column from="Time" to="Trukmė"/>
-        <column from="Width" to="Plotis"/>
-        <column from="Height" to="Aukštis"/>
         <column from="Hits" to="Kreipinių"/>
         <column from="Uploads" to="Išsiųsta"/>
+        <column from="Modified" to="Pakeista"/>
     </list>
     <list name="CDownloadCtrl">
         <column from="Downloaded File" to="Parsisiunčiama byla"/>
