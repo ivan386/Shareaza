@@ -132,17 +132,17 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_wndList.SelectSchema( pSchema, &pColumns );
 	}
 	
-	m_nCacheHubs	= 0;
-	m_nCacheLeaves	= 0;
-	m_bPanel		= Settings.Search.SearchPanel;
-	m_bDetails		= Settings.Search.DetailPanelVisible;
-	m_nDetails		= Settings.Search.DetailPanelSize;
-	m_bPaused		= TRUE;
-	m_bSetFocus		= TRUE;
-	m_bWaitMore		= FALSE;
-	m_nMaxResults	= 0;
-	m_nMaxED2KResults=0;
-	m_nMaxQueryCount= 0;
+	m_nCacheHubs		= 0;
+	m_nCacheLeaves		= 0;
+	m_bPanel			= Settings.Search.SearchPanel;
+	m_bDetails			= Settings.Search.DetailPanelVisible;
+	m_nDetails			= Settings.Search.DetailPanelSize;
+	m_bPaused			= TRUE;
+	m_bSetFocus			= TRUE;
+	m_bWaitMore			= FALSE;
+	m_nMaxResults		= 0;
+	m_nMaxED2KResults	= 0;
+	m_nMaxQueryCount	= 0;
 	
 	LoadState( _T("CSearchWnd"), TRUE );
 	
@@ -441,17 +441,17 @@ void CSearchWnd::OnSearchSearch()
 	//********** The 'Search More' situation
 	//ToDo: Detect if search has changed and skip this
 	POSITION pos = m_pSearches.GetTailPosition();
-	if((!m_bPaused)&&(m_bWaitMore)&&(pos))
+	if( (!m_bPaused) && m_bWaitMore && pos )
 	{
-		m_bWaitMore=FALSE;
+		m_bWaitMore = FALSE;
 		pSearch = (CManagedSearch*)m_pSearches.GetPrev(pos);
-		pSearch->m_bActive=TRUE;
+		pSearch->m_bActive = TRUE;
 		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
 
-		m_nMaxResults=m_pMatches->m_nFilteredHits+Settings.Gnutella.MaxResults;
-		m_nMaxQueryCount=pSearch->m_nQueryCount+Settings.Gnutella2.QueryLimit;
+		m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
+		m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
 
-		//m_nMaxED2KResults=m_pMatches->m_nED2KHits+100;//ED2K is only 100 extra on search more
+		//m_nMaxED2KResults = m_pMatches->m_nED2KHits + 100; // ??? Is search more allowed on ed2k?
 
 		m_bUpdate = TRUE;
 		return;
@@ -617,14 +617,13 @@ void CSearchWnd::ExecuteSearch()
 	{
 		if(pManaged->m_pSearch->CheckValid())
 		{
-			m_bPaused	= FALSE;
-			m_tSearch   = GetTickCount();
-			m_bWaitMore	= FALSE;
+			m_bPaused			= FALSE;
+			m_tSearch			= GetTickCount();
+			m_bWaitMore			= FALSE;
 
-			m_nMaxResults=Settings.Gnutella.MaxResults;
-			m_nMaxED2KResults=(DWORD)min( 201, Settings.eDonkey.MaxResults );
-
-			m_nMaxQueryCount= Settings.Gnutella2.QueryLimit;
+			m_nMaxResults		= Settings.Gnutella.MaxResults;
+			m_nMaxED2KResults	= (DWORD)min( 201, Settings.eDonkey.MaxResults );
+			m_nMaxQueryCount	= Settings.Gnutella2.QueryLimit;
 		
 			pManaged->Stop();
 			pManaged->Start();
@@ -762,10 +761,10 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 				theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
 			}
 
-			if (!m_bWaitMore&& ( (m_pMatches->m_nFilteredHits - m_pMatches->m_nED2KHits) >= m_nMaxResults))
+			if ( !m_bWaitMore&& ( (m_pMatches->m_nFilteredHits - m_pMatches->m_nED2KHits) >= m_nMaxResults ) )
 			{
-				m_bWaitMore=TRUE;
-				pManaged->m_bActive=FALSE;
+				m_bWaitMore = TRUE;
+				pManaged->m_bActive = FALSE;
 				theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
 			}
 			
@@ -779,13 +778,13 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 void CSearchWnd::OnTimer(UINT nIDEvent) 
 {
 	POSITION pos = m_pSearches.GetTailPosition();
-	if(Settings.Gnutella2.QueryLimit && pos)
+	if( Settings.Gnutella2.QueryLimit && pos )
 	{
 		CManagedSearch* pManaged = (CManagedSearch*)m_pSearches.GetPrev(pos);
-		if((pManaged->m_bActive) && (pManaged->m_nQueryCount>m_nMaxQueryCount))
+		if( ( pManaged->m_bActive ) && (pManaged->m_nQueryCount > m_nMaxQueryCount) )
 		{
-			m_bWaitMore=TRUE;
-			pManaged->m_bActive=FALSE;
+			m_bWaitMore = TRUE;
+			pManaged->m_bActive = FALSE;
 			theApp.Message( MSG_DEBUG, _T("Search Reached Maximum Duration") );
 			m_bUpdate = TRUE;
 		}
