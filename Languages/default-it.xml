@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Italian Skin File -->
 
@@ -2647,7 +2647,7 @@
 	<string id="16385" value="Stai per modificare i metadata di %i file, desideri continuare?"/>
 	<string id="16386" value="Modifica dei metadata di %i file."/>
 	<string id="16387" value="Il file &quot;%s&quot; non ha subito il processo di hash.  Attendi che il file abbia subito il processo di hash, poi prova ancora."/>
-	<string id="16388" value="Questa opzione utilizza i servizi di Bitzi.com per il riconoscimento e la condivisione dei file selezionati.\n\nShareaza non trasmetterà il codice hash SHA1 per i file selezionati per poter effettuare richieste al database di Bitzi.  Se non conosci le condizioni sulla privacy, consultale su Bitzi.com .\n\nDesideri continuare?"/>
+	<string id="16388" value="Questa opzione utilizza i servizi di Bitzi.com per il riconoscimento e la condivisione dei file selezionati.\n\nShareaza trasmetterà il codice hash SHA1 per i file selezionati per poter effettuare richieste al database di Bitzi.  Se non conosci le condizioni sulla privacy, consultale su Bitzi.com .\n\nDesideri continuare?"/>
 	<string id="16389" value="Desideri eliminare definitivamente i %i file selezionati?\n\nQuesta azione non potrà essere revocata e non utilizza il tuo &quot;cestino&quot;."/>
 	<string id="16390" value="Non hai selezionato un lettore multimediale per accodare i file (per esempio Nullsoft Winamp). Desideri selezionarlo ora?\n\nShareaza passerà il nome del file al programma indicato con il parametro &quot;/ADD&quot;."/>
 	<string id="16391" value="Non sei connesso alla rete."/>
@@ -3826,7 +3826,7 @@
 		<control caption="Scarica"/>
 		<control caption="Condividi"/>
 		<control caption="Annulla"/>
-		<control caption="Fai clic su Condividi per condividere file completi usando BitTorrent. Quando questo processo è stato completato il torrent comparirà come un nuovo elemento nell'elenco dei tuoi download."/>
+		<control caption="Fai clic su Condividi per condividere file completi usando BitTorrent. Quando questo processo sarà completato il torrent comparirà nell'elenco dei tuoi download."/>
 		<control/>
 	</dialog>
 
