@@ -370,8 +370,9 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 	}
 
 	CString strServerFlags;
-	strServerFlags.Format( _T("Server Flags: Zlib: %d Short Tags: %d Unicode: %d "), m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE );
-	theApp.Message( MSG_DEBUG, strServerFlags );
+	strServerFlags.Format( _T("Server Flags: Zlib: %d Short Tags: %d Unicode: %d GetSources2: %d (64): %d  (128): %d"), 
+		m_nFlags & ED2K_SERVER_TCP_DEFLATE, m_nFlags & ED2K_SERVER_TCP_SMALLTAGS, m_nFlags & ED2K_SERVER_TCP_UNICODE, m_nFlags & ED2K_SERVER_TCP_GETSOURCES2, m_nFlags & 0x00000040, m_nFlags & 0x00000080  );
+	theApp.Message( MSG_DEBUG, strServerFlags );//debug
 	
 	
 	return TRUE;
@@ -450,12 +451,21 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			break;
 		case ED2K_ST_MAXUSERS:
 			m_nUserLimit = pTag.m_nValue;
+			break;
+/*
+		case ED2K_ST_MAXFILES:
+			nMaxFiles = pTag.m_nValue;
+			break;
+		case ED2K_ST_UDPFLAGS:
+			nUDPFlags = pTag.m_nValue;
+			break;
+*/
 		default:
 			theApp.Message( MSG_ERROR, _T("Unrecognised tag in ED2K server Ident") );
 			//****************Debug only
 		}
 	}
-	
+
 	if ( (DWORD&)m_pGUID == 0x2A2A2A2A )
 		m_sUserAgent = _T("eFarm Server");
 	else
@@ -466,6 +476,16 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		pHost->m_sName			= m_sServerName;
 		pHost->m_sDescription	= strDescription;
 		pHost->m_nUserLimit		= m_nUserLimit;
+		pHost->m_nTCPFlags		= m_nFlags;
+
+		// If a server has support for GetSources2, we can assume some UDP flags
+		if ( m_nFlags & ED2K_SERVER_TCP_GETSOURCES2 )
+		{
+			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES;
+			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETFILES;
+			pHost->m_nUDPFlags |= ED2K_SERVER_TCP_UNICODE;
+			pHost->m_nUDPFlags |= ED2K_SERVER_TCP_GETSOURCES2;
+		}
 	}
 	
 	theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
