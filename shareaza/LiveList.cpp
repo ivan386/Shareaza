@@ -78,7 +78,7 @@ CLiveItem* CLiveList::Add(LPVOID pParam)
 //////////////////////////////////////////////////////////////////////
 // CLiveList apply
 
-void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
+BOOL CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 {
 	BOOL bModified = FALSE;
 
@@ -119,8 +119,9 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 	m_pItems.RemoveAll();
 
 	if ( bModified && bSort ) Sort( pCtrl, -1 );
-}
 
+	return bModified;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CLiveItem construction
