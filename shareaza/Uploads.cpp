@@ -240,24 +240,39 @@ void CUploads::OnRun()
 	m_nCount		= 0;
 	m_nBandwidth	= 0;
 	
+	//Set measured queue speeds to 0
 	for ( pos = UploadQueues.GetIterator() ; pos ; )
 	{
 		UploadQueues.GetNext( pos )->m_nMeasured = 0;
 	}
+	UploadQueues.m_pTorrentQueue->m_nMeasured = 0;
+	UploadQueues.m_pTorrentQueue->m_nMinTransfers = 0;
+	UploadQueues.m_pTorrentQueue->m_nMaxTransfers = 0;
 	
 	for ( pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pTransfer = GetNext( pos );
 		DWORD nMeasured = pTransfer->GetMeasuredSpeed();
 		
-		if ( pTransfer->m_nState == upsUploading )
+		if ( pTransfer->m_nState == upsUploading )			//If this upload is transferring
 		{
 			m_nCount ++;
-			if ( pTransfer->m_nProtocol == PROTOCOL_BT ) nCountTorrent ++;
-			
 			m_nBandwidth += nMeasured;
-			if ( pTransfer->m_pQueue != NULL && UploadQueues.Check( pTransfer->m_pQueue ) )
+
+			if ( pTransfer->m_nProtocol == PROTOCOL_BT )	//If it's a torrent transfer
+			{
+				nCountTorrent ++;
+				UploadQueues.m_pTorrentQueue->m_nMinTransfers ++;
+				UploadQueues.m_pTorrentQueue->m_nMeasured += nMeasured;
+			}
+			else if ( pTransfer->m_pQueue != NULL && UploadQueues.Check( pTransfer->m_pQueue ) )
 				pTransfer->m_pQueue->m_nMeasured += nMeasured;
+		}
+		else if ( pTransfer->m_nState != upsNull )				//If this upload is not inactive (complete)
+		{
+			if ( pTransfer->m_nProtocol == PROTOCOL_BT )	//Count torrent transfers (Choked, etc) for queue display
+				UploadQueues.m_pTorrentQueue->m_nMaxTransfers ++;
+
 		}
 	}
 	

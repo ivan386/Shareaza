@@ -165,7 +165,7 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 	
 	if ( GetQueueRemaining() > 0 || bForce )
 	{
-		//Id reward is on, only queue known sharers in the last position
+		//If reward is on, only queue known sharers in the last position
 		if ( ( m_bRewardUploaders ) && ( pUpload->m_nUserRating > 2  ) && ( GetQueueRemaining() == 1 ) ) return FALSE;
 
 		m_pQueued.Add( pUpload );

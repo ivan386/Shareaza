@@ -828,17 +828,16 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			break;
 			
 		case UPLOAD_COLUMN_SIZE:
-			if ( pQueue != UploadQueues.m_pTorrentQueue && pQueue != UploadQueues.m_pHistoryQueue )
+			if ( pQueue == UploadQueues.m_pTorrentQueue )
+				strText.Format( _T("%i/%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers ); //No. Clients was loaded into these variables
+			else if ( pQueue != UploadQueues.m_pHistoryQueue )
 				strText.Format( _T("%i/%i"), pQueue->GetTransferCount(), pQueue->GetQueuedCount() );
 			break;
 			
 		case UPLOAD_COLUMN_SPEED:
-			if ( pQueue != UploadQueues.m_pTorrentQueue && pQueue != UploadQueues.m_pHistoryQueue )
-			{
+			if ( pQueue != UploadQueues.m_pHistoryQueue )
 				strText = Settings.SmartVolume( pQueue->GetMeasuredSpeed() * 8, FALSE, TRUE );
-			}
 			break;
-			
 		}
 		
 		nTextLeft	= min( nTextLeft, rcCell.left );
