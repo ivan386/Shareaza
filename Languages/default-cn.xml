@@ -11,9 +11,9 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <fonts>
-	<font name="System.Plain" face="宋体" size="12" /> 
-	<font name="System.Bold" face="宋体" size="12" weight="bold" /> 
-	<font name="Panel.Caption" face="宋体" size="13" weight="bold" /> 
+	<font name="System.Plain" face="宋体" size="12" />
+	<font name="System.Bold" face="宋体" size="12" weight="bold" />
+	<font name="Panel.Caption" face="宋体" size="13" weight="bold" />
 </fonts>
 
 <!-- Manifest -->
@@ -469,7 +469,6 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
-				<item id="ID_HELP_WEB_4" text="Napjunk.net"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -555,7 +554,6 @@
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
-				<item id="ID_HELP_WEB_4" text="Napjunk.net"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -635,7 +633,6 @@
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
-				<item id="ID_HELP_WEB_4" text="Napjunk.net"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -798,6 +795,7 @@
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="下载(_D)"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="立即下载"/>
 		<item id="ID_SEARCH_COPY" text="复制 URI(_U)"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="浏览用户(_W)"/>
@@ -1061,7 +1059,7 @@
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="专辑属性(_A)"/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
-	<menu name="CLibraryTileView.Virtual">
+	<menu name="CLibraryTileView">
 		<item id="ID_LIBRARY_ALBUM_OPEN" text="打开(_O)"/>
 		<item id="ID_LIBRARY_ALBUM_DELETE" text="删除(_D)"/>
 		<separator/>
@@ -1637,9 +1635,9 @@
 			<text id="UploadsNone" format="b">没有激活的上传</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 个激活上传</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i 个激活上传</link>
-			
+
 			<newline gap="4"/>
-			
+
 			<text id="UploadedNone">今天您没有上传任何文件。</text>
 			<text id="UploadedOne">您已上传了 1 个文件 (%s)。</text>
 			<text id="UploadedMany">您上传了 %i 个文件 (%s)。</text>
@@ -1661,11 +1659,11 @@
 		</para>
 
 	</document>
-	
+
 	<!-- Settings Pages -->
 
 	<document name="CGeneralSettingsGroup" title="常规" leftMargin="8" topMargin="8">
-		
+
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
@@ -1691,12 +1689,12 @@
 		<gap size="4"/>
 		<text>描述和管理收藏的文件，查看文件。</text>
 		<newline gap="10"/>
-		
+
 		<link target="raza:page:CMediaSettingsPage" format="b">媒体播放器:</link>
 		<gap size="4"/>
 		<text>何时何地使用内置的播放器。</text>
 		<newline gap="10"/>
-		
+
 		<link target="raza:page:CCommunitySettingsPage" format="b">社区:</link>
 		<gap size="4"/>
 		<text>个人资料，聊天和及时讯息的设置。</text>
@@ -1706,11 +1704,11 @@
 		<gap size="4"/>
 		<text>集成 Shareaza 到浏览器以便允许点对点连接和下载。</text>
 		<newline gap="10"/>
-	
+
 	</document>
 
 	<document name="CInternetSettingsGroup" title="互联网" leftMargin="8" topMargin="8">
-		
+
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
@@ -2019,6 +2017,7 @@
 	<tip id="ID_NETWORK_CONNECT_TO" message="手动连接到主机..."/>
 	<tip id="ID_NETWORK_SEARCH" message="在网络上进行新的搜索。"/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="下载选定的文件。"/>
+	<tip id="ID_SEARCH_DOWNLOADNOW" message="优先下载选定的文件。"/>
 	<tip id="ID_SEARCH_SEARCH" message="再次搜索网络..."/>
 	<tip id="ID_SEARCH_FILTER" message="过滤某种词组或情况..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="从结果中移除过滤器。"/>
@@ -2064,6 +2063,7 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="显示图例。"/>
 	<tip id="ID_TRAFFIC_SETUP" message="选择和配置图表..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="清除通讯的图表。"/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Torrent 做种"/>
 	<tip id="ID_TOOLS_WIZARD" message="打开 Shareaza 快速启动..."/>
 	<tip id="ID_CHILD_RESTORE" message="打开选定的窗口。"/>
 	<tip id="ID_CHILD_CLOSE" message="关闭激活的窗口。"/>
@@ -2270,6 +2270,7 @@
 	<tip id="ID_UPLOADS_FILTER_MENU" message="选择在此视图中要显示或隐藏的上传类型。"/>
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="取消选定的未完成的下载。"/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="从列表中移除选定的下载。"/>
+	<tip id="ID_LIBRARY_CREATETORRENT" message="为此文件创建一个 .torrent 文件以上传至网页。"/>
 	<tip id="ID_WINDOW_NAVBAR" message="显示或隐藏导航栏。"/>
 	<tip id="ID_DOWNLOADS_RATE" message="评价此选定的下载。"/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="显示丰富收集视图" tip="收集视图"/>
@@ -2277,15 +2278,16 @@
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="将选定的专辑文件夹作为一个收集文件导出..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="将选定的专辑文件夹导出到一个收集文件中..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="在 BitTorrent 中将选定的 Torrent 做种。"/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="在 BitTorrent 中将选定的 Torrent 做种。"/>
 	<tip id="ID_DOWNLOADS_EDIT" message="显示下载的高级编辑界面..."/>
 	<tip id="ID_MEDIA_MUTE" message="音频播放静音"/>
 	<tip id="ID_WINDOW_REMOTE" message="显示或隐藏 Shareaza 远程控制器"/>
 	<tip id="ID_UPLOADS_FILTER_TORRENT" message="显示 BitTorrent 上传。"/>
+	<tip id="ID_TOOLS_MERCORA" message="启动 P2P 广播"/>
 	<tip id="ID_HELP_FIREWALLS" message="获取配置您的路由器或防火墙的帮助。"/>
 	<tip id="ID_WINDOW_CASCADE" message="扩展所有打开的窗口适配屏幕。"/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="水平布置窗口，禁止重叠拉伸。"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="垂直布置窗口，禁止重叠拉伸。"/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Torrent 做种"/>
 	<tip id="ID_DOWNLOADS_FILE_UNSAFE" message="标注选定的文件为不安全。"/>
 </commandTips>
 
@@ -2323,6 +2325,8 @@
 	<string id="8009" value="您确定要删除 &quot;%s&quot; 皮肤吗？ 此操作不可逆。"/>
 	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 www.shareaza.com 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
+	<string id="8062" value="Hub 模式有 %lu 个邻居。%s 于本地收藏夹。"/>
+	<string id="8063" value="已连接。%s 于本地收藏夹。"/>
 	<string id="8064" value="连接到 %lu 个邻居。%s 在本地收藏。"/>
 	<string id="8065" value="连接网络..."/>
 	<string id="8066" value="尚未连接网络。"/>
@@ -2349,6 +2353,8 @@
 	<string id="8132" value="某些结果可用，但已被过滤。"/>
 	<string id="8133" value="Shareaza 正积极地搜索网络..."/>
 	<string id="8134" value="立即开始新的搜索。确定要清除之前的搜索吗？"/>
+	<string id="8141" value="显示搜索面板"/>
+	<string id="8142" value="隐藏搜索面板"/>
 	<string id="8143" value="搜索中..."/>
 	<string id="8144" value="开始搜索"/>
 	<string id="8145" value="重新搜索"/>
@@ -2417,6 +2423,16 @@
 	<string id="8313" value="此文件可能是垃圾。"/>   
 	<string id="8314" value="您以前已经下载过并删除了这一文件。"/>
 	<string id="8315" value="黑名单: "/>
+	<string id="8316" value="命中"/>
+	<string id="8317" value="上传"/>
+	<string id="8318" value="%lu 今天，%lu 总计"/>
+	<string id="8320" value="状态:"/>
+	<string id="8321" value="速度:"/>
+	<string id="8322" value="链接:"/>
+	<string id="8323" value="用户代理:"/>
+	<string id="8324" value="停止"/>
+	<string id="8325" value="活动"/>
+	<string id="8326" value="下一个"/>
 	<string id="16064" value="启动 Shareaza 网络内核..."/>
 	<string id="16065" value="不能绑定正进入连接的主机 %s 的 %i 端口。不支持进入的连接。"/>
 	<string id="16066" value="关闭 Shareaza 网络内核..."/>
@@ -2620,6 +2636,8 @@
 	<string id="16405" value="您要下载此文件吗？\r\n\r\n&quot;%s&quot;\r\n\r\n选择取消以停止任何进一步的提示。"/>
 	<string id="16406" value="您要下载此收集中的所有文件吗？\r\n\r\n选择取消以停止任何进一步的提示。"/>
 	<string id="16407" value="您要防止此收集提示您下载的任何文件吗？"/>
+	<string id="16408" value="复制 URI(_U)"/>
+	<string id="16409" value="导出 URI(_U)..."/>
 	<string id="16448" value="连接到 %s，握手..."/>
 	<string id="16449" value="正在与 %s (%s) 聊天。"/>
 	<string id="16450" value="到 %s 的连接已关闭。"/>
@@ -2661,6 +2679,16 @@
 	<string id="16773" value="端口:"/>
 	<string id="16774" value="连接(_C)"/>
 	<string id="16775" value="浏览(_B)"/>
+	<string id="16776" value="添加"/>
+	<string id="16777" value="文件名:"/>
+	<string id="16778" value="链接:"/>
+	<string id="16779" value="类型:"/>
+	<string id="16780" value="未指定"/>
+	<string id="16781" value="请求中..."/>
+	<string id="16782" value="成功！"/>
+	<string id="16783" value="已完成，单击关闭"/>
+	<string id="16784" value="关闭(_C)"/>
+	<string id="16785" value="(无可视化效果)"/>
 	<string id="16800" value="您还未指定一个连接速度。在连接前，请选择您的 Internet 连接类型，或者输入连接速度。"/>
 	<string id="16801" value="请在连接前选择您使用的 Internet 连接类型。"/>
 	<string id="16802" value="您还未指定任何共享文件夹。您确定吗？"/>
@@ -2670,6 +2698,7 @@
 	<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口转发。\n\n请配置您的网络到转发 TCP 端口 %i 到您的本地计算机。"/>   
 	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千 bit 每秒，或 &quot;123 KB/s&quot; 千 byte 每秒。"/>
 	<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
+	<string id="16809" value="退出(_X)"/>
 	<string id="16864" value="正在查询主机探索服务..."/>
 	<string id="16865" value="正在查询探索服务 &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache 交易成功 (&quot;%s&quot;)。"/>
@@ -2769,7 +2798,7 @@
 	<string id="17485" value="为 &quot;%s&quot; 接收 BitTorrent 跟踪器回应，%i 个新资源。"/>
 	<string id="17486" value="与 %s 开始 BitTorrent 客户端连合..."/>
 	<string id="17487" value="与 %s 建立 BitTorrent 连合，握手中..."/>
- 	<string id="17488" value="您已经更改此 Torrent 的跟踪器的链接。您确定您希望保存这一更改吗？\n\n一个无效的跟踪器链接可能会妨碍进一步下载。"/>
+	<string id="17488" value="您已经更改此 Torrent 的跟踪器的链接。您确定您希望保存这一更改吗？\n\n一个无效的跟踪器链接可能会妨碍进一步下载。"/>
 	<string id="17489" value="BitTorrent 与 %s 的连合是扩展的协议，识别为 &quot;%s&quot;。"/>
 	<string id="17490" value="接收到 %i 个新的 BitTorrent 资源从 %s。"/>
 	<string id="17491" value="此 torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
@@ -2799,6 +2828,35 @@
 	<string id="19001" value="您必须选择一个用户名和密码。"/>
 	<string id="19002" value="未能接受连接，链接不可用。"/>
 	<string id="20000" value="无 URN 可用"/>
+	<string id="20100" value="连接中"/>
+	<string id="20101" value="请求中"/>
+	<string id="20102" value="回应"/>
+	<string id="20103" value="下载中"/>
+	<string id="20104" value="TigerTree"/>
+	<string id="20105" value="Hashset"/>
+	<string id="20106" value="Metadata"/>
+	<string id="20107" value="繁忙"/>
+	<string id="20108" value="列队"/>
+	<string id="20109" value="已列队"/>
+	<string id="20110" value="未知"/>
+	<string id="20111" value="已完成"/>
+	<string id="20112" value="做种中"/>
+	<string id="20113" value="移动中"/>
+	<string id="20114" value="暂停"/>
+	<string id="20115" value="文件错误"/>
+	<string id="20116" value="不能移动"/>
+	<string id="20117" value="校验中"/>
+	<string id="20118" value="活动"/>
+	<string id="20119" value="挂起"/>
+	<string id="20120" value="搜索中"/>
+	<string id="20121" value="创建中"/>
+	<string id="20122" value="Torrent"/>
+	<string id="20123" value="Tracker 未响应"/>
+	<string id="20124" value="(无资源)"/>
+	<string id="20125" value="已校验"/>
+	<string id="20126" value="未校验"/>
+	<string id="20127" value="个资源"/>
+	<string id="20128" value="个资源"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2813,7 +2871,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="常规">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="常规">
 		<control caption="用户界面(_U):"/>
 		<control caption="Shareaza 启动后自动连接"/>
 		<control caption="系统启动后运行 Shareaza"/>
@@ -2830,20 +2888,22 @@
 		<control/><control/>
 		<control caption="透明度:"/>
 		<control/>
-		<control caption="托盘(_T):"/>
+		<control caption="系统托盘(_T):"/>
 		<control caption="点击关闭时:"/>
 		<control/>
 		<control caption="点击最小化时:"/>
 		<control/>
+		<control caption="在启动搜索时隐藏侧边栏"/>
+		<control/>
 	</dialog>
-	
+
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
 		<control caption="选项(_O):"/>
 		<control caption="记住文件夹视图"/>
 		<control caption="监视收藏文件夹"/>
-		<control caption="保持动态资源筛选"/>
+		<control/>
 		<control caption="按扩展名过滤目标"/>
-		<control caption="保持 Hash 的完整性"/>
+		<control/>
 		<control caption="允许他人浏览共享"/>
 		<control caption="近期文件(_R):"/>
 		<control caption="记住:"/>
@@ -2862,7 +2922,7 @@
 		<control caption="添加(_A)"/>
 		<control caption="移除(_R)"/>
 		<control caption="在这里储存收集(_C):"/>
-	<control/><control/>
+		<control/><control/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="媒体播放器">
@@ -3322,7 +3382,7 @@
 		<control caption="浏览(_B)..."/>
 		<control caption="移除(_R)"/>
 	</dialog>
-	
+
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="最爱">
 		<control/>
 		<control caption="编辑(_E):"/>
@@ -3370,7 +3430,7 @@
 		<control caption="取消"/>
 		<control caption="Shareaza 可以从 web (HTTP) 下载文件，并且支持自动搜索和下载以下类型的 P2P 链接 (Magnet，Gnutella，eDonkey2000，mP2P)。"/>
 		<control caption="Shareaza 也可以下载 BitTorrent 文件。Torrent 可以被描述成 xyz.torrent 文件，或者到 .torrent 文件的 HTTP 链接。只需粘贴 Torrent 的 HTTP 的地址到上面的方框就可以进行下载。如果已经拥有 .torrent 文件，点击打开 Torrent:"/>
-		<control caption="打开 Torrent..."/>
+		<control caption="打开 Torrent(_T)..."/>
 	</dialog>
 
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="新建搜索|重新搜索|在收藏中查找">
@@ -3378,6 +3438,7 @@
 		<control caption="搜索"/>
 		<control caption="取消"/>
 	</dialog>
+
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
@@ -3400,7 +3461,7 @@
 		<control caption="过滤"/>
 		<control caption="取消"/>
 	</dialog>
-	
+
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="探索服务">
 		<control caption="服务地址(_A):"/>
 		<control/>
@@ -3409,6 +3470,7 @@
 		<control caption="确定"/>
 		<control caption="取消"/>
 	</dialog>
+
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="下载 : Shareaza">
 		<control caption="Shareaza 正在下载:"/>
 		<control caption="..."/>
@@ -3582,7 +3644,7 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBums" caption="导出 URI">
+	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="导出 URI">
 		<control/>
 		<control caption="您已经选择 %lu 个文件作为 Shareaza 支持的 URI 导出。请为这些 URI 选择格式，并单击保存:"/>
 		<control/>
@@ -3794,7 +3856,6 @@
 	</dialog>
 </dialogs>
 
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
@@ -3813,10 +3874,12 @@
 		<column from="Speed" to="速度"/>
 		<column from="Status" to="状态"/>
 		<column from="Client" to="客户端"/>
+		<column from="Downloaded" to="已下载"/>
+		<column from="Complete" to="完成"/>
 	</list>
 		<list name="CUploadCtrl">
-		<column from="Uploaded File" to="上传文件"/>
 		<column from="Remote User" to="远程用户"/>
+		<column from="Uploaded File" to="上传文件"/>
 		<column from="Size" to="大小"/>
 		<column from="Progress" to="进程"/>
 		<column from="Speed" to="速度"/>
@@ -3871,7 +3934,7 @@
 		<column from="ASCII" to="ASCII"/>
 		<column from="G1-ID" to="G1-ID"/>
 	</list>
-	<list name="CSearchMonitorWnd"> 
+	<list name="CSearchMonitorWnd">
 		<column from="Search" to="搜索"/>
 		<column from="URN" to="URN"/>
 		<column from="Schema" to="结构"/>
