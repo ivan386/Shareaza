@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,6 @@ public:
 public:
 	CEdit			m_wndSearch;
 	CSchemaCombo	m_wndSchemas;
-	CNetworkCombo	m_wndNetworks;
 	CIconButtonCtrl	m_wndStart;
 	CIconButtonCtrl	m_wndStop;
 	
@@ -73,6 +72,39 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
+class CSearchAdvancedBox : public CTaskBox
+{
+// Construction
+public:
+	CSearchAdvancedBox();
+	virtual ~CSearchAdvancedBox();
+	DECLARE_DYNAMIC(CSearchAdvancedBox)
+
+// Attributes
+public:
+
+	CEdit			m_wndSizeMin;
+	CEdit			m_wndSizeMax;
+	CNetworkCombo	m_wndNetworks;
+	
+// Operations
+public:
+	void	OnSkinChange();
+
+// Overrides
+public:
+	//{{AFX_VIRTUAL(CSearchAdvancedBox)
+	//}}AFX_VIRTUAL
+
+// Implementation
+protected:
+	//{{AFX_MSG(CSearchAdvancedBox)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnPaint();
+	//}}AFX_MSG
+	DECLARE_MESSAGE_MAP()
+};
 
 class CSearchSchemaBox : public CTaskBox
 {
@@ -157,8 +189,10 @@ public:
 	BOOL				m_bSendSearch;
 protected:
 	CSearchInputBox		m_boxSearch;
+	CSearchAdvancedBox	m_boxAdvanced;
 	CSearchSchemaBox	m_boxSchema;
 	CSearchResultsBox	m_boxResults;
+	BOOL				m_bAdvanced;
 
 // Operations
 public:
@@ -194,5 +228,7 @@ protected:
 #define IDC_SEARCH_START	105
 #define IDC_SEARCH_STOP		106
 #define IDC_SEARCH_NETWORKS	107
+#define IDC_SEARCH_SIZEMIN	108
+#define IDC_SEARCH_SIZEMAX	109
 
 #endif // !defined(AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_)

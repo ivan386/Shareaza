@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,6 +58,15 @@ BEGIN_MESSAGE_MAP(CSearchInputBox, CTaskBox)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+IMPLEMENT_DYNAMIC(CSearchAdvancedBox, CTaskBox)
+BEGIN_MESSAGE_MAP(CSearchAdvancedBox, CTaskBox)
+	//{{AFX_MSG_MAP(CSearchAdvancedBox)
+	ON_WM_CREATE()
+	ON_WM_SIZE()
+	ON_WM_PAINT()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
 IMPLEMENT_DYNAMIC(CSearchSchemaBox, CTaskBox)
 BEGIN_MESSAGE_MAP(CSearchSchemaBox, CTaskBox)
 	//{{AFX_MSG_MAP(CSearchSchemaBox)
@@ -81,7 +90,8 @@ END_MESSAGE_MAP()
 
 CSearchPanel::CSearchPanel()
 {
-	m_bSendSearch = FALSE;
+	m_bSendSearch	= FALSE;
+	m_bAdvanced		= FALSE;
 }
 
 CSearchPanel::~CSearchPanel()
@@ -101,15 +111,21 @@ int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CTaskPanel::OnCreate( lpCreateStruct ) == -1 )return -1;
 	
-	BOOL bAdvanced = ( Settings.General.GUIMode != GUI_BASIC ) &&  ( ! Settings.Interface.LowResMode ) ;
+	m_bAdvanced = ( Settings.General.GUIMode != GUI_BASIC ) &&  ( Settings.Search.AdvancedPanel );
 	
-	m_boxSearch.Create( this, bAdvanced ? 188 : 140, _T("Search"), IDR_SEARCHFRAME );
+	m_boxSearch.Create( this, 136, _T("Search"), IDR_SEARCHFRAME );
+	m_boxAdvanced.Create( this, 100, _T("Advanced"), IDR_SEARCHFRAME );
 	m_boxSchema.Create( this, 0, _T("Schema"), IDR_SEARCHFRAME );
 	m_boxResults.Create( this, 80, _T("Results"), IDR_HOSTCACHEFRAME );
 	
 	AddBox( &m_boxSearch );
+	if ( m_bAdvanced ) 
+	{
+		AddBox( &m_boxAdvanced );
+		m_boxAdvanced.Expand( FALSE );
+	}
 	AddBox( &m_boxSchema );
-	if ( bAdvanced ) AddBox( &m_boxResults );
+	if ( m_bAdvanced ) AddBox( &m_boxResults );
 	
 	SetStretchBox( &m_boxSchema );
 	
@@ -133,6 +149,10 @@ void CSearchPanel::OnSkinChange()
 	m_boxSearch.SetWatermark( Skin.GetWatermark( _T("CSearchInputBox") ) );
 	m_boxSearch.SetCaptionmark( Skin.GetWatermark( _T("CSearchInputBox.Caption") ) );
 	m_boxSearch.OnSkinChange();
+
+	m_boxAdvanced.SetWatermark( Skin.GetWatermark( _T("CSearchAdvancedBox") ) );
+	m_boxAdvanced.SetCaptionmark( Skin.GetWatermark( _T("CSearchAdvancedBox.Caption") ) );
+	m_boxAdvanced.OnSkinChange();
 	
 	m_boxSchema.SetWatermark( Skin.GetWatermark( _T("CSearchSchemaBox") ) );
 	m_boxSchema.SetCaptionmark( Skin.GetWatermark( _T("CSearchSchemaBox.Caption") ) );
@@ -158,17 +178,32 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 	
 	m_boxSearch.m_wndSearch.SetWindowText( pSearch->m_pSearch->m_sSearch );
 	m_boxSearch.m_wndSchemas.Select( pSearch->m_pSearch->m_pSchema );
-	
-	if ( m_boxSearch.m_wndNetworks.m_hWnd != NULL )
+
+	if ( m_bAdvanced )
 	{
 		if ( pSearch->m_bAllowG2 && ! pSearch->m_bAllowG1 && ! pSearch->m_bAllowED2K )
-			m_boxSearch.m_wndNetworks.SetNetwork( PROTOCOL_G2 );
+			m_boxAdvanced.m_wndNetworks.SetNetwork( PROTOCOL_G2 );
 		else if ( ! pSearch->m_bAllowG2 && pSearch->m_bAllowG1 && ! pSearch->m_bAllowED2K )
-			m_boxSearch.m_wndNetworks.SetNetwork( PROTOCOL_G1 );
+			m_boxAdvanced.m_wndNetworks.SetNetwork( PROTOCOL_G1 );
 		else if ( ! pSearch->m_bAllowG2 && ! pSearch->m_bAllowG1 && pSearch->m_bAllowED2K )
-			m_boxSearch.m_wndNetworks.SetNetwork( PROTOCOL_ED2K );
+			m_boxAdvanced.m_wndNetworks.SetNetwork( PROTOCOL_ED2K );
 		else
-			m_boxSearch.m_wndNetworks.SetNetwork( PROTOCOL_NULL );
+			m_boxAdvanced.m_wndNetworks.SetNetwork( PROTOCOL_NULL );
+
+
+		CString strSize;
+		if ( pSearch->m_pSearch->m_nMinSize > 0 )
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, FALSE );
+		else
+			strSize.Empty();
+		if ( m_boxAdvanced.m_wndSizeMin.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMin.SetWindowText( strSize );
+
+
+		if ( pSearch->m_pSearch->m_nMaxSize < SIZE_UNKNOWN )
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, FALSE );
+		else
+			strSize.Empty();
+		if ( m_boxAdvanced.m_wndSizeMax.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMax.SetWindowText( strSize );
 	}
 	
 	OnSchemaChange();
@@ -233,33 +268,6 @@ CManagedSearch* CSearchPanel::GetSearch()
 	
 	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
 	
-	if ( m_boxSearch.m_wndNetworks.m_hWnd != NULL )
-	{
-		switch ( m_boxSearch.m_wndNetworks.GetNetwork() )
-		{
-		case PROTOCOL_NULL:
-			pSearch->m_bAllowG2		= TRUE;
-			pSearch->m_bAllowG1		= TRUE;
-			pSearch->m_bAllowED2K	= TRUE;
-			break;
-		case PROTOCOL_G2:
-			pSearch->m_bAllowG2		= TRUE;
-			pSearch->m_bAllowG1		= FALSE;
-			pSearch->m_bAllowED2K	= FALSE;
-			break;
-		case PROTOCOL_G1:
-			pSearch->m_bAllowG2		= FALSE;
-			pSearch->m_bAllowG1		= TRUE;
-			pSearch->m_bAllowED2K	= FALSE;
-			break;
-		case PROTOCOL_ED2K:
-			pSearch->m_bAllowG2		= FALSE;
-			pSearch->m_bAllowG1		= FALSE;
-			pSearch->m_bAllowED2K	= TRUE;
-			break;
-		}
-	}
-	
 	if ( CSchema* pSchema = m_boxSearch.m_wndSchemas.GetSelected() )
 	{
 		pSearch->m_pSearch->m_pSchema	= pSchema;
@@ -273,6 +281,57 @@ CManagedSearch* CSearchPanel::GetSearch()
 	else
 	{
 		Settings.Search.LastSchemaURI.Empty();
+	}
+	if ( m_bAdvanced )
+	{
+		if ( m_boxAdvanced.m_wndNetworks.m_hWnd != NULL )
+		{
+			switch ( m_boxAdvanced.m_wndNetworks.GetNetwork() )
+			{
+			case PROTOCOL_NULL:
+				pSearch->m_bAllowG2		= TRUE;
+				pSearch->m_bAllowG1		= TRUE;
+				pSearch->m_bAllowED2K	= TRUE;
+				break;
+			case PROTOCOL_G2:
+				pSearch->m_bAllowG2		= TRUE;
+				pSearch->m_bAllowG1		= FALSE;
+				pSearch->m_bAllowED2K	= FALSE;
+				break;
+			case PROTOCOL_G1:
+				pSearch->m_bAllowG2		= FALSE;
+				pSearch->m_bAllowG1		= TRUE;
+				pSearch->m_bAllowED2K	= FALSE;
+				break;
+			case PROTOCOL_ED2K:
+				pSearch->m_bAllowG2		= FALSE;
+				pSearch->m_bAllowG1		= FALSE;
+				pSearch->m_bAllowED2K	= TRUE;
+				break;
+			}
+		}
+
+		if ( m_boxAdvanced.m_wndSizeMin.m_hWnd != NULL )
+		{
+			CString strWindowValue;
+
+			m_boxAdvanced.m_wndSizeMin.GetWindowText( strWindowValue );
+			if ( strWindowValue.IsEmpty() || ( _tcsicmp( strWindowValue, _T("any") ) == 0 ) )
+				pSearch->m_pSearch->m_nMinSize = 0;
+			else
+				pSearch->m_pSearch->m_nMinSize = Settings.ParseVolume( strWindowValue, FALSE );
+
+
+			m_boxAdvanced.m_wndSizeMax.GetWindowText( strWindowValue );
+			if ( strWindowValue.IsEmpty() || ( _tcsicmp( strWindowValue, _T("any") ) == 0 )  || ( _tcsicmp( strWindowValue, _T("max") ) == 0 ) )
+				pSearch->m_pSearch->m_nMaxSize = SIZE_UNKNOWN;
+			else
+				pSearch->m_pSearch->m_nMaxSize = Settings.ParseVolume( strWindowValue, FALSE );
+
+			// Check it wasn't invalid
+			if ( pSearch->m_pSearch->m_nMinSize > pSearch->m_pSearch->m_nMaxSize )
+				pSearch->m_pSearch->m_nMaxSize = SIZE_UNKNOWN;
+		}
 	}
 	
 	pSearch->m_pSearch->BuildWordList();
@@ -337,7 +396,11 @@ void CSearchPanel::Enable()
 {
 	m_boxSearch.m_wndSearch.EnableWindow( TRUE );
 	m_boxSearch.m_wndSchemas.EnableWindow( TRUE );
-	if ( m_boxSearch.m_wndNetworks.m_hWnd != NULL ) m_boxSearch.m_wndNetworks.EnableWindow( TRUE );
+
+	m_boxAdvanced.m_wndNetworks.EnableWindow( TRUE );
+	m_boxAdvanced.m_wndSizeMin.EnableWindow( TRUE );
+	m_boxAdvanced.m_wndSizeMax.EnableWindow( TRUE );
+
 	m_boxSchema.m_wndSchema.Enable();
 }
 
@@ -345,7 +408,11 @@ void CSearchPanel::Disable()
 {
 	m_boxSearch.m_wndSearch.EnableWindow( FALSE );
 	m_boxSearch.m_wndSchemas.EnableWindow( FALSE );
-	if ( m_boxSearch.m_wndNetworks.m_hWnd != NULL ) m_boxSearch.m_wndNetworks.EnableWindow( FALSE );
+
+	m_boxAdvanced.m_wndNetworks.EnableWindow( FALSE );
+	m_boxAdvanced.m_wndSizeMin.EnableWindow( FALSE );
+	m_boxAdvanced.m_wndSizeMax.EnableWindow( FALSE );
+
 	m_boxSchema.m_wndSchema.Disable();
 }
 
@@ -383,11 +450,6 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
 	
-	if ( ( Settings.General.GUIMode != GUI_BASIC ) && ( ! Settings.Interface.LowResMode ) )
-	{
-		if ( ! m_wndNetworks.Create( WS_TABSTOP, this, IDC_SEARCH_NETWORKS ) ) return -1;
-	}
-	
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.Create( rc, this, IDC_SEARCH_START );
 	m_wndStart.SetWindowText( strCaption );
@@ -409,18 +471,6 @@ void CSearchInputBox::OnSkinChange()
 {
 	CString strCaption;
 	
-	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
-	//m_wndSchemas.Load( Settings.Search.LastSchemaURI );
-
-	CString sSchema = m_wndSchemas.GetSelectedURI();
-	if( sSchema.GetLength() > 0 )
-		m_wndSchemas.Load( sSchema );
-	else
-		m_wndSchemas.Load( NULL ); //m_wndSchemas.Load( Settings.Search.LastSchemaURI );
-		
-
-	if ( m_wndNetworks.m_hWnd != NULL ) m_wndNetworks.OnSkinChange();
-	
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.SetWindowText( strCaption );
 	m_wndStart.SetIcon( CoolInterface.ExtractIcon( ID_SEARCH_SEARCH ) );
@@ -434,22 +484,14 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 {
 	CTaskBox::OnSize( nType, cx, cy );
 	
-	HDWP hDWP = BeginDeferWindowPos( 5 );
+	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27, cx - BOX_MARGIN * 2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 71, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
 	
-	if ( m_wndNetworks.m_hWnd != NULL )
-	{
-		DeferWindowPos( hDWP, m_wndNetworks, NULL, BOX_MARGIN, 118, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 152, 94, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 52, 152, 52, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-	}
-	else
-	{
-		DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 106, 94, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 52, 106, 52, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-	}
+	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 94, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 52, 102, 52, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
+
 	
 	EndDeferWindowPos( hDWP );
 }
@@ -488,17 +530,9 @@ void CSearchInputBox::OnPaint()
 	pDC->ExcludeClipRect( &rct );
 
 	LoadString( str, IDS_SEARCH_PANEL_INPUT_2 );
-	rct.OffsetRect( 0, 54 - rct.top );
+	rct.OffsetRect( 0, 50 - rct.top );
 	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
 	pDC->ExcludeClipRect( &rct );
-	
-	if ( m_wndNetworks.m_hWnd != NULL )
-	{
-		LoadString( str, IDS_SEARCH_PANEL_INPUT_3 );
-		rct.OffsetRect( 0, 102 - rct.top );
-		pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
-		pDC->ExcludeClipRect( &rct );
-	}
 	
 	pDC->SelectObject( pOldFont );
 	
@@ -542,6 +576,120 @@ void CSearchInputBox::OnSearchStop()
 		pTarget->PostMessage( WM_COMMAND, ID_SEARCH_CLEAR );
 	else
 		pTarget->PostMessage( WM_COMMAND, ID_SEARCH_STOP );
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CSearchAdvancedBox construction
+
+CSearchAdvancedBox::CSearchAdvancedBox()
+{
+}
+
+CSearchAdvancedBox::~CSearchAdvancedBox()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CSearchAdvancedBox message handlers
+
+int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+{
+	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	
+	CRect rc( 0, 0, 0, 0 );
+	CString strCaption;
+
+	if ( ! m_wndNetworks.Create( WS_TABSTOP, this, IDC_SEARCH_NETWORKS ) ) return -1;
+
+	if ( ! m_wndSizeMin.Create( WS_TABSTOP, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
+	m_wndSizeMin.SetFont( &theApp.m_gdiFont );
+	m_wndSizeMin.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+
+	if ( ! m_wndSizeMax.Create( WS_TABSTOP, rc, this, IDC_SEARCH_SIZEMAX ) ) return -1;
+	m_wndSizeMax.SetFont( &theApp.m_gdiFont );
+	m_wndSizeMax.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+	
+	return 0;
+}
+
+void CSearchAdvancedBox::OnSkinChange()
+{
+	if ( m_wndNetworks.m_hWnd != NULL ) m_wndNetworks.OnSkinChange();
+}
+
+void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy) 
+{
+	CTaskBox::OnSize( nType, cx, cy );
+	
+	HDWP hDWP = BeginDeferWindowPos( 3 );
+
+	if ( m_wndNetworks.m_hWnd != NULL )
+		DeferWindowPos( hDWP, m_wndNetworks, NULL, BOX_MARGIN, 27, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
+		
+	if ( m_wndSizeMin.m_hWnd != NULL )
+	{
+		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
+	}
+	
+	EndDeferWindowPos( hDWP );
+}
+
+void CSearchAdvancedBox::OnPaint() 
+{
+	CPaintDC dc( this );
+	CRect rc, rct;
+	CString strControlTitle;
+	
+	UINT nFlags = ETO_CLIPPED;
+	CDC* pDC = &dc;
+	
+	GetClientRect( &rc );
+	
+	if ( m_bmWatermark.m_hObject != NULL )
+	{
+		pDC = CoolInterface.GetBuffer( dc, rc.Size() );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
+		pDC->SetBkMode( TRANSPARENT );
+	}
+	else
+	{
+		pDC->SetBkMode( OPAQUE );
+		pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
+		nFlags |= ETO_OPAQUE;
+	}
+	
+	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
+	
+	pDC->SetTextColor( 0 );
+	
+	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_3 );
+	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN, BOX_MARGIN + 16 );
+	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
+	pDC->ExcludeClipRect( &rct );
+
+	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_4 );
+	rct.OffsetRect( 0, 54 - rct.top );
+	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
+	pDC->ExcludeClipRect( &rct );
+
+	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_5 );
+	rct.OffsetRect( ( rc.Width() / 2 ) - ( BOX_MARGIN * 2 ) , 18 );
+	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
+	pDC->ExcludeClipRect( &rct );
+	
+	pDC->SelectObject( pOldFont );
+	
+	if ( pDC != &dc )
+	{
+		dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
+		pDC->SelectClipRgn( NULL );
+	}
+	else
+	{
+		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
