@@ -420,7 +420,8 @@ void CSearchInputBox::OnSkinChange()
 	if( sSchema.GetLength() > 0 )
 		m_wndSchemas.Load( sSchema );
 	else
-		m_wndSchemas.Load( Settings.Search.LastSchemaURI );
+		m_wndSchemas.Load( NULL ); //m_wndSchemas.Load( Settings.Search.LastSchemaURI );
+		
 
 	if ( m_wndNetworks.m_hWnd != NULL ) m_wndNetworks.OnSkinChange();
 	
