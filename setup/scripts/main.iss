@@ -300,6 +300,10 @@ Type: filesandordirs; Name: "{app}\Remote"
 Type: filesandordirs; Name: "{app}\Skins\Languages"; Components: not language
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"; Components: not language
 
+; Delete old Shareaza installers
+Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}\Shareaza*.exe"; Tasks: multiuser
+Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}\Shareaza*.exe"; Tasks: not multiuser
+
 [UninstallDelete]
 ; Clean up files created after installation
 Type: filesandordirs; Name: "{app}\Data"
