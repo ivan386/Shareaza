@@ -753,12 +753,12 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
 				{
 					CopyMemory( &m_pSHA1, &pItem->m_pBuffer[1], 20 );
-					m_bSHA1 = TRUE;
+					m_bSHA1 = ! CSHA::IsNull(&m_pSHA1);
 				}
 				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
 				{
 					CopyMemory( &m_pTiger, &pItem->m_pBuffer[21], 24 );
-					m_bTiger = TRUE;
+					m_bTiger = ! CTigerNode::IsNull(&m_pTiger);
 				}
 			}
 			else if ( CGGEPItem* pItem = pGGEP.Find( _T("u"), 5 + 32 ) )
@@ -834,20 +834,21 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 			
 			if ( nPacket >= 20 && strURN == _T("sha1") )
 			{
-				m_bSHA1 = TRUE;
 				pPacket->Read( &m_pSHA1, sizeof(SHA1) );
+				m_bSHA1 = ! CSHA::IsNull(&m_pSHA1);
 			}
 			else if ( nPacket >= 44 && ( strURN == _T("bp") || strURN == _T("bitprint") ) )
 			{
-				m_bSHA1 = TRUE;
 				pPacket->Read( &m_pSHA1, sizeof(SHA1) );
-				m_bTiger = TRUE;
+				m_bSHA1 = ! CSHA::IsNull(&m_pSHA1);
+
 				pPacket->Read( &m_pTiger, sizeof(TIGEROOT) );
+				m_bTiger = ! CTigerNode::IsNull(&m_pTiger);
 			}
 			else if ( nPacket >= 24 && ( strURN == _T("ttr") || strURN == _T("tree:tiger/") ) )
 			{
-				m_bTiger = TRUE;
 				pPacket->Read( &m_pTiger, sizeof(TIGEROOT) );
+				m_bTiger = ! CTigerNode::IsNull(&m_pTiger);
 			}
 			else if ( nPacket >= 16 && strURN == _T("ed2k") )
 			{
