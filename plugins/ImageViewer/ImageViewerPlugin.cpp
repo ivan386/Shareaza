@@ -367,7 +367,7 @@ void CImageViewerPlugin::RemoveWindow(CImageWindow* pWindow)
 			return;
 		}
 		
-		ppPrev = &pWindow->m_pNext;
+		ppPrev = &pSeek->m_pNext;
 	}
 }
 
