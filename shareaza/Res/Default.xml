@@ -409,12 +409,13 @@
 			<item id="ID_TAB_SEARCH" text="_Search"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Se_curity"/>
-			<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
-			<separator/>
 			<menu text="_Advanced">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
+				<separator/>
+				<item id="ID_VIEW_SECURITY" text="Se_curity"/>
+				<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
+				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="_Normal Mode"/>
@@ -862,15 +863,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
@@ -893,9 +894,9 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
+		<!-- <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/>
-		<separator/>
+		<separator/> -->
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -913,9 +914,9 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
@@ -926,9 +927,9 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Clear"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Clear"/> -->
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Resume All"/>
@@ -957,9 +958,9 @@
 	<menu name="CUploadsWnd.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
 	<menu name="CUploadsWnd">
 		<item id="ID_UPLOADS_START" text="_Start Now"/>
@@ -968,9 +969,9 @@
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
 		<item id="ID_SECURITY_BAN" text="B_an User"/>
-		<separator/>
+		<!-- <separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Show All"/>
