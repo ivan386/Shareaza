@@ -1903,6 +1903,19 @@
 		a list of downloader peers.</text>
 	</document>
 	
+	<!-- Search help documents -->
+	
+	<document name="SearchHelp.BadSearch">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search is poorly formatted, and may not function correctly. 
+		Searches should include several terms where possible, and should specify a schema 
+		(file type). Furthermore, searches must not be limited to numbers or negative
+		terms only, and you should avoid overly general queries.</text>
+		<newline gap="8"/>
+		<text> Most clients on the network will ignore a search for all MP3 files, for 		example, because it is not specific enough and would generate too many results.</text>
+	</document>
+	
 </documents>
 
 <!-- Navigation Bar -->
