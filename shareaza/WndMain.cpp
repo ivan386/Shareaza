@@ -359,37 +359,22 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockControlBar( &m_wndMonitorBar, AFX_IDW_DOCKBAR_TOP );
 	
 	// Default Size
-	HMONITOR hMonitor = NULL;
-	CRect rcMonitor( 0, 0, 0, 0 );
-
+	int iXSize, iYSize;
 	if (GetSystemMetrics( SM_CMONITORS ) > 1)
-	{
-		CRect rc;
-		GetWindowRect( &rc );
-		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
-
-		if (NULL != hMonitor)
-		{
-			MONITORINFO mi = {0};
-			mi.cbSize = sizeof(MONITORINFO);
-
-			if ( GetMonitorInfoA(hMonitor, &mi) )
-				rcMonitor = mi.rcWork;
-			else
-				hMonitor = NULL; // Fall back to GetSystemMetrics
-		}
+	{	// Multi Monitor
+		iXSize = GetSystemMetrics( SM_CXVIRTUALSCREEN );
+		iYSize = GetSystemMetrics( SM_CYVIRTUALSCREEN );
+	}
+	else
+	{	// Single Monitor
+		iXSize = GetSystemMetrics( SM_CXSCREEN );
+		iYSize = GetSystemMetrics( SM_CYSCREEN );
 	}
 
-	if ( NULL == hMonitor )
-	{	// Unimon system or something is wrong with multimon
-		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );
-		rcMonitor.bottom = GetSystemMetrics( SM_CYSCREEN );
-	}
-
-	SetWindowPos( NULL, rcMonitor.right  * 1 / 10,
-						rcMonitor.bottom * 1 / 10,
-						rcMonitor.right  * 8 / 10,
-						rcMonitor.bottom * 8 / 10, 0 );
+	SetWindowPos( NULL, iXSize  * 1 / 10,
+						iYSize * 1 / 10,
+						iXSize  * 8 / 10,
+						iYSize * 8 / 10, 0 );
 	/*
 	SetWindowPos( NULL,	GetSystemMetrics( SM_CXSCREEN ) * 1 / 10,
 						GetSystemMetrics( SM_CYSCREEN ) * 1 / 10,
