@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/03/23 18:59:19 $"
-//	Revision:		"$Revision: 1.17 $"
+//	Date:			"$Date: 2005/03/24 20:02:46 $"
+//	Revision:		"$Revision: 1.18 $"
 //  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1068,7 +1068,7 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 	int nHex;						// The hex code of the character we found
 	
 	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
-	LPTSTR pszBytes = new TCHAR[ _tcslen( pszInput ) + 1 ];
+	LPTSTR pszBytes = strOutput.GetBuffer( _tcslen( pszInput ) );
 
 	// Point the output string pointer at this array
 	LPTSTR pszOutput = pszBytes;
@@ -1110,7 +1110,7 @@ CString CConnection::URLDecodeUnicode(LPCTSTR pszInput)
 	// End the output text with a null terminator
 	*pszOutput = 0;
 	// Put the output into a CString
-	strOutput = pszBytes;
+	strOutput.ReleaseBuffer();
 	// Return the output string
 	return strOutput;
 }
