@@ -133,6 +133,12 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_wndG2ClientMode.SetItemData( 1, MODE_LEAF );
 	m_wndG2ClientMode.SetItemData( 2, MODE_HUB );
 
+	//********************					Temp- until UP mode fixed
+	Settings.Gnutella1.ClientMode = MODE_LEAF;
+	m_wndG1ClientMode.EnableWindow( FALSE ); 
+	m_wndG1ClientMode.SetCurSel( MODE_LEAF );
+	//********************
+
 	if ( ! theApp.m_bNT )
 	{	//Win9x systems cannot handle G2 hub mode
 		Settings.Gnutella2.ClientMode = MODE_LEAF;

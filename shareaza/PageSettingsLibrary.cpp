@@ -63,8 +63,8 @@ CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPag
 	m_nRecentTotal = 0;
 	m_bStoreViews = FALSE;
 	m_bSchemaTypes = FALSE;
-	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
 	m_bBrowseFiles = FALSE;
+	m_bHighPriorityHash = FALSE;
 	m_sCollectionPath = _T("");
 	//}}AFX_DATA_INIT
 }
@@ -92,7 +92,6 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_SCHEMA_TYPES, m_bSchemaTypes);
 	DDX_Check(pDX, IDC_BROWSE_FILES, m_bBrowseFiles);
 	DDX_Check(pDX, IDC_HIGH_HASH, m_bHighPriorityHash);
-	//DDX_Check(pDX, IDC_HASH_INTEGRITY, m_bHashIntegrity);
 	DDX_Control(pDX, IDC_COLLECTIONS_BROWSE, m_wndCollectionPath);
 	DDX_Text(pDX, IDC_COLLECTIONS_FOLDER, m_sCollectionPath);
 	//}}AFX_DATA_MAP
@@ -107,15 +106,16 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	
 	m_bStoreViews		= Settings.Library.StoreViews;
 	m_bWatchFolders		= Settings.Library.WatchFolders;
-	//m_bSourceMesh		= Settings.Library.SourceMesh;
 	m_bSchemaTypes		= Settings.Search.SchemaTypes;
-	//m_bHashIntegrity	= Settings.General.HashIntegrity;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
-	
+	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
+
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
 	m_nRecentDays		= Settings.Library.HistoryDays;
 
 	m_sCollectionPath	= Settings.Downloads.CollectionPath;
+
+	
 
 	CString strList;
 	
@@ -259,7 +259,6 @@ void CLibrarySettingsPage::OnOK()
 	Settings.Library.WatchFolders	= m_bWatchFolders;
 	Settings.Search.SchemaTypes		= m_bSchemaTypes;
 	Settings.Community.ServeFiles	= m_bBrowseFiles;
-	//Settings.General.HashIntegrity	= m_bHashIntegrity;
 	Settings.Library.HighPriorityHash=m_bHighPriorityHash;
 
 	Settings.Library.HistoryTotal	= m_nRecentTotal;

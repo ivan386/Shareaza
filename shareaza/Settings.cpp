@@ -395,6 +395,9 @@ CSettings::CSettings()
 	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
 	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
 	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+
+
+	Gnutella1.ClientMode = MODE_LEAF; //Temp- until hub fixed
 }
 
 CSettings::~CSettings()
