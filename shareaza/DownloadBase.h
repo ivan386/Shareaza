@@ -66,6 +66,7 @@ public:
 	virtual BOOL	IsMoving() const = 0;
 	virtual BOOL	IsCompleted() const = 0;
 	virtual BOOL	IsTasking() { return m_pTask != NULL; }
+	virtual BOOL	IsTrying() const = 0;
 public:
 	void			SetModified();
 protected:

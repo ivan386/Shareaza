@@ -202,7 +202,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	
 	if ( m_pTask != NULL ) return FALSE;
 	
-	BOOL bLive = ( ! IsPaused() ) && ( Network.IsConnected() );
+	BOOL bLive = ( ! IsPaused() ) && ( IsTrying() ) && ( Network.IsConnected() );
 	
 	if ( bLive && ! m_bTorrentStarted )
 	{
