@@ -128,6 +128,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella1.PongCount, 1, 1, 64 );
 	
 	AddSetting( &Settings.Gnutella2.EnableAlways, 1, 0, 1 );
+	AddSetting( &Settings.Gnutella2.PingRelayLimit, 1, 10, 30);
 	AddSetting( &Settings.Gnutella2.UdpMTU, 1, 16, 10240 );
 	AddSetting( &Settings.Gnutella2.UdpBuffers, 1, 16, 2048 );
 	AddSetting( &Settings.Gnutella2.UdpInFrames, 1, 16, 2048 );

@@ -264,6 +264,7 @@ public:
 		int			NumHubs;
 		int			NumLeafs;
 		int			NumPeers;
+		int			PingRelayLimit;				// Number of other leafs to forward a /PI/UDP to: 10 - 30
 		DWORD		UdpMTU;
 		DWORD		UdpBuffers;
 		DWORD		UdpInFrames;

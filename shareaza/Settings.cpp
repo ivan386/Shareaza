@@ -229,6 +229,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.NumHubs"), &Gnutella2.NumHubs, 2 );
 	Add( _T("Gnutella2.NumLeafs"), &Gnutella2.NumLeafs, 300 );
 	Add( _T("Gnutella2.NumPeers"), &Gnutella2.NumPeers, 6 );
+	Add( _T("Gnutella2.PingRelayLimit"), &Gnutella2.PingRelayLimit, 10);
 	Add( _T("Gnutella2.UdpMTU"), &Gnutella2.UdpMTU, 500 );
 	Add( _T("Gnutella2.UdpBuffers"), &Gnutella2.UdpBuffers, 512 );
 	Add( _T("Gnutella2.UdpInFrames"), &Gnutella2.UdpInFrames, 256 );
