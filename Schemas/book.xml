@@ -451,6 +451,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <typeFilter>
                <type extension="cbr"/>
                <type extension="cbz"/>
+               <type extension="chm"/>
                <type extension="doc"/>
                <type extension="htm"/>
                <type extension="html"/>
