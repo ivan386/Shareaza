@@ -2651,6 +2651,7 @@ Other:
     <string id="16373" value="Fichiers partiels"/>
     <string id="16374" value="Nouvelle queue"/>
     <string id="16375" value="Partiel"/>
+	<string id="16376" value="Fichiers Complétés"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnêes de %i fichiers, voulez-vous continuer?"/>
 	<string id="16386" value="Edition des métadonnêes de %i fichiers."/>
