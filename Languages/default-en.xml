@@ -2293,11 +2293,11 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Display legend."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Select and configure items to graph..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Open a new graph window..."/>
-	<tip id="ID_TRAY_OPEN" message="Open the Shareaza window."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Access the selected download source(s) and attempt to download."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Disconnect the selected download transfer(s)."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Disconnect and forget the selected download source(s)."/>
+	<tip id="ID_TRAY_OPEN" message="Open the Shareaza window."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatically clear uploads which have been completed."/>
 	<tip id="ID_UPLOADS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Clear the selected upload(s) from the list."/>
