@@ -197,15 +197,15 @@ br.icons_downloads=Downloads
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
-fr.components_languages=Languages
-fr.tasks_allusers=All users
-fr.tasks_selectusers=Install %1 for:
-fr.tasks_currentuser=%1 only
-fr.tasks_multisetup=Enable multi-user support
-fr.run_skinexe=Running skin installation...
-fr.reg_incomingchat=Incoming chat message
+fr.components_languages=Langages
+fr.tasks_allusers=Tous les utilisateurs
+fr.tasks_selectusers=Installer %1 pour:
+fr.tasks_currentuser=%1 seulement
+fr.tasks_multisetup=Activer le support multi-utilisateurs
+fr.run_skinexe=Installation de la skin en cours...
+fr.reg_incomingchat=Réception d'un message chat
 fr.reg_apptitle=Shareaza Ultimate File Sharing
-fr.icons_license=License
-fr.icons_uninstall=Uninstall
-fr.icons_downloads=Downloads
+fr.icons_license=Licence
+fr.icons_uninstall=Désinstaller
+fr.icons_downloads=Téléchargements
 
