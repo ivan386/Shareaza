@@ -1148,7 +1148,10 @@ void CMainWnd::UpdateMessages()
 		}
 		else
 		{
-			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+			if (  Neighbours.IsHub() )
+				LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB );
+			else
+				LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
 			strMessage.Format( strFormat, nCount,
 								(LPCTSTR)Settings.SmartVolume( nLocalVolume, TRUE ) );
 		}
