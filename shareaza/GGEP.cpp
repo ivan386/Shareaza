@@ -171,7 +171,9 @@ BYTE CGGEPBlock::ReadByte()
 {
 	if ( m_nInput < 1 ) AfxThrowUserException();
 	m_nInput--;
-	return *m_pInput++;
+	BYTE result = *m_pInput;
+	m_pInput+= 2;
+	return result;
 }
 
 //////////////////////////////////////////////////////////////////////
