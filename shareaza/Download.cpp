@@ -366,7 +366,9 @@ void CDownload::OnRun()
 		}
 	}
 	
-	if ( tNow > m_tSaved && tNow - m_tSaved >= Settings.Downloads.SaveInterval )
+	// Don't save Downloads with many sources too often since it's slow
+	if ( tNow - m_tSaved >=
+		( m_nSourceCount > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
 	{
 		if ( m_pFile != NULL && m_pFile->Flush() )
 		{
