@@ -277,7 +277,7 @@ fr.reg_apptitle=Shareaza Ultimate File Sharing
 fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
-fr.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+fr.dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre?
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
