@@ -370,6 +370,16 @@ BOOL CBTClient::OnHandshake1()
 			Close();
 			return FALSE;
 		}
+
+		// Check we don't have too many active torrent connections 
+		// (Prevent routers overloading for very popular torrents)
+		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections + 10 ) ) 
+		{
+			theApp.Message( MSG_ERROR, _T("Could not accept BitTorrent coupling from %s, maximum connections reached"), (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+
 	}
 	
 	// Verify a download and hash
@@ -426,15 +436,20 @@ BOOL CBTClient::OnHandshake2()
 	{
 		ASSERT( m_pDownloadTransfer == NULL );
 		
-		
-		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
-		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
-		if ( m_pDownloadTransfer == NULL )
+		if ( m_pDownload->m_nStartTorrentDownloads != dtNever ) 
 		{
-			m_pDownload = NULL;
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
-			Close();
-			return FALSE;
+			// Download from uploaders, unless the user has turned off downloading for this torrent
+		
+			m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
+			// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
+			// May just be clients sending duplicate connection requests, though...
+			if ( m_pDownloadTransfer == NULL )
+			{
+				m_pDownload = NULL;
+				theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+				Close();
+				return FALSE;
+			}
 		}
 	}
 	
