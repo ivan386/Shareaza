@@ -11,7 +11,7 @@
 ; $jrsoftware: issrc/Files/Default.isl,v 1.58 2004/04/07 20:17:13 jr Exp $
 
 [LangOptions]
-LanguageName=Español
+LanguageName=Espa<00F1>ol
 LanguageID=$1034
 LanguageCodePage=0
 ; If the language you are translating to requires special font faces or
