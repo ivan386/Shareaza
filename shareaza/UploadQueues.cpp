@@ -26,7 +26,7 @@
 #include "UploadQueue.h"
 #include "UploadTransfer.h"
 #include "Transfers.h"
-
+#include "Skin.h"
 #include "SharedFile.h"
 #include "Download.h"
 
@@ -442,11 +442,12 @@ void CUploadQueues::CreateDefault()
 	CUploadQueue* pQueue = NULL;
 	
 	Clear();
+	CString strQueueName;
 	
 	if ( Settings.Connection.OutSpeed > 800 )  // 800 Kb/s (Massive connection)
 	{
-
-		pQueue						= Create( _T("eDonkey Partials") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_bPartial			= TRUE;
@@ -456,7 +457,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 
-		pQueue						= Create( _T("eDonkey Core") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 2000;
@@ -465,7 +467,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		
-		pQueue						= Create( _T("Partial Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
@@ -474,7 +477,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		
-		pQueue						= Create( _T("Small Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		//pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
@@ -482,7 +486,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
-		pQueue						= Create( _T("Medium Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 1  * 1024 * 1024 + 1;
@@ -491,7 +496,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
-		pQueue						= Create( _T("Large Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
@@ -503,7 +509,8 @@ void CUploadQueues::CreateDefault()
 	}
 	else if ( Settings.Connection.OutSpeed > 200 )  // >200 Kb/s (Good Broadband)
 	{
-		pQueue						= Create( _T("eDonkey Core") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 2000;
@@ -512,7 +519,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		
-		pQueue						= Create( _T("Partial Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
@@ -521,7 +529,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		
-		pQueue						= Create( _T("Small Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxSize			= 1 * 1024 * 1024;
@@ -529,7 +538,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
-		pQueue						= Create( _T("Medium Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 1  * 1024 * 1024 + 1;
@@ -538,7 +548,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;
 		
-		pQueue						= Create( _T("Large Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
@@ -550,7 +561,8 @@ void CUploadQueues::CreateDefault()
 	}
 	else if ( Settings.Connection.OutSpeed > 120 )  // >120 Kb/s (Average Broadband)
 	{
-		pQueue						= Create( _T("eDonkey Core") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 2000;
@@ -559,7 +571,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		
-		pQueue						= Create( _T("Partial Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
@@ -568,7 +581,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 	
-		pQueue						= Create( _T("Small Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
@@ -576,7 +590,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
 		
-		pQueue						= Create( _T("Large Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
@@ -588,7 +603,8 @@ void CUploadQueues::CreateDefault()
 	}
 	else if ( Settings.Connection.OutSpeed > 40 ) // >40 Kb/s (Slow Broadband/ISDN)
 	{
-		pQueue						= Create( _T("eDonkey Core") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 500;
@@ -597,7 +613,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
 		
-		pQueue						= Create( _T("Partial Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_bPartial			= TRUE;
@@ -607,7 +624,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
 		
-		pQueue						= Create( _T("Complete Files") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HISTORY );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 15;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nCapacity			= 8;
@@ -618,7 +636,8 @@ void CUploadQueues::CreateDefault()
 	}
 	else  // <40 Kb/s (Dial up modem)
 	{
-		pQueue						= Create( _T("eDonkey Core") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_CORE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nCapacity			= 500;
@@ -627,7 +646,8 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
 		
-		pQueue						= Create( _T("Queue") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_QUEUE );
+		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nCapacity			= 5;
@@ -645,11 +665,13 @@ void CUploadQueues::CreateDefault()
 
 void CUploadQueues::Validate()
 {
+	CString strQueueName;
 	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, TRUE ) == NULL &&
 		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, TRUE ) == NULL &&
 		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, TRUE ) == NULL )
 	{
-		CUploadQueue* pQueue		= Create( _T("eDonkey Guard") );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_GUARD );
+		CUploadQueue* pQueue		= Create( strQueueName );
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 5;

@@ -156,10 +156,6 @@ BOOL CShareazaApp::InitInstance()
 		AdultFilter.Load();
 	dlgSplash->Step( _T("Scheduler") );
 		Schedule.Load();
-	dlgSplash->Step( _T("Download Manager") );
-		Downloads.Load();
-	dlgSplash->Step( _T("Upload Manager") );
-		UploadQueues.Load();
 	dlgSplash->Step( _T("Rich Documents") );
 		Emoticons.Load();
 	dlgSplash->Step( _T("GUI") );
@@ -179,7 +175,12 @@ BOOL CShareazaApp::InitInstance()
 		m_pMainWnd->ShowWindow( SW_SHOW );
 		m_pMainWnd->UpdateWindow();
 	}
-	
+	// From this point translations are available and LoadString returns correct strings
+	dlgSplash->Step( _T("Download Manager") ); 
+		Downloads.Load();
+	dlgSplash->Step( _T("Upload Manager") );
+		UploadQueues.Load();
+
 	dlgSplash->Step( _T("IPC") );
 		DDEServer.Create();
 		IEProtocol.Create();

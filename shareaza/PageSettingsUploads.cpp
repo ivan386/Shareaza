@@ -260,7 +260,9 @@ void CUploadsSettingsPage::OnDblClkQueues(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CUploadsSettingsPage::OnQueueNew() 
 {
-	CUploadQueue* pQueue = UploadQueues.Create( _T("New Queue"), TRUE );
+	CString strQueueName;
+	LoadString( strQueueName, IDS_UPLOAD_QUEUE_NEW );
+	CUploadQueue* pQueue = UploadQueues.Create( strQueueName, TRUE );
 	UpdateQueues();
 	
 	CQueuePropertiesDlg dlg( pQueue, TRUE, this );

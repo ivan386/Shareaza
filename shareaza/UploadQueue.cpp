@@ -115,7 +115,8 @@ CString CUploadQueue::GetCriteriaString() const
 	if ( m_bPartial )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		str1 += _T("Partial");
+		LoadString( str2, IDS_UPLOAD_QUEUE_PARTIAL );
+		str1 += str2;
 	}
 	
 	// ADD: Release states

@@ -961,24 +961,27 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 			
 		case UPLOAD_COLUMN_SPEED:
 			if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
-				strText = _T("Complete");
+				LoadString( strText, IDS_STATUS_COMPLETED );
 			else if ( pTransfer->m_nProtocol == PROTOCOL_BT )
 			{
 				CUploadTransferBT* pBT = (CUploadTransferBT*)pTransfer;
 				
 				if ( ! pBT->m_bInterested )
-					strText = _T("Uninterested");
+					LoadString( strText, IDS_STATUS_UNINTERESTED );
 				else if ( pBT->m_bChoked )
-					strText = _T("Choked");
+					LoadString( strText, IDS_STATUS_CHOKED );
 				else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
 					strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 			}
 			else if ( nPosition > 0 )
-				strText.Format( _T("Q %i"), nPosition );
+			{
+				LoadString( strText, IDS_STATUS_Q );
+				strText.Format( _T("%s %i"), strText, nPosition );
+			}
 			else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
 				strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
 			else
-				strText = _T("Next");
+				LoadString( strText, IDS_STATUS_NEXT );
 			break;
 			
 		case UPLOAD_COLUMN_CLIENT:
