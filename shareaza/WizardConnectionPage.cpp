@@ -27,6 +27,7 @@
 #include "WizardConnectionPage.h"
 #include "UploadQueues.h"
 #include "Skin.h"
+#include "DlgHelp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -268,7 +269,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed > 256 && theApp.m_bNT )
+	if ( nSpeed > 256 && theApp.m_bNT && !theApp.m_bLimitedConnections )
 	{
 		Settings.Downloads.MaxFiles			= 32;
 		Settings.Downloads.MaxTransfers		= 128;
@@ -288,6 +289,21 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	}
 	
 	UploadQueues.CreateDefault();
+
+	if ( theApp.m_bLimitedConnections ) 
+	{	//Window XP Service Pack 2
+		theApp.Message( MSG_ERROR, _T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced.") );
+		Settings.Downloads.ConnectThrottle	= max( Settings.Downloads.ConnectThrottle, 2000 );
+		Settings.Gnutella.ConnectFactor		= min( Settings.Downloads.ConnectThrottle, 2 );
+		Settings.Gnutella2.NumHubs			= min( Settings.Gnutella2.NumHubs, 2 );
+		Settings.Gnutella1.EnableAlways		= FALSE;
+		Settings.Gnutella1.EnableToday		= FALSE;
+		Settings.Downloads.MaxFileSearches	= 1;
+		//Settings.Connection.TimeoutConnect	= 30000;
+		Settings.Connection.TimeoutHandshake= 60000;
+
+		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
+	}
 	
 	return 0;
 }
