@@ -1433,7 +1433,7 @@ void CMainWnd::OnNetworkG1()
 void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI) 
 {
 	pCmdUI->SetCheck( Settings.eDonkey.EnableToday );
-	pCmdUI->Enable( (Settings.Bandwidth.Uploads >= 2048)||(Settings.Bandwidth.Uploads == 0) );
+	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
 }
 
 void CMainWnd::OnNetworkED2K() 
@@ -1444,7 +1444,7 @@ void CMainWnd::OnNetworkED2K()
 	}
 	else
 	{
-		Settings.eDonkey.EnableToday = TRUE;
+		Settings.eDonkey.EnableToday = Settings.GetOutgoingBandwidth() >= 2;
 		Network.Connect( TRUE );
 	}
 }

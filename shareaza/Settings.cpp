@@ -391,24 +391,6 @@ CSettings::CSettings()
 
 	// Add all settings
 	Setup();
-
-	// Enforce a few sensible values (in case of registry fiddling)
-	Downloads.SearchPeriod = min( Downloads.SearchPeriod, 5*60 );
-	Downloads.StarveTimeout = max( Downloads.StarveTimeout, 45*60 );
-	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
-	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
-	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
-	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
-
-	// Reset ed2k if bandwidth is too low
-	if ( (Settings.Bandwidth.Uploads < 2048) && ( Settings.Bandwidth.Uploads != 0 ) ) 
-	{
-		Settings.eDonkey.EnableToday = FALSE;
-		Settings.eDonkey.EnableAlways = FALSE;
-	}
-
-	//Temporary- until G1 ultrapeer has been updated
-	Gnutella1.ClientMode = MODE_LEAF; 
 }
 
 CSettings::~CSettings()
@@ -478,14 +460,37 @@ void CSettings::Load()
 		pRegistry.SetInt( _T("Settings"), _T("Running"), TRUE );
 	}
 	
+	// Set current networks
 	Gnutella1.EnableToday	= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday	= Gnutella2.EnableAlways;
 	eDonkey.EnableToday		= eDonkey.EnableAlways;
 	
+	// Make sure some needed paths exist
 	CreateDirectory( General.Path + _T("\\Data"), NULL );
 	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
 
 	Interface.LowResMode	= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
+
+	// Enforce a few sensible values (in case of registry fiddling)
+	Downloads.SearchPeriod = min( Downloads.SearchPeriod, 5*60 );
+	Downloads.StarveTimeout = max( Downloads.StarveTimeout, 45*60 );
+	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
+	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
+	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
+	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
+
+	// Reset certain network variables if bandwidth is too low
+	// Set ed2k
+	if ( GetOutgoingBandwidth() < 2 ) 
+	{
+		eDonkey.EnableToday = FALSE;
+		eDonkey.EnableAlways = FALSE;
+	}
+	// Set number of torrents
+	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
+
+	//Temporary- until G1 ultrapeer has been updated
+	Gnutella1.ClientMode = MODE_LEAF; 
 }
 
 void CSettings::Save(BOOL bShutdown)
@@ -944,6 +949,17 @@ QWORD CSettings::ParseVolume(LPCTSTR psz, BOOL bSpeedInBits)
 	{
 		return (QWORD)val;
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CSettings::CheckBandwidth 
+
+DWORD CSettings::GetOutgoingBandwidth()
+{	// This returns the available (Affected by limit) outgoing bandwidth in KB/s
+	if ( Settings.Bandwidth.Uploads == 0 )
+		return ( Settings.Connection.OutSpeed / 8 );
+
+	return ( min( ( Settings.Connection.OutSpeed / 8 ), ( Settings.Bandwidth.Uploads / 1024 ) ) );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -239,7 +239,7 @@ void CNetworksSettingsPage::OnEd2kEnable()
 {
 	UpdateData();
 
-	if ( (m_bEDEnable) && !( (Settings.Bandwidth.Uploads >= 2048) || (Settings.Bandwidth.Uploads == 0) ) )
+	if ( m_bEDEnable && ( Settings.GetOutgoingBandwidth() < 2 ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_BANDWIDTH_LOW );

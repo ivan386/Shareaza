@@ -98,8 +98,11 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
 	m_wndMakerPath.SetIcon( IDI_BROWSE );
 
+	DWORD nMaxTorrents = ( Settings.GetOutgoingBandwidth() / 2 ) + 2;
+	nMaxTorrents = min (10, nMaxTorrents);
+
 	m_wndLinksSpin.SetRange( 0, 100 );
-	m_wndDownloadsSpin.SetRange( 0, 10 );
+	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
 	UpdateData( FALSE );
 
 	return TRUE;
@@ -151,11 +154,10 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
 	Settings.BitTorrent.Endgame				= m_bEndGame;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
-	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;
+	Settings.BitTorrent.DownloadTorrents	= min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;
-
 
 	CSettingsPage::OnOK();
 }

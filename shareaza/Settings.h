@@ -460,6 +460,7 @@ public:
 	CString	SmartAgent(LPCTSTR pszAgent);
 	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE);
 	QWORD	ParseVolume(LPCTSTR psz, BOOL bSpeedInBits);
+	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
 protected:
