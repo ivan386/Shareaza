@@ -66,6 +66,7 @@ reg_incomingchat=Incoming chat message
 reg_apptitle=Shareaza Ultimate File Sharing
 icons_license=License
 icons_uninstall=Uninstall
+icons_downloads=Downloads
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -79,6 +80,7 @@ nl.reg_incomingchat=Nieuw chat bericht
 nl.reg_apptitle=Shareaza Ultimate File Sharing
 nl.icons_license=Gebruiksovereenkomst
 nl.icons_uninstall=Verwijderen
+nl.icons_downloads=Downloads
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -92,6 +94,7 @@ lt.reg_incomingchat=Gaunama þinutë pokalbiui
 lt.reg_apptitle=Shareaza — geriausia programa bylø mainams
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Paðalinti
+lt.icons_downloads=Downloads
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -105,6 +108,7 @@ de.reg_incomingchat=Eingehende Chat Nachricht
 de.reg_apptitle=Shareaza Ultimate File Sharing
 de.icons_license=Lizenz
 de.icons_uninstall=Shareaza deinstallieren
+de.icons_downloads=Downloads
 ; Portuguese
 pt.components_plugins=Plugins
 pt.components_skins=Skins
@@ -118,6 +122,7 @@ pt.reg_incomingchat=Incoming chat message
 pt.reg_apptitle=Shareaza Ultimate File Sharing
 pt.icons_license=License
 pt.icons_uninstall=Uninstall
+pt.icons_downloads=Downloads
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -131,6 +136,7 @@ it.reg_incomingchat=Messaggio di chat in arrivo
 it.reg_apptitle=Shareaza, il programma definitivo di P2P
 it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
+it.icons_downloads=Downloads
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -144,4 +150,5 @@ no.reg_incomingchat=Innkommende melding
 no.reg_apptitle=Shareaza Ultimate File Sharing
 no.icons_license=Lisens
 no.icons_uninstall=Uninstall
+no.icons_downloads=Downloads
 
