@@ -1,0 +1,2 @@
+Beginnende bij versie 2.0.0.1 kan u kiezen of u de download bibliotheek prive wilt maken of delen met andere gebruikers van deze computer.
+U mag wel niet over een oudere versie heen installeren, anders zal dit niet werken.
