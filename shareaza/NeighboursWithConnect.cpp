@@ -66,6 +66,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 		return NULL;
 	}
 	
+	//Don't connect to blocked addresses
 	if ( Security.IsDenied( pAddress ) )
 	{
 		if ( bAutomatic ) return NULL;
@@ -79,7 +80,7 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 	if ( ! Network.Connect() ) return NULL;
 	
 	if ( ! bAutomatic )
-	{
+	{	//Activate appropriate network (if required)
 		switch ( nProtocol )
 		{
 		case PROTOCOL_G1:
@@ -257,16 +258,22 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		//
 		
 		//Check the connection
-		if ( Settings.Connection.InSpeed < 200 )
+		if ( Settings.Connection.InSpeed < 200 )	//Check inbound speed
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
 			return FALSE;
 		}	
-		if ( Settings.Connection.OutSpeed < 200 )
+		if ( Settings.Connection.OutSpeed < 200 )	//Check outbound speed
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
 			return FALSE;
 		}
+		/* //Might create problems with scheduler/slider. Check that before enabling
+		if ( ( Settings.Bandwidth.Uploads <= 4096 ) && ( Settings.Bandwidth.Uploads != 0 ) ) //Check limit
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Upload limit set too low") );
+			return FALSE;
+		}*/
 		//
 
 		//Confirm how long the node has been running.
@@ -479,14 +486,19 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		//
 		
 		//Check the connection
-		if ( Settings.Connection.InSpeed < 200 )
+		if ( Settings.Connection.InSpeed < 200 )	//Check inbound speed
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
 			return FALSE;
 		}
-		if ( Settings.Connection.OutSpeed < 200 )
+		if ( Settings.Connection.OutSpeed < 200 )	//Check outbound speed
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
+			return FALSE;
+		}
+		if ( ( Settings.Bandwidth.Uploads <= 4096 ) && ( Settings.Bandwidth.Uploads != 0 ) ) //Check limit
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Upload limit set too low") );
 			return FALSE;
 		}
 		//
@@ -628,11 +640,12 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 // CNeighboursWithConnect connection capacity
 
 BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
-{
+{	//Check if the specified protocol need more hubs (Hubs, Ultrapeers, Peers)
 	if ( ! Network.IsConnected() ) return FALSE;
 	
 	int nConnected[4] = { 0, 0, 0, 0 };
 	
+	//Count number of hubs (hub/up/peer)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
@@ -660,11 +673,12 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
 }
 
 BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
-{
+{	//Check if the specified protocol need more leafs
 	if ( ! Network.IsConnected() ) return FALSE;
 	
 	int nConnected[4] = { 0, 0, 0, 0 };
 	
+	//Count number of leafs
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
@@ -692,9 +706,10 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 }
 
 BOOL CNeighboursWithConnect::IsHubLoaded(PROTOCOLID nProtocol)
-{
+{	//Is this hub 'loaded'. (At least 75% capacity)
 	int nConnected[4] = { 0, 0, 0, 0 };
 	
+	//Count number of leafs
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
@@ -707,12 +722,12 @@ BOOL CNeighboursWithConnect::IsHubLoaded(PROTOCOLID nProtocol)
 	
 	switch ( nProtocol )
 	{
-	case PROTOCOL_NULL:
+	case PROTOCOL_NULL:	//Are we at 75% of G1 and G2 combined?
 		return ( nConnected[1] + nConnected[2] ) >= ( Settings.Gnutella1.NumLeafs + Settings.Gnutella2.NumLeafs ) * 3 / 4;
-	case PROTOCOL_G1:
+	case PROTOCOL_G1:	//Do we have 75% of G1 capacity?
 		if ( Settings.Gnutella1.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[1] ) > Settings.Gnutella1.NumLeafs * 3 / 4;
-	case PROTOCOL_G2:
+	case PROTOCOL_G2:	//Do we have 75% of G2 capacity?
 		if ( Settings.Gnutella2.EnableToday == FALSE ) return FALSE;
 		return ( nConnected[2] ) > Settings.Gnutella2.NumLeafs * 3 / 4;
 	default:
@@ -765,35 +780,35 @@ void CNeighboursWithConnect::Maintain()
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
 		
-		if ( pNeighbour->m_nState == nrsConnected )
+		if ( pNeighbour->m_nState == nrsConnected )	//If this neighbour is connected
 		{
 			if ( pNeighbour->m_nNodeType != ntHub && bIsG2Leaf && pNeighbour->m_nProtocol == PROTOCOL_G2 )
-			{
-				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
+			{	//If it's not a hub and we are a G2 leaf
+				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );	//Close the connection
 			}
 			else if ( pNeighbour->m_nNodeType != ntHub && bIsG1Leaf && pNeighbour->m_nProtocol == PROTOCOL_G1 )
-			{
-				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
+			{	//If it's not an ultrapeer and we are a G1 leaf
+				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );	//Close the connection
 			}
-			else if ( pNeighbour->m_nNodeType != ntLeaf )
-			{
+			else if ( pNeighbour->m_nNodeType != ntLeaf )	//If it's a peer/hub/UP
+			{	
 				if ( tNow - pNeighbour->m_tConnected > 8000 )
 				{
-					nCount[ pNeighbour->m_nProtocol ][ ntHub ] ++;
+					nCount[ pNeighbour->m_nProtocol ][ ntHub ] ++;	//Count hubs
 				}
 			}
 			else
 			{
-				nCount[ pNeighbour->m_nProtocol ][ ntLeaf ] ++;
+				nCount[ pNeighbour->m_nProtocol ][ ntLeaf ] ++;	//Count leafs
 			}
 		}
-		else if ( pNeighbour->m_nState < nrsConnected )
+		else if ( pNeighbour->m_nState < nrsConnected )		//If it's still conecting, we aren't sure of the protocol
 		{
 			nCount[ pNeighbour->m_nProtocol ][ 0 ] ++;
 		}
 	}
 	
-	//Set numbers of neighbours
+	//Set numbers of neighbours (G1)
 	if ( bIsG1Leaf )
 	{
 		nLimit[ PROTOCOL_G1 ][ ntHub ]	= min( Settings.Gnutella1.NumHubs, 2 );
@@ -804,6 +819,12 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G1 ][ ntLeaf ]	= Settings.Gnutella1.NumLeafs;
 	}
 
+	if ( Settings.Gnutella1.EnableToday == FALSE )
+	{
+		nLimit[ PROTOCOL_G1 ][ ntHub ] = nLimit[ PROTOCOL_G1 ][ ntLeaf ] = 0;
+	}
+
+	//Set numbers of neighbours (G2)
 	if ( bIsG2Leaf )
 	{
 		nLimit[ PROTOCOL_G2 ][ ntHub ]	= min( Settings.Gnutella2.NumHubs, 3 );
@@ -819,11 +840,7 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G2 ][ ntHub ] = nLimit[ PROTOCOL_G2 ][ ntLeaf ] = 0;
 	}
 	
-	if ( Settings.Gnutella1.EnableToday == FALSE )
-	{
-		nLimit[ PROTOCOL_G1 ][ ntHub ] = nLimit[ PROTOCOL_G1 ][ ntLeaf ] = 0;
-	}
-	
+	//Set numbers of neighbours (ED2K)
 	if ( Settings.eDonkey.EnableToday )
 	{
 		nLimit[ PROTOCOL_ED2K ][ ntHub ] = min( 1, Settings.eDonkey.NumServers );
@@ -833,7 +850,7 @@ void CNeighboursWithConnect::Maintain()
 	nCount[ PROTOCOL_G2 ][0] += nCount[ PROTOCOL_NULL ][0];
 	
 	//Maintain neighbour connections
-	for ( int nProtocol = 3 ; nProtocol >= 1 ; nProtocol-- )
+	for ( int nProtocol = 3 ; nProtocol >= 1 ; nProtocol-- )		//Loop through protocols. (ED2K, G2, then G1))
 	{
 		if ( nCount[ nProtocol ][ ntHub ] > 0 ) m_tPresent[ nProtocol ] = tNow;
 		
@@ -868,6 +885,7 @@ void CNeighboursWithConnect::Maintain()
 						
 						if ( Settings.Connection.ConnectThrottle != 0 )
 						{
+							//Throttle new connections and downloads
 							Network.m_tLastConnect = tTimer;
 							Downloads.m_tLastConnect = tTimer;
 							return;
@@ -887,6 +905,7 @@ void CNeighboursWithConnect::Maintain()
 					
 					if ( Settings.Connection.ConnectThrottle != 0 )
 					{
+						//Throttle new connections and downloads
 						Network.m_tLastConnect = tTimer;
 						Downloads.m_tLastConnect = tTimer;
 						return;
