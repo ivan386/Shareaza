@@ -284,6 +284,8 @@ BOOL CLibrary::Load()
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
 	StartThread();
+
+	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
 	
 	return TRUE;
 }
