@@ -37,6 +37,8 @@ BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
 	//{{AFX_MSG_MAP(CLanguageDlg)
 	ON_WM_ERASEBKGND()
 	ON_WM_PAINT()
+	ON_WM_VSCROLL()
+	ON_WM_MOUSEWHEEL()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
@@ -107,7 +109,16 @@ BOOL CLanguageDlg::OnInitDialog()
 	m_bKeyMode	= FALSE;
 
 	CRect rc( 0, 0, 438, HEADING_HEIGHT );
-	rc.bottom += m_pPaths.GetSize() * ITEM_HEIGHT;
+
+	int nLanguagesToDisplay;
+
+	if( GetSystemMetrics( SM_CYSCREEN ) < 768 )
+		nLanguagesToDisplay = min(m_pPaths.GetSize(), 10);
+	else
+		nLanguagesToDisplay = min(m_pPaths.GetSize(), 14);
+
+	rc.bottom += ( nLanguagesToDisplay ) * ITEM_HEIGHT;
+
 
 	if ( m_pSkin )
 		m_pSkin->CalcWindowRect( &rc );
@@ -117,7 +128,16 @@ BOOL CLanguageDlg::OnInitDialog()
 	rc.OffsetRect(	GetSystemMetrics( SM_CXSCREEN ) / 2 -  rc.Width() / 2 - rc.left,
 					GetSystemMetrics( SM_CYSCREEN ) / 2 - rc.Height() / 2 - rc.top );
 	
-	SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), 0 );
+	SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height() , 0 );
+
+	SCROLLINFO pScroll;
+	ZeroMemory( &pScroll, sizeof(pScroll) );
+	pScroll.cbSize	= sizeof(pScroll);
+	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
+	pScroll.nMin	= 0;
+	pScroll.nMax	= m_pPaths.GetSize(); 
+	pScroll.nPage	= ( rc.bottom - HEADING_HEIGHT ) / ITEM_HEIGHT ;
+	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
 	SetTimer( 1, 100, NULL );
 	
@@ -139,6 +159,7 @@ void CLanguageDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
+	int nScroll = GetScrollPos( SB_VERT );
 
 	GetClientRect( &rc );
 
@@ -155,8 +176,15 @@ void CLanguageDlg::OnPaint()
 
 	for ( int nCount = 0 ; nCount < m_pPaths.GetSize() ; nCount++ )
 	{
-		PaintItem( nCount, &dc, &rc );
-		rc.OffsetRect( 0, rc.Height() );
+		if ( nScroll > 0 )
+		{
+			nScroll --;
+		}
+		else
+		{
+			PaintItem( nCount, &dc, &rc );
+			rc.OffsetRect( 0, rc.Height() );
+		}
 	}
 
 	dc.SelectObject( pOldFont );
@@ -275,16 +303,70 @@ void CLanguageDlg::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText)
 	}
 }
 
+
+void CLanguageDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	SCROLLINFO pInfo;
+	
+	pInfo.cbSize	= sizeof(pInfo);
+	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
+	
+	GetScrollInfo( SB_VERT, &pInfo );
+	int nDelta = pInfo.nPos;
+	
+	switch ( nSBCode )
+	{
+	case SB_BOTTOM:
+		pInfo.nPos = pInfo.nMax - pInfo.nPage;
+		break;
+	case SB_LINEDOWN:
+		pInfo.nPos ++;
+		break;
+	case SB_LINEUP:
+		pInfo.nPos --;
+		break;
+	case SB_PAGEDOWN:
+		pInfo.nPos += pInfo.nPage;
+		break;
+	case SB_PAGEUP:
+		pInfo.nPos -= pInfo.nPage;
+		break;
+	case SB_THUMBPOSITION:
+	case SB_THUMBTRACK:
+		pInfo.nPos = nPos;
+		break;
+	case SB_TOP:
+		pInfo.nPos = 0;
+		break;
+	}
+	
+	pInfo.nPos = max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
+	if ( pInfo.nPos == nDelta ) return;
+	
+	SetScrollInfo( SB_VERT, &pInfo, TRUE );
+
+	m_nHover	= 0;
+	m_nDown		= 0;
+	Invalidate();
+}
+
+BOOL CLanguageDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA ), NULL );
+	return TRUE;
+}
+
 void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	CRect rc;
+	int nScroll = GetScrollPos( SB_VERT );
 
 	GetClientRect( &rc );
 	rc.top += HEADING_HEIGHT;
 
 	if ( rc.PtInRect( point ) )
 	{
-		int nHover = ( point.y - rc.top ) / ITEM_HEIGHT + 1;
+		int nHover = ( point.y - rc.top ) / ITEM_HEIGHT + 1 + nScroll;
 
 		if ( nHover != m_nHover )
 		{
