@@ -1,37 +1,36 @@
-										<td class="tabsel">Nieuwe Zoekopdracht</td>
-										<td class="tabedg">&nbsp;</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td class="frame">
-								<div>
-									Om een nieuwe zoekopdracht te starten, type een zoekterm
-									in het veld hier beneden en klik op <b>Start Zoeken</b>.
-									Als je je zoekopdracht wilt beperken tot een bepaald
-									bestandstype, selecteer het dan uit de lijst.
-								</div>
-								<form method="get" action="newsearch">
-								<table align="center">
-									<tr>
-										<td>Zoeken naar:</td>
-										<td><input type="text" name="search" size="30"></td>
-									</tr>
-									<tr>
-										<td>File type:</td>
-										<td>
-											<select name="schema">
-												<option value="">Elk Bestandstype</option>
-												<%= schema_option_list %>
-											</select>
-										</td>
-									</tr>
-									<tr/>
-									<tr>
-										<td colspan="2" align="center">
-											<input type="submit" value="Start Zoeken">
-										</td>
-									</tr>
-								</table>
-								</form>
+<td class="tabsel">Nieuwe Zoekopdracht</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Om een nieuwe zoekopdracht te starten, type een zoekterm
+			in het veld hier beneden en klik op <b>Start Zoeken</b>.
+			Als je je zoekopdracht wilt beperken tot een bepaald
+			bestandstype, selecteer het dan uit de lijst.
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Zoeken naar:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Soort bestand:</td>
+					<td>
+						<select name="schema">
+							<option value="">Elk Bestandstype</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Start Zoeken">
+					</td>
+				</tr>
+			</table>
+		</form>
