@@ -20,7 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Folder</title>
                <title language="af">Gids</title>
-               <title language="ar">مجلد</title>
+               <title language="ar">&#160;مجلد</title>
                <title language="chs">文件夹</title>
                <title language="de">Ordner</title>
                <title language="es">Carpeta</title>
@@ -38,7 +38,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <member name="title" search="generic">
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="ar">المجموع</title>
+                       <title language="ar">&#160;المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -52,7 +52,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <member name="description" search="none">
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
-                       <title language="ar">نبذه تعريفية</title>
+                       <title language="ar">&#160;نبذه&#160;تعريفية</title>
                        <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
@@ -66,7 +66,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
-                       <title language="ar">الالوان</title>
+                       <title language="ar">&#160;الالوان</title>
                        <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
@@ -80,7 +80,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <member name="comments">
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
-                       <title language="ar">التعليقات</title>
+                       <title language="ar">&#160;التعليقات</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>

@@ -20,7 +20,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <titles>
                <title language="en">Video:All Video</title>
                <title language="af">Video:Alle Video</title>
-               <title language="ar">فديو : جيمع الفيديو</title>
+               <title language="ar">&#160;فديو&#160;:&#160;جيمع&#160;الفيديو</title>
                <title language="chs">视频: 所有视频</title>
                <title language="de">Video:Alle Videos</title>
                <title language="es">Video:Todos los videos</title>
@@ -39,7 +39,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="ar">المجموع</title>
+                       <title language="ar">&#160;المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -57,7 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
        <headerContent version="1.0">
                <title language="en">All Video</title>
                <title language="af">Alle Video</title>
-               <title language="ar">جميع الافلام</title>
+               <title language="ar">&#160;جميع&#160;الافلام</title>
                <title language="chs">所有视频</title>
                <title language="de">Alle Videos</title>
                <title language="es">Todos los videos</title>
@@ -69,7 +69,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="ru">&#160;Все видео</title>
                <subtitle language="en">This folder contains every video file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle videolêers in jou biblioteek.</subtitle>
-               <subtitle language="ar">يحتوي هذا المجلد على جميع ملفات الفيديو في المكتبة.</subtitle>
+               <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;على&#160;جميع&#160;ملفات&#160;الفيديو&#160;في&#160;المكتبة.</subtitle>
                <subtitle language="chs">这个文件夹包含收藏中所有的视频文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Videos in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
