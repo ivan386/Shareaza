@@ -1577,10 +1577,10 @@ Other:
 				<newline gap="8"/>
 			</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Cliquez ici pour accélérer le hashage</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Cliquez ici pour accélérer le hachage</link>
 			</group>
 			<group id="4">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Cliquez ici pour ralentir le hashage</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Cliquez ici pour ralentir le hachage</link>
 			</group>
 		</para>
 	</document>
@@ -2012,7 +2012,7 @@ Other:
 		<text format="i"> à l'intérieur de </text>
 		<text> ces dossiers. Merci de partagé plutôt ceux-la.</text>
 		<newline gap="8"/>
-		<text>Le dossier 'Imcomplete' de Shareaza ne devrait également pas être partagé à travers la bibliothèque car le hashage d'un téléchargement en progression peut avoir un impact sur les performances.</text>
+		<text>Le dossier 'Imcomplete' de Shareaza ne devrait également pas être partagé à travers la bibliothèque car le hachage d'un téléchargement en progression peut avoir un impact sur les performances.</text>
 	</document>
 
 </documents>
@@ -2133,7 +2133,7 @@ Other:
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Créer ici un nouveau dossier &quot;album&quot;..."/>
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Voir et modifier les propriétés du dossier &quot;album&quot; sélectionné..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Gérer les dossiers physiques dans votre bibliothèque..."/>
-	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Booste la vitesse d'indexation et de hashage des fichiers."/>
+	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Booste la vitesse d'indexation et de hachage des fichiers."/>
 	<!--<tip id="ID_LIBRARY_JIGLE" message="Interroger la base de donnée web Jigle pour une information sur le fichier sélectionné."/>-->
 	<tip id="ID_LIBRARY_LAUNCH" message="Ouvrir ou lire cette sélection de fichiers."/>
 	<tip id="ID_LIBRARY_MOVE" message="Déplacer vers un autre dossier de la bibliothèque cette sélection de fichiers..."/>
