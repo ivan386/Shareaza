@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
    ================================================================
-   | Arcadia's Call 2.3 by ogg123  <oggvorbis123@hotmail.com> |
+   | Arcadia's Call 2.4 by ogg123  <oggvorbis123@hotmail.com> |
    ================================================================
    | You may edit this, and re-distribute, but please leave all
    | commenting attached; you see.... I finally cleaned it up!  :p
@@ -16,7 +16,7 @@
 			author="ogg123"
 			description="Ashes to ashes."
 			link="http://www.shareaza.com/"
-			version="2.3"
+			version="2.4"
 			type="Skin"
 			language="en"
 			/>
@@ -50,6 +50,7 @@
 		<colour name="TaskBox.Primary.Text"         value="000000"/>
 		<colour name="TaskBox.Caption.Hover"        value="505050"/>
 		<colour name="TaskBox.Client"               value="FEFEFE"/>
+        	<colour name="Banner.back"		        value="546E94"/>
 </colourScheme>
 
 
