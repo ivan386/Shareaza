@@ -44,7 +44,7 @@ AppModifyPath="{app}\Uninstall\repair.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest.txt
-MinVersion=4.0.950,4.0.1381sp4
+MinVersion=4.0,4.0sp4
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
@@ -316,6 +316,8 @@ const
   KeyLoc1 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
   KeyLoc2 = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
   KeyName = 'UninstallString';
+  NET_FW_SCOPE_ALL = 0;
+  NET_FW_IP_VERSION_ANY = 2;
 var
   Installed: Boolean;
 
@@ -392,5 +394,31 @@ Begin
           Wnd := FindWindowByClassName('ShareazaMainWnd');
         End
 End;
+
+Procedure RegisterFirewall();
+var
+  InstallFolder: string;
+  FirewallObject: Variant;
+  FirewallManager: Variant;
+  FirewallProfile: Variant;
+Begin
+  if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then
+    FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
+    InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+    FirewallObject.ProcessImageFileName := InstallFolder;
+    FirewallObject.Name := 'Shareaza';
+    FirewallObject.Scope := NET_FW_SCOPE_ALL;
+    FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
+    FirewallObject.Enabled := True;
+    FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+    FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+    FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+End;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+Begin
+  if CurStep=ssPostInstall then RegisterFirewall;
+End;
+  
 
 #expr SaveToFile("..\builds\Preprocessed.iss")
