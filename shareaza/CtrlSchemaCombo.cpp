@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -259,7 +259,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			if ( pszLeft && nRight >= 0 )
 			{
 				int nLeft = pszLeft - (LPCTSTR)strURI;
-				strURI = strURI.Left( nLeft ) + _T("/…") + strURI.Mid( nRight );
+				strURI = strURI.Left( nLeft ) + _T("/\x2026") + strURI.Mid( nRight );
 			}
 		}
 		

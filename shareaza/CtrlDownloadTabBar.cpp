@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -644,12 +644,12 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 	
 	if ( pDC->GetTextExtent( strText ).cx > rc.Width() )
 	{
-		while ( pDC->GetTextExtent( strText + _T("…") ).cx > rc.Width() && strText.GetLength() )
+		while ( pDC->GetTextExtent( strText + _T('\x2026') ).cx > rc.Width() && strText.GetLength() )
 		{
 			strText = strText.Left( strText.GetLength() - 1 );
 		}
 		
-		if ( strText.GetLength() ) strText += _T("…");
+		if ( strText.GetLength() ) strText += _T('\x2026');
 	}
 	
 	rc.left -= 20;

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHistoryPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -234,12 +234,12 @@ void CLibraryHistoryPanel::OnPaint()
 				{
 					while ( str.GetLength() > 0 )
 					{
-						szText = dc.GetTextExtent( str + _T('…') );
+						szText = dc.GetTextExtent( str + _T('\x2026') );
 						if ( szText.cx < rcText.Width() - 4 ) break;
 						str = str.Left( str.GetLength() - 1 );
 					}
 					
-					str += _T('…');
+					str += _T('\x2026');
 				}
 				
 				rcText.right = rcText.left + szText.cx + 4;

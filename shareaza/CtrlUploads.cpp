@@ -1,7 +1,7 @@
 //
 // CtrlUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -847,12 +847,12 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
-			while ( dc.GetTextExtent( strText + _T("…") ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
+			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
 			
-			if ( strText.GetLength() > 0 ) strText += _T("…");
+			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
 		
 		int nWidth		= dc.GetTextExtent( strText ).cx;
@@ -1004,12 +1004,12 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
-			while ( dc.GetTextExtent( strText + _T("…") ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
+			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
 			
-			if ( strText.GetLength() > 0 ) strText += _T("…");
+			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
 		
 		int nWidth		= dc.GetTextExtent( strText ).cx;

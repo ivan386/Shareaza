@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -597,7 +597,7 @@ void CMatchCtrl::OnPaint()
 	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	
-	m_nTrailWidth = dc.GetTextExtent( _T("…") ).cx;
+	m_nTrailWidth = dc.GetTextExtent( _T('\x2026') ).cx;
 	
 	rcItem.SetRect( rcClient.left, rcClient.top, rcClient.right, 0 );
 	rcItem.top -= m_nHitIndex * ITEM_HEIGHT;
@@ -985,7 +985,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			CString strTrail;
 			LPTSTR pszTrail = strTrail.GetBuffer( nText + 1 );
 			CopyMemory( pszTrail, pszText, nText * sizeof(TCHAR) );
-			pszTrail[ nText ] = _T('…');
+			pszTrail[ nText ] = _T('\x2026');
 			strTrail.ReleaseBuffer( nText + 1 );
 			dc.ExtTextOut( nPosition, rcCol.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 				&rcCol, strTrail, nText + 1, NULL );

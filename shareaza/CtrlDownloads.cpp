@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/03/05 22:59:26 $"
-//	Revision:		"$Revision: 1.27 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/03/10 07:39:32 $"
+//	Revision:		"$Revision: 1.28 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1024,12 +1024,12 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
-			while ( dc.GetTextExtent( strText + _T("…") ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
+			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
 			
-			if ( strText.GetLength() > 0 ) strText += _T("…");
+			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
 		
 		int nWidth		= dc.GetTextExtent( strText ).cx;
@@ -1201,12 +1201,12 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
-			while ( dc.GetTextExtent( strText + _T("…") ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
+			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
 			
-			if ( strText.GetLength() > 0 ) strText += _T("…");
+			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
 		
 		int nWidth		= dc.GetTextExtent( strText ).cx;

@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -428,11 +428,11 @@ void CHomeDownloadsBox::OnPaint()
 		
 		if ( dc.GetTextExtent( str ).cx > rcText.Width() - 8 )
 		{
-			while ( str.GetLength() && dc.GetTextExtent( str + _T('…') ).cx > rcText.Width() - 8 )
+			while ( str.GetLength() && dc.GetTextExtent( str + _T('\x2026') ).cx > rcText.Width() - 8 )
 			{
 				str = str.Left( str.GetLength() - 1 );
 			}
-			str += _T('…');
+			str += _T('\x2026');
 		}
 		
 		dc.SetTextColor( m_pHover == pItem ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );
@@ -829,11 +829,11 @@ void CHomeLibraryBox::OnPaint()
 		
 		if ( dc.GetTextExtent( str ).cx > rcText.Width() - 8 )
 		{
-			while ( str.GetLength() && dc.GetTextExtent( str + _T('…') ).cx > rcText.Width() - 8 )
+			while ( str.GetLength() && dc.GetTextExtent( str + _T('\x2026') ).cx > rcText.Width() - 8 )
 			{
 				str = str.Left( str.GetLength() - 1 );
 			}
-			str += _T('…');
+			str += _T('\x2026');
 		}
 		
 		dc.SetTextColor( m_pHover == pItem ? RGB( 255, 0, 0 ) : RGB( 0, 0, 255 ) );

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -1148,7 +1148,7 @@ void CLibraryAlbumTrack::PaintText(CDC* pDC, const CRect& rcTrack, int nFrom, in
 					if ( szText.cx + 8 <= rcText.Width() ) break;
 				}
 				
-				CString str = pstr->Left( nText ) + _T('…');
+				CString str = pstr->Left( nText ) + _T('\x2026');
 				
 				pDC->ExtTextOut( bCenter ? ( ( rcText.left + rcText.right ) / 2 - szText.cx / 2 ) : ( rcText.left + 4 ),
 					( rcText.top + rcText.bottom ) / 2 - szText.cy / 2 - 1,
