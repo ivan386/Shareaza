@@ -371,7 +371,8 @@ BOOL CCoolMenuBarCtrl::OnMenuMessage(MSG* pMsg)
 	{
 	case WM_MOUSEMOVE:
 		{
-			CPoint pt( LOWORD( pMsg->lParam ), HIWORD( pMsg->lParam ) );
+			//CPoint pt( LOWORD( pMsg->lParam ), HIWORD( pMsg->lParam ) );
+			CPoint pt( pMsg->lParam );
 			ScreenToClient( &pt );
 
 			if ( m_pMouse == pt ) return TRUE;
@@ -391,7 +392,8 @@ BOOL CCoolMenuBarCtrl::OnMenuMessage(MSG* pMsg)
 		break;
 	case WM_LBUTTONDOWN:
 		{
-			CPoint pt( LOWORD( pMsg->lParam ), HIWORD( pMsg->lParam ) );
+			//CPoint pt( LOWORD( pMsg->lParam ), HIWORD( pMsg->lParam ) );
+			CPoint pt( pMsg->lParam );
 
 			CWnd* pWnd = CWnd::WindowFromPoint( pt );
 

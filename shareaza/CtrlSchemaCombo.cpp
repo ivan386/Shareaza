@@ -324,7 +324,8 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 	if ( pThis->m_nAvailability < CSchema::saMax &&
 		 ( nMsg == WM_LBUTTONDOWN || nMsg == WM_LBUTTONUP ) )
 	{
-		CPoint pt( LOWORD( lParam ), HIWORD( lParam ) );
+		//CPoint pt( LOWORD( lParam ), HIWORD( lParam ) );
+		CPoint pt( lParam );
 		CRect rcClient;
 		
 		::GetClientRect( hWnd, &rcClient );
