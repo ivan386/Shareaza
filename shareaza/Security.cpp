@@ -1345,16 +1345,16 @@ void CMessageFilter::Load()
 
 BOOL CMessageFilter::IsBlockedED2K( LPCTSTR pszText )
 {
-#define NUM_STRINGS 4
+#define NUM_STRINGS 5
 
-	CString ED2KBlock[NUM_STRINGS] = {_T("Your client is connecting too fast"),_T("Join the L33cher Team"),_T("Your client is making too many connections"),_T("AUTOMATED MESSAGE") };
+	LPCTSTR ED2KBlock[NUM_STRINGS] = {_T("Your client is connecting too fast"), _T("Join the L33cher Team"), _T("PeerFactor"), _T("Your client is making too many connections"), _T("AUTOMATED MESSAGE") };
 
-	if ( Settings.Community.ChatFilter && pszText )
+	if ( Settings.Community.ChatFilterED2K && pszText )
 	{
 		// Check for filtered (client generated) phrases
 		for ( int nLoop = 0 ; nLoop < NUM_STRINGS ; nLoop++ )
 		{
-			if ( _tcsistr( pszText, ED2KBlock[nLoop].GetBuffer() ) != NULL ) return TRUE;
+			if ( _tcsistr( pszText, ED2KBlock[nLoop] ) != NULL ) return TRUE;
 		}
 	}
 	

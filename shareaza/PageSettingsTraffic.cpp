@@ -91,6 +91,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
 	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
 	AddSetting( &Settings.General.HashIntegrity, 1, 0, 1 );
+
+	AddSetting( &Settings.Community.ChatFilterED2K, 1, 0, 1 );
 	
 	AddSetting( &Settings.Connection.IgnoreOwnIP, 1, 0, 1 );
 	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );

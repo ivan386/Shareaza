@@ -175,6 +175,7 @@ void CSettings::Setup()
 	Add( _T("Community.ChatEnable"), &Community.ChatEnable, TRUE );
 	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, FALSE );
 	Add( _T("Community.ChatFilter"), &Community.ChatFilter, FALSE );
+	Add( _T("Community.ChatFilterED2K"), &Community.ChatFilterED2K, TRUE );
 	Add( _T("Community.ChatCensor"), &Community.ChatCensor, FALSE );
 
 	Add( _T("Community.Timestamp"), &Community.Timestamp, TRUE );

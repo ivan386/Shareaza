@@ -193,9 +193,10 @@ public:
 
 	struct sCommunity
 	{
-		BOOL		ChatEnable;					// Is chat enabled?
-		BOOL		ChatAllNetworks;			// Is chat allowed over other networks? (ed2k, etc)
+		BOOL		ChatEnable;					// Is chat enabled with compatible clients?
+		BOOL		ChatAllNetworks;			// Is chat allowed over other protocols? (ed2k, etc)
 		BOOL		ChatFilter;					// Filter out chat spam
+		BOOL		ChatFilterED2K;				// Filter known ed2k spam. (pretty bad- always on)
 		BOOL		ChatCensor;					// Censor 'bad' words from chat. (Uses adult filter)
 		BOOL		Timestamp;
 		BOOL		ServeProfile;
