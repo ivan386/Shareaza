@@ -3000,13 +3000,13 @@ BEGIN
                     SS_CENTERIMAGE
     CONTROL         " Clear downloaded torrents",IDC_TORRENT_AUTOCLEAR,
                     "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,80,
-                    108,11,WS_EX_TRANSPARENT
-    LTEXT           "When the share ratio reaches ",IDC_STATIC,125,80,107,11,
+                    105,11,WS_EX_TRANSPARENT
+    LTEXT           "When the share ratio reaches ",IDC_STATIC,126,80,101,11,
                     SS_CENTERIMAGE,WS_EX_TRANSPARENT | WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,234,80,30,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,230,80,35,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,259,80,11,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,80,11,12
     GROUPBOX        "&EndGame:",IDC_STATIC,6,99,270,27
     CONTROL         "Enable EndGame mode when completing torrents",
                     IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
@@ -3022,7 +3022,7 @@ BEGIN
     RTEXT           "Default Tracker: ",IDC_STATIC,14,197,69,11,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,83,197,184,12,ES_AUTOHSCROLL
-    LTEXT           "%",IDC_STATIC,264,81,8,11,SS_CENTERIMAGE,
+    LTEXT           "%",IDC_STATIC,266,81,8,11,SS_CENTERIMAGE,
                     WS_EX_TRANSPARENT
 END
 

@@ -269,7 +269,7 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 	{
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
-		
+
 		DWORD tNow = GetTickCount();
 		
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
@@ -281,14 +281,24 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 				 tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
 			{
 				if ( pDownload->m_pTorrent.IsAvailable() == FALSE )	//If it's a torrent
-				{	// Check the torrent clear settings
-					if ( Settings.BitTorrent.AutoClear && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
-						pDownload->Remove();
+				{	
+					// Check the torrent clear settings
+					if ( Settings.BitTorrent.AutoClear )
+					{
+						// If we're not seeding and have reached the required ratio
+						if ( ( ! pDownload->IsSeeding() ) && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
+						{
+							pDownload->Remove();
+						}
+					}
 				}
 				else												// else (It's a normal download)
-				{	// Check the general auto clear setting
+				{	
+					// Check the general auto clear setting
 					if ( Settings.Downloads.AutoClear ) 
+					{
 						pDownload->Remove();
+					}
 				}
 			}
 		}
