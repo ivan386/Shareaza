@@ -245,11 +245,6 @@ const
 var
   Installed: Boolean;
 
-Function ShareazaInstalled(): boolean;
-Begin
-    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza');
-End;
-
 Function InnoSetupUsed(): boolean;
 Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc1);
@@ -281,22 +276,6 @@ Begin
   Result := False;
   if PageID = wpSelectDir then Result := Installed;
   if PageID = wpSelectProgramGroup then Result := Installed;
-End;
-
-Procedure DeleteSingleDataDir();
-var
-  SingleDataDir: string;
-Begin
-  SingleDataDir := ExpandConstant('{app}\Data');
-  DelTree(SingleDataDir, True, True, True);
-End;
-
-Procedure DeleteSingleSkinDir();
-var
-  SingleSkinDir: string;
-Begin
-  SingleSkinDir := ExpandConstant('{app}\Skins');
-  DelTree(SingleSkinDir, True, True, True);
 End;
 
 Procedure DeleteMultiDataDir();
