@@ -312,6 +312,7 @@ public:
 		BOOL		MagnetSearch;				// Search for magnets over ed2k (lower server load)
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k
+		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 	} eDonkey;
 	
 	struct sBitTorrent

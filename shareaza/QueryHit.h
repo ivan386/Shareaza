@@ -101,7 +101,7 @@ protected:
 public:
 	static CQueryHit*	FromPacket(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromPacket(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID* pSearchID = NULL, DWORD m_nServerFlags = 0 );
+	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, GGUID* pSearchID = NULL );
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);

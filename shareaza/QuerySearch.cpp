@@ -300,7 +300,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	
 	CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
 
-	BOOL bUTF8 = ( ! bUDP ) && ( nServerFlags & ED2K_SERVER_TCP_UNICODE );
+	BOOL bUTF8 = bUDP || ( nServerFlags & ED2K_SERVER_TCP_UNICODE );
 	
 	if ( m_bED2K )
 	{

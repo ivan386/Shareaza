@@ -503,7 +503,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit from ED2K packet
 
-CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID* pSearchID, DWORD m_nServerFlags )
+CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, GGUID* pSearchID )
 {
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;

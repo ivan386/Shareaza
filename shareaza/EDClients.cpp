@@ -340,7 +340,7 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
-		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost ) )
+		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, Settings.eDonkey.DefaultServerFlags ) )
 		{
 			Downloads.OnQueryHits( pHits );
 			
