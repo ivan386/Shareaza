@@ -44,8 +44,8 @@ BEGIN_MESSAGE_MAP(CDownloadsCtrl, CWnd)
 	ON_WM_VSCROLL()
 	ON_WM_HSCROLL()
 	ON_WM_MOUSEWHEEL()
-	//ON_NOTIFY(HDN_ITEMCLICKA, AFX_IDW_PANE_FIRST, OnSortPanelItems)
-	//ON_NOTIFY(HDN_ITEMCLICKW, AFX_IDW_PANE_FIRST, OnSortPanelItems)
+	ON_NOTIFY(HDN_ITEMCLICKA, AFX_IDW_PANE_FIRST, OnSortPanelItems)
+	ON_NOTIFY(HDN_ITEMCLICKW, AFX_IDW_PANE_FIRST, OnSortPanelItems)
 	ON_NOTIFY(HDN_ITEMCHANGEDW, AFX_IDW_PANE_FIRST, OnChangeHeader)
 	ON_NOTIFY(HDN_ITEMCHANGEDA, AFX_IDW_PANE_FIRST, OnChangeHeader)
 	ON_NOTIFY(HDN_ENDDRAG, AFX_IDW_PANE_FIRST, OnChangeHeader)
@@ -115,8 +115,11 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CRect rect( 0, 0, 0, 0 );
 
-	m_wndHeader.Create( WS_CHILD|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
-	//m_wndHeader.Create( WS_CHILD|HDS_BUTTONS|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
+	if ( Settings.Downloads.SortColumns )
+		m_wndHeader.Create( WS_CHILD|HDS_BUTTONS|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
+	else
+        m_wndHeader.Create( WS_CHILD|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
+	
 	m_wndHeader.SetFont( &theApp.m_gdiFont );
 	
 	m_wndTip.Create( this, &Settings.Interface.TipDownloads );
@@ -1126,6 +1129,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			else
 				strText = _T("-");
 			break;
+
 		}
 		
 		nTextLeft	= min( nTextLeft, rcCell.left );
@@ -1478,7 +1482,7 @@ void CDownloadsCtrl::BubbleSortDownloads(int nColumn)
 		}
 	}
 }
-/*
+
 void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -1486,7 +1490,7 @@ void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* pResult)
 	BubbleSortDownloads( pLV->iItem );
 	Invalidate();
 }
-*/
+
 
 void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
