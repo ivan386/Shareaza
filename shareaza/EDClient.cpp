@@ -908,7 +908,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		switch ( pTag.m_nKey )
 		{
 		case ED2K_ET_COMPRESSION:
-			 m_bEmDeflate = pTag.m_nValue;
+			 if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmDeflate = pTag.m_nValue;
 			break;
 		case ED2K_ET_UDPPORT:
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_nUDP = (WORD)pTag.m_nValue;
@@ -1081,13 +1081,13 @@ void CEDClient::DeriveVersion()
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case ED2K_CLIENT_MOD:	// (Did not send a compatible client ID, but did send a MOD tag)
-			m_sUserAgent.Format( _T("eMule mod") );
+			m_sUserAgent.Format( _T("eMule mod %i"), m_nEmVersion );
 			break;
 		case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
 			if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )
-				m_sUserAgent.Format( _T("Pruna") );
+				m_sUserAgent.Format( _T("Pruna %i"), m_nEmVersion );
 			else
-				m_sUserAgent.Format( _T("Unidentified") );
+				m_sUserAgent.Format( _T("Unidentified %i"), m_nEmVersion );
 			break;
 		default:	// (Sent a compatible client ID, but we don't recognise it)
 			m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
