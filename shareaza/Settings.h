@@ -328,6 +328,7 @@ public:
 		INT			MaxTransfers;
 		INT			MaxFileTransfers;
 		INT			MaxFileSearches;
+		INT			MaxConnectingSources;
 		INT			MinSources;
 		DWORD		ConnectThrottle;
 		INT			QueueLimit;
