@@ -35,9 +35,9 @@ SourceDir=..\..
 [Components]
 ; Ask user wich components to install
 Name: "mainfiles"; Description: "{cm:components_mainfiles}"; Types: full compact custom; Flags: fixed
-Name: "plugins"; Description: "{cm:components_plugins}"; Types: full compact
-Name: "skins"; Description: "{cm:components_skins}"; Types: full
-Name: "languages"; Description: "{cm:components_languages}"; Types: full
+Name: "plugins"; Description: "{cm:components_plugins}"; Types: full compact; Flags: disablenouninstallwarning
+Name: "skins"; Description: "{cm:components_skins}"; Types: full; Flags: disablenouninstallwarning
+Name: "languages"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
 
 [Tasks]
 ; Ask user to setup Shareaza for all users or just current user
@@ -155,6 +155,11 @@ Name: "{commonappdata}\Shareaza\Collections"; Flags: uninsalwaysuninstall; Tasks
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
+
+; Delete extra components so installer can "uninstall" them
+Type: filesandordirs; Name: "{app}\Skins"
+Type: filesandordirs; Name: "{app}\Plugins"
+Type: filesandordirs; Name: "{app}\Remote"
 
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
