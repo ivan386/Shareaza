@@ -978,8 +978,9 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, 
 			}
 			else if ( nPosition > 0 )
 			{
-				LoadString( strText, IDS_STATUS_Q );
-				strText.Format( _T("%s %i"), strText, nPosition );
+				CString strQ;
+				LoadString( strQ, IDS_STATUS_Q );
+				strText.Format( _T("%s %i"), strQ, nPosition );
 			}
 			else if ( DWORD nSpeed = pTransfer->GetMeasuredSpeed() * 8 )
 				strText = Settings.SmartVolume( nSpeed, FALSE, TRUE );
