@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.102"
+		version="2.1.0.111"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -820,6 +820,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
@@ -837,6 +838,7 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
@@ -905,6 +907,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
@@ -1122,8 +1125,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -1192,8 +1194,7 @@
 			<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadata rebuild"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -2197,8 +2198,7 @@
 	<tip id="ID_LIBRARY_PARENT" message="Move up to the parent folder."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="View and edit the properties of the selected files..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
-	<!-- Add the following line if you need it -->
-	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using your native language."/>
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using other language."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Refresh the library view."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Remove the selected shared folders."/>
 	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
@@ -4049,6 +4049,19 @@
 		<control caption="Don't check for new versions"/>
 		<control caption="Don't Upgrade"/>
 	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+		<control/>
+		<control caption="OK"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+		<control caption="OK"/>
+		<control caption="Cancel"/>
+		<control caption="Please select the method of re-encoding"/>
+		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese/>
+	</dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4167,6 +4180,12 @@
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to=""/>
 		<column from="Size" to=""/>
+	</list>
+	<list name="CReviewList">
+		<column from="User" to=""/>
+		<column from="Rating" to=""/>
+		<column from="Comments" to=""/>
+		<column from="Order" to=""/>
 	</list>
 </listColumns>
 </skin>
