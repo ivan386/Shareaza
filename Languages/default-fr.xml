@@ -2665,7 +2665,7 @@ Other:
 	<string id="16347" value="Envoi mis en queue %s redemande trop rapidement, ferme la connexion."/>
 	<string id="16348" value="Refuse une requête poussée (push) pour %s car il y a trop de connexions d'envoi."/>
 	<string id="16349" value="Envoi du tiger-tree de &quot;%s&quot; pour &quot;%s&quot;."/>
-	<string id="16350" value="Envoi des métadonnêes  de &quot;%s&quot; vers %s."/>
+	<string id="16350" value="Envoi des métadonnées  de &quot;%s&quot; vers %s."/>
 	<string id="16351" value="Refus d'envoi de &quot;%s&quot; vers %s (%s), trop de concurrents sur l'hôte."/>
 	<string id="16352" value="Envoi d'une prévisualisation de &quot;%s&quot; vers %s."/>
 	<string id="16353" value="Refus d'envoi d'une prévisualisation de &quot;%s&quot; vers %s, trop de connexions de prévisualisation."/>
@@ -2694,8 +2694,8 @@ Other:
 	<string id="16376" value="Fichiers Complétés"/>
 	<string id="16377" value="Garde HTTP"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
-	<string id="16385" value="Vous allez modifier les métadonnêes de %i fichiers, voulez-vous continuer?"/>
-	<string id="16386" value="Edition des métadonnêes de %i fichiers."/>
+	<string id="16385" value="Vous allez modifier les métadonnées de %i fichiers, voulez-vous continuer?"/>
+	<string id="16386" value="Edition des métadonnées de %i fichiers."/>
 	<string id="16387" value="Ce fichier &quot;%s&quot; n'a pas encore été haché.  Prière d'attendre que le fichier soit haché et réessayer."/>
 	<string id="16388" value="Cet option utilise les services de Bitzi.com pour la reconnaissance de l'information partagée du fichier(s) sélectionné(s).\n\nShareaza va transmettre le code SHA1 de ce fichier(s) pour interroger la base de donnée de Bitzi.  Si vous êtes inquiété par les question de vie privée, consultez la politique de Bitzi.com à ce sujet.\n\nVoulez-vous continuer?"/>
 	<string id="16389" value="Voulez-vous vraiment supprimer définitivement le(s) %i fichier(s) sélectionné(s)?\n\nCes fichiers seront déplacés vers votrp corbeille si vous répondez OK."/>
