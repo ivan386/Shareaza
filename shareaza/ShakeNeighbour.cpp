@@ -1010,7 +1010,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	if ( m_nNodeType == ntHub )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_GOTPEER );
-		Neighbours.PeerPrune();
+		Neighbours.PeerPrune( pNeighbour->m_nProtocol );
 	}
 	else if ( m_nNodeType == ntLeaf )
 	{

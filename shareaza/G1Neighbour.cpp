@@ -234,7 +234,8 @@ BOOL CG1Neighbour::OnPacket(CG1Packet* pPacket)
 	
 	if ( pPacket->m_nTTL == 0 )
 	{
-		theApp.Message( MSG_DEBUG, IDS_PROTOCOL_NO_TTL, (LPCTSTR)m_sAddress );
+		// This is valid- no need to worry the user
+		//theApp.Message( MSG_DEBUG, IDS_PROTOCOL_NO_TTL, (LPCTSTR)m_sAddress );
 	}
 	else if (	(DWORD)pPacket->m_nTTL + pPacket->m_nHops > Settings.Gnutella1.MaximumTTL &&
 				pPacket->m_nType != G1_PACKET_PUSH && pPacket->m_nType != G1_PACKET_HIT )

@@ -57,7 +57,7 @@ public:
 	virtual void	OnRun();
 protected:
 	void	Maintain();
-	void	PeerPrune();
+	void	PeerPrune(PROTOCOLID nProtocol);			//Close peer connections if you get a hub/up
 
 // Data
 protected:

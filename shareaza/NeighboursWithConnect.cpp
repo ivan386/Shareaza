@@ -128,37 +128,25 @@ CNeighbour* CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithConnect
 
-void CNeighboursWithConnect::PeerPrune()
-{
-	BOOL bNeedMoreG1 = NeedMoreHubs( FALSE ), bNeedMoreG2 = NeedMoreHubs( TRUE );
+void CNeighboursWithConnect::PeerPrune(PROTOCOLID nProtocol)
+{	//This function trims PEERS after you get a HUB. (eg: You have been demoted to a leaf for this protocol)
+	BOOL bNeedMore;
+	if ( nProtocol == PROTOCOL_G2 )
+		bNeedMore = NeedMoreHubs( TRUE );
+	else
+		bNeedMore = NeedMoreHubs( FALSE );
 	
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
+	for ( POSITION pos = GetIterator() ; pos ; )				//Loop through all neighbours
+	{	
 		CNeighbour* pNeighbour = GetNext( pos );
-
-		if ( pNeighbour->m_nNodeType != ntHub )
-		{
-			switch ( pNeighbour->m_nProtocol )
-			{
-			case PROTOCOL_G1:
-				if ( pNeighbour->m_nState == nrsConnected || ! bNeedMoreG1 )
-					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
-				break;
-			case PROTOCOL_G2:
-				if ( pNeighbour->m_nState == nrsConnected || ! bNeedMoreG2 )
-					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
-				break;
+		if ( pNeighbour->m_nProtocol == nProtocol )				//If we're pruning this protocol
+		{	
+			if ( pNeighbour->m_nNodeType != ntHub )				//And it's not a hub
+			{	
+				if ( ! bNeedMore || pNeighbour->m_nState == nrsConnected )	// And either we don't need any more hubs, OR it's finished connecting (so we know it won't be a hub)
+					pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );		//Then drop it
 			}
 		}
-		/*
-		if ( pNeighbour->m_nNodeType != ntHub && ( pNeighbour->m_nState == nrsConnected || ! bNeedMore ) )
-		{
-			if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
-			{
-				pNeighbour->Close( IDS_CONNECTION_PEERPRUNE );
-			}
-		}
-		*/
 	}
 }
 
