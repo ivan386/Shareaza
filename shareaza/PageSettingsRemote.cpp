@@ -1,0 +1,190 @@
+//
+// PageSettingsRemote.cpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+#include "StdAfx.h"
+#include "Shareaza.h"
+#include "Settings.h"
+#include "Network.h"
+#include "Handshakes.h"
+#include "PageSettingsRemote.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+IMPLEMENT_DYNAMIC(CRemoteSettingsPage, CSettingsPage)
+
+BEGIN_MESSAGE_MAP(CRemoteSettingsPage, CSettingsPage)
+	ON_BN_CLICKED(IDC_REMOTE_ENABLE, OnBnClickedRemoteEnable)
+	ON_EN_CHANGE(IDC_REMOTE_USERNAME, OnBnClickedRemoteEnable)
+	ON_EN_CHANGE(IDC_REMOTE_PASSWORD, OnBnClickedRemoteEnable)
+	ON_WM_CTLCOLOR()
+	ON_WM_SETCURSOR()
+	ON_WM_LBUTTONUP()
+END_MESSAGE_MAP()
+
+
+//////////////////////////////////////////////////////////////////////////////
+// CRemoteSettingsPage construction
+
+CRemoteSettingsPage::CRemoteSettingsPage() : CSettingsPage( CRemoteSettingsPage::IDD )
+{
+	m_bEnable = FALSE;
+}
+
+CRemoteSettingsPage::~CRemoteSettingsPage()
+{
+}
+
+void CRemoteSettingsPage::DoDataExchange(CDataExchange* pDX)
+{
+	CSettingsPage::DoDataExchange(pDX);
+	DDX_Check(pDX, IDC_REMOTE_ENABLE, m_bEnable);
+	DDX_Control(pDX, IDC_REMOTE_URL, m_wndURL);
+	DDX_Control(pDX, IDC_REMOTE_USERNAME, m_wndUsername);
+	DDX_Text(pDX, IDC_REMOTE_USERNAME, m_sUsername);
+	DDX_Control(pDX, IDC_REMOTE_PASSWORD, m_wndPassword);
+	DDX_Text(pDX, IDC_REMOTE_PASSWORD, m_sPassword);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// CRemoteSettingsPage message handlers
+
+BOOL CRemoteSettingsPage::OnInitDialog()
+{
+	CSettingsPage::OnInitDialog();
+	
+	m_bEnable	= m_bOldEnable		= Settings.Remote.Enable;
+	m_sUsername	= m_sOldUsername	= Settings.Remote.Username;
+	m_sPassword	= m_sOldPassword	= Settings.Remote.Password;
+	
+	UpdateData( FALSE );
+	OnBnClickedRemoteEnable();
+	
+	return TRUE;
+}
+
+void CRemoteSettingsPage::OnBnClickedRemoteEnable()
+{
+	UpdateData();
+	
+	Settings.Remote.Enable		= m_bEnable;
+	Settings.Remote.Username	= m_sUsername;
+	Settings.Remote.Password	= m_sPassword;
+	
+	m_wndUsername.EnableWindow( m_bEnable );
+	m_wndPassword.EnableWindow( m_bEnable );
+	
+	CString strURL;
+	
+	if ( m_bEnable && ! m_sUsername.IsEmpty() && ! m_sPassword.IsEmpty() )
+	{
+		if ( Network.IsListening() )
+		{
+			strURL.Format( _T("http://%s:%i/remote/"),
+				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+				(int)ntohs( Network.m_pHost.sin_port ) );
+			m_wndURL.EnableWindow( TRUE );
+		}
+		else if ( Handshakes.IsListening() && Network.m_pHost.sin_port != 0 )
+		{
+			strURL.Format( _T("http://localhost:%i/remote/"),
+				(int)ntohs( Network.m_pHost.sin_port ) );
+			m_wndURL.EnableWindow( TRUE );
+		}
+		else
+		{
+			strURL = _T("Unable to accept connections, URL unavailable.");
+			m_wndURL.EnableWindow( FALSE );
+		}
+	}
+	else if ( m_bEnable )
+	{
+		strURL = _T("You must choose a username and password.");
+		m_wndURL.EnableWindow( FALSE );
+	}
+	else
+	{
+		strURL = _T("Remote access is disabled.");
+		m_wndURL.EnableWindow( FALSE );
+	}
+	
+	m_wndURL.SetWindowText( strURL );
+	
+}
+
+HBRUSH CRemoteSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CSettingsPage::OnCtlColor( pDC, pWnd, nCtlColor );
+	
+	if ( pWnd == &m_wndURL && m_wndURL.IsWindowEnabled() )
+	{
+		pDC->SelectObject( &theApp.m_gdiFontLine );
+		pDC->SetTextColor( RGB( 0, 0, 255 ) );
+	}
+	
+	return hbr;
+}
+
+BOOL CRemoteSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+{
+	CPoint point;
+	GetCursorPos( &point );
+	CRect rect;
+	m_wndURL.GetWindowRect( &rect );
+	
+	if ( rect.PtInRect( point ) && m_wndURL.IsWindowEnabled() )
+	{
+		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
+		return TRUE;
+	}
+	else
+	{
+		return CSettingsPage::OnSetCursor( pWnd, nHitTest, message );
+	}
+}
+
+void CRemoteSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	CRect rect;
+	m_wndURL.GetWindowRect( &rect );
+	ScreenToClient( &rect );
+	
+	if ( rect.PtInRect( point ) && m_wndURL.IsWindowEnabled() )
+	{
+		CString strURL;
+		m_wndURL.GetWindowText( strURL );
+		ShellExecute( GetSafeHwnd(), NULL, strURL, NULL, NULL, SW_SHOWNORMAL );
+	}
+	
+	CSettingsPage::OnLButtonUp( nFlags, point );
+}
+
+void CRemoteSettingsPage::OnCancel()
+{
+	Settings.Remote.Enable		= m_bOldEnable;
+	Settings.Remote.Username	= m_sOldUsername;
+	Settings.Remote.Password	= m_sOldPassword;
+	
+	CSettingsPage::OnCancel();
+}

@@ -1,0 +1,113 @@
+//
+// CtrlLibraryFileView.h
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+#if !defined(AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_)
+#define AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_
+
+#pragma once
+
+#include "CtrlLibraryView.h"
+
+class CLibraryFile;
+
+
+class CLibraryFileView : public CLibraryView
+{
+// Construction
+public:
+	CLibraryFileView();
+	virtual ~CLibraryFileView();
+	
+	DECLARE_DYNAMIC(CLibraryFileView)
+
+// Attributes
+protected:
+	POSITION	m_posSel;
+	BOOL		m_bEditing;
+
+// Operations
+protected:
+	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
+	virtual DWORD	HitTestIndex(const CPoint& point) const = 0;
+protected:
+	void			StartSelectedFileLoop();
+	CLibraryFile*	GetNextSelectedFile();
+	CLibraryFile*	GetSelectedFile();
+
+// Overrides
+public:
+	//{{AFX_VIRTUAL(CLibraryFileView)
+	public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	//}}AFX_VIRTUAL
+
+// Implementation
+protected:
+	//{{AFX_MSG(CLibraryFileView)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnUpdateLibraryLaunch(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryLaunch();
+	afx_msg void OnUpdateLibraryEnqueue(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryEnqueue();
+	afx_msg void OnUpdateLibraryURL(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryURL();
+	afx_msg void OnUpdateLibraryMove(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryMove();
+	afx_msg void OnUpdateLibraryCopy(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryCopy();
+	afx_msg void OnUpdateLibraryDelete(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryDelete();
+	afx_msg void OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryBitziWeb();
+	afx_msg void OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryBitziDownload();
+	afx_msg void OnUpdateLibraryShared(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryShared();
+	afx_msg void OnUpdateLibraryProperties(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryProperties();
+	afx_msg void OnUpdateLibraryUnlink(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryUnlink();
+	afx_msg void OnUpdateSearchForThis(CCmdUI* pCmdUI);
+	afx_msg void OnSearchForThis();
+	afx_msg void OnUpdateSearchForSimilar(CCmdUI* pCmdUI);
+	afx_msg void OnSearchForSimilar();
+	afx_msg void OnUpdateSearchForArtist(CCmdUI* pCmdUI);
+	afx_msg void OnSearchForArtist();
+	afx_msg void OnUpdateSearchForAlbum(CCmdUI* pCmdUI);
+	afx_msg void OnSearchForAlbum();
+	afx_msg void OnUpdateSearchForSeries(CCmdUI* pCmdUI);
+	afx_msg void OnSearchForSeries();
+	afx_msg void OnUpdateLibraryJigle(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryJigle();
+	//}}AFX_MSG
+	
+	DECLARE_MESSAGE_MAP()
+	
+};
+
+//{{AFX_INSERT_LOCATION}}
+
+#endif // !defined(AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_)

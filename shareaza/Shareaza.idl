@@ -1,0 +1,572 @@
+//
+// Shareaza.odl
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+[ uuid(E3481FE3-E062-4E1C-A23A-62A6D13CBFB8), version(1.0) ]
+library Shareaza
+{
+	importlib("stdole32.tlb");
+
+	interface IApplication;
+	
+	//
+	// Common Data Types
+	//
+
+	typedef enum
+	{
+		TSUNKNOWN, TSTRUE, TSFALSE
+	} STRISTATE;
+
+	//
+	// XML Object Model
+	//
+
+	interface ISXMLNode;
+	interface ISXMLElement;
+	interface ISXMLElements;
+	interface ISXMLAttribute;
+	interface ISXMLAttributes;
+
+	typedef enum
+	{
+		xmlNode, xmlElement, xmlAttribute
+	} SXMLNodeType;
+
+	[ uuid(A0F89545-DAD8-4441-9DF4-BCB106B12234), dual, oleautomation ]
+	interface ISXMLNode : IDispatch
+	{
+		[id(1),propget] HRESULT Parent( [out,retval] ISXMLElement** ppParent );
+		[id(2),propget] HRESULT Type( [out,retval] SXMLNodeType* pnType );
+		[id(3),propget] HRESULT AsNode( [out,retval] ISXMLNode** ppNode );
+		[id(4),propget] HRESULT AsElement( [out,retval] ISXMLNode** ppElement );
+		[id(5),propget] HRESULT AsAttribute( [out,retval] ISXMLNode** ppAttribute );
+		[id(6),propget] HRESULT Name( [out,retval] BSTR* psName );
+		[id(6),propput] HRESULT Name( [in] BSTR sName );
+		[id(0),propget] HRESULT Value( [out,retval] BSTR* psValue );
+		[id(0),propput] HRESULT Value( [in] BSTR sValue );
+
+		[id(10)] HRESULT Delete();
+		[id(11)] HRESULT IsNamed( [in] BSTR sName, [out,retval] VARIANT_BOOL* pbResult );
+
+	};
+	
+	[ uuid(5198A470-F9EE-49eb-948C-F8176610A8B2), dual, oleautomation ]
+	interface ISXMLElement : ISXMLNode
+	{
+		[id(20),propget] HRESULT Elements( [out,retval] ISXMLElements** ppElements );
+		[id(21),propget] HRESULT Attributes( [out,retval] ISXMLAttributes** ppAttributes );
+
+		[id(30)] HRESULT Detach();
+		[id(31)] HRESULT Clone( [out,retval] ISXMLElement** ppClone );
+		[id(32)] HRESULT ToString( [out,retval] BSTR* psValue );
+		[id(33)] HRESULT ToStringEx( [in] VARIANT_BOOL bHeader, [in] VARIANT_BOOL bNewlines, [out,retval] BSTR* psValue );
+		[id(34)] HRESULT FromString( [in] BSTR sXML, [out,retval] ISXMLElement** ppElement );
+		[id(35)] HRESULT GetWords( [out,retval] BSTR* psWords );
+	};
+	
+	[ uuid(6D4598A7-26A1-4990-BA60-DE0E212AF93C), dual, oleautomation ]
+	interface ISXMLAttribute : ISXMLNode
+	{
+		[id(30)] HRESULT Detach();
+		[id(31)] HRESULT Clone( [out,retval] ISXMLAttribute** ppClone );
+	};
+	
+	[ uuid(10BF271C-85A3-4ad4-8930-CC0E3CEEADA4), dual, oleautomation ]
+	interface ISXMLElements : IDispatch
+	{
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ISXMLElement** ppElement );
+		[id(1),propget] HRESULT Count( [out,retval] LONG* pnCount );
+		[id(2)] HRESULT Create( [in] BSTR strName, [out,retval] ISXMLElement** ppElement );
+		[id(3)] HRESULT Attach( [in] ISXMLElement* pElement );
+		[id(4)] HRESULT RemoveAll();
+		[id(5),propget] HRESULT First( [out,retval] ISXMLElement** ppElement );
+		[id(6),propget] HRESULT ByName( [in] BSTR sName, [out,retval] ISXMLElement** ppElement );
+	};
+	
+	[ uuid(8E03E1BF-CCC0-4616-9C0D-8204A83BAEB4), dual, oleautomation ]
+	interface ISXMLAttributes : IDispatch
+	{
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ISXMLAttribute** ppAttribute );
+		[id(1),propget] HRESULT Count( [out,retval] LONG* pnCount );
+		[id(2)] HRESULT Add( [in] BSTR strName, [in] BSTR strValue );
+		[id(3)] HRESULT Create( [in] BSTR strName, [out,retval] ISXMLAttribute** ppAttribute );
+		[id(4)] HRESULT Attach( [in] ISXMLAttribute* pAttribute );
+		[id(5)] HRESULT RemoveAll();
+		[id(6),propget] HRESULT ByName( [in] BSTR sName, [out,retval] ISXMLAttribute** ppAttribute );
+		[id(7),propget] HRESULT Get( [in] BSTR sName, [out,retval] BSTR* psValue );
+	};
+	
+	//
+	// General Plugin Support
+	//
+	
+	[ uuid(D1B5D3A4-B890-470a-A3FF-9700F3C2A063) ]
+	interface IGeneralPlugin : IUnknown
+	{
+		HRESULT SetApplication( [in] IApplication* pApplication );
+		HRESULT QueryCapabilities( [out] DWORD* pnCaps );
+		HRESULT Configure();
+		HRESULT OnSkinChanged();
+	};
+	
+	//
+	// Command Plugin
+	//
+	
+	[ uuid(CB25DAED-D745-45db-994E-32639D2888A9) ]
+	interface ICommandPlugin : IUnknown
+	{
+		HRESULT RegisterCommands();
+		HRESULT InsertCommands();
+		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STristate* pbVisible, [in,out] STristate* pbEnabled, [in,out] STristate* pbChecked );
+		HRESULT OnCommand( [in] UINT nCommandID );
+	};
+
+	//
+	// Execute Plugin
+	//
+	
+	[ uuid(8E878640-37B5-44a3-A37C-FC3BF1CCF6B6) ]
+	interface IExecutePlugin : IUnknown
+	{
+		HRESULT OnExecute( [in] BSTR sFilePath );
+		HRESULT OnEnqueue( [in] BSTR sFilePath );
+	};
+
+	//
+	// Window Plugin
+	//
+
+	interface ISToolbar;
+
+	[ uuid(ADDB77AE-3483-4a15-B391-AE31563BD7E3) ]
+	interface IPluginWindow : IUnknown
+	{
+		HRESULT ListenForSingleMessage( [in] UINT nMessage );
+		HRESULT ListenForMultipleMessages( [in] SAFEARRAY* pMessages );
+		HRESULT Create1( [in] BSTR bsCaption, [in] HICON hIcon, [in] VARIANT_BOOL bPanel, [in] VARIANT_BOOL bTabbed );
+		HRESULT Create2( [in] UINT nCommandID, [in] VARIANT_BOOL bPanel, [in] VARIANT_BOOL bTabbed );
+		HRESULT GetHwnd( [out] HWND* phWnd );
+		HRESULT HandleMessage( [out] LRESULT* plResult );
+		HRESULT LoadState( [in] VARIANT_BOOL bMaximise );
+		HRESULT SaveState();
+		HRESULT ThrowMenu( [in] BSTR sName, [in] LONG nDefaultID, [in] POINT* pPoint );
+		HRESULT AddToolbar( [in] BSTR sName, [in] LONG nPosition, [out] HWND* phWnd, [out,retval] ISToolbar** ppToolbar );
+		HRESULT AdjustWindowRect( [in,out] RECT* pRect, [in] VARIANT_BOOL bClientToWindow );
+	};
+	
+	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9) ]
+	interface IPluginWindowOwner : IUnknown
+	{
+		HRESULT OnTranslate( [in] MSG* pMessage );
+		HRESULT OnMessage( [in] UINT nMessage, [in] WPARAM wParam, [in] LPARAM lParam, [out] LRESULT* plResult );
+		HRESULT OnUpdate( [in] UINT nCommandID, [in,out] STristate* pbVisible, [in,out] STristate* pbEnabled, [in,out] STristate* pbChecked );
+		HRESULT OnCommand( [in] UINT nCommandID );
+	};
+
+	//
+	// LibraryBuilder Plugin
+	//
+
+	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34) ]
+	interface ILibraryBuilderPlugin : IUnknown
+	{
+		HRESULT Process( [in] HANDLE hFile, [in] BSTR sFile, [in] ISXMLElement* pXML );
+	};
+	
+	//
+	// ImageService Plugin
+	//
+
+	typedef struct
+	{
+		int cbSize;
+		int nFlags;
+		int nWidth;
+		int nHeight;
+		int nComponents;
+		int nQuality;
+	} IMAGESERVICEDATA;
+	
+	typedef enum
+	{
+		IMAGESERVICE_SCANONLY		= 0x01,
+		IMAGESERVICE_PARTIAL_IN		= 0x02,
+		IMAGESERVICE_PARTIAL_OUT	= 0x04
+	} IMAGESERVICEFLAGS;
+	
+	[ uuid(AD49786E-09C1-4069-B48A-15AD42D6CED1) ]
+	interface IImageServicePlugin : IUnknown
+	{
+		HRESULT LoadFromFile( [in] HANDLE hFile, [in] DWORD nLength, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
+		HRESULT LoadFromMemory( [in] SAFEARRAY* pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
+		HRESULT SaveToFile( [in] HANDLE hFile, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
+		HRESULT SaveToMemory( [out] SAFEARRAY** ppMemory, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
+	};
+	
+	//
+	// DownloadPreview Plugin
+	//
+
+	[ uuid(52A97CBD-2B99-45e8-B6F9-41E9CD583960) ]
+	interface IDownloadPreviewSite : IUnknown
+	{
+		HRESULT GetSuggestedFilename( [out,retval] BSTR* psFile );
+		HRESULT GetAvailableRanges( [out,retval] SAFEARRAY **pArray );
+		HRESULT SetProgressRange( [in] DWORD nRange );
+		HRESULT SetProgressPosition( [in] DWORD nPosition );
+		HRESULT SetProgressMessage( [in] BSTR sMessage );
+		HRESULT QueueDeleteFile( [in] BSTR sTempFile );
+		HRESULT ExecuteFile( [in] BSTR sFile );
+	};
+
+	[ uuid(1182FCD9-9F14-4e4a-BD05-432422B5BFAF) ]
+	interface IDownloadPreviewPlugin : IUnknown
+	{
+		HRESULT SetSite( [in] IDownloadPreviewSite* pSite );
+		HRESULT Preview( [in] HANDLE hFile, [in] BSTR sFile );
+		HRESULT Cancel();
+	};
+
+	//
+	// MediaPlayer Plugin
+	//
+
+	interface IAudioVisPlugin;
+	
+	typedef enum
+	{
+		smsNull, smsOpen, smsPaused, smsPlaying
+	} MediaState;
+
+	typedef enum
+	{
+		smaDefault = 0,
+		smzDistort = -1, smzFill = 0, smzOne = 1, smzDouble = 2,
+	} MediaZoom;
+
+	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), pointer_default(unique) ]
+	interface IMediaPlayer : IUnknown
+	{
+		HRESULT Create( [in] HWND hWnd );
+		HRESULT Destroy();
+		HRESULT Reposition( [in] RECT* prcWnd );
+		HRESULT SetLogoBitmap( [in] HBITMAP hLogo );
+		
+		HRESULT GetVolume( [out] DOUBLE* pnVolume );
+		HRESULT SetVolume( [in] DOUBLE nVolume );
+		HRESULT GetZoom( [out] MediaZoom* pnZoom );
+		HRESULT SetZoom( [in] MediaZoom nZoom );
+		HRESULT GetAspect( [out] DOUBLE* pnAspect );
+		HRESULT SetAspect( [in] DOUBLE nAspect );
+		
+		HRESULT Open( [in] BSTR sFilename );
+		HRESULT Close();
+		
+		HRESULT Play();
+		HRESULT Pause();
+		HRESULT Stop();
+		HRESULT GetState( [out] MediaState* pnState );
+		
+		HRESULT GetLength( [out] LONGLONG* pnLength );
+		HRESULT GetPosition( [out] LONGLONG* pnPosition );
+		HRESULT SetPosition( [in] LONGLONG nPosition );
+		HRESULT GetSpeed( [out] DOUBLE* pnSpeed );
+		HRESULT SetSpeed( [in] DOUBLE nSpeed );
+		
+		HRESULT GetPlugin( [out] IAudioVisPlugin** ppPlugin );
+		HRESULT SetPlugin( [in] IAudioVisPlugin* pPlugin );
+		HRESULT GetPluginSize( [out] LONG* pnSize );
+		HRESULT SetPluginSize( [in] LONG nSize );
+	};
+	
+	//
+	// Audio Visualisation Plugin
+	//
+
+	typedef struct 
+	{
+		DWORD	nTime;
+		BYTE	nWaveform[2][512];
+		BYTE	nSpectrum[2][512];
+	} SHAREAZAVISCHUNK;
+
+	[ uuid(E788D125-4D41-4a35-A436-D1A1FD0C8EC9) ]
+	interface IAudioVisPlugin : IUnknown
+	{
+		HRESULT Configure();
+		HRESULT Create( [in] HWND hWnd );
+		HRESULT Destroy();
+		HRESULT Reposition( [in] RECT* prcWnd );
+		
+		HRESULT OnTrackOpen( [in] BSTR sName, [in] DWORD nLength );
+		HRESULT OnTrackClose();
+		HRESULT OnPlayStart();
+		HRESULT OnPlayStop();
+		HRESULT OnChunk( [in] SHAREAZAVISCHUNK* pChunk );
+	};
+
+	[ uuid(71045028-F95C-4c03-AB09-6D906DBFC731) ]
+	interface IWrappedPluginControl : IUnknown
+	{
+		HRESULT Load( [in] BSTR sDLL, [in] LONG nIndex );
+		HRESULT Unload();
+		HRESULT Enumerate( [out] LPSAFEARRAY* ppArray );
+	};
+
+	//
+	// Shareaza Object Model
+	//
+
+	interface IApplication;
+	interface IUserInterface;
+	interface ILibrary;
+
+	[ uuid(8EBD0B6F-7BC4-44d1-BEC1-03E22DC2A587), dual, oleautomation ]
+	interface IApplication : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Version( [out,retval] BSTR* psVersion );
+		
+		[id(10)] HRESULT CheckVersion( [in] BSTR sVersion );
+		[id(11)] HRESULT CreateXML( [out,retval] ISXMLElement** ppXML );
+		
+		[id(20),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
+		[id(21),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+	};
+
+	//
+	// User Interface Object Model
+	//
+	
+	interface ISMenu;
+	interface ISToolbar;
+	interface ISToolbarItem;
+	interface IGenericView;
+	
+	[ uuid(FCDE733E-DDA0-4849-AD83-D02B0F4D1DA3), dual, oleautomation ]
+	interface IUserInterface : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
+		
+		[id(10)] HRESULT NewWindow( [in] BSTR bsName, [in] IPluginWindowOwner* pOwner, [out,retval] IPluginWindow** ppWindow );
+		[id(11),propget] HRESULT MainWindowHwnd( [out,retval] HWND* phWnd );
+		[id(12),propget] HRESULT ActiveView( [out,retval] IGenericView** ppView );
+		
+		[id(20)] HRESULT RegisterCommand( [in] BSTR bsName, [in] HICON hIcon, [out,retval] UINT* pnCommand );
+		[id(21)] HRESULT AddFromString( [in] BSTR sXML );
+		[id(22)] HRESULT AddFromResource( [in] HINSTANCE hInstance, [in] UINT nID );
+		[id(23)] HRESULT AddFromXML( [in] ISXMLElement* pXML );
+		
+		[id(31)] HRESULT GetMenu( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISMenu** ppMenu );
+		[id(32)] HRESULT GetToolbar( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISToolbar** ppToolbar );
+		
+	};
+	
+	typedef enum
+	{
+		mnuMenu, mnuSeparator, mnuCommand
+	} SMenuType;
+	
+	[ uuid(D8C3C592-5AF4-44cf-8AA8-59038FE38812), dual, oleautomation ]
+	interface ISMenu : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
+		
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ISMenu** ppMenu );
+		[id(3),propget] HRESULT Count( [out,retval] LONG* pnCount );
+		
+		[id(10),propget] HRESULT ItemType( [out,retval] SMenuType* pnType );
+		[id(11),propget] HRESULT CommandID( [out,retval] LONG* pnCommandID );
+		[id(11),propput] HRESULT CommandID( [in] LONG nCommandID );
+		[id(12),propget] HRESULT Text( [out,retval] BSTR* psText );
+		[id(12),propput] HRESULT Text( [in] BSTR sText );
+		[id(13),propget] HRESULT HotKey( [out,retval] BSTR* psText );
+		[id(13),propput] HRESULT HotKey( [in] BSTR sText );
+		
+		[id(30)] HRESULT Remove();
+		[id(31)] HRESULT InsertSeparator( [in] LONG nPosition );
+		[id(32)] HRESULT InsertMenu( [in] LONG nPosition, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
+		[id(33)] HRESULT InsertCommand( [in] LONG nPosition, [in] LONG nCommandID, [in] BSTR sText, [out,retval] ISMenu** ppMenu );
+	};
+	
+	typedef enum
+	{
+		tbSeparator, tbButton, tbControl
+	} SToolbarType;
+	
+	[ uuid(E02F505E-9649-4eb1-AB3F-56FFDFF5B92C), dual, oleautomation ]
+	interface ISToolbar : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
+		
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ISToolbarItem** ppItem );
+		[id(3),propget] HRESULT Count( [out,retval] LONG* pnCount );
+		
+		[id(4)] HRESULT InsertSeparator( [in] LONG nPosition );
+		[id(5)] HRESULT InsertButton( [in] LONG nPosition, [in] LONG nCommandID, [in] BSTR sText, [out,retval] ISToolbarItem** ppItem );
+	};
+	
+	[ uuid(3A82A3A3-5560-4ece-B38A-D56E1E74642A), dual, oleautomation ]
+	interface ISToolbarItem : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
+		[id(3),propget] HRESULT Toolbar( [out,retval] ISToolbar** ppToolbar );
+		
+		[id(10),propget] HRESULT ItemType( [out,retval] SToolbarType* pnType );
+		[id(11),propget] HRESULT CommandID( [out,retval] LONG* pnCommandID );
+		[id(11),propput] HRESULT CommandID( [in] LONG nCommandID );
+		[id(12),propget] HRESULT Text( [out,retval] BSTR* psText );
+		[id(12),propput] HRESULT Text( [in] BSTR sText );
+		
+		[id(20)] HRESULT Remove();
+	};
+	
+	[ uuid(EBAD02A1-E1B0-4961-9415-83267B2A5010), dual, oleautomation ]
+	interface IGenericView : IDispatch
+	{
+		[id(1),propget] HRESULT Name( [out,retval] BSTR* psName );
+		[id(2),propget] HRESULT Unknown( [out,retval] IUnknown** ppUnknown );
+		[id(3),propget] HRESULT Param( [out,retval] LONG* pnParam );
+		
+		[id(4),propget] HRESULT Count( [out,retval] LONG* pnCount );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] VARIANT* pvItem );
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+	};
+
+	//
+	// Library Object Model
+	//
+
+	interface ILibraryFile;
+	interface ILibraryFiles;
+	interface ILibraryFolder;
+	interface ILibraryFolders;
+
+	[ uuid(1735A63C-099B-414c-9B22-817C2FC5EC34), dual, oleautomation ]
+	interface ILibrary : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		
+		[id(10),propget] HRESULT Folders( [out,retval] ILibraryFolders** ppFolders );
+		[id(11),propget] HRESULT Albums( [out,retval] IUnknown** ppAlbums );
+		[id(12),propget] HRESULT Files( [out,retval] ILibraryFiles** ppFiles );
+		
+		[id(20)] HRESULT FindByName( [in] BSTR sName, [out,retval] ILibraryFile** ppFile );
+		[id(21)] HRESULT FindByPath( [in] BSTR sPath, [out,retval] ILibraryFile** ppFile );
+		[id(22)] HRESULT FindByURN( [in] BSTR sURN, [out,retval] ILibraryFile** ppFile );
+		[id(23)] HRESULT FindByIndex( [in] LONG nIndex, [out,retval] ILibraryFile** ppFile );
+	};
+	
+	[ uuid(43DF8D22-6F85-4d0a-B072-1C8BF8A57073), dual, oleautomation ]
+	interface ILibraryFolders : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ILibraryFolder** ppFolder );
+		[id(3),propget] HRESULT Count( [out,retval] LONG* pnCount );
+	};
+	
+	[ uuid(49346C06-DC33-4975-978E-E807F7E41EF9), dual, oleautomation ]
+	interface ILibraryFiles : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		
+		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
+		[id(0),propget] HRESULT Item( [in] VARIANT vIndex, [out,retval] ILibraryFile** ppFile );
+		[id(3),propget] HRESULT Count( [out,retval] LONG* pnCount );
+	};
+	
+	[ uuid(8A6BC680-3451-4a78-8A01-B7DFC1D9A148), dual, oleautomation ]
+	interface ILibraryFolder : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		
+		[id(10),propget] HRESULT Parent( [out,retval] ILibraryFolder** ppFolder );
+		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
+		[id(12),propget] HRESULT Name( [out,retval] BSTR* psPath );
+		[id(13),propget] HRESULT Shared( [out,retval] STristate* pnValue );
+		[id(13),propput] HRESULT Shared( [in] STristate nValue );
+		[id(14),propget] HRESULT EffectiveShared( [out,retval] VARIANT_BOOL* pbValue );
+		
+		[id(20),propget] HRESULT Folders( [out,retval] ILibraryFolders** ppFolders );
+		[id(21),propget] HRESULT Files( [out,retval] ILibraryFiles** ppFiles );
+	};
+	
+	[ uuid(B663F7DE-E1C6-4fe6-92BD-D0549B7601E3), dual, oleautomation ]
+	interface ILibraryFile : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		
+		[id(10),propget] HRESULT Folder( [out,retval] ILibraryFolder** ppFolder );
+		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
+		[id(12),propget] HRESULT Name( [out,retval] BSTR* psPath );
+		[id(13),propget] HRESULT Shared( [out,retval] STristate* pnValue );
+		[id(13),propput] HRESULT Shared( [in] STristate nValue );
+		[id(14),propget] HRESULT EffectiveShared( [out,retval] VARIANT_BOOL* pbValue );
+		
+		[id(20),propget] HRESULT Size( [out,retval] LONG* pnSize );
+		[id(21),propget] HRESULT Index( [out,retval] LONG* pnIndex );
+		[id(22),propget] HRESULT URN( [in] BSTR sURN, [out,retval] BSTR* psURN );
+		[id(23),propget] HRESULT MetadataAuto( [out,retval] VARIANT_BOOL* pbValue );
+		[id(24),propget] HRESULT Metadata( [out,retval] ISXMLElement** ppXML );
+		[id(24),propput] HRESULT Metadata( [in] ISXMLElement* pXML );
+		
+		[id(30)] HRESULT Execute();
+		[id(31)] HRESULT SmartExecute();
+		[id(32)] HRESULT Delete();
+		[id(33)] HRESULT Rename( [in] BSTR sNewName );
+		[id(34)] HRESULT Copy( [in] BSTR sNewPath );
+		[id(35)] HRESULT Move( [in] BSTR sNewPath );
+	};
+	
+	//
+	// Web Object Models
+	//
+	
+	[ uuid(CF66956E-901F-44D0-B5C6-FC6A436A030D), dual, oleautomation ]
+	interface ICollectionHtmlView : IDispatch
+	{
+		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
+		
+		[id(11)] HRESULT Detect( [in] BSTR sURN, [out,retval] BSTR* psState );
+		[id(12)] HRESULT Hover( [in] BSTR sURN );
+		[id(13)] HRESULT Open( [in] BSTR sURN, [out,retval] VARIANT_BOOL* pbResult );
+		[id(14)] HRESULT Enqueue( [in] BSTR sURN, [out,retval] VARIANT_BOOL* pbResult );
+		[id(15)] HRESULT Download( [in] BSTR sMagnet, [out,retval] VARIANT_BOOL* pbResult );
+		[id(16)] HRESULT DownloadAll();
+		[id(17),propget] HRESULT MissingCount( [out,retval] LONG* pnCount );
+	}
+};

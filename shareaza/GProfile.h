@@ -1,0 +1,71 @@
+//
+// GProfile.h
+//
+// Copyright (c) Shareaza Development Team, 2002-2004.
+// This file is part of SHAREAZA (www.shareaza.com)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+#if !defined(AFX_GPROFILE_H__16D49240_3116_441C_9C15_2D604E02B73E__INCLUDED_)
+#define AFX_GPROFILE_H__16D49240_3116_441C_9C15_2D604E02B73E__INCLUDED_
+
+#pragma once
+
+class CXMLElement;
+class CG2Packet;
+
+
+class CGProfile : public CComObject
+{
+// Construction
+public:
+	CGProfile();
+	virtual ~CGProfile();
+	
+// Attributes
+public:
+	GGUID			GUID;
+protected:
+	CXMLElement*	m_pXML;
+protected:
+	static LPCTSTR	xmlns;
+
+// Operations
+public:
+	void			Create();
+	void			Clear();
+	BOOL			IsValid() const;
+	CXMLElement*	GetXML(LPCTSTR pszElement = NULL, BOOL bCreate = FALSE);
+public:
+	BOOL			Load(LPCTSTR pszFile = NULL);
+	BOOL			Save(LPCTSTR pszFile = NULL);
+	BOOL			FromXML(CXMLElement* pXML);
+public:
+	CString			GetNick() const;
+	CString			GetLocation() const;
+	CString			GetContact(LPCTSTR pszType) const;
+	DWORD			GetPackedGPS() const;
+	CG2Packet*		CreateAvatar();
+	
+// Interfaces
+protected:
+	DECLARE_INTERFACE_MAP()
+
+};
+
+extern CGProfile MyProfile;
+
+#endif // !defined(AFX_GPROFILE_H__16D49240_3116_441C_9C15_2D604E02B73E__INCLUDED_)

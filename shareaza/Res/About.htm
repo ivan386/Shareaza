@@ -1,0 +1,119 @@
+200 OK
+<html>
+<head>
+ <title>Shareaza</title>
+ <style>
+	td { font-family: Verdana; font-size: 12px; }
+	a { color: maroon; text-decoration: none; }
+	a:hover { color: red; text-decoration: underline; }
+	table.flat { border-collapse: collapse; border-style: solid; border-width: 1px; border-color: maroon; }
+	td.fh { border-style: solid; border-width: 1px; border-color: maroon; font-weight: bold; color: maroon; }
+	td.fi { border-style: solid; border-width: 1px; border-color: maroon; }
+ </style>
+</head>
+<body bgcolor="white" link="black" vlink="black" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table width="100%" height="100%" cellPadding="0" cellSpacing="0">
+
+<tr height="48">
+<td bgcolor="#BE0000" align="left" valign="center" style="border-style: solid; border-width: 0px 0px 1px 0px; border-color: black;">
+	<a href="http://www.shareaza.com/">
+	<img src="http://www.shareaza.com/images/barlogo.gif" width="240" height="48" border="0" align="absmiddle" alt="Shareaza"></a>
+	<font face="Verdana" color="yellow" size="4"><b>Shareaza Node Information</b></font>
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+
+<br>
+
+<table width="100%">
+<td width="32">&nbsp;</td>
+<td>
+<font face="Verdana" size="2">
+
+<h3>This is a Shareaza Node</h3>
+
+<p>
+This P2P node is powered by <b><a href="http://www.shareaza.com/download/">Shareaza</a></b>
+v<% Version %>.
+</p>
+
+<p>
+If this copy of Shareaza is running on your PC, you can connect to
+<a href="/remote/"><b>Shareaza Remote Access</b></a>.
+</p>
+
+<p>
+If you're using Shareaza or another URI enabled P2P client, you can
+<a href="gnutella:browse:<% ListenIP %>"><b>browse this user</b></a>.
+</p>
+
+<table class="flat" cellPadding="4">
+<tr bgColor="#FFFFE0">
+	<td class="fh">Neighbour Address</td>
+	<td class="fh" align="center">Uptime</td>
+	<td class="fh">Mode</td>
+	<td class="fh">User-Agent</td>
+	<td class="fh">&nbsp;</td>
+</tr>
+<% Neighbours %>
+</table>
+
+<br><br>
+
+<h3>Get Shareaza Now</h3>
+
+<p>
+Shareaza is the definitive P2P file-sharing application.  It connects to four
+premiere file-sharing networks:
+</p>
+
+<ul>
+<li><a href="http://www.gnutella2.com/"><b>Gnutella2</b></a> - Shareaza's premiere
+file-sharing network boasting leading edge features like "global search",
+preview-before-you-download, community file ratings / reviews (and ghost ratings),
+comprehensive metadata support and full Unicode/international support.</li>
+<li><a href="http://www.gnutella.com/"><b>Gnutella1</b></a> - This network is
+supported by a very diverse range of file-sharing clients on a variety of
+operating systems.</li>
+<li><a href="http://www.edonkey2000.com/"><b>eDonkey2000</b></a> - The eDonkey2000
+and <b>eMule</b> network boasts an amazing selection of files.</li>
+<li><b>BitTorrent</b> - This distribution network focuses on "new" files, and
+is legendary for its high download speeds.</li>
+</ul>
+
+<p>
+<b>Shareaza</b> can access all of these networks, and even download parts of the
+same file from multiple networks at once!  It also features an awesome interface
+and first class remote access facility.  Oh, and its free, too.
+</p>
+
+<font size="1">
+<a href="http://www.shareaza.com/download/">
+<img src="http://www.shareaza.com/images/iconshadowed.gif" width="42" height="50" align="absmiddle" hspace="5" border="0"></a>
+<a href="http://www.shareaza.com/download/">Download now at Shareaza.com</a>
+</font>
+
+<br><br>
+
+</font>
+</td>
+<td width="32">&nbsp;</td>
+</table>
+
+</td>
+</tr>
+<tr height="48">
+<td align="right" valign="center" bgcolor="#BE0000" style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: black;">
+<font face="Verdana" size="1" color="maroon">Shareaza v<% Version %>&nbsp;&nbsp;</font>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
+
+
+
