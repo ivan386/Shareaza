@@ -28,6 +28,7 @@
 #include "DownloadGroups.h"
 #include "Transfers.h"
 #include "Uploads.h"
+#include "LibraryFolders.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -72,9 +73,17 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 		sExtention.MakeLower();
 
 		if( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
+		{
 			m_sPath	= Settings.Downloads.CollectionPath;
+			CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
+		}
 		else if( sExtention == ".torrent" )
+		{
 			m_sPath	= Settings.Downloads.TorrentPath;
+			CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+			LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
+		}
 	}
 
 	
@@ -309,6 +318,13 @@ void CDownloadTask::RunCopyTorrent()
 		FILE_ATTRIBUTE_NORMAL, NULL );
 	
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
+
+	/*//Check for multi-torrent space available here?
+	if ( ! Downloads.IsSpaceAvailable( (QWORD)m_pTorrent.m_nTotalSize ) )
+	{
+		m_bSuccess = FALSE;
+		return;
+	}*/
 	
 	QWORD nOffset = 0;
 	
