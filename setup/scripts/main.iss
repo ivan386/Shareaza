@@ -275,13 +275,13 @@ Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc2);
 End;
 
-Procedure CurStepChanged(CurStep: TSetupStep);
+Function NextButtonClick(CurPageID: integer): Boolean;
 var
   Wnd: HWND;
   Shutdownmessage: string;
 Begin
   Shutdownmessage := ExpandConstant('{cm:dialog_shutdown,Shareaza}');
-  if CurStep = ssInstall then
+  if CurPageID = wpWelcome then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
   if Wnd <> 0 then
     if MsgBox(Shutdownmessage, mbConfirmation, MB_YESNO) = IDYES then begin
@@ -291,9 +291,9 @@ Begin
         Sleep(100);
         Wnd := FindWindowByClassName('ShareazaMainWnd');
         End;
+      Result := True;
     End else
-        MainForm.close;
-        exit;
+        Result := False;
 End;
 
 Function InitializeSetup: Boolean;
