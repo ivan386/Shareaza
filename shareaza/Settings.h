@@ -127,6 +127,7 @@ public:
 		DWORD		DetailPanelSize;
 		DWORD		MaxPreviewLength;
 		BOOL		AdultFilter;
+		BOOL		AdvancedPanel;
 	} Search;
 	
 	struct sMediaPlayer
@@ -175,6 +176,7 @@ public:
 		BOOL		RequireForTransfers;		// Only upload/download to connected networks
 		BOOL		AsyncIO;
 		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
+		BOOL		DetectConnectionLoss;		// Detect loss of internet connection
 	} Connection;
 
 	struct sBandwidth

@@ -121,6 +121,7 @@ void CSettings::Setup()
 	Add( _T("Search.DetailPanelSize"), &Search.DetailPanelSize, 100 );
 	Add( _T("Search.MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024 );
 	Add( _T("Search.AdultFilter"), &Search.AdultFilter, FALSE );
+	Add( _T("Search.AdvancedPanel"), &Search.AdvancedPanel, TRUE );
 
 	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
 	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );
@@ -160,6 +161,7 @@ void CSettings::Setup()
 	Add( _T("Connection.AsyncIO"), &Connection.AsyncIO, TRUE );
 	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
 	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
+	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
 	
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
@@ -490,6 +492,7 @@ void CSettings::Load()
 
 	// Set interface
 	Interface.LowResMode		= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
+	if ( Live.FirstRun ) Search.AdvancedPanel = ! Interface.LowResMode;
 
 	// Reset certain network variables if bandwidth is too low
 	// Set ed2k

@@ -1626,6 +1626,7 @@
 #define ID_TOOLS_RESEEDTORRENT          33121
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
+#define ID_HELP_CONNECTIONFAIL          33132
 
 // Next default values for new objects
 // 

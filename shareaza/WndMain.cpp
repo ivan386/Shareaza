@@ -213,8 +213,9 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TOOLS_MERCORA, OnToolsMercora)
 	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
 	ON_COMMAND(ID_TOOLS_RESEEDTORRENT, OnToolsReseedTorrent)
-	ON_COMMAND(ID_HELP_DISKSPACE, OnHelpDiskSpace)
-	ON_COMMAND(ID_HELP_DISKWRITEFAIL, OnHelpDiskWriteFail)
+	ON_COMMAND(ID_HELP_DISKSPACE, OnDiskSpace)
+	ON_COMMAND(ID_HELP_DISKWRITEFAIL, OnDiskWriteFail)
+	ON_COMMAND(ID_HELP_CONNECTIONFAIL, OnConnectionFail)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_MEDIA, OnUpdateViewMedia)
 	ON_COMMAND(ID_VIEW_MEDIA, OnViewMedia)
 	ON_UPDATE_COMMAND_UI(ID_TAB_MEDIA, OnUpdateTabMedia)
@@ -756,7 +757,7 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	// Disk space / writable checks
 
 	DWORD tTicks = GetTickCount();
-	if ( tTicks - tLastCheck > 5 * 60 * 1000 )  // Run once every 5 minutes
+	if ( tTicks - tLastCheck > 2 * 60 * 1000 )  // Run once every 2 minutes
 	{
 		tLastCheck = tTicks;
 
@@ -770,7 +771,7 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 			}
 		}
 
-		// Check disk/directory exists and isn't read-only writable
+		// Check disk/directory exists and isn't read-only
 		if ( Settings.Live.DiskWriteWarning == FALSE )
 		{
 			DWORD nCompleteAttributes, nIncompleteAttributes;
@@ -782,6 +783,16 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 			{
 				Settings.Live.DiskWriteWarning = TRUE;
 				PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
+			}
+		}
+
+		// Check network connection state
+		if ( Settings.Connection.DetectConnectionLoss &&  Network.IsConnected() )
+		{
+			if ( ! Network.IsAvailable() )
+			{
+				Network.Disconnect();
+				PostMessage( WM_COMMAND, ID_HELP_CONNECTIONFAIL );
 			}
 		}
 	}
@@ -2017,14 +2028,19 @@ void CMainWnd::OnToolsReseedTorrent()
 	dlgSeed.DoModal();
 }
 
-void CMainWnd::OnHelpDiskSpace()
+void CMainWnd::OnDiskSpace()
 {
 	CHelpDlg::Show( _T("GeneralHelp.DiskSpace") );
 }
 
-void CMainWnd::OnHelpDiskWriteFail()
+void CMainWnd::OnDiskWriteFail()
 {
 	CHelpDlg::Show( _T("GeneralHelp.DiskWriteFail") );
+}
+
+void CMainWnd::OnConnectionFail()
+{
+	CHelpDlg::Show( _T("GeneralHelp.ConnectionFail") );
 }
 
 void CMainWnd::OnToolsProfile() 

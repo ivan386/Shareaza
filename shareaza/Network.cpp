@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,11 @@ CNetwork::~CNetwork()
 BOOL CNetwork::IsAvailable() const
 {
 	DWORD dwState = 0;
-	// return InternetGetConnectedState( &dwState, 0 );
+	if ( InternetGetConnectedState( &dwState, 0 ) )
+	{
+		if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) return TRUE;
+	}
+
 	return FALSE;
 }
 

@@ -101,6 +101,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	// AddSetting( &Settings.Connection.AsyncIO, 1, 0, 1 );
 	AddSetting( &Settings.Connection.RequireForTransfers, 1, 0, 1 );
 	AddSetting( &Settings.Connection.ConnectThrottle, 1, 0, 500, _T(" ms") );
+	AddSetting( &Settings.Connection.DetectConnectionLoss, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
 	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );
@@ -193,6 +194,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Search.ShowNames, 1, 0, 1 );
 	AddSetting( &Settings.Search.MonitorQueue, 1, 1, 4096 );
 	AddSetting( &Settings.Search.MaxPreviewLength, 1024, 1, 4096, _T(" KB") );
+	AddSetting( &Settings.Search.AdvancedPanel, 1, 0, 1 );
 	
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
