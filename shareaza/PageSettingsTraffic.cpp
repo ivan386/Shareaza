@@ -115,7 +115,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella1.EnableGGEP, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.VendorMsg, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.QueryThrottle, 60, 5, 2048, _T(" m") );
-	AddSetting( &Settings.Gnutella1.RequeryDelay, 60, 35, 2048, _T(" m") );
+	AddSetting( &Settings.Gnutella1.RequeryDelay, 60, 45, 2048, _T(" m") );
 	AddSetting( &Settings.Gnutella1.PingFlood, 1000, 0, 30, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PingRate, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PongCache, 1000, 1, 180, _T(" s") );
@@ -136,8 +136,9 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle, 1, 1, 60*1000, _T(" ms") );
 	AddSetting( &Settings.Gnutella2.QueryHostThrottle, 1, 1, 10*60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.RequeryDelay, 60, 5, 180, _T(" m") );
+	AddSetting( &Settings.Gnutella2.RequeryDelay, 60, 45, 8*60, _T(" m") );
 	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
+	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
 	
 	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 500, 20000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 180, _T(" m") );
@@ -176,10 +177,10 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
-	AddSetting( &Settings.Downloads.MinSources, 1, 0, 32 );
+	AddSetting( &Settings.Downloads.MinSources, 1, 0, 8 );
 	AddSetting( &Settings.Downloads.ConnectThrottle, 1, 0, 2000, _T(" ms") );
 	AddSetting( &Settings.Downloads.PushTimeout, 1000, 5, 180, _T(" s") );
-	AddSetting( &Settings.Downloads.StarveTimeout, 60, 5, 1440, _T(" m") );
+	AddSetting( &Settings.Downloads.StarveTimeout, 60, 45, 1440, _T(" m") );
 	AddSetting( &Settings.Downloads.ChunkSize, 1024, 0, 10240, _T(" KB") );
 	AddSetting( &Settings.Downloads.ChunkStrap, 1024, 0, 10240, _T(" KB") );
 	AddSetting( &Settings.Downloads.AllowBackwards, 1, 0, 1 );

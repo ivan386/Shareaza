@@ -267,6 +267,7 @@ public:
 		DWORD		QueryHostDeadline;
 		DWORD		RequeryDelay;
 		DWORD		HubHorizonSize;
+		DWORD		QueryLimit;
 	} Gnutella2;
 	
 	struct seDonkey

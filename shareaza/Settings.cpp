@@ -179,7 +179,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );
 	Add( _T("Gnutella.DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, FALSE );
 	Add( _T("Gnutella.DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, TRUE );
-	Add( _T("Gnutella.MaxResults"), &Gnutella.MaxResults, 300 );
+	Add( _T("Gnutella.MaxResults"), &Gnutella.MaxResults, 100 );
 	Add( _T("Gnutella.MaxHits"), &Gnutella.MaxHits, 64 );
 	Add( _T("Gnutella.HitsPerPacket"), &Gnutella.HitsPerPacket, 64 );
 	Add( _T("Gnutella.RouteCache"), &Gnutella.RouteCache, 600 );
@@ -230,8 +230,9 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 120 );
 	Add( _T("Gnutella2.QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120 );
 	Add( _T("Gnutella2.QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60 );
-	Add( _T("Gnutella2.RequeryDelay"), &Gnutella2.RequeryDelay, 2*60*60 );
+	Add( _T("Gnutella2.RequeryDelay"), &Gnutella2.RequeryDelay, 4*60*60 );
 	Add( _T("Gnutella2.HubHorizonSize"), &Gnutella2.HubHorizonSize, 128 );
+	Add( _T("Gnutella2.QueryLimit"), &Gnutella2.QueryLimit, 2400 );
 	
 	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
 	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
@@ -387,7 +388,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	28
+#define SMART_VERSION	29
 
 void CSettings::Load()
 {
@@ -509,6 +510,16 @@ void CSettings::SmartUpgrade()
 		Connection.Firewalled = TRUE;	// We now assume so until proven otherwise
 		Library.VirtualFiles = TRUE;	// Virtual files (stripping) on
 		BitTorrent.Endgame = TRUE;		// Endgame on
+	}
+
+	if ( nVersion < 29 )
+	{
+		Downloads.MinSources = 1;		// Lower Max value- should reset it in case  
+		Downloads.StarveTimeout = 2700; // Increased due to ed2k queues (Tripping too often)
+		Gnutella.MaxResults = 100;      // No longer includes ed2k max files
+		Gnutella2.RequeryDelay = 4*3600;// Longer delay between sending same search to G2 hub
+		Uploads.QueuePollMin = 20000;	// Lower values for re-ask times- a dynamic multiplier
+		Uploads.QueuePollMax = 60000;	//  is now applied based on Q# (from 1x to 5x)
 	}
 	
 	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
