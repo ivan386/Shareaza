@@ -67,7 +67,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 {
 	METHOD_PROLOGUE( CBitmapImageService, Service )
 	
-	LPBYTE pRowBuf, pRowIn, pRowOut, pData;
+	LPBYTE pRowBuf, pData;
 	BITMAPFILEHEADER pBFH;
 	BITMAPINFOHEADER pBIH;
 	RGBQUAD pPalette[256];
@@ -135,32 +135,50 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 			}
 		}
 
-		pRowOut	= &pData[ nY * nOutPitch ];
-		pRowIn	= pRowBuf;
-		
-		for ( int nX = 0 ; nX < nWidth ; nX++ )
+
+		if ( pBIH.biBitCount == 24 )
 		{
-			BYTE bRed, bGreen, bBlue;
-
-			if ( pBIH.biBitCount == 24 )
-			{
-				bBlue	= *pRowIn++;
-				bGreen	= *pRowIn++;
-				bRed	= *pRowIn++;
+			__asm {
+			mov eax, nOutPitch
+			mov edi, pData
+			mul nY
+			add edi, eax
+			mov esi, pRowBuf
+			mov ecx, nWidth
+			loop1: mov ax, [esi]
+			mov bl, [esi+2]
+			mov [edi+1], ah
+			mov [edi+2], al
+			mov [edi], bl
+			add esi, 3
+			add edi, 3
+			dec ecx
+			jnz loop1
 			}
-			else
-			{
-				bRed	= pPalette[ *pRowIn ].rgbRed;
-				bGreen	= pPalette[ *pRowIn ].rgbGreen;
-				bBlue	= pPalette[ *pRowIn++ ].rgbBlue;
+		}
+		else 
+		{
+			__asm {
+			mov eax, nOutPitch
+			mul nY
+			mov edi, pData
+			add edi, eax
+			mov esi, pRowBuf
+			mov edx, nWidth
+			xor eax, eax
+			_loop: mov al, [esi]
+			inc esi
+			mov ebx, [pPalette+eax*4]
+			bswap ebx
+			mov [edi], bh
+			shr ebx, 16
+			mov [edi+1], bx
+			add edi, 3
+			dec edx
+			jnz _loop
 			}
-
-			*pRowOut++	= bRed;
-			*pRowOut++	= bGreen;
-			*pRowOut++	= bBlue;
 		}
 	}
-
 	SafeArrayUnaccessData( *ppImage );
 
 	delete [] pRowBuf;
@@ -172,7 +190,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 {
 	METHOD_PROLOGUE( CBitmapImageService, Service )
 	
-	LPBYTE pRowIn, pRowOut, pData;
+	LPBYTE pData;
 	BITMAPFILEHEADER pBFH;
 	BITMAPINFOHEADER pBIH;
 	RGBQUAD pPalette[256];
@@ -259,36 +277,50 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 				return E_FAIL;
 			}
 		}
-		
-		pRowOut	= &pData[ nY * nOutPitch ];
-		pRowIn	= pSource;
-
 		pSource += nInPitch;
 		nMemory -= nInPitch;
-		
-		for ( int nX = 0 ; nX < nWidth ; nX++ )
+
+		if ( pBIH.biBitCount == 24 )
+		__asm {
+			mov eax, nOutPitch
+			mov edi, pData
+			mul nY
+			add edi, eax
+			mov esi, pSource
+			mov ecx, nWidth
+			loop1: mov ax, [esi]
+			mov bl, [esi+2]
+			mov [edi+1], ah
+			mov [edi+2], al
+			mov [edi], bl
+			add esi, 3
+			add edi, 3
+			dec ecx
+			jnz loop1
+		}
+		else 
 		{
-			BYTE bRed, bGreen, bBlue;
-
-			if ( pBIH.biBitCount == 24 )
-			{
-				bBlue	= *pRowIn++;
-				bGreen	= *pRowIn++;
-				bRed	= *pRowIn++;
-			}
-			else
-			{
-				bRed	= pPalette[ *pRowIn ].rgbRed;
-				bGreen	= pPalette[ *pRowIn ].rgbGreen;
-				bBlue	= pPalette[ *pRowIn++ ].rgbBlue;
-			}
-
-			*pRowOut++	= bRed;
-			*pRowOut++	= bGreen;
-			*pRowOut++	= bBlue;
+		__asm {
+			mov eax, nOutPitch
+			mul nY
+			mov edi, pData
+			add edi, eax
+			mov esi, pSource
+			mov edx, nWidth
+			xor eax, eax
+			_loop: mov al, [esi]
+			inc esi
+			mov ebx, [pPalette+eax*4]
+			bswap ebx
+			mov [edi], bh
+			shr ebx, 16
+			mov [edi+1], bx
+			add edi, 3
+			dec edx
+			jnz _loop
+		}
 		}
 	}
-
 	SafeArrayUnaccessData( *ppImage );
 	SafeArrayUnaccessData( pMemory );
 	
