@@ -4835,7 +4835,7 @@ BEGIN
     IDS_TIP_QUEUE           "%i upload slots, %i waiting in queue"
     IDS_TIP_EXISTS_LIBRARY  "You already have this file in your library."
     IDS_TIP_EXISTS_DOWNLOAD "You already have this file on your download list."
-    IDS_TIP_BOGUS           "This file appear to be spam."
+    IDS_TIP_BOGUS           "This file appears to be spam."
     IDS_TIP_EXISTS_DELETED  "You have downloaded and deleted this file before."
     IDS_TIP_EXISTS_BLACKLISTED "Blacklisted: "
 END
