@@ -521,6 +521,11 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			if ( m_pDownload != NULL ) m_pDownload->OnSendingPart( pPacket );
 			return TRUE;
 
+		// Misc
+
+		case ED2K_C2C_MESSAGE:
+			return OnMessage( pPacket );
+
 		}
 	}
 	else if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EMULE )
@@ -1139,6 +1144,54 @@ BOOL CEDClient::OnQueueRequest(CEDPacket* pPacket)
 	
 	m_pUpload->Request( &m_pUpMD4 );
 	
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CEDClient Message handler
+
+BOOL CEDClient::OnMessage(CEDPacket* pPacket)
+{
+	DWORD nMessageLength;
+	CString sMessage;
+
+	//Check packet has message length
+	if ( pPacket->GetRemaining() < 3 )
+	{
+		theApp.Message( MSG_ERROR, _T("Empty message packet recieved from %s"), (LPCTSTR)m_sAddress );
+		return TRUE;
+	}
+
+	//Read message length
+	nMessageLength = pPacket->ReadLongLE();
+
+	//Validate message length
+	if ( ( nMessageLength < 1 ) || ( nMessageLength > 500 ) || ( nMessageLength != pPacket->GetRemaining() ) )
+	{
+		theApp.Message( MSG_ERROR, _T("Invalid message packet recieved from %s"), (LPCTSTR)m_sAddress );
+		return TRUE;
+	}
+
+
+	//Read in message
+	//if ( unicode )
+	//	sMessage = pPacket->ReadStringUTF8( nMessageLength );
+	//else
+		sMessage = pPacket->ReadString( nMessageLength );
+
+	// Check if chat is enabled
+	if ( Settings.Community.ChatEnable )
+	{	// Chat is enabled- we should open a chat window
+		theApp.Message( MSG_DEFAULT, _T("Message from %s recieved, opening chat window."), (LPCTSTR)m_sAddress );
+
+		theApp.Message( MSG_DEFAULT, sMessage ); //***temp- open chat window instead
+	}
+	else
+	{	// Disabled- don't open a chat window
+		theApp.Message( MSG_DEFAULT, _T("Message from %s:"), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_DEFAULT, sMessage );
+	}
+
 	return TRUE;
 }
 

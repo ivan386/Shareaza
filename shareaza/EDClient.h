@@ -115,6 +115,7 @@ protected:
 	BOOL	OnQueueRequest(CEDPacket* pPacket);
 	BOOL	OnSourceRequest(CEDPacket* pPacket);
 	BOOL	OnSourceAnswer(CEDPacket* pPacket);
+	BOOL	OnMessage(CEDPacket* pPacket);
 public:
 	BOOL	OnUdpReask(CEDPacket* pPacket);
 	BOOL	OnUdpReaskAck(CEDPacket* pPacket);
