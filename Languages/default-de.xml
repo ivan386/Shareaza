@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Shareaza German Skin File -->
 <!-- Special characters used in German:
 
@@ -16,10 +16,10 @@ Other:
 	<manifest 
 		name="Deutsch" 
 		author="Jann Röder" 
-		description="Shareaza 2.0 German Skin File" 
+		description="Shareaza 2.1 German Skin File" 
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de" 
-		version="2.0.2.3" 
+		version="2.1.2.4" 
 		type="Language" 
 		language="de" 
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -97,11 +97,11 @@ Other:
 			<button id="ID_SEARCH_FILTER_RAW" text="Mehr..." />
 		</toolbar>
 		<toolbar name="CSearchWnd.Full">
-			<button id="ID_SEARCH_DOWNLOAD" text="Herunterladen" />
-			<button id="ID_BROWSE_LAUNCH" text="Benutzer durchsuchen" />
-			<separator />
 			<button id="ID_SEARCH_SEARCH" text="Erneut suchen..." />
 			<button id="ID_SEARCH_STOP" text="Stopp" />
+			<separator />
+		<button id="ID_SEARCH_DOWNLOAD" text="Herunterladen" />
+			<button id="ID_BROWSE_LAUNCH" text="Benutzer durchsuchen" />
 			<separator />
 			<button id="ID_SEARCH_PANEL" text="Suchleiste" />
 			<button id="ID_SEARCH_DETAILS" text="Details anzeigen" />
@@ -425,13 +425,14 @@ Other:
 				<item id="ID_TAB_MEDIA" text="_Medienwiedergabe" />
 				<item id="ID_TAB_SEARCH" text="_Suchen" />
 				<item id="ID_TAB_TRANSFERS" text="_Downloads" />
-				<separator />
-				<item id="ID_VIEW_SECURITY" text="S_icherheit" />
-				<item id="ID_VIEW_HOSTS" text="H_ost Cache" />
-				<separator />
+				<separator />				
 				<menu text="_Erweitert">
 					<item id="ID_VIEW_NEIGHBOURS" text="_Netzwerk" />
 					<item id="ID_VIEW_UPLOADS" text="_Uploads" />
+					<separator />
+					<item id="ID_VIEW_SECURITY" text="_Sicherheit" />
+					<item id="ID_VIEW_HOSTS" text="H_ost Cache" />
+					<item id="ID_VIEW_DISCOVERY" text="Service _Provider"/>
 				</menu>
 				<separator />
 				<item id="ID_VIEW_BASIC" text="_Normal Modus" />
@@ -876,15 +877,15 @@ Other:
 			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Abbrechen" />
 			<separator />
 			<item id="ID_DOWNLOADS_SOURCES" text="_Zusätzliche Quellen suchen" />
-			<separator />
+			<!-- <separator />
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomatisch entfernen" />
+			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomatisch entfernen" /> -->
 			<separator />
 			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..." />
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH" text="V_orschau" />
-			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vorschau (Kopie)" />
+			<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vorschau (Kopie)" /> -->
 			<item id="ID_DOWNLOADS_ENQUEUE" text="_In Wiedergabeliste aufnehmen" />
 			<separator />
 			<item id="ID_DOWNLOADS_RESUME" text="_Wiederaufnehmen" />
@@ -907,9 +908,6 @@ Other:
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Nach _unten" />
 				<item id="ID_DOWNLOADS_BOOST" text="G_eschwindigkeitslimit aufheben" />
 			</menu>
-			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomatisch entfernen" />
-			<separator />
 			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..." />
 		</menu>
 		<menu name="CDownloadsWnd.Source">
@@ -927,9 +925,6 @@ Other:
 			<item id="ID_DOWNLOADS_CLEAR" text="Download _Entfernen" />
 			<separator />
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen" />
-			<separator />
-			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomatisch entfernen" />
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH" text="_Öffnen" />
@@ -937,12 +932,20 @@ Other:
 			<item id="ID_DOWNLOADS_CLEAR" text="_Entfernen" />
 			<separator />
 			<item id="ID_DOWNLOADS_COPY" text="U_RI kopieren" />
+			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
 			<separator />
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen" />
 			<item id="ID_DOWNLOADS_RATE" text="D_atei bewerten..." />
-			<separator />
-			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_utomatisch entfernen" />
+		</menu>
+		<menu name="CDownloadsWnd.Seeding">
+			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
+			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
+			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Seeden beenden"/>
+		</menu>
+		<menu name="CDownloadsWnd.Nothing">
+			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>
+			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen"/>
+			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Automatisch entfernen"/>
 		</menu>
 		<menu name="CDownloadTabBar">
 			<item id="ID_DOWNLOAD_GROUP_RESUME" text="Alle _starten" />
@@ -971,20 +974,24 @@ Other:
 		<menu name="CUploadsWnd.Basic">
 			<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen" />
 			<item id="ID_UPLOADS_CHAT" text="Mit Benutzer _chatten" />
-			<separator />
-			<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_UPLOADS_AUTO_CLEAR" text="_Automatisch entfernen" />
 		</menu>
-		<menu name="CUploadsWnd">
+		<menu name="CUploadsWnd.Upload">
 			<item id="ID_UPLOADS_START" text="_Jetzt starten" />
 			<item id="ID_UPLOADS_CLEAR" text="_Abbrechen" />
 			<separator />
 			<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen" />
 			<item id="ID_UPLOADS_CHAT" text="Mit Benutzer _chatten" />
 			<item id="ID_SECURITY_BAN" text="Host _bannen" />
-			<separator />
-			<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Beendete entfernen" />
-			<item id="ID_UPLOADS_AUTO_CLEAR" text="_Automatisch entfernen" />
+		</menu>
+		<menu name="CUploadsWnd.Queue">
+			<item id="ID_UPLOADS_EDIT_QUEUE" text="_Warteschlange Einstellungen"/>
+			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen"/>
+			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Automatisch entfernen"/>
+		</menu>
+		<menu name="CUploadsWnd.Nothing">
+			<item id="ID_UPLOADS_HELP" text="_Hilfe..."/>
+			<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Beendete entfernen"/>
+			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Automatisch entfernen"/>
 		</menu>
 		<menu name="CUploadsWnd.Filter">
 			<item id="ID_UPLOADS_FILTER_ALL" text="Alle anzeigen" />
@@ -1437,6 +1444,7 @@ Other:
 			<column from="Queue" to="Warteschlange" />
 			<column from="Speed" to="Geschwindigkeit" />
 			<column from="Client" to="Client" />
+			<column from="Rating" to="Bewertung"/>
 		</list>
 		<list name="CDownloadCtrl">
 			<column from="Downloaded File" to="Dateiname" />
@@ -1487,377 +1495,319 @@ Other:
 			<column from="Bandwidth" to="Bandbreite" />
 			<column from="Transfers" to="Transfer" />
 		</list>
+		<list name="CAdvancedSettingsList">
+			<column from="Setting" to="Einstellung"/>
+			<column from="Value" to="Wert"/>
+		</list>
+		<list name="CFavouritesProfileList">
+			<column from="Name" to="Name"/>
+			<column from="URL" to="URL"/>
+		</list>
+		<list name="CFileSourcesPageList">
+			<column from="URL" to="URL"/>
+			<column from="Expires" to="Läuft ab"/>
+		</list>
+		<list name="CTorrentTrackerList">
+			<column from="Filename" to="Dateiname"/>
+			<column from="Size" to="Größe"/>
+		</list>
 	</listColumns>
 	<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
-		<tip id="ID_HELP_ABOUT" message="Informationen über Shareaza anzeigen..." tip="Über Shareaza" />
-		<tip id="ID_NETWORK_EXIT" message="Shareaza beenden" tip="Beenden" />
-		<tip id="ID_NETWORK_CONNECT" message="Mit dem Netzwerk verbinden" />
-		<tip id="ID_NETWORK_DISCONNECT" message="Die Verbindung zum Netzwerk trennen" />
-		<tip id="ID_TOOLS_SETTINGS" message="Shareaza konfigurieren..." tip="Einstellungen" />
-		<tip id="ID_VIEW_SYSTEM" message="Die Konsole ein- oder ausblenden." tip="Konsole" />
-		<tip id="ID_VIEW_NEIGHBOURS" message="Das Netzwerkfenster ein- oder ausblenden." tip="Netzwerkfenster" />
-		<tip id="ID_HOSTCACHE_REMOVE" message="Die ausgewählten Hosts vom Hostcache entfernen."
-			tip="Hosts entfernen" />
-		<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..." tip="Verbinden mit" />
-		<tip id="ID_NETWORK_SEARCH" message="Eine neue Suche starten..." tip="Eine neue Suche starten" />
-		<tip id="ID_SEARCH_DOWNLOAD" message="Die markierten(n) Datei(en) herunterladen." />
-		<tip id="ID_SEARCH_DOWNLOADNOW" message="Die markierte(n) Datei(en) mit Priorität herunterladen." />
-		<tip id="ID_SEARCH_SEARCH" message="Erneut im Netzwerk suchen..." tip="Erneut im Netzwerk suchen" />
-		<tip id="ID_SEARCH_FILTER" message="Die Suchergebnisse nach bestimmten Wörtern und Zuständen filtern..."
-			tip="Die Suchergebnisse filtern" />
-		<tip id="ID_SEARCH_FILTER_REMOVE" message="Den Filter von den Ergebnissen entfernen."
-			tip="Filter entfernen" />
-		<tip id="ID_SEARCH_GROUPED" message="Die Ergebnisse nach Dateien gruppieren." tip="Nach Dateien gruppieren" />
-		<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor Puffer leeren." tip="Puffer leeren" />
-		<tip id="ID_SEARCHMONITOR_PAUSE" message="Den Suchmonitor anhalten" tip="Anzeige anhalten" />
-		<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten" />
-		<tip id="ID_VIEW_TRAFFIC" message="Das Diagramm Fenster ein- oder ausblenden." tip="Diagramm Fenster" />
-		<tip id="ID_VIEW_LIBRARY" message="Das Bibliothek Fenster ein- oder ausblenden." tip="Bibliothek Fenster" />
-		<tip id="ID_VIEW_DOWNLOADS" message="Das Downloads Fenster ein- oder ausblenden." tip="Downloads Fenster" />
-		<tip id="ID_VIEW_UPLOADS" message="Das Uploads Fenster ein- oder ausblenden." tip="Uploads Fenster" />
-		<tip id="ID_VIEW_HOSTS" message="Das Hosts Cache Fenster ein- oder ausblenden." tip="Host Cache Fenster" />
-		<tip id="ID_VIEW_PACKETS" message="Das Packet Dump Fenster ein- oder ausblenden." tip="Packet Dump Fenster" />
-		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Die Verbindung zu den markierten Hosts trennen."
-			tip="Verbindung trennen" />
-		<tip id="ID_SYSTEM_CLEAR" message="Den Konsolenpuffer leeren." tip="Puffer leeren" />
-		<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Ein neues Packet Dump Fenster öffnen, um diesen Host zu überwachen."
-			tip="Allen Traffic anzeigen" />
-		<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Ein neues Packet Dump Fenster öffnen, um eingehenden Traffic von diesem Host zu überwachen."
-			tip="Eingehenden Traffic anzeigen" />
-		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Ein neues Packet Dump Fenster öffnen, um ausgehenden Traffic an diesen Host zu überwachen."
-			tip="Ausgehenden Traffic anzeigen" />
-		<tip id="ID_VIEW_SEARCH_MONITOR" message="Das Suchmonitor Fenster ein- oder ausblenden."
-			tip="Suchmonitor Fenster" />
-		<tip id="ID_VIEW_RESULTS_MONITOR" message="Das Treffermonitor Fenster ein- oder ausblenden."
-			tip="Treffermonitor Fenster" />
-		<tip id="ID_HOSTCACHE_CONNECT" message="Mit markierten Host(s) verbinden." tip="Jetzt verbinden" />
-		<tip id="ID_HOSTCACHE_DISCONNECT" message="Verbindung zu markierten Host(s) beenden."
-			tip="Verbindung beenden" />
-		<tip id="ID_TRANSFERS_DISCONNECT" message="Markierten Transfer abbrechen." tip="Verbindung beenden" />
-		<tip id="ID_TRANSFERS_FORGET" message="Markierten Transfer abbrechen und Quelle vergessen."
-			tip="Quelle entfernen" />
-		<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com besuchen." tip="Shareaza.com" />
-		<tip id="ID_HELP_WEB_1" message="Zeropaid.com besuchen" tip="Zeropaid.com" />
-		<tip id="ID_HELP_WEB_2" message="P2PForums.com besuchen" tip="P2PForums.com" />
-		<tip id="ID_HELP_WEB_3" message="Slyck.com besuchen" tip="Slyck.com" />
-		<tip id="ID_HELP_FAQ" message="Die Shareaza Anleitung anzeigen" tip="Shareaza Anleitung" />
-		<tip id="ID_SEARCH_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen."
-			tip="Chat beginnen" />
-		<tip id="ID_TRAFFIC_GRID" message="Gitternetz anzeigen." tip="Gitternetz anzeigen" />
-		<tip id="ID_TRAFFIC_AXIS" message="Y-Achse anzeigen" tip="Achse anzeigen" />
-		<tip id="ID_SEARCHMONITOR_CLEAR" message="Suchmonitor Puffer leeren." tip="Puffer leeren" />
-		<tip id="ID_SEARCH_COPY" message="URI der markierten Datei kopieren." tip="URL kopieren" />
-		<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen."
-			tip="Danach suchen" />
-		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Horizont anzeigen (G2)." />
-		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gecachte Hosts anzeigen (G2)." />
-		<tip id="ID_HOSTCACHE_G1_CACHE" message="Gecachte Hosts anzeigen (G1)." />
-		<tip id="ID_SEARCH_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..."
-			tip="Spalten auswählen" />
-		<tip id="ID_DOWNLOADS_RESUME" message="Markierte(n) Download(s) fortsetzen." tip="Download fortsetzen" />
-		<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Beendete Downloads entfernen." tip="Beendete entfernen" />
-		<tip id="ID_LIBRARY_CREATETORRENT" message="Eine .torrent für diese Datei erstellen, um sie auf eine Webseite hochzuladen." />
-		<tip id="ID_DOWNLOADS_SOURCES" message="Zusätzliche Quellen für den/die markierten Download(s) suchen."
-			tip="Mehr Quellen" />
-		<tip id="ID_DOWNLOADS_LAUNCH" message="Vorschau für die markierte(n) Datei(en) anzeigen."
-			tip="Vorschau" />
-		<tip id="ID_DOWNLOADS_CLEAR" message="Markierte(n) Download(s) entfernen." tip="Entfernen" />
-		<tip id="ID_DOWNLOADS_PAUSE" message="Markierte(n) Download(s) anhalten." tip="Anhalten" />
-		<tip id="ID_LIBRARY_LAUNCH" message="Markierte(n) Ordner öffnen." tip="Ordner öffnen" />
-		<tip id="ID_LIBRARY_SCAN" message="Markierten Ordner scannen." tip="Scannen" />
-		<tip id="ID_LIBRARY_SHARED" message="Markiertes Objekt Freigeben / nicht Freigeben."
-			tip="Freigeben / nicht Freigeben" />
-		<tip id="ID_LIBRARY_REMOVE" message="Markierten Ordner entfernen." tip="Entfernen" />
-		<tip id="ID_LIBRARY_ADD" message="Ihrer Bibliothek einen neuen Ordner hinzufügen..."
-			tip="Ihrer Bibliothek einen neuen Ordner hinzufügen" />
-		<tip id="ID_LIBRARY_PROPERTIES" message="Eigenschaften der markierten Dateien anzeigen und bearbeiten..."
-			tip="Eigenschaften der markierten Dateien anzeigen und bearbeiten" />
-		<tip id="ID_LIBRARY_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..."
-			tip="Spalten auswählen" />
-		<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Angehaltene Downloads entfernen." tip="Angehaltene entfernen" />
-		<tip id="ID_UPLOADS_LAUNCH" message="Die markierte(n) Datei(en) öffnen." tip="Öffnen" />
-		<tip id="ID_UPLOADS_DISCONNECT" message="Den markierten Upload Transfer abbrechen." tip="Verbindung trennen" />
-		<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Beendete Uploads entfernen." tip="Beendete entfernen" />
-		<tip id="ID_UPLOADS_CLEAR" message="Markierte(n) Upload(s) von der Liste entfernen."
-			tip="Entfernen" />
-		<tip id="ID_TRAFFIC_LEGEND" message="Legende anzeigen." tip="Legende anzeigen" />
-		<tip id="ID_TRAFFIC_SETUP" message="Die zu überwachenden Elemente auswählen und konfigurieren..."
-			tip="Diagramme auswählen" />
-		<tip id="ID_TRAFFIC_CLEAR" message="Das Traffic Diagramm löschen." tip="Diagramm löschen" />
-		<tip id="ID_TOOLS_SEEDTORRENT" message="Ein Torrent seeden" />
-		<tip id="ID_TOOLS_WIZARD" message="Den Shareaza Schnellstart Assistent starten..." tip="Schnellstart Assistent" />
-		<tip id="ID_CHILD_RESTORE" message="Das markierte Fenster öffnen." />
+		<tip id="ID_BROWSE_FILES" message="Die Dateien des Benutzers anzeigen." />
+		<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen." tip="Benutzer durchsuchen" />
+		<tip id="ID_BROWSE_PROFILE" message="Das Profil des Benutzers anzeigen." />
+		<tip id="ID_BROWSE_REFRESH" message="Die Dateiliste erneut anfordern." tip="Aktualisieren" />
+		<tip id="ID_BROWSE_STOP" message="Durchsuchen dieses Hosts beenden." tip="Durchsuchen beenden" />
+		<tip id="ID_CHAT_BOLD" message="Fett (Ctrl+B)" />
+		<tip id="ID_CHAT_BROWSE" message="Das Profil und die freigegebenen Dateien anzeigen." />
+		<tip id="ID_CHAT_CLEAR" message="Clear the message text in this window." />
+		<tip id="ID_CHAT_COLOUR" message="Eine Textfarbe wählen (Ctrl+K)" />
+		<tip id="ID_CHAT_CONNECT" message="Zum Chat verbinden.." />
+		<tip id="ID_CHAT_DISCONNECT" message="Chatverbindung beenden." />
+		<tip id="ID_CHAT_EMOTICONS" message="Smiley einfügen." />
+		<tip id="ID_CHAT_ITALIC" message="Kursiv (Ctrl+I)" />
+		<tip id="ID_CHAT_PRIORITY" message="Diesem Benutzer Uploadpriorität gewähren." />
+		<tip id="ID_CHAT_SEND_FILE" message="Eine Datei senden..." />
+		<tip id="ID_CHAT_TIMESTAMP" message="Die Zeit anzeigen wann eine Nachricht empfangen wurde." />
+		<tip id="ID_CHAT_UNDERLINE" message="Unterstrichen (Ctrl+U)" />
 		<tip id="ID_CHILD_CLOSE" message="Das aktive Fenster schließen." />
 		<tip id="ID_CHILD_MAXIMISE" message="Das aktive Fenster maximieren, um das Fenster zu füllen." />
 		<tip id="ID_CHILD_MINIMISE" message="Das markierte Fenster in die Tableiste minimieren." />
-		<tip id="ID_TRANSFERS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen."
-			tip="Chat beginnen" />
-		<tip id="ID_UPLOADS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen."
-			tip="Chat beginnen" />
-		<tip id="ID_SEARCH_CLEAR" message="Die Suchergebnisse entfernen." tip="Ergebnisse entfernen" />
-		<tip id="ID_TRAY_OPEN" message="Open the Shareaza window." tip="Das Shareaza Fenster öffnen" />
-		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch nach dem Beenden der Transfer beenden."
-			tip="Nach Transfer schließen" />
-		<tip id="ID_UPLOADS_AUTO_CLEAR" message="Beendete Uploads automatisch entfernen" tip="Automatisch entfernen" />
-		<tip id="ID_LIBRARY_SEARCH" message="In ihrer Bibliothek suchen..." tip="In ihrer Bibliothek suchen" />
-		<tip id="ID_TRAFFIC_WINDOW" message="Ein neues Diagrammfenster öffnen..." tip="Neues Fenster" />
-		<tip id="ID_NEIGHBOURS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen."
-			tip="Chat beginnen" />
-		<tip id="ID_HELP_WEB_4" message="NapJunk.net besuchen" />
-		<tip id="ID_SEARCH_STOP" message="Den Empfang von Suchergebnissen in diesem Fenster beenden."
-			tip="Suche stoppen" />
-		<tip id="ID_TOOLS_DOWNLOAD" message="Eine neue Datei oder ein Torrent herunterladen..." />
-		<tip id="ID_DOWNLOADS_URL" message="Quellen aus einer URL zum markierten Download hinzufügen..."
-			tip="Quell-URL hinzufügen" />
-		<tip id="ID_LIBRARY_BITZI_WEB" message="Das Bitzi(TM) Ticket für die markierte Datei im Browser anzeigen."
-			tip="Das Bitzi für die markierte Datei anzeigen" />
-		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metadaten für die markierte(n) Datei(en) von Bitzi(TM) herunterladen..."
-			tip="Metadaten suchen" />
-		<tip id="ID_VIEW_SECURITY" message="Das Sicherheitsfenster ein- oder ausblenden." tip="Sicherheitsfenster" />
-		<tip id="ID_SECURITY_EDIT" message="Die markierte Sicherheitsregel bearbeiten..." tip="Regel bearbeiten" />
-		<tip id="ID_SECURITY_REMOVE" message="Die markierte(n) Sicherheitsregel(n) löschen."
-			tip="Regel löschen" />
-		<tip id="ID_SECURITY_RESET" message="Die Trefferzähler der markierte(n) Sicherheitsregel(n) zurücksetzen."
-			tip="Regeln zurücksetzen" />
-		<tip id="ID_SECURITY_ADD" message="Der Sicherheitskette eine neue Regel hinzufügen..."
-			tip="Regel hinzufügen" />
-		<tip id="ID_SECURITY_POLICY_ACCEPT" message="Die Default Policy so einstellen, dass alle Hosts erlaubt werden."
-			tip="Default Policy: Accept" />
-		<tip id="ID_SECURITY_POLICY_DENY" message="Die Default Policy so einstellen, dass alle Hosts abgewiesen werden."
-			tip="Default Policy: Deny" />
-		<tip id="ID_LIBRARY_REFRESH" message="Die Bibliothek aktualisieren." tip="Aktualisieren" />
-		<tip id="ID_LIBRARY_MOVE" message="Die markierten Dateien in einen anderen Ordner verschieben..."
-			tip="Dateien verschieben" />
-		<tip id="ID_LIBRARY_COPY" message="Die markierten Dateien in einen anderen Ordner kopieren..."
-			tip="Dateien kopieren" />
-		<tip id="ID_LIBRARY_DELETE" message="Die markierten Dateien dauerhaft löschen." tip="Dateien löschen" />
-		<tip id="ID_LIBRARY_ENQUEUE" message="Die markierte(n) Datei(en) in ihre Wiedergabeliste aufnehmen."
-			tip="In Wiedergabeliste aufnehmen" />
-		<tip id="ID_DOWNLOADS_ENQUEUE" message="Den markierten Download in ihre Wiedergabeliste aufnehmen."
-			tip="In Wiedergabeliste aufnehmen" />
-		<tip id="ID_SECURITY_MOVE_UP" message="Die Priorität dieser Regel erhöhen.." tip="Nach oben" />
-		<tip id="ID_SECURITY_MOVE_DOWN" message="Die Priorität dieser Regel erniedrigen." tip="Nach unten" />
-		<tip id="ID_SECURITY_BAN" message="Den markierten Host für die Dauer dieser Sitzung bannen."
-			tip="Host bannen" />
-		<tip id="ID_UPLOADS_GROUP" message="Uploads nach Verbindung gruppieren (host)." tip="Nach Host gruppieren" />
-		<tip id="ID_TAB_NETWORK" message="Ihre Verbindungen zum Netzwerk anzeigen." tip="Ihre Verbindungen zum Netzwerk anzeigen" />
-		<tip id="ID_TAB_LIBRARY" message="Die lokale Bibliothek anzeigen um ihre Dateien zu verwalten."
-			tip="Die lokale Bibliothek anzeigen um ihre Dateien zu verwalten" />
-		<tip id="ID_TAB_TRANSFERS" message="Uploads und Downloads überwachen." tip="Uploads und Downloads überwachen" />
-		<tip id="ID_TAB_CONNECT" message="Verbindung zum Netzwerk herstellen / trennen." tip="Verbindung zum Netzwerk herstellen / trennen." />
-		<tip id="ID_VIEW_TABBED" message="Shareaza im Tab Modus benutzen (Home, Bibliothek, Transfer, Netzwerk)."
-			tip="Tab Modus" />
-		<tip id="ID_VIEW_WINDOWED" message="Shareaza im Fenster Modus benutzen (Fortgeschrittene Benutzer)."
-			tip="Fenster Modus" />
-		<tip id="ID_LIBRARY_URL" message="Die URI der markierten Datei kopieren" tip="URL kopieren" />
-		<tip id="ID_VIEW_DISCOVERY" message="Das Service Provider Fenster ein- oder ausblenden."
-			tip="Service Provider Fenster" />
-		<tip id="ID_DISCOVERY_EDIT" message="Eigenschaften für den markierten Service Provider anzeigen."
-			tip="Eigenschaften" />
-		<tip id="ID_DISCOVERY_QUERY" message="Den markierten Service Provider jetzt abfragen."
-			tip="Jetzt abfragen" />
-		<tip id="ID_DISCOVERY_REMOVE" message="Den markierten Service Provider entfernen." tip="Entfernen" />
+		<tip id="ID_CHILD_RESTORE" message="Das markierte Fenster öffnen." />
 		<tip id="ID_DISCOVERY_ADD" message="Einen neuen Service Provider hinzufügen..." tip="Dienst hinzufügen" />
-		<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap Dienste im Service Provider Fenster anzeigen."
-			tip="Bootstraps anzeigen" />
-		<tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache Dienste im Service Provider Fenster anzeigen."
-			tip="GWebCaches anzeigen" />
-		<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Beendete Downloads automatisch entfernen."
-			tip="Automatisch entfernen" />
-		<tip id="ID_TRANSFERS_CONNECT" message="Auf die markierte(n) Quelle(n) zugreifen und einen Download versuchen."
-			tip="Quelle benutzen" />
-		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Quellen anzeigen, die zur Zeit nicht benutzt werden."
-			tip="Alle Quellen zeigen" />
-		<tip id="ID_SYSTEM_VERBOSE" message="Ausführliche Meldungen ausgeben." tip="Ausführliche Meldungen ausgeben" />
-		<tip id="ID_DISCOVERY_ADVERTISE" message="Den markierten GWebCache mit einem zufälligen anderen GWebCache bekannt machen."
-			tip="GWebCache bekannt machen" />
-		<tip id="ID_DISCOVERY_BROWSE" message="Die Statistik-Seite des markierten GWebCache service anzeigen."
-			tip="Statistik anzeigen" />
-		<tip id="ID_BROWSE_STOP" message="Durchsuchen dieses Hosts beenden." tip="Durchsuchen beenden" />
-		<tip id="ID_BROWSE_REFRESH" message="Die Dateiliste erneut anfordern." tip="Aktualisieren" />
-		<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen."
-			tip="Benutzer durchsuchen" />
-		<tip id="ID_DOWNLOADS_BOOST" message="Die Geschwindigkeit des markierten Downloads erhöhen, indem das Geschwindigkeitslimit aufgehoben wird."
-			tip="Geschwindigkeitslimit aufheben" />
-		<tip id="ID_TAB_HOME" message="Zur Shareaza Homepage zurückkehren" tip="Zur Shareaza Homepage zurückkehren" />
-		<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Eine Kopie der markierten Datei(en) als Vorschau anzeigen."
-			tip="Kopie öffnen" />
-		<tip id="ID_SEARCH_MERGE" message="Die markierten Dateigruppen zusammenfügen." tip="Ergebnisse zusammenführen" />
-		<tip id="ID_DOWNLOADS_MONITOR" message="Ein Downloadmonitorfenster für diesen Download öffnen.."
-			tip="Monitor öffnen" />
-		<tip id="ID_LIBRARY_SELECT_ALL" message="Alle Ordner in der Bibliothek auswählen und anzeigen."
-			tip="Alle Ordner in der Bibliothek auswählen und anzeigen" />
-		<tip id="ID_SECURITY_EXPORT" message="Die markierten Regeln in eine Datei exportieren..."
-			tip="Regeln exportieren" />
-		<tip id="ID_SECURITY_IMPORT" message="Sicherheitsregeln aus Datei importieren..." tip="Importieren" />
-		<tip id="ID_SEARCH_FILTER_RAW" message="Die Ergebnisse nach bestimmte Wörtern und Eigenschaften filtern..."
-			tip="Erweiterte Filteroptionen anzeigen" />
-		<tip id="ID_SEARCH_PANEL" message="Die Suchleiste auf der linken Seite des Shareaza Fensters anzeigen"
-			tip="Suchleiste anzeigen" />
-		<tip id="ID_SYSTEM_TIMESTAMP" message="Für jede Zeile einen Zeitstempel aufzeichnen."
-			tip="Zeitstempel anzeigen" />
-		<tip id="ID_LIBRARY_LAUNCH_FILE" message="Die markierte Datei(en) öffnen." tip="Markierte Datei(en) öffnen" />
-		<tip id="ID_NEIGHBOURS_COPY" message="Eine URL kopieren um auf den markierten Host zuzugreifen."
-			tip="URL kopieren" />
-		<tip id="ID_TOOLS_RESKIN" message="Den aktuellen Skin neu laden und anwenden." />
-		<tip id="ID_WINDOW_CASCADE" message="Alle offenen Fenster maximieren." tip="Vollbild" />
-		<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen."
-			tip="Übereinander" />
-		<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen."
-			tip="Nebeneinander" />
-		<tip id="ID_MONITOR_CLOSE" message="Das Monitor Fenster schließen." tip="Monitor Fenster schließen" />
-		<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen" />
-		<tip id="ID_WINDOW_TABBAR" message="Die Tableiste ein- oder ausblenden." tip="Tableiste anzeigen" />
-		<tip id="ID_WINDOW_MONITOR" message="Den Bandbreiten Monitor ein- oder ausblenden." tip="Monitor anzeigen" />
-		<tip id="ID_NETWORK_BROWSE_TO" message="Die freigegebenen Dateien eines Benutzers durchsuchen und dessen Profil anzeigen..."
-			tip="Benutzer durchsuchen" />
-		<tip id="ID_TOOLS_SKIN" message="Einen anderen Skin für Shareaza wählen..." tip="Skin wechseln" />
-		<tip id="ID_LIBRARY_HASH_PRIORITY" message="Das markierte Objekt sofort hashen." tip="Jetzt hashen" />
+		<tip id="ID_DISCOVERY_ADVERTISE" message="Den markierten GWebCache mit einem zufälligen anderen GWebCache bekannt machen." tip="GWebCache bekannt machen" />
+		<tip id="ID_DISCOVERY_BROWSE" message="Die Statistik-Seite des markierten GWebCache service anzeigen." tip="Statistik anzeigen" />
+		<tip id="ID_DISCOVERY_EDIT" message="Eigenschaften für den markierten Service Provider anzeigen." tip="Eigenschaften" />
+		<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap Dienste im Service Provider Fenster anzeigen." tip="Bootstraps anzeigen" />
+		<tip id="ID_DISCOVERY_QUERY" message="Den markierten Service Provider jetzt abfragen." tip="Jetzt abfragen" />
+		<tip id="ID_DISCOVERY_REMOVE" message="Den markierten Service Provider entfernen." tip="Entfernen" />
+		<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey Server.met Dienste im Service Provider Fenster anzeigen." />
+		<tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache Dienste im Service Provider Fenster anzeigen." tip="GWebCaches anzeigen" />
+		<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Alle Downloads in dieser Gruppe abbrechen und entfernen." />
+		<tip id="ID_DOWNLOAD_GROUP_NEW" message="Eine neue Downloadgruppe erstellen..." />
+		<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Alle Downloads in dieser Gruppe anhalten." />
+		<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Die Eigenschaften der markierten Downloadgruppe bearbeiten." />
+		<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Die markierte Downloadgruppe entfernen." />
+		<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Alle Downloads in dieser Gruppe wiederaufnehmen." />
+		<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Die Downloadgruppen Leiste ein- oder ausblenden." />
+		<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Beendete Downloads automatisch entfernen." tip="Automatisch entfernen" />
+		<tip id="ID_DOWNLOADS_BOOST" message="Die Geschwindigkeit des markierten Downloads erhöhen, indem das Geschwindigkeitslimit aufgehoben wird." tip="Geschwindigkeitslimit aufheben" />
+		<tip id="ID_DOWNLOADS_CLEAR" message="Markierte(n) Download(s) entfernen." tip="Entfernen" />
+		<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Den markierten Download von der Liste entfernen." />
+		<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Beendete Downloads entfernen." tip="Beendete entfernen" />
+		<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Den markierten, unvollständigen Download abbrechen." />
+		<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Angehaltene Downloads entfernen." tip="Angehaltene entfernen" />
+		<tip id="ID_DOWNLOADS_COPY" message="Die URI der markierten Datei kopieren." />
+		<tip id="ID_DOWNLOADS_EDIT" message="Den erweiterten Downloadeditor anzeigen..." />
+		<tip id="ID_DOWNLOADS_ENQUEUE" message="Den markierten Download in ihre Wiedergabeliste aufnehmen." tip="In Wiedergabeliste aufnehmen" />
 		<tip id="ID_DOWNLOADS_FILE_DELETE" message="Die markierte(n) Datei(en) löschen." tip="Löschen" />
-		<tip id="ID_LIBRARY_RENAME" message="Die markierte Datei umbenennen." tip="Datei umbenennen" />
-		<tip id="ID_UPLOADS_START" message="Markierten Upload in der Warteschlange starten" tip="Upload starten" />
-		<tip id="ID_DOWNLOADS_MOVE_UP" message="Markierten Download(s) eine höhere Priorität zuweisen."
-			tip="Höhere Priorotät" />
-		<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Markierten Download(s) eine niedrigere Priorität zuweisen."
-			tip="Niedrigere Priorität" />
-		<tip id="ID_TOOLS_LANGUAGE" message="Wählen Sie die Sprache in der Sie Shareaza benutzen möchten..." />
-		<tip id="ID_DOWNLOADS_SETTINGS" message="Downloadeinstellungen  konfigurieren..." />
-		<tip id="ID_UPLOADS_SETTINGS" message="Uploadeinstellungen konfigurieren..." />
-		<tip id="ID_DOWNLOADS_FILTER_ALL" message="Alle Downloads anzeigen." />
 		<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Aktive Downloads anzeigen." />
+		<tip id="ID_DOWNLOADS_FILTER_ALL" message="Alle Downloads anzeigen." />
+		<tip id="ID_DOWNLOADS_FILTER_MENU" message="Legen Sie fest, welche Arten von Downloads angezeigt werden sollen." />
+		<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Angehaltene Downloads anzeigen." />
 		<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Downloads in Warteschlangen anzeigen" />
 		<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Downloads anzeigen, für die zur Zeit keine Quellen verfügbar sind." />
-		<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Angehaltene Downloads anzeigen." />
-		<tip id="ID_NEIGHBOURS_SETTINGS" message="Netzwerkeinstellungen konfigurieren..." />
+		<tip id="ID_DOWNLOADS_HELP" message="Informationen über diesen Download anzeigen..." />
+		<tip id="ID_DOWNLOADS_LAUNCH" message="Vorschau für die markierte(n) Datei(en) anzeigen." tip="Vorschau" />
+		<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="die markierte(n) Dateien öffnen oder abspielen." />
+		<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Eine Kopie der markierten Datei(en) als Vorschau anzeigen." tip="Kopie öffnen" />
+		<tip id="ID_DOWNLOADS_MONITOR" message="Ein Downloadmonitorfenster für diesen Download öffnen.." tip="Monitor öffnen" />
+		<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Markierten Download(s) eine niedrigere Priorität zuweisen." tip="Niedrigere Priorität" />
+		<tip id="ID_DOWNLOADS_MOVE_UP" message="Markierten Download(s) eine höhere Priorität zuweisen." tip="Höhere Priorotät" />
+		<tip id="ID_DOWNLOADS_PAUSE" message="Markierte(n) Download(s) anhalten." tip="Anhalten" />
+		<tip id="ID_DOWNLOADS_RATE" message="Den markierten Download bewerten." />
+		<tip id="ID_DOWNLOADS_RESUME" message="Markierte(n) Download(s) fortsetzen." tip="Download fortsetzen" />
+		<tip id="ID_DOWNLOADS_SETTINGS" message="Downloadeinstellungen  konfigurieren..." />
+		<tip id="ID_DOWNLOADS_SHARE" message="Diese teilweise heruntergeladene Datei freigeben." />
+		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Quellen anzeigen, die zur Zeit nicht benutzt werden." tip="Alle Quellen zeigen" />
+		<tip id="ID_DOWNLOADS_SOURCES" message="Zusätzliche Quellen für den/die markierten Download(s) suchen." tip="Mehr Quellen" />
+		<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Informationen über den markierten BitTorrent Download anzeigen..." />
+		<tip id="ID_DOWNLOADS_URL" message="Quellen aus einer URL zum markierten Download hinzufügen..." tip="Quell-URL hinzufügen" />
+		<tip id="ID_HELP_ABOUT" message="Informationen über Shareaza anzeigen..." tip="Über Shareaza" />
+		<tip id="ID_HELP_FAQ" message="Die Shareaza Anleitung anzeigen" tip="Shareaza Anleitung" />
+		<tip id="ID_HELP_FIREWALLS" message="Finden Sie heraus wie Sie ihren Router/Firewall konfigurieren müssen." />
+		<tip id="ID_HELP_FORUMS" message="Das Shareaza Forum besuchen." />
+		<tip id="ID_HELP_HOMEPAGE" message="Shareaza.com besuchen." tip="Shareaza.com" />
+		<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren) schützen." />
+		<tip id="ID_HELP_WEB_1" message="Zeropaid.com besuchen" tip="Zeropaid.com" />
+		<tip id="ID_HELP_WEB_2" message="P2PForums.com besuchen" tip="P2PForums.com" />
+		<tip id="ID_HELP_WEB_3" message="Slyck.com besuchen" tip="Slyck.com" />
+		<tip id="ID_HELP_WEB_4" message="NapJunk.net besuchen" />
+		<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor Puffer leeren." tip="Puffer leeren" />
+		<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten" />
+		<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen" />
+		<tip id="ID_HOSTCACHE_CONNECT" message="Mit markierten Host(s) verbinden." tip="Jetzt verbinden" />
+		<tip id="ID_HOSTCACHE_DISCONNECT" message="Verbindung zu markierten Host(s) beenden." tip="Verbindung beenden" />
+		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey Server anzeigen." />
+		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Eine eDonkey &quot;server.met&quot; Datei herunterladen..." />
+		<tip id="ID_HOSTCACHE_G1_CACHE" message="Gecachte Hosts anzeigen (G1)." />
+		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gecachte Hosts anzeigen (G2)." />
+		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Horizont anzeigen (G2)." />
+		<tip id="ID_HOSTCACHE_IMPORT" message="Eine liste bekannter Hosts importieren, z.B. eine &quot;server.met&quot; Datei..." />
+		<tip id="ID_HOSTCACHE_PRIORITY" message="Zuerst zu diesem Server verbinden, bevor andere versucht werden." />
+		<tip id="ID_HOSTCACHE_REMOVE" message="Die ausgewählten Hosts vom Hostcache entfernen." tip="Hosts entfernen" />
+		<tip id="ID_LIBRARY_ADD" message="Ihrer Bibliothek einen neuen Ordner hinzufügen..." tip="Ihrer Bibliothek einen neuen Ordner hinzufügen" />
+		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Das markierte Album löschen." />
+		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Das Album öffnen." />
+		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Die Eigenschaften des markierten Albums anzeigen und bearbeiten..." />
+		<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metadaten für die markierte(n) Datei(en) von Bitzi(TM) herunterladen..." tip="Metadaten suchen" />
+		<tip id="ID_LIBRARY_BITZI_WEB" message="Das Bitzi(TM) Ticket für die markierte Datei im Browser anzeigen." tip="Das Bitzi für die markierte Datei anzeigen" />
+		<tip id="ID_LIBRARY_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..." tip="Spalten auswählen" />
+		<tip id="ID_LIBRARY_COPY" message="Die markierten Dateien in einen anderen Ordner kopieren..." tip="Dateien kopieren" />
+		<tip id="ID_LIBRARY_CREATETORRENT" message="Eine .torrent für diese Datei erstellen, um sie auf eine Webseite hochzuladen." />
+		<tip id="ID_LIBRARY_DELETE" message="Die markierten Dateien dauerhaft löschen." tip="Dateien löschen" />
+		<tip id="ID_LIBRARY_ENQUEUE" message="Die markierte(n) Datei(en) in ihre Wiedergabeliste aufnehmen." tip="In Wiedergabeliste aufnehmen" />
+		<tip id="ID_LIBRARY_EXPLORE" message="Den markierten Ordner öffnen."/>
+		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..." />
+		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Alle Dateien der markierten Kollektion herunterladen." />
+		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle Dateien des markierten Albums zur Wiedergabeliste hinzufügen." />
+		<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..." />
+		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Die Eigenschaften aller Dateien im gewählten Ordner anzeigen und bearbeiten..." />
+		<tip id="ID_LIBRARY_FOLDER_METADATA" message="Gemeinsame Metadaten des Albums für alle Dateien übernehmen." />
+		<tip id="ID_LIBRARY_FOLDER_NEW" message="Ein neues Album erstellen..." />
+		<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Die Eigenschaften des markierten Albums anzeigen und bearbeiten..." />
+		<tip id="ID_LIBRARY_FOLDERS" message="Die Ordner auf ihrer Festplatte verwalten..." />
+		<tip id="ID_LIBRARY_HASH_PRIORITY" message="Das markierte Objekt sofort hashen." tip="Jetzt hashen" />
+		<tip id="ID_LIBRARY_LAUNCH" message="Markierte(n) Datei(en) öffnen." />
+		<tip id="ID_LIBRARY_MOVE" message="Die markierten Dateien in einen anderen Ordner verschieben..." tip="Dateien verschieben" />
+		<tip id="ID_LIBRARY_PANEL" message="Die Details ein- oder ausblenden." />
+		<tip id="ID_LIBRARY_PARENT" message="Zum übergeordneten Ordner wechseln." />
+		<tip id="ID_LIBRARY_PROPERTIES" message="Eigenschaften der markierten Dateien anzeigen und bearbeiten..." tip="Eigenschaften der markierten Dateien anzeigen und bearbeiten" />
+		<tip id="ID_LIBRARY_REBUILD" message="Metadaten neu einlesen und Hashwerte neu berechnen." />
+		<tip id="ID_LIBRARY_REBUILD_ANSI" message="MP3 Metadaten mit lokalem Charset einlesen."/>
+		<tip id="ID_LIBRARY_REFRESH" message="Die Bibliothek aktualisieren." tip="Aktualisieren" />
+		<tip id="ID_LIBRARY_REMOVE" message="Markierten Ordner entfernen." tip="Entfernen" />
+		<tip id="ID_LIBRARY_RENAME" message="Die markierte Datei umbenennen." tip="Datei umbenennen" />
+		<tip id="ID_LIBRARY_SCAN" message="Markierten Ordner scannen." tip="Scannen" />
+		<tip id="ID_LIBRARY_SEARCH" message="In ihrer Bibliothek suchen..." tip="In ihrer Bibliothek suchen" />
+		<tip id="ID_LIBRARY_SEARCH_QUICK" message="In ihrer Bibliothek suchen..." />
+		<tip id="ID_LIBRARY_SEED_TORRENT" message="Das markierte Torrent &quot;seeden&quot;." />
+		<tip id="ID_LIBRARY_SELECT_ALL" message="Alle Ordner in der Bibliothek auswählen und anzeigen." tip="Alle Ordner in der Bibliothek auswählen und anzeigen" />
+		<tip id="ID_LIBRARY_SHARED" message="Markiertes Objekt Freigeben / nicht Freigeben." tip="Freigeben / nicht Freigeben" />
+		<tip id="ID_LIBRARY_SHARED_FOLDER" message="Den markierten Ordner freigeben / nicht freigeben." />
 		<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Die Ordner auf ihrer Festplatte anzeigen." />
 		<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Die Bibliothek verwalten." />
-		<tip id="ID_LIBRARY_SHARED_FOLDER" message="Den markierten Ordner freigeben / nicht freigeben." />
-		<tip id="ID_LIBRARY_VIEW" message="Ansicht wählen..." />
-		<tip id="ID_LIBRARY_VIEW_DETAIL" message="Dateiname, Details und Metadaten anzeigen"
-			tip="Detailansicht" />
-		<tip id="ID_LIBRARY_VIEW_HOME" message="Die Bibliotheksübersicht anzeigen" tip="Übersicht" />
-		<tip id="ID_LIBRARY_VIEW_LIST" message="Dateien in Listenform anzeigen" tip="Listenansicht" />
-		<tip id="ID_LIBRARY_VIEW_ICON" message="Dateien mit Symbolen anzeigen" tip="Symbole" />
-		<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Miniaturansicht für die Dateien anzeigen"
-			tip="Miniaturansicht" />
-		<tip id="ID_LIBRARY_PARENT" message="Zum übergeordneten Ordner wechseln." />
-		<tip id="ID_LIBRARY_PANEL" message="Die Details ein- oder ausblenden." />
-		<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Die Eigenschaften des markierten Albums anzeigen und bearbeiten..." />
-		<tip id="ID_LIBRARY_FOLDER_NEW" message="Ein neues Album erstellen..." />
 		<tip id="ID_LIBRARY_UNLINK" message="Die markierten Dateien aus dem Album entfernen." />
-		<tip id="ID_LIBRARY_FOLDER_METADATA" message="Gemeinsame Metadaten des Albums für alle Dateien übernehmen." />
-		<tip id="ID_VIEW_MEDIA" message="Die Medienwiedergabe ein- oder ausblenden." />
-		<tip id="ID_TAB_MEDIA" message="Audio- und Videodateien aus der Bibliothek abspielen." />
-		<tip id="ID_MEDIA_OPEN" message="Eine Datei oder Wiedergabeliste öffnen und abspielen..." />
-		<tip id="ID_MEDIA_CLOSE" message="Die aktuelle Datei schließen um Speicher freizugeben." />
-		<tip id="ID_MEDIA_PLAY" message="Die aktuelle Datei wiedergeben." tip="Wiedergeben" />
-		<tip id="ID_MEDIA_STOP" message="Die Wiedergabe beenden." tip="Stopp" />
-		<tip id="ID_MEDIA_PREVIOUS" message="Zur vorherigen Datei der Wiedergabeliste zurückspringen."
-			tip="Vorherige Datei" />
-		<tip id="ID_MEDIA_NEXT" message="Die nächste Datei in der Wiedergabeliste wiedergeben."
-			tip="Nächste Datei" />
-		<tip id="ID_MEDIA_SIZE_FILL" message="Wählen Sie die Größe des Videos entsprechend des Seitenverhältnisses." />
-		<tip id="ID_MEDIA_SIZE_DISTORT" message="Das Video an das Fenster anpassen. Das Video wird möglicherweise verzerrt." />
-		<tip id="ID_MEDIA_SIZE_ONE" message="Das Video in der Originalgröße anzeigen." />
-		<tip id="ID_MEDIA_SIZE_TWO" message="Das Video in doppelter Größe anzeigen." />
-		<tip id="ID_MEDIA_SIZE_THREE" message="Das Video in dreifacher Größe anzeigen." />
-		<tip id="ID_MEDIA_FULLSCREEN" message="In den Vollbild Modus wechseln." />
-		<tip id="ID_MEDIA_RANDOM" message="Zufallswiedergabe ein- oder ausschalten." />
-		<tip id="ID_MEDIA_REPEAT" message="Die aktuelle Datei wiederholen." />
-		<tip id="ID_MEDIA_SETTINGS" message="Medieneinstellungen konfigurieren..." />
-		<tip id="ID_MEDIA_PAUSE" message="Die Wiedergabe anhalten." tip="Pause" />
-		<tip id="ID_MEDIA_ZOOM" message="Zoom und Seitenverhältnis einstellen.." />
-		<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Das Originalseitenverhältnis benutzen." />
-		<tip id="ID_MEDIA_ASPECT_4_3" message="Das Seitenverhältnis auf 4:3 einstellen (TV)." />
-		<tip id="ID_MEDIA_ASPECT_16_9" message="Das Seitenverhältnis auf 16:9 einstellen (Film)." />
-		<tip id="ID_MEDIA_SELECT" message="Diese Datei wiedergeben." />
-		<tip id="ID_MEDIA_ADD" message="Der Wiedergabeliste eine Datei hinzufügen..." />
-		<tip id="ID_MEDIA_REMOVE" message="Die markierte Datei aus der Wiedergabeliste entfernen." />
-		<tip id="ID_MEDIA_CLEAR" message="Die Wiedergabeliste löschen." />
-		<tip id="ID_MEDIA_SAVE" message="Die Wiedergabeliste abspeichern..." />
-		<tip id="ID_MEDIA_PLAYLIST" message="Die Wiedergabeliste ein- oder ausblenden." />
-		<tip id="ID_LIBRARY_VIEW_TILE" message="Eine Liste der Alben anzeigen." tip="Ordneransicht" />
-		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Das Album öffnen." />
-		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle Dateien des markierten Albums zur Wiedergabeliste hinzufügen." />
-		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Das markierte Album löschen." />
-		<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Die Eigenschaften des markierten Albums anzeigen und bearbeiten..." />
-		<tip id="ID_TAB_SEARCH" message="Das Netzwerk nach Dateien durchsuchen" />
-		<tip id="ID_LIBRARY_FOLDERS" message="Die Ordner auf ihrer Festplatte verwalten..." />
-		<tip id="ID_TOOLS_PROFILE" message="Ihr Benutzerprofil bearbeiten..." />
-		<tip id="ID_BROWSE_PROFILE" message="Das Profil des Benutzers anzeigen." />
-		<tip id="ID_BROWSE_FILES" message="Die Dateien des Benutzers anzeigen." />
-		<tip id="ID_MEDIA_VIS" message="Ein Visualisierungs Plugin wählen..." />
-		<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="die markierte(n) Dateien öffnen oder abspielen." />
-		<tip id="ID_CHAT_CONNECT" message="Zum Chat verbinden.." />
-		<tip id="ID_CHAT_DISCONNECT" message="Chatverbindung beenden." />
-		<tip id="ID_CHAT_BROWSE" message="Das Profil und die freigegebenen Dateien anzeigen." />
-		<tip id="ID_CHAT_COLOUR" message="Eine Textfarbe wählen (Ctrl+K)" />
-		<tip id="ID_CHAT_BOLD" message="Fett (Ctrl+B)" />
-		<tip id="ID_CHAT_ITALIC" message="Kursiv (Ctrl+I)" />
-		<tip id="ID_CHAT_UNDERLINE" message="Unterstrichen (Ctrl+U)" />
-		<tip id="ID_CHAT_SEND_FILE" message="Eine Datei senden..." />
-		<tip id="ID_CHAT_PRIORITY" message="Diesem Benutzer Uploadpriorität gewähren." />
-		<tip id="ID_CHAT_CLEAR" message="Clear the message text in this window." />
-		<tip id="ID_CHAT_EMOTICONS" message="Smiley einfügen." />
-		<tip id="ID_DOWNLOADS_SHARE" message="Diese teilweise heruntergeladene Datei freigeben." />
-		<tip id="ID_MEDIA_ADD_FOLDER" message="Einen Ordner zur Wiedergabeliste hinzufügen..." />
-		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Die Eigenschaften aller Dateien im gewählten Ordner anzeigen und bearbeiten..." />
-		<tip id="ID_LIBRARY_REBUILD" message="Metadaten neu einlesen und Hashwerte neu berechnen." />
-		<tip id="ID_VIEW_HELP" message="Das Hilfefenster ein- oder ausblenden." />
-		<tip id="ID_TAB_HELP" message="Shareaza Hilfe." />
-		<tip id="ID_DOWNLOADS_COPY" message="Die URI der markierten Datei kopieren." />
+		<tip id="ID_LIBRARY_URL" message="Die URI der markierten Datei kopieren" tip="URL kopieren" />
+		<tip id="ID_LIBRARY_VIEW" message="Ansicht wählen..." />
 		<tip id="ID_LIBRARY_VIEW_ALBUM" message="Die Albumansicht anzeigen" tip="Albumansicht" />
-		<tip id="ID_SEARCH_DETAILS" message="Detailierte Informationen über die markierte Datei anzeigen." />
-		<tip id="ID_UPLOADS_FILTER_ALL" message="Alle Uploads anzeigen." />
-		<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Uploads anzeigen, die Daten &#251;bertragen." />
-		<tip id="ID_UPLOADS_FILTER_QUEUED" message="Uploads anzeigen, die in der Warteschlange warten." />
-		<tip id="ID_UPLOADS_FILTER_HISTORY" message="Ulpoads anzeigen, die nicht mehr verbunden sind." />
-		<tip id="ID_SEARCH_FOR_THIS" message="Andere Kopien der markierten Datei suchen." />
-		<tip id="ID_SEARCH_FOR_SIMILAR" message="Nach Dateien suchen, die einen ähnlichen Namen haben" />
-		<tip id="ID_SEARCH_FOR_ARTIST" message="Nach Musikdateien vom gleichen K&#251;nstler wie der markierten Datei suchen." />
-		<tip id="ID_SEARCH_FOR_ALBUM" message="Nach Musikdateien aus dem gleichen Album wie die markierte Datei suchen.." />
-		<tip id="ID_SEARCH_FOR_SERIES" message="Nach Folgen der gleichen Fernsehserie suchen." />
-		<tip id="ID_CHAT_TIMESTAMP" message="Die Zeit anzeigen wann eine Nachricht empfangen wurde." />
-		<tip id="ID_MEDIA_STATUS" message="Die Satuszeile ein- oder ausblenden." />
-		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey Server anzeigen." />
-		<tip id="ID_HOSTCACHE_IMPORT" message="Eine liste bekannter Hosts importieren, z.B. eine &quot;server.met&quot; Datei..." />
-		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Eine eDonkey &quot;server.met&quot; Datei herunterladen..." />
-		<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey Server.met Dienste im Service Provider Fenster anzeigen." />
-		<tip id="ID_NETWORK_G2" message="Zum Gnutella2 Netzwerk verbinden (empfohlen)." />
-		<tip id="ID_NETWORK_G1" message="Zum original Gnutella Netzwerk verbinden." />
-		<tip id="ID_NETWORK_ED2K" message="Zum eDonkey Netzwerk verbinden." />
-		<tip id="ID_LIBRARY_JIGLE" message="Nach Informationen über die markierte Datei in der Jigle Datenbank im Web suchen." />
-		<tip id="ID_HOSTCACHE_PRIORITY" message="Zuerst zu diesem Server verbinden, bevor andere versucht werden." />
-		<tip id="ID_VIEW_BASIC" message="Shareaza im Normal Modus verwenden." />
-		<tip id="ID_LIBRARY_SEARCH_QUICK" message="In ihrer Bibliothek suchen..." />
-		<tip id="ID_HELP_FORUMS" message="Das Shareaza Forum besuchen." />
-		<tip id="ID_DOWNLOAD_GROUP_NEW" message="Eine neue Downloadgruppe erstellen..." />
-		<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Die markierte Downloadgruppe entfernen." />
-		<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Die Eigenschaften der markierten Downloadgruppe bearbeiten." />
-		<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Alle Downloads in dieser Gruppe anhalten." />
-		<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Alle Downloads in dieser Gruppe wiederaufnehmen." />
-		<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Alle Downloads in dieser Gruppe abbrechen und entfernen." />
-		<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Informationen über den markierten BitTorrent Download anzeigen..." />
-		<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Die Downloadgruppen Leiste ein- oder ausblenden." />
-		<tip id="ID_DOWNLOADS_HELP" message="Informationen über diesen Download anzeigen..." />
-		<tip id="ID_DOWNLOADS_FILTER_MENU" message="Legen Sie fest, welche Arten von Downloads angezeigt werden sollen." />
-		<tip id="ID_UPLOADS_FILTER_MENU" message="Legen Sie fest, welche Arten von Uploads angezeigt werden sollen." />
-		<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Den markierten, unvollständigen Download abbrechen." />
-		<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Den markierten Download von der Liste entfernen." />
-		<tip id="ID_WINDOW_NAVBAR" message="Die Navigationsleiste ein- oder ausblenden." />
-		<tip id="ID_DOWNLOADS_RATE" message="Den markierten Download bewerten." />
 		<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Die Kollektionsansicht anzeigen" tip="Kollektionsansicht" />
-		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Alle Dateien der markierten Kollektion herunterladen." />
-		<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..." />
-		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..." />
-		<tip id="ID_LIBRARY_SEED_TORRENT" message="Das markierte Torrent &quot;seeden&quot;." />
-		<tip id="ID_DOWNLOADS_EDIT" message="Den erweiterten Downloadeditor anzeigen..." />
+		<tip id="ID_LIBRARY_VIEW_DETAIL" message="Dateiname, Details und Metadaten anzeigen" tip="Detailansicht" />
+		<tip id="ID_LIBRARY_VIEW_HOME" message="Die Bibliotheksübersicht anzeigen" tip="Übersicht" />
+		<tip id="ID_LIBRARY_VIEW_ICON" message="Dateien mit Symbolen anzeigen" tip="Symbole" />
+		<tip id="ID_LIBRARY_VIEW_LIST" message="Dateien in Listenform anzeigen" tip="Listenansicht" />
+		<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Miniaturansicht für die Dateien anzeigen" tip="Miniaturansicht" />
+		<tip id="ID_LIBRARY_VIEW_TILE" message="Eine Liste der Alben anzeigen." tip="Ordneransicht" />
+		<tip id="ID_MEDIA_ADD" message="Der Wiedergabeliste eine Datei hinzufügen..." />
+		<tip id="ID_MEDIA_ADD_FOLDER" message="Einen Ordner zur Wiedergabeliste hinzufügen..." />
+		<tip id="ID_MEDIA_ASPECT_16_9" message="Das Seitenverhältnis auf 16:9 einstellen (Film)." />
+		<tip id="ID_MEDIA_ASPECT_4_3" message="Das Seitenverhältnis auf 4:3 einstellen (TV)." />
+		<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Das Originalseitenverhältnis benutzen." />
+		<tip id="ID_MEDIA_CLEAR" message="Die Wiedergabeliste löschen." />
+		<tip id="ID_MEDIA_CLOSE" message="Die aktuelle Datei schließen um Speicher freizugeben." />
+		<tip id="ID_MEDIA_FULLSCREEN" message="In den Vollbild Modus wechseln." />
 		<tip id="ID_MEDIA_MUTE" message="Audio wiedergabe stummschalten" />
-		<tip id="ID_WINDOW_REMOTE" message="Die Shareaza Fernbedienung ein- oder ausblenden." />
-		<tip id="ID_HELP_FIREWALLS" message="Finden Sie heraus wie Sie ihren Router/Firewall konfigurieren müssen." />
+		<tip id="ID_MEDIA_NEXT" message="Die nächste Datei in der Wiedergabeliste wiedergeben." tip="Nächste Datei" />
+		<tip id="ID_MEDIA_OPEN" message="Eine Datei oder Wiedergabeliste öffnen und abspielen..." />
+		<tip id="ID_MEDIA_PAUSE" message="Die Wiedergabe anhalten." tip="Pause" />
+		<tip id="ID_MEDIA_PLAY" message="Die aktuelle Datei wiedergeben." tip="Wiedergeben" />
+		<tip id="ID_MEDIA_PLAYLIST" message="Die Wiedergabeliste ein- oder ausblenden." />
+		<tip id="ID_MEDIA_PREVIOUS" message="Zur vorherigen Datei der Wiedergabeliste zurückspringen." tip="Vorherige Datei" />
+		<tip id="ID_MEDIA_RANDOM" message="Zufallswiedergabe ein- oder ausschalten." />
+		<tip id="ID_MEDIA_REMOVE" message="Die markierte Datei aus der Wiedergabeliste entfernen." />
+		<tip id="ID_MEDIA_REPEAT" message="Die aktuelle Datei wiederholen." />
+		<tip id="ID_MEDIA_SAVE" message="Die Wiedergabeliste abspeichern..." />
+		<tip id="ID_MEDIA_SELECT" message="Diese Datei wiedergeben." />
+		<tip id="ID_MEDIA_SETTINGS" message="Medieneinstellungen konfigurieren..." />
+		<tip id="ID_MEDIA_SIZE_DISTORT" message="Das Video an das Fenster anpassen. Das Video wird möglicherweise verzerrt." />
+		<tip id="ID_MEDIA_SIZE_FILL" message="Wählen Sie die Größe des Videos entsprechend des Seitenverhältnisses." />
+		<tip id="ID_MEDIA_SIZE_ONE" message="Das Video in der Originalgröße anzeigen." />
+		<tip id="ID_MEDIA_SIZE_THREE" message="Das Video in dreifacher Größe anzeigen." />
+		<tip id="ID_MEDIA_SIZE_TWO" message="Das Video in doppelter Größe anzeigen." />
+		<tip id="ID_MEDIA_STATUS" message="Die Satuszeile ein- oder ausblenden." />
+		<tip id="ID_MEDIA_STOP" message="Die Wiedergabe beenden." tip="Stopp" />
+		<tip id="ID_MEDIA_VIS" message="Ein Visualisierungs Plugin wählen..." />
+		<tip id="ID_MEDIA_ZOOM" message="Zoom und Seitenverhältnis einstellen.." />
+		<tip id="ID_MONITOR_CLOSE" message="Das Monitor Fenster schließen." tip="Monitor Fenster schließen" />
+		<tip id="ID_NEIGHBOURS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen." tip="Chat beginnen" />
+		<tip id="ID_NEIGHBOURS_COPY" message="Eine URL kopieren um auf den markierten Host zuzugreifen." tip="URL kopieren" />
+		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Die Verbindung zu den markierten Hosts trennen." tip="Verbindung trennen" />
+		<tip id="ID_NEIGHBOURS_SETTINGS" message="Netzwerkeinstellungen konfigurieren..." />
+		<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Ein neues Packet Dump Fenster öffnen, um diesen Host zu überwachen." tip="Allen Traffic anzeigen" />
+		<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Ein neues Packet Dump Fenster öffnen, um eingehenden Traffic von diesem Host zu überwachen." tip="Eingehenden Traffic anzeigen" />
+		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Ein neues Packet Dump Fenster öffnen, um ausgehenden Traffic an diesen Host zu überwachen." tip="Ausgehenden Traffic anzeigen" />
+		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch nach dem Beenden der Transfer beenden." tip="Nach Transfer schließen" />
+		<tip id="ID_NETWORK_BROWSE_TO" message="Die freigegebenen Dateien eines Benutzers durchsuchen und dessen Profil anzeigen..." tip="Benutzer durchsuchen" />
+		<tip id="ID_NETWORK_CONNECT" message="Mit dem Netzwerk verbinden" />
+		<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..." tip="Verbinden mit" />
+		<tip id="ID_NETWORK_DISCONNECT" message="Die Verbindung zum Netzwerk trennen" />
+		<tip id="ID_NETWORK_ED2K" message="Zum eDonkey Netzwerk verbinden." />
+		<tip id="ID_NETWORK_EXIT" message="Shareaza beenden" tip="Beenden" />
+		<tip id="ID_NETWORK_G1" message="Zum original Gnutella Netzwerk verbinden." />
+		<tip id="ID_NETWORK_G2" message="Zum Gnutella2 Netzwerk verbinden (empfohlen)." />
+		<tip id="ID_NETWORK_SEARCH" message="Eine neue Suche starten..." tip="Eine neue Suche starten" />
+		<tip id="ID_SEARCH_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen." tip="Chat beginnen" />
+		<tip id="ID_SEARCH_CLEAR" message="Die Suchergebnisse entfernen." tip="Ergebnisse entfernen" />
+		<tip id="ID_SEARCH_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..." tip="Spalten auswählen" />
+		<tip id="ID_SEARCH_COPY" message="URI der markierten Datei kopieren." tip="URL kopieren" />
+		<tip id="ID_SEARCH_DETAILS" message="Detailierte Informationen über die markierte Datei anzeigen." />
+		<tip id="ID_SEARCH_DOWNLOAD" message="Die markierten(n) Datei(en) herunterladen." />
+		<tip id="ID_SEARCH_DOWNLOADNOW" message="Die markierte(n) Datei(en) mit Priorität herunterladen." />
+		<tip id="ID_SEARCH_FILTER" message="Die Suchergebnisse nach bestimmten Wörtern und Zuständen filtern..." tip="Die Suchergebnisse filtern" />
+		<tip id="ID_SEARCH_FILTER_RAW" message="Die Ergebnisse nach bestimmte Wörtern und Eigenschaften filtern..." tip="Erweiterte Filteroptionen anzeigen" />
+		<tip id="ID_SEARCH_FILTER_REMOVE" message="Den Filter von den Ergebnissen entfernen." tip="Filter entfernen" />
+		<tip id="ID_SEARCH_FOR_ALBUM" message="Nach Musikdateien aus dem gleichen Album wie die markierte Datei suchen.." />
+		<tip id="ID_SEARCH_FOR_ARTIST" message="Nach Musikdateien vom gleichen K&#251;nstler wie der markierten Datei suchen." />
+		<tip id="ID_SEARCH_FOR_SERIES" message="Nach Folgen der gleichen Fernsehserie suchen." />
+		<tip id="ID_SEARCH_FOR_SIMILAR" message="Nach Dateien suchen, die einen ähnlichen Namen haben" />
+		<tip id="ID_SEARCH_FOR_THIS" message="Andere Kopien der markierten Datei suchen." />
+		<tip id="ID_SEARCH_PANEL" message="Die Suchleiste auf der linken Seite des Shareaza Fensters anzeigen" tip="Suchleiste anzeigen" />
+		<tip id="ID_SEARCH_SEARCH" message="Erneut im Netzwerk suchen..." tip="Erneut im Netzwerk suchen" />
+		<tip id="ID_SEARCH_STOP" message="Den Empfang von Suchergebnissen in diesem Fenster beenden." tip="Suche stoppen" />
+		<tip id="ID_SEARCHMONITOR_CLEAR" message="Suchmonitor Puffer leeren." tip="Puffer leeren" />
+		<tip id="ID_SEARCHMONITOR_PAUSE" message="Den Suchmonitor anhalten" tip="Anzeige anhalten" />
+		<tip id="ID_SECURITY_ADD" message="Der Sicherheitskette eine neue Regel hinzufügen..." tip="Regel hinzufügen" />
+		<tip id="ID_SECURITY_BAN" message="Den markierten Host für die Dauer dieser Sitzung bannen." tip="Host bannen" />
+		<tip id="ID_SECURITY_EDIT" message="Die markierte Sicherheitsregel bearbeiten..." tip="Regel bearbeiten" />
+		<tip id="ID_SECURITY_EXPORT" message="Die markierten Regeln in eine Datei exportieren..." tip="Regeln exportieren" />
+		<tip id="ID_SECURITY_IMPORT" message="Sicherheitsregeln aus Datei importieren..." tip="Importieren" />
+		<tip id="ID_SECURITY_MOVE_DOWN" message="Die Priorität dieser Regel erniedrigen." tip="Nach unten" />
+		<tip id="ID_SECURITY_MOVE_UP" message="Die Priorität dieser Regel erhöhen.." tip="Nach oben" />
+		<tip id="ID_SECURITY_POLICY_ACCEPT" message="Die Default Policy so einstellen, dass alle Hosts erlaubt werden." tip="Default Policy: Accept" />
+		<tip id="ID_SECURITY_POLICY_DENY" message="Die Default Policy so einstellen, dass alle Hosts abgewiesen werden." tip="Default Policy: Deny" />
+		<tip id="ID_SECURITY_REMOVE" message="Die markierte(n) Sicherheitsregel(n) löschen." tip="Regel löschen" />
+		<tip id="ID_SECURITY_RESET" message="Die Trefferzähler der markierte(n) Sicherheitsregel(n) zurücksetzen." tip="Regeln zurücksetzen" />
+		<tip id="ID_SYSTEM_CLEAR" message="Den Konsolenpuffer leeren." tip="Puffer leeren" />
+		<tip id="ID_SYSTEM_TIMESTAMP" message="Für jede Zeile einen Zeitstempel aufzeichnen." tip="Zeitstempel anzeigen" />
+		<tip id="ID_SYSTEM_VERBOSE" message="Ausführliche Meldungen ausgeben." tip="Ausführliche Meldungen ausgeben" />
+		<tip id="ID_TAB_CONNECT" message="Verbindung zum Netzwerk herstellen / trennen." tip="Verbindung zum Netzwerk herstellen / trennen." />
+		<tip id="ID_TAB_HELP" message="Shareaza Hilfe." />
+		<tip id="ID_TAB_HOME" message="Zur Shareaza Homepage zurückkehren" tip="Zur Shareaza Homepage zurückkehren" />
+		<tip id="ID_TAB_LIBRARY" message="Die lokale Bibliothek anzeigen um ihre Dateien zu verwalten." tip="Die lokale Bibliothek anzeigen um ihre Dateien zu verwalten" />
+		<tip id="ID_TAB_MEDIA" message="Audio- und Videodateien aus der Bibliothek abspielen." />
+		<tip id="ID_TAB_NETWORK" message="Ihre Verbindungen zum Netzwerk anzeigen." tip="Ihre Verbindungen zum Netzwerk anzeigen" />
+		<tip id="ID_TAB_SEARCH" message="Das Netzwerk nach Dateien durchsuchen" />
+		<tip id="ID_TAB_TRANSFERS" message="Uploads und Downloads überwachen." tip="Uploads und Downloads überwachen" />
+		<tip id="ID_TOOLS_DOWNLOAD" message="Eine neue Datei oder ein Torrent herunterladen..." />
+		<tip id="ID_TOOLS_LANGUAGE" message="Wählen Sie die Sprache in der Sie Shareaza benutzen möchten..." />
+		<tip id="ID_TOOLS_PROFILE" message="Ihr Benutzerprofil bearbeiten..." />
+		<tip id="ID_TOOLS_RESKIN" message="Den aktuellen Skin neu laden und anwenden." />
+		<tip id="ID_TOOLS_SEEDTORRENT" message="Ein Torrent seeden" />
 		<tip id="ID_TOOLS_SEEDTORRENT" message="Den markierten Torrent über BitTorretn seeden." />
-		<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren) schützen." />
+		<tip id="ID_TOOLS_SETTINGS" message="Shareaza konfigurieren..." tip="Einstellungen" />
+		<tip id="ID_TOOLS_SKIN" message="Einen anderen Skin für Shareaza wählen..." tip="Skin wechseln" />
+		<tip id="ID_TOOLS_WIZARD" message="Den Shareaza Schnellstart Assistent starten..." tip="Schnellstart Assistent" />
+		<tip id="ID_TRAFFIC_AXIS" message="Y-Achse anzeigen" tip="Achse anzeigen" />
+		<tip id="ID_TRAFFIC_CLEAR" message="Das Traffic Diagramm löschen." tip="Diagramm löschen" />
+		<tip id="ID_TRAFFIC_GRID" message="Gitternetz anzeigen." tip="Gitternetz anzeigen" />
+		<tip id="ID_TRAFFIC_LEGEND" message="Legende anzeigen." tip="Legende anzeigen" />
+		<tip id="ID_TRAFFIC_SETUP" message="Die zu überwachenden Elemente auswählen und konfigurieren..." tip="Diagramme auswählen" />
+		<tip id="ID_TRAFFIC_WINDOW" message="Ein neues Diagrammfenster öffnen..." tip="Neues Fenster" />
+		<tip id="ID_TRANSFERS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen." tip="Chat beginnen" />
+		<tip id="ID_TRANSFERS_CONNECT" message="Auf die markierte(n) Quelle(n) zugreifen und einen Download versuchen." tip="Quelle benutzen" />
+		<tip id="ID_TRANSFERS_DISCONNECT" message="Markierten Transfer abbrechen." tip="Verbindung beenden" />
+		<tip id="ID_TRANSFERS_FORGET" message="Markierten Transfer abbrechen und Quelle vergessen." tip="Quelle entfernen" />
+		<tip id="ID_TRAY_OPEN" message="Open the Shareaza window." tip="Das Shareaza Fenster öffnen" />
+		<tip id="ID_UPLOADS_AUTO_CLEAR" message="Beendete Uploads automatisch entfernen" tip="Automatisch entfernen" />
+		<tip id="ID_UPLOADS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen." tip="Chat beginnen" />
+		<tip id="ID_UPLOADS_CLEAR" message="Markierte(n) Upload(s) von der Liste entfernen." tip="Entfernen" />
+		<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Beendete Uploads entfernen." tip="Beendete entfernen" />
+		<tip id="ID_UPLOADS_DISCONNECT" message="Den markierten Upload Transfer abbrechen." tip="Verbindung trennen" />
+		<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Uploads anzeigen, die Daten &#251;bertragen." />
+		<tip id="ID_UPLOADS_FILTER_ALL" message="Alle Uploads anzeigen." />
+		<tip id="ID_UPLOADS_FILTER_HISTORY" message="Ulpoads anzeigen, die nicht mehr verbunden sind." />
+		<tip id="ID_UPLOADS_FILTER_MENU" message="Legen Sie fest, welche Arten von Uploads angezeigt werden sollen." />
+		<tip id="ID_UPLOADS_FILTER_QUEUED" message="Uploads anzeigen, die in der Warteschlange warten." />
+		<tip id="ID_UPLOADS_GROUP" message="Uploads nach Verbindung gruppieren (host)." tip="Nach Host gruppieren" />
+		<tip id="ID_UPLOADS_LAUNCH" message="Die markierte(n) Datei(en) öffnen." tip="Öffnen" />
+		<tip id="ID_UPLOADS_SETTINGS" message="Uploadeinstellungen konfigurieren..." />
+		<tip id="ID_UPLOADS_START" message="Markierten Upload in der Warteschlange starten" tip="Upload starten" />
+		<tip id="ID_VIEW_BASIC" message="Shareaza im Normal Modus verwenden." />
+		<tip id="ID_VIEW_DISCOVERY" message="Das Service Provider Fenster ein- oder ausblenden." tip="Service Provider Fenster" />
+		<tip id="ID_VIEW_DOWNLOADS" message="Das Downloads Fenster ein- oder ausblenden." tip="Downloads Fenster" />
+		<tip id="ID_VIEW_HELP" message="Das Hilfefenster ein- oder ausblenden." />
+		<tip id="ID_VIEW_HOSTS" message="Das Hosts Cache Fenster ein- oder ausblenden." tip="Host Cache Fenster" />
+		<tip id="ID_VIEW_LIBRARY" message="Das Bibliothek Fenster ein- oder ausblenden." tip="Bibliothek Fenster" />
+		<tip id="ID_VIEW_MEDIA" message="Die Medienwiedergabe ein- oder ausblenden." />
+		<tip id="ID_VIEW_NEIGHBOURS" message="Das Netzwerkfenster ein- oder ausblenden." tip="Netzwerkfenster" />
+		<tip id="ID_VIEW_PACKETS" message="Das Packet Dump Fenster ein- oder ausblenden." tip="Packet Dump Fenster" />
+		<tip id="ID_VIEW_RESULTS_MONITOR" message="Das Treffermonitor Fenster ein- oder ausblenden." tip="Treffermonitor Fenster" />
+		<tip id="ID_VIEW_SEARCH_MONITOR" message="Das Suchmonitor Fenster ein- oder ausblenden." tip="Suchmonitor Fenster" />
+		<tip id="ID_VIEW_SECURITY" message="Das Sicherheitsfenster ein- oder ausblenden." tip="Sicherheitsfenster" />
+		<tip id="ID_VIEW_SYSTEM" message="Die Konsole ein- oder ausblenden." tip="Konsole" />
+		<tip id="ID_VIEW_TABBED" message="Shareaza im Tab Modus benutzen (Home, Bibliothek, Transfer, Netzwerk)." tip="Tab Modus" />
+		<tip id="ID_VIEW_TRAFFIC" message="Das Diagramm Fenster ein- oder ausblenden." tip="Diagramm Fenster" />
+		<tip id="ID_VIEW_UPLOADS" message="Das Uploads Fenster ein- oder ausblenden." tip="Uploads Fenster" />
+		<tip id="ID_VIEW_WINDOWED" message="Shareaza im Fenster Modus benutzen (Fortgeschrittene Benutzer)." tip="Fenster Modus" />
+		<tip id="ID_WINDOW_CASCADE" message="Alle offenen Fenster maximieren." tip="Vollbild" />
+		<tip id="ID_WINDOW_MONITOR" message="Den Bandbreiten Monitor ein- oder ausblenden." tip="Monitor anzeigen" />
+		<tip id="ID_WINDOW_NAVBAR" message="Die Navigationsleiste ein- oder ausblenden." />
+		<tip id="ID_WINDOW_REMOTE" message="Die Shareaza Fernbedienung ein- oder ausblenden." />
+		<tip id="ID_WINDOW_TABBAR" message="Die Tableiste ein- oder ausblenden." tip="Tableiste anzeigen" />
+		<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen." tip="Übereinander" />
+		<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen." tip="Nebeneinander" />
+		<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen" />
 	</commandTips>
 	<!-- Localised String Table -->
 	<strings>
@@ -1997,7 +1947,7 @@ Other:
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern, wollen Sie fortfahren?" />
 		<string id="16386" value="Metadaten von %i bearbeiten." />
 		<string id="16387" value="Die Datei &quot;%s&quot; wurde noch nicht gehasht.  Bitte warten Sie bis die Datei gehasht wurde und versuchen Sie es erneut." />
-		<string id="16388" value="Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zu teilen.\n\nShareaza wird den SHA1 Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;Bitzi.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?" />
+		<string id="16388" value="Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\n\nShareaza wird den SHA1 Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;Bitzi.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?" />
 		<string id="16389" value="Sind Sie sicher, dass Sie die %i ausgewählten Datei(en) dauerhaft löschen möchten?\n\nDie Dateien werden in den Windows Papierkorb verschoben." />
 		<string id="16390" value="Sie haben keinen Mediaplayer wie Winamp gewählt um Dateien in die Wiedergabeliste aufzunehmen.  Wollen Sie jetzt einen auswählen?\n\nShareaza wird dem gewählten Programm den Dateinamen mit der &quot;/ADD&quot; Option übergeben." />
 		<string id="16391" value="Sie sind nicht mit dem Netzwerk verbunden." />
@@ -2025,6 +1975,7 @@ Other:
 		<string id="16333" value="Kein freier Uploadslot um &quot;%s&quot; an %s hochzuladen, Warteschlange auf Position #%i von %i (&quot;%s&quot;)." />
 		<string id="16334" value="Push Request(alt) von %s hat eine unbekannte Datei angefordert, trotzdem verbinden..." />
 		<string id="16335" value="Upload von &quot;%s&quot; an %s entfernt." />
+		<string id="7000" value="Sind Sie sicher, dass Sie diesen Filter löschen möchten ?"/>
 		<string id="8000" value="Einstellungen" />
 		<string id="8001" value="Wilkommen bei Shareaza" />
 		<string id="8002" value="Datei Eigenschaften" />
@@ -2065,7 +2016,9 @@ Other:
 		<string id="16525" value="Geroutete Gnutella Pakete" />
 		<string id="16526" value="Verworfene Gnutella Pakete" />
 		<string id="16527" value="Verlorene Gnutella Pakete" />
-		<string id="8062" value="Hub Modus mit %lu Leafs.  %s in ihrer Bibliothek."/>
+		<string id="8060" value="Hub/Ultrapeer Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
+		<string id="8061" value="Ultrapeer Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
+		<string id="8062" value="Hub Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 		<string id="8063" value="Verbunden. %s in lokaler Bibliothek." />
 		<string id="8064" value="Verbunden mit %lu Host(s), %s in der lokalen Bibliothek." />
 		<string id="8065" value="Verbindung mit dem Netzwerk herstellen..." />
@@ -2125,6 +2078,8 @@ Other:
 		<string id="16807" value="Bitte geben sie das gewünschte Bandbreitenlimit ein. &quot;123 kb/s&quot; für Kilobits pro Sekunde, oder &quot;123 KB/s&quot; für Kilobytes pro Sekunde." />
 		<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht angegeben. Sind Sie sicher, dass sie fortfahren möchten?" />
 		<string id="16809" value="&amp;Schließen" />
+		<string id="16810" value="Jahre alt"/>
+		<string id="16811" value="Automatisch"/>
 		<string id="16864" value="Service Provider abfragen..." />
 		<string id="16865" value="Service Provider &quot;%s&quot; abfragen..." />
 		<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)." />
@@ -2140,6 +2095,8 @@ Other:
 		<string id="8132" value="Es sind Ergebnisse verfügbar, die jedoch herausgefiltert wurden." />
 		<string id="8133" value="Shareaza durchsucht das Netzwerk..." />
 		<string id="8134" value="Sie sind dabei eine neue Suche zu starten, möchten Sie die Ergebnisse ihrer vorherigen Suche entfernen?" />
+		<string id="8135" value="Keine Metadaten"/>
+		<string id="8136" value="Textsuche"/>
 		<string id="8160" value="Verbindung herstellen..." />
 		<string id="8161" value="Push request gesendet, auf Verbindung warten..." />
 		<string id="8162" value="Verbunden, Dateiliste wird angefordert..." />
@@ -2236,8 +2193,18 @@ Other:
 		<string id="8322" value="URL:" />
 		<string id="8323" value="User Agent:" />
 		<string id="8324" value="Inaktiv" />
-		<string id="8325" value="Aktive" />
+		<string id="8325" value="Aktiv" />
 		<string id="8326" value="Next in Line" />
+		<string id="8327" value="Dateien gesamt:"/>
+		<string id="8328" value="Größe:"/>
+		<string id="8329" value="ihrer Bibliothek"/>
+		<string id="8330" value="Ordner"/>
+		<string id="8331" value="Diese Quelle hat zur Zeit keine freien Uploadslots"/>
+		<string id="8332" value="Diese Quelle ist hinter einer Firewall"/>
+		<string id="8333" value="Diese Quelle kann instabil sein"/>
+		<string id="8334" value="Quellen für diese Datei sind haben zur Zeit keine freien Uploadslots"/>
+		<string id="8335" value="Quellen für diese Datei sind hinter einer Firewall"/>
+		<string id="8336" value="Quellen für diese Datei können instabil sein"/>
 		<string id="16304" value="Die TTH Daten des Hosts sind verfälscht oder inkonsistent, ignoriert." />
 		<string id="16305" value="Die TTH Daten des Hosts entsprechen nicht dem erwarteten Root-Wert." />
 		<string id="16306" value="TTH Daten für &quot;%s&quot; empfangen, %i Level, kleinstes verifizierbarer Teil ist %s." />
@@ -2279,6 +2246,37 @@ Other:
 		<string id="17041" value="Nachricht konnte nicht gesendet werden. Es wurde noch keine Verbindung hergestellt." />
 		<string id="17042" value="Sie haben ihr Benutzerprofil nicht ausgefüllt. Sie müssen ein Profil anlegen, bevor Sie mit anderen Benutzern chatten können.\n\nMöchten Sie ihr Profil jetzt ausfüllen ?" />
 		<string id="17043" value="Upload Priorität für Host %s genehmigt." />
+		<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
+		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Verbindung"/>
+		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Verbindung"/>
+		<string id="17103" value="Gnutella II: Hub-to-Hub Verbindung"/>
+		<string id="17104" value="Gnutella II: Leaf-to-Hub Verbindung"/>
+		<string id="17105" value="Gnutella II: Hub-to-Leaf Verbindung"/>
+		<string id="17106" value="eDonkey Server Verbindung (LOWID: %lu)"/>
+		<string id="17107" value="eDonkey2000 Server Verbindung"/>
+		<string id="17108" value="Handshake"/>
+		<string id="17109" value="Eingehend"/>
+		<string id="17110" value="Ausgehend"/>
+		<string id="17111" value="Bandbreite:"/>
+		<string id="17112" value="Gesamt:"/>
+		<string id="17113" value="Kompression:"/>
+		<string id="17114" value="Ratio:"/>
+		<string id="17115" value="Deflate"/>
+		<string id="17116" value="Keine"/>
+		<string id="17117" value="Verbinden..."/>
+		<string id="17118" value="Handshake..."/>
+		<string id="17119" value="Abgelehnt"/>
+		<string id="17120" value="Schließen..."/>
+		<string id="17121" value="Unbekannt"/>
+		<string id="17122" value="G1 Peer"/>
+		<string id="17123" value="G1 Ultrapeer"/>
+		<string id="17124" value="G1 Leaf"/>
+		<string id="17125" value="G2 Peer"/>
+		<string id="17126" value="G2 Hub"/>
+		<string id="17127" value="G2 Leaf"/>
+		<string id="17128" value="eDonkey2000 Server"/>
+		<string id="17129" value="eDonkey2000 (LowID)"/>
+		<string id="17130" value="eDonkey2000 (HighID)"/>
 		<string id="16400" value="Zieldatei existiert:\n\n%s\n\nMöchten Sie sie überschreiben?" />
 		<string id="16401" value="Alle Dateitypen anzeigen" />
 		<string id="16402" value="Shareaza hat folgende Kollektion empfangen:\r\n\r\n&quot;%s&quot;\r\n\r\nDiese Datei scheint keine gültige Kollektion zu sein." />
@@ -2314,6 +2312,18 @@ Other:
 		<string id="16363" value="Torrent Uploads" />
 		<string id="16364" value="Fertige Uploads" />
 		<string id="16365" value="Sind Sie sicher, dass Sie alle Downlaods in dieser Gruppe abbrechen möchten?" />
+		<string id="16366" value="Warteschlange"/>
+		<string id="16367" value="eDonkey Kern"/>
+		<string id="16368" value="eDonkey unvollständig"/>
+		<string id="16369" value="eDonkey Wächter"/>
+		<string id="16370" value="Kleine Dateien"/>
+		<string id="16371" value="Mittelgroße Dateien"/>
+		<string id="16372" value="Große Dateien"/>
+		<string id="16373" value="Unvollständige Dateien"/>
+		<string id="16374" value="Neue Warteschlange"/>
+		<string id="16375" value="Unvollständig"/>
+		<string id="16376" value="Vollständige Dateien"/>
+		<string id="16377" value="HTTP Wächter"/>
 		<string id="17216" value="Verbindung zu eDonkey Server &quot;%s&quot; herstellen..." />
 		<string id="17217" value="Mit eDoneky Server %s verbunden, handshaking..." />
 		<string id="17218" value="ED2K[%s] %s" />
@@ -2429,6 +2439,17 @@ Other:
 		<string id="20130" value="Quellen" /> <!-- from 11 to 19 -->
 		<string id="20131" value="Quellen" /> <!-- from 2 to 4 -->
 		<string id="20132" value="Quellen" /> <!-- from 5 to 9 -->
+		<string id="20133" value="Uninteressiert"/>
+		<string id="20134" value="Choked"/>
+		<string id="20135" value="Next"/>
+		<string id="20136" value="Q"/>
+		<string id="20200" value="Sonntag"/>
+		<string id="20201" value="Montag"/>
+		<string id="20202" value="Dienstag"/>
+		<string id="20203" value="Mittwoch"/>
+		<string id="20204" value="Donnerstag"/>
+		<string id="20205" value="Freitag"/>
+		<string id="20206" value="Samstag"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<dialogs>
@@ -2440,18 +2461,18 @@ Other:
 			<control />
 		</dialog>
 		<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein" />
-		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu"
-			caption="Allgemein">
+
+		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Allgemein">
 			<control caption="_Benutzeroberfläche:" />
 			<control caption="Bei Programmstart verbinden" />
 			<control caption="Shareaza mit Windows starten" />
-			<control caption="Neue Suchergebnisse in Fett anzeigen" />
+			<control caption="Neue Suchergebnisse in fett anzeigen" />
 			<control caption="Multi-source Downloads erweitern" />
 			<control caption="Bei D/L zur Transfer Ansicht wechseln" />
 			<control caption="Neue Downloads erweitern" />
 			<control caption="Dialog vor dem Öffnen von URLs" />
 			<control caption="Datenraten in:" />
-			<control />
+			<control caption="bits/Sekunde|bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Tooltips:" />
 			<control />
 			<control caption="Verzögerung:" />
@@ -2461,19 +2482,21 @@ Other:
 			<control />
 			<control caption="_Tray:" />
 			<control caption="Bei Klick auf [X]:" />
-			<control />
+			<control caption="Fragen|Sofort beenden|In den Tray minimieren|Nach Transfer beenden"/>
 			<control caption="Bei Klick auf [-]:" />
-			<control />
+			<control caption="Normal|In den Tray minimieren"/>
 			<control caption="Suchleiste automatisch ausblenden" />
+			<control caption="Erotikfilter aktivieren"/>
+			<control caption="Downloads automatisch entfernen"/>
+			<control caption="Uploads automatisch entfernen"/>
 		</dialog>
-		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu"
-			caption="Bibliothek">
+		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothek">
 			<control caption="_Optionen:" />
 			<control caption="Ansichtoptionen speichern" />
 			<control caption="Ordner überwachen" />
-			<control caption="" />
+			<control caption="Schnell hashen (Mehr CPU)"/>
 			<control caption="Objekte nach Erweiterung filtern" />
-			<control caption="" />
+			<control />
 			<control caption="Durchsuchen erlauben" />
 			<control caption="_Neue Dateien:" />
 			<control caption="Merken:" />
@@ -2510,12 +2533,15 @@ Other:
 			<control caption="Media Services _Plugin:" />
 			<control />
 		</dialog>
-		<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Community">
+		<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
 			<control caption="Mein _Profil:" />
 			<control caption="Sie können das Profil benutzen um Informationen über Sie selbst, Internet Links und empfohlene Dateien für Andere zugänglich zu machen." />
 			<control caption="Profil bearbeiten" />
 			<control caption="_Chat:" />
-			<control caption="Chat mit kompatiblen Clients aktivieren" />
+			<control caption="Chat mit Gnutella Clients aktivieren" />
+			<control caption="Chat mit eDonkey Clients aktivieren"/>
+			<control caption="Spamnachrichten im Chat filtern"/>
+			<control caption="Vulgäre Sprache im Chat filtern"/>
 		</dialog>
 		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 			<control caption="_Peer to Peer Links:" />
@@ -2537,7 +2563,7 @@ Other:
 			caption="Verbindung">
 			<control caption="_Inbound Adresse:" />
 			<control caption="Adresse:" />
-			<control />
+			<control caption="Automatisch"/>
 			<control caption="Port:" />
 			<control />
 			<control caption="Zufällig" />
@@ -2546,7 +2572,7 @@ Other:
 			<control caption="Diese Adresse erzwingen" />
 			<control caption="_Outbound Adresse:" />
 			<control caption="Adresse:" />
-			<control />
+			<control caption="Automatisch"/>
 			<control caption="Geschw.:" />
 			<control />
 			<control caption="O_ptionen:" />
@@ -2605,7 +2631,7 @@ Other:
 			<control caption="Limit:" />
 			<control />
 			<control caption="Modus:" />
-			<control />
+			<control caption="Maximum|Durchschnitt"/>
 			<control caption="_Warteschlangen:" />
 			<control />
 			<control caption="_Neu..." />
@@ -2628,36 +2654,35 @@ Other:
 			<control caption="Original Gnutella verwenden" />
 			<control caption="Gnutella1 konfigurieren" />
 		</dialog>
-		<dialog name="CGnutellaSettingsPage" cookie="BuBuBuBuBuBuBuBuBuBuBuStEdmsStEdmsStEdmsBuStEdmsStEdmsStEdmsBuBuBuBu"
-			caption="Gnutella">
-			<control caption="Gnutella2 Netzwerk (empfohlen):" />
-			<control caption="Zu Gnutella2 verbinden" />
-			<control caption="Gnutella1 Network:" />
+		<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+			<control caption="Gnutella2 Netzwerk:" />
+			<control caption="Immer zu Gnutella2 verbinden" />
+			<control caption="Heute zu Gnutella2 verbinden" />
+			<control caption="Modus:" />
+			<control caption="Optimal|Leaf|Hub"/>
+			<control caption="G_2 Verbindungen:" />
+			<control caption="Leaf zu Hub:" />
+			<control />
+			<control />
+			<control caption="Hub zu Leaf:" />
+			<control />
+			<control />
+			<control caption="Hub zu Hub:" />
+			<control />
+			<control />
+			<control caption="Gnutella1 Netzwerk:" />
 			<control caption="Heute zu Gnutella1 verbinden" />
 			<control caption="Immer zu Gnutella1 verbinden" />
-			<control caption="Netzwerk _Modus:" />
-			<control caption="Hubmodus erlauben" />
-			<control caption="Hub-Fähigkeit erzwingen" />
-			<control caption="Leafmodus erlauben" />
-			<control caption="Nur Hubverbindungen " />
-			<control caption="Gnutella-G_2:" />
-			<control caption="Leaf zu Hub:" />
+			<control caption="Modus:" />
+			<control caption="Optimal|Leaf|Ultrapeer"/>
+			<control caption="G_1 Verbindungen:" />
+			<control caption="Leaf zu Ulrapeer:" />
 			<control />
 			<control />
-			<control caption="Hub zu Leaf:" />
+			<control caption="Ulrapeer zu Leaf:" />
 			<control />
 			<control />
-			<control caption="Hub zu Hub:" />
-			<control />
-			<control />
-			<control caption="Gnutella-G_1:" />
-			<control caption="Leaf zu Hub:" />
-			<control />
-			<control />
-			<control caption="Hub zu Leaf:" />
-			<control />
-			<control />
-			<control caption="Hub zu Hub:" />
+			<control caption="Peer zu Peer:" />
 			<control />
 			<control />
 			<control caption="_Kompression:" />
@@ -2722,8 +2747,7 @@ Other:
 			<control caption="Info:" />
 			<control />
 		</dialog>
-		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu"
-			caption="Warteschlange Eigenschaften">
+		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Warteschlange Eigenschaften">
 			<control caption="_Name:" />
 			<control />
 			<control caption="_Kriterium:" />
@@ -2760,6 +2784,7 @@ Other:
 			<control />
 			<control caption="OK" />
 			<control caption="Abbrechen" />
+			<control caption="Uploader belohnen"/>
 		</dialog>
 		<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Wilkommen bei Shareaza [1 von 7]">
 			<control caption="Wilkommen bei Shareaza!" />
@@ -2785,13 +2810,13 @@ Other:
 		</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Wilkommen bei Shareaza [3 von 7]">
 			<control caption="Um richtig zu funktionieren, benötigt Shareaza Informationen über ihre Internetverbindung." />
-			<control />
-			<control caption="Ist ihr Netzwerk durch eine Firewall oder einen NAT Router geschützt?" />
-			<control />
+			<control caption="&#160;( Bitte wählen )| Ich benutze das Internet zu Hause| Ich benutze das Internet in einem Universitätsnetzwerk| Ich benutze das Internet in einem Büronetzwerk| Ich benutze das Internet in einem Hotel oder Flughafen"/>
+			<control caption="Ist ihr Netzwerk oder Campus durch eine Firewall oder einen NAT Router geschützt?" />
+			<control caption="&#160;Nein, eingehende Verbindungen sind möglich| Ja, eingehende Verbindungen aus dem Internet sind NICHT möglich| Ich weiß es nicht, bitte AUTOMATISCH erkennen"/>
 			<control caption="Ist ihr Computer durch eine Firewall oder einen NAT Router geschützt?" />
-			<control />
+			<control caption="&#160;Nein, ich habe vollen Zugriff auf das Internet| Ja, aber ich werde einen Port für Shareaza weiterleiten| Ja, eingehende Verbindungen aus dem Internet sind NICHT möglich| Ich weiß es nicht, bitte AUTOMATISCH erkennen"/>
 			<control caption="Falls Sie wissen, wie schnell ihre Internetverbindung ist, wählen Sie bitte die passendste Geschwindigkeit:" />
-			<control />
+			<control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
 			<control caption="Benutzerdefiniert:" />
 			<control />
 		</dialog>
@@ -2809,8 +2834,8 @@ Other:
 			<control caption="Ich heiße:" />
 			<control />
 			<control caption="und ich bin ein:" />
-			<control />
-			<control />
+			<control caption="&#160;( Bitte wählen )"/>
+			<control caption="&#160;( Bitte wählen )| Junge| Mädchen| Mann| Frau"/>
 			<control caption="aus:" />
 			<control />
 			<control />
@@ -2874,7 +2899,7 @@ Other:
 			<control />
 			<control />
 			<control caption="_Persönliche Daten:" />
-			<control />
+			<control caption="|männlich|weiblich"/>
 			<control caption="Geschlecht:" />
 			<control />
 			<control caption="Alter:" />
@@ -2954,7 +2979,7 @@ Other:
 			<control />
 			<control />
 			<control caption="_Netzwerkprotokoll:" />
-			<control />
+			<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 			<control caption="_UP unterdrücken" />
 			<control caption="Verbinden" />
 			<control caption="Abbrechen" />
@@ -2976,11 +3001,11 @@ Other:
 			<control caption="Suchen" />
 			<control caption="Abbrechen" />
 		</dialog>
-		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filter Matches">
+		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Matches">
 			<control caption="Nur Ergebnisse die folgende _Wörter enthalten:" />
 			<control />
 			<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )" />
-			<control caption="Und folgende _Größe haben (KB):" />
+			<control caption="Und folgende _Größe haben:" />
 			<control caption="Minimum:" />
 			<control />
 			<control caption="Maximum:" />
@@ -2998,6 +3023,17 @@ Other:
 			<control caption="Gefälschte Ergebnisse" />
 			<control caption="Filtern" />
 			<control caption="Abbrechen" />
+			<control/>
+			<control caption="Als Standard"/>
+			<control caption="_Speichern als"/>
+			<control caption="_Löschen"/>
+			<control caption="Filter:"/>
+		</dialog>
+		<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filtern speichern als">
+			<control/>
+			<control caption="OK"/>
+			<control caption="Abbrechen"/>
+			<control caption="Den aktuellen Filter speichern als"/>
 		</dialog>
 		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
 			<control caption="Service _Adresse:" />
@@ -3052,8 +3088,8 @@ Other:
 		<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Bewertung">
 			<control caption="Meine Bewertung" />
 			<control caption="Bewertung:" />
-			<control />
-			<control caption="Meine Rezension" />
+			<control caption="(Keine Bewertung)|Fake/Korrupt/Irreführend|Schlecht|Durchschnittlich|Gut|Sehr Gut|Exzellent"/>
+			<control caption="Mein Kommentar" />
 			<control />
 			<control />
 		</dialog>
@@ -3141,7 +3177,7 @@ Other:
 			caption="Regel">
 			<control caption="_Regel:" />
 			<control caption="Typ:" />
-			<control />
+			<control caption="Netzwerk (IP) Adresse|Inhaltsfilter"/>
 			<control caption="Kommentar:" />
 			<control />
 			<control caption="_Netzwerk Adresse:" />
@@ -3155,15 +3191,15 @@ Other:
 			<control />
 			<control />
 			<control />
-			<control caption="_Dateien Filter:" />
+			<control caption="_Inhaltsfilter:" />
 			<control />
 			<control caption="logisch UND" />
 			<control caption="logisch ODER" />
 			<control caption="_Optionen:" />
 			<control caption="Aktion:" />
-			<control />
+			<control caption="Keine|Accept|Deny"/>
 			<control caption="Läuft ab:" />
-			<control />
+			<control caption="Nie (Unbegrenzt)|Bei Programmende|Nach:"/>
 			<control />
 			<control caption="T" />
 			<control />
@@ -3196,7 +3232,7 @@ Other:
 			<control caption="Sie haben %lu Dateien zum Exportieren als URI Referenz gewählt. Bitte wählen Sie das gewünschte Format und klicken Sie auf sichern:" />
 			<control />
 			<control caption="Einfügen:" />
-			<control />
+			<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Dateiname|Dateiname (URI)|Basis Dateiname|Dateierweiterung|Dateigröße|Dateigröße (bytes)|Verzeichnispfad|Local Host|Local Port"/>
 			<control caption="Vorlage:" />
 			<control />
 			<control caption="_Kopieren" />
@@ -3342,7 +3378,7 @@ Other:
 			<control />
 			<control caption="Wählen Sie eine Visualisierung aus der Liste:" />
 			<control />
-			<control />
+			<control caption="Als Fußzeile|Vollbild|Groß|Mittel|Klein"/>
 			<control caption="_Einstellungen..." />
 			<control caption="OK" />
 			<control caption="Abbrechen" />
@@ -3369,13 +3405,13 @@ Other:
 			<control caption="Um vollständige Dateien über BitTorrent freizugeben, müssen diese geseedet werden. Wenn dies abgeschlossen ist, erscheint das Torrent als Datei in ihrer Downloadliste." />
 			<control />
 		</dialog>
-		<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent Tracker Viewer">
+		<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent Tracker Viewer">
 			<control caption="Torrent _Informationen:" />
 			<control caption="Name:" />
 			<control />
 			<control caption="Tracker:" />
 			<control />
-			<control caption="_Herunterladende:" />
+			<control caption="_Quellen:" />
 			<control caption="Vollständig (Seeds):" />
 			<control />
 			<control caption="Unvollständig:" />
@@ -3385,49 +3421,76 @@ Other:
 			<control caption="_Aktualisieren" />
 			<control />
 			<control caption="Schließen" />
+			<control caption="Wenn benötigt|Wenn U/D Verhältnis über 100%|Nur auf Anforderung|Nie"/>
+			<control caption="Neue Downloadtransfer starten:"/>
+			<control caption="Transfer:"/>
 		</dialog>
 		<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote Access">
 			<control caption="_Erklärung:" />
 			<control caption="Shareaza Remote Access erlaubt es ihnen, Shareaza auf ihrem PC laufen zu lassen und es aus der Ferne, über einen Webbrowser zu bedienen.  Sie müssen eingehende Verbindungen akzeptieren können um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)" />
 			<control caption="_Aktivieren:" />
 			<control caption="Shareaza Remote Access aktivieren:" />
-			<control caption="URL" />
+			<control />
 			<control caption="_Zugangsdaten:" />
 			<control caption="Benutzername:" />
 			<control />
 			<control caption="Passwort:" />
 			<control />
 		</dialog>
+		<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Zeitsteuerung">
+			<control caption="_Optionen:"/>
+			<control caption="Zeitsteuerung _aktivieren"/>
+			<control/><control/>
+			<control caption="_Netzwerke einschränken"/>
+			<control caption="Legende:"/>
+			<control caption="So"/>
+			<control caption="Mo"/>
+			<control caption="Di"/>
+			<control caption="Mi"/>
+			<control caption="Do"/>
+			<control caption="Fr"/>
+			<control caption="Sa"/>
+			<control caption="Nicht verbinden"/>
+			<control caption="Bandbreite beschränken"/>
+			<control caption="Mit voller Geschwindigkeit verbinden"/>
+			<control caption="% der _Bandbreite wenn beschränkt"/>
+			<control/>
+			<control caption="Hilfe"/>
+			<control caption="Die Zeitsteuerung erlaubt ihnen zu bestimmen, wann Shareaza sich verbindet und Dateien herutnerlädt. &#13;&#10;&#13;&#10;Bemerkung: Wenn Sie Shareaza geöffnet haben, wenn die Zeitsteuerung aktiviert ist, sieht man wie sich die Einstellungen ändern - Das ist normal!"/>
+		</dialog>
 		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Update verfügbar">
 			<control />
-			<control caption="Eine neue Version von Shareaza ist verfügbar.  Möchten Sie updaten?" />
-			<control caption="Wenn Sie auf &quot;Jetzt updaten&quot; klicken, wird das Update automatisch zu ihrer Downloadliste hinzugefügt und heruntergeladen." />
-			<control caption="Jetzt _updaten" />
+			<control caption="Eine neue Version von Shareaza ist verfügbar.  Möchten Sie aktualisieren?" />
+			<control caption="Wenn Sie auf &quot;Jetzt aktualisieren&quot; klicken, wird das Update automatisch zu ihrer Downloadliste hinzugefügt und heruntergeladen." />
+			<control caption="Jetzt _aktualisieren" />
 			<control caption="Nicht nach Updates suchen" />
 			<control caption="Nicht updaten" />
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuEdBuBuEdmsStBuBuBuBuBuStEdEdBuEdmsStBu"
-			caption="BitTorrent">
-			<control caption="Torrents hier _speichern:" />
-			<control />
-			<control />
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+			<control caption="_Benutzeroberfläche:" />
+			<control caption="Zusätzliche BitTorrent Bedienelemente anzeigen" />
 			<control caption="_Download Verbindungen:" />
 			<control />
 			<control />
+			<control caption="Torrents gleichzeitig"/>
+			<control />
+			<control />
 			<control caption="Client Verbindungen" />
-			<control caption="_Benutzeroberfläche:" />
-			<control caption="Zusätzliche BitTorrent Bedienelemente anzeigen" />
+			<control caption=" Torrents entfernen bei einem"/>
+			<control caption="Up-/Downloadverhältnis von "/>
+			<control />
+			<control />
 			<control caption="_End Game:" />
 			<control caption="End Game Modus am Ende von Torrent Downloads aktivieren" />
-			<control caption="_Torrent Creator" />
-			<control caption="Tracker:" />
+			<control caption="Torrents hier _speichern:" />
 			<control />
 			<control />
+			<control caption="_Torrent Erstellungsprogramm" />
 			<control />
 			<control />
+			<control caption="St_andard Tracker:" />
 			<control />
-			<control caption="Torrents gleichzeitig" />
-			<control caption="S_tandard Tracker:" />
+			<control />
 		</dialog>
 	</dialogs>
 	<!-- Rich Documents -->
@@ -3646,7 +3709,14 @@ Other:
 				<text id="TorrentsOne" format="b">1 Torrent Seed</text>
 				<text id="TorrentsMany" format="b">%i Torrent Seeds</text>
 				<newline gap="4" />
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein Torrent seeden</link>
+				<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">%s neu seeden</link>
+				<newline gap="4"/>
+				<group id="1">
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein weiteres Torrent seeden</link>
+				</group>
+				<group id="2">
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein Torrent seedn</link>
+				</group>
 			</para>
 		</document>
 		<!-- Settings Pages -->
@@ -3824,9 +3894,12 @@ Other:
 		</document>
 		<!-- Download help documents -->
 		<document name="DownloadHelp.Select">
-			<text format="b">Bitte markieren Sie einen Download</text>
+			<text format="b">Downloadfenster</text>
 			<newline gap="8" />
-			<text>Sie können diesen Befehl benutzen um eine Erklärung für den Status eines Downloads zu erhalten.
+			<text>Hier werden Dateien angezeigt, die gerade heruntergeladen werden. Sie können die Quellen eines
+               Downloads anzeigen lassen, indem Sie auf das kleine + auf der linken Seite klicken.</text>
+			<newline gap="8"/>
+			<text>Sie können den Hilfe-Befehl auch benutzen um eine Erklärung für den Status eines Downloads zu erhalten.
                Markieren Sie einfach einen Download und benutzen diesen Befehl erneut.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
@@ -3872,17 +3945,28 @@ Other:
 			<text format="b">Zusätzliche Quellen suchen </text>
 			<text>
                Befehl nach zusätzlichen Quelle zu durchsuchen.
-        Wenn sich die Downloadgeschwindigkeit nicht verbessert liegt das wahrscheinlich an der begrenzten Uploadgeschwindigkeit
-        der Benutzer, von denen Sie die Datei herunterladen.
+               Wenn sich die Downloadgeschwindigkeit nicht verbessert liegt das wahrscheinlich an der begrenzten Uploadgeschwindigkeit
+               der Benutzer, von denen Sie die Datei herunterladen.
                Normalerweise erhöht sich die Downloadgeschwindigkeit mit der Zeit.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
+			<text format="b">Dieser Download wartet auf Transfer</text>
+			<newline gap="8"/>
+			<text>Dieser Download wartet darauf, dass jemand anfängt die Datei zu übertragen.
+			Shareaza ist bereit diese Datei herunterzuladen, aber zur Zeit übertägt niemand diese Datei an Sie.
+			Sie befinden sich wahrscheinlich in der Warteschlange eines anderen Benutzers und der Download
+			kann jederzeit beginnen. Sie können die einzelnen Quellen untersuchen, um 
+			allen Warteschalngen zu sehen in denen Sie sich befinden. Wenn Sie selbst Dateien freigegeben haben,
+			kann das ihre Chancen auf einen schnellen Start des Downloads erhöhen.</text>
+		</document>
+		<document name="DownloadHelp.Queued">
 			<text format="b">Dieser Download wartet</text>
 			<newline gap="8" />
 			<text>Dieser Download wartet, bis einer ihrer anderen Downloads fertig ist.
                Ihre Downloadeinstellungen begrenzen die Anzahl der Downloads die gleichzeitg aktiv sein können
                um sicherzustellen, dass jeder Download einen genügend großen Anteil der verfügbaren Bandbreite erhält.
-               Sie können diese Einstellungen unter Extras -> Einstellungen ändern.</text>
+               Sie können diese Einstellungen unter Extras &gt; Einstellungen ändern.
+               Alternativ können Sie diesen Download mit dem Befehl </text><text format="b">Wiederaufnehmen </text><text>manuell starten.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">Für diesen Download werden Quellen gesucht</text>
@@ -3909,7 +3993,19 @@ Other:
 			<text>Der BitTorrent Tracker für diesen Download ist nicht erreichbar oder funktioniert nicht richtig.
                Shareaza kann ihn nicht kontaktieren um eine Liste mit Downloadquellen zu erhalten.</text>
 		</document>
+		
+		<!-- Upload help documents -->
+	
+		<document name="UploadHelp">
+			<text format="b">Uploadfenster</text>
+			<newline gap="8"/>
+			<text>Hier werden Warteschlangen und Uploads angezeigt. Sie können eine Warteschlange erweitern,
+			indem Sie auf das kleine + auf der linken Seite klicken. Außerdem können Sie mit Hilfe des Filter-Buttons rechts unten
+			bestimmen was angezeigt wird.</text>
+		</document>
+
 		<!-- Search help documents -->
+
 		<document name="SearchHelp.BadSearch">
 			<text format="b">Bitte formulieren Sie die Suche neu!</text>
 			<newline gap="8" />
@@ -3919,7 +4015,19 @@ Other:
                ignorieren zum Beispiel Suchen nach allen MP3 Dateien.
                </text>
 		</document>
+
+		<document name="SearchHelp.AdultSearch">
+			<text format="b">Diese Suche kann nicht gestartet werden</text>
+			<newline gap="8"/>
+			<text>Diese Suche würde wahrscheinlich eine große Anzahl an Ergebnissen mit erotischem Inhalt liefern.
+			Dies wurde in dern Einstellungen deaktiviert. Sie sollten die Suche entweder neu formulieren,
+			oder den Filter deaktivieren.</text>
+			<newline gap="8"/>
+			<text>Um den Filter zu deaktivieren, wählen Sie Extras &gt; Einstellungen &gt; Allgemein und deaktiviern Sie den Erotikfilter.</text>
+		</document>
+
 		<!-- Share help documents -->
+
 		<document name="ShareHelp.AlreadyShared">
 			<text format="b">Bereits freigegeben</text>
 			<newline gap="8" />
@@ -3957,13 +4065,22 @@ Other:
 		</document>
 		
 		<document name="GeneralHelp.XPsp2">
-	 	 <text format="b">Windows XP Service Pack 2</text>
-	     <newline gap="8"/>
-		 <text>Sie haben Windows XP Service Pack 2 installiert. Service Pack 2 beschränkt die Anzahl der Verbindungen die ein Programm gleichzeitig aufbauen kann.</text>
-		 <newline gap="8"/>
-		 <text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindugen beschränkt und andere Parameter entsprechend eingestellt, 
-		 die Geschwindigkeit kann dadurch jedoch reduziert sein. Bitte besuchen Sie das 
-		 Shareaza Forum für weitere Informationen und aktuelle Neuigkeiten.</text>
-	</document>
+			<text format="b">Windows XP Service Pack 2</text>
+			<newline gap="8"/>
+			<text>Sie haben Windows XP Service Pack 2 installiert. Service Pack 2 beschränkt die Anzahl der Verbindungen die ein Programm gleichzeitig aufbauen kann.</text>
+			<newline gap="8"/>
+			<text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindugen beschränkt und andere Parameter entsprechend eingestellt, 
+               die Geschwindigkeit kann dadurch jedoch reduziert sein. Bitte besuchen Sie das 
+               Shareaza Forum für weitere Informationen und aktuelle Neuigkeiten.</text>
+		</document>
+		
+		<document name="GeneralHelp.AdultFilter">
+			<text format="b">Erotikfitler aktiviert</text>
+			<newline gap="8"/>
+			<text>Bitte beachten Sie, dieser Filter (wie jeder automatische Filter) nicht 100% genau arbeiten kann.
+               Er wurde entwickelt, um übermäßige ungewollte Suchergebnisse herauszufiltern und nicht als eine 100% sichere Blockade.</text>
+			<newline gap="8"/>
+			<text>Die Internetnutzung von Kindern (inklusive P2P file sharing) sollte immer von ihren Eltern überwacht werden.</text>
+		</document>
 	</documents>
 </skin>
