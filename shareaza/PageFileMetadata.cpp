@@ -91,29 +91,29 @@ BOOL CFileMetadataPage::OnInitDialog()
 	BOOL bCollection = FALSE;
 	CSchema* pSchema = NULL;
 	
-	Library.Lock();
-	
-	for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 	{
-		if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
+		CQuickLock oLock( Library.m_pSection );
+		
+		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
-			CSchema* pThisSchema = pFile->m_pSchema;
-			
-			if ( pThisSchema != NULL && pThisSchema->m_nType == CSchema::stFolder ) bCollection = TRUE;
-			
-			if ( pSchema == NULL )
+			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
 			{
-				pSchema = pThisSchema;
-			}
-			else if ( pSchema != pThisSchema )
-			{
-				pSchema = NULL;
-				break;
+				CSchema* pThisSchema = pFile->m_pSchema;
+				
+				if ( pThisSchema != NULL && pThisSchema->m_nType == CSchema::stFolder ) bCollection = TRUE;
+				
+				if ( pSchema == NULL )
+				{
+					pSchema = pThisSchema;
+				}
+				else if ( pSchema != pThisSchema )
+				{
+					pSchema = NULL;
+					break;
+				}
 			}
 		}
 	}
-	
-	Library.Unlock();
 	
 	m_wndSchemas.Load( pSchema != NULL ? pSchema->m_sURI : _T(""), bCollection ? -1 : 0 );
 	OnSelChangeSchemas();
@@ -123,37 +123,37 @@ BOOL CFileMetadataPage::OnInitDialog()
 		CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
 		CXMLElement* pXML		= pContainer->AddElement( pSchema->m_sSingular );
 		
-		Library.Lock();
-		
-		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 		{
-			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
+			CQuickLock oLock( Library.m_pSection );
+			
+			for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 			{
-				if ( pFile->m_pMetadata != NULL && pSchema->Equals( pFile->m_pSchema ) )
+				if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 				{
-					for ( POSITION pos2 = pSchema->GetMemberIterator() ; pos2 ; )
+					if ( pFile->m_pMetadata != NULL && pSchema->Equals( pFile->m_pSchema ) )
 					{
-						CSchemaMember* pMember = pSchema->GetNextMember( pos2 );
-						CString strOld = pMember->GetValueFrom( pXML, _T("(~ns~)") );
-						CString strNew = pMember->GetValueFrom( pFile->m_pMetadata /* , _T("(~ns~)") */ );
-						
-						if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
+						for ( POSITION pos2 = pSchema->GetMemberIterator() ; pos2 ; )
 						{
-							if ( strOld == _T("(~ns~)") )
+							CSchemaMember* pMember = pSchema->GetNextMember( pos2 );
+							CString strOld = pMember->GetValueFrom( pXML, _T("(~ns~)") );
+							CString strNew = pMember->GetValueFrom( pFile->m_pMetadata /* , _T("(~ns~)") */ );
+							
+							if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
 							{
-								pXML->AddAttribute( pMember->m_sName, strNew );
-							}
-							else if ( strOld != strNew )
-							{
-								pXML->AddAttribute( pMember->m_sName, _T("(~mt~)") );
+								if ( strOld == _T("(~ns~)") )
+								{
+									pXML->AddAttribute( pMember->m_sName, strNew );
+								}
+								else if ( strOld != strNew )
+								{
+									pXML->AddAttribute( pMember->m_sName, _T("(~mt~)") );
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		
-		Library.Unlock();
 		
 		m_wndData.UpdateData( pXML, FALSE );
 		delete pContainer;
@@ -198,7 +198,7 @@ void CFileMetadataPage::OnOK()
 	
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
 	{
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		
 		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 		{
@@ -222,12 +222,10 @@ void CFileMetadataPage::OnOK()
 				}
 			}
 		}
-		
-		Library.Unlock( TRUE );
 	}
 	else
 	{
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		
 		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 		{
@@ -237,7 +235,7 @@ void CFileMetadataPage::OnOK()
 			}
 		}
 		
-		Library.Unlock( TRUE );
+		Library.Update();
 	}
 	
 	CFilePropertiesPage::OnOK();

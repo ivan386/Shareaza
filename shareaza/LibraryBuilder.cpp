@@ -274,15 +274,17 @@ void CLibraryBuilder::OnRun()
 			continue;
 		}
 		
-		if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE ) )
 		{
-			m_sPath = pFile->GetPath();
-			Library.Unlock();
-		}
-		else
-		{
-			m_nIndex = 0;
-			continue;
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
+			{
+				m_sPath = pFile->GetPath();
+			}
+			else
+			{
+				m_nIndex = 0;
+				continue;
+			}
 		}
 		
 		BOOL bPriority = FALSE;
@@ -402,31 +404,34 @@ BOOL CLibraryBuilder::HashFile(HANDLE hFile, BOOL bPriority, SHA1* pOutSHA1)
 	pTiger.FinishFile();
 	pED2K.FinishFile();
 	
-	CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE );
-	if ( pFile == NULL ) return FALSE;
-	
-	Library.RemoveFile( pFile );
-	
-	pFile->m_bBogus			= FALSE;
-	pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
-	pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
-	
-	pFile->m_bSHA1 = TRUE;
-	pSHA1.GetHash( &pFile->m_pSHA1 );
-	if ( pOutSHA1 != NULL ) *pOutSHA1 = pFile->m_pSHA1;
-	
-	pFile->m_bMD5 = TRUE;
-	pMD5.GetHash( &pFile->m_pMD5 );
-	
-	pFile->m_bTiger = TRUE;
-	pTiger.GetRoot( &pFile->m_pTiger );
-	
-	pFile->m_bED2K = TRUE;
-	pED2K.GetRoot( &pFile->m_pED2K );
-	
-	LibraryMaps.CullDeletedFiles( pFile );
-	Library.AddFile( pFile );
-	Library.Unlock( TRUE );
+	{
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = Library.LookupFile( m_nIndex );
+		if ( pFile == NULL ) return FALSE;
+		
+		Library.RemoveFile( pFile );
+		
+		pFile->m_bBogus			= FALSE;
+		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
+		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
+		
+		pFile->m_bSHA1 = TRUE;
+		pSHA1.GetHash( &pFile->m_pSHA1 );
+		if ( pOutSHA1 != NULL ) *pOutSHA1 = pFile->m_pSHA1;
+		
+		pFile->m_bMD5 = TRUE;
+		pMD5.GetHash( &pFile->m_pMD5 );
+		
+		pFile->m_bTiger = TRUE;
+		pTiger.GetRoot( &pFile->m_pTiger );
+		
+		pFile->m_bED2K = TRUE;
+		pED2K.GetRoot( &pFile->m_pED2K );
+		
+		LibraryMaps.CullDeletedFiles( pFile );
+		Library.AddFile( pFile );
+		Library.Update();
+	}
 	
 	LibraryHashDB.StoreTiger( m_nIndex, &pTiger );
 	LibraryHashDB.StoreED2K( m_nIndex, &pED2K );
@@ -459,7 +464,8 @@ BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 	pXML->Detach();
 	delete pBase;
 	
-	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE ) )
+	CQuickLock oLock( Library.m_pSection );
+	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
 	{
 		if ( pFile->m_pMetadata == NULL )
 		{
@@ -470,12 +476,11 @@ BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 			pFile->m_bMetadataAuto	= TRUE;
 			
 			Library.AddFile( pFile );
-			Library.Unlock( TRUE );
+			Library.Update();
 			
 			return TRUE;
 		}
 		
-		Library.Unlock();
 	}
 	
 	delete pXML;
@@ -488,10 +493,10 @@ BOOL CLibraryBuilder::SubmitMetadata(LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 
 BOOL CLibraryBuilder::SubmitCorrupted()
 {
-	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE ) )
+	CQuickLock oLock( Library.m_pSection );
+	if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
 	{
 		pFile->m_bBogus = TRUE;
-		Library.Unlock( TRUE );
 		return TRUE;
 	}
 	

@@ -234,16 +234,18 @@ void CBitziDownloader::OnRun()
 
 BOOL CBitziDownloader::BuildRequest()
 {
-	CLibraryFile* pFile = Library.LookupFile( m_nFileIndex, TRUE );
+	{
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = Library.LookupFile( m_nFileIndex );
 
-	if ( ! pFile ) return FALSE;
+		if ( ! pFile ) return FALSE;
 
-	m_sFileName = pFile->m_sName;
-	m_sFileHash.Empty();
+		m_sFileName = pFile->m_sName;
+		m_sFileHash.Empty();
 
-	if ( pFile->m_bSHA1 ) m_sFileHash = CSHA::HashToString( &pFile->m_pSHA1 );
+		if ( pFile->m_bSHA1 ) m_sFileHash = CSHA::HashToString( &pFile->m_pSHA1 );
 
-	Library.Unlock();
+	}
 
 	if ( m_sFileHash.IsEmpty() ) return FALSE;
 
@@ -469,7 +471,9 @@ CXMLElement* CBitziDownloader::ImportData(CSchema* pSchema)
 
 BOOL CBitziDownloader::SubmitMetaData(CXMLElement* pXML)
 {
-	CLibraryFile* pFile = Library.LookupFile( m_nFileIndex, TRUE );
+	CQuickLock oLock( Library.m_pSection );
+
+	CLibraryFile* pFile = Library.LookupFile( m_nFileIndex );
 	
 	if ( pFile == NULL )
 	{
@@ -482,8 +486,6 @@ BOOL CBitziDownloader::SubmitMetaData(CXMLElement* pXML)
 	BOOL bSuccess = pFile->SetMetadata( pXML );
 
 	delete pXML;
-
-	Library.Unlock();
 
 	return bSuccess;
 }

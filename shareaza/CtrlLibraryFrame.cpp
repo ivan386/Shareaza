@@ -999,9 +999,11 @@ void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point)
 		bCopy = ( nFlags & MK_CONTROL ) != 0;
 	}
 	
-	Library.Lock();
-	m_wndTree.DropObjects( m_pDragList, bCopy );
-	Library.Unlock( TRUE );
+	{
+		CQuickLock oLock( Library.m_pSection );
+		m_wndTree.DropObjects( m_pDragList, bCopy );
+		Library.Update();
+	}
 	
 	delete m_pDragList;
 	m_pDragList = NULL;
@@ -1178,25 +1180,28 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 		delete pOuter;
 	}
 	
-	CPtrList* pFiles = Library.Search( pSearch, 0, TRUE );
-	
-	if ( pFiles != NULL )
 	{
-		for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
+		CQuickLock oLock( Library.m_pSection );
+
+		CPtrList* pFiles = Library.Search( pSearch, 0 );
+		
+		if ( pFiles != NULL )
 		{
-			CLibraryFile* pFile = (CLibraryFile*)pFiles->GetNext( pos );
-			
-			if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
+			for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 			{
-				if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
-					pFile = NULL;
+				CLibraryFile* pFile = (CLibraryFile*)pFiles->GetNext( pos );
+				
+				if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
+				{
+					if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
+						pFile = NULL;
+				}
+				
+				if ( pFile != NULL && pFile->IsAvailable() ) pFolder->AddFile( pFile );
 			}
 			
-			if ( pFile != NULL && pFile->IsAvailable() ) pFolder->AddFile( pFile );
+			delete pFiles;
 		}
-		
-		delete pFiles;
-		Library.Unlock();
 	}
 	
 	delete pSearch;

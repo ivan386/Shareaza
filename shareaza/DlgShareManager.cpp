@@ -85,18 +85,18 @@ BOOL CShareManagerDlg::OnInitDialog()
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT|LVS_EX_LABELTIP,
 		LVS_EX_FULLROWSELECT|LVS_EX_LABELTIP );
-	
-	Library.Lock();
-	
-	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
-	{
-		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
 
-		m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
-			pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+	{
+		CQuickLock oLock( Library.m_pSection );
+		
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+		{
+			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+
+			m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
+				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+		}
 	}
-	
-	Library.Unlock();
 	
 	m_wndRemove.EnableWindow( FALSE );
 	
@@ -245,31 +245,31 @@ void CShareManagerDlg::OnShareRemove()
 
 void CShareManagerDlg::OnOK() 
 {
-	Library.Lock();
-	
-	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 	{
-		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+		CQuickLock oLock( Library.m_pSection );
 		
-        int nItem = 0;
-		for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 		{
-			CString strFolder = m_wndList.GetItemText( nItem, 0 );
-			if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;
+			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+			
+			int nItem = 0;
+			for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
+			{
+				CString strFolder = m_wndList.GetItemText( nItem, 0 );
+				if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;
+			}
+			
+			if ( nItem >= m_wndList.GetItemCount() )
+			{
+				LibraryFolders.RemoveFolder( pFolder );
+			}
 		}
 		
-		if ( nItem >= m_wndList.GetItemCount() )
+		for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 		{
-			LibraryFolders.RemoveFolder( pFolder );
+			LibraryFolders.AddFolder( m_wndList.GetItemText( nItem, 0 ) );
 		}
 	}
-	
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
-	{
-		LibraryFolders.AddFolder( m_wndList.GetItemText( nItem, 0 ) );
-	}
-	
-	Library.Unlock();
 	
 	CFolderScanDlg dlgScan;
 	dlgScan.DoModal();

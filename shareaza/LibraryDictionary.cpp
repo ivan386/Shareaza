@@ -301,7 +301,7 @@ void CLibraryDictionary::RebuildHashTable()	//Force table to re-build. (If queue
 
 CQueryHashTable* CLibraryDictionary::GetHashTable()
 {
-	if ( ! Library.Lock( 500 ) ) return NULL;
+	CQuickLock oLock( Library.m_pSection );
 	
 	BuildHashTable();
 	
@@ -416,7 +416,7 @@ CPtrList* CLibraryDictionary::Search(CQuerySearch* pSearch, int nMaximum, BOOL b
 				
 				if ( pHit->m_nCollIndex )
 				{
-					if ( CLibraryFile* pCollection = LibraryMaps.LookupFile( pHit->m_nCollIndex, FALSE, ! bLocal, TRUE ) )
+					if ( CLibraryFile* pCollection = LibraryMaps.LookupFile( pHit->m_nCollIndex, ! bLocal, TRUE ) )
 					{
 						if ( pCollection->m_nSearchCookie != nCookie )
 						{

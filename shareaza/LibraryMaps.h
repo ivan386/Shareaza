@@ -56,13 +56,13 @@ public:
 	int				GetFileCount() const;
 	void			GetStatistics(DWORD* pnFiles, QWORD* pnVolume);
 public:
-	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileBySHA1(const SHA1* pSHA1, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByTiger(const TIGEROOT* pTiger, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
-	CLibraryFile*	LookupFileByED2K(const MD4* pED2K, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByName(LPCTSTR pszName, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileBySHA1(const SHA1* pSHA1, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByTiger(const TIGEROOT* pTiger, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFileByED2K(const MD4* pED2K, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 protected:
 	void			Clear();
 	DWORD			AllocateIndex();

@@ -48,6 +48,7 @@
 #include "ShellIcons.h"
 #include "Skin.h"
 #include "Scheduler.h"
+#include "FileExecutor.h"
 
 #include "WndMain.h"
 #include "WndSystem.h"
@@ -553,10 +554,15 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		DWORD nIndex = 0;
 		_stscanf( (LPCTSTR)strURI + 12, _T("%lu"), &nIndex );
 
-		if ( CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 		{
-			pFile->Execute();
-			Library.Unlock();
+			if ( pFile->m_pFolder )
+			{
+				CString strPath = pFile->GetPath();
+				oLock.Unlock();
+				CFileExecutor::Execute( strPath, FALSE );
+			}
 		}
 	}
 	else if (	strURI.Find( _T("http://") ) == 0 ||

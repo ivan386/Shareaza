@@ -340,11 +340,11 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 
 BOOL CCollectionFile::File::IsComplete() const
 {
-	if ( m_bSHA1 && LibraryMaps.LookupFileBySHA1( &m_pSHA1, FALSE, FALSE, TRUE ) )
+	if ( m_bSHA1 && LibraryMaps.LookupFileBySHA1( &m_pSHA1, FALSE, TRUE ) )
 		return TRUE;
-	if ( m_bTiger && LibraryMaps.LookupFileByTiger( &m_pTiger, FALSE, FALSE, TRUE ) )
+	if ( m_bTiger && LibraryMaps.LookupFileByTiger( &m_pTiger, FALSE, TRUE ) )
 		return TRUE;
-	if ( m_bED2K && LibraryMaps.LookupFileByED2K( &m_pED2K, FALSE, FALSE, TRUE ) )
+	if ( m_bED2K && LibraryMaps.LookupFileByED2K( &m_pED2K, FALSE, TRUE ) )
 		return TRUE;
 	return FALSE;
 }

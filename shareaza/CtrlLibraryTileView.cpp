@@ -1022,16 +1022,17 @@ void CLibraryTileView::OnLibraryAlbumDelete()
 
 	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_OKCANCEL ) != IDOK ) return;
 
-	Library.Lock();
-
-	for ( POSITION pos = m_pSelTile.GetHeadPosition() ; pos ; )
 	{
-		CLibraryTileItem* pTile = (CLibraryTileItem*)m_pSelTile.GetNext( pos );
-		CAlbumFolder* pFolder = pTile->m_pFolder;
-		if ( LibraryFolders.CheckAlbum( pFolder ) ) pFolder->Delete();
-	}
+		CQuickLock oLock( Library.m_pSection );
 
-	Library.Unlock();
+		for ( POSITION pos = m_pSelTile.GetHeadPosition() ; pos ; )
+		{
+			CLibraryTileItem* pTile = (CLibraryTileItem*)m_pSelTile.GetNext( pos );
+			CAlbumFolder* pFolder = pTile->m_pFolder;
+			if ( LibraryFolders.CheckAlbum( pFolder ) ) pFolder->Delete();
+		}
+
+	}
 	PostUpdate();
 }
 

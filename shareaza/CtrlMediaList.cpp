@@ -221,10 +221,12 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 	pszFile = pszFile ? pszFile + 1 : pszPath;
 	
 	DWORD nFile = 0;
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE ) )
 	{
-		nFile = pFile->m_nIndex;
-		Library.Unlock();
+		CQuickLock oLock( Library.m_pSection );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath ) )
+		{
+			nFile = pFile->m_nIndex;
+		}
 	}
 	
 	LV_ITEM pItem;

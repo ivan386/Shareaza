@@ -218,9 +218,9 @@ void CLibrarySettingsPage::OnPrivateRemove()
 
 void CLibrarySettingsPage::OnRecentClear() 
 {
-	Library.Lock();
+	CQuickLock oLock( Library.m_pSection );
 	LibraryHistory.Clear();
-	Library.Unlock( TRUE );
+	Library.Update();
 }
 
 void CLibrarySettingsPage::OnCollectionsBrowse() 

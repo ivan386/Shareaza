@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/03/11 14:46:50 $"
-//	Revision:		"$Revision: 1.14 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/03/11 16:28:30 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -276,8 +276,7 @@ void CLibraryFileView::OnLibraryLaunch()
 				pFile = Library.LookupFile( nIndex );
 				if ( NULL == pFile ) continue;
 				pFile->m_bVerify = TS_UNKNOWN;
-				Library.Lock();
-				Library.Unlock( TRUE );
+				Library.Update();
 			}
 		}
 		
@@ -452,7 +451,7 @@ void CLibraryFileView::OnLibraryDelete()
 	
 	while ( pList.GetCount() > 0 )
 	{
-		CLibraryFile* pFile = Library.LookupFile( pList.GetHead(), FALSE, FALSE, TRUE );
+		CLibraryFile* pFile = Library.LookupFile( pList.GetHead(), FALSE, TRUE );
 		if ( pFile == NULL ) continue;
 		
 		CDeleteFileDlg dlg( this );
@@ -465,15 +464,14 @@ void CLibraryFileView::OnLibraryDelete()
 		
 		for ( int nProcess = dlg.m_bAll ? pList.GetCount() : 1 ; nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
-			if ( pFile = Library.LookupFile( pList.RemoveHead(), FALSE, FALSE, TRUE ) )
+			if ( pFile = Library.LookupFile( pList.RemoveHead(), FALSE, TRUE ) )
 			{
 				dlg.Apply( pFile );
 				pFile->Delete();
 			}
 		}
 		
-		Library.Lock();
-		Library.Unlock( TRUE );
+		Library.Update();
 	}
 }
 
@@ -530,9 +528,9 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 	while ( m_posSel )
 	{
 		// Lookup locks library if it finds a file
-		CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ), TRUE );
+		CQuickLock oLock( Library.m_pSection );
 
-		if ( pFile )
+		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
 			CString strExtention = pFile->m_sName.Right(3);
 			CharLower( strExtention.GetBuffer() );
@@ -540,8 +538,6 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 
 			if ( ( strExtention != _T("mp3") ) || ( ! pFile->m_bMetadataAuto ) )
 				nSelected--;
-
-			Library.Unlock();
 		}
 	}
 	pCmdUI->Enable( nSelected > 0 );
@@ -654,7 +650,7 @@ void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryShared() 
 {
-	Library.Lock();
+	CQuickLock oLock( Library.m_pSection );
 
 	StartSelectedFileLoop();
 
@@ -667,7 +663,7 @@ void CLibraryFileView::OnLibraryShared()
 		pFile->m_nUpdateCookie++;
 	}
 
-	Library.Unlock( TRUE );
+	Library.Update();
 }
 
 void CLibraryFileView::OnUpdateLibraryUnlink(CCmdUI* pCmdUI) 

@@ -432,10 +432,10 @@ int CBaseMatchWnd::CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT*
 	{
 		if ( CLibraryWnd* pLibrary = (CLibraryWnd*)GetManager()->Open( RUNTIME_CLASS(CLibraryWnd) ) )
 		{
-			if ( pFile = Library.LookupFile( nIndex, TRUE ) )
+			CQuickLock oLock( Library.m_pSection );
+			if ( pFile = Library.LookupFile( nIndex ) )
 			{
 				pLibrary->Display( pFile );
-				Library.Unlock();
 			}
 		}
 	}

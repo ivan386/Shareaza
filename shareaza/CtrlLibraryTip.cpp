@@ -70,75 +70,76 @@ CLibraryTipCtrl::~CLibraryTipCtrl()
 
 BOOL CLibraryTipCtrl::OnPrepare()
 {
-	CLibraryFile* pFile = Library.LookupFile( (DWORD)m_pContext, TRUE );
-	if ( pFile == NULL ) return FALSE;
-	
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	// Basic data
-	
-	m_sName = pFile->m_sName;
-	m_sPath = pFile->GetPath();
-	m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
-	m_nIcon = 0;
-	
-	if ( pFile->m_pFolder != NULL ) m_sFolder = pFile->m_pFolder->m_sPath;
-	m_sType.Empty();
-	m_sSHA1.Empty();
-	m_sTTH.Empty();
-	m_sED2K.Empty();
-	
-	// Type information and icons
-
-	m_sType = ShellIcons.GetTypeString( m_sName );
-	m_nIcon = ShellIcons.Get( m_sName, 48 );
-
-	// URN
-
-	if ( pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC) 
 	{
-		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = Library.LookupFile( (DWORD)m_pContext );
+		if ( pFile == NULL ) return FALSE;
+		
+		CSingleLock pLock( &m_pSection, TRUE );
+
+		// Basic data
+		
+		m_sName = pFile->m_sName;
+		m_sPath = pFile->GetPath();
+		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
+		m_nIcon = 0;
+		
+		if ( pFile->m_pFolder != NULL ) m_sFolder = pFile->m_pFolder->m_sPath;
+		m_sType.Empty();
+		m_sSHA1.Empty();
+		m_sTTH.Empty();
+		m_sED2K.Empty();
+		
+		// Type information and icons
+
+		m_sType = ShellIcons.GetTypeString( m_sName );
+		m_nIcon = ShellIcons.Get( m_sName, 48 );
+
+		// URN
+
+		if ( pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC) 
+		{
+			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+		}
+		if ( pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC) 
+		{
+			m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
+		}
+		if ( pFile->m_bED2K  && Settings.General.GUIMode != GUI_BASIC)
+		{
+			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
+		}
+
+		// Metadata
+		
+		CSchema* pSchema = pFile->m_pSchema;
+		CString str, sData, sFormat;
+
+		m_pMetadata.Clear();
+
+		LoadString( str, IDS_TIP_LOCATION );
+		m_pMetadata.Add( str, m_sFolder );
+		LoadString( str, IDS_TIP_TYPE );
+		m_pMetadata.Add( str, m_sType );
+		LoadString( str, IDS_TIP_SIZE );
+		m_pMetadata.Add( str, m_sSize );
+		
+		LoadString( sFormat, IDS_TIP_TODAYTOTAL );
+
+		sData.Format( sFormat, pFile->m_nHitsToday, pFile->m_nHitsTotal );
+		LoadString( str, IDS_TIP_HITS );
+		m_pMetadata.Add( str, sData );
+		sData.Format( sFormat, pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
+		LoadString( str, IDS_TIP_UPLOADS );
+		m_pMetadata.Add( str, sData );
+
+		if ( pFile->m_pMetadata && pSchema )
+		{
+			m_pMetadata.Setup( pSchema, FALSE );
+			m_pMetadata.Combine( pFile->m_pMetadata );
+			m_pMetadata.Clean();
+		}
 	}
-	if ( pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC) 
-	{
-		m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
-	}
-	if ( pFile->m_bED2K  && Settings.General.GUIMode != GUI_BASIC)
-	{
-		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
-	}
-
-	// Metadata
-	
-	CSchema* pSchema = pFile->m_pSchema;
-	CString str, sData, sFormat;
-
-	m_pMetadata.Clear();
-
-	LoadString( str, IDS_TIP_LOCATION );
-	m_pMetadata.Add( str, m_sFolder );
-	LoadString( str, IDS_TIP_TYPE );
-	m_pMetadata.Add( str, m_sType );
-	LoadString( str, IDS_TIP_SIZE );
-	m_pMetadata.Add( str, m_sSize );
-	
-	LoadString( sFormat, IDS_TIP_TODAYTOTAL );
-
-	sData.Format( sFormat, pFile->m_nHitsToday, pFile->m_nHitsTotal );
-	LoadString( str, IDS_TIP_HITS );
-	m_pMetadata.Add( str, sData );
-	sData.Format( sFormat, pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
-	LoadString( str, IDS_TIP_UPLOADS );
-	m_pMetadata.Add( str, sData );
-
-	if ( pFile->m_pMetadata && pSchema )
-	{
-		m_pMetadata.Setup( pSchema, FALSE );
-		m_pMetadata.Combine( pFile->m_pMetadata );
-		m_pMetadata.Clean();
-	}
-
-	Library.Unlock();
 
 	CalcSizeHelper();
 

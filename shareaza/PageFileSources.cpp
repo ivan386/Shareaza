@@ -90,15 +90,16 @@ BOOL CFileSourcesPage::OnInitDialog()
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
 
-	CLibraryFile* pFile = GetFile();
-	if ( pFile == NULL ) return TRUE;
-
-	for ( POSITION pos = pFile->m_pSources.GetHeadPosition() ; pos ; )
 	{
-		AddSource( (CSharedSource*)pFile->m_pSources.GetNext( pos ) );
-	}
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = GetFile();
+		if ( pFile == NULL ) return TRUE;
 
-	Library.Unlock();
+		for ( POSITION pos = pFile->m_pSources.GetHeadPosition() ; pos ; )
+		{
+			AddSource( (CSharedSource*)pFile->m_pSources.GetNext( pos ) );
+		}
+	}
 
 	Skin.Translate( _T("CFileSourcesPageList"), m_wndList.GetHeaderCtrl() );
 	m_wndNew.EnableWindow( FALSE );
@@ -152,23 +153,26 @@ void CFileSourcesPage::OnChangeFileSource()
 
 void CFileSourcesPage::OnSourceRemove() 
 {
-	CLibraryFile* pFile = GetFile();
-	if ( pFile == NULL ) return;
-
-	for ( int nItem ; ( nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) >= 0 ; )
 	{
-		CSharedSource* pSource = (CSharedSource*)m_wndList.GetItemData( nItem );
-		
-		if ( POSITION pos = pFile->m_pSources.Find( pSource ) )
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = GetFile();
+		if ( pFile == NULL ) return;
+
+		for ( int nItem ; ( nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) >= 0 ; )
 		{
-			delete pSource;
-			pFile->m_pSources.RemoveAt( pos );
+			CSharedSource* pSource = (CSharedSource*)m_wndList.GetItemData( nItem );
+			
+			if ( POSITION pos = pFile->m_pSources.Find( pSource ) )
+			{
+				delete pSource;
+				pFile->m_pSources.RemoveAt( pos );
+			}
+			
+			m_wndList.DeleteItem( nItem );
 		}
-		
-		m_wndList.DeleteItem( nItem );
+		Library.Update();
 	}
 
-	Library.Unlock( TRUE );
 	m_wndRemove.EnableWindow( FALSE );
 }
 
@@ -178,11 +182,13 @@ void CFileSourcesPage::OnSourceNew()
 
 	if ( m_sSource.Find( _T("http://") ) == 0 )
 	{
+		CSingleLock oLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pFile = GetFile() )
 		{
 			CSharedSource* pSource = pFile->AddAlternateSources( m_sSource );
 			m_sSource.Empty();
-			Library.Unlock( TRUE );
+			Library.Update();
+			oLock.Unlock();
 			UpdateData( FALSE );
 			if ( pSource ) AddSource( pSource );
 		}

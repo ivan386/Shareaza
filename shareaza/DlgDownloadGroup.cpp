@@ -209,10 +209,10 @@ void CDownloadGroupDlg::OnOK()
 				
 				BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
 				
-				Library.Lock();
+				CQuickLock oLock( Library.m_pSection );
 				if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
 					pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
-				Library.Unlock( TRUE );
+				Library.Update();
 			}
 		}
 	}

@@ -161,7 +161,8 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 	if ( ! pDownload->m_bSHA1 && ! pDownload->m_bTiger && ! pDownload->m_bED2K ) return;
 	if ( m_sComments.IsEmpty() ) return;
 	
-	if ( ! Library.Lock( 500 ) ) return;
+	CSingleLock oLock( &Library.m_pSection );
+	if ( !oLock.Lock( 500 ) ) return;
 	
 	CLibraryFile* pFile = NULL;
 	
@@ -190,5 +191,5 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 	
 	Apply( pFile );
 	
-	Library.Unlock( TRUE );
+	Library.Update();
 }

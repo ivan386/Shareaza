@@ -89,17 +89,6 @@ CLibrary::~CLibrary()
 //////////////////////////////////////////////////////////////////////
 // CLibrary locking
 
-BOOL CLibrary::Lock(DWORD nTimeout)
-{
-	return m_pSection.Lock( nTimeout );
-}
-
-void CLibrary::Unlock(BOOL bSetUpdated)
-{
-	if ( bSetUpdated ) m_nUpdateCookie = GetTickCount();
-	m_pSection.Unlock();
-}
-
 void CLibrary::Inhibit(BOOL bInhibit)
 {
 	if ( bInhibit )
@@ -111,9 +100,9 @@ void CLibrary::Inhibit(BOOL bInhibit)
 //////////////////////////////////////////////////////////////////////
 // CLibrary file and folder operations
 
-CLibraryFile* CLibrary::LookupFile(DWORD nIndex, BOOL bLockOnSuccess, BOOL bSharedOnly, BOOL bAvailableOnly)
+CLibraryFile* CLibrary::LookupFile(DWORD nIndex, BOOL bSharedOnly, BOOL bAvailableOnly)
 {
-	return LibraryMaps.LookupFile( nIndex, bLockOnSuccess, bSharedOnly, bAvailableOnly );
+	return LibraryMaps.LookupFile( nIndex, bSharedOnly, bAvailableOnly );
 }
 
 CAlbumFolder* CLibrary::GetAlbumRoot()
@@ -168,7 +157,9 @@ void CLibrary::OnFileDelete(CLibraryFile* pFile)
 
 CPtrList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 {
-	if ( ! m_pSection.Lock( 50 ) ) return NULL;
+	CSingleLock oLock( &m_pSection );
+
+	if ( !oLock.Lock( 50 ) ) return NULL;
 	
 	CPtrList* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal );
 	
@@ -176,8 +167,6 @@ CPtrList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 	{
 		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal );
 	}
-	
-	if ( pHits == NULL ) m_pSection.Unlock();
 	
 	return pHits;
 }

@@ -397,12 +397,13 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		CLibraryFile* pExisting = NULL;
 		
+		CQuickLock oLock( Library.m_pSection );
 		if ( pExisting == NULL && m_pFile->m_bSHA1 == TRUE )
-			pExisting = LibraryMaps.LookupFileBySHA1( &m_pFile->m_pSHA1, TRUE );
+			pExisting = LibraryMaps.LookupFileBySHA1( &m_pFile->m_pSHA1 );
 		if ( pExisting == NULL && m_pFile->m_bTiger == TRUE )
-			pExisting = LibraryMaps.LookupFileByTiger( &m_pFile->m_pTiger, TRUE );
+			pExisting = LibraryMaps.LookupFileByTiger( &m_pFile->m_pTiger );
 		if ( pExisting == NULL && m_pFile->m_bED2K == TRUE )
-			pExisting = LibraryMaps.LookupFileByED2K( &m_pFile->m_pED2K, TRUE );
+			pExisting = LibraryMaps.LookupFileByED2K( &m_pFile->m_pED2K );
 		
 		if ( pExisting != NULL )
 		{
@@ -423,7 +424,6 @@ void CMatchTipCtrl::LoadFromFile()
 				}
 			}
 			
-			Library.Unlock();
 		}
 	}
 	else if ( m_pFile->m_bDownload || m_pFile->m_pBest->m_bDownload )

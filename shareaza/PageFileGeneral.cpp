@@ -93,63 +93,65 @@ BOOL CFileGeneralPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
 	
-	CLibraryFile* pFile = GetFile();
-	if ( ! pFile ) return TRUE;
+	{
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = GetFile();
+		if ( ! pFile ) return TRUE;
 
-	if ( pFile->m_pFolder != NULL ) m_sPath = pFile->m_pFolder->m_sPath;
-	m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
-	m_sType = ShellIcons.GetTypeString( pFile->m_sName );	
-	m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
+		if ( pFile->m_pFolder != NULL ) m_sPath = pFile->m_pFolder->m_sPath;
+		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
+		m_sType = ShellIcons.GetTypeString( pFile->m_sName );	
+		m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
-	if ( pFile->m_bSHA1 )
-	{
-		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+		if ( pFile->m_bSHA1 )
+		{
+			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+		}
+		else
+		{
+			LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
+		}
+		
+		if ( pFile->m_bTiger )
+		{
+			m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
+		}
+		else
+		{
+			m_sTiger.Empty();
+		}
+		
+		if ( pFile->m_bMD5 )
+		{
+			m_sMD5 = _T("md5:") + CMD5::HashToString( &pFile->m_pMD5 );
+		}
+		else
+		{
+			m_sMD5.Empty();
+		}
+		
+		if ( pFile->m_bED2K )
+		{
+			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
+		}
+		else
+		{
+			m_sED2K.Empty();
+		}
+		
+		CString strDate, strTime;
+		SYSTEMTIME pTime;
+		
+		FileTimeToSystemTime( &pFile->m_pTime, &pTime );
+		SystemTimeToTzSpecificLocalTime( NULL, &pTime, &pTime );
+		
+		GetDateFormat( LOCALE_USER_DEFAULT, DATE_LONGDATE, &pTime, NULL, strDate.GetBuffer( 64 ), 64 );
+		GetTimeFormat( LOCALE_USER_DEFAULT, TIME_FORCE24HOURFORMAT, &pTime, NULL, strTime.GetBuffer( 64 ), 64 );
+		strDate.ReleaseBuffer(); strTime.ReleaseBuffer();
+		
+		m_sModified = strDate + _T(", ") + strTime;
 	}
-	else
-	{
-		LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
-	}
-	
-	if ( pFile->m_bTiger )
-	{
-		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
-	}
-	else
-	{
-		m_sTiger.Empty();
-	}
-	
-	if ( pFile->m_bMD5 )
-	{
-		m_sMD5 = _T("md5:") + CMD5::HashToString( &pFile->m_pMD5 );
-	}
-	else
-	{
-		m_sMD5.Empty();
-	}
-	
-	if ( pFile->m_bED2K )
-	{
-		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
-	}
-	else
-	{
-		m_sED2K.Empty();
-	}
-	
-	CString strDate, strTime;
-	SYSTEMTIME pTime;
-	
-	FileTimeToSystemTime( &pFile->m_pTime, &pTime );
-	SystemTimeToTzSpecificLocalTime( NULL, &pTime, &pTime );
-	
-	GetDateFormat( LOCALE_USER_DEFAULT, DATE_LONGDATE, &pTime, NULL, strDate.GetBuffer( 64 ), 64 );
-	GetTimeFormat( LOCALE_USER_DEFAULT, TIME_FORCE24HOURFORMAT, &pTime, NULL, strTime.GetBuffer( 64 ), 64 );
-	strDate.ReleaseBuffer(); strTime.ReleaseBuffer();
-	
-	m_sModified = strDate + _T(", ") + strTime;
-	
-	Library.Unlock();
+
 	UpdateData( FALSE );
 	
 	return TRUE;

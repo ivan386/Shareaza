@@ -177,53 +177,54 @@ void CURLExportDlg::OnSave()
 		
 		DWORD nIndex = (DWORD)m_pFiles.GetNext( pos );
 		
-		CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE );
-		if ( ! pFile ) continue;
-		
 		CString strLine = m_sFormat;
-		CString strItem;
-		
-		Replace( strLine, _T("[Name]"), pFile->m_sName );
-		Replace( strLine, _T("[NameURI]"), CTransfer::URLEncode( pFile->m_sName ) );
-		Replace( strLine, _T("[Size]"), Settings.SmartVolume( pFile->m_nSize, FALSE ) );
-		if ( pFile->m_pFolder != NULL ) Replace( strLine, _T("[Path]"), pFile->m_pFolder->m_sPath );
-		
-		strItem.Format( _T("%I64i"), pFile->m_nSize );
-		Replace( strLine, _T("[ByteSize]"), strItem );
-		
-		strItem = CTigerNode::HashToString( &pFile->m_pTiger );
-		Replace( strLine, _T("[TIGER]"), strItem );
-		strItem = CSHA::HashToString( &pFile->m_pSHA1 );
-		Replace( strLine, _T("[SHA1]"), strItem );
-		strItem = CMD5::HashToString( &pFile->m_pMD5 );
-		Replace( strLine, _T("[MD5]"), strItem );
-		strItem = CED2K::HashToString( &pFile->m_pED2K );
-		Replace( strLine, _T("[ED2K]"), strItem );
-		
-		int nDot = pFile->m_sName.ReverseFind( '.' );
-		
-		if ( nDot > 0 )
 		{
-			Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
-			Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+			CQuickLock oLock( Library.m_pSection );
+			CLibraryFile* pFile = Library.LookupFile( nIndex );
+			if ( ! pFile ) continue;
+			
+			CString strItem;
+			
+			Replace( strLine, _T("[Name]"), pFile->m_sName );
+			Replace( strLine, _T("[NameURI]"), CTransfer::URLEncode( pFile->m_sName ) );
+			Replace( strLine, _T("[Size]"), Settings.SmartVolume( pFile->m_nSize, FALSE ) );
+			if ( pFile->m_pFolder != NULL ) Replace( strLine, _T("[Path]"), pFile->m_pFolder->m_sPath );
+			
+			strItem.Format( _T("%I64i"), pFile->m_nSize );
+			Replace( strLine, _T("[ByteSize]"), strItem );
+			
+			strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+			Replace( strLine, _T("[TIGER]"), strItem );
+			strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+			Replace( strLine, _T("[SHA1]"), strItem );
+			strItem = CMD5::HashToString( &pFile->m_pMD5 );
+			Replace( strLine, _T("[MD5]"), strItem );
+			strItem = CED2K::HashToString( &pFile->m_pED2K );
+			Replace( strLine, _T("[ED2K]"), strItem );
+			
+			int nDot = pFile->m_sName.ReverseFind( '.' );
+			
+			if ( nDot > 0 )
+			{
+				Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
+				Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+			}
+			else
+			{
+				Replace( strLine, _T("[FileBase]"), pFile->m_sName );
+				Replace( strLine, _T("[FileExt]"), _T("") );
+			}
+			
+			if ( Network.IsListening() )
+			{
+				strItem = inet_ntoa( Network.m_pHost.sin_addr );
+				Replace( strLine, _T("[LocalHost]"), strItem );
+				strItem.Format( _T("%lu"), htons( Network.m_pHost.sin_port ) );
+				Replace( strLine, _T("[LocalPort]"), strItem );
+			}
+			
+			strLine += _T("\r\n");
 		}
-		else
-		{
-			Replace( strLine, _T("[FileBase]"), pFile->m_sName );
-			Replace( strLine, _T("[FileExt]"), _T("") );
-		}
-		
-		if ( Network.IsListening() )
-		{
-			strItem = inet_ntoa( Network.m_pHost.sin_addr );
-			Replace( strLine, _T("[LocalHost]"), strItem );
-			strItem.Format( _T("%lu"), htons( Network.m_pHost.sin_port ) );
-			Replace( strLine, _T("[LocalPort]"), strItem );
-		}
-		
-		strLine += _T("\r\n");
-
-		Library.Unlock();
 		
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strLine, strLine.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pBytes = new CHAR[nBytes];
@@ -258,51 +259,52 @@ void CURLExportDlg::OnCopy()
 		
 		DWORD nIndex = (DWORD)m_pFiles.GetNext( pos );
 		
-		CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE );
-		if ( ! pFile ) continue;
-		
 		CString strLine = m_sFormat;
-		CString strItem;
-		
-		Replace( strLine, _T("[Name]"), pFile->m_sName );
-		Replace( strLine, _T("[NameURI]"), CTransfer::URLEncode( pFile->m_sName ) );
-		Replace( strLine, _T("[Size]"), Settings.SmartVolume( pFile->m_nSize, FALSE ) );
-		if ( pFile->m_pFolder != NULL ) Replace( strLine, _T("[Path]"), pFile->m_pFolder->m_sPath );
-		
-		strItem.Format( _T("%I64i"), pFile->m_nSize );
-		Replace( strLine, _T("[ByteSize]"), strItem );
-		
-		strItem = CTigerNode::HashToString( &pFile->m_pTiger );
-		Replace( strLine, _T("[TIGER]"), strItem );
-		strItem = CSHA::HashToString( &pFile->m_pSHA1 );
-		Replace( strLine, _T("[SHA1]"), strItem );
-		strItem = CMD5::HashToString( &pFile->m_pMD5 );
-		Replace( strLine, _T("[MD5]"), strItem );
-		strItem = CED2K::HashToString( &pFile->m_pED2K );
-		Replace( strLine, _T("[ED2K]"), strItem );
-		
-		int nDot = pFile->m_sName.ReverseFind( '.' );
-		
-		if ( nDot > 0 )
 		{
-			Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
-			Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+			CQuickLock oLock( Library.m_pSection );
+			CLibraryFile* pFile = Library.LookupFile( nIndex );
+			if ( ! pFile ) continue;
+			
+			CString strItem;
+			
+			Replace( strLine, _T("[Name]"), pFile->m_sName );
+			Replace( strLine, _T("[NameURI]"), CTransfer::URLEncode( pFile->m_sName ) );
+			Replace( strLine, _T("[Size]"), Settings.SmartVolume( pFile->m_nSize, FALSE ) );
+			if ( pFile->m_pFolder != NULL ) Replace( strLine, _T("[Path]"), pFile->m_pFolder->m_sPath );
+			
+			strItem.Format( _T("%I64i"), pFile->m_nSize );
+			Replace( strLine, _T("[ByteSize]"), strItem );
+			
+			strItem = CTigerNode::HashToString( &pFile->m_pTiger );
+			Replace( strLine, _T("[TIGER]"), strItem );
+			strItem = CSHA::HashToString( &pFile->m_pSHA1 );
+			Replace( strLine, _T("[SHA1]"), strItem );
+			strItem = CMD5::HashToString( &pFile->m_pMD5 );
+			Replace( strLine, _T("[MD5]"), strItem );
+			strItem = CED2K::HashToString( &pFile->m_pED2K );
+			Replace( strLine, _T("[ED2K]"), strItem );
+			
+			int nDot = pFile->m_sName.ReverseFind( '.' );
+			
+			if ( nDot > 0 )
+			{
+				Replace( strLine, _T("[FileBase]"), pFile->m_sName.Left( nDot ) );
+				Replace( strLine, _T("[FileExt]"), pFile->m_sName.Mid( nDot + 1 ) );
+			}
+			else
+			{
+				Replace( strLine, _T("[FileBase]"), pFile->m_sName );
+				Replace( strLine, _T("[FileExt]"), _T("") );
+			}
+			
+			if ( Network.IsListening() )
+			{
+				strItem = inet_ntoa( Network.m_pHost.sin_addr );
+				Replace( strLine, _T("[LocalHost]"), strItem );
+				strItem.Format( _T("%lu"), htons( Network.m_pHost.sin_port ) );
+				Replace( strLine, _T("[LocalPort]"), strItem );
+			}
 		}
-		else
-		{
-			Replace( strLine, _T("[FileBase]"), pFile->m_sName );
-			Replace( strLine, _T("[FileExt]"), _T("") );
-		}
-		
-		if ( Network.IsListening() )
-		{
-			strItem = inet_ntoa( Network.m_pHost.sin_addr );
-			Replace( strLine, _T("[LocalHost]"), strItem );
-			strItem.Format( _T("%lu"), htons( Network.m_pHost.sin_port ) );
-			Replace( strLine, _T("[LocalPort]"), strItem );
-		}
-		
-		Library.Unlock();
 		
 		strLine += _T("\r\n");
 		strOutput += strLine;

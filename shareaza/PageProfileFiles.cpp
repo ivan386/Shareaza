@@ -77,26 +77,26 @@ BOOL CFilesProfilePage::OnInitDialog()
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
 	m_wndList.InsertColumn( 0, _T("File"), LVCFMT_LEFT, rc.right, -1 );
 	m_wndList.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
-	
-	Library.Lock();
-	
-	CAlbumFolder* pFolder = LibraryFolders.GetAlbumTarget( CSchema::uriFavouritesFolder, _T("Title"), NULL );
-	
-	if ( pFolder != NULL )
+
 	{
-		for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
+		CQuickLock oLock( Library.m_pSection );
+		
+		CAlbumFolder* pFolder = LibraryFolders.GetAlbumTarget( CSchema::uriFavouritesFolder, _T("Title"), NULL );
+		
+		if ( pFolder != NULL )
 		{
-			CLibraryFile* pFile = pFolder->GetNextFile( pos );
-			
-			if ( pFile->IsShared() )
+			for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 			{
-				m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM, m_wndList.GetItemCount(),
-					pFile->m_sName, 0, 0, ShellIcons.Get( pFile->m_sName, 16 ), pFile->m_nIndex );
+				CLibraryFile* pFile = pFolder->GetNextFile( pos );
+				
+				if ( pFile->IsShared() )
+				{
+					m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM, m_wndList.GetItemCount(),
+						pFile->m_sName, 0, 0, ShellIcons.Get( pFile->m_sName, 16 ), pFile->m_nIndex );
+				}
 			}
 		}
 	}
-	
-	Library.Unlock();
 	
 	UpdateData( FALSE );
 	

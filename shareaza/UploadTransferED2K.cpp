@@ -82,28 +82,33 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 	
 	Cleanup( ! bSame );
 	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( pMD4, TRUE, TRUE, TRUE ) )
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( pMD4, TRUE, TRUE ) )
 	{
 		RequestComplete( pFile );
-		Library.Unlock();
-	}
-	else if ( CDownload* pFile = Downloads.FindByED2K( pMD4, TRUE ) )
-	{
-		RequestPartial( pFile );
+		oLock.Unlock();
 	}
 	else
 	{
-		UploadQueues.Dequeue( this );
-		
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
-			(LPCTSTR)CED2K::HashToString( pMD4, TRUE ) );	
-		
-		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-		pReply->Write( pMD4, sizeof(MD4) );
-		Send( pReply );
-		
-		Close();
-		return FALSE;
+		oLock.Unlock();
+		if ( CDownload* pFile = Downloads.FindByED2K( pMD4, TRUE ) )
+		{
+			RequestPartial( pFile );
+		}
+		else
+		{
+			UploadQueues.Dequeue( this );
+			
+			theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress,
+				(LPCTSTR)CED2K::HashToString( pMD4, TRUE ) );	
+			
+			CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
+			pReply->Write( pMD4, sizeof(MD4) );
+			Send( pReply );
+			
+			Close();
+			return FALSE;
+		}
 	}
 	
 	if ( UploadQueues.GetPosition( this, FALSE ) < 0 && ! UploadQueues.Enqueue( this ) )
@@ -453,11 +458,11 @@ BOOL CUploadTransferED2K::OpenFile()
 	
 	if ( m_pDiskFile != NULL )
 	{
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE, TRUE ) )
+		CQuickLock oLock( Library.m_pSection );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE ) )
 		{
 			pFile->m_nUploadsToday++;
 			pFile->m_nUploadsTotal++;
-			Library.Unlock();
 		}
 		
 		return TRUE;

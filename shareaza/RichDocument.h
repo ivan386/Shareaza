@@ -76,19 +76,6 @@ public:
 protected:
 	BOOL			LoadXMLStyles(CXMLElement* pParent);
 	BOOL			LoadXMLColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour);
-
-// Inline
-public:
-	inline void Lock()
-	{
-		m_pSection.Lock();
-	}
-
-	inline void Unlock()
-	{
-		m_pSection.Unlock();
-	}
-	
 };
 
 #endif // !defined(AFX_RICHDOCUMENT_H__9D4A133E_6F29_4BF5_8CCF_2A02830663D5__INCLUDED_)

@@ -907,10 +907,19 @@ void CHomeLibraryBox::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( Item* pItem = HitTest( point ) )
 	{
-		if ( CLibraryFile* pFile = Library.LookupFile( pItem->m_nIndex, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = Library.LookupFile( pItem->m_nIndex ) )
 		{
-			pFile->Execute();
-			Library.Unlock();
+			if ( pFile->m_pFolder )
+			{
+				CString strPath = pFile->GetPath();
+				oLock.Unlock();
+				CFileExecutor::Execute( strPath, FALSE );
+			}
+			else
+			{
+				oLock.Unlock();
+			}
 			m_pHover = NULL;
 			KillTimer( 2 );
 			Invalidate();

@@ -150,6 +150,7 @@ int CLocalSearch::Execute(int nMaximum)
 
 int CLocalSearch::ExecuteSharedFiles(int nMaximum)
 {
+	CQuickLock oLock( Library.m_pSection );
 	CPtrList* pFiles = Library.Search( m_pSearch, nMaximum );
 	if ( pFiles == NULL ) return 0;
 	
@@ -173,7 +174,6 @@ int CLocalSearch::ExecuteSharedFiles(int nMaximum)
 	}
 	
 	delete pFiles;
-	Library.Unlock();
 	
 	return nHits;
 }
@@ -976,17 +976,18 @@ void CLocalSearch::DestroyPacket()
 
 void CLocalSearch::WriteVirtualTree()
 {
-	if ( Library.Lock( 100 ) )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 100 ) )
 	{
 		m_pPacket = AlbumToPacket( Library.GetAlbumRoot() );
-		Library.Unlock();
+		oLock.Unlock();
 		if ( m_pPacket != NULL ) DispatchPacket();
 	}
 	
-	if ( Library.Lock( 100 ) )
+	if ( oLock.Lock( 100 ) )
 	{
 		m_pPacket = FoldersToPacket();
-		Library.Unlock();
+		oLock.Unlock();
 		if ( m_pPacket != NULL ) DispatchPacket();
 	}
 }

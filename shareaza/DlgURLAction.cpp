@@ -355,17 +355,20 @@ void CURLActionDlg::OnUrlDownload()
 		{
 			CLibraryFile* pFile;
 			
-			if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1, TRUE ) ) ) ||
-				 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K, TRUE ) ) ) )
 			{
-				CString strFormat, strMessage;
-				::Skin.LoadString( strFormat, IDS_URL_ALREADY_HAVE );
-				strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-				Library.Unlock();
-				
-				UINT nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-				if ( nMBOX == IDCANCEL ) return;
-				if ( nMBOX == IDNO ) continue;
+				CSingleLock oLock( &Library.m_pSection, TRUE );
+				if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1 ) ) ) ||
+					( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K ) ) ) )
+				{
+					CString strFormat, strMessage;
+					::Skin.LoadString( strFormat, IDS_URL_ALREADY_HAVE );
+					strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
+					oLock.Unlock();
+					
+					UINT nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+					if ( nMBOX == IDCANCEL ) return;
+					if ( nMBOX == IDNO ) continue;
+				}
 			}
 			
 			CDownload* pDownload = Downloads.Add( pURL );

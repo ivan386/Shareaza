@@ -472,14 +472,13 @@ void CLibraryDetailView::CacheItem(int nItem)
 
 void CLibraryDetailView::OnCacheHint(NMLVCACHEHINT* pNotify, LRESULT* pResult)
 {
-	if ( ! Library.Lock( 100 ) ) return;
+	CSingleLock oLock( &Library.m_pSection );
+	if ( !oLock.Lock( 100 ) ) return;
 	
 	for ( int nItem = pNotify->iFrom ; nItem <= pNotify->iTo ; nItem++ )
 	{
 		CacheItem( nItem );
 	}
-	
-	Library.Unlock();
 }
 
 void CLibraryDetailView::OnGetDispInfoW(NMLVDISPINFO* pNotify, LRESULT* pResult)
@@ -496,9 +495,11 @@ void CLibraryDetailView::OnGetDispInfoW(NMLVDISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pItem->nCookie != m_nListCookie )
 	{
-		if ( ! Library.Lock( 100 ) ) return;
-		CacheItem( pNotify->item.iItem );
-		Library.Unlock();
+		{
+			CSingleLock oLock( &Library.m_pSection );
+			if ( !oLock.Lock( 100 ) ) return;
+			CacheItem( pNotify->item.iItem );
+		}
 		if ( pItem->nCookie != m_nListCookie ) return;
 	}
 	
@@ -530,9 +531,11 @@ void CLibraryDetailView::OnGetDispInfoA(NMLVDISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pItem->nCookie != m_nListCookie )
 	{
-		if ( ! Library.Lock( 100 ) ) return;
-		CacheItem( pNotify->item.iItem );
-		Library.Unlock();
+		{
+			CSingleLock oLock( &Library.m_pSection );
+			if ( !oLock.Lock( 100 ) ) return;
+			CacheItem( pNotify->item.iItem );
+		}
 		if ( pItem->nCookie != m_nListCookie ) return;
 	}
 	
@@ -750,14 +753,16 @@ void CLibraryDetailView::OnEndLabelEditW(LV_DISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pNotify->item.pszText && *pNotify->item.pszText )
 	{
-		if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ pNotify->item.iItem ].nIndex, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ pNotify->item.iItem ].nIndex ) )
 		{
 			m_pList[ pNotify->item.iItem ].nState &= ~LDVI_SELECTED;
 			CString strName = (LPCWSTR)pNotify->item.pszText;
 			LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' );
 			if ( pszType ) strName += pszType;
 			*pResult = pFile->Rename( strName );
-			Library.Unlock( TRUE );
+			Library.Update();
+			oLock.Unlock();
 			
 			if ( *pResult == FALSE )
 			{
@@ -779,14 +784,16 @@ void CLibraryDetailView::OnEndLabelEditA(LV_DISPINFO* pNotify, LRESULT* pResult)
 	
 	if ( pNotify->item.pszText && *pNotify->item.pszText )
 	{
-		if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ pNotify->item.iItem ].nIndex, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ pNotify->item.iItem ].nIndex ) )
 		{
 			m_pList[ pNotify->item.iItem ].nState &= ~LDVI_SELECTED;
 			CString strName = (LPCSTR)pNotify->item.pszText;
 			LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' );
 			if ( pszType ) strName += pszType;
 			*pResult = pFile->Rename( strName );
-			Library.Unlock( TRUE );
+			Library.Update();
+			oLock.Unlock();
 			
 			if ( *pResult == FALSE )
 			{
@@ -808,7 +815,7 @@ void CLibraryDetailView::OnFindItemW(NMLVFINDITEM* pNotify, LRESULT* pResult)
 	LPCTSTR pszFind = W2CT( (LPCWSTR)pNotify->lvfi.psz );
 	
 	GET_LIST();
-	Library.Lock();
+	CQuickLock oLock( Library.m_pSection );
 
 	for ( int nLoop = 0 ; nLoop < 2 ; nLoop++ )
 	{
@@ -821,7 +828,6 @@ void CLibraryDetailView::OnFindItemW(NMLVFINDITEM* pNotify, LRESULT* pResult)
 					if ( _tcsnicmp( pszFind, pFile->m_sName, _tcslen( pszFind ) ) == 0 )
 					{
 						*pResult = nItem;
-						Library.Unlock();
 						return;
 					}
 				}
@@ -830,7 +836,6 @@ void CLibraryDetailView::OnFindItemW(NMLVFINDITEM* pNotify, LRESULT* pResult)
 		pNotify->iStart = 0;
 	}
 
-	Library.Unlock();
 	*pResult = -1;
 }
 
@@ -840,7 +845,7 @@ void CLibraryDetailView::OnFindItemA(NMLVFINDITEM* pNotify, LRESULT* pResult)
 	LPCTSTR pszFind = A2CT( (LPCSTR)pNotify->lvfi.psz );
 	
 	GET_LIST();
-	Library.Lock();
+	CQuickLock oLock( Library.m_pSection );
 
 	for ( int nLoop = 0 ; nLoop < 2 ; nLoop++ )
 	{
@@ -853,7 +858,6 @@ void CLibraryDetailView::OnFindItemA(NMLVFINDITEM* pNotify, LRESULT* pResult)
 					if ( _tcsnicmp( pszFind, pFile->m_sName, _tcslen( pszFind ) ) == 0 )
 					{
 						*pResult = nItem;
-						Library.Unlock();
 						return;
 					}
 				}
@@ -862,7 +866,6 @@ void CLibraryDetailView::OnFindItemA(NMLVFINDITEM* pNotify, LRESULT* pResult)
 		pNotify->iStart = 0;
 	}
 
-	Library.Unlock();
 	*pResult = -1;
 }
 

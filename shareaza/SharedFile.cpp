@@ -243,19 +243,6 @@ BOOL CLibraryFile::Rebuild()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryFile execute
-
-BOOL CLibraryFile::Execute(BOOL bPrompt)
-{
-	if ( m_pFolder == NULL ) return FALSE;
-	CString strPath = GetPath();
-	Library.Unlock();
-	BOOL bResult = CFileExecutor::Execute( strPath, ! bPrompt );
-	Library.Lock();
-	return bResult;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CLibraryFile rename
 
 BOOL CLibraryFile::Rename(LPCTSTR pszName)
@@ -911,13 +898,13 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	if ( bChanged )
 	{
 		Library.AddFile( this );
-		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ), FALSE );
+		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ) );
 		pLock.Unlock();
 		m_nUpdateCookie++;
 	}
 	else
 	{
-		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ), TRUE );
+		CFolderScanDlg::Update( m_sName, (DWORD)( m_nSize / 1024 ) );
 	}
 	
 	return bChanged;

@@ -172,3 +172,18 @@ typedef int PROTOCOLID;
 #define PROTOCOL_HTTP	4
 #define PROTOCOL_FTP	5
 #define PROTOCOL_BT		6
+
+class CQuickLock
+{
+public:
+	CQuickLock(CSyncObject& mutex) : m_mutex( mutex ) { m_mutex.Lock(); }
+	~CQuickLock() { m_mutex.Unlock(); }
+private:
+	CSyncObject& m_mutex;
+	CQuickLock(const CQuickLock&);
+	CQuickLock& operator=(const CQuickLock&);
+	static void* operator new(std::size_t);
+	static void* operator new[](std::size_t);
+	static void operator delete(void*);
+	static void operator delete[](void*);
+};

@@ -1,9 +1,9 @@
 //
 // DlgDecodeMetadata.cpp
 //
-//	Date:			"$Date: 2005/03/11 02:20:01 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/03/11 16:28:40 $"
+//	Revision:		"$Revision: 1.2 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -99,7 +99,7 @@ void CDecodeMetadataDlg::OnOK()
 		CLibraryFile* pFile;
 
 		{
-			CSingleLock oLock( &Library.m_pSection, TRUE );
+			CQuickLock oLock( Library.m_pSection );
 
 			if ( m_pFiles.IsEmpty() ) break;
 
@@ -126,7 +126,7 @@ void CDecodeMetadataDlg::OnOK()
 			{
 				const TCHAR* source = pszSource;
 				CHAR* dest = pszDest;
-				while ( *dest++ = (CHAR)*source, *source++ );
+				while ( *dest++ = static_cast< CHAR >( *source ), *source++ );
 			}
 
 			int nWide = MultiByteToWideChar( nCodePage, 0, pszDest, nLength, NULL, 0 );
@@ -140,7 +140,7 @@ void CDecodeMetadataDlg::OnOK()
 			pAttribute->SetValue( strAttribute );
 		}
 
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		// make a clean copy of schema with namespace included
 		CXMLElement* pContainer	= pFile->m_pSchema->Instantiate( TRUE );
 		if ( pContainer )
@@ -151,6 +151,5 @@ void CDecodeMetadataDlg::OnOK()
 			pFile->SetMetadata( pContainer );
 			delete pContainer;
 		}
-		Library.Unlock();
 	}
 }

@@ -560,7 +560,8 @@ void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 	nImage = nImage ? SHI_FOLDER_OPEN : SHI_FOLDER_CLOSED;
 	SetItemImage( hItem, nImage, nImage );
 
-	if ( m_bSaveExpand && Library.Lock( 50 ) )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( m_bSaveExpand && oLock.Lock( 50 ) )
 	{
 		CLibraryFolder* pFolder = (CLibraryFolder*)GetItemData( hItem );
 
@@ -569,7 +570,6 @@ void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 			pFolder->m_bExpanded = ( nImage == 1 );
 		}
 
-		Library.Unlock();
 	}
 }
 

@@ -60,13 +60,16 @@ public:
 	
 // Sync Operations
 public:
-	BOOL			Lock(DWORD nTimeout = INFINITE);
-	void			Unlock(BOOL bSetUpdated = FALSE);
+	void			Update()
+	{
+		CQuickLock oLock( m_pSection );
+		m_nUpdateCookie = GetTickCount();
+	}
 	void			Inhibit(BOOL bInhibit);
 	
 // File and Folder Operations
 public:
-	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bLockOnSuccess = FALSE, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
+	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
 	CAlbumFolder*	GetAlbumRoot();
 protected:
 	void			AddFile(CLibraryFile* pFile);

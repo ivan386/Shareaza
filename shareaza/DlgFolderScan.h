@@ -45,7 +45,7 @@ public:
 	
 // Operations
 public:
-	static void Update(LPCTSTR pszName, DWORD nVolume, BOOL bLock);
+	static void Update(LPCTSTR pszName, DWORD nVolume);//, BOOL bLock);
 	void	InstanceUpdate(LPCTSTR pszName, DWORD nVolume);
 
 // Data

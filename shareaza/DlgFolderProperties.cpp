@@ -344,8 +344,8 @@ void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 	CString str;
 	m_wndTitle.GetWindowText( str );
 	if ( str.IsEmpty() ) return;
-	
-	Library.Lock();
+
+	CQuickLock oLock( Library.m_pSection );
 	
 	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
 	{
@@ -369,10 +369,6 @@ void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 		
 		m_pFolder->MetaToFiles( bMetaToFiles );
 		
-		Library.Unlock( TRUE );
-	}
-	else
-	{
-		Library.Unlock( FALSE );
+		Library.Update();
 	}
 }

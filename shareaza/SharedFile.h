@@ -104,7 +104,6 @@ public:
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
 public:
 	BOOL			Rebuild();
-	BOOL			Execute(BOOL bPrompt = TRUE);
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete();
 	BOOL			SetMetadata(CXMLElement* pXML);

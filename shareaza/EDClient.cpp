@@ -1120,10 +1120,10 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	pReply->Write( &m_pUpMD4, sizeof(MD4) );
 	m_bUpMD4 = TRUE;
 	
-	CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE );
-	if ( pFile )
 	{
-		if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection,TRUE );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE );
+		if ( ( pFile ) && ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, TRUE ) ) )
 		{
 			// Create the reply packet
 			pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
@@ -1141,7 +1141,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 					m_bCommentSent = TRUE;
 				}
 			}
-			Library.Unlock();
+			oLock.Unlock();
 
 			// Send reply
 			Send( pReply );
@@ -1150,10 +1150,9 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 
 			return TRUE;
 		}
-		Library.Unlock();
-
 	}
-	else if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
+
+	if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
 	{
 		pReply->WriteEDString( pDownload->m_sRemoteName, m_bEmUnicode );
 		Send( pReply );
@@ -1186,7 +1185,8 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 	pReply->Write( &m_pUpMD4, sizeof(MD4) );
 	m_bUpMD4 = TRUE;
 	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE, TRUE ) )
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &m_pUpMD4, TRUE, TRUE ) )
 	{
 		pReply->WriteShortLE( 0 );
 		pReply->WriteByte( 0 );
@@ -1195,11 +1195,12 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 		if ( ! CEDPacket::IsLowID( m_nClientID ) )
 			pFile->AddAlternateSource( GetSourceURL() );
 		
-		Library.Unlock();
+		oLock.Unlock();
 		Send( pReply );
 		return TRUE;
 	}
-	else if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
+	oLock.Unlock();
+	if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
 	{
 		WritePartStatus( pReply, pDownload );
 		m_nUpSize = pDownload->m_nSize;
@@ -1239,23 +1240,28 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 	CED2K* pHashset	= NULL;
 	BOOL bDelete = FALSE;
 	CString strName;
-	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &pHash, TRUE, TRUE, TRUE ) )
+
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( &pHash, TRUE, TRUE ) )
 	{
 		strName		= pFile->m_sName;
 		pHashset	= pFile->GetED2K();
 		bDelete		= TRUE;
-		Library.Unlock();
+		oLock.Unlock();
 	}
-	else if ( CDownload* pDownload = Downloads.FindByED2K( &pHash, TRUE ) )
+	else
 	{
-		if ( pHashset = pDownload->GetHashset() )
+		oLock.Unlock();
+		if ( CDownload* pDownload = Downloads.FindByED2K( &pHash, TRUE ) )
 		{
-			strName		= pDownload->m_sRemoteName;
-			bDelete		= FALSE;
+			if ( pHashset = pDownload->GetHashset() )
+			{
+				strName		= pDownload->m_sRemoteName;
+				bDelete		= FALSE;
+			}
 		}
 	}
-	
+
 	if ( pHashset != NULL )
 	{
 		CEDPacket* pReply = CEDPacket::New( ED2K_C2C_HASHSETANSWER );

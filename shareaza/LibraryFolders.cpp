@@ -115,27 +115,30 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 		strPath = strPath.Left( 2 );
 	
 	if ( IsFolderShared( strPath ) ) return NULL;
-	
-	Library.Lock();
-	
-	CLibraryFolder* pFolder = new CLibraryFolder( NULL, strPath );
-	BOOL bAdded = FALSE;
-	
-	for ( POSITION pos = GetFolderIterator() ; pos ; )
+
+	CLibraryFolder* pFolder;
 	{
-		POSITION posAdd = pos;
+		CQuickLock oLock( Library.m_pSection );
 		
-		if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
+		pFolder = new CLibraryFolder( NULL, strPath );
+		BOOL bAdded = FALSE;
+		
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
-			m_pFolders.InsertBefore( posAdd, pFolder );
-			bAdded = TRUE;
-			break;
+			POSITION posAdd = pos;
+			
+			if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
+			{
+				m_pFolders.InsertBefore( posAdd, pFolder );
+				bAdded = TRUE;
+				break;
+			}
 		}
+		
+		if ( ! bAdded ) m_pFolders.AddTail( pFolder );
+	
+		Library.Update();
 	}
-	
-	if ( ! bAdded ) m_pFolders.AddTail( pFolder );
-	
-	Library.Unlock( TRUE );
 	Library.StartThread();
 	
 	return pFolder;
@@ -161,7 +164,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
 
 BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CQuickLock pLock( Library.m_pSection );
 	CWaitCursor pCursor;
 	
 	if ( m_bRemoveMask ) return FALSE;
@@ -172,8 +175,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 	pFolder->OnDelete();
 	m_pFolders.RemoveAt( pos );
 	
-	Library.Lock();
-	Library.Unlock( TRUE );
+	Library.Update();
 	
 	return TRUE;
 }
@@ -404,10 +406,11 @@ void CLibraryFolders::Clear()
 BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 {
 	BOOL bChanged = FALSE;
-	
-	Library.Lock();
-	m_bRemoveMask = TRUE;
-	Library.Unlock();
+
+	{
+		CQuickLock oLock( Library.m_pSection );
+		m_bRemoveMask = TRUE;
+	}
 	
 	for ( POSITION pos = GetFolderIterator() ; pos && *pbContinue ; )
 	{
@@ -424,9 +427,10 @@ BOOL CLibraryFolders::ThreadScan(BOOL* pbContinue, BOOL bForce)
 		}
 	}
 	
-	Library.Lock();
-	m_bRemoveMask = FALSE;
-	Library.Unlock();
+	{
+		CQuickLock oLock( Library.m_pSection );
+		m_bRemoveMask = FALSE;
+	}
 	
 	return bChanged;
 }

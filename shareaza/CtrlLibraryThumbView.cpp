@@ -917,13 +917,13 @@ void CLibraryThumbView::OnRun()
 		{
 			if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
-				if ( CLibraryFile* pFile = Library.LookupFile( (*pList)->m_nIndex, TRUE ) )
+				CQuickLock oLock( Library.m_pSection );
+				if ( CLibraryFile* pFile = Library.LookupFile( (*pList)->m_nIndex ) )
 				{
 					pThumb	= *pList;
 					nIndex	= pFile->m_nIndex;
 					strPath	= pFile->GetPath();
 					bCache	= pFile->m_bCachedPreview;
-					Library.Unlock();
 					break;
 				}
 			}
@@ -1001,10 +1001,10 @@ void CLibraryThumbView::OnRun()
 		
 		if ( bSuccess && ! bCache )
 		{
-			if ( CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE ) )
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 			{
 				pFile->m_bCachedPreview = TRUE;
-				Library.Unlock();
 			}
 		}
 		

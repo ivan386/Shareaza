@@ -362,7 +362,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 22;
 		CXMLElement* pMetadata = NULL;
 		
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
 		{
 			if ( pShared->m_pMetadata != NULL )
 			{
@@ -370,14 +371,18 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				pMetadata	= pShared->m_pSchema->Instantiate( TRUE );
 				pMetadata->AddElement( pShared->m_pMetadata->Clone() );
 			}
-			Library.Unlock();
+			oLock.Unlock();
 		}
-		else if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		else
 		{
-			if ( pDownload->m_pXML != NULL )
+			oLock.Unlock();
+			if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 			{
-				m_sFileName	= pDownload->m_sRemoteName;
-				pMetadata	= pDownload->m_pXML->Clone();
+				if ( pDownload->m_pXML != NULL )
+				{
+					m_sFileName	= pDownload->m_sRemoteName;
+					pMetadata	= pDownload->m_pXML->Clone();
+				}
 			}
 		}
 		
@@ -387,14 +392,16 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 23;
 		
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE, TRUE ) )
 		{
-			CTigerTree* pTigerTree = pShared->GetTigerTree();
-			m_sFileName = pShared->m_sName;
-			Library.Unlock();
-			return RequestTigerTreeRaw( pTigerTree, TRUE );
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+			{
+				CTigerTree* pTigerTree = pShared->GetTigerTree();
+				m_sFileName = pShared->m_sName;
+				return RequestTigerTreeRaw( pTigerTree, TRUE );
+			}
 		}
-		else if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
@@ -415,16 +422,18 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		BOOL bHashset = ( _tcsistr( m_sRequest, _T("ed2k=1") ) != NULL );
 		
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE, TRUE ) )
 		{
-			CTigerTree* pTigerTree	= pShared->GetTigerTree();
-			CED2K* pHashset			= bHashset ? pShared->GetED2K() : NULL;
-			m_sFileName = pShared->m_sName;
-			m_nFileSize = pShared->GetSize();
-			Library.Unlock();
-			return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, TRUE );
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+			{
+				CTigerTree* pTigerTree	= pShared->GetTigerTree();
+				CED2K* pHashset			= bHashset ? pShared->GetED2K() : NULL;
+				m_sFileName = pShared->m_sName;
+				m_nFileSize = pShared->GetSize();
+				return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, TRUE );
+			}
 		}
-		else if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
+		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
@@ -438,18 +447,23 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	else if ( StartsWith( m_sRequest, _T("/gnutella/preview/v1?urn:") ) && Settings.Uploads.SharePreviews )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 21;
-		CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE, TRUE );
-		if ( pShared != NULL ) return RequestPreview( pShared );
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE );
+		if ( pShared != NULL ) return RequestPreview( pShared, oLock );
 	}
 	else if ( StartsWith( m_sRequest, _T("/uri-res/N2R?urn:") ) )
 	{
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
 		
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE, TRUE ) )
 		{
-			return RequestSharedFile( pShared );
+			CSingleLock oLock( &Library.m_pSection, TRUE );
+
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+			{
+				return RequestSharedFile( pShared, oLock );
+			}
 		}
-		
+
 		CDownload* pDownload = Downloads.FindByURN( pszURN );
 		
 		if ( pDownload != NULL && pDownload->IsShared() && pDownload->IsStarted() )
@@ -468,33 +482,38 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			strFile = strFile.Mid( nChar + 1 );
 			
-			CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE, TRUE, TRUE );
-			
-			if ( pFile != NULL && pFile->m_sName.CompareNoCase( strFile ) )
 			{
-				Library.Unlock();
-				pFile = NULL;
-			}
+				CSingleLock oLock( &Library.m_pSection, TRUE );
+
+				CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE, TRUE );
 			
-			if ( pFile == NULL )
-			{
-				pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE, TRUE );
-			}
+				if ( pFile != NULL && pFile->m_sName.CompareNoCase( strFile ) )
+				{
+					pFile = NULL;
+				}
 			
-			if ( pFile != NULL ) return RequestSharedFile( pFile );
+				if ( pFile == NULL )
+				{
+					pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
+				}
+			
+				if ( pFile != NULL ) return RequestSharedFile( pFile, oLock );
+			}
 		}
 		else
 		{
 			strFile = strFile.Mid( nChar + 1 );
-			CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE, TRUE );
-			if ( pFile != NULL ) return RequestSharedFile( pFile );
+			CSingleLock oLock( &Library.m_pSection, TRUE );
+			CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
+			if ( pFile != NULL ) return RequestSharedFile( pFile, oLock );
 		}
 	}
 	else
 	{
 		CString strFile = m_sRequest.Mid( 1 );
-		CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE, TRUE );
-		if ( pFile != NULL ) return RequestSharedFile( pFile );
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
+		if ( pFile != NULL ) return RequestSharedFile( pFile, oLock );
 	}
 	
 	if ( m_sFileName.IsEmpty() )
@@ -532,13 +551,13 @@ BOOL CUploadTransferHTTP::IsNetworkDisabled()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP request a shared file
 
-BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
+BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oLibraryLock)
 {
 	ASSERT( pFile != NULL );
 	
 	if ( ! RequestComplete( pFile ) )
 	{
-		Library.Unlock();
+		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_HASHMISMATCH );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		return TRUE;
@@ -547,7 +566,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
 	if ( ! UploadQueues.CanUpload( PROTOCOL_HTTP, pFile ) )
 	{
 		// File is not uploadable. (No queue, is a ghost, etc)
-		Library.Unlock();
+		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		return TRUE;
@@ -562,7 +581,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
 	
 	if ( m_nOffset >= m_nFileSize || m_nOffset + m_nLength > m_nFileSize )
 	{
-		Library.Unlock();
+		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_BADRANGE );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		return TRUE;
@@ -573,7 +592,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile)
 	if ( m_sLocations.GetLength() ) pFile->AddAlternateSources( m_sLocations );
 	m_sLocations = strLocations;
 	
-	Library.Unlock();
+	oLibraryLock.Unlock();
 	
 	return QueueRequest();
 }
@@ -975,11 +994,11 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 			theApp.Message( MSG_SYSTEM, IDS_UPLOAD_FILE,
 				(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE, TRUE ) )
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE ) )
 			{
 				pFile->m_nUploadsToday++;
 				pFile->m_nUploadsTotal++;
-				Library.Unlock();
 			}
 		}
 		
@@ -1380,7 +1399,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP request preview
 
-BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile)
+BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibraryLock)
 {
 	ASSERT( pFile != NULL );
 	
@@ -1395,7 +1414,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile)
 	DWORD nIndex	= pFile->m_nIndex;
 	BOOL bCached	= pFile->m_bCachedPreview;
 	
-	Library.Unlock();
+	oLibraryLock.Unlock();
 	
 	int nExisting = Uploads.GetCount( this, upsPreview );
 	
@@ -1444,10 +1463,11 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile)
 	
 	if ( ! bCached )
 	{
-		if ( pFile = Library.LookupFile( nIndex, TRUE ) )
+		CQuickLock oLock( Library.m_pSection );
+		if ( pFile = Library.LookupFile( nIndex ) )
 		{
 			pFile->m_bCachedPreview = TRUE;
-			Library.Unlock( TRUE );
+			Library.Update();
 		}
 	}
 	

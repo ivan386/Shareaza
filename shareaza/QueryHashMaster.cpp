@@ -132,13 +132,15 @@ void CQueryHashMaster::Build()
 		if ( tNow - m_nCookie < 20000 ) return;
 	}
 	
-	CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
-	if ( pLocalTable == NULL ) return;
-	
-	Clear();
-	Merge( pLocalTable );
-	
-	Library.Unlock();
+	{
+		CSingleLock oLock( &Library.m_pSection );
+		if ( !oLock.Lock( 500 ) ) return;
+		CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
+		if ( pLocalTable == NULL ) return;
+		
+		Clear();
+		Merge( pLocalTable );
+	}
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{

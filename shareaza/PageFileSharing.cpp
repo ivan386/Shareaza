@@ -110,29 +110,28 @@ BOOL CFileSharingPage::OnInitDialog()
 		}
 	}
 
-	if ( CLibraryFile* pFile = GetFile() )
 	{
-		m_bOverride	= pFile->m_bShared != TS_UNKNOWN;
-		m_bShare	= pFile->IsShared();
-		m_sTags		= pFile->m_sShareTags;
-		
-		Library.Unlock();
-	}
-	else if ( CLibraryList* pList = GetList() )
-	{
-		Library.Lock();
-		
-		for ( POSITION pos = pList->GetIterator() ; pos ; )
+		CQuickLock oLock( Library.m_pSection );
+
+		if ( CLibraryFile* pFile = GetFile() )
 		{
-			if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
-			{
-				m_bOverride	= pFile->m_bShared != TS_UNKNOWN;
-				m_bShare	= pFile->IsShared();
-				m_sTags		= pFile->m_sShareTags;
-			}
+			m_bOverride	= pFile->m_bShared != TS_UNKNOWN;
+			m_bShare	= pFile->IsShared();
+			m_sTags		= pFile->m_sShareTags;
 		}
-		
-		Library.Unlock();
+		else if ( CLibraryList* pList = GetList() )
+		{
+			for ( POSITION pos = pList->GetIterator() ; pos ; )
+			{
+				if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
+				{
+					m_bOverride	= pFile->m_bShared != TS_UNKNOWN;
+					m_bShare	= pFile->IsShared();
+					m_sTags		= pFile->m_sShareTags;
+				}
+			}
+			
+		}
 	}
 	
 	UpdateData( FALSE );
@@ -149,6 +148,7 @@ void CFileSharingPage::OnShareOverride0()
 
 	if ( ! m_bOverride )
 	{
+		CSingleLock oLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pFile = GetFile() )
 		{
 			TRISTATE bSave = pFile->m_bShared;
@@ -156,7 +156,7 @@ void CFileSharingPage::OnShareOverride0()
 			m_bShare = pFile->IsShared();
 			pFile->m_bShared = bSave;
 			
-			Library.Unlock();
+			oLock.Unlock();
 			UpdateData( FALSE );
 		}
 	}
@@ -173,7 +173,7 @@ void CFileSharingPage::OnOK()
 	
 	if ( CLibraryList* pList = GetList() )
 	{
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		
 		for ( POSITION pos = pList->GetIterator() ; pos ; )
 		{
@@ -192,7 +192,6 @@ void CFileSharingPage::OnOK()
 			}
 		}
 		
-		Library.Unlock();
 	}
 	
 	CFilePropertiesPage::OnOK();

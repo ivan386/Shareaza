@@ -218,7 +218,7 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 	
 	if ( m_bCollSHA1 )
 	{
-		if ( CLibraryFile* pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, FALSE, TRUE ) )
+		if ( CLibraryFile* pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE ) )
 		{
 			pFile->m_nCollIndex = pCollection->m_nIndex;
 		}
@@ -545,7 +545,7 @@ CCollectionFile* CAlbumFolder::GetCollection()
 	if ( ! m_bCollSHA1 ) return NULL;
 	if ( m_pCollection != NULL ) return m_pCollection;
 	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, FALSE, TRUE ) )
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE ) )
 	{
 		m_pCollection = new CCollectionFile();
 		
@@ -983,7 +983,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 			if ( m_bCollSHA1 )
 			{
 				ar.Read( &m_pCollSHA1, sizeof(SHA1) );
-				pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, FALSE, TRUE );
+				pCollection = LibraryMaps.LookupFileBySHA1( &m_pCollSHA1, FALSE, TRUE );
 				if ( pCollection == NULL ) m_bCollSHA1 = FALSE;
 			}
 		}

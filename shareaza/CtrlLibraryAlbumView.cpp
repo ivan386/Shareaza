@@ -1217,13 +1217,14 @@ BOOL CLibraryAlbumTrack::LockRating()
 	}
 	else if ( m_nSetRating >= 0 && m_nSetRating <= 6 )
 	{
-		CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE );
+		CQuickLock oLock( Library.m_pSection );
+		CLibraryFile* pFile = Library.LookupFile( m_nIndex );
 		if ( pFile == NULL ) return FALSE;
 		
 		pFile->m_nRating = m_nRating = ( m_nSetRating > 1 ? m_nSetRating : 0 );
 		pFile->SaveMetadata();
 		
-		Library.Unlock( TRUE );
+		Library.Update();
 		return TRUE;
 	}
 	else

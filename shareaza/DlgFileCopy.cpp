@@ -99,17 +99,17 @@ BOOL CFileCopyDlg::OnInitDialog()
 	if ( ! m_wndTree.Create( WS_VISIBLE|WS_TABSTOP|WS_BORDER, rc, this, IDC_FOLDERS ) ) return -1;
 	m_wndTree.SetMultiSelect( FALSE );
 
-	Library.Lock();
-
-	m_nCookie = Library.m_nUpdateCookie;
-	m_wndTree.Update();
-
-	if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sTarget ) )
 	{
-		m_wndTree.SelectFolder( pFolder );
-	}
+		CQuickLock oLock( Library.m_pSection );
 
-	Library.Unlock();
+		m_nCookie = Library.m_nUpdateCookie;
+		m_wndTree.Update();
+
+		if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sTarget ) )
+		{
+			m_wndTree.SelectFolder( pFolder );
+		}
+	}
 	
 	m_wndFileProg.SetRange( 0, 400 );
 
@@ -264,26 +264,23 @@ void CFileCopyDlg::OnRun()
 		CString strName, strPath;
 		BOOL bMetaData;
 
-		Library.Lock();
-
-		if ( m_pFiles.IsEmpty() )
+		CLibraryFile* pFile;
 		{
-			Library.Unlock();
-			break;
+			CQuickLock oLock( Library.m_pSection );
+
+			if ( m_pFiles.IsEmpty() ) break;
+
+			DWORD nIndex = (DWORD)m_pFiles.RemoveHead();
+
+			pFile = Library.LookupFile( nIndex );
+
+			if ( pFile != NULL && pFile->IsAvailable() )
+			{
+				strName		= pFile->m_sName;
+				strPath		= pFile->m_pFolder->m_sPath;
+				bMetaData	= ( pFile->m_pMetadata != NULL ) && ! pFile->m_bMetadataAuto;
+			}
 		}
-
-		DWORD nIndex = (DWORD)m_pFiles.RemoveHead();
-
-		CLibraryFile* pFile = Library.LookupFile( nIndex );
-
-		if ( pFile != NULL && pFile->IsAvailable() )
-		{
-			strName		= pFile->m_sName;
-			strPath		= pFile->m_pFolder->m_sPath;
-			bMetaData	= ( pFile->m_pMetadata != NULL ) && ! pFile->m_bMetadataAuto;
-		}
-
-		Library.Unlock();
 
 		if ( NULL == pFile || ! pFile->IsAvailable() ) break;
 

@@ -74,7 +74,8 @@ CLibraryFile* CFilePropertiesPage::GetFile()
 {
 	CLibraryList* pList = GetList();
 	if ( pList->GetCount() != 1 ) return NULL;
-	CLibraryFile* pFile = Library.LookupFile( pList->GetHead(), TRUE );
+	CQuickLock oLock( Library.m_pSection );
+	CLibraryFile* pFile = Library.LookupFile( pList->GetHead() );
 	if ( pFile != NULL ) return pFile;
 	PostMessage( WM_CLOSE );
 	return NULL;
@@ -95,6 +96,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 	
 	Skin.Apply( NULL, this );
 	
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 	if ( CLibraryFile* pFile = GetFile() )
 	{
 		if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
@@ -104,19 +106,23 @@ BOOL CFilePropertiesPage::OnInitDialog()
 		
 		m_nIcon = ShellIcons.Get( pFile->m_sName, 48 );
 		
-		Library.Unlock();
+		oLock.Unlock();
 	}
-	else if ( CLibraryList* pList = GetList() )
+	else
 	{
-		if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
+		oLock.Unlock();
+		if ( CLibraryList* pList = GetList() )
 		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_LIBRARY_METADATA_EDIT );
-			strMessage.Format( strFormat, pList->GetCount() );
-			pNameWnd->SetWindowText( strMessage );
+			if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
+			{
+				CString strFormat, strMessage;
+				LoadString( strFormat, IDS_LIBRARY_METADATA_EDIT );
+				strMessage.Format( strFormat, pList->GetCount() );
+				pNameWnd->SetWindowText( strMessage );
+			}
+			
+			m_nIcon = SHI_EXECUTABLE;
 		}
-		
-		m_nIcon = SHI_EXECUTABLE;
 	}
 	
 	return TRUE;

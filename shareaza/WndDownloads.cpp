@@ -1397,13 +1397,14 @@ void CDownloadsWnd::OnDownloadsFileDelete()
 			pLock.Unlock();
 			if ( dlg.DoModal() != IDOK ) break;
 			
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath, TRUE ) )
 			{
-				dlg.Apply( pFile );
-				Library.Unlock();
+				CQuickLock oLibraryLock( Library.m_pSection );
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
+				{
+					dlg.Apply( pFile );
+				}
 			}
-			
-			pLock.Lock();
+
 			if ( Downloads.Check( pDownload ) ) pDownload->Remove( TRUE );
 		}
 	}
@@ -1436,10 +1437,10 @@ void CDownloadsWnd::OnDownloadsRate()
 	{
 		CString strPath = pList.RemoveHead();
 		
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath, TRUE ) )
+		CQuickLock oLock( Library.m_pSection );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
 		{
 			dlg.Add( pFile->m_nIndex );
-			Library.Unlock();
 		}
 	}
 	

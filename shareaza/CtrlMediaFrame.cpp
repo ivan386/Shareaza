@@ -1426,22 +1426,25 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 	
 	m_sFile = pszFile;
 	
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFile, TRUE ) )
 	{
-		m_pMetadata.Add( _T("Filename"), pFile->m_sName );
-		m_pMetadata.Setup( pFile->m_pSchema, FALSE );
-		m_pMetadata.Combine( pFile->m_pMetadata );
-		m_pMetadata.Clean( 1024 );
-		Library.Unlock();
-		
-		CMetaItem* pWidth	= m_pMetadata.Find( _T("Width") );
-		CMetaItem* pHeight	= m_pMetadata.Find( _T("Height") );
-		
-		if ( pWidth != NULL && pHeight != NULL )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFile ) )
 		{
-			pWidth->m_sKey = _T("Dimensions");
-			pWidth->m_sValue += 'x' + pHeight->m_sValue;
-			m_pMetadata.Remove( _T("Height") );
+			m_pMetadata.Add( _T("Filename"), pFile->m_sName );
+			m_pMetadata.Setup( pFile->m_pSchema, FALSE );
+			m_pMetadata.Combine( pFile->m_pMetadata );
+			m_pMetadata.Clean( 1024 );
+			oLock.Unlock();
+			
+			CMetaItem* pWidth	= m_pMetadata.Find( _T("Width") );
+			CMetaItem* pHeight	= m_pMetadata.Find( _T("Height") );
+			
+			if ( pWidth != NULL && pHeight != NULL )
+			{
+				pWidth->m_sKey = _T("Dimensions");
+				pWidth->m_sValue += 'x' + pHeight->m_sValue;
+				m_pMetadata.Remove( _T("Height") );
+			}
 		}
 	}
 	

@@ -54,11 +54,11 @@ CFolderScanDlg::CFolderScanDlg(CWnd* pParent) : CSkinDialog(CFolderScanDlg::IDD,
 	m_tLastUpdate	= 0;
 	m_bActive		= FALSE;
 
-	if ( Library.Lock( 500 ) )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 500 ) )
 	{
 		m_pDialog	= this;
 		m_nCookie	= Library.m_nScanCount;
-		Library.Unlock();
 	}
 }
 
@@ -123,17 +123,10 @@ void CFolderScanDlg::OnCancel()
 	CSkinDialog::OnCancel();
 }
 
-void CFolderScanDlg::Update(LPCTSTR pszName, DWORD nVolume, BOOL bLock)
+void CFolderScanDlg::Update(LPCTSTR pszName, DWORD nVolume)
 {
-	if ( bLock )
-	{
-		if ( Library.Lock( 10 ) )
-		{
-			if ( m_pDialog != NULL ) m_pDialog->InstanceUpdate( pszName, nVolume );
-			Library.Unlock();
-		}
-	}
-	else if ( m_pDialog != NULL )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( m_pDialog != NULL && oLock.Lock( 10 ) )
 	{
 		m_pDialog->InstanceUpdate( pszName, nVolume );
 	}

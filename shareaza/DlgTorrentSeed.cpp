@@ -95,20 +95,23 @@ void CTorrentSeedDlg::OnDownload()
 		CShareazaURL* pURL = new CShareazaURL( pTorrent );
 		//if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 		CLibraryFile* pFile;
-			
-		if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1, TRUE ) ) ) ||
-				 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K, TRUE ) ) ) )
+		
 		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
-			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-			Library.Unlock();
-				
-			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
+			CSingleLock oLock( &Library.m_pSection, TRUE );
+			if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1 ) ) ) ||
+					( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K ) ) ) )
 			{
-				delete pURL;
-				EndDialog( IDOK );
-				return;
+				CString strFormat, strMessage;
+				LoadString( strFormat, IDS_URL_ALREADY_HAVE );
+				strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
+				oLock.Unlock();
+					
+				if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
+				{
+					delete pURL;
+					EndDialog( IDOK );
+					return;
+				}
 			}
 		}
 			
@@ -314,10 +317,11 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 
 	if ( pFile->m_bSHA1 )
 	{
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( &pFile->m_pSHA1, TRUE, FALSE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( &pFile->m_pSHA1, FALSE, TRUE ) )
 		{
 			strFile = pShared->GetPath();
-			Library.Unlock();
+			oLock.Unlock();
 			if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
 		}
 	}

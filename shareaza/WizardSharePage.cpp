@@ -89,34 +89,34 @@ BOOL CWizardSharePage::OnInitDialog()
 	m_wndList.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndList.EnableToolTips( TRUE );
 	
-	Library.Lock();
-	
-	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 	{
-		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+		CQuickLock oLock( Library.m_pSection );
 		
-		m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
-			pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+		{
+			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+			
+			m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
+				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+		}
+		
+		CreateDirectory( Settings.Downloads.CompletePath, NULL );
+		AddPhysicalFolder( Settings.Downloads.CompletePath );
+
+		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		AddPhysicalFolder( Settings.Downloads.CollectionPath );
+
+		AddPhysicalFolder( _T("C:\\Program Files\\Piolet\\My Shared Folder") );
+		AddPhysicalFolder( _T("C:\\Program Files\\eMule\\Incoming") );
+		AddPhysicalFolder( _T("C:\\Program Files\\eDonkey2000\\incoming") );
+		AddPhysicalFolder( _T("C:\\Program Files\\Ares\\My Shared Folder") );
+		AddPhysicalFolder( _T("C:\\Program Files\\morpheus\\My Shared Folder") );
+
+		
+		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Kazaa\\Transfer"), _T("DlDir0") );
+		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("completedir") );
+		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("sharedir") );
 	}
-	
-	CreateDirectory( Settings.Downloads.CompletePath, NULL );
-	AddPhysicalFolder( Settings.Downloads.CompletePath );
-
-	CreateDirectory( Settings.Downloads.CollectionPath, NULL );
-	AddPhysicalFolder( Settings.Downloads.CollectionPath );
-
-	AddPhysicalFolder( _T("C:\\Program Files\\Piolet\\My Shared Folder") );
-	AddPhysicalFolder( _T("C:\\Program Files\\eMule\\Incoming") );
-	AddPhysicalFolder( _T("C:\\Program Files\\eDonkey2000\\incoming") );
-	AddPhysicalFolder( _T("C:\\Program Files\\Ares\\My Shared Folder") );
-	AddPhysicalFolder( _T("C:\\Program Files\\morpheus\\My Shared Folder") );
-
-	
-	AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Kazaa\\Transfer"), _T("DlDir0") );
-	AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("completedir") );
-	AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("sharedir") );
-	
-	Library.Unlock();
 	
 	return TRUE;
 }
@@ -320,32 +320,32 @@ LRESULT CWizardSharePage::OnWizardNext()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDNO )
 			return -1;
 	}
-	
-	Library.Lock();
 
-	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 	{
-		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+		CQuickLock oLock( Library.m_pSection );
 
-        int nItem = 0;
-		for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 		{
-			CString strFolder = m_wndList.GetItemText( nItem, 0 );
-			if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;
+			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
+
+			int nItem = 0;
+			for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
+			{
+				CString strFolder = m_wndList.GetItemText( nItem, 0 );
+				if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;
+			}
+
+			if ( nItem >= m_wndList.GetItemCount() )
+			{
+				LibraryFolders.RemoveFolder( pFolder );
+			}
 		}
 
-		if ( nItem >= m_wndList.GetItemCount() )
+		for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 		{
-			LibraryFolders.RemoveFolder( pFolder );
+			LibraryFolders.AddFolder( m_wndList.GetItemText( nItem, 0 ) );
 		}
 	}
-
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
-	{
-		LibraryFolders.AddFolder( m_wndList.GetItemText( nItem, 0 ) );
-	}
-	
-	Library.Unlock();
 
 	CFolderScanDlg dlgScan;
 	dlgScan.DoModal();

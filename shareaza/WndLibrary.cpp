@@ -176,17 +176,18 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		pLibFolder =  LibraryFolders.GetFolder( Settings.Downloads.CollectionPath );
 		if( pLibFolder != NULL ) pLibFolder->Scan();
 
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE, FALSE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, FALSE, TRUE ) )
 		{	//Collection IS already in the library
 
 			//Re-mount the collection
 			LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
 			pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-			Library.Unlock();
+			oLock.Unlock();
 		}
 		else
 		{	//Collection is not already in the main library 
-
+			oLock.Unlock();
 			//Check the collection folder
 			CString strSource( pszPath ), strTarget;
 			
@@ -197,16 +198,18 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 				LibraryBuilder.RequestPriority( strTarget );
 			}
 
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
+			oLock.Lock();
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 			{	//Collection is already in the collection folder
 
 				//Re-mount the collection
 				LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
 				pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-				Library.Unlock();
+				oLock.Unlock();
 			}
 			else
 			{	//Collection is not already in collection folder
+				oLock.Unlock();
 
 				if ( strTarget.GetLength() > 0 && CopyFile( strSource, strTarget, TRUE ) )
 				{	//Collection was copied into the collection folder
@@ -217,11 +220,12 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 					LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
 					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
 					AfxMessageBox( strMessage, MB_ICONINFORMATION );		
-					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
+					oLock.Lock();
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 					{
 						pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-						Library.Unlock();
 					}
+					oLock.Unlock();
 				}
 				else	
 				{	//Was not able to copy collection to the collection folder
@@ -238,16 +242,18 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 						strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
 						AfxMessageBox( strMessage , MB_ICONINFORMATION );
 
-						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) ) 
+						oLock.Lock();
+						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) ) 
 						{	//Collection was already there.
 							//Re-mount the collection
 							LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
 							pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
-							Library.Unlock();
+							oLock.Unlock();
 						}
 						else
 						{	//File of this name exists in the folder, but does not appear in the 
 							//library. Most likely cause- Corrupt file in collection folder.
+							oLock.Unlock();
 							LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
 							strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
 							AfxMessageBox( strMessage, MB_ICONEXCLAMATION );

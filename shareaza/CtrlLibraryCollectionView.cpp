@@ -90,15 +90,15 @@ BOOL CLibraryCollectionView::CheckAvailable(CLibraryTreeItem* pSel)
 	{
 		if ( pFolder->m_bCollSHA1 )
 		{
-			if ( LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, FALSE, TRUE ) )
+			if ( LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, TRUE ) )
 			{
 				bAvailable = TRUE;
 			}
 			else
 			{
-				Library.Lock();
+				CQuickLock oLock( Library.m_pSection );
 				pFolder->m_bCollSHA1 = FALSE;
-				Library.Unlock( TRUE );
+				Library.Update();
 			}
 		}
 	}
@@ -118,7 +118,7 @@ void CLibraryCollectionView::Update()
 	{
 		if ( pFolder->m_bCollSHA1 && m_pWebCtrl != NULL )
 		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, FALSE, TRUE ) )
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( &pFolder->m_pCollSHA1, FALSE, TRUE ) )
 			{
 				ShowCollection( pFile );
 				return;
@@ -284,7 +284,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Detect(BSTR sURN, BSTR *ps
 	{
 		CString( _T("NotInCollection") ).SetSysString( psState );
 	}
-	else if ( LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, FALSE, TRUE ) )
+	else if ( LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 	{
 		CString( _T("Complete") ).SetSysString( psState );
 	}
@@ -322,10 +322,10 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Hover(BSTR sURN)
 	{
 		if ( pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) != NULL )
 		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), TRUE, FALSE, TRUE ) )
+			CQuickLock oLock( Library.m_pSection );
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 			{
 				pView->m_nWebIndex = pFile->m_nIndex;
-				Library.Unlock();
 			}
 		}
 	}
@@ -351,10 +351,19 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Open(BSTR sURN, VARIANT_BO
 	
 	if ( pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) != NULL )
 	{
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), TRUE, FALSE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 		{
-			*pbResult = pFile->Execute() ? VARIANT_TRUE : VARIANT_FALSE;
-			Library.Unlock();
+			if ( pFile->m_pFolder )
+			{
+				CString strPath = pFile->GetPath();
+				oLock.Unlock();
+				*pbResult = CFileExecutor::Execute( strPath, FALSE ) ? VARIANT_TRUE : VARIANT_FALSE;
+			}
+			else
+			{
+				*pbResult = VARIANT_FALSE;
+			}
 		}
 	}
 	
@@ -369,10 +378,11 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Enqueue(BSTR sURN, VARIANT
 	
 	if ( pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) != NULL )
 	{
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), TRUE, FALSE, TRUE ) )
+		CSingleLock oLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 		{
 			CString strPath = pFile->GetPath();
-			Library.Unlock();
+			oLock.Unlock();
 			*pbResult = CFileExecutor::Enqueue( strPath ) ? VARIANT_TRUE : VARIANT_FALSE;
 		}
 	}

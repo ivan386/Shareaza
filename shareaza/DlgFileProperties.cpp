@@ -124,7 +124,9 @@ BOOL CFilePropertiesDlg::OnInitDialog()
 
 void CFilePropertiesDlg::Update()
 {
-	CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE );
+	CQuickLock oLock( Library.m_pSection );
+
+	CLibraryFile* pFile = Library.LookupFile( m_nIndex );
 
 	if ( pFile == NULL )
 	{
@@ -190,7 +192,6 @@ void CFilePropertiesDlg::Update()
 		delete pXML;
 	}
 
-	Library.Unlock();
 }
 
 void CFilePropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
@@ -275,29 +276,31 @@ void CFilePropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CFilePropertiesDlg::OnOK() 
 {
-	CLibraryFile* pFile = Library.LookupFile( m_nIndex, TRUE );
-
-	if ( pFile )
 	{
-		if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
-		{
-			CXMLElement* pXML		= pSchema->Instantiate( TRUE );
-			CXMLElement* pSingular	= pXML->AddElement( pSchema->m_sSingular );
+		CQuickLock oLock( Library.m_pSection );
 
-			m_wndSchema.UpdateData( pSingular, TRUE );
+		if ( CLibraryFile* pFile = Library.LookupFile( m_nIndex ) )
+		{
+			if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
+			{
+				CXMLElement* pXML		= pSchema->Instantiate( TRUE );
+				CXMLElement* pSingular	= pXML->AddElement( pSchema->m_sSingular );
+
+				m_wndSchema.UpdateData( pSingular, TRUE );
+				
+				if ( CXMLAttribute* pSHA1 = pSingular->GetAttribute( _T("SHA1") ) )
+					pSHA1->Delete();
+
+				pFile->SetMetadata( pXML );
+				delete pXML;
+			}
+			else
+			{
+				pFile->SetMetadata( NULL );
+			}
 			
-			if ( CXMLAttribute* pSHA1 = pSingular->GetAttribute( _T("SHA1") ) )
-				pSHA1->Delete();
-
-			pFile->SetMetadata( pXML );
-			delete pXML;
+			Library.Update();
 		}
-		else
-		{
-			pFile->SetMetadata( NULL );
-		}
-		
-		Library.Unlock( TRUE );
 	}
 
 	CSkinDialog::OnOK();

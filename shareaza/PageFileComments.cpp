@@ -81,19 +81,18 @@ BOOL CFileCommentsPage::OnInitDialog()
 	
 	if ( pFiles->GetCount() == 1 )
 	{
+		CQuickLock oLock( Library.m_pSection );
 		CLibraryFile* pFile = GetFile();
 		if ( pFile == NULL ) return TRUE;
 		
 		m_nRating	= pFile->m_nRating;
 		m_sComments	= pFile->m_sComments;
-		
-		Library.Unlock();
 	}
 	else
 	{
 		m_wndComments.EnableWindow( FALSE );
 		
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		
 		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
@@ -103,7 +102,6 @@ BOOL CFileCommentsPage::OnInitDialog()
 			}
 		}
 		
-		Library.Unlock();
 	}
 	
 	UpdateData( FALSE );
@@ -193,18 +191,19 @@ void CFileCommentsPage::OnOK()
 	
 	if ( pFiles == NULL || pFiles->GetCount() == 1 )
 	{
+		CQuickLock oLock( Library.m_pSection );
 		if ( CLibraryFile* pFile = GetFile() )
 		{
 			pFile->m_nRating	= m_nRating;
 			pFile->m_sComments	= m_sComments;
 			
 			pFile->SaveMetadata();
-			Library.Unlock( TRUE );
+			Library.Update();
 		}
 	}
 	else
 	{
-		Library.Lock();
+		CQuickLock oLock( Library.m_pSection );
 		
 		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
@@ -214,7 +213,7 @@ void CFileCommentsPage::OnOK()
 			}
 		}
 		
-		Library.Unlock( TRUE );
+		Library.Update();
 	}
 	
 	CFilePropertiesPage::OnOK();
