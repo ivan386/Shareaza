@@ -82,30 +82,21 @@ BOOL CDiscoveryServices::Check(CDiscoveryService* pService, int nType) const
 	return ( nType < 0 ) || ( pService->m_nType == nType );
 }
 
-int CDiscoveryServices::GetCount(int nType) const
+int CDiscoveryServices::GetCount(int nType, BOOL G2Only) const
 {
-	if ( nType == CDiscoveryService::dsNull ) return m_pList.GetCount();
+	//if ( nType == CDiscoveryService::dsNull ) return m_pList.GetCount();
 
 	int nCount = 0;
+	CDiscoveryService* ptr;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		if ( GetNext( pos )->m_nType == nType ) nCount++;
-	}
-
-	return nCount;
-}
-
-int CDiscoveryServices::GetGnutella2Count() const
-{
-	int nCount = 0;
-	CDiscoveryService *pDiscovery;
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		pDiscovery = GetNext( pos );
-		if ( ( pDiscovery->m_nType == CDiscoveryService::dsWebCache ) && ( pDiscovery->m_bGnutella2  ) ) 
-			nCount++;
+		ptr = GetNext( pos );
+		if ( ( nType == CDiscoveryService::dsNull ) || ( ptr->m_nType == nType ) )//If we're counting all types, or it matches
+		{
+			if ( ! G2Only || ptr->m_bGnutella2 )//If we're counting all services or it supports G2
+				nCount++;
+		}
 	}
 
 	return nCount;
@@ -194,18 +185,19 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService)
 	if ( POSITION pos = m_pList.Find( pService ) ) m_pList.RemoveAt( pos );
 	delete pService;
 	
-	int nCount[4];
+	int nCount[4], nG2Count = 0;
 	ZeroMemory( nCount, sizeof(int) * 4 );
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDiscoveryService* pService = GetNext( pos );
 		nCount[ pService->m_nType ] ++;
+		if ( pService->m_bGnutella2 ) nG2Count++;
 	}
 	
 	if ( ( nCount[ CDiscoveryService::dsWebCache ] < 4 ) ||
 		 ( nCount[ CDiscoveryService::dsServerMet ] < 1 ) ||
-		 ( GetGnutella2Count() < 3 ) )
+		 ( nG2Count < 3 ) )
 	{
 		AddDefaults();
 	}
@@ -276,10 +268,13 @@ BOOL CDiscoveryServices::Load()
 	
 	pFile.Close();
 	
-	if ( ( GetCount() < 4 ) || ( GetGnutella2Count() < 3 ) )
+	//Check we have the minimum number of services (in case of file corruption, etc)
+	if ( ( GetCount(CDiscoveryService::dsWebCache, FALSE)  < 4 ) ||	//At least 4 webcaches
+		 ( GetCount(CDiscoveryService::dsWebCache, TRUE)   < 3 ) ||	//At least 3 that support G2
+		 ( GetCount(CDiscoveryService::dsServerMet, FALSE) < 1 )  )	//And at leasr 1 server.met
 	{
-		AddDefaults();
-		Save();
+		AddDefaults();	// Re-add the default list
+		Save();			// And save it
 	}
 	
 	return TRUE;
@@ -422,20 +417,43 @@ BOOL CDiscoveryServices::Update()
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
 	if ( Network.GetStableTime() < 7200 ) return FALSE;				// Up for two hours
-//ToDo: ***** Need to add G1 stuff
-	if ( ! Neighbours.IsG2Hub() ) return FALSE;						// Must be a hub now 
-	if ( Neighbours.GetCount( PROTOCOL_G2, -1, ntNode ) < 4 ) return FALSE;	// Must have 4 peers
-//
-	
-	CDiscoveryService* pService = GetRandomWebCache( TRUE, NULL, TRUE );
-	
-	if ( pService == NULL ) return FALSE;
-	
-	m_tUpdated = tNow;
-	
-	theApp.Message( MSG_DEFAULT, IDS_DISCOVERY_UPDATING, (LPCTSTR)pService->m_sAddress );
 
-	return RequestWebCache( pService, wcmUpdate );
+	m_bForG2 = Neighbours.IsG2Hub();
+
+	if ( m_bForG2 )		//G2 update
+	{	
+		// Must be a G2 hub now 
+		if ( ! Neighbours.IsG2Hub() ) return FALSE;
+		// Must have at least 4 peers
+		if ( Neighbours.GetCount( PROTOCOL_G2, -1, ntNode ) < 4 ) return FALSE;	
+		
+		CDiscoveryService* pService = GetRandomWebCache( TRUE, NULL, TRUE );
+		
+		if ( pService == NULL ) return FALSE;
+		
+		m_tUpdated = tNow;
+		
+		theApp.Message( MSG_DEFAULT, IDS_DISCOVERY_UPDATING, (LPCTSTR)pService->m_sAddress );
+
+		return RequestWebCache( pService, wcmUpdate );
+	}
+	else				//G1 update
+	{
+		// Must be a G1 ultrapeer now 
+		if ( ! Neighbours.IsG1Ultrapeer() ) return FALSE;	
+		// Must have at least 4 peers
+		if ( Neighbours.GetCount( PROTOCOL_G1, -1, ntNode ) < 4 ) return FALSE;	
+		
+		CDiscoveryService* pService = GetRandomWebCache( TRUE, NULL, TRUE );
+		
+		if ( pService == NULL ) return FALSE;
+		
+		m_tUpdated = tNow;
+		
+		theApp.Message( MSG_DEFAULT, IDS_DISCOVERY_UPDATING, (LPCTSTR)pService->m_sAddress );
+
+		return RequestWebCache( pService, wcmUpdate );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -541,11 +559,11 @@ int CDiscoveryServices::ExecuteWebCache()
 {
 	m_bForG2 = Neighbours.NeedMoreHubs( TS_TRUE );
 
-	CDiscoveryService* pService = GetRandomWebCache( FALSE );
+	CDiscoveryService* pService = GetRandomWebCache( FALSE, 0, 0 );
 	if ( pService == NULL ) 
 	{
 		/*
-		//This would be a way to ensure the user always has G2 services available-
+		//This would be a way to ensure the user always has services available-
 		//However re-adding services in a section that's contantly run is risky.
 		//See if the other changes fix the problem first.
 		if ( GetGnutella2Count() < 3 )
