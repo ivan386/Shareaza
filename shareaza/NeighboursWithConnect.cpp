@@ -750,15 +750,19 @@ void CNeighboursWithConnect::Maintain()
 	DWORD tNow = time( NULL );
 	BOOL bIsG1Leaf = IsG1Leaf(), bIsG2Leaf = IsG2Leaf();
 	
-	if ( Settings.Downloads.ConnectThrottle != 0 )
+	//Check connection throttle
+	if ( Settings.Connection.ConnectThrottle != 0 )
 	{
-		if ( tTimer <= Downloads.m_tLastConnect ) return;
-		if ( tTimer - Downloads.m_tLastConnect < Settings.Downloads.ConnectThrottle ) return;
+		if ( tTimer < Network.m_tLastConnect ) return;
+		if ( tTimer - Network.m_tLastConnect < Settings.Connection.ConnectThrottle ) return;
 	}
 	
+	//Initialise counters
 	ZeroMemory( nCount, sizeof(int) * 4 * 3 );
 	ZeroMemory( nLimit, sizeof(int) * 4 * 3 );
 	
+
+	//Count (and prune) neighbours
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
@@ -791,6 +795,7 @@ void CNeighboursWithConnect::Maintain()
 		}
 	}
 	
+	//Set numbers of neighbours
 	if ( bIsG1Leaf )
 	{
 		nLimit[ PROTOCOL_G1 ][ ntHub ]	= min( Settings.Gnutella1.NumHubs, 2 );
@@ -829,17 +834,19 @@ void CNeighboursWithConnect::Maintain()
 	nCount[ PROTOCOL_G1 ][0] += nCount[ PROTOCOL_NULL ][0];
 	nCount[ PROTOCOL_G2 ][0] += nCount[ PROTOCOL_NULL ][0];
 	
+	//Maintain neighbour connections
 	for ( int nProtocol = 3 ; nProtocol >= 1 ; nProtocol-- )
 	{
 		if ( nCount[ nProtocol ][ ntHub ] > 0 ) m_tPresent[ nProtocol ] = tNow;
 		
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
-		{
+		{	//We don't have enough hubs
+
 			//If connections are limited (XP sp2), then don't try to connect to G1 until G2 is ok.
-			if ( (nProtocol == PROTOCOL_G1) && (Settings.Downloads.MaxConnectingSources < 10) 
-											&& (Settings.Gnutella2.EnableToday == TRUE) )
+			if ( ( nProtocol == PROTOCOL_G1 ) && ( Settings.Gnutella2.EnableToday == TRUE )
+											  && ( Settings.Downloads.MaxConnectingSources < 10 ) )
 			{
-				if ( (nCount[ PROTOCOL_G2 ][ ntHub ] == 0) || (Network.GetStableTime() < 15) )
+				if ( (nCount[ PROTOCOL_G2 ][ ntHub ] == 0) || ( Network.GetStableTime() < 15 ) )
 					return;
 			}
 
@@ -847,8 +854,10 @@ void CNeighboursWithConnect::Maintain()
 			
 			int nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
 			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : 2;
-			nAttempt = min(nAttempt, (Settings.Downloads.MaxConnectingSources - 2) ); //Helps XP sp2
+			//Prevent XP sp2 from maxing out half open connections
+			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) ); 
 			
+			//Handle priority ed2k servers
 			if ( nProtocol == PROTOCOL_ED2K )
 			{
 				for (	CHostCacheHost* pHost = pCache->GetNewest() ;
@@ -859,8 +868,9 @@ void CNeighboursWithConnect::Maintain()
 						ASSERT( pHost->m_nProtocol == nProtocol );
 						nCount[ nProtocol ][0] ++;
 						
-						if ( Settings.Downloads.ConnectThrottle != 0 )
+						if ( Settings.Connection.ConnectThrottle != 0 )
 						{
+							Network.m_tLastConnect = tTimer;
 							Downloads.m_tLastConnect = tTimer;
 							return;
 						}
@@ -868,6 +878,7 @@ void CNeighboursWithConnect::Maintain()
 				}
 			}
 			
+			//Connect to regular hosts (neighbours)
 			for (	CHostCacheHost* pHost = pCache->GetNewest() ;
 					pHost && nCount[ nProtocol ][0] < nAttempt ; pHost = pHost->m_pPrevTime )
 			{
@@ -876,8 +887,9 @@ void CNeighboursWithConnect::Maintain()
 					ASSERT( pHost->m_nProtocol == nProtocol );
 					nCount[ nProtocol ][0] ++;
 					
-					if ( Settings.Downloads.ConnectThrottle != 0 )
+					if ( Settings.Connection.ConnectThrottle != 0 )
 					{
+						Network.m_tLastConnect = tTimer;
 						Downloads.m_tLastConnect = tTimer;
 						return;
 					}
@@ -900,9 +912,10 @@ void CNeighboursWithConnect::Maintain()
 			}
 		}
 		else if ( nCount[ nProtocol ][ ntHub ] > nLimit[ nProtocol ][ ntHub ] )
-		{
+		{	//We have too many hubs
 			CNeighbour* pNewest = NULL;
 			
+			//Find the most recently added
 			for ( POSITION pos = GetIterator() ; pos ; )
 			{
 				CNeighbour* pNeighbour = GetNext( pos );
@@ -915,27 +928,28 @@ void CNeighboursWithConnect::Maintain()
 						pNewest = pNeighbour;
 				}
 			}
-			
-			if ( pNewest != NULL )
-				pNewest->Close();
+
+			//Drop it
+			if ( pNewest != NULL ) pNewest->Close();
 		}
 		
 		if ( nCount[ nProtocol ][ ntLeaf ] > nLimit[ nProtocol ][ ntLeaf ] )
-		{
+		{	//We have too many Leafs
 			CNeighbour* pNewest = NULL;
 			
+			//Find the most recently added
 			for ( POSITION pos = GetIterator() ; pos ; )
 			{
 				CNeighbour* pNeighbour = GetNext( pos );
 				
-				if ( pNeighbour->m_nNodeType == ntLeaf &&
-					 pNeighbour->m_nProtocol == nProtocol )
+				if ( pNeighbour->m_nNodeType == ntLeaf && pNeighbour->m_nProtocol == nProtocol )
 				{
 					if ( pNewest == NULL || pNeighbour->m_tConnected > pNewest->m_tConnected )
 						pNewest = pNeighbour;
 				}
 			}
 			
+			//Drop it
 			if ( pNewest != NULL ) pNewest->Close();
 		}
 	}

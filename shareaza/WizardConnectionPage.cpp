@@ -310,6 +310,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	{	//Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
 		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 1000 );
+		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, 300 );
 		Settings.Gnutella.ConnectFactor			= min( Settings.Gnutella.ConnectFactor, 3 );
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;

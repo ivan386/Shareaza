@@ -74,6 +74,7 @@ CNetwork::CNetwork()
 	m_bAutoConnect	= FALSE;
 	m_nSequence		= 0;
 	m_hThread		= NULL;
+	m_tLastConnect  = 0;
 }
 
 CNetwork::~CNetwork()
@@ -178,6 +179,8 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	
 	m_bEnabled	= TRUE;
 	m_hThread	= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
+
+
 	
 	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 	

@@ -170,6 +170,7 @@ public:
 		DWORD		SendBuffer;
 		BOOL		RequireForTransfers;		//Only upload/download to connected networks
 		BOOL		AsyncIO;
+		DWORD		ConnectThrottle;			//Delay between connection attempts. (Neighbour connections)
 	} Connection;
 
 	struct sBandwidth

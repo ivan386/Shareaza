@@ -155,6 +155,7 @@ void CSettings::Setup()
 	Add( _T("Connection.SendBuffer"), &Connection.SendBuffer, 2048 );
 	Add( _T("Connection.AsyncIO"), &Connection.AsyncIO, TRUE );
 	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
+	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 150 );
 	
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
@@ -389,7 +390,7 @@ CSettings::CSettings()
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
 	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
 	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
-	
+	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 }
 
 CSettings::~CSettings()

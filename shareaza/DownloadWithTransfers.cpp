@@ -140,7 +140,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	
 	if ( Settings.Downloads.ConnectThrottle != 0 )
 	{
-		if ( tNow <= Downloads.m_tLastConnect ) return FALSE;
+		if ( tNow < Downloads.m_tLastConnect ) return FALSE;
 		if ( tNow - Downloads.m_tLastConnect <= Settings.Downloads.ConnectThrottle ) return FALSE;
 	}
 

@@ -52,6 +52,7 @@ public:
 	SOCKADDR_IN		m_pHost;
 	BOOL			m_bEnabled;
 	BOOL			m_bAutoConnect;
+	DWORD			m_tLastConnect;
 protected:
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;
