@@ -62,8 +62,7 @@ public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
-	int					GetCount(int nType = 0) const;
-	int					GetGnutella2Count() const;
+	int					GetCount(int nType = 0, BOOL bG2Only = FALSE) const;
 	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, int nCacheType = wcForBoth);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
 	void				Remove(CDiscoveryService* pService);
