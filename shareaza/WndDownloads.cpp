@@ -311,7 +311,7 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 		}
 	}
 	
-    if ( nIDEvent != 1 && m_pDragList == NULL && IsPartiallyVisible() ) Update();
+    if ( nIDEvent != 1 && m_pDragList == NULL ) Update();
 }
 
 void CDownloadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 

@@ -191,7 +191,7 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 		}
 	}
 	
-	if ( nIDEvent != 1 && IsPartiallyVisible() ) m_wndUploads.Update();
+	if ( nIDEvent != 1 ) m_wndUploads.Update();
 }
 
 void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
