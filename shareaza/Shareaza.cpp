@@ -771,6 +771,7 @@ void ToLower(CString& strSource)
 	const int nLength = strSource.GetLength();
 	const LPTSTR str = strSource.GetBuffer() + nLength;
 	for ( int i = -nLength; i; ++i ) str[ i ] = ToLowerCase( str[ i ] );
+	if ( str[ -1 ] == 0x3C3 ) str[ -1 ]--; // last greek sigma fix
 	strSource.ReleaseBuffer( nLength );
 }
 
