@@ -166,15 +166,12 @@ UINT CTransfers::ThreadStart(LPVOID pParam)
 
 void CTransfers::OnRun()
 {
-	CSingleLock pLock( &m_pSection );
-	
 	while ( m_bThread )
 	{
+		Sleep( 10 );
 		WaitForSingleObject( m_pWakeup, 50 );
 		
-		pLock.Lock();
-		EDClients.OnRun();
-		pLock.Unlock();
+		CTransfers::Lock(), EDClients.OnRun();
 		if ( ! m_bThread ) break;
 		
 		OnRunTransfers();
@@ -182,10 +179,7 @@ void CTransfers::OnRun()
 		Downloads.OnRun();
 		if ( ! m_bThread ) break;
 		
-		pLock.Lock();
-		Uploads.OnRun();
-		OnCheckExit();
-		pLock.Unlock();
+		CTransfers::Lock(), Uploads.OnRun(), OnCheckExit();
 		
 		TransferFiles.CommitDeferred();
 	}
@@ -196,29 +190,14 @@ void CTransfers::OnRun()
 
 void CTransfers::OnRunTransfers()
 {
-	CSingleLock pLock( &m_pSection );
-	m_nRunCookie ++;
+	CTransfers::Lock oLock;
+	++m_nRunCookie;
 	
-	while ( TRUE )
+	for ( POSITION pos = GetIterator(); pos; )
 	{
-		BOOL bWorked = FALSE;
-		pLock.Lock();
-		
-		for ( POSITION pos = GetIterator() ; pos ; )
-		{
-			CTransfer* pTransfer = GetNext( pos );
-			
-			if ( pTransfer->m_nRunCookie != m_nRunCookie )
-			{
-				pTransfer->m_nRunCookie = m_nRunCookie;
-				pTransfer->DoRun();
-				bWorked = TRUE;
-				break;
-			}
-		}
-		
-		pLock.Unlock();
-		if ( ! bWorked ) break;
+		CTransfer* pTransfer = GetNext( pos );
+		pTransfer->m_nRunCookie = m_nRunCookie;
+		pTransfer->DoRun();
 	}
 }
 
