@@ -94,7 +94,7 @@ lt.reg_incomingchat=Gaunama þinutë pokalbiui
 lt.reg_apptitle=Shareaza — geriausia programa bylø mainams
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Paðalinti
-lt.icons_downloads=Downloads
+lt.icons_downloads=Atsisiuntimai
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
