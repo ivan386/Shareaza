@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Norwegian Skin File -->
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as    -->
@@ -11,7 +11,7 @@
 
 <!-- Manifest -->
 <manifest      name="Norsk"
-                       author="Tom Seland (Thanks to: Vegard Martinsen)"
+                       author="Tom Seland (Vegard Martinsen)"
                        description="Shareaza Default Norwegian Skin File"
                        link="http://www.shareaza.com/"
                        email="contact@shareaza.com"
@@ -897,7 +897,7 @@
                <item id="ID_DOWNLOADS_SOURCES" text="Finn flere kilder"/>
                <separator/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
                <separator/>
                <item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
        </menu>
@@ -927,7 +927,7 @@
                        <item id="ID_DOWNLOADS_BOOST" text="Ignorer hastighetsinnstillinger"/>
                </menu>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
                <separator/>
                <item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
        </menu>
@@ -948,7 +948,7 @@
                <item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
                <separator/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
        </menu>
        <menu name="CDownloadsWnd.Completed">
                <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
@@ -961,7 +961,7 @@
                <item id="ID_DOWNLOADS_RATE" text="Gi karakter"/>
                <separator/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
        </menu>
        <menu name="CDownloadTabBar">
                <item id="ID_DOWNLOAD_GROUP_RESUME" text="Start alle"/>
@@ -992,7 +992,7 @@
                <item id="ID_UPLOADS_CHAT" text="Chat med bruker"/>
                <separator/>
                <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_UPLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
        </menu>
        <menu name="CUploadsWnd">
                <item id="ID_UPLOADS_START" text="Start nå"/>
@@ -1003,7 +1003,7 @@
                <item id="ID_SECURITY_BAN" text="Blokker bruker"/>
                <separator/>
                <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
-               <item id="ID_UPLOADS_AUTO_CLEAR" text="Auto fjern"/>
+               <item id="ID_UPLOADS_AUTO_CLEAR" text="Fjern automatisk"/>
        </menu>
        <menu name="CUploadsWnd.Filter">
            <item id="ID_UPLOADS_FILTER_ALL" text="Vis alle"/>
@@ -2421,7 +2421,7 @@
        <string id="8176" value="Søk med Shareaza"/>
        <string id="8177" value="Skriv inn hva du ønsker å lete etter:"/>
        <string id="8178" value="Hva slags filtype er det?"/>
-       <string id="8179" value="(Fjern søke logg)"/>
+       <string id="8179" value="(Fjern søkelogg)"/>
        <string id="8208" value="Shareaza lager hash for %i fil(er):"/>
        <string id="8224" value="Shareaza laster ned:"/>
        <string id="8225" value="Denne nedlastingen er pauset:"/>
@@ -3601,7 +3601,7 @@
                <control caption="Vertikal akse"/>
                <control caption="Forklaring"/>
                <control caption="Frekvens:"/>
-               <control caption="Frekvensperiode: "/>
+               <control caption="Oppdateringsfrekvens: "/>
                <control/><control/>
                <control caption="ms"/>
                <control caption="_Navn:"/>

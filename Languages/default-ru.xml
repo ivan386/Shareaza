@@ -2374,7 +2374,7 @@
 	<string id="8103" value="Щелкните для предв. просмотра"/>
 	<string id="8104" value="Предпросматриваю..."/>
 	<string id="8105" value="Невозможно загрузить содержимое предв. просмотра с «%s»."/>
-	<string id="8128" value="Кликните здесь для поиска снова"/>
+	<string id="8128" value="Щелкните здесь для поиска снова"/>
 	<string id="8129" value="Поиск еще не был запущен в этом окне."/>
 	<string id="8130" value="Shareaza ищет файлы в сети ..."/>
 	<string id="8131" value="Сеть все еще не возвратила никаких результатов."/>
@@ -3108,8 +3108,8 @@
 		<control caption="_Выборка узлов:"/>
 		<control caption="Позволить стать узлом"/>
 		<control caption="Принудительно стать узлом"/>
-		<control caption="Посволить стать ветвью"/>
-		<control caption="Принимать только соединения с узлами"/>
+		<control caption="Позволить стать ветвью"/>
+		<control caption="Соединяться только с узлом"/>
 		<control caption="Gnutella-G_2:"/>
 		<control caption="Ветвь к узлу:"/>
 		<control/><control/>
@@ -3934,7 +3934,7 @@
 		<column from="Port" to="Порт"/>
 		<column from="Client" to="Клиент"/>
 		<column from="Last Seen" to="Когда встречался"/>
-		<column from="Name" to="Имя"/>
+		<column from="Name" to="Название"/>
 		<column from="Description" to="Описание"/>
 		<column from="CurUsers" to="Текущих пользов."/>
 		<column from="MaxUsers" to="Макс. число польз."/>
