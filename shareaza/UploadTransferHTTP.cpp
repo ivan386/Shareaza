@@ -660,12 +660,14 @@ BOOL CUploadTransferHTTP::QueueRequest()
 			ASSERT( m_pQueue != NULL );
 			//ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) );
 
+			//***Tempt debug check- the assertion was failing...
 			if( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, m_bFilePartial, m_sFileTags ) )
 			{
 				AfxMessageBox(m_sFileName, MB_OK);
 				AfxMessageBox(m_sAddress, MB_OK);
 				ASSERT( FALSE );
 			}
+			//***
 
 			
 			if ( nPosition == 0 )

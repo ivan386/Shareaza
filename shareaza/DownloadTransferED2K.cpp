@@ -661,7 +661,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 ) m_pClient->WritePartStatus( pPacket, m_pDownload );
 	/*
-	//We don't have any need to this, so only offer extended request V1
+	//We don't have any need to do this- it's not very useful (or accurate). Raza only offers extended request V1
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 2 ) 
 	{
 		pPacket->WriteShortLE( m_pDownload->GetED2KCompleteSourceCount() );
