@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Norwegian Skin File -->
 
@@ -16,7 +16,7 @@
 		description="Shareaza Default Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.94"
+		version="2.1.0.97"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -2388,6 +2388,7 @@
 	<string id="WINDOW_MEDIA" value="Mediaspiller"/>
 	<string id="WINDOW_SEARCHPAD" value="Søk"/>
 	<string id="WINDOW_HELP" value="Shareaza hjelp"/>
+	<string id="7000" value="Er du sikker på at du vil slette dette filteret?"/>
 	<string id="8000" value="Innstillinger"/>
 	<string id="8001" value="Velkommen til Shareaza"/>
 	<string id="8002" value="Egenskaper"/>
@@ -3610,7 +3611,7 @@
 		<control caption="Avbryt"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtrer treff">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtrertreff">
 		<control caption="Vis bare treff som inneholder _ordene:"/>
 		<control/>
 		<control caption="( du kan også fjerne ord, med -ord )"/>
@@ -3631,6 +3632,11 @@
 		<control caption="Falske resultat"/>
 		<control caption="Filtrer"/>
 		<control caption="Avbryt"/>
+		<control/>
+		<control caption="Bruk som standard"/>
+		<control caption="Lagre som"/>
+		<control caption="Slett"/>
+		<control caption="Filtere:"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Oppdagelsestjeneste">
