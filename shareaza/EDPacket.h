@@ -344,14 +344,15 @@ public:
 #define ED2K_FT_BITRATE				0xD4
 #define ED2K_FT_CODEC				0xD5
 
-// eMuleinfo tags
+// eMuleinfo tags. Note this is now obsolete, due to ED2K_CT_FEATUREVERSIONS
 #define ED2K_ET_COMPRESSION			0x20
 #define ED2K_ET_UDPPORT				0x21
 #define ED2K_ET_UDPVER				0x22
 #define ED2K_ET_SOURCEEXCHANGE		0x23
 #define ED2K_ET_COMMENTS			0x24
 #define ED2K_ET_EXTENDEDREQUEST		0x25
-#define ED2K_ET_COMPATIBLECLIENT	0x26
+#define ED2K_ET_COMPATIBLECLIENT	0x26	// Client ID. (Shareaza = 4)
+#define ED2K_ET_FEATURES			0x27	// Preview and sec ID
 
 // Max files (Hash + Size) in a getsources packet
 #define ED2K_MAXFILESINPACKET		0x20
@@ -369,5 +370,6 @@ public:
 #define ED2K_VERSION_SECUREID		0x00
 #define ED2K_VERSION_COMMENTS		0x00
 
-
+// "Unknown" client ID for compatible client variable
+#define ED2K_CLIENT_UNKNOWN			0xFF
 
