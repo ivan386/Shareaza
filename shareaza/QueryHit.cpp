@@ -530,6 +530,12 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 			pHit->m_pVendor = VendorCache.m_pED2K;
 			if ( ! pHit->ReadEDPacket( pPacket, pServer ) ) break;
 			pHit->Resolve();
+
+			if( pHit->m_bPush == TS_TRUE )
+			{
+				pHit->m_sNick		= _T("(Low ID)");
+				pHit->m_nPort		= 0;
+			}
 		}
 	}
 	else if (	pPacket->m_nType == ED2K_S2C_FOUNDSOURCES ||
