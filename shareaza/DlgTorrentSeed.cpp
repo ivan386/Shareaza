@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,7 @@
 #include "DlgTorrentSeed.h"
 #include "WndMain.h"
 #include "WndDownloads.h"
+#include "DlgHelp.h"
 
 #include "LibraryHistory.h"
 
@@ -92,27 +93,35 @@ void CTorrentSeedDlg::OnDownload()
 	
 	if ( pTorrent->LoadTorrentFile( m_sTorrent ) )
 	{
+		if ( pTorrent->HasEncodingError() )		// Check the torrent is valid
+		{
+			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
+		}
+
 		CShareazaURL* pURL = new CShareazaURL( pTorrent );
 		//if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 		CLibraryFile* pFile;
 		
+
+		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+		if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1 ) ) ) ||
+			 ( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K ) ) )  )
 		{
-			CSingleLock oLock( &Library.m_pSection, TRUE );
-			if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1 ) ) ) ||
-					( pURL->m_bED2K && ( pFile = LibraryMaps.LookupFileByED2K( &pURL->m_pED2K ) ) ) )
-			{
-				CString strFormat, strMessage;
-				LoadString( strFormat, IDS_URL_ALREADY_HAVE );
-				strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-				oLock.Unlock();
+			CString strFormat, strMessage;
+			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
+			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
+			oLibraryLock.Unlock();
 					
-				if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
-				{
-					delete pURL;
-					EndDialog( IDOK );
-					return;
-				}
+			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
+			{
+				delete pURL;
+				EndDialog( IDOK );
+				return;
 			}
+		}
+		else
+		{
+			oLibraryLock.Unlock();
 		}
 			
 		CDownload* pDownload = Downloads.Add( pURL );
@@ -136,8 +145,8 @@ void CTorrentSeedDlg::OnDownload()
 				
 		if ( Settings.Downloads.ShowMonitorURLs )
 		{
-			CSingleLock pLock( &Transfers.m_pSection, TRUE );
-			if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pLock );
+			CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
+			if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pTransfersLock );
 		}
 
 		EndDialog( IDOK );
@@ -151,16 +160,22 @@ void CTorrentSeedDlg::OnDownload()
 
 void CTorrentSeedDlg::OnSeed()
 {
-	if ( ! Network.IsConnected() ) Network.Connect();
-	
 	m_wndDownload.EnableWindow( FALSE );
 	m_wndSeed.EnableWindow( FALSE );
 	m_bCancel = FALSE;
 	
 	if ( m_pInfo.LoadTorrentFile( m_sTorrent ) )
 	{
-		if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
+		if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
 		{
+			m_bCancel = TRUE;
+			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
+		}
+		else if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
+		{
+			// Connect if (we aren't)
+			if ( ! Network.IsConnected() ) Network.Connect();
+
 			// Update the last seeded torrent
 			LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
 			LibraryHistory.LastSeededTorrent.m_tLastSeeded = time( NULL );
@@ -171,7 +186,7 @@ void CTorrentSeedDlg::OnSeed()
 			m_hThread = AfxBeginThread( ThreadStart, this,
 				THREAD_PRIORITY_NORMAL )->m_hThread;
 		}
-		else
+		else	// We are already seeding the torrent
 		{
 			CString strFormat, strMessage;
 			LoadString(strFormat, IDS_BT_SEED_ALREADY );
@@ -182,6 +197,7 @@ void CTorrentSeedDlg::OnSeed()
 	}
 	else
 	{
+		// We couldn't load the .torrent file
 		CString strFormat, strMessage;
 		LoadString(strFormat, IDS_BT_SEED_PARSE_ERROR );
 		strMessage.Format( strFormat, (LPCTSTR)m_sTorrent );
@@ -317,11 +333,11 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 
 	if ( pFile->m_bSHA1 )
 	{
-		CSingleLock oLock( &Library.m_pSection, TRUE );
+		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( &pFile->m_pSHA1, FALSE, TRUE ) )
 		{
 			strFile = pShared->GetPath();
-			oLock.Unlock();
+			oLibraryLock.Unlock();
 			if ( GetFileAttributes( strFile ) != 0xFFFFFFFF ) return strFile;
 		}
 	}
@@ -571,8 +587,8 @@ BOOL CTorrentSeedDlg::VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath)
 
 BOOL CTorrentSeedDlg::CreateDownload()
 {
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 2000 ) ) return FALSE;
+	CSingleLock pTransfersLock( &Transfers.m_pSection );
+	if ( ! pTransfersLock.Lock( 2000 ) ) return FALSE;
 	
 	if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) != NULL )
 	{

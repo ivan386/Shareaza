@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +56,7 @@ public:
 // Attributes
 public:
 	BOOL		m_bValid;
+	BOOL		m_bEncodingError;
 	SHA1		m_pInfoSHA1;
 	BOOL		m_bDataSHA1;
 	SHA1		m_pDataSHA1;
@@ -94,6 +95,7 @@ protected:
 // Inlines
 public:
 	inline BOOL IsAvailable() const { return m_bValid; }
+	inline BOOL HasEncodingError() const { return m_bEncodingError; }
 
 };
 

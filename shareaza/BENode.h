@@ -1,7 +1,7 @@
 //
 // BENode.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,6 +91,13 @@ public:
 		{
 			nLength = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)m_pValue, nSource, NULL, 0 );
 			MultiByteToWideChar( CP_ACP, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+			if ( GetLastError() == ERROR_NO_UNICODE_TRANSLATION ) 
+			{
+				// Bad encoding
+				str.ReleaseBuffer( nLength );
+				str = _T("#ERROR#");
+				return str;
+			}
 		}
 		str.ReleaseBuffer( nLength );
 

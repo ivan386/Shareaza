@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,6 +40,7 @@ static char THIS_FILE[]=__FILE__;
 CBTInfo::CBTInfo()
 {
 	m_bValid		= FALSE;
+	m_bEncodingError= FALSE;
 	m_bDataSHA1		= FALSE;
 	m_nTotalSize	= 0;
 	m_nBlockSize	= 0;
@@ -304,7 +305,14 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	CBENode* pName = pInfo->GetNode( "name" );
 	if ( pName->IsType( CBENode::beString ) ) m_sName = pName->GetString();
-    if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
+	if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
+	{
+		m_bEncodingError = TRUE;
+		pName = pInfo->GetNode( "name.utf-8" );
+		if ( ( pName ) && ( pName->IsType( CBENode::beString ) ) ) m_sName = pName->GetString();
+		else m_sName.Empty();
+	}
+	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
 	
 	CBENode* pPL = pInfo->GetNode( "piece length" );
 	if ( ! pPL->IsType( CBENode::beInt ) ) return FALSE;
@@ -356,6 +364,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
 		{
+			CBENode* pPart;
+
 			CBENode* pFile = pFiles->GetNode( nFile );
 			if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;
 			
@@ -366,15 +376,27 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			CBENode* pPath = pFile->GetNode( "path" );
 			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
 			if ( pPath->GetCount() > 32 ) return FALSE;
-			
-			// Hack to prefix all
 
+			// Check the path is valid
+			pPart = pPath->GetNode( 0 );
+			if ( pPart->IsType( CBENode::beString ) )
+			{
+				if ( _tcsicmp( pPart->GetString().GetString() , _T("#ERROR#") ) == 0 )
+				{
+					m_bEncodingError = TRUE;
+					pPath = pFile->GetNode( "path.utf-8" );
+					if ( ( ! pPath ) || ( ! pPath->IsType( CBENode::beList ) ) ) return FALSE;
+					if ( pPath->GetCount() > 32 ) return FALSE;
+				}
+			}
+
+			// Hack to prefix all
 			//m_pFiles[ nFile ].m_sPath = m_sName;
 			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );
 			
 			for ( int nPath = 0 ; nPath < pPath->GetCount() ; nPath++ )
 			{
-				CBENode* pPart = pPath->GetNode( nPath );
+				pPart = pPath->GetNode( nPath );
 				if ( ! pPart->IsType( CBENode::beString ) ) return FALSE;
 				
 				if ( m_pFiles[ nFile ].m_sPath.GetLength() )
