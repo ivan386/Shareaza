@@ -992,7 +992,7 @@ BEGIN
                     CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "&Suppress Ultrapeer",IDC_CONNECT_ULTRAPEER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,150,65,75,15
+                    BS_AUTOCHECKBOX | WS_TABSTOP,137,65,91,15
     DEFPUSHBUTTON   "Connect",IDOK,130,93,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,185,93,50,14
 END
