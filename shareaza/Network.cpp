@@ -295,7 +295,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	
 	m_pHost.sin_addr = pAddress;
 
-	Security.SessionBan( &pAddress );		// Ban self
+	Security.SessionBan( &pAddress, 0 );		// Ban self
 }
 
 //////////////////////////////////////////////////////////////////////
