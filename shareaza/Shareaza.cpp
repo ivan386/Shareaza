@@ -778,7 +778,7 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 			plen	= _tcslen( pszPattern ) ;
 			slen >= plen ; start++, slen-- )
 	{
-		while ( toupper( *start ) != toupper( *pszPattern ) )
+		while ( CharUpper( *start ) != CharUpper( *pszPattern ) )
 		{
 			start++;
 			slen--;
@@ -789,7 +789,7 @@ LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
 		sptr = start;
 		pptr = pszPattern;
 
-		while ( toupper( *sptr ) == toupper( *pptr ) )
+		while ( CharUpper( *sptr ) == CharUpper( *pptr ) )
 		{
 			sptr++;
 			pptr++;
