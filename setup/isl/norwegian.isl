@@ -298,8 +298,8 @@ StatusUninstalling=Avinnstallerer %1...
 
 NameAndVersion=%1 versjon %2
 AdditionalIcons=Ekstra-ikoner:
-CreateDesktopIcon=Lag ikon på &skrivebordet
-CreateQuickLaunchIcon=Lag et &Hurtigstarts-ikon
+CreateDesktopIcon=Vis ikon på &skrivebordet
+CreateQuickLaunchIcon=Vis et &Hurtigstarts-ikon
 ProgramOnTheWeb=%1 på weben
 UninstallProgram=Avinstaller %1
 LaunchProgram=Kjør %1

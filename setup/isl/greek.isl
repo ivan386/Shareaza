@@ -222,8 +222,8 @@ StatusUninstalling=Απεγκατάσταση του %1...
 [CustomMessages]
 NameAndVersion=%1 έκδοση %2
 AdditionalIcons=Επιπλέον εικονίδια:
-CreateDesktopIcon=Δημιουργία ενός &εικονιδίου επιφάνειας εργασίας
-CreateQuickLaunchIcon=Δημιουργία ενός ε&ικονιδίου Γρήγορης Εκκίνησης
+CreateDesktopIcon=Εμφάνισε το &εικονίδιο στην επιφάνεια εργασίας
+CreateQuickLaunchIcon=Εμφάνισε ένα ε&ικονίδιο Γρήγορης Εκκίνησης
 ProgramOnTheWeb=Το %1 στο Internet
 UninstallProgram=Απεγκατάσταση του %1
 LaunchProgram=Εκκίνηση του %1
