@@ -2533,7 +2533,7 @@ Other:
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netzwerke">
 		<control caption="Shareaza ist ein allround File-sharing Programm, das auf mehrere P2P Netzwerke gleichzeitig zugreifen kann.  Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und können Netzwerkspezifische Einstellungen vornehmen."/>
 		<control caption="Gnutella2 Netzwerk:"/>
-		<control caption="Das Gnutella2 Netzwerk ist das Hauptnetzwerk von Shareaza, es bietet mehr Funktionen und Geschwindigkeit als irgendein anderes P2P Netzwerk.  Empfohlen."/>
+		<control caption="Gnutella2 ist das Hauptnetzwerk von Shareaza, es bietet mehr Funktionen und Geschwindigkeit als irgendein anderes P2P Netzwerk.  Empfohlen."/>
 		<control caption="Gnutella2 (G2) verwenden"/>
 		<control caption="Gnutella2 konfigurieren"/>
 		<control caption="eDonkey Netzwerk:"/>
