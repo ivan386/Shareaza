@@ -52,6 +52,7 @@ public:
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
 	SHA1		m_pPeerID;
+	int			m_nStartTorrentDownloads;
 protected:
 	BYTE*		m_pTorrentBlock;
 	DWORD		m_nTorrentBlock;
@@ -76,6 +77,7 @@ public:
 	void			CloseTorrent();
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
 	float			GetRatio() const;
+	BOOL 			CheckTorrentRatio() const;
 public:
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*				CreateBitfieldPacket();
@@ -86,6 +88,11 @@ protected:
 	void			CloseTorrentUploads();
 	
 	friend class CDownloadTransferBT;
+};
+
+enum
+{
+	dtAlways, dtWhenRatio, dtNever
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_)

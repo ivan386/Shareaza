@@ -1051,7 +1051,8 @@ void CDownloadsWnd::OnDownloadsTorrentInfo()
 		
 		if ( pDownload->m_bSelected && pDownload->m_pTorrent.IsAvailable() )
 		{
-			CTorrentTrackerDlg dlg( &pDownload->m_pTorrent );
+			//CTorrentTrackerDlg dlg( &pDownload->m_pTorrent );
+			CTorrentTrackerDlg dlg( pDownload );
 			
 			pLock.Unlock();
 			dlg.DoModal();

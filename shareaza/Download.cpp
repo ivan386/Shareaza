@@ -345,7 +345,8 @@ void CDownload::OnRun()
 					}
 					else
 					{
-						StartTransfersIfNeeded( tNow );
+						if( ! m_bBTH || CheckTorrentRatio() )
+							StartTransfersIfNeeded( tNow );
 					}
 				}
 				else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )

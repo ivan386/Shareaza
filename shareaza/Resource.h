@@ -237,6 +237,7 @@
 #define IDC_MAX_HOST                    1059
 #define IDC_MAX_HOST_SPIN               1060
 #define IDC_SOURCE_MESH                 1061
+#define IDC_HIGH_HASH                   1061
 #define IDC_WATCH_FOLDERS               1062
 #define IDC_STORE_VIEWS                 1063
 #define IDC_TIMEOUT_CONNECTION_SPIN     1064
@@ -636,6 +637,7 @@
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENT_LINKS_SPIN          1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
+#define IDC_STARTTORRENTDOWNLOADS       1386
 #define IDC_TORRENT_ENDGAME             1387
 #define IDC_TORRENT_INTERFACE           1388
 #define IDC_TORRENT_CLIENTLINKS         1389
@@ -1584,7 +1586,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33120
-#define _APS_NEXT_CONTROL_VALUE         1386
+#define _APS_NEXT_CONTROL_VALUE         1387
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

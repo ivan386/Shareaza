@@ -27,13 +27,14 @@
 #include "BTInfo.h"
 #include "DlgSkinDialog.h"
 #include "HttpRequest.h"
+#include "Download.h"
 
 
 class CTorrentTrackerDlg : public CSkinDialog
 {
 // Construction
 public:
-	CTorrentTrackerDlg(CBTInfo* pInfo, CWnd* pParent = NULL);
+	CTorrentTrackerDlg(CDownload* pDown, CWnd* pParent = NULL);
 
 // Dialog Data
 public:
@@ -46,6 +47,7 @@ public:
 	CEdit	m_wndIncomplete;
 	CString	m_sName;
 	CString	m_sTracker;
+	CComboBox	m_wndStartDownloads;
 	//}}AFX_DATA
 	
 // Attributes
@@ -55,6 +57,7 @@ public:
 	HANDLE			m_hThread;
 	int				m_nComplete;
 	int				m_nIncomplete;
+	int*			m_pStartTorrentDownloads;
 	
 // Thread
 protected:

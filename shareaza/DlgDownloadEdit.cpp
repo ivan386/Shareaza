@@ -213,7 +213,7 @@ void CDownloadEditDlg::OnTorrentInfo()
 	if ( ! Downloads.Check( m_pDownload ) ) return;
 	if ( ! m_pDownload->m_pTorrent.IsAvailable() ) return;
 	
-	CTorrentTrackerDlg dlg( &m_pDownload->m_pTorrent );
+	CTorrentTrackerDlg dlg( m_pDownload );
 	pLock.Unlock();
 	dlg.DoModal();
 }

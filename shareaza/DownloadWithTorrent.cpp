@@ -68,6 +68,8 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	m_tTorrentChoke			= 0;
 	m_tTorrentSources		= 0;
 	ZeroMemory(m_pPeerID.n, 20);
+
+	m_nStartTorrentDownloads= dtAlways;
 }
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
@@ -187,7 +189,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = 0;
-		ZeroMemory(m_pPeerID.n, 20);
+		//ZeroMemory(m_pPeerID.n, 20);	//Okay to use the same one in a single session
 	}
 	
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
@@ -213,7 +215,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	{
 		if ( m_pPeerID.n[ nByte ] != 0 ) 
 		{
-			theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use Peer ID") );
+			theApp.Message( MSG_DEBUG, _T("Attempted to re-create an in-use Peer ID") );
 			return FALSE;
 		}
 	}
@@ -571,4 +573,23 @@ float CDownloadWithTorrent::GetRatio() const
 {
 	if ( m_nTorrentUploaded == 0 || m_nTorrentDownloaded == 0 ) return 0;
 	return (float)m_nTorrentUploaded / (float)m_nTorrentDownloaded;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent Check if it's okay to start a new download transfer
+
+BOOL CDownloadWithTorrent::CheckTorrentRatio() const
+{
+	
+	if ( m_nStartTorrentDownloads == dtAlways ) return TRUE;	//Torrent is set to download as needed
+
+	if ( m_nStartTorrentDownloads == dtWhenRatio )				//Torrent is set to download only when ratio is okay
+	{
+		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	//Ratio OK
+		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		//Always get at least 5 MB so you have something to upload	
+	}
+
+	if ( ! m_bBTH ) return TRUE;						//Not a torrent
+
+	return FALSE;
 }

@@ -26,6 +26,7 @@
 #include "DlgTorrentTracker.h"
 #include "BENode.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -45,15 +46,17 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentTrackerDlg dialog
 
-CTorrentTrackerDlg::CTorrentTrackerDlg(CBTInfo* pInfo, CWnd* pParent) : CSkinDialog(CTorrentTrackerDlg::IDD, pParent)
+CTorrentTrackerDlg::CTorrentTrackerDlg(CDownload* pDown, CWnd* pParent) : CSkinDialog(CTorrentTrackerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CTorrentTrackerDlg)
 	m_sName = _T("");
 	m_sTracker = _T("");
 	//}}AFX_DATA_INIT
-	
-	m_pInfo.Copy( pInfo );
+
+	m_pInfo.Copy( &(pDown->m_pTorrent) );
 	m_pInfo.m_bValid = FALSE;
+
+	m_pStartTorrentDownloads = &(pDown->m_nStartTorrentDownloads);
 }
 
 void CTorrentTrackerDlg::DoDataExchange(CDataExchange* pDX)
@@ -67,6 +70,7 @@ void CTorrentTrackerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TORRENT_INCOMPLETE, m_wndIncomplete);
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
+	DDX_Control(pDX, IDC_STARTTORRENTDOWNLOADS, m_wndStartDownloads);
 	//}}AFX_DATA_MAP
 }
 
@@ -105,12 +109,18 @@ BOOL CTorrentTrackerDlg::OnInitDialog()
 		
 		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize, FALSE ) );
 	}
+
+	m_wndStartDownloads.SetItemData( 0, dtAlways );
+	m_wndStartDownloads.SetItemData( 1, dtWhenRatio );
+	m_wndStartDownloads.SetItemData( 2, dtNever );
+
+	m_wndStartDownloads.SetCurSel( *m_pStartTorrentDownloads );
 	
 	UpdateData( FALSE );
 	m_hThread = NULL;
 	
 	PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
-	
+
 	return TRUE;
 }
 
@@ -170,17 +180,22 @@ void CTorrentTrackerDlg::OnOK()
 {
 	UpdateData();
 	
+	//Check if tracker has been changed
 	if ( m_pInfo.m_sTracker != m_sTracker )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
 		
+		//Display warning
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			m_pInfo.m_sTracker = m_sTracker;
 			m_pInfo.m_bValid = TRUE;
 		}
 	}
+
+	//Update the starting of torrent transfers
+	*m_pStartTorrentDownloads = m_wndStartDownloads.GetCurSel();
 	
 	CSkinDialog::OnOK();
 }
