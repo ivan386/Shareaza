@@ -300,13 +300,14 @@ void CDownload::OnRun()
 	if( IsTrying() )
 	{	//This download is trying to download
 
-		DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
 		//'Dead download' check- if download appears dead, give up and allow another to start.
-		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 )  )	
-		{	//If it's not complete, and have had no new data for 3-12 hours	
+		if ( ( !IsCompleted() ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )	
+		{	//If it's not complete, and we've been trying for at least 3 hours
 
-			if ( ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 ) )
-			{	//And we've been trying for at least 3 hours
+			DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
+
+			if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
+			{	//And have had no new data for 5-14 hours	
 
 				if( m_bBTH )	//If it's a torrent
 				{
@@ -316,7 +317,7 @@ void CDownload::OnRun()
 						return;
 					}
 				}
-				else		//It's a regular download
+				else			//It's a regular download
 				{
 					if( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 					{	//If there are other downloads that could try
