@@ -55,6 +55,7 @@ Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerro
 
 ; Main files
 Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
