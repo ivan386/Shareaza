@@ -2401,6 +2401,7 @@ right quote	&#147;
 	<string id="WINDOW_MEDIA" value="Grotuvas"/>
 	<string id="WINDOW_SEARCHPAD" value="Paieška"/>
 	<string id="WINDOW_HELP" value="„Shareaza“ žinynas"/>
+	<string id="7000" value="Ar tikrai norite pašalinti šį filtrą?"/>
 	<string id="8000" value="„Shareaza“ nuostatos"/>
 	<string id="8001" value="Sveiki! Čia „Shareaza“"/>
 	<string id="8002" value="Bylos ypatybės"/>
@@ -2751,7 +2752,6 @@ right quote	&#147;
 	<string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
 	<string id="16408" value="Kopijuoti &amp;nuorodą"/>
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
-	<string id="16410" value="Ar tikrai norite pašalinti šį filtrą?"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>

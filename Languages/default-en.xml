@@ -2387,6 +2387,7 @@
 	<string id="WINDOW_MEDIA" value="Media Player"/>
 	<string id="WINDOW_SEARCHPAD" value="Search"/>
 	<string id="WINDOW_HELP" value="Shareaza Help"/>
+	<string id="7000" value="Are you sure you want to delete this filter ?"/>
 	<string id="8000" value="Shareaza Settings"/>
 	<string id="8001" value="Welcome to Shareaza"/>
 	<string id="8002" value="File Properties"/>
@@ -2737,7 +2738,6 @@
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
-	<string id="16410" value="Are you sure you want to delete this filter ?"/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
