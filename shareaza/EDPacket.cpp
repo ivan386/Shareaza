@@ -162,6 +162,8 @@ BOOL CEDPacket::Deflate()
 		
 		CopyMemory( m_pBuffer, pOutput, nOutput );
 		m_nLength = nOutput;
+
+		delete [] pOutput;
 		
 		return TRUE;
 	}
