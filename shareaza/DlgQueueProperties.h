@@ -96,6 +96,13 @@ protected:
 	afx_msg void OnChangeTransfersMax();
 	afx_msg void OnMatchCheck();
 	//}}AFX_MSG
+
+	// Get the protcol checkbox
+	CButton* GetProtocolCheckbox()
+	{
+		return ((CButton*)GetDlgItem(IDC_PROTOCOLS_CHECK));
+	}
+
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -210,6 +210,20 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	m_wndRotateTimeSpin.EnableWindow( m_bRotate );
 	m_wndCapacity.SetRange32( m_nTransfersMax, 4096 );
 	OnHScroll( 0, 0, NULL );
+
+
+	if ( Settings.General.GUIMode == GUI_BASIC )
+	{
+		if ( !( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
+		{
+			m_bProtocols = FALSE;
+			m_wndProtocols.EnableWindow( FALSE );
+			m_wndProtocols.ShowWindow( FALSE );
+
+			(GetProtocolCheckbox())->EnableWindow( FALSE );
+			(GetProtocolCheckbox())->ShowWindow( FALSE );
+		}
+	}
 	
 	return TRUE;
 }
@@ -240,6 +254,10 @@ void CQueuePropertiesDlg::OnMatchCheck()
 
 void CQueuePropertiesDlg::OnProtocolsCheck() 
 {
+	if ( Settings.General.GUIMode == GUI_BASIC )
+		if ( !( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
+			return;
+
 	UpdateData();
 	m_wndProtocols.EnableWindow( m_bProtocols );
 }

@@ -174,12 +174,16 @@ void CUploadsSettingsPage::UpdateQueues()
 		BOOL bDonkeyOnlyDisabled = FALSE;
 
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-		CLiveItem* pItem = pQueues.Add( pQueue );
 
-		if ( ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+		if ( ( ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 ) && ( Settings.Connection.RequireForTransfers ) )
 		{
 			bDonkeyOnlyDisabled = !( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday );
 		}
+
+		if( ( bDonkeyOnlyDisabled ) && (Settings.General.GUIMode == GUI_BASIC) )
+			continue;
+
+		CLiveItem* pItem = pQueues.Add( pQueue );
 		
 		if( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
 		{
