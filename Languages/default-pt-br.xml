@@ -655,15 +655,15 @@
 	<menu name="CMainWnd.View.Tabbed">
 		<item id="ID_TAB_HOME" text="_Lar"/> 
 		<item id="ID_TAB_LIBRARY" text="_Biblioteca"/> 
-		<item id="ID_TAB_MEDIA" text="_M?dia"/> 
+		<item id="ID_TAB_MEDIA" text="_Mídia"/> 
 		<item id="ID_TAB_SEARCH" text="_Pesquisar"/> 
-		<item id="ID_TAB_TRANSFERS" text="Transfer?ncias"/> 
+		<item id="ID_TAB_TRANSFERS" text="Transferências"/> 
 		<item id="ID_TAB_NETWORK" text="_Rede"/> 
 		<separator/> 
-		<item id="ID_VIEW_SECURITY" text="Seguran?a"/> 
+		<item id="ID_VIEW_SECURITY" text="Segurança"/> 
 		<item id="ID_VIEW_HOSTS" text="Armazenamento de Hosts"/> 
 		<item id="ID_VIEW_DISCOVERY" text="Des_cobrimento de Hosts"/> 
-		<item id="ID_VIEW_TRAFFIC" text="_Gr?fico"/> 
+		<item id="ID_VIEW_TRAFFIC" text="_Gráfico"/> 
 		<separator/> 
 		<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos"/> 
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Monitor de _Pesquisas"/> 
@@ -1746,7 +1746,7 @@
 
 		<link target="raza:page:CRemoteSettingsPage" format="b">Acesso Remoto:</link>
 		<gap size="4"/>
-		<text>Configure a habilidade de usar o Shareaza atrav?s de um navegador de internet.</text>
+		<text>Configure a habilidade de usar o Shareaza através de um navegador de internet.</text>
 		<newline gap="10"/>
 		
 		
@@ -1971,12 +1971,12 @@
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 Detectado</text>
 		<newline gap="8"/>
-		<text>Shareaza detectou o Windows XP Service Pack 2. Ele restringe o n?mero de conex?es 
+		<text>Shareaza detectou o Windows XP Service Pack 2. Ele restringe o número de conexões 
         que um programa pode fazer ao mesmo tempo.</text>
 		<newline gap="8"/>
-		<text>Shareaza limitou as conex?es e configurou valores padr?es para garantir 
+		<text>Shareaza limitou as conexões e configurou valores padrões para garantir 
         o funcionamento normal, entretando a performance pode ser reduzida. Por favor visite 
-        os f?runs do Shareaza para maiores informa??es.</text>
+        os fóruns do Shareaza para maiores informações.</text>
 	</document>
 
         <!-- Search help documents -->
@@ -2487,7 +2487,7 @@
 	<string id="16083" value="Forçar o seu PC em modo de HUB pode resultados adversos à sua perfomace e à rede  É geralmente melhor deixar o Shareaza decidir se o modo de HUB deve ou não ser usado.\n\nModo de HUB NÃO melhora a sua perfomace, ou traz qualquer outras vantagens à você.\n\nVocê realmente quer fazer isso, apesar das desvantagens?"/>
 	<string id="16084" value="Desabilitar o suporte à Gnutella-1 pode diminuir os seus resultados, e se você estiver agindo como HUB pode impactar outros usuários também.  Tem certeza que deseja fazer isto?"/>
 	<string id="16085" value="Gnutella 2 é a rede principal do Shareaza.  Desabilita-la pode reduzir severamente o número e qualidade dos resultados na pesquisas.  Tem CERTEZA que deseja fazer isto?"/>
-	<string id="16087" value="Sua banda de upload ? muito baixa para ativar essa rede"/>
+	<string id="16087" value="Sua banda de upload é muito baixa para ativar essa rede"/>
 	<string id="16128" value="Aceita uma conexão de entrada de %s porta %i."/>
 	<string id="16129" value="Inicializando conexão de vizinho com %s porta %i..."/>
 	<string id="16130" value="Incapaz de iniciar uma conexão de vizinho com %s."/>
@@ -3747,7 +3747,7 @@
 		<control caption="Não baixar este arquivo"/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
-		<control caption="Você j? baixou e deletou esse arquivo antes. O que gostaria de fazer?"/>
+		<control caption="Você já baixou e deletou esse arquivo antes. O que gostaria de fazer?"/>
 	</dialog>
 	
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Botão de Fechar">
