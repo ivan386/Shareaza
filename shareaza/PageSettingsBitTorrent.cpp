@@ -98,7 +98,7 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
 	m_wndMakerPath.SetIcon( IDI_BROWSE );
 
-	m_wndLinksSpin.SetRange( 0, 80 );
+	m_wndLinksSpin.SetRange( 0, 100 );
 	m_wndDownloadsSpin.SetRange( 0, 10 );
 	UpdateData( FALSE );
 

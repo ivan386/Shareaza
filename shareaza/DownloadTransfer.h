@@ -84,7 +84,8 @@ enum
 
 	dtsCountAll = -1,
 	dtsCountNotQueued = -2,
-	dtsCountNotConnecting = -3
+	dtsCountNotConnecting = -3,
+	dtsCountTorrentAndActive = -4
 };
 
 

@@ -95,6 +95,13 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
 			{
 				if ( pTransfer->m_nState > dtsConnecting ) nCount++;
 			}
+			else if ( nState == dtsCountTorrentAndActive )
+			{
+				if ( ( pTransfer->m_nState == dtsTorrent ) ||
+					 ( pTransfer->m_nState == dtsRequesting ) ||
+					 ( pTransfer->m_nState == dtsDownloading ) )
+					nCount++;
+			}
 			else
 			{
 				if ( pTransfer->m_nState == nState ) nCount++;
@@ -130,7 +137,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 
 	if ( m_bBTH )
 	{
-		if ( nTransfers > Settings.BitTorrent.DownloadConnections ) return FALSE;
+		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;
 		//if ( ( m_pTransferFirst == NULL ) &&  ( Downloads.GetTryingCount(TRUE) >= Settings.BitTorrent.DownloadTorrents ) ) return FALSE;
 	}
 	
