@@ -60,6 +60,7 @@ END_MESSAGE_MAP()
 #define TIP_OFFSET_Y	24
 #define TIP_MARGIN		6
 #define TIP_TEXTHEIGHT	14
+#define TIP_ICONHEIGHT	16
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -470,21 +471,24 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		LoadString( m_sBusy, IDS_TIP_FILE_BUSY );
 	}
-	else {
+	else 
+	{
 		m_sBusy.Empty();
 	}
 	if (m_pFile->m_bPush == 2)
 	{
 		LoadString( m_sPush, IDS_TIP_FILE_FIREWALLED );
 	}
-	else {
+	else 
+	{
 		m_sPush.Empty();
 	}
 	if (m_pFile->m_bStable == 1)
 	{
 		LoadString( m_sUnstable, IDS_TIP_FILE_UNSTABLE );
 	}
-	else {
+	else 
+	{
 		m_sUnstable.Empty();
 	}
 }
@@ -606,21 +610,24 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		LoadString( m_sBusy, IDS_TIP_SOURCE_BUSY );
 	}
-	else {
+	else 
+	{
 		m_sBusy.Empty();
 	}
 	if (m_pHit->m_bPush == 2)
 	{
 		LoadString( m_sPush, IDS_TIP_SOURCE_FIREWALLED );
 	}
-	else {
+	else 
+	{
 		m_sPush.Empty();
 	}
 	if (m_pHit->m_bStable == 1)
 	{
 		LoadString( m_sUnstable, IDS_TIP_SOURCE_UNSTABLE );
 	}
-	else {
+	else 
+	{
 		m_sUnstable.Empty();
 	}
 }
@@ -715,46 +722,6 @@ CSize CMatchTipCtrl::ComputeSize()
 		}
 	}
 	
-	if ( m_sPartial.GetLength() || m_sQueue.GetLength() )
-	{
-		sz.cy += 5 + 6;
-		
-		if ( m_sPartial.GetLength() )
-		{
-			ExpandSize( dc, sz, m_sPartial );
-			sz.cy += TIP_TEXTHEIGHT;
-		}
-		
-		if ( m_sQueue.GetLength() )
-		{
-			ExpandSize( dc, sz, m_sQueue );
-			sz.cy += TIP_TEXTHEIGHT;
-		}
-	}
-	
-	if (m_sBusy.GetLength() || m_sPush.GetLength() || m_sUnstable.GetLength() )
-	{
-		sz.cy += 11;
-
-		if (m_sBusy.GetLength())
-		{
-			ExpandSize( dc, sz, m_sBusy);
-			sz.cy += TIP_TEXTHEIGHT;
-		}
-
-		if (m_sPush.GetLength())
-		{
-			ExpandSize( dc, sz, m_sPush);
-			sz.cy += TIP_TEXTHEIGHT;
-		}
-
-		if (m_sUnstable.GetLength())
-		{
-			ExpandSize( dc, sz, m_sUnstable);
-			sz.cy += TIP_TEXTHEIGHT;
-		}
-	}
-	
 	if ( m_pMetadata.GetCount() )
 	{
 		sz.cy += 5 + 6;
@@ -768,6 +735,55 @@ CSize CMatchTipCtrl::ComputeSize()
 		sz.cx = max( sz.cx, m_nKeyWidth + nValueWidth );
 		sz.cy += TIP_TEXTHEIGHT * m_pMetadata.GetCount();
 	}
+
+	// Busy/Firewalled/unstable warnings. Queue info.
+	if ( m_sBusy.GetLength() || m_sPush.GetLength() || m_sUnstable.GetLength() || m_sQueue.GetLength() )
+	{
+		sz.cy += 11;
+
+		if ( m_sBusy.GetLength() )
+		{
+			dc.SelectObject( &CoolInterface.m_fntBold );
+			ExpandSize( dc, sz, m_sBusy, 20 );
+			dc.SelectObject( &CoolInterface.m_fntNormal );
+			sz.cy += TIP_ICONHEIGHT;
+		}
+
+		if ( m_sQueue.GetLength() )
+		{
+			if ( m_sBusy.GetLength() )				//Align queue info with above (if present)
+				ExpandSize( dc, sz, m_sQueue, 20 );
+			else
+				ExpandSize( dc, sz, m_sQueue );
+			sz.cy += TIP_TEXTHEIGHT;
+		}
+
+		if ( m_sPush.GetLength() )
+		{
+			dc.SelectObject( &CoolInterface.m_fntBold );
+			ExpandSize( dc, sz, m_sPush, 20 );
+			dc.SelectObject( &CoolInterface.m_fntNormal );
+			sz.cy += TIP_ICONHEIGHT;
+		}
+
+		if ( m_sUnstable.GetLength() )
+		{
+			dc.SelectObject( &CoolInterface.m_fntBold );
+			ExpandSize( dc, sz, m_sUnstable, 20 );
+			dc.SelectObject( &CoolInterface.m_fntNormal );
+			sz.cy += TIP_ICONHEIGHT;
+		}
+	}
+
+	//Partial warning
+	if ( m_sPartial.GetLength() )
+	{
+		sz.cy += 5 + 6;
+
+		ExpandSize( dc, sz, m_sPartial );
+		sz.cy += TIP_TEXTHEIGHT;
+	}
+
 	
 	dc.SelectObject( pOldFont );
 	
@@ -868,40 +884,8 @@ void CMatchTipCtrl::OnPaint()
 	pt.x -= 40;
 	pt.x -= 40;
 	pt.y += 16;
-	
-	if (m_sBusy.GetLength() || m_sPush.GetLength() || m_sUnstable.GetLength())
-	{
-		pt.y += 5;
-		dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
-			m_crBorder, m_crBorder );
-		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
-		pt.y += 6;
 
-		dc.SetTextColor( m_crWarnings );
-		dc.SelectObject( &CoolInterface.m_fntBold );
-
-		if (m_sBusy.GetLength())
-		{
-			DrawText ( dc, pt, m_sBusy);
-			pt.y += TIP_TEXTHEIGHT;
-		}
-
-		if (m_sPush.GetLength())
-		{
-			DrawText ( dc, pt, m_sPush);
-			pt.y += TIP_TEXTHEIGHT;
-		}
-
-		if (m_sUnstable.GetLength())
-		{	
-			DrawText ( dc, pt, m_sUnstable);
-			pt.y += TIP_TEXTHEIGHT;
-		}
-
-		dc.SetTextColor( m_crText );
-		dc.SelectObject( &CoolInterface.m_fntNormal );
-	}
-
+	//Hashes
 	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() )
 	{
 		pt.y += 5;
@@ -928,28 +912,95 @@ void CMatchTipCtrl::OnPaint()
 			pt.y += TIP_TEXTHEIGHT;
 		}
 	}
-	
-	if ( m_sPartial.GetLength() || m_sQueue.GetLength() )
+
+	//Busy, firewalled, unstabled warnings. Queue info
+	if (m_sBusy.GetLength() || m_sPush.GetLength() || m_sUnstable.GetLength() || m_sQueue.GetLength())
 	{
 		pt.y += 5;
 		dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
 			m_crBorder, m_crBorder );
 		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
 		pt.y += 6;
-		
-		if ( m_sPartial.GetLength() )
+
+		dc.SetTextColor( m_crWarnings );
+		dc.SelectObject( &CoolInterface.m_fntBold );
+
+		//Source busy warning
+		if (m_sBusy.GetLength())
 		{
-			DrawText( dc, pt, m_sPartial );
-			pt.y += TIP_TEXTHEIGHT;
+			ShellIcons.Draw( &dc, SHI_BUSY, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+
+			CPoint ptTextWithIcon = pt;
+			ptTextWithIcon.x += 20;
+			ptTextWithIcon.y += 1;
+
+			DrawText ( dc, ptTextWithIcon, m_sBusy);
+			pt.y += TIP_ICONHEIGHT;
 		}
-		
+
+		dc.SetTextColor( m_crText );
+		dc.SelectObject( &CoolInterface.m_fntNormal );
+
+		//Queue info
 		if ( m_sQueue.GetLength() )
 		{
-			DrawText( dc, pt, m_sQueue );
+			CPoint ptTextWithIcon = pt;
+			ptTextWithIcon.x += 20;
+
+			if ( m_sBusy.GetLength() )			//Align queue info with above (if present)
+				DrawText( dc, ptTextWithIcon, m_sQueue );
+			else
+				DrawText( dc, pt, m_sQueue );
+
 			pt.y += TIP_TEXTHEIGHT;
 		}
+
+		dc.SetTextColor( m_crWarnings );
+		dc.SelectObject( &CoolInterface.m_fntBold );
+
+		//Source firewalled warning
+		if (m_sPush.GetLength())
+		{
+			ShellIcons.Draw( &dc, SHI_FIREWALL, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+
+			CPoint ptTextWithIcon = pt;
+			ptTextWithIcon.x += 20;
+			ptTextWithIcon.y += 1;
+
+			DrawText ( dc, ptTextWithIcon, m_sPush);
+			pt.y += TIP_ICONHEIGHT;
+		}
+
+		//Source unstable warning
+		if (m_sUnstable.GetLength())
+		{	
+			ShellIcons.Draw( &dc, SHI_UNSTABLE, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+
+			CPoint ptTextWithIcon = pt;
+			ptTextWithIcon.x += 20;
+			ptTextWithIcon.y += 1;
+
+			DrawText ( dc, ptTextWithIcon, m_sUnstable);
+			pt.y += TIP_ICONHEIGHT;
+		}
+		dc.SetTextColor( m_crText );
+		dc.SelectObject( &CoolInterface.m_fntNormal );
 	}
 	
+	//Partial warning
+	if ( m_sPartial.GetLength() )
+	{
+		pt.y += 5;
+		dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
+			m_crBorder, m_crBorder );
+		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
+		pt.y += 6;
+
+		DrawText( dc, pt, m_sPartial );
+		pt.y += TIP_TEXTHEIGHT;
+	}
+	
+	//Metadata
 	if ( m_pMetadata.GetCount() )
 	{
 		pt.y += 5;
