@@ -16,7 +16,7 @@
                        description="Shareaza Default Hungarian Skin File"
                        link="http://www.shareaza.com/"
                        email="yuri1 (at) freemail (dot) hu"
-                       version="2.0.0.14."
+                       version="2.0.2.11"
                        type="Language"
                        language="hu"
                        prompt="Kattints ide a magyar nyelvhez."
@@ -506,7 +506,7 @@
                                <separator/>
                                <item id="ID_VIEW_SECURITY" text="Biztonság" shortcut="F7"/>
                                <item id="ID_VIEW_HOSTS" text="Kiszolgálók listája" shortcut="F8"/>
-                               <item id="ID_VIEW_DISCOVERY" text="Szerverfürkésző" shortcut="F9"/>
+                               <item id="ID_VIEW_DISCOVERY" text="Szerverkereső" shortcut="F9"/>
                                <item id="ID_VIEW_TRAFFIC" text="Grafikon" shortcut="F10"/>
                                <separator/>
                                <item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
@@ -545,7 +545,7 @@
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
-                               <item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+                               <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
                                <item id="ID_HELP_WEB_3" text="Slyck.com"/>
                        </menu>
@@ -582,7 +582,7 @@
                        <separator/>
                        <item id="ID_VIEW_SECURITY" text="Biztonság" shortcut="F7"/>
                        <item id="ID_VIEW_HOSTS" text="Kiszolgálók listája" shortcut="F8"/>
-                       <item id="ID_VIEW_DISCOVERY" text="Szerverfürkésző" shortcut="F9"/>
+                       <item id="ID_VIEW_DISCOVERY" text="Szerverkereső" shortcut="F9"/>
                        <item id="ID_VIEW_TRAFFIC" text="Grafikon" shortcut="F10"/>
                        <separator/>
                        <item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
@@ -624,7 +624,7 @@
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
-                               <item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+                               <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
                                <item id="ID_HELP_WEB_3" text="Slyck.com"/>
                        </menu>
@@ -657,7 +657,7 @@
                <separator/>
                <item id="ID_VIEW_SECURITY" text="Biztonság"/>
                <item id="ID_VIEW_HOSTS" text="Kiszolgálók listája"/>
-               <item id="ID_VIEW_DISCOVERY" text="Szerverfürkésző"/>
+               <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
                <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
@@ -676,7 +676,7 @@
                <separator/>
                <item id="ID_VIEW_SECURITY" text="Biztonság"/>
                <item id="ID_VIEW_HOSTS" text="Kiszolgálók listája"/>
-               <item id="ID_VIEW_DISCOVERY" text="Szerverfürkésző"/>
+               <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
                <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
@@ -742,7 +742,7 @@
                <separator/>
                <item id="ID_VIEW_SECURITY" text="Biztonság"/>
                <item id="ID_VIEW_HOSTS" text="Kiszolgálók listája"/>
-               <item id="ID_VIEW_DISCOVERY" text="Szerverfürkésző"/>
+               <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
                <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
@@ -781,15 +781,15 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
-                       <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
-                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
-                       <separator/>
+              <menu text="Webszolgáltatások">
+       <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
                        <item id="ID_SEARCH_COPY" text="URL másolása..."/>
+                       <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
        </menu>
        <menu name="CSearchWnd">
                <item id="ID_SEARCH_DOWNLOAD" text="Letöltés"/>
+                <item id="ID_SEARCH_DOWNLOADNOW" text="Letöltés most"/>
                <item id="ID_SEARCH_COPY" text="URL másolása"/>
                <separator/>
                <item id="ID_BROWSE_LAUNCH" text="Fájllista és profil"/>
@@ -797,14 +797,14 @@
                <item id="ID_SECURITY_BAN" text="Felhasználó letiltása"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
                </menu>
@@ -828,11 +828,10 @@
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="_Web File Info">
+               <menu text="Webes fájlinfó">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
-                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
-                       <separator/>
                        <item id="ID_SEARCH_COPY" text="URL másolása..."/>
+                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
                </menu>
        </menu>
        <menu name="CBrowseHostWnd">
@@ -842,14 +841,14 @@
                <item id="ID_SEARCH_CHAT" text="Chat"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
                </menu>
@@ -868,14 +867,14 @@
                <item id="ID_SEARCH_CHAT" text="Chat"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
                </menu>
@@ -1069,20 +1068,19 @@
                <item id="ID_LIBRARY_DELETE" text="Törlés"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
-                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
-                       <separator/>
                        <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata letöltése"/>
                        <separator/>
-                       <item id="ID_LIBRARY_URL" text="URL másolása"/>
+                       <item id="ID_LIBRARY_URL" text=""/>
+                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
                </menu>
                <menu text="Rendező">
                        <item id="ID_LIBRARY_RENAME" text="Fájl átnevezése"/>
@@ -1098,22 +1096,23 @@
                <separator/>
                <item id="ID_LIBRARY_SHARED_FILE" text="Megosztott"/>
                <separator/>
-               <item id="ID_LIBRARY_URL" text="URL másolása"/>
+               <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="Törlés"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
-                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
+                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata letöltése"/>
                        <separator/>
-                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata megszerzése"/>
+                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
+                       <item id="ID_LIBRARY_CREATETORRENT" text=".torrent fájl készítése"/>
                </menu>
                <menu text="Rendező">
                        <item id="ID_LIBRARY_RENAME" text="Fájl átnevezése"/>
@@ -1135,20 +1134,19 @@
                <item id="ID_LIBRARY_DELETE" text="Törlés"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+               <menu text="Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
+                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata letöltése"/>
+                       <separator/>
+                       <item id="ID_LIBRARY_URL" text=""/>
                        <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
-                       <separator/>
-                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata megszerzése"/>
-                       <separator/>
-                       <item id="ID_LIBRARY_URL" text="URL másolása"/>
                </menu>
                <menu text="Rendező">
                        <item id="ID_LIBRARY_RENAME" text="Fájl átnevezése"/>
@@ -1166,23 +1164,23 @@
                <separator/>
                <item id="ID_LIBRARY_SHARED_FILE" text="Megosztott"/>
                <separator/>
-               <item id="ID_LIBRARY_URL" text="URL másolása"/>
+               <item id="ID_LIBRARY_URL" text=""/>
                <item id="ID_LIBRARY_DELETE" text="Törlés"/>
                <separator/>
                <menu text="Keresés">
-                       <item id="ID_SEARCH_FOR_THIS" text="Ezt keresd"/>
+                       <item id="ID_SEARCH_FOR_THIS" text="Keresés URN alapján"/>
                        <item id="ID_SEARCH_FOR_SIMILAR" text="Hasonló fájlok"/>
                        <separator/>
                        <item id="ID_SEARCH_FOR_ARTIST" text="Ugyanattól az előadótól"/>
                        <item id="ID_SEARCH_FOR_ALBUM" text="Ugyanabból az albumból"/>
                        <item id="ID_SEARCH_FOR_SERIES" text="Ugyanabból a sorozatból"/>
                </menu>
-               <menu text="Web">
+              <menu text="_Webszolgáltatások">
                        <item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticket"/>
-                       <!--<item id="ID_LIBRARY_JIGLE" text="Jigle Lookup"/>-->
+                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata letöltése"/>
                        <separator/>
-                       <item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata megszerzése"/>
                        <item id="ID_LIBRARY_CREATETORRENT" text=".torrent fájl készítése"/>
+                       <!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
                </menu>
                <menu text="Rendező">
                        <item id="ID_LIBRARY_UNLINK" text="Fájlok eltávolítása"/>
@@ -1301,10 +1299,10 @@
        </menu>
        <!-- SYSTEM WINDOW -->
        <menu name="CSystemWnd">
-               <item id="ID_SYSTEM_VERBOSE" text="Részletes szöveges nézet"/>
+               <item id="ID_SYSTEM_VERBOSE" text="Részletes log"/>
                <item id="ID_SYSTEM_TIMESTAMP" text="Időbélyegző"/>
                <separator/>
-               <item id="ID_SYSTEM_CLEAR" text="Tároló törlése"/>
+               <item id="ID_SYSTEM_CLEAR" text="Log törlése"/>
        </menu>
        <!-- NEIGHBOURS WINDOW -->
        <menu name="CNeighboursWnd.Basic">
@@ -1343,11 +1341,11 @@
                <item id="ID_HITMONITOR_SEARCH" text="Keresés"/>
                <separator/>
                <item id="ID_SEARCHMONITOR_PAUSE" text="Szüneteltetés"/>
-               <item id="ID_SEARCHMONITOR_CLEAR" text="Tároló törlése"/>
+               <item id="ID_SEARCHMONITOR_CLEAR" text="Adatok törlése"/>
        </menu>
        <!-- GRAPH/TRAFFIC WINDOW -->
        <menu name="CTrafficWnd">
-               <item id="ID_TRAFFIC_SETUP" text="Grafikon kiválasztása"/>
+               <item id="ID_TRAFFIC_SETUP" text="Grafikon beállítása"/>
                <separator/>
                <item id="ID_TRAFFIC_GRID" text="Rácsok"/>
                <item id="ID_TRAFFIC_AXIS" text="Tengely"/>
@@ -1370,7 +1368,7 @@
                <item id="ID_SECURITY_IMPORT" text="Importálás..."/>
                <item id="ID_SECURITY_EXPORT" text="Exportálás..."/>
                <separator/>
-               <menu text="Default P_olicy">
+               <menu text="Alapszabály">
                        <item id="ID_SECURITY_POLICY_ACCEPT" text="Elfogad"/>
                        <item id="ID_SECURITY_POLICY_DENY" text="Tagad"/>
                </menu>
@@ -1446,8 +1444,8 @@
                        <icon res="130" width="32" height="32"/><gap size="8"/>
                        <heading align="middle">K A P C S O L Ó D J</heading>
                        <newline gap="8" indent="42"/>
-                       <text>Üdvözöllek a Shareazaban! &#160;Jelenkeg egyik p2p hálózathoz sem csatlakoztál. &#160;</text>
-                       <link target="raza:command:ID_NETWORK_CONNECT">Az indításhoz kattints ide</link>
+                       <text>Üdvözöllek a Shareazában! &#160;Jelenleg egyik p2p hálózathoz sem csatlakoztál. &#160;</text>
+                       <link target="raza:command:ID_NETWORK_CONNECT">Az indításhoz kattints ide.</link>
                        <newline gap="18" indent="0"/>
                </group>
 
@@ -1638,6 +1636,22 @@
                        <text id="UploadedOne">1 fájlt feltöltöttél (%s).</text>
                        <text id="UploadedMany">%i fájlt feltöltöttél (%s).</text>
                </para>
+       </document>
+
+        <document name="CHomeTorrentsBox" title="Torrentek" leftMargin="6" topMargin="6">
+               <styles>
+                       <style name="default">
+                               <font face="Verdana" size="9"/>
+                       </style>
+               </styles>
+               <para align="center">
+                       <text id="TorrentsNone" format="b">Jelenleg nem terjesztesz torrentfájlt</text>
+                       <text id="TorrentsOne" format="b">1 torrentfájl terjesztése</text>
+                       <text id="TorrentsMany" format="b">%i torrentfájl terjesztése</text>
+                       <newline gap="4"/>
+                       <link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Torrent terjesztése</link>
+               </para>
+
        </document>
 
        <!-- Settings Pages -->
@@ -1940,8 +1954,6 @@
                A Shareaza nem kap információkat az elérhető letöltési szálakról.</text>
        </document>
 
-       <!-- Search help documents -->
-
 <!-- General help documents -->
 
 <document name="GeneralHelp.DiskSpace">
@@ -1949,16 +1961,28 @@
     <newline gap="8"/>
     <text>A Shareaza által használt lemez(ek)en lévő szabad hely kevés.</text>
     <newline gap="8"/>
-    <text>Valamennyi szabad helynek mindig kell lenni a lemezeken.
-    A programok instabilakká válhatnak, ha megtelik a lemez és az ideiglenes fájlok
+    <text>Valamennyi szabad helynek mindig kell lenni a lemezeken. A programok instabilakká válhatnak, ha megtelik a lemez és az ideiglenes fájlok
     elveszhetnek. Futtass le egy lemezkarbantartó programot, töröld le a szükségtelen fájlokat és/vagy
     uninstaláld a nem használt programokat.</text>
 </document>
 
+<document name="GeneralHelp.XPsp2">
+                <text format="b">Windows XP Service Pack 2 észlelve</text>
+              <newline gap="8"/>
+                <text>A Shareaza észlelte a Windows XP SP2 jelenlétét. Ez korlátozza az egyszerre létrehozható
+                kapcsolatokat.</text>
+                <newline gap="8"/>
+                <text>A Shareaza csökkentette a kapcsolatok számát és beállította a megfelelő értékeket
+                , de a teljesítmény így csökkenhet.További információkért látogasd meg a
+                Shareaza fórumait.</text>
+       </document>
+
+       <!-- Search help documents -->
+
 <document name="SearchHelp.BadSearch">
     <text format="b">Gyenge keresés</text>
     <newline gap="8"/>
-    <text>Ez a keresés gyengén lett kivitelvzve és nem működik megfelelően.
+    <text>Ez a keresés gyengén lett kivitelezve és nem működik megfelelően.
     A keresések lehetőleg több kifejezést tartalmazzanak és/vagy a fájl kiterjesztését.
     Ne csak kizárásos alapon keressünk és
     kerüljük az általános szavakat.</text>
@@ -1973,8 +1997,7 @@
 <document name="ShareHelp.AlreadyShared">
     <text format="b">Már meg van osztva</text>
     <newline gap="8"/>
-    <text>A kiválsztott mappa már meg van
-    osztva.</text>
+    <text>A kiválsztott mappa már meg van osztva.</text>
     <newline gap="8"/>
     <text> %s </text>
 </document>
@@ -1988,92 +2011,14 @@
     <text>A Windows, Program Files és hasonló mappák
     általában nem tartalmaznak megosztásra alkalmas fájlokat. Esetleg a
     </text><text format="i"> bennük </text><text> található almappák
-    lehetnek meosztásra érdemesek.</text>
+    lehetnek megosztásra érdemesek.</text>
     <newline gap="8"/>
     <text>A Shareaza 'Félkész letöltések' mappát sem kéne megosztani,
     mert a folyamatban lévő letöltések hashelése csökkentheti a rendszer
     teljesítményét.</text>
 </document>
-</documents>
 
-<!-- Navigation Bar -->
-<windowSkins>
-       <windowSkin>
-               <image type="image" language="en" res="241"/>
-               <image type="alpha" language="en" res="246"/>
-               <target window="CMainTabBarCtrl.Basic"/>
-               <anchors>
-                       <anchor name="Background"                               rect="0,0,470,44"/>
-                       <anchor name="_ID_TAB_HOME"                             rect="4,1,80,38"/>
-                       <anchor name="_ID_TAB_LIBRARY"                  rect="86,1,90,38"/>
-                       <anchor name="_ID_TAB_MEDIA"                    rect="178,1,84,38"/>
-                       <anchor name="_ID_TAB_SEARCH"                   rect="264,1,90,38"/>
-                       <anchor name="_ID_TAB_TRANSFERS"                rect="356,1,106,38"/>
-               </anchors>
-               <parts>
-                       <part name="_ID_TAB_HOME.Up"                    rect="0,0,80,38"/>
-                       <part name="_ID_TAB_HOME.Checked"               rect="0,38,80,38"/>
-                       <part name="_ID_TAB_HOME.Hover"                 rect="0,38,80,38"/>
-                       <part name="_ID_TAB_HOME.Down"                  rect="0,76,80,38"/>
-                       <part name="_ID_TAB_LIBRARY.Up"                 rect="80,0,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Checked"    rect="80,38,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Hover"              rect="80,38,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Down"               rect="80,76,90,38"/>
-                       <part name="_ID_TAB_MEDIA.Up"                   rect="170,0,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Checked"              rect="170,38,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Hover"                rect="170,38,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Down"                 rect="170,76,84,38"/>
-                       <part name="_ID_TAB_SEARCH.Up"                  rect="254,0,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Checked"             rect="254,38,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Hover"               rect="254,38,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Down"                rect="254,76,90,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Up"               rect="344,0,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Checked"  rect="344,38,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Hover"    rect="344,38,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Down"             rect="344,76,106,38"/>
-               </parts>
-       </windowSkin>
-       <windowSkin>
-               <image type="image" language="en" res="241"/>
-               <image type="alpha" language="en" res="246"/>
-               <target window="CMainTabBarCtrl"/>
-               <anchors>
-                       <anchor name="Background"                               rect="0,0,574,44"/>
-                       <anchor name="_ID_TAB_HOME"                             rect="4,1,80,38"/>
-                       <anchor name="_ID_TAB_LIBRARY"                  rect="86,1,90,38"/>
-                       <anchor name="_ID_TAB_MEDIA"                    rect="178,1,84,38"/>
-                       <anchor name="_ID_TAB_SEARCH"                   rect="264,1,90,38"/>
-                       <anchor name="_ID_TAB_TRANSFERS"                rect="356,1,106,38"/>
-                       <anchor name="_ID_TAB_NETWORK"                  rect="464,1,102,38"/>
-               </anchors>
-               <parts>
-                       <part name="_ID_TAB_HOME.Up"                    rect="0,0,80,38"/>
-                       <part name="_ID_TAB_HOME.Checked"               rect="0,38,80,38"/>
-                       <part name="_ID_TAB_HOME.Hover"                 rect="0,38,80,38"/>
-                       <part name="_ID_TAB_HOME.Down"                  rect="0,76,80,38"/>
-                       <part name="_ID_TAB_LIBRARY.Up"                 rect="80,0,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Checked"    rect="80,38,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Hover"              rect="80,38,90,38"/>
-                       <part name="_ID_TAB_LIBRARY.Down"               rect="80,76,90,38"/>
-                       <part name="_ID_TAB_MEDIA.Up"                   rect="170,0,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Checked"              rect="170,38,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Hover"                rect="170,38,84,38"/>
-                       <part name="_ID_TAB_MEDIA.Down"                 rect="170,76,84,38"/>
-                       <part name="_ID_TAB_SEARCH.Up"                  rect="254,0,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Checked"             rect="254,38,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Hover"               rect="254,38,90,38"/>
-                       <part name="_ID_TAB_SEARCH.Down"                rect="254,76,90,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Up"               rect="344,0,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Checked"  rect="344,38,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Hover"    rect="344,38,106,38"/>
-                       <part name="_ID_TAB_TRANSFERS.Down"             rect="344,76,106,38"/>
-                       <part name="_ID_TAB_NETWORK.Up"                 rect="450,0,108,38"/>
-                       <part name="_ID_TAB_NETWORK.Checked"    rect="450,38,102,38"/>
-                       <part name="_ID_TAB_NETWORK.Hover"              rect="450,38,102,38"/>
-                       <part name="_ID_TAB_NETWORK.Down"               rect="450,76,102,38"/>
-               </parts>
-       </windowSkin>
-</windowSkins>
+</documents>
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
@@ -2090,7 +2035,7 @@
        <tip id="ID_VIEW_UPLOADS" message="A FELTÖLTÉSEK ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_HOSTS" message="A KISZOLGÁLÓK LISTÁJA ablak elrejtése, mutatása.."/>
        <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása.."/>
-       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról"/>
+       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
        <tip id="ID_SYSTEM_CLEAR" message="A log törlése."/>
        <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak"/>
        <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a bejövő forgalmat mutatja."/>
@@ -2099,18 +2044,19 @@
        <tip id="ID_VIEW_RESULTS_MONITOR" message="A TALÁLATOK FIGYELÉSE ablak elrejtése, mutatása."/>
        <tip id="ID_HOSTCACHE_CONNECT" message="Kapcsolódik a kiválasztott kiszolgáló(k)hoz."/>
        <tip id="ID_HOSTCACHE_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
-       <tip id="ID_SEARCHMONITOR_PAUSE" message="Keresések megfigelésének leállítása."/>
        <tip id="ID_HOSTCACHE_REMOVE" message="Eltávolítja a kiválasztott kiszolgálókat a Kiszolgálók listájából."/>
        <tip id="ID_NETWORK_CONNECT_TO" message="Manuálisan kapcsolódik egy kiszolgálóhoz..."/>
        <tip id="ID_NETWORK_SEARCH" message="Új keresést indít a hálózaton..."/>
-       <tip id="ID_SEARCH_DOWNLOAD" message="Letölti a kiválasztott fájl(okat)."/>
+       <tip id="ID_SEARCH_DOWNLOAD" message="Letölti a kiválasztott fájl(ok)at."/>
+       <tip id="ID_SEARCH_DOWNLOADNOW" message="Elsőbbséget ad a letöltendő fájl(ok)nak."/>
        <tip id="ID_SEARCH_SEARCH" message="Újra keres a hálózaton..."/>
        <tip id="ID_SEARCH_FILTER" message="Szűri a keresési eredményeket a megadott paramétereknek megfelelően..."/>
        <tip id="ID_SEARCH_FILTER_REMOVE" message="Szűrés eltávolítása."/>
        <tip id="ID_SEARCH_GROUPED" message="Csoportosítja az eredményeket."/>
-       <tip id="ID_HITMONITOR_CLEAR" message="Kiüríti a tárolót."/>
+       <tip id="ID_HITMONITOR_CLEAR" message="Törli az összes találati bejegyzést."/>
+       <tip id="ID_SEARCHMONITOR_PAUSE" message="Keresések megfigelésének leállítása."/>
        <tip id="ID_HITMONITOR_PAUSE" message="Szünetelteti a megfigyelést."/>
-       <tip id="ID_SEARCHMONITOR_CLEAR" message="Kiüríti a tárolót."/>
+       <tip id="ID_SEARCHMONITOR_CLEAR" message="Törli az összes keresési bejegyzést."/>
        <tip id="ID_SEARCH_COPY" message="Lemásolja a fájl URL-ét."/>
        <tip id="ID_HITMONITOR_SEARCH" message="Keresés a hálózaton a megadottak alapján."/>
        <tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 hubok mutatása."/>
@@ -2129,7 +2075,7 @@
        <tip id="ID_LIBRARY_REMOVE" message="Eltávolítja a kiválasztott mappákat."/>
        <tip id="ID_LIBRARY_ADD" message="Új mappa a könyvtárban..."/>
        <tip id="ID_LIBRARY_PROPERTIES" message="Megjeleníti a fájl tulajdonságait..."/>
-       <tip id="ID_LIBRARY_COLUMNS" message="Select metadata columns to be displayed..."/>
+       <tip id="ID_LIBRARY_COLUMNS" message="Milyen oszlopokat kívánsz megjeleníteni..."/>
        <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Szüneteltetett letöltések törlése."/>
        <tip id="ID_UPLOADS_LAUNCH" message="Megnyitás."/>
        <tip id="ID_UPLOADS_DISCONNECT" message="A feltöltés(ek) szétkapcsolása."/>
@@ -2148,6 +2094,7 @@
        <tip id="ID_TRAFFIC_LEGEND" message="Jelmagyarázat megjelenítése."/>
        <tip id="ID_TRAFFIC_SETUP" message="A grafikon elemeinek beállítása..."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Grafikon törlése."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése"/>
        <tip id="ID_TOOLS_WIZARD" message="Shareaza Gyors beállítások megnyitása..."/>
        <tip id="ID_CHILD_RESTORE" message="A kiválasztott ablak megnyitása."/>
        <tip id="ID_CHILD_CLOSE" message="A kiválasztott ablak bezárása."/>
@@ -2192,7 +2139,7 @@
        <tip id="ID_VIEW_TABBED" message="Shareaza használata az összetett nézetben."/>
        <tip id="ID_VIEW_WINDOWED" message="A Shareaza használata az ablakos nézetben."/>
        <tip id="ID_LIBRARY_URL" message="URL másolása."/>
-       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERFÜRKÉSZŐ ablak elrejtése, mutatása.."/>
+       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERKERESŐ ablak elrejtése, mutatása.."/>
        <tip id="ID_DISCOVERY_EDIT" message="A kiválasztott szolgáltatás tulajdonságai."/>
        <tip id="ID_DISCOVERY_QUERY" message="A kiválasztott szolgáltatás lekérdezése."/>
        <tip id="ID_DISCOVERY_REMOVE" message="A kiválasztott szolgáltatás eltávolítása."/>
@@ -2354,6 +2301,7 @@
        <tip id="ID_UPLOADS_FILTER_MENU" message="Válaszd ki, milyen feltöltéseket akarsz mejeleníteni, ejrejteni."/>
        <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="A félkész letöltés(ek) törlése."/>
        <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="A kiválasztott letöltés(ek) törlése."/>
+        <tip id="ID_LIBRARY_CREATETORRENT" message=".torrent fájl létrehozása ehhez a fájl(ok)hoz."/>
        <tip id="ID_WINDOW_NAVBAR" message="A navigációsablak mutatása, elrejtése."/>
        <tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
        <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Gyűjteménynézet mutatása" tip="Gyűjteménynézet"/>
@@ -2361,10 +2309,12 @@
        <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
        <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
        <tip id="ID_LIBRARY_SEED_TORRENT" message="A kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message=" kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
        <tip id="ID_DOWNLOADS_EDIT" message="A fejlett letöltésszerkesztő mutatása..."/>
        <tip id="ID_MEDIA_MUTE" message="Némítás"/>
        <tip id="ID_WINDOW_REMOTE" message="A Shareaza távirányítójának mutatása"/>
        <tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent feltöltések mutatása."/>
+       <tip id="ID_TOOLS_MERCORA" message="P2P Rádió indítása"/>
        <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
        <tip id="ID_WINDOW_CASCADE" message="Minden ablak teljes méretűvé alakítása."/>
        <tip id="ID_WINDOW_TILE_HORZ" message="Vízszintesen rendezi a megnyitott ablakokat."/>
@@ -2387,7 +2337,7 @@
        <string id="WINDOW_TRAFFIC" value="Grafikon"/>
        <string id="WINDOW_CHAT" value="Chat"/>
        <string id="WINDOW_SECURITY" value="Biztonság"/>
-       <string id="WINDOW_DISCOVERY" value="Szerverfürkésző szolg."/>
+       <string id="WINDOW_DISCOVERY" value="Szerverkereső szolg."/>
        <string id="WINDOW_BROWSEHOST" value="Böngészés"/>
        <string id="WINDOW_HOME" value="Shareaza kezdőlap"/>
        <string id="WINDOW_MEDIA" value="Médialejátszó"/>
@@ -2397,7 +2347,7 @@
        <string id="8001" value="Üdvözöllek a Shareazában"/>
        <string id="8002" value="Fájl tulajdonságai"/>
        <string id="8003" value="Saját profil szerkesztése"/>
-       <string id="8004" value="!Üdvözöllek a Shareazában (version) !\n.\nA Shareaza teljesen ingyenes.\nKérlek, felelősséggel használt és tiszteld mások jogait.\n."/>
+       <string id="8004" value="!Üdvözöllek a Shareazában! Verziószám: (version) !\n.\nA Shareaza teljesen ingyenes.\nKérlek, használd felelősséggel és tiszteld mások jogait.\n."/>
        <string id="8005" value=" (forgalom után bezárás)"/>
        <string id="8006" value="Nem vagy kapcsolódva. Kattints a Kapcsolódás gombra a kezdéshez."/>
        <string id="8007" value="Nincsen aktív keresés. Kattints ide a fájlok kereséséhez."/>
@@ -2405,6 +2355,8 @@
        <string id="8009" value="Biztos, hogy törölni akarod a &quot;%s&quot; kinézetet? Ezt már nem lehet később visszavonni."/>
        <string id="8010" value="Ez a Shareaza béta verziója. Töltsd le a legújabb kész vertiót a www.shareaza.com -ról."/>
        <string id="8011" value="A kinézet megváltoztatása bezár minden nyitott ablakot. Most akarod megvátoztatni?"/>
+       <string id="8062" value="Hub mód %lu szomszéddal.  %s a helyi könyvtárban."/>
+       <string id="8063" value="Kapcsolódva. %s a helyi könyvtárban."/>
        <string id="8064" value="Kapcsolódva vagy %lu szomszéddal.  %s a megosztásod mérete."/>
        <string id="8065" value="Kapcsolódik a hálózathoz..."/>
        <string id="8066" value="Nincs kapcsolódva a hálózathoz."/>
@@ -2431,6 +2383,8 @@
        <string id="8132" value="Néhány találat van, de ki lettek szűrve."/>
        <string id="8133" value="Aktív keresés folyamatban..."/>
        <string id="8134" value="Új keresést indítottál. Ki akarod törölni az előző keresés eredményeit?"/>
+       <string id="8141" value="Keresési ablak mutatása"/>
+       <string id="8142" value="Keresési ablak elrejtése"/>
        <string id="8143" value="Keresés..."/>
        <string id="8144" value="Keresést indít"/>
        <string id="8145" value="Keresés újra"/>
@@ -2479,6 +2433,8 @@
        <string id="8239" value="Kész"/>
        <string id="8240" value="Letöltés áthelyezése:"/>
        <string id="8241" value="Hibaellenőrzés:"/>
+       <string id="8242" value="%s a %s (%.2f%%)-ból"/>
+       <string id="8243" value="Feltöltve:"/>
        <string id="8288" value="Tallózás a könyvtárban"/>
        <string id="8289" value="Tallózás "/>
        <string id="8290" value="%i mappa tartalmának a tallózása"/>
@@ -2499,6 +2455,16 @@
        <string id="8313" value="Ez a fájl spamnek néz ki."/>
        <string id="8314" value="Egyszer már letöltötted és utána törölted ezt a fájlt."/>
        <string id="8315" value="Feketelistán van: "/>
+       <string id="8316" value="Találatok"/>
+       <string id="8317" value="Feltöltések"/>
+       <string id="8318" value="%lu ma, %lu teljes"/>
+       <string id="8320" value="Státusz:"/>
+       <string id="8321" value="Sebesség:"/>
+       <string id="8322" value="URL:"/>
+       <string id="8323" value="Kliens:"/>
+       <string id="8324" value="Inaktív"/>
+       <string id="8325" value="Aktív"/>
+       <string id="8326" value="Következő a sorban"/>
        <string id="16064" value="Shareaza hálózati mag indítása..."/>
        <string id="16065" value="Nem tudok akcsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
        <string id="16066" value="Shareaza hálózati mag leállítása..."/>
@@ -2519,6 +2485,7 @@
        <string id="16083" value="A PC hub módba való kényszerítése negatívan befolyásolhatja a hálózati teljesítményt. Általában a legjobb, ha a Shareaza dönti el, hogy érdemes-e átkapcsolni vagy nem.\n\nHub módban nem kapsz jobb keresési eredményt, nem teszel szert előnyre.\n\nBiztos, hogy ezt akarod tenni?"/>
        <string id="16084" value="A Gnutella1 kikapcsolása csökkentheti a találatok számát kereséskor és hub módban másokra is kihat ez a beállítás. Biztos, hogy ezt akarod tenni?"/>
        <string id="16085" value="A Gnutella2 a Shareaza fő hálózata. Kikapcsolásával lecsökkenhet a találatok száma és minősége kereséskor. Biztos, hogy ezt akarod tenni?"/>
+       <string id="16087" value="A feltöltési sebesség túl alacsony a hálózat bekapcsolásához"/>
        <string id="16128" value="Bejövő kapcsolat elfogadva: %s port %i."/>
        <string id="16129" value="Kapcsolódás: %s port %i..."/>
        <string id="16130" value="Nem lehetett kapcsolatot létrehozni: %s."/>
@@ -2700,7 +2667,9 @@
        <string id="16404" value="Nem lehetett telepíteni a(z) &quot;%s&quot; gyűjteményfájlt a &quot;%s&quot; mappába való másolássa."/>
        <string id="16405" value="Le akarod tölteni ezt a fájlt?\n\n&quot;%s&quot;\n\nKattints a Mégse gombra a további kérdések elkerülésére."/>
        <string id="16406" value="Minden fájlt le akarsz tölteni a gyűjteményből?\n\nKattints a Mégse gombra a további kérdések elkerülésére."/>
-       <string id="16407" value="Meg akarod-e akadályozni, hogy minden fájl előtt kérdezzen??"/>
+       <string id="16407" value="Meg akarod-e akadályozni, hogy minden fájl előtt kérdezzen?"/>
+       <string id="16408" value="URL másolása"/>
+       <string id="16409" value="URL exportálása..."/>
        <string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
        <string id="16449" value="Jelenleg vele beszélgetsz: %s (%s)."/>
        <string id="16450" value="Kapcsolat bezárva: %s."/>
@@ -2742,7 +2711,17 @@
        <string id="16773" value="Port:"/>
        <string id="16774" value="Kapcsolódás"/>
        <string id="16775" value="Böngészés"/>
-       <string id="16800" value="Nev választottad ki az internetkapcsolatodat. Válassz egy kapcsolattípust vagy írd be a kapcsolatod sebességét."/>
+       <string id="16776" value="Hozzáad"/>
+       <string id="16777" value="Fájlnév:"/>
+       <string id="16778" value="URL:"/>
+       <string id="16779" value="Típus:"/>
+       <string id="16780" value="Nincs meghatározva"/>
+       <string id="16781" value="Kérés..."/>
+       <string id="16782" value="Siker!"/>
+       <string id="16783" value="Kész, zárd be"/>
+       <string id="16784" value="Bezár"/>
+       <string id="16785" value="(Nincs képi megjelenítés)"/>
+       <string id="16800" value="Nem választottad ki az internetkapcsolatodat. Válassz egy kapcsolattípust vagy írd be a kapcsolatod sebességét."/>
        <string id="16801" value="Válaszd ki az internetkapcsolatod típusát."/>
        <string id="16802" value="Nem választottál ki megosztani való mappákat. Bizots ilyen köcsög akarsz lenni?"/>
        <string id="16803" value="A mappa, amit meg akarsz osztani egy másik mappában már meg van osztva:\n\n%s"/>
@@ -2751,8 +2730,9 @@
        <string id="16806" value="Port-forwardingot akarsz csinálni a NAT router vagy a tűzfal felé.\n\nÁllítsd be a hálózatodat, hogy a TCP port %i-ot forwardolja."/>
        <string id="16807" value="Írd be a sávszél-korlátozást: &quot;123 kb/s&quot; kilobits per másodperc vagy &quot;123 KB/s&quot; kilobytes per másodperc formában."/>
        <string id="16808" value="Nem adtad meg a korodat és a nemedet. Tovább akarsz így menni?"/>
-       <string id="16864" value="Fürkésző szolgáltatás keresése..."/>
-       <string id="16865" value="Fürkésző szolgáltatás keresése &quot;%s&quot;..."/>
+       <string id="16809" value="Kilépés"/>
+       <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
+       <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
        <string id="16867" value="Fürkésző szolgáltatás &quot;%s&quot; hibázott, hibák száma: %i."/>
        <string id="16868" value="Fürkésző szolgáltatás &quot;%s&quot; %i alkalommal hibázott, eltávolítás."/>
@@ -2822,7 +2802,6 @@
        <string id="17233" value="Időtúllépés az eDonkey2000 klines viszontválaszánál: %s."/>
        <string id="17234" value=" eDonkey2000 klines link megtagadása, mert az eDonkey2000 ki van kapcsolva: %s."/>
        <string id="17248" value="Félkész eDonkey2000 letöltések importálása..."/>
-       <string id="17473" value="Időtúllépés a BitTorrent klienssel való kapcsolódásakor %s."/>
        <string id="17249" value="Fladat kész, %i félkész letöltés importálva."/>
        <string id="17250" value="Mappa beolvasása: &quot;%s&quot;..."/>
        <string id="17251" value="  Nem lehetett a fájlt importálni."/>
@@ -2836,6 +2815,7 @@
        <string id="17259" value="  Ez a fájl már a letöltési listában van."/>
        <string id="17260" value="  Nincs elég hely a letöltés másolásához."/>
        <string id="17472" value="%s a bejövő kapcsolat egy BitTorrent kapcsolódás, egyeztetés..."/>
+       <string id="17473" value="Időtúllépés a BitTorrent klienssel való kapcsolódásakor %s."/>
        <string id="17474" value="Viszontválasz közbeni időtúllépés a BitTorrent kliens által: %s."/>
        <string id="17475" value="BitTorrent kapcsolat bezárása a forgalom hiánya miatt: %s."/>
        <string id="17476" value="BitTorrent kapcsolódás nem sikerült, mert a kliensnek más GUID-je van: %s."/>
@@ -2880,7 +2860,35 @@
        <string id="19001" value="Egy felhasználónevet és egy jelszót kell választanod."/>
        <string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
        <string id="20000" value="Nincs elérhető URN"/>
-
+       <string id="20100" value="Kapcsolódás"/>
+       <string id="20101" value="Kérés"/>
+       <string id="20102" value="Válasz"/>
+       <string id="20103" value="Letöltés"/>
+       <string id="20104" value="TTH"/>
+       <string id="20105" value="Hash érték"/>
+       <string id="20106" value="Metadata"/>
+       <string id="20107" value="Elfoglalt"/>
+       <string id="20108" value="Várakozási sorba kerül"/>
+       <string id="20109" value="Sorbanáll"/>
+       <string id="20110" value="Ismeretlen"/>
+       <string id="20111" value="Kész"/>
+       <string id="20112" value="Terjesztés"/>
+       <string id="20113" value="Mozgatás"/>
+       <string id="20114" value="Szünet"/>
+       <string id="20115" value="Hiba"/>
+       <string id="20116" value="Nem mozgatható"/>
+       <string id="20117" value="Ellenőrzés"/>
+       <string id="20118" value="Aktív"/>
+       <string id="20119" value="Várakozás"/>
+       <string id="20120" value="Keresés"/>
+       <string id="20121" value="Létrehozás"/>
+       <string id="20122" value="Torrent"/>
+       <string id="20123" value="Tracker üzemen kívül"/>
+       <string id="20124" value="(Nincs forrás)"/>
+       <string id="20125" value="Ellenőrizve"/>
+       <string id="20126" value="Ellenőrizetlen"/>
+       <string id="20127" value="forrás"/>
+       <string id="20128" value="forrás"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2895,7 +2903,7 @@
 
        <dialog name="CGeneralSettingsGroup" cookie="" caption="Általános"/>
 
-       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="Általános">
+       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Általános">
                <control caption="Felhasználói felület:"/>
                <control caption="Automatikus kapcsolódás indításkor"/>
                <control caption="Együtt töltődik be a Windows-al"/>
@@ -2904,6 +2912,7 @@
                <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
                <control caption="Új letöltések kibontása"/>
                <control caption="Ablak mutatása URL megyitása előtt"/>
+
                <control caption="Sebességérték:"/>
                <control/>
                <control caption="Gyorstippek:"/>
@@ -2917,6 +2926,7 @@
                <control/>
                <control caption="Kis méret gomb:"/>
                <control/>
+               <control caption="Keresőpanel elrejtése kereséskor"/>
        </dialog>
 
        <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Könyvtár">
@@ -3144,15 +3154,15 @@
          <control/><control/>
          <control caption="Letöltési kapcsolatok:"/>
          <control/><control/>
-         <control caption="Kliens kapcsolódások"/>
+         <control caption="kliens kapcsolódhat hozzám egyszerre "/>
          <control caption="Felhasználói felület:"/>
          <control caption="További BitTorrent felhasználói elemek"/>
          <control caption="EndGame:"/>
          <control caption="Letöltés végének gyorsítása (EndGame mód)"/>
-         <control caption="Torrentkészítő"/>
+         <control caption="Torrentkészítő program útvonala:"/>
          <control caption="Tracker:"/>
          <control/><control/><control/><control/><control/>
-         <control caption="Torrentek egyszerre"/>
+         <control caption="torrent letöltése egyszerre"/>
          <control caption="Alapértelmezett Tracker:"/>
 </dialog>
 
@@ -3260,9 +3270,9 @@
                <control/>
                <control caption="A számítógép egy tűzfal vagy NAT router mögött van?"/>
                <control/>
-               <control caption="Ha nem tudod, milyen gyors a neted:"/>
+               <control caption="Az internetelérésed típusa, sebessége:"/>
                <control/>
-               <control caption="VAGY válassz innen:"/>
+               <control caption="Csak sebesség:"/>
                <control/>
        </dialog>
 
@@ -3290,9 +3300,9 @@
                <control caption="A Shareaza használata közben találkozhatsz hasonló érdeklődésű emberekkel. Megnézheted mások profilját és megosztását."/>
                <control caption="Becenév:"/>
                <control/>
-               <control caption="Én egy:"/>
+               <control caption="Kor, nem:"/>
                <control/><control/>
-               <control caption="Innen:"/>
+               <control caption="Lakhely:"/>
                <control/><control/>
        </dialog>
 
@@ -3317,7 +3327,7 @@
 
        <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Köszöntelek a Shareazában [7/7]">
                <control caption="Ennyi volt! A Shareaza kész a használatra."/>
-               <control caption="Ha meg kell változtatnod valami, csak futtasd újra a programot."/>
+               <control caption="Ha meg kell változtatnod valamit, csak futtasd újra a programot."/>
                <control caption="A beállítások után azonnal keresgélhetsz és letölthetsz."/>
                <control caption="Kapcsolódás a hálózathoz a beállítások után"/>
                <control caption="Minden Shareaza indításkor kapcsolódik"/>
@@ -3347,9 +3357,9 @@
                <control caption="Mások is láthassák a profilomat"/>
        </dialog>
 
-       <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEd" caption="Kapcsolat">
+       <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kapcsolat">
                <control caption="Email cím:"/>
-               <control caption="Fő:"/>
+               <control caption="Email cím:"/>
                <control/>
                <control caption="Üzenetküldők:"/>
                <control caption="MSN/.NET Passport:"/>
@@ -3371,9 +3381,9 @@
                <control caption="Város:"/>
                <control/>
                <control caption="Térkép:"/>
-               <control caption="Latitude:"/>
+               <control caption="Szélességi fok:"/>
                <control/>
-               <control caption="Longitude:"/>
+               <control caption="Hosszúsági fok:"/>
                <control/>
                <control caption="Érdeklődési kör:"/>
                <control/>
@@ -3474,7 +3484,7 @@
                <control caption="Mégse"/>
        </dialog>
 
-       <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Szerverfürkésző szolgáltatás hozzáadása">
+       <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Szerverkereső szolgáltatás hozzáadása">
                <control caption="Szolgáltatás címe:"/>
                <control/>
                <control caption="Típusa:"/>
@@ -3554,7 +3564,7 @@
                <control caption="OK"/>
                <control caption="Mégse"/>
                <control/>
-               <control caption="Kész..."/>
+               <control caption="Folyamat"/>
                <control caption="%i fájlt választottál ki a mozgatásra:"/>
        </dialog>
 
@@ -3575,9 +3585,9 @@
                <control caption="Szerkeszt..."/>
                <control caption="Eltávolít"/>
                <control caption="Megjelenik:"/>
-               <control caption="Rácsvonalak"/>
-               <control caption="Függőleges tengely"/>
-               <control caption="Jelmagyarázat"/>
+               <control caption="Rácsok"/>
+               <control caption="Függ. tengely"/>
+               <control caption="Jelmagy."/>
                <control caption="Mintavétel:"/>
                <control caption="Időköz:"/>
                <control/><control/>
@@ -3656,7 +3666,7 @@
                <control caption="Mégse"/>
        </dialog>
 
-       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBums" caption="URL exportálása">
+       <dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URL exportálása">
                <control/>
                <control caption="%lu fájlt választottál ki URL exportálásra. Válaszd ki a megfelelő formátumot és kattints a Mentés gombra."/>
                <control/>
@@ -3682,7 +3692,7 @@
                <control caption="Mégse"/>
                <control caption="Beállítás megjegyzése"/>
                <control caption="Letöltésmonitor megnyitása"/>
-               <control caption="Egy Shareaza által is támogatott URL-re kattintottál, ami a következő szerverfürkésző szolgáltatást adja hozzá a gyűjteményedhez."/>
+               <control caption="Egy Shareaza által is támogatott URL-re kattintottál, ami a következő Szerverkereső szolgáltatást adja hozzá a gyűjteményedhez."/>
        </dialog>
 
        <dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Metadata letöltése...">
@@ -3793,7 +3803,7 @@
                <control/>
                <control caption="ED2K:"/>
                <control/>
-               <control caption="Cuccok:"/>
+               <control caption="Eszközök:"/>
                <control caption="Újraellenőrzés (TTH vagy eD2k hash)"/>
                 <control caption="Az adat 100%-osnak vétele és így újraellenőrzése"/>
                <control caption="Minden forrás elfelejtése"/>
@@ -3814,7 +3824,7 @@
            <control caption="Letöltés"/>
            <control caption="Terjeszt"/>
            <control caption="Mégse"/>
-           <control caption="Ha egy kész fájlt meg akarsz osztani a BitTorrent hálózaton, előbb terjeszteni kell azt. Ha kész, a tottent egy új elemként fog megjelenni a letöltési listán."/>
+           <control caption="Ha egy kész fájlt meg akarsz osztani a BitTorrent hálózaton, előbb terjeszteni kell azt. Ha kész, a torrent egy új elemként fog megjelenni a letöltési listán."/>
            <control/>
        </dialog>
 
@@ -3825,7 +3835,7 @@
            <control caption="Tracker:"/>
            <control/>
            <control caption="Letöltők:"/>
-           <control caption="Completed (Seeds):"/>
+           <control caption="Kész (terjesztés):"/>
            <control/>
            <control caption="Flélkész:"/>
            <control/>
@@ -3887,6 +3897,8 @@
         <column from="Speed" to="Sebesség"/>
         <column from="Status" to="Helyzet"/>
         <column from="Client" to="Kliensprogram"/>
+        <column from="Downloaded" to="Letöltve"/>
+        <column from="Complete" to="Kész"/>
     </list>
     <list name="CUploadCtrl">
         <column from="Uploaded File" to="Feltöltendő fájl"/>
@@ -3918,7 +3930,7 @@
         <column from="Comment" to="Megjegyzés"/>
     </list>
     <list name="CHostCacheWnd">
-        <column from="Address" to=""/>
+        <column from="Address" to="Cím"/>
         <column from="Port" to=""/>
         <column from="Client" to="Kliensprogram"/>
         <column from="Last Seen" to="Utoljára látva"/>
@@ -3969,4 +3981,3 @@
     </list>
 </listColumns>
 </skin>
-
