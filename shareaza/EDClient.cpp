@@ -951,12 +951,12 @@ void CEDClient::DeriveVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		case 2:
-			m_sUserAgent.Format( _T("aMule %i.%i%c"), 
+			m_sUserAgent.Format( _T("xMule %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		case 3:
-			m_sUserAgent.Format( _T("xMule %i.%i%c"), 
+			m_sUserAgent.Format( _T("aMule %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
@@ -978,8 +978,8 @@ void CEDClient::DeriveVersion()
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		default:
-			m_sUserAgent.Format( _T("eMule/c %i.%i%c"), 
-				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
+			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), 
+				( m_nEmCompatible, ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
 		}
