@@ -356,7 +356,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 			nFrameSize = ( pFrame->nSize[0] << 16 ) | ( pFrame->nSize[1] << 8 ) | pFrame->nSize[2];
 		}
 		
-		if ( nBuffer < nFrameSize || ! nFrameSize || ! szFrameTag[0] ) break;
+		if ( nBuffer < nFrameSize || ! szFrameTag[0] ) break;
 		
 		if ( strcmp( szFrameTag, "TIT2" ) == 0 || strcmp( szFrameTag, "TT2" ) == 0)
 		{
