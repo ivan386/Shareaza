@@ -118,7 +118,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( Settings.Downloads.ConnectThrottle != 0 )
 	{
 		if ( tNow <= Downloads.m_tLastConnect ) return FALSE;
-		if ( tNow - Downloads.m_tLastConnect < Settings.Downloads.ConnectThrottle ) return FALSE;
+		if ( tNow - Downloads.m_tLastConnect <= Settings.Downloads.ConnectThrottle ) return FALSE;
 	}
 	
 	int nTransfers = GetTransferCount( dtsDownloading );
@@ -126,7 +126,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 	if ( m_bBTH )
 	{
 		if ( nTransfers > Settings.BitTorrent.DownloadConnections ) return FALSE;
-		if ( ( m_pTransferFirst == NULL ) &&  ( Downloads.GetActiveTorrentCount() >= Settings.BitTorrent.DownloadTorrents ) ) return FALSE;
+		//if ( ( m_pTransferFirst == NULL ) &&  ( Downloads.GetTryingCount(TRUE) >= Settings.BitTorrent.DownloadTorrents ) ) return FALSE;
 	}
 	
 	if ( nTransfers < Settings.Downloads.MaxFileTransfers &&

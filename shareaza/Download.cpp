@@ -94,7 +94,7 @@ void CDownload::Pause()
 	
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	
-	m_tBegan	= 0;
+	m_tBegan = 0;
 	CloseTransfers();
 	CloseFile();
 	SetModified();
@@ -321,7 +321,7 @@ void CDownload::OnRun()
 			}
 		}
 	}
-	else	
+	else if (! m_bPaused )
 	{	//If this download isn't trying to download, see if it can try
 		if(m_bBTH)
 		{	//Torrents only try when 'ready to go'. (Reduce tracker load)

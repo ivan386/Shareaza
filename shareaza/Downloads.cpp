@@ -284,8 +284,8 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 		(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 	
-	if( ( pDownload->m_bBTH && ( GetActiveTorrentCount() < Settings.BitTorrent.DownloadTorrents ) ) ||
-		( ! pDownload->m_bBTH && ( GetCount(TRUE) < Settings.Downloads.MaxFiles ) ) )
+	if( (  pDownload->m_bBTH && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
+		( !pDownload->m_bBTH && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
 	{
 		pDownload->SetStartTimer();
 		if ( pURL->m_nAction != CShareazaURL::uriSource )
