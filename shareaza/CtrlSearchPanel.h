@@ -83,8 +83,8 @@ public:
 // Attributes
 public:
 
-	CEdit			m_wndSizeMin;
-	CEdit			m_wndSizeMax;
+	CComboBox		m_wndSizeMin;
+	CComboBox		m_wndSizeMax;
 	CNetworkCombo	m_wndNetworks;
 	
 // Operations

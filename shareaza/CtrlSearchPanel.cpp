@@ -193,14 +193,14 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 
 		CString strSize;
 		if ( pSearch->m_pSearch->m_nMinSize > 0 )
-			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, FALSE );
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, FALSE, FALSE, TRUE );
 		else
 			strSize.Empty();
 		if ( m_boxAdvanced.m_wndSizeMin.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMin.SetWindowText( strSize );
 
 
 		if ( pSearch->m_pSearch->m_nMaxSize < SIZE_UNKNOWN )
-			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, FALSE );
+			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, FALSE, FALSE, TRUE );
 		else
 			strSize.Empty();
 		if ( m_boxAdvanced.m_wndSizeMax.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMax.SetWindowText( strSize );
@@ -600,15 +600,43 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 	CString strCaption;
 
+	// Network combo
 	if ( ! m_wndNetworks.Create( WS_TABSTOP, this, IDC_SEARCH_NETWORKS ) ) return -1;
 
-	if ( ! m_wndSizeMin.Create( WS_TABSTOP, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
+	// Min combo
+	if ( ! m_wndSizeMin.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
 	m_wndSizeMin.SetFont( &theApp.m_gdiFont );
-	m_wndSizeMin.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
 
-	if ( ! m_wndSizeMax.Create( WS_TABSTOP, rc, this, IDC_SEARCH_SIZEMAX ) ) return -1;
+	m_wndSizeMin.AddString( _T("") );
+	m_wndSizeMin.AddString( _T("500 KB") );
+	m_wndSizeMin.AddString( _T("1 MB") );
+	m_wndSizeMin.AddString( _T("10 MB") );
+	m_wndSizeMin.AddString( _T("50 MB") );
+	m_wndSizeMin.AddString( _T("100 MB") );
+	m_wndSizeMin.AddString( _T("200 MB") );
+	m_wndSizeMin.AddString( _T("500 MB") );
+	m_wndSizeMin.AddString( _T("1 GB") );
+	m_wndSizeMin.AddString( _T("4 GB") );
+
+	// Max combo
+	if ( ! m_wndSizeMax.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|CBS_DROPDOWN, rc, this, IDC_SEARCH_SIZEMIN ) ) return -1;
 	m_wndSizeMax.SetFont( &theApp.m_gdiFont );
-	m_wndSizeMax.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+
+	m_wndSizeMax.AddString( _T("") );
+	m_wndSizeMax.AddString( _T("500 KB") );
+	m_wndSizeMax.AddString( _T("1 MB") );
+	m_wndSizeMax.AddString( _T("10 MB") );
+	m_wndSizeMax.AddString( _T("50 MB") );
+	m_wndSizeMax.AddString( _T("100 MB") );
+	m_wndSizeMax.AddString( _T("200 MB") );
+	m_wndSizeMax.AddString( _T("500 MB") );
+	m_wndSizeMax.AddString( _T("1 GB") );
+	m_wndSizeMax.AddString( _T("4 GB") );
+	
+
+	/*if ( ! m_wndSizeMax.Create( WS_TABSTOP, rc, this, IDC_SEARCH_SIZEMAX ) ) return -1;
+	m_wndSizeMax.SetFont( &theApp.m_gdiFont );
+	m_wndSizeMax.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );*/
 	
 	return 0;
 }
@@ -629,8 +657,8 @@ void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy)
 		
 	if ( m_wndSizeMin.m_hWnd != NULL )
 	{
-		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 219, SWP_SHOWWINDOW|SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 71, ( cx - BOX_MARGIN * 4 ) /2, 219, SWP_SHOWWINDOW|SWP_NOZORDER );
 	}
 	
 	EndDeferWindowPos( hDWP );
@@ -675,7 +703,7 @@ void CSearchAdvancedBox::OnPaint()
 	pDC->ExcludeClipRect( &rct );
 
 	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_5 );
-	rct.OffsetRect( ( rc.Width() / 2 ) - ( BOX_MARGIN * 2 ) , 18 );
+	rct.OffsetRect( ( rc.Width() / 2 ) - ( BOX_MARGIN * 2 ) , 25 );
 	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
 	pDC->ExcludeClipRect( &rct );
 	
