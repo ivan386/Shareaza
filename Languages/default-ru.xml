@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.102"
+		version="2.1.0.111"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -799,6 +799,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
 		<separator/>
@@ -816,6 +817,7 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
@@ -884,6 +886,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
@@ -1101,10 +1104,9 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Переделать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Выбрать _колонки..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
@@ -1171,8 +1173,7 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Переделать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
@@ -2140,6 +2141,7 @@
 	<tip id="ID_DOWNLOADS_SOURCES" message="Искать большего кол-ва источников для помеченной загрузки(ок)."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Просмотр информации о помеченной BitTorrent загрузке..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Добавить ссылку источника к помеченной загрузке..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Просмотр оценок о помеченной загрузке."/>
 	<tip id="ID_HELP_ABOUT" message="Показать диалог «О Shareaza...»"/>
 	<tip id="ID_HELP_FAQ" message="Посетить Руководство пользователя Shareaza."/>
 	<tip id="ID_HELP_FIREWALLS" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
@@ -2191,8 +2193,7 @@
 	<tip id="ID_LIBRARY_PARENT" message="Переместиться вверх в родиельскую папку."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Обзор и правка свойств помеченных файлов..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
-	<!-- Add the following line if you need it -->
-	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Переделать мета данные в русский язык."/>
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Перекодировать мета данные на другой язык."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Удалить помеченные разделяемые папки."/>
 	<tip id="ID_LIBRARY_RENAME" message="Переименовать помеченный файл."/>
@@ -4043,6 +4044,19 @@
 		<control caption="Не проверять новых версий"/>
 		<control caption="Не обновлять"/>
 	</dialog>
+
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Оценки закрузки">
+		<control/>
+		<control caption="ДА"/>
+		<control/><control/>
+	</dialog>
+
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Локализация мета данных">
+		<control caption="ДА"/>
+		<control caption="Отмена"/>
+		<control caption="Выберите способ перекодировки (группу языков)"/>
+		<control caption="Арабский|Балтийский|Центральной Европы|Китайский упрощенный|Китайский традиционный|Кириллица|Греческий|Иврит|Японский|Корейский|Тайский|Турецкий|Вьетнамский"/>
+	</dialog>
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4134,10 +4148,10 @@
 		<column from="Type" to="Расширение"/>
 		<column from="Size" to="Размер"/>
 		<column from="Rating" to="Оценка"/>
+		<column from="Status" to="Статус"/>
 		<column from="Host/Count" to="Кол-во хостов"/>
 		<column from="Speed" to="Скорость"/>
 		<column from="Client" to="Клиент"/>
-		<column from="Status" to="Статус"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Название"/>
@@ -4161,6 +4175,12 @@
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Имя файла"/>
 		<column from="Size" to="Размер"/>
+	</list>
+	<list name="CReviewList">
+		<column from="User" to="Пользователь"/>
+		<column from="Rating" to="Оценка"/>
+		<column from="Comments" to="Комментарии"/>
+		<column from="Order" to="Порядок"/>
 	</list>
 </listColumns>
 </skin>
