@@ -48,14 +48,14 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
 	
 	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		DWORD nType = 0, nSize = 0;
 		
 		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, NULL, &nSize ); 
-		
-		if ( nErrorCode == ERROR_MORE_DATA && nType == REG_SZ && nSize >= sizeof(TCHAR) )
+
+		if ( nErrorCode == ERROR_SUCCESS && nType == REG_SZ && nSize >= sizeof(TCHAR) )
 		{
 			LPTSTR pszValue = strValue.GetBuffer( nSize / sizeof(TCHAR) - 1 );
 			nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)pszValue, &nSize ); 
