@@ -34,6 +34,7 @@
 #include "QueryHit.h"
 #include "SearchManager.h"
 
+#include "Neighbours.h"
 #include "HostCache.h"
 
 #ifdef _DEBUG
@@ -258,14 +259,6 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 void CEDClients::OnRun()
 {
 
-	// ***********************************
-	// Note: ED2K is NOT READY FOR TESTING
-	// Do not use versions with this enabled anywhere except a private, isolated LAN
-	Settings.eDonkey.EnableToday = FALSE;
-	return;
-	// ***********************************
-
-
 	// Delay to keep ed2k transfers under 10 KB/s per source
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle ) return;
@@ -478,9 +471,6 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 {
 	CHostCacheHost *pHost;
 
-	Settings.eDonkey.EnableToday = FALSE;
-	return;
-
 	// Don't send stat requests or time out servers if we're not stable
 	if ( ! Datagrams.IsStable() ) return;
 
@@ -525,24 +515,27 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 			theApp.Message( MSG_DEFAULT, strT );*/
 
 			// Check if this server could be asked for stats
-			
 			if ( ( pHost->CanQuery( tSecs ) ) &&												// If it hasn't been searched recently	
 				 ( ( tSecs > pHost->m_tStats + Settings.eDonkey.StatsServerThrottle  ) ||		// AND we have not checked this host in a week OR
 				   ( ( pHost->m_nFailures > 0 ) && ( tSecs > pHost->m_tStats + 8*60*60  ) ) ) &&	// -last check failed, have not checked in 8 hours
 				 ( ( pHost->m_nUDPFlags == 0 ) ||												// AND it has no flags set OR
 				   ( m_bAllServersDone ) ) )														// -we have checked all servers		
 			{
-				// Send a request for stats to this server
-				if ( pHost->m_sName.GetLength() )
-					theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), pHost->m_sName );
-				else
-					theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
+				// Don't ask current neighbours for stats
+				if ( ! Neighbours.Get( &pHost->m_pAddress ) )
+				{
+					// Send a request for stats to this server
+					if ( pHost->m_sName.GetLength() )
+						theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), pHost->m_sName );
+					else
+						theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
-				RequestServerStatus( &pHost->m_pAddress, pHost->m_nPort );
-				pHost->m_tStats = tSecs;
-				m_tLastServerStats = tNow;
-				m_pLastServer = pHost->m_pAddress;
-				return;
+					RequestServerStatus( &pHost->m_pAddress, pHost->m_nPort );
+					pHost->m_tStats = tSecs;
+					m_tLastServerStats = tNow;
+					m_pLastServer = pHost->m_pAddress;
+					return;
+				}
 			}
 		}
 		// We have checked all known servers, we may go back and re-query any that didn't respond.
