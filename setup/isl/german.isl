@@ -295,8 +295,8 @@ StatusUninstalling=Entferne %1 ...
 
 NameAndVersion=%1 Version %2
 AdditionalIcons=Zusätzliche Symbole:
-CreateDesktopIcon=&Desktop-Symbol anlegen
-CreateQuickLaunchIcon=Symbol in der Schnellstartleiste anlegen
+CreateDesktopIcon=&Symbol auf dem Schreibtisch anzeigen
+CreateQuickLaunchIcon=&Quick Launch Symbol anzeigen
 ProgramOnTheWeb=%1 im Internet
 UninstallProgram=%1 entfernen
 LaunchProgram=%1 starten
