@@ -213,6 +213,8 @@ Type: files; Name: "{app}\*.bmp"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
+Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
+Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
