@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.cq-keda.com/shareaza"
 		email="shareaza(AT)163(DOT)com"
-		version="2.1.0.25"
+		version="2.1.0.42"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -1915,9 +1915,21 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">此下载挂起中</text>
 		<newline gap="8"/>
-		<text>这一下载正在等待您完成其他的下载。您的下载设置限制了在某一时间内可以
-		活动的下载的数量，请确定每个下载都获得了一部分可用带宽。您可以通过
-		Shareaza 设置中的工具来改变这些设置。</text>
+		<text>此下载正在等待别人开始上传。
+		Shareaza 正准备开始下载这一文件，但此刻没有人向您发送
+		您需要的部分。您可能正处于他人的队列中，并且这一下载
+		可能在任何时间启动。您可以检查个别的资源以便查看您所
+		等待的队列。如果您自己正在与他人共享某些文件，则有可能
+		增加快速启动下载传输的机会。</text>
+	</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">此下载处于队列中</text>
+		<newline gap="8"/>
+		<text>这一下载正在等待您完成其他的下载。
+		您的下载设置限制了在某一时间内可以激活的下载
+		的数量，请确定每个下载都获得了一部分可用带宽。
+		您可以通过 Shareaza 设置中的工具来改变这些设置。</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
@@ -2359,9 +2371,11 @@
 	<string id="8009" value="您确定要删除 &quot;%s&quot; 皮肤吗？ 此操作不可逆。"/>
 	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 www.shareaza.com 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
-	<string id="8062" value="Hub 模式有 %lu 个邻居。%s 于本地收藏夹。"/>
+	<string id="8060" value="Hub/Ultrapeer 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
+	<string id="8061" value="Ultrapeer 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
+	<string id="8062" value="Hub 模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8063" value="已连接。%s 于本地收藏夹。"/>
-	<string id="8064" value="连接到 %lu 个邻居。%s 在本地收藏。"/>
+	<string id="8064" value="连接到 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8065" value="连接网络..."/>
 	<string id="8066" value="尚未连接网络。"/>
 	<string id="8067" value="%s入 : %s出 [下:%i / 上:%i]"/>
@@ -2661,6 +2675,7 @@
 	<string id="16373" value="部分文件"/>
 	<string id="16374" value="新建队列"/>
 	<string id="16375" value="部分"/>
+	<string id="16376" value="完成文件"/>
 	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 	<string id="16385" value="您将修改 %i 文件的 Metadata，确定要继续吗？"/>
 	<string id="16386" value="正在修改 %i 的 Metadata。"/>
@@ -3066,7 +3081,7 @@
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="连接">
 		<control caption="传入地址(_I):"/>
 		<control caption="地址:"/>
-		<control/>
+		<control caption="自动"/>
 		<control caption="端口:"/>
 		<control/>
 		<control caption="随机"/>
@@ -3075,7 +3090,7 @@
 		<control caption="强制绑定到此地址"/>
 		<control caption="传出地址(_O):"/>
 		<control caption="地址:"/>
-		<control/>
+		<control caption="自动"/>
 		<control caption="速度:"/>
 		<control/>
 		<control caption="选项(_O):"/>
@@ -3105,7 +3120,7 @@
 		<control/>
 		<control caption="最大列队长度:"/>
 		<control/><control/>
-		<control caption="选项(_O):"/>
+		<control/>
 		<control caption="只在已连接的网络下载和上传。"/>
 	</dialog>
 
@@ -3125,7 +3140,7 @@
 		<control caption="限制:"/>
 		<control/>
 		<control caption="模式:"/>
-		<control/>
+		<control caption="最大|平均"/>
 		<control caption="队列(_Q):"/>
 		<control/>
 		<control caption="新建(_N)..."/>
