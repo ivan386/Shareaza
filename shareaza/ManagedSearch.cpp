@@ -34,6 +34,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
+#include "EDNeighbour.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -226,7 +227,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			if ( ! m_bAllowED2K ) continue;
 			break;
 		}
-		
+
 		// Must be stable for 15 seconds, or longer for G1 low priority searches
 		
 		nPeriod = bIsOld ? 15 : 5;
@@ -271,7 +272,24 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				nFrequency = 86400;
 			
-			if ( tSecs - nPeriod < nFrequency ) continue;
+			if ( tSecs - nPeriod < nFrequency ) //If we've queried this neighbour 'recently'
+			{
+				//Request more ed2k results (if appropriate)
+				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && ( pNeighbour->m_pMoreResultsGUID != NULL ) )
+				{								//If it's an ed2k server and more results are available
+					if ( m_pSearch->m_pGUID == *pNeighbour->m_pMoreResultsGUID )
+					{							//And this search is the one with results waiting
+						//Request more results
+						pNeighbour->Send( CEDPacket::New(  ED2K_C2S_MORERESULTS ) );
+						((CEDNeighbour*)pNeighbour)->m_pQueries.AddTail( pNeighbour->m_pMoreResultsGUID );
+						pNeighbour->m_pMoreResultsGUID = NULL;
+						//theApp.Message( MSG_DEBUG, _T("Asking ed2k neighbour for additional search results") );
+					}
+				}
+
+				//Don't search this neighbour again.
+				continue; 
+			}
 		}
 		
 		// Set the last query time for this host for this search
@@ -304,6 +322,8 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		
 		if ( pPacket != NULL && pNeighbour->SendQuery( m_pSearch, pPacket, TRUE ) )
 		{
+			pNeighbour->m_pMoreResultsGUID = NULL;
+
 			theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
 				m_pSearch->m_sSearch.GetLength()
 					? (LPCTSTR)m_pSearch->m_sSearch

@@ -68,6 +68,7 @@ public:
 	BOOL		m_bGUID;
 	CGUID		m_pGUID;
 	CGProfile*	m_pProfile;
+	CGUID*		m_pMoreResultsGUID;		//Last search GUID- used to get more results
 // Attributes : Capabilities
 public:
 	BOOL		m_bAutomatic;

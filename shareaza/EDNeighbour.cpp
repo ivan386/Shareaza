@@ -57,6 +57,7 @@ CEDNeighbour::CEDNeighbour() : CNeighbour( PROTOCOL_ED2K )
 	m_nUserCount	= 0;
 	m_nUserLimit	= 0;
 	m_nFlags		= 0;
+	m_pMoreResultsGUID = NULL;
 }
 
 CEDNeighbour::~CEDNeighbour()
@@ -482,8 +483,8 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	{
 		if ( pPacket->ReadByte() == TRUE )
 		{
-			Send( CEDPacket::New(  ED2K_C2S_MORERESULTS ) );
-			m_pQueries.AddTail( pGUID );
+			//theApp.Message( MSG_DEBUG, _T("Additional results packet recieved.") );
+			m_pMoreResultsGUID = pGUID;
 			pGUID = NULL;
 		}
 	}
