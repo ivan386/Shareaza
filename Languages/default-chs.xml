@@ -3011,6 +3011,13 @@
 	<string id="20204" value="星期四"/>
 	<string id="20205" value="星期五"/>
 	<string id="20206" value="星期六"/>
+	<string id="20210" value="(无评价)"/>
+	<string id="20211" value="虚假/损坏"/>
+	<string id="20212" value="较差"/>
+	<string id="20213" value="一般"/>
+	<string id="20214" value="较好"/>
+	<string id="20215" value="很好"/>
+	<string id="20216" value="优秀"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
