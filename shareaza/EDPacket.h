@@ -162,7 +162,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 	delete [] (CEDPacket*)pPacket;
 }
 
-
+// TCP
 #define ED2K_C2S_LOGINREQUEST			0x01
 #define ED2K_C2S_GETSERVERLIST			0x14
 #define	ED2K_C2S_OFFERFILES				0x15
@@ -181,6 +181,9 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_S2C_SERVERIDENT			0x41
 #define ED2K_S2C_CALLBACKREQUESTED		0x35
 
+// Global (UDP)
+#define ED2K_C2SG_SEARCHREQUEST2		0x92
+#define ED2K_C2SG_GETSOURCES2			0x94
 #define ED2K_C2SG_SERVERSTATUSREQUEST	0x96
 #define	ED2K_S2CG_SERVERSTATUS			0x97
 #define ED2K_C2SG_SEARCHREQUEST			0x98
@@ -188,7 +191,9 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2SG_GETSOURCES			0x9A
 #define ED2K_S2CG_FOUNDSOURCES			0x9B
 #define ED2K_C2SG_CALLBACKREQUEST		0x9C
+#define ED2K_S2CG_CALLBACKFAIL			0x9E
 
+// TCP
 #define ED2K_C2C_HELLO					0x01
 #define ED2K_C2C_HELLOANSWER			0x4C
 #define ED2K_C2C_FILEREQUEST			0x58
@@ -217,18 +222,21 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_REQUESTSOURCES			0x81
 #define ED2K_C2C_ANSWERSOURCES			0x82
 
+// UDP
 #define ED2K_C2C_UDP_REASKFILEPING		0x90
 #define ED2K_C2C_UDP_REASKACK			0x91
 #define ED2K_C2C_UDP_FILENOTFOUND		0x92
 #define ED2K_C2C_UDP_QUEUEFULL			0x93
 
-//Server TCP flags
+// Server TCP flags
 #define	ED2K_SERVER_TCP_DEFLATE		0x00000001
 #define	ED2K_SERVER_TCP_SMALLTAGS	0x00000008
 #define	ED2K_SERVER_TCP_UNICODE		0x00000010
-//Server UDP flags
+#define	ED2K_SERVER_TCP_GETSOURCES2	0x00000020
+// Server UDP flags
 #define	ED2K_SERVER_UDP_GETSOURCES	0x00000001
 #define	ED2K_SERVER_UDP_GETFILES	0x00000002
+//#define	ED2K_SERVER_UDP_GETSOURCES2	0x00000020
 
 
 class CEDTag
@@ -281,11 +289,11 @@ public:
 #define ED2K_TAG_UINT8				0x09
 #define ED2K_TAG_UNUSED				0x0A // 8 bit size, then value
 #define ED2K_TAG_SHORTSTRING		0x11 //String <=16 bytes, using tag ID for length
-
 // 0x10 to 0x20 are reserved for short strings
 #define ED2K_TAG_STRING1			0x11
 #define ED2K_TAG_STRING16			0x20
 
+// Server tags / met files
 #define ED2K_ST_SERVERNAME			0x01
 #define ED2K_ST_DESCRIPTION			0x0B
 #define ED2K_ST_PING				0x0C
@@ -294,7 +302,10 @@ public:
 #define	ED2K_ST_DYNIP				0x85
 #define ED2K_ST_LASTPING			0x86
 #define ED2K_ST_MAXUSERS			0x87
+#define ED2K_ST_MAXFILES			0x88
+#define ED2K_ST_UDPFLAGS			0x92
 
+// Client tags
 #define ED2K_CT_NAME				0x01
 #define	ED2K_CT_PORT				0x0F
 #define ED2K_CT_VERSION				0x11
@@ -303,6 +314,7 @@ public:
 #define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
 #define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
 
+// File tags
 #define ED2K_FT_FILENAME			0x01
 #define ED2K_FT_FILESIZE			0x02
 #define ED2K_FT_FILETYPE			0x03
@@ -325,6 +337,7 @@ public:
 #define ED2K_FT_BITRATE				0xD4
 #define ED2K_FT_CODEC				0xD5
 
+// eMuleinfo tags
 #define ED2K_ET_COMPRESSION			0x20
 #define ED2K_ET_UDPPORT				0x21
 #define ED2K_ET_UDPVER				0x22
@@ -332,6 +345,9 @@ public:
 #define ED2K_ET_COMMENTS			0x24
 #define ED2K_ET_EXTENDEDREQUEST		0x25
 #define ED2K_ET_COMPATIBLECLIENT	0x26
+
+// Max files (Hash + Size) in a getsources packet
+#define ED2K_MAXFILESINPACKET		0x20
 
 // Client ID
 #define ED2K_COMPATIBLECLIENT_ID	0x44 // Temp change to test stuff... should be 4
