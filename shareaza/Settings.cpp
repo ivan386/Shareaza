@@ -122,6 +122,7 @@ void CSettings::Setup()
 	Add( _T("Search.MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024 );
 	Add( _T("Search.AdultFilter"), &Search.AdultFilter, FALSE );
 	Add( _T("Search.AdvancedPanel"), &Search.AdvancedPanel, TRUE );
+	Add( _T("Search.GeneralThrottle"), &Search.GeneralThrottle, 200 );
 
 	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
 	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );
@@ -162,7 +163,7 @@ void CSettings::Setup()
 	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
 	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
 	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
-	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionReset, FALSE );
+	Add( _T("Connection.DetectConnectionReset"), &Connection.DetectConnectionReset, FALSE );
 	
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
@@ -269,11 +270,11 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60 );
 	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );
-	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
+	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
 	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000 );
 	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
-	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 120*1000 );
+	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
