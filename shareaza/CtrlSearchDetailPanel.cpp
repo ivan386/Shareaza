@@ -179,48 +179,51 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 4096 );
 	
-	CString strFormat, strPart;
-	m_sStatus.Empty();
-	
-	if ( pFile->m_nSources == 1 )
+	if ( IsWindowVisible() )
 	{
-		LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_ONE );
-		strPart.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
-		m_sStatus += strPart;
-	}
-	else
-	{
-		if ( pFile->m_nSources == 0 ) nSpeed = 0;
-		LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_MANY );
-		strPart.Format( strFormat, pFile->m_nSources, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
-		m_sStatus += strPart;
-	}
-	
-	if ( m_pReviews.GetCount() > 1 )
-	{
-		LoadString( strFormat, IDS_SEARCH_DETAILS_REVIEWS_MANY );
-		strPart.Format( strFormat, m_pReviews.GetCount() );
-		m_sStatus += strPart;
-	}
-	else if ( m_pReviews.GetCount() == 1 )
-	{
-		LoadString( strPart, IDS_SEARCH_DETAILS_REVIEWS_ONE );
-		m_sStatus += strPart;
-	}
-	
-	if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
-	{
-		CImageServices pServices;
-		CImageFile pImage( &pServices );
+		CString strFormat, strPart;
+		m_sStatus.Empty();
 		
-		if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
+		if ( pFile->m_nSources == 1 )
 		{
-			pLock.Unlock();
-			OnPreviewLoaded( &m_pSHA1, &pImage );
+			LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_ONE );
+			strPart.Format( strFormat, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
+			m_sStatus += strPart;
 		}
+		else
+		{
+			if ( pFile->m_nSources == 0 ) nSpeed = 0;
+			LoadString( strFormat, IDS_SEARCH_DETAILS_SOURCES_MANY );
+			strPart.Format( strFormat, pFile->m_nSources, (LPCTSTR)Settings.SmartVolume( nSpeed, TRUE, TRUE ) );
+			m_sStatus += strPart;
+		}
+		
+		if ( m_pReviews.GetCount() > 1 )
+		{
+			LoadString( strFormat, IDS_SEARCH_DETAILS_REVIEWS_MANY );
+			strPart.Format( strFormat, m_pReviews.GetCount() );
+			m_sStatus += strPart;
+		}
+		else if ( m_pReviews.GetCount() == 1 )
+		{
+			LoadString( strPart, IDS_SEARCH_DETAILS_REVIEWS_ONE );
+			m_sStatus += strPart;
+		}
+		
+		if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
+		{
+			CImageServices pServices;
+			CImageFile pImage( &pServices );
+			
+			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
+			{
+				pLock.Unlock();
+				OnPreviewLoaded( &m_pSHA1, &pImage );
+			}
+		}
+		
+		OnSize( SIZE_INTERNAL, 0, 0 );
 	}
-	
-	OnSize( SIZE_INTERNAL, 0, 0 );
 }
 
 void CSearchDetailPanel::ClearReviews()
