@@ -12773,9 +12773,6 @@
 				Name="Hash algorithms"
 				Filter="">
 				<File
-					RelativePath=".\asm\common.inc">
-				</File>
-				<File
 					RelativePath="MD4.h">
 				</File>
 				<File
