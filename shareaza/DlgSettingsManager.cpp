@@ -38,6 +38,7 @@
 #include "PageSettingsNetworks.h"
 #include "PageSettingsGnutella.h"
 #include "PageSettingsDonkey.h"
+#include "PageSettingsBitTorrent.h"
 #include "PageSettingsSkins.h"
 #include "PageSettingsPlugins.h"
 #include "PageSettingsTraffic.h"
@@ -117,6 +118,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	CNetworksSettingsPage	gNetworks;
 	CGnutellaSettingsPage	pGnutella;
 	CDonkeySettingsPage		pDonkey;
+	CBitTorrentSettingsPage	pTorrent;
 	CSkinsSettingsPage		pSkins;
 	CPluginsSettingsPage	pPlugins;
 	CAdvancedSettingsPage	pAdvanced;
@@ -136,6 +138,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddGroup( &gNetworks );
 	AddPage( &pGnutella );
 	AddPage( &pDonkey );
+	AddPage( &pTorrent );
 	AddPage( &pProtocols );
 	AddGroup( &pSkins );
 	AddGroup( &pPlugins );
