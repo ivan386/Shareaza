@@ -270,7 +270,7 @@ void CDownload::OnRun()
 	{	//This download is trying to download
 
 		//** 'Dead download' check- if it appears dead, give up and allow another to start.
-		if ( ( GetTickCount() - GetStartTimer() ) > ( 8 * 60 * 60 * 1000 ) )	//If we've been searching for 6 hours
+		if ( (!IsCompleted()) && ( ( GetTickCount() - GetStartTimer() ) > ( 8 * 60 * 60 * 1000 ) ) )//If we've been searching for 6 hours
 		{												
 			if ( ( GetTickCount() - m_tReceived ) > ( 5 * 60 * 60 * 1000 ) )	//And had no new data for 5
 			{											
