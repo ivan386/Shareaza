@@ -771,8 +771,6 @@ BOOL CQuerySearch::CheckValid()
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
 	{
-		AfxMessageBox( m_pWordPtr[nCount] );
-
 		if (	_tcsnicmp( m_pWordPtr[nCount], _T("mp3"),  m_pWordLen[nCount] ) == 0 ||
 				_tcsnicmp( m_pWordPtr[nCount], _T("ogg"),  m_pWordLen[nCount] ) == 0 ||
 
@@ -810,7 +808,6 @@ BOOL CQuerySearch::CheckValid()
 		}
 		else
 		{
-			Beep(500,500);
 			// Valid search term - add to list of valid words.
 			nValidWords++;
 			nValidCharacters += m_pWordLen[nCount];
