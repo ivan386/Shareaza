@@ -518,10 +518,30 @@ void CEDNeighbour::SendSharedFiles()
 	
 	CSingleLock pLock1( &Library.m_pSection );
 	CSingleLock pLock2( &Transfers.m_pSection );
+
+	//Send files on download list to ed2k server
+	pLock2.Lock();
+	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
+	{
+		CDownload* pDownload = Downloads.GetNext( pos );
+		
+		if ( pDownload->m_bED2K && pDownload->IsStarted() && ! pDownload->IsMoving() &&
+			 pDownload->NeedHashset() == FALSE )	//If the file has and ed2k hash, has started, etc...
+		{
+			//Send the file hash and name to the ed2k server
+			pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
+			pPacket->Write( pPadding, 6 );
+			pPacket->WriteLongLE( 2 );
+			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
+			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
+			//Increment count of files sent
+			nCount++;
+		}
+	}
+	pLock2.Unlock();
 	
 	//Send files in library to ed2k server
 	pLock1.Lock();
-
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
@@ -552,31 +572,7 @@ void CEDNeighbour::SendSharedFiles()
 			}
 		}
 	}
-	
 	pLock1.Unlock();
-
-	//Send files on download list to ed2k server
-	pLock2.Lock();
-	
-	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nLimit == 0 || nCount < nLimit ) ; )
-	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		
-		if ( pDownload->m_bED2K && pDownload->IsStarted() && ! pDownload->IsMoving() &&
-			 pDownload->NeedHashset() == FALSE )	//If the file has and ed2k hash, has started, etc...
-		{
-			//Send the file hash and name to the ed2k server
-			pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
-			pPacket->Write( pPadding, 6 );
-			pPacket->WriteLongLE( 2 );
-			CEDTag( ED2K_FT_FILENAME, pDownload->m_sRemoteName ).Write( pPacket );
-			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
-			//Increment count of files sent
-			nCount++;
-		}
-	}
-	
-	pLock2.Unlock();
 	
 	*(DWORD*)pPacket->m_pBuffer = nCount;
 	
