@@ -2762,7 +2762,7 @@
 	<string id="16774" value="&amp;Соединиться"/>
 	<string id="16775" value="&amp;Просматривать"/>
 	<string id="16776" value="Добавить"/>
-	<string id="16777" value="Имя файла:"/>
+	<string id="16777" value="Имя&#160;файла:"/>
 	<string id="16778" value="Ссылка:"/>
 	<string id="16779" value="Тип:"/>
 	<string id="16780" value="Не указано"/>
