@@ -1,0 +1,35 @@
+<td class="tabsel">Nuova Ricerca</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Per iniziare una nuova ricerca, immetti i dati nella casella <b>Ricerca</b> e clicca su <b>Inizia 
+				Ricerca</b>. Se desideri restringere la tua ricerca a un tipo particolare di file, 
+			selezionalo dall'elenco.
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Ricerca:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Tipo di File:</td>
+					<td>
+						<select name="schema">
+							<option value="">Qualsiasi tipo di File</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Inizia Ricerca">
+					</td>
+				</tr>
+			</table>
+		</form>

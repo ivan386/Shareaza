@@ -1,0 +1,24 @@
+					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p style="font-size: 7pt;">
+					This network is <b>not</b> enabled -
+					<a href="?connect=<%= network_id %>"><b>Connect to <%= network_caption %></b></a>
+					</p>
+<%?%><%? network_connected %>
+					<p style="font-size: 7pt;">
+					This network is enabled -
+					<a href="?disconnect=<%= network_id %>"><b>Disable <%= network_caption %></b></a>
+					</p>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Address</td>
+							<td class="viewheader" align="center">Time</td>
+							<td class="viewheader" align="center">Packets</td>
+							<td class="viewheader" align="center">Bandwidth</td>
+							<td class="viewheader" align="center">Total</td>
+							<td class="viewheader" align="center">Mode</td>
+							<td class="viewheader" align="center">Leaves</td>
+							<td class="viewheader">User-Agent</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>

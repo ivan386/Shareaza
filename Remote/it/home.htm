@@ -1,0 +1,78 @@
+<table width="95%" align="center" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="center">
+			<table width="100%" cellspacing="0">
+				<tr>
+					<td class="tabedg">&nbsp;</td>
+					<td class="tabsel">Home</td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="search">Ricerche</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="downloads">Download</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="uploads">Upload</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="network">Reti</a></td>
+					<td class="tabedg">&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="frame">
+			<p>
+				Benvenuto all'<b>Accesso Remoto di Shareaza</b>.
+			</p>
+			<p>
+				Questa console web permette un pieno controllo delle tue ricerche, downloads, uploads 
+				e connessioni alle diverse reti.
+			</p>
+			<br>
+			<table cellspacing="8">
+				<tr>
+					<td width="4" />
+					<td><a href="search"><b>Ricerche</b></a> - Ricerca di file, gestione dei risultati  delle
+						ricerche, selezione file da scaricare.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="downloads"><b>Download</b></a> - Gestione dei download, pausa e resume, 
+						azzeramento dei risultati.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="uploads"><b>Upload</b></a> - Visualizza gli upload.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="network"><b>Reti</b></a> - Controllo e gestione delle connessioni di rete, 
+						connette o disconnette da differenti reti P2P, o chiude Shareaza.</td>
+				</tr>
+			</table>
+			<br>
+			<form method="get" action="newsearch" ID="Form1">
+				<table align="center">
+					<tr>
+						<td>Ricerca veloce:</td>
+						<td><input type="text" name="search" size="30"></td>
+						<td>
+							<input type="submit" value="Esegui">
+						</td>
+					</tr>
+				</table>
+			</form>
+			<br>
+			<form method="get" action="newdownload" ID="Form2">
+				<table align="center">
+					<tr>
+						<td>Download Magnet:</td>
+						<td><input type="text" name="uri" size="50"></td>
+						<td>
+							<input type="submit" value="Esegui">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>

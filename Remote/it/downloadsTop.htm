@@ -1,0 +1,42 @@
+﻿<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<form method="get" action="" ID="Form1">
+			<table width="100%">
+				<tr>
+					<td nowrap style="font-size: 7pt"><input type="hidden" name="filter_set" value="1" ID="Hidden1"><b>Filtro:</b></td>
+					<td />
+					<td><input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %>></td>
+					<td nowrap style="font-size: 7pt"><label for="filter_active">Attivo</label></td>
+					<td />
+					<td><input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %>></td>
+					<td nowrap style="font-size: 7pt"><label for="filter_queued">Accodato</label></td>
+					<td />
+					<td><input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %>></td>
+					<td nowrap style="font-size: 7pt"><label for="filter_sources">Nessun Sorgente</label></td>
+					<td />
+					<td><input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %>></td>
+					<td nowrap style="font-size: 7pt"><label for="filter_paused">In Pausa</label></td>
+					<td />
+					<td><input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %>></td>
+					<td nowrap style="font-size: 7pt"><label for="filter_show_all">Mostra tutti i Sorgenti</label></td>
+					<td />
+					<td nowrap><input type="submit" value=" Seleziona "></td>
+					<td width="100%" />
+					<td nowrap align="right" style="font-size: 7pt"><a href="?refresh=<%= random %>">Aggiorna la 
+							Pagina</a></td>
+				</tr>
+			</table>
+		</form>
+		<br>
+		<table width="100%" cellspacing="0" style="border-collapse: collapse">
+			<tr>
+				<td class="viewheader">File Scaricato</td>
+				<td class="viewheader" align="center">Dimensione</td>
+				<td class="viewheader" align="center">Progresso</td>
+				<td class="viewheader" align="center">Velocità</td>
+				<td class="viewheader" align="center">Sorgenti</td>
+				<td class="viewheader" align="center">Stato</td>
+				<td class="viewheader" align="center">Controllo</td>
+			</tr>
