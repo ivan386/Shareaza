@@ -189,20 +189,23 @@ BOOL CManagedSearch::Execute()
 	
 	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K && Network.IsListening() )
 	{
-		if ( tTicks > m_tLastED2K && tTicks - m_tLastED2K >= Settings.eDonkey.QueryGlobalThrottle )
+		if ( ( m_pSearch->m_bED2K ) || ( IsLastED2KSearch() ) )
 		{
-			bSuccess |= ExecuteDonkeyMesh( tTicks, tSecs );
-			m_tLastED2K = tTicks;
+			if ( tTicks > m_tLastED2K && tTicks - m_tLastED2K >= Settings.eDonkey.QueryGlobalThrottle )
+			{
+				bSuccess |= ExecuteDonkeyMesh( tTicks, tSecs );
+				m_tLastED2K = tTicks;
+			}
 		}
 	}
 
-	if(bSuccess) m_nQueryCount++;
+	if ( bSuccess ) m_nQueryCount++;
 	
 	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////
-// CManagedSearch execute the search on G1 and G2 neighbours
+// CManagedSearch execute the search on G1 / G2 / ED2K neighbours
 
 BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 {
@@ -345,12 +348,18 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
 				m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
 				(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
-
-			// Add to ED2K search counts
+			
 			if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
+				// Add to ED2K search counts
 				m_nEDServers++;
 				m_nEDClients += ((CEDNeighbour*)pNeighbour)->m_nUserCount;
+
+				// Set the "last ED2K search" value if we sent a text search (to find the search later).
+				if ( ! m_pSearch->m_bED2K )
+				{
+					SearchManager.m_pLastED2KSearch = m_pSearch->m_pGUID;
+				}
 			}
 		}
 		pPacket->Release();
@@ -651,3 +660,12 @@ void CManagedSearch::OnHostAcknowledge(DWORD nAddress)
 	DWORD tSecs = time( NULL );
 	m_pNodes.SetAt( (LPVOID)nAddress, (LPVOID)tSecs );
 }
+
+//////////////////////////////////////////////////////////////////////
+// CManagedSearch check if we were the most recent ed2k text search. (Not find more sources)
+
+BOOL CManagedSearch::IsLastED2KSearch()
+{
+	return ( m_pSearch->m_pGUID == SearchManager.m_pLastED2KSearch );
+}
+

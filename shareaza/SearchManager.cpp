@@ -48,6 +48,8 @@ CSearchManager::CSearchManager()
 
 	m_nPriorityClass = 0;
 	m_nPriorityCount = 0;
+
+	m_pLastED2KSearch = (GGUID&)GUID_NULL;
 }
 
 CSearchManager::~CSearchManager()

@@ -39,6 +39,7 @@ public:
 // Attributes
 public:
 	CMutex			m_pSection;
+	GGUID			m_pLastED2KSearch;
 protected:
 	CPtrList		m_pList;
 	DWORD			m_tLastTick;

@@ -844,32 +844,34 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 		CManagedSearch* pManaged = (CManagedSearch*)m_pSearches.GetPrev( pos );
 		BOOL bNull = FALSE;
 		
-		if ( pManaged->m_bReceive &&
-			 (	pManaged->m_pSearch->m_pGUID == pHits->m_pSearchID ||
-				( bNull = ( pHits->m_pSearchID == (GGUID&)GUID_NULL ) ) ) )
+		if ( pManaged->m_bReceive )
 		{
-			m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
-			m_bUpdate = TRUE;
-			
-			if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )
+			if ( ( pManaged->m_pSearch->m_pGUID == pHits->m_pSearchID ) ||								// The hits GUID matches the search
+				 ( ( pHits->m_pSearchID == (GGUID&)GUID_NULL ) && ( pManaged->IsLastED2KSearch() ) ) )	// The hits have no GUID and the search is the most recent ED2K text search
 			{
-				if( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
-				{						
+				m_pMatches->AddHits( pHits, pManaged->m_pSearch, bNull );
+				m_bUpdate = TRUE;
+				
+				if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )
+				{
+					if( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
+					{						
+						m_bWaitMore = TRUE;
+						pManaged->m_bActive = FALSE;
+					}
+					pManaged->m_tLastED2K = 0xFFFFFFFF;
+					theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
+				}
+
+				if ( !m_bWaitMore && ( m_pMatches->m_nGnutellaHits >= m_nMaxResults ) )
+				{
 					m_bWaitMore = TRUE;
 					pManaged->m_bActive = FALSE;
+					theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
 				}
-				pManaged->m_tLastED2K = 0xFFFFFFFF;
-				theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
+				
+				return TRUE;
 			}
-
-			if ( !m_bWaitMore && ( m_pMatches->m_nGnutellaHits >= m_nMaxResults ) )
-			{
-				m_bWaitMore = TRUE;
-				pManaged->m_bActive = FALSE;
-				theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
-			}
-			
-			return TRUE;
 		}
 	}
 	

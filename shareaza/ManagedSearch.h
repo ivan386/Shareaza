@@ -69,6 +69,7 @@ public:
 	void	Stop();
 	BOOL	Execute();
 	void	OnHostAcknowledge(DWORD nAddress);
+	BOOL	IsLastED2KSearch();
 protected:
 	BOOL	ExecuteNeighbours(DWORD tTicks, DWORD tSecs);
 	BOOL	ExecuteG2Mesh(DWORD tTicks, DWORD tSecs);
