@@ -660,8 +660,6 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILEREQUEST );
 	pPacket->Write( &m_pDownload->m_pED2K, sizeof(MD4) );
 
-	CString st = m_pClient->m_sAddress + _T(" ") + m_pClient->m_sNick;
-	theApp.Message( MSG_DEFAULT, st );
 	if ( Settings.eDonkey.ExtendedRequest && m_pClient->m_bEmRequest >= 1 )
 	{
 		m_pClient->WritePartStatus( pPacket, m_pDownload );
