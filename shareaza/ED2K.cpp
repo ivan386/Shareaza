@@ -73,7 +73,7 @@ void CED2K::Serialize(CArchive& ar)
 		Clear();
 		
 		ar >> m_nList;
-		if ( m_nList == 0 ) return;
+//		if ( m_nList == 0 ) return;
 		
 		ar.Read( &m_pRoot, sizeof(MD4) );
 		
@@ -103,7 +103,7 @@ DWORD CED2K::GetSerialSize() const
 
 BOOL CED2K::GetRoot(MD4* pHash) const
 {
-	if ( m_nList == 0 ) return FALSE;
+	// if ( m_nList == 0 ) return FALSE;
 	*pHash = m_pRoot;
 	return TRUE;
 }
@@ -180,6 +180,11 @@ BOOL CED2K::FinishFile()
 	if ( m_nList == 1 )
 	{
 		m_pRoot = *m_pList;
+	}
+	else if ( m_nList == 0)
+	{
+		m_pSegment.Finish();
+		m_pSegment.GetHash( &m_pRoot );
 	}
 	else
 	{
