@@ -1061,9 +1061,9 @@ void CAdultFilter::Load()
 		}
 		catch ( CException* pException )
 		{
+			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); //Check if file is still open, if yes close
 			pException->Delete();
 		}
-		pFile.Close();
 
 		//Load the blocked words into the Adult Filter
 		if ( strBlockedWords.GetLength() > 3 )

@@ -381,7 +381,7 @@ void CDiscoveryServices::AddDefaults()
 		}
 		catch ( CException* pException )
 		{
-			pFile.Close();
+			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); //Check if file is still open, if yes close
 			pException->Delete();
 		}
 	}
