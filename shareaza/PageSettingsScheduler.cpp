@@ -239,10 +239,12 @@ void CSchedulerSettingsPage::OnPaint()
 	{
 		for ( nHour = 0 ; nHour < 24 ; nHour++ )
 		{
-			ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(),
-					rc.left + ( nHour * 16 ) , rc.top + ( nDay * 16 ) , 16, 16, 
-					CLR_DEFAULT, CLR_DEFAULT, /*pSource->m_bSelected ? ILD_SELECTED :*/ ILD_NORMAL );
-			
+			if ( ( nDay == m_nHoverDay ) && ( nHour == m_nHoverHour ) )
+				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ), 
+					rc.top + ( nDay * 16 ) , 16, 16, CLR_DEFAULT, RGB( 180, 180, 180), ILD_SELECTED );
+			else
+				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ), 
+					rc.top + ( nDay * 16 ) , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 		}
 	}
 
