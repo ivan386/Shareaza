@@ -545,12 +545,6 @@ void CSearchWnd::OnSearchSearch()
 	pLock.Unlock();
 	
 	ExecuteSearch();
-
-	if ( m_bPanel && Settings.Search.HideSearchPanel )
-	{
-		m_bPanel = FALSE;
-		OnSkinChange();
-	}
 }
 
 void CSearchWnd::OnUpdateSearchClear(CCmdUI* pCmdUI) 
@@ -682,6 +676,12 @@ void CSearchWnd::ExecuteSearch()
 			m_wndPanel.ShowSearch( pManaged );
 
 			m_wndPanel.Disable();
+
+			if ( m_bPanel && Settings.Search.HideSearchPanel )
+			{
+				m_bPanel = FALSE;
+				OnSkinChange();
+			}
 		}
 		else
 		{
