@@ -27,7 +27,7 @@
 #include "DlgSkinDialog.h"
 
 class CMatchList;
-
+class CResultFilters;
 
 class CFilterSearchDlg : public CSkinDialog
 {
@@ -50,9 +50,11 @@ public:
 	int		m_nSources;
 	CString	m_sMaxSize;
 	CString	m_sMinSize;
+	BOOL    m_bDefault;
 	//}}AFX_DATA
 
 	CMatchList*	m_pMatches;
+	CResultFilters * m_pResultFilters;
 
 // Overrides
 public:
@@ -69,6 +71,18 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void OnBnClickedSaveFilter();
+	afx_msg void OnDestroy();
+
+private:
+	void UpdateFields();
+	void UpdateList();
+public:
+	CComboBox m_Filters;
+	afx_msg void OnCbnSelchangeFilters();
+	afx_msg void OnBnClickedDeleteFilter();
+	afx_msg void OnBnClickedSetDefaultFilter();
 };
 
 //{{AFX_INSERT_LOCATION}}
