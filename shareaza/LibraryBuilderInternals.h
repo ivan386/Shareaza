@@ -46,6 +46,7 @@ protected:
 	BOOL		m_bEnableAPE;
 	BOOL		m_bEnableAVI;
 	BOOL		m_bEnablePDF;
+	BOOL		m_bEnableCHM;
 protected:
 	DWORD		m_nSleep;
 public:
@@ -86,7 +87,7 @@ protected:		// General Media
 	CString		ReadLine(HANDLE hFile);
 	CString		ReadLineReverse(HANDLE hFile);
 	BOOL		ReadCollection( HANDLE hFile, SHA1* pSHA1);
-
+	BOOL		ReadCHM(HANDLE hFile, LPCTSTR pszPath);
 };
 
 #endif // !defined(AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_)

@@ -65,6 +65,7 @@ void CLibraryBuilderInternals::LoadSettings()
 	m_bEnableAPE	= theApp.GetProfileInt( _T("Library"), _T("ScanAPE"), TRUE );
 	m_bEnableAVI	= theApp.GetProfileInt( _T("Library"), _T("ScanAVI"), TRUE );
 	m_bEnablePDF	= theApp.GetProfileInt( _T("Library"), _T("ScanPDF"), TRUE );
+	m_bEnableCHM	= theApp.GetProfileInt( _T("Library"), _T("ScanCHM"), TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -146,7 +147,11 @@ BOOL CLibraryBuilderInternals::ExtractMetadata( CString& strPath, HANDLE hFile, 
 	{
 		return ReadCollection( hFile, pSHA1 );
 	}
-	
+	else if ( strType == _T(".chm") )
+	{
+		if ( ! m_bEnableCHM ) return FALSE;
+		return ReadCHM( hFile, strPath );
+	}
 	return FALSE;
 }
 
@@ -2058,4 +2063,245 @@ BOOL CLibraryBuilderInternals::ReadCollection( HANDLE hFile, SHA1* pSHA1)
 	}
 	
 	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals CHM (threaded)
+
+BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
+{
+	CHAR szMagic[4];
+	DWORD nVersion, nIHDRSize, nLCID, nRead, nPos, nComprVersion;
+	QWORD nContentOffset;
+	const DWORD MAX_LENGTH_ALLOWED = 8192;
+	
+	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+	ReadFile( hFile, szMagic, 4, &nRead, NULL );
+	
+	if ( nRead != 4 || strncmp( szMagic, "ITSF", 4 ) )
+		return SubmitCorrupted();
+	if ( GetFileSize( hFile, NULL ) < 510 ) return SubmitCorrupted();
+
+	// Get CHM file version number
+	ReadFile( hFile, &nVersion, sizeof(nVersion), &nRead, NULL );
+	if ( nRead != sizeof(nVersion) || nVersion < 3 )
+		return FALSE; // In Version 2 files, content section data offset is not there
+
+	// Get initial header size
+	ReadFile( hFile, &nIHDRSize, sizeof(nIHDRSize), &nRead, NULL );
+	if ( nRead != sizeof(nIHDRSize) || nIHDRSize == 0 ) return SubmitCorrupted();
+	nPos = nIHDRSize - sizeof(nContentOffset);
+
+	// Get Windows LCID of machine on which the file was compiled;
+	// Always located at offset 20
+	SetFilePointer( hFile, 20, NULL, FILE_BEGIN );
+	ReadFile( hFile, &nLCID, sizeof(nLCID), &nRead, NULL );
+	if ( nRead != sizeof(nLCID) ) return SubmitCorrupted();
+	if ( !IsValidLocale( nLCID, LCID_SUPPORTED ) ) nLCID = 1033;
+
+	// Read the last qword from the end of header; it contains content section data offset
+	SetFilePointer( hFile, nPos, NULL, FILE_BEGIN );
+	ReadFile( hFile, &nContentOffset, sizeof(nContentOffset), &nRead, NULL );
+	if ( nRead != sizeof(nContentOffset) ) return SubmitCorrupted();
+	if ( nContentOffset == 0 ) return FALSE;
+
+	// Go to compressed control data and check version;
+	// Content section data always takes 110 bytes (?)
+	nContentOffset += 110;
+	DWORD nError = NO_ERROR;
+	DWORD nSizeLow	= (DWORD)( nContentOffset & 0xFFFFFFFF );
+	DWORD nSizeHigh	= (DWORD)( nContentOffset >> 32 );
+
+	nSizeLow = SetFilePointer( hFile, nSizeLow, (long*)&nSizeHigh, FILE_BEGIN );
+	if ( nSizeLow == INVALID_SET_FILE_POINTER && 
+		 ( nError = GetLastError() ) != NO_ERROR ) return SubmitCorrupted();
+	ReadFile( hFile, szMagic, 4, &nRead, NULL );
+	if ( nRead != 4 || strncmp( szMagic, "LZXC", 4 ) ) // compression method
+		return FALSE;
+	ReadFile( hFile, &nComprVersion, sizeof(nComprVersion), &nRead, NULL );
+	if ( nRead != sizeof(nComprVersion) || nComprVersion != 2 ) // Note: MS Reader books has version 3
+		return FALSE;
+
+	// Read no more than 8192 bytes to find "HHA Version" string
+	CHAR szByte[1];
+	CHAR* szFragment = new CHAR[10];
+	BOOL bCorrupted = FALSE;
+	BOOL bHFound = FALSE;
+	int nFragmentPos = 0;
+
+	ZeroMemory( szFragment, sizeof(CHAR) * 10 ); // "HA Version" string length
+
+	for ( nPos = 0; ReadFile( hFile, &szByte, 1, &nRead, NULL ) && nPos++ < MAX_LENGTH_ALLOWED ; )
+	{
+		if ( nRead != 1 ) 
+		{
+			bCorrupted = TRUE;
+			break;
+		}
+		if ( szByte[0] == 'H' )
+		{
+			nFragmentPos = 0;
+			szFragment[0] = 'H';
+			bHFound = TRUE;
+		}
+		else
+		{
+			nFragmentPos++;
+			if ( bHFound ) 
+			{
+				if ( IsCharacter( szByte[0] ) ) 
+					szFragment[ nFragmentPos ] = szByte[0];
+				else
+					szFragment[ nFragmentPos ] = ' ';
+			}
+		}
+		if ( nFragmentPos == 9 )
+		{
+			if ( !strncmp( szFragment, "HA Version", 10 ) ) 
+			{
+				// Remember position two words before; 
+				// the second word is data entry length
+				nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT ) - 15;
+				break;
+			}
+			else
+			{
+				nFragmentPos = 0;
+				bHFound = FALSE;
+			}
+		}
+	}
+	if ( bCorrupted ) 
+	{
+		delete [] szFragment;
+		return SubmitCorrupted();
+	}
+	if ( strncmp( szFragment, "HA Version", 10 ) && nPos == MAX_LENGTH_ALLOWED )
+	{
+		delete [] szFragment;
+		return FALSE;
+	}
+	delete [] szFragment;
+
+	// Collect author, title if file name contains "book" keyword
+	CString strLine;
+	BOOL bBook = ( _tcsistr( pszPath, _T("book") ) != NULL );
+	
+	CXMLElement* pXML = new CXMLElement( NULL, bBook ? _T("book") : _T("wordprocessing") );
+	
+	if ( LPCTSTR pszName = _tcsrchr( pszPath, '\\' ) )
+	{
+		pszName++;
+		
+		if ( _tcsnicmp( pszName, _T("ebook - "), 8 ) == 0 )
+		{
+			strLine = pszName + 8;
+			strLine = strLine.SpanExcluding( _T(".") );
+			strLine.TrimLeft();
+			strLine.TrimRight();
+			pXML->AddAttribute( _T("title"), strLine );
+		}
+		else if ( _tcsnicmp( pszName, _T("(ebook"), 6 ) == 0 )
+		{
+			if ( pszName = _tcschr( pszName, ')' ) )
+			{
+				if ( _tcsncmp( pszName, _T(") - "), 4 ) == 0 )
+					strLine = pszName + 4;
+				else
+					strLine = pszName + 1;
+				strLine = strLine.SpanExcluding( _T(".") );
+				strLine.TrimLeft();
+				strLine.TrimRight();
+				pXML->AddAttribute( _T("title"), strLine );
+			}
+		}
+	}
+
+	// Meta data extraction
+	WORD nData;
+	CHARSETINFO csInfo;
+	CString strTemp;
+	TCHAR *pszBuffer = NULL;
+	UINT nCodePage = CP_ACP;
+	DWORD nCwc;
+	UINT charSet = DEFAULT_CHARSET;
+
+	// Find default ANSI codepage for given LCID
+	DWORD nLength = GetLocaleInfo( nLCID, LOCALE_IDEFAULTANSICODEPAGE, NULL, 0 );
+	pszBuffer = (TCHAR*)LocalAlloc( LPTR, ( nLength + 1 ) * sizeof(TCHAR) );
+	nCwc = GetLocaleInfo( nLCID, LOCALE_IDEFAULTANSICODEPAGE, pszBuffer, nLength );
+	if ( nCwc > 0 )
+	{	
+		CString strTemp = pszBuffer;
+		strTemp = strTemp.Left( nCwc - 1 );
+		_stscanf( strTemp, _T("%lu"), &charSet );
+		if ( TranslateCharsetInfo( (LPDWORD)charSet, &csInfo, TCI_SRCCODEPAGE ) )
+			nCodePage = csInfo.ciACP;
+	}
+	SetFilePointer( hFile, nPos, NULL, FILE_BEGIN );
+
+	for ( int nCount = 1 ; nCount < 5 ; nCount++ ) // nCount may be up to 6
+	{
+		// Unknown data
+		ReadFile( hFile, &nData, sizeof(nData), &nRead, NULL );
+		if ( nRead != sizeof(nData) ) bCorrupted = TRUE;
+
+		// Entry length
+		ReadFile( hFile, &nData, sizeof(nData), &nRead, NULL );
+		if ( nRead != sizeof(nData) ) bCorrupted = TRUE;
+		if ( nData == 0 ) break;
+		if ( bCorrupted ) nData = 1;
+
+		CHAR* szMetadata = new CHAR[ nData ];
+		ReadFile( hFile, szMetadata, nData, &nRead, NULL );
+		if ( nRead != nData ) bCorrupted = TRUE;
+
+		if ( nCount == 2 || nCount == 3 ) 
+		{
+			delete [] szMetadata;
+			continue;
+		}
+		
+		// Convert meta data string from ANSI to unicode
+		int nWide = MultiByteToWideChar( nCodePage, 0, szMetadata, nData, NULL, 0 );
+		LPWSTR pszOutput = strLine.GetBuffer( nWide + 1 );
+		MultiByteToWideChar( nCodePage, 0, szMetadata, nData, pszOutput, nWide );
+		pszOutput[ nWide ] = 0;
+		strLine.ReleaseBuffer();
+		strLine.Trim();
+
+		int nPos;
+
+		switch ( nCount )
+		{
+			case 1: // version number
+				nPos = strLine.ReverseFind( ' ' );
+				strLine = strLine.Mid( nPos + 1 );
+				if ( !bBook ) pXML->AddAttribute( _T("formatVersion"), strLine );
+			break;
+			case 2: // unknown data
+			break;
+			case 3: // redirection url -- do we need such files?
+					// then set this file to bogus and remove condition to skip 
+					// nCount == 3
+			break;
+			case 4: // title
+				if ( strLine.CompareNoCase( _T("htmlhelp") ) != 0 )
+					pXML->AddAttribute( _T("title"), strLine );
+			break;
+		}
+		delete [] szMetadata;
+		if ( bCorrupted ) return SubmitCorrupted();
+	}
+
+	pXML->AddAttribute( _T("format"), _T("Compiled HTML Help") );
+	if ( bBook )
+	{
+		pXML->AddAttribute( _T("back"), _T("Digital") );
+		return SubmitMetadata( CSchema::uriBook, pXML );
+	}
+	else
+	{
+		return SubmitMetadata( CSchema::uriDocument, pXML );
+	}
 }
