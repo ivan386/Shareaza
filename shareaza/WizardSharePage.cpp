@@ -101,7 +101,10 @@ BOOL CWizardSharePage::OnInitDialog()
 	
 	CreateDirectory( Settings.Downloads.CompletePath, NULL );
 	AddPhysicalFolder( Settings.Downloads.CompletePath );
-	
+
+	CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+	AddPhysicalFolder( Settings.Downloads.CollectionPath );
+
 	AddPhysicalFolder( _T("C:\\Program Files\\Piolet\\My Shared Folder") );
 	AddPhysicalFolder( _T("C:\\Program Files\\eMule\\Incoming") );
 	AddPhysicalFolder( _T("C:\\Program Files\\eDonkey2000\\incoming") );
