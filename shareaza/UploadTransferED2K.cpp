@@ -625,20 +625,18 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 
 BOOL CUploadTransferED2K::SendRanking()
 {
-	ASSERT( m_pQueue != NULL );
-	
 	int nPosition = UploadQueues.GetPosition( this, TRUE );
 	
 	if ( nPosition < 0 )
-	{	//Invalid queue position
+	{	// Invalid queue position or queue deleted
 		Cleanup();
 		Close( TRUE );
 		return FALSE;
 	}
 	
-	//If queue ranking hasn't changed, don't send (unless specifically requested: m_nRanking set to -1)
+	// If queue ranking hasn't changed, don't send (unless specifically requested: m_nRanking set to -1)
 	if ( m_nRanking == nPosition ) return TRUE;	
-	//Update the 'ranking sent' variables
+	// Update the 'ranking sent' variables
 	m_nRanking = nPosition;
 	m_tRanking = GetTickCount();
 	
