@@ -503,8 +503,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	else
 	{
 		LoadString( strStatus, IDS_TIP_INACTIVE );
-		//strStatus = _T("Inactive");
-		strSpeed = _T("N/A");
+		LoadString( strSpeed, IDS_TIP_NA );
 	}
 	
 	LoadString( strText, IDS_TIP_STATUS );

@@ -886,8 +886,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( pDownload->m_nSize < SIZE_UNKNOWN )
 				strText = Settings.SmartVolume( pDownload->m_nSize, FALSE );
-			else
-				strText = _T("Unknown");
+			else;
+				LoadString( strText, IDS_STATUS_UNKNOWN );
 			break;
 			
 		case DOWNLOAD_COLUMN_PROGRESS:
@@ -910,60 +910,76 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			
 		case DOWNLOAD_COLUMN_STATUS:
 			if ( pDownload->IsCompleted() )
-				strText = pDownload->IsSeeding() ? _T("Seeding") : _T("Completed");
+				if ( pDownload->IsSeeding() )
+					LoadString( strText, IDS_STATUS_SEEDING );
+				else
+					LoadString( strText, IDS_STATUS_COMPLETED );
 			else if ( pDownload->IsMoving() )
-				strText = _T("Moving");
+				LoadString( strText, IDS_STATUS_MOVING );
 			else if ( pDownload->IsPaused() )
 			{
 				if ( pDownload->m_bDiskFull )
-					strText = ( pDownload->IsCompleted() ) ? _T("Can't Move") : _T("File Error");
+				{
+					if ( pDownload->IsCompleted() )
+						LoadString( strText, IDS_STATUS_CANTMOVE );
+					else
+						LoadString( strText, IDS_STATUS_FILEERROR );
+				}
 				else
-					strText = _T("Paused");
+					LoadString( strText, IDS_STATUS_PAUSED );
 			}
 			else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
-				strText = _T("Verifying");
+				LoadString( strText, IDS_STATUS_VERIFYING );
 			else if ( pDownload->IsDownloading() )
 			{
 				DWORD nTime = pDownload->GetTimeRemaining();
 				
 				if ( nTime == 0xFFFFFFFF )
-					strText = _T("Active");
+					LoadString( strText, IDS_STATUS_ACTIVE );
 				else
 					strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 			}
 			else if ( ! pDownload->IsTrying() )
-				strText = _T("Queued");
+				LoadString( strText, IDS_STATUS_QUEUED );
 			else if ( nSources > 0 )
-				strText = _T("Pending");
+				LoadString( strText, IDS_STATUS_PENDING );
 			else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-				strText = _T("Searching");
+				LoadString( strText, IDS_STATUS_SEARCHING );
 			else if ( pDownload->m_bBTH )
 			{
 				if ( pDownload->IsTasking() )
-					strText = _T("Creating");
+					LoadString( strText, IDS_STATUS_CREATING );
 				else if ( pDownload->m_bTorrentTrackerError )
-					strText = _T("Tracker Down");
+					LoadString( strText, IDS_STATUS_TRACKERDOWN );
 				else
-					strText = _T("Torrent");
+					LoadString( strText, IDS_STATUS_TORRENT );
 			}
 			else
-				strText = _T("No Sources");
+				LoadString( strText, IDS_STATUS_NOSOURCES );
 			break;
 			
 		case DOWNLOAD_COLUMN_CLIENT:
 			if ( pDownload->IsCompleted() )
 			{
 				if ( pDownload->m_bVerify == TS_TRUE )
-					strText = _T("Verified");
+					LoadString( strText, IDS_STATUS_VERIFIED );
 				else if ( pDownload->m_bVerify == TS_FALSE )
-					strText = _T("Unverified");
+					LoadString( strText, IDS_STATUS_UNVERIFIED );
 			}
 			else if ( nSources == 1 )
-				strText = _T("(1 source)");
+			{
+				CString strSource;
+				LoadString( strSource, IDS_STATUS_SOURCE );
+				strText.Format( _T("(1 %s)"), strSource );
+			}
 			else if ( nSources > 1 )
-				strText.Format( _T("(%i sources)"), nSources );
+			{
+				CString strSource;
+				LoadString( strSource, IDS_STATUS_SOURCES );
+				strText.Format( _T("(%i %s)"), nSources, strSource );
+			}
 			else
-				strText = _T("(No sources)");
+				LoadString( strText, IDS_STATUS_NOSOURCES );
 			break;
 		case DOWNLOAD_COLUMN_DOWNLOADED:
 			strText = Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE );
@@ -974,7 +990,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				strText.Format( _T("%i%%"), ((int) ( (double)(pDownload->GetVolumeComplete() ) / (double)(pDownload->m_nSize) * 100 )) );
 			}
 			else
-				strText = _T("Unknown");
+				LoadString( strText, IDS_STATUS_UNKNOWN );
 			break;
 		}
 		

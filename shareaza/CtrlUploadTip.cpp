@@ -205,13 +205,15 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	{
 		if ( pUpload->m_nState == upsQueued )
 		{
-			strStatus.Format( _T("%s: Next in Line"), 
-				(LPCTSTR)pUpload->m_pQueue->m_sName );
+			LoadString( strText, IDS_TIP_NEXT );
+			strStatus.Format( _T("%s: %s"), 
+				(LPCTSTR)pUpload->m_pQueue->m_sName, strText );
 		}
 		else
 		{
-			strStatus.Format( _T("%s: Active"), 
-				(LPCTSTR)pUpload->m_pQueue->m_sName );
+			LoadString( strText, IDS_TIP_ACTIVE );
+			strStatus.Format( _T("%s: %s"), 
+				(LPCTSTR)pUpload->m_pQueue->m_sName, strText );
 		}
 	}
 	else if ( nQueue > 0 )

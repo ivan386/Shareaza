@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,25
- PRODUCTVERSION 2,0,0,25
+ FILEVERSION 2,0,0,26
+ PRODUCTVERSION 2,0,0,26
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 25"
+            VALUE "FileVersion", "2, 0, 0, 26"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 25"
+            VALUE "ProductVersion", "2, 0, 0, 26"
         END
     END
     BLOCK "VarFileInfo"
@@ -4737,7 +4737,7 @@ STRINGTABLE
 BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
-    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+    ID_WINDOW_TILE_VERT     "Unknown"
 END
 
 STRINGTABLE 
@@ -5322,6 +5322,48 @@ BEGIN
     IDS_TIP_USERAGENT       "User Agent:"
     IDS_TIP_INACTIVE        "Inactive"
     IDS_TIP_ACTIVE          "Active"
+    IDS_TIP_NEXT            "Next in Line"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_CONNECTING   "Connecting"
+    IDS_STATUS_REQUESTING   "Requesting"
+    IDS_STATUS_RESPONSE     "Response"
+    IDS_STATUS_DOWNLOADING  "Downloading"
+    IDS_STATUS_TIGERTREE    "TigerTree"
+    IDS_STATUS_HASHSET      "Hashset"
+    IDS_STATUS_METADATA     "Metadata"
+    IDS_STATUS_BUSY         "Busy"
+    IDS_STATUS_ENQUEUE      "Enqueue"
+    IDS_STATUS_QUEUED       "Queued"
+    IDS_STATUS_UNKNOWN      "Unknown"
+    IDS_STATUS_COMPLETED    "Completed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_SEEDING      "Seeding"
+    IDS_STATUS_MOVING       "Moving"
+    IDS_STATUS_PAUSED       "Paused"
+    IDS_STATUS_FILEERROR    "File Error"
+    IDS_STATUS_CANTMOVE     "Can't Move"
+    IDS_STATUS_VERIFYING    "Verifying"
+    IDS_STATUS_ACTIVE       "Active"
+    IDS_STATUS_PENDING      "Pending"
+    IDS_STATUS_SEARCHING    "Searching"
+    IDS_STATUS_CREATING     "Creating"
+    IDS_STATUS_TORRENT      "Torrent"
+    IDS_STATUS_TRACKERDOWN  "Tracker Down"
+    IDS_STATUS_NOSOURCES    "(No Sources)"
+    IDS_STATUS_VERIFIED     "Verified"
+    IDS_STATUS_UNVERIFIED   "Unverified"
+    IDS_STATUS_SOURCE       "source"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_SOURCES      "sources"
 END
 
 #endif    // English (Australia) resources
