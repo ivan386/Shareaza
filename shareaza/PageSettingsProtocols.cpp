@@ -73,7 +73,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hG2, _T("PrimaryURN"), _T("sha1") );
 	AddItem( hG2, _T("NodeClass"), _T("Hub, Leaf") );
 	AddItem( hG2, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hG2, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hG2, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	HTREEITEM hG1 = AddItem( hNetworks, _T("Gnutella1 Network") );
 	AddItem( hG1, _T("Name"), _T("Gnutella1") );
@@ -81,7 +81,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hG1, _T("PrimaryURN"), _T("sha1") );
 	AddItem( hG1, _T("NodeClass"), _T("Leaf, Ultrapeer, Peer") );
 	AddItem( hG1, _T("ProtocolVersion"), _T("0.6") );
-	AddItem( hG1, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hG1, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	HTREEITEM hED = AddItem( hNetworks, _T("eDonkey2000 Network") );
 	AddItem( hED, _T("Name"), _T("eDonkey2000") );
@@ -89,7 +89,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hED, _T("PrimaryURN"), _T("ed2k (compound md4)") );
 	AddItem( hED, _T("NodeClass"), _T("Client") );
 	AddItem( hED, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hED, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hED, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	HTREEITEM hTransfers = AddItem( NULL, _T("File Transfer Protocols") );
 	
@@ -101,7 +101,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hHTTP, _T("Capabilities"), _T("THEX, PFS, Metadata, HUGE, Browse") );
 	AddItem( hHTTP, _T("Encodings"), _T("Deflate, Backwards") );
 	AddItem( hHTTP, _T("ProtocolVersion"), _T("1.1") );
-	AddItem( hHTTP, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hHTTP, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	/*
 	HTREEITEM hFTP = AddItem( hTransfers, _T("File Transfer Protocol (FTP)") );
@@ -122,7 +122,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hEFTP, _T("Directions"), _T("Download, Upload") );
 	AddItem( hEFTP, _T("Capabilities"), _T("Hashset, SourceExchange, Deflate") );
 	AddItem( hEFTP, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hEFTP, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hEFTP, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	HTREEITEM hBT = AddItem( hTransfers, _T("BitTorrent Coupling (BT)") );
 	AddItem( hBT, _T("Name"), _T("BitTorrent Coupling (BT)") );
@@ -131,7 +131,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hBT, _T("Directions"), _T("Download, Upload") );
 	// AddItem( hBT, _T("Capabilities"), _T("Hashset, SourceExchange, Deflate") );
 	AddItem( hBT, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hBT, _T("ComponentVersion"), _T("1.8.9.4") );
+	AddItem( hBT, _T("ComponentVersion"), _T("2.0.0.0") );
 	
 	return TRUE;
 }
