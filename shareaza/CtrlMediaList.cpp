@@ -623,7 +623,7 @@ void CMediaListCtrl::OnMediaAddFolder()
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder to share:");
+	pBI.lpszTitle		= _T("Select folder to add to playlist:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
 	
 	pPath = SHBrowseForFolder( &pBI );
