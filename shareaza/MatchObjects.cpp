@@ -662,7 +662,8 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	pHit->m_bFiltered = FALSE;
 	
 	if ( m_bFilterBusy && pHit->m_bBusy == TS_TRUE ) return FALSE;
-	if ( m_bFilterPush && pHit->m_bPush == TS_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
+	//if ( m_bFilterPush && pHit->m_bPush == TS_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
+	if ( m_bFilterPush && pHit->m_bPush == TS_TRUE ) return FALSE;
 	if ( m_bFilterUnstable && pHit->m_bStable == TS_FALSE ) return FALSE;
 	if ( m_bFilterReject && pHit->m_bMatched == FALSE ) return FALSE;
 	if ( m_bFilterBogus && pHit->m_bBogus ) return FALSE;
