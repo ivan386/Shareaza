@@ -1508,6 +1508,10 @@ void CDownloadsWnd::OnDownloadsHelp()
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Downloading") );
 	}
+	else if ( ! pDownload->IsTrying() )
+	{
+		CHelpDlg::Show( _T("DownloadHelp.Queued") );
+	}
 	else if ( pDownload->GetSourceCount() > 0 )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Pending") );
@@ -1523,10 +1527,6 @@ void CDownloadsWnd::OnDownloadsHelp()
 	else if ( pDownload->m_bTorrentTrackerError )
 	{
 		CHelpDlg::Show( _T("DownloadHelp.Tracker") );
-	}
-	else if ( !pDownload->IsTrying() )
-	{
-		CHelpDlg::Show( _T("DownloadHelp.Pending") );
 	}
 	else
 	{

@@ -1886,6 +1886,17 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">This Download is Pending</text>
 		<newline gap="8"/>
+		<text>This download is waiting for someone to start uploading.
+		Shareaza is ready to start downloading this file, but no-one is sending it at
+		the moment. You are probably waiting in other user's queues, and the download
+		may start transfering at any time. You can examine the individual sources to 
+		see each queue you are waiting in. If you are sharing files yourself, it may
+		improve the chances of a download transfer starting quickly.</text>
+	</document>
+	
+	<document name="DownloadHelp.Queued">
+		<text format="b">This Download is Queued</text>
+		<newline gap="8"/>
 		<text>This download is waiting for some of your other downloads to complete.
 		Your download settings limit the number of downloads which may be active at
 		any given time, to ensure that each download gets a good share of the available
