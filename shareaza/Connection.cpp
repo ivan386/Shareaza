@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/04/03 22:01:36 $"
-//	Revision:		"$Revision: 1.20 $"
+//	Date:			"$Date: 2005/04/06 15:15:38 $"
+//	Revision:		"$Revision: 1.21 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -766,11 +766,8 @@ BOOL CConnection::ReadHeaders()
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
-			if ( strValue.GetLength() > 0 )
-			{
-				// Give OnHeaderLine this last header, and its value
-				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
-			}
+			// Give OnHeaderLine this last header, and its value
+			if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
 		}
 	}
 
@@ -871,7 +868,7 @@ BOOL CConnection::IsAgentBlocked()
 	// Eliminate some obvious block and don't block cases
 	if ( m_sUserAgent == _T("Fake Shareaza") )		return TRUE;	// Block "Fake Shareaza"
 
-	if ( m_sUserAgent.Trim().IsEmpty() )									// Blank user agent
+	if ( m_sUserAgent.IsEmpty() )									// Blank user agent
 	{
 		if ( Settings.Gnutella.BlockBlankClients )
 			return TRUE;
