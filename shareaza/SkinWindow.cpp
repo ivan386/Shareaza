@@ -811,7 +811,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	if ( m_bCaption )
 	{
 		pWnd->GetWindowText( strCaption );
-		if ( m_bCaptionCaps ) strCaption.MakeUpper();
+		if ( m_bCaptionCaps ) strCaption = CharUpper( strCaption.GetBuffer() );
 	}
 	
 	if ( m_bAnchor[ SKINANCHOR_ICON ] )

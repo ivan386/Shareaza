@@ -1429,7 +1429,9 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		CString strKey		= strComment.Left( nEquals );
 		CString strValue	= strComment.Mid( nEquals + 1 );
 		
-		strKey.TrimLeft(); strKey.TrimRight(); strKey.MakeUpper();
+		strKey.TrimLeft(); strKey.TrimRight(); 
+		strKey = CharUpper( strKey.GetBuffer() );
+
 		strValue.TrimLeft(); strValue.TrimRight();
 		if ( strValue.IsEmpty() ) continue;
 		
