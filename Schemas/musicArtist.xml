@@ -4,7 +4,6 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,7 +21,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Music Artist</title>
                <title language="af">Musiek Kunstenaar</title>
                <title language="ar">&#160;الالبوم&#160;الفنان</title>
-               <title language="chs">音乐艺术家</title>
                <title language="de">Musiker</title>
                <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
@@ -42,7 +40,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Name</title>
                        <title language="af">Naam</title>
                        <title language="ar">&#160;الاسم</title>
-                       <title language="chs">名称</title>
                        <title language="de">Name</title>
                        <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
@@ -57,7 +54,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="ar">&#160;نبذه&#160;تعريفية</title>
-                       <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
@@ -72,7 +68,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ar">&#160;الالوان</title>
-                       <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -87,7 +82,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
                        <title language="ar">&#160;التعليقات</title>
-                       <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
@@ -117,7 +111,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">{name} - Discography</title>
                <title language="af">{name} - Diskografie</title>
                <title language="ar">&#160;{name}&#160;-التسجيل</title>
-               <title language="chs">{name} - 分类</title>
                <title language="de">{name}</title>
                <title language="es">{name}</title>
                <title language="fr">{name} - Discographie</title>
@@ -130,7 +123,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
                <subtitle language="ar">&#160;تحتوي&#160;هذه&#160;الحافظة&#160;كلّ&#160;موسيقاك&#160;من&#160;قبل&#160;{name}.</subtitle>
-               <subtitle language="chs">这个文件夹中包括您所有的音乐，按 {name}。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>

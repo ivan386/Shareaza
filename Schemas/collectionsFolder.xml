@@ -4,7 +4,6 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,7 +21,6 @@ Shareaza Russian Schemas File translated by dAbserver
               <title language="en">Collections:My Collections</title>
               <title language="af">Versamelings:My Versamelings</title>
               <title language="ar">&#160;المجموعات:&#160;مجموعاتي</title>
-              <title language="chs">收藏: 我的收藏</title>
               <title language="de">Kollektionen:Eigene Kollektionen</title>
               <title language="es">Colecciones: Mis Colecciones</title>
               <title language="fr">Collections:Mes collections</title>
@@ -42,7 +40,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -58,7 +55,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">My Collections</title>
                <title language="af">My Versamelings</title>
                <title language="ar">&#160;مجموعاتي</title>
-               <title language="chs">我的收藏</title>
                <title language="de">Eigene Kollektionen</title>
                <title language="es">Mis Colecciones</title>
                <title language="fr">Mes collections</title>
@@ -71,7 +67,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;مجموعتي&#160;في&#160;المكتبة.</subtitle>
-               <subtitle language="chs">这个文件夹包含您收藏中的所有富文本。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>

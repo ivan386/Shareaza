@@ -4,7 +4,6 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,7 +21,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Music Album</title>
                <title language="af">Musiek Album</title>
                <title language="ar">&#160;الالبوم&#160;الاغنية</title>
-               <title language="chs">音乐专集</title>
                <title language="de">Musikalbum</title>
                <title language="es">Album de Música</title>
                <title language="fr">Album Musical</title>
@@ -42,7 +40,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -59,7 +56,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Artist</title>
                        <title language="af">Kunstenaar</title>
                        <title language="ar">&#160;الفنان</title>
-                       <title language="chs">艺术家</title>
                        <title language="de">Künstler</title>
                        <title language="es">Artista</title>
                        <title language="fr">Artiste</title>
@@ -76,7 +72,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Genre</title>
                        <title language="af">Genre</title>
                        <title language="ar">&#160;النوع</title>
-                       <title language="chs">流派</title>
                        <title language="de">Genre</title>
                        <title language="es">Género</title>
                        <title language="fr">Genre</title>
@@ -91,7 +86,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Tracks</title>
                        <title language="af">Snitte</title>
                        <title language="ar">&#160;المسارات</title>
-                       <title language="chs">Tracks</title>
                        <title language="de">Tracks</title>
                        <title language="es">Pista</title>
                        <title language="fr">Pistes</title>
@@ -106,7 +100,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Disks</title>
                        <title language="af">Skywe</title>
                        <title language="ar">&#160;الأقراص</title>
-                       <title language="chs">碟片</title>
                        <title language="de">Disks</title>
                        <title language="es">Disco</title>
                        <title language="fr">Disques</title>
@@ -121,7 +114,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Label</title>
                        <title language="af">CD Maatskappy</title>
                        <title language="ar">&#160;العلامة</title>
-                       <title language="chs">标签</title>
                        <title language="de">Etikett</title>
                        <title language="es">Etiqueta</title>
                        <title language="fr">Étiquette</title>
@@ -136,7 +128,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Source</title>
                        <title language="af">Bron</title>
                        <title language="ar">&#160;المصدر</title>
-                       <title language="chs">源</title>
                        <title language="de">Source</title>
                        <title language="es">Fuente</title>
                        <title language="fr">Source</title>
@@ -151,7 +142,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
                        <title language="ar">&#160;النوع</title>
-                       <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
@@ -166,7 +156,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Total Time</title>
                        <title language="af">Totale Tydsduur</title>
                        <title language="ar">&#160;مجموع&#160;الوقت</title>
-                       <title language="chs">总时间</title>
                        <title language="de">Gesamtdauer</title>
                        <title language="es">Tiempo Total</title>
                        <title language="fr">Durée totale</title>
@@ -181,7 +170,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
                        <title language="ar">&#160;اللغة</title>
-                       <title language="chs">语言</title>
                        <title language="de">Sprache</title>
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
@@ -196,7 +184,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Completeness</title>
                        <title language="af">Volledigheid</title>
                        <title language="ar">&#160;الكمال</title>
-                       <title language="chs">完全</title>
                        <title language="de">Vollständigkeit</title>
                        <title language="es">Lo completo</title>
                        <title language="fr">Perfection</title>
@@ -211,7 +198,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Encoder Used</title>
                        <title language="af">Enkodeerder Gebruik</title>
                        <title language="ar">&#160;Encoder&#160;Used</title>
-                       <title language="chs">使用编码</title>
                        <title language="de">Benutzter Encoder</title>
                        <title language="es">Encoder Usado</title>
                        <title language="fr">Encodeur Utilisé</title>
@@ -226,7 +212,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Bitrate</title>
                        <title language="af">Bistempo</title>
                        <title language="ar">&#160;معدل&#160;البت</title>
-                       <title language="chs">比特率</title>
                        <title language="de">Bitrate</title>
                        <title language="es">Bitrate</title>
                        <title language="fr">Fréquence</title>
@@ -241,7 +226,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Sample Rate</title>
                        <title language="af">Klanktempo</title>
                        <title language="ar">&#160;نسبة&#160;عيّنة</title>
-                       <title language="chs">样品分级</title>
                        <title language="de">Abtastrate</title>
                        <title language="es">Sample Rate</title>
                        <title language="fr">Echantillonage</title>
@@ -256,7 +240,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="ar">&#160;نبذه&#160;تعريفية</title>
-                       <title language="chs">描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
@@ -271,7 +254,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ar">&#160;الالوان</title>
-                       <title language="chs">收藏者</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -286,7 +268,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Quality Notes</title>
                        <title language="af">Kwaliteit Notas</title>
                        <title language="ar">&#160;ملاحظة&#160;الجودة</title>
-                       <title language="chs">质量说明项</title>
                        <title language="de">Qualitätshinweise</title>
                        <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
@@ -301,7 +282,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
                        <title language="ar">&#160;الموزّع</title>
-                       <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
                        <title language="es">Distribuidor</title>
                        <title language="fr">Distributeur</title>
@@ -316,7 +296,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ar">&#160;رابط&#160;الموزع</title>
-                       <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
                        <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>
@@ -331,7 +310,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Release Group</title>
                        <title language="af">Uitgewers Groep</title>
                        <title language="ar">&#160;اصدار&#160;المجموعات</title>
-                       <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
                        <title language="es">Release Group</title>
                        <title language="fr">Groupe de release</title>
@@ -346,7 +324,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Release Group Link</title>
                        <title language="af">Uitgewers Skakel</title>
                        <title language="ar">&#160;رابط&#160;اصدار&#160;المجموعات</title>
-                       <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="fr">Lien du groupe de release</title>
@@ -361,7 +338,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
                        <title language="ar">&#160;سنة</title>
-                       <title language="chs">年份</title>
                        <title language="de">Jahr</title>
                        <title language="es">Año</title>
                        <title language="fr">Année</title>
@@ -376,7 +352,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
                        <title language="ar">&#160;الرابط</title>
-                       <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>

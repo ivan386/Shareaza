@@ -4,7 +4,6 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,7 +21,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Video:TV Shows</title>
                <title language="af">Video:TV Programme</title>
                <title language="ar">&#160;فيديز&#160;:&#160;البرامج&#160;التلفازية</title>
-               <title language="chs">视频: 电视演出</title>
                <title language="de">Video:Fernsehserien</title>
                <title language="es">Video: Shows de TV</title>
                <title language="fr">Vidéo:Séries</title>
@@ -42,7 +40,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -61,7 +58,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">TV Shows</title>
                <title language="af">TV Programme</title>
                <title language="ar">&#160;البرامج&#160;التلفازية</title>
-               <title language="chs">电视演出</title>
                <title language="de">Fernsehserien</title>
                <title language="es">Shows de TV</title>
                <title language="fr">Séries</title>
@@ -74,7 +70,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains a list of TV series you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die TV reekse wat jy in jou biblioteek het.</subtitle>
                <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;على&#160;جميع&#160;ملفات&#160;البرامج&#160;التلفازية.</subtitle>
-               <subtitle language="chs">这个文件夹中的清单包含您库中的电视系列。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Fernsehserien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient la liste des séries de votre bibliothèque.</subtitle>

@@ -4,7 +4,6 @@
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
-Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
@@ -22,7 +21,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Video:My Video</title>
                <title language="af">Video:My Video</title>
                <title language="ar">&#160;فيديو&#160;:&#160;افلامي</title>
-               <title language="chs">视频: 我的视频</title>
                <title language="de">Video:Eigene Videos</title>
                <title language="es">Video:Mis Videos</title>
                <title language="fr">Vidéo:Mes vidéos</title>
@@ -42,7 +40,6 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -63,7 +60,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Welcome to My Video!</title>
                <title language="af">Welkom by My Video's!</title>
                <title language="ar">&#160;مرحبا&#160;بك&#160;في&#160;افلامي!</title>
-               <title language="chs">欢迎来到我的视频！</title>
                <title language="de">Willkommen bei Eigene Videos!</title>
                <title language="es">Bienvenido a Mis Videos!</title>
                <title language="fr">Bienvenue dans Mes vidéos!</title>
@@ -76,7 +72,6 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="ar">&#160;يحتوي&#160;هذا&#160;المجلد&#160;على&#160;جيمع&#160;ملفات&#160;الافلام&#160;في&#160;المكتبة,&#160;منقسم&#160;إلى&#160;الأفلام,البرامج&#160;التلفزيونية&#160;والأغاني&#160;المصوّرة.&#160;&#160;جاري&#160;فتح&#160;المجلد.</subtitle>
-               <subtitle language="chs">这些文件夹包括您收藏中所有的视频，分成电影，电视演出和MTV。打开下面的文件夹可进行查看。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéos.  Ouvrez un sous-dossier pour continuer.</subtitle>
