@@ -261,7 +261,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
 	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
-	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 14*24*60*60 );
+	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60 );
 	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );
 	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 2000 );
 	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
