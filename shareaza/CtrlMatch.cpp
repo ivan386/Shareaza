@@ -847,9 +847,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					if ( ppHit->m_nSources > 1 )
 					{
-						_stprintf( szBuffer, _T("%s+%lu"),
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"),
 							(LPCTSTR)ppHit->m_sNick,
 							ppHit->m_nSources - 1 );
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 						pszText = szBuffer;
 					}
 					else
@@ -864,15 +865,17 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						/*_stprintf( szBuffer, _T("%lu@%s+%lu"), ppHit->m_pClientID.w[2], 
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), 
 							ppHit->m_nSources - 1 );*/
-						_stprintf( szBuffer, _T("(%s)+%lu"),
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(%s)+%u"),
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ), ppHit->m_nSources - 1 );
-
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					else
 					{
 						/*_stprintf( szBuffer, _T("%lu@%s"), ppHit->m_pClientID.w[2], 
 							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );*/
-						_stprintf( szBuffer, _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("(%s)"),
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)ppHit->m_pClientID.w[0] ) ) );
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					pszText = szBuffer;
 					
@@ -881,9 +884,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				{
 					if ( ppHit->m_nSources > 1 )
 					{
-						_stprintf( szBuffer, _T("%s+%lu"),
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"),
 							(LPCTSTR)CString( inet_ntoa( ppHit->m_pAddress ) ),
 							ppHit->m_nSources - 1 );
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 						pszText = szBuffer;
 					}
 					else
@@ -898,8 +902,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					{
 						CString strSource, strText;
 						LoadSourcesString( strSource, pFile->m_nSources );
-						strText.Format( _T("(%lu %s)"), pFile->m_nSources, strSource );
-						_stprintf( szBuffer, strText, pFile->m_nSources );
+						strText.Format( _T("(%u %s)"), pFile->m_nSources, strSource );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
+						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					else
 					{
@@ -912,8 +917,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			{
 				CString strSource, strText;
 				LoadSourcesString( strSource, pFile->m_nSources );
-				strText.Format( _T("(%lu %s)"), pFile->m_nSources, strSource );
-				_stprintf( szBuffer, strText, pFile->m_nSources );
+				strText.Format( _T("(%u %s)"), pFile->m_nSources, strSource );
+				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
+				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				pszText = szBuffer;
 			}
 			break;

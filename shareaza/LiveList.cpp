@@ -155,10 +155,11 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 	va_list pArgs;
 
 	va_start( pArgs, pszFormat );
-	int result = _vsnwprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), pszFormat, pArgs );
+	_vsntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), pszFormat, pArgs );
+	szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 	va_end( pArgs );
 
-	m_pColumn[ nColumn ] = result != -1 ? szBuffer : _T( "" );
+	m_pColumn[ nColumn ] = szBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////

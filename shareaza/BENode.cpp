@@ -203,7 +203,7 @@ void CBENode::Encode(CBuffer* pBuffer) const
 	
 	if ( m_nType == beString )
 	{
-		sprintf( szBuffer, "%lu:", (DWORD)m_nValue );
+		sprintf( szBuffer, "%u:", (DWORD)m_nValue );
 		pBuffer->Print( szBuffer );
 		pBuffer->Add( m_pValue, (DWORD)m_nValue );
 	}

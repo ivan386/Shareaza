@@ -1,8 +1,8 @@
 //
 // EDPartImporter.cpp
 //
-//	Date:			"$Date: 2005/02/20 11:59:51 $"
-//	Revision:		"$Revision: 1.6 $"
+//	Date:			"$Date: 2005/03/22 22:00:12 $"
+//	Revision:		"$Revision: 1.7 $"
 //	Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -386,7 +386,7 @@ void CEDPartImporter::Message(UINT nMessageID, ...)
 	CEdit* pCtrl = m_pTextCtrl;
 	if ( pCtrl == NULL ) return;
 	
-	TCHAR szBuffer[2048];
+	TCHAR szBuffer[2048] = { 0 };
 	CString strFormat;
 	va_list pArgs;
 	

@@ -165,12 +165,12 @@ BOOL CHandshake::OnConnected()
 	// Compose the GIV string, which is like "GIV index:guid/" with two newlines at the end (do)
 	CString strGIV;
 	strGIV.Format( // MFC's CString::Format is like sprintf, "%.2X" formats a byte into 2 hexidecimal characters like "ff"
-		_T("GIV %lu:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"),
+		_T("GIV %u:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"),
 		m_nIndex,											// Our index on the Gnutella network (do)
-		pID->n[0],  pID->n[1],  pID->n[2],  pID->n[3],		// Our GUID
-		pID->n[4],  pID->n[5],  pID->n[6],  pID->n[7],
-		pID->n[8],  pID->n[9],  pID->n[10], pID->n[11],
-		pID->n[12], pID->n[13], pID->n[14], pID->n[15] );
+		int( pID->n[0] ),  int( pID->n[1] ),  int( pID->n[2] ),  int( pID->n[3] ),		// Our GUID
+		int( pID->n[4] ),  int( pID->n[5] ),  int( pID->n[6] ),  int( pID->n[7] ),
+		int( pID->n[8] ),  int( pID->n[9] ),  int( pID->n[10] ), int( pID->n[11] ),
+		int( pID->n[12] ), int( pID->n[13] ), int( pID->n[14] ), int( pID->n[15] ) );
 
 	// Print the string into the output buffer, and write the output buffer to the remote computer
 	m_pOutput->Print( strGIV );

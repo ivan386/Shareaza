@@ -1,9 +1,9 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/07 12:45:15 $"
-//	Revision:		"$Revision: 1.14 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/03/22 22:00:11 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1210,7 +1210,8 @@ void CChatSession::StatusMessage(int nFlags, UINT nID, ...)
 	else
 	{
 		TCHAR szMessageBuffer[1024];
-		_vstprintf( szMessageBuffer, strFormat, pArgs );
+		_vsntprintf( szMessageBuffer, sizeof( szMessageBuffer ) / sizeof( TCHAR ), strFormat, pArgs );
+		szMessageBuffer[ 1023 ] = 0; //truncate here if necessary
 		if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnStatusMessage( nFlags, szMessageBuffer );
 	}
 	

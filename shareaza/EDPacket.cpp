@@ -213,7 +213,7 @@ BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 LPCTSTR CEDPacket::GetType() const
 {
 	static TCHAR szTypeBuffer[16];
-	_stprintf( szTypeBuffer, _T("0x%x"), m_nType );
+	_stprintf( szTypeBuffer, _T("0x%x"), int( m_nType ) );
 	return szTypeBuffer;
 
 	/*

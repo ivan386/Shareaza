@@ -97,6 +97,6 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 LPCTSTR CBTPacket::GetType() const
 {
 	static TCHAR szTypeBuffer[16];
-	_stprintf( szTypeBuffer, _T("%i"), m_nType );
+	_stprintf( szTypeBuffer, _T("%i"), int( m_nType ) );
 	return szTypeBuffer;
 }

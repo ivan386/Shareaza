@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/03/11 18:02:00 $"
-//	Revision:		"$Revision: 1.15 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/03/22 22:00:11 $"
+//	Revision:		"$Revision: 1.16 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -846,7 +846,7 @@ BOOL CConnection::SendMyAddress()
 
 		// Format works just like sprintf
 		strHeader.Format(
-			_T("Listen-IP: %s:%lu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
+			_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "67.176.34.172"
 			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
