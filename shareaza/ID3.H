@@ -163,6 +163,6 @@ LPCTSTR CLibraryBuilderInternals::pszID3Genre[] =
 };
 #endif
 
-#define ID3_GENRES	124
+#define ID3_GENRES	126
 
 #pragma pack()
