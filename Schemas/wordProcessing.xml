@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Document:Word Processing XML Schema Framework; 1.4; Jonathan C. Nilson -->
 <!-- Original by Higgy -->
 
@@ -29,7 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Dokument:Textverarbeitung</title>
                <title language="es">Documento: Documento de Texto</title>
                <title language="fr">Document:Traitement de texte</title>
-               <title language="hu">Dokumentom: szövegszerkesztés</title>
+               <title language="hu">Dokumentum: szövegszerkesztés</title>
                <title language="it">Documento:Documento di testo</title>
                <title language="lt">Dokumentas:Dokumentas</title>
                <title language="nl">Document:Word Processing</title>
