@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 // #include "Shareaza.h"
 #include "TigerTree.h"
-#include "TigerBoxes.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

@@ -6550,14 +6550,16 @@
 					Name="Unicode Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -6602,14 +6604,16 @@
 					Name="Unicode Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -8941,14 +8945,16 @@
 					Name="Unicode Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
@@ -9493,14 +9499,16 @@
 					Name="Unicode Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Unicode Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(InputName).obj"/>
 				</FileConfiguration>
 			</File>
@@ -12301,9 +12309,6 @@
 			</File>
 			<File
 				RelativePath="ThumbCache.h">
-			</File>
-			<File
-				RelativePath="TigerBoxes.h">
 			</File>
 			<File
 				RelativePath="TigerTree.h">
