@@ -26,6 +26,8 @@
 #include "WizardFinishedPage.h"
 #include "Network.h"
 #include "Skin.h"
+#include "HostCache.h"
+#include "DlgDonkeyServers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -96,6 +98,15 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 	UpdateData();
 
 	Settings.Connection.AutoConnect = m_bAutoConnect;
+
+	if ( Settings.eDonkey.EnableToday )
+	{
+		if ( HostCache.eDonkey.m_nHosts < 3 )
+		{
+			CDonkeyServersDlg dlg;
+			dlg.DoModal();
+		}
+	}
 
 	if ( m_bConnect ) Network.Connect( TRUE );
 	Settings.SetStartup( m_bStartup );
