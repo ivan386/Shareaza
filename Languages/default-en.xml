@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.114"
+		version="2.1.0.120"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2007,11 +2007,32 @@
 		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
 	</document>
 
+	<document name="GeneralHelp.DiskWriteFail">
+		<text format="b">A Required Directory is Non-writable</text>
+		<newline gap="8"/>
+		<text>A disk or directory Shareaza needs cannot be written to.</text>
+		<newline gap="8"/>
+		<text>A network drive may have been disconnected, or you may not have write permission 
+		to a selected directory. Please check directories and permissions, or change the
+		temporary files location.</text>
+	</document>
+
+	<document name="GeneralHelp.ConnectionFail">
+		<text format="b">Internet Connection Has Been Lost</text>
+		<newline gap="8"/>
+		<text>Windows reports that there is no internet connection is available.</text>
+		<newline gap="8"/>
+		<text>It is likely that a modem or router has dropped, meaning the internet cannot
+		be accessed. You may need to manually re-connect or reset your connection.</text>
+		<newline gap="8"/>
+		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
+	</document>
+	
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 detected</text>
 		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
-		that applications can attempt at once.</text>
+		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of
+		connections that applications can attempt at once.</text>
 		<newline gap="8"/>
 		<text>Shareaza has limited network connections and set appropriate default values to
 		ensure proper operation, however performance may be reduced. Please visit the Shareaza
@@ -2021,15 +2042,28 @@
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
-		<text>Please note that (as with any automated filter) it may not be 100% effective at screening
-		content. It is designed simply to filter out excess unwanted results, rather than as a 100% safe block.</text>
+		<text>Please note that (as with any automated filter) it may not be 100% effective at
+		screening content. It is designed simply to filter out excess unwanted results, rather than 
+		as a 100% safe block.</text>
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
 	</document>
 
+	<document name="GeneralHelp.BadTorrentEncoding">
+		<text format="b">This torrent appears to have an encoding error</text>
+		<newline gap="8"/>
+		<text>Windows has reported a translation fault while decoding text in this torrent. It is
+		possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+		still download properly, although some file names could be incorrect.</text>
+		<newline gap="8"/>
+		<text>Most torrent creation programs should allow you to repair this torrent, which
+		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums 
+		if you require additional help.</text>
+	</document>
+
 	<!-- Search help documents -->
 
-	<document name="SearchHelp.BadSearch">
+	<document name="SearchHelp.BadSearch1">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
 		<text>This search is poorly formatted, and may not function correctly.
@@ -2038,7 +2072,34 @@
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
 		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
-		because it is not specific enough and would generate too many results.</text>
+		because it is not specific enough, and would generate too many results.</text>
+	</document>
+
+	<document name="SearchHelp.BadSearch2">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search does not contain enough terms to function properly. All searches need
+		a minimum number of valid, alphabetic characters to be able to start.</text>
+		<newline gap="8"/>
+		<text>While common file extentions (and numbers) can be searched for, you must enter
+		other terms as well when creating the search. Punctuation and wildcards are not used
+		in searches, just the text you enter.</text>
+	</document>
+  	 
+	<document name="SearchHelp.BadSearch3">
+		<text format="b">Please re-phrase the search</text>
+		<newline gap="8"/>
+		<text>This search seems to contain only common file extentions, or no searchable
+		words.</text>
+		<newline gap="8"/>
+		<text>If you are having trouble creating searches, keep in mind that it's quite similar
+		to a web search. Specific terms or phrases are best- Unique names, titles and
+		keywords.</text>
+		<newline gap="8"/>
+		<text>General terms cannot be searched for efficiently and may result in poor
+		search performance, as well as high bandwidth use during searches.</text>
+		<newline gap="8"/>
+		<text>Further help is available on the Shareaza web site.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
@@ -2048,7 +2109,8 @@
 		content, and this has been turned off in the settings. You should either re-phrase the
 		search, or disable the filter.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the adult content filter.</text>
+		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
+		adult content filter.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2400,6 +2462,9 @@
 	<string id="WINDOW_SEARCHPAD" value="Search"/>
 	<string id="WINDOW_HELP" value="Shareaza Help"/>
 	<string id="7000" value="Are you sure you want to delete this filter ?"/>
+	<string id="7001" value="&amp;Schemas"/>
+	<string id="7002" value="Multiple Values"/>
+	<string id="7003" value="Multiple"/>
 	<string id="8000" value="Shareaza Settings"/>
 	<string id="8001" value="Welcome to Shareaza"/>
 	<string id="8002" value="File Properties"/>
@@ -2462,7 +2527,7 @@
 	<string id="8156" value="Search"/>
 	<string id="8157" value="Results"/>
 	<string id="8158" value="Clear"/>
-	<string id="8159" value="Advanced..."/>
+	<string id="8159" value="Advanced"/>
 	<string id="8160" value="Establishing a connection to host..."/>
 	<string id="8161" value="Sent a push request, waiting for connection..."/>
 	<string id="8162" value="Connected, requesting browse..."/>
@@ -2475,6 +2540,8 @@
 	<string id="8177" value="Type some keywords to search for:"/>
 	<string id="8178" value="What type of file is it?"/>
 	<string id="8179" value="(Clear Search History)"/>
+	<string id="8180" value="File size must be"/>
+	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
 	<string id="8224" value="Shareaza is downloading:"/>
 	<string id="8225" value="This download is paused:"/>
@@ -2582,7 +2649,7 @@
 	<string id="16155" value="Acting as a hub for leaf neighbour %s."/>
 	<string id="16156" value="Neighbour %s wants to be a hub, closing connection."/>
 	<string id="16157" value="Neighbour %s is not a hub, closing connection."/>
-	<string id="16158" value="Gnutella][ connection with neighbour %s established successfully (%s)."/>
+	<string id="16158" value="Gnutella2 connection with neighbour %s established successfully (%s)."/>
 	<string id="16159" value="Closing connection to non-Gnutella2 neighbour %s."/>
 	<string id="16192" value="Neighbour %s forwarded a packet of excessive size, dropping connection."/>
 	<string id="16193" value="Neighbour %s forwarded a packet with zero TTL, ignoring."/>
