@@ -608,7 +608,13 @@ void CEDNeighbour::SendSharedFiles()
 			//Send the file size to the ed2k server
 			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket );
 			//Send the file type to the ed2k server
-			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket ); // We don't know it for incomplete files...
+			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket ); // We don't know it for certain with
+			// incomplete files. Might be okay to assume from the extention, since they are usually correct.
+
+			// Don't send metadata for incomplete files, since we have not verified it yet.
+			// We should be careful not propagate unchecked metadata over ed2k, since there seems
+			// to be a bit of a problem with bad data there... (Possibly old clients?)
+
 			//Increment count of files sent
 			nCount++;
 		}
