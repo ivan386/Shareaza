@@ -16,7 +16,7 @@
 			description="Shareaza Default English Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.0.28"
+			version="2.0.2.16"
 			type="Language"
 			language="en"
 			prompt="Click here to select English as your natural language."
@@ -1957,56 +1957,65 @@
 	<!-- General help documents -->
 
 	<document name="GeneralHelp.DiskSpace">
-	<text format="b">Disk Space is Low</text>
-	<newline gap="8"/>
-	<text>The amount of free space on one or more drives used by Shareaza is low.</text>
-	<newline gap="8"/>
-	<text>You should always attempt to keep a reasonable amount of disk space free.
-	Programs can become unstable if the drives become full, and temporary files may be
-	lost. You should run a disk clean-up, delete unwanted files, or un-install software
-	you no longer need.</text>
-  </document>
+		<text format="b">Disk Space is Low</text>
+		<newline gap="8"/>
+		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
+		<newline gap="8"/>
+		<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
+		can become unstable if the drives become full, and temporary files may be lost. You should 
+		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+	</document>
+
+	<document name="GeneralHelp.XPsp2">
+	 	 <text format="b">Windows XP Service Pack 2 detected</text>
+	       <newline gap="8"/>
+		 <text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of connections
+		 that applications can attempt at once.</text>
+		 <newline gap="8"/>
+		 <text>Shareaza has limited network connections and set appropriate default values to 
+		 ensure proper operation, however performance may be reduced. Please visit the Shareaza 
+		 forums for further imformation, and up to date news.</text>
+	</document>
 
 	<!-- Search help documents -->
 
-<document name="SearchHelp.BadSearch">
-    <text format="b">Please re-phrase the search</text>
-    <newline gap="8"/>
-    <text>This search is poorly formatted, and may not function correctly.
-    Searches should include several terms where possible, and should specify a schema
-    (file type). Furthermore, searches must not be limited to numbers or negative
-    terms only, and you should avoid overly general queries.</text>
-    <newline gap="8"/>
-    <text> Most clients on the network will ignore a search for
-        all MP3 files, for example, because it is not specific
-        enough and would generate too many results.</text>
- </document>
+      <document name="SearchHelp.BadSearch">
+             <text format="b">Please re-phrase the search</text>
+             <newline gap="8"/>
+             <text>This search is poorly formatted, and may not function correctly.
+             Searches should include several terms where possible, and should specify a schema
+             (file type). Furthermore, searches must not be limited to numbers or negative
+             terms only, and you should avoid overly general queries.</text>
+             <newline gap="8"/>
+             <text> Most clients on the network will ignore a search for
+             all MP3 files, for example, because it is not specific
+             enough and would generate too many results.</text>
+      </document>
 
 <!-- Share help documents -->
 
 	<document name="ShareHelp.AlreadyShared">
-	<text format="b">Already Shared</text>
-	<newline gap="8"/>
-	<text>The folder you have selected is already being shared as part of an
-	existing share.</text>
-	<newline gap="8"/>
-	<text> %s </text>
- </document>
+	       <text format="b">Already Shared</text>
+	       <newline gap="8"/>
+	       <text>The folder you have selected is already being shared as part of an existing share.</text>
+	       <newline gap="8"/>
+	       <text> %s </text>
+      </document>
 
 	<document name="ShareHelp.BadShare">
-	<text format="b">This folder should not be shared</text>
-	<newline gap="8"/>
-	<text>This folder is (or contains) a system folder. Sharing this folder is not
-	recommended, since most of the files in it are of no use to other people.</text>
-	<newline gap="8"/>
-	<text>Folders such as the Windows directory, Program Files, and similar folders
-	do not usually contain files suitable for sharing. Any files of interest would be in
-	sub-folders located </text><text format="i"> inside </text><text> these
-	folders. Please share those instead.</text>
-	<newline gap="8"/>
-	<text>The Shareaza 'incomplete' folder should also not be shared through the
-	library, since attempting to hash downloads in progress may impact on
-	performance.</text>
+	        <text format="b">This folder should not be shared</text>
+	        <newline gap="8"/>
+	        <text>This folder is (or contains) a system folder. Sharing this folder is not
+	        recommended, since most of the files in it are of no use to other people.</text>
+	        <newline gap="8"/>
+	        <text>Folders such as the Windows directory, Program Files, and similar folders
+	        do not usually contain files suitable for sharing. Any files of interest would be in
+              sub-folders located </text><text format="i"> inside </text><text> these
+	        folders. Please share those instead.</text>
+	       <newline gap="8"/>
+	       <text>The Shareaza 'incomplete' folder should also not be shared through the
+             library, since attempting to hash downloads in progress may impact on
+	       performance.</text>
  </document>
 
 </documents>
@@ -2085,7 +2094,6 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Display legend."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Select and configure items to graph..."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Clear the traffic graph."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed a torrent"/>
 	<tip id="ID_TOOLS_WIZARD" message="Open the Shareaza QuickStart wizard..."/>
 	<tip id="ID_CHILD_RESTORE" message="Open the selected window."/>
 	<tip id="ID_CHILD_CLOSE" message="Close the active window."/>
@@ -2299,8 +2307,8 @@
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
-    <tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
-    <tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
 	<tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
 	<tip id="ID_WINDOW_REMOTE" message="Show or hide the Shareaza Remote Control"/>
@@ -2347,7 +2355,7 @@
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?"/>
 	<string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library."/>
-    <string id="8063" value="Connected. %s in local library."/>
+	<string id="8063" value="Connected. %s in local library."/>
 	<string id="8064" value="Connected to %lu neighbour(s).  %s in local library."/>
 	<string id="8065" value="Connecting to the network..."/>
 	<string id="8066" value="Not connected to the network."/>
@@ -2375,7 +2383,7 @@
 	<string id="8133" value="Shareaza is actively searching the network..."/>
 	<string id="8134" value="You are about to start a new search.  Would you like to clear the results of your previous search?"/>
 	<string id="8141" value="Show the Search Panel"/>
-    <string id="8142" value="Hide the Search Panel"/>
+	<string id="8142" value="Hide the Search Panel"/>
 	<string id="8143" value="Searching..."/>
 	<string id="8144" value="Start Search"/>
 	<string id="8145" value="Search More"/>
@@ -2424,6 +2432,8 @@
 	<string id="8239" value="Completed"/>
 	<string id="8240" value="Shareaza is moving the download:"/>
 	<string id="8241" value="Shareaza is checking the download for errors:"/>
+      <string id="8242" value="%s of %s (%.2f%%)"/>
+      <string id="8243" value="Volume uploaded:"/>
 	<string id="8288" value="Exploring Your Shareaza Library"/>
 	<string id="8289" value="Exploring "/>
 	<string id="8290" value="Exploring the contents of %i folders"/>
@@ -2444,13 +2454,16 @@
 	<string id="8313" value="This file appears to be spam."/>
 	<string id="8314" value="You have downloaded and deleted this file before."/>
 	<string id="8315" value="Blacklisted: "/>
-    <string id="8320" value="Status:"/>
-    <string id="8321" value="Speed:"/>
-    <string id="8322" value="URL:"/>
-    <string id="8323" value="User Agent:"/>
-    <string id="8324" value="Inactive"/>
-    <string id="8325" value="Active"/>
-    <string id="8326" value="Next in Line"/>
+	<string id="8316" value="Hits"/>
+	<string id="8317" value="Uploads"/>
+	<string id="8318" value="%lu today, %lu total"/>
+	<string id="8320" value="Status:"/>
+	<string id="8321" value="Speed:"/>
+	<string id="8322" value="URL:"/>
+	<string id="8323" value="User Agent:"/>
+	<string id="8324" value="Inactive"/>
+	<string id="8325" value="Active"/>
+	<string id="8326" value="Next in Line"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
@@ -2471,6 +2484,7 @@
 	<string id="16083" value="Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
 	<string id="16084" value="Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"/>
 	<string id="16085" value="Gnutella2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"/>
+	<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
 	<string id="16128" value="Accepted an incoming connection from %s port %i."/>
 	<string id="16129" value="Initiating a neighbour connection to %s port %i..."/>
 	<string id="16130" value="Unable to initiate a neighbour connection with %s."/>
@@ -2653,8 +2667,8 @@
 	<string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
-    <string id="16408" value="Copy &amp;URI"/>
-    <string id="16409" value="Export &amp;URIs..."/>
+	<string id="16408" value="Copy &amp;URI"/>
+	<string id="16409" value="Export &amp;URIs..."/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
@@ -2696,16 +2710,16 @@
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Connect"/>
 	<string id="16775" value="&amp;Browse"/>
-    <string id="16776" value="Add"/>
-    <string id="16777" value="Filename:"/>
-    <string id="16778" value="URL:"/>
-    <string id="16779" value="Type:"/>
-    <string id="16780" value="Unspecified"/>
-    <string id="16781" value="Requesting..."/>
-    <string id="16782" value="Success!"/>
-    <string id="16783" value="Finished, click Close"/>
-    <string id="16784" value="&amp;Close"/>
-    <string id="16785" value="(No Visualisation)"/>
+	<string id="16776" value="Add"/>
+	<string id="16777" value="Filename:"/>
+	<string id="16778" value="URL:"/>
+	<string id="16779" value="Type:"/>
+	<string id="16780" value="Unspecified"/>
+	<string id="16781" value="Requesting..."/>
+	<string id="16782" value="Success!"/>
+	<string id="16783" value="Finished, click Close"/>
+	<string id="16784" value="&amp;Close"/>
+	<string id="16785" value="(No Visualisation)"/>
 	<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 	<string id="16801" value="Please choose the type of Internet connection you are using before continuing."/>
 	<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -2715,7 +2729,7 @@
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
-    <string id="16809" value="E&amp;xit"/>
+	<string id="16809" value="E&amp;xit"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2842,8 +2856,8 @@
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
 	<string id="19000" value="Remote access is disabled."/>
-    <string id="19001" value="You must choose a username and password."/>
-    <string id="19002" value="Unable to accept connections, URL unavailable."/>
+	<string id="19001" value="You must choose a username and password."/>
+	<string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
 	<string id="20100" value="Connecting"/>
 	<string id="20101" value="Requesting"/>
@@ -2873,7 +2887,12 @@
 	<string id="20125" value="Verified"/>
 	<string id="20126" value="Unverified"/>
 	<string id="20127" value="source"/>
-	<string id="20128" value="sources"/>
+	<!-- Noun case agreement with numbers (strings 20129-20132) are optional  -->
+	<string id="20128" value="sources"/> <!-- more than one source; or numbers 21, 31, ... when used with optional strings -->
+	<string id="20129" value="sources"/> <!-- tens -->
+	<string id="20130" value="sources"/> <!-- from 11 to 19 -->
+	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
+	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2917,9 +2936,9 @@
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
-		<control caption="Maintain alternate source mesh"/>
+        <control/>
 		<control caption="Filter objects by extension"/>
-		<control caption="Preserve hash integrity"/>
+        <control/>
 		<control caption="Allow others to browse shares"/>
 		<control caption="_Recent Files:"/>
 		<control caption="Remember:"/>
@@ -3341,7 +3360,7 @@
 		<control caption="Allow others to browse my user profile"/>
 	</dialog>
 
-	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEd" caption="Contact">
+	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Contact">
 		<control caption="_Email Addresses:"/>
 		<control caption="Primary:"/>
 		<control/>
@@ -3650,7 +3669,7 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBums" caption="Export URIs">
+	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Export URIs">
 		<control/>
 		<control caption="You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"/>
 		<control/>
@@ -3776,7 +3795,7 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
+	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
 		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 		<control caption="File_name:"/>
 		<control/>

@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.2.11"
+                        version="2.0.2.16"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2096,7 +2096,6 @@ right quote    &#147;
        <tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
        <tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Išvalyti duomenų srauto grafiką."/>
-       <tip id="ID_TOOLS_SEEDTORRENT" message="Sukurkite šiai bylai .torrent."/>
        <tip id="ID_TOOLS_WIZARD" message="Paleisti „Shareaza“ nuostatų vedlį..."/>
        <tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
        <tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
@@ -2303,7 +2302,7 @@ right quote    &#147;
        <tip id="ID_UPLOADS_FILTER_MENU" message="Pasirinkite, kurio tipo išsiunčiamas bylas rodyti, o kurių nerodyti."/>
        <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Atšaukti nebaigtos siųstis bylos(-ų) parsisiuntimą."/>
        <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Pašalinti pasirinktą bylą(-as) iš sąrašo."/>
-          <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
+       <tip id="ID_LIBRARY_CREATETORRENT" message="Sukurti šiai bylai .torrent patalpinimui į svetainę."/>
        <tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
        <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
        <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
@@ -2889,8 +2888,12 @@ right quote    &#147;
        <string id="20124" value="(Nėra šaltinių)"/>
        <string id="20125" value="Patikrinta"/>
        <string id="20126" value="Nepatikrinta"/>
-       <string id="20127" value="šaltinis"/>
-       <string id="20128" value="šaltiniai"/>
+       <string id="20127" value="šaltinis"/> <!-- 1 source -->
+       <string id="20128" value="šaltinis"/> <!-- more than one source; or numbers 21, 31, ... when used with optional strings bellow -->
+       <string id="20129" value="šaltinių"/> <!-- tens -->
+       <string id="20130" value="šaltinių"/> <!-- from 11 to 19 -->
+       <string id="20131" value="šaltiniai"/> <!-- from 2 to 4 -->
+       <string id="20132" value="šaltiniai"/> <!-- from 5 to 9 -->
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
