@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -422,7 +422,17 @@ void CNeighboursWnd::OnNeighboursCopy()
 
 void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 && Settings.Community.ChatEnable );
+	if ( m_wndList.GetSelectedCount() == 1 && Settings.Community.ChatEnable )
+	{
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+		CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+		if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+		{
+			pCmdUI->Enable( TRUE );
+			return;
+		}
+	}
+	pCmdUI->Enable( FALSE );
 }
 
 void CNeighboursWnd::OnNeighboursChat() 
@@ -466,7 +476,17 @@ void CNeighboursWnd::OnSecurityBan()
 
 void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
+	if ( m_wndList.GetSelectedCount() == 1 )
+	{
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+		CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+		if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+		{
+			pCmdUI->Enable( TRUE );
+			return;
+		}
+	}
+	pCmdUI->Enable( FALSE );
 }
 
 void CNeighboursWnd::OnBrowseLaunch() 
