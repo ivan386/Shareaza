@@ -14,6 +14,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -34,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Musikksjanger</title>
                <title language="br">Gênero Musical</title>
                <title language="ru">Стиль музыки</title>
+               <title language="sv">Musikgenre</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -55,6 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sv">Titel</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -71,6 +74,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
+                       <title language="sv">Beskrivning</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -87,6 +91,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
+                       <title language="sv">Samlare</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -103,6 +108,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
+                       <title language="sv">Kommentarer</title>
                </member>
        </members>
        <extends>
@@ -128,6 +134,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">{name} Musikk</title>
                <title language="br">{name} - Música</title>
                <title language="ru">Музыка {name}</title>
+               <title language="sv">{name} musik</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="ar">يحتوي هذا المجلد على حميع الاغاني ذات {name} نوع .</subtitle>
@@ -142,6 +149,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name}-sjangeren.</subtitle>
                <subtitle language="br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all din musik som tillhör genren {name}.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

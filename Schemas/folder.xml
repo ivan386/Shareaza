@@ -14,6 +14,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -34,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Mappe</title>
                <title language="br">Pasta</title>
                <title language="ru">Папка</title>
+               <title language="sv">Mapp</title>
        </titles>
        <images>
                <icon path="folder.ico"/>
@@ -54,6 +56,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sv">Titel</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -70,6 +73,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
+                       <title language="sv">Beskrivning</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -86,6 +90,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
+                       <title language="sv">Samlare</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -102,6 +107,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
+                       <title language="sv">Kommentarer</title>
                </member>
        </members>
        <contains>

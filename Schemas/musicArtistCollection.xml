@@ -14,6 +14,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicArtistCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -34,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Musikk: per artist</title>
                <title language="br">Música:Por Artista</title>
                <title language="ru">&#160;Музыка: По артистам</title>
+               <title language="sv">Musik: Efter artist</title>
        </titles>
        <members>
                <member name="title" search="none">
@@ -52,6 +54,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sv">Titel</title>
                </member>
        </members>
        <images>
@@ -75,6 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Musikk per artist</title>
                <title language="br">Música por Artista</title>
                <title language="ru">Музыка по артистам</title>
+               <title language="sv">Musik efter artist</title>
                <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="ar">هذا المجلد يحتوي على قائمة الفنانين في المكتبة.</subtitle>
@@ -86,9 +90,10 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="it">Questa cartella contiene la lista degli artisti nella tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met artiesten uit je muziekbibliotheek.</subtitle>
-               <subtitle language="no">Denne mappen inneholder en liste med artister i mine filer</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste over artister i mine filer</subtitle>
                <subtitle language="br">Esta pasta contém todos os artistas presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список артистов найденных в музыкальных файлах Вашего хранилища.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över artister som du har i ditt bibliotek.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

@@ -14,6 +14,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/videoRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -34,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Video: mine videoer</title>
                <title language="br">Vídeo:Meus Vídeos</title>
                <title language="ru">&#160;Видео: Мои видео</title>
+               <title language="sv">Video: Min video</title>
        </titles>
        <images>
                <icon path="videoFolder.ico"/>
@@ -55,6 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sv">Titel</title>
                </member>
        </members>
        <contains>
@@ -77,6 +80,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Velkommen til mine videoer</title>
                <title language="br">Bem-vindo à Meus Vídeos</title>
                <title language="ru">Добро пожаловать в Ваши видео!</title>
+               <title language="sv">Välkommen till min video!</title>
                <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="ar">يحتوي هذا المجلد على جيمع ملفات الافلام في المكتبة, منقسم إلى الأفلام,البرامج التلفزيونية والأغاني المصوّرة.  جاري فتح المجلد.</subtitle>
@@ -91,6 +95,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="no">Disse mappene inneholder alle dine videofiler, delt inn i film, TV-show, og musikkvideo. Åpne en mappe for å forsette.</subtitle>
                <subtitle language="br">Estas pastas contém todas os vídeos da sua biblioteca, dividias em filmes, Shows de TV, e clipes musicais. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают все видео подразделенные на фильмы, ТВ шоу и музыкальные видео.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla din videofiler i ditt bibliotek, uppdelad i filmer, TV-program och musikvideor. Öppna en mapp nedanför för att fortsätta.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

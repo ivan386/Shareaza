@@ -14,6 +14,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
 Shareaza Russian Schemas File translated by dAbserver
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/allFiles.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -34,6 +35,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Generelt: alle filer</title>
                <title language="br">Geral:Todos os Arquivos</title>
                <title language="ru">&#160;Основное: Все файлы</title>
+               <title language="sv">Generellt: Alla filer</title>
         </titles>
        <images>
                <icon path="folder.ico"/>
@@ -55,6 +57,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
+                       <title language="sv">Titel</title>
                </member>
        </members>
        <headerContent version="1.0">
@@ -72,6 +75,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="no">Alle filer</title>
                <title language="br">Todos os Arquivos</title>
                <title language="ru">Все файлы</title>
+               <title language="sv">Alla filer</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="ar">هذا المجلد يحتوي على جميع الملفات في مكتبتك.</subtitle>
@@ -86,6 +90,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="no">Denne mappen inneholder alle filene i mine filer</subtitle>
                <subtitle language="br">Esta pasta contém todos os arquivos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл в Вашем хранилище.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla filer som du har i ditt bibliotek.</subtitle>
      </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 
