@@ -840,7 +840,7 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 void CDownloadsWnd::OnUpdateDownloadsSources(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelNotMoving );
+	pCmdUI->Enable( m_bSelNotMoving && m_bSelTrying );
 }
 
 void CDownloadsWnd::OnDownloadsSources() 
