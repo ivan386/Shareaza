@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,6
- PRODUCTVERSION 2,0,0,6
+ FILEVERSION 2,0,0,8
+ PRODUCTVERSION 2,0,0,8
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 6"
+            VALUE "FileVersion", "2, 0, 0, 8"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 6"
+            VALUE "ProductVersion", "2, 0, 0, 8"
         END
     END
     BLOCK "VarFileInfo"
@@ -2956,6 +2956,37 @@ BEGIN
                     ES_AUTOHSCROLL
 END
 
+IDD_SETTINGS_BITTORRENT DIALOGEX 0, 0, 282, 220
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "BitTorrent"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,171,270,34,WS_GROUP
+    EDITTEXT        IDC_TORRENTS_FOLDER,15,185,225,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,181,23,20
+    GROUPBOX        "&Client Link Connections:",IDC_STATIC,5,89,270,34
+    RTEXT           "Connect to:",IDC_STATIC,15,103,80,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_CLIENTLINKS,105,103,35,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_TORRENTLINKS_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,141,103,8,12
+    LTEXT           "BitTorrent clients per torrent.",IDC_STATIC,150,103,100,
+                    12,SS_CENTERIMAGE
+    GROUPBOX        "&Interface:",IDC_STATIC,6,7,270,34
+    CONTROL         "Enable BitTorrent extra interface elements",
+                    IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,16,19,250,15
+    GROUPBOX        "&EndGame:",IDC_STATIC,6,48,270,34
+    CONTROL         "Enable BitTorrent endgame mode when finishing files",
+                    IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,16,60,250,15
+    GROUPBOX        "&Default Tracker",IDC_STATIC,5,130,270,34,WS_GROUP
+    RTEXT           "Tracker:",IDC_STATIC,15,143,47,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,72,143,194,12,ES_AUTOHSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3582,6 +3613,14 @@ BEGIN
     END
 
     IDD_SETTINGS_REMOTE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 213
+    END
+
+    IDD_SETTINGS_BITTORRENT, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 275
@@ -4670,7 +4709,7 @@ STRINGTABLE
 BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
-    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+    ID_WINDOW_TILE_VERT     "Create a .torrent for this file to upload to a website"
 END
 
 STRINGTABLE 
@@ -4783,6 +4822,8 @@ BEGIN
     IDS_MEDIA_PARTIAL_RENDER 
                             "Part of this file could not be played, you may need to download additional codecs."
     IDS_MEDIA_EMPTY         "There is no file playing.  Double-click a media file in your library to play it."
+    IDS_MEDIA_TITLE         "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
+    IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
 END
 
 STRINGTABLE 
@@ -5146,6 +5187,8 @@ BEGIN
                             "Cancel the selected incomplete download(s)."
     ID_DOWNLOADS_CLEAR_COMPLETE 
                             "Remove the selected download(s) from the list."
+    ID_LIBRARY_CREATETORRENT 
+                            "Create a .torrent for this file to upload to a website."
 END
 
 STRINGTABLE 
@@ -5182,7 +5225,7 @@ BEGIN
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
     ID_TOOLS_MERCORA        "Start P2P Radio"
     ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
-    ID_TOOLS_SEEDTORRENT    "Seed a torrent"
+    ID_TOOLS_SEEDTORRENT    "Seed a Torrent"
 END
 
 STRINGTABLE 
