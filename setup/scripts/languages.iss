@@ -249,7 +249,7 @@ af.reg_apptitle=Shareaza Ultimate File Sharing
 af.icons_license=Lisensie-ooreenkoms
 af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
-af.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+af.dialog_shutdown=%1 is op die oomblik besig om te loop. Wil jy graag %1 sluit sodat die installasie kan voortgaan?
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
