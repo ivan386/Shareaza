@@ -98,9 +98,10 @@ void CLibraryDictionary::Remove(CLibraryFile* pFile)
 
 void CLibraryDictionary::ProcessFile(CLibraryFile* pFile, BOOL bAdd)
 {
+	ASSERT(pFile != NULL);
 	ProcessPhrase( pFile, pFile->GetSearchName(), bAdd, FALSE );
 	
-	if ( pFile->m_pMetadata )
+	if ( pFile->m_pMetadata && pFile->m_pSchema )
 	{
 		ProcessWord( pFile, pFile->m_pSchema->m_sURI, bAdd );
 		ProcessPhrase( pFile, pFile->GetMetadataWords(), bAdd );
