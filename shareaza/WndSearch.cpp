@@ -148,8 +148,16 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	ExecuteSearch();
 	
-	if ( pSearch == NULL ) m_wndPanel.ShowSearch( NULL );
-	else m_wndPanel.Disable();
+	if ( pSearch == NULL ) 
+	{
+		m_wndPanel.ShowSearch( NULL );
+	}
+	else 
+	{
+		m_wndPanel.Disable();
+		if ( m_bPanel && Settings.General.HideSearchBar )
+			m_bPanel = FALSE;
+	}
 	
 	OnSkinChange();
 	
@@ -429,7 +437,13 @@ BOOL CSearchWnd::DoSizeDetails()
 void CSearchWnd::OnUpdateSearchSearch(CCmdUI* pCmdUI) 
 {
 	// pCmdUI->Enable( Network.IsWellConnected() );
-	pCmdUI->Enable( TRUE );
+	//pCmdUI->Enable( TRUE );
+
+	if( (m_bPaused) || ( m_bWaitMore ) )
+		pCmdUI->Enable( TRUE );
+	else
+		pCmdUI->Enable( FALSE );
+
 }
 
 void CSearchWnd::OnSearchSearch() 
@@ -441,36 +455,26 @@ void CSearchWnd::OnSearchSearch()
 
 	//** The 'Search More' situation   (ToDo: Detect if search changed and skip)
 	POSITION pos = m_pSearches.GetTailPosition();
-	if( (!m_bPaused) && pos )
+	if( ( !m_bPaused ) && ( m_bWaitMore ) && ( pos ) )
 	{
 		pSearch = (CManagedSearch*)m_pSearches.GetPrev( pos );
-		
-		if( m_bWaitMore )
-		{
-			//Re-activate search window
-			theApp.Message( MSG_DEBUG, _T("Resuming Search") );
-			pSearch->m_bActive = TRUE;
-			m_bWaitMore = FALSE;
 
-			//Resume G2 search
-			m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
-			m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
+		//Re-activate search window
+		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
+		pSearch->m_bActive = TRUE;
+		m_bWaitMore = FALSE;
 
-			//Resume ED2K search
-			m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
-			pSearch->m_tLastED2K = GetTickCount();
+		//Resume G2 search
+		m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
+		m_nMaxQueryCount = pSearch->m_nQueryCount + Settings.Gnutella2.QueryLimit;
 
-			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0x8000 )
-				pSearch->m_nPriority = 1; //spMedium;
-		}
-		else
-		{
-			//Pause search
-			theApp.Message( MSG_DEBUG, _T("Pausing Search") );
-			pSearch->m_bActive = FALSE;
-			m_bWaitMore = TRUE; 
-		}
+		//Resume ED2K search
+		m_nMaxED2KResults = m_pMatches->m_nED2KHits + ( (DWORD)min( 201, Settings.eDonkey.MaxResults ) );														
+		pSearch->m_tLastED2K = GetTickCount();
 
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
+			pSearch->m_nPriority = CManagedSearch::spMedium;
+	
 		m_bUpdate = TRUE;
 		return;
 	}
@@ -542,6 +546,13 @@ void CSearchWnd::OnSearchSearch()
 	ExecuteSearch();
 
 	m_wndPanel.Disable();
+
+	if ( m_bPanel && Settings.General.HideSearchBar )
+	{
+		m_bPanel = FALSE;
+		//Settings.Search.SearchPanel = m_bPanel ;
+		OnSkinChange();
+	}
 }
 
 void CSearchWnd::OnUpdateSearchClear(CCmdUI* pCmdUI) 
@@ -566,6 +577,23 @@ void CSearchWnd::OnUpdateSearchStop(CCmdUI* pCmdUI)
 
 void CSearchWnd::OnSearchStop() 
 {
+	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
+	{
+		theApp.Message( MSG_DEFAULT, _T("shifty!") );
+		if( ( !m_bPaused ) && ( !m_bWaitMore ) )
+		{	//Pause search
+			POSITION pos = m_pSearches.GetTailPosition();
+			if( pos )
+			{
+				theApp.Message( MSG_DEBUG, _T("Pausing Search") );
+				((CManagedSearch*)m_pSearches.GetPrev( pos ))->m_bActive = FALSE;
+				m_bWaitMore = TRUE; 
+				m_bUpdate = TRUE;
+				return;
+			}
+		}
+	}
+
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	
 	for ( POSITION pos = m_pSearches.GetHeadPosition() ; pos ; )
@@ -576,9 +604,8 @@ void CSearchWnd::OnSearchStop()
 	}
 
 	m_bPaused = TRUE;
-
+	
 	m_wndPanel.Enable();
-
 	UpdateMessages();
 }
 
@@ -593,6 +620,7 @@ void CSearchWnd::OnSearchPanel()
 {
 	Settings.Search.SearchPanel = m_bPanel = ! m_bPanel;
 	OnSkinChange();
+	UpdateMessages();
 }
 
 void CSearchWnd::OnUpdateSearchDetails(CCmdUI* pCmdUI) 
