@@ -77,7 +77,7 @@ BOOL CWizardNetworksPage::OnInitDialog()
 {
 	CWizardPage::OnInitDialog();
 
-	Skin.Apply( _T("CWizardProfilePage"), this );
+	Skin.Apply( _T("CWizardNetworksPage"), this );
 	
 	m_bG2Enable = Settings.Gnutella2.EnableToday;
 	m_bG1Enable = Settings.Gnutella1.EnableToday;
