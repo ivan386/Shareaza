@@ -409,7 +409,7 @@
 		<menu text="_Сети">
 			<item id="ID_NETWORK_CONNECT" text="_Соединение" shortcut="Ctrl+G"/>
 			<separator/>
-			<menu text="Выберите _Сеть">
+			<menu text="Выберите _сеть">
 				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
 				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
@@ -433,14 +433,14 @@
 				<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Обычный режим"/>
+			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
 			<item id="ID_VIEW_TABBED" text="_Режим опытных"/>
 		</menu>
 		<menu text="_Инструменты">
 			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Выбрать шк_урку..."/>
+			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
@@ -476,7 +476,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться к ..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Просмотр хоста..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
 			<item id="ID_NETWORK_EXIT" text="В_ыход"/>
@@ -502,23 +502,23 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
-				<item id="ID_VIEW_DISCOVERY" text="Ре_сурсы соединений" shortcut="F9"/>
+				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
-				<item id="ID_VIEW_SEARCH_MONITOR" text="Монитор по_иска" shortcut="Ctrl+F2"/>
+				<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска" shortcut="Ctrl+F2"/>
 				<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор хи_тов" shortcut="Ctrl+F3"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Обычный режим"/>
+			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
 			<item id="ID_VIEW_TABBED" text="Режим _закладок"/>
-			<item id="ID_VIEW_WINDOWED" text="О_конный режим"/>
+			<item id="ID_VIEW_WINDOWED" text="Око_нный режим"/>
 		</menu>
 		<menu text="_Инструменты">
 			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Выбрать шк_урку..."/>
+			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
@@ -557,7 +557,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться к ..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Просмотр хоста..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 			<separator/>
 			<menu text="_Выбор сетей">
 				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
@@ -565,12 +565,12 @@
 				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Закрыть _после пересылок"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="_Закрыть после пересылок"/>
 			<item id="ID_NETWORK_EXIT" text="В_ыход"/>
 		</menu>
 		<menu text="_Вид">
 			<item id="ID_VIEW_SYSTEM" text="_Система" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="_Соединения" shortcut="F2"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="F2"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Загрузки" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_Выгрузки" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Хранилище" shortcut="F5"/>
@@ -578,22 +578,22 @@
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Безопасность" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
-			<item id="ID_VIEW_DISCOVERY" text="Ре_сурсы соединений" shortcut="F9"/>
+			<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
-			<item id="ID_VIEW_SEARCH_MONITOR" text="Монитор по_иска" shortcut="Ctrl+F2"/>
-			<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор х_итов" shortcut="Ctrl+F3"/>
+			<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска" shortcut="Ctrl+F2"/>
+			<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор хи_тов" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Обычный режим"/>
-			<item id="ID_VIEW_TABBED" text="Режим закладок"/>
-			<item id="ID_VIEW_WINDOWED" text="Оконный режим"/>
+			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
+			<item id="ID_VIEW_TABBED" text="Ре_жим закладок"/>
+			<item id="ID_VIEW_WINDOWED" text="Око_нный режим"/>
 		</menu>
 		<menu text="_Инструменты">
 			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Выбрать шк_урку..."/>
+			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
@@ -604,7 +604,7 @@
 		<menu text="_Окна">
 			<item id="ID_WINDOW_CASCADE" text="_Полный экран"/>
 			<item id="ID_WINDOW_TILE_HORZ" text="Растянуть _горизонтально"/>
-			<item id="ID_WINDOW_TILE_VERT" text="Растянуть вертикально"/>
+			<item id="ID_WINDOW_TILE_VERT" text="Растянуть _вертикально"/>
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="Показать _навигационную полоску"/>
 			<item id="ID_WINDOW_TOOLBAR" text="Показать полоску _инструментов"/>
@@ -649,21 +649,21 @@
 		<item id="ID_TAB_MEDIA" text="Про_игрыватель"/>
 		<item id="ID_TAB_SEARCH" text="_Поиск"/>
 		<item id="ID_TAB_TRANSFERS" text="Пере_сылки"/>
-		<item id="ID_TAB_NETWORK" text="_Сети"/>
+		<item id="ID_TAB_NETWORK" text="Се_ти"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 		<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ре_сурсы соединений"/>
+		<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений"/>
 		<item id="ID_VIEW_TRAFFIC" text="_График"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Монитор по_иска"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор х_итов"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Мо_нитор хитов"/>
 	</menu>
 	<menu name="CMainWnd.View.Windowed">
 		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
 		<separator/>
-		<item id="ID_VIEW_SYSTEM" text="С_истема"/>
+		<item id="ID_VIEW_SYSTEM" text="_Система"/>
 		<item id="ID_VIEW_NEIGHBOURS" text="С_оединения"/>
 		<item id="ID_VIEW_DOWNLOADS" text="_Загрузки"/>
 		<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
@@ -672,29 +672,29 @@
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 		<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ресурсы соединений"/>
+		<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений"/>
 		<item id="ID_VIEW_TRAFFIC" text="_График"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Монитор по_иска"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор х_итов"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор по_иска"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор хи_тов"/>
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
 		<item id="ID_TRAY_OPEN" text="_Открыть Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Нов_ый поиск..."/>
+		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="_Загрузить файл..."/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Воспроизводить"/>
-		<item id="ID_MEDIA_PAUSE" text="На _паузу"/>
-		<item id="ID_MEDIA_STOP" text="_Остановить"/>
+		<item id="ID_MEDIA_PAUSE" text="Приоста_новить"/>
+		<item id="ID_MEDIA_STOP" text="Ос_тановить"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="Пред_ыдущий трэк"/>
+		<item id="ID_MEDIA_PREVIOUS" text="Пре_дыдущий трэк"/>
 		<item id="ID_MEDIA_NEXT" text="_Следующий трэк"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти после _пересылок"/>
-		<item id="ID_NETWORK_EXIT" text="В_ыход"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="В_ыйти после пересылок"/>
+		<item id="ID_NETWORK_EXIT" text="Вы_ход"/>
 	</menu>
 	<!-- HOME MENU -->
 	<menu name="CHomeWnd.Basic">
@@ -717,16 +717,16 @@
 		<item id="ID_TAB_MEDIA" text="Про_игрыватель"/>
 		<item id="ID_TAB_SEARCH" text="_Поиск"/>
 		<item id="ID_TAB_TRANSFERS" text="Пере_сылки"/>
-		<item id="ID_TAB_NETWORK" text="_Сети"/>
+		<item id="ID_TAB_NETWORK" text="Се_ти"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 		<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ре_сурсы соединений"/>
+		<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений"/>
 		<item id="ID_VIEW_TRAFFIC" text="_График"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Монитор п_иска"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Монитор х_итов"/>
+		<item id="ID_VIEW_PACKETS" text="Д_амп пакетов"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="М_онитор хитов"/>
 	</menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
@@ -744,13 +744,13 @@
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Импорт MET файла..."/>
-		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="Загрузить MET..."/>
+		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="_Загрузить MET..."/>
 	</menu>
 	<!-- SEARCH WINDOW -->
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
 		<separator/>
 		<menu text="_Искать">
@@ -771,7 +771,7 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="_Блок. юзера"/>
 		<separator/>
@@ -789,10 +789,10 @@
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="_Снять фильтр"/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="С_нять фильтр"/>
 		<item id="ID_SEARCH_CLEAR" text="О_чистить результаты"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Выбрать к_олонки..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Выбрать ко_лонки..."/>
 	</menu>
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
@@ -835,14 +835,14 @@
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать результаты..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="С_нять фильтр"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Выбрать к_олонки..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Выбрать ко_лонки..."/>
 	</menu>
 	<!-- HIT MONITOR WINDOW -->
 	<menu name="CHitMonitorWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
 		<separator/>
 		<menu text="_Искать">
@@ -859,12 +859,12 @@
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Фильтровать найденое..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="_Снять фильтр"/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="С_нять фильтр"/>
 		<separator/>
 		<item id="ID_HITMONITOR_PAUSE" text="_Пауза монитора"/>
 		<item id="ID_HITMONITOR_CLEAR" text="О_чистить монитор"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Выбрать к_олонки..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Выбрать ко_лонки..."/>
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
@@ -877,14 +877,14 @@
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_HELP" text="_Помощь..."/>
+		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
 		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Добавить в список воспроизв."/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
@@ -892,29 +892,29 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<separator/>
-		<menu text="_Опытным">
+		<menu text="Оп_ытным">
 			<item id="ID_DOWNLOADS_SHARE" text="_Разделять файл"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку"/>
+			<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 			<item id="ID_DOWNLOADS_URL" text="_Добавить источник..."/>
 			<separator/>
-			<item id="ID_DOWNLOADS_MONITOR" text="Окно монитора"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Правка опытным..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent инфо..."/>
+			<item id="ID_DOWNLOADS_MONITOR" text="Окно _монитора"/>
+			<item id="ID_DOWNLOADS_EDIT" text="_Правка опытным..."/>
+			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Вв_ерх"/>
-			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Вн_из"/>
-			<item id="ID_DOWNLOADS_BOOST" text="_Снять лимит пропускной способности"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
+			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит пропускной способности"/>
 		</menu>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_HELP" text="_Помощь..."/>
+		<item id="ID_DOWNLOADS_HELP" text="По_мощь..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Доступ"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Чат с юзером"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Разъединить"/>
@@ -923,17 +923,17 @@
 	<menu name="CDownloadsWnd.Completed.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Убрать"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Убрать"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 		<separator/>
@@ -941,14 +941,14 @@
 		<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Возобновить все"/>
-		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Приостановить все"/>
+		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="При_остановить все"/>
 		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Убрать все"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Новая група..."/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Новая группа..."/>
 		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="Удалить _группу"/>
 		<separator/>
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Показывать группы"/>
@@ -958,47 +958,47 @@
 	<menu name="CDownloadsWnd.Filter">
 		<item id="ID_DOWNLOADS_FILTER_ALL" text="Показывать все"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Показывать а_ктивные"/>
-		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Показывать о_прашиваемые"/>
-		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Показывать без и_сточников"/>
-		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Показывать в приостановленные"/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Показывать _активные"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Показывать _опрашиваемые"/>
+		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Показывать _без источников"/>
+		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Показывать _приостановленные"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Показывать все источники"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Показывать группы"/>
+		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Показывать _все источники"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Показывать _группы"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 	</menu>
 	<menu name="CUploadsWnd">
 		<item id="ID_UPLOADS_START" text="_Начать сейчас"/>
-		<item id="ID_UPLOADS_CLEAR" text="_Убрать"/>
+		<item id="ID_UPLOADS_CLEAR" text="У_брать"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
 		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
 		<separator/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="А_вто очистка"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Ав_то очистка"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Показывать все"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Показывать активных"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="Показывать ожидающих"/>
-		<item id="ID_UPLOADS_FILTER_TORRENT" text="Показывать BitTorrent"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="Показывать историю"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Показывать _активные"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Показывать _ожидающие"/>
+		<item id="ID_UPLOADS_FILTER_TORRENT" text="Показывать _BitTorrent"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Показывать _историю"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Разделено"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Удалить"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDERS" text="Разделять файлы..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Раз_делять файлы..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
 		<item id="ID_LIBRARY_EXPLORE" text="_Обзор"/>
@@ -1007,8 +1007,8 @@
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Разделено"/>
 		<separator/>
 		<item id="ID_LIBRARY_SCAN" text="С_канирование"/>
-		<item id="ID_LIBRARY_REBUILD" text="Пере_стройка"/>
-		<item id="ID_LIBRARY_FOLDERS" text="Разделяемые файлы..."/>
+		<item id="ID_LIBRARY_REBUILD" text="_Перестройка"/>
+		<item id="ID_LIBRARY_FOLDERS" text="Раз_деляемые файлы..."/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
 	</menu>
@@ -1033,7 +1033,7 @@
 	</menu>
 	<!-- LIBRARY VIEWS -->
 	<menu name="CLibraryTileView">
-		<item id="ID_LIBRARY_ALBUM_OPEN" text="Открыть"/>
+		<item id="ID_LIBRARY_ALBUM_OPEN" text="_Открыть"/>
 		<item id="ID_LIBRARY_ALBUM_DELETE" text="_Удалить"/>
 		<separator/>
 		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Свойства"/>
@@ -1046,7 +1046,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
-		<menu text="И_скать">
+		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
 			<separator/>
@@ -1071,14 +1071,14 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical">
 		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Копировать _ссылку"/>
+		<item id="ID_LIBRARY_URL" text="Копировать сс_ылку"/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
-		<menu text="И_скать">
+		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
 			<separator/>
@@ -1091,7 +1091,7 @@
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть в _Jigle"/>-->
-			<item id="ID_LIBRARY_CREATETORRENT" text="Создать .torrent файл"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1099,20 +1099,20 @@
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Выбрать _колонки..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
-		<menu text="И_скать">
+		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
 			<separator/>
@@ -1129,9 +1129,9 @@
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
-			<item id="ID_LIBRARY_UNLINK" text="Удалить _файлы"/>
+			<item id="ID_LIBRARY_UNLINK" text="_Удалить файлы"/>
 			<separator/>
-			<item id="ID_LIBRARY_MOVE" text="_Переместить файлы..."/>
+			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
 		<separator/>
@@ -1139,14 +1139,14 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
 		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
 		<separator/>
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
-		<menu text="И_скать">
+		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
 			<separator/>
@@ -1158,30 +1158,30 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Создать .torrent файл"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="Посмотреть _Jigle Lookup"/>-->
 		</menu>
 		<menu text="О_перации">
-			<item id="ID_LIBRARY_UNLINK" text="Удалить _файлы"/>
+			<item id="ID_LIBRARY_UNLINK" text="_Удалить файлы"/>
 			<separator/>
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Выбрать _колонки..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<!-- MEDIA WINDOW -->
 	<menu name="CMediaFrame.Basic">
 		<item id="ID_MEDIA_PLAY" text="_Играть"/>
-		<item id="ID_MEDIA_PAUSE" text="Па_уза"/>
+		<item id="ID_MEDIA_PAUSE" text="_Пауза"/>
 		<item id="ID_MEDIA_STOP" text="_Стоп"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Открыть медиа файл..."/>
 		<separator/>
-		<menu text="Список воспроизведения">
+		<menu text="Список _воспроизведения">
 			<item id="ID_MEDIA_PREVIOUS" text="Предыду_щий"/>
 			<item id="ID_MEDIA_NEXT" text="_Следующий"/>
 			<item id="ID_MEDIA_RANDOM" text="_Произвольный режим"/>
@@ -1196,14 +1196,14 @@
 			<item id="ID_MEDIA_SIZE_FILL" text="_Наибольший"/>
 			<item id="ID_MEDIA_SIZE_DISTORT" text="На _всё окно"/>
 			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Пропорции по умолчанию"/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Пропорции по _умолчанию"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="Пропорции _4:3 (Телевизор)"/>
 			<item id="ID_MEDIA_ASPECT_16_9" text="Пропорции _16:9 (Широкоформатное кино)"/>
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Полный экран"/>
 		</menu>
-		<menu text="Установки">
-			<item id="ID_MEDIA_VIS" text="Выбрать визуализацию..."/>
+		<menu text="_Установки">
+			<item id="ID_MEDIA_VIS" text="Выбрать _визуализацию..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="_Показать список воспроизв."/>
 			<item id="ID_MEDIA_STATUS" text="Показать _строку статуса"/>
@@ -1213,21 +1213,21 @@
 	</menu>
 	<menu name="CMediaFrame">
 		<item id="ID_MEDIA_PLAY" text="_Играть"/>
-		<item id="ID_MEDIA_PAUSE" text="Па_уза"/>
+		<item id="ID_MEDIA_PAUSE" text="_Пауза"/>
 		<item id="ID_MEDIA_STOP" text="_Стоп"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Открыть медиа файл..."/>
 		<item id="ID_MEDIA_CLOSE" text="_Закрыть файл"/>
 		<separator/>
-		<menu text="Список воспроизведения">
+		<menu text="Список _воспроизведения">
 			<item id="ID_MEDIA_PREVIOUS" text="Предыду_щий"/>
 			<item id="ID_MEDIA_NEXT" text="_Следующий"/>
-			<item id="ID_MEDIA_RANDOM" text="_Произвольный режим"/>
+			<item id="ID_MEDIA_RANDOM" text="Произвольный _режим"/>
 			<item id="ID_MEDIA_REPEAT" text="Режим по_втора"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Показать _список"/>
+			<item id="ID_MEDIA_PLAYLIST" text="_Показать список"/>
 		</menu>
-		<menu text="Ра_змер видео">
+		<menu text="_Размер видео">
 			<item id="ID_MEDIA_SIZE_ONE" text="_Оригинальный размер"/>
 			<item id="ID_MEDIA_SIZE_TWO" text="_Двойной размер"/>
 			<item id="ID_MEDIA_SIZE_THREE" text="_Тройной размер"/>
@@ -1240,8 +1240,8 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Полный экран"/>
 		</menu>
-		<menu text="Установки">
-			<item id="ID_MEDIA_VIS" text="Выбрать визуализацию..."/>
+		<menu text="_Установки">
+			<item id="ID_MEDIA_VIS" text="Выбрать _визуализацию..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="_Показать список воспроизв."/>
 			<item id="ID_MEDIA_STATUS" text="Показать строку _статуса"/>
@@ -1256,7 +1256,7 @@
 		<item id="ID_MEDIA_SIZE_FILL" text="_Наибольший"/>
 		<item id="ID_MEDIA_SIZE_DISTORT" text="На _всё окно"/>
 		<separator/>
-		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Пропорции по умолчанию"/>
+		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Пропорции по _умолчанию"/>
 		<item id="ID_MEDIA_ASPECT_4_3" text="Пропорции _4:3 (Телевизор)"/>
 		<item id="ID_MEDIA_ASPECT_16_9" text="Пропорции _16:9 (Широкоформатное кино)"/>
 	</menu>
@@ -1267,39 +1267,39 @@
 		<item id="ID_MEDIA_ADD_FOLDER" text="Добавить _папку..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Удалить"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Произвольный режим"/>
-		<item id="ID_MEDIA_REPEAT" text="Режим повтора"/>
+		<item id="ID_MEDIA_RANDOM" text="Произвольный _режим"/>
+		<item id="ID_MEDIA_REPEAT" text="Режим по_втора"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Открыть список воспроизведения..."/>
 		<item id="ID_MEDIA_SAVE" text="_Сохранить список воспроизведения..."/>
-		<item id="ID_MEDIA_CLEAR" text="_Очистить список воспроизведения"/>
+		<item id="ID_MEDIA_CLEAR" text="О_чистить список воспроизведения"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="Показать список воспроизведения"/>
+		<item id="ID_MEDIA_PLAYLIST" text="По_казать список воспроизведения"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
 		<item id="ID_SYSTEM_VERBOSE" text="_Информативный режим"/>
-		<item id="ID_SYSTEM_TIMESTAMP" text="Временной штамп"/>
+		<item id="ID_SYSTEM_TIMESTAMP" text="_Временной штамп"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Очистить _буфер"/>
+		<item id="ID_SYSTEM_CLEAR" text="_Очистить буфер"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_NEIGHBOURS_CHAT" text="_Чат с юзером"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Разъединить"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_COPY" text="Копировать _ссылку"/>
+		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="Про_смотр юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
 		<item id="ID_NEIGHBOURS_CHAT" text="_Чат с юзером"/>
-		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
+		<item id="ID_SECURITY_BAN" text="_Блок. юзера"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Разъединить"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_COPY" text="Копировать _ссылку"/>
+		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 		<separator/>
 		<menu text="_Сети">
 			<item id="ID_NETWORK_CONNECT" text="_Соединение"/>
@@ -1310,7 +1310,7 @@
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Монитор">
-			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Смотреть _весь трафик"/>
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Смотреть весь _трафик"/>
 			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Смотреть _входящий трафик"/>
 			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Смотреть _исходящий трафик"/>
 		</menu>
@@ -1319,35 +1319,35 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Искать это"/>
 		<separator/>
-		<item id="ID_SEARCHMONITOR_PAUSE" text="Монитор на паузу"/>
-		<item id="ID_SEARCHMONITOR_CLEAR" text="Очистить буфер"/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="Монитор на _паузу"/>
+		<item id="ID_SEARCHMONITOR_CLEAR" text="_Очистить буфер"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
 	<menu name="CTrafficWnd">
-		<item id="ID_TRAFFIC_SETUP" text="Выбрать графики..."/>
+		<item id="ID_TRAFFIC_SETUP" text="Выбрать _графики..."/>
 		<separator/>
-		<item id="ID_TRAFFIC_GRID" text="Линии сетки"/>
-		<item id="ID_TRAFFIC_AXIS" text="Ось"/>
-		<item id="ID_TRAFFIC_LEGEND" text="Легенда"/>
+		<item id="ID_TRAFFIC_GRID" text="Линии _сетки"/>
+		<item id="ID_TRAFFIC_AXIS" text="_Ось"/>
+		<item id="ID_TRAFFIC_LEGEND" text="_Легенда"/>
 		<separator/>
-		<item id="ID_TRAFFIC_CLEAR" text="Очистить"/>
+		<item id="ID_TRAFFIC_CLEAR" text="О_чистить"/>
 		<separator/>
-		<item id="ID_TRAFFIC_WINDOW" text="Новое окно"/>
+		<item id="ID_TRAFFIC_WINDOW" text="_Новое окно"/>
 	</menu>
 	<!-- SECURITY WINDOW -->
 	<menu name="CSecurityWnd">
-		<item id="ID_SECURITY_ADD" text="Добавить правило..."/>
+		<item id="ID_SECURITY_ADD" text="_Добавить правило..."/>
 		<separator/>
-		<item id="ID_SECURITY_REMOVE" text="Удалить"/>
-		<item id="ID_SECURITY_RESET" text="Сброс"/>
+		<item id="ID_SECURITY_REMOVE" text="_Удалить"/>
+		<item id="ID_SECURITY_RESET" text="С_брос"/>
 		<separator/>
-		<item id="ID_SECURITY_MOVE_UP" text="Вверх"/>
-		<item id="ID_SECURITY_MOVE_DOWN" text="Вниз"/>
+		<item id="ID_SECURITY_MOVE_UP" text="_Вверх"/>
+		<item id="ID_SECURITY_MOVE_DOWN" text="В_низ"/>
 		<separator/>
-		<item id="ID_SECURITY_IMPORT" text="Импорт..."/>
-		<item id="ID_SECURITY_EXPORT" text="Экспорт..."/>
+		<item id="ID_SECURITY_IMPORT" text="_Импорт..."/>
+		<item id="ID_SECURITY_EXPORT" text="_Экспорт..."/>
 		<separator/>
-		<menu text="П_олитика по умолчанию">
+		<menu text="_Политика по умолчанию">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="Принимать"/>
 			<item id="ID_SECURITY_POLICY_DENY" text="Отказать"/>
 		</menu>
@@ -1375,11 +1375,11 @@
 		<item id="ID_CHAT_CONNECT" text="_Соединение"/>
 		<item id="ID_CHAT_DISCONNECT" text="_Разъединить"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="Про_смотр юзера"/>
-		<item id="ID_CHAT_SEND_FILE" text="Послать _файл..."/>
+		<item id="ID_CHAT_BROWSE" text="Просмотр _юзера"/>
+		<item id="ID_CHAT_SEND_FILE" text="П_ослать файл..."/>
 		<item id="ID_CHAT_PRIORITY" text="_Предоставить приоритет"/>
 		<separator/>
-		<menu text="_Format">
+		<menu text="_Формат">
 			<item id="ID_CHAT_BOLD" text="_Жирный"/>
 			<item id="ID_CHAT_ITALIC" text="_Наклонный"/>
 			<item id="ID_CHAT_UNDERLINE" text="_Подчеркнутый"/>
@@ -2666,8 +2666,8 @@
 	<string id="16405" value="Хотите ли Вы загрузить этот файл?\n\n\n\n«%s»\n\n\n\nВыберите «Cancel», чтобы не тревожить об этом позже."/>
 	<string id="16406" value="Хотите ли Вы загрузить все файлы из этой коллекции?\n\n\n\nВыберите «Cancel», чтобы не тревожить об этом позже."/>
 	<string id="16407" value="Хотите ли Вы, чтобы Вас не спрашивали подверждений о дальнейших загрузках из этой коллекции?"/>
-	<string id="16408" value="Копировать &amp;ссылку"/>
-	<string id="16409" value="Экспорт &amp;ссылок..."/>
+	<string id="16408" value="&amp;Копировать ссылку"/>
+	<string id="16409" value="&amp;Экспорт ссылок..."/>
 	<string id="16448" value="Установлена связь с %s, идет подтверждение связи..."/>
 	<string id="16449" value="Сейчас идет беседа с %s (%s)."/>
 	<string id="16450" value="Соединение с %s закрыто."/>
@@ -2946,11 +2946,11 @@
 		<control/><control/>
 		<control caption="дней"/>
 		<control caption="Очистить список"/>
-		<control caption="Не опасно открывать:"/>
+		<control caption="_Не опасно открывать:"/>
 		<control/>
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
-		<control caption="_Не разделять:"/>
+		<control caption="Не _разделять:"/>
 		<control/>
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
@@ -2967,7 +2967,7 @@
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
 		<control caption="Модуль аудио визуализации:"/>
-		<control caption="_Выбрать модуль..."/>
+		<control caption="Выбрать _модуль..."/>
 		<control caption="Модуль медиа услуг:"/>
 		<control/>
 	</dialog>
@@ -2975,7 +2975,7 @@
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Сообщество">
 		<control caption="Мой _профиль:"/>
 		<control caption="Используйте профиль пользователя Gnutella для обмена информацией о себе, своих интересах, ссылках на файлы и сайты, с другими."/>
-		<control caption="Ред. свой профиль"/>
+		<control caption="_Ред. свой профиль"/>
 		<control caption="_Чат:"/>
 		<control caption="Разрешить P2P чат с совместимыми клиентами"/>
 	</dialog>
@@ -3049,20 +3049,20 @@
 		<control caption="Разделять новые загрузки"/>
 		<control caption="Огранич. выгр.(режим узла)"/>
 		<control caption="Разрешить предв. просмотр"/>
-		<control caption="Удалять мета данные"/>
-		<control caption="Лимит на хост:"/>
+		<control caption="Удалять ID3 теги из mp3"/>
+		<control caption="Лимит на уник. хост:"/>
 		<control/>
 		<control/>
 		<control caption="_Юзер-Агент фильтр:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
-		<control caption="_Полоса пропускания:"/>
+		<control caption="По_лоса пропускания:"/>
 		<control caption="Лимит:"/>
 		<control/>
 		<control caption="Режим:"/>
 		<control/>
-		<control caption="_Очереди:"/>
+		<control caption="О_череди:"/>
 		<control/>
 		<control caption="_Новое..."/>
 		<control caption="_Правка..."/>
@@ -3072,7 +3072,7 @@
 	
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Удал. доступ">
     	<control caption="_Описание:"/>
-    	<control caption="Удаленный доступ к Shareaza позвояит Вам оставить Shareaza запущенной и контролировать её удаленно из вэб браузера.  Для использования этого Вам понадобится иметь возможность принимать входящие соединения (и правильно настроить брандмауэр)."/>
+    	<control caption="Удаленный доступ к Shareaza позволит Вам оставить Shareaza запущенной и контролировать её удаленно из вэб браузера.  Для использования этого Вам понадобится иметь возможность принимать входящие соединения (и правильно настроить брандмауэр)."/>
     	<control caption="_Разрешение:"/>
     	<control caption="Разрешить удаленный доступ к Shareaza:"/>
     	<control/>
@@ -3139,7 +3139,7 @@
 		<control caption="Стоп поиска после:"/>
 		<control/><control/>
 		<control caption="результатов."/>
-		<control caption="_Соединения с клиентами ED2K:"/>
+		<control caption="С_оединения с клиентами ED2K:"/>
 		<control caption="Соединять не более чем с:"/>
 		<control/><control/>
 		<control caption="другими ED2K клиентами."/>
@@ -3163,7 +3163,7 @@
 	<control caption="_Программа для создания торрентов"/>
 	<control caption="Трекер:"/>
 	<control/><control/><control/><control/><control/>
-	<control caption="Торрентов одновременно"/>
+	<control caption="_Торрентов одновременно"/>
 	<control caption="Т_рекер по умолчанию:"/>
 </dialog>
 	
@@ -3183,7 +3183,7 @@
 		<control/>
 		<control caption="Удалить"/>
 		<control caption="Установить..."/>
-		<control caption="Хочу ещё..."/>
+		<control caption="_Хочу ещё..."/>
 	</dialog>
 	
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Модули">
@@ -3194,7 +3194,7 @@
 		<control caption="Описание:"/>
 		<control/>
 		<control caption="_Установки..."/>
-		<control caption="Хочу ещё..."/>
+		<control caption="_Хочу ещё..."/>
 	</dialog>
 	
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Опытным">
@@ -3402,7 +3402,7 @@
 		<control/>
 		<control caption="_Выбор:"/>
 		<control caption="Другие пользователи Gnutella, просматривающие ваш профиль и разделяемые файлы будут видеть вашу картинку воплощения. Она должна быть размером 128x128 пикселей, любого формата изображений."/>
-		<control caption="_Выбрать..."/>
+		<control caption="В_ыбрать..."/>
 		<control caption="_Удалить"/>
 	</dialog>
 	
@@ -3585,11 +3585,11 @@
 		<control caption="_Добавить..."/>
 		<control caption="_Править..."/>
 		<control caption="_Удалить"/>
-		<control caption="_Показывать:"/>
+		<control caption="По_казывать:"/>
 		<control caption="Сетку"/>
 		<control caption="Верт. ось"/>
 		<control caption="Легенду"/>
-		<control caption="Выбор частоты измерения:"/>
+		<control caption="_Выбор частоты измерения:"/>
 		<control caption="Интервал между измер.:"/>
 		<control/><control/>
 		<control caption="мс"/>
@@ -3631,7 +3631,7 @@
 		<control/><control/><control/><control/>
 		<control caption="Маска сети:"/>
 		<control/><control/><control/><control/>
-		<control caption="Фильтр _содержания:"/>
+		<control caption="_Фильтр содержания:"/>
 		<control/>
 		<control caption="Удовл. любое"/>
 		<control caption="Удовл. всем"/>
@@ -3814,7 +3814,7 @@
 		<control caption="по"/>
 		<control/>
 		<control caption="Стереть"/>
-		<control caption="_Torrent Инфо..."/>
+		<control caption="Torrent _Инфо..."/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 	</dialog>
