@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -345,6 +345,13 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
 				m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
 				(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
+
+			// Add to ED2K search counts
+			if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+			{
+				m_nEDServers++;
+				m_nEDClients += ((CEDNeighbour*)pNeighbour)->m_nUserCount;
+			}
 		}
 		pPacket->Release();
 		
@@ -620,6 +627,13 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs)
 				
 				theApp.Message( MSG_DEBUG, _T("Sending UDP query to %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
+
+				// Add to ED2K search counts
+				if ( pHost->m_nProtocol == PROTOCOL_ED2K )
+				{
+					m_nEDServers++;
+					m_nEDClients += pHost->m_nUserCount;
+				}
 				
 				return TRUE;
 			}
