@@ -15,7 +15,7 @@ Setup and repair command-line parameters:
 /DIR="[path]"					Specify default path setup uses
 /GROUP="[foldername]"				Specify default name of start menu group
 /COMPONENTS="[component1,component2,etc]"	Specify list of extra components to install
-(comma separated list, valid entries: skins language)
+(comma separated list, valid entries: language)
 
 /SETTINGS="[path\filename]"			Path to ini file to overwrite some settings
 
