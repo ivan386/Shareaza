@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.60"
+version="2.1.0.70"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -512,7 +512,7 @@ prompt="Kattints ide a magyar nyelvhez."
                                <item id="ID_VIEW_DISCOVERY" text="Szerverkereső" shortcut="F9"/>
                                <item id="ID_VIEW_TRAFFIC" text="Grafikon" shortcut="F10"/>
                                <separator/>
-                               <item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
+                               <item id="ID_VIEW_PACKETS" text="Csomagforgalom" shortcut="Ctrl+F1"/>
                                <item id="ID_VIEW_SEARCH_MONITOR" text="Keresések figyelése" shortcut="Ctrl+F2"/>
                                <item id="ID_VIEW_RESULTS_MONITOR" text="Találatok figyelése" shortcut="Ctrl+F3"/>
                        </menu>
@@ -589,7 +589,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_VIEW_DISCOVERY" text="Szerverkereső" shortcut="F9"/>
                        <item id="ID_VIEW_TRAFFIC" text="Grafikon" shortcut="F10"/>
                        <separator/>
-                       <item id="ID_VIEW_PACKETS" text="Packet Dump" shortcut="Ctrl+F1"/>
+                       <item id="ID_VIEW_PACKETS" text="Csomagforgalom" shortcut="Ctrl+F1"/>
                        <item id="ID_VIEW_SEARCH_MONITOR" text="Keresések figyelése" shortcut="Ctrl+F2"/>
                        <item id="ID_VIEW_RESULTS_MONITOR" text="Találatok figyelése" shortcut="Ctrl+F3"/>
                        <separator/>
@@ -665,7 +665,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
-               <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+               <item id="ID_VIEW_PACKETS" text="Csomagforgalom"/>
                <item id="ID_VIEW_SEARCH_MONITOR" text="Keresések figyelése"/>
                <item id="ID_VIEW_RESULTS_MONITOR" text="Találatok figyelése"/>
        </menu>
@@ -684,7 +684,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
-               <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+               <item id="ID_VIEW_PACKETS" text="Csomagforgalom"/>
                <item id="ID_VIEW_SEARCH_MONITOR" text="Keresések figyelése"/>
                <item id="ID_VIEW_RESULTS_MONITOR" text="Találatok figyelése"/>
        </menu>
@@ -750,7 +750,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_VIEW_DISCOVERY" text="Szerverkereső"/>
                <item id="ID_VIEW_TRAFFIC" text="Grafikon"/>
                <separator/>
-               <item id="ID_VIEW_PACKETS" text="Packet Dump"/>
+               <item id="ID_VIEW_PACKETS" text="Csomagforgalom"/>
                <item id="ID_VIEW_SEARCH_MONITOR" text="Keresések figyelése"/>
                <item id="ID_VIEW_RESULTS_MONITOR" text="Találatok figyelése"/>
        </menu>
@@ -896,15 +896,11 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Töröl"/>
                <separator/>
                <item id="ID_DOWNLOADS_SOURCES" text="Több forrás keresése"/>
-               <!-- <separator/>
-               <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automata törlés"/> -->
                <separator/>
                <item id="ID_DOWNLOADS_HELP" text="Súgó..."/>
        </menu>
        <menu name="CDownloadsWnd.Download">
                <item id="ID_DOWNLOADS_LAUNCH" text="Előnézet"/>
-               <!--<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Másolat előnézete"/>  -->
                <item id="ID_DOWNLOADS_ENQUEUE" text="Listához ad"/>
                <separator/>
                <item id="ID_DOWNLOADS_RESUME" text="Folytat"/>
@@ -927,9 +923,6 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_DOWNLOADS_MOVE_DOWN" text="Le"/>
                        <item id="ID_DOWNLOADS_BOOST" text="Nincs sávszélkorlátozás"/>
                </menu>
-               <!--<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automata törlés"/>
-               <separator/> -->
                <item id="ID_DOWNLOADS_HELP" text="Súgó..."/>
        </menu>
        <menu name="CDownloadsWnd.Source">
@@ -947,9 +940,6 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Töröl"/>
                <separator/>
                <item id="ID_DOWNLOADS_FILE_DELETE" text="Fájl törlése"/>
-               <!-- <separator/>
-               <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automata törlés"/> -->
        </menu>
        <menu name="CDownloadsWnd.Completed">
                <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Megnyitás-Lejátszás"/>
@@ -961,14 +951,16 @@ prompt="Kattints ide a magyar nyelvhez."
                <separator/>
                <item id="ID_DOWNLOADS_FILE_DELETE" text="Fájl törlése"/>
                <item id="ID_DOWNLOADS_RATE" text="Fájl osztályozása..."/>
-               <!-- <separator/>
-               <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automata törlés"/> -->
        </menu>
        <menu name="CDownloadsWnd.Seeding">
                <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Megnyitás"/>
                <item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent infó"/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Terjesztés leállítása"/>
+       </menu>
+       <menu name="CDownloadsWnd.Nothing">
+               <item id="ID_DOWNLOADS_HELP" text="Súgó..."/>
+               <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
+               <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automata törlés"/>
        </menu>
        <menu name="CDownloadTabBar">
                <item id="ID_DOWNLOAD_GROUP_RESUME" text="Mindet folytat"/>
@@ -997,9 +989,6 @@ prompt="Kattints ide a magyar nyelvhez."
        <menu name="CUploadsWnd.Basic">
                <item id="ID_BROWSE_LAUNCH" text="Fájllista és profil"/>
                <item id="ID_UPLOADS_CHAT" text="Chat"/>
-               <!-- <separator/>
-               <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_UPLOADS_AUTO_CLEAR" text="Automata törlés"/>  -->
        </menu>
        <menu name="CUploadsWnd">
                <item id="ID_UPLOADS_START" text="Kezdés most"/>
@@ -1008,12 +997,24 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_BROWSE_LAUNCH" text="Fájllista és profil"/>
                <item id="ID_UPLOADS_CHAT" text="Chat"/>
                <item id="ID_SECURITY_BAN" text="Felhasználó letiltása"/>
-               <!-- <separator/>
+       </menu>
+       <menu name="CUploadsWnd.Queue.Basic">
+               <item id="ID_UPLOADS_HELP" text="Súgó..."/>
                <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
-               <item id="ID_UPLOADS_AUTO_CLEAR" text="Automata törlés"/>  -->
+               <item id="ID_UPLOADS_AUTO_CLEAR" text="Automata törlés"/>
+       </menu>
+       <menu name="CUploadsWnd.Queue">
+               <item id="ID_UPLOADS_EDIT_QUEUE" text="Sor beállítása"/>
+               <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
+               <item id="ID_UPLOADS_AUTO_CLEAR" text="Automata törlés"/>
+       </menu>
+       <menu name="CUploadsWnd.Nothing">
+               <item id="ID_UPLOADS_HELP" text="Súgó..."/>
+               <item id="ID_UPLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
+               <item id="ID_UPLOADS_AUTO_CLEAR" text="Automata törlés"/>
        </menu>
        <menu name="CUploadsWnd.Filter">
-               <item id="ID_UPLOADS_FILTER_ALL" text="Show All"/>
+               <item id="ID_UPLOADS_FILTER_ALL" text="Mindet mutat"/>
                <separator/>
                <item id="ID_UPLOADS_FILTER_ACTIVE" text="Aktív mutatása"/>
                <item id="ID_UPLOADS_FILTER_QUEUED" text="Sorbanálló mutatása"/>
@@ -1220,7 +1221,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_MEDIA_SIZE_DISTORT" text="Ablak kitöltése"/>
                        <separator/>
                        <item id="ID_MEDIA_ASPECT_DEFAULT" text="Alapértelmezett arány"/>
-                       <item id="ID_MEDIA_ASPECT_4_3" text="_4:3 arány (TV)"/>
+                       <item id="ID_MEDIA_ASPECT_4_3" text="4:3 arány (TV)"/>
                        <item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
                        <separator/>
                        <item id="ID_MEDIA_FULLSCREEN" text="Teljes képernyő"/>
@@ -1258,7 +1259,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_MEDIA_SIZE_DISTORT" text="Ablak kitöltése"/>
                        <separator/>
                        <item id="ID_MEDIA_ASPECT_DEFAULT" text="Alapértelmezett arány"/>
-                       <item id="ID_MEDIA_ASPECT_4_3" text="_4:3 arány (TV)"/>
+                       <item id="ID_MEDIA_ASPECT_4_3" text="4:3 arány (TV)"/>
                        <item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
                        <separator/>
                        <item id="ID_MEDIA_FULLSCREEN" text="Teljes képernyő"/>
@@ -1280,7 +1281,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <item id="ID_MEDIA_SIZE_DISTORT" text="Ablak kitöltése"/>
                <separator/>
                <item id="ID_MEDIA_ASPECT_DEFAULT" text="Alapértelmezett arány"/>
-               <item id="ID_MEDIA_ASPECT_4_3" text="_4:3 arány (TV)"/>
+               <item id="ID_MEDIA_ASPECT_4_3" text="4:3 arány (TV)"/>
                <item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Film)"/>
        </menu>
        <menu name="CMediaList">
@@ -1862,10 +1863,13 @@ prompt="Kattints ide a magyar nyelvhez."
        <!-- Download help documents -->
 
        <document name="DownloadHelp.Select">
-               <text format="b">Kérlek, válassz egy letöltést</text>
+               <text format="b">Letöltések</text>
                <newline gap="8"/>
-               <text>Itt információkat kaphatsz egy letöltésről.
-               Csak kattints rá egyre és használd ugyanezt a parancsot.</text>
+               <text>Itt találhatók a letöltések. A + jelre való kattintással
+               megnézheted a fájlokhoz tartozó forrásokat.</text>
+               <newline gap="8"/>
+               <text>Más információt is megtudhatsz ezzel a paranccsal.
+               Csak kattints egy fájlra és használd ugyanezt a funkciót.</text>
        </document>
 
        <document name="DownloadHelp.Completed">
@@ -1967,6 +1971,16 @@ prompt="Kattints ide a magyar nyelvhez."
                A Shareaza nem kap információkat az elérhető letöltési szálakról.</text>
        </document>
 
+       <!-- Upload help documents -->
+
+       <document name="UploadHelp">
+               <text format="b">Feltöltések</text>
+               <newline gap="8"/>
+               <text>Itt találhatók a feltöltések.
+               A + jelre való kattintással
+               megnézheted a fájlokhoz tartozó forrásokat.</text>
+       </document>
+
 <!-- General help documents -->
 
 <document name="GeneralHelp.DiskSpace">
@@ -2012,7 +2026,7 @@ prompt="Kattints ide a magyar nyelvhez."
     <text> Például a legtöbb kliensprogram nem engedélyezi csak az MP3 szóra
         való rákeresést, mert nem elég sajátos és ezért
         túl sok találatot eredményezne.</text>
-       </document>
+</document>
 
        <document name="SearchHelp.AdultSearch">
                <text format="b">Ezt a keresést nem lehet elkezdeni</text>
@@ -2232,9 +2246,9 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_NEIGHBOURS_COPY" message="URL másolása."/>
        <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
        <tip id="ID_NEIGHBOURS_SETTINGS" message="Hálózati beállítások..."/>
-       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak"/>
-       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a bejövő forgalmat mutatja."/>
-       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a kimenő forgalmat mutatja."/>
+       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Csomagforgalom ablakot ennek a szomszédnak"/>
+       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Nyit egy új Csomagforgalom ablakot ennek a szomszédnak, ami a bejövő forgalmat mutatja."/>
+       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Nyit egy új Csomagforgalom ablakot ennek a szomszédnak, ami a kimenő forgalmat mutatja."/>
        <tip id="ID_NETWORK_AUTO_CLOSE" message="Bezárja a programot a forgalom végeztével."/>
        <tip id="ID_NETWORK_BROWSE_TO" message="Fájllista letöltése, profil megtekintése..."/>
        <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz"/>
@@ -2329,7 +2343,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_VIEW_LIBRARY" message="A KÖNYVTÁR ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_MEDIA" message="A MÉDIALEJÁTSZÓ ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_NEIGHBOURS" message="A HÁLÓZAT ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_PACKETS" message="A CSOMAGFORGALOM ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_RESULTS_MONITOR" message="A TALÁLATOK FIGYELÉSE ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_SEARCH_MONITOR" message="A KERESÉSEK FIGYELÉSE ablak elrejtése, mutatása."/>
        <tip id="ID_VIEW_SECURITY" message="A BIZTONSÁG ablak elrejtése, mutatása."/>
@@ -2353,7 +2367,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="WINDOW_MAIN" value="Shareaza"/>
        <string id="WINDOW_SYSTEM" value="Rendszer"/>
        <string id="WINDOW_NEIGHBOURS" value="Hálózat"/>
-       <string id="WINDOW_PACKET" value="Packet Dump"/>
+       <string id="WINDOW_PACKET" value="Csomagforgalom"/>
        <string id="WINDOW_HOSTCACHE" value="Kiszolgálók listája"/>
        <string id="WINDOW_SEARCHMONITOR" value="Keresések figyelése"/>
        <string id="WINDOW_SEARCH" value="Keresés"/>
@@ -3391,10 +3405,10 @@ prompt="Kattints ide a magyar nyelvhez."
        <dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Köszöntelek a Shareazában [3/7]">
                <control caption="A helyes működéshez a programnak tudnia kell néhány dolgot az internetkapcolatodról."/>
                <control caption="&#160;(kérlek válassz)| Otthoni internetelérés| Egyetemi hálózat| Irodai kapcsolat| Repülőtér vagy szálloda"/>
-               <control caption="Védi-e tűzfal vagy router a hálózatot?"/>
-               <control caption="&#160;Nem, tudok bejövő kapcsolatokat fogadni| Igen, ezért nem tudok bejövő kapcsolatokat fogadni| Nem tudom, automata felismerést kérek"/>
-               <control caption="Védi-e tűzfal vagy router a számítógépedet?"/>
-               <control caption="&#160;Nem, teljesen ura vagyok a hálózatnak| Igen, de beállítom a tűzfalat/routert| Igen, ezért nem tudok bejövő kapcsolatokat fogadni| Nem tudom, automata felismerést kérek"/>
+               <control caption="Aktív vagy passzív?"/>
+               <control caption="&#160;Aktív hálózati kapcsolat| Passzív hálózati kapcsolat| Nem tudom, automata felismerést kérek"/>
+               <control caption="Aktív vagy passzív?"/>
+               <control caption="&#160;Aktív kapcsolat| Passzív, de beállítom a tűzfalat/routert| Passzív kapcsolat| Nem tudom, automata felismerést kérek"/>
                <control caption="Add meg az internetelérésed típusát vagy a sebességét:"/>
                <control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kábel/SDSL| T1| T3| LAN| OC3"/>
                <control caption="VAGY"/>
@@ -3802,9 +3816,9 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Beállítás kiválasztása:"/>
                <control/>
                <control caption="Mégse"/>
-               <control caption="Típus kiválasztása:"/>
-               <control/>
                <control caption="Mentés..."/>
+               <control/>
+               <control caption="Mégse"/>
        </dialog>
 
        <dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="URL menedzser">
@@ -4120,6 +4134,10 @@ prompt="Kattints ide a magyar nyelvhez."
     <list name="CFileSourcesPageList">
          <column from="URL" to=""/>
          <column from="Expires" to="Lejárat"/>
+       </list>
+       <list name="CTorrentTrackerList">
+               <column from="Filename" to="Fájlnév"/>
+               <column from="Size" to="Méret"/>
 </list>
 </listColumns>
 </skin>
