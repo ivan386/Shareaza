@@ -2183,7 +2183,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(HANDLE hFile, LPCTSTR pszPath)
 		delete [] szFragment;
 		return SubmitCorrupted();
 	}
-	if ( strncmp( szFragment, "HA Version", 10 ) && nPos == MAX_LENGTH_ALLOWED )
+	if ( strncmp( szFragment, "HA Version", 10 ) && nPos == MAX_LENGTH_ALLOWED + 1 )
 	{
 		delete [] szFragment;
 		return FALSE;
