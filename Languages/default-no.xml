@@ -2454,7 +2454,7 @@
 	<string id="8241" value="Shareaza sjekker om det finnes feil på filen: "/>
 	<string id="8243" value="Lastet opp:"/>
 	<string id="8288" value="Utforsker mine filer."/>
-	<string id="8289" value="Utforsker"/>
+	<string id="8289" value="Utforsker "/>
 	<string id="8290" value="Utforske innholdet i %i mapper"/>
 	<string id="8291" value="Flere mapper"/>
 	<string id="8292" value="%i filer valgt"/>
@@ -3202,7 +3202,7 @@
 
 	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2-nettverket:"/>
-		<control caption="(G2 anbefalt)"/>
+		<control caption="(G2 er anbefalt)"/>
 		<control caption="Koble til Gnutella2 i dag"/>
 		<control caption="Modus:"/>
 		<control caption="Optimal|Leaf|Hub"/>
@@ -3256,7 +3256,7 @@
 		<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
 		<control caption="Nedlastingskoblinger:"/>
 		<control/><control/>
-		<control caption="_Lag Torrent"/>
+		<control caption="_Samtidige torrenter"/>
 		<control/><control/>
 		<control caption="Klienttilkoblinger"/>
 		<control caption="_EndGame:"/>
