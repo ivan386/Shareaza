@@ -132,7 +132,7 @@ lt.reg_apptitle=Shareaza Ч geriausia programa bylш mainams
 lt.icons_license=Licencinл sutartis
 lt.icons_uninstall=Paрalinti
 lt.icons_downloads=Atsisiuntimai
-lt.dialog_shutdown=Ar norite nutraukti Д%1У darbа?
+lt.dialog_shutdown=Д%1У рiuo metu dirba. Ar norite nutraukti Д%1У darbа, tam kad bыtш galima tжsti бdiegimа?
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -177,7 +177,7 @@ it.reg_apptitle=Shareaza, il programma definitivo di P2P
 it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
-it.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+it.dialog_shutdown=%1 и attualmente in esecuzione. Vuoi che %1 sia chiuso cosм l'installazione puт continuare?
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -267,7 +267,7 @@ ru.reg_apptitle=Shareaza - программа дл€ обмена файлами
 ru.icons_license=Ћицензи€
 ru.icons_uninstall=ƒеинсталл€ци€
 ru.icons_downloads=«агрузки
-ru.dialog_shutdown=’отите ли завершить работу %1?
+ru.dialog_shutdown=%1 в данный момент работает. ’отите ли завершить работу %1, чтобы продолжить установку?
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
