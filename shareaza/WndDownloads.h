@@ -78,6 +78,8 @@ protected:
 	BOOL			m_bSelIdleSource;
 	BOOL			m_bSelActiveSource;
 	BOOL			m_bSelHttpSource;
+	BOOL			m_bSelSourceAcceptConnections;
+	BOOL			m_bSelSourceExtended;
 
 // Overrides
 public:

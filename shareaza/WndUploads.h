@@ -55,6 +55,8 @@ protected:
 	BOOL			m_bSelActive;
 	BOOL			m_bSelQueued;
 	BOOL			m_bSelHttp;
+	BOOL			m_bSelSourceAcceptConnections;
+	BOOL			m_bSelSourceExtended;
 
 // Overrides
 public:

@@ -396,6 +396,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
 	m_bSelHttpSource = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
+	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	BOOL bFirstShare = TRUE;
@@ -457,6 +458,8 @@ void CDownloadsWnd::Prepare()
 				else
 					m_bSelActiveSource = TRUE;
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttpSource = TRUE;
+				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
+				m_bSelSourceExtended = pSource->m_bClientExtended;
 			}
 		}
 	}
@@ -1218,7 +1221,7 @@ void CDownloadsWnd::OnUpdateTransfersChat(CCmdUI* pCmdUI)
 	}
 	
 	Prepare();
-	pCmdUI->Enable( m_bSelHttpSource );
+	pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections) );
 }
 
 void CDownloadsWnd::OnTransfersChat() 
@@ -1231,10 +1234,12 @@ void CDownloadsWnd::OnTransfersChat()
 		
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; pSource = pSource->m_pNext )
 		{
-			if ( pSource->m_bSelected && pSource->m_nProtocol == PROTOCOL_HTTP )
+			if ( pSource->m_bSelected ) 
 			{
-				ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort,
-					pSource->m_bPushOnly );
+				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) //Many HTTP clients support this
+					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly );
+				else if ( pSource->m_bClientExtended ) //Over ED2K/BT, you can only contact non-push Shareaza clients
+					ChatWindows.OpenPrivate( NULL, &pSource->m_pAddress, pSource->m_nPort, FALSE );
 			}
 		}
 	}
@@ -1243,7 +1248,7 @@ void CDownloadsWnd::OnTransfersChat()
 void CDownloadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelHttpSource );
+	pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections) );
 }
 
 void CDownloadsWnd::OnBrowseLaunch() 
@@ -1256,10 +1261,12 @@ void CDownloadsWnd::OnBrowseLaunch()
 		
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource != NULL ; pSource = pSource->m_pNext )
 		{
-			if ( pSource->m_bSelected && pSource->m_nProtocol == PROTOCOL_HTTP )
+			if ( pSource->m_bSelected )
 			{
-				new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort,
-					pSource->m_bPushOnly, &pSource->m_pGUID );
+				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) //Many HTTP clients support this
+					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, &pSource->m_pGUID );
+				else if ( pSource->m_bClientExtended ) //Over ED2K/BT, you can only contact non-push Shareaza clients
+					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, FALSE, NULL );
 			}
 		}
 	}

@@ -244,6 +244,7 @@ void CUploadsWnd::Prepare()
 	m_bSelFile = m_bSelUpload = FALSE;
 	m_bSelActive = m_bSelQueued = FALSE;
 	m_bSelHttp = FALSE;
+	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	
@@ -271,6 +272,12 @@ void CUploadsWnd::Prepare()
 				{
 					m_bSelActive = TRUE;
 				}
+
+				if ( pTransfer->m_bClientExtended )
+					m_bSelSourceExtended = TRUE;
+
+					//BOOL			m_bSelSourceAcceptConnections;
+
 			}
 		}
 	}
@@ -420,7 +427,7 @@ void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 {
 	Prepare();
 	
-	pCmdUI->Enable( Settings.Community.ChatEnable && m_bSelHttp );
+	pCmdUI->Enable( Settings.Community.ChatEnable && ( m_bSelHttp || m_bSelSourceExtended ) );
 }
 
 void CUploadsWnd::OnUploadsChat() 
@@ -475,7 +482,7 @@ void CUploadsWnd::OnSecurityBan()
 void CUploadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelHttp );
+	pCmdUI->Enable( ( m_bSelHttp || m_bSelSourceExtended ) );
 }
 
 void CUploadsWnd::OnBrowseLaunch() 
