@@ -156,6 +156,9 @@ public:
 	static LPCTSTR	uriImage;
 	static LPCTSTR	uriVideo;
 	static LPCTSTR	uriROM;
+	static LPCTSTR	uriDocument;
+	static LPCTSTR	uriSpreadsheet;
+	static LPCTSTR	uriPresentation;
 public:
 	static LPCTSTR	uriLibrary;
 	static LPCTSTR	uriFolder;
@@ -185,6 +188,8 @@ public:
 	static LPCTSTR	uriVideoFilmCollection;
 	static LPCTSTR	uriVideoFilm;
 	static LPCTSTR	uriVideoMusicCollection;
+	static LPCTSTR	uriDocumentRoot;
+	static LPCTSTR	uriDocumentAll;
 	
 	friend class CSchemaMember;
 };

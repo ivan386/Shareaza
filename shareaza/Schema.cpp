@@ -168,11 +168,11 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 			m_sDonkeyType = _T("Pro");
 		else if ( m_sURI == CSchema::uriBook )
 			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/presentation.xsd") )
+		else if ( m_sURI == CSchema::uriPresentation )
 			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/spreadsheet.xsd") )
+		else if ( m_sURI == CSchema::uriSpreadsheet )
 			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/wordProcessing.xsd") )
+		else if ( m_sURI == CSchema::uriDocument )
 			m_sDonkeyType = _T("Doc");
 		/*
 		//Bit of a hack - Should probably save this info as part of schema. Do that in 2.2
@@ -190,7 +190,7 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 			m_sDonkeyType = _T("Doc");
 		else if ( m_sURI == _T("http://www.shareaza.com/schemas/spreadsheet.xsd") )
 			m_sDonkeyType = _T("Doc");
-		else if ( m_sURI == _T("http://www.shareaza.com/schemas/wordProcessing.xsd") )
+		else if ( m_sURI == CSchema::uriDocument )
 			m_sDonkeyType = _T("Doc");
 		*/
 
@@ -785,6 +785,9 @@ LPCTSTR	CSchema::uriBook		= _T("http://www.limewire.com/schemas/book.xsd");
 LPCTSTR	CSchema::uriImage		= _T("http://www.shareaza.com/schemas/image.xsd");
 LPCTSTR	CSchema::uriVideo		= _T("http://www.limewire.com/schemas/video.xsd");
 LPCTSTR	CSchema::uriROM			= _T("http://www.shareaza.com/schemas/rom.xsd");
+LPCTSTR	CSchema::uriDocument	 = _T("http://www.shareaza.com/schemas/wordProcessing.xsd");
+LPCTSTR	CSchema::uriSpreadsheet	 = _T("http://www.shareaza.com/schemas/spreadsheet.xsd");
+LPCTSTR CSchema::uriPresentation = _T("http://www.shareaza.com/schemas/presentation.xsd");
 
 LPCTSTR CSchema::uriLibrary					= _T("http://www.shareaza.com/schemas/libraryRoot.xsd");
 
@@ -821,3 +824,5 @@ LPCTSTR	CSchema::uriVideoFilmCollection		= _T("http://www.shareaza.com/schemas/v
 LPCTSTR	CSchema::uriVideoFilm				= _T("http://www.shareaza.com/schemas/videoFilm.xsd");
 LPCTSTR	CSchema::uriVideoMusicCollection	= _T("http://www.shareaza.com/schemas/videoMusicCollection.xsd");
 
+LPCTSTR	CSchema::uriDocumentRoot			= _T("http://www.shareaza.com/schemas/documentRoot.xsd");
+LPCTSTR	CSchema::uriDocumentAll				= _T("http://www.shareaza.com/schemas/documentAll.xsd");
