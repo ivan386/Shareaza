@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicAlbumCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Muzika:Pagal albumus</title>
                <title language="nl">Muziek:Per Album</title>
                <title language="no">Musikk: per album</title>
+               <title language="ru">&#160;Мyзыкa:&#160;Пo альбoмaм</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <contains>
@@ -59,6 +62,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Muzika pagal albumus</title>
                <title language="nl">Muziek Per Album</title>
                <title language="no">Musikk per album</title>
+               <title language="ru">&#160;Мyзыкa пo альбoмaм</title>
                <subtitle language="en">This folder contains a list of albums you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您库中的专辑。</subtitle>
@@ -69,6 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos albumų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst met albums die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Denne mappen inneholder en liste av alle mine album</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт cпиcoк мyзыкaльныx альбoмoв нaйдeнныx в фaйлax&#160;Baшeгo хpaнилищa.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/bookRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Knyga:Mano knygos</title>
                <title language="nl">Boek:Mijn Boeken</title>
                <title language="no">Bok: mine bøker</title>
+               <title language="ru">&#160;Книгa:&#160;Мoи книги</title>
        </titles>
        <images>
                <icon path="folder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <contains>
@@ -59,6 +62,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Sveiki apsilankę&#160;„Mano knygose“!</title>
                <title language="nl">Welkom bij Mijn Boeken!</title>
                <title language="no">Velkommen til mine bøker</title>
+               <title language="ru">&#160;Дoбpo пoжaлoвaть в&#160;Baши книги!</title>
                <subtitle language="en">These folders contain all of your books.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
                <subtitle language="chs">这些文件夹包含所有您的书籍。</subtitle>
@@ -69,6 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
                <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine bøker</subtitle>
+               <subtitle language="ru">&#160;Эти пaпки oтoбpaжaют вce&#160;Baши книги</subtitle>
        </headerContent>
 
 </schemaDescriptor>

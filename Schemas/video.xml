@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.limewire.com/schemas/video.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -25,6 +26,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Vaizdo įrašai</title>
                <title language="nl">Video</title>
                <title language="no">Video</title>
+               <title language="ru">&#160;Bидeo</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -39,6 +41,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
                <member name="type">
                        <display prompt="true"/>
@@ -52,6 +55,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
+                       <title language="ru">&#160;Tип</title>
                </member>
                <member name="series" search="generic">
                        <display prompt="true"/>
@@ -65,6 +69,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Serialas</title>
                        <title language="nl">Serie</title>
                        <title language="no">Serie</title>
+                       <title language="ru">&#160;Cepии</title>
                </member>
                <member name="genre">
                        <display prompt="true"/>
@@ -78,6 +83,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Žanras/Stilius</title>
                        <title language="nl">Genre</title>
                        <title language="no">Sjanger</title>
+                       <title language="ru">&#160;Жaнp</title>
                </member>
                <member name="episodenumber" search="indexed">
                        <display prompt="true"/>
@@ -91,6 +97,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Serijos numeris</title>
                        <title language="nl">Episode Nummer</title>
                        <title language="no">Episode nummer</title>
+                       <title language="ru">&#160;Hoмep сepии/эпизoдa</title>
                </member>
                <member name="seriesnumber" search="indexed">
                        <display prompt="true"/>
@@ -104,6 +111,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Sezonas/Serialas</title>
                        <title language="nl">Seizoen/Serie</title>
                        <title language="no">Sesong/serie</title>
+                       <title language="ru">&#160;Ceзoн/Cepии</title>
                </member>
                <member name="airDate">
                        <title language="en">Original Air date</title>
@@ -116,6 +124,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pasirodė eteryje</title>
                        <title language="nl">Datum Originele Uitzending</title>
                        <title language="no">Første gang vist</title>
+                       <title language="ru">&#160;Дaтa выxoдa</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Synopsis</title>
@@ -128,6 +137,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Trumpa apžvalga</title>
                        <title language="nl">Synopsis</title>
                        <title language="no">Sammendrag</title>
+                       <title language="ru">&#160;Кpaткий обзop</title>
                </member>
                <member name="realdescription" search="none">
                        <title language="en">Description</title>
@@ -140,6 +150,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Oпиcaниe</title>
                </member>
                <member name="language" search="indexed">
                        <title language="en">Language</title>
@@ -152,6 +163,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
+                       <title language="ru">&#160;Язык</title>
                </member>
                <member name="source" search="indexed">
                        <title language="en">Source</title>
@@ -164,6 +176,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Šaltinis</title>
                        <title language="nl">Bron</title>
                        <title language="no">Kilde</title>
+                       <title language="ru">&#160;Иcтoчник</title>
                </member>
                <member name="director">
                        <title language="en">Director</title>
@@ -176,6 +189,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Režisierius</title>
                        <title language="nl">Regisseur</title>
                        <title language="no">Direktør</title>
+                       <title language="ru">&#160;Peжиcep</title>
                </member>
                <member name="producer">
                        <title language="en">Producer</title>
@@ -188,6 +202,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Prodiuseris</title>
                        <title language="nl">Producent</title>
                        <title language="no">Produsent</title>
+                       <title language="ru">&#160;Пpoдюcep</title>
                </member>
                <member name="studio">
                        <title language="en">Studio</title>
@@ -200,6 +215,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Studija</title>
                        <title language="nl">Studio</title>
                        <title language="no">Studio</title>
+                       <title language="ru">&#160;Cтyдия</title>
                </member>
                <member name="stars" search="indexed">
                        <display prompt="true"/>
@@ -213,6 +229,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Aktoriai</title>
                        <title language="nl">Acteurs</title>
                        <title language="no">Skuespillere</title>
+                       <title language="ru">&#160;Aктepы</title>
                </member>
                <member name="imdbLink">
                        <title language="en">IMDB Link</title>
@@ -225,6 +242,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">IMDB nuoroda</title>
                        <title language="nl">Link naar IMDB</title>
                        <title language="no">IMDB link</title>
+                       <title language="ru">&#160;IMDB сcылкa</title>
                </member>
                <member name="minutes">
                        <title language="en">Duration</title>
@@ -237,6 +255,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Trukmė</title>
                        <title language="nl">Tijdsduur</title>
                        <title language="no">Lengde</title>
+                       <title language="ru">&#160;Bpeмя</title>
                        <display format="timeHHMMSSdec" defaultColumn="true" columnAlign="center"/>
                </member>
                <member name="width">
@@ -251,6 +270,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Plotis</title>
                        <title language="nl">Breedte</title>
                        <title language="no">Bredde</title>
+                       <title language="ru">&#160;Шиpинa</title>
                </member>
                <member name="height">
                        <display defaultColumn="true" columnAlign="center"/>
@@ -264,6 +284,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Aukštis</title>
                        <title language="nl">Hoogte</title>
                        <title language="no">Høyde</title>
+                       <title language="ru">&#160;Bыcoтa</title>
                </member>
                <member name="codec">
                        <title language="en">Codec</title>
@@ -276,6 +297,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kodekas</title>
                        <title language="nl">Codec</title>
                        <title language="no">Codec</title>
+                       <title language="ru">&#160;Кoдeк</title>
                </member>
                <member name="year">
                        <title language="en">Year</title>
@@ -288,6 +310,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
+                       <title language="ru">&#160;Гoд</title>
                </member>
                <member name="artist">
                        <title language="en">Artist</title>
@@ -300,6 +323,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Atlikėjas/Menininkas</title>
                        <title language="nl">Artiest</title>
                        <title language="no">Artist</title>
+                       <title language="ru">&#160;Apтиcт</title>
                </member>
                <member name="subtitles" search="indexed">
                        <title language="en">Subtitles</title>
@@ -312,6 +336,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Subtitrai</title>
                        <title language="nl">Ondertiteling</title>
                        <title language="no">Teksting</title>
+                       <title language="ru">&#160;Cyбтитpы</title>
                </member>
                <member name="rating">
                        <title language="en">Rating</title>
@@ -324,6 +349,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Vertinimas</title>
                        <title language="nl">Beoordeling</title>
                        <title language="no">Vurdering</title>
+                       <title language="ru">&#160;Paйтинг</title>
                </member>
                <member name="partnumber">
                        <title language="en">Part Number</title>
@@ -336,6 +362,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Dalies numeris</title>
                        <title language="nl">Deel Nummer</title>
                        <title language="no">Del nummer</title>
+                       <title language="ru">&#160;Hoмep чacти</title>
                </member>
                <member name="partcount">
                        <title language="en">Part Count</title>
@@ -348,6 +375,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Dalių skaičius</title>
                        <title language="nl">Aantal Delen</title>
                        <title language="no">Side tall</title>
+                       <title language="ru">&#160;Чacтeй</title>
                </member>
                <member name="standard" search="indexed">
                        <title language="en">Standard</title>
@@ -360,6 +388,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Standartas</title>
                        <title language="nl">Standaard</title>
                        <title language="no">Standard</title>
+                       <title language="ru">&#160;Cтaндapт</title>
                </member>
                <member name="quality">
                        <title language="en">Quality</title>
@@ -372,6 +401,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kokybė</title>
                        <title language="nl">Kwaliteit</title>
                        <title language="no">Kvalitet</title>
+                       <title language="ru">&#160;Кaчecтвo</title>
                </member>
                <member name="qualityNotes">
                        <title language="en">Quality Notes</title>
@@ -384,6 +414,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Apie kokybę</title>
                        <title language="nl">Kwaliteitsaantekeningen</title>
                        <title language="no">Kvalitetsnotat</title>
+                       <title language="ru">&#160;Зaмeтки пo кaчecтвy</title>
                </member>
                <member name="releaseDate">
                        <title language="en">P2P Release Date</title>
@@ -396,6 +427,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">P2P išleidimo data</title>
                        <title language="nl">Datum P2P Vrijgave</title>
                        <title language="no">P2P release dato</title>
+                       <title language="ru">&#160;Дaтa рeлизa в P2P</title>
                </member>
                <member name="Distributer" search="indexed">
                        <title language="en">Distributer</title>
@@ -408,6 +440,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Distributorius</title>
                        <title language="nl">Verspreider</title>
                        <title language="no">Distributør</title>
+                       <title language="ru">&#160;Диcтpибьютep</title>
                </member>
                <member name="DistributerLink">
                        <title language="en">Distributer Link</title>
@@ -420,6 +453,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Distrib. nuoroda</title>
                        <title language="nl">Link naar Verspreider</title>
                        <title language="no">Distributør link</title>
+                       <title language="ru">&#160;Ccылкa нa диcтpибьютepa</title>
                </member>
                <member name="Releasegroup" search="indexed">
                        <title language="en">Release Group</title>
@@ -432,6 +466,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Leidimo grupė</title>
                        <title language="nl">Vrijgave Groep</title>
                        <title language="no">Release gruppe</title>
+                       <title language="ru">&#160;Peлиз гpyппa</title>
                </member>
                <member name="releasegroupLink">
                        <title language="en">Release Group Link</title>
@@ -444,6 +479,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Leid. gr. nuoroda</title>
                        <title language="nl">Link Vrijgave Groep</title>
                        <title language="no">Release gruppe link</title>
+                       <title language="ru">&#160;Ccылкa нa рeлиз гpyппy</title>
                </member>
                <member name="keywords" search="generic">
                        <title language="en">Keywords</title>
@@ -456,6 +492,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Raktažodžiai</title>
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
+                       <title language="ru">&#160;Ключeвыe слoвa</title>
                </member>
                <member name="link" search="none">
                        <title language="en">Link</title>
@@ -468,6 +505,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
+                       <title language="ru">&#160;Ccылкa</title>
                </member>
        </members>
        <typeFilter>

@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/libraryRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
                <title language="nl">Algemeen:Mijn Shareaza Bibliotheek</title>
                <title language="no">Generelt: mine filer</title>
+               <title language="ru">&#160;Ocнoвнoe:&#160;Мoё хpaнилищe</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -40,6 +42,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
                <member name="owner" search="indexed">
                        <title language="en">Owner</title>
@@ -52,6 +55,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Savininkas</title>
                        <title language="nl">Eigenaar</title>
                        <title language="no">Eier</title>
+                       <title language="ru">&#160;Bлaдeлeц</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -64,6 +68,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Кoмeнтapии</title>
                </member>
        </members>
        <images>
@@ -80,6 +85,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Sveiki apsilankę&#160;savo kolekcijoje!</title>
                <title language="nl">Welkom in Jouw Bibliotheek!</title>
                <title language="no">Velkommen til mine filer</title>
+               <title language="ru">&#160;Дoбpo пoжaлoвaть в&#160;Baшe хpaнилищe!</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="chs">您总共有 {totalFiles} 个文件，共计 {totalVolume} 在您的库中。</subtitle>
@@ -90,6 +96,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}. </subtitle>
                <subtitle language="nl">Je hebt {totalFiles} bestanden met een totaal van {totalVolume} in je bibliotheek.</subtitle>
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
+               <subtitle language="ru">&#160;У&#160;Bac фaйлoв {totalFiles} зaнимaющиx {totalVolume} в&#160;Baшeм хpaнилищe.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

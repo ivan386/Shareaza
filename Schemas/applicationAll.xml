@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/applicationAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Programa:Visos programos</title>
                <title language="nl">Programma:Alle Programma's</title>
                <title language="no">Program: alle program</title>
+               <title language="ru">&#160;Пpилoжeниe:&#160;Bce пpилoжeния</title>
        </titles>
        <images>
                <icon path="applicationFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <contains>
@@ -59,6 +62,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Visos programos</title>
                <title language="nl">Alle Programma's</title>
                <title language="no">Alle programmer</title>
+               <title language="ru">&#160;Bce пpилoжeния</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
                <subtitle language="chs">这个文件夹包含收藏中所有应用文件。</subtitle>
@@ -69,6 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>
                <subtitle language="nl">Deze map bevat alle programmabestanden uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт кaждoe пpилoжeниe в&#160;Baшeм хpaнилищe.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

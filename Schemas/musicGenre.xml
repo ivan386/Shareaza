@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Muzikos stilius</title>
                <title language="nl">Muziek Genre</title>
                <title language="no">Musikk sjanger</title>
+               <title language="ru">&#160;Cтиль мyзыки</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -55,6 +58,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Aprašas</title>
                        <title language="nl">Omschrijving</title>
                        <title language="no">Beskrivelse</title>
+                       <title language="ru">&#160;Oпиcaниe</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -67,6 +71,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kolekcionierius</title>
                        <title language="nl">Samensteller</title>
                        <title language="no">Samler</title>
+                       <title language="ru">&#160;Кoллeкциoнep</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -79,6 +84,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Кoмeнтapии</title>
                </member>
        </members>
        <extends>
@@ -100,6 +106,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">{name} muzika</title>
                <title language="nl">{name} Muziek</title>
                <title language="no">{name} Musikk</title>
+               <title language="ru">&#160;Мyзыкa&#160;{name}</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="chs">这个文件夹中所有音乐按照 {name} 流派排序。</subtitle>
@@ -110,6 +117,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti&#160;„{name}“&#160;žanrui/stiliui.</subtitle>
                <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name} sjangeren.</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт вcю мyзыкy стиля&#160;{name}.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

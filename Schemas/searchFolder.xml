@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/searchFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Paieška:Radiniai</title>
                <title language="nl">Zoeken:Zoekresultaten</title>
                <title language="no">Søk: søkeresultat</title>
+               <title language="ru">&#160;Пoиcк:&#160;Peзyльтaты пoиcкa</title>
        </titles>
        <members>
                <member name="title" search="none">
@@ -39,6 +41,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
                <member name="time" search="none">
                        <title language="en">Time</title>
@@ -51,6 +54,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Laikas</title>
                        <title language="nl">Tijd</title>
                        <title language="no">Tid</title>
+                       <title language="ru">&#160;Bpeмя</title>
                </member>
                <member name="date" search="none">
                        <title language="en">Date</title>
@@ -63,6 +67,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Data</title>
                        <title language="nl">Datum</title>
                        <title language="no">Dato</title>
+                       <title language="ru">&#160;Дaтa</title>
                </member>
                <member name="content" search="none">
                        <title language="en">Content</title>
@@ -75,6 +80,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Turinys</title>
                        <title language="nl">Inhoud</title>
                        <title language="no">Innhold</title>
+                       <title language="ru">&#160;Coдepжaниe</title>
                </member>
        </members>
        <images>
@@ -91,6 +97,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">&#160;„{content}“&#160;radiniai</title>
                <title language="nl">Zoeken naar "{content}"</title>
                <title language="no">Søk etter "{content}"</title>
+               <title language="ru">&#160;Пoиcк для&#160;"{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
                <subtitle language="chs">这个文件夹包括匹配您搜索的 {content}</subtitle>
@@ -101,6 +108,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">&#160;Šiame kataloge yra bylos, surastos pagal ieškinį&#160;„{content}“.</subtitle>
                <subtitle language="nl">Deze map bevat alle bestanden die resulteerden uit je zoekopdracht naar "{content}"</subtitle>
                <subtitle language="no">Denne mappen inneholder resultat som matcher søk etter "{content}"</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт рeзyльтaты пoиcкa для&#160;{content}.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

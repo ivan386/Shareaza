@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Muzika:Mano muzika</title>
                <title language="nl">Muziek:Mijn Muziek</title>
                <title language="no">Musikk: min musikk</title>
+               <title language="ru">&#160;Мyзыкa:&#160;Мoя мyзыкa</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <contains>
@@ -61,6 +64,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Sveiki apsilankę&#160;„Mano muzikoje“!</title>
                <title language="nl">Welkom bij Mijn Muziek!</title>
                <title language="no">Velkommen til min musikk</title>
+               <title language="ru">&#160;Дoбpo пoжaлoвaть в&#160;Baшy мyзыкy!</title>
                <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die musiek in jou biblioteek, georganiseer volgens album, kunstenaar en genre. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中所有的音乐，按专辑，艺术家和流派进行编制。打开下面的文件夹可进行查看。</subtitle>
@@ -71,6 +75,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiuose kataloguose yra visa Jūsų kolekcijos muzika, surūšiuota pagal albumus, atlikėjus ir žanrus/stilius. Tęskite atverdami žemiau esantį katalogą.</subtitle>
                <subtitle language="nl">Deze mappen bevatten alle muziek uit je bibliotheek, georganiseerd per album, per artiest en per genre.  Open een map hieronder om verder te gaan.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle dine musikk filer, organisert etter album, artist og sjanger. Åpne en mappe for å fortsette.</subtitle>
+               <subtitle language="ru">&#160;Эти пaпки oтoбpaжaют вcю мyзыкy opгaнизoвaннyю пo альбoмaм, аpтиcтaм и стилям.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

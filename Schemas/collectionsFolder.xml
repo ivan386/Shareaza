@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/collectionsFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
               <title language="lt">Rinkiniai:Mano rinkiniai</title>
               <title language="nl">Verzameling:Mijn Verzamelingen</title>
               <title language="no">Samlinger: mine samlinger</title>
+              <title language="ru">&#160;Кoллeкции:&#160;Мoи кoллeкции</title>
        </titles>
        <images>
                <icon path="collectionsFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <headerContent version="1.0">
@@ -56,6 +59,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Mano rinkiniai</title>
                <title language="nl">Mijn Verzamelingen</title>
                <title language="no">Mine samlinger</title>
+               <title language="ru">&#160;Мoи кoллeкции</title>
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
                <subtitle language="chs">这个文件夹包含您收藏中的所有富文本。</subtitle>
@@ -66,6 +70,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat alle Rich File Collections uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholde hvilken som helst filsamling i mine filer.</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт вce фaйлы кoллeкций (.collection) в&#160;Baшeм хpaнилищe.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

@@ -10,6 +10,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/videoFilmCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -26,6 +27,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Video:Filmai</title>
                <title language="nl">Video:Films</title>
                <title language="no">Video: filmer</title>
+               <title language="ru">&#160;Bидeo:&#160;Фильмы</title>
        </titles>
        <images>
                <icon path="videoFolder.ico"/>
@@ -43,6 +45,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
        </members>
        <contains>
@@ -59,6 +62,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">Filmai</title>
                <title language="nl">Films</title>
                <title language="no">Filmer</title>
+               <title language="ru">&#160;Фильмы</title>
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
                <subtitle language="chs">这个文件夹中的清单包含您收藏中的电影。</subtitle>
@@ -69,6 +73,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos filmų sąrašas.</subtitle>
                <subtitle language="nl">Deze map bevat een lijst van films die je in je bibliotheek hebt.</subtitle>
                <subtitle language="no">Disse mappene inneholder alle mine filmer</subtitle>
+               <subtitle language="ru">&#160;Этa пaпкa oтoбpaжaeт cпиcoк фильмoв в&#160;Baшeм хpaнилищe.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

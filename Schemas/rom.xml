@@ -11,6 +11,7 @@ Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
 Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Russian Schemas File translated by dAbserver
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -27,6 +28,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                <title language="lt">ROM atvaizdis</title>
                <title language="nl">ROM Afbeelding</title>
                <title language="no">ROM image</title>
+               <title language="ru">&#160;Oбpaз ROM</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -41,6 +43,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Pavadinimas</title>
                        <title language="nl">Titel</title>
                        <title language="no">Tittel</title>
+                       <title language="ru">&#160;Haзвaниe</title>
                </member>
                <member name="company" search="generic">
                        <display defaultColumn="true"/>
@@ -54,6 +57,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kompanija</title>
                        <title language="nl">Bedrijf</title>
                        <title language="no">Firma</title>
+                       <title language="ru">&#160;Кoмпaния</title>
                </member>
                <member name="system">
                        <display defaultColumn="true"/>
@@ -67,6 +71,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Sistema</title>
                        <title language="nl">Systeem</title>
                        <title language="no">System</title>
+                       <title language="ru">&#160;Cиcтeмa</title>
                </member>
                <member name="year">
                        <title language="en">Year</title>
@@ -79,6 +84,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Metai</title>
                        <title language="nl">Jaar</title>
                        <title language="no">År</title>
+                       <title language="ru">&#160;Гoд</title>
                </member>
                <member name="type">
                        <title language="en">Type</title>
@@ -91,6 +97,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Tipas</title>
                        <title language="nl">Type</title>
                        <title language="no">Type</title>
+                       <title language="ru">&#160;Tип</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
@@ -103,6 +110,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kalba</title>
                        <title language="nl">Taal</title>
                        <title language="no">Språk</title>
+                       <title language="ru">&#160;Язык</title>
                </member>
                <member name="rating">
                        <title language="en">Rating</title>
@@ -115,6 +123,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Vertinimas</title>
                        <title language="nl">Beoordeling</title>
                        <title language="no">Vurdering</title>
+                       <title language="ru">&#160;Paйтинг</title>
                </member>
                <member name="price">
                        <title language="en">Price</title>
@@ -127,6 +136,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Kaina</title>
                        <title language="nl">Prijs</title>
                        <title language="no">Pris</title>
+                       <title language="ru">&#160;Цeнa</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -139,6 +149,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Nuoroda</title>
                        <title language="nl">Link</title>
                        <title language="no">Link</title>
+                       <title language="ru">&#160;Ccылкa</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -151,6 +162,7 @@ Shareaza Norwegian Schemas File translated by Tom Seland
                        <title language="lt">Komentarai</title>
                        <title language="nl">Opmerkingen</title>
                        <title language="no">Kommentar</title>
+                       <title language="ru">&#160;Кoмeнтapии</title>
                </member>
        </members>
        <typeFilter>
