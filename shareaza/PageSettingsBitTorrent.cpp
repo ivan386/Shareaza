@@ -134,6 +134,7 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 
 void CBitTorrentSettingsPage::OnMakerBrowse() 
 {
+	/*
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
@@ -157,6 +158,18 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 	UpdateData( TRUE );
 	m_sMakerPath = szPath;
 	UpdateData( FALSE );
+	*/
+
+	CFileDialog dlg( TRUE, _T("Select .torrent creator:"), _T("TorrentWizard.exe") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
+		_T("Executable Files|*.exe;*.com|All Files|*.*||"), this );
+	
+	if ( dlg.DoModal() != IDOK ) return;
+	
+	UpdateData( TRUE );
+	m_sMakerPath = dlg.GetPathName();
+	UpdateData( FALSE );
+	
+
 }
 
 void CBitTorrentSettingsPage::OnOK() 
