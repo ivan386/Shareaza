@@ -671,7 +671,13 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ) );
 	}
 	
+theApp.Message( MSG_ERROR, _T("DeriveVersion() in CEDClient::OnHello") );
+theApp.Message( MSG_ERROR, m_sUserAgent );
+
 	DeriveVersion();
+
+theApp.Message( MSG_ERROR, m_sUserAgent );			//*******************************
+theApp.Message( MSG_ERROR, m_sNick );
 	
 	if ( pPacket->m_nType == ED2K_C2C_HELLO )
 	{
@@ -766,7 +772,13 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	m_bEmule = TRUE;
 	if ( pPacket->m_nType == ED2K_C2C_EMULEINFO ) SendEmuleInfo( ED2K_C2C_EMULEINFOANSWER );
 	
+theApp.Message( MSG_ERROR, _T("DeriveVersion() in CEDClient::OnEmuleInfo") );
+theApp.Message( MSG_ERROR, m_sUserAgent );
+
 	DeriveVersion();
+
+theApp.Message( MSG_ERROR, m_sUserAgent );				//*******************************
+theApp.Message( MSG_ERROR, m_sNick );
 	
 	return TRUE;
 }
@@ -807,6 +819,12 @@ void CEDClient::DeriveVersion()
 			break;
 		case 1:
 			m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			break;
+		case 2:
+			m_sUserAgent.Format( _T("xMule v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			break;
+		case 3:
+			m_sUserAgent.Format( _T("aMule v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 			break;
 		case 4:
 			m_sUserAgent.Format( _T("Shareaza"), m_nEmVersion >> 4, m_nEmVersion & 15 );

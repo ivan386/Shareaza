@@ -200,6 +200,8 @@ int CBTTrackerRequest::Run()
 void CBTTrackerRequest::Process(BOOL bRequest)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
+
+	theApp.Message( MSG_ERROR, _T("*** Processing BT tracker response") );
 	
 	if ( ! pLock.Lock( 250 ) ) return;
 	if ( ! Downloads.Check( m_pDownload ) ) return;
@@ -219,18 +221,17 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 	if ( pBuffer == NULL ) return;
-	
+
 	CBENode* pRoot = CBENode::Decode( pBuffer );
 	
 	if ( pRoot->IsType( CBENode::beDict ) )
 	{
-		if ( ! Process( pRoot ) )
-		{	//There was an error
-			theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
-		}
+theApp.Message( MSG_ERROR, _T("** BE Dictionary") );
+		Process( pRoot );
 	}
 	else if ( pRoot->IsType( CBENode::beString ) )
 	{
+theApp.Message( MSG_ERROR, _T("** BE String") );
 		CString str = pRoot->GetString();
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)str );
@@ -238,6 +239,7 @@ void CBTTrackerRequest::Process(BOOL bRequest)
 	}
 	else
 	{
+theApp.Message( MSG_ERROR, _T("** BE Unrecognised") );
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
 		m_pDownload->OnTrackerEvent( FALSE );
 	}
@@ -266,8 +268,15 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 	int nInterval = (int)(DWORD)pInterval->GetInt();
 
+CString str;
+str.Format( _T("Interval: %d"), nInterval );
+theApp.Message( MSG_ERROR, str );
+
 	nInterval = max( nInterval, 60*2 );
 	nInterval = min( nInterval, 60*60 );
+
+str.Format( _T("Interval: %d"), nInterval );
+theApp.Message( MSG_ERROR, str );
 	
 	m_pDownload->m_tTorrentTracker = GetTickCount() + 1000 * nInterval;
 	m_pDownload->m_bTorrentStarted = TRUE;
@@ -277,6 +286,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	
 	if ( pPeers->IsType( CBENode::beList ) && ! m_pDownload->IsMoving() )
 	{
+theApp.Message( MSG_ERROR, _T("Peer list beList") );
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
 			CBENode* pPeer = pPeers->GetNode( nPeer );
@@ -310,6 +320,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 	else if ( pPeers->IsType( CBENode::beString ) && ! m_pDownload->IsMoving() )
 	{
+theApp.Message( MSG_ERROR, _T("Peer list beString") );
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
 			BYTE* pPointer = (BYTE*)pPeers->m_pValue;
