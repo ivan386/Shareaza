@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,2,9
- PRODUCTVERSION 2,0,2,9
+ FILEVERSION 2,0,2,10
+ PRODUCTVERSION 2,0,2,10
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 2, 9"
+            VALUE "FileVersion", "2, 0, 2, 10"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 2, 9"
+            VALUE "ProductVersion", "2, 0, 2, 10"
         END
     END
     BLOCK "VarFileInfo"
@@ -2463,21 +2463,21 @@ BEGIN
                     NOT WS_BORDER
 END
 
-IDD_WARNINGS DIALOG  0, 0, 292, 214
+IDD_WARNINGS DIALOGEX 0, 0, 292, 214
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Respects its Users"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "Did you know Shareaza is a 100% free product?",
-                    IDC_TITLE,15,40,265,10,SS_CENTERIMAGE
+                    IDC_TITLE,15,34,265,19,SS_CENTERIMAGE
     LTEXT           "Shareaza does NOT contain ANY ""spyware"", ""adware"" or other bundled software. It does NOT display any advertisements or ""popups"", ever.\n\nIf you ever see advertising or ""popups"" while using Shareaza, be assured that they are NOT coming from this program.",
-                    IDC_STATIC,15,60,260,45
+                    IDC_STATIC,15,56,265,50
     LTEXT           "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program.",
-                    IDC_STATIC,15,110,260,25
+                    IDC_STATIC,15,107,265,33
     LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from www.shareaza.com.  If you paid someone money for Shareaza, you should demand a full refund immediately.",
-                    IDC_STATIC,15,145,260,25
-    LTEXT           "Shareaza respects its users!",IDC_RESPECT,15,180,155,10
+                    IDC_STATIC,15,143,265,35
+    LTEXT           "Shareaza respects its users!",IDC_RESPECT,15,178,232,13
     LTEXT           "www.shareaza.com",IDC_WEB,15,195,65,10
     DEFPUSHBUTTON   "Close",IDOK,245,190,39,14
 END
@@ -5205,6 +5205,8 @@ STRINGTABLE
 BEGIN
     IDS_DLM_MOVING          "Shareaza is moving the download:"
     IDS_DLM_VERIFY          "Shareaza is checking the download for errors:"
+    IDS_DLM_UPLOADED        "%s of %s (%.2f%%)"
+    IDS_DLM_VOLUME_UPLOADED "Volume uploaded:"
 END
 
 STRINGTABLE 

@@ -722,6 +722,8 @@
 #define IDS_DLM_COMPLETED_WORD          8239
 #define IDS_DLM_MOVING                  8240
 #define IDS_DLM_VERIFY                  8241
+#define IDS_DLM_UPLOADED				8242
+#define IDS_DLM_VOLUME_UPLOADED         8243
 #define IDS_LIBHEAD_HOME                8288
 #define IDS_LIBHEAD_EXPLORE_FOLDER      8289
 #define IDS_LIBHEAD_EXPLORE_MANY        8290
