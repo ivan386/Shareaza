@@ -453,7 +453,7 @@ void CSearchWnd::OnSearchSearch()
 	
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
-	//** The 'Search More' situation
+	//The 'Search More' situation
 	POSITION pos = m_pSearches.GetTailPosition();
 	if( ( !m_bPaused ) && ( m_bWaitMore ) && ( pos ) )
 	{
@@ -478,7 +478,7 @@ void CSearchWnd::OnSearchSearch()
 		m_bUpdate = TRUE;
 		return;
 	}
-	//** End of 'Search More'
+	//End of 'Search More'
 	
 	if ( m_pMatches->m_nFiles > 0 )
 	{
@@ -548,7 +548,6 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_bPanel && Settings.Search.HideSearchPanel )
 	{
 		m_bPanel = FALSE;
-		//Settings.Search.SearchPanel = m_bPanel ;
 		OnSkinChange();
 	}
 }
@@ -837,7 +836,7 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 void CSearchWnd::OnTimer(UINT nIDEvent) 
 {
 	POSITION pos = m_pSearches.GetTailPosition();
-	if( Settings.Gnutella2.QueryLimit && pos )
+	if( pos )
 	{
 		CManagedSearch* pManaged = (CManagedSearch*)m_pSearches.GetPrev(pos);
 		if( ( pManaged->m_bActive ) && (pManaged->m_nQueryCount > m_nMaxQueryCount) )
