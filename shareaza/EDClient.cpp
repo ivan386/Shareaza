@@ -168,10 +168,16 @@ BOOL CEDClient::Connect()
 	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
 	if ( EDClients.IsFull( this ) ) 
 	{
-		if ( ! m_pDownload || m_pDownload->m_nState != dtsQueued )
-			return FALSE;	
-		Beep(800,400);
-		theApp.Message( MSG_ERROR, _T("*** ED2K Queued download over-riding max client connections") );
+		// If this download isn't queued, don't try to start it.
+		if ( ! m_pDownload || m_pDownload->m_nState != dtsQueued ) return FALSE;	
+
+		// If we're really overloaded, we may have to drop some queued downloads
+		if ( EDClients.IsOverloaded() ) 
+		{
+			Beep(800,400);
+			theApp.Message( MSG_ERROR, _T("*** ED2K Queued download was dropped due to connection overloading") );
+			return FALSE;
+		}
 	}
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) )
