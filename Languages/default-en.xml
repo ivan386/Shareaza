@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.87"
+		version="2.1.0.94"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3089,12 +3089,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Community">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
 		<control caption="My _Profile:"/>
 		<control caption="You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others."/>
 		<control caption="Edit My Profile"/>
 		<control caption="_Chat:"/>
 		<control caption="Enable peer to peer chat with compatible clients"/>
+		<control caption="Enable chat on all networks"/>
+		<control caption="Filter chat messages for spam"/>
+		<control caption="Censor profanity in chat"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
