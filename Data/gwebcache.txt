@@ -39,7 +39,7 @@ http://www.kuwaitcontact.com/g2/bazooka.php
 http://www.rodage.net/gnetcache/gcache.php
 #
 # Keep these comments at the end
-# Last updated July 24, 2004
+# Last updated August 7, 2004
 #
 # Do not link to the root directory of a site like http://site.com
 # Instead link to the full path of the file
