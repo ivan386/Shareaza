@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -175,13 +175,17 @@ public:
 	inline DWORD GetFilteredCount() const
 	{
 		if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
-		return m_nSources >= m_pList->m_nFilterSources ? m_nFiltered : 0;
+		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
+		if ( m_pBest == NULL ) return 0;
+
+		return m_nFiltered;
 	}
 	
 	inline DWORD GetItemCount() const
 	{
 		if ( m_pList->m_bFilterLocal && m_bExisting ) return 0;
 		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
+		if ( m_pBest == NULL ) return 0;
 
 		if ( m_nFiltered == 1 || ! m_bExpanded )
 			return 1;
