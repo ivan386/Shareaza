@@ -30,7 +30,7 @@ Other:
 			description="Shareaza French Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.3.8"
+			version="2.0.5.0"
 			type="Language"
 			language="fr"
 			prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -93,7 +93,7 @@ Other:
 		<button id="ID_SEARCH_PANEL" text="Panneau de recherche"/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -104,7 +104,7 @@ Other:
 		<button id="ID_SEARCH_PANEL" text="Panneau de recherche"/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -118,7 +118,7 @@ Other:
 		<button id="ID_SEARCH_PANEL" text="Panneau de recherche"/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -137,7 +137,7 @@ Other:
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -150,7 +150,7 @@ Other:
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -231,7 +231,7 @@ Other:
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Partager des fichiers..."/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -239,7 +239,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Créer un album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -247,7 +247,7 @@ Other:
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Créer un album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -255,7 +255,7 @@ Other:
 		<button id="ID_LIBRARY_LAUNCH" text="Ouvrir ou lire"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Ajouter à la liste de lecture"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -269,7 +269,7 @@ Other:
 		<button id="ID_LIBRARY_COPY" text="Copier"/>
 		<button id="ID_LIBRARY_DELETE" text="Supprimer"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -278,7 +278,7 @@ Other:
 		<button id="ID_LIBRARY_ENQUEUE" text="Ajouter à la liste de lecture"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Lire l'album"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -289,7 +289,7 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriétés"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -298,7 +298,7 @@ Other:
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Téléch. tous les fichiers"/>
 		<rightAlign/>
-		<label text="Trouver:" tip="Entrer des mots-clés pour chercher votre bibliothèque"/>
+		<label text="Trouver:" tip="Saisir des mots-clés pour chercher votre bibliothèque"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -383,7 +383,7 @@ Other:
 		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
 		<button id="ID_SEARCH_CLEAR" text="Nettoyer"/>
 		<rightAlign/>
-		<label text="Filtrer:" tip="Entrer des mots-clés pour filtrer les résultats"/>
+		<label text="Filtrer:" tip="Saisir des mots-clés pour filtrer les résultats"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
@@ -413,7 +413,7 @@ Other:
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="Parcourir l'util."/>
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Envoyer un fichier"/> -->
-		<button id="ID_CHAT_PRIORITY" text="Octroi la priorité"/>
+		<button id="ID_CHAT_PRIORITY" text="Donner la priorité"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Se connecter" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Se déconnecter"/>
@@ -1486,11 +1486,11 @@ Other:
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">A T T E N T I O N &#160; - &#160; V O U S &#160; Ê T E S &#160; D E R R I È R E &#160; U N &#160; F I R E W A L L (pare-feu)</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">Shareaza a déterminé que vous êtes derrière un routeur NAT ou un firewall (pare-feu),
-			et est dans l'incapacité de recevoir des connections depuis Internet. &#160;</text>
-			<text colour="FF0000" format="b">Ceci peut entraîner de faible performance en téléchargement.</text>
+			<text colour="FF0000">Shareaza a détecté un routeur NAT ou un pare-feu (firewall),
+			et est dans l'incapacité actuelle de recevoir des connections depuis Internet. &#160;</text>
+			<text colour="FF0000" format="b">En l'état ceci peut entraîner de faible performance en téléchargement.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Cliquez ici pour apprendre à configurer votre routeur ou firewall (pare-feu) pour une optimisation optimale de Shareaza</link>
+			<link target="raza:command:ID_HELP_FIREWALLS">Cliquez ici pour apprendre à configurer votre routeur ou pare-feu (firewall) pour une utilisation optimale de Shareaza</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
@@ -1880,7 +1880,7 @@ Other:
 	<document name="DownloadHelp.Completed">
 		<text format="b">Ce téléchargement est complet</text>
 		<newline gap="8"/>
-		<text>Shareaza a fini de télécharger ce fichier, et a vérifié qu'il était 100% correct. Il a égalemment déplacé le fichier vers le dossier Downloads.</text>
+		<text>Shareaza a fini de télécharger ce fichier, et a vérifié qu'il était 100% correct. Il a également déplacé le fichier vers le dossier Downloads.</text>
 	</document>
 
 	<document name="DownloadHelp.Moving">
@@ -1961,7 +1961,7 @@ Other:
   	    <newline gap="8"/>
   	    <text>Shareaza a détecté Windows XP service pack 2. Ceci restreint le nombre de connections que les applications peuvent tenter en même temps.</text>
   	    <newline gap="8"/>
-  	    <text>Shareaza a limité les connections réseau et a mis en place les valeurs par défaut appropriées pour s'assurer une bonne opération, cependant les performances peuvent être réduites. Merci de visiter les forums Shareaza pour plus d'information, et les nouvelles mise à jour.</text>
+  	    <text>Shareaza a limité les connections réseau et a mis en place les valeurs par défaut appropriées pour s'assurer une bonne opération, cependant les performances peuvent en être réduites. Merci de visiter les forums Shareaza pour plus d'information, et les nouvelles mise à jour.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -1970,9 +1970,9 @@ Other:
     <text format="b">Merci de reformuler votre recherche</text>
     <newline gap="8"/>
     <text>Cette recherche est pauvrement formatée, et peut ne pas fonctionner correctement.
-    Les recherches doivent si possible inclure plusieurs termes, spécifier un schéma (type de fichier). En outre, il est préférable de ne pas se limiter à des nombres ou à des seuls termes négatifs, et d'eviter les rêquetes excessivement générale.</text>
+    Les recherches doivent si possible inclure plusieurs termes, spécifier un schéma (type de fichier). En outre, il est préférable de ne pas se limiter à des nombres ou à des seuls termes négatifs, et d'éviter les requêtes excessivements générales.</text>
     <newline gap="8"/>
-    <text> La plupart des clients sur le réseau ignoreront une recherche avec un seul terme, &quot;MP3&quot; par exemple, car ce n'est pas assez précis et générerait beaucoup trop de résultats.</text>
+    <text> La plupart des clients sur le réseau ignoreront une recherche avec un seul terme, &quot;MP3&quot; par exemple, peut précise elle génèrerait beaucoup trop de résultats.</text>
 </document>
 
 <!-- Share help documents -->
@@ -1992,7 +1992,7 @@ Other:
 	<newline gap="8"/>
 	<text>Des dossiers comme le dossier &quot;Windows&quot;, &quot;Program Files&quot;, et autres dossiers similaires ne contiennent généralement pas de fichiers appropriés au partage. les fichiers intéressants doivent plutôt être dans des sous-dossiers localisés </text><text format="i"> à l'intérieur de </text><text> ces dossiers. Merci de partagé plutôt ceux-la.</text>
 	<newline gap="8"/>
-	<text>Le dossier 'Imcomplete' de Shareaza ne devrait égalemment pas être partagé à travers la bibliothèque car le hashage d'un téléchargement en progression peut avoir un impact sur les performances.</text>
+	<text>Le dossier 'Imcomplete' de Shareaza ne devrait également pas être partagé à travers la bibliothèque car le hashage d'un téléchargement en progression peut avoir un impact sur les performances.</text>
  </document>
 
 </documents>
@@ -2207,7 +2207,7 @@ Other:
 	<tip id="ID_MEDIA_SELECT" message="Sélectionner et lire ce fichier.."/>
 	<tip id="ID_MEDIA_ADD" message="Ajouter un fichier media à la liste de lecture..."/>
 	<tip id="ID_MEDIA_REMOVE" message="Enlever le fichier média sélectionné de la liste de lecture."/>
-	<tip id="ID_MEDIA_CLEAR" message="Nettoyer (vider) la liste de lecture."/>
+	<tip id="ID_MEDIA_CLEAR" message="Nettoyer la liste de lecture."/>
 	<tip id="ID_MEDIA_SAVE" message="Sauvegarder la liste de lecture actuelle dans un fichier..."/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Afficher ou masquer l'éditeur de liste de lecture."/>
 	<tip id="ID_LIBRARY_VIEW_TILE" message="Afficher une liste de dossiers &quot;album&quot;." tip="Vue en cascade"/>
@@ -2332,7 +2332,7 @@ Other:
 	<string id="8008" value="Shareaza à fini de télécharger la prochaine version (%s) de Shareaza.  Voulez-vous mettre à jour maintenant?\n\nSi vous choisissez &quot;Oui&quot;, Shareaza va se fermer temporairement durant l'installation de la mise à jour."/>
 	<string id="8009" value="Êtes-vous certain de vouloir supprimer la skin &quot;%s&quot; ?  Ceci n'est pas réversible."/>
 	<string id="8010" value="Ceci est une pré-release de Shareaza, et la période de beta test est terminée.  Merci de télécharger la version complète, officielle à partir de www.shareaza.com."/>
-	<string id="8011" value="Changer la vue fermera toutes les fenêtres que vous avez ouverts.  Voulez-vous changer maintenant?"/>
+	<string id="8011" value="Changer la vue fermera toutes les fenêtres actuellement ouvertes.  Voulez-vous changer la vue maintenant?"/>
     <string id="8062" value="En mode Hub avec %lu voisin(s). %s dans votre bibliothèque locale."/>
     <string id="8063" value="Connecté. %s dans la bibliothèque locale."/>
 	<string id="8064" value="Connecté à %lu voisin(s).  %s dans votre bibliothèque locale."/>
@@ -2344,7 +2344,7 @@ Other:
 	<string id="8070" value="Connection..."/>
 	<string id="8071" value="Connecté"/>
 	<string id="8072" value="Se déconnecter"/>
-	<string id="8096" value="Cette fenêtre affiche plus d'information sur le fichier que vous sélectionnez."/>
+	<string id="8096" value="Cette fenêtre affiche plus d'informations sur le fichier que vous sélectionnez."/>
 	<string id="8097" value="Une source est disponible (%s).  "/>
 	<string id="8098" value="%i sources sont disponibles (%s).  "/>
 	<string id="8099" value="Il y a une description."/>
@@ -2357,7 +2357,7 @@ Other:
 	<string id="8128" value="Cliquez ici pour rechercher à nouveau"/>
 	<string id="8129" value="Aucune recherche en cours dans cette fenêtre."/>
 	<string id="8130" value="Shareaza recherche le réseau..."/>
-	<string id="8131" value="Le réseau n'a encore retourné aucun appariement."/>
+	<string id="8131" value="Le réseau n'a encore retourné aucun résultat."/>
 	<string id="8132" value="Quelques résultats sont disponibles, mais ils ont été filtrés."/>
 	<string id="8133" value="Shareaza recherche activement le réseau..."/>
 	<string id="8134" value="Vous êtes sur le point de commencer une nouvelle recherche.  Voulez-vous nettoyer les résultats de votre précédente recherche?"/>
@@ -2381,7 +2381,7 @@ Other:
 	<string id="8158" value="Vider"/>
 	<string id="8159" value="Avancée..."/>
 	<string id="8160" value="Etablissement  d'une connection à l'hôte..."/>
-	<string id="8161" value="Requête &quot;push&quot; envoyée, en attente de connection..."/>
+	<string id="8161" value="Requête poussée (push) envoyée, en attente de connection..."/>
 	<string id="8162" value="Connecté, demande de navigation..."/>
 	<string id="8163" value="Télécharge la réponse de navigation (%2.f%%)..."/>
 	<string id="8164" value="Incapable de se connecter à l'hôte afin de parcourir l'utilisateur."/>
@@ -2431,26 +2431,26 @@ Other:
 	<string id="8311" value="Vous avez déjà ce fichier dans votre bibliothèque."/>
 	<string id="8312" value="Vous avez déjà ce fichier dans votre liste de téléchargement."/>
 	<string id="8313" value="Ce fichier semble être un spam."/>
-	<string id="8314" value="Vous avez déjà téléchargé puis effacé ce fichier précédemment."/>
+	<string id="8314" value="Vous avez déjà précédemment téléchargé puis effacé ce fichier."/>
 	<string id="8315" value="Liste noire: "/>
-<string id="8316" value="Hits"/>
-<string id="8317" value="Envois"/>
-<string id="8318" value="%lu aujourd'hui, %lu total"/>	
+    <string id="8316" value="Hits"/>
+    <string id="8317" value="Envois"/>
+    <string id="8318" value="%lu aujourd'hui, %lu total"/>	
     <string id="8320" value="Statut:"/>
     <string id="8321" value="Vitesse:"/>
     <string id="8322" value="URL:"/>
-    <string id="8323" value="User Agent:"/>
+    <string id="8323" value="Agent Util.:"/>
     <string id="8324" value="Inactif"/>
     <string id="8325" value="Actif"/>
     <string id="8326" value="Prochain dans la queue"/>
 	<string id="16064" value="Démarrage du core réseau Shareaza..."/>
-	<string id="16065" value="Ne peut pas se relier au %s port %i pour les connections entrantes.  Les connections entrantes ne seront pas supportées."/>
+	<string id="16065" value="Impossible de se relier au %s port %i pour les connections entrantes.  Les connections entrantes ne seront pas supportées."/>
 	<string id="16066" value="Fermeture du core réseau Shareaza..."/>
 	<string id="16067" value="Déconnecté du réseau."/>
 	<string id="16068" value="Connections TCP entrantes acceptées sur %s port %i."/>
 	<string id="16069" value="Les connections sortantes se feront depuis %s port %i."/>
 	<string id="16070" value="Impossible de résoudre %s pour les connections sortantes.  Les connections sortantes utiliseront l'interface par défaut."/>
-	<string id="16071" value="Derrière un firewall, ne pourra pas écouter les connections entrantes..."/>
+	<string id="16071" value="Derrière un pare-feu (firewall), ne pourra pas écouter les connections entrantes..."/>
 	<string id="16072" value="Ecoute les datagrammes UDP sur %s port %i."/>
 	<string id="16073" value="Resoud l'hôte &quot;%s&quot;..."/>
 	<string id="16074" value="Incapable de résoudre l'hôte &quot;%s&quot;."/>
@@ -2459,7 +2459,7 @@ Other:
 	<string id="16077" value="L'adresse %s est déja bloquée par vos règles de sécurité."/>
 	<string id="16078" value="Règle de sécurité ajoutée au bloc %s."/>
 	<string id="16079" value="Êtes-vous certain de vouloir vous déconnecter ?"/>
-	<string id="16081" value="Envoi d'une interrogation pour &quot;%s&quot; à %s."/>
+	<string id="16081" value="Envoi d'une question pour &quot;%s&quot; à %s."/>
 	<string id="16083" value="Forcer votre PC à passer en mode &quot;hub&quot; peut avoir des effets néfastes sur ses performances et le réseau.  Il est généralement conseillé de laisser Shareaza décider seul si le mode &quot;hub&quot; doit être utilisé.\n\nLe mode &quot;hub&quot; n'apporte aucun bénéfice à l'utilisateur local, et il consomme plus de bande passante, de mémoire et de ressources système.\n\nÊtes-vous certain de vouloir le faire?"/>
 	<string id="16084" value="Désactiver le support des protocoles Gnutella-1 peut limiter vos résultats de recherche et si vous êtes en mode &quot;hub&quot;, cela peut également avoir un impact sur les résultats des autres utilisateurs.\n\nÊtes-vous certain de vouloir le faire?"/>
 	<string id="16085" value="Gnutella2 est le réseau primaire de Shareaza.  Le désactiver peut considérablement limiter le nombre et la qualité de vos recherches.\n\nÊtes-vous certain de vouloir l'enlever?"/>
@@ -2467,9 +2467,9 @@ Other:
 	<string id="16128" value="Connection entrante en provenance de %s port %i acceptée."/>
 	<string id="16129" value="Initialisation d'une connection de type &quot;voisin&quot; avec %s port %i..."/>
 	<string id="16130" value="Initialisation d'une connection de type &quot;voisin&quot; avec %s. impossible"/>
-	<string id="16131" value="Time-out pour la connection à %s."/>
+	<string id="16131" value="Délai expiré (time-out) pour la connection à %s."/>
 	<string id="16132" value="Ferme la connection au voisin %s à cause du manque de traffic."/>
-	<string id="16133" value="Etablit une connection avec le voisin %s, &quot;handshake&quot;..."/>
+	<string id="16133" value="Etablit une connection avec le voisin %s, poignée de main (handshake)..."/>
 	<string id="16134" value="Connection fermée avec le voisin %s."/>
 	<string id="16135" value="Initialisation d'une connection de type &quot;voisin&quot; avec %s impossible (refusé)."/>
 	<string id="16136" value="La connection a été subitement interrompue par le voisin %s."/>
@@ -2478,12 +2478,12 @@ Other:
 	<string id="16139" value="Le voisin %s a fermé la connection (%i : %s)."/>
 	<string id="16140" value="Le voisin %s a une connection lente et problèmatique."/>
 	<string id="16141" value="Connection fermée avec le voisin %s : ce n'est pas un hub."/>
-	<string id="16144" value="Time-out du &quot;handshake&quot; avec %s."/>
+	<string id="16144" value="Délai expiré (time-out) de la poignée de main (handshake) avec %s."/>
 	<string id="16145" value="La connection Gnutella est établie avec succès avec le voisin %s (G%i.%i : %s)."/>
-	<string id="16146" value="échec du &quot;handshake&quot; avec %s causé par une donnée invalide."/>
+	<string id="16146" value="Echec de la poignée de main (handshake) avec %s causé par une donnée invalide."/>
 	<string id="16147" value="Fermeture du surplus de connection avec %s, optimisation d'hôte (%s port %i)."/>
 	<string id="16148" value="La connection à %s est rejetée (%s)."/>
-	<string id="16149" value="Echec du &quot;handshake&quot; Gnutella 0.6 avec %s, essaye avec 0.4."/>
+	<string id="16149" value="Echec de la poignée de main (handshake) Gnutella 0.6 avec %s, essaye avec 0.4."/>
 	<string id="16150" value="Fermeture du surplus de connections avec %s."/>
 	<string id="16151" value="Refus de connection avec %s car c'est une &quot;node&quot; en mode &quot;leaf&quot; protégé."/>
 	<string id="16152" value="Le &quot;hub&quot; voisin %s ne veut pas pous accepter comme &quot;hub&quot;, fermeture de la connection."/>
@@ -2505,11 +2505,11 @@ Other:
 	<string id="16200" value="Le voisin %s a fait suivre un paquet de pong avec adresse invalide, ignore."/>
 	<string id="16201" value="Réception d'une question mal formattée de %s, ignore."/>
 	<string id="16202" value="Réception d'une question de paquet hit mal formattée de %s, ignore."/>
-	<string id="16203" value="Le voisin %s a fait suivre un paquet de &quot;push&quot; d'une longueur invalide, ignore."/>
+	<string id="16203" value="Le voisin %s a fait suivre un paquet poussé (push) d'une longueur invalide, ignore."/>
 	<string id="16208" value="Reception inattendue d'une mise à jour de table de routage du voisin %s."/>
 	<string id="16209" value="Le voisin %s a envoyé une notification de mise à jour de table de routage invalide, connection relâchée."/>
 	<string id="16210" value="Le voisin %s a mis à jour sa question table de routage (%i bit = %lu[%i], %i%% full)."/>
-	<string id="16211" value="Le voisin %s a fait suivre une requête &quot;push&quot; a une adresse bloquée, ignore."/>
+	<string id="16211" value="Le voisin %s a fait suivre une requête poussée (push) a une adresse bloquée, ignore."/>
 	<string id="16212" value="Le voisin %s a fait suivre un paquet étendu qui n'est pas encodé GGEP."/>
 	<string id="16213" value="Envoie une question table de routage au voisin %s (%i bit = %lu[%i], %i%% plein)"/>
 	<string id="16256" value="Ajoute &quot;%s&quot; avec %i source(s) à la liste des téléchargements."/>
@@ -2526,7 +2526,7 @@ Other:
 	<string id="16267" value="Requête du fragment de téléchargement (%lu-%lu) de %s."/>
 	<string id="16268" value="Plus de fragments du téléchargement, fermeture de la connection avec %s."/>
 	<string id="16269" value="Fragment raccourci, fermeture de la connection avec %s."/>
-	<string id="16270" value="Time-out pour la requête de téléchargement à %s, fermeture de la connection."/>
+	<string id="16270" value="Délai expiré (time-out) pour la requête de téléchargement à %s, fermeture de la connection."/>
 	<string id="16271" value="Fermeture de la connection de téléchargement avec %s pour manque de traffic."/>
 	<string id="16272" value="L'hôte de téléchargement %s n'a pas le fichier &quot;%s&quot;."/>
 	<string id="16273" value="L'hôte de téléchargement %s a répondu avec une réponse HTTP invalide."/>
@@ -2540,12 +2540,12 @@ Other:
 	<string id="16281" value="Voulez-vous vraiment supprimer &quot;%s&quot;?\n\nUne fois un téléchargement supprimé de la fenêtre de téléchargements, vous ne pourrez ensuite plus les reprendre."/>
 	<string id="16282" value="Voulez-vous vraiment exécuter ce fichier téléchargé &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16283" value="Le fichier &quot;%s&quot; est déjà en téléchargement, ajoute les sources."/>
-	<string id="16284" value="Réception d'une connection &quot;push&quot; défectueuse de %s, fermeture de la connection."/>
-	<string id="16285" value="Réception d'une connection &quot;push&quot; inutile de %s, fermeture de la connection."/>
-	<string id="16286" value="L'hôte %s fait un &quot;push&quot; du téléchargement &quot;%s&quot;, accepte."/>
+	<string id="16284" value="Réception d'une connection poussée (push) défectueuse de %s, fermeture de la connection."/>
+	<string id="16285" value="Réception d'une connection poussée (push) inutile de %s, fermeture de la connection."/>
+	<string id="16286" value="L'hôte %s pousse (push) le téléchargement &quot;%s&quot;, accepte."/>
 	<string id="16287" value="Ne peut rechercher plus de sources pour le téléchargement de &quot;%s&quot; car il n'y a pas de connections au réseau."/>
 	<string id="16288" value="Questionne pour plus de sources pour le téléchargement &quot;%s&quot; sur %i connections(s)..."/>
-	<string id="16289" value="Envoie une requête &quot;push&quot; pour le téléchargement &quot;%s&quot;..."/>
+	<string id="16289" value="Envoie une requête poussée (push) pour le téléchargement &quot;%s&quot;..."/>
 	<string id="16290" value="L'hôte de téléchargement %s a répondu avec un fragment différent mais utile (%lu-%lu) de &quot;%s&quot;."/>
 	<string id="16291" value="Déplacé &quot;%s&quot; vers &quot;%s&quot;, téléchargement complété."/>
 	<string id="16292" value="Ne peut déplacer le téléchargement vers &quot;%s&quot;.  Vérifiez que ce fichier n'est pas utilisé et que votre dossier de téléchargement existe et est écrivable."/>
@@ -2572,39 +2572,39 @@ Other:
 	<string id="16313" value="Réception d'un &quot;hashset&quot; eDonkey2000 pour &quot;%s&quot;, partie verifiable au minimum %s."/>
 	<string id="16314" value="Hôte du &quot;hashset&quot; eDonkey2000 corrompu ou inconsistant, source relâchée."/>
 	<string id="16315" value="Incapable d'initialiser &quot;inflate&quot; pour le téléchargement &quot;%s&quot;."/>
-	<string id="16316" value="&quot;Time-out&quot; sur la mise à jour de la queue pour l'hôte eDonkey2000 %s pour le fichier &quot;%s&quot;."/>
+	<string id="16316" value="Délai expiré (time-out) dans l'attente d'une mise à jour de la queue de l'hôte eDonkey2000 %s pour le fichier &quot;%s&quot;."/>
 	<string id="16317" value="Reste dans la queue pour &quot;%s&quot;."/>
 	<string id="16318" value="Espace disque insuffisant pour télécharger &quot;%s&quot; (%s)."/>
 	<string id="16319" value="Source %s (%s) relâchée pour avoir envoyée une partie corrompue de &quot;%s&quot; (%I64i-%I64i)."/>
 	<string id="16320" value="L'hôte d'envoi %s a fait parvenir une requête HTTP invalide."/>
-	<string id="16321" value="Initialisation d'une connection &quot;push&quot; à %s pour l'envoi de &quot;%s&quot;."/>
-	<string id="16322" value="Impossible de se connecter à l'hôte d'envoi %s pour un &quot;push&quot;."/>
+	<string id="16321" value="Initialisation d'une connection poussée (push) à %s pour l'envoi de &quot;%s&quot;."/>
+	<string id="16322" value="Impossible de se connecter à l'hôte d'envoi %s pour la poussée (push)."/>
 	<string id="16323" value="La connection d'envoi à %s a été fermée."/>
-	<string id="16324" value="Time-out dans l'attente de demande de l'hôte d'envoi %s."/>
+	<string id="16324" value="Délai expiré (time-out) dans l'attente d'une demande de l'hôte d'envoi %s."/>
 	<string id="16325" value="L'hôte d'envoi %s a demandé un fichier inconnu ou non disponible &quot;%s&quot;."/>
 	<string id="16326" value="L'hôte d'envoi %s a demandé &quot;%s&quot; avec un SHA1 différent."/>
-	<string id="16327" value="Refus d'envoi de &quot;%s&quot; pour %s, trop d'envois pour le moment."/>
-	<string id="16328" value="La connection &quot;push&quot; à %s est établie, en attente de &quot;handshake&quot;..."/>
-	<string id="16329" value="Impossible d'ouvrir &quot;%s&quot; pour l'hôte d'envoi %s."/>
+	<string id="16327" value="Refuse l'envoi de &quot;%s&quot; à %s, occupé et le client ne supporte pas la mise en queue."/>
+	<string id="16328" value="La connection poussée (push) à %s est établie, en attente de la poignée de main (handshake)..."/>
+	<string id="16329" value="Impossible d'ouvrir &quot;%s&quot; pour l'envoi à l'hôte %s, erreur disque/fichier."/>
 	<string id="16330" value="Transfert du fragment %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
 	<string id="16331" value="Envoi de &quot;%s&quot; terminé pour %s."/>
 	<string id="16332" value="La connection entrante en provenance de %s est une demande d'envoi HTTP."/>
 	<string id="16333" value="Trop occupé pour envoyer &quot;%s&quot; à %s, mis en queue à la position #%i de %i (&quot;%s&quot;)."/>
-	<string id="16334" value="La requête &quot;push&quot; en provenance de %s est une demande d'un fichier inconnu, se connecte quand même..."/>
+	<string id="16334" value="La requête poussée (push) en provenance de %s est une demande d'un fichier inconnu, se connecte quand même..."/>
 	<string id="16335" value="Supprime l'envoi de &quot;%s&quot; à %s."/>
-	<string id="16336" value="L'hôte d'envoi %s est un navigateur, refuser l'envoi de &quot;%s&quot;."/>
+	<string id="16336" value="Refuse une demande, l'hôte d'envoi %s est dans la liste noire des agents utilisateur (user-agent)."/>
 	<strpng id="16337" value="Transmission des headers d'envoi de &quot;%s&quot; pour l'hôte %s (%s)."/>
 	<string id="16338" value="L'hôte d'envoi %s a demandé un fragment insatisfaisant du fichier &quot;%s&quot;."/>
 	<string id="16339" value="Envoi de la réponse HTML par défaut à l'hôte d'envoi %s (%s)."/>
-	<string id="16340" value="Refus de la demande de navigation de %s."/>
+	<string id="16340" value="Refuse la demande de navigation de %s."/>
 	<string id="16341" value="L'hôte d'envoi %s (%s) a envoyé une requête de navigation utilisateur, répond..."/>
 	<string id="16342" value="Fermeture de la connection d'envoi %s pour manque de traffic."/>
 	<string id="16343" value="Fermeture d'un envoi plus ancien à %s car il a établit une connection plus récente."/>
-	<string id="16344" value="Refus d'un nouvel envoi à %s car une connection précédente est déjà en suspens."/>
-	<string id="16345" value="Arrêt de l'envoi &quot;%s&quot; pour %s car le fichier a été supprimé."/>
+	<string id="16344" value="Refuse un nouvel envoi à %s car une connection précédente est déjà en suspens."/>
+	<string id="16345" value="Arrête l'envoi &quot;%s&quot; pour %s car le fichier a été supprimé."/>
 	<string id="16346" value="Envoi du fragment %lu-%lu de &quot;%s&quot; pour l'hôte %s (%s)."/>
 	<string id="16347" value="Envoi mis en queue %s redemande trop rapidement, ferme la connection."/>
-	<string id="16348" value="Refus d'une requête &quot;push&quot; pour %s car il y a trop de connections d'envoi."/>
+	<string id="16348" value="Refuse une requête poussée (push) pour %s car il y a trop de connections d'envoi."/>
 	<string id="16349" value="Envoi du tiger-tree de &quot;%s&quot; pour &quot;%s&quot;."/>
 	<string id="16350" value="Envoi des métadonnêes  de &quot;%s&quot; vers %s."/>
 	<string id="16351" value="Refus d'envoi de &quot;%s&quot; vers %s (%s), trop de concurrents sur l'hôte."/>
@@ -2676,7 +2676,7 @@ Other:
 	<string id="16525" value="Paquets Gnutella routés"/>
 	<string id="16526" value="Paquets Gnutella dérivés"/>
 	<string id="16527" value="Paquets Gnutella perdus"/>
-	<string id="16528" value="Interrogations locales Gnutella"/>
+	<string id="16528" value="Questions locales Gnutella"/>
 	<string id="16532" value="Bande passante TCP totale"/>
 	<string id="16533" value="Bande passante TCP transmise"/>
 	<string id="16534" value="Bande passante TCP reçue"/>
@@ -2718,8 +2718,8 @@ Other:
 	<string id="16871" value="Soumission GWebCache &quot;%s&quot; à un GWebCache aléatoire..."/>
 	<string id="16928" value="Initialisation d'une connection à %s pour parcourir l'utilisateur..."/>
 	<string id="16929" value="Impossible d'initialiser une connection à %s pour parcourir l'utilisateur."/>
-	<string id="16930" value="Envoi d'une requête &quot;push&quot; à %s pour parcourir l'utilisateur."/>
-	<string id="16931" value="Impossible d'envoyer une requête &quot;push&quot; à %s pour parcourir l'utilisateur."/>
+	<string id="16930" value="Envoi d'une requête poussée (push) à %s pour parcourir l'utilisateur."/>
+	<string id="16931" value="Impossible d'envoyer une requête poussée (push) à %s pour parcourir l'utilisateur."/>
 	<string id="16932" value="Envoi d'une demande de navigation à %s..."/>
 	<string id="16933" value="L'hôte de navigation %s a transmis une réponse HTTP invalide."/>
 	<string id="16934" value="L'hôte de navigation %s a répondu avec le code %s (%s)."/>
@@ -2742,12 +2742,12 @@ Other:
 	<string id="16999" value="Liste de lecture"/>
 	<string id="17024" value="Initialisation d'une connection vers %s..."/>
 	<string id="17025" value="Impossible de créer une connection vers %s."/>
-	<string id="17026" value="Demande une connection &quot;push&quot; firewallée de %s..."/>
-	<string id="17027" value="Connection &quot;push&quot; en provenance de %s acceptée, &quot;handshake&quot;..."/>
-	<string id="17028" value="Connection établie, &quot;handshake&quot;..."/>
-	<string id="17029" value="Echec du &quot;handshake&quot;, l'hôte peut ne pas supporter le chat."/>
-	<string id="17030" value="&quot;Handshake&quot; fini, protocol chat version %s."/>
-	<string id="17031" value="Echange des informations des profils..."/>
+	<string id="17026" value="Demande une connection poussée (push) de derrière un pare-feu (firewall) de %s..."/>
+	<string id="17027" value="Connection poussée (push) en provenance de %s acceptée, poignée de main (handshake)..."/>
+	<string id="17028" value="Connection établie, poignée de main (handshake)..."/>
+	<string id="17029" value="Echec de la poignée de main (handshake), l'hôte peut ne pas supporter le chat."/>
+	<string id="17030" value="poignée de main (handshake) complète, protocol de chat version %s."/>
+	<string id="17031" value="Echange l'information du profil..."/>
 	<string id="17032" value="Utilisateur authentifié "/>
 	<string id="17033" value="Demande une conversation privée avec l'utilisateur..."/>
 	<string id="17034" value="Conversation privée établie, vous chattez avec %s."/>
@@ -2755,33 +2755,33 @@ Other:
 	<string id="17036" value="%s n'est pas la : %s"/>
 	<string id="17037" value="La connection chat a été perdue."/>
 	<string id="17038" value="Connection fermée."/>
-	<string id="17039" value="Demande d'une connection &quot;push&quot; impossible depuis %s, pas de route disponible."/>
+	<string id="17039" value="Demande d'une connection poussée (push) impossible depuis %s, pas de route disponible."/>
 	<string id="17040" value="Ne peut envoyer le message, vous n'etes pas connecté.  Shareaza essaye de se connecter..."/>
 	<string id="17041" value="Ne peut envoyer le message, aucune connection n'est encore établie."/>
 	<string id="17042" value="Vous n'avez pas encore rempli votre profil utilisateur.  Vous devez envoyer un profil avant de pouvoir chatter avec les autres utilisateurs.\n\nVoulez-vous remplir votre profil utilisateur maintenant?"/>
 	<string id="17043" value="Envoi prioritaire établi à l'hôte %s."/>
 	<string id="17216" value="Initialisation d'une connection au serveur eDonkey2000 %s..."/>
-	<string id="17217" value="Connecté au serveur eDonkey2000 %s, &quot;handshake&quot;..."/>
+	<string id="17217" value="Connecté au serveur eDonkey2000 %s, poignée de main (handshake)..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
 	<string id="17219" value="Le serveur eDonkey2000 %s a refusé la connection."/>
 	<string id="17220" value="Le serveur eDonkey2000 %s est en ligne: votre ID client est %lu."/>
 	<string id="17221" value="Le serveur eDonkey2000 %s a changé votre ID client de %lu à %lu."/>
 	<string id="17222" value="Le serveur eDonkey2000 %s s'est identifié comme &quot;%s&quot;."/>
 	<string id="17223" value="Le serveur eDonkey2000 %s a rejeté la connection."/>
-	<string id="17224" value="Erreur dans l'echange du &quot;handshake&quot; avec le client eDonkey2000 %s."/>
+	<string id="17224" value="Erreur dans l'echange de la poignée de main (handshake) avec le client eDonkey2000 %s."/>
 	<string id="17225" value="La connection au client eDonkey2000 %s a été perdue."/>
 	<string id="17226" value="Reception d'un paquet eDonkey2000 malformé en provenance de %s (id=%x)."/>
 	<string id="17227" value="La connection entrante en provenance de %s est un lien de client eDonkey2000."/>
 	<string id="17228" value="Envoi du &quot;hashset&quot; eDonkey2000 de &quot;%s&quot; vers %s..."/>
 	<string id="17229" value="La connection client eDonkey2000 vers %s est idle, fermée."/>
 	<string id="17230" value="Initialisation d'une connection au client eDonkey2000 %s..."/>
-	<string id="17231" value="Le client eDonkey2000 %s a un mauvais GUID, &quot;handshake&quot; annulé."/>
-	<string id="17232" value="Time-out de connection vers le client eDonkey2000 %s."/>
-	<string id="17233" value="Time-out du &quot;handshake&quot; avec le client eDonkey2000 %s."/>
-	<string id="17234" value="Refus d'un lien de client eDonkey2000 en provenance de %s car eDonkey2000 n'est pas actif."/>
+	<string id="17231" value="Le client eDonkey2000 %s a un mauvais GUID, poignée de main (handshake) annulée."/>
+	<string id="17232" value="Délai expiré (time-out) pour la connection vers le client eDonkey2000 %s."/>
+	<string id="17233" value="Délai expiré (time-out) de la poignée de main (handshake) avec le client eDonkey2000 %s."/>
+	<string id="17234" value="Refuse un lien de client eDonkey2000 en provenance de %s car eDonkey2000 n'est pas actif."/>
 	<string id="17248" value="Démarrage du processus d'importation de téléchargement partiel eDonkey2000..."/>
 	<string id="17249" value="Processus complété, téléchargement partiel %i importé avec succès."/>
-	<string id="17250" value="Scan du répertoire : &quot;%s&quot;..."/>
+	<string id="17250" value="Parcours le répertoire : &quot;%s&quot;..."/>
 	<string id="17251" value="  Impossible d'importer le fichier."/>
 	<string id="17252" value=" Un téléchargement partiel &quot;%s&quot; est trouvé, importation..."/>
 	<string id="17253" value="  Impossible d'ouvrir le fichier partiel &quot;%s&quot;."/>
@@ -2793,21 +2793,21 @@ Other:
 	<string id="17259" value="  Ce fichier est deja dans la list des téléchargements de Shareaza."/>
 	<string id="17260" value="  Espace disque insuffisant pour copier le fichier."/>
 	<string id="17472" value="La connection entrante en provenance de %s est un accouplement BitTorrent, négociation..."/>
-	<string id="17473" value="Time-out de connection au client BitTorrent %s."/>
-	<string id="17474" value="Time-out du &quot;handshake&quot; avec le client BitTorrent %s."/>
-	<string id="17475" value="Fermeture de l'accouplement BitTorrent avec %s a cause du manque de trafic."/>
+	<string id="17473" value="Délai expiré (time-out) de la connection au client BitTorrent %s."/>
+	<string id="17474" value="Délai expiré (time-out) de la poignée de main (handshake) avec le client BitTorrent %s."/>
+	<string id="17475" value="Fermeture de l'accouplement BitTorrent avec %s à cause du manque de trafic."/>
 	<string id="17476" value="L'accouplement BitTorrent avec %s a échoué car le client a distance a un GUID different."/>
 	<string id="17477" value="L'accouplement BitTorrent avec %s a répondu avec un mauvais fichier."/>
 	<string id="17478" value="L'accouplement BitTorrent avec %s a demandé un fichier inconnu."/>
 	<string id="17479" value="L'accouplement BitTorrent avec %s etablie pour &quot;%s&quot;."/>
 	<string id="17480" value="L'accouplement BitTorrent avec %s a été perdu."/>
-	<string id="17481" value="Recois le fichier de description BitTorrent : &quot;%s&quot;"/>
-	<string id="17482" value="Analyse du prefetched du fichier BitTorrent &quot;%s&quot; impossible."/>
+	<string id="17481" value="Réception du fichier de description BitTorrent : &quot;%s&quot;"/>
+	<string id="17482" value="Impossible d'analyser le fichier précherché (prefetched) BitTorrent &quot;%s&quot;."/>
 	<string id="17483" value="Erreur du traqueur BitTorrent pour &quot;%s&quot; : &quot;%s&quot;."/>
 	<string id="17484" value="Erreur d'analyse de la reponse du traqueur BitTorrent."/>
-	<string id="17485" value="Traqueur BitTorrent recu pour &quot;%s&quot;, %i nouvelles sources."/>
+	<string id="17485" value="Traqueur BitTorrent reçu pour &quot;%s&quot;, %i nouvelles sources."/>
 	<string id="17486" value="Initialisation d'un accouplement client BitTorrent avec %s..."/>
-	<string id="17487" value="Accouplement BitTorrent avec %s établie, envoi du &quot;handshake&quot;..."/>
+	<string id="17487" value="Accouplement BitTorrent avec %s établie, envoi de la poignée de main (handshake)..."/>
 	<string id="17488" value="Vous avez changé l'URL du traqueur pour ce torrent.  Voulez-vous sauver ce changement?\n\nUn URL de traqueur invalide peut vous empecher les téléchargement."/>
 	<string id="17489" value="Accouplement BitTorrent avec %s est un protocole étendu, identifié &quot;%s&quot;."/>
 	<string id="17490" value="%i nouvelles sources BitTorrent recue de %s."/>
@@ -2818,7 +2818,7 @@ Other:
 	<string id="17495" value="Ce torrent inclus le fichier &quot;%s&quot; qui devrait être %s, cependant votre version du fichier est %s."/>
 	<string id="17496" value="Erreur durant la copie de &quot;%s&quot; dans un fichier de partage BitTorrent."/>
 	<string id="17497" value="Erreur inconnue en essayant de &quot;seed&quot; &quot;%s&quot;."/>
-	<string id="17498" value="Erreur détecté dans le fichier &quot;%s&quot;."/>
+	<string id="17498" value="Erreur détectée dans le fichier &quot;%s&quot;."/>
 	<string id="18496" value="Vous avez fait des changements dans le champ &quot;nom&quot;.  Êtes-vous certain de vouloir renommer ce téléchargement?"/>
 	<string id="18497" value="Vous avez tapez une valeur SHA1, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
 	<string id="18498" value="Vous avez tapez une valeur tiger-tree, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
@@ -2828,8 +2828,8 @@ Other:
 	<string id="18502" value="Vous avez fourni une valeur de hash eDonkey2000 qui est différente de celle actuellement associée avec ce téléchargement.  Êtes-vous certain de vouloir changer le hash eDonkey2000 maintenant?"/>
 	<string id="18503" value="Êtes-vous certain de vouloir oublier le statut de vérification actuel?  Toutes les données téléchargées seront considérée comme non-vérifié, et les &quot;hashtrees&quot; et &quot;hashsets&quot; en cache seront nettoyés."/>
 	<string id="18504" value="Êtes-vous certain de vouloir oublier toutes les sources du téléchargement sélectionné?"/>
-	<string id="18505" value="Merci d'entrer une gamme valide à effacer.  Le champ &quot;De&quot; est le premier byte à effacer, le champ &quot;Dernier&quot; est le dernier byte à effacer."/>
-	<string id="18506" value="Incapable d'effacer le champ sélectionné du téléchargement car aucune partie de ce champ n'est présente."/>
+	<string id="18505" value="Merci de saisir une gamme valide à effacer.  Le champ &quot;De&quot; est le premier byte à effacer, le champ &quot;Dernier&quot; est le dernier byte à effacer."/>
+	<string id="18506" value="Impossible d'effacer la gamme sélectionné du téléchargement car aucune partie de cette gamme n'est présente."/>
 	<string id="18507" value="%I64i bytes effacés du téléchargement."/>
 	<string id="18508" value="Relâche la source %s du téléchargement &quot;%s&quot; car la position %i en queue est trop grande."/>
 	<string id="18509" value="Vous ne pouvez pas assumer que ce téléchargement est complété et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent.  Sans information de vérification le téléchargement ne peut pas être vérifié."/>
@@ -2913,7 +2913,7 @@ Other:
 		<control/>
 		<control caption="Filtrer les objets par extension"/>
 		<control/>
-		<control caption="Autoriser les util. à la parcourir"/>
+		<control caption="Autoriser les util. à voir la biblio."/>
 		<control caption="Fichiers _récents:"/>
 		<control caption="Mémoriser:"/>
 		<control/><control/>
@@ -2994,7 +2994,7 @@ Other:
 		<control caption="_Timeouts:"/>
 		<control caption="Connection:"/>
 		<control/><control/>
-		<control caption="Handshake:"/>
+		<control caption="Poignée de main (handshake):"/>
 		<control/><control/>
 		<control caption="Accepter les connections entrantes"/>
 	</dialog>
@@ -3029,7 +3029,7 @@ Other:
 		<control caption="Limite par hôte:"/>
 		<control/>
 		<control/>
-		<control caption="Filtre _User-Agent:"/>
+		<control caption="Filtre agent _utilisateur (User-Agent):"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
