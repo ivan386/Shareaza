@@ -476,7 +476,7 @@ void CBTClient::DetermineUserAgent()
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )	//ToDo: Make certain SZ isn't used before 2.2 final
 		{
-			m_sUserAgent = _T("Shareaza");
+			m_sUserAgent = _T("RAZA");
 			//if ( m_pGUID.b[3] > '1' ) m_bExtended = TRUE;
 		}
 		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
@@ -521,7 +521,7 @@ void CBTClient::DetermineUserAgent()
 			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
 		}
 		
-		strVer.Format( _T(" %i%i%i"),
+		strVer.Format( _T(" %i.%i.%i"),
 			( m_pGUID.b[1] - '0' ), ( m_pGUID.b[2] - '0' ),
 			( m_pGUID.b[3] - '0' ) );
 		m_sUserAgent += strVer;
