@@ -1,6 +1,9 @@
+; Version branding: Change this key on each release
+#define version "2.0.0.5"
+
 [Setup]
 AppName=Shareaza
-AppVerName=Shareaza 2.0.0.5
+AppVerName=Shareaza {#version}
 AppPublisher=Shareaza Development Team
 AppId=Shareaza
 AppMutex=Shareaza
@@ -10,7 +13,7 @@ OutputBaseFilename=repair
 OutputDir=setup\builds
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
-VersionInfoVersion=2.0.0.5
+VersionInfoVersion={#version}
 DefaultDirName={pf}\Shareaza
 DefaultGroupName=Shareaza
 DisableDirPage=yes
