@@ -59,6 +59,7 @@ void CSettings::Setup()
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
 	Add( _T("Settings.UserAgent"), &General.UserAgent, _T(".") );
 	Add( _T("Settings.Language"), &General.Language, _T("en") );
+	Add( _T("Settings.IgnoreXPsp2"), &General.IgnoreXPsp2, FALSE );
 	
 	Add( _T("Interface.TipDelay"), &Interface.TipDelay, 600 );
 	Add( _T("Interface.TipAlpha"), &Interface.TipAlpha, 230 );
@@ -501,7 +502,7 @@ void CSettings::Load()
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
-	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(5*60*1000) );
+	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, DWORD(4*60*1000) );
 	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, DWORD(45*60) );
 	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, DWORD(1000) );
 	Gnutella1.RequeryDelay		= max( Gnutella1.RequeryDelay, DWORD(45*60) );

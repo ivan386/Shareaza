@@ -36,10 +36,10 @@ public:
 	{
 		CString		Path;						// Installation path for Shareaza
 		CString		UserPath;					// Path for user data. (May be the same as above for single user installs)
-		BOOL		Debug;
-		BOOL		DebugLog;
+		BOOL		Debug;						// Display debug information
+		BOOL		DebugLog;					// Create a log file
 		DWORD		MaxDebugLogSize;			// Max size of the log file
-		BOOL		UpdateCheck;
+		BOOL		UpdateCheck;				// Does Shareaza check for new versions?
 		DWORD		DiskSpaceWarning;			// Value at which to warn the user about low disk space
 		INT			GUIMode;
 		BOOL		CloseMode;
@@ -53,6 +53,7 @@ public:
 		BOOL		AlwaysOpenURLs;
 		CString		UserAgent;
 		CString		Language;
+		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
 	} General;
 
 	struct sInterface

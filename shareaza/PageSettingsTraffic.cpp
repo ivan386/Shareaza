@@ -212,7 +212,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.ShowPercent, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.ClearDelay, 1000, 1, 1800, _T(" s") );
 	AddSetting( &Settings.Downloads.RetryDelay, 1000, 120, 60*60, _T(" s") );
-	AddSetting( &Settings.Downloads.SearchPeriod, 1000, 10, 5*60 );
+	AddSetting( &Settings.Downloads.SearchPeriod, 1000, 10, 4*60 );
 	AddSetting( &Settings.Downloads.StaggardStart, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.VerifyFiles, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.VerifyTiger, 1, 0, 1 );

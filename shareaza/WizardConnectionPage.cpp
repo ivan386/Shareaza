@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -246,6 +246,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL (4:1)
 	else if( nSpeed <= 1536 )
 		Settings.Connection.OutSpeed = nSpeed / 6;	// ADSL (6:1)
+	else if( nSpeed <= 4096 )
+		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL2 (4:1)
 	else
 		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, and the big boys.
 
@@ -266,8 +268,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFiles				= 32;
 		Settings.Downloads.MaxTransfers			= 128;
 		Settings.Downloads.MaxFileTransfers		= 16;
-		Settings.Downloads.MaxConnectingSources	= 40;
-		Settings.Downloads.MaxFileSearches		= 8;
+		Settings.Downloads.MaxConnectingSources	= 32;
+		Settings.Downloads.MaxFileSearches		= 5;
 		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
@@ -276,7 +278,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 96;
 		Settings.Downloads.MaxFileTransfers		= 10;
 		Settings.Downloads.MaxConnectingSources	= 28;
-		Settings.Downloads.MaxFileSearches		= 6;
+		Settings.Downloads.MaxFileSearches		= 5;
 	}
 	else if ( nSpeed > 256 && theApp.m_bNT )
 	{	//Slower broadband
@@ -306,7 +308,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	UploadQueues.CreateDefault();
 
-	if ( theApp.m_bLimitedConnections ) 
+	if ( ( theApp.m_bLimitedConnections ) && ( ! Settings.General.IgnoreXPsp2 ) ) 
 	{	//Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
 		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, DWORD(800) );
