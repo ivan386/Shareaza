@@ -703,6 +703,8 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	for ( POSITION pos = m_pWindows.GetIterator() ; pos ; )
 	{
 		CChildWnd* pChild = m_pWindows.GetNext( pos );
+		if ( !pChild->IsIconic() && 
+			 ( pChild->IsActive() || Settings.General.GUIMode == GUI_WINDOWED ) )
 		pChild->PostMessage( WM_TIMER, 1, 0 );
 	}
 	
