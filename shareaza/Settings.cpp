@@ -268,6 +268,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.Path + _T("\\Incomplete") );
 	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.Path + _T("\\Downloads") );
 	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.Path + _T("\\Torrents") );
+	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.Path + _T("\\Collections") );
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
 	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );

@@ -313,6 +313,7 @@ public:
 		CString		IncompletePath;
 		CString		CompletePath;
 		CString		TorrentPath;
+		CString		CollectionPath;
 		DWORD		BufferSize;
 		DWORD		SparseThreshold;
 		INT			MaxFiles;
