@@ -3652,7 +3652,7 @@
 
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Shared Folder Manager">
 		<control/>
-		<control caption="This is a list of folders in your library.  You can add and remove folders using the buttons on the right.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."/>
+		<control caption="This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."/>
 		<control/>
 		<control caption="_Add..."/>
 		<control caption="_Remove"/>
