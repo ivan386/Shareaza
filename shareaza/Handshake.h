@@ -19,60 +19,62 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CHandshake figures out what the remote computer wants from the first 7 bytes it sends us
+// http://wiki.shareaza.com/static/Developers.Code.CHandshake
+
+// Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_HANDSHAKE_H__FC762B48_46E6_4BB1_8B25_BC783DA966A4__INCLUDED_)
 #define AFX_HANDSHAKE_H__FC762B48_46E6_4BB1_8B25_BC783DA966A4__INCLUDED_
 
+// Only include the lines beneath this one once
 #pragma once
 
-// CHandshake inherits from CConnection
-#include "Connection.h"
+// Copy in the contents of these files here before compiling
+#include "Connection.h" // CHandshake inherits from CConnection
 
 // OnRead needs the eDonkey2000 packet formats to see if the very first bytes the remote computer sent are one
 class CEDPacket;
 
-// Inherit from CConnection to get a socket and methods to send data through it
 // CHandshake adds methods to figure out what network the other computer is on, and authenticate GIV and PUSH requests
-class CHandshake : public CConnection
+class CHandshake : public CConnection // Inherit from CConnection to get a socket and methods to send data through it
 {
 
-// Construction
 public:
 
-	// New
-	CHandshake();									// Make a new object with null and default values
-	CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);	// Make a new one with this socket and IP address
-	CHandshake(CHandshake* pCopy);					// Make a new object that is a copy of this given one
+	// Make a new CHanshake object
+	CHandshake();                                   // Make a new object with null and default values
+	CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost); // Make a new one with this socket and IP address
+	CHandshake(CHandshake* pCopy);                  // Make a new object that is a copy of this given one
 
-	// Delete
+	// Delete this CHandshake object
 	virtual ~CHandshake(); // The CConnection destructor handles putting things away
 
-// Attributes
 public:
 
 	// Member variables for push operations and the Gnutella index (do)
-	BOOL	m_bPushing;	// True if we connected to the remote computer as part of a push
-	DWORD	m_nIndex;	// (do)
+	BOOL  m_bPushing; // True if we connected to the remote computer as part of a push
+	DWORD m_nIndex;   // (do)
 	
-// Operations
 public:
 
 	// Push open a connection to the remote computer with the given IP address
-	virtual BOOL	Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex);
+	virtual BOOL Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex);
 
 protected:
 
 	// Send a push request, and look at the very start of the handshake
-	virtual BOOL	OnRun();				// Make sure the connection hasn't been going on for too long
-	virtual BOOL	OnConnected();			// Send GIV to the other computer
-	virtual void	OnDropped(BOOL bError);	// Record our push didn't work
-	virtual BOOL	OnRead();				// Figure out the remote computer's network from the first 7 bytes it tells us
+	virtual BOOL OnRun();                // Make sure the connection hasn't been going on for too long
+	virtual BOOL OnConnected();          // Send GIV to the other computer
+	virtual void OnDropped(BOOL bError); // Record our push didn't work
+	virtual BOOL OnRead();               // Figure out the remote computer's network from the first 7 bytes it tells us
 
 protected:
 
 	// Receive push requests
-	BOOL	OnAcceptGive();			// The remote computer said GIV, see if we were expecting it
-	BOOL	OnAcceptPush();			// The remote computer said PUSH, see if we were expecting it
-	BOOL	OnPush(GGUID* pGUID);	// See if a child window recognizes the guid
+	BOOL OnAcceptGive();       // The remote computer said GIV, see if we were expecting it
+	BOOL OnAcceptPush();       // The remote computer said PUSH, see if we were expecting it
+	BOOL OnPush(GGUID* pGUID); // See if a child window recognizes the guid
 };
 
+// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
 #endif // !defined(AFX_HANDSHAKE_H__FC762B48_46E6_4BB1_8B25_BC783DA966A4__INCLUDED_)

@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/04/06 15:15:38 $"
-//	Revision:		"$Revision: 1.21 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/04/06 16:25:09 $"
+//	Revision:		"$Revision: 1.22 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -23,6 +23,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CConnection holds a socket used to communicate with a remote computer, and is the root of a big inheritance tree
+// http://wiki.shareaza.com/static/Developers.Code.CConnection
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -32,17 +36,21 @@
 #include "Buffer.h"
 #include "Statistics.h"
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define TEMP_BUFFER			10240
-#define METER_SECOND		1000
-#define METER_MINIMUM		100
-#define METER_LENGTH		64		// Used to be 24, now 64
-#define METER_PERIOD		6000	// Used to be 2000, now 6000
+// Hard-coded settings for socket data transfer
+#define TEMP_BUFFER 10240 // Transfer data between the socket and a local 10 KB buffer of space
+
+// Hard-coded settings for the bandwidth transfer meter
+#define METER_SECOND  1000  // Used by the bandwidth transfer meter, 1000 milliseconds is 1 second
+#define METER_MINIMUM 100   // If the current slot is less than a tenth of a second old, record more bytes transferred there
+#define METER_LENGTH  64    // Number of slots in the bandwidth meter, used to be 24, now 64
+#define METER_PERIOD  6000  // The bandwidth meter holds onto information for 6 seconds, used to be 2000, now 6000
 
 //////////////////////////////////////////////////////////////////////
 // CConnection construction
@@ -57,7 +65,7 @@ CConnection::CConnection()
 	m_bInitiated	= FALSE;			// This connection hasn't been initiated or connected yet
 	m_bConnected	= FALSE;
 	m_tConnected	= 0;				// This will be the tick count when the connection is made
-	m_nQueuedRun	= 0;				// DoRun sets it to 1, QueueRun sets it to 2 (do)
+	m_nQueuedRun	= 0;				// DoRun sets it to 0, QueueRun sets it to 2 (do)
 
 	// Zero the memory of the input and output TCPBandwidthMeter objects
 	ZeroMemory( &m_mInput, sizeof(m_mInput) );
@@ -346,7 +354,7 @@ BOOL CConnection::DoRun()
 	return TRUE;
 }
 
-// (do)
+// Call OnWrite if DoRun has just succeeded (do)
 void CConnection::QueueRun()
 {
 	// If the queued run state is 1 or 2, make it 2, if it's 0, call OnWrite now (do)
@@ -357,18 +365,23 @@ void CConnection::QueueRun()
 //////////////////////////////////////////////////////////////////////
 // CConnection socket event handlers
 
+// Objects that inherit from CConnection have OnConnected methods that do things, unlike this one
 BOOL CConnection::OnConnected()
 {
+	// Just return true
 	return TRUE;
 }
 
+// Objects that inherit from CConnection have OnDropped methods that do things, unlike this one
 void CConnection::OnDropped(BOOL bError)
 {
-
+	// Do nothing
 }
 
+// Objects that inherit from CConnection have OnRun methods that do things, unlike this one
 BOOL CConnection::OnRun()
 {
+	// Just return true
 	return TRUE;
 }
 
@@ -382,7 +395,7 @@ BOOL CConnection::OnRead()
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 
 	// Setup local variables
-	BYTE pData[TEMP_BUFFER];			// Make a 4 KB data buffer called pData
+	BYTE pData[TEMP_BUFFER];			// Make a 10 KB data buffer called pData
 	DWORD tNow		= GetTickCount();	// The time right now
 	DWORD nLimit	= 0xFFFFFFFF;		// Make the limit huge
 	DWORD nTotal	= 0;				// Start the total at 0
@@ -658,7 +671,7 @@ _ignore:	inc		ebx
 void CConnection::Measure()
 {
 	// Set tCutoff to the tick count exactly 2 seconds ago
-	DWORD tCutoff = GetTickCount() - METER_PERIOD; // METER_PERIOD is 2 seconds
+	DWORD tCutoff = GetTickCount() - METER_PERIOD; // METER_PERIOD is 6 seconds
 
 	// This part of the code has been translated into assembly language to make it faster
 /*
@@ -766,8 +779,11 @@ BOOL CConnection::ReadHeaders()
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
-			// Give OnHeaderLine this last header, and its value
-			if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
+			if ( strValue.GetLength() > 0 )
+			{
+				// Give OnHeaderLine this last header, and its value
+				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
+			}
 		}
 	}
 
@@ -807,7 +823,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			// Read the number after the colon into nPort
 			int nPort = GNUTELLA_DEFAULT_PORT; // Start out nPort as the default value, 6346
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 // Make sure 1 number was found
+			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 // Make sure 1 number was found
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
 				// Save the found port number in m_pHost
@@ -866,17 +882,18 @@ BOOL CConnection::SendMyAddress()
 BOOL CConnection::IsAgentBlocked()
 {
 	// Eliminate some obvious block and don't block cases
-	if ( m_sUserAgent == _T("Fake Shareaza") )		return TRUE;	// Block "Fake Shareaza"
+	if ( m_sUserAgent == _T("Fake Shareaza") ) return TRUE; // Block "Fake Shareaza"
 
-	if ( m_sUserAgent.IsEmpty() )									// Blank user agent
+	// The remote computer didn't send a "User-Agent" header, or the sent blank text
+	if ( m_sUserAgent.Trim().IsEmpty() )
 	{
-		if ( Settings.Gnutella.BlockBlankClients )
-			return TRUE;
-		else
-			return FALSE;	
+		// If settings say we should block that, return true
+		if ( Settings.Gnutella.BlockBlankClients ) return TRUE;
+		else                                       return FALSE;	
 	}
 
-	if ( Settings.Uploads.BlockAgents.IsEmpty() )	return FALSE;	// If the list of programs to block is empty, allow this
+	// If the list of programs to block is empty, allow this program
+	if ( Settings.Uploads.BlockAgents.IsEmpty() ) return FALSE;
 
 	// Get the list of blocked programs, and make a copy here of it all in lowercase letters
 	CString strBlocked = Settings.Uploads.BlockAgents;

@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CHandshakes listens for remote computers that want to connect to us
+// http://wiki.shareaza.com/static/Developers.Code.CHandshakes
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -32,6 +36,7 @@
 #include "Transfers.h"
 #include "Uploads.h"
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -492,9 +497,9 @@ void CHandshakes::RunStableUpdate()
 	if ( m_nStableCount > 0 )
 	{
 		// If there isn't a record of when we first connected yet, set it to the current time.
-		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL );
+		if ( m_tStableTime == 0 ) m_tStableTime = (DWORD)time( NULL ); // The function time( NULL ) resolves to the number of seconds since 1970
 
-		// Update the discover services (do)
+		// Update the discovery services (do)
 		DiscoveryServices.Update();
 	}
 }

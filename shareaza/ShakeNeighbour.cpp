@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CShakeNeighbour reads and sends handshake headers to negotiate the Gnutella or Gnutella2 handshake
+// http://wiki.shareaza.com/static/Developers.Code.CShakeNeighbour
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -32,6 +36,7 @@
 #include "G2Neighbour.h"
 #include "Packet.h"
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -664,7 +669,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		// Record this ability in the member variable
 		m_bPongCaching = TRUE;
 
-	} // The remote computer is telling us it supports the Gnutella vendor message
+	} // The remote computer is telling us it supports vendor-specific Gnutella messages
 	else if ( strHeader.CompareNoCase( _T("Vendor-Message") ) == 0 )
 	{
 		// Record this ability in the member variable
@@ -802,7 +807,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 BOOL CShakeNeighbour::OnHeadersCompleteG2()
 {
 	// Report that a set of Gnutella2 headers from a remote computer are complete
-	theApp.Message( MSG_DEBUG, _T("Headers Complete: G2 client") );
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G2 client") );
 
 	// The remote computer replied to our headers with something other than "200 OK"
 	if ( m_nState == nrsRejected )
@@ -1031,7 +1036,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 BOOL CShakeNeighbour::OnHeadersCompleteG1()
 {
 	// Report that a set of Gnutella headers from a remote computer are complete
-	theApp.Message( MSG_DEBUG, _T("Headers Complete: G1 client") );
+	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G1 client") );
 
 	// Check if Gnutella1 is enabled before connecting to a gnutella client
 	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected ) // And make sure the state is before getting rejected
@@ -1304,7 +1309,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 
 	// If the remote computer supports compression, setup buffers for arriving and departing compressed data
 	if ( m_bDeflateSend )   m_pZInput  = new CBuffer(); // The remote computer said "Content-Encoding: deflate", make a buffer for compressed data coming in
-	if ( m_bDeflateAccept ) m_pZOutput = new CBuffer(); // The remote computer said "Accept-Encoding: deflate", make a buffer for compressed data going out
+	if ( m_bDeflateAccept ) m_pZOutput = new CBuffer(); // The remote computer said "Accept-Encoding: deflate", make a buffer for data to compress before sending
 
 	// If Shareaza Settings specify a size for the send buffer
 	if ( Settings.Connection.SendBuffer ) // By default, this is 2048, which is 2 KB of space
@@ -1357,8 +1362,8 @@ void CShakeNeighbour::OnHandshakeComplete()
 	}
 
 	// When we copied the object, the pointers to buffers were also copied, null them here so deleting this doesn't delete them
-	m_pZInput	= NULL;
-	m_pZOutput	= NULL;
+	m_pZInput  = NULL;
+	m_pZOutput = NULL;
 
 	// Delete this CShakeNeighbour object now that it has been turned into a CG1Neighbour or CG2Neighbour object
 	delete this;

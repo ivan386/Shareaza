@@ -19,12 +19,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CZLib makes it easier to use the zlib compression library
+// http://wiki.shareaza.com/static/Developers.Code.CZLib
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "ZLib.h"
-
 #include <zlib.h>
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

@@ -19,6 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CBuffer holds some memory, and takes care of allocating and freeing it itself
+// http://wiki.shareaza.com/static/Developers.Code.CBuffer
+
 // Only include the lines beneath this one once
 #pragma once
 
@@ -26,14 +29,12 @@
 class CBuffer
 {
 
-// Construction
 public:
 
 	// Make a new CBuffer object, and delete one
 	CBuffer(DWORD* pLimit = NULL); // The argument is not used (do)
 	virtual ~CBuffer();            // The virtual keyword indicates a class that inherits from this one may override this
 
-// Attributes
 public:
 
 	// Memory pointers and byte counts
@@ -42,7 +43,6 @@ public:
 	DWORD    m_nLength; // The number of bytes we have written into the block
 	DWORD    m_nBuffer; // The size of the allocated block
 
-// Operations
 public:
 
 	// Add and remove data from the memory block in the CBuffer object

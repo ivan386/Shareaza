@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CBuffer holds some memory, and takes care of allocating and freeing it itself
+// http://wiki.shareaza.com/static/Developers.Code.CBuffer
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -26,10 +30,9 @@
 #include "Packet.h"
 #include "ZLib.h"
 #include "Statistics.h"
-
-// Use the ZLib library compiled into Shareaza
 #include <zlib.h>
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

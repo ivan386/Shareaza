@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
+// http://wiki.shareaza.com/static/Developers.Code.CNeighbour
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -41,6 +45,7 @@
 #include "Statistics.h"
 #include <zlib.h>
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -58,51 +63,51 @@ static char THIS_FILE[]=__FILE__;
 CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 {
 	// Copy the given network protocol into this new object
-	m_nProtocol		= nProtocol;	// nProtocol is like PROTOCOL_ED2K
+	m_nProtocol = nProtocol; // nProtocol is like PROTOCOL_ED2K
 
 	// Set null and default values for connection state, software vendor, guid, and user profile
-	m_nState		= nrsNull;		// No state now, soon we'll connect and do the handshake
-	m_pVendor		= NULL;			// We don't know what brand software the remote computer is running yet
-	m_bGUID			= FALSE;		// There is no GUID stored here yet
-	m_pProfile		= NULL;			// No profile on the person running the remote computer yet
+	m_nState   = nrsNull; // No state now, soon we'll connect and do the handshake
+	m_pVendor  = NULL;    // We don't know what brand software the remote computer is running yet
+	m_bGUID    = FALSE;   // There is no GUID stored here yet
+	m_pProfile = NULL;    // No profile on the person running the remote computer yet
 
 	// Set handshake values to defaults
-	m_bAutomatic	= FALSE;		// Automatic setting used to maintain the connection
-	m_bShareaza		= FALSE;		// Expect the remote computer to not be running Shareaza
-	m_nNodeType		= ntNode;		// Start out assuming that we and the remote computer are both hubs
-	m_bQueryRouting	= FALSE;		// Don't start query routing or pong caching yet
-	m_bPongCaching	= FALSE;
-	m_bVendorMsg	= FALSE;		// We haven't gotten a vendor message header in the handshake yet
-	m_bGGEP			= FALSE;		// The remote computer hasn't told us it supports the GGEP block yet
+	m_bAutomatic    = FALSE;  // Automatic setting used to maintain the connection
+	m_bShareaza     = FALSE;  // Expect the remote computer to not be running Shareaza
+	m_nNodeType     = ntNode; // Start out assuming that we and the remote computer are both hubs
+	m_bQueryRouting = FALSE;  // Don't start query routing or pong caching yet
+	m_bPongCaching  = FALSE;
+	m_bVendorMsg    = FALSE;  // The remote computer hasn't told us it supports the vendor-specific messages yet
+	m_bGGEP         = FALSE;  // The remote computer hasn't told us it supports the GGEP block yet
 
-	// Zero tick count times
-	m_tLastQuery	= 0;			// We'll set these to the current tick count when we get a query or packet
-	m_tLastPacket	= 0;
+	// Start out time variables as 0
+	m_tLastQuery  = 0; // We'll set these to the current tick or seconds count when we get a query or packet
+	m_tLastPacket = 0;
 
 	// Zero packet and file counts
-	m_nInputCount	= m_nOutputCount = 0;
-	m_nDropCount	= 0;
-	m_nLostCount	= 0;
-	m_nOutbound		= 0;
-	m_nFileCount	= 0;
-	m_nFileVolume	= 0;
+	m_nInputCount = m_nOutputCount = 0;
+	m_nDropCount  = 0;
+	m_nLostCount  = 0;
+	m_nOutbound   = 0;
+	m_nFileCount  = 0;
+	m_nFileVolume = 0;
 
 	// The local and remote query tables aren't set up yet, make the pointers to them start out null
-	m_pQueryTableLocal	= NULL;
-	m_pQueryTableRemote	= NULL;
+	m_pQueryTableLocal  = NULL;
+	m_pQueryTableRemote = NULL;
 
 	// Null pointers and zero counts for zlib compression
-	m_pZInput			= NULL;
-	m_pZOutput			= NULL;
-	m_nZInput			= 0;
-	m_nZOutput			= 0;
-	m_pZSInput			= NULL;
-	m_pZSOutput			= NULL;
-	m_bZFlush			= FALSE;
-	m_tZOutput			= 0;
+	m_pZInput   = NULL;
+	m_pZOutput  = NULL;
+	m_nZInput   = 0;
+	m_nZOutput  = 0;
+	m_pZSInput  = NULL;
+	m_pZSOutput = NULL;
+	m_bZFlush   = FALSE;
+	m_tZOutput  = 0;
 
 	// This guid of the last search will be used to get more results, but we don't have one at the start
-	m_pMoreResultsGUID	= NULL;
+	m_pMoreResultsGUID = NULL;
 }
 
 // Make a new CNeighbour object, copying values from a base one
@@ -218,10 +223,10 @@ BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 	return FALSE;
 }
 
-// SendQuery does nothing but return false (do)
+// CG1Neighbour, which inherits from CNeighbour, overrides this method with its own version that does something
 BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
-	// Just return false (do)
+	// Always return false (do)
 	return FALSE;
 }
 

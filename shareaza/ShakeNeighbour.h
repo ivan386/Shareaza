@@ -19,60 +19,65 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CShakeNeighbour reads and sends handshake headers to negotiate the Gnutella or Gnutella2 handshake
+// http://wiki.shareaza.com/static/Developers.Code.CShakeNeighbour
+
+// Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_)
 #define AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_
 
+// Only include the lines beneath this one once
 #pragma once
 
+// Copy in the contents of these files here before compiling
 #include "Neighbour.h"
 
 // Define the class CShakeNeighbour to inherit from CNeighbour, which inherits from CConnection, picking up a socket
-class CShakeNeighbour : public CNeighbour  
+class CShakeNeighbour : public CNeighbour
 {
 
-// Construction
 public:
 
+	// Make a new CShakeNeighbour object, and delete this one
 	CShakeNeighbour();          // Make a new blank CShakeNeighbour object
 	virtual ~CShakeNeighbour(); // Delete this CShakeNeighbour object, virtual means we expect a derived class to redefine this
 
-// Attributes
 protected:
 
 	// Shareaza Settings allow us to send and receive compressed data
 	BOOL m_bCanDeflate;
 
 	// Set to true when we have sent the following handshake header
-	BOOL		m_bSentAddress;		// We told the remote computer our Internet IP address that we are listening on
+	BOOL        m_bSentAddress;     // We told the remote computer our Internet IP address that we are listening on
 									// We sent it a header like this
 									//
 									//    Listen-IP: 1.2.3.4:5
 									//
 
 	// Set to true when we have received the following handshake headers
-	BOOL		m_bG2Send;			// The remote computer is going to send us Gnutella2 packets
+	BOOL        m_bG2Send;          // The remote computer is going to send us Gnutella2 packets
 									// It sent us a header like one of these
 									//
 									//    Content-Type: application/x-gnutella2
 									//    Content-Type: application/x-shareaza
 									//
-	BOOL		m_bG2Accept;		// The remote computer accepts Gnutella2 packets
+	BOOL        m_bG2Accept;        // The remote computer accepts Gnutella2 packets
 									// It sent us a header like one of these
 									//
 									//    Accept: application/x-gnutella2
 									//    Accept: application/x-shareaza
 									//
-	BOOL		m_bDeflateSend;		// All the data from the remote computer is going to be compressed
+	BOOL        m_bDeflateSend;     // All the data from the remote computer is going to be compressed
 									// It sent us a header like this
 									//
 									//    Content-Encoding: deflate
 									//
-	BOOL		m_bDeflateAccept;	// The remote computer accepts compressed data
+	BOOL        m_bDeflateAccept;   // The remote computer accepts compressed data
 									// It sent us a header like this
 									//
 									//    Accept-Encoding: deflate
 									//
-	TRISTATE	m_bUltraPeerSet;	// The remote computer is an ultrapeer or hub, true, a leaf, false, or hasn't told us yet, unknown
+	TRISTATE    m_bUltraPeerSet;    // The remote computer is an ultrapeer or hub, true, a leaf, false, or hasn't told us yet, unknown
 									// True if it sent us a header like this
 									//
 									//    X-Ultrapeer: True
@@ -84,7 +89,7 @@ protected:
 									//    X-Hub: False
 									//
 									// Unknown if it hasn't sent us any headers like that yet
-	TRISTATE	m_bUltraPeerNeeded;	// True if the remote computer has told us it needs more connections to ultrapeers or hubs
+	TRISTATE    m_bUltraPeerNeeded; // True if the remote computer has told us it needs more connections to ultrapeers or hubs
 									// True if it sent us a header like this
 									//
 									//    X-Ultrapeer-Needed: True
@@ -100,7 +105,6 @@ protected:
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
 
-// Interface methods
 public:
 
 	// Connect, disconnect, and copy
@@ -108,7 +112,6 @@ public:
 	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
 
-// Internal methods
 protected:
 
 	// Read headers and respond to them
@@ -130,4 +133,5 @@ protected:
 	void OnHandshakeComplete();                                   // Turn this object into one specialized for Gnutella or Gnutella2
 };
 
+// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
 #endif // !defined(AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_)

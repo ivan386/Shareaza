@@ -19,6 +19,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+// CHandshake figures out what the remote computer wants from the first 7 bytes it sends us
+// http://wiki.shareaza.com/static/Developers.Code.CHandshake
+
+// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -32,14 +36,13 @@
 #include "Network.h"
 #include "Buffer.h"
 #include "GProfile.h"
-
 #include "BTClients.h"
 #include "EDClients.h"
 #include "EDPacket.h"
-
 #include "WndMain.h"
 #include "WndChat.h"
 
+// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
