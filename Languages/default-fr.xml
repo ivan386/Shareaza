@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.25"
+		version="2.1.0.97"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -107,11 +107,11 @@ Other:
 		<button id="ID_SEARCH_FILTER_RAW" text="Plus..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
+		<button id="ID_SEARCH_SEARCH" text="Chercher encore..."/>
+		<button id="ID_SEARCH_STOP" text="Stopper la recherche"/>
+		<separator/>	
 		<button id="ID_SEARCH_DOWNLOAD" text="Télécharger"/>
 		<button id="ID_BROWSE_LAUNCH" text="Parcourir l'utilisateur"/>
-		<separator/>
-		<button id="ID_SEARCH_SEARCH" text="Chercher encore..."/>
-		<button id="ID_SEARCH_STOP" text="Stop"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Panneau de recherche"/>
 		<button id="ID_SEARCH_DETAILS" text="Afficher les détails"/>
@@ -441,12 +441,13 @@ Other:
 			<item id="ID_TAB_SEARCH" text="Nouvelle _Recherche"/>
 			<item id="ID_TAB_TRANSFERS" text="_Téléchargements"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Sé_curité"/>
-			<item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
-			<separator/>
 			<menu text="A_vancé">
 				<item id="ID_VIEW_NEIGHBOURS" text="V_oisins"/>
 				<item id="ID_VIEW_UPLOADS" text="_Envois"/>
+			    <separator/>				
+			    <item id="ID_VIEW_SECURITY" text="Sé_curité"/>
+			    <item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
+                <item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Mode _normal"/>
@@ -799,7 +800,6 @@ Other:
 		<menu text="Services _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
 			<item id="ID_SEARCH_COPY" text="_Copier l'URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
@@ -821,7 +821,6 @@ Other:
 		</menu>
 		<menu text="Services _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtrer les résultats..."/>
@@ -846,7 +845,6 @@ Other:
 		<menu text="Info _Web sur le fichier">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
 			<item id="ID_SEARCH_COPY" text="_Copier l'URI..."/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
@@ -865,7 +863,6 @@ Other:
 		</menu>
 		<menu text="Services _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtrer les résultats..."/>
@@ -891,7 +888,6 @@ Other:
 		</menu>
 		<menu text="Services _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtrer les résultats..."/>
@@ -911,15 +907,15 @@ Other:
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Supprimer"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Trouver plus de sources"/>
-		<separator/>
+		<!--<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="Ai_de..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévisualiser"/>
-		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pré_visualiser la copie"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pré_visualiser la copie"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Ajouter à la liste de _lecture"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reprendre le téléchargement"/>
@@ -942,9 +938,6 @@ Other:
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="_Descendre d'un cran"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignorer la limitation de la bande passante"/>
 		</menu>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
-		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="Ai_de..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
@@ -962,9 +955,6 @@ Other:
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Netto_yer"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Supprimer le fichier"/>
-		<separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ouvrir ou lire"/>
@@ -972,13 +962,21 @@ Other:
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Netto_yer"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="_Copier l'URI"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Info Torrent"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Supprimer le fichier"/>
 		<item id="ID_DOWNLOADS_RATE" text="E_valuer ce fichier..."/>
-		<separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
 	</menu>
+	<menu name="CDownloadsWnd.Seeding">
+  	    <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ouvrir"/>
+  	    <item id="ID_DOWNLOADS_TORRENT_INFO" text="_Info Torrent"/>
+  	    <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stopper l'ensemencement (seeding)"/>
+  	</menu>
+	<menu name="CDownloadsWnd.Nothing">
+  	    <item id="ID_DOWNLOADS_HELP" text="Ai_de..."/>
+  	    <item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
+  	    <item id="ID_DOWNLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
+  	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="Tout _reprendre"/>
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Tout mettre en pa_use"/>
@@ -1003,21 +1001,30 @@ Other:
 		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Afficher les g_roupes"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
-	<menu name="CUploadsWnd.Basic">
+	<menu name="CUploadsWnd.Upload.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="_Parcourir l'utilisateur"/>
 		<item id="ID_UPLOADS_CHAT" text="_Discuter avec l'util."/>
-		<separator/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
 	</menu>
-	<menu name="CUploadsWnd">
+	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="Démarrer _maintenant"/>
 		<item id="ID_UPLOADS_CLEAR" text="Netto_yer"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Parcourir l'utilisateur"/>
 		<item id="ID_UPLOADS_CHAT" text="_Discuter avec l'util."/>
 		<item id="ID_SECURITY_BAN" text="_Bannir l'util."/>
-		<separator/>
+    </menu>
+    <menu name="CUploadsWnd.Queue.Basic">
+  	    <item id="ID_UPLOADS_HELP" text="Ai_de..."/>
+  	    <item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
+  	    <item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>		 
+    </menu>
+    <menu name="CUploadsWnd.Queue">
+  	    <item id="ID_UPLOADS_EDIT_QUEUE" text="Réglages _Queue"/>
+  	    <item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
+  	    <item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
+    </menu>
+    <menu name="CUploadsWnd.Nothing">
+  	    <item id="ID_UPLOADS_HELP" text="Ai_de..."/>		
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Nettoyer complétés"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Nettoyer a_utomatiquement"/>
 	</menu>
@@ -1095,7 +1102,6 @@ Other:
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="_Copier l'URI"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<menu text="Orga_niser">
 			<item id="ID_LIBRARY_RENAME" text="_Renommer le fichier"/>
@@ -1126,7 +1132,6 @@ Other:
 			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
 			<separator/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 			<item id="ID_LIBRARY_CREATETORRENT" text="Créer un fichier .torrent"/>
 		</menu>
 		<menu text="Orga_niser">
@@ -1161,7 +1166,6 @@ Other:
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="_Copier l'URI"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<menu text="Orga_niser">
 			<item id="ID_LIBRARY_RENAME" text="_Renommer le fichier"/>
@@ -1195,7 +1199,6 @@ Other:
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Créer un fichier .torrent"/>
-			<!--<item id="ID_LIBRARY_JIGLE" text="Consulter _Jigle"/>-->
 		</menu>
 		<menu text="Orga_niser">
 			<item id="ID_LIBRARY_UNLINK" text="_Enlever les fichiers"/>
@@ -1660,11 +1663,11 @@ Other:
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">Pas de torrent en &quot;seed&quot;</text>
-			<text id="TorrentsOne" format="b">1 torrent en &quot;seed&quot;</text>
-			<text id="TorrentsMany" format="b">%i torrents en &quot;seed&quot;</text>
+			<text id="TorrentsNone" format="b">Pas de torrent en semence (seed)</text>
+			<text id="TorrentsOne" format="b">1 torrent en semence (seed)</text>
+			<text id="TorrentsMany" format="b">%i torrents en semence (seed)</text>
 			<newline gap="4"/>
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">&quot;Seed&quot; un torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">semer (seed) un torrent</link>
 		</para>
 
 	</document>
@@ -1873,9 +1876,11 @@ Other:
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">Merci de choisir un téléchargement</text>
+		<text format="b">Zone de téléchargement</text>
 		<newline gap="8"/>
-		<text>Vous pouvez utiliser cette commande pour obtenir une information d'aide sur un téléchargement. Il vous suffit pour cela de sélectionner un téléchargement et de choisir à nouveau cette commande.</text>
+		<text>Ici sont affichés les fichiers actuellement téléchargés. Pour voir les sources individuelles vous pouvez expandre chaque fichier avec un petit + sur la gauche.</text>
+  	    <newline gap="8"/>
+  	    <text>Vous pouvez également utiliser cette commande pour obtenir une information d'aide sur un téléchargement spécifique. Sélectionnez simplement un téléchargement et choisissez cette commande à nouveau.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
@@ -1920,10 +1925,21 @@ Other:
 		<text>Si la vitesse n'augmente pas, cela est peut être dû à la vitesse d'envoi limitée des utilisateurs desquels vous téléchargez.  En général la vitesse des téléchargements augmente au cours du temps.</text>
 	</document>
 
-	<document name="DownloadHelp.Pending">
-		<text format="b">Ce téléchargement est en suspens.</text>
+<document name="DownloadHelp.Pending">
+    <text format="b">This Download is Pending</text>
+    <newline gap="8"/>
+    <text>Ce téléchargement attend que quelqu'un commence l'envoi du fichier.
+	Shareaza est prêt à commencer à télécharger ce fichier, mais personne ne l'envoi en ce moment.
+	Vous êtes probablement en attente dans les queues d'autres utilisateurs, et le téléchargement peut débuter à tout moment.
+	Vous pouvez examiner les sources individuelles afin de voir chacune des queue dans lesquelles vous êtes en attente.
+	Si vous partagez vous même des fichiers, cela peut améliorer vos chances de commencer un transfert de téléchargement rapidement.
+    </text>
+</document>
+
+	<document name="DownloadHelp.Queued">
+		<text format="b">Ce téléchargement est en attente dans une queue.</text>
 		<newline gap="8"/>
-		<text>Ce téléchargement attend que certains de vos autres téléchargements se terminent. Vos réglages de téléchargement limitent le nombre de téléchargements qui peuvent être actifs à un instant donné, pour s'assurer que chacun des téléchargements dispose d'une part appréciable de la bande passante disponible.  Vous pouvez changer ces réglages via Outils, Réglages de Shareaza.</text>
+		<text>Ce téléchargement attend que certains de vos autres téléchargements se terminent. Vos réglages de téléchargement limitent le nombre de téléchargements qui peuvent être actifs à un instant donné, et cela afin d'assurer que chacun des téléchargements dispose d'une part appréciable de la bande passante disponible.  Vous pouvez changer ces réglages via Outils, Réglages de Shareaza. Alternativement, vous pouvez commencer ce téléchargement avec la commande &quot;Reprendre&quot;</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
@@ -1946,6 +1962,14 @@ Other:
 		<newline gap="8"/>
 		<text>Le serveur du Tracker BitTorrent de ce téléchargement semble être hors ligne ou rencontrer des difficultés techniques. Shareaza est dans l'incapacité de le contacter et de recevoir une liste de participants au téléchargement.</text>
 	</document>
+	
+	<!-- Upload help documents -->
+  	 
+	<document name="UploadHelp">
+		<text format="b">Zone des envois</text>
+		<newline gap="8"/>
+		<text>Ici sont affichés les queues et les envois. Vous pouvez expandre chaque queue avec un petit + sur la gauche, et filtrer ce qui sera affiché avec le boutton sur la droite de la barre d'outil de la fenêtre.</text>
+	</document>	
 
 	<!-- General help documents -->
 
@@ -2134,7 +2158,6 @@ Other:
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Voir et modifier les propriétés du dossier &quot;album&quot; sélectionné..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Gérer les dossiers physiques dans votre bibliothèque..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Booste la vitesse d'indexation et de hachage des fichiers."/>
-	<!--<tip id="ID_LIBRARY_JIGLE" message="Interroger la base de donnée web Jigle pour une information sur le fichier sélectionné."/>-->
 	<tip id="ID_LIBRARY_LAUNCH" message="Ouvrir ou lire cette sélection de fichiers."/>
 	<tip id="ID_LIBRARY_MOVE" message="Déplacer vers un autre dossier de la bibliothèque cette sélection de fichiers..."/>
 	<tip id="ID_LIBRARY_PANEL" message="Afficher ou masquer le panneau &quot;détails&quot; de la bibliothèque."/>
@@ -2147,7 +2170,7 @@ Other:
 	<tip id="ID_LIBRARY_SCAN" message="Parcourir afin de mettre à jour d'éventuels changements dans cette sélection de dossiers ou de fichiers."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Rechercher votre bibliothèque de fichiers..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Rechercher dans votre bibliothèque Shareaza..."/>
-	<tip id="ID_LIBRARY_SEED_TORRENT" message="&quot;Seed&quot; le Torrent sélectionné sur BitTorrent."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="Semer (seed) le Torrent sélectionné sur BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Sélectionner et voir tous les fichiers de votre bibliothèque."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="Partager ou retirer du partage cette sélection de fichiers."/>
 	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Partager ou retirer du partage cette sélection de dossiers."/>
@@ -2259,7 +2282,7 @@ Other:
 	<tip id="ID_TOOLS_MERCORA" message="Démarrez la Radio P2P"/>
 	<tip id="ID_TOOLS_PROFILE" message="Modifier votre profil utilisateur..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Recharger et appliquer votre sélection de skin actuelle."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="&quot;Seed&quot; le Torrent sélectionné sur BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Semer (seed) le Torrent sélectionné sur BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Configurer les réglages de Shareaza..."/>
 	<tip id="ID_TOOLS_SKIN" message="Choisir une skin différente pour Shareaza..."/>
 	<tip id="ID_TOOLS_WIZARD" message="Ouvre l'assistant de démarrage rapide de Shareaza..."/>
@@ -2349,6 +2372,8 @@ Other:
 	<string id="8009" value="Êtes-vous certain de vouloir supprimer la skin &quot;%s&quot; ?  Ceci n'est pas réversible."/>
 	<string id="8010" value="Ceci est une pré-release de Shareaza, et la période de beta test est terminée.  Merci de télécharger la version complète, officielle à partir de www.shareaza.com."/>
 	<string id="8011" value="Changer la vue fermera toutes les fenêtres actuellement ouvertes.  Voulez-vous changer la vue maintenant?"/>
+
+
 	<string id="8062" value="En mode Hub avec %lu voisin(s). %s dans votre bibliothèque locale."/>
 	<string id="8063" value="Connecté. %s dans la bibliothèque locale."/>
 	<string id="8064" value="Connecté à %lu voisin(s).  %s dans votre bibliothèque locale."/>
@@ -2462,6 +2487,12 @@ Other:
     <string id="8328" value="Volume total:"/>
     <string id="8329" value="de votre bibliothèque"/>
     <string id="8330" value="Dossier"/>
+    <string id="8331" value="Cette source est actuellement occupée"/>
+  	<string id="8332" value="Cette source est derrière un pare-feu (firewall)"/>
+  	<string id="8333" value="Cette source peut être instable"/>
+  	<string id="8334" value="Les sources pour ce fichier sont actuellement occupées"/>
+  	<string id="8335" value="Les sources pour ce fichier sont derrière un pare-feu (firewall)"/>
+  	<string id="8336" value="Les sources pour ce fichier sont peut être instables"/>
 	<string id="16064" value="Démarrage du core réseau Shareaza..."/>
 	<string id="16065" value="Impossible de se relier au %s port %i pour les connexions entrantes.  Les connexions entrantes ne seront pas supportées."/>
 	<string id="16066" value="Fermeture du core réseau Shareaza..."/>
@@ -2634,7 +2665,7 @@ Other:
 	<string id="16356" value="Refus d'une requête d'exploration de l'utilisateur %s, trop de connexions d'exploration."/>
 	<string id="16357" value="Envoi du fichier &quot;%s&quot; à l'hôte %s..."/>
 	<string id="16358" value="L'envoi d'une connexion vers %s a été perdue, position de queue préservée."/>
-	<string id="16359" value="File d'attente hors ligne vers %s expirée, enlevée."/>
+	<string id="16359" value="Queue d'attente hors ligne vers %s expirée, enlevée."/>
 	<string id="16360" value="Envoi refusé de &quot;%s&quot; vers %s (%s), toutes les queues assorties sont pleines."/>
 	<string id="16361" value="Envoi refusé vers %s (%s), réseau fermé."/>
 	<string id="16362" value="Un envoi sur eDonkey2000 ne devrait pas etre annulé.  Êtes-vous certain de vouloir annuler cet envoi?"/>
@@ -2648,10 +2679,11 @@ Other:
     <string id="16370" value="Fichiers petits"/>
     <string id="16371" value="Fichiers moyens"/>
     <string id="16372" value="Fichiers larges"/>
-    <string id="16373" value="Fichiers partiels"/>
+    <string id="16373" value="Fichiers Partiels"/>
     <string id="16374" value="Nouvelle queue"/>
     <string id="16375" value="Partiel"/>
 	<string id="16376" value="Fichiers Complétés"/>
+	<string id="16377" value="Garde HTTP"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnêes de %i fichiers, voulez-vous continuer?"/>
 	<string id="16386" value="Edition des métadonnêes de %i fichiers."/>
@@ -2874,13 +2906,13 @@ Other:
 	<string id="17488" value="Vous avez changé l'URL du traqueur pour ce torrent.  Voulez-vous sauver ce changement?\n\nUn URL de traqueur invalide peut vous empecher les téléchargement."/>
 	<string id="17489" value="Accouplement BitTorrent avec %s est un protocole étendu, identifié &quot;%s&quot;."/>
 	<string id="17490" value="%i nouvelles sources BitTorrent recue de %s."/>
-	<string id="17491" value="Le torrent &quot;%s&quot; est déjà dans votre liste de téléchargement, et ne peut pas être &quot;seeded&quot;."/>
+	<string id="17491" value="Le torrent &quot;%s&quot; est déjà dans votre liste de téléchargement, et ne peut pas être semer (seed)."/>
 	<string id="17492" value="Erreur dans le chargement du fichier torrent &quot;%s&quot;.  Il ne doit être un torrent valide."/>
 	<string id="17493" value="Incapable de créer un fichier de partage BitTorrent &quot;%s&quot;."/>
 	<string id="17494" value="Ce torrent inclus le fichier &quot;%s&quot;, mais Shareaza ne peut pas trouver ce fichier dans votre bibliothèque.  Si possible, déplacer le fichier dans le même dossier que le torrent et recommencer."/>
 	<string id="17495" value="Ce torrent inclus le fichier &quot;%s&quot; qui devrait être %s, cependant votre version du fichier est %s."/>
 	<string id="17496" value="Erreur durant la copie de &quot;%s&quot; dans un fichier de partage BitTorrent."/>
-	<string id="17497" value="Erreur inconnue en essayant de &quot;seed&quot; &quot;%s&quot;."/>
+	<string id="17497" value="Erreur inconnue en essayant de semer (seed) &quot;%s&quot;."/>
 	<string id="17498" value="Erreur détectée dans le fichier &quot;%s&quot;."/>
 	<string id="18496" value="Vous avez fait des changements dans le champ &quot;nom&quot;.  Êtes-vous certain de vouloir renommer ce téléchargement?"/>
 	<string id="18497" value="Vous avez tapez une valeur SHA1, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
@@ -2960,7 +2992,7 @@ Other:
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Général"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="Général">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Général">
 		<control caption="Interface _utilisateur:"/>
 		<control caption="Connexion auto. au démarrage"/>
 		<control caption="Démarrer Shareaza avec Windows"/>
@@ -2984,13 +3016,15 @@ Other:
 		<control caption="Normal|Minimiser dans la barre des tâches"/>
 		<control caption="Masquer auto. le panneau de recherche"/>
 		<control caption="Filtrer le contenu adulte des recherches"/>
+		<control caption="Nettoyer automatiquement la fenêtre des téléchargements"/>
+  	    <control caption="Nettoyer automatiquement la fenêtre des envois"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothèque">
 		<control caption="_Options:"/>
 		<control caption="Mémoriser l'affich. des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
-		<control/>
+		<control caption="Hachage rapide (Utilise plus le CPU)"/>
 		<control caption="Filtrer les objets par extension"/>
 		<control/>
 		<control caption="Autoriser les util. à voir la biblio."/>
@@ -3028,12 +3062,15 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBu" caption="Communauté">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Communauté">
 		<control caption="Mon _Profil:"/>
 		<control caption="Utiliser votre Profil Utilisateur Gnutella afin de vous faire connaître des autres utilisateurs, partager vos centres d'intérêt, vos fichiers recommandés, etc."/>
 		<control caption="Editer Mon Profil"/>
 		<control caption="_Chat:"/>
 		<control caption="Activer le Chat avec les clients P2P compatibles"/>
+		<control caption="Activer le chat sur tous les réseaux"/>
+  	    <control caption="Filtrer les messages de chat messages du spam"/>
+  	    <control caption="Censurer les grossièretés dans le chat"/>
 	</dialog>
 
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
@@ -3094,7 +3131,7 @@ Other:
 		<control caption="Bande passante:"/>
 		<control caption="Limite en réception:"/>
 		<control/>
-		<control caption="Taille de la file d'attente:"/>
+		<control caption="Taille de la queue d'attente:"/>
 		<control/><control/>
 		<control/>
 		<control caption="Télécharger et envoyer uniquement sur les réseaux connectés."/>
@@ -3107,8 +3144,7 @@ Other:
 		<control caption="Partager les prévisualisations"/>
 		<control caption="Retirer métadonnées du hash"/>
 		<control caption="Limite par hôte:"/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="Filtre agent _utilisateur (User-Agent):"/>
 		<control/>
 		<control caption="+"/>
@@ -3228,7 +3264,7 @@ Other:
 		<control caption="Télécharger..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 	    <control caption="_Interface:"/>
         <control caption="Afficher les éléments d'interface BitTorrent additionnels"/>
         <control caption="Connexions de _Téléchargement:"/>
@@ -3236,6 +3272,9 @@ Other:
         <control caption="Torrents à la fois"/>
         <control/><control/>
         <control caption="Connexions de client"/>
+		<control caption=" Nettoyer les torrents téléchargés"/>
+  	    <control caption="Lorsque le ratio de partage dépasse "/>
+  	    <control/><control/>
         <control caption="_EndGame:"/>
         <control caption="Activer le mode Endgame lors de la complétion des torrents"/>
         <control caption="_Stocker les Torrents ici:"/>
@@ -3243,8 +3282,7 @@ Other:
         <control caption="Créateur de _torrent"/>
         <control/><control/>
         <control caption="Tracker par _défaut:"/>
-        <control caption="Tracker:"/>
-        <control/>
+        <control/><control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocoles">
@@ -3842,8 +3880,7 @@ Other:
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Télécharger un fichier Server.met">
 		<control/>
 		<control caption="Vous pouvez télécharger un fichier server.met eDonkey2000 afin de mettre à jour votre liste de serveurs."/>
-		<control/>
-		<control/>
+		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Annuler"/>
 	</dialog>
@@ -3904,22 +3941,22 @@ Other:
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Ouvrir un fichier Torrent">
 		<control/>
-		<control caption="Vous avez ouvert un fichier Torrent.  Voulez-vous télécharger ses contenus, ou le &quot;re-seed&quot;?"/>
+		<control caption="Vous avez ouvert un fichier Torrent.  Voulez-vous télécharger ses contenus, ou le semer (seed) à nouveau?"/>
 		<control caption="Télécharger"/>
-		<control caption="Seed"/>
+		<control caption="Semer (seed)"/>
 		<control caption="Annuler"/>
-		<control caption="Pour partager des fichiers complets avec BitTorrent il faut les &quot;seed&quot;.  Une fois ce processus complété le Torrent apparaitra dans votre liste de téléchargements."/>
+		<control caption="Pour partager des fichiers complets avec BitTorrent il faut les semer (seed).  Une fois ce processus complété le Torrent apparaitra dans votre liste de téléchargements."/>
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="Voir le tracker BitTorrent">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Informations avancés BitTorrent">
 		<control caption="_Information du Torrent:"/>
 		<control caption="Nom:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
 		<control caption="Utils. téléchargeant:"/>
-		<control caption="Complétés (Seeds):"/>
+		<control caption="Complétés (seeds):"/>
 		<control/>
 		<control caption="Incomplets:"/>
 		<control/>
@@ -3928,6 +3965,9 @@ Other:
 		<control caption="_Rafraîchir"/>
 		<control/>
 		<control caption="Fermer"/>
+		<control caption="Selon le besoin|Si le ratio dépasse de 100%|Seulement si requis|Jamais"/>
+  	    <control caption="Commencer les transferts du nouveau téléchargement:"/>
+  	    <control caption="Transfers:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriétés du groupe de téléchargement">
@@ -4076,5 +4116,9 @@ Other:
 		<column from="URL" to=""/>
 		<column from="Expires" to=""/>
 	</list>
+	<list name="CTorrentTrackerList">
+  	    <column from="Filename" to="Nom du fichier"/>
+  	    <column from="Size" to="Taille"/>
+  	</list>
 </listColumns>
 </skin>
