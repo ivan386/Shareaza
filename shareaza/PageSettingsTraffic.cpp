@@ -216,6 +216,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Uploads.DynamicPreviews, 1, 0, 1 );
 	AddSetting( &Settings.Uploads.PreviewQuality, 1, 0, 100, _T("%") );
 	AddSetting( &Settings.Uploads.PreviewTransfers, 1, 1, 64 );
+
+	AddSetting( &Settings.Interface.LowResMode, 1, 0, 1 );
 	
 	AddSetting( &Settings.Library.SourceExpire, 60, 60, 604800, _T(" m") );
 	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );

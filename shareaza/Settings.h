@@ -49,7 +49,6 @@ public:
 		BOOL		RatesInBytes;
 		DWORD		RatesUnit;
 		BOOL		AlwaysOpenURLs;
-		BOOL		HideSearchBar;
 		CString		UserAgent;
 		CString		Language;
 	} General;
@@ -64,6 +63,7 @@ public:
 		BOOL		TipUploads;
 		BOOL		TipNeighbours;
 		BOOL		TipMedia;
+		BOOL		LowResMode;
 	} Interface;
 	
 	struct sLibrary
@@ -100,6 +100,7 @@ public:
 	{
 		CString		LastSchemaURI;
 		CString		BlankSchemaURI;
+		BOOL		HideSearchPanel;
 		BOOL		SearchPanel;
 		BOOL		ExpandMatches;
 		BOOL		HighlightNew;

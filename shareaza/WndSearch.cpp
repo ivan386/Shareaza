@@ -155,7 +155,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	else 
 	{
 		m_wndPanel.Disable();
-		if ( m_bPanel && Settings.General.HideSearchBar )
+		if ( m_bPanel && Settings.Search.HideSearchPanel )
 			m_bPanel = FALSE;
 	}
 	
@@ -547,7 +547,7 @@ void CSearchWnd::OnSearchSearch()
 
 	m_wndPanel.Disable();
 
-	if ( m_bPanel && Settings.General.HideSearchBar )
+	if ( m_bPanel && Settings.Search.HideSearchPanel )
 	{
 		m_bPanel = FALSE;
 		//Settings.Search.SearchPanel = m_bPanel ;

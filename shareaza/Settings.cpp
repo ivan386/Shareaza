@@ -55,7 +55,6 @@ void CSettings::Setup()
 	Add( _T("Settings.RatesInBytes"), &General.RatesInBytes, FALSE );
 	Add( _T("Settings.RatesUnit"), &General.RatesUnit, 0 );
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
-	Add( _T("Settings.HideSearchBar"), &General.HideSearchBar, TRUE );
 	Add( _T("Settings.UserAgent"), &General.UserAgent, _T(".") );
 	Add( _T("Settings.Language"), &General.Language, _T("en") );
 	
@@ -67,6 +66,7 @@ void CSettings::Setup()
 	Add( _T("Interface.TipUploads"), &Interface.TipUploads, TRUE );
 	Add( _T("Interface.TipNeighbours"), &Interface.TipNeighbours, TRUE );
 	Add( _T("Interface.TipMedia"), &Interface.TipMedia, TRUE );
+	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
 	
 	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
 	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
@@ -96,6 +96,7 @@ void CSettings::Setup()
 	
 	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
 	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
+	Add( _T("Search.HideSearchPanel"), &Search.HideSearchPanel, FALSE );
 	Add( _T("Search.SearchPanel"), &Search.SearchPanel, TRUE );
 	Add( _T("Search.ExpandMatches"), &Search.ExpandMatches, FALSE );
 	Add( _T("Search.HighlightNew"), &Search.HighlightNew, TRUE );
@@ -359,8 +360,10 @@ CSettings::CSettings()
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
-	
+
 	Setup();
+
+	Interface.LowResMode	= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
 }
 
 CSettings::~CSettings()
