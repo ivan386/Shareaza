@@ -360,7 +360,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	// Default Size
 	int iXSize, iYSize;
-	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
 	{	// Multi Monitor
 		iXSize = GetSystemMetrics( SM_CXVIRTUALSCREEN );
 		iYSize = GetSystemMetrics( SM_CYVIRTUALSCREEN );

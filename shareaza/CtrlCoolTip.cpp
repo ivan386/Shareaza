@@ -215,7 +215,7 @@ void CCoolTipCtrl::ShowImpl()
 	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
 	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
 
-	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 

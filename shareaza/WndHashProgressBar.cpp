@@ -120,7 +120,7 @@ void CHashProgressBar::Update()
 		int nWidth = sz.cx + 4 + 48 + 8 + 16;
 		nWidth = max( nWidth, WINDOW_WIDTH );
 		//nWidth = min( nWidth, GetSystemMetrics( SM_CXSCREEN ) );
-		if (GetSystemMetrics( SM_CMONITORS ) > 1)
+		if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
 			nWidth = min( nWidth, GetSystemMetrics( SM_CXVIRTUALSCREEN ) );
 		else
 			nWidth = min( nWidth, GetSystemMetrics( SM_CXSCREEN ) );

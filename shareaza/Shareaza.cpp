@@ -285,7 +285,11 @@ void CShareazaApp::InitResources()
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx( &pVersion );
 	
+	//Networking is poor under Win9x
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
+
+	//Win 95/98/Me/NT (<5) do not support some functions
+	m_dwWindowsVersion = pVersion.dwMajorVersion; 
 	
 	m_gdiFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,

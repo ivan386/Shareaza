@@ -240,7 +240,7 @@ void CMatchTipCtrl::ShowInternal()
 	rc.bottom = rc.top + sz.cy;
 	
 
-	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 

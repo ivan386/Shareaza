@@ -46,6 +46,7 @@ public:
 	CWnd*				m_pSafeWnd;
 	BOOL				m_bLive;
 	BOOL				m_bNT;
+	DWORD				m_dwWindowsVersion;
 protected:
 	CCriticalSection	m_csMessage;
 	static TCHAR		szMessageBuffer[16384];
