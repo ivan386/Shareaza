@@ -301,7 +301,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 1;
-		Settings.Downloads.SourcesWanted		= 200; //Don't bother requesting so many
+		Settings.Downloads.SourcesWanted		= 200; //Don't bother requesting so many sources
 	}
 	
 	UploadQueues.CreateDefault();
@@ -309,8 +309,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	if ( theApp.m_bLimitedConnections ) 
 	{	//Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
-		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 1000 );
-		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, 300 );
+		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, 800 );
+		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, 250 );
 		Settings.Gnutella.ConnectFactor			= min( Settings.Gnutella.ConnectFactor, 3 );
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;

@@ -122,7 +122,13 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	LoadState( _T("CHostCacheWnd"), TRUE );
 	
+	if ( Settings.Gnutella.HostCacheView < PROTOCOL_NULL || Settings.Gnutella.HostCacheView < PROTOCOL_ED2K )
+	{
+		ASSERT(FALSE); //Temp check
+		Settings.Gnutella.HostCacheView = PROTOCOL_G2;
+	}
 	m_nMode = Settings.Gnutella.HostCacheView;
+
 	
 	CWaitCursor pCursor;
 	Update();
