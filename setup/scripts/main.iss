@@ -194,6 +194,12 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "Shareaza"; Flags: dontcreatekey uninsdeletevalue
+Root: HKCR; Subkey: ".co"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: ".collection"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: ".torrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: "bittorrent"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: "shareaza"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: "Shareaza.*"; Flags: dontcreatekey uninsdeletekey
 
 ; Delete NSIS entry on software panel
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza"; Flags: dontcreatekey deletekey
