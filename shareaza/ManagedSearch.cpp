@@ -162,6 +162,11 @@ BOOL CManagedSearch::Execute()
 		if ( tTicks - m_tExecute < 30000 ) return FALSE;
 		m_tExecute = tTicks;
 	}
+	else if ( m_nPriority == spMedium )
+	{
+		if ( tTicks - m_tExecute < 1000 ) return FALSE;
+		m_tExecute = tTicks;
+	}
 	else
 	{
 		if ( tTicks - m_tExecute < 180 ) return FALSE;
