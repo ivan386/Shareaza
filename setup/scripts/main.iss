@@ -159,6 +159,9 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 
+; Delete NSIS entry on software panel
+Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza"; Flags: dontcreatekey deletekey
+
 [Dirs]
 ; Make incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied
@@ -172,6 +175,8 @@ Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\So
 [InstallDelete]
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\zlib1.dll"
+Type: files; Name: "{app}\LICENSE.txt"
+Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
 
 ; Clean up old Shareaza icons
