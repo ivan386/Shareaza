@@ -167,7 +167,7 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService)
 		nCount[ pService->m_nType ] ++;
 	}
 	
-	if ( nCount[ CDiscoveryService::dsWebCache ] == 0 ||
+	if ( nCount[ CDiscoveryService::dsWebCache ] < 3 ||
 		 nCount[ CDiscoveryService::dsServerMet ] == 0 )
 	{
 		AddDefaults();
