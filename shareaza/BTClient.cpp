@@ -430,7 +430,6 @@ BOOL CBTClient::OnHandshake2()
 	
 	m_bOnline = TRUE;
 	
-	m_sUserAgent = _T("BitTorrent");
 	DetermineUserAgent();
 	
 	if ( ! m_bInitiated ) SendHandshake( FALSE, TRUE );
@@ -445,8 +444,8 @@ void CBTClient::DetermineUserAgent()
 {
 	CString strVer;
 	
-	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )
-	{
+	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )	
+	{	//Azerus style
 		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'Z' )
 		{
 			m_sUserAgent = _T("Azureus");
@@ -503,7 +502,7 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent += strVer;
 	}
 	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
-	{
+	{	//Shadow style
 		switch ( m_pGUID.b[0] )
 		{
 		case 'A':
@@ -526,6 +525,18 @@ void CBTClient::DetermineUserAgent()
 			( m_pGUID.b[1] - '0' ), ( m_pGUID.b[2] - '0' ),
 			( m_pGUID.b[3] - '0' ) );
 		m_sUserAgent += strVer;
+	}
+	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[2] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[6] == '-' )
+	{	//BitTorrent
+		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1], m_pGUID.b[3], m_pGUID.b[5]);
+	}
+	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
+	{	//BitComet
+		m_sUserAgent.Format( _T("BitComet %i"), m_pGUID.b[5]);
+	}
+	else
+	{	//Unknown peer ID string
+		m_sUserAgent = _T("BitTorrent");
 	}
 	
 	if ( m_pDownloadTransfer != NULL )

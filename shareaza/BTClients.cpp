@@ -63,10 +63,17 @@ void CBTClients::Clear()
 	ShutdownRequests();
 }
 
-/*	//This needs to be a per-download generated ID
-//////////////////////////////////////////////////////////////////////
-// CBTClients GUID->SHA1 filter
 
+//////////////////////////////////////////////////////////////////////
+// CBTClients GUID->SHA1 filter	
+
+  //Note: This was removed and placed in the transfer, after a request from people running trackers.
+  // They wanted a per-download generated ID, not static. (Do not retain between sessions.)
+
+  //Note 2: Official spec says "Generate per download", which is as per above.
+  // Unofficial spec says "Generate at startup", which is how it used to be. Which is correct?
+
+/*
 SHA1* CBTClients::GetGUID()
 {
 	(GGUID&)m_pGUID = MyProfile.GUID;
