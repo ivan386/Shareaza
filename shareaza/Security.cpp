@@ -1167,15 +1167,14 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 		//Check dubious words
 		if ( m_pszDubiousWords )
 		{
-			int nDubiousWords = 0, nTextLength = _tcslen( pszText );
+			int nDubiousWords = 0, nWordsPermitted = min( (_tcslen( pszText ) / 8 ), 4 );
 
 			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) nDubiousWords++;
 
-				if ( nDubiousWords > 1 ) return TRUE;
-				else if ( ( nDubiousWords == 1 ) && ( nTextLength < 10 ) ) return TRUE;
-
+				if ( nDubiousWords > nWordsPermitted ) return TRUE;
+				
 				pszWord += _tcslen( pszWord ) + sizeof( TCHAR );
 			}
 		}
