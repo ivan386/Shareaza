@@ -48,7 +48,7 @@ Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereado
 ; Russian
 Source: "Remote-localized\Russian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: ru; Components: language
 ; Greek
-Source: "Remote-localized\greek\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: gr; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -97,6 +97,7 @@ reg_apptitle=Shareaza Ultimate File Sharing
 icons_license=License
 icons_uninstall=Uninstall
 icons_downloads=Downloads
+dialog_shutdown=Do you wish to shut down %1?
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
@@ -111,6 +112,7 @@ nl.reg_apptitle=Shareaza Ultimate File Sharing
 nl.icons_license=Gebruiksovereenkomst
 nl.icons_uninstall=Verwijderen
 nl.icons_downloads=Downloads
+nl.dialog_shutdown=Wil je %1 afsluiten?
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -125,6 +127,7 @@ lt.reg_apptitle=Shareaza — geriausia programa bylø mainams
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Pağalinti
 lt.icons_downloads=Atsisiuntimai
+lt.dialog_shutdown=Do you wish to shut down %1?
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -139,6 +142,7 @@ de.reg_apptitle=Shareaza Ultimate File Sharing
 de.icons_license=Lizenz
 de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
+de.dialog_shutdown=Do you wish to shut down %1?
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Skins
@@ -153,6 +157,7 @@ pt.reg_apptitle=Shareaza Ultimate File Sharing
 pt.icons_license=License
 pt.icons_uninstall=Uninstall
 pt.icons_downloads=Downloads
+pt.dialog_shutdown=Do you wish to shut down %1?
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -167,6 +172,7 @@ it.reg_apptitle=Shareaza, il programma definitivo di P2P
 it.icons_license=Licenza
 it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
+it.dialog_shutdown=Do you wish to shut down %1?
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -181,6 +187,7 @@ no.reg_apptitle=Shareaza Ultimate File Sharing
 no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
+it.dialog_shutdown=Do you wish to shut down %1?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
@@ -195,6 +202,7 @@ af.reg_apptitle=Shareaza Ultimate File Sharing
 af.icons_license=Lisensie-ooreenkoms
 af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
+af.dialog_shutdown=Do you wish to shut down %1?
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
@@ -209,6 +217,7 @@ br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
 br.icons_license=Licença
 br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
+br.dialog_shutdown=Do you wish to shut down %1?
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
@@ -223,6 +232,7 @@ fr.reg_apptitle=Shareaza Ultimate File Sharing
 fr.icons_license=Licence
 fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
+fr.dialog_shutdown=Do you wish to shut down %1?
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -237,6 +247,7 @@ es.reg_apptitle=Shareaza Ultimate File Sharing
 es.icons_license=Licencia
 es.icons_uninstall=Desinstalar
 es.icons_downloads=Descargas
+es.dialog_shutdown=Do you wish to shut down %1?
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóğêè
@@ -251,6 +262,7 @@ ru.reg_apptitle=Shareaza - ïğîãğàììà äëÿ îáìåíà ôàéëàìè
 ru.icons_license=Ëèöåíçèÿ
 ru.icons_uninstall=Äåèíñòàëëÿöèÿ
 ru.icons_downloads=Çàãğóçêè
+ru.dialog_shutdown=Do you wish to shut down %1?
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
@@ -265,4 +277,5 @@ gr.reg_apptitle=Shareaza Ultimate File Sharing
 gr.icons_license=¢äåéá
 gr.icons_uninstall=ÁğåãêáôÜóôáóç
 gr.icons_downloads=Êáôİâáóìá
+gr.dialog_shutdown=Do you wish to shut down %1?
 

@@ -261,11 +261,13 @@ End;
 Procedure CurStepChanged(CurStep: TSetupStep);
 var
   Wnd: HWND;
+  Shutdownmessage: string;
 Begin
+  Shutdownmessage := ExpandConstant('{cm:dialog_shutdown,Shareaza}');
   if CurStep = ssInstall then
     Wnd := FindWindowByClassName('ShareazaMainWnd');
   if Wnd <> 0 then
-    if MsgBox('Do you wish to shut down Shareaza?', mbConfirmation, MB_YESNO) = IDYES then begin
+    if MsgBox(Shutdownmessage, mbConfirmation, MB_YESNO) = IDYES then begin
       SendMessage(Wnd, WM_CLOSE, 0, 0);
       while Wnd <> 0 do
         begin
