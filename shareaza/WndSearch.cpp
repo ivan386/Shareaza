@@ -442,7 +442,7 @@ void CSearchWnd::OnSearchSearch()
 	POSITION pos = m_pSearches.GetTailPosition();
 	if( (!m_bPaused) && pos )
 	{
-		pSearch = (CManagedSearch*)m_pSearches.GetPrev(pos);
+		pSearch = (CManagedSearch*)m_pSearches.GetPrev( pos );
 		
 		if( m_bWaitMore )
 		{
@@ -450,7 +450,6 @@ void CSearchWnd::OnSearchSearch()
 			theApp.Message( MSG_DEBUG, _T("Resuming Search") );
 			pSearch->m_bActive = TRUE;
 			m_bWaitMore = FALSE;
-			m_bUpdate = TRUE;
 
 			//Resume G2 search
 			m_nMaxResults = m_pMatches->m_nFilteredHits + Settings.Gnutella.MaxResults;
@@ -466,8 +465,9 @@ void CSearchWnd::OnSearchSearch()
 			theApp.Message( MSG_DEBUG, _T("Pausing Search") );
 			pSearch->m_bActive = FALSE;
 			m_bWaitMore = TRUE; 
-			m_bUpdate = TRUE;
 		}
+
+		m_bUpdate = TRUE;
 		return;
 	}
 	//** End of 'Search More'
@@ -490,8 +490,10 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_wndPanel.m_bSendSearch )
 	{
 		pSearch = m_wndPanel.GetSearch();
-		if ( pSearch == NULL ) 
-		{								//Invalid search, open help window
+		if ( pSearch == NULL ) //Invalid search, open help window
+		{				
+			//ToDo: If there was a previous search by hash, it was lost and won't re-search
+			//Maybe add a search by hash schema?
 			CHelpDlg::Show( _T("SearchHelp.BadSearch") );
 			return;
 		}
