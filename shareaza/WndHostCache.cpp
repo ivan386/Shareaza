@@ -79,6 +79,7 @@ END_MESSAGE_MAP()
 CHostCacheWnd::CHostCacheWnd()
 {
 	Create( IDR_HOSTCACHEFRAME );
+	m_nMode = 0;
 }
 
 CHostCacheWnd::~CHostCacheWnd()
@@ -224,6 +225,11 @@ void CHostCacheWnd::OnSkinChange()
 	CPanelWnd::OnSkinChange();
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CHostCacheWnd"), &m_wndToolBar );
+	if ( Settings.General.GUIMode == GUI_BASIC)
+	{
+		m_nMode = Settings.Gnutella.HostCacheView = PROTOCOL_G2;
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
