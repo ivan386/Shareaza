@@ -622,9 +622,9 @@
 #define IDC_TORRENTS_FOLDER             1383
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENTLINKS_SPIN           1385
-#define IDC_TORRENT_DEFAULTTRACKER		1386
-#define IDC_TORRENT_ENDGAME				1387
-#define IDC_TORRENT_INTERFACE			1388
+#define IDC_TORRENT_DEFAULTTRACKER	1386
+#define IDC_TORRENT_ENDGAME		1387
+#define IDC_TORRENT_INTERFACE		1388
 #define IDC_TORRENT_CLIENTLINKS         1389
 #define IDS_SETTINGS                    8000
 #define IDS_WIZARD                      8001
@@ -983,6 +983,10 @@
 #define IDS_URL_PARSE_ERROR             16769
 #define IDS_URL_BUSY                    16770
 #define IDS_URL_ALREADY_HAVE            16771
+#define IDS_URL_HOST            	16772
+#define IDS_URL_PORT            	16773
+#define IDS_URL_CONNECT          	16774
+#define IDS_URL_BROWSE            	16775
 #define IDS_WIZARD_NEED_SPEED           16800
 #define IDS_WIZARD_NEED_CONNECTION      16801
 #define IDS_WIZARD_SHARE_CONFIRM        16802
@@ -1425,7 +1429,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
+#define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        263
 #define _APS_NEXT_COMMAND_VALUE         33120
 #define _APS_NEXT_CONTROL_VALUE         1382

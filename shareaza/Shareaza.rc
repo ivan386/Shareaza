@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,8
- PRODUCTVERSION 2,0,0,8
+ FILEVERSION 2,0,0,9
+ PRODUCTVERSION 2,0,0,9
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 8"
+            VALUE "FileVersion", "2, 0, 0, 9"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 8"
+            VALUE "ProductVersion", "2, 0, 0, 9"
         END
     END
     BLOCK "VarFileInfo"
@@ -4575,6 +4575,10 @@ BEGIN
     IDS_URL_PARSE_ERROR     "Unable to parse URL: Shareaza does not understand this URL."
     IDS_URL_BUSY            "Unable to display URL action dialog because Shareaza is busy."
     IDS_URL_ALREADY_HAVE    "You already have the file ""%s"" in your library.  Do you want to download it anyway?"
+    IDS_URL_HOST            "Host:"
+    IDS_URL_PORT            "Port:"
+    IDS_URL_CONNECT         "&Connect"
+    IDS_URL_BROWSE          "&Browse"
 END
 
 STRINGTABLE 
