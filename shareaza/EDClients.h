@@ -45,7 +45,7 @@ protected:
 	DWORD			m_tLastServerStats;
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
-	BOOL			m_bAllServerStats;
+	BOOL			m_bAllServersDone;
 	
 // Operations
 protected:

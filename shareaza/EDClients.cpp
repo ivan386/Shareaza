@@ -56,7 +56,7 @@ CEDClients::CEDClients()
 	m_tLastRun			= 0;
 	m_tLastServerStats	= 0;
 	m_nLastServerKey	= 0;
-	m_bAllServerStats	= FALSE;
+	m_bAllServersDone	= FALSE;
 }
 
 CEDClients::~CEDClients()
@@ -263,7 +263,10 @@ void CEDClients::OnRun()
 	m_tLastRun = tNow;
 
 	if ( Settings.eDonkey.ServerWalk && Settings.eDonkey.EnableToday )
+	{
 		RunGlobalStatsRequests( tNow );
+		//RunGlobalSearches( tNow );
+	}
 	
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
 	{
@@ -299,6 +302,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CEDClients process UDP Packets
 
+// UDP packet received
 BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
@@ -366,6 +370,7 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	return TRUE;
 }
 
+// Server status packet received
 void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	DWORD nLen, nKey;
@@ -443,6 +448,7 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	//theApp.Message( MSG_DEFAULT, strT );
 }
 
+// Send a server status request
 void CEDClients::RequestServerStatus(IN_ADDR* pHost, WORD nPort)
 {
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_SERVERSTATUSREQUEST, ED2K_PROTOCOL_EDONKEY );
@@ -452,6 +458,9 @@ void CEDClients::RequestServerStatus(IN_ADDR* pHost, WORD nPort)
 	pPacket->WriteLongLE( m_nLastServerKey );
 	Datagrams.Send( pHost, nPort + 4, pPacket );
 }
+
+//////////////////////////////////////////////////////////////////////
+// CEDClients send/time out UDP global server status packets
 
 void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 {
@@ -518,7 +527,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 			if ( ( tSecs > pHost->m_tStats + 7*(24*60*60)  ) &&	// We have not checked this host in a week
 				 ( pHost->CanQuery( tSecs ) ) &&				// AND it hasn't been searched recently
 				 ( ( pHost->m_nUDPFlags == 0 ) ||				// AND  - it has no flags set OR
-				   ( m_bAllServerStats ) ) )					//		- we have flags for all servers
+				   ( m_bAllServersDone ) ) )					//		- we have checked all servers
 			{
 				// Send a request for stats to this server
 				if ( pHost->m_sName.GetLength() )
@@ -533,9 +542,22 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				return;
 			}	
 		}
-		// We now have stats for all known servers.
-		m_bAllServerStats = TRUE;
+		// We have checked all known servers, we may go back and re-query any that didn't respond.
+		m_bAllServersDone = TRUE;
 		// Try again later. (we don't want to keep running this function, it's a little slow)
 		m_tLastServerStats = tNow;
 	}
 }
+
+//////////////////////////////////////////////////////////////////////
+// CEDClients global UDP searches
+/*
+void CEDClients::RunGlobalSearches(DWORD tNow)
+{
+	// Note: This could create very heavy server load. Be *really* careful with it.
+
+	// Don't try this until we are stable
+	if ( ! Datagrams.IsStable() ) return;
+
+}
+*/
