@@ -3685,13 +3685,13 @@
 	</dialog>
 
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Копирование|Перемещение файлов">
-		<control caption="Вы выделили %i файл(а/ов) для копирования в следующую папку:"/>
+		<control caption="Вы выбрали %i файл(а/ов) для копирования в папку:"/>
 		<control/><control/>
 		<control caption="ДА"/>
 		<control caption="Отмена"/>
 		<control/>
-		<control caption="Готово..."/>
-		<control caption="Вы выделили %i файл(а/ов) для перемещения в следующую папку:"/>
+		<control caption="Жду..."/>
+		<control caption="Вы выбрали %i файл(а/ов) для перемещения в папку:"/>
 	</dialog>
 
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Параметры папки хранилища">
