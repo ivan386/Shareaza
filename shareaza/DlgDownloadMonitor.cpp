@@ -294,6 +294,7 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 		{
 			m_pTray.uFlags = NIF_TIP;
 			_tcsncpy( m_pTray.szTip, strText, 63 );
+			m_pTray.szTip[63] = 0;
 			Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 		}
 	}
