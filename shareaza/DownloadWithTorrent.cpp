@@ -131,7 +131,8 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	ZeroMemory( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 	SetModified();
 	
-	pTorrent->SaveTorrentFile( Settings.Downloads.CompletePath );
+	CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+	pTorrent->SaveTorrentFile( Settings.Downloads.TorrentPath );
 	
 	return TRUE;
 }
