@@ -1,4 +1,4 @@
-﻿//
+//
 // CtrlWndTabBar.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -130,15 +130,15 @@ void CWndTabBar::SetWatermark(HBITMAP hBitmap)
 /////////////////////////////////////////////////////////////////////////////
 // CWndTabBar message handlers
 
-int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
 
 	m_mnuChild.LoadMenu( IDR_CHILDFRAME );
 	CoolMenu.AddMenu( &m_mnuChild );
-	
+
 	m_dwStyle |= CBRS_BORDER_3D;
 
 	return 0;
@@ -168,7 +168,7 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 
 	BOOL bChanged = FALSE;
 	m_nCookie++;
-	
+
 	CChildWnd* pActive = pManager->GetActive();
 
 	if ( pActive && pActive->m_bGroupMode )
@@ -201,7 +201,7 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 			{
 				bFound = TRUE;
 				pItem->m_nCookie = m_nCookie;
-				
+
 				if ( strCaption != pItem->m_sCaption )
 				{
 					pItem->m_nImage = ImageIndexForWindow( pChild );
@@ -213,19 +213,19 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 					pItem->m_nImage = ImageIndexForWindow( pChild );
 					bChanged = TRUE;
 				}
-				
+
 				if ( pChild->IsWindowVisible() != pItem->m_bVisible )
 				{
 					pItem->m_bVisible = pChild->IsWindowVisible();
 					bChanged = TRUE;
 				}
-				
+
 				if ( pChild->m_bAlert != pItem->m_bAlert )
 				{
 					pItem->m_bAlert = pChild->m_bAlert;
 					bChanged = TRUE;
 				}
-				
+
 				if ( pChild == pActive && m_pSelected != pItem )
 				{
 					m_pSelected	= pItem;
@@ -236,7 +236,7 @@ void CWndTabBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 					m_pSelected	= NULL;
 					bChanged	= TRUE;
 				}
-				
+
 				break;
 			}
 		}
@@ -271,7 +271,7 @@ int CWndTabBar::ImageIndexForWindow(CWnd* pChild)
 {
 	CRuntimeClass* pClass = pChild->GetRuntimeClass();
 	WORD nImage;
-	
+
 	if ( pClass != RUNTIME_CLASS(CPluginWnd) )
 	{
 		if ( m_pIcons.Lookup( pClass, nImage ) ) return (int)nImage;
@@ -341,30 +341,30 @@ void CWndTabBar::DoPaint(CDC* pDC)
 {
 	ASSERT_VALID(this);
 	ASSERT_VALID(pDC);
-	
+
 	CDC* pOutDC = pDC;
 	CRect rc;
-	
+
 	GetClientRect( &rc );
-	
+
 	if ( m_bmImage.m_hObject != NULL )
 	{
 		pDC = CoolInterface.GetBuffer( *pDC, rc.Size() );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmImage );
 	}
-	
+
 	DrawBorders( pDC, rc );
-	
+
 	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
-	
+
 	if ( m_pItems.GetCount() )
 	{
 		m_nCloseImage = CoolInterface.ImageForID( ID_CHILD_CLOSE );
-		
+
 		CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
 		rcItem.right = ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3;
 		rcItem.right = min( rcItem.right, LONG(m_nMaximumWidth) );
-		
+
 		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
 			TabItem* pItem = (TabItem*)m_pItems.GetNext( pos );
@@ -372,10 +372,10 @@ void CWndTabBar::DoPaint(CDC* pDC)
 			pItem->Paint( this, pDC, &rcItem, m_pSelected == pItem, m_pHot == pItem,
 				pDC != pOutDC );
 			pDC->ExcludeClipRect( &rcItem );
-			
+
 			rcItem.OffsetRect( rcItem.Width() + 3, 0 );
 		}
-		
+
 		if ( pDC == pOutDC ) pDC->FillSolidRect( &rc, CoolInterface.m_crMidtone );
 	}
 	else
@@ -383,10 +383,10 @@ void CWndTabBar::DoPaint(CDC* pDC)
 		CSize  sz = pDC->GetTextExtent( m_sMessage );
 		CPoint pt = rc.CenterPoint();
 		pt.x -= sz.cx / 2; pt.y -= sz.cy / 2 + 1;
-		
+
 		pDC->SetBkColor( CoolInterface.m_crMidtone );
 		pDC->SetTextColor( CoolInterface.m_crDisabled );
-		
+
 		if ( pDC == pOutDC )
 		{
 			pDC->SetBkMode( OPAQUE );
@@ -400,9 +400,9 @@ void CWndTabBar::DoPaint(CDC* pDC)
 
 		m_rcMessage.SetRect( pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy );
 	}
-	
+
 	pDC->SelectObject( pOldFont );
-	
+
 	if ( pDC != pOutDC )
 	{
 		GetClientRect( &rc );
@@ -411,7 +411,7 @@ void CWndTabBar::DoPaint(CDC* pDC)
 	}
 }
 
-void CWndTabBar::OnMouseMove(UINT nFlags, CPoint point) 
+void CWndTabBar::OnMouseMove(UINT nFlags, CPoint point)
 {
 	TabItem* pItem = HitTest( point );
 
@@ -435,7 +435,7 @@ void CWndTabBar::OnMouseMove(UINT nFlags, CPoint point)
 	CControlBar::OnMouseMove( nFlags, point );
 }
 
-void CWndTabBar::OnTimer(UINT nIDEvent) 
+void CWndTabBar::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 1 )
 	{
@@ -458,32 +458,32 @@ void CWndTabBar::OnTimer(UINT nIDEvent)
 	CControlBar::OnTimer( nIDEvent );
 }
 
-BOOL CWndTabBar::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CWndTabBar::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( m_pItems.GetCount() == 0 && m_nMessage == IDS_TABBAR_CONNECTED  )
 	{
 		CPoint point;
 		GetCursorPos( &point );
 		ScreenToClient( &point );
-		
+
 		if ( m_rcMessage.PtInRect( point ) )
 		{
 			SetCursor( theApp.LoadCursor( IDC_HAND ) );
 			return TRUE;
 		}
 	}
-	
+
 	return CControlBar::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CWndTabBar::OnLButtonDown(UINT nFlags, CPoint point) 
+void CWndTabBar::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rc;
-	
+
 	if ( TabItem* pItem = HitTest( point, &rc ) )
 	{
 		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
-		
+
         if ( m_pSelected == pItem &&
 			 Settings.General.GUIMode != GUI_WINDOWED &&
 			 point.x >= rc.right - 18 )
@@ -501,9 +501,9 @@ void CWndTabBar::OnLButtonDown(UINT nFlags, CPoint point)
 			pChild->ShowWindow( SW_MINIMIZE );
 			return;
 		}
-		
+
 		pChild->MDIActivate();
-		
+
 		return;
 	}
 	else if ( m_nMessage == IDS_TABBAR_CONNECTED )
@@ -513,11 +513,11 @@ void CWndTabBar::OnLButtonDown(UINT nFlags, CPoint point)
 			return;
 		}
 	}
-	
+
 	CControlBar::OnLButtonDown( nFlags, point );
 }
 
-void CWndTabBar::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CWndTabBar::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	/*
 	if ( TabItem* pItem = HitTest( point ) )
@@ -527,14 +527,14 @@ void CWndTabBar::OnLButtonDblClk(UINT nFlags, CPoint point)
 		return;
 	}
 	*/
-	
+
 	OnLButtonDown( nFlags, point );
 }
 
-void CWndTabBar::OnLButtonUp(UINT nFlags, CPoint point) 
+void CWndTabBar::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rc;
-	
+
 	if ( TabItem* pItem = HitTest( point, &rc ) )
 	{
 	}
@@ -545,37 +545,37 @@ void CWndTabBar::OnLButtonUp(UINT nFlags, CPoint point)
 			GetOwner()->PostMessage( WM_COMMAND, ID_NETWORK_SEARCH );
 		}
 	}
-	
+
 	CControlBar::OnLButtonUp( nFlags, point );
 }
 
-void CWndTabBar::OnMButtonUp(UINT nFlags, CPoint point) 
+void CWndTabBar::OnMButtonUp(UINT nFlags, CPoint point)
 {
 	if ( TabItem* pItem = HitTest( point ) )
 	{
 		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
 		pChild->PostMessage( WM_SYSCOMMAND, SC_CLOSE, 0 );
 	}
-	
+
 	CControlBar::OnMButtonUp( nFlags, point );
 }
 
-void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point) 
+void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rcItem;
-	
+
 	if ( TabItem* pItem = HitTest( point, &rcItem ) )
 	{
 		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
 		if ( pChild->IsWindowVisible() ) pChild->MDIActivate();
-		
+
 		ClientToScreen( &rcItem );
-		
+
 		CMenu* pMenu = m_mnuChild.GetSubMenu( pChild->m_bPanelMode ? 1 : 0 );
-		
+
 		BOOL bCanRestore	= pChild->IsIconic() || pChild->IsZoomed();
 		UINT nCommand		= 0;
-		
+
 		/*
 		MENUITEMINFO pInfo;
 		pInfo.cbSize	= sizeof(pInfo);
@@ -584,17 +584,17 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 		pInfo.fState = ( pInfo.fState & (~MFS_DEFAULT) ) | ( bCanRestore ? MFS_DEFAULT : 0 );
 		SetMenuItemInfo( pMenu->GetSafeHmenu(), ID_CHILD_RESTORE, FALSE, &pInfo );
 		*/
-		
+
 		pMenu->EnableMenuItem( ID_CHILD_RESTORE, MF_BYCOMMAND |
 			( bCanRestore ? 0 : MF_GRAYED ) );
 		pMenu->EnableMenuItem( ID_CHILD_MINIMISE, MF_BYCOMMAND |
 			( pChild->IsIconic() ? MF_GRAYED : 0 ) );
 		pMenu->EnableMenuItem( ID_CHILD_MAXIMISE, MF_BYCOMMAND |
 			( pChild->IsZoomed() ? MF_GRAYED : 0 ) );
-		
+
 		m_bMenuGray = TRUE;
 		Invalidate();
-		
+
 		if ( rcItem.bottom > GetSystemMetrics( SM_CYSCREEN ) / 2 )
 		{
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
@@ -606,10 +606,10 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
 				TPM_LEFTALIGN|TPM_TOPALIGN, rcItem.left, rcItem.bottom - 1, this, NULL );
 		}
-		
+
 		m_bMenuGray = FALSE;
 		Invalidate();
-		
+
 		switch ( nCommand )
 		{
 		case ID_CHILD_RESTORE:
@@ -625,19 +625,19 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 			pChild->PostMessage( WM_SYSCOMMAND, SC_CLOSE, 0 );
 			break;
 		}
-		
+
 		return;
 	}
-	
+
 	CControlBar::OnRButtonUp( nFlags, point );
 }
 
-void CWndTabBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CWndTabBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	CoolMenu.OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CWndTabBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CWndTabBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
 }
@@ -672,7 +672,7 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 {
 	CRect rc( pRect );
 	COLORREF crBack;
-	
+
 	if ( bSelected && pBar->m_bMenuGray )
 	{
 		crBack = CoolInterface.m_crBackNormal;
@@ -729,9 +729,9 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 			ptImage.x, ptImage.y, 0, 0, crBack, CoolInterface.m_crShadow, ILD_BLEND50 );
 		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
 	}
-	
+
 	rc.left += 20;
-	
+
 	if ( bSelected && Settings.General.GUIMode != GUI_WINDOWED )
 	{
 		ptImage.x = rc.right - 18;
@@ -742,9 +742,9 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 		rc.right -= 20;
 		if ( crBack != CLR_NONE ) pDC->FillSolidRect( rc.right, rc.top, 20, rc.Height(), crBack );
 	}
-	
+
 	CString strText = m_sCaption;
-	
+
 	if ( pDC->GetTextExtent( strText ).cx > rc.Width() )
 	{
 		while ( pDC->GetTextExtent( strText + _T("…") ).cx > rc.Width() && strText.GetLength() )
@@ -754,9 +754,9 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 
 		if ( strText.GetLength() ) strText += _T("…");
 	}
-	
+
 	rc.left -= 20;
-	
+
 	if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
 
 	if ( m_bAlert )
