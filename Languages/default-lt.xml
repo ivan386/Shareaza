@@ -2828,7 +2828,7 @@ right quote	&#147;
 	<string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
 	<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
 	<string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
-	<string id="17100" value="Gnutella: Ryšys dalyvis-dalyvis"/>
+	<string id="17100" value="Gnutella: Ryšys partneris-partneris"/>
 	<string id="17101" value="Gnutella: Ryšys atšaka-vedantysis"/>
 	<string id="17102" value="Gnutella: Ryšys vedantysis-atšaka"/>
 	<string id="17103" value="Gnutella II: Ryšys mazgas-mazgas"/>
@@ -2850,10 +2850,10 @@ right quote	&#147;
 	<string id="17119" value="Atsakyta"/>
 	<string id="17120" value="Atsijungiama"/>
 	<string id="17121" value="Nežinoma"/>
-	<string id="17122" value="G1 dalyvis"/>
+	<string id="17122" value="G1 partneris"/>
 	<string id="17123" value="G1 vedantysis"/>
 	<string id="17124" value="G1 atšaka"/>
-	<string id="17125" value="G2 dalyvis"/>
+	<string id="17125" value="G2 partneris"/>
 	<string id="17126" value="G2 mazgas"/>
 	<string id="17127" value="G2 atšaka"/>
 	<string id="17128" value="eDonkey2000 serveris"/>

@@ -8,10 +8,10 @@
 
 <!-- Manifest -->
 <manifest	name="Русский"
-		author="dAbserver"
+		author="dAbserver & Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
-		email="dabserver@mail.ru"
+		email="contact@shareaza.com"
 		version="2.1.0.25"
 		type="Language"
 		language="ru"
@@ -2815,7 +2815,7 @@
 	<string id="17041" value="Не могу послать сообщение, соединение пока не установлено."/>
 	<string id="17042" value="Вы ещё не заполнили своего профиля пользователя.  Вы должны его заполнить, прежде чем беседовать с другими пользователями.\n\nХотите ли заполнить свой профиль сейчас?"/>
 	<string id="17043" value="Предоставлен приоритет загрузки для хоста %s."/>
-	<string id="17100" value="Gnutella: Связь участник к участнику"/>
+	<string id="17100" value="Gnutella: Связь партнер к партнеру"/>
 	<string id="17101" value="Gnutella: Связь ветвь к ведущему"/>
 	<string id="17102" value="Gnutella: Связь ведущий к ветви"/>
 	<string id="17103" value="Gnutella II: Связь узел к узлу"/>
@@ -2837,10 +2837,10 @@
 	<string id="17119" value="Отказ"/>
 	<string id="17120" value="Разъединяется"/>
 	<string id="17121" value="Неизвестно"/>
-	<string id="17122" value="G1 участник"/>
+	<string id="17122" value="G1 партнер"/>
 	<string id="17123" value="G1 ведущий"/>
 	<string id="17124" value="G1 ветвь"/>
-	<string id="17125" value="G2 участник"/>
+	<string id="17125" value="G2 партнер"/>
 	<string id="17126" value="G2 узел"/>
 	<string id="17127" value="G2 ветвь"/>
 	<string id="17128" value="eDonkey2000 сервер"/>
