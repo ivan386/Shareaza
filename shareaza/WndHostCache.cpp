@@ -312,6 +312,8 @@ void CHostCacheWnd::OnHostCacheConnect()
 
 void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI) 
 {
+	if ( !IsActive() ) return;
+
 	CSingleLock pLock( &Network.m_pSection );
 	
 	if ( pLock.Lock( 50 ) )
