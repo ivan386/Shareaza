@@ -527,12 +527,16 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent += strVer;
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[2] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[6] == '-' )
-	{	//BitTorrent
+	{	//BitTorrent (Standard client, newer version)
 		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
 	{	//BitComet
 		m_sUserAgent.Format( _T("BitComet %i"), m_pGUID.b[5] - '0' );
+	}
+	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
+	{	//Burst
+		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_pGUID.b[5] - '0', m_pGUID.b[7] - '0', m_pGUID.b[5] - '9' );
 	}
 	else
 	{	//Unknown peer ID string
