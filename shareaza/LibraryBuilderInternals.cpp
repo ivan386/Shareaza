@@ -220,10 +220,10 @@ BOOL CLibraryBuilderInternals::ReadID3v1( HANDLE hFile, CXMLElement* pXML)
 BOOL CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength)
 {
 	CString strValue;
-	LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
-	
-	for ( int nChar = 0 ; nChar < nLength ; nChar++ ) *pszOutput++ = (TCHAR)*pszValue++;
-	*pszOutput++ = 0;
+	int nWide = MultiByteToWideChar( CP_ACP, 0, pszValue, nLength, NULL, 0 );
+    LPWSTR pszOutput = strValue.GetBuffer( nWide + 1 );
+	MultiByteToWideChar( CP_ACP, 0, pszValue, nLength, pszOutput, nWide );
+	pszOutput[ nWide ] = 0;
 	strValue.ReleaseBuffer();
 	
 	strValue.TrimLeft();
@@ -480,13 +480,11 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		
 		strValue.ReleaseBuffer( nOut );
 	}
-	else if ( nEncoding == 1 )
+	else if ( nEncoding == 1 && ( nLength & 1 ) == 0 && nLength >= 2 )
 	{
-		if ( nLength < 4 || nLength & 1 ) return FALSE;
-		
 		nLength = ( nLength - 2 ) / 2;
 		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
-
+		
 		if ( pBuffer[0] == 0xFF && pBuffer[1] == 0xFE )
 		{
 			pBuffer += 2;
@@ -512,6 +510,27 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			strValue.ReleaseBuffer( 0 );
 			return FALSE;
 		}
+	}
+	else if ( nEncoding == 2 && ( nLength & 1 ) == 0 )
+	{
+		nLength = nLength / 2;
+		LPTSTR pszOutput = strValue.GetBuffer( nLength + 1 );
+		
+		for ( DWORD nChar = 0, nOut = 0 ; nChar < nLength ; nChar++, nOut++ )
+		{
+			pszOutput[ nOut ] = (TCHAR)pBuffer[ nChar*2+1 ] | ( (TCHAR)pBuffer[ nChar*2+0 ] << 8 );
+			if ( pszOutput[ nOut ] == 0 ) break;
+		}
+		
+		strValue.ReleaseBuffer( nOut );
+	}
+	else if ( nEncoding == 3 )
+	{
+		int nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer, nLength, NULL, 0 );
+		LPTSTR pszOutput = strValue.GetBuffer( nWide + 1 );
+		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer, nLength, pszOutput, nWide );
+		pszOutput[ nWide ] = 0;
+		strValue.ReleaseBuffer();
 	}
 	
 	strValue.TrimLeft();
