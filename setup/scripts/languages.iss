@@ -177,16 +177,16 @@ af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
 ; Portuguese braz
 br.components_plugins=Plugins
-br.components_skins=Skins
-br.components_languages=Languages
-br.tasks_allusers=All users
-br.tasks_selectusers=Install %1 for:
-br.tasks_currentuser=%1 only
-br.tasks_multisetup=Enable multi-user support
-br.run_skinexe=Running skin installation...
-br.reg_incomingchat=Incoming chat message
-br.reg_apptitle=Shareaza Ultimate File Sharing
-br.icons_license=License
-br.icons_uninstall=Uninstall
+br.components_skins=Peles
+br.components_languages=Linguagens
+br.tasks_allusers=Todos os Usuários
+br.tasks_selectusers=Instalar %1 para:
+br.tasks_currentuser=%1 apenas
+br.tasks_multisetup=Ativar suporte para vários usuários
+br.run_skinexe=Instalando as Peles...
+br.reg_incomingchat=Nova mensagem no chat
+br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
+br.icons_license=Licensa
+br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 
