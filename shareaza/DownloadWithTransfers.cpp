@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,6 +60,14 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers counting
 
+// This macro is used to clean up the function below and make it more readable. It's the first 
+// condition in any IF statement that checks if the current transfer should be counted
+#define VALID_TRANSFER ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&	\
+					   ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) ||											\
+						 ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient &&						\
+						   static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+
+
 int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
 {
 	// if ( nState == -1 && pAddress == NULL ) return m_pTransfers.GetCount();
@@ -70,10 +78,7 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
     case dtsCountAll:
         for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
         {
-		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
-                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+		    if ( VALID_TRANSFER )
             {
                 ++nCount;
             }
@@ -82,12 +87,9 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
     case dtsCountNotQueued:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
-                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected )
-                && ( pTransfer->m_nState != dtsQueued || pTransfer->m_nState == dtsTorrent
-                    && !static_cast< CDownloadTransferBT* >( pTransfer )->m_bChoked ) )
+		    if ( VALID_TRANSFER && ( ( pTransfer->m_nState != dtsQueued ) && 
+				( ! ( pTransfer->m_nState == dtsTorrent && static_cast< CDownloadTransferBT* >(pTransfer)->m_bChoked ) ) ) )
+                 
             {
                 ++nCount;
             }
@@ -96,8 +98,8 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
     case dtsCountNotConnecting:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
-                && pTransfer->m_nState > dtsConnecting )
+		    if ( ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) && 
+				 ( pTransfer->m_nState > dtsConnecting ) )
             {
                 ++nCount;
             }
@@ -106,10 +108,7 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
     case dtsCountTorrentAndActive:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
-                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+		    if ( VALID_TRANSFER )
 		    {
                 switch( pTransfer->m_nState )
                 {
@@ -124,11 +123,7 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
     default:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
-                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected )
-		        && pTransfer->m_nState == nState )
+		    if ( VALID_TRANSFER && ( pTransfer->m_nState == nState ) )
             {
                 ++nCount;
 			}
@@ -143,7 +138,7 @@ int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) cons
 QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* pAddress) const
 {
 	QWORD nTotal = 0;
-	
+
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	{	
 		if ( pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr )
