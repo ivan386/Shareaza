@@ -276,18 +276,18 @@ void CUploads::OnRun()
 		}
 	}
 	
-	if ( nCountTorrent > 0 )
-	{
+	if ( nCountTorrent > 0 )	//If there are any active torrents
+	{	//Assign bandwidth to BT (4/5ths by default)
 		m_nTorrentSpeed = Settings.Bandwidth.Uploads;
 		if ( m_nTorrentSpeed == 0 ) m_nTorrentSpeed = 0xFFFFFFFF;
 		m_nTorrentSpeed = min( m_nTorrentSpeed, Settings.Connection.OutSpeed * 128 );
-		m_nTorrentSpeed = m_nTorrentSpeed * 4 / 5;
+		m_nTorrentSpeed = m_nTorrentSpeed * Settings.BitTorrent.BandwidthPercentage / 100;
 		
 		m_nTorrentSpeed = m_nTorrentSpeed / nCountTorrent;
 		m_nTorrentSpeed = max( m_nTorrentSpeed, Settings.Bandwidth.Request );
 	}
 	else
-	{
+	{	//If there are no torrents, set to zero
 		m_nTorrentSpeed = 0;
 	}
 }

@@ -323,6 +323,7 @@ public:
 		int			DownloadConnections;		//Number active torrent connections allowed
 		int			DownloadTorrents;			//Number of torrents to download at once
 		BOOL		Endgame;					//Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
+		DWORD		BandwidthPercentage;		//Percentage of bandwidth to use when BT active.
 	} BitTorrent;
 
 	struct sDownloads
@@ -375,7 +376,7 @@ public:
 	
 	struct sUploads
 	{
-		int			MaxPerHost;
+		int			MaxPerHost;					//Max simultaneous uploads to one remote client
 		DWORD		FreeBandwidthValue;
 		DWORD		FreeBandwidthFactor;
 		DWORD		ClampdownFactor;
@@ -392,11 +393,11 @@ public:
 		BOOL		DynamicPreviews;
 		DWORD		PreviewQuality;
 		DWORD		PreviewTransfers;
-		BOOL		AllowBackwards;
+		BOOL		AllowBackwards;				//Allow data to be sent from end of range to begining where supported
 		BOOL		HubUnshare;
 		CString		BlockAgents;
-		BOOL		AutoClear;
-		DWORD		ClearDelay;
+		BOOL		AutoClear;					//Automatically clear completed uploads ('Completed' queue)
+		DWORD		ClearDelay;					//Delay between auto-clears
 		DWORD		FilterMask;
 	} Uploads;
 	

@@ -281,6 +281,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
 	Add( _T("BitTorrent.DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
+	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
 	
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.UserPath + _T("\\Incomplete") );
 	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.UserPath + _T("\\Downloads") );
