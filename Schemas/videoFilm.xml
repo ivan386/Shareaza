@@ -311,7 +311,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="nl">Kwaliteitsaantekeningen</title>
                        <title language="no">Kvalitetsnotat</title>
                        <title language="br">Notas de Qualidade</title>
-                       <title language="ru">Заметки по качеству</title>
+                       <title language="ru">Прим. о качестве</title>
                        <title language="sv">Kvalitetanteckningar</title>
                </member>
                <member name="distributer" search="indexed">
@@ -345,7 +345,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                       <title language="nl">Link naar Verspreider</title>
                       <title language="no">Distributørlink</title>
                       <title language="br">Link do Distribuidor</title>
-                      <title language="ru">Ссылка на дистрибьютера</title>
+                      <title language="ru">Ссылка агента</title>
                       <title language="sv">Distributionslänk</title>
                </member>
                <member name="releasegroup">
@@ -379,7 +379,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="nl">Link Vrijgave Groep</title>
                        <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
-                       <title language="ru">Ссылка на релиз группу</title>
+                       <title language="ru">Ссылка группы</title>
                        <title language="sv">Lanseringsgrupplänk</title>
                </member>
                <member name="keywords" search="generic">
@@ -396,7 +396,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
                        <title language="br">Palavras-chave</title>
-                       <title language="ru">Ключевые слова</title>
+                       <title language="ru">Ключ. слова</title>
                        <title language="sv">Nyckelord</title>
                </member>
                <member name="link" search="none">

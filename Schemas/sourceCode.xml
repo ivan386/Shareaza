@@ -127,7 +127,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="nl">Sleutelwoorden</title>
                        <title language="no">Nøkkelord</title>
                        <title language="br">Palavras-chave</title>
-                       <title language="ru">Ключевые слова</title>
+                       <title language="ru">Ключ. слова</title>
                        <title language="sv">Nyckelord</title>
                </member>
                <member name="abstract">
@@ -161,7 +161,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="nl">Copyright</title>
                        <title language="no">Kopibeskyttelse</title>
                        <title language="br">Direitos de Cópia</title>
-                       <title language="ru">Правообладатель</title>
+                       <title language="ru">Автор. права</title>
                        <title language="sv">Upphovsrätt</title>
                </member>
                <member name="version">
