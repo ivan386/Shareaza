@@ -25,6 +25,7 @@
 //#include "Library.h"
 //#include "LibraryHistory.h"
 #include "PageSettingsBitTorrent.h"
+#include ".\pagesettingsbittorrent.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,6 +38,7 @@ IMPLEMENT_DYNCREATE(CBitTorrentSettingsPage, CSettingsPage)
 BEGIN_MESSAGE_MAP(CBitTorrentSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CBitTorrentSettingsPage)
 	ON_BN_CLICKED(IDC_TORRENTS_BROWSE, OnTorrentsBrowse)
+	ON_BN_CLICKED(IDC_TORRENTS_TORRENTMAKERBROWSE, OnMakerBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -50,8 +52,10 @@ CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSe
 	m_bTorrentInterface	= FALSE;
 	m_bEndGame			= FALSE;
 	m_nLinks			= 0;
+	m_nDownloads		= 0;
 	m_sTracker			= _T("");
 	m_sTorrentPath		= _T("");
+	m_sMakerPath		= _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -67,9 +71,13 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_TORRENT_ENDGAME, m_bEndGame);
 	DDX_Text(pDX, IDC_TORRENT_CLIENTLINKS, m_nLinks);
 	DDX_Control(pDX, IDC_TORRENTLINKS_SPIN, m_wndLinksSpin);
+	DDX_Text(pDX, IDC_TORRENT_DOWNLOADS, m_nDownloads);
+	DDX_Control(pDX, IDC_TORRENT_DOWNLOADS_SPIN, m_wndDownloadsSpin);
 	DDX_Text(pDX, IDC_TORRENT_DEFAULTTRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENTS_BROWSE, m_wndTorrentPath);
 	DDX_Text(pDX, IDC_TORRENTS_FOLDER, m_sTorrentPath);
+	DDX_Control(pDX, IDC_TORRENTS_TORRENTMAKERBROWSE, m_wndMakerPath);
+	DDX_Text(pDX, IDC_TORRENTS_TORRENTMAKER, m_sMakerPath);
 	//}}AFX_DATA_MAP
 }
 
@@ -84,10 +92,14 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;
 	m_sTracker			= Settings.BitTorrent.DefaultTracker;
 	m_sTorrentPath		= Settings.Downloads.TorrentPath;
+	m_nDownloads		= Settings.BitTorrent.DownloadTorrents;
+	m_sMakerPath		= Settings.BitTorrent.TorrentCreatorPath;
 
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
+	m_wndMakerPath.SetIcon( IDI_BROWSE );
 
 	m_wndLinksSpin.SetRange( 0, 80 );
+	m_wndDownloadsSpin.SetRange( 0, 10 );
 	UpdateData( FALSE );
 
 	return TRUE;
@@ -120,6 +132,33 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 	UpdateData( FALSE );
 }
 
+void CBitTorrentSettingsPage::OnMakerBrowse() 
+{
+	TCHAR szPath[MAX_PATH];
+	LPITEMIDLIST pPath;
+	LPMALLOC pMalloc;
+	BROWSEINFO pBI;
+		
+	ZeroMemory( &pBI, sizeof(pBI) );
+	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
+	pBI.pszDisplayName	= szPath;
+	pBI.lpszTitle		= _T("Select .torrent creator:");
+	pBI.ulFlags			= BIF_BROWSEINCLUDEFILES | BIF_NONEWFOLDERBUTTON;
+	
+	pPath = SHBrowseForFolder( &pBI );
+
+	if ( pPath == NULL ) return;
+
+	SHGetPathFromIDList( pPath, szPath );
+	SHGetMalloc( &pMalloc );
+	pMalloc->Free( pPath );
+	pMalloc->Release();
+	
+	UpdateData( TRUE );
+	m_sMakerPath = szPath;
+	UpdateData( FALSE );
+}
+
 void CBitTorrentSettingsPage::OnOK() 
 {
 	UpdateData();
@@ -127,10 +166,11 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
 	Settings.BitTorrent.Endgame				= m_bEndGame;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
+	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
-	//CreateDirectory( m_sTorrentPath, NULL );
+	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;
+
 
 	CSettingsPage::OnOK();
 }
-

@@ -45,9 +45,13 @@ public:
 	BOOL	m_bEndGame;
 	CSpinButtonCtrl	m_wndLinksSpin;
 	int		m_nLinks;
-	CString	m_sTracker;
+	CSpinButtonCtrl	m_wndDownloadsSpin;
+	int		m_nDownloads;
 	CIconButtonCtrl	m_wndTorrentPath;
 	CString	m_sTorrentPath;
+	CString	m_sTracker;
+	CIconButtonCtrl	m_wndMakerPath;
+	CString	m_sMakerPath;
 	//}}AFX_DATA
 
 // Overrides
@@ -65,10 +69,13 @@ protected:
 	//{{AFX_MSG(CLibrarySettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTorrentsBrowse();
+	afx_msg void OnMakerBrowse();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void OnDeltaposTorrentlinksSpin2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 //{{AFX_INSERT_LOCATION}}
