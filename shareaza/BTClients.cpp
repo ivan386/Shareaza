@@ -63,21 +63,23 @@ void CBTClients::Clear()
 	ShutdownRequests();
 }
 
+/*	//This needs to be a per-download generated ID
 //////////////////////////////////////////////////////////////////////
 // CBTClients GUID->SHA1 filter
 
 SHA1* CBTClients::GetGUID()
 {
 	(GGUID&)m_pGUID = MyProfile.GUID;
-	
+
 	for ( int nByte = 16 ; nByte < 20 ; nByte++ )
 	{
 		m_pGUID.n[ nByte ]	= MyProfile.GUID.n[ nByte % 16 ]
 							^ MyProfile.GUID.n[ 15 - ( nByte % 16 ) ];
 	}
-	
+
 	return &m_pGUID;
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 // CBTClients accept new connections

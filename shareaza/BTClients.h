@@ -39,7 +39,7 @@ public:
 // Attributes
 protected:
 	CPtrList	m_pList;
-	SHA1		m_pGUID;
+	//SHA1		m_pGUID;
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pShutdown;
@@ -49,7 +49,7 @@ protected:
 // Operations
 public:
 	void		Clear();
-	SHA1*		GetGUID();
+	//SHA1*		GetGUID();
 	BOOL		OnAccept(CConnection* pConnection);
 	void		ShutdownRequests();
 protected:

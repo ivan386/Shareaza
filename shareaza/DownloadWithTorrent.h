@@ -51,6 +51,7 @@ public:
 	BOOL		m_bTorrentEndgame;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
+	SHA1		m_pPeerID;
 protected:
 	BYTE*		m_pTorrentBlock;
 	DWORD		m_nTorrentBlock;
@@ -79,9 +80,10 @@ public:
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*				CreateBitfieldPacket();
 protected:
-	BOOL		RunTorrent(DWORD tNow);
-	void		OnFinishedTorrentBlock(DWORD nBlock);
-	void		CloseTorrentUploads();
+	BOOL			GenerateTorrentDownloadID();	//Generate Peer ID
+	BOOL			RunTorrent(DWORD tNow);
+	void			OnFinishedTorrentBlock(DWORD nBlock);
+	void			CloseTorrentUploads();
 	
 	friend class CDownloadTransferBT;
 };

@@ -37,6 +37,7 @@
 #include "Buffer.h"
 #include "SHA.h"
 #include "LibraryFolders.h"
+#include "GProfile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -66,6 +67,7 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	
 	m_tTorrentChoke			= 0;
 	m_tTorrentSources		= 0;
+	ZeroMemory(m_pPeerID.n, 20);
 }
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
@@ -91,7 +93,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 		m_bBTH = TRUE;
 		m_pBTH = m_pTorrent.m_pInfoSHA1;
 	}
-	
+
 	if ( nVersion >= 23 && m_pTorrent.IsAvailable() )
 	{
 		if ( ar.IsStoring() )
@@ -169,6 +171,10 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	{
 		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
 		{
+			GenerateTorrentDownloadID();
+			//if ( ! GenerateTorrentDownloadID() );
+			//	InitialiseTorrentDownload();
+
 			m_bTorrentRequested	= TRUE;
 			m_bTorrentStarted	= FALSE;
 			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
@@ -182,6 +188,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = 0;
+		ZeroMemory(m_pPeerID.n, 20);
 	}
 	
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
@@ -190,6 +197,41 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		CBTTrackerRequest::SendUpdate( this );
 	}
 	
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent GenerateTorrentDownloadID (Called 'Peer ID', but seperate for each transfer)
+
+BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
+{
+	theApp.Message( MSG_DEBUG, _T("Creating Peer ID") );
+
+	int nByte;
+
+	for ( nByte = 0 ; nByte < 20 ; nByte++ )
+	{
+		if ( m_pPeerID.n[ nByte ]	!= 0 ) 
+		{
+			theApp.Message( MSG_ERROR, _T("Attmepted to re-create an in-use peer ID") );
+			return FALSE;
+		}
+	}
+
+	(GGUID&)m_pPeerID = MyProfile.GUID;
+	srand( GetTickCount() );
+	
+	for ( nByte = 0 ; nByte < 16 ; nByte++ ) 
+	{
+		m_pPeerID.n[ nByte ] += rand();
+	}
+
+	for ( nByte = 16 ; nByte < 20 ; nByte++ )
+	{
+		m_pPeerID.n[ nByte ]	= m_pPeerID.n[ nByte % 16 ]
+								^ m_pPeerID.n[ 15 - ( nByte % 16 ) ];
+	}
+
 	return TRUE;
 }
 
@@ -434,7 +476,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 	{
 		ASSERT( m_pTorrent.IsAvailable() );
 		
-		if ( GetTickCount() - m_tTorrentSources > 10000 )
+		if ( GetTickCount() - m_tTorrentSources > 15000 )
 		{
 			m_tTorrentTracker = GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 			m_tTorrentSources = GetTickCount();
@@ -451,6 +493,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 
 BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 {
+	
 	CDownload* pDownload = reinterpret_cast<CDownload*>(this);
 	
 	if ( IsMoving() || IsCompleted() ) return FALSE;
@@ -462,6 +505,8 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	if ( m_pFile->IsOpen() ) return FALSE;
 	delete m_pFile;
 	m_pFile = NULL;
+
+	GenerateTorrentDownloadID();
 	
 	pDownload->m_bSeeding	= TRUE;
 	pDownload->m_bComplete	= TRUE;
@@ -480,9 +525,10 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sLocalName = pszTarget;
 	SetModified();
 	
+	m_tTorrentTracker	= GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 	m_bTorrentRequested	= TRUE;
 	m_bTorrentStarted	= FALSE;
-	CBTTrackerRequest::SendStarted( this );
+	CBTTrackerRequest::SendStarted( this );	
 	
 	return TRUE;
 }
@@ -496,6 +542,7 @@ void CDownloadWithTorrent::CloseTorrent()
 	m_bTorrentRequested		= FALSE;
 	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
+	ZeroMemory(m_pPeerID.n, 20);
 }
 
 
@@ -504,6 +551,6 @@ void CDownloadWithTorrent::CloseTorrent()
 
 float CDownloadWithTorrent::GetRatio() const
 {
-	if ( m_nTorrentUploaded == 0 || GetVolumeComplete() == 0 ) return 0;
-	return (float)m_nTorrentUploaded / (float)GetVolumeComplete();
+	if ( m_nTorrentUploaded == 0 || m_nTorrentDownloaded == 0 ) return 0;
+	return (float)m_nTorrentUploaded / (float)m_nTorrentDownloaded;
 }
