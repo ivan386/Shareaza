@@ -1,0 +1,38 @@
+Setup and repair command-line parameters:
+(brackets indicate things you need to fill in.) (Don't type the brackets.)
+
+/SILENT						automatic mode
+/VERYSILENT					hidden mode
+/LOG						create logfile in user's TEMP folder
+/NOCANCEL					disable cancel button
+/NORESTART					do not reboot
+/RESTARTEXITCODE=[exit code]			exit code if reboot needed
+/LOADINF="[path\filename]"			Load setup settings from file
+/SAVEINF="[path\filename]"			Save setup settings to file
+/LANG=[languagename]				Specify language to use.
+(Look in languages.iss to find valid names. examples: en nl lt)
+
+/DIR="[path]"					Specify default path setup uses
+/GROUP="[foldername]"				Specify default name of start menu group
+/COMPONENTS="[component1,component2,etc]"	Specify list of extra components to install
+(comma separated list, valid entries: plugins skins languages)
+
+/SETTINGS="[path\filename]"			Path to ini file to overwrite some settings
+
+Uninstall command-line parameters:
+(brackets indicate things you need to fill in.) (Don't type the brackets.)
+
+/SILENT						automatic mode
+/VERYSILENT					hidden mode
+/LOG						create logfile in user's TEMP folder
+
+example ini file:
+
+[Locations]
+CompletePath=C:\Documents and Settings\All Users\Application Data\Shareaza\Downloads
+IncompletePath=C:\Documents and Settings\All Users\Application Data\Shareaza\Incomplete
+TorrentPath=C:\Documents and Settings\All Users\Application Data\Shareaza\Torrents
+CollectionPath=C:\Documents and Settings\All Users\Application Data\Shareaza\Collections
+[General]
+RatesInBytes=1
+VerboseMode=0

@@ -32,10 +32,10 @@ SourceDir=..\..
 
 [INI]
 ; Write important settings to safe location before erasing them from registry
-Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "CompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|}"
-Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "IncompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|}"
-Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "TorrentPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|}"
-Filename: "{tmp}\settings.ini"; Section: "Locations"; key: "CollectionPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|}"
+Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "CompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|}"; Flags: createkeyifdoesntexist
+Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "IncompletePath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,IncompletePath|}"; Flags: createkeyifdoesntexist
+Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "TorrentPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,TorrentPath|}"; Flags: createkeyifdoesntexist
+Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "CollectionPath"; String: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPath|}"; Flags: createkeyifdoesntexist
 
 [Registry]
 ; Delete all settings before starting reparation
@@ -59,7 +59,7 @@ Source: "{app}\Uninstall\setup.exe"; DestDir: "{tmp}"; DestName: "temp.exe"; Fla
 
 [Run]
 ; Run installer in silent mode and pass all settings.
-Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /NORESTART /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{tmp}\settings.ini"""
+Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /NORESTART /LANG={language} /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{param:SETTINGS|{tmp}\settings.ini}"""
 
 [Messages]
 WelcomeLabel1=Welcome to the [name] Repair Wizard
