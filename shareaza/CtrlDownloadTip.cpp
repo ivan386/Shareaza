@@ -401,6 +401,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 		m_sName = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + ')';
 	else
 		m_sName = inet_ntoa( pSource->m_pAddress );
+
+	if( pSource->m_bPushOnly )
+	{
+		m_sName += _T(" (push)");
+	}
+
 	
 	m_sURL = pSource->m_sURL;
 

@@ -1068,6 +1068,10 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				else
 					strText = inet_ntoa( pSource->m_pAddress );
 			}
+			if( pSource->m_bPushOnly )
+			{
+				strText += _T(" (push)");
+			}
 			break;
 			
 		case DOWNLOAD_COLUMN_SIZE:
