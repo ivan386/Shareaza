@@ -1,4 +1,4 @@
-//
+ï»¿//
 // CtrlWndTabBar.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
@@ -747,12 +747,12 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 	
 	if ( pDC->GetTextExtent( strText ).cx > rc.Width() )
 	{
-		while ( pDC->GetTextExtent( strText + _T("…") ).cx > rc.Width() && strText.GetLength() )
+		while ( pDC->GetTextExtent( strText + _T("â€¦") ).cx > rc.Width() && strText.GetLength() )
 		{
 			strText = strText.Left( strText.GetLength() - 1 );
 		}
 
-		if ( strText.GetLength() ) strText += _T("…");
+		if ( strText.GetLength() ) strText += _T("â€¦");
 	}
 	
 	rc.left -= 20;
