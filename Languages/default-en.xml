@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.4"
+		version="2.1.0.10"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2293,11 +2293,11 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Display legend."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Select and configure items to graph..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Open a new graph window..."/>
-	<tip id="ID_TRAY_OPEN" message="Open the Shareaza window."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Access the selected download source(s) and attempt to download."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Disconnect the selected download transfer(s)."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Disconnect and forget the selected download source(s)."/>
+	<tip id="ID_TRAY_OPEN" message="Open the Shareaza window."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatically clear uploads which have been completed."/>
 	<tip id="ID_UPLOADS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Clear the selected upload(s) from the list."/>
@@ -2909,6 +2909,13 @@
 	<string id="20130" value="sources"/><!-- from 11 to 19 -->
 	<string id="20131" value="sources"/><!-- from 2 to 4 -->
 	<string id="20132" value="sources"/><!-- from 5 to 9 -->
+	<string id="20200" value="Sunday"/>
+	<string id="20201" value="Monday"/>
+	<string id="20202" value="Tuesday"/>
+	<string id="20203" value="Wednesday"/>
+	<string id="20204" value="Thursday"/>
+	<string id="20205" value="Friday"/>
+	<string id="20206" value="Saturday"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3100,6 +3107,25 @@
 		<control/>
 		<control caption="Choose a Password:"/>
 		<control/>
+	</dialog>
+
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+		<control caption="_Options:"/>
+		<control caption="_Enable Scheduler"/>
+		<control/><control/>
+		<control caption="_Restrict networks when limited"/>
+		<control caption="Key:"/>
+		<control caption="Sun"/>
+		<control caption="Mon"/>
+		<control caption="Tue"/>
+		<control caption="Wed"/>
+		<control caption="Thu"/>
+		<control caption="Fri"/>
+		<control caption="Sat"/>
+		<control caption="Do not connect"/>
+		<control caption="Limited connection"/>
+		<control caption="Connect at full speed"/>
+		<control caption="% of _bandwith under limit"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
