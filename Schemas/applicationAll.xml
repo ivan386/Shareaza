@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Application:All Applications</title>
                <title language="af">Program:Alle Programme</title>
                <title language="ar">&#160;البرامج&#160;:&#160;جميع&#160;البرامج</title>
-               <title language="ch">&#160;应用程序:&#160;所有应用程序</title>
+               <title language="cn">&#160;应用程序:&#160;所有应用程序</title>
                <title language="de">Anwendung:Alle Anwendungen</title>
                <title language="es">Aplicación: Todas los programas</title>
                <title language="fr">Application:Toutes les applications</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="ch">&#160;标题</title>
+                       <title language="cn">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -64,7 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">All Applications</title>
                <title language="af">Alle Programme</title>
                <title language="ar">&#160;&#160;جميع&#160;البرامج</title>
-               <title language="ch">&#160;所有应用程序</title>
+               <title language="cn">&#160;所有应用程序</title>
                <title language="de">Alle Anwendungen</title>
                <title language="es">Todas las aplicaciones</title>
                <title language="fr">Toutes les applications</title>
@@ -78,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;ملفات&#160;البرامج&#160;في&#160;المكتبة.</subtitle>
-               <subtitle language="ch">&#160;这个文件夹包含收藏中所有应用文件。</subtitle>
+               <subtitle language="cn">&#160;这个文件夹包含收藏中所有应用文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Anwendungen in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>

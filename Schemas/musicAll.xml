@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Music:All Music</title>
                <title language="af">Musiek:Alle Musiek</title>
                <title language="ar">&#160;اغاني&#160;جميع&#160;الاغاني</title>
-               <title language="ch">&#160;音乐:&#160;所有音乐</title>
+               <title language="cn">&#160;音乐:&#160;所有音乐</title>
                <title language="de">Musik:Alle Musik</title>
                <title language="es">Música: Toda la Música</title>
                <title language="fr">Musique:Toutes les musiques</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="ch">&#160;标题</title>
+                       <title language="cn">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -64,7 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">All Music</title>
                <title language="af">Alle Musiek</title>
                <title language="ar">&#160;جميع&#160;الاغاني</title>
-               <title language="ch">&#160;所有音乐</title>
+               <title language="cn">&#160;所有音乐</title>
                <title language="de">Alle Musik</title>
                <title language="es">Toda la música</title>
                <title language="fr">Toutes les musiques</title>
@@ -78,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains every music file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle musieklêers in jou biblioteek.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;جميع&#160;الاغاني&#160;في&#160;المكتبة.</subtitle>
-               <subtitle language="ch">&#160;这个文件夹包含收藏中所有的音乐文件。</subtitle>
+               <subtitle language="cn">&#160;这个文件夹包含收藏中所有的音乐文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musikdateien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene toda la música de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque.</subtitle>

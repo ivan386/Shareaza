@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Favourites:Favourites</title>
                <title language="af">Gunstelinge:Gunstelinge</title>
                <title language="ar">&#160;المفضلة&#160;:&#160;المفضلة</title>
-               <title language="ch">&#160;最爱:最爱</title>
+               <title language="cn">&#160;最爱:最爱</title>
                <title language="de">Favoriten:Favoriten</title>
                <title language="es">Favoritos: Favoritos</title>
                <title language="fr">Favoris:Favoris</title>
@@ -44,7 +44,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="ch">&#160;标题</title>
+                       <title language="cn">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -60,7 +60,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Description</title>
                        <title language="af">Beskrywing</title>
                        <title language="ar">&#160;نبذه&#160;تعريفية</title>
-                       <title language="ch">&#160;描述</title>
+                       <title language="cn">&#160;描述</title>
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
@@ -77,7 +77,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">My Favourite Files</title>
                <title language="af">My Gunsteling Lêers</title>
                <title language="ar">&#160;ملف&#160;مفضلتي&#160;</title>
-               <title language="ch">&#160;我的最爱文件</title>
+               <title language="cn">&#160;我的最爱文件</title>
                <title language="de">Favoriten</title>
                <title language="es">Mis Archivos Favoritos</title>
                <title language="fr">Mes fichiers favoris</title>
@@ -91,7 +91,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains favourite files which Shareaza will recommend to other users who browse your collection.</subtitle>
                <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
                <subtitle language="ar">&#160;تحتوي&#160;هذه&#160;الحافظة&#160;ملفات&#160;مفضّلة&#160;التي&#160;Shareaza&#160;ستوصي&#160;إلى&#160;المستعملين&#160;الآخرين&#160;الذين&#160;يتصفّحون&#160;مجموعتك.</subtitle>
-               <subtitle language="ch">&#160;这个文件夹中的文件都是Shareaza推荐给其它浏览您的收藏的用户。</subtitle>
+               <subtitle language="cn">&#160;这个文件夹中的文件都是Shareaza推荐给其它浏览您的收藏的用户。</subtitle>
                <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>

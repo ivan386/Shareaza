@@ -23,7 +23,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Music:By Artist</title>
                <title language="af">Musiek:Volgens Kunstenaar</title>
                <title language="ar">&#160;اغنية&#160;بواسطة&#160;الفنان</title>
-               <title language="ch">&#160;音乐:&#160;按艺术家</title>
+               <title language="cn">&#160;音乐:&#160;按艺术家</title>
                <title language="de">Musik:Nach Künstler</title>
                <title language="es">Música: Por Artista</title>
                <title language="fr">Musique:Par artiste</title>
@@ -41,7 +41,7 @@ Shareaza Russian Schemas File translated by dAbserver
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
                        <title language="ar">&#160;المجموع</title>
-                       <title language="ch">&#160;标题</title>
+                       <title language="cn">&#160;标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
@@ -64,7 +64,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <title language="en">Music By Artist</title>
                <title language="af">Musiek Volgens Kunstenaar</title>
                <title language="ar">&#160;اغنية&#160;بواسطة&#160;الفنان</title>
-               <title language="ch">&#160;音乐-按-艺术家</title>
+               <title language="cn">&#160;音乐-按-艺术家</title>
                <title language="de">Musik nach Künstler</title>
                <title language="es">Música por Artista</title>
                <title language="fr">Musique par artiste</title>
@@ -78,7 +78,7 @@ Shareaza Russian Schemas File translated by dAbserver
                <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="ar">&#160;هذا&#160;المجلد&#160;يحتوي&#160;على&#160;قائمة&#160;الفنانين&#160;في&#160;المكتبة.</subtitle>
-               <subtitle language="ch">&#160;这个文件夹中的清单包含您音乐收藏中的艺术家。</subtitle>
+               <subtitle language="cn">&#160;这个文件夹中的清单包含您音乐收藏中的艺术家。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in ihrer Musikbibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
