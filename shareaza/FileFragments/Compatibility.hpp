@@ -72,7 +72,7 @@ selectBlock(const ListType& src, typename ListType::FSizeType blockSize,
             --blockEnd;
 		}
 		// this fragment contains one or more aligned empty blocks
-        for( ; blockBegin <= blockEnd; ++blockBegin )
+        if( blockEnd != ~0ULL ) for( ; blockBegin <= blockEnd; ++blockBegin )
         {
             if( !available || available[ blockBegin ] )
             {
