@@ -63,53 +63,78 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
 {
 	// if ( nState == -1 && pAddress == NULL ) return m_pTransfers.GetCount();
-	int nCount = 0;
-	
-	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	{	
-		if ( pAddress == NULL || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr )
-		{
-			if ( pTransfer->m_nProtocol == PROTOCOL_ED2K && nState != dtsCountNotConnecting )
-			{
-				CDownloadTransferED2K* pED2K = (CDownloadTransferED2K*)pTransfer;
-				if ( pED2K->m_pClient == NULL || pED2K->m_pClient->m_bConnected == FALSE ) continue;
-			}
-			
-			if ( nState == dtsCountAll )
-			{
-				nCount++;
-			}
-			else if ( nState == dtsCountNotQueued )
-			{
-				if ( pTransfer->m_nState == dtsTorrent )
-				{
-					CDownloadTransferBT* pBT = (CDownloadTransferBT*)pTransfer;
-					if ( ! pBT->m_bChoked ) nCount++;
-				}
-				else if ( pTransfer->m_nState != dtsQueued )
-				{
-					nCount++;
-				}
-			}
-			else if ( nState == dtsCountNotConnecting )
-			{
-				if ( pTransfer->m_nState > dtsConnecting ) nCount++;
-			}
-			else if ( nState == dtsCountTorrentAndActive )
-			{
-				if ( ( pTransfer->m_nState == dtsTorrent ) ||
-					 ( pTransfer->m_nState == dtsRequesting ) ||
-					 ( pTransfer->m_nState == dtsDownloading ) )
-					nCount++;
-			}
-			else
-			{
-				if ( pTransfer->m_nState == nState ) nCount++;
+    int nCount = 0;
+
+    switch ( nState )
+    {
+    case dtsCountAll:
+        for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
+        {
+		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
+                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
+                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
+                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+            {
+                ++nCount;
+            }
+        }
+        return nCount;
+    case dtsCountNotQueued:
+	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+	    {	
+		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
+                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
+                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
+                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected )
+                && ( pTransfer->m_nState != dtsQueued || pTransfer->m_nState == dtsTorrent
+                    && !static_cast< CDownloadTransferBT* >( pTransfer )->m_bChoked ) )
+            {
+                ++nCount;
+            }
+        }
+        return nCount;
+    case dtsCountNotConnecting:
+	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+	    {	
+		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
+                && pTransfer->m_nState > dtsConnecting )
+            {
+                ++nCount;
+            }
+        }
+        return nCount;
+    case dtsCountTorrentAndActive:
+	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+	    {	
+		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
+                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
+                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
+                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+		    {
+                switch( pTransfer->m_nState )
+                {
+                case dtsTorrent:
+                case dtsRequesting:
+                case dtsDownloading:
+                    ++nCount;
+                }
+            }
+        }
+        return nCount;
+    default:
+	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+	    {	
+		    if ( !pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr
+                && ( pTransfer->m_nProtocol != PROTOCOL_ED2K
+                    || static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
+                        && static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected )
+		        && pTransfer->m_nState == nState )
+            {
+                ++nCount;
 			}
 		}
+    	return nCount;
 	}
-	
-	return nCount;
 }
 
 //////////////////////////////////////////////////////////////////////
