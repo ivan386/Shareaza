@@ -403,7 +403,8 @@ CSettings::CSettings()
 	Live.LoadWindowState	= FALSE;
 	Live.AutoClose			= FALSE;
 	Live.FirstRun			= FALSE;
-	Live.DiskWarning		= FALSE;
+	Live.DiskSpaceWarning	= FALSE;
+	Live.DiskWriteWarning	= FALSE;
 	Live.AdultWarning		= FALSE;
 
 	// Add all settings

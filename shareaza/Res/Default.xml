@@ -1975,6 +1975,16 @@
 		can become unstable if the drives become full, and temporary files may be lost. You should 
 		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
 	</document>
+
+	<document name="GeneralHelp.DiskWriteFail">
+		<text format="b">A Required Directory is Non-writable</text>
+		<newline gap="8"/>
+		<text>A disk or directory Shareaza needs cannot be written to.</text>
+		<newline gap="8"/>
+		<text>A network drive may have been disconnected, or you may not have write permission 
+		to a selected directory. Please check directories and permissions, or change the
+		temporary files location.</text>
+	</document>
 	
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 detected</text>

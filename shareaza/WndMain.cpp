@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -213,6 +213,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TOOLS_MERCORA, OnToolsMercora)
 	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
 	ON_COMMAND(ID_TOOLS_RESEEDTORRENT, OnToolsReseedTorrent)
+	ON_COMMAND(ID_HELP_DISKSPACE, OnHelpDiskSpace)
+	ON_COMMAND(ID_HELP_DISKWRITEFAIL, OnHelpDiskWriteFail)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_MEDIA, OnUpdateViewMedia)
 	ON_COMMAND(ID_VIEW_MEDIA, OnViewMedia)
 	ON_UPDATE_COMMAND_UI(ID_TAB_MEDIA, OnUpdateTabMedia)
@@ -751,20 +753,35 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	
 	if ( Settings.Scheduler.Enable ) Schedule.Update();
 
-	// Disk space check
+	// Disk space / writable checks
 
-	if ( Settings.Live.DiskWarning == FALSE )
+	DWORD tTicks = GetTickCount();
+	if ( tTicks - tLastCheck > 5 * 60 * 1000 )  // Run once every 5 minutes
 	{
-		DWORD tTicks = GetTickCount();
+		tLastCheck = tTicks;
 
-		if ( tTicks - tLastCheck > 5 * 60 * 1000 )  //Run once every 5 minutes
+		// Check disk space
+		if ( Settings.Live.DiskSpaceWarning == FALSE )
 		{
-			tLastCheck = tTicks;
-
 			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
 			{
-				CHelpDlg::Show( _T("GeneralHelp.DiskSpace") );
-				Settings.Live.DiskWarning = TRUE;
+				Settings.Live.DiskSpaceWarning = TRUE;
+				PostMessage( WM_COMMAND, ID_HELP_DISKSPACE );
+			}
+		}
+
+		// Check disk/directory exists and isn't read-only writable
+		if ( Settings.Live.DiskWriteWarning == FALSE )
+		{
+			DWORD nCompleteAttributes, nIncompleteAttributes;
+			nCompleteAttributes = GetFileAttributes( Settings.Downloads.CompletePath );
+			nIncompleteAttributes = GetFileAttributes( Settings.Downloads.IncompletePath );
+
+			if ( ( nCompleteAttributes == INVALID_FILE_ATTRIBUTES ) || ( nIncompleteAttributes == INVALID_FILE_ATTRIBUTES ) || 
+				 ( nCompleteAttributes &  FILE_ATTRIBUTE_READONLY ) || ( nIncompleteAttributes &  FILE_ATTRIBUTE_READONLY ) )
+			{
+				Settings.Live.DiskWriteWarning = TRUE;
+				PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
 			}
 		}
 	}
@@ -1998,6 +2015,16 @@ void CMainWnd::OnToolsReseedTorrent()
 {
 	CTorrentSeedDlg dlgSeed( LibraryHistory.LastSeededTorrent.m_sPath );
 	dlgSeed.DoModal();
+}
+
+void CMainWnd::OnHelpDiskSpace()
+{
+	CHelpDlg::Show( _T("GeneralHelp.DiskSpace") );
+}
+
+void CMainWnd::OnHelpDiskWriteFail()
+{
+	CHelpDlg::Show( _T("GeneralHelp.DiskWriteFail") );
 }
 
 void CMainWnd::OnToolsProfile() 

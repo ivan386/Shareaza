@@ -1624,6 +1624,8 @@
 #define ID_HELP_SECURITY                33119
 #define ID_HELP_FORUMS                  33120
 #define ID_TOOLS_RESEEDTORRENT          33121
+#define ID_HELP_DISKSPACE               33130
+#define ID_HELP_DISKWRITEFAIL           33131
 
 // Next default values for new objects
 // 
