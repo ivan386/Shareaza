@@ -182,6 +182,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
 	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 10 );
+	AddSetting( &Settings.Downloads.MaxConnectingSources, 1, 5, 50 );
 	AddSetting( &Settings.Downloads.MinSources, 1, 0, 8 );
 	AddSetting( &Settings.Downloads.ConnectThrottle, 1, 0, 5000, _T(" ms") );
 	AddSetting( &Settings.Downloads.PushTimeout, 1000, 5, 180, _T(" s") );
