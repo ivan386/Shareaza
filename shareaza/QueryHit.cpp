@@ -533,7 +533,7 @@ CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, GGUID
 
 			if( pHit->m_bPush == TS_TRUE )
 			{
-				pHit->m_sNick		= _T("(Low ID)");
+				//pHit->m_sNick		= _T("(Low ID)");
 				pHit->m_nPort		= 0;
 			}
 		}

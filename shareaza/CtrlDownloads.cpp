@@ -1095,7 +1095,17 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 				if ( Settings.Search.ShowNames && pSource->m_sNick.GetLength() )
 					strText = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + _T(")");
 				else
-					strText = inet_ntoa( pSource->m_pAddress );
+				{
+					if( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+					{
+						strText.Format( _T("%lu@%s"), pSource->m_pAddress.S_un.S_addr, 
+							(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
+					}
+					else
+					{
+						strText = inet_ntoa( pSource->m_pAddress );
+					}
+				}
 			}
 			if( pSource->m_bPushOnly )
 			{

@@ -445,9 +445,18 @@ void CMatchTipCtrl::LoadFromFile()
 		}
 		else
 		{
-			m_sUser.Format( _T("%s - %s"),
-				(LPCTSTR)CString( inet_ntoa( m_pFile->m_pBest->m_pAddress ) ),
-				(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
+			if( ( m_pFile->m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pFile->m_pBest->m_bPush == TS_TRUE ) )
+			{
+				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_pClientID.w[2], 
+					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pFile->m_pBest->m_pClientID.w[0]) ),
+					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
+			}
+			else
+			{
+				m_sUser.Format( _T("%s - %s"),
+					(LPCTSTR)CString( inet_ntoa( m_pFile->m_pBest->m_pAddress ) ),
+					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
+			}
 		}
 	}
 	else
@@ -554,9 +563,19 @@ void CMatchTipCtrl::LoadFromHit()
 	}
 	else
 	{
-		m_sUser.Format( _T("%s - %s"),
-			(LPCTSTR)CString( inet_ntoa( m_pHit->m_pAddress ) ),
-			(LPCTSTR)m_pHit->m_pVendor->m_sName );
+		if( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
+		{
+			m_sUser.Format( _T("%lu@%s - %s"),
+				m_pHit->m_pClientID.w[2], 
+				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pHit->m_pClientID.w[0]) ),
+				(LPCTSTR)m_pHit->m_pVendor->m_sName );
+		}
+		else
+		{
+			m_sUser.Format( _T("%s - %s"),
+				(LPCTSTR)CString( inet_ntoa( m_pHit->m_pAddress ) ),
+				(LPCTSTR)m_pHit->m_pVendor->m_sName );
+		}
 	}
 }
 

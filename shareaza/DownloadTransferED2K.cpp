@@ -218,7 +218,7 @@ BOOL CDownloadTransferED2K::OnConnected()
 {
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
-	
+
 	m_pHost		= m_pClient->m_pHost;
 	m_sAddress	= m_pClient->m_sAddress;
 	

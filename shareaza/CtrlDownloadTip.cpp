@@ -477,7 +477,17 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	if ( pSource->m_sNick.GetLength() > 0 )
 		m_sName = pSource->m_sNick + _T(" (") + inet_ntoa( pSource->m_pAddress ) + ')';
 	else
-		m_sName = inet_ntoa( pSource->m_pAddress );
+	{
+		if( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( pSource->m_bPushOnly == TRUE ) )
+		{
+			m_sName.Format( _T("%lu@%s"), (DWORD)pSource->m_pAddress.S_un.S_addr, 
+				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pSource->m_pServerAddress) ) );
+		}
+		else
+		{
+			m_sName = inet_ntoa( pSource->m_pAddress );
+		}
+	}
 
 	if( pSource->m_bPushOnly )
 	{
