@@ -3,6 +3,8 @@ http://files.jrsoftware.org/is/5/
 You'll also need to install the PreProcessor:
 http://files.jrsoftware.org/ispack/
 
+Minimum version needed is 5.0.4.
+
 Compile procedure for Shareaza:
 1)	Place Shareaza.exe in \setup\builds\
 2)	Place skin.exe in \setup\builds\
