@@ -1482,11 +1482,11 @@ right quote	&#147;
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">Į S P Ė J I M A S &#160; - &#160; J Ū S &#160; E S A T E &#160; U Ž &#160; U Ž K A R D O S</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">„Shareaza“ nustatė, kad jūs esate už NAT maršrutizatoriaus ar ugniasienės,
+			<text colour="FF0000">„Shareaza“ nustatė, kad jūs esate už NAT maršrutizatoriaus ar užkardos,
 			ir negali priimti susijungimų iš Interneto. &#160;</text>
 			<text colour="FF0000" format="b">Tai gali sumažinti atsisiuntimų našumą.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Paspauskite čia, jei norite sužinoti, kaip suderinti savo maršrutizatorių ar ugniasienę</link>
+			<link target="raza:command:ID_HELP_FIREWALLS">Paspauskite čia, jei norite sužinoti, kaip suderinti savo maršrutizatorių ar užkardą</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
@@ -2156,7 +2156,7 @@ right quote	&#147;
 	<tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinktos bylos..."/>
 	<tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
 	<tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
-	<tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar ugniasienę."/>
+	<tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
 	<tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza.com tinklalapį."/>
 	<tip id="ID_HELP_SECURITY" text="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose"/>
@@ -2529,10 +2529,10 @@ right quote	&#147;
 	<string id="8329" value="visos kolekcijos"/>
 	<string id="8330" value="aplankas"/>
 	<string id="8331" value="Šis šaltinis šiuo metu užimtas"/>
-	<string id="8332" value="Šis šaltinis yra už ugniasienės"/>
+	<string id="8332" value="Šis šaltinis yra už užkardos"/>
 	<string id="8333" value="Šis šaltinis gali siųsti nestabiliai"/>
 	<string id="8334" value="Šios bylos šaltiniai šiuo metu užimti"/>
-	<string id="8335" value="Šios bylos šaltiniai yra už ugniasienės"/>
+	<string id="8335" value="Šios bylos šaltiniai yra už užkardos"/>
 	<string id="8336" value="Šios bylos šaltiniai gali siųsti nestabiliai"/>
 	<string id="16064" value="Startuojamas „Shareaza“ tinklo branduolys..."/>
 	<string id="16065" value="Neįmanoma susieti %s adreso %i prievado įeinantiems susijungimams. Įeinantys susijungimai nebus palaikomi."/>
@@ -2541,7 +2541,7 @@ right quote	&#147;
 	<string id="16068" value="Priimami įeinantys TCP susijungimai adresu %s per %i prievadą."/>
 	<string id="16069" value="Išeinantys susijungimai vyks adresu %s per %i prievadą."/>
 	<string id="16070" value="Neįmanoma nustatyti %s adreso išeinantiems susijungimams. Išeinatiems susijungimams bus naudojamas numatytasis sąsajos įtaisas."/>
-	<string id="16071" value="Už ugniasienės, įeinančių susijungimų nesiklausoma."/>
+	<string id="16071" value="Už užkardos, įeinančių susijungimų nesiklausoma."/>
 	<string id="16072" value="Klausomasi UDP datagramų adresu %s per %i prievadą."/>
 	<string id="16073" value="Nustatomas adresato „%s“ adresas..."/>
 	<string id="16074" value="Neįmanoma nustatyti adresato „%s“ adreso."/>
@@ -2600,7 +2600,7 @@ right quote	&#147;
 	<string id="16208" value="Gaunamas netikėtas užklausos maršruto lentelės atnaujinimas iš kaimyno %s."/>
 	<string id="16209" value="Kaimynas adresu %s atsiuntė neteisingą užklausos maršruto lentelės atnaujinimą, ryšys nutraukiamas."/>
 	<string id="16210" value="Kaimynas adresu %s atnaujino savo užklausos maršruto lentelę (%i bitų = %lu[%i], %i%% užimtumas)."/>
-	<string id="16211" value="Kaimynas adresu %s persiuntė įstūmiančiojo susijungimo užklausą adresatui už ugniasienės, ignoruojama."/>
+	<string id="16211" value="Kaimynas adresu %s persiuntė įstūmiančiojo susijungimo užklausą adresatui už užkardos, ignoruojama."/>
 	<string id="16212" value="Kaimynas adresu %s persiuntė pernelyg išplėstą paketą, kuris nėra užkoduotas pagal GGEP protokolą."/>
 	<string id="16213" value="Siunčiama užklausos maršruto lentelė kaimynui %s (%i bitų = %lu[%i], %i%% užimtumas)"/>
 	<string id="16256" value="Adresatas „%s“ įtrauktas į parsisiuntimo eilę su %i šaltinių(-iais)."/>
@@ -2751,6 +2751,7 @@ right quote	&#147;
 	<string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
 	<string id="16408" value="Kopijuoti &amp;nuorodą"/>
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
+	<string id="16410" value="Ar tikrai norite pašalinti šį filtrą?"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -3429,7 +3430,7 @@ right quote	&#147;
 		<control caption="&#160;( prašome pasirinkti )| Aš naudojuosi Internetu namuose| Aš naudojuosi Internetu mokymosi įstaigos tinkle| Aš naudojuosi Internetu biuro tinkle| Aš naudojuosi Internetu viešbutyje ar oro uoste"/>
 		<control caption="Ar Jūsų organizacijos tinklas yra saugomas užkarda ar NAT maršrutizatoriumi?"/>
 		<control caption="&#160;Ne, aš GALIU priimti visus ryšius| Taip, ir aš NEGALIU primti įeinančio ryšio iš Interneto| Aš nežinau, prašau APTIKTI užkardą automatiškai"/>
-		<control caption="Ar Jūsų namų interneto ryšys yra už ugniasienės ar NAT maršrutizatioriaus?"/>
+		<control caption="Ar Jūsų namų interneto ryšys yra už užkardos ar NAT maršrutizatioriaus?"/>
 		<control caption="&#160;Ne, aš turiu PILNĄ PRIĖJIMĄ prie Interneto| Taip, bet aš peradresuosiu prievadą programai| Taip, ir aš NEGALIU primti įeinančio ryšio iš Interneto| Aš nežinau, prašau APTIKTI užkardą automatiškai"/>
 		<control caption="Jei Jūs žinote, kokios spartos interneto ryšį turite, žemiau pasirinkite artimiausią spartos variantą:"/>
 		<control caption="| Telefono ryšys| ISDN| ADSL (256 K)| ADSL (512 K)| ADSL (768 K)| ADSL (1,5 M)| Kabelinis modemas/SDSL| T1| T3| Vietinis tinklas| OC3"/>
@@ -3623,11 +3624,11 @@ right quote	&#147;
 		<control caption="Atšaukti"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtruoti atitikimus">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtruoti atitikimus">
 		<control caption="Rodyti tik atitikimus, kuriuose yra ž_odžiai:"/>
 		<control/>
 		<control caption="( Jūs galite išbraukti iš radinių žodžius su -žodis )"/>
-		<control caption="Ir yra tokio _dydžio (KB):"/>
+		<control caption="Ir yra tokio _dydžio:"/>
 		<control caption="Mažiausiai:"/>
 		<control/>
 		<control caption="Daugiausiai:"/>
@@ -3637,13 +3638,18 @@ right quote	&#147;
 		<control caption="šaltinių."/>
 		<control caption="_Slėpti:"/>
 		<control caption="Užimtus adresatus"/>
-		<control caption="Už ugniasienės"/>
+		<control caption="Už užkardos"/>
 		<control caption="Nestabilius adresatus"/>
 		<control caption="Neatitinka kriterijų"/>
 		<control caption="Bylas, kurias jau turite"/>
 		<control caption="Klastotes"/>
 		<control caption="Filtruoti"/>
 		<control caption="Atšaukti"/>
+		<control/>
+		<control caption="Nustatyti numatytuoju"/>
+		<control caption="_Išsaugoti kaip"/>
+		<control caption="_Trinti"/>
+		<control caption="Filtrai:"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Paslaugų radimo tarnyba">

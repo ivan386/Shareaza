@@ -2732,6 +2732,7 @@
 	<string id="16407" value="Хотите ли Вы, чтобы Вас не спрашивали подверждений о дальнейших загрузках из этой коллекции?"/>
 	<string id="16408" value="&amp;Копировать ссылку"/>
 	<string id="16409" value="&amp;Экспорт ссылок..."/>
+	<string id="16410" value="Вы уверены, что хотите удалить этот фильтр?"/>
 	<string id="16448" value="Установлена связь с %s, идет подтверждение связи..."/>
 	<string id="16449" value="Сейчас идет беседа с %s (%s)."/>
 	<string id="16450" value="Соединение с %s закрыто."/>
@@ -3604,11 +3605,11 @@
 		<control caption="Отмена"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Фильтрование соответсвий">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Фильтрование соответсвий">
 		<control caption="Показывать только содержащие слова:"/>
 		<control/>
 		<control caption="( исключать слова можно ставя '-' перед ними )"/>
-		<control caption="И размером:"/>
+		<control caption="И _размером:"/>
 		<control caption="Минимум:"/>
 		<control/>
 		<control caption="Максимум:"/>
@@ -3616,7 +3617,7 @@
 		<control caption="Минимум с:"/>
 		<control/><control/>
 		<control caption="источн."/>
-		<control caption="--хосты--———-—СКРЫТЬ-ИЗ-СПИСКА—————--файлы--"/>
+		<control caption="--хосты--———-—С_КРЫТЬ-ИЗ-СПИСКА—————--файлы--"/>
 		<control caption="Занятые"/>
 		<control caption="За брандмауэром"/>
 		<control caption="Нестабильные"/>
@@ -3625,6 +3626,11 @@
 		<control caption="Подделки"/>
 		<control caption="Фильтр"/>
 		<control caption="Отмена"/>
+		<control/>
+		<control caption="Использовать по умолчанию"/>
+		<control caption="_Сохранить как"/>
+		<control caption="_Удалить"/>
+		<control caption="Фильтры:"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Ресурс соединений">

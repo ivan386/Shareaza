@@ -2737,6 +2737,7 @@
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
+	<string id="16410" value="Are you sure you want to delete this filter ?"/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
@@ -3609,11 +3610,11 @@
 		<control caption="Cancel"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filter Matches">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Matches">
 		<control caption="Only show matches which include the _words:"/>
 		<control/>
 		<control caption="( you can also exclude words with -word )"/>
-		<control caption="And are of _size (KB):"/>
+		<control caption="And are of _size:"/>
 		<control caption="Minimum:"/>
 		<control/>
 		<control caption="Maximum:"/>
@@ -3630,6 +3631,11 @@
 		<control caption="Bogus results"/>
 		<control caption="Filter"/>
 		<control caption="Cancel"/>
+		<control/>
+		<control caption="Set as default"/>
+		<control caption="_Save as"/>
+		<control caption="_Delete"/>
+		<control caption="Filters:"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
