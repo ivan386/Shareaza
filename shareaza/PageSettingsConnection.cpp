@@ -257,10 +257,12 @@ CString CConnectionSettingsPage::GetInOutHostTranslation()
 void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CSettingsPage::OnShowWindow(bShow, nStatus);
-	
-	// Update speed units
-	m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
-	m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
+	if ( bShow )
+	{
+		// Update speed units
+		m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
+		m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
 
-	UpdateData( FALSE );
+		UpdateData( FALSE );
+	}
 }

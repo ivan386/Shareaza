@@ -388,18 +388,19 @@ void CUploadsSettingsPage::OnOK()
 void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CSettingsPage::OnShowWindow(bShow, nStatus);
-
-	// Update speed units
-	if ( Settings.Bandwidth.Uploads )
+	if ( bShow )
 	{
-		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+		// Update speed units
+		if ( Settings.Bandwidth.Uploads )
+		{
+			m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+		}
+		else
+		{
+			m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
+			int nSpace		= m_sBandwidth.Find( ' ' );
+			m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+		}
+		UpdateData( FALSE );
 	}
-	else
-	{
-		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-		int nSpace		= m_sBandwidth.Find( ' ' );
-		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
-	}
-
-	UpdateData( FALSE );
 }

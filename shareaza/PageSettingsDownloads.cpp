@@ -245,18 +245,19 @@ void CDownloadsSettingsPage::OnOK()
 void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CSettingsPage::OnShowWindow(bShow, nStatus);
-
-	// Update speed units
-	if ( Settings.Bandwidth.Downloads )
+	if ( bShow )
 	{
-		m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+		// Update speed units
+		if ( Settings.Bandwidth.Downloads )
+		{
+			m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+		}
+		else
+		{
+			m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
+			int nSpace		= m_sBandwidth.Find( ' ' );
+			m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+		}
+		UpdateData( FALSE );
 	}
-	else
-	{
-		m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-		int nSpace		= m_sBandwidth.Find( ' ' );
-		m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
-	}
-
-	UpdateData( FALSE );
 }
