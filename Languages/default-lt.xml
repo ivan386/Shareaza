@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.4.0"
+                        version="2.0.5.0"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2028,7 +2028,7 @@ right quote    &#147;
        <tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
        <tip id="ID_NETWORK_CONNECT" message="Jungtis prie tinklo"/>
        <tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklo"/>
-       <tip id="ID_TOOLS_SETTINGS" message="Konfigūruoti „Shareaza“ nuostatas..."/>
+       <tip id="ID_TOOLS_SETTINGS" message="Keisti „Shareaza“ nuostatas..."/>
        <tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
        <tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
        <tip id="ID_VIEW_TRAFFIC" message="Rodyti arba paslėpti „GRAFIKŲ“ langą."/>
@@ -2038,7 +2038,7 @@ right quote    &#147;
        <tip id="ID_VIEW_HOSTS" message="Rodyti arba paslėpti „ADRESATŲ TALPYKLOS“ langą."/>
        <tip id="ID_VIEW_PACKETS" message="Rodyti arba paslėpti „PAKETŲ IŠVESTIES“ langą."/>
        <tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
-       <tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos protokolą."/>
+       <tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos žurnalą."/>
        <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Atverti naują „Paketų išvesties“ langą šiam kaimynui stebėti."/>
        <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno įeinačiam srautui stebėti."/>
        <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Atverti naują „Paketų išvesties“ langą šio kaimyno išeinačiam srautui stebėti."/>
@@ -2059,7 +2059,7 @@ right quote    &#147;
        <tip id="ID_SEARCHMONITOR_PAUSE" message="Pristabdyti paieškos užklausų stebėjimą."/>
        <tip id="ID_HITMONITOR_PAUSE" message="Pristabdyti kreipinių stebėjimą."/>
        <tip id="ID_SEARCHMONITOR_CLEAR" message="Išvalyti paieškos užklausų monitoriaus buferį."/>
-       <tip id="ID_SEARCH_COPY" message="Nukopijuoti pasirinktos bylos URI."/>
+       <tip id="ID_SEARCH_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
        <tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
        <tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
        <tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
@@ -2080,7 +2080,7 @@ right quote    &#147;
        <tip id="ID_LIBRARY_COLUMNS" message="Pasirinkti, kuriuos meta duomenų stulpelius rodyti..."/>
        <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Ištrinti bylas, kurių atsisiuntimas yra sustabdytas."/>
        <tip id="ID_UPLOADS_LAUNCH" message="Atverti/vykdyti pasirinktą bendrintą bylą(-as)."/>
-       <tip id="ID_UPLOADS_DISCONNECT" message="Atjungti pasirinktą išsiuntimo perdavimą(-us)."/>
+       <tip id="ID_UPLOADS_DISCONNECT" message="Nutraukti pasirinktą išsiuntimą(-us)."/>
        <tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Pašalinti iš sąrašo bylas, kurių išsiuntimas baigtas."/>
        <tip id="ID_UPLOADS_CLEAR" message="Pašalinti iš išsiunčiamų bylų sąrašo pasirinktą bylą(-as)."/>
        <tip id="ID_TRANSFERS_DISCONNECT" message="Atjungti pasirinktą atsisiuntimo srautą(-us)."/>
@@ -2090,9 +2090,9 @@ right quote    &#147;
        <tip id="ID_HELP_WEB_2" message="Aplankyti P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Aplankyti Slyck.com"/>
        <tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ vartotojo vadovą."/>
-       <tip id="ID_SEARCH_CHAT" message="Sukurti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
        <tip id="ID_TRAFFIC_GRID" message="Rodyti tinklelį."/>
-       <tip id="ID_TRAFFIC_AXIS" message="Rodyti vertikalią ašį"/>
+       <tip id="ID_TRAFFIC_AXIS" message="Rodyti vertikalią ašį."/>
        <tip id="ID_TRAFFIC_LEGEND" message="Rodyti legendą."/>
        <tip id="ID_TRAFFIC_SETUP" message="Pasirinkti ir konfigūruoti grafiko elementus..."/>
        <tip id="ID_TRAFFIC_CLEAR" message="Išvalyti duomenų srauto grafiką."/>
@@ -2100,19 +2100,19 @@ right quote    &#147;
        <tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
        <tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
        <tip id="ID_CHILD_MAXIMISE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
-       <tip id="ID_CHILD_MINIMISE" message="Sutraukti pasirinktą langą, patalpinant į kortelių juosta."/>
-       <tip id="ID_TRANSFERS_CHAT" message="Sukurti pokalbio sesiją su pasirinktu vartotoju."/>
-       <tip id="ID_UPLOADS_CHAT" message="Sukurti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_CHILD_MINIMISE" message="Sutraukti pasirinktą langą, patalpinant į kortelių juostą."/>
+       <tip id="ID_TRANSFERS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_UPLOADS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
        <tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
        <tip id="ID_TRAY_OPEN" message="Atverti „Shareaza“ langą."/>
        <tip id="ID_NETWORK_AUTO_CLOSE" message="Automatiškai išeiti iš „Shareaza“ programos, kai bus baigti visi atsisiuntimai/išsiuntimai."/>
        <tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatiškai šalinti užbaigtas bylas iš išsiunčiamų bylų sąrašo."/>
        <tip id="ID_LIBRARY_SEARCH" message="Ieškoti savo bylų kolekcijoje..."/>
        <tip id="ID_TRAFFIC_WINDOW" message="Atverti naują grafiko langą..."/>
-       <tip id="ID_NEIGHBOURS_CHAT" message="Sukurti pokalbio sesiją su pasirinktu vartotoju."/>
+       <tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu vartotoju."/>
        <tip id="ID_HELP_WEB_4" message="Aplankyti NapJunk.net"/>
        <tip id="ID_SEARCH_STOP" message="Sustabdyti radinių išvedimą šiame lange."/>
-       <tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti HTTP URL naudojantis „Shareaza“ atsisiuntimo sistema..."/>
+       <tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti naują ar BitTorrent tinklo torrent bylą..."/>
        <tip id="ID_DOWNLOADS_URL" message="Pridėti šaltinio adresą prie pasirinktos bylos..."/>
        <tip id="ID_LIBRARY_BITZI_WEB" message="Peržiūrėti pasirinktos bylos Bitzi(TM) etiketę internete."/>
        <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Parsisiųsti pasirinktos bylos(-ų) meta duomenis iš Bitzi(TM)..."/>
@@ -2121,8 +2121,8 @@ right quote    &#147;
        <tip id="ID_SECURITY_REMOVE" message="Pašalinti pasirinktą(-as) saugos taisyklę(-es)."/>
        <tip id="ID_SECURITY_RESET" message="Apnulinti pasirinktų saugos taisyklių kreipinių skaitliukus."/>
        <tip id="ID_SECURITY_ADD" message="Pridėti naują taisyklę prie apsaugos sekos..."/>
-       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Nustatyti, kad saugos politika, leidžianti visų adresatų prieigą, yra numatytoji."/>
-       <tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, yra numatytoji."/>
+       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Nustatyti, kad saugos politika, leidžianti visų adresatų prieigą, būtų numatytąja."/>
+       <tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, būtų numatytąja."/>
        <tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
        <tip id="ID_LIBRARY_MOVE" message="Perkelti pasirinktas bylas į kitą kolekcijos aplanką..."/>
        <tip id="ID_LIBRARY_COPY" message="Kopijuoti pasirinktas bylas į kitą kolekcijos aplanką..."/>
@@ -2137,9 +2137,9 @@ right quote    &#147;
        <tip id="ID_TAB_LIBRARY" message="Peržiūrėkite ir keiskite savo kolekcijos bylas."/>
        <tip id="ID_TAB_TRANSFERS" message="Stebėkite, kaip vyksta bylų atsisiuntimas ir išsiuntimas."/>
        <tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
-       <tip id="ID_VIEW_TABBED" message="Naudokite „Shareaza“ aukštesnio lygio veiksenoje su kortelėmis (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas)."/>
-       <tip id="ID_VIEW_WINDOWED" message="Naudokite „Shareaza“ aukštesnio lygio veiksenoje su langais."/>
-       <tip id="ID_LIBRARY_URL" message="Kopijuoti pasirinktos bylos URI."/>
+       <tip id="ID_VIEW_TABBED" message="Perjunkite „Shareaza“ į kortelių veikseną (Pradžia, Kolekcija, Grotuvas, Siuntimai, Tinklas), skirtą patyrusiems vartotojams."/>
+       <tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems vartotojams."/>
+       <tip id="ID_LIBRARY_URL" message="Kopijuoti pasirinktos bylos nuorodą."/>
        <tip id="ID_VIEW_DISCOVERY" message="Rodyti ar paslėpti „PASLAUGŲ RADIMO TARNYBŲ“ langą."/>
        <tip id="ID_DISCOVERY_EDIT" message="Peržiūrėti pasirinktos paslaugų radimo tarnybos ypatybes."/>
        <tip id="ID_DISCOVERY_QUERY" message="Nusiųsti tuoj pat užklausą pasirinktai paslaugų radimo tarnybai."/>
@@ -2147,28 +2147,28 @@ right quote    &#147;
        <tip id="ID_DISCOVERY_ADD" message="Pridėti naują paslaugų radimo tarnybą..."/>
        <tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
        <tip id="ID_DISCOVERY_WEBCACHE" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
-       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatiškai šalinti iš sąrašo parsisiųstų bylų pavadinimus."/>
+       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatiškai šalinti iš sąrašo parsisiųstas bylas."/>
        <tip id="ID_TRANSFERS_CONNECT" message="Susijungti su pasirinktu šaltiniu(-ais) ir pamėginti parsisiųsti bylą."/>
        <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Rodyti šaltinius, kurie šiuo metu nenaudojami."/>
-       <tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo protokolą."/>
+       <tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
        <tip id="ID_DISCOVERY_ADVERTISE" message="Anonsuoti pasirinktą GWebCache tarnybą atsitiktinei egzistuojančiai GWebCache tarnybai."/>
        <tip id="ID_DISCOVERY_BROWSE" message="Peržvelgti internete pasirinktos GWebCache tarnybos statistiką."/>
        <tip id="ID_BROWSE_STOP" message="Sustabdyti šio adresato bylų peržiūrą."/>
-       <tip id="ID_BROWSE_REFRESH" message="Atnaujinti šiame adresate pasiekiamų bylų sąrašą."/>
+       <tip id="ID_BROWSE_REFRESH" message="Atnaujinti šio adresato siūlomų bylų sąrašą."/>
        <tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto vartotojo profilį ir bendrintas bylas."/>
-       <tip id="ID_DOWNLOADS_BOOST" message="Paspartinti pasirinktos bylos parsisiuntimą, panaikinant perdavimo greitaveikos apribojimus."/>
+       <tip id="ID_DOWNLOADS_BOOST" message="Paspartinti pasirinktos bylos parsisiuntimą, panaikinant greitaveikos apribojimus."/>
        <tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Peržiūrėti pasirinktą bylą(-as) naudojant intelektualų peržiūros būdą."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Pasirinktos bylos(-ų) kopijos peržiūra."/>
        <tip id="ID_SEARCH_MERGE" message="Apjungti pasirinktas bylų grupes."/>
        <tip id="ID_DOWNLOADS_MONITOR" message="Atverti parsisiuntimo monitoriaus langą, stebint pasirinktą bylą..."/>
        <tip id="ID_LIBRARY_SELECT_ALL" message="Pasirinkti ir peržiūrėti visus savo kolekcijos aplankus."/>
        <tip id="ID_SECURITY_EXPORT" message="Eksportuoti pasirinktas saugos taisykles į bylą..."/>
        <tip id="ID_SECURITY_IMPORT" message="Importuoti saugos taisykles iš bylos..."/>
        <tip id="ID_SEARCH_FILTER_RAW" message="Filtruoti radinius pagal tam tikrus žodžius arba sąlygas..."/>
-       <tip id="ID_SEARCH_PANEL" message="Rodyti sparčiosios paieškos skydelį iš kairės pusės nuo „Paieškos“ lango."/>
+       <tip id="ID_SEARCH_PANEL" message="Rodyti sparčiosios paieškos skydelį kairėje „Paieškos“ lango pusėje."/>
        <tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
        <tip id="ID_LIBRARY_LAUNCH" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
-       <tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato URI, kuriuo bus galima prisijungti prie jo."/>
+       <tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
        <tip id="ID_TOOLS_RESKIN" message="Perkrauti ir pritaikyti pasirinktą apvalkalą."/>
        <tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
        <tip id="ID_WINDOW_TOOLBAR" message="Rodyti ar paslėpti įrankių juostą."/>
@@ -2178,7 +2178,7 @@ right quote    &#147;
        <tip id="ID_TOOLS_SKIN" message="Pasirinkti kitokį „Shareaza“ apvalkalą..."/>
        <tip id="ID_LIBRARY_HASH_PRIORITY" message="Paspartinti skenavimą ir maišos (tapatybės kodo) skaičiavimą."/>
        <tip id="ID_DOWNLOADS_FILE_DELETE" message="Trinti pasirinktą užbaigtą bylą(-as)."/>
-       <tip id="ID_LIBRARY_RENAME" message="Pervadinti pasirinktą bylą."/>
+       <tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą bylą."/>
        <tip id="ID_UPLOADS_START" message="Tęsti pasirinktos siunčiamos bylos(-ų) išsiuntimą."/>
        <tip id="ID_DOWNLOADS_MOVE_UP" message="Perkelti pasirinktą bylą(-as) aukštyn, suteikiant didesnį prioritetą."/>
        <tip id="ID_DOWNLOADS_MOVE_DOWN" message="Perkelti pasirinktą bylą(-as) žemyn, suteikiant mažesnį prioritetą."/>
@@ -2207,7 +2207,7 @@ right quote    &#147;
        <tip id="ID_LIBRARY_UNLINK" message="Pašalinti pasirinktas bylas iš šio albumo katalogo."/>
        <tip id="ID_LIBRARY_FOLDER_METADATA" message="Pritaikyti bendrus albumo katalogo meta duomenis visoms jame esančioms byloms."/>
        <tip id="ID_VIEW_MEDIA" message="Rodyti ar paslėpti „GROTUVO“ langą."/>
-       <tip id="ID_TAB_MEDIA" message="Grokite garso ir vaizdo bylas iš savo kolekcijos."/>
+       <tip id="ID_TAB_MEDIA" message="Grokite savo kolekcijos garso ir vaizdo bylas."/>
        <tip id="ID_MEDIA_OPEN" message="Atverti ir groti grotuvo bylą ar grojaraštį..."/>
        <tip id="ID_MEDIA_CLOSE" message="Užverti veikiančią grotuvo bylą, tuo pačiu atlaisvinant atmintį."/>
        <tip id="ID_MEDIA_PLAY" message="Groti pažymėtą grotuvo bylą."/>
@@ -2222,7 +2222,7 @@ right quote    &#147;
        <tip id="ID_MEDIA_FULLSCREEN" message="Į-/Išjungti visaekranę vaizdo veikseną."/>
        <tip id="ID_MEDIA_RANDOM" message="Į-/Išjungti atsitiktinį bylų pasirinkimą iš veikiančio grojaraščio."/>
        <tip id="ID_MEDIA_REPEAT" message="Kartoti veikiančios bylos grojimą."/>
-       <tip id="ID_MEDIA_SETTINGS" message="Rodyti grotuvo nuostatų puslapį..."/>
+       <tip id="ID_MEDIA_SETTINGS" message="Atverti grotuvo nuostatų langą..."/>
        <tip id="ID_MEDIA_PAUSE" message="Pristabdyti grotuvo bylos grojimą."/>
        <tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
        <tip id="ID_MEDIA_ASPECT_DEFAULT" message="Naudoti numatytąjį vaizdo matmenų santykį."/>
@@ -2242,7 +2242,7 @@ right quote    &#147;
        <tip id="ID_TAB_SEARCH" message="Ieškoti tinkle bylų parsisiuntimui"/>
        <tip id="ID_LIBRARY_FOLDERS" message="Tvarkyti fizinius savo kolekcijos aplankus..."/>
        <tip id="ID_TOOLS_PROFILE" message="Taisyti savo vartotojo profilį..."/>
-       <tip id="ID_BROWSE_PROFILE" message="Pažvelgti į vartotojo profilį."/>
+       <tip id="ID_BROWSE_PROFILE" message="Peržiūrėti vartotojo profilį."/>
        <tip id="ID_BROWSE_FILES" message="Peržiūrėti vartotojo bendrintas bylas."/>
        <tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
        <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Atverti ar vykdyti pasirinktą bylą(-as)."/>
@@ -2263,11 +2263,11 @@ right quote    &#147;
        <tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar bylų meta duomenis ir maišas."/>
        <tip id="ID_VIEW_HELP" message="Rodyti ar paslėpti „ŽINYNO“ langą."/>
        <tip id="ID_TAB_HELP" message="Skaityti „Shareaza“ vartotojo instrukciją."/>
-       <tip id="ID_DOWNLOADS_COPY" message="Kopijuoti pasirinktos bylos URI."/>
+       <tip id="ID_DOWNLOADS_COPY" message="Kopijuoti pasirinktos bylos nuorodą."/>
        <tip id="ID_LIBRARY_VIEW_ALBUM" message="Rodyti išsamią albumų informaciją" tip="Albumai"/>
        <tip id="ID_SEARCH_DETAILS" message="Rodyti išsamią pasirinktos bylos informaciją."/>
        <tip id="ID_UPLOADS_FILTER_ALL" message="Rodyti visas išsiunčiamas bylas."/>
-       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Rodyti tas bylas, kurios aktyviai siunčia."/>
+       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Rodyti tas bylas, kurios aktyviai siunčiamos."/>
        <tip id="ID_UPLOADS_FILTER_QUEUED" message="Rodyti tas bylas, kurių išsiuntimo laukiama."/>
        <tip id="ID_UPLOADS_FILTER_HISTORY" message="Rodyti bylas, kurios buvo išsiųstos."/>
        <tip id="ID_SEARCH_FOR_THIS" message="Ieškoti kitų pasirinktos bylos kopijų."/>
@@ -2307,8 +2307,8 @@ right quote    &#147;
        <tip id="ID_DOWNLOADS_RATE" message="Įvertinti pasirinktą bylą."/>
        <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Rodyti rinkinį raiškiuoju būdu" tip="Raiškioji peržiūra"/>
        <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visas bylas iš pasirinkto rinkinio."/>
-       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio bylą..."/>
-       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio bylą..."/>
+       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Eksportuoti ir išsaugoti pasirinktą albumo aplanką kaip rinkinio bylą..."/>
+       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į turimą rinkinio bylą..."/>
        <tip id="ID_LIBRARY_SEED_TORRENT" message="Pradėti skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
        <tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>
        <tip id="ID_DOWNLOADS_EDIT" message="Rodyti bylos išplėstinės taisos langą..."/>
@@ -2383,7 +2383,7 @@ right quote    &#147;
        <string id="8131" value="Iš tinklo negauta jokių radinių, atitinkančių paieškos kriterijus."/>
        <string id="8132" value="Radinių yra, bet jie buvo nufiltruoti."/>
        <string id="8133" value="„Shareaza“ aktyviai ieško tinkle..."/>
-       <string id="8134" value="Jūs mėginate pradėti naują paiešką. Ar norite išvalyti ankstesnės paieškos radinius?"/>
+       <string id="8134" value="Jūs ketinate pradėti naują paiešką. Ar norite išvalyti ankstesnės paieškos radinius?"/>
        <string id="8141" value="Rodyti paieškos skydelį"/>
        <string id="8142" value="Paslėpti paieškos skydelį"/>
        <string id="8143" value="Ieškoma..."/>
@@ -2427,10 +2427,10 @@ right quote    &#147;
        <string id="8232" value="Atverti"/>
        <string id="8233" value="Peržiūra"/>
        <string id="8234" value="%s iš %s (%.2f%%)"/>
-       <string id="8235" value="Sparta:"/>
-       <string id="8236" value="Likę laiko:"/>
-       <string id="8237" value="Apimtis:"/>
-       <string id="8238" value="Šaltinių:"/>
+       <string id="8235" value="Visuminė sparta:"/>
+       <string id="8236" value="Apytiksl. likę laiko:"/>
+       <string id="8237" value="Atsisiunt. apimtis:"/>
+       <string id="8238" value="Šaltinių skaičius:"/>
        <string id="8239" value="Baigta"/>
        <string id="8240" value="„Shareaza“ perkelia parsisiųstą bylą:"/>
        <string id="8241" value="„Shareaza“ ieško klaidų parsisiųstoje byloje:"/>
@@ -2487,12 +2487,12 @@ right quote    &#147;
        <string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų vartotojų paiešką. Ar tikrai norite tęsti?"/>
        <string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
        <string id="16087" value="Jūsų išeinanti greitaveika yra per maža šio tinklo įgalinimui"/>
-       <string id="16128" value="Priimtas įeinantis susijungimas su %s per %i prievadą."/>
-       <string id="16129" value="Užmezgamas ryšys su kaimynu %s per %i prievadą..."/>
+       <string id="16128" value="Priimtas įeinantis susijungimas su %s iš %i prievado."/>
+       <string id="16129" value="Užmezgamas ryšys su kaimynu %s iš %i prievado..."/>
        <string id="16130" value="Neįmanoma užmegzti ryšio su kaimynu %s."/>
        <string id="16131" value="Baigėsi laiko limitas ryšiui su %s užmegzti."/>
        <string id="16132" value="Ryšys su kaimynu %s nutrauktas dėl siuntimų srauto kamščio."/>
-       <string id="16133" value="Užmegztas ryšys su kaimynu %s, sveikinamasi..."/>
+       <string id="16133" value="Užmegztas ryšys su kaimynu %s, patvirtinama..."/>
        <string id="16134" value="Nutrauktas ryšys su kaimynu %s."/>
        <string id="16135" value="Neįmanoma užmegzti ryšio su kaimynu %s (atsakyta)."/>
        <string id="16136" value="Ryšys su kaimynu %s netikėtai nutrūko."/>
@@ -2501,12 +2501,12 @@ right quote    &#147;
        <string id="16139" value="Kaimynas adresu %s nutraukė ryšį (%i : %s)."/>
        <string id="16140" value="Kaimynas adresu %s dirbtinai palaiko ryšį."/>
        <string id="16141" value="Nutrauktas ryšys su kaimynu %s, nes adresatas nėra mazgas."/>
-       <string id="16144" value="Baigėsi sveikinimosi su %s laiko limitas."/>
+       <string id="16144" value="Baigėsi susijungimo su %s patvirtinimo laiko limitas."/>
        <string id="16145" value="Gnutella ryšys su kaimynu %s užmegztas sėkmingai (G%i.%i : %s)."/>
-       <string id="16146" value="Sveikinimosi procedūra su %s nesėkminga dėl klaidų ryšio linijoje."/>
+       <string id="16146" value="Ryšio su %s patvirtinimas nesėkmingas dėl klaidų ryšio linijoje."/>
        <string id="16147" value="Nutraukiamas pridėtinis ryšys su %s, adresatas atsiuntė patarimą (%s prievadas %i)."/>
        <string id="16148" value="Ryšys su %s atmestas (%s)."/>
-       <string id="16149" value="Gnutella 0.6 sveikinimosi su %s procedūra buvo nesėkminga, bandoma naudojantis 0.4."/>
+       <string id="16149" value="Ryšio su %s patvirtinimas pagal Gnutella 0.6 protokolą buvo nesėkmingas, bandoma naudojantis 0.4."/>
        <string id="16150" value="Nutraukiamas pridėtinis ryšys su %s."/>
        <string id="16151" value="Atsakoma ryšio adresatui %s, nes jis yra apsaugota atšaka."/>
        <string id="16152" value="Kaimynas-mazgas adresu %s nepriims mūsų kaip mazgo, nutraukiamas ryšys."/>
@@ -2543,7 +2543,7 @@ right quote    &#147;
        <string id="16261" value="Kuriama byla „%s“ parsisiuntimui."/>
        <string id="16262" value="Neįmanoma sukurti vietinės bylos „%s“ parsisiuntimui, procedūra nutraukiama."/>
        <string id="16263" value="Neįmanoma atverti vietinės bylos „%s“ parsisiuntimui, procedūra nutraukiama."/>
-       <string id="16264" value="Užmezgamas ryšys su %s per %i prievadą bylos „%s“ parsisiuntimui..."/>
+       <string id="16264" value="Užmezgamas ryšys su %s iš %i prievado bylos „%s“ parsisiuntimui..."/>
        <string id="16265" value="Neįmanoma užmegzti ryšio su adresatu %s parsisiuntimui vykdyti."/>
        <string id="16266" value="Ryšys su %s parsisiuntimui vykdyti užmegztas."/>
        <string id="16267" value="Siunčiama užklausa parsisiųsti fragmentą (%lu-%lu), priklausantį bylai „%s“, iš adresato %s."/>
@@ -2607,7 +2607,7 @@ right quote    &#147;
        <string id="16325" value="Adresatas %s užklausė išsiųsti nežinomą arba nesamą objektą „%s“."/>
        <string id="16326" value="Adresatas %s užklausė išsiųsti „%s“ su skirtingu SHA1."/>
        <string id="16327" value="Atsakyta išsiųsti „%s“ adresatui %s (%s), užimtas, o klientas nepalaiko eilių."/>
-       <string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama pasisveikinimo..."/>
+       <string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama patvirtinimo..."/>
        <string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/bylos klaida."/>
        <string id="16330" value="Išsiunčiama atkarpa %lu-%lu, priklausanti bylai „%s“, adresatui %s (%s)."/>
        <string id="16331" value="Baigta siųsti bylos „%s“ dalis adresatui %s."/>
@@ -2671,13 +2671,13 @@ right quote    &#147;
        <string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
        <string id="16408" value="Kopijuoti &amp;URI"/>
        <string id="16409" value="Eksportuoti &amp;URIs..."/>
-       <string id="16448" value="Susijungta su %s, sveikinamasi..."/>
+       <string id="16448" value="Susijungta su %s, patvirtinama..."/>
        <string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
        <string id="16450" value="Ryšys su %s nutrauktas."/>
        <string id="16451" value="Ryšys su %s prarastas."/>
        <string id="16452" value="Neatpažinta komanda „%s“."/>
        <string id="16453" value="Jungiamasi su adresatu %s pokalbiui..."/>
-       <string id="16454" value="Priimama įeinanti užklausa pokalbiui iš %s, sveikinamasi..."/>
+       <string id="16454" value="Priimama įeinanti užklausa pokalbiui iš %s, patvirtinimas ryšys..."/>
        <string id="16455" value="%s dabar žinomas(-a) kaip %s."/>
        <string id="16456" value="Neįmanoma susisiekti su adresatu %s."/>
        <string id="16457" value="Ryšio užmegzti nepavyko dėl klaidų perdavimo linijoje."/>
@@ -2766,10 +2766,10 @@ right quote    &#147;
        <string id="17024" value="Užmezgamas ryšys su %s..."/>
        <string id="17025" value="Neįmanoma užmegzti ryšio su %s."/>
        <string id="17026" value="Prašoma užmegzti įstūmiantįjį ryšį per užkardą su adresatu %s..."/>
-       <string id="17027" value="Priimtas įstumiantysis ryšys su %s, sveikinamasi..."/>
-       <string id="17028" value="Ryšys užmegztas, sveikinamasi..."/>
-       <string id="17029" value="Sveikinimosi procedūra buvo nesėkminga, adresatas galbūt nepalaiko pokalbių."/>
-       <string id="17030" value="Sveikinimasis baigtas, pokalbių protokolo versija %s."/>
+       <string id="17027" value="Priimtas įstumiantysis ryšys su %s, patvirtinama..."/>
+       <string id="17028" value="Ryšys užmegztas, patvirtinama..."/>
+       <string id="17029" value="Ryšio patvirtinimas buvo nesėkmingas, adresatas galbūt nepalaiko pokalbių."/>
+       <string id="17030" value="Ryšio patvirtinimas baigtas, pokalbių protokolo versija %s."/>
        <string id="17031" value="Apsikeičiama profilių informacija..."/>
        <string id="17032" value="Paliudytasis vartotojas "/>
        <string id="17033" value="Prašoma privataus pokalbio su vartotoju..."/>
@@ -2784,23 +2784,23 @@ right quote    &#147;
        <string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį vartotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
        <string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
        <string id="17216" value="Užmezgamas ryšys su eDonkey2000 serveriu %s..."/>
-       <string id="17217" value="Ryšys su eDonkey2000 serveriu %s užmegztas, sveikinamasi..."/>
+       <string id="17217" value="Ryšys su eDonkey2000 serveriu %s užmegztas, patvirtinama..."/>
 
        <string id="17219" value="eDonkey2000 serveris %s atsakė ryšio."/>
        <string id="17220" value="eDonkey2000 serveris %s atsiliepė, kliento ID yra %lu."/>
        <string id="17221" value="eDonkey2000 serveris %s pakeitė mūsų kliento ID iš %lu į %lu."/>
        <string id="17222" value="eDonkey2000 serveris %s prisistatė kaip „%s“."/>
        <string id="17223" value="eDonkey2000 serveris %s atmetė ryšį."/>
-       <string id="17224" value="Klaida sveikinantis su eDonkey2000 klientu %s."/>
+       <string id="17224" value="Klaida patvirtinant ryšį su eDonkey2000 klientu %s."/>
        <string id="17225" value="eDonkey2000 kliento ryšys su %s nutrūko."/>
        <string id="17226" value="Gautas neteisingo formato eDonkey2000 paketas iš %s (id=%x)."/>
        <string id="17227" value="Įeinantis ryšys iš %s identifikuotas kaip eDonkey2000 kliento."/>
        <string id="17228" value="Siunčiamas bylos „%s“ eDonkey2000 maišos rinkinys adresatui %s..."/>
        <string id="17229" value="eDonkey2000 kliento ryšys su %s buvo nenaudojamas, ryšys nutrauktas."/>
        <string id="17230" value="Užmezgamas eDonkey2000 kliento ryšys su %s..."/>
-       <string id="17231" value="eDonkey2000 klientas %s turi neteisingą GUID, sveikinimasis atšaukiamas."/>
+       <string id="17231" value="eDonkey2000 klientas %s turi neteisingą GUID, ryšio patvirtinimas atšaukiamas."/>
        <string id="17232" value="Baigėsi susijungimo su eDonkey2000 klientu %s laiko limitas."/>
-       <string id="17233" value="Baigėsi sveikinimosi su eDonkey2000 klientu %s laiko limitas."/>
+       <string id="17233" value="Baigėsi ryšio su eDonkey2000 klientu %s patvirtinimo laiko limitas."/>
        <string id="17234" value="Atsakoma susijungimo su eDonkey2000 klientu %s, nes eDonkey2000 yra neįgalintas."/>
        <string id="17248" value="Pradedamas eDonkey2000 dalinių bylų importas..."/>
        <string id="17249" value="Veiksmas baigtas, sėkmingai importuotos %i dalinės bylos(-ų)."/>
@@ -2817,7 +2817,7 @@ right quote    &#147;
        <string id="17260" value="  Bylos kopijavimui nepakanka vietos diske."/>
        <string id="17472" value="Įeinantis ryšys su %s identifikuotas kaip BitTorrent kliento, deramasi dėl ryšio..."/>
        <string id="17473" value="Baigėsi susijungimo su BitTorrent klientu %s laiko limitas."/>
-       <string id="17474" value="Baigėsi sveikinimosi su BitTorrent klientu %s laiko limitas."/>
+       <string id="17474" value="Baigėsi ryšio su BitTorrent klientu %s patvirtinimo laiko limitas."/>
        <string id="17475" value="Nutraukiamas BitTorrent ryšys su adresatu %s dėl siuntimų srauto kamščio."/>
        <string id="17476" value="BitTorrent ryšio užmezgimas su %s nepasisekė, nes nutolęs klientas turi ne tą GUID."/>
        <string id="17477" value="BitTorrent adresato %s atsakyme nurodyta ne ta byla."/>
@@ -2830,7 +2830,7 @@ right quote    &#147;
        <string id="17484" value="Klaida nagrinėjant BitTorrent seklio atsakymą."/>
        <string id="17485" value="Gautas BitTorrent seklio atsakymas apie bylą „%s“, %i nauji šaltiniai(-ų)."/>
        <string id="17486" value="Užmezgamas ryšys su BitTorrent klientu %s..."/>
-       <string id="17487" value="Užmegztas ryšys su BitTorrent klientu %s, sveikinamasi..."/>
+       <string id="17487" value="Užmegztas ryšys su BitTorrent klientu %s, patvirtinama..."/>
        <string id="17488" value="Jūs pakeitėte šios torrent bylos seklio URL. Ar tikrai norite palikti šį pakeitimą?\n\nNeteisingas seklio URL gali neleisti toliau vykdyti parsisiuntimo."/>
        <string id="17489" value="BitTorrent ryšiui su adresatu %s naudojamas išplėstinis protokolas, identifikuotas kaip &quot;%s&quot;."/>
        <string id="17490" value="Gauta %i naujų(-i) BitTorrent šaltinių(-iai) iš adresato %s."/>
@@ -3021,7 +3021,7 @@ right quote    &#147;
                <control caption="_Laiko limitai:"/>
                <control caption="Susijungimui:"/>
                <control/><control/>
-               <control caption="Sveikinimuisi:"/>
+               <control caption="Patvirtinimui:"/>
                <control/><control/>
                <control caption="Aš galiu priimti įeinančias užklausas"/>
        </dialog>
