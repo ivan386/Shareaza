@@ -1,75 +1,78 @@
-		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tabsel">Home</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="search">Search</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="downloads">Downloads</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="uploads">Uploads</a></td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab"><a class="tab" href="network">Networks</a></td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<p>
-						Welcome to <b>Shareaza Remote Access</b>.
-					</p>
-					<p>
-						This web console provides full control over your searches, downloads,
-						uploads and network connections.
-					</p>
-					<br>
-					<table cellspacing="8">
-						<tr>
-							<td width="4"/>
-							<td><a href="search"><b>Search</b></a> - Search for files, work with search results, select files to download.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="downloads"><b>Downloads</b></a> - Manage downloads, pause and resume, clear completed.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="uploads"><b>Uploads</b></a> - View uploads.</td>
-						</tr>
-						<tr>
-							<td width="4"/>
-							<td><a href="network"><b>Networks</b></a> - Review and manage network connections, connect or disconnect from different P2P networks, or shutdown Shareaza.</td>
-						</tr>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newsearch">
-							<tr>
-								<td>Quick Search:</td>
-								<td><input type="text" name="search" size="30"></td>
-								<td>
-									<input type="submit" value="Go">
-								</td>
-							</tr>
-						</form>
-					</table>
-					<br>
-					<table align="center">
-						<form method="get" action="newdownload">
-							<tr>
-								<td>Download Magnet:</td>
-								<td><input type="text" name="uri" size="50"></td>
-								<td>
-									<input type="submit" value="Go">
-								</td>
-							</tr>
-						</form>
-					</table>
-				</td>
-			</tr>
-		</table>
+<table width="95%" align="center" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="center">
+			<table width="100%" cellspacing="0">
+				<tr>
+					<td class="tabedg">&nbsp;</td>
+					<td class="tabsel">Home</td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="search">Search</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="downloads">Downloads</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="uploads">Uploads</a></td>
+					<td class="tabfil">&nbsp;</td>
+					<td class="tab"><a class="tab" href="network">Networks</a></td>
+					<td class="tabedg">&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="frame">
+			<p>
+				Welcome to <b>Shareaza Remote Access</b>.
+			</p>
+			<p>
+				This web console provides full control over your searches, downloads, uploads 
+				and network connections.
+			</p>
+			<br>
+			<table cellspacing="8">
+				<tr>
+					<td width="4" />
+					<td><a href="search"><b>Search</b></a> - Search for files, work with search 
+						results, select files to download.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="downloads"><b>Downloads</b></a> - Manage downloads, pause and resume, 
+						clear completed.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="uploads"><b>Uploads</b></a> - View uploads.</td>
+				</tr>
+				<tr>
+					<td width="4" />
+					<td><a href="network"><b>Networks</b></a> - Review and manage network connections, 
+						connect or disconnect from different P2P networks, or shutdown Shareaza.</td>
+				</tr>
+			</table>
+			<br>
+			<form method="get" action="newsearch" ID="Form1">
+				<table align="center">
+					<tr>
+						<td>Quick Search:</td>
+						<td><input type="text" name="search" size="30"></td>
+						<td>
+							<input type="submit" value="Go">
+						</td>
+					</tr>
+				</table>
+			</form>
+			<br>
+			<form method="get" action="newdownload" ID="Form2">
+				<table align="center">
+					<tr>
+						<td>Download Magnet:</td>
+						<td><input type="text" name="uri" size="50"></td>
+						<td>
+							<input type="submit" value="Go">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>
