@@ -430,18 +430,18 @@ void CRemote::PageSwitch(CString& strPath)
 
 void CRemote::PageLogin()
 {
-	CString sPassword = GetKey( _T("password"));
-
-	if( !sPassword.IsEmpty())
+	CString strPassword = GetKey( _T("password") );
+	
+	if ( ! strPassword.IsEmpty() )
 	{
 		CSHA pSHA1;
-		pSHA1.Add( sPassword, sPassword.GetLength() );
+		pSHA1.Add( (LPCTSTR)strPassword, strPassword.GetLength() * sizeof(TCHAR) );
 		pSHA1.Finish();
-		sPassword = pSHA1.GetHashString( FALSE );
+		strPassword = pSHA1.GetHashString( FALSE );
 	}
-
+	
 	if ( GetKey( _T("username") ) == Settings.Remote.Username &&
-						sPassword == Settings.Remote.Password &&
+					  strPassword == Settings.Remote.Password &&
 		 Settings.Remote.Username.GetLength() > 0 &&
 		 Settings.Remote.Password.GetLength() > 0 )
 	{

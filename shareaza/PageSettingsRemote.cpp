@@ -77,9 +77,9 @@ BOOL CRemoteSettingsPage::OnInitDialog()
 	
 	m_bEnable	= m_bOldEnable		= Settings.Remote.Enable;
 	m_sUsername	= m_sOldUsername	= Settings.Remote.Username;
-	m_sOldPassword	= Settings.Remote.Password;
-	if( Settings.Remote.Password.GetLength() > 0 ) m_sPassword	= _T("      ");
-	else m_sPassword = _T("");
+	m_sOldPassword					= Settings.Remote.Password;
+	
+	if ( ! m_sOldPassword.IsEmpty() ) m_sPassword = _T("      ");
 	
 	UpdateData( FALSE );
 	OnBnClickedRemoteEnable();
@@ -90,23 +90,23 @@ BOOL CRemoteSettingsPage::OnInitDialog()
 void CRemoteSettingsPage::OnNewPassword()
 {
 	UpdateData();
-
-	if( m_sPassword.GetLength() < 3 )	//Password too short
+	
+	if ( m_sPassword.GetLength() < 3 )		// Password too short
 	{
-		Settings.Remote.Password = _T("");
+		Settings.Remote.Password = m_sOldPassword;
 	}
-	else if( m_sPassword == _T("      ") ) //Password hasn't been edited. (?)
+	else if ( m_sPassword == _T("      ") )	// Password hasn't been edited
 	{
-		//Settings.Remote.Password = m_sOldPassword;
+		Settings.Remote.Password = m_sOldPassword;
 	}
-	else								//Hash and store new password
+	else
 	{
 		CSHA pSHA1;
-		pSHA1.Add( m_sPassword, m_sPassword.GetLength() );
+		pSHA1.Add( (LPCTSTR)m_sPassword, m_sPassword.GetLength() * sizeof(TCHAR) );
 		pSHA1.Finish();
 		Settings.Remote.Password = pSHA1.GetHashString( FALSE );
 	}
-
+	
 	OnBnClickedRemoteEnable();
 }
 
@@ -116,7 +116,6 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 	
 	Settings.Remote.Enable		= m_bEnable;
 	Settings.Remote.Username	= m_sUsername;
-	//Settings.Remote.Password	= m_sPassword;
 	
 	m_wndUsername.EnableWindow( m_bEnable );
 	m_wndPassword.EnableWindow( m_bEnable );
@@ -140,18 +139,18 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 		}
 		else
 		{
-			LoadString(strURL, IDS_REMOTE_UNAVAILABLE );
+			LoadString( strURL, IDS_REMOTE_UNAVAILABLE );
 			m_wndURL.EnableWindow( FALSE );
 		}
 	}
 	else if ( m_bEnable )
 	{
-		LoadString(strURL, IDS_REMOTE_ENABLED );
+		LoadString( strURL, IDS_REMOTE_ENABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	else
 	{
-		LoadString(strURL, IDS_REMOTE_DISABLED );
+		LoadString( strURL, IDS_REMOTE_DISABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
 	
