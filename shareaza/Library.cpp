@@ -213,7 +213,7 @@ BOOL CLibrary::Load()
 	BOOL bFile1, bFile2;
 	CString strFile;
 	
-	strFile = Settings.General.Path + _T("\\Data\\Library");
+	strFile = Settings.General.UserPath + _T("\\Data\\Library");
 	
 	bFile1 = pFile1.Open( strFile + _T("1.dat"), CFile::modeRead );
 	bFile2 = pFile2.Open( strFile + _T("2.dat"), CFile::modeRead );
@@ -301,7 +301,7 @@ void CLibrary::Save()
 	CFile pFile;
 	
 	strFile.Format( _T("%s\\Data\\Library%i.dat"),
-		(LPCTSTR)Settings.General.Path, m_nFileSwitch + 1 );
+		(LPCTSTR)Settings.General.UserPath, m_nFileSwitch + 1 );
 	
 	m_nFileSwitch = ( m_nFileSwitch == 0 ) ? 1 : 0;
 	

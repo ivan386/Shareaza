@@ -134,6 +134,7 @@ void CShareManagerDlg::OnShareAdd()
 
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;
 	CString strGeneralPathLC = Settings.General.Path;
+	CString strUserPathLC = Settings.General.UserPath;
 	strIncompletePathLC.MakeLower();
 	strGeneralPathLC.MakeLower();
 
@@ -144,6 +145,8 @@ void CShareManagerDlg::OnShareAdd()
 		 strPathLC == _T( "c:\\program files" ) ||
 		 strPathLC == strGeneralPathLC ||
 		 strPathLC == strGeneralPathLC + _T("\\data") ||
+		 strPathLC == strUserPathLC ||
+		 strPathLC == strUserPathLC + _T("\\data") ||
 		 strPathLC == strIncompletePathLC )
 	{
 		CHelpDlg::Show( _T("ShareHelp.BadShare") );

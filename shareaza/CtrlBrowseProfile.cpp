@@ -387,7 +387,7 @@ void CBrowseProfileCtrl::LoadDefaultHead()
 	CImageServices pServices;
 	CImageFile pImage( &pServices );
 	
-	if ( pImage.LoadFromFile( Settings.General.Path + _T("\\Data\\DefaultAvatar.png") )
+	if ( pImage.LoadFromFile( Settings.General.UserPath + _T("\\Data\\DefaultAvatar.png") )
 		 && pImage.EnsureRGB( CoolInterface.m_crWindow ) )
 	{
 		pImage.Resample( 128, 128 );

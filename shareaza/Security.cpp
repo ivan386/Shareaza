@@ -249,7 +249,7 @@ BOOL CSecurity::Load()
 {
 	CFile pFile;
 
-	CString strFile = Settings.General.Path + _T("\\Data\\Security.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
 	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
 	
@@ -275,7 +275,7 @@ BOOL CSecurity::Save(BOOL bLock)
 
 	CFile pFile;
 
-	CString strFile = Settings.General.Path + _T("\\Data\\Security.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
 	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{

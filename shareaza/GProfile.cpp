@@ -116,7 +116,7 @@ BOOL CGProfile::Load(LPCTSTR pszFile)
 	if ( pszFile != NULL )
 		strFile = pszFile;
 	else
-		strFile = Settings.General.Path + _T("\\Data\\Profile.xml");
+		strFile = Settings.General.UserPath + _T("\\Data\\Profile.xml");
 	
 	CXMLElement* pXML = CXMLElement::FromFile( strFile, TRUE );
 	
@@ -140,7 +140,7 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 	if ( pszFile != NULL )
 		strXML = pszFile;
 	else
-		strXML = Settings.General.Path + _T("\\Data\\Profile.xml");
+		strXML = Settings.General.UserPath + _T("\\Data\\Profile.xml");
 	
 	if ( ! pFile.Open( strXML, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
 	

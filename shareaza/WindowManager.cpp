@@ -443,7 +443,7 @@ void CWindowManager::SaveWindowStates()
 
 BOOL CWindowManager::LoadSearchWindows()
 {
-	CString strFile = Settings.General.Path + _T("\\Data\\Searches.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 	CFile pFile;
 
 	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
@@ -473,7 +473,7 @@ BOOL CWindowManager::LoadSearchWindows()
 
 void CWindowManager::SaveSearchWindows()
 {
-	CString strFile = Settings.General.Path + _T("\\Data\\Searches.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 	CFile pFile;
 
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;

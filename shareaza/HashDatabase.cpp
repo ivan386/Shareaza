@@ -61,7 +61,7 @@ BOOL CHashDatabase::Create()
 	
 	Close();
 	
-	m_sPath = Settings.General.Path + _T("\\Data\\TigerTree.dat");
+	m_sPath = Settings.General.UserPath + _T("\\Data\\TigerTree.dat");
 	
 	if ( m_pFile.Open( m_sPath, CFile::modeReadWrite ) )
 	{

@@ -204,7 +204,7 @@ BOOL CDownloadGroups::Load()
 	CSingleLock pLock( &m_pSection, TRUE );
 	
 	CFile pFile;
-	CString strPath = Settings.General.Path + _T("\\Data\\DownloadGroups.dat");
+	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
 	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return FALSE;
 	
 	try
@@ -230,7 +230,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	if ( ! bForce && m_nBaseCookie == m_nSaveCookie ) return FALSE;
 	m_nSaveCookie = m_nBaseCookie;
 	
-	CString strPath = Settings.General.Path + _T("\\Data\\DownloadGroups.dat");
+	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
 	DeleteFile( strPath + _T(".tmp") );
 	
 	CFile pFile;

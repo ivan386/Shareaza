@@ -357,7 +357,7 @@ BOOL CUploadQueues::Load()
 	LoadString( m_pTorrentQueue->m_sName, IDS_UPLOAD_QUEUE_TORRENT );
 	LoadString( m_pHistoryQueue->m_sName, IDS_UPLOAD_QUEUE_HISTORY );
 
-	CString strFile = Settings.General.Path + _T("\\Data\\UploadQueues.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
 	
 	if ( ! pFile.Open( strFile, CFile::modeRead ) )
 	{
@@ -389,7 +389,7 @@ BOOL CUploadQueues::Save()
 	CSingleLock pLock( &m_pSection, TRUE );
 	CFile pFile;
 	
-	CString strFile = Settings.General.Path + _T("\\Data\\UploadQueues.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
 	if ( !pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 		return FALSE;
 	
