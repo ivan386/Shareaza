@@ -155,6 +155,7 @@ void CHostCacheWnd::Update()
 	CLiveList pLiveList( 8 );
 	
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
+
 	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
 	
 	m_nCookie = pCache->m_nCookie;
@@ -233,6 +234,12 @@ void CHostCacheWnd::OnSize(UINT nType, int cx, int cy)
 void CHostCacheWnd::OnTimer(UINT nIDEvent) 
 {
 	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
+
+//**********Problem here
+	if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
+			ASSERT(FALSE);
+//(Temp check)
+
 	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
 	DWORD tTicks = GetTickCount();
 
