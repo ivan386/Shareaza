@@ -2397,11 +2397,11 @@ right quote	&#147;
 	<string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
 	<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš www.shareaza.com."/>
 	<string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
-	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
-	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
-	<string id="8062" value="Mazgo veiksena su %lu kaimynais(-ų). %s vietinėje kolekcijoje."/>
+	<string id="8060" value="Mazgas/Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
+	<string id="8061" value="Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
+	<string id="8062" value="Mazgo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
 	<string id="8063" value="Prisijungta. Jūsų kolekcijoje yra %s."/>
-	<string id="8064" value="Prisijungta prie %lu kaimynų(-o). %s vietinėje kolekcijoje."/>
+	<string id="8064" value="Prisijungta prie %lu kaimynų(-o). %s asmeninėje kolekcijoje."/>
 	<string id="8065" value="Jungiamasi prie tinklo..."/>
 	<string id="8066" value="Neprisijungta prie tinklo."/>
 	<string id="8067" value="%s įein. : %s išein. [D:%i/U:%i]"/>
