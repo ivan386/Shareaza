@@ -20,7 +20,7 @@ right quote    &#147;
                         description="Shareaza Lithuanian Skin File"
                         link="http://www.shareaza.com/"
                         email="rrol2002(at)hotmail.com"
-                        version="2.0.0.28"
+                        version="2.0.0.38"
                         type="Language"
                         language="lt"
                         prompt="Paspauskite&#160;&#269;ia, jei Jūsų gimtoji kalba lietuvių."
@@ -2444,6 +2444,9 @@ right quote    &#147;
        <string id="8313" value="Ši byla, atrodo, yra reklaminė šiukšlė."/>
        <string id="8314" value="Jūs anksčiau buvote parsisiuntę šią bylą ir ją ištrynėte."/>
        <string id="8315" value="Įtraukta į juodajį sąrašą: "/>
+       <string id="8316" value="Kreipinių"/>
+       <string id="8317" value="Išsiųsta"/>
+       <string id="8318" value="%lu šiandien, %lu iš viso"/>
        <string id="8320" value="Būklė:"/>
        <string id="8321" value="Sparta:"/>
        <string id="8322" value="URL adresas:"/>
@@ -2715,7 +2718,7 @@ right quote    &#147;
        <string id="16806" value="Jūs nurodėte, jog norite paruošti prievado nukreipimą į savo NAT maršrutizatorių ar užkardą.\n\nSukonfigūruokite savo tinklą TCP prievado %i nukreipimui į savo vietinį kompiuterį."/>
        <string id="16807" value="Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."/>
        <string id="16808" value="Jūs nenurodėte savo amžiaus ir lyties. Ar tikrai norite tęsti be šių duomenų?"/>
-       <string id="16809" value="B&amp;aigti"/>
+       <string id="16809" value="&amp;Užverti"/>
        <string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
        <string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
        <string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
@@ -2917,9 +2920,9 @@ right quote    &#147;
                <control caption="Pa_rinktys:"/>
                <control caption="Prisiminti aplankų peržiūros būdą"/>
                <control caption="Stebėti kolekcijos katalogus"/>
-               <control caption="Laikyti šaltinių pakaitalų tinklelį"/>
+               <control/>
                <control caption="Filtruoti pagal plėtinius"/>
-               <control caption="Saugoti maišos vientisumą"/>
+               <control/>
                <control caption="Leisti peržiūrėti bendrintas bylas"/>
                <control caption="Paskutinės _bylos:"/>
                <control caption="Prisiminti:"/>
