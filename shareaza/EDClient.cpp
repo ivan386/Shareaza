@@ -791,7 +791,10 @@ void CEDClient::DeriveVersion()
 	}
 	else
 	{
-		m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion - 1000 );
+		if ( m_nVersion >= 1000 )
+			m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion - 1000 );
+		else
+			m_sUserAgent.Format( _T("eDonkey v1.%i"), m_nVersion);
 	}
 	
 	if ( m_bEmule && m_nEmVersion > 0 )
