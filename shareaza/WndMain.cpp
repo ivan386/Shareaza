@@ -82,6 +82,7 @@
 #include "DlgWarnings.h"
 #include "DlgPromote.h"
 #include "DlgCloseMode.h"
+#include "DlgTorrentSeed.h"
 
 IMPLEMENT_DYNCREATE(CMainWnd, CMDIFrameWnd)
 
@@ -207,6 +208,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TOOLS_SKIN, OnToolsSkin)
 	ON_COMMAND(ID_TOOLS_LANGUAGE, OnToolsLanguage)
 	ON_COMMAND(ID_TOOLS_MERCORA, OnToolsMercora)
+	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_MEDIA, OnUpdateViewMedia)
 	ON_COMMAND(ID_VIEW_MEDIA, OnViewMedia)
 	ON_UPDATE_COMMAND_UI(ID_TAB_MEDIA, OnUpdateTabMedia)
@@ -1893,6 +1895,18 @@ void CMainWnd::OnToolsMercora()
 	}
 	
 	ShellExecute( GetSafeHwnd(), NULL, _T("http://www.mercora.com/"), NULL, NULL, SW_SHOWNORMAL );
+}
+
+
+void CMainWnd::OnToolsSeedTorrent()
+{
+	CFileDialog dlgFile( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
+		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
+	
+	if ( dlgFile.DoModal() != IDOK ) return;
+	
+	CTorrentSeedDlg dlgSeed( dlgFile.GetPathName() );
+	dlgSeed.DoModal();
 }
 
 void CMainWnd::OnToolsProfile() 
