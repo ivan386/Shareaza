@@ -428,6 +428,39 @@ BOOL ParsePASV (CString& strValue, SOCKADDR_IN& host)
 	return TRUE;
 }
 
+bool Split (CString& in, TCHAR token, CString& out)
+{
+	in = in.Trim (_T(" \t\r\n"));
+	if (!in.GetLength ()) {
+		out.Empty ();
+		return false;
+	}
+	int p = in.ReverseFind (token);
+	if (p != -1) {
+		out = in.Mid (p + 1);
+		in = in.Mid (0, p);
+	} else {
+		out = in;
+		in.Empty ();
+	}
+	return true;
+}
+
+bool ExtractFileSize (CString data, QWORD& size)
+{
+	CString tmp;
+	for (int n = 0; Split (data, _T(' '), tmp); ++n) {
+		for (int i = 0; i < tmp.GetLength (); ++i)
+			if (!isdigit (tmp [i]))
+				break;
+		if (i == tmp.GetLength () && tmp [0] != _T('0') && n != 2) {
+			size = _tstoi (tmp);
+			return true;
+		}
+	}
+	return false;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP read header lines
 
@@ -482,7 +515,9 @@ BOOL CDownloadTransferFTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			if ( strHeader == _T("200")) // Type A setted
 			{
 				m_FtpState = ftpPASV1;
-			}
+			} else
+			if ( strHeader == _T("230")) // Extra "Logged in" messages
+				return TRUE;
 			return SendRequest ();
 
 		case ftpPASV1:
@@ -509,19 +544,9 @@ BOOL CDownloadTransferFTP::OnHeaderLine(CString& strHeader, CString& strValue)
 			{
 				TRACE ("List: \"%ls\"\n", m_sListData);
 
-				// Extract file length
-				m_sListData = m_sListData.Trim (_T(" \t\r\n"));
-				int p = m_sListData.ReverseFind (_T(' '));
-				if (p != -1) {
-					m_sListData = m_sListData.Mid (0, p);
-					m_sListData = m_sListData.Trim (_T(" \t\r\n"));
-					p = m_sListData.ReverseFind (_T(' '));
-					if (p != -1) {
-						m_pDownload->m_nSize = _tstoi (m_sListData.Mid (p + 1));
-
+				// Extract file size
+				if (ExtractFileSize (m_sListData, m_pDownload->m_nSize))
 						return StartNextFragment();
-					}
-				}
 				m_FtpState = ftpTYPE1;
 				return SendRequest ();
 			} else {

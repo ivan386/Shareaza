@@ -78,8 +78,8 @@ public:
 		CTransfer::Close();		
 		m_pSource = NULL;
 		ASSERT( m_pDownload != NULL );
-		//m_pDownload->RemoveTransfer( this );
-		CDownloadTransfer::Close( bKeepSource );
+		m_pDownload->RemoveTransfer( this );
+		//CDownloadTransfer::Close( bKeepSource );
 	}
 	virtual void	Boost()
 	{

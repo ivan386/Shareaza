@@ -57,7 +57,6 @@ public:
 	DWORD		GetMeasuredSpeed() const;
 	BOOL		OnAcceptPush(CGUID* pClientID, CConnection* pConnection);
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
-protected:
 	void		AddTransfer(CDownloadTransfer* pTransfer);
 	void		RemoveTransfer(CDownloadTransfer* pTransfer);
 
