@@ -16,7 +16,7 @@
 			description="Shareaza Default English Skin File"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.0.0.20"
+			version="2.0.0.25"
 			type="Language"
 			language="en"
 			prompt="Click here to select English as your natural language."
@@ -1079,7 +1079,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
@@ -1096,7 +1096,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1145,7 +1145,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 			<!--<item id="ID_LIBRARY_JIGLE" text="View _Jigle Lookup"/>-->
 		</menu>
 		<menu text="O_rganise">
@@ -1164,7 +1164,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -2299,14 +2299,14 @@
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
-	<tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
+    <tip id="ID_LIBRARY_SEED_TORRENT" message="Seed the selected Torrent on BitTorrent."/>
+    <tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
 	<tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
 	<tip id="ID_WINDOW_REMOTE" message="Show or hide the Shareaza Remote Control"/>
 	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Show BitTorrent uploads."/>
 	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_HELP_FIREWALLS" message="Get help configuring your router or firewall."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
 	<tip id="ID_WINDOW_CASCADE" message="Expand all open windows to fill the screen."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles."/>
@@ -2441,6 +2441,12 @@
 	<string id="8313" value="This file appears to be spam."/>
 	<string id="8314" value="You have downloaded and deleted this file before."/>
 	<string id="8315" value="Blacklisted: "/>
+    <string id="8320" value="Status:"/>
+    <string id="8321" value="Speed:"/>
+    <string id="8322" value="URL:"/>
+    <string id="8323" value="User Agent:"/>
+    <string id="8324" value="Inactive"/>
+    <string id="8325" value="Active"/>
 	<string id="16064" value="Starting Shareaza network core..."/>
 	<string id="16065" value="Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."/>
 	<string id="16066" value="Shutting down Shareaza network core..."/>
@@ -2643,6 +2649,8 @@
 	<string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
+    <string id="16408" value="Copy &amp;URI"/>
+    <string id="16409" value="Export &amp;URIs..."/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
@@ -2684,6 +2692,16 @@
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Connect"/>
 	<string id="16775" value="&amp;Browse"/>
+    <string id="16776" value="Add"/>
+    <string id="16777" value="Filename:"/>
+    <string id="16778" value="URL:"/>
+    <string id="16779" value="Type:"/>
+    <string id="16780" value="Unspecified"/>
+    <string id="16781" value="Requesting..."/>
+    <string id="16782" value="Success!"/>
+    <string id="16783" value="Finished, click Close"/>
+    <string id="16784" value="&amp;Close"/>
+    <string id="16785" value="(No Visualisation)"/>
 	<string id="16800" value="You have not yet specified a connection speed.  Before continuing, please either choose your Internet connection type, or type in a connection speed."/>
 	<string id="16801" value="Please choose the type of Internet connection you are using before continuing."/>
 	<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
@@ -2693,6 +2711,7 @@
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
+    <string id="16809" value="E&amp;xit"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2836,7 +2855,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCo" caption="General">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="General">
 		<control caption="_User Interface:"/>
 		<control caption="Auto-connect on Shareaza startup"/>
 		<control caption="Start Shareaza at Windows startup"/>
@@ -2858,6 +2877,7 @@
 		<control/>
 		<control caption="When I click minimise:"/>
 		<control/>
+        <control caption="Hide side bar when starting search"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
@@ -3831,8 +3851,8 @@
 	    <column from="Complete" to=""/>
     </list>
     <list name="CUploadCtrl">
-        <column from="Uploaded File" to=""/>
         <column from="Remote User" to=""/>
+        <column from="Uploaded File" to=""/>
         <column from="Size" to=""/>
         <column from="Progress" to=""/>
         <column from="Speed" to=""/>
