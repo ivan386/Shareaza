@@ -20,6 +20,7 @@ Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"; LicenseF
 Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
 Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
+Name: "sw"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
 
 [Files]
 #ifndef debug
@@ -56,6 +57,8 @@ Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereado
 Source: "Remote-localized\hungarian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 ; Chinese Simp
 Source: "Remote-localized\chinese-simpl\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
+; Swedish
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sw; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -90,7 +93,8 @@ Source: "setup\license\greek.rtf"; DestDir: "{app}\Uninstall"; DestName: "licens
 Source: "setup\license\hungarian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 ; Chinese Simp
 Source: "setup\license\chinese.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
-
+; Swedish
+Source: "setup\license\swedish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sw; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -125,6 +129,8 @@ Source: "setup\filter\greek.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: hu; Components: language
 ; Chinese Simp
 Source: "setup\filter\chinese-simpl.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
+; Swedish
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sw; Components: language
 #endif
 
 [CustomMessages]
@@ -355,5 +361,19 @@ chs.icons_license=Ðí¿É
 chs.icons_uninstall=Ð¶ÔØ
 chs.icons_downloads=ÏÂÔØ
 chs.dialog_shutdown=%1 ÕýÔÚÔËÐÐ¡£ÄúÏ£Íû¹Ø±Õ %1 ÒÔ±ã¼ÌÐø°²×°Âð£¿
+; Swedish
+sw.components_skins=Skinn
+sw.components_languages=Språk
+sw.tasks_allusers=Alla användare
+sw.tasks_selectusers=Installera %1 för:
+sw.tasks_currentuser=%1 endast
+sw.tasks_multisetup=Aktivera stöd för flera användare
+sw.run_skinexe=Kör skinninstallation...
+sw.reg_incomingchat=Inkommande chattmeddelande
+sw.reg_apptitle=Shareaza ultimat fildelning
+sw.icons_license=Licens
+sw.icons_uninstall=Avinstallera
+sw.icons_downloads=Nedladdningar
+sw.dialog_shutdown=%1 körs för tillfället. Vill du att %1 ska stängas ned så att installationen kan fortsätta?
 
 
