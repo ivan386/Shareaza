@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.70"
+		version="2.1.0.87"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3288,7 +3288,7 @@
 		<control caption="Download..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="_Interface:"/>
 		<control caption="Display additional BitTorrent interface elements"/>
 		<control caption="_Download Connections:"/>
@@ -3296,15 +3296,17 @@
 		<control caption="Torrents at once"/>
 		<control/><control/>
 		<control caption="Client connections"/>
+		<control caption=" Clear downloaded torrents"/>
+		<control caption="When the share ratio reaches "/>
+		<control/><control/>
 		<control caption="_EndGame:"/>
 		<control caption="Enable EndGame mode when completing torrents"/>
 		<control caption="_Store Torrents Here:"/>
 		<control/><control/>
 		<control caption="_Torrent Creator"/>
 		<control/><control/>
-		<control caption="_Default Tracker:"/>
-		<control caption="Tracker:"/>
-		<control/>
+		<control caption="Default Tracker:"/>
+		<control/><control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">

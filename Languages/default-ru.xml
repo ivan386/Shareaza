@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Russian Skin File -->
 
@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.70"
+		version="2.1.0.87"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3283,7 +3283,7 @@
 		<control caption="Загрузить..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuBuBuEdBuBuEdBuBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="_Интерфейс:"/>
 		<control caption="Показывать дополнительные элементы BitTorrent интерфейса"/>
 		<control caption="_Соединений для загрузки:"/>
@@ -3291,15 +3291,17 @@
 		<control caption="_Торрентов одновременно"/>
 		<control/><control/>
 		<control caption="Клиентских соединений"/>
+		<control caption=" Убрать загр. торренты"/>
+		<control caption="Когда соотношение достигает"/>
+		<control/><control/>
 		<control caption="_ЕndGame (ускорение):"/>
 		<control caption="Переходить в режим EndGame при завершении торрентов"/>
 		<control caption="_Держать торренты в папке:"/>
 		<control/><control/>
 		<control caption="_Программа для создания торрентов"/>
 		<control/><control/>
-		<control caption="Т_рекер по умолчанию:"/>
-		<control caption="Трекер:"/>
-		<control/>
+		<control caption="Трекер по умолч.: "/>
+		<control/><control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Протоколы">
@@ -3825,7 +3827,7 @@
 		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая свяжет Вас со следующим хостом или сервером:"/>
 		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая позволит Вам просмотреть разделяемые файлы на следующем хосте:"/>
 		<control/><control/><control/><control/>
-		<control caption="Выберите _действие, которое Shareaza должна выполнить:"/>
+		<control caption="Выерите _действие, которое Shareaza должна выполнить:"/>
 		<control caption="_Загрузить"/>
 		<control caption="_Искать файл"/>
 		<control caption="_Отмена"/>
