@@ -938,8 +938,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				else if ( pDownload->m_bVerify == TS_FALSE )
 					LoadString( strText, IDS_STATUS_UNVERIFIED );
 			}
-
-			if ( nSources > 0 )
+			else if ( nSources > 0 )
 			{
 				if (nSources == 1)
 				{
