@@ -5,3 +5,5 @@
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Settings"; ValueType: dword; ValueName: "RatesInBytes"; ValueData: "{ini:{param:SETTINGS|},General,RatesInBytes|1}"; Flags: createvalueifdoesntexist uninsdeletekey
 ; Turn off verbose mode in network tab
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Settings"; ValueType: dword; ValueName: "VerboseMode"; ValueData: "{ini:{param:SETTINGS|},General,VerboseMode|0}"; Flags: createvalueifdoesntexist uninsdeletekey
+; Turn on ShareazaOS skin if skin installed
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey; Components: skins

@@ -36,3 +36,5 @@ CollectionPath=C:\Documents and Settings\All Users\Application Data\Shareaza\Col
 [General]
 RatesInBytes=1
 VerboseMode=0
+[Skins]
+ShareazaOS=1
