@@ -1,8 +1,14 @@
 //
 // ChatSession.cpp
 //
-//	Date: "$Date: 2004/11/17 14:32:45 $"
-//	Revision: "$Revision: 1.5 $"
+//	Date:		"$Date: 2004/11/17 14:38:19 $"
+//	Revision:	"$Revision: 1.6 $"
+//  Author:		"$Author: spooky23 $"
+//	Last log:	"$Log: ChatSession.cpp,v $
+//	Last log:	"Revision 1.6  2004/11/17 14:38:19  spooky23
+//	Last log:	"Added CVS revision tag
+//	Last log:	""
+//  Statuts		"$State: Exp $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
