@@ -1074,7 +1074,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 			strCodec = pTag.m_sValue;
 		}
 		//Note: Maybe ignore these keys? They seem to have a lot of bad values....
-		else if ( pTag.m_nKey == 0&& pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("length")  )
+		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("length") )  )
 		{	//Length- old style (As a string- x:x:x, x:x or x)
 			DWORD nSecs = 0, nMins = 0, nHours = 0;
 
@@ -1093,11 +1093,11 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);
 		}
-		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey == _T("bitrate") ) )
+		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_INT ) && ( pTag.m_sKey == _T("bitrate") ) )
 		{	//Bitrate- old style			
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
-		else if ( ( pTag.m_nKey == 0 && pTag.m_nType == ED2K_TAG_STRING && pTag.m_sKey == _T("codec") ) )
+		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("codec") ) )
 		{	//Codec - old style
 			strCodec = pTag.m_sValue;
 		}
