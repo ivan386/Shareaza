@@ -77,11 +77,11 @@ CEDClient::CEDClient()
 	m_bEmSecureID	= FALSE;		// Not supported
 	m_bEmSources	= FALSE;
 	m_bEmRequest	= FALSE;
-	m_bEmComments	= FALSE;		// Not supported over ed2k
+	m_bEmComments	= FALSE;		// Not over ed2k
 	m_bEmPeerCache	= FALSE;		// Not supported
-	m_bEmBrowse		= FALSE;		// Not supported over ed2k
+	m_bEmBrowse		= FALSE;		// Not over ed2k
 	m_bEmMultiPacket= FALSE;		// Not supported
-	m_bEmPreview	= FALSE;		// Not supported over ed2k
+	m_bEmPreview	= FALSE;		// Not over ed2k
 	
 	// Misc stuff
 	m_bLogin		= FALSE;
@@ -620,18 +620,18 @@ void CEDClient::SendHello(BYTE nType)
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
 	// 4 - Feature Versions. 
-	nVersion = ( ( ED2K_VERSION_AICH << 29) | // AICH
-				 //( TRUE << 28) | // Unicode
-				 ( ED2K_VERSION_UDP << 24) | // UDP version
-				 ( ED2K_VERSION_COMPRESSION << 20) | // Compression
-			     ( ED2K_VERSION_SECUREID << 16) | // Secure ID
+	nVersion = ( ( ED2K_VERSION_AICH << 29) |			// AICH
+				 ( TRUE << 28) |						// Unicode
+				 ( ED2K_VERSION_UDP << 24) |			// UDP version
+				 ( ED2K_VERSION_COMPRESSION << 20) |	// Compression
+			     ( ED2K_VERSION_SECUREID << 16) |		// Secure ID
 				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) | // Source exchange
 				 ( ED2K_VERSION_EXTENDEDREQUEST << 8) | // Extended requests
-				 ( ED2K_VERSION_COMMENTS << 4) | // Comments
-				 ( FALSE << 3) | // Peer Cache
-				 ( TRUE << 2) | // No browse
-				 ( FALSE << 1) | // Multipacket
-				 ( FALSE ) );// Preview
+				 ( ED2K_VERSION_COMMENTS << 4) |		// Comments
+				 ( FALSE << 3) |						// Peer Cache
+				 ( TRUE << 2) |							// No browse
+				 ( FALSE << 1) |						// Multipacket
+				 ( FALSE ) );							// Preview
 
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
@@ -925,7 +925,7 @@ void CEDClient::DeriveVersion()
 				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) &0x03 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 			
-			//Client allows G2 chat, etc
+			//Client allows G2 browse, etc
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
 			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 		case 10:
@@ -1186,7 +1186,6 @@ BOOL CEDClient::OnQueueRequest(CEDPacket* pPacket)
 BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 {
 	DWORD nMessageLength;
-	CString sMessage;
 
 	//Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
@@ -1205,25 +1204,23 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		return TRUE;
 	}
 
-	//Read in message
-	//if ( m_bEmUnicode )
-	//	sMessage = pPacket->ReadStringUTF8( nMessageLength );
-	//else
-		sMessage = pPacket->ReadString( nMessageLength );
 
 	// Check if chat is enabled
-	if ( Settings.Community.ChatEnable )
-	{	// Chat is enabled- we should accept/open a chat window
-
-		//ChatCore.OnAccept( this );
-
-		theApp.Message( MSG_DEFAULT, sMessage ); //*** temp
+	if ( Settings.Community.ChatEnable )	// Chat is enabled- accept/open a chat window.
+	{	
+		//ChatCore.OnED2KMessage( this, pPacket );
 	}
-	else
-	{	// Disabled- don't open a chat window. Display in system window
+	else									// Chat is disabled- don't open a chat window. 
+	{	
+		CString sMessage;
+		//Read in message
+		if ( m_bEmUnicode )
+			sMessage = pPacket->ReadStringUTF8( nMessageLength );
+		else
+			sMessage = pPacket->ReadString( nMessageLength );
+		// Display in system window
 		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
-
 	return TRUE;
 }
 
