@@ -400,6 +400,13 @@ CSettings::CSettings()
 	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
 	Downloads.ConnectThrottle = max ( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
 
+	// Reset ed2k if bandwidth is too low
+	if ( (Settings.Bandwidth.Uploads < 2048) && ( Settings.Bandwidth.Uploads != 0 ) ) 
+	{
+		Settings.eDonkey.EnableToday = FALSE;
+		Settings.eDonkey.EnableAlways = FALSE;
+	}
+
 	//Temporary- until G1 ultrapeer has been updated
 	Gnutella1.ClientMode = MODE_LEAF; 
 }
