@@ -241,7 +241,7 @@
 				InlineFunctionExpansion="1"
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
-				OptimizeForProcessor="2"
+				OptimizeForProcessor="0"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories=".\zlib"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
