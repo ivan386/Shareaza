@@ -452,6 +452,7 @@
                        <item id="ID_HELP_FAQ" text="_Руководство пользователя"/>
                        <item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
                        <item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
+                       <item id="ID_HELP_SECURITY" text="О _безопасности"/>
                        <separator/>
                        <menu text="_Вэб сайты">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -537,6 +538,7 @@
                        <item id="ID_HELP_FAQ" text="_Руководсво пользователя"/>
                        <item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
                        <item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
+                       <item id="ID_HELP_SECURITY" text="О _безопасности"/>
                        <separator/>
                        <menu text="_Вэб сайты">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -616,6 +618,7 @@
                        <item id="ID_HELP_FAQ" text="_Руководство пользователя"/>
                        <item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
                        <item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
+                       <item id="ID_HELP_SECURITY" text="О _безопасности"/>
                        <separator/>
                        <menu text="_Вэб сайты">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -2096,6 +2099,7 @@
        <tip id="ID_HELP_FIREWALLS" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
        <tip id="ID_HELP_FORUMS" message="Посетить форумы дискуссий Shareaza."/>
        <tip id="ID_HELP_HOMEPAGE" message="Посетить сайт Shareaza.com."/>
+       <tip id="ID_HELP_SECURITY" text="Узнайте как защититься от вредителей в сетях."/>
        <tip id="ID_HELP_WEB_1" message="Посетить Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Посетить P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Посетить Slyck.com"/>

@@ -460,6 +460,7 @@ right quote    &#147;
                        <item id="ID_HELP_FAQ" text="„Shareaza“ _vartotojo vadovas"/>
                        <item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
                        <item id="ID_HELP_FIREWALLS" text="Pagalba apie _maršrutizatorius"/>
+                       <item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
                        <separator/>
                        <menu text="Tinkla_lapiai">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -545,6 +546,7 @@ right quote    &#147;
                        <item id="ID_HELP_FAQ" text="„Shareaza“ _vartotojo vadovas"/>
                        <item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
                        <item id="ID_HELP_FIREWALLS" text="Pagalba apie _maršrutizatorius"/>
+                       <item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
                        <separator/>
                        <menu text="Tinkla_lapiai">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -624,6 +626,7 @@ right quote    &#147;
                        <item id="ID_HELP_FAQ" text="„Shareaza“ _vartotojo vadovas"/>
                        <item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
                        <item id="ID_HELP_FIREWALLS" text="Pagalba apie _maršrutizatorius"/>
+                       <item id="ID_HELP_SECURITY" text="_Pagalba apie apsaugą"/>
                        <separator/>
                        <menu text="Tinkla_lapiai">
                                <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -2099,6 +2102,7 @@ right quote    &#147;
        <tip id="ID_HELP_FIREWALLS" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
        <tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
        <tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza.com tinklalapį."/>
+       <tip id="ID_HELP_SECURITY" text="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose"/>
        <tip id="ID_HELP_WEB_1" message="Aplankyti Zeropaid.com"/>
        <tip id="ID_HELP_WEB_2" message="Aplankyti P2PForums.com"/>
        <tip id="ID_HELP_WEB_3" message="Aplankyti Slyck.com"/>
