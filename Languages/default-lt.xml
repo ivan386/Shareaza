@@ -2838,7 +2838,7 @@ right quote    &#147;
        <string id="17491" value="Torrent byla „%s“ jau yra parsisiunčiamų bylų sąraše ir pradėti ją skleisti negalima."/>
        <string id="17492" value="Klaida įkeliant torrent bylą „%s“. Tikriausiai tai bloga torrent byla."/>
        <string id="17493" value="Neįmanoma sukurti BitTorrent bendrintos bylos „%s“."/>
-       <string id="17494" value="Šiai torrent bylai priklauso byla „%s“, bet „Shareaza“ negali surasti šios bylos Jūsų kolekcijoje. Jei įmanoma, perkelkite šią bylą į tą patį aplanką kaip ir torrent byla ir bandykite dar kartą."/>
+       <string id="17494" value="Šiai torrent bylai priklauso byla „%s“, bet „Shareaza“ negali surasti šios bylos Jūsų kolekcijoje. Jei įmanoma, perkelkite šią bylą į bendrintus aplankus ir bandykite dar kartą."/>
        <string id="17495" value="Šiai torrent bylai priklauso byla „%s“, kurios versija turėtų būti %s, tačiau esamos bylos versija yra %s."/>
        <string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą bylą."/>
        <string id="17497" value="Įvyko nežinoma klaida mėginant skleisti bylą „%s“."/>
