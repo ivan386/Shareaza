@@ -424,8 +424,8 @@ BOOL CDiscoveryServices::Update()
 	if ( Network.GetStableTime() < 7200 ) return FALSE;				// Up for two hours
 //ToDo: ***** Need to add G1 stuff
 	if ( ! Neighbours.IsG2Hub() ) return FALSE;						// Must be a hub now 
+	if ( Neighbours.GetCount( PROTOCOL_G2, -1, ntNode ) < 4 ) return FALSE;	// Must have 4 peers
 //
-	if ( Neighbours.GetCount( -1, -1, ntNode ) < 4 ) return FALSE;	// Must have 4 peers
 	
 	CDiscoveryService* pService = GetRandomWebCache( TRUE, NULL, TRUE );
 	
@@ -919,7 +919,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 			(LPCTSTR)m_pWebCache->m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
-			Neighbours.GetCount( -1, -1, ntLeaf ) );
+			Neighbours.GetCount( -1, -1, ntLeaf ) );		//ToDo: Check this
 	}
 	
 	if ( m_pSubmit != NULL && Check( m_pSubmit, CDiscoveryService::dsWebCache ) &&

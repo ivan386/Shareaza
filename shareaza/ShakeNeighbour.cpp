@@ -670,7 +670,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			}
 			else if ( m_bUltraPeerSet == TS_TRUE && m_bUltraPeerNeeded == TS_FALSE )
 			{
-				if ( Neighbours.GetCount( -1, nrsConnected, ntLeaf ) > 0 )
+				if ( Neighbours.GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) > 0 )
 				{
 					SendHostHeaders( _T("GNUTELLA/0.6 503 I have leaves") );
 					DelayClose( IDS_HANDSHAKE_CANTBEPEER );

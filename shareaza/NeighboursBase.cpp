@@ -108,8 +108,8 @@ int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) c
 		
 		if ( nProtocol < 0 || nProtocol == pNeighbour->m_nProtocol )
 		{
-			// Hack to count only Gnutella
-			if ( nProtocol == -2 && pNeighbour->m_nProtocol > PROTOCOL_G2 ) continue;
+			// Hack to count only Gnutella (No longer needed)
+			//if ( nProtocol == -2 && pNeighbour->m_nProtocol > PROTOCOL_G2 ) continue;
 			
 			if ( nState < 0 || nState == pNeighbour->m_nState )
 			{

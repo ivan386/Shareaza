@@ -74,7 +74,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
 	pPacket->WritePacket( "D", 8 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
-	pPacket->WriteShortBE( GetCount( -1, nrsConnected, ntLeaf ) );
+	pPacket->WriteShortBE( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) );
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
