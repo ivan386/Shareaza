@@ -14,9 +14,9 @@
 <manifest      name="Magyar"
                        author="Yuri"
                        description="Shareaza Default Hungarian Skin File"
-                       link="http://www.shareaza.com/"
-                       email="yuri1 (at) freemail (dot) hu"
-                       version="2.0.3.8"
+                       link="http://totenkopf.uw.hu/shareaza/index.html"
+                       email="yuri1(at)freemail.hu"
+                       version="2.1.0.13"
                        type="Language"
                        language="hu"
                        prompt="Kattints ide a magyar nyelvhez."
@@ -456,6 +456,7 @@
                        <item id="ID_HELP_FAQ" text="Használati utasítás"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
                        <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
+                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -541,6 +542,7 @@
                        <item id="ID_HELP_FAQ" text="Használati utasítás"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
                        <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
+                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -620,6 +622,7 @@
                        <item id="ID_HELP_FAQ" text="Használati utasítás"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
                        <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
+                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -1925,7 +1928,7 @@
        </document>
 
        <document name="DownloadHelp.Searching">
-               <text format="b">A letöltés keres</text>
+               <text format="b">Forrás keresése</text>
                <newline gap="8"/>
                <text>Nincs ismert forrás a letöltéshez.
                Ezért a Shareaza automatikusan keres az elérhető
@@ -1940,7 +1943,7 @@
        </document>
 
        <document name="DownloadHelp.Creating">
-               <text format="b">A letöltés készül</text>
+               <text format="b">Letöltés befejezése</text>
                <newline gap="8"/>
                <text>A Shareaza megfelelő mennyiségű helyet
                lefoglal a lemezen a letöltésnek.</text>
@@ -1977,6 +1980,15 @@
                 Shareaza fórumait.</text>
        </document>
 
+       <document name="GeneralHelp.AdultFilter">
+               <text format="b">Felnőtt tartalom szűrése</text>
+               <newline gap="8"/>
+               <text>Ez nem egy 100%-os megoldás, mint ahogy más automata szűrők sem azok.
+               Ezt arra tervezték, hogy kiszűrje a nem kívánt találatokat, nem arra, hogy 100%-os védelmet nyújtson.</text>
+               <newline gap="8"/>
+               <text>A gyermekek internethasználatát (a fájlmegoszó programokat) szülői felügyelet mellett szabad csak engedni.</text>
+       </document>
+
        <!-- Search help documents -->
 
 <document name="SearchHelp.BadSearch">
@@ -1990,6 +2002,16 @@
     <text> Például a legtöbb kliensprogram nem engedélyezi csak az MP3 szóra
         való rákeresést, mert nem elég sajátos és ezért
         túl sok találatot eredményezne.</text>
+       </document>
+
+       <document name="SearchHelp.AdultSearch">
+               <text format="b">Ezt a keresést nem lehet elkezdeni</text>
+               <newline gap="8"/>
+               <text>A keresés valószínűleg hatalmas mennyiségű felnőtt tartalommal rendelkező fájlt
+               produkálna, ezt a beépített tartalomszűrő megakadályozza. Fogalmazd át a keresést vagy
+               kapcsold ki a szűrőt.</text>
+               <newline gap="8"/>
+               <text>A szűrő kikapcsolása: Eszközök &gt; Beállítások &gt; Általános és itt szedd ki a pipát a tartalomszűrő elől.</text>
 </document>
 
 <!-- Share help documents -->
@@ -2022,302 +2044,300 @@
 
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-       <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
-       <tip id="ID_NETWORK_EXIT" message="Kilépés a Shareazából."/>
-       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz"/>
-       <tip id="ID_NETWORK_DISCONNECT" message="Lekapcsolódik a hálózatról."/>
-       <tip id="ID_TOOLS_SETTINGS" message="A Shareaza beállításai..."/>
-       <tip id="ID_VIEW_SYSTEM" message="A RENDSZER ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_NEIGHBOURS" message="A SZOMSZÉDOK ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_TRAFFIC" message="A GRAFIKON ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_LIBRARY" message="A KÖNYVTÁR ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_DOWNLOADS" message="A LETÖLTÉSEK ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_UPLOADS" message="A FELTÖLTÉSEK ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_HOSTS" message="A KISZOLGÁLÓK LISTÁJA ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása."/>
-       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
-       <tip id="ID_SYSTEM_CLEAR" message="A log törlése."/>
-       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak"/>
-       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a bejövő forgalmat mutatja."/>
-       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a kimenő forgalmat mutatja."/>
-       <tip id="ID_VIEW_SEARCH_MONITOR" message="A KERESÉSEK FIGYELÉSE ablak elrejtése, mutatása."/>
-       <tip id="ID_VIEW_RESULTS_MONITOR" message="A TALÁLATOK FIGYELÉSE ablak elrejtése, mutatása."/>
-       <tip id="ID_HOSTCACHE_CONNECT" message="Kapcsolódik a kiválasztott kiszolgáló(k)hoz."/>
-       <tip id="ID_HOSTCACHE_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
-       <tip id="ID_HOSTCACHE_REMOVE" message="Eltávolítja a kiválasztott kiszolgálókat a Kiszolgálók listájából."/>
-       <tip id="ID_NETWORK_CONNECT_TO" message="Manuálisan kapcsolódik egy kiszolgálóhoz..."/>
-       <tip id="ID_NETWORK_SEARCH" message="Új keresést indít a hálózaton..."/>
-       <tip id="ID_SEARCH_DOWNLOAD" message="Letölti a kiválasztott fájl(ok)at."/>
-       <tip id="ID_SEARCH_DOWNLOADNOW" message="Elsőbbséget ad a letöltendő fájl(ok)nak."/>
-       <tip id="ID_SEARCH_SEARCH" message="Újra keres a hálózaton..."/>
-       <tip id="ID_SEARCH_FILTER" message="Szűri a keresési eredményeket a megadott paramétereknek megfelelően..."/>
-       <tip id="ID_SEARCH_FILTER_REMOVE" message="Szűrés eltávolítása."/>
-       <tip id="ID_SEARCH_GROUPED" message="Csoportosítja az eredményeket."/>
-       <tip id="ID_HITMONITOR_CLEAR" message="Törli az összes találati bejegyzést."/>
-       <tip id="ID_SEARCHMONITOR_PAUSE" message="Keresések megfigelésének leállítása."/>
-       <tip id="ID_HITMONITOR_PAUSE" message="Szünetelteti a megfigyelést."/>
-       <tip id="ID_SEARCHMONITOR_CLEAR" message="Törli az összes keresési bejegyzést."/>
-       <tip id="ID_SEARCH_COPY" message="Lemásolja a fájl URL-ét."/>
-       <tip id="ID_HITMONITOR_SEARCH" message="Keresés a hálózaton a megadottak alapján."/>
-       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 hubok mutatása."/>
-       <tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 kiszolgálók mutatása."/>
-       <tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 kiszolgálók mutatása."/>
-       <tip id="ID_SEARCH_COLUMNS" message="Válaszd ki a megjelenítendő metadata oszlopokat..."/>
-       <tip id="ID_DOWNLOADS_RESUME" message="A kiválasztott letöltés(ek) folytatása."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Törli a befejezett letöltéseket."/>
-       <tip id="ID_DOWNLOADS_SOURCES" message="Több forrást keres a kiválasztott letöltés(ek)hez."/>
-       <tip id="ID_DOWNLOADS_LAUNCH" message="Előnézet."/>
-       <tip id="ID_DOWNLOADS_CLEAR" message="Eltávolítja a kiválasztott letöltés(ek)et."/>
-       <tip id="ID_DOWNLOADS_PAUSE" message="Szünetelteti a kiválasztott letöltés(ek)et.."/>
-       <tip id="ID_LIBRARY_EXPLORE" message="Megnyitja a kiválasztott mappá(k)at."/>
-       <tip id="ID_LIBRARY_SCAN" message="Átnézi a mappá(k)at változások után kutatva."/>
-       <tip id="ID_LIBRARY_SHARED_FILE" message="Megosztod-e vagy nem a fájlokat?"/>
-       <tip id="ID_LIBRARY_REMOVE" message="Eltávolítja a kiválasztott mappákat."/>
-       <tip id="ID_LIBRARY_ADD" message="Új mappa a könyvtárban..."/>
-       <tip id="ID_LIBRARY_PROPERTIES" message="Megjeleníti a fájl tulajdonságait..."/>
-       <tip id="ID_LIBRARY_COLUMNS" message="Milyen oszlopokat kívánsz megjeleníteni..."/>
-       <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Szüneteltetett letöltések törlése."/>
-       <tip id="ID_UPLOADS_LAUNCH" message="Megnyitás."/>
-       <tip id="ID_UPLOADS_DISCONNECT" message="A feltöltés(ek) szétkapcsolása."/>
-       <tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Kész feltöltés(ek) törlése."/>
-       <tip id="ID_UPLOADS_CLEAR" message="A kijelölt feltöltés(ek) törlése."/>
-       <tip id="ID_TRANSFERS_DISCONNECT" message="A kiválasztott letöltés(ek) szétkapcsolása."/>
-       <tip id="ID_TRANSFERS_FORGET" message="A kiválasztott letöltés(ek) törlése és a forrás(ok) elfelejtése."/>
-       <tip id="ID_HELP_HOMEPAGE" message="Ellátogat a Shareaza.com-ra."/>
-       <tip id="ID_HELP_WEB_1" message="Ellátogat a Zeropaid.com-ra."/>
-       <tip id="ID_HELP_WEB_2" message="Ellátogat a P2PForums.com-ra."/>
-       <tip id="ID_HELP_WEB_3" message="Ellátogat a Slyck.com-ra."/>
-       <tip id="ID_HELP_FAQ" message="A Shareaza használati utasításához vezet el."/>
-       <tip id="ID_SEARCH_CHAT" message="Egy chatszobát nyit a kiválasztott felhasználóval."/>
-       <tip id="ID_TRAFFIC_GRID" message="Rácsvolnalak megjelenítése."/>
-       <tip id="ID_TRAFFIC_AXIS" message="A függőleges tengelyt jeleníti meg."/>
-       <tip id="ID_TRAFFIC_LEGEND" message="Jelmagyarázat megjelenítése."/>
-       <tip id="ID_TRAFFIC_SETUP" message="A grafikon elemeinek beállítása..."/>
-       <tip id="ID_TRAFFIC_CLEAR" message="Grafikon törlése."/>
-       <tip id="ID_TOOLS_WIZARD" message="Shareaza Gyors beállítások megnyitása..."/>
-       <tip id="ID_CHILD_RESTORE" message="A kiválasztott ablak megnyitása."/>
+       <tip id="ID_BROWSE_FILES" message="A felhasználó megosztásának böngészése"/>
+       <tip id="ID_BROWSE_LAUNCH" message="Fájllista letöltése és profil megtekintése."/>
+       <tip id="ID_BROWSE_PROFILE" message="A felhasználó profiljának böngészése."/>
+       <tip id="ID_BROWSE_REFRESH" message="A kiszolgálón lévő fájllista frissítése."/>
+       <tip id="ID_BROWSE_STOP" message="Böngészés leállítása a kiszolgálón."/>
+       <tip id="ID_CHAT_BOLD" message="Félkövér betűk (Ctrl+B)"/>
+       <tip id="ID_CHAT_BROWSE" message="A felhasználó profiljának és megosztásának böngészése."/>
+       <tip id="ID_CHAT_CLEAR" message="Szöveg törlése ebben az ablakban."/>
+       <tip id="ID_CHAT_COLOUR" message="Betűszín kiválaztása (Ctrl+K)"/>
+       <tip id="ID_CHAT_CONNECT" message="Kapcsolódik a chathez."/>
+       <tip id="ID_CHAT_DISCONNECT" message="Lekapcsolódik a chathről."/>
+       <tip id="ID_CHAT_EMOTICONS" message="Szmájli beszúrása."/>
+       <tip id="ID_CHAT_ITALIC" message="Dőlt betűk (Ctrl+I)"/>
+       <tip id="ID_CHAT_PRIORITY" message="Feltöltési elsőbbséget ad a felhasználnak."/>
+       <tip id="ID_CHAT_SEND_FILE" message="Fájl elküldése..."/>
+       <tip id="ID_CHAT_TIMESTAMP" message="Időbélyegző hozzáadása az üzenethez."/>
+       <tip id="ID_CHAT_UNDERLINE" message="Aláhúzott betűk (Ctrl+U)"/>
        <tip id="ID_CHILD_CLOSE" message="A kiválasztott ablak bezárása."/>
        <tip id="ID_CHILD_MAXIMISE" message="Ablak nagyítása."/>
        <tip id="ID_CHILD_MINIMISE" message="Ablak kicsinyítése."/>
-       <tip id="ID_TRANSFERS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
-       <tip id="ID_UPLOADS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
-       <tip id="ID_SEARCH_CLEAR" message="Keresési eredmények törlése."/>
-       <tip id="ID_TRAY_OPEN" message="Shareaza ablak megnyitása."/>
-       <tip id="ID_NETWORK_AUTO_CLOSE" message="Bezárja a programot a forgalom végeztével."/>
-       <tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatikusan törli a kész feltöltéseket."/>
-       <tip id="ID_LIBRARY_SEARCH" message="A könyvtárban való keresés..."/>
-       <tip id="ID_TRAFFIC_WINDOW" message="Grafikon megnyitása..."/>
-       <tip id="ID_NEIGHBOURS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
-       <tip id="ID_HELP_WEB_4" message="Látogasd meg: NapJunk.net"/>
-       <tip id="ID_SEARCH_STOP" message="Eredmények fogadásának leállítása."/>
-       <tip id="ID_TOOLS_DOWNLOAD" message="Új fájl vagy Torent letöltése..."/>
-       <tip id="ID_DOWNLOADS_URL" message="URL hozzáadása a letöltéshez..."/>
-       <tip id="ID_LIBRARY_BITZI_WEB" message="Bitzi(TM) ticket megnézése."/>
-       <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metadata letöltésea Bitzi(TM)-ről..."/>
-       <tip id="ID_VIEW_SECURITY" message="A BIZTONSÁG ablak elrejtése, mutatása."/>
-       <tip id="ID_SECURITY_EDIT" message="A kiválasztott biztonsági szabály szerkesztése..."/>
-       <tip id="ID_SECURITY_REMOVE" message="A kiválasztott biztonsági szabály eltávolítása."/>
-       <tip id="ID_SECURITY_RESET" message="A kiválasztott biztonsági szabály számlálójának nullázása."/>
-       <tip id="ID_SECURITY_ADD" message="Új szabály hozzáadása..."/>
-       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol engedélyezett."/>
-       <tip id="ID_SECURITY_POLICY_DENY" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol tiltva van."/>
-       <tip id="ID_LIBRARY_REFRESH" message="A könyvtár frissítése."/>
-       <tip id="ID_LIBRARY_MOVE" message="A kiválasztott fájlok mozgatása egy másik mappába..."/>
-       <tip id="ID_LIBRARY_COPY" message="A kiválasztott fájlok másolása egy másik mappába..."/>
-       <tip id="ID_LIBRARY_DELETE" message="Azonnal törli a fájl(ok)at."/>
-       <tip id="ID_LIBRARY_ENQUEUE" message="A kiválasztott fájl(ok) hozzáadása a lejátszólistához."/>
-       <tip id="ID_DOWNLOADS_ENQUEUE" message="A kiválasztott letöltés(ek) hozzáadása a lejátszólistához."/>
-       <tip id="ID_SECURITY_MOVE_UP" message="A kiválasztott szabály feljebb tolása az elsőbbségi listán."/>
-       <tip id="ID_SECURITY_MOVE_DOWN" message="A kiválasztott szabály lejjebb tolása az elsőbbségi listán."/>
-       <tip id="ID_SECURITY_BAN" message="A kiválasztott kiszolgáló letiltása egy időre."/>
-       <tip id="ID_UPLOADS_GROUP" message="A feltöltések kapcsolat alapján való rendezése."/>
-       <tip id="ID_TAB_NETWORK" message="Hálózati adatok ellenőrzése."/>
-       <tip id="ID_TAB_LIBRARY" message="A könyvtár rendezése."/>
-       <tip id="ID_TAB_TRANSFERS" message="Fel- és letöltések figyelése."/>
-       <tip id="ID_TAB_CONNECT" message="Le- és felkapcsolódás a hálózatokra."/>
-       <tip id="ID_VIEW_TABBED" message="Shareaza használata az összetett nézetben."/>
-       <tip id="ID_VIEW_WINDOWED" message="A Shareaza használata az ablakos nézetben."/>
-       <tip id="ID_LIBRARY_URL" message="URL másolása."/>
-       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERKERESŐ ablak elrejtése, mutatása."/>
-       <tip id="ID_DISCOVERY_EDIT" message="A kiválasztott szolgáltatás tulajdonságai."/>
-       <tip id="ID_DISCOVERY_QUERY" message="A kiválasztott szolgáltatás lekérdezése."/>
-       <tip id="ID_DISCOVERY_REMOVE" message="A kiválasztott szolgáltatás eltávolítása."/>
+       <tip id="ID_CHILD_RESTORE" message="A kiválasztott ablak megnyitása."/>
        <tip id="ID_DISCOVERY_ADD" message="Új szolgáltatás hozzáadása..."/>
-       <tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap szolgáltatás mutatása."/>
-       <tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache szolgáltatás mutatása."/>
-       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="A kész letöltések automatikus törlése."/>
-       <tip id="ID_TRANSFERS_CONNECT" message="Az elérhető források használata."/>
-       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Jelenleg nem használt források mutatása."/>
-       <tip id="ID_SYSTEM_VERBOSE" message="Részletes log mutatása."/>
        <tip id="ID_DISCOVERY_ADVERTISE" message="Reklámozd GWebCache szolgáltatást egy másik létező GWebCache-nek."/>
        <tip id="ID_DISCOVERY_BROWSE" message="Statisztika megjelenítése."/>
-       <tip id="ID_BROWSE_STOP" message="Böngészés leállítása a kiszolgálón."/>
-       <tip id="ID_BROWSE_REFRESH" message="A kiszolgálón lévő fájllista frissítése."/>
-       <tip id="ID_BROWSE_LAUNCH" message="Fájllista letöltése és profil megtekintése."/>
+       <tip id="ID_DISCOVERY_EDIT" message="A kiválasztott szolgáltatás tulajdonságai."/>
+       <tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap szolgáltatás mutatása."/>
+       <tip id="ID_DISCOVERY_QUERY" message="A kiválasztott szolgáltatás lekérdezése."/>
+       <tip id="ID_DISCOVERY_REMOVE" message="A kiválasztott szolgáltatás eltávolítása."/>
+       <tip id="ID_DISCOVERY_SERVERMET" message="eDonkey2000 Server.met letöltöhelyek mutatása."/>
+       <tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache szolgáltatás mutatása."/>
+       <tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Minden letöltés törlése a csoportban."/>
+       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Új letöltési csoport létrehozása..."/>
+       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Minden letöltés szüneteltetése a csoportban."/>
+       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="A kiválasztott letöltési csoport szerkesztése."/>
+       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="A kiválasztott letöltési csoport törlése."/>
+       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Minden letöltés folytatása a csoportban."/>
+       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="A letöltési csoportok eszközsorának mutatása, elrejtése."/>
+       <tip id="ID_DOWNLOADS_AUTO_CLEAR" message="A kész letöltések automatikus törlése."/>
        <tip id="ID_DOWNLOADS_BOOST" message="Növeli a letöltési sebességet a korlátozás eltávolításával."/>
-       <tip id="ID_TAB_HOME" message="Vissza a Shareaza kezdőlapjára."/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Előnézet."/>
-       <tip id="ID_SEARCH_MERGE" message="Egyesítse a kiválasztott csoportokat."/>
-       <tip id="ID_DOWNLOADS_MONITOR" message="Letöltésmonitor megnyitása..."/>
-       <tip id="ID_LIBRARY_SELECT_ALL" message="Minden mappa kiválasztása."/>
-       <tip id="ID_SECURITY_EXPORT" message="Biztonsági szabályok exportálása..."/>
-       <tip id="ID_SECURITY_IMPORT" message="Biztonsági szabályok importálása..."/>
-       <tip id="ID_SEARCH_FILTER_RAW" message="Eredmények szűrése a megadott kifejezésekkel..."/>
-       <tip id="ID_SEARCH_PANEL" message="A gyorskereső ablak megjelenítése a keresőablak bal oldalán."/>
-       <tip id="ID_SYSTEM_TIMESTAMP" message="Minden sorhoz időbélyegzőt ad."/>
-       <tip id="ID_LIBRARY_LAUNCH" message="Megnyitja vagy lejátsza a fájlt."/>
-       <tip id="ID_NEIGHBOURS_COPY" message="URL másolása."/>
-       <tip id="ID_TOOLS_RESKIN" message="A jelenlegi kinézet újratöltése és alkalmazása."/>
-       <tip id="ID_MONITOR_CLOSE" message="Monitorablak bezárása."/>
-       <tip id="ID_WINDOW_TOOLBAR" message="Eszközsor elrejtése, mutatása."/>
-       <tip id="ID_WINDOW_TABBAR" message="Megnyitott ablakok sorának elrejtése, mutatása."/>
-       <tip id="ID_WINDOW_MONITOR" message="A sávszélfigyelő elrejtése, mutatása."/>
-       <tip id="ID_NETWORK_BROWSE_TO" message="Fájllista letöltése, profil megtekintése..."/>
-       <tip id="ID_TOOLS_SKIN" message="Más kinézet választása a Shareazának..."/>
-       <tip id="ID_LIBRARY_HASH_PRIORITY" message="A hashelés sebességének növelése."/>
+       <tip id="ID_DOWNLOADS_CLEAR" message="Eltávolítja a kiválasztott letöltés(ek)et."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="A kiválasztott letöltés(ek) törlése."/>
+       <tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Törli a befejezett letöltéseket."/>
+       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="A félkész letöltés(ek) törlése."/>
+       <tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Szüneteltetett letöltések törlése."/>
+       <tip id="ID_DOWNLOADS_COPY" message="URL másolása."/>
+       <tip id="ID_DOWNLOADS_EDIT" message="A fejlett letöltésszerkesztő mutatása..."/>
+       <tip id="ID_DOWNLOADS_ENQUEUE" message="A kiválasztott letöltés(ek) hozzáadása a lejátszólistához."/>
        <tip id="ID_DOWNLOADS_FILE_DELETE" message="A kiválasztott kész fájl(ok) törlése."/>
-       <tip id="ID_LIBRARY_RENAME" message="A fájl átnevezése."/>
-       <tip id="ID_UPLOADS_START" message="A kiválasztott feltöltés(ek) indítása."/>
-       <tip id="ID_DOWNLOADS_MOVE_UP" message="A kiválasztott letöltés(ek) feljebb tolása az elsőbbségi listán."/>
-       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="A kiválasztott letöltés(ek) lejjebb tolása az elsőbbségi listán."/>
-       <tip id="ID_TOOLS_LANGUAGE" message="Válaszd ki a neked legmegfelelőbb nyelvet..."/>
-       <tip id="ID_DOWNLOADS_SETTINGS" message="Letöltési beállítások..."/>
-       <tip id="ID_UPLOADS_SETTINGS" message="Feltöltési beállítások..."/>
-       <tip id="ID_DOWNLOADS_FILTER_ALL" message="Minden letöltés mutatása."/>
        <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Minden aktív letöltés mutatása."/>
+       <tip id="ID_DOWNLOADS_FILTER_ALL" message="Minden letöltés mutatása."/>
+       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Válaszd ki, milyen letöltéseket akarsz mejeleníteni, ejrejteni."/>
+       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Minden szüneteltetett letöltés mutatása."/>
        <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Minden sorbanálló letöltés mutatása."/>
        <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Minden forrásra váró letöltés mutatása."/>
-       <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Minden szüneteltetett letöltés mutatása."/>
-       <tip id="ID_NEIGHBOURS_SETTINGS" message="Hálózati beállítások..."/>
+       <tip id="ID_DOWNLOADS_HELP" message="Súgó mutatása a letöltésről..."/>
+       <tip id="ID_DOWNLOADS_LAUNCH" message="Előnézet."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Megnyitja vagy lejátsza a kiválasztott fájlt."/>
+       <tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Előnézet."/>
+       <tip id="ID_DOWNLOADS_MONITOR" message="Letöltésmonitor megnyitása..."/>
+       <tip id="ID_DOWNLOADS_MOVE_DOWN" message="A kiválasztott letöltés(ek) lejjebb tolása az elsőbbségi listán."/>
+       <tip id="ID_DOWNLOADS_MOVE_UP" message="A kiválasztott letöltés(ek) feljebb tolása az elsőbbségi listán."/>
+       <tip id="ID_DOWNLOADS_PAUSE" message="Szünetelteti a kiválasztott letöltés(ek)et.."/>
+       <tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
+       <tip id="ID_DOWNLOADS_RESUME" message="A kiválasztott letöltés(ek) folytatása."/>
+       <tip id="ID_DOWNLOADS_SETTINGS" message="Letöltési beállítások..."/>
+       <tip id="ID_DOWNLOADS_SHARE" message="Ezt a félig letöltött fájlt ossza meg másokkal."/>
+       <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Jelenleg nem használt források mutatása."/>
+       <tip id="ID_DOWNLOADS_SOURCES" message="Több forrást keres a kiválasztott letöltés(ek)hez."/>
+       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="A BitTorrent adatainak mutatása..."/>
+       <tip id="ID_DOWNLOADS_URL" message="URL hozzáadása a letöltéshez..."/>
+       <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
+       <tip id="ID_HELP_FAQ" message="A Shareaza használati utasításához vezet el."/>
+       <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
+       <tip id="ID_HELP_FORUMS" message="Látogasd meg a Shareaza hivatalos fórumait."/>
+       <tip id="ID_HELP_HOMEPAGE" message="Ellátogat a Shareaza.com-ra."/>
+       <tip id="ID_HELP_SECURITY" message="Veszélyes programok elleni védekezés."/>
+       <tip id="ID_HELP_WEB_1" message="Ellátogat a Zeropaid.com-ra."/>
+       <tip id="ID_HELP_WEB_2" message="Ellátogat a P2PForums.com-ra."/>
+       <tip id="ID_HELP_WEB_3" message="Ellátogat a Slyck.com-ra."/>
+       <tip id="ID_HELP_WEB_4" message="Látogasd meg: NapJunk.net"/>
+       <tip id="ID_HITMONITOR_CLEAR" message="Törli az összes találati bejegyzést."/>
+       <tip id="ID_HITMONITOR_PAUSE" message="Szünetelteti a megfigyelést."/>
+       <tip id="ID_HITMONITOR_SEARCH" message="Keresés a hálózaton a megadottak alapján."/>
+       <tip id="ID_HOSTCACHE_CONNECT" message="Kapcsolódik a kiválasztott kiszolgáló(k)hoz."/>
+       <tip id="ID_HOSTCACHE_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
+       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000 szerverek mutatása."/>
+       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="eDonkey2000 &quot;server.met&quot; fájl letöltése..."/>
+       <tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 kiszolgálók mutatása."/>
+       <tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 kiszolgálók mutatása."/>
+       <tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 hubok mutatása."/>
+       <tip id="ID_HOSTCACHE_IMPORT" message="Ismert kiszolgálók listájának importálása, mint a &quot;server.met&quot; fájl..."/>
+       <tip id="ID_HOSTCACHE_PRIORITY" message="Próbáljon ehhez a szerverhez előbb kapcsolódni."/>
+       <tip id="ID_HOSTCACHE_REMOVE" message="Eltávolítja a kiválasztott kiszolgálókat a Kiszolgálók listájából."/>
+       <tip id="ID_LIBRARY_ADD" message="Új mappa a könyvtárban..."/>
+       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Törli a kiválasztott mappát."/>
+       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Album megnyitása."/>
+       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="A kiválasztott mappa tulajdonságainak szerkesztése..."/>
+       <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Metadata letöltésea Bitzi(TM)-ről..."/>
+       <tip id="ID_LIBRARY_BITZI_WEB" message="Bitzi(TM) ticket megnézése."/>
+       <tip id="ID_LIBRARY_COLUMNS" message="Milyen oszlopokat kívánsz megjeleníteni..."/>
+       <tip id="ID_LIBRARY_COPY" message="A kiválasztott fájlok másolása egy másik mappába..."/>
+       <tip id="ID_LIBRARY_CREATETORRENT" message=".torrent fájl létrehozása ehhez a fájl(ok)hoz."/>
+       <tip id="ID_LIBRARY_DELETE" message="Azonnal törli a fájl(ok)at."/>
+       <tip id="ID_LIBRARY_ENQUEUE" message="A kiválasztott fájl(ok) hozzáadása a lejátszólistához."/>
+       <tip id="ID_LIBRARY_EXPLORE" message="Megnyitja a kiválasztott mappá(k)at."/>
+       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
+       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Minden fájl letöltése a gyűjteményben."/>
+       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Minden fájl hozzáadása a lejátszólistához."/>
+       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
+       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Minden fájl tulajdonságának szerkesztése..."/>
+       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Közös metadata adatok átvétele."/>
+       <tip id="ID_LIBRARY_FOLDER_NEW" message="Új album létrehozása..."/>
+       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Tulajdonságok szerkesztése..."/>
+       <tip id="ID_LIBRARY_FOLDERS" message="A valós mappák rendezése..."/>
+       <tip id="ID_LIBRARY_HASH_PRIORITY" message="A hashelés sebességének növelése."/>
+       <!--<tip id="ID_LIBRARY_JIGLE" message="A Jigle adatbázis átnézése információk után."/>-->
+       <tip id="ID_LIBRARY_LAUNCH" message="Megnyitja vagy lejátsza a fájlt."/>
+       <tip id="ID_LIBRARY_MOVE" message="A kiválasztott fájlok mozgatása egy másik mappába..."/>
+       <tip id="ID_LIBRARY_PANEL" message="Részletek elrejtése, mutatása."/>
+       <tip id="ID_LIBRARY_PARENT" message="Egy szinttel feljebb."/>
+       <tip id="ID_LIBRARY_PROPERTIES" message="Megjeleníti a fájl tulajdonságait..."/>
+       <tip id="ID_LIBRARY_REBUILD" message="Új metadata és hash értékek megadása."/>
+       <tip id="ID_LIBRARY_REFRESH" message="A könyvtár frissítése."/>
+       <tip id="ID_LIBRARY_REMOVE" message="Eltávolítja a kiválasztott mappákat."/>
+       <tip id="ID_LIBRARY_RENAME" message="A fájl átnevezése."/>
+       <tip id="ID_LIBRARY_SCAN" message="Átnézi a mappá(k)at változások után kutatva."/>
+       <tip id="ID_LIBRARY_SEARCH" message="A könyvtárban való keresés..."/>
+       <tip id="ID_LIBRARY_SEARCH_QUICK" message="A könytárban keres..."/>
+       <tip id="ID_LIBRARY_SEED_TORRENT" message="A kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
+       <tip id="ID_LIBRARY_SELECT_ALL" message="Minden mappa kiválasztása."/>
+       <tip id="ID_LIBRARY_SHARED_FILE" message="Megosztod-e vagy nem a fájlokat?"/>
+       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Megosztod?"/>
        <tip id="ID_LIBRARY_TREE_PHYSICAL" message="Valós mappák mutatása."/>
        <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Könyvtár rendezése."/>
-       <tip id="ID_LIBRARY_SHARED_FOLDER" message="Megosztod?"/>
+       <tip id="ID_LIBRARY_UNLINK" message="Fájlok eltávolítása az albumból."/>
+       <tip id="ID_LIBRARY_URL" message="URL másolása."/>
        <tip id="ID_LIBRARY_VIEW" message="Könytárnézet kiválasztása..."/>
+       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Albumnézet mutatása." tip="Albumnézet"/>
+       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Gyűjteménynézet mutatása" tip="Gyűjteménynézet"/>
        <tip id="ID_LIBRARY_VIEW_DETAIL" message="Fájl neve, részletek, metadata." tip="Nézetek"/>
        <tip id="ID_LIBRARY_VIEW_HOME" message="Könyvtár kezdőlapja." tip="Kezdőlap"/>
-       <tip id="ID_LIBRARY_VIEW_LIST" message="Fájlok vízszintes sorokban való mutatása." tip="Listanézet"/>
        <tip id="ID_LIBRARY_VIEW_ICON" message="Fájlok ikonnézetben." tip="Ikonnézet"/>
+       <tip id="ID_LIBRARY_VIEW_LIST" message="Fájlok vízszintes sorokban való mutatása." tip="Listanézet"/>
        <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Kis képek szerinti nézet." tip="Miniatűrök"/>
-       <tip id="ID_LIBRARY_PARENT" message="Egy szinttel feljebb."/>
-       <tip id="ID_LIBRARY_PANEL" message="Részletek elrejtése, mutatása."/>
-       <tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Tulajdonságok szerkesztése..."/>
-       <tip id="ID_LIBRARY_FOLDER_NEW" message="Új album létrehozása..."/>
-       <tip id="ID_LIBRARY_UNLINK" message="Fájlok eltávolítása az albumból."/>
-       <tip id="ID_LIBRARY_FOLDER_METADATA" message="Közös metadata adatok átvétele."/>
-       <tip id="ID_VIEW_MEDIA" message="A MÉDIALEJÁTSZÓ ablak elrejtése, mutatása."/>
-       <tip id="ID_TAB_MEDIA" message="Zene és videó lejátszása."/>
-       <tip id="ID_MEDIA_OPEN" message="Lista vagy médiafájl megnyitása és lejátszása..."/>
-       <tip id="ID_MEDIA_CLOSE" message="Zárd be a médiafájlt memóriaspórolás céljából."/>
-       <tip id="ID_MEDIA_PLAY" message="Lejátszás elkezdése." tip="Lejátszás"/>
-       <tip id="ID_MEDIA_STOP" message="Lejátszás leállítása." tip="Stop"/>
-       <tip id="ID_MEDIA_PREVIOUS" message="Visszamegy az előző fájlra." tip="Előző"/>
-       <tip id="ID_MEDIA_NEXT" message="Előremegy a következő fájlra." tip="Következő"/>
-       <tip id="ID_MEDIA_SIZE_FILL" message="A videó méretének változtatása."/>
-       <tip id="ID_MEDIA_SIZE_DISTORT" message="A videó szétnyújtása az ablak széléig."/>
-       <tip id="ID_MEDIA_SIZE_ONE" message="Eredeti méretben mutatja a videót."/>
-       <tip id="ID_MEDIA_SIZE_TWO" message="Kétszeres méretben mutatja a videót."/>
-       <tip id="ID_MEDIA_SIZE_THREE" message="Háromszoros méretben mutatja a videót."/>
-       <tip id="ID_MEDIA_FULLSCREEN" message="Teljes képernyős mód."/>
-       <tip id="ID_MEDIA_RANDOM" message="Véletlenszerű lejátszás kapcsolgatása."/>
-       <tip id="ID_MEDIA_REPEAT" message="Ismételt lejátszás kapcsolgatása."/>
-       <tip id="ID_MEDIA_SETTINGS" message="A médiabeállításokat mutatja..."/>
-       <tip id="ID_MEDIA_PAUSE" message="Lejátszás szüneteltetése." tip="Szünet"/>
-       <tip id="ID_MEDIA_ZOOM" message="Zoom és képarány beállítása."/>
-       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="A videó eredeti kéaránya."/>
-       <tip id="ID_MEDIA_ASPECT_4_3" message="4:3-as képarány, mint a TV."/>
-       <tip id="ID_MEDIA_ASPECT_16_9" message="16:9-es képarány, szélesvásznú."/>
-       <tip id="ID_MEDIA_SELECT" message="Lejátsza a fájlt."/>
-       <tip id="ID_MEDIA_ADD" message="A lejátszólistához adja..."/>
-       <tip id="ID_MEDIA_REMOVE" message="Eltávolítja a lejátszólistából."/>
-       <tip id="ID_MEDIA_CLEAR" message="Lejátszólista törlése (ürítése)."/>
-       <tip id="ID_MEDIA_SAVE" message="A jelenlegi list mentése..."/>
-       <tip id="ID_MEDIA_PLAYLIST" message="Lejátszólista-szerkesztő mutatása, elrejtése."/>
        <tip id="ID_LIBRARY_VIEW_TILE" message="Csak albumok mutatása." tip="Albumnézet"/>
-       <tip id="ID_LIBRARY_ALBUM_OPEN" message="Album megnyitása."/>
-       <tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Minden fájl hozzáadása a lejátszólistához."/>
-       <tip id="ID_LIBRARY_ALBUM_DELETE" message="Törli a kiválasztott mappát."/>
-       <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="A kiválasztott mappa tulajdonságainak szerkesztése..."/>
-       <tip id="ID_TAB_SEARCH" message="Keresést indít letölthető fájlok után."/>
-       <tip id="ID_LIBRARY_FOLDERS" message="A valós mappák rendezése..."/>
-       <tip id="ID_TOOLS_PROFILE" message="Saját profil szerkesztése..."/>
-       <tip id="ID_BROWSE_PROFILE" message="A felhasználó profiljának böngészése."/>
-       <tip id="ID_BROWSE_FILES" message="A felhasználó megosztásának böngészése"/>
-       <tip id="ID_MEDIA_VIS" message="Válassz egy képi megjelenítést..."/>
-       <tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Megnyitja vagy lejátsza a kiválasztott fájlt."/>
-       <tip id="ID_CHAT_CONNECT" message="Kapcsolódik a chathez."/>
-       <tip id="ID_CHAT_DISCONNECT" message="Lekapcsolódik a chathről."/>
-       <tip id="ID_CHAT_BROWSE" message="A felhasználó profiljának és megosztásának böngészése."/>
-       <tip id="ID_CHAT_COLOUR" message="Betűszín kiválaztása (Ctrl+K)"/>
-       <tip id="ID_CHAT_BOLD" message="Félkövér betűk (Ctrl+B)"/>
-       <tip id="ID_CHAT_ITALIC" message="Dőlt betűk (Ctrl+I)"/>
-       <tip id="ID_CHAT_UNDERLINE" message="Aláhúzott betűk (Ctrl+U)"/>
-       <tip id="ID_CHAT_SEND_FILE" message="Fájl elküldése..."/>
-       <tip id="ID_CHAT_PRIORITY" message="Feltöltési elsőbbséget ad a felhasználnak."/>
-       <tip id="ID_CHAT_CLEAR" message="Szöveg törlése ebben az ablakban."/>
-       <tip id="ID_CHAT_EMOTICONS" message="Szmájli beszúrása."/>
-       <tip id="ID_DOWNLOADS_SHARE" message="Ezt a félig letöltött fájlt ossza meg másokkal."/>
+       <tip id="ID_MEDIA_ADD" message="A lejátszólistához adja..."/>
        <tip id="ID_MEDIA_ADD_FOLDER" message="Egy egész mappányi médiafájl hozzáadása a lejátszólistához..."/>
-       <tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Minden fájl tulajdonságának szerkesztése..."/>
-       <tip id="ID_LIBRARY_REBUILD" message="Új metadata és hash értékek megadása."/>
-       <tip id="ID_VIEW_HELP" message="A SÚGÓ ablak elrejtése, mutatása."/>
-       <tip id="ID_TAB_HELP" message="Shareaza segítség."/>
-       <tip id="ID_DOWNLOADS_COPY" message="URL másolása."/>
-       <tip id="ID_LIBRARY_VIEW_ALBUM" message="Albumnézet mutatása." tip="Albumnézet"/>
-       <tip id="ID_SEARCH_DETAILS" message="Részletes adatok a kiválasztott fájlról."/>
-       <tip id="ID_UPLOADS_FILTER_ALL" message="Minden feltöltés mutatása."/>
-       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Aktív feltöltések mutatása."/>
-       <tip id="ID_UPLOADS_FILTER_QUEUED" message="Sorbanálló feltöltések mutatása."/>
-       <tip id="ID_UPLOADS_FILTER_HISTORY" message="Kapcsolat nélküli feltöltések mutatása."/>
-       <tip id="ID_SEARCH_FOR_THIS" message="Más másolatok után való keresés."/>
-       <tip id="ID_SEARCH_FOR_SIMILAR" message="Hasonló fájlok után való keresés."/>
-       <tip id="ID_SEARCH_FOR_ARTIST" message="Ugyanattól az előadótól való keresés."/>
-       <tip id="ID_SEARCH_FOR_ALBUM" message="Ugyanabból az albumból való keresé."/>
-       <tip id="ID_SEARCH_FOR_SERIES" message="Ugyanabból a sorozatból való keresés."/>
-       <tip id="ID_CHAT_TIMESTAMP" message="Időbélyegző hozzáadása az üzenethez."/>
-       <tip id="ID_MEDIA_STATUS" message="Média állapotsorának mutatása, elrejtése."/>
-       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000 szerverek mutatása."/>
-       <tip id="ID_HOSTCACHE_IMPORT" message="Ismert kiszolgálók listájának importálása, mint a &quot;server.met&quot; fájl..."/>
-       <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="eDonkey2000 &quot;server.met&quot; fájl letöltése..."/>
-       <tip id="ID_DISCOVERY_SERVERMET" message="eDonkey2000 Server.met letöltöhelyek mutatása."/>
-       <tip id="ID_NETWORK_G2" message="Kapcsolódik a Gnutella2-höz (erősen ajánlott)."/>
-       <tip id="ID_NETWORK_G1" message="Kapcsolódik a Gnutella-hez."/>
-       <tip id="ID_NETWORK_ED2K" message="Kapcsolódik a eDonkey2000-hez."/>
-       <!--<tip id="ID_LIBRARY_JIGLE" message="A Jigle adatbázis átnézése információk után."/>-->
-       <tip id="ID_HOSTCACHE_PRIORITY" message="Próbáljon ehhez a szerverhez előbb kapcsolódni."/>
-       <tip id="ID_VIEW_BASIC" message="A Shareaza egyszerű nézete."/>
-       <tip id="ID_LIBRARY_SEARCH_QUICK" message="A könytárban keres..."/>
-       <tip id="ID_HELP_FORUMS" message="Látogasd meg a Shareaza hivatalos fórumait."/>
-       <tip id="ID_DOWNLOAD_GROUP_NEW" message="Új letöltési csoport létrehozása..."/>
-       <tip id="ID_DOWNLOAD_GROUP_REMOVE" message="A kiválasztott letöltési csoport törlése."/>
-       <tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="A kiválasztott letöltési csoport szerkesztése."/>
-       <tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Minden letöltés szüneteltetése a csoportban."/>
-       <tip id="ID_DOWNLOAD_GROUP_RESUME" message="Minden letöltés folytatása a csoportban."/>
-       <tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Minden letöltés törlése a csoportban."/>
-       <tip id="ID_DOWNLOADS_TORRENT_INFO" message="A BitTorrent adatainak mutatása..."/>
-       <tip id="ID_DOWNLOAD_GROUP_SHOW" message="A letöltési csoportok eszközsorának mutatása, elrejtése."/>
-       <tip id="ID_DOWNLOADS_HELP" message="Súgó mutatása a letöltésről..."/>
-       <tip id="ID_DOWNLOADS_FILTER_MENU" message="Válaszd ki, milyen letöltéseket akarsz mejeleníteni, ejrejteni."/>
-       <tip id="ID_UPLOADS_FILTER_MENU" message="Válaszd ki, milyen feltöltéseket akarsz mejeleníteni, ejrejteni."/>
-       <tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="A félkész letöltés(ek) törlése."/>
-       <tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="A kiválasztott letöltés(ek) törlése."/>
-        <tip id="ID_LIBRARY_CREATETORRENT" message=".torrent fájl létrehozása ehhez a fájl(ok)hoz."/>
-       <tip id="ID_WINDOW_NAVBAR" message="A navigációsablak mutatása, elrejtése."/>
-       <tip id="ID_DOWNLOADS_RATE" message="A letöltés osztályozása."/>
-       <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Gyűjteménynézet mutatása" tip="Gyűjteménynézet"/>
-       <tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Minden fájl letöltése a gyűjteményben."/>
-       <tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
-       <tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
-       <tip id="ID_LIBRARY_SEED_TORRENT" message="A kiválasztott torrent terjesztése a BitTorrent hálózaton."/>
-       <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése."/>
-       <tip id="ID_DOWNLOADS_EDIT" message="A fejlett letöltésszerkesztő mutatása..."/>
+       <tip id="ID_MEDIA_ASPECT_16_9" message="16:9-es képarány, szélesvásznú."/>
+       <tip id="ID_MEDIA_ASPECT_4_3" message="4:3-as képarány, mint a TV."/>
+       <tip id="ID_MEDIA_ASPECT_DEFAULT" message="A videó eredeti kéaránya."/>
+       <tip id="ID_MEDIA_CLEAR" message="Lejátszólista törlése (ürítése)."/>
+       <tip id="ID_MEDIA_CLOSE" message="Zárd be a médiafájlt memóriaspórolás céljából."/>
+       <tip id="ID_MEDIA_FULLSCREEN" message="Teljes képernyős mód."/>
        <tip id="ID_MEDIA_MUTE" message="Némítás."/>
-       <tip id="ID_WINDOW_REMOTE" message="A Shareaza távirányítójának mutatása."/>
-       <tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent feltöltések mutatása."/>
+       <tip id="ID_MEDIA_NEXT" message="Előremegy a következő fájlra." tip="Következő"/>
+       <tip id="ID_MEDIA_OPEN" message="Lista vagy médiafájl megnyitása és lejátszása..."/>
+       <tip id="ID_MEDIA_PAUSE" message="Lejátszás szüneteltetése." tip="Szünet"/>
+       <tip id="ID_MEDIA_PLAY" message="Lejátszás elkezdése." tip="Lejátszás"/>
+       <tip id="ID_MEDIA_PLAYLIST" message="Lejátszólista-szerkesztő mutatása, elrejtése."/>
+       <tip id="ID_MEDIA_PREVIOUS" message="Visszamegy az előző fájlra." tip="Előző"/>
+       <tip id="ID_MEDIA_RANDOM" message="Véletlenszerű lejátszás kapcsolgatása."/>
+       <tip id="ID_MEDIA_REMOVE" message="Eltávolítja a lejátszólistából."/>
+       <tip id="ID_MEDIA_REPEAT" message="Ismételt lejátszás kapcsolgatása."/>
+       <tip id="ID_MEDIA_SAVE" message="A jelenlegi list mentése..."/>
+       <tip id="ID_MEDIA_SELECT" message="Lejátsza a fájlt."/>
+       <tip id="ID_MEDIA_SETTINGS" message="A médiabeállításokat mutatja..."/>
+       <tip id="ID_MEDIA_SIZE_DISTORT" message="A videó szétnyújtása az ablak széléig."/>
+       <tip id="ID_MEDIA_SIZE_FILL" message="A videó méretének változtatása."/>
+       <tip id="ID_MEDIA_SIZE_ONE" message="Eredeti méretben mutatja a videót."/>
+       <tip id="ID_MEDIA_SIZE_THREE" message="Háromszoros méretben mutatja a videót."/>
+       <tip id="ID_MEDIA_SIZE_TWO" message="Kétszeres méretben mutatja a videót."/>
+       <tip id="ID_MEDIA_STATUS" message="Média állapotsorának mutatása, elrejtése."/>
+       <tip id="ID_MEDIA_STOP" message="Lejátszás leállítása." tip="Stop"/>
+       <tip id="ID_MEDIA_VIS" message="Válassz egy képi megjelenítést..."/>
+       <tip id="ID_MEDIA_ZOOM" message="Zoom és képarány beállítása."/>
+       <tip id="ID_MONITOR_CLOSE" message="Monitorablak bezárása."/>
+       <tip id="ID_NEIGHBOURS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
+       <tip id="ID_NEIGHBOURS_COPY" message="URL másolása."/>
+       <tip id="ID_NEIGHBOURS_DISCONNECT" message="Lekapcsolódik a kiválasztott szomszéd(ok)ról."/>
+       <tip id="ID_NEIGHBOURS_SETTINGS" message="Hálózati beállítások..."/>
+       <tip id="ID_NEIGHBOURS_VIEW_ALL" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak"/>
+       <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a bejövő forgalmat mutatja."/>
+       <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Nyit egy új Packet Dump ablakot ennek a szomszédnak, ami a kimenő forgalmat mutatja."/>
+       <tip id="ID_NETWORK_AUTO_CLOSE" message="Bezárja a programot a forgalom végeztével."/>
+       <tip id="ID_NETWORK_BROWSE_TO" message="Fájllista letöltése, profil megtekintése..."/>
+       <tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a hálózathoz"/>
+       <tip id="ID_NETWORK_CONNECT_TO" message="Manuálisan kapcsolódik egy kiszolgálóhoz..."/>
+       <tip id="ID_NETWORK_DISCONNECT" message="Lekapcsolódik a hálózatról."/>
+       <tip id="ID_NETWORK_ED2K" message="Kapcsolódik a eDonkey2000-hez."/>
+       <tip id="ID_NETWORK_EXIT" message="Kilépés a Shareazából."/>
+       <tip id="ID_NETWORK_G1" message="Kapcsolódik a Gnutella-hez."/>
+       <tip id="ID_NETWORK_G2" message="Kapcsolódik a Gnutella2-höz (erősen ajánlott)."/>
+       <tip id="ID_NETWORK_SEARCH" message="Új keresést indít a hálózaton..."/>
+       <tip id="ID_SEARCH_CHAT" message="Egy chatszobát nyit a kiválasztott felhasználóval."/>
+       <tip id="ID_SEARCH_CLEAR" message="Keresési eredmények törlése."/>
+       <tip id="ID_SEARCH_COLUMNS" message="Válaszd ki a megjelenítendő metadata oszlopokat..."/>
+       <tip id="ID_SEARCH_COPY" message="Lemásolja a fájl URL-ét."/>
+       <tip id="ID_SEARCH_DETAILS" message="Részletes adatok a kiválasztott fájlról."/>
+       <tip id="ID_SEARCH_DOWNLOAD" message="Letölti a kiválasztott fájl(ok)at."/>
+       <tip id="ID_SEARCH_DOWNLOADNOW" message="Elsőbbséget ad a letöltendő fájl(ok)nak."/>
+       <tip id="ID_SEARCH_FILTER" message="Szűri a keresési eredményeket a megadott paramétereknek megfelelően..."/>
+       <tip id="ID_SEARCH_FILTER_RAW" message="Eredmények szűrése a megadott kifejezésekkel..."/>
+       <tip id="ID_SEARCH_FILTER_REMOVE" message="Szűrés eltávolítása."/>
+       <tip id="ID_SEARCH_FOR_ALBUM" message="Ugyanabból az albumból való keresé."/>
+       <tip id="ID_SEARCH_FOR_ARTIST" message="Ugyanattól az előadótól való keresés."/>
+       <tip id="ID_SEARCH_FOR_SERIES" message="Ugyanabból a sorozatból való keresés."/>
+       <tip id="ID_SEARCH_FOR_SIMILAR" message="Hasonló fájlok után való keresés."/>
+       <tip id="ID_SEARCH_FOR_THIS" message="Más másolatok után való keresés."/>
+       <tip id="ID_SEARCH_PANEL" message="A gyorskereső ablak megjelenítése a keresőablak bal oldalán."/>
+       <tip id="ID_SEARCH_SEARCH" message="Újra keres a hálózaton..."/>
+       <tip id="ID_SEARCH_STOP" message="Eredmények fogadásának leállítása."/>
+       <tip id="ID_SEARCHMONITOR_CLEAR" message="Törli az összes keresési bejegyzést."/>
+       <tip id="ID_SEARCHMONITOR_PAUSE" message="Keresések megfigelésének leállítása."/>
+       <tip id="ID_SECURITY_ADD" message="Új szabály hozzáadása..."/>
+       <tip id="ID_SECURITY_BAN" message="A kiválasztott kiszolgáló letiltása egy időre."/>
+       <tip id="ID_SECURITY_EDIT" message="A kiválasztott biztonsági szabály szerkesztése..."/>
+       <tip id="ID_SECURITY_EXPORT" message="Biztonsági szabályok exportálása..."/>
+       <tip id="ID_SECURITY_IMPORT" message="Biztonsági szabályok importálása..."/>
+       <tip id="ID_SECURITY_MOVE_DOWN" message="A kiválasztott szabály lejjebb tolása az elsőbbségi listán."/>
+       <tip id="ID_SECURITY_MOVE_UP" message="A kiválasztott szabály feljebb tolása az elsőbbségi listán."/>
+       <tip id="ID_SECURITY_POLICY_ACCEPT" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol engedélyezett."/>
+       <tip id="ID_SECURITY_POLICY_DENY" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol tiltva van."/>
+       <tip id="ID_SECURITY_REMOVE" message="A kiválasztott biztonsági szabály eltávolítása."/>
+       <tip id="ID_SECURITY_RESET" message="A kiválasztott biztonsági szabály számlálójának nullázása."/>
+       <tip id="ID_SYSTEM_CLEAR" message="A log törlése."/>
+       <tip id="ID_SYSTEM_TIMESTAMP" message="Minden sorhoz időbélyegzőt ad."/>
+       <tip id="ID_SYSTEM_VERBOSE" message="Részletes log mutatása."/>
+       <tip id="ID_TAB_CONNECT" message="Le- és felkapcsolódás a hálózatokra."/>
+       <tip id="ID_TAB_HELP" message="Shareaza segítség."/>
+       <tip id="ID_TAB_HOME" message="Vissza a Shareaza kezdőlapjára."/>
+       <tip id="ID_TAB_LIBRARY" message="A könyvtár rendezése."/>
+       <tip id="ID_TAB_MEDIA" message="Zene és videó lejátszása."/>
+       <tip id="ID_TAB_NETWORK" message="Hálózati adatok ellenőrzése."/>
+       <tip id="ID_TAB_SEARCH" message="Keresést indít letölthető fájlok után."/>
+       <tip id="ID_TAB_TRANSFERS" message="Fel- és letöltések figyelése."/>
+       <tip id="ID_TOOLS_DOWNLOAD" message="Új fájl vagy Torent letöltése..."/>
+       <tip id="ID_TOOLS_LANGUAGE" message="Válaszd ki a neked legmegfelelőbb nyelvet..."/>
        <tip id="ID_TOOLS_MERCORA" message="P2P Rádió indítása"/>
-       <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
+       <tip id="ID_TOOLS_PROFILE" message="Saját profil szerkesztése..."/>
+       <tip id="ID_TOOLS_RESKIN" message="A jelenlegi kinézet újratöltése és alkalmazása."/>
+       <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése."/>
+       <tip id="ID_TOOLS_SETTINGS" message="A Shareaza beállításai..."/>
+       <tip id="ID_TOOLS_SKIN" message="Más kinézet választása a Shareazának..."/>
+       <tip id="ID_TOOLS_WIZARD" message="Shareaza Gyors beállítások megnyitása..."/>
+       <tip id="ID_TRAFFIC_AXIS" message="A függőleges tengelyt jeleníti meg."/>
+       <tip id="ID_TRAFFIC_CLEAR" message="Grafikon törlése."/>
+       <tip id="ID_TRAFFIC_GRID" message="Rácsvolnalak megjelenítése."/>
+       <tip id="ID_TRAFFIC_LEGEND" message="Jelmagyarázat megjelenítése."/>
+       <tip id="ID_TRAFFIC_SETUP" message="A grafikon elemeinek beállítása..."/>
+       <tip id="ID_TRAFFIC_WINDOW" message="Grafikon megnyitása..."/>
+       <tip id="ID_TRANSFERS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
+       <tip id="ID_TRANSFERS_CONNECT" message="Az elérhető források használata."/>
+       <tip id="ID_TRANSFERS_DISCONNECT" message="A kiválasztott letöltés(ek) szétkapcsolása."/>
+       <tip id="ID_TRANSFERS_FORGET" message="A kiválasztott letöltés(ek) törlése és a forrás(ok) elfelejtése."/>
+       <tip id="ID_TRAY_OPEN" message="Shareaza ablak megnyitása."/>
+       <tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatikusan törli a kész feltöltéseket."/>
+       <tip id="ID_UPLOADS_CHAT" message="Chat megnyitása a kiválasztott felhasználóval."/>
+       <tip id="ID_UPLOADS_CLEAR" message="A kijelölt feltöltés(ek) törlése."/>
+       <tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Kész feltöltés(ek) törlése."/>
+       <tip id="ID_UPLOADS_DISCONNECT" message="A feltöltés(ek) szétkapcsolása."/>
+       <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Aktív feltöltések mutatása."/>
+       <tip id="ID_UPLOADS_FILTER_ALL" message="Minden feltöltés mutatása."/>
+       <tip id="ID_UPLOADS_FILTER_HISTORY" message="Kapcsolat nélküli feltöltések mutatása."/>
+       <tip id="ID_UPLOADS_FILTER_MENU" message="Válaszd ki, milyen feltöltéseket akarsz mejeleníteni, ejrejteni."/>
+       <tip id="ID_UPLOADS_FILTER_QUEUED" message="Sorbanálló feltöltések mutatása."/>
+       <tip id="ID_UPLOADS_FILTER_TORRENT" message="BitTorrent feltöltések mutatása."/>
+       <tip id="ID_UPLOADS_LAUNCH" message="Megnyitás."/>
+       <tip id="ID_UPLOADS_SETTINGS" message="Feltöltési beállítások..."/>
+       <tip id="ID_UPLOADS_START" message="A kiválasztott feltöltés(ek) indítása."/>
+       <tip id="ID_VIEW_BASIC" message="A Shareaza egyszerű nézete."/>
+       <tip id="ID_VIEW_DISCOVERY" message="A SZERVERKERESŐ ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_DOWNLOADS" message="A LETÖLTÉSEK ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_HELP" message="A SÚGÓ ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_HOSTS" message="A KISZOLGÁLÓK LISTÁJA ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_LIBRARY" message="A KÖNYVTÁR ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_MEDIA" message="A MÉDIALEJÁTSZÓ ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_NEIGHBOURS" message="A SZOMSZÉDOK ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_PACKETS" message="A PACKET DUMP ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_RESULTS_MONITOR" message="A TALÁLATOK FIGYELÉSE ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_SEARCH_MONITOR" message="A KERESÉSEK FIGYELÉSE ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_SECURITY" message="A BIZTONSÁG ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_SYSTEM" message="A RENDSZER ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_TABBED" message="Shareaza használata az összetett nézetben."/>
+       <tip id="ID_VIEW_TRAFFIC" message="A GRAFIKON ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_UPLOADS" message="A FELTÖLTÉSEK ablak elrejtése, mutatása."/>
+       <tip id="ID_VIEW_WINDOWED" message="A Shareaza használata az ablakos nézetben."/>
        <tip id="ID_WINDOW_CASCADE" message="Minden ablak teljes méretűvé alakítása."/>
+       <tip id="ID_WINDOW_MONITOR" message="A sávszélfigyelő elrejtése, mutatása."/>
+       <tip id="ID_WINDOW_NAVBAR" message="A navigációsablak mutatása, elrejtése."/>
+       <tip id="ID_WINDOW_REMOTE" message="A Shareaza távirányítójának mutatása."/>
+       <tip id="ID_WINDOW_TABBAR" message="Megnyitott ablakok sorának elrejtése, mutatása."/>
        <tip id="ID_WINDOW_TILE_HORZ" message="Vízszintesen rendezi a megnyitott ablakokat."/>
        <tip id="ID_WINDOW_TILE_VERT" message="Függőlegesen rendezi a megnyitott ablakokat."/>
+       <tip id="ID_WINDOW_TOOLBAR" message="Eszközsor elrejtése, mutatása."/>
 </commandTips>
 
 <!-- Localised Strings -->
@@ -2424,7 +2444,6 @@
        <string id="8231" value="Nincs forrás"/>
        <string id="8232" value="Megnyitás"/>
        <string id="8233" value="Előnézet"/>
-       <string id="8234" value="%s a %s (%.2f%%)-ból"/>
        <string id="8235" value="Sebesség:"/>
        <string id="8236" value="Hátralévő idő:"/>
        <string id="8237" value="Letöltve:"/>
@@ -2432,7 +2451,6 @@
        <string id="8239" value="Kész"/>
        <string id="8240" value="Letöltés áthelyezése:"/>
        <string id="8241" value="Hibaellenőrzés:"/>
-       <string id="8242" value="%s a %s (%.2f%%)-ból"/>
        <string id="8243" value="Feltöltve:"/>
        <string id="8288" value="Tallózás a könyvtárban"/>
        <string id="8289" value="Tallózás "/>
@@ -2443,7 +2461,6 @@
        <string id="8294" value="Mostanában hozzáadva"/>
        <string id="8295" value="Osztályozd"/>
        <string id="8304" value="Nincs adat"/>
-       <string id="8305" value="%i/%i"/>
        <string id="8306" value="Hely"/>
        <string id="8307" value="Típus"/>
        <string id="8308" value="Méret"/>
@@ -2464,6 +2481,10 @@
        <string id="8324" value="Inaktív"/>
        <string id="8325" value="Aktív"/>
        <string id="8326" value="Következő a sorban"/>
+       <string id="8327" value="Összes fájl:"/>
+       <string id="8328" value="Teljes méret:"/>
+       <string id="8329" value="a könyvtár mérete"/>
+       <string id="8330" value="Mappa"/>
        <string id="16064" value="Shareaza hálózati mag indítása..."/>
        <string id="16065" value="Nem tudok kacsolódni: %s port %i A bejövő kacsolatok nem támogatottak."/>
        <string id="16066" value="Shareaza hálózati mag leállítása..."/>
@@ -2781,8 +2802,39 @@
        <string id="17041" value="Nem tudok üzenetet küldeni, még nem jött létre a kapcsolat."/>
        <string id="17042" value="Nem töltötted ki a profilodat. A chatelés előtt ki kell töltened.\n\nMost akarod kitölteni?"/>
        <string id="17043" value="Feltöltési elsőbbség megadva: %s."/>
-       <string id="17216" value="eDonkey2000 szerverhez való kapcsolódás inicializálása: %s..."/>
-       <string id="17217" value="Kapcsolódva az eDonkey2000 szerverhez: %s, viszontválasz..."/>
+       <string id="17100" value="Gnutella: Peer-to-Peer kapcsolat"/>
+       <string id="17101" value="Gnutella: Leaf-to-Ultrapeer kapcsolat"/>
+       <string id="17102" value="Gnutella: Ultrapeer-to-Leaf kapcsolat"/>
+       <string id="17103" value="Gnutella 2: Hub-to-Hub kapcsolat"/>
+       <string id="17104" value="Gnutella 2: Leaf-to-Hub kapcsolat"/>
+       <string id="17105" value="Gnutella 2: Hub-to-Leaf kapcsolat"/>
+       <string id="17106" value="eDonkey kapcsolat (LOWID: %lu)"/>
+       <string id="17107" value="eDonkey2000 kapcsolat"/>
+       <string id="17108" value="Viszontválasz"/>
+       <string id="17109" value="Bejövő"/>
+       <string id="17110" value="Kimenő"/>
+       <string id="17111" value="Jelenleg:"/>
+       <string id="17112" value="Teljes:"/>
+       <string id="17113" value="Tömörítés:"/>
+       <string id="17114" value="Arány:"/>
+       <string id="17115" value="Csökkent"/>
+       <string id="17116" value="Nincs"/>
+       <string id="17117" value="Kapcsolódás"/>
+       <string id="17118" value="Viszontválasz"/>
+       <string id="17119" value="Megtagadva"/>
+       <string id="17120" value="Bezár"/>
+       <string id="17121" value="Ismeretlen"/>
+       <string id="17122" value="G1 Peer"/>
+       <string id="17123" value="G1 Ultrapeer"/>
+       <string id="17124" value="G1 Leaf"/>
+       <string id="17125" value="G2 Peer"/>
+       <string id="17126" value="G2 Hub"/>
+       <string id="17127" value="G2 Leaf"/>
+       <string id="17128" value="eDonkey2000 szerver"/>
+       <string id="17129" value="eDonkey2000 (LowID)"/>
+       <string id="17130" value="eDonkey2000 (HighID)"/>
+       <string id="17216" value="eDonkey2000 szerverhez való kapcsolódás: %s..."/>
+       <string id="17217" value="eDonkey2000 szerverhez kapcsolódva: %s, viszontválasz..."/>
        <string id="17218" value="ED2K[%s] %s"/>
        <string id="17219" value="eDonkey2000 szerver, %s megtagadta a kapcsolódást."/>
        <string id="17220" value="eDonkey2000 szerver, %s online, kliens ID: %lu."/>
@@ -2859,6 +2911,7 @@
        <string id="19001" value="Egy felhasználónevet és egy jelszót kell választanod."/>
        <string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
        <string id="20000" value="Nincs elérhető URN"/>
+       <string id="20002" value="of"/><!-- e.g. 1 of 10 -->
        <string id="20100" value="Kapcsolódás"/>
        <string id="20101" value="Kérés"/>
        <string id="20102" value="Válasz"/>
@@ -2892,6 +2945,13 @@
        <string id="20130" value="forrás"/> <!-- from 11 to 19 -->
        <string id="20131" value="forrás"/> <!-- from 2 to 4 -->
        <string id="20132" value="forrás"/> <!-- from 5 to 9 -->
+       <string id="20200" value="Vasárnap"/>
+       <string id="20201" value="Hétfő"/>
+       <string id="20202" value="Kedd"/>
+       <string id="20203" value="Szerda"/>
+       <string id="20204" value="Csütörtök"/>
+       <string id="20205" value="Péntek"/>
+       <string id="20206" value="Szombat"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -2906,7 +2966,7 @@
 
        <dialog name="CGeneralSettingsGroup" cookie="" caption="Általános"/>
 
-       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBu" caption="Általános">
+       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBu" caption="Általános">
                <control caption="Felhasználói felület:"/>
                <control caption="Automatikus kapcsolódás indításkor"/>
                <control caption="Együtt töltődik be a Windows-al"/>
@@ -2915,7 +2975,6 @@
                <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
                <control caption="Új letöltések kibontása"/>
                <control caption="Ablak mutatása URL megyitása előtt"/>
-
                <control caption="Sebességérték:"/>
                <control/>
                <control caption="Gyorstippek:"/>
@@ -2930,15 +2989,16 @@
                <control caption="Kis méret gomb:"/>
                <control/>
                <control caption="Keresőpanel elrejtése kereséskor"/>
+               <control caption="Felnőtt tartalmú fájlok kiszűrése"/>
        </dialog>
 
        <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Könyvtár">
                <control caption="Opciók:"/>
                <control caption="Utolsó mappa megjegyzése"/>
                <control caption="Mappák figyelése"/>
-               <control caption="Más források tárolása"/>
+                      <control/>
                <control caption="Szűrés kiterjesztés alapján"/>
-               <control caption="Hash integritás megőrzése"/>
+               <control/>
                <control caption="Böngészésés engedélyezése"/>
                <control caption="Legutóbbi fájlok a könytárban:"/>
                <control caption="Mutass"/>
@@ -3085,7 +3145,29 @@
               <control/>
        </dialog>
 
-       <dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Hálózatok">
+       <dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Ütemező">
+               <control caption="Beállítások:"/>
+               <control caption="Ütemező bekapcsolása"/>
+               <control/><control/>
+               <control caption="_Restrict networks when limited"/>
+               <control caption="Jelmagyarázat:"/>
+               <control caption="H"/>
+               <control caption="K"/>
+               <control caption="Sz"/>
+               <control caption="Cs"/>
+               <control caption="P"/>
+               <control caption="Szo"/>
+               <control caption="V"/>
+               <control caption="Ne kapcsolódjon"/>
+               <control caption="Csökkentett sebességgel"/>
+               <control caption="Teljes sebességgel"/>
+               <control caption="% of _bandwidth under limit"/>
+               <control/>
+               <control caption="Súgó"/>
+               <control caption="Az ütemezővel beállíthatod, hogy a Shareaza mikor töltse kapcsolódjon és mikor töltse le a fájlokat. &#13;&#10;&#13;&#10;&#13;&#10;Note: Ha éppen meg van nyitva a Shareaza és az ütemező is be van kapcsolva, láthatod, hogy megváltoztatja a beállításaidat.- Ez teljesen normális!-"/>
+       </dialog>
+
+<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Hálózatok">
                <control caption="A Shareaza egy fájlmegosztó program, ami egyszerre több p2p hálózathoz is tud csatlakozni. Ezen az oldalon beállíthatod, hogy melyik hálózathoz akarsz kapcsolódni és külön-külön be is állíthatod őket."/>
                <control caption="Gnutella2:"/>
                <control caption="A Gnutella2 a Shareaza fő hálózata, p2p rendszerű. Rengeteg szolgáltatás és nagy sebesség. Erősen ajánlott!"/>
@@ -3919,7 +4001,7 @@
         <column from="Bandwidth" to="Sávszél"/>
         <column from="Total" to="Teljes forgalom"/>
         <column from="Flow" to=""/>
-        <column from="Leaves" to=""/>
+        <column from="Leaves" to="Leafek"/>
         <column from="Mode" to="Mód"/>
         <column from="Client" to="Kliensprogram"/>
         <column from="Name" to="Név"/>
@@ -3970,10 +4052,10 @@
         <column from="Type" to="Típus"/>
         <column from="Size" to="Méret"/>
         <column from="Rating" to="Jegy"/>
+        <column from="Status" to="Státusz"/>
         <column from="Host/Count" to="IP/Források"/>
         <column from="Speed" to="Sebesség"/>
         <column from="Client" to="Kliensprogram"/>
-        <column from="Status" to="Státusz"/>
     </list>
     <list name="CUploadQueueList">
         <column from="Name" to="Név"/>
