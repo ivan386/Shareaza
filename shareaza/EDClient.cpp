@@ -625,7 +625,7 @@ void CEDClient::SendHello(BYTE nType)
 	}
 	strNick.Left( 255 );
 	
-	CEDTag( ED2K_CT_NAME, strNick ).Write( pPacket );
+	CEDTag( ED2K_CT_NAME, strNick ).Write( pPacket, ED2K_SERVER_TCP_UNICODE );
 
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
@@ -718,7 +718,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	while ( nCount-- > 0 && pPacket->GetRemaining() > 0 )
 	{
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket ) )
+		if ( ! pTag.Read( pPacket, ED2K_SERVER_TCP_UNICODE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );
 			Close();
