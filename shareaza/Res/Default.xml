@@ -1944,6 +1944,15 @@
 		ensure proper operation, however performance may be reduced. Please visit the Shareaza 
 		forums for further information, and up to date news.</text>
 	</document>
+	
+	<document name="GeneralHelp.AdultFilter">
+		<text format="b">Adult content filter enabled</text>
+		<newline gap="8"/>
+		<text>Please note that (as with any automated filter) it may not be 100% effective at screening
+		content. It is designed simply to filter out excess unwanted results, rather than as a 100% safe block.</text>
+		<newline gap="8"/>
+		<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
+	</document>
 
 	
 	<!-- Search help documents -->
@@ -1956,7 +1965,18 @@
 		(file type). Furthermore, searches must not be limited to numbers or negative
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for 					example, because it is not specific enough and would generate too many results.</text>
+		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
+		because it is not specific enough and would generate too many results.</text>
+	</document>
+	
+	<document name="SearchHelp.AdultSearch">
+		<text format="b">This search cannot be started</text>
+		<newline gap="8"/>
+		<text>The specified search would probably return a large number of results with adult 
+		content, and this has been turned off in the settings. You should either re-phrase the 
+		search, or disable the filter.</text>
+		<newline gap="8"/>
+		<text>To disable the filter, go into Tools > Settings > General and un-check the adult content filter.</text>
 	</document>
 
 	<!-- Share help documents -->
