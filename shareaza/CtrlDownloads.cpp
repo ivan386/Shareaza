@@ -919,56 +919,6 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			
 		case DOWNLOAD_COLUMN_STATUS:
 			strText = GetDownloadStatus( pDownload );
-
-			/*
-			if ( pDownload->IsCompleted() )
-				if ( pDownload->IsSeeding() )
-					LoadString( strText, IDS_STATUS_SEEDING );
-				else
-					LoadString( strText, IDS_STATUS_COMPLETED );
-			else if ( pDownload->IsMoving() )
-				LoadString( strText, IDS_STATUS_MOVING );
-			else if ( pDownload->IsPaused() )
-			{
-				if ( pDownload->m_bDiskFull )
-				{
-					if ( pDownload->IsCompleted() )
-						LoadString( strText, IDS_STATUS_CANTMOVE );
-					else
-						LoadString( strText, IDS_STATUS_FILEERROR );
-				}
-				else
-					LoadString( strText, IDS_STATUS_PAUSED );
-			}
-			else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
-				LoadString( strText, IDS_STATUS_VERIFYING );
-			else if ( pDownload->IsDownloading() )
-			{
-				DWORD nTime = pDownload->GetTimeRemaining();
-				
-				if ( nTime == 0xFFFFFFFF )
-					LoadString( strText, IDS_STATUS_ACTIVE );
-				else
-					strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
-			}
-			else if ( ! pDownload->IsTrying() )
-				LoadString( strText, IDS_STATUS_QUEUED );
-			else if ( nSources > 0 )
-				LoadString( strText, IDS_STATUS_PENDING );
-			else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-				LoadString( strText, IDS_STATUS_SEARCHING );
-			else if ( pDownload->m_bBTH )
-			{
-				if ( pDownload->IsTasking() )
-					LoadString( strText, IDS_STATUS_CREATING );
-				else if ( pDownload->m_bTorrentTrackerError )
-					LoadString( strText, IDS_STATUS_TRACKERDOWN );
-				else
-					LoadString( strText, IDS_STATUS_TORRENT );
-			}
-			else
-				LoadString( strText, IDS_STATUS_NOSOURCES );
-			*/
 			break;
 			
 		case DOWNLOAD_COLUMN_CLIENT:
@@ -1341,18 +1291,18 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 			LoadString( strText, IDS_STATUS_SEEDING );
 		else
 			LoadString( strText, IDS_STATUS_COMPLETED );
-	else if ( pDownload->IsMoving() )
-		LoadString( strText, IDS_STATUS_MOVING );
 	else if ( pDownload->IsPaused() )
 	{
 		if ( pDownload->m_bDiskFull )
-			if( pDownload->IsCompleted() )
+			if( pDownload->IsMoving() )
 				LoadString( strText, IDS_STATUS_CANTMOVE );
 			else
 				LoadString( strText, IDS_STATUS_FILEERROR );
 		else
 			LoadString( strText, IDS_STATUS_PAUSED );
 	}
+	else if ( pDownload->IsMoving() )
+		LoadString( strText, IDS_STATUS_MOVING );
 	else if ( pDownload->GetProgress() == 1.0f && pDownload->IsStarted() )
 		LoadString( strText, IDS_STATUS_VERIFYING );
 	else if ( pDownload->IsDownloading() )
