@@ -229,7 +229,50 @@ void CMatchTipCtrl::ShowInternal()
 	m_bVisible = TRUE;
 	
 	CSize sz = ComputeSize();
+
+	//** Multimonitor update
+	HMONITOR hMonitor = NULL;
+	MONITORINFO mi = {0};
+	CRect rcMonitor( 0, 0, 0, 0 );
+
+	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
+	rc.right = rc.left + sz.cx;
+	rc.bottom = rc.top + sz.cy;
 	
+
+	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	{
+		mi.cbSize = sizeof(MONITORINFO);
+
+		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		if (NULL != hMonitor)
+		{
+		if ( GetMonitorInfoA(hMonitor, &mi) )
+			rcMonitor = mi.rcWork;
+		else
+			hMonitor = NULL; // Fall back to GetSystemMetrics
+		}
+
+	}
+
+	if ( NULL == hMonitor )
+	{
+		// Unimon system or something is wrong with multimon
+		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );
+		rcMonitor.bottom = GetSystemMetrics( SM_CYSCREEN );
+	}
+
+	if ( rc.right >= rcMonitor.right)
+	{
+		rc.OffsetRect( rcMonitor.right - rc.right - 4, 0 );
+	}
+
+	if ( rc.bottom >= rcMonitor.bottom )
+	{
+		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
+	}
+
+	/*
 	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
 	rc.right = rc.left + sz.cx;
 	rc.bottom = rc.top + sz.cy;
@@ -242,7 +285,7 @@ void CMatchTipCtrl::ShowInternal()
 	if ( rc.bottom >= GetSystemMetrics( SM_CYSCREEN ) )
 	{
 		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
-	}
+	}*/
 	
 	if ( Settings.Interface.TipAlpha == 255 || m_pfnSetLayeredWindowAttributes == NULL )
 	{

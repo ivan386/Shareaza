@@ -359,11 +359,42 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockControlBar( &m_wndMonitorBar, AFX_IDW_DOCKBAR_TOP );
 	
 	// Default Size
-	
+	HMONITOR hMonitor = NULL;
+	CRect rcMonitor( 0, 0, 0, 0 );
+
+	if (GetSystemMetrics( SM_CMONITORS ) > 1)
+	{
+		CRect rc;
+		GetWindowRect( &rc );
+		hMonitor = MonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+
+		if (NULL != hMonitor)
+		{
+			MONITORINFO mi = {0};
+			mi.cbSize = sizeof(MONITORINFO);
+
+			if ( GetMonitorInfoA(hMonitor, &mi) )
+				rcMonitor = mi.rcWork;
+			else
+				hMonitor = NULL; // Fall back to GetSystemMetrics
+		}
+	}
+
+	if ( NULL == hMonitor )
+	{	// Unimon system or something is wrong with multimon
+		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );
+		rcMonitor.bottom = GetSystemMetrics( SM_CYSCREEN );
+	}
+
+	SetWindowPos( NULL, rcMonitor.right  * 1 / 10,
+						rcMonitor.bottom * 1 / 10,
+						rcMonitor.right  * 8 / 10,
+						rcMonitor.bottom * 8 / 10, 0 );
+	/*
 	SetWindowPos( NULL,	GetSystemMetrics( SM_CXSCREEN ) * 1 / 10,
 						GetSystemMetrics( SM_CYSCREEN ) * 1 / 10,
 						GetSystemMetrics( SM_CXSCREEN ) * 8 / 10,
-						GetSystemMetrics( SM_CYSCREEN ) * 8 / 10, 0 );
+						GetSystemMetrics( SM_CYSCREEN ) * 8 / 10, 0 );*/
 	
 	// Plugins
 	
