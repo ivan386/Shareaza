@@ -536,6 +536,8 @@ void CSearchWnd::OnSearchSearch()
 	pLock.Unlock();
 	
 	ExecuteSearch();
+
+	m_wndPanel.Disable();
 }
 
 void CSearchWnd::OnUpdateSearchClear(CCmdUI* pCmdUI) 
@@ -570,6 +572,8 @@ void CSearchWnd::OnSearchStop()
 	}
 
 	m_bPaused = TRUE;
+
+	m_wndPanel.Enable();
 
 	UpdateMessages();
 }
