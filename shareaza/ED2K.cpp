@@ -73,7 +73,7 @@ void CED2K::Serialize(CArchive& ar)
 		Clear();
 		
 		ar >> m_nList;
-//		if ( m_nList == 0 ) return;
+		if ( m_nList == 0 ) return;
 		
 		ar.Read( &m_pRoot, sizeof(MD4) );
 		
