@@ -16,6 +16,7 @@ DefaultDirName={reg:HKLM\SOFTWARE\Shareaza,|{pf}\Shareaza}
 DirExistsWarning=no
 DefaultGroupName=Shareaza
 DisableReadyPage=yes
+DisableProgramGroupPage=yes
 OutputDir=setup\builds
 OutputBaseFilename=Shareaza {#version}
 SolidCompression=yes
@@ -49,16 +50,12 @@ Name: "skins"; Description: "{cm:components_skins}"; Types: full; Flags: disable
 Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
 
 [Files]
-; Need zlib.dll in {sys} or regserver will crash
-; Place this entry before other entries using regserver
-Source: "setup\builds\zlib.dll"; DestDir: "{sys}"; Flags: regserver noregerror overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension
-
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension regserver noregerror; MinVersion: 4.0,0
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: regserver noregerror overwritereadonly replacesameversion restartreplace sharedfile uninsneveruninstall sortfilesbyextension; MinVersion: 4.0,0
 
 ; Main files
-Source: "setup\builds\zlib.dll"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 Source: "Data\*"; DestDir: "{userappdata}\Shareaza\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
@@ -228,3 +225,25 @@ begin
     if Wnd <> 0 then
       SendMessage(Wnd, WM_CLOSE, 0, 0);
 end;
+
+const
+  ISKey1 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1';
+  ISKey2 = 'Software\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza';
+  ISVal = 'UninstallString';
+  
+var
+  AppExists: Boolean;
+
+function InitializeSetup: Boolean;
+begin
+  Result := True;
+  AppExists := RegValueExists(HKEY_LOCAL_MACHINE, ISKey1, ISVal) or
+    RegValueExists(HKEY_LOCAL_MACHINE, ISKey2, ISVal);
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  Result := False;
+  if PageID = wpSelectDir then Result := AppExists;
+end;
+
