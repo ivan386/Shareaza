@@ -30,6 +30,7 @@
 #include "DlgNewSearch.h"
 #include "Skin.h"
 #include "DlgHelp.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -288,8 +289,12 @@ void CHomeSearchCtrl::OnSearchCreate()
 	CQuerySearch* pSearch	= new CQuerySearch();
 	pSearch->m_sSearch		= strText;
 	pSearch->m_pSchema		= pSchema;
-	
-	if ( NULL == pSearch->OpenWindow() ) 
+
+	if ( AdultFilter.IsFiltered( pSearch->m_sSearch ) )
+	{								//Adult search blocked, open help window
+		CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+	}
+	else if ( NULL == pSearch->OpenWindow() ) 
 	{								//Invalid search, open help window
 		CHelpDlg::Show( _T("SearchHelp.BadSearch") );
 		delete pSearch;
