@@ -870,6 +870,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
@@ -886,7 +887,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
@@ -1073,6 +1074,7 @@
 			<item id="ID_LIBRARY_MOVE" text="П_ереместить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
@@ -1140,6 +1142,7 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>

@@ -896,6 +896,7 @@ right quote	&#147;
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Peržiūra"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="P_eržvelgti įvertinimus"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Tęsti"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="_Stabdyti"/>
@@ -1099,6 +1100,7 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Ypatybės"/>
 	</menu>
@@ -1166,6 +1168,7 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Ypatybės"/>
 	</menu>
