@@ -324,6 +324,8 @@ public:
 		int			DownloadConnections;		// Number active torrent connections allowed
 		int			DownloadTorrents;			// Number of torrents to download at once
 		BOOL		Endgame;					// Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
+		BOOL		AutoClear;					// Clear completed torrents when they meet the required share ratio
+		DWORD		ClearRatio;					// Share ratio a torrent must reach to be cleared. (Minimum 100%)
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		BOOL		TrackerKey;					// Send a key (random value) to trackers
 	} BitTorrent;

@@ -645,6 +645,9 @@
 #define IDC_TORRENT_DOWNLOADS_SPIN      1391
 #define IDC_TORRENTS_TORRENTMAKER       1392
 #define IDC_TORRENTS_TORRENTMAKERBROWSE 1393
+#define IDC_TORRENT_AUTOCLEAR           1394
+#define IDC_TORRENT_CLEAR_PERCENTAGE    1395
+#define IDC_TORRENT_CLEAR_SPIN          1396
 #define IDC_G1_CLIENTMODE               1396
 #define IDC_G2_CLIENTMODE               1397
 #define IDC_SCHEDULER_ENABLE            1400
@@ -780,12 +783,12 @@
 #define IDS_TIP_TOTAL_VOLUME            8328
 #define IDS_TIP_LIBRARY_PERCENT         8329
 #define IDS_TIP_FOLDER                  8330
-#define IDS_TIP_SOURCE_BUSY				8331
-#define IDS_TIP_SOURCE_FIREWALLED		8332
-#define IDS_TIP_SOURCE_UNSTABLE			8333
-#define IDS_TIP_FILE_BUSY				8334
-#define IDS_TIP_FILE_FIREWALLED			8335
-#define IDS_TIP_FILE_UNSTABLE			8336
+#define IDS_TIP_SOURCE_BUSY             8331
+#define IDS_TIP_SOURCE_FIREWALLED       8332
+#define IDS_TIP_SOURCE_UNSTABLE         8333
+#define IDS_TIP_FILE_BUSY               8334
+#define IDS_TIP_FILE_FIREWALLED         8335
+#define IDS_TIP_FILE_UNSTABLE           8336
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003
@@ -1346,10 +1349,10 @@
 #define ID_UPLOADS_DISCONNECT           32844
 #define ID_UPLOADS_CLEAR_COMPLETED      32845
 #define ID_UPLOADS_CLEAR                32846
-#define ID_UPLOADS_EDIT_QUEUE			32847
+#define ID_UPLOADS_EDIT_QUEUE           32847
 #define ID_TRANSFERS_DISCONNECT         32848
 #define ID_TRANSFERS_FORGET             32849
-#define ID_UPLOADS_HELP					32850
+#define ID_UPLOADS_HELP                 32850
 #define ID_HELP_HOMEPAGE                32851
 #define ID_HELP_WEB_1                   32852
 #define ID_HELP_WEB_2                   32853
@@ -1553,9 +1556,9 @@
 #define ID_NETWORK_G2                   33080
 #define ID_NETWORK_G1                   33081
 #define ID_NETWORK_ED2K                 33082
-#define ID_NETWORK_HTTP					33083
+#define ID_NETWORK_HTTP                 33083
 #define ID_NETWORK_FTP                  33084
-#define ID_NETWORK_BT					33085
+#define ID_NETWORK_BT                   33085
 #define ID_HOSTCACHE_PRIORITY           33086
 #define ID_VIEW_BASIC                   33087
 #define ID_LIBRARY_SEARCH_QUICK         33088
@@ -1590,7 +1593,6 @@
 #define ID_HELP_SECURITY                33119
 #define ID_HELP_FORUMS                  33120
 
-
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
@@ -1598,7 +1600,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        266
 #define _APS_NEXT_COMMAND_VALUE         33121
-#define _APS_NEXT_CONTROL_VALUE         1387
+#define _APS_NEXT_CONTROL_VALUE         1397
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

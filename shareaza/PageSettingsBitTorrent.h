@@ -47,6 +47,10 @@ public:
 	int		m_nLinks;
 	CSpinButtonCtrl	m_wndDownloadsSpin;
 	int		m_nDownloads;
+	BOOL	m_bAutoClear;
+	CEdit	m_wndClearPercentage;
+	CSpinButtonCtrl	m_wndClearPercentageSpin;
+	int		m_nClearPercentage;
 	CIconButtonCtrl	m_wndTorrentPath;
 	CString	m_sTorrentPath;
 	CString	m_sTracker;
@@ -59,6 +63,7 @@ public:
 	//{{AFX_VIRTUAL(CBitTorrentSettingsPage)
 	public:
 	virtual void OnOK();
+	virtual BOOL OnSetActive();
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
@@ -68,6 +73,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CLibrarySettingsPage)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnTorrentsAutoClear();
 	afx_msg void OnTorrentsBrowse();
 	afx_msg void OnMakerBrowse();
 	//}}AFX_MSG

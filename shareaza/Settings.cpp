@@ -282,6 +282,8 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
 	Add( _T("BitTorrent.DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
+	Add( _T("BitTorrent.AutoClear"), &BitTorrent.AutoClear, TRUE );
+	Add( _T("BitTorrent.ClearRatio"), &BitTorrent.ClearRatio, 120 );
 	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
 	Add( _T("BitTorrent.TrackerKey"), &BitTorrent.TrackerKey, TRUE );
 	

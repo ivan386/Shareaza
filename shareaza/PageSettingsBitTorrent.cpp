@@ -37,6 +37,7 @@ IMPLEMENT_DYNCREATE(CBitTorrentSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CBitTorrentSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CBitTorrentSettingsPage)
+	ON_BN_CLICKED(IDC_TORRENT_AUTOCLEAR, OnTorrentsAutoClear)
 	ON_BN_CLICKED(IDC_TORRENTS_BROWSE, OnTorrentsBrowse)
 	ON_BN_CLICKED(IDC_TORRENTS_TORRENTMAKERBROWSE, OnMakerBrowse)
 	//}}AFX_MSG_MAP
@@ -53,6 +54,8 @@ CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSe
 	m_bEndGame			= FALSE;
 	m_nLinks			= 0;
 	m_nDownloads		= 0;
+	m_bAutoClear		= FALSE;
+	m_nClearPercentage	= 0;
 	m_sTracker			= _T("");
 	m_sTorrentPath		= _T("");
 	m_sMakerPath		= _T("");
@@ -73,6 +76,10 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TORRENT_LINKS_SPIN, m_wndLinksSpin);
 	DDX_Text(pDX, IDC_TORRENT_DOWNLOADS, m_nDownloads);
 	DDX_Control(pDX, IDC_TORRENT_DOWNLOADS_SPIN, m_wndDownloadsSpin);
+	DDX_Check(pDX, IDC_TORRENT_AUTOCLEAR, m_bAutoClear);
+	DDX_Control(pDX, IDC_TORRENT_CLEAR_PERCENTAGE, m_wndClearPercentage);
+	DDX_Control(pDX, IDC_TORRENT_CLEAR_SPIN, m_wndClearPercentageSpin);
+	DDX_Text(pDX, IDC_TORRENT_CLEAR_PERCENTAGE, m_nClearPercentage);
 	DDX_Text(pDX, IDC_TORRENT_DEFAULTTRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENTS_BROWSE, m_wndTorrentPath);
 	DDX_Text(pDX, IDC_TORRENTS_FOLDER, m_sTorrentPath);
@@ -94,18 +101,44 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_sTorrentPath		= Settings.Downloads.TorrentPath;
 	m_nDownloads		= Settings.BitTorrent.DownloadTorrents;
 	m_sMakerPath		= Settings.BitTorrent.TorrentCreatorPath;
+	m_bAutoClear		= Settings.BitTorrent.AutoClear;
+	m_nClearPercentage	= Settings.BitTorrent.ClearRatio;
 
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
 	m_wndMakerPath.SetIcon( IDI_BROWSE );
 
+	m_wndClearPercentage.EnableWindow( m_bAutoClear );
+
 	DWORD nMaxTorrents = ( Settings.GetOutgoingBandwidth() / 2 ) + 2;
 	nMaxTorrents = min (10, nMaxTorrents);
+
+	m_wndClearPercentageSpin.SetRange( 100, 999 );
 
 	m_wndLinksSpin.SetRange( 0, 100 );
 	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
 	UpdateData( FALSE );
 
 	return TRUE;
+}
+
+BOOL CBitTorrentSettingsPage::OnSetActive() 
+{
+	DWORD nMaxTorrents = ( Settings.GetOutgoingBandwidth() / 2 ) + 2;
+	nMaxTorrents = min (10, nMaxTorrents);
+
+	m_nDownloads	= min( m_nDownloads, (int)nMaxTorrents );
+	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
+
+	UpdateData( FALSE );
+
+	return CSettingsPage::OnSetActive();
+}
+
+void CBitTorrentSettingsPage::OnTorrentsAutoClear() 
+{
+	UpdateData();
+	m_wndClearPercentage.EnableWindow( m_bAutoClear );
+	m_wndClearPercentageSpin.EnableWindow( m_bAutoClear );
 }
 
 void CBitTorrentSettingsPage::OnTorrentsBrowse() 
@@ -151,10 +184,15 @@ void CBitTorrentSettingsPage::OnOK()
 {
 	UpdateData();
 
+	m_nClearPercentage = min (m_nClearPercentage, 999);
+	m_nClearPercentage = max (m_nClearPercentage, 100);
+
 	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
 	Settings.BitTorrent.Endgame				= m_bEndGame;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
 	Settings.BitTorrent.DownloadTorrents	= min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
+	Settings.BitTorrent.AutoClear			= m_bAutoClear;
+	Settings.BitTorrent.ClearRatio			= m_nClearPercentage;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;

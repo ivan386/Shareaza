@@ -102,7 +102,7 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCompileTime; 
-	tCompileTime.ParseDateTime( _T(__DATE__) );
+	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )

@@ -265,7 +265,7 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 5 ) m_tSel = 0;
 	
-	if ( nIDEvent == 4 && Settings.Downloads.AutoClear )
+	if ( nIDEvent == 4 && ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear ) )
 	{
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
@@ -278,10 +278,18 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 			
 			if ( pDownload->IsCompleted() &&
 				 pDownload->IsPreviewVisible() == FALSE &&
-				 pDownload->m_pTorrent.IsAvailable() == FALSE &&
 				 tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
 			{
-				pDownload->Remove();
+				if ( pDownload->m_pTorrent.IsAvailable() == FALSE )	//If it's a torrent
+				{	// Check the torrent clear settings
+					if ( Settings.BitTorrent.AutoClear && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
+						pDownload->Remove();
+				}
+				else												// else (It's a normal download)
+				{	// Check the general auto clear setting
+					if ( Settings.Downloads.AutoClear ) 
+						pDownload->Remove();
+				}
 			}
 		}
 	}

@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,86
- PRODUCTVERSION 2,1,0,86
+ FILEVERSION 2,1,0,87
+ PRODUCTVERSION 2,1,0,87
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 86"
+            VALUE "FileVersion", "2, 1, 0, 87"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 86"
+            VALUE "ProductVersion", "2, 1, 0, 87"
         END
     END
     BLOCK "VarFileInfo"
@@ -2979,40 +2979,50 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "BitTorrent"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Interface:",IDC_STATIC,6,8,270,27
+    GROUPBOX        "&Interface:",IDC_STATIC,6,5,270,27
     CONTROL         "Display additional BitTorrent interface elements",
                     IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,16,17,250,15
-    GROUPBOX        "&Download Connections:",IDC_STATIC,5,37,270,44
+                    WS_GROUP | WS_TABSTOP,16,14,250,15
+    GROUPBOX        "&Download Connections:",IDC_STATIC,5,37,270,60
     EDITTEXT        IDC_TORRENT_DOWNLOADS,15,48,35,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_TORRENT_DOWNLOADS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,48,11,12
-    LTEXT           "Torrents at once",IDC_STATIC,65,48,201,12,
+    LTEXT           "Torrents at once",IDC_STATIC,57,48,207,12,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_CLIENTLINKS,15,64,35,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_TORRENT_LINKS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,64,11,12
-    LTEXT           "Client connections",IDC_STATIC,65,64,201,12,
+    LTEXT           "Client connections",IDC_STATIC,57,64,211,12,
                     SS_CENTERIMAGE
-    GROUPBOX        "&EndGame:",IDC_STATIC,6,82,270,27
+    CONTROL         " Clear downloaded torrents",IDC_TORRENT_AUTOCLEAR,
+                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,80,
+                    117,11,WS_EX_TRANSPARENT
+    LTEXT           "When the share ratio reaches ",IDC_STATIC,116,80,116,11,
+                    SS_CENTERIMAGE,WS_EX_TRANSPARENT | WS_EX_RIGHT
+    EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,234,80,30,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,259,80,11,12
+    GROUPBOX        "&EndGame:",IDC_STATIC,6,99,270,27
     CONTROL         "Enable EndGame mode when completing torrents",
                     IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,16,91,250,15
-    GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,110,270,33,WS_GROUP
-    EDITTEXT        IDC_TORRENTS_FOLDER,15,122,225,12,ES_AUTOHSCROLL | 
+                    WS_TABSTOP,16,108,250,15
+    GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,128,270,32,WS_GROUP
+    EDITTEXT        IDC_TORRENTS_FOLDER,15,140,225,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
-    PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,118,23,20
-    GROUPBOX        "&Torrent Creator:",IDC_STATIC,5,145,270,33,WS_GROUP
-    EDITTEXT        IDC_TORRENTS_TORRENTMAKER,15,158,225,12,ES_AUTOHSCROLL | 
+    PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,136,23,20
+    GROUPBOX        "&Torrent Creator:",IDC_STATIC,5,164,270,50,WS_GROUP
+    EDITTEXT        IDC_TORRENTS_TORRENTMAKER,15,176,225,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
-    PUSHBUTTON      "",IDC_TORRENTS_TORRENTMAKERBROWSE,245,154,23,20
-    GROUPBOX        "Default Tracker:",IDC_STATIC,5,180,270,33,WS_GROUP
-    RTEXT           "Tracker:",IDC_STATIC,15,192,47,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,72,192,194,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "",IDC_TORRENTS_TORRENTMAKERBROWSE,245,172,23,20
+    RTEXT           "Default Tracker:",IDC_STATIC,7,197,58,11,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,72,197,194,12,ES_AUTOHSCROLL
+    LTEXT           "%",IDC_STATIC,264,81,8,11,SS_CENTERIMAGE,
+                    WS_EX_TRANSPARENT
 END
 
 IDD_SETTINGS_SCHEDULER DIALOGEX 0, 0, 282, 220
@@ -3022,7 +3032,8 @@ FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,3,155,154,56
     CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,164,144,15
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,164,144,15,
+                    WS_EX_TRANSPARENT
     EDITTEXT        IDC_SCHEDULER_LIMITED,10,181,29,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",
@@ -3030,26 +3041,29 @@ BEGIN
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
     CONTROL         " &Restrict networks when limited",
                     IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,10,195,142,15
+                    WS_GROUP | WS_TABSTOP,10,195,142,15,WS_EX_TRANSPARENT
     GROUPBOX        "Key:",IDC_STATIC,3,104,154,49
     RTEXT           "Sun",IDC_STATIC,0,26,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Mon",IDC_STATIC,0,36,21,8
-    RTEXT           "Tue",IDC_STATIC,0,46,21,8
-    RTEXT           "Wed",IDC_STATIC,0,56,21,8
-    RTEXT           "Thu",IDC_STATIC,0,66,21,8
-    RTEXT           "Fri",IDC_STATIC,0,76,21,8
-    RTEXT           "Sat",IDC_STATIC,0,86,21,8
-    LTEXT           "Do not connect",IDC_STATIC,36,114,116,8
-    LTEXT           "Limited connection",IDC_STATIC,36,126,116,8
-    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,116,8
+    RTEXT           "Mon",IDC_STATIC,0,36,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Tue",IDC_STATIC,0,46,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Wed",IDC_STATIC,0,56,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Thu",IDC_STATIC,0,66,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Fri",IDC_STATIC,0,76,21,8,0,WS_EX_TRANSPARENT
+    RTEXT           "Sat",IDC_STATIC,0,86,21,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Do not connect",IDC_STATIC,36,114,116,8,0,
+                    WS_EX_TRANSPARENT
+    LTEXT           "Limited connection",IDC_STATIC,36,126,116,8,0,
+                    WS_EX_TRANSPARENT
+    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,116,8,0,
+                    WS_EX_TRANSPARENT
     LTEXT           "% of &bandwidth under limit",IDC_STATIC,40,181,114,12,
-                    SS_CENTERIMAGE
+                    SS_CENTERIMAGE,WS_EX_TRANSPARENT
     EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
                     ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
                     WS_TABSTOP,WS_EX_TRANSPARENT
     GROUPBOX        "Help",IDC_STATIC,159,104,118,107,0,WS_EX_RIGHT
     LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",
-                    IDC_STATIC,167,112,101,94
+                    IDC_STATIC,167,112,101,94,0,WS_EX_TRANSPARENT
 END
 
 
