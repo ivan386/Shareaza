@@ -179,11 +179,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib MD4_asm.obj MD5_asm.obj SHA_asm.obj Tiger_asm.obj"
+				AdditionalDependencies="ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib mswsock.lib"
 				OutputFile=".\Debug/Shareaza.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories=".\asm\"
+				AdditionalLibraryDirectories=".\asm\;.\zlib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Shareaza.pdb"
 				SubSystem="2"
@@ -205,7 +205,8 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"/>
+				Culture="3081"
+				AdditionalIncludeDirectories=".\zlib"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -253,11 +254,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib MD4_asm.obj MD5_asm.obj SHA_asm.obj Tiger_asm.obj"
+				AdditionalOptions="/NODEFAULTLIB:LIBC"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib ole32.lib rpcrt4.lib version.lib ws2_32.lib wininet.lib winmm.lib zlib.lib"
 				OutputFile=".\Release/Shareaza.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories=".\asm\"
+				AdditionalLibraryDirectories=".\zlib;.\asm"
 				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Release/Shareaza.pdb"
@@ -282,7 +284,8 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"/>
+				Culture="3081"
+				AdditionalIncludeDirectories=".\zlib"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -6542,6 +6545,17 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\asm\MD4_asm.asm">
+				<FileConfiguration
+					Name="Unicode Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="MD5.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -6574,6 +6588,17 @@
 						Optimization="2"
 						PreprocessorDefinitions=""
 						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\asm\MD5_asm.asm">
+				<FileConfiguration
+					Name="Unicode Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot;  /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(InputName).obj "/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -8896,6 +8921,17 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\asm\SHA_asm.asm">
+				<FileConfiguration
+					Name="Unicode Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(InputName).obj "/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="ShakeNeighbour.cpp">
 				<FileConfiguration
 					Name="ASCII Release|Win32">
@@ -9428,6 +9464,17 @@
 						Optimization="2"
 						PreprocessorDefinitions=""
 						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\asm\Tiger_asm.asm">
+				<FileConfiguration
+					Name="Unicode Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\bin\ml.exe&quot; /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(InputName).obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -12672,22 +12719,6 @@
 			</File>
 			<File
 				RelativePath="Res\World.ico">
-			</File>
-		</Filter>
-		<Filter
-			Name="Assembler Files"
-			Filter="">
-			<File
-				RelativePath=".\asm\MD4_asm.asm">
-			</File>
-			<File
-				RelativePath=".\asm\MD5_asm.asm">
-			</File>
-			<File
-				RelativePath=".\asm\SHA_asm.asm">
-			</File>
-			<File
-				RelativePath=".\asm\Tiger_asm.asm">
 			</File>
 		</Filter>
 	</Files>
