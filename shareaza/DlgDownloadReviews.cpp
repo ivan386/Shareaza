@@ -39,7 +39,7 @@ END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CDownloadDlg dialog
+// CDownloadReviewDlg dialog
 
 CDownloadReviewDlg::CDownloadReviewDlg(CWnd* pParent, CDownload* pDownload) : CSkinDialog( CDownloadReviewDlg::IDD, pParent )
 {

@@ -1,5 +1,5 @@
 //
-// CDownloadReviewDlg.h
+// DlgDownloadReviews.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
