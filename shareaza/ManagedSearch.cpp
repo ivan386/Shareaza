@@ -318,7 +318,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
-			pPacket = m_pSearch->ToEDPacket( FALSE, ((CEDNeighbour*)pNeighbour)->m_nFlags );
+			pPacket = m_pSearch->ToEDPacket( FALSE, ((CEDNeighbour*)pNeighbour)->m_nTCPFlags );
 		}
 		else
 		{
