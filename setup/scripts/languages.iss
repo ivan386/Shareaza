@@ -2,7 +2,7 @@
 ; WARNING: Do not change this file's encoding
 
 [Languages]
-; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license and readme files
+; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license files
 ; Note: first language specified is default > English
 
 Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseFile: "setup/license/default.rtf"
@@ -10,39 +10,31 @@ Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFil
 Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
 Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"; LicenseFile: "setup/license/German.rtf"
 Name: "pt"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-std.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "it"; MessagesFile: "compiler:Default.isl,setup\isl\italian.isl"; LicenseFile: "setup/license/italian.rtf"
 
 [Files]
 ; Install default remote
-Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language; Tasks: multiuser
-Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language; Tasks: multiuser
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language; Tasks: not multiuser
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language; Tasks: not multiuser
+Source: "Remote\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language; Tasks: multiuser
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language; Tasks: not multiuser
 ; Install localized remote
 ; English:
-Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language; Tasks: multiuser
-Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language; Tasks: multiuser
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language; Tasks: not multiuser
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language; Tasks: not multiuser
+Source: "Remote\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language; Tasks: multiuser
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language; Tasks: not multiuser
 ; Dutch:
-Source: "Remote-localized\dutch\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language; Tasks: multiuser
-Source: "Remote-localized\dutch\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language; Tasks: multiuser
-Source: "Remote-localized\dutch\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language; Tasks: not multiuser
-Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language; Tasks: not multiuser
+Source: "Remote-localized\dutch\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language; Tasks: multiuser
+Source: "Remote-localized\dutch\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language; Tasks: not multiuser
 ; Lithuanian
-Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language; Tasks: multiuser
-Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language; Tasks: multiuser
-Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language; Tasks: not multiuser
-Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language; Tasks: not multiuser
+Source: "Remote-localized\lithuanian\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language; Tasks: multiuser
+Source: "Remote-localized\lithuanian\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language; Tasks: not multiuser
 ; German:
-Source: "Remote\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language; Tasks: multiuser
-Source: "Remote\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language; Tasks: multiuser
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language; Tasks: not multiuser
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language; Tasks: not multiuser
+Source: "Remote\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language; Tasks: multiuser
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language; Tasks: not multiuser
 ; Portuguese
-Source: "Remote-localized\portuguese\*.htm"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language; Tasks: multiuser
-Source: "Remote-localized\portuguese\*.txt"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: pt; Components: language; Tasks: multiuser
-Source: "Remote-localized\portuguese\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language; Tasks: not multiuser
-Source: "Remote-localized\portuguese\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: pt; Components: language; Tasks: not multiuser
+Source: "Remote-localized\portuguese\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language; Tasks: multiuser
+Source: "Remote-localized\portuguese\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language; Tasks: not multiuser
+; Italian
+Source: "Remote\*"; DestDir: "{userappdata}\Shareaza\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Components: language; Tasks: multiuser
+Source: "Remote\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Components: language; Tasks: not multiuser
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -57,6 +49,8 @@ Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "l
 Source: "setup\license\german.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
 ; Portuguese
 Source: "setup\license\portuguese-braz.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pt; Components: language
+; italian
+Source: "setup\license\italian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: it; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -97,6 +91,7 @@ lt.tasks_currentuser=Tik vartotojui %1
 lt.tasks_multisetup=Enable multi-user support
 lt.run_skinexe=Vykdoma apvalkalo sàranka...
 lt.reg_incomingchat=Gaunama þinutë pokalbiui
+lt.reg_apptitle=Shareaza Ultimate File Sharing
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Paðalinti
 ; German
@@ -125,4 +120,17 @@ pt.reg_incomingchat=Incoming chat message
 pt.reg_apptitle=Shareaza Ultimate File Sharing
 pt.icons_license=License
 pt.icons_uninstall=Uninstall
+; Italian
+it.components_plugins=Plugins
+it.components_skins=Skins
+it.components_languages=Lingua
+it.tasks_allusers=Tutti gli utenti
+it.tasks_selectusers=Installa %1 per:
+it.tasks_currentuser=Solo %1
+it.tasks_multisetup=Abilita supporto multi utente
+it.run_skinexe=Stò installando le skin...
+it.reg_incomingchat=Messaggio di chat in arrivo
+it.reg_apptitle=Shareaza, il programma definitivo di P2P
+it.icons_license=Licenza
+it.icons_uninstall=Disinstalla
 
