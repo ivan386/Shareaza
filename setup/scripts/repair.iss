@@ -5,7 +5,6 @@ AppName=Shareaza
 AppVerName=Shareaza {#version}
 AppPublisher=Shareaza Development Team
 AppId=Shareaza
-AppMutex=Shareaza
 Compression=lzma/ultra
 InternalCompressLevel=Ultra
 SolidCompression=yes
@@ -20,7 +19,7 @@ DisableDirPage=yes
 DisableFinishedPage=yes
 DisableProgramGroupPage=yes
 DisableReadyPage=yes
-PrivilegesRequired=admin
+PrivilegesRequired=poweruser
 LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 Uninstallable=no
@@ -51,6 +50,9 @@ Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{app}\Remote"
 Type: filesandordirs; Name: "{app}\Data"
 Type: filesandordirs; Name: "{app}\Schemas"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Data"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\Shareaza.exe"
@@ -66,3 +68,17 @@ Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: 
 [Messages]
 WelcomeLabel1=Welcome to the [name] Repair Wizard
 WelcomeLabel2=This will repair [name/ver] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+
+[Code]
+const
+  WM_CLOSE = $0010;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  Wnd: HWND;
+begin
+  if CurStep = ssInstall then
+    Wnd := FindWindowByClassName('ShareazaMainWnd');
+    if Wnd <> 0 then
+      SendMessage(Wnd, WM_CLOSE, 0, 0);
+end;

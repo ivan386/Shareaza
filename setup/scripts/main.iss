@@ -5,7 +5,6 @@
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
 AppId=Shareaza
-;AppMutex=Shareaza,Global\Shareaza
 AppName=Shareaza
 AppPublisher=Shareaza Development Team
 AppReadmeFile={app}\Uninstall\readme.txt
@@ -23,7 +22,7 @@ Compression=lzma/ultra
 InternalCompressLevel=Ultra
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
-PrivilegesRequired=admin
+PrivilegesRequired=poweruser
 ShowLanguageDialog=auto
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\uninstall.ico
