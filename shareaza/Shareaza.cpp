@@ -287,11 +287,12 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
+	//Determine the version of Windows
 	OSVERSIONINFO pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx( &pVersion );
 	
-	//Networking is poor under Win9x
+	//Networking is poor under Win9x based operating systems. (95/98/Me)
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 
 	//Win 95/98/Me/NT (<5) do not support some functions
@@ -303,7 +304,6 @@ void CShareazaApp::InitResources()
 	m_bLimitedConnections = FALSE;
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
-
 		if( _tcsnicmp( pVersion.szCSDVersion, _T("Service Pack 2"), 15 ) == 0 )
 		{	//XP SP2 - Limit the networking.
 			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
@@ -311,6 +311,30 @@ void CShareazaApp::InitResources()
 		}
 	}
 
+	//Get the amount of installed memory.
+	m_nPhysicalMemory = 0;
+	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
+	{	//Use GlobalMemoryStatusEx if possible (WinXP)
+		void (WINAPI *m_pfnGlobalMemoryStatus)( LPMEMORYSTATUSEX );
+		MEMORYSTATUSEX pMemory;
+
+		(FARPROC&)m_pfnGlobalMemoryStatus = GetProcAddress(
+			m_hUser32, "GlobalMemoryStatusEx" );
+
+		if ( m_pfnGlobalMemoryStatus )
+		{
+			m_pfnGlobalMemoryStatus( &pMemory ); 
+			m_nPhysicalMemory = pMemory.ullTotalPhys;
+		}
+	}
+
+	if ( m_nPhysicalMemory == 0 )
+	{	//Fall back to GlobalMemoryStatusEx (always available)
+		MEMORYSTATUS pMemory;
+		GlobalMemoryStatus( &pMemory ); 
+		m_nPhysicalMemory = pMemory.dwTotalPhys;
+	}
+	
 	//Get pointers to some functions that don't exist under 95/NT
 	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
 	{

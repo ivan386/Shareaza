@@ -186,13 +186,6 @@ BOOL CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: hub mode disabled") );
 		return FALSE;
 	}
-	/*
-	if ( Settings.Gnutella.LeafEnable && Settings.Gnutella.LeafForce ) //Covered by above check now
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: leaf mode forced") );
-		return FALSE;
-	}
-	*/
 	
 	if ( IsG2Leaf() )
 	{
@@ -207,62 +200,71 @@ BOOL CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 	{	//This node has hub mode turned on in the G2 settings.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub mode forced") );
-		return TRUE;
-	}
-	
-	MEMORYSTATUS pMemory;
-	GlobalMemoryStatus( &pMemory );
-	
-	if ( pMemory.dwTotalPhys < 250*1024*1024 )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
-		return FALSE;
 	}
 	else
 	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: more than 250 MB RAM") );
+		//Additional checks (if user has *not* forced hub mode)
+		if ( theApp.m_nPhysicalMemory < 250*1024*1024 )
+		{	//Check memory
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: more than 250 MB RAM") );
+		}
+		
+		if ( Settings.Connection.InSpeed < 200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
+			return FALSE;
+		}
+		
+		if ( Settings.Connection.OutSpeed < 200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
+			return FALSE;
+		}
+		
+		if ( Settings.Gnutella2.NumPeers < 4 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G2 hub2hub") );
+			return FALSE;
+		}
+		
+		if ( Network.GetStableTime() < 7200 )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+		}
+		
+		if ( ! Datagrams.IsStable() )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
+		}
+
+		if ( Settings.Scheduler.Enable && ! Settings.Scheduler.AllowHub )
+		{	//Check scheduler
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: scheduler active") );
+			return FALSE;
+		}
+		else
+		{	
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: scheduler OK") );
+		}
+		
+		//This node meets the minimum requirements to be a hub.
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub capable by test") );
 	}
-	
-	if ( Settings.Connection.InSpeed < 200 )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s in") );
-		return FALSE;
-	}
-	
-	if ( Settings.Connection.OutSpeed < 200 )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 200 Kb/s out") );
-		return FALSE;
-	}
-	
-	if ( Settings.Gnutella2.NumPeers < 4 )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G2 hub2hub") );
-		return FALSE;
-	}
-	
-	if ( Network.GetStableTime() < 7200 )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
-		return FALSE;
-	}
-	else
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
-	}
-	
-	if ( ! Datagrams.IsStable() )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
-		return FALSE;
-	}
-	else
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
-	}
-	
-	//This node meets the minimum requirements to be a hub.
-	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub capable by test") );
 	
 	return TRUE;
 }
@@ -317,12 +319,15 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 
-	// Get installed memory.
-	MEMORYSTATUS pMemory;
-	GlobalMemoryStatus( &pMemory );
-	//ToDo: Run once at program startup and save value to avoid multiple calls?
-	//ToDo: Use GlobalMemoryStatusEx on 2000/XP? (In case RAM > 4GB)
-		
+	if ( IsG2Hub() )
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Acting as a G2 hub") );
+		return FALSE;
+	}
+	else
+	{
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a G2 hub") );
+	}
 	
 	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
 	{
@@ -332,9 +337,8 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 	else
 	{
 		//Additional checks (if user has *not* forced ultrapeer mode)
-
-		if ( pMemory.dwTotalPhys < 250*1024*1024 )
-		{
+		if ( theApp.m_nPhysicalMemory < 250*1024*1024 )
+		{	//Check memory
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
 			return FALSE;
 		}
@@ -387,6 +391,16 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
 		}
 
+		if ( Settings.Scheduler.Enable && ! Settings.Scheduler.AllowHub )
+		{	//Check scheduler
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: scheduler active") );
+			return FALSE;
+		}
+		else
+		{	
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: scheduler OK") );
+		}
+			
 		//This node meets the minimum requirements to be an ultrapeer.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: ultrapeer capable by test") );
 	}
@@ -396,7 +410,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 	//The higher the rating, the better the UP.
 
 	//Check memory
-	if ( pMemory.dwTotalPhys > 600*1024*1024 )
+	if ( theApp.m_nPhysicalMemory > 600*1024*1024 )
 	{
 		nRating++;	// More than half a gig of RAM is good
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
@@ -437,20 +451,25 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		nRating++;	// 8 hours uptime is pretty good.
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
 	}
+
+	//Check scheduler.
+	if ( ! Settings.Scheduler.Enable )
+	{
+		//ToDo : If this node is scheduled to shut down at any time, it's not going to be a great
+		//choice for an ultrapeer. If it's going down in the next few hours, don't be an UP at all.
+		nRating++;
+	}
+
+	//Check CPU.
+		//ToDo: Add a CPU check. Faster CPU is better
 	
 	//Check if behind a router.
 		//ToDo: Add a behind router check. (Some routers have problems with the traffic caused)
 		//Note: This check *may* only be necessary for G2, due to the UDP traffic. Check that.
 
-	//Check CPU.
-		//ToDo: Add a CPU check. Faster CPU is better
-
 	//Check how much is shared and upload/download usage.
 		//ToDo : Clients not uploading much make better ultrapeers.
 
-	//Check scheduler.
-		//ToDo : If this node is scheduled to shut down at any time, it's not going to be a great
-		//choice for an ultrapeer. If it's going down in the next few hours, don't be an UP at all.
 	
 	return nRating;
 }

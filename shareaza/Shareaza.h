@@ -45,10 +45,11 @@ public:
 	CFont				m_gdiFontLine;
 	CWnd*				m_pSafeWnd;
 	BOOL				m_bLive;
-	BOOL				m_bNT;
-	BOOL				m_bLimitedConnections;
-	DWORD				m_dwWindowsVersion;
-	DWORD				m_dwWindowsVersionMinor;
+	BOOL				m_bNT;						//NT based core. (NT, 2000, XP, etc)
+	BOOL				m_bLimitedConnections;		//Networking is limited (XP SP2)
+	DWORD				m_dwWindowsVersion;			//Windows version
+	DWORD				m_dwWindowsVersionMinor;	//Windows minor version
+	QWORD				m_nPhysicalMemory;			//Physical RAM installed
 
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
