@@ -214,13 +214,13 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		switch ( pNeighbour->m_nNodeType )
 		{
 		case ntNode:
-			str = _T("Gnutella: Peer-to-Peer Connection");
+			LoadString( str, IDS_NEIGHBOUR_G1PP );
 			break;
 		case ntHub:
-			str = _T("Gnutella: Leaf-to-Ultrapeer Connection");
+			LoadString( str, IDS_NEIGHBOUR_G1LU );
 			break;
 		case ntLeaf:
-			str = _T("Gnutella: Ultrapeer-to-Leaf Connection");
+			LoadString( str, IDS_NEIGHBOUR_G1UL );
 			break;
 		}
 		break;
@@ -228,13 +228,13 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		switch ( pNeighbour->m_nNodeType )
 		{
 		case ntNode:
-			str = _T("Gnutella II: Hub-to-Hub Connection");
+			LoadString( str, IDS_NEIGHBOUR_G2HH );
 			break;
 		case ntHub:
-			str = _T("Gnutella II: Leaf-to-Hub Connection");
+			LoadString( str, IDS_NEIGHBOUR_G2LH );
 			break;
 		case ntLeaf:
-			str = _T("Gnutella II: Hub-to-Leaf Connection");
+			LoadString( str, IDS_NEIGHBOUR_G2HL );
 			break;
 		}
 		break;
@@ -243,16 +243,18 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		{
 			if ( CEDPacket::IsLowID( pED->m_nClientID ) )
 			{
-				str.Format( _T("eDonkey Server Connection (LOWID: %lu)"), pED->m_nClientID );
+				CString sFormat;
+				LoadString( sFormat, IDS_NEIGHBOUR_ED2K_LOW );
+				str.Format( sFormat, pED->m_nClientID );
 			}
 			else
 			{
-				str = _T("eDonkey2000 Server Connection");
+				LoadString( str, IDS_NEIGHBOUR_ED2K_HIGH );
 			}
 		}
 		break;
 	default:
-		str = _T("Handshake");
+		LoadString( str, IDS_NEIGHBOUR_HANDSHAKE );
 		break;
 	}
 	
@@ -269,22 +271,26 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 
 	pDC->SelectObject( &CoolInterface.m_fntBold );
 	pDC->SetTextColor( m_pItemIn->m_nColour );
-	DrawText( pDC, &pt, _T("Inbound"), 128 );
+	LoadString( str, IDS_NEIGHBOUR_INBOUND );
+	DrawText( pDC, &pt, str, 128 );
 	pDC->SetTextColor( m_pItemOut->m_nColour );
-	DrawText( pDC, &pt, _T("Outbound"), 128 + 80 );
+	LoadString( str, IDS_NEIGHBOUR_OUTBOUND );
+	DrawText( pDC, &pt, str, 128 + 80 );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pDC->SetTextColor( 0 );
 	
 	pt.y += TIP_TEXTHEIGHT;
 
-	DrawText( pDC, &pt, _T("Current:") );
+	LoadString( str, IDS_NEIGHBOUR_CURRENT );
+	DrawText( pDC, &pt, str );
 	str = Settings.SmartVolume( pNeighbour->m_mInput.nMeasure * 8, FALSE, TRUE );
 	DrawText( pDC, &pt, str, 128 );
 	str = Settings.SmartVolume( pNeighbour->m_mOutput.nMeasure * 8, FALSE, TRUE );
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
-	DrawText( pDC, &pt, _T("Total:") );
+	LoadString( str, IDS_NEIGHBOUR_TOTAL );
+	DrawText( pDC, &pt, str );
 	str = Settings.SmartVolume( pNeighbour->m_mInput.nTotal, FALSE );
 	DrawText( pDC, &pt, str, 128 );
 	str = Settings.SmartVolume( pNeighbour->m_mOutput.nTotal, FALSE );
@@ -294,14 +300,16 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	float nCompIn, nCompOut;
 	pNeighbour->GetCompression( &nCompIn, &nCompOut );
 
-	DrawText( pDC, &pt, _T("Compression:") );
-	str = nCompIn >= 0 ? _T("Deflate") : _T("None");
+	LoadString( str, IDS_NEIGHBOUR_COMPRESSION );
+	DrawText( pDC, &pt, str );
+	LoadString( str, nCompIn >= 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
 	DrawText( pDC, &pt, str, 128 );
-	str = nCompOut >= 0 ? _T("Deflate") : _T("None");
+	LoadString( str, nCompOut >= 0 ? IDS_NEIGHBOUR_COMPRESSION_DF : IDS_NEIGHBOUR_COMPRESSION_NONE );
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pt.y += TIP_TEXTHEIGHT;
 
-	DrawText( pDC, &pt, _T("Ratio:"), 8 );
+	LoadString( str, IDS_NEIGHBOUR_RATIO );
+	DrawText( pDC, &pt, str, 8 );
 	if ( nCompIn >= 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0f ); else str.Empty();
 	DrawText( pDC, &pt, str, 128 );
 	if ( nCompOut >= 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0f ); else str.Empty();

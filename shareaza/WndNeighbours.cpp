@@ -162,6 +162,7 @@ void CNeighboursWnd::Update()
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
+		CString str;
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 		CLiveItem* pItem = pLiveList.Add( pNeighbour->m_nUnique );
 		
@@ -173,26 +174,28 @@ void CNeighboursWnd::Update()
 		switch ( pNeighbour->m_nState )
 		{
 		case nrsConnecting:
-			pItem->Set( 2, _T("Connecting") );
+			LoadString ( str,IDS_NEIGHBOUR_CONNECTING );
 			break;
 		case nrsHandshake1:
 		case nrsHandshake2:
 		case nrsHandshake3:
-			pItem->Set( 2, _T("Handshaking") );
+			LoadString ( str,IDS_NEIGHBOUR_HANDSHAKING );
 			break;
 		case nrsRejected:
-			pItem->Set( 2, _T("Rejected") );
+			LoadString ( str,IDS_NEIGHBOUR_REJECTED );
 			break;
 		case nrsClosing:
-			pItem->Set( 2, _T("Closing") );
+			LoadString ( str,IDS_NEIGHBOUR_CLOSING );
 			break;
 		case nrsConnected:
 			pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
 			break;
 		default:
-			pItem->Set( 2, _T("Unknown") );
+			LoadString ( str,IDS_NEIGHBOUR_UNKNOWN );
 			break;
 		}
+
+		pItem->Set( 2, str );
 		
 		pNeighbour->Measure();
 		
@@ -218,16 +221,17 @@ void CNeighboursWnd::Update()
 			switch ( pNeighbour->m_nNodeType )
 			{
 			case ntNode:
-				pItem->Set( 8, _T("G1 Peer") );
+				LoadString ( str,IDS_NEIGHBOUR_G1PEER );
 				break;
 			case ntHub:
-				pItem->Set( 8, _T("G1 Ultrapeer") );
+				LoadString ( str,IDS_NEIGHBOUR_G1ULTRA );
 				break;
 			case ntLeaf:
-				pItem->Set( 8, _T("G1 Leaf") );
+				LoadString ( str,IDS_NEIGHBOUR_G1LEAF );
 				break;
 			}
 			
+			pItem->Set( 8, str );
 			pItem->m_nImage = PROTOCOL_G1;
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
@@ -237,15 +241,16 @@ void CNeighboursWnd::Update()
 			switch ( pNeighbour->m_nNodeType )
 			{
 			case ntNode:
-				pItem->Set( 8, _T("G2 Peer") );
+				LoadString ( str,IDS_NEIGHBOUR_G2PEER );
 				break;
 			case ntHub:
-				pItem->Set( 8, _T("G2 Hub") );
+				LoadString ( str,IDS_NEIGHBOUR_G2HUB );
 				break;
 			case ntLeaf:
-				pItem->Set( 8, _T("G2 Leaf") );
+				LoadString ( str,IDS_NEIGHBOUR_G2LEAF );
 				break;
 			}
+			pItem->Set( 8, str );
 			
 			if ( pG2->m_nLeafCount > 0 )
 			{
@@ -284,11 +289,13 @@ void CNeighboursWnd::Update()
 					pItem->Format( 7, _T("%i"), pED2K->m_nUserCount );
 				}
 				
-				pItem->Set( 9, CEDPacket::IsLowID( pED2K->m_nClientID ) ? _T("eDonkey2000 (LowID)") : _T("eDonkey (HighID)") );
+				LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );
+				pItem->Set( 9, str );
 			}
 			else
 			{
-				pItem->Set( 9, _T("eDonkey2000 Server") );
+				LoadString ( str,IDS_NEIGHBOUR_ED2K_SERVER );
+				pItem->Set( 9, str );
 			}
 		}
 		else

@@ -367,7 +367,7 @@ public:
 		BOOL		ShowMonitorURLs;
 		BOOL		SortColumns;				//Allow user to sort downloads by clicking column headers
 		BOOL		SortSources;				//Automatically sort sources (Status, protocol, queue)
-		DWORD		SourcesWanted;				//Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
+		int			SourcesWanted;				//Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 	} Downloads;
 	
 	struct sUploads

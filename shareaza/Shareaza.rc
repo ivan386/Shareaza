@@ -4807,7 +4807,7 @@ STRINGTABLE
 BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
-    ID_WINDOW_TILE_VERT     "Unknown"
+    ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
 
 STRINGTABLE 
@@ -4923,6 +4923,34 @@ BEGIN
     IDS_MEDIA_EMPTY         "There is no file playing.  Double-click a media file in your library to play it."
     IDS_MEDIA_TITLE         "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
     IDS_MEDIA_PLAYLIST      "P L A Y L I S T"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_G1PP      "Gnutella: Peer-to-Peer Connection"
+    IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
+    IDS_NEIGHBOUR_G1UL      "Gnutella: Ultrapeer-to-Leaf Connection"
+    IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
+    IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
+    IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
+    IDS_NEIGHBOUR_ED2K_HIGH "eDonkey2000 Server Connection"
+    IDS_NEIGHBOUR_HANDSHAKE "Handshake"
+    IDS_NEIGHBOUR_INBOUND   "Inbound"
+    IDS_NEIGHBOUR_OUTBOUND  "Outbound"
+    IDS_NEIGHBOUR_CURRENT   "Current:"
+    IDS_NEIGHBOUR_TOTAL     "Total:"
+    IDS_NEIGHBOUR_COMPRESSION "Compression:"
+    IDS_NEIGHBOUR_RATIO     "Ratio:"
+    IDS_NEIGHBOUR_COMPRESSION_DF "Deflate"
+    IDS_NEIGHBOUR_COMPRESSION_NONE "None"
+    IDS_NEIGHBOUR_CONNECTING "Connecting"
+    IDS_NEIGHBOUR_HANDSHAKING "Handshaking"
+    IDS_NEIGHBOUR_REJECTED  "Rejected"
 END
 
 STRINGTABLE 
@@ -5457,6 +5485,21 @@ BEGIN
     IDS_DAY_THURSDAY        "Thursday"
     IDS_DAY_FRIDAY          "Friday"
     IDS_DAY_SATURDAY        "Saturday"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_NEIGHBOUR_CLOSING   "Closing"
+    IDS_NEIGHBOUR_UNKNOWN   "Unknown"
+    IDS_NEIGHBOUR_G1PEER    "G1 Peer"
+    IDS_NEIGHBOUR_G1ULTRA   "G1 Ultrapeer"
+    IDS_NEIGHBOUR_G1LEAF    "G1 Leaf"
+    IDS_NEIGHBOUR_G2PEER    "G2 Peer"
+    IDS_NEIGHBOUR_G2HUB     "G2 Hub"
+    IDS_NEIGHBOUR_G2LEAF    "G2 Leaf"
+    IDS_NEIGHBOUR_ED2K_SERVER "eDonkey2000 Server"
+    IDS_NEIGHBOUR_ED2K_LOWID "eDonkey2000 (LowID)"
+    IDS_NEIGHBOUR_ED2K_HIGHID "eDonkey2000 (HighID)"
 END
 
 #endif    // English (Australia) resources
