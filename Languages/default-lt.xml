@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail.com"
-		version="2.1.0.101"
+		version="2.1.0.102"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -1006,11 +1006,6 @@ right quote	&#147;
 		<item id="ID_UPLOADS_CHAT" text="_Kalbėtis su vartotoju"/>
 		<item id="ID_SECURITY_BAN" text="Užkirsti _vartotojo prieigą"/>
 	</menu>
-	<menu name="CUploadsWnd.Queue.Basic">
-		<item id="ID_UPLOADS_HELP" text="Ži_nynas..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Savai_minis valymas"/>
-	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Eilės nuostatos"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Valyti baigtus"/>
@@ -1132,6 +1127,8 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Perdaryti _meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Pasirinkti _stulpelius..."/>
 		<separator/>
@@ -1200,6 +1197,8 @@ right quote	&#147;
 			<item id="ID_LIBRARY_MOVE" text="P_erkelti bylas..."/>
 			<item id="ID_LIBRARY_COPY" text="_Kopijuoti bylas..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="Perdaryti _meta duomenis"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Pasirinkti _stulpelius..."/>
 		<separator/>
@@ -1669,7 +1668,14 @@ right quote	&#147;
 			<text id="TorrentsOne" format="b">Skleidžiama 1 byla</text>
 			<text id="TorrentsMany" format="b">Skleidžiamos %i bylos(-ų)</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Skleisti %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Skleisti kitą torrent</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Skleisti torrent</link>
+			</group>
 		</para>
 
 	</document>
@@ -2205,6 +2211,8 @@ right quote	&#147;
 	<tip id="ID_LIBRARY_PARENT" message="Eiti į aukštesnį aplanką."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Peržiūrėti ir taisyti pasirinktų bylų ypatybes..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar bylų meta duomenis ir maišas."/>
+	<!-- Add the following line if you need it -->
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Perdaryti meta duomenis lietuvių kalba."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
 	<tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą bylą."/>
