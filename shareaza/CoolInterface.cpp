@@ -240,6 +240,7 @@ void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 	if ( m_fntBold.m_hObject ) m_fntBold.DeleteObject();
 	if ( m_fntUnder.m_hObject ) m_fntUnder.DeleteObject();
 	if ( m_fntCaption.m_hObject ) m_fntCaption.DeleteObject();
+	if ( m_fntItalic.m_hObject ) m_fntItalic.DeleteObject();
 	
 	m_fntNormal.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
@@ -254,6 +255,10 @@ void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 		DEFAULT_PITCH|FF_DONTCARE, pszFace );
 	
 	m_fntCaption.CreateFont( -nSize - 2, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_PITCH|FF_DONTCARE, pszFace );
+
+	m_fntItalic.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, TRUE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, pszFace );
 }
