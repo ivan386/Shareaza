@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,2,8
- PRODUCTVERSION 2,0,2,8
+ FILEVERSION 2,0,2,9
+ PRODUCTVERSION 2,0,2,9
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 2, 8"
+            VALUE "FileVersion", "2, 0, 2, 9"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 2, 8"
+            VALUE "ProductVersion", "2, 0, 2, 9"
         END
     END
     BLOCK "VarFileInfo"
@@ -2727,11 +2727,11 @@ BEGIN
     LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",
                     IDC_STATIC,25,57,250,18
     CONTROL         "Connect to eDonkey2000",IDC_ED2K_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,79,100,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
     LTEXT           "The eDonkey2000 network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection.",
                     IDC_STATIC,25,91,250,18
     CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,113,100,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
     LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource.",
                     IDC_STATIC,25,126,250,18
 END
