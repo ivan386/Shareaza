@@ -1159,8 +1159,7 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;
-
-				pszWord += _tcslen( pszWord ) + sizeof( TCHAR );
+				pszWord += _tcslen( pszWord ) + 1;
 			}
 		}
 
@@ -1172,10 +1171,8 @@ BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) nDubiousWords++;
-
 				if ( nDubiousWords > nWordsPermitted ) return TRUE;
-				
-				pszWord += _tcslen( pszWord ) + sizeof( TCHAR );
+				pszWord += _tcslen( pszWord ) + 1;
 			}
 		}
 	}
