@@ -128,6 +128,7 @@ public:
 		DWORD		MaxPreviewLength;
 		BOOL		AdultFilter;
 		BOOL		AdvancedPanel;
+		DWORD		GeneralThrottle;			// A general throttle for how often each indidivual search may run. Low values may cause source finding to get overlooked. 
 	} Search;
 	
 	struct sMediaPlayer
