@@ -1,6 +1,10 @@
 //
 // EDPartImporter.cpp
 //
+//	Date:			"$Date: 2005/01/09 10:35:31 $"
+//	Revision:		"$Revision: 1.5 $"
+//	Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2004.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -302,7 +306,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	if ( ! pData.Open( strPath, CFile::modeRead ) ) return FALSE;
 	pData.GetStatus( pStatus );
 	pData.Close();
-	if ( nDate != mktime( pStatus.m_mtime.GetLocalTm() ) )
+	if ( nDate != mktime( pStatus.m_mtime.GetLocalTm( NULL ) ) )
 	{
 		Message( IDS_ED2K_EPI_FILE_OLD );
 		return FALSE;
