@@ -216,6 +216,7 @@ Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
 Type: files; Name: "{userdesktop}\Shareaza.lnk"
 Type: filesandordirs; Name: "{userprograms}\Shareaza"
+Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza.lnk"
 
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Remote"
