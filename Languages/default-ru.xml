@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Russian Skin File -->
 
@@ -7,12 +7,12 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
-<manifest	name="Русский"
+<manifest	name="Pусский"
 		author="dAbserver &amp; Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.60"
+		version="2.1.0.70"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -1417,7 +1417,7 @@
 				<colours text="000000" link="0000FF" hover="FF0000"/>
 			</style>
 			<style name="heading">
-				<font face="Trebuchet MS" size="16" weight="800"/>
+				<font face="Comic Sans MS" size="16" weight="800"/>
 				<colours text="800000"/>
 			</style>
 		</styles>
@@ -1486,33 +1486,27 @@
 
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер устанoвок</link>
+		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер Устанoвок</link>
 		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
 
-		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
+		<icon res="147" width="32" height="32" target="http://wiki.shareaza.com/Static/RuHome"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Быстрaя помoщь (EN)</link>
-		<text align="middle">&#160;- Чaстые вопрoсы (FAQ на сaйте Sharеaza)</text>
+		<link target="http://wiki.shareaza.com/Static/RuHome" format="bu" align="middle">Быстрaя Помoщь (RUS)</link>
+		<text align="middle">&#160;- Онлайновая Справочная Система Wiki</text>
 		<newline gap="8"/>
 
-		<icon res="147" width="32" height="32" target="http://www.emule-rus.com/modules.php?name=FAQ&amp;myfaq=yes&amp;id_cat=3&amp;categories=FAQ+%EF%EE+Shareaza"/>
+		<icon res="147" width="32" height="32" target="http://forums.shareaza.com/forumdisplay.php?s=&amp;forumid=29"/>
 		<gap size="8"/>
-		<link target="http://www.emule-rus.com/modules.php?name=FAQ&amp;myfaq=yes&amp;id_cat=3&amp;categories=FAQ+%EF%EE+Shareaza" format="bu" align="middle">ЧaВo от Gаdgеt (RUS)</link>
-		<text align="middle">&#160;- Чaстые вопрoсы (FAQ нa сaйте Emulе-Rus)</text>
+		<link target="http://forums.shareaza.com/forumdisplay.php?s=&amp;forumid=29" format="bu" align="middle">Форум SHAREAZA (RUS)</link>
+		<text align="middle">&#160;- Форумы SHAREAZA - Русская Секция</text>
 		<newline gap="8"/>
-
-		<icon res="147" width="32" height="32" target="http://www.emule-rus.com/modules.php?name=Forums&amp;file=viewtopic&amp;t=125"/>
+		
+		<icon res="147" width="32" height="32" target="http://forum.ru-board.com/topic.cgi?forum=5&amp;topic=4232#1"/>
 		<gap size="8"/>
-		<link target="http://www.emule-rus.com/modules.php?name=Forums&amp;file=viewtopic&amp;t=125" format="bu" align="middle">Нaстрoйка от Gаdgеt (RUS)</link>
-		<text align="middle">&#160;- Описание настройки (нa сaйте Emulе-Rus)</text>
-		<newline gap="8"/>
-
-		<icon res="186" width="32" height="32" target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"/>
-		<gap size="8"/>
-		<link target="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html" format="bu" align="middle">Cтрaничкa пeрeвoдa</link>
-		<text align="middle">&#160;- Cтрaничка этoгo руccкoгo пeрeвoдa oт  </text><heading align="middle">dАbserver</heading>
-		<newline gap="18" indent="0"/>
+		<link target="http://forum.ru-board.com/topic.cgi?forum=5&amp;topic=4232#1" format="bu" align="middle">Форум RU-BOARD</link>
+		<text align="middle">&#160;- Обсуждение программы и работы с ней</text>
+		<newline gap="8"/>		
 
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -2407,8 +2401,8 @@
 	<string id="8064" value="Соединено с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8065" value="Подключаюсь к сети..."/>
 	<string id="8066" value="Нет соединения с сетью."/>
-	<string id="8067" value="%s вход. : %s исход. [З:%i/В:%i]"/>
-	<string id="8068" value="[У:%i] %s вход. : %s исход. [З:%i/В:%i]"/>
+	<string id="8067" value="%s-Вх. %s-Исх. [З:%i/В:%i]"/>
+	<string id="8068" value="[У:%i] %s-Вх. %s-Исх. [З:%i/В:%i]"/>
 	<string id="8069" value="Соединиться"/>
 	<string id="8070" value="Соединение..."/>
 	<string id="8071" value="Соединены"/>
