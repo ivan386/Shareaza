@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CLibrarySettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_PRIVATE_ADD, OnPrivateAdd)
 	ON_BN_CLICKED(IDC_PRIVATE_REMOVE, OnPrivateRemove)
 	ON_BN_CLICKED(IDC_RECENT_CLEAR, OnRecentClear)
+	ON_BN_CLICKED(IDC_COLLECTIONS_BROWSE, OnCollectionsBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -63,6 +64,7 @@ CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPag
 	m_bSchemaTypes = FALSE;
 	m_bHashIntegrity = FALSE;
 	m_bBrowseFiles = FALSE;
+	m_sCollectionPath = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -90,6 +92,8 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_SCHEMA_TYPES, m_bSchemaTypes);
 	DDX_Check(pDX, IDC_HASH_INTEGRITY, m_bHashIntegrity);
 	DDX_Check(pDX, IDC_BROWSE_FILES, m_bBrowseFiles);
+	DDX_Control(pDX, IDC_COLLECTIONS_BROWSE, m_wndCollectionPath);
+	DDX_Text(pDX, IDC_COLLECTIONS_FOLDER, m_sCollectionPath);
 	//}}AFX_DATA_MAP
 }
 
@@ -110,6 +114,8 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
 	m_nRecentDays		= Settings.Library.HistoryDays;
 
+	m_sCollectionPath	= Settings.Downloads.CollectionPath;
+
 	CString strList;
 	
 	for ( strList = Settings.Library.SafeExecute + '|' ; strList.GetLength() ; )
@@ -129,6 +135,8 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 		strType.TrimRight();
 		if ( strType.GetLength() ) m_wndPrivateList.AddString( strType );
 	}
+
+	m_wndCollectionPath.SetIcon( IDI_BROWSE );
 
 	UpdateData( FALSE );
 
@@ -212,6 +220,34 @@ void CLibrarySettingsPage::OnRecentClear()
 	Library.Unlock( TRUE );
 }
 
+void CLibrarySettingsPage::OnCollectionsBrowse() 
+{
+	TCHAR szPath[MAX_PATH];
+	LPITEMIDLIST pPath;
+	LPMALLOC pMalloc;
+	BROWSEINFO pBI;
+		
+	ZeroMemory( &pBI, sizeof(pBI) );
+	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
+	pBI.pszDisplayName	= szPath;
+	pBI.lpszTitle		= _T("Select folder for collections:");
+	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
+	
+	pPath = SHBrowseForFolder( &pBI );
+
+	if ( pPath == NULL ) return;
+
+	SHGetPathFromIDList( pPath, szPath );
+	SHGetMalloc( &pMalloc );
+	pMalloc->Free( pPath );
+	pMalloc->Release();
+	
+	UpdateData( TRUE );
+	m_sCollectionPath = szPath;
+	//m_bCollectionsChanged = TRUE;
+	UpdateData( FALSE );
+}
+
 void CLibrarySettingsPage::OnOK() 
 {
 	UpdateData();
@@ -225,6 +261,9 @@ void CLibrarySettingsPage::OnOK()
 
 	Settings.Library.HistoryTotal	= m_nRecentTotal;
 	Settings.Library.HistoryDays	= m_nRecentDays;
+
+	Settings.Downloads.CollectionPath = m_sCollectionPath;
+	//CreateDirectory( m_sCollectionPath, NULL );
 
 	Settings.Library.SafeExecute.Empty();
 

@@ -25,6 +25,7 @@
 #pragma once
 
 #include "WndSettingsPage.h"
+#include "CtrlIconButton.h"
 
 
 class CLibrarySettingsPage : public CSettingsPage
@@ -56,6 +57,8 @@ public:
 	BOOL	m_bSchemaTypes;
 	BOOL	m_bHashIntegrity;
 	BOOL	m_bBrowseFiles;
+	CIconButtonCtrl	m_wndCollectionPath;
+	CString	m_sCollectionPath;
 	//}}AFX_DATA
 
 // Overrides
@@ -81,6 +84,7 @@ protected:
 	afx_msg void OnPrivateAdd();
 	afx_msg void OnPrivateRemove();
 	afx_msg void OnRecentClear();
+	afx_msg void OnCollectionsBrowse();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
