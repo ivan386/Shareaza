@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,4
- PRODUCTVERSION 2,0,0,4
+ FILEVERSION 2,0,0,5
+ PRODUCTVERSION 2,0,0,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 4"
+            VALUE "FileVersion", "2, 0, 0, 5"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 4"
+            VALUE "ProductVersion", "2, 0, 0, 5"
         END
     END
     BLOCK "VarFileInfo"
@@ -383,7 +383,6 @@ BEGIN
         POPUP "Web Ser&vices"
         BEGIN
             MENUITEM "View &Bitzi Ticket",          ID_LIBRARY_BITZI_WEB
-            MENUITEM "View &Jigle Lookup",          ID_LIBRARY_JIGLE
         END
         MENUITEM SEPARATOR
         MENUITEM "&Filter Results...",          ID_SEARCH_FILTER
@@ -414,7 +413,6 @@ BEGIN
         POPUP "Web Ser&vices"
         BEGIN
             MENUITEM "View &Bitzi Ticket",          ID_LIBRARY_BITZI_WEB
-            MENUITEM "View &Jigle Lookup",          ID_LIBRARY_JIGLE
         END
         MENUITEM SEPARATOR
         MENUITEM "&Filter Results...",          ID_SEARCH_FILTER
@@ -731,7 +729,6 @@ BEGIN
         POPUP "&Web Services"
         BEGIN
             MENUITEM "View &Bitzi Ticket",          ID_LIBRARY_BITZI_WEB
-            MENUITEM "View &Jigle Lookup",          ID_LIBRARY_JIGLE
             MENUITEM SEPARATOR
             MENUITEM "&Acquire Metadata",           ID_LIBRARY_BITZI_DOWNLOAD
 
@@ -5027,7 +5024,6 @@ BEGIN
     ID_NETWORK_G2           "Connect to the Gnutella2 network (highly recommended)."
     ID_NETWORK_G1           "Connect to the original Gnutella network."
     ID_NETWORK_ED2K         "Connect to the eDonkey2000 network."
-    ID_LIBRARY_JIGLE        "Query the Jigle database for information on the selected file on the web."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Normal mode."
     ID_LIBRARY_SEARCH_QUICK "Search your file library..."
