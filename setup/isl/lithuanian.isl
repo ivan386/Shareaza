@@ -308,8 +308,8 @@ StatusUninstalling=Ðalinama „%1“...
 
 NameAndVersion=%1 versija %2
 AdditionalIcons=Papildomos piktogramos:
-CreateDesktopIcon=Sukurti piktogramà &Darbalaukyje
-CreateQuickLaunchIcon=Sukurti Sparèiosios &Paleisties piktogramà
+CreateDesktopIcon=Rodyti piktogramà &Darbalaukyje
+CreateQuickLaunchIcon=Rodyti Sparèiosios &Paleisties piktogramà
 ProgramOnTheWeb=„%1“ þiniatinklyje
 UninstallProgram=Paðalinti „%1“
 LaunchProgram=Paleisti „%1“

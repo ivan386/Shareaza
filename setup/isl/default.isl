@@ -305,8 +305,8 @@ StatusUninstalling=Uninstalling %1...
 
 NameAndVersion=%1 version %2
 AdditionalIcons=Additional icons:
-CreateDesktopIcon=Create a &desktop icon
-CreateQuickLaunchIcon=Create a &Quick Launch icon
+CreateDesktopIcon=Display a &desktop icon
+CreateQuickLaunchIcon=Display a &Quick Launch icon
 ProgramOnTheWeb=%1 on the Web
 UninstallProgram=Uninstall %1
 LaunchProgram=Launch %1

@@ -295,8 +295,8 @@ StatusUninstalling=Деинсталляция %1...
 
 NameAndVersion=%1, версия %2
 AdditionalIcons=Дополнительные значки:
-CreateDesktopIcon=Создать значок на &Рабочем столе
-CreateQuickLaunchIcon=Создать значок в &Панели быстрого запуска
+CreateDesktopIcon=Показывать значок на &Рабочем столе
+CreateQuickLaunchIcon=Показывать значок в &Панели быстрого запуска
 ProgramOnTheWeb=Сайт %1 в Интернете
 UninstallProgram=Деинсталлировать %1
 LaunchProgram=Запустить %1
