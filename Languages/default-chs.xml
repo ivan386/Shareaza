@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.94"
+		version="2.1.0.102"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -902,7 +902,7 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="查找更多资源(_F)"/>
 		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_E)"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
@@ -1006,11 +1006,6 @@
 		<item id="ID_BROWSE_LAUNCH" text="浏览用户(_B)"/>
 		<item id="ID_UPLOADS_CHAT" text="与用户聊天(_C)"/>
 		<item id="ID_SECURITY_BAN" text="禁止用户(_A)"/>
-	</menu>
-	<menu name="CUploadsWnd.Queue.Basic">
-		<item id="ID_UPLOADS_HELP" text="帮助(_H)..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="自动清除(_O)"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="队列设置(_Q)"/>
@@ -1133,6 +1128,8 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="重建元数据"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
@@ -1201,6 +1198,8 @@
 			<item id="ID_LIBRARY_MOVE" text="移动文件(_M)..."/>
 			<item id="ID_LIBRARY_COPY" text="复制文件(_C)..."/>
 		</menu>
+		<!-- Add the following entry if you need metadata conversion from ANSI -->
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="重建元数据"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
 		<separator/>
@@ -1661,7 +1660,14 @@
 			<text id="TorrentsOne" format="b">1 个做种的 Torrent</text>
 			<text id="TorrentsMany" format="b">%i 个做种的 Torrent</text>
 			<newline gap="4"/>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">重新做种 %s</link>
+			<newline gap="4"/>
+			<group id="1">
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">其他 Torrent 做种</link>
+			</group>
+			<group id="2">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">做种</link>
+			</group>
 		</para>
 
 	</document>
@@ -2184,6 +2190,8 @@
 	<tip id="ID_LIBRARY_PARENT" message="上移至父级文件夹。"/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="查看和编辑选定文件的属性..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="重建元数据和 Hash 选定文件夹或文件。"/>
+	<!-- Add the following line if you need it -->
+	<tip id="ID_LIBRARY_REBUILD_ANSI" message="使用您的本地语言重建元数据。"/>
 	<tip id="ID_LIBRARY_REFRESH" message="刷新收藏视图。"/>
 	<tip id="ID_LIBRARY_REMOVE" message="移除选定的文件夹。"/>
 	<tip id="ID_LIBRARY_RENAME" message="就地更名选定的文件。"/>
@@ -2380,6 +2388,7 @@
 	<string id="WINDOW_MEDIA" value="媒体播放器"/>
 	<string id="WINDOW_SEARCHPAD" value="搜索"/>
 	<string id="WINDOW_HELP" value="Shareaza 帮助"/>
+	<string id="7000" value="您确定要删除这一过滤吗？"/>
 	<string id="8000" value="Shareaza 设置"/>
 	<string id="8001" value="欢迎来到 Shareaza"/>
 	<string id="8002" value="文件属性"/>
@@ -3602,11 +3611,11 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="过滤匹配项">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
 		<control caption="( 您也可以通过 - 来排除字词 )"/>
-		<control caption="以及大小(KB)(_S):"/>
+		<control caption="以及大小(_S):"/>
 		<control caption="最小:"/>
 		<control/>
 		<control caption="最大:"/>
@@ -3623,6 +3632,18 @@
 		<control caption="虚假结果"/>
 		<control caption="过滤"/>
 		<control caption="取消"/>
+		<control/>
+		<control caption="设为默认"/>
+		<control caption="另存为(_S)"/>
+		<control caption="删除(_D)"/>
+		<control caption="过滤:"/>
+	</dialog>
+
+	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="保存过滤为">
+		<control/>
+		<control caption="确定"/>
+		<control caption="取消"/>
+		<control caption="保存当前过滤为"/>
 	</dialog>
 
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="探索服务">
@@ -3856,7 +3877,7 @@
 
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza 以用户至上">
 		<control/>
-		<control caption="您知道 Shareaza 是 100％ 免费的软件吗？"/>
+		<control caption="您知道 Shareaza 是 100% 免费的软件吗？"/>
 		<control caption="Shareaza 不包含任何 &quot;间谍软件&quot;，&quot;广告软件&quot;，或者其他任何绑定的软件。它也不会显示任何广告或者 &quot;弹出窗口&quot;，{n}{n}如果使用 Shareaza 时，您看到任何&quot;弹出窗口&quot;，请确定它们不是来自此程序。"/>
 		<control caption="不幸的是多数同类软件都隐藏着广告软件或间谍软件，如果您对看到的现象产生怀疑，您可以使用特定的软件检查并且移除广告和间谍软件。"/>
 		<control caption="您不必为获取 Shareaza 而付费。Shareaza 可以从 www.shareaza.com 免费下载。如果您付钱给 Shareaza 的某人，您可以要求马上取回。"/>
@@ -3985,7 +4006,7 @@
 		<control caption="刷新(_R)"/>
 		<control/>
 		<control caption="关闭"/>
-		<control caption="需要时|当比率大于 100%|从不"/>
+		<control caption="需要时|当比率大于 100% 时|被请求时|从不"/>
 		<control caption="启动新的下载传输:"/>
 		<control caption="传送:"/>
 	</dialog>
