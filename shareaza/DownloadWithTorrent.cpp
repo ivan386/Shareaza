@@ -195,7 +195,12 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-		CBTTrackerRequest::SendUpdate( this );
+		if ( IsMoving() )
+			CBTTrackerRequest::SendUpdate( this, 0 );	//If we are seeding, completed, or moving we don't need to request peers.
+		else if ( GetSourceCount() > Settings.Downloads.SourcesWanted )
+			CBTTrackerRequest::SendUpdate( this, 5 );	//If we have many sources, just get a few to make sure we have some fresh ones. 
+		else
+			CBTTrackerRequest::SendUpdate( this );		//Otherwise, take the tracker default. (It should be an appropriate number.)
 	}
 	
 	return TRUE;
