@@ -380,6 +380,14 @@ CSettings::CSettings()
 	Live.FirstRun			= FALSE;
 
 	Setup();
+
+	//Enforce a few sensible values (in case of registry fiddling)
+	Downloads.SearchPeriod = min( Downloads.SearchPeriod, 5*60 );
+	Downloads.StarveTimeout = max( Downloads.StarveTimeout, 45*60 );
+	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000 );
+	Gnutella1.RequeryDelay = max( Gnutella1.RequeryDelay, 45*60 );
+	Gnutella2.RequeryDelay = max( Gnutella2.RequeryDelay, 45*60 );
+	
 }
 
 CSettings::~CSettings()
