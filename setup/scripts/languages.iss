@@ -8,38 +8,54 @@
 ;Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseFile: "setup/license/default.rtf"; InfoBeforeFile: "setup/readme/default.txt"
 ;Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"; InfoBeforeFile: "setup/readme/dutch.txt"
 ;Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"; InfoBeforeFile: "setup/readme/lithuanian.txt"
+;Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\German.isl"; LicenseFile: "setup/license/German.rtf"; InfoBeforeFile: "setup/readme/German.txt"
 ; Uncomment either section above or below to compile with or without showing readme file
 Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseFile: "setup/license/default.rtf"
 Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"
 Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
+Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"; LicenseFile: "setup/license/German.rtf"
 
 [Files]
+; Install default remote
+Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
+Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language
 ; Install localized remote
 ; English:
-Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en
-Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en
+Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language
+Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language
 ; Dutch:
-Source: "Remote-localized\dutch\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl
-Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl
+Source: "Remote-localized\dutch\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language
+Source: "Remote-localized\dutch\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language
 ; Lithuanian
-Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt
-Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt
+Source: "Remote-localized\lithuanian\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language
+Source: "Remote-localized\lithuanian\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language
+; German:
+Source: "Remote\*.htm"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
+Source: "Remote\*.txt"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language
 
+; Install default license
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
 ; Install localized license
 ; English
-Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en; Components: language
 ; Dutch
-Source: "setup\license\dutch.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl
+Source: "setup\license\dutch.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl; Components: language
 ; Lithuanian
-Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt
+Source: "setup\license\lithuanian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt; Components: language
+; German
+Source: "setup\license\german.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: de; Components: language
 
+; Install default readme
+Source: "setup\readme\default.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: not language
 ; Install localized readme
 ; English
-Source: "setup\readme\default.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: en
+Source: "setup\readme\default.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: en; Components: language
 ; Dutch
-Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: nl
+Source: "setup\readme\dutch.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: nl; Components: language
 ; Lithuanian
-Source: "setup\readme\lithuanian.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: lt
+Source: "setup\readme\lithuanian.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: lt; Components: language
+; German
+Source: "setup\readme\german.txt"; DestDir: "{app}\Uninstall"; DestName: "readme.txt"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Languages: de; Components: language
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
@@ -66,8 +82,8 @@ nl.tasks_currentuser=Aleen %1
 nl.run_skinexe=Skin installatie uitvoeren...
 nl.reg_incomingchat=Nieuw chat bericht
 nl.reg_apptitle=Shareaza Ultimate File Sharing
-icons_license=Gebruiksovereenkomst
-icons_uninstall=Verwijderen
+nl.icons_license=Gebruiksovereenkomst
+nl.icons_uninstall=Verwijderen
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -79,3 +95,16 @@ lt.run_skinexe=Vykdoma apvalkalo sàranka...
 lt.reg_incomingchat=Gaunama þinutë pokalbiui
 lt.icons_license=Licencinë sutartis
 lt.icons_uninstall=Paðalinti
+; German
+de.components_plugins=Plugins
+de.components_skins=Skins
+de.components_languages=Sprachen
+de.tasks_allusers=Alle Benutzer
+de.tasks_selectusers=Installieren %1 für:
+de.tasks_currentuser=Nur für %1
+de.run_skinexe=Skin Installer einrichten...
+de.reg_incomingchat=Eingehende Chat Nachricht
+de.reg_apptitle=Shareaza Ultimate File Sharing
+de.icons_license=Lizenz
+de.icons_uninstall=Shareaza deinstallieren
+

@@ -22,6 +22,7 @@ DirExistsWarning=no
 DisableFinishedPage=yes
 DisableReadyPage=yes
 PrivilegesRequired=admin
+LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\TorrentWizard.exe
 UninstallDisplayName={cm:NameAndVersion,Torrent Wizard,{#version}}

@@ -47,7 +47,7 @@ AppUpdatesURL=http://www.shareaza.com/?id=download
 ; Ask user wich components to install
 Name: "plugins"; Description: "{cm:components_plugins}"; Types: full compact; Flags: disablenouninstallwarning
 Name: "skins"; Description: "{cm:components_skins}"; Types: full; Flags: disablenouninstallwarning
-Name: "languages"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
+Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
 
 [Tasks]
 ; Ask user to setup Shareaza for all users or just current user
@@ -104,9 +104,9 @@ Source: "Skins\ShareazaOS\*.bmp"; DestDir: "{app}\Skins\ShareazaOS"; Flags: igno
 
 ; Languages: English gets installed by default
 Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-Source: "Languages\*.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: "languages"
-Source: "Languages\*.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: "languages"
-Source: "Languages\*.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "languages"
+Source: "Languages\*.bmp"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: "language"
+Source: "Languages\*.ico"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist; Components: "language"
+Source: "Languages\*.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"
 
 ; Old versions of Shareaza stored xml and dat files under {app}
 ; These need to be copied to {app}\Data
@@ -125,6 +125,9 @@ Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
 Name: "{commonprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: allusers
 Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; MinVersion: 4.0,0
+Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: currentuser
+Name: "{commondesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Tasks: allusers
+Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; MinVersion: 4.0,0
 
 ; License and uninstall icon in user language
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Tasks: currentuser
@@ -134,10 +137,11 @@ Name: "{commonprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstall
 Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; MinVersion: 4.0,0
 Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; MinVersion: 4.0,0; IconFilename: "{app}\Uninstall\uninstall.ico"
 
-; Set icons if ShareazaInstalled=1
-Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Check: ShareazaInstalled
-Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Check: ShareazaInstalled
-Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Check: ShareazaInstalled; IconFilename: "{app}\Uninstall\uninstall.ico"
+; Set icons if ShareazaInstalled=1 and InnoSetupUsed=0
+Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Check: ShareazaInstalled and not InnoSetupUsed
+Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "Shareaza Ultimate File Sharing"; Check: ShareazaInstalled and not InnoSetupUsed
+Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"; Check: ShareazaInstalled and not InnoSetupUsed
+Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; Check: ShareazaInstalled and not InnoSetupUsed; IconFilename: "{app}\Uninstall\uninstall.ico"
 
 [Messages]
 ; Overwrite standard ISL entries
@@ -226,7 +230,6 @@ Type: filesandordirs; Name: "{userprograms}\Shareaza"
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{app}\Remote"
-Type: files; Name: "{app}\TorrentWizard.exe"
 
 [UninstallDelete]
 Type: files; Name: "{app}\*.dat"
@@ -244,4 +247,9 @@ Type: files; Name: "{app}\Data\*.xml"
 Function ShareazaInstalled(): boolean;
 Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza');
+End;
+
+Function InnoSetupUsed(): boolean;
+Begin
+    Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1');
 End;

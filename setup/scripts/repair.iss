@@ -21,6 +21,7 @@ DisableFinishedPage=yes
 DisableProgramGroupPage=yes
 DisableReadyPage=yes
 PrivilegesRequired=admin
+LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 Uninstallable=no
 SetupIconFile=setup\misc\install.ico
