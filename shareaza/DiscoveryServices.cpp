@@ -225,6 +225,7 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 	if ( ( pService->m_bGnutella2 && ( GetCount( PROTOCOL_G2 ) >= Settings.Discovery.CacheCount ) ) ||
 		 ( pService->m_bGnutella1 && ( GetCount( PROTOCOL_G1 ) >= Settings.Discovery.CacheCount ) ) )
 	{
+		delete pService;
 		return NULL;
 	}
 
