@@ -867,11 +867,15 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	
 	int nTransfers	= pDownload->GetTransferCount();
 	int nSources	= pDownload->GetSourceCount();
+	CString strTemp;
+	LoadString( strTemp, IDS_STATUS_SOURCES );
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
 		CString strText;
 		CRect rcCell;
+		int nLastTwoDigits;
+		CString strSource;
 		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
@@ -930,6 +934,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 			
 		case DOWNLOAD_COLUMN_CLIENT:
+			nLastTwoDigits = nSources % 100;
 			if ( pDownload->IsCompleted() )
 			{
 				if ( pDownload->m_bVerify == TS_TRUE )
@@ -937,16 +942,40 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				else if ( pDownload->m_bVerify == TS_FALSE )
 					LoadString( strText, IDS_STATUS_UNVERIFIED );
 			}
-			else if ( nSources == 1 )
+			else if (nLastTwoDigits % 10==1)
 			{
-				CString strSource;
 				LoadString( strSource, IDS_STATUS_SOURCE );
 				strText.Format( _T("(1 %s)"), strSource );
 			}
-			else if ( nSources > 1 )
+			else if (nSources > 1)
 			{
-				CString strSource;
-				LoadString( strSource, IDS_STATUS_SOURCES );
+				if ((nLastTwoDigits > 10) && (nLastTwoDigits < 20))
+				{
+					if (strTemp=="") LoadString( strSource, IDS_STATUS_SOURCES11TO19 );
+					else strSource = strTemp;
+				}
+				else
+					switch (nLastTwoDigits % 10)
+					{
+						case 0:
+							if (strTemp=="") LoadString( strSource, IDS_STATUS_SOURCESTENS );
+							else strSource = strTemp;
+							break;
+						case 2:
+						case 3:
+						case 4:
+							if (strTemp=="") LoadString( strSource, IDS_STATUS_SOURCES2TO4);
+							else strSource = strTemp;
+							break;
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+							if (strTemp=="") LoadString( strSource,  IDS_STATUS_SOURCES5TO9);
+							else strSource = strTemp;
+							break;
+					}
 				strText.Format( _T("(%i %s)"), nSources, strSource );
 			}
 			else

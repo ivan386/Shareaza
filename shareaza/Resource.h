@@ -1193,6 +1193,10 @@
 #define IDS_STATUS_UNVERIFIED           20126
 #define IDS_STATUS_SOURCE               20127
 #define IDS_STATUS_SOURCES              20128
+#define IDS_STATUS_SOURCESTENS          20129
+#define IDS_STATUS_SOURCES11TO19        20130
+#define IDS_STATUS_SOURCES2TO4          20131
+#define IDS_STATUS_SOURCES5TO9          20132
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
