@@ -85,19 +85,6 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	
 	m_wndGroup.SetCurSel( 0 );
 	
-	/*
-	m_wndType.SetItemData( 0, 0 );
-	m_wndType.SetItemData( 1, 56 );
-	m_wndType.SetItemData( 2, 128 );
-	m_wndType.SetItemData( 3, 350 );
-	m_wndType.SetItemData( 4, 576 );
-	m_wndType.SetItemData( 5, 1544 );
-	m_wndType.SetItemData( 6, 45000 );
-	m_wndType.SetItemData( 7, 100000 );
-	m_wndType.SetItemData( 8, 155000 );
-	*/
-	//; Dialup Modem; ISDN; Cable Modem/DSL; T1; T3; LAN; OC3;
-
 	m_wndType.SetItemData( 0, 0 );
 	m_wndType.SetItemData( 1, 56 );
 	m_wndType.SetItemData( 2, 128 );
@@ -116,7 +103,7 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	strSpeed.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
 	m_wndSpeed.SetWindowText( strSpeed );
 
-	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps;
+	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps;
 	
 	return TRUE;
 }
@@ -253,6 +240,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Connection.OutSpeed = 32;			// Dial up modem
 	else if( nSpeed <= 128 )
 		Settings.Connection.OutSpeed = nSpeed;		// ISDN
+	else if( nSpeed == 384 )
+		Settings.Connection.OutSpeed = 128;			// 384/128 DSL (Europe)
 	else if( nSpeed <= 700 )
 		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL (4:1)
 	else if( nSpeed <= 1536 )
