@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,16
- PRODUCTVERSION 2,1,0,16
+ FILEVERSION 2,1,0,17
+ PRODUCTVERSION 2,1,0,17
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 16"
+            VALUE "FileVersion", "2, 1, 0, 17"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 16"
+            VALUE "ProductVersion", "2, 1, 0, 17"
         END
     END
     BLOCK "VarFileInfo"
@@ -1284,7 +1284,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,172,WS_GROUP
+    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,208,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
                     140,10
