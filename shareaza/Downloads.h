@@ -60,8 +60,8 @@ protected:
 // Operations
 public:
 	CDownload*	Add();
-	CDownload*	Add(CQueryHit* pHit);
-	CDownload*	Add(CMatchFile* pFile);
+	CDownload*	Add(CQueryHit* pHit, BOOL bAddToHead = FALSE);
+	CDownload*	Add(CMatchFile* pFile, BOOL bAddToHead = FALSE);
 	CDownload*	Add(CShareazaURL* pURL);
 	void		PauseAll();
 	void		ClearCompleted();

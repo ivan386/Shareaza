@@ -84,7 +84,7 @@ CDownload* CDownloads::Add()
 //////////////////////////////////////////////////////////////////////
 // CDownloads add download from a hit or from a file
 
-CDownload* CDownloads::Add(CQueryHit* pHit)
+CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	
@@ -108,21 +108,31 @@ CDownload* CDownloads::Add(CQueryHit* pHit)
 	{
 		pDownload = new CDownload();
 		pDownload->AddSourceHit( pHit, TRUE );
-		m_pList.AddTail( pDownload );
+
+		if ( bAddToHead ) m_pList.AddHead( pDownload );
+		else m_pList.AddTail( pDownload );
 		
 		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 	}
-	
+
 	pHit->m_bDownload = TRUE;
 	
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
+
+	if ( ( (pDownload->GetSourceCount() == 0 ) ||
+		   ( pDownload->m_bED2K && ! pDownload->m_bSHA1 )) &&
+		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
+	{
+		pDownload->SetStartTimer();
+	}
+	
 	
 	return pDownload;
 }
 
-CDownload* CDownloads::Add(CMatchFile* pFile)
+CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	
@@ -149,7 +159,8 @@ CDownload* CDownloads::Add(CMatchFile* pFile)
 	else
 	{
 		pDownload = new CDownload();
-		m_pList.AddTail( pDownload );
+		if ( bAddToHead ) m_pList.AddHead( pDownload );
+		else m_pList.AddTail( pDownload );
 		
 		if ( pFile->m_pBest != NULL )
 		{
@@ -178,6 +189,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile)
 		   (GetCount(TRUE) < Settings.Downloads.MaxFiles ) )
 	{
 		pDownload->FindMoreSources();
+		pDownload->SetStartTimer();
 	}
 	
 	return pDownload;
@@ -275,6 +287,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	if( ( pDownload->m_bBTH && ( GetActiveTorrentCount() < Settings.BitTorrent.DownloadTorrents ) ) ||
 		( ! pDownload->m_bBTH && ( GetCount(TRUE) < Settings.Downloads.MaxFiles ) ) )
 	{
+		pDownload->SetStartTimer();
 		if ( pURL->m_nAction != CShareazaURL::uriSource )
 			pDownload->FindMoreSources();
 	}
