@@ -1764,7 +1764,7 @@ Other:
 
 	<document name="CBrowseHostProfile.1">
 
-		<heading>Profil de</heading>
+		<heading>Profil de </heading>
 		<heading id="Nick"/>
 		<newline gap="8"/>
 
