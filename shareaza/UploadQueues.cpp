@@ -623,7 +623,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
 		
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HISTORY );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_COMPLETE );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 15;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);

@@ -5547,6 +5547,7 @@ BEGIN
     IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
     IDS_UPLOAD_QUEUE_NEW    "New Queue"
     IDS_UPLOAD_QUEUE_PARTIAL "Partial"
+    IDS_UPLOAD_QUEUE_COMPLETE "Complete Files"
 END
 
 #endif    // English (Australia) resources
