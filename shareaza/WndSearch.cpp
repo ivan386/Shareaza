@@ -611,9 +611,11 @@ void CSearchWnd::OnSearchStop()
 
 void CSearchWnd::OnUpdateSearchPanel(CCmdUI* pCmdUI) 
 {
+	CString sText;
 	CCoolBarItem* pItem = m_wndToolBar.GetID( ID_SEARCH_PANEL );
 	pItem->SetCheck( m_bPanel );
-	pItem->SetTip( m_bPanel ? _T("Hide the Search Panel") : _T("Show the Search Panel") );
+	LoadString( sText, m_bPanel ? IDS_SEARCH_PANEL_HIDE : IDS_SEARCH_PANEL_SHOW );
+	pItem->SetTip( sText );
 }
 
 void CSearchWnd::OnSearchPanel() 

@@ -76,6 +76,8 @@ void CMediaVisDlg::DoDataExchange(CDataExchange* pDX)
 
 BOOL CMediaVisDlg::OnInitDialog() 
 {
+	CString strMessage;
+
 	CSkinDialog::OnInitDialog();
 	
 	SkinMe( NULL, ID_MEDIA_VIS );
@@ -96,7 +98,8 @@ BOOL CMediaVisDlg::OnInitDialog()
 	m_hIcon = CoolInterface.ExtractIcon( ID_MEDIA_VIS );
 	SetIcon( m_hIcon, FALSE );
 	
-	AddPlugin( _T("(No Visualisation)"), NULL, NULL );
+	LoadString( strMessage, IDS_MEDIAVIS_NOVIS );
+	AddPlugin( strMessage, NULL, NULL );
 	Enumerate();
 	
 	m_nSize = Settings.MediaPlayer.VisSize + 1;

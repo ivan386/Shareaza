@@ -672,7 +672,8 @@
 #define IDS_SEARCH_FILTERED             8132
 #define IDS_SEARCH_ACTIVE               8133
 #define IDS_SEARCH_CLEAR_PREVIOUS       8134
-#define IDS_SEARCH                      8143
+#define IDS_SEARCH_PANEL_SHOW		8141
+#define IDS_SEARCH_PANEL_HIDE		8142
 #define IDS_SEARCH_PANEL_SEARCHING      8143
 #define IDS_SEARCH_PANEL_START          8144
 #define IDS_SEARCH_PANEL_MORE           8145
@@ -954,6 +955,8 @@
 #define IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 16405
 #define IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 16406
 #define IDS_LIBRARY_COLLECTION_LOCKDOWN 16407
+#define IDS_LIBRARY_COPYURI             16408
+#define IDS_LIBRARY_EXPORTURIS          16409
 #define IDS_CHAT_CONNECTED_X            16448
 #define IDS_CHAT_ONLINE_X               16449
 #define IDS_CHAT_CLOSED_X               16450
@@ -995,6 +998,16 @@
 #define IDS_URL_PORT                    16773
 #define IDS_URL_CONNECT                 16774
 #define IDS_URL_BROWSE                  16775
+#define IDS_URL_ADD                     16776
+#define IDS_URL_FILENAME                16777
+#define IDS_URL_URL                     16778
+#define IDS_URL_TYPE                    16779
+#define IDS_URL_UNSPECIFIED             16780
+#define IDS_BITZI_REQUESTING            16781
+#define IDS_BITZI_SUCCESS               16782
+#define IDS_BITZI_FINISHED              16783
+#define IDS_BITZI_CLOSE                 16784
+#define IDS_MEDIAVIS_NOVIS              16785
 #define IDS_WIZARD_NEED_SPEED           16800
 #define IDS_WIZARD_NEED_CONNECTION      16801
 #define IDS_WIZARD_SHARE_CONFIRM        16802
@@ -1004,6 +1017,7 @@
 #define IDS_WIZARD_PORT_FORWARD         16806
 #define IDS_SETTINGS_NEED_BANDWIDTH     16807
 #define IDS_PROFILE_NO_VITALS           16808
+#define IDS_WIZARD_EXIT                 16809
 #define IDS_DISCOVERY_BOOTSTRAP         16864
 #define IDS_DISCOVERY_QUERY             16865
 #define IDS_DISCOVERY_WEB_SUCCESS       16866
@@ -1137,6 +1151,7 @@
 #define IDS_REMOTE_ENABLED              19001
 #define IDS_REMOTE_UNAVAILABLE          19002
 #define IDS_GENERAL_NOURNAVAILABLE      20000
+#define IDS_GENERAL_CLOSE               20001
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776

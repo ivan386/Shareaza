@@ -337,8 +337,11 @@ void CLibraryFileView::OnLibraryEnqueue()
 
 void CLibraryFileView::OnUpdateLibraryURL(CCmdUI* pCmdUI) 
 {
+	CString strMessage;
+
 	pCmdUI->Enable( GetSelectedCount() > 0 );
-	pCmdUI->SetText( GetSelectedCount() > 1 ? _T("Export &URIs...") : _T("Copy &URI") );
+	GetSelectedCount() > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
+	pCmdUI->SetText( strMessage );
 }
 
 void CLibraryFileView::OnLibraryURL() 

@@ -177,7 +177,7 @@ void CURLActionDlg::Update()
 		m_wndMessage2.ShowWindow( SW_SHOW );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
 
-		LoadString(strMessage, IDS_URL_CONNECT );
+		LoadString( strMessage, IDS_URL_CONNECT );
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
 		
@@ -208,8 +208,8 @@ void CURLActionDlg::Update()
 	}
 	else if ( pURL->m_nAction == CShareazaURL::uriDiscovery )
 	{
-		m_sNameTitle = _T("URL:");
-		m_sHashTitle = _T("Type:");
+		LoadString(m_sNameTitle, IDS_URL_URL );
+		LoadString(m_sHashTitle, IDS_URL_TYPE );
 		
 		if ( m_pURLs.GetCount() == 1 )
 		{
@@ -231,13 +231,14 @@ void CURLActionDlg::Update()
 		}
 		
 		m_wndMessage4.ShowWindow( SW_SHOW );
-		m_wndDownload.SetWindowText( _T("Add") );
+		LoadString(strMessage, IDS_URL_ADD );
+		m_wndDownload.SetWindowText( strMessage );
 		m_wndSearch.ShowWindow( SW_HIDE );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
 	}
 	else if ( pURL->m_nAction == CShareazaURL::uriSource )
 	{
-		m_sNameTitle = _T("URL:");
+		LoadString(m_sNameTitle, IDS_URL_URL );
 		
 		if ( m_pURLs.GetCount() == 1 )
 		{
@@ -253,7 +254,7 @@ void CURLActionDlg::Update()
 	}
 	else
 	{
-		m_sNameTitle = _T("Filename:");
+		LoadString(m_sNameTitle, IDS_URL_FILENAME );
 		m_sHashTitle = _T("URN:");
 		
 		if ( m_pURLs.GetCount() > 1 )
@@ -273,7 +274,7 @@ void CURLActionDlg::Update()
 		}
 		else
 		{
-			m_sNameValue = _T("Unspecified");
+			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
 		
 		if ( m_pURLs.GetCount() > 1 )
@@ -300,7 +301,7 @@ void CURLActionDlg::Update()
 		}
 		else
 		{
-			m_sHashValue = _T("Unspecified");
+			LoadString(m_sHashValue, IDS_URL_UNSPECIFIED );
 		}
 
 		m_wndMessage1.ShowWindow( SW_SHOW );

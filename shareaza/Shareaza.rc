@@ -125,8 +125,8 @@ IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,23
- PRODUCTVERSION 2,0,0,23
+ FILEVERSION 2,0,0,24
+ PRODUCTVERSION 2,0,0,24
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -144,12 +144,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 0, 0, 23"
+            VALUE "FileVersion", "2, 0, 0, 24"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 0, 0, 23"
+            VALUE "ProductVersion", "2, 0, 0, 24"
         END
     END
     BLOCK "VarFileInfo"
@@ -4592,6 +4592,14 @@ BEGIN
     IDS_URL_PORT            "Port:"
     IDS_URL_CONNECT         "&Connect"
     IDS_URL_BROWSE          "&Browse"
+    IDS_URL_ADD             "Add"
+    IDS_URL_FILENAME        "Filename:"
+    IDS_URL_URL             "URL:"
+    IDS_URL_TYPE            "Type:"
+    IDS_URL_UNSPECIFIED     "Unspecified"
+    IDS_BITZI_REQUESTING    "Requesting..."
+    IDS_BITZI_SUCCESS       "Success!"
+    IDS_BITZI_FINISHED      "Finished, click Close"
 END
 
 STRINGTABLE 
@@ -4609,6 +4617,7 @@ BEGIN
     IDS_SETTINGS_NEED_BANDWIDTH 
                             "Please type the bandwidth limit you wish to set in the form ""123 kb/s"" for kilobits per second, or ""123 KB/s"" for kilobytes per second."
     IDS_PROFILE_NO_VITALS   "You have not selected your age and gender.  Are you sure you want to continue without doing this?"
+    IDS_WIZARD_EXIT         "E&xit"
 END
 
 STRINGTABLE 
@@ -4639,6 +4648,8 @@ BEGIN
     IDS_SEARCH_ACTIVE       "Shareaza is actively searching the network..."
     IDS_SEARCH_CLEAR_PREVIOUS 
                             "You are about to start a new search.  Would you like to clear the results of your previous search?"
+    IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
+    IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
     IDS_SEARCH_PANEL_SEARCHING "Searching..."
 END
 
@@ -5010,6 +5021,8 @@ BEGIN
                             "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
     IDS_LIBRARY_COLLECTION_LOCKDOWN 
                             "Would you like to prevent this collection from prompting you to download anything else?"
+    IDS_LIBRARY_COPYURI     "Copy &URI"
+    IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
 END
 
 STRINGTABLE 
@@ -5287,11 +5300,18 @@ END
 STRINGTABLE 
 BEGIN
     IDS_GENERAL_NOURNAVAILABLE "No URN available"
+    IDS_GENERAL_CLOSE       "Close"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_STATUS_BAR_CONNECTED_SIMPLE "Connected. %s in local library."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BITZI_CLOSE         "&Close"
+    IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
 END
 
 #endif    // English (Australia) resources

@@ -121,6 +121,8 @@ BOOL CWizardSheet::OnInitDialog()
 	CPropertySheet::OnInitDialog();
 	CRect rc;
 	
+	CString strMessage;
+
 	SetIcon( theApp.LoadIcon( IDR_MAINFRAME ), TRUE );
 	SetFont( &theApp.m_gdiFont );
 	
@@ -149,7 +151,8 @@ BOOL CWizardSheet::OnInitDialog()
 	ScreenToClient( &rc );
 	rc.OffsetRect( 95 + 170 - rc.left, 0 );
 	GetDlgItem( 2 )->MoveWindow( &rc );
-	GetDlgItem( 2 )->SetWindowText( _T("E&xit") );
+	LoadString( strMessage, IDS_WIZARD_EXIT );
+	GetDlgItem( 2 )->SetWindowText( strMessage );
 	
 	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );

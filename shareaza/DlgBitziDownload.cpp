@@ -95,18 +95,23 @@ void CBitziDownloadDlg::OnNextFile(DWORD nIndex)
 
 void CBitziDownloadDlg::OnRequesting(DWORD nIndex, LPCTSTR pszName)
 {
+	CString strMessage;
+
 	int nImage	= ShellIcons.Get( pszName, 16 );
 	int nItem	= m_wndFiles.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndFiles.GetItemCount(),
 					pszName, 0, 0, nImage, nIndex );
 
 	m_wndFiles.EnsureVisible( nItem, FALSE );
-	m_wndFiles.SetItemText( nItem, 1, _T("Requesting...") );
+	LoadString( strMessage, IDS_BITZI_REQUESTING );
+	m_wndFiles.SetItemText( nItem, 1, strMessage );
 }
 
 void CBitziDownloadDlg::OnSuccess(DWORD nIndex)
 {
-	m_wndFiles.SetItemText( m_wndFiles.GetItemCount() - 1, 1,
-		_T("Success!") );
+	CString strMessage;
+
+	LoadString( strMessage, IDS_BITZI_SUCCESS );
+	m_wndFiles.SetItemText( m_wndFiles.GetItemCount() - 1, 1, strMessage );
 }
 
 void CBitziDownloadDlg::OnFailure(DWORD nIndex, LPCTSTR pszMessage)
@@ -123,14 +128,18 @@ void CBitziDownloadDlg::OnFinishedFile(DWORD nIndex)
 
 void CBitziDownloadDlg::OnTimer(UINT nIDEvent) 
 {
+	CString strMessage;
+
 	if ( ! m_pDownloader.IsWorking() )
 	{
 		KillTimer( 1 );
 
+		LoadString( strMessage, IDS_BITZI_FINISHED );
 		int nItem = m_wndFiles.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndFiles.GetItemCount(),
-			_T("Finished, click Close"), 0, 0, -1, 0 );
+			strMessage, 0, 0, -1, 0 );
 		m_wndFiles.EnsureVisible( nItem, FALSE );
-		m_wndCancel.SetWindowText( _T("&Close") );
+		LoadString( strMessage, IDS_BITZI_CLOSE );
+		m_wndCancel.SetWindowText( strMessage );
 
 		if ( ! m_nFailures ) PostMessage( WM_COMMAND, IDCANCEL );
 	}
