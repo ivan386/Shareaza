@@ -489,7 +489,7 @@ void CLibraryFileView::OnLibraryBitziWeb()
 
 void CLibraryFileView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( GetSelectedCount() == 1 && ( Settings.BitTorrent.DefaultTracker.GetLength() > 5 ) );
+	pCmdUI->Enable( GetSelectedCount() == 1 && ( Settings.BitTorrent.DefaultTracker.GetLength() > 5 ) && ( Settings.BitTorrent.TorrentCreatorPath.GetLength() > 5 ) );
 }
 
 void CLibraryFileView::OnLibraryCreateTorrent() 
@@ -505,14 +505,12 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 		{
 			sCommandLine = _T(" -sourcefile \"") + sPath + _T("\" -destination \"") + Settings.Downloads.TorrentPath + _T("\" -tracker \"" + Settings.BitTorrent.DefaultTracker + "\"" );
 
-			ShellExecute( GetSafeHwnd(), _T("open"), _T("TorrentWizard.exe"), sCommandLine, NULL, SW_SHOWNORMAL );
+			ShellExecute( GetSafeHwnd(), _T("open"), Settings.BitTorrent.TorrentCreatorPath, sCommandLine, NULL, SW_SHOWNORMAL );
 		
 		}
 
 	}
 }
-
-
 
 /*
 void CLibraryFileView::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
