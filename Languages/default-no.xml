@@ -415,7 +415,7 @@
                        <menu text="Velg nettverk">
                                <item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
                                <item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
-                               <item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+                               <item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
                        </menu>
                        <separator/>
                        <item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -454,7 +454,7 @@
                <menu text="_Hjelp">
                        <item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Hjelp med _ruter"/>
+                       <item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
                        <separator/>
                        <menu text="Websider">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -475,7 +475,7 @@
                        <menu text="Velg nettverk">
                                <item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
                                <item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
-                               <item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+                               <item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
                        </menu>
                        <separator/>
                        <item id="ID_NETWORK_CONNECT_TO" text="Koble til..." shortcut="Ctrl+T"/>
@@ -539,7 +539,7 @@
                <menu text="_Hjelp">
                        <item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Hjelp med _ruter"/>
+                       <item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
                        <separator/>
                        <menu text="Websider">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -565,7 +565,7 @@
                        <menu text="Velg nettverk">
                                <item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
                                <item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
-                               <item id="ID_NETWORK_G1" text="Koble til Gnutella_1"/>
+                               <item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
                        </menu>
                        <separator/>
                        <item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -618,7 +618,7 @@
                <menu text="_Hjelp">
                        <item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
                        <item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Hjelp med _ruter"/>
+                       <item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
                        <separator/>
                        <menu text="Websider">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
@@ -760,7 +760,7 @@
                        <item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 cluster"/>
                        <item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 cache"/>
                        <item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 cache"/>
-                       <item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey-tjenere"/>
+                       <item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey-servere"/>
                </menu>
                <separator/>
                <item id="ID_HOSTCACHE_IMPORT" text="Åpne MET fil..."/>
@@ -1470,7 +1470,7 @@
             <icon res="252" width="32" height="32"/><gap size="8"/>
             <heading align="middle">O B S &#160; - &#160; D U &#160; E R &#160; B A K &#160; E N &#160; B R A N N M U R</heading>
             <newline gap="8" indent="42"/>
-            <text colour="FF0000">Shareaza har oppdaget at du er bak en NAT-ruter eller brannmur,
+            <text colour="FF0000">Shareaza har oppdaget at du er bak en NAT-router eller brannmur,
             og klarer ikke å motta tilkoblinger fra internett. &#160;</text>
             <text colour="FF0000" format="b">Dette kan gi lav nedlastingshastighet.</text>
             <newline gap="6"/>
@@ -1957,8 +1957,8 @@
        <document name="DownloadHelp.Tracker">
                <text format="b">BitTorrent tracker nede</text>
                <newline gap="8"/>
-               <text>BitTorrent-tjeneren for denne filen ser ut til å være
-               offline eller ødelagt. Shareaza klarer ikke å kontakte tjeneren
+               <text>BitTorrent-serveren for denne filen ser ut til å være
+               offline eller ødelagt. Shareaza klarer ikke å kontakte serveren
                for å få en liste over kjente kilder.</text>
        </document>
 
@@ -2284,7 +2284,7 @@
        <tip id="ID_SEARCH_FOR_SERIES" message="Søk etter videofiler fra samme serie som valgte fil."/>
        <tip id="ID_CHAT_TIMESTAMP" message="Vis tidspunkt for når hver melding ble mottatt."/>
        <tip id="ID_MEDIA_STATUS" message="Vis eller skjul mediastatus linjen."/>
-       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Vis eDonkey2000-tjenere."/>
+       <tip id="ID_HOSTCACHE_ED2K_CACHE" message="Vis eDonkey2000-servere."/>
        <tip id="ID_HOSTCACHE_IMPORT" message="Åpne en liste med kjente verter, som en &quot;server.met&quot; fil..."/>
        <tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Last ned en eDonkey2000 &quot;server.met&quot; fil..."/>
        <tip id="ID_DISCOVERY_SERVERMET" message="Vis eDonkey2000 server.met tjeneste i oppdagelsesvinduet."/>
@@ -2292,7 +2292,7 @@
        <tip id="ID_NETWORK_G1" message="Koble til det originale Gnutella-nettverket."/>
        <tip id="ID_NETWORK_ED2K" message="Koble til eDonkey2000-nettverket."/>
        <tip id="ID_LIBRARY_JIGLE" message="Søk i Jigle-databasen etter informasjon om den valgte filen (på nettet)."/>
-       <tip id="ID_HOSTCACHE_PRIORITY" message="Prøv å koble til denne tjeneren før de andre tjenerne."/>
+       <tip id="ID_HOSTCACHE_PRIORITY" message="Prøv å koble til denne serveren før de andre tjenerne."/>
        <tip id="ID_VIEW_BASIC" message="Bruk Shareaza i normalmodus."/>
        <tip id="ID_LIBRARY_SEARCH_QUICK" message="Søk gjennom Mine filer..."/>
        <tip id="ID_HELP_FORUMS" message="Besøk Shareazas forum."/>
@@ -2735,7 +2735,7 @@
        <string id="16803" value="Mappen du deler er allerede delt gjennom en annen delt mappe:\n\n%s"/>
        <string id="16804" value="Du har ikke angitt et navn i brukerprofilen din.\n\nDet er en god ide å angi et spesielt navn slik at brukerne kan se hvem de er koblet til.\n\nEr du sikker på at du vil fortsette?"/>
        <string id="16805" value="Du har ikke angitt hvor du er fra i brukerprofilen din.\n\nDet er en god ide å angi hvor du er fra slik at andre kan se hvor de er koblet til.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
-       <string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-ruter eller brannmur.\n\nVennligst sett opp nettverket til å forwarde TCP port %i til din lokale PC."/>
+       <string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\n\nVennligst sett opp nettverket til å forwarde TCP port %i til din lokale PC."/>
        <string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per sekund, eller &quot;123 KB/s&quot; for kilobytes per sekund."/>
 	   <string id="16808" value="Du har ikke valgt alder og kjønn.  Er du sikker på at du vil fortsette?"/>
        <string id="16809" value="Avslutt"/>
@@ -3118,7 +3118,7 @@
                <control caption="Koble alltid til Gnutella1"/>
                <control caption="_Hubvalg:"/>
                <control caption="La denne noden bli en Hub"/>
-               <control caption="Tving denne noden til å bli en Hub"/>
+               <control caption="Gjør denne noden til en Hub"/>
                <control caption="La denne noden bli et Leaf"/>
                <control caption="Godta bare Hub-koblinger"/>
                <control caption="Gnutella-G_2:"/>
@@ -3142,11 +3142,11 @@
        </dialog>
 
        <dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
-               <control caption="_eDonkey2000 nettverket:"/>
+               <control caption="eDonkey2000 nettverket:"/>
                <control caption="Koble til eDonkey2000 i dag"/>
                <control caption="Koble til automatisk hver gang"/>
                <control caption="_Globalt søk:"/>
-               <control caption="Søk kjente fjern-tjenere i tjener-cachen:"/>
+               <control caption="Søk kjente fjern-servere i server-cachen:"/>
                <control caption="Stopp søket etter"/>
                <control/><control/>
                <control caption="søkeresultater"/>
@@ -3157,7 +3157,7 @@
                <control caption="eDonkey2000 _verktøy:"/>
                <control caption="Importer uferdige nedlastinger fra eDonkey/eMule (.part):"/>
                <control caption="Importer..."/>
-               <control caption="Last ned eDonkey2000 tjenerliste fra nettet:"/>
+               <control caption="Last ned eDonkey2000 serverliste fra nettet:"/>
                <control caption="Last ned..."/>
        </dialog>
 
@@ -3278,9 +3278,9 @@
        <dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Velkommen til Shareaza [3 of 7]">
                <control caption="For optimal utnyttelse, trenger Shareaza å vite litt om tilkoblingen din."/>
                <control/>
-               <control caption="Er nettverket på skolen beskyttet av brannmur eller NAT-ruter?"/>
+               <control caption="Er nettverket på skolen beskyttet av brannmur eller NAT-router?"/>
                <control/>
-               <control caption="Har du brannmur eller NAT-ruter på tilkoblingen din"/>
+               <control caption="Har du brannmur eller NAT-router på tilkoblingen din"/>
                <control/>
                <control caption="Hvis du kjenner hastigheten på tilkoblingen din, velg den som passer best nedenfor."/>
                <control/>
@@ -3695,7 +3695,7 @@
        <dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareazas URI-verktøy">
                <control/>
                <control caption="Du har klikket på en Shareaza URI som peker til innholdet på nettverket:"/>
-               <control caption="Du har klikket en Shareaza URL som vil koble deg til denne verten eller denne tjeneren:"/>
+               <control caption="Du har klikket en Shareaza URL som vil koble deg til denne verten eller denne serveren:"/>
                <control caption="Du har klikket på en Shareaza URI som vil gi deg muligheten til å utforske filene på denne verten:"/>
                <control/><control/><control/><control/>
                <control caption="Vennligst velg hvordan du vil Shareaza skal reagere:"/>
@@ -3769,7 +3769,7 @@
 
        <dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Last ned server.met fil">
                <control/>
-               <control caption="Du kan laste ned en eDonkey2000 server.met fil fra nettet for å oppdatere listen med tjenere."/>
+               <control caption="Du kan laste ned en eDonkey2000 server.met fil fra nettet for å oppdatere listen med servere."/>
                <control/>
                <control/>
                <control caption="OK"/>
