@@ -102,23 +102,7 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCompileTime; 
-	const char cTime[] = __DATE__;
-	CString strMonth;
-	int nDay, nYear, nMonth;
-	sscanf( cTime, "%3ls %d %d", strMonth, &nDay, &nYear );
-	if (!strncmp (cTime, "Jan", 3)) nMonth = 1;
-	else if (!strncmp (cTime, "Feb", 3)) nMonth = 2;
-	else if (!strncmp (cTime, "Mar", 3)) nMonth = 3;
-	else if (!strncmp (cTime, "Apr", 3)) nMonth = 4;
-	else if (!strncmp (cTime, "May", 3)) nMonth = 5;
-	else if (!strncmp (cTime, "Jun", 3)) nMonth = 6;
-	else if (!strncmp (cTime, "Jul", 3)) nMonth = 7;
-	else if (!strncmp (cTime, "Aug", 3)) nMonth = 8;
-	else if (!strncmp (cTime, "Sep", 3)) nMonth = 9;
-	else if (!strncmp (cTime, "Oct", 3)) nMonth = 10;
-	else if (!strncmp (cTime, "Nov", 3)) nMonth = 11;
-	else if (!strncmp (cTime, "Dec", 3)) nMonth = 12;
-	tCompileTime.SetDate( nYear, nMonth, nDay);
+	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
