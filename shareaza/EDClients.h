@@ -42,6 +42,7 @@ protected:
 	CEDClient*		m_pLast;
 	int				m_nCount;
 	DWORD			m_tLastRun;
+	DWORD			m_tLastMaxClients;
 	DWORD			m_tLastServerStats;
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
