@@ -451,18 +451,6 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 	//
-
-	//Check if node is already a G2 hub (ToDo: Maybe this should not be a requirement)
-	if ( IsG2Hub() )
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Acting as a G2 hub") );
-		return FALSE;
-	}
-	else
-	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a G2 hub") );
-	}
-	//
 	
 	//Check if this node has ultrapeer mode forced in the gnutella settings.
 	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
@@ -472,6 +460,19 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 	else
 	{
 		//Additional checks (if user has *not* forced ultrapeer mode)
+
+		//Check if node is already a G2 hub
+		//	ToDo: Check what sort of machine can handle being both a HUB and UP
+		if ( IsG2Hub() )
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Acting as a G2 hub") );
+			return FALSE;
+		}
+		else
+		{
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a G2 hub") );
+		}
+		//
 
 		//Check amount of memory installed in the machine
 		if ( theApp.m_nPhysicalMemory < 250*1024*1024 )
