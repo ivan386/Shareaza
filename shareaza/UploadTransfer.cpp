@@ -299,7 +299,7 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 
 		// High ranked users can get a longer rotate time
 		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) ) 
-			tRotationLength << 1;			
+			tRotationLength <<= 1;			
 
 		if ( m_tRotateTime == 0 )	//If the upload hasn't started yet
 		{
