@@ -127,6 +127,14 @@ CDownloadSource::CDownloadSource(CDownload* pDownload, CQueryHit* pHit)
 		m_bGUID = TRUE;
 		m_pGUID = pHit->m_pClientID;
 	}
+	else if ( pHit->m_nProtocol == PROTOCOL_ED2K )
+	{
+		if ( ( m_sURL.Right( 3 ) == _T("/0/") ) && ( pDownload->m_nSize ) )
+		{	//Add the size if it was missing.
+			CString strTemp =  m_sURL.Left( m_sURL.GetLength() - 2 );
+			m_sURL.Format( _T("%s%I64i/"), strTemp, pDownload->m_nSize );
+		}
+	}
 	
 	ResolveURL();
 }
