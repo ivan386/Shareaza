@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Greek Skin File -->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
 <manifest      name="Ελλάδα"
-                       author="Dimitris Petsalakis"
+                       author="Δημήτρης Πετσαλάκης"
                        description="Shareaza Default Greek Skin File"
                        link="http://www.shareaza.com/"
                        email="contact@shareaza.com"
@@ -517,7 +517,7 @@
                        <item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσε..."/>
                        <item id="ID_TOOLS_DOWNLOAD" text="_Πρόσθεσε/Torrent..."/>
                        <separator/>
-                       <item id="ID_TOOLS_SKIN" text="Δίαλεξε S_kin..."/>
+                       <item id="ID_TOOLS_SKIN" text="Διάλεξε S_kin..."/>
                        <item id="ID_TOOLS_LANGUAGE" text="Διάλεξε μια _γλώσσα..."/>
                        <separator/>
                        <item id="ID_TOOLS_PROFILE" text="Επεξεργασία του  _προφίλ μου..."/>
@@ -1226,7 +1226,7 @@
                        <item id="ID_MEDIA_FULLSCREEN" text="_Ολόκληρη οθόνη"/>
                </menu>
                <menu text="Settings">
-                       <item id="ID_MEDIA_VIS" text="Δίαλεξε _Visualisation..."/>
+                       <item id="ID_MEDIA_VIS" text="Διάλεξε _Visualisation..."/>
                        <separator/>
                        <item id="ID_MEDIA_PLAYLIST" text="Δείξε τα αρχεία στην _Playlist"/>
                        <item id="ID_MEDIA_STATUS" text="Δείξε τα _στατιστικά"/>
@@ -1264,7 +1264,7 @@
                        <item id="ID_MEDIA_FULLSCREEN" text="_Ολόκληρη οθόνη"/>
                </menu>
                <menu text="Settings">
-                       <item id="ID_MEDIA_VIS" text="Δίαλεξε _Visualisation..."/>
+                       <item id="ID_MEDIA_VIS" text="Διάλεξε _Visualisation..."/>
                        <separator/>
                        <item id="ID_MEDIA_PLAYLIST" text="Δείξε την _Playlist"/>
                        <item id="ID_MEDIA_STATUS" text="Δείξε τα _στατιστικά"/>
@@ -1930,11 +1930,11 @@
           <document name="DownloadHelp.Pending">
                <text format="b">Αυτό το αρχείο είναι εν αναμονή</text>
                <newline gap="8"/>
-		<text>Αυτό το αρχείο περιμένει απο κάποιον να αρχίσεινα ανεβάζει.
+		<text>Αυτό το αρχείο περιμένει απο κάποιον να αρχίσει να ανεβάζει.
 		Το Shareaza είναι έτοιμο να αρχίσει να κατεβάζει το αρχείο, αλλά κανένας δεν το στέλνει
 		αυτή τη στιγμή. Λογικά περιμένετε στην ουρά των χρηστών, και το κατέβασμα
-		μπορεί να αρχίσει οποιαδήποτε στιγμή. Μπορείς να εξετάσεις τις ξεχωριστές πηγές για να 
-		δεις σε ποια σειρά περιμένεις. Εαν και εσύ μοιράζεις αρχεία, ίσως καλλιτερέψεις
+		μπορεί να αρχίσει οποιαδήποτε στιγμή. Μπορείτε να εξετάσετε τις ξεχωριστές πηγές για να 
+		δειτε σε ποια σειρά περιμένετε. Εαν και εσεις μοιράζετε αρχεία, ίσως καλλυτερέψετε
 		τις πιθανότητες για να αρχίσει να κατέβαίνει ένα αρχείο ποιο γρήγορα.</text>
 	</document>
 
@@ -1952,7 +1952,7 @@
                <text format="b">Αυτό το αρχείο ψάχνει</text>
                <newline gap="8"/>
                <text>Δεν υπάρχουν γνωστές πηγές για αυτό το αρχείο, έτσι το Shareaza ψάχνει
-               όλα τα συνδεδεμένα all P2P δίκτυα για νεες πηγές.  Όταν βρεθούν νέες πηγές, το
+               όλα τα συνδεδεμένα P2P δίκτυα για νέες πηγές.  Όταν βρεθούν νέες πηγές, το
                αρχείο θα αρχίσει να κατεβαίνει αυτόματα.  Το Shareaza ψάχνει για πηγές αυτόματα,
                αν και μπορέις να επιταχύνεις την διαδικασία χρησιμοποιώντας την εντολή </text>
                <text format="b">Βρες περισσότερες πηγές </text>
@@ -2224,7 +2224,7 @@
        <tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Δες και επεξεργάσου τον συγκεκριμένο φάκελο..."/>
        <tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Κατέβασε το metadata για το συγκεκριμένο αρχείο(α) απο το Bitzi(TM)..."/>
        <tip id="ID_LIBRARY_BITZI_WEB" message="Δες το Bitzi(TM) ticket για το συγκεκριμένο αρχείο στο web."/>
-       <tip id="ID_LIBRARY_COLUMNS" message="Δίαλεξε ένα metadata columns να εμφανιστεί..."/>
+       <tip id="ID_LIBRARY_COLUMNS" message="Διάλεξε ένα metadata columns να εμφανιστεί..."/>
        <tip id="ID_LIBRARY_COPY" message="Αντέγραψε τα συγκεκριμένα αρχεία σε έναν άλλο φάκελο της Βιβλιοθήκης..."/>
        <tip id="ID_LIBRARY_CREATETORRENT" message="Δημιούργησε ένα .torrent για αυτό το αρχείο για να το ανεβάσεις σε ένα website."/>
        <tip id="ID_LIBRARY_DELETE" message="Διέγραψε για πάντα τα συγκεκριμένα αρχεία."/>
@@ -2309,18 +2309,18 @@
        <tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Άνοιξε ένα νέο Packet Dump παράθυρο που παρακολουθεί την άφιξη των αρχείων απο τον γείτονα."/>
        <tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Άνοιξε ένα νέο Packet Dump παράθυρο που παρακολουθεί την έξοδο των αρχείων απο τον γείτονα."/>
        <tip id="ID_NETWORK_AUTO_CLOSE" message="Αυτόματα κλείσε το Shareaza όταν ολοκληρωθούν οι μεταφορές των αρχείων."/>
-       <tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
+       <tip id="ID_NETWORK_BROWSE_TO" message="Κάνε έρευνα του χρήστη,δείχνωντας το προφίλ του και τα αρχεία που μοιράζει..."/>
        <tip id="ID_NETWORK_CONNECT" message="Σύνδεση με το δίκτυο."/>
        <tip id="ID_NETWORK_CONNECT_TO" message="Χειροκίνητα συνδέσου με τον host..."/>
        <tip id="ID_NETWORK_DISCONNECT" message="Αποσύνδεση απο το δίκτυο."/>
-       <tip id="ID_NETWORK_ED2K" message="Συνδέσου ,με το δίκτυο του eDonkey2000."/>
+       <tip id="ID_NETWORK_ED2K" message="Συνδέσου με το δίκτυο του eDonkey2000."/>
        <tip id="ID_NETWORK_EXIT" message="Έξοδος απο το Shareaza"/>
        <tip id="ID_NETWORK_G1" message="Συνδέσου με το αυθεντικό δίκτυο του Gnutella."/>
        <tip id="ID_NETWORK_G2" message="Συνδέσου στο δίκτυο του Gnutella2 (Συνήστατε)."/>
        <tip id="ID_NETWORK_SEARCH" message="Άρχισε μια νέα έρευνα στο δίκτυο..."/>
        <tip id="ID_SEARCH_CHAT" message="Άνοιξε ένα chat session με τον χρήστη."/>
        <tip id="ID_SEARCH_CLEAR" message="Καθάρισε τα αποτελέσματα."/>
-       <tip id="ID_SEARCH_COLUMNS" message="Δίαλεξε το metadata columns που θα προβληθεί..."/>
+       <tip id="ID_SEARCH_COLUMNS" message="Διάλεξε το metadata columns που θα προβληθεί..."/>
        <tip id="ID_SEARCH_COPY" message="Αντέγραψε το URI απο το συγκεκριμένο αρχείο."/>
        <tip id="ID_SEARCH_DETAILS" message="Δείξε τις λεπτομέρεις απο το αρχείο."/>
        <tip id="ID_SEARCH_DOWNLOAD" message="Κατέβασε το συγκεκριμένο αρχείο(α)."/>
@@ -2506,7 +2506,7 @@
        <string id="8156" value="Έρευνα"/>
        <string id="8157" value="Αποτελέσματα"/>
        <string id="8158" value="Καθάρισε"/>
-       <string id="8159" value="Advanced"/>
+       <string id="8159" value="Προχωρημένο"/>
        <string id="8160" value="Εγκαθίστατε η σύνδεση με τον host..."/>
        <string id="8161" value="Sent a push request, waiting for connection..."/>
        <string id="8162" value="Σύνδεση, Ζήτηση για έρευνα αρχείων..."/>
@@ -3408,7 +3408,7 @@
                <control caption="Πάρε περισσότερα"/>
        </dialog>
 
-       <dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Advanced">
+       <dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένο">
                <control/>
                <control caption="Setting Properties:"/>
                <control caption="Τιμή:"/>
@@ -3564,7 +3564,7 @@
                <control caption="Πραγματικό όνομα:"/>
                <control/><control/>
                <control caption="_Vitals:"/>
-		<control caption="|Αρσενικό|Θηλυκό"/>
+		<control caption="|Άνδρας|Γυναίκα"/>
 		<control caption="Γένος:"/>
                <control/>
 		<control caption="Ηλικία:"/>
