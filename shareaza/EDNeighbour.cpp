@@ -548,7 +548,7 @@ void CEDNeighbour::SendSharedFiles()
 		
 		if ( pFile->IsShared() && pFile->m_bED2K )	//If file is shared and has an ed2k hash
 		{
-			if ( Settings.eDonkey.MinServerFileSize && ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
+			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->m_nSize > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile, FALSE ) ) // Check if a queue exists
 				{
@@ -560,7 +560,7 @@ void CEDNeighbour::SendSharedFiles()
 					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket );
 					//Increment count of files sent
 					nCount++;
-/*							
+/*					
 					CString str;
 					str.Format( _T("ED2K list- File Added: %s"), pFile->m_sName );
 					theApp.Message( MSG_DEFAULT, str );
