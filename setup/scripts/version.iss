@@ -13,5 +13,5 @@ AppUpdatesURL=http://www.shareaza.com/?id=download
 
 [Files]
 ; Copy installer into download dir
-Source: "{srcexe}"; DestDir: "{userappdata}\Shareaza\Downloads"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: currentuser
-Source: "{srcexe}"; DestDir: "{commonappdata}\Shareaza\Downloads"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: allusers
+Source: "{srcexe}"; DestDir: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userappdata}\Shareaza\Downloads}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: currentuser
+Source: "{srcexe}"; DestDir: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{commonappdata}\Shareaza\Downloads}"; DestName: "Shareaza 2.0.0.5.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external; Components: mainfiles; Tasks: allusers
