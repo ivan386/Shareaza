@@ -5,7 +5,7 @@
 [Setup]
 AppComments=Shareaza Ultimate File Sharing
 AppId=Shareaza
-AppMutex=Shareaza,Global\Shareaza
+;AppMutex=Shareaza,Global\Shareaza
 AppName=Shareaza
 AppPublisher=Shareaza Development Team
 AppReadmeFile={app}\Uninstall\readme.txt
@@ -253,3 +253,19 @@ Function InnoSetupUsed(): boolean;
 Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1');
 End;
+
+const
+  WM_CLOSE = $0010;
+
+function InitializeSetup: Boolean;
+var
+  Wnd: HWND;
+begin
+  Wnd := FindWindowByClassName('ShareazaMainWnd');
+  if Wnd <> 0 then
+      SendMessage(Wnd, WM_CLOSE, 0, 0);
+
+  Result := True;
+end;
+
+
