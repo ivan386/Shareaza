@@ -29,6 +29,13 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+// This detects ICL and makes necessary changes for proper compilation
+#if __INTEL_COMPILER > 0
+#define asm_m_nWidth CImageFile.m_nWidth
+#else
+#define asm_m_nWidth CImageFile::m_nWidth
+#endif
+
 IMPLEMENT_DYNAMIC(CImageFile, CComObject)
 
 
@@ -261,7 +268,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 			{
 				mov edi, this
 				mov esi, pLine
-				mov ecx, [edi+CImageFile::m_nWidth]
+				mov ecx, [edi+asm_m_nWidth]
 				loop1: mov eax, [esi]
 				bswap eax
 				ror eax, 8
@@ -287,7 +294,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 			{
 				mov edi, this
 				mov esi, pLine
-				mov ecx, [edi+CImageFile::m_nWidth]
+				mov ecx, [edi+asm_m_nWidth]
 				loop2: mov eax, [esi]
 				bswap eax
 				ror eax, 8
