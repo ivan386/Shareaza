@@ -426,12 +426,15 @@ void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 {
 	if ( m_wndList.GetSelectedCount() == 1 && Settings.Community.ChatEnable )
 	{
-		CSingleLock pLock( &Network.m_pSection, TRUE );
-		CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-		if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+		CSingleLock pNetworkLock( &Network.m_pSection );
+		if ( pNetworkLock.Lock( 500 ) )
 		{
-			pCmdUI->Enable( TRUE );
-			return;
+			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+			if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+			{
+				pCmdUI->Enable( TRUE );
+				return;
+			}
 		}
 	}
 	pCmdUI->Enable( FALSE );
@@ -480,12 +483,15 @@ void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	if ( m_wndList.GetSelectedCount() == 1 )
 	{
-		CSingleLock pLock( &Network.m_pSection, TRUE );
-		CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-		if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+		CSingleLock pNetworkLock( &Network.m_pSection );
+		if ( pNetworkLock.Lock( 500 ) )
 		{
-			pCmdUI->Enable( TRUE );
-			return;
+			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+			if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+			{
+				pCmdUI->Enable( TRUE );
+				return;
+			}
 		}
 	}
 	pCmdUI->Enable( FALSE );
