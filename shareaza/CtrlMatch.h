@@ -41,6 +41,7 @@ public:
 
 	friend class CHitMonitorWnd;
 	friend class CSearchWnd;
+	friend class CBrowseFrameCtrl;
 
 // Attributes
 public:
