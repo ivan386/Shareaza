@@ -149,6 +149,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ExecuteSearch();
 	
 	if ( pSearch == NULL ) m_wndPanel.ShowSearch( NULL );
+	else m_wndPanel.Disable();
 	
 	OnSkinChange();
 	
