@@ -1135,6 +1135,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("tooltip.back"), &CoolInterface.m_crTipBack );
 	pColours.SetAt( _T("tooltip.text"), &CoolInterface.m_crTipText );
 	pColours.SetAt( _T("tooltip.border"), &CoolInterface.m_crTipBorder );
+	pColours.SetAt( _T("tooltip.warnings"), &CoolInterface.m_crTipWarnings );
 	
 	pColours.SetAt( _T("taskpanel.back"), &CoolInterface.m_crTaskPanelBack );
 	pColours.SetAt( _T("taskbox.caption.back"), &CoolInterface.m_crTaskBoxCaptionBack );

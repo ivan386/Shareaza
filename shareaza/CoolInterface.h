@@ -63,6 +63,7 @@ public:
 	COLORREF	m_crTipBack;
 	COLORREF	m_crTipText;
 	COLORREF	m_crTipBorder;
+	COLORREF	m_crTipWarnings; // Colour of warning messages
 	COLORREF	m_crTaskPanelBack;
 	COLORREF	m_crTaskBoxCaptionBack;
 	COLORREF	m_crTaskBoxPrimaryBack;

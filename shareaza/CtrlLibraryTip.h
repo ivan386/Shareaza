@@ -46,6 +46,7 @@ protected:
 	CString			m_sType;
 	CString			m_sSHA1;
 	CString			m_sTTH;
+	CString			m_sED2K;
 	int				m_nIcon;
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;

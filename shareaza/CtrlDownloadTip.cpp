@@ -437,19 +437,19 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sBTH.Empty();
 	m_sURL.Empty();
 	
-	if ( pDownload->m_bSHA1 )
+	if ( pDownload->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pDownload->m_pSHA1 );
 	}  
-	if ( pDownload->m_bTiger )
+	if ( pDownload->m_bTiger && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pDownload->m_pTiger );
 	}
-	if ( pDownload->m_bED2K )
+	if ( pDownload->m_bED2K && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pDownload->m_pED2K );
 	}
-	if ( pDownload->m_bBTH )
+	if ( pDownload->m_bBTH && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sBTH = _T("btih:") + CSHA::HashToString( &pDownload->m_pBTH );
 		m_sURL = pDownload->m_pTorrent.m_sTracker;

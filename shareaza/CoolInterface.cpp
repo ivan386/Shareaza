@@ -291,6 +291,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crTipBack				= GetSysColor( COLOR_INFOBK );
 	m_crTipText				= GetSysColor( COLOR_INFOTEXT );
 	m_crTipBorder			= CalculateColour( m_crTipBack, (COLORREF)0, 100 );
+	m_crTipWarnings			= RGB( 0, 0, 255 ); // Colour of warning messages (Blue)
 	
 	m_crTaskPanelBack		= RGB( 122, 161, 230 );
 	m_crTaskBoxCaptionBack	= RGB( 250, 250, 255 );

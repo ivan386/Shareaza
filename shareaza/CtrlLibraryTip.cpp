@@ -31,6 +31,7 @@
 #include "SchemaCache.h"
 #include "TigerTree.h"
 #include "SHA.h"
+#include "ED2K.h"
 #include "ImageServices.h"
 #include "CtrlLibraryTip.h"
 
@@ -85,6 +86,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 	m_sType.Empty();
 	m_sSHA1.Empty();
 	m_sTTH.Empty();
+	m_sED2K.Empty();
 	
 	// Type information and icons
 
@@ -93,8 +95,18 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	// URN
 
-	if ( pFile->m_bSHA1 ) m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
-	if ( pFile->m_bTiger ) m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
+	if ( pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC) 
+	{
+		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
+	}
+	if ( pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC) 
+	{
+		m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
+	}
+	if ( pFile->m_bED2K  && Settings.General.GUIMode != GUI_BASIC)
+	{
+		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
+	}
 
 	// Metadata
 	

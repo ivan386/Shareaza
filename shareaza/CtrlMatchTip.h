@@ -54,6 +54,9 @@ protected:
 	CString			m_sED2K;
 	CString			m_sType;
 	CString			m_sSize;
+	CString			m_sBusy; // Busy status message
+	CString			m_sPush; // Firewalled status message
+	CString			m_sUnstable; // Unstable status message
 	int				m_nIcon;
 	CString			m_sStatus;
 	COLORREF		m_crStatus;
@@ -72,6 +75,7 @@ protected:
 	static COLORREF	m_crBack;
 	static COLORREF	m_crText;
 	static COLORREF	m_crBorder;
+	static COLORREF	m_crWarnings; // Colour of warning messages
 	
 // Operations
 public:
