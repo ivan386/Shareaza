@@ -232,7 +232,7 @@ no.reg_apptitle=Shareaza Ultimate File Sharing
 no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
-no.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+no.dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
