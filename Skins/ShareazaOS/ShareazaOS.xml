@@ -286,8 +286,8 @@
       </windowSkin>
       <!-- Navigation Bar -->
       <windowSkin> 
-        <image type="image" language="en" path="sos_navbar.bmp"/>
-        <image type="watermark" language="en" path="sos_navbarbg.bmp"/>
+        <image type="image" path="sos_navbar.bmp"/>
+        <image type="watermark" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <anchors> 
           <anchor name="Background"			rect="0,0,525,38"/>
@@ -325,8 +325,8 @@
         </parts>
       </windowSkin>
   <windowSkin> 
-        <image type="image" language="en" path="sos_navbar.bmp"/>
-        <image type="watermark" language="en" path="sos_navbarbg.bmp"/>
+        <image type="image" path="sos_navbar.bmp"/>
+        <image type="watermark" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl"/>
 		<target window="CMainTabBarCtrl.Windowed"/>
         <anchors> 
