@@ -170,6 +170,7 @@ Type: filesandordirs; Name: "{userprograms}\Shareaza"
 
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
+Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"
 
 ; Clean up {app} after moving to {userappdata}\Shareaza
 Type: filesandordirs; Name: "{app}\Schemas"
