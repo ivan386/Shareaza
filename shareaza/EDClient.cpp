@@ -643,19 +643,19 @@ void CEDClient::SendHello(BYTE nType)
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
 	// 4 - Feature Versions. 
+	BYTE nExtendedRequests = ( Settings.eDonkey.ExtendedRequest ) ? ED2K_VERSION_EXTENDEDREQUEST : 0 ;
 	nVersion = ( ( ED2K_VERSION_AICH << 29) |			// AICH
 				 ( TRUE << 28) |						// Unicode
 				 ( ED2K_VERSION_UDP << 24) |			// UDP version
 				 ( ED2K_VERSION_COMPRESSION << 20) |	// Compression
 			     ( ED2K_VERSION_SECUREID << 16) |		// Secure ID
 				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) | // Source exchange
-				 ( ED2K_VERSION_EXTENDEDREQUEST << 8) | // Extended requests
+				 ( nExtendedRequests << 8) |			// Extended requests
 				 ( ED2K_VERSION_COMMENTS << 4) |		// Comments
 				 ( FALSE << 3) |						// Peer Cache
 				 ( TRUE << 2) |							// No browse
 				 ( FALSE << 1) |						// Multipacket
 				 ( FALSE ) );							// Preview
-
 
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
 
