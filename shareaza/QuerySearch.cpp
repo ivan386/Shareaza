@@ -302,8 +302,17 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP)
 	
 	if ( m_bED2K )
 	{
-		pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
-		pPacket->Write( &m_pED2K, sizeof(MD4) );
+		if( m_bWantDN && Settings.eDonkey.MagnetSearch )
+		{			//We need the size- do a search by magnet (hash)
+			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_SEARCHREQUEST : ED2K_C2S_SEARCHREQUEST );
+			pPacket->WriteByte( 1 );
+			pPacket->WriteEDString( _T("magnet:?xt=ed2k:") + CED2K::HashToString( &m_pED2K ));
+		}
+		else
+		{			//Don't need the size- Find more sources
+			pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES : ED2K_C2S_GETSOURCES );
+			pPacket->Write( &m_pED2K, sizeof(MD4) );
+		}
 	}
 	else if ( m_bBTH )
 	{
@@ -638,6 +647,10 @@ BOOL CQuerySearch::CheckValid()
 		if ( _tcsicmp( *m_pWordPtr, _T("mp3") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("ogg") ) == 0 ||
 
+			 _tcsicmp( *m_pWordPtr, _T("jpg") ) == 0 ||
+			 _tcsicmp( *m_pWordPtr, _T("gif") ) == 0 ||
+			 _tcsicmp( *m_pWordPtr, _T("png") ) == 0 ||
+
 			 _tcsicmp( *m_pWordPtr, _T("mpg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("avi") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("wmv") ) == 0 ||
@@ -647,6 +660,8 @@ BOOL CQuerySearch::CheckValid()
 			 _tcsicmp( *m_pWordPtr, _T("mpeg") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("divx") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("xvid") ) == 0 ||
+
+			 _tcsicmp( *m_pWordPtr, _T("torrent") ) == 0 ||
 
 			 _tcsicmp( *m_pWordPtr, _T("xxx") ) == 0 ||
 			 _tcsicmp( *m_pWordPtr, _T("sex") ) == 0 ||
