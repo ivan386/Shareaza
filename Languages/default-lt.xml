@@ -960,7 +960,7 @@ right quote    &#147;
                <item id="ID_DOWNLOADS_ENQUEUE" text="Įt_raukti į grojaraštį"/>
                <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Val_yti"/>
                <separator/>
-               <item id="ID_DOWNLOADS_COPY" text="Kopijuoti nuorodą"/>
+               <item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
                <separator/>
                <item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
                <item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
@@ -3414,7 +3414,7 @@ right quote    &#147;
                <control caption="_Taisyti:"/>
                <control caption="Pavad.:"/>
                <control/>
-               <control caption="Nuoroda:"/>
+               <control caption="URL:"/>
                <control/>
                <control caption="Nauja"/>
                <control caption="Šalinti"/>
