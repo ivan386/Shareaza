@@ -9,7 +9,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="lccolunga@hotmail.com"
-		version="2.1.0.4"
+		version="2.1.0.17"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -2287,11 +2287,11 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Mostrar Leyenda."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Seleccionar y Configurar elementos para graficar..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Open a new graph window..."/>
-	<tip id="ID_TRAY_OPEN" message="Abrir la ventana de Shareaza."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Comenzar un chat con el usuario."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Acceder la fuente seleccionada."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Desconectar las transferencias seleccionadas."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Desconectar y olvidar las fuentes seleccionadas."/>
+	<tip id="ID_TRAY_OPEN" message="Abrir la ventana de Shareaza."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Limpiar los archivos subidos automáticamente."/>
 	<tip id="ID_UPLOADS_CHAT" message="Comenzar un chat con el usuario."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Eliminar las transferencias seleccionadas."/>
@@ -2474,6 +2474,15 @@
 	<string id="8324" value="Inactivo"/>
 	<string id="8325" value="Activo"/>
 	<string id="8326" value="Siguiente en Línea"/>
+	<string id="8327" value="Archivos totales:"/>
+	<string id="8328" value="Volumen total:"/>
+	<string id="8329" value="de tu librería"/>
+	<string id="8330" value="Carpeta"/>
+	<string id="9000" value="General"/>
+	<string id="9001" value="Metadata"/>
+	<string id="9002" value="Mi revisión"/>
+	<string id="9003" value="Compartiendo"/>
+	<string id="9004" value="Fuentes"/>
 	<string id="16064" value="Iniciando el nucleo de la red..."/>
 	<string id="16065" value="Imposible asociar %s con el puerto %i para conexiones entrantes.  Conexiones entrantes no van a ser soportadas."/>
 	<string id="16066" value="Cerrando el nucleo de la red..."/>
@@ -2791,8 +2800,39 @@
 	<string id="17041" value="El mensaje no pudo ser enviado, porque la comunicación no ha sido establecida."/>
 	<string id="17042" value="Todavía no ha llenado tu perfil su usuario. Es necesario que lo llene, para poder chatear con otros.\n\n¿Quieres hacerlo ahora?"/>
 	<string id="17043" value="Se le dio prioridad a %s para descargar archivos."/>
-	<string id="17216" value="Initiating connection to eDonkey2000 server at %s..."/>
-	<string id="17217" value="Connected to eDonkey2000 server %s, handshaking..."/>
+	<string id="17100" value="Gnutella: Conexión Peer-to-Peer"/>
+	<string id="17101" value="Gnutella: Conexión Leaf-to-Ultrapeer"/>
+	<string id="17102" value="Gnutella: Conexión Ultrapeer-to-Leaf"/>
+	<string id="17103" value="Gnutella II: Conexión Hub-to-Hub"/>
+	<string id="17104" value="Gnutella II: Conexión Leaf-to-Hub"/>
+	<string id="17105" value="Gnutella II: Conexión Hub-to-Leaf"/>
+	<string id="17106" value="Conexión Servidor eDonkey(LOWID: %lu)"/>
+	<string id="17107" value="Conexión Servidor eDonkey"/>
+	<string id="17108" value="Handshake"/>
+	<string id="17109" value="Entrada"/>
+	<string id="17110" value="Salida"/>
+	<string id="17111" value="Actual:"/>
+	<string id="17112" value="Total:"/>
+	<string id="17113" value="Compresión:"/>
+	<string id="17114" value="Ratio:"/>
+	<string id="17115" value="Deflate"/>
+	<string id="17116" value="Ninguno"/>
+	<string id="17117" value="Conectando"/>
+	<string id="17118" value="Handshaking"/>
+	<string id="17119" value="Rechazado"/>
+	<string id="17120" value="Cerrando"/>
+	<string id="17121" value="Desconocido"/>
+	<string id="17122" value="G1 Peer"/>
+	<string id="17123" value="G1 Ultrapeer"/>
+	<string id="17124" value="G1 Leaf"/>
+	<string id="17125" value="G2 Peer"/>
+	<string id="17126" value="G2 Hub"/>
+	<string id="17127" value="G2 Leaf"/>
+	<string id="17128" value="Servidor eDonkey2000"/>
+	<string id="17129" value="eDonkey2000 (LowID)"/>
+	<string id="17130" value="eDonkey2000 (HighID)"/>
+	<string id="17216" value="Iniciando conexión a servidor eDonkey2000 en %s..."/>
+	<string id="17217" value="Conectado en servidor eDonkey2000 %s, handshaking..."/>
 
 	<string id="17219" value="El servidor eDonkey2000 %s no aceptó la conexión."/>
 	<string id="17220" value="El servidor eDonkey2000 %s nos dió %lu como número de identificación."/>
@@ -3102,7 +3142,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEd" caption="Scheduler">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="_Opciones:"/>
 		<control caption="_Habilitar Calendario"/>
 		<control/><control/>
@@ -3119,7 +3159,12 @@
 		<control caption="Conexión limitada"/>
 		<control caption="Conectar a alta velocidad"/>
 		<control caption="% de _banda ancha abajo del limite"/>
-	</dialog>
+		<control/>
+		<control caption="Ayuda"/>
+		<control caption="El Calendario esta diseñado para que puedas asignar tiempos de cuando Shareaza se va a conectar
+		y descargar archivos. &#13;&#10;Note: Si tienes Shareaza abierto cuando el calendario esta activo, puede que veas
+		que este cambiando configuraciones- ¡Esto es normal!-"/>
+</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
 		<control caption="Shareaza tiene la habilidad de acceder varias redes de compartimiento de archivos. En esta página se pueden seleccionar las redes que serán usadas, y ajustar las configuraciones de las misMás."/>
