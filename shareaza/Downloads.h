@@ -69,6 +69,7 @@ public:
 	void		Clear(BOOL bClosing = FALSE);
 	void		CloseTransfers();
 public:
+	int			GetSeedCount() const;
 	int			GetCount(BOOL bActiveOnly = FALSE) const;
 	int			GetTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;

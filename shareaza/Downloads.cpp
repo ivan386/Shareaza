@@ -300,7 +300,7 @@ void CDownloads::ClearCompleted()
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->IsCompleted() ) pDownload->Remove();
+		if ( ( pDownload->IsCompleted() ) && ( !pDownload->IsSeeding() ) ) pDownload->Remove();
 	}
 }
 
@@ -347,6 +347,21 @@ void CDownloads::CloseTransfers()
 
 //////////////////////////////////////////////////////////////////////
 // CDownloads list access
+
+int CDownloads::GetSeedCount() const
+{
+	int nCount = 0;
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+		
+		if ( pDownload->IsSeeding() )
+				nCount++;
+	}
+	
+	return nCount;
+}
 
 int CDownloads::GetCount(BOOL bActiveOnly) const
 {
