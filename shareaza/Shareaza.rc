@@ -2328,14 +2328,14 @@ BEGIN
     PUSHBUTTON      "Generate New",IDC_GUID_CREATE,105,105,70,15
 END
 
-IDD_SHARE_MANAGER DIALOG  0, 0, 292, 180
+IDD_SHARE_MANAGER DIALOGEX 0, 0, 292, 180
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
     WS_CAPTION | WS_SYSMENU
 CAPTION "Shared Folder Manager"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the right.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",
+    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",
                     IDC_STATIC,5,35,280,30
     CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | 
                     LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | 
