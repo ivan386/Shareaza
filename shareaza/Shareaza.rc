@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,54
- PRODUCTVERSION 2,1,0,54
+ FILEVERSION 2,1,0,55
+ PRODUCTVERSION 2,1,0,55
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 54"
+            VALUE "FileVersion", "2, 1, 0, 55"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 54"
+            VALUE "ProductVersion", "2, 1, 0, 55"
         END
     END
     BLOCK "VarFileInfo"
@@ -5566,6 +5566,7 @@ BEGIN
     IDS_UPLOAD_QUEUE_NEW    "New Queue"
     IDS_UPLOAD_QUEUE_PARTIAL "Partial"
     IDS_UPLOAD_QUEUE_COMPLETE "Complete Files"
+    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
 END
 
 #endif    // English (Australia) resources
