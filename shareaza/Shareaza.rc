@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,82
- PRODUCTVERSION 2,1,0,82
+ FILEVERSION 2,1,0,83
+ PRODUCTVERSION 2,1,0,83
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 82"
+            VALUE "FileVersion", "2, 1, 0, 83"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2004."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 82"
+            VALUE "ProductVersion", "2, 1, 0, 83"
         END
     END
     BLOCK "VarFileInfo"
@@ -5343,7 +5343,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotating..."
+    IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotiating..."
     IDS_BT_CLIENT_CONNECT_TIMEOUT 
                             "Timed out connecting to BitTorrent client %s."
     IDS_BT_CLIENT_HANDSHAKE_TIMEOUT 
