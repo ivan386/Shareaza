@@ -566,13 +566,12 @@ BOOL CDownload::Save(BOOL bFlush)
 	if ( ! pFile.Open( m_sLocalName + _T(".sd.sav"),
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
 	
-	BYTE* pBuffer = new BYTE[ 4096 ];
 	{
+		BYTE pBuffer[ 65536 ];
 		CArchive ar( &pFile, CArchive::store, 4096, pBuffer );
 		Serialize( ar, 0 );
 		ar.Close();
 	}
-	delete [] pBuffer;
 	
 	if ( Settings.Downloads.FlushSD || bFlush ) pFile.Flush();
 	pFile.SeekToBegin();
