@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,8 @@
 #include "SHA.h"
 #include "LibraryFolders.h"
 #include "GProfile.h"
+#include "Uploads.h"
+#include "UploadTransfer.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -203,8 +205,13 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-		if ( IsMoving() )
-			CBTTrackerRequest::SendUpdate( this, 0 );	//If we are seeding, completed, or moving we don't need to request peers.
+		if ( IsMoving() )								//If we are seeding or completed, base requests on BT uploads
+		{
+			if ( ( ! IsCompleted() ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
+				CBTTrackerRequest::SendUpdate( this, 0 );	// We don't need to request peers.
+			else
+				CBTTrackerRequest::SendUpdate( this, 10 );	// We might need more peers.					
+		}
 		else if ( GetSourceCount() > Settings.Downloads.SourcesWanted )
 			CBTTrackerRequest::SendUpdate( this, 5 );	//If we have many sources, just get a few to make sure we have some fresh ones. 
 		else

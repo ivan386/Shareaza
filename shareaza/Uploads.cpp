@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,6 +99,37 @@ int CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 				break;
 			case -2:
 				if ( pUpload->m_nState > upsNull ) nCount++;
+				break;
+			default:
+				if ( pUpload->m_nState == nState ) nCount++;
+				break;
+			}
+		}
+	}
+	
+	return nCount;
+}
+
+int CUploads::GetTorrentCount(int nState) const
+{
+	int nCount = 0;
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CUploadTransfer* pUpload = GetNext( pos );
+
+		if ( pUpload->m_nProtocol == PROTOCOL_BT )
+		{
+			switch ( nState )
+			{
+			case -1:
+				nCount++;
+				break;
+			case -2:
+				if ( pUpload->m_nState > upsNull ) nCount++;
+				break;
+			case -3:
+				if ( pUpload->m_nState >= upsUploading ) nCount++;
 				break;
 			default:
 				if ( pUpload->m_nState == nState ) nCount++;

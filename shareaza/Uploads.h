@@ -1,7 +1,7 @@
 //
 // Uploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,6 +48,7 @@ protected:
 public:
 	void		Clear(BOOL bMessage = TRUE);
 	int			GetCount(CUploadTransfer* pExcept, int nState = -1) const;
+	int			GetTorrentCount(int nState) const;
 public:
 	BOOL		AllowMoreTo(IN_ADDR* pAddress) const;
 	BOOL		EnforcePerHostLimit(CUploadTransfer* pUpload, BOOL bRequest = FALSE);
@@ -81,6 +82,11 @@ public:
 	inline int GetTransferCount() const
 	{
 		return GetCount( NULL, -2 );
+	}
+
+	inline int GetTorrentUploadCount() const
+	{
+		return GetTorrentCount( -3 );
 	}
 	
 };
