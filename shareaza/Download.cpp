@@ -304,8 +304,9 @@ void CDownload::OnRun()
 		if ( ( !IsCompleted() ) &&  ( tNow - m_tReceived ) > ( 3 * 60 * 60 * 1000 ) )	
 		{	//If it's not complete and we've had no new data for 3 hours	
 
-			if ( ( ( tNow - GetStartTimer() ) > ( 6 * 60 * 60 * 1000 ) ) || ( GetSourceCount() == 0 ) )			
-			{	//And we've been trying for 6 hours, or have no sources
+			DWORD tHoursToTry = min ( ( GetSourceCount() + 49 ) / 50 , 9 ) + 3;
+			if ( ( tNow - GetStartTimer() ) > ( tHoursToTry * 60 * 60 * 1000 ) )
+			{	//And we've been trying for several hours, or have no sources
 
 				if( m_bBTH )	//If it's a torrent
 				{
