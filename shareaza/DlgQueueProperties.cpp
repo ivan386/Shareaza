@@ -193,7 +193,8 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	DWORD nLimit = Settings.Bandwidth.Uploads;
 	
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
-	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints() - m_pQueue->m_nBandwidthPoints;
+	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - m_pQueue->m_nBandwidthPoints;
+
 	if ( nOtherPoints < 0 ) nOtherPoints = 0;
 	
 	m_wndBandwidthSlider.SetRange( 1, max( 100, nOtherPoints * 3 ) );
@@ -287,7 +288,7 @@ void CQueuePropertiesDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScroll
 	
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
-	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints() - m_pQueue->m_nBandwidthPoints;
+	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - m_pQueue->m_nBandwidthPoints;
 	if ( nOtherPoints < 0 ) nOtherPoints = 0;
 	
 	int nLocalPoints = m_wndBandwidthSlider.GetPos();
