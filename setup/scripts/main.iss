@@ -32,6 +32,7 @@ ShowComponentSizes=no
 WizardImageFile=setup\misc\sidebar.bmp
 WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\repair.exe"
+ChangesAssociations=yes
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
