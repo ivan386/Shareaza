@@ -1,0 +1,48 @@
+CC = gcc
+RM = rm -f
+RC = windres
+
+OBJZLIB =   lib/zlib-1.1.4/adler32.o \
+		lib/zlib-1.1.4/compress.o \
+    		lib/zlib-1.1.4/crc32.o \
+    		lib/zlib-1.1.4/deflate.o \
+    		lib/zlib-1.1.4/gzio.o \
+    		lib/zlib-1.1.4/inffast.o \
+    		lib/zlib-1.1.4/infback.o \
+    		lib/zlib-1.1.4/inflate.o \
+    		lib/zlib-1.1.4/inftrees.o \
+    		lib/zlib-1.1.4/trees.o \
+    		lib/zlib-1.1.4/uncompr.o \
+    		lib/zlib-1.1.4/zutil.o
+
+OBJ =	lib/unzip/ioapi.o \
+		lib/unzip/unzip.o \
+		extract.o \
+		registry.o \
+		skin.o \
+		utils.o \
+		window.o
+
+#LIB = -lgdi32 -lcomctl32 ../zlib-1.1.4/libz.a
+LIB = -lgdi32 -lcomctl32 ../bin/zlib.dll
+BIN = ../bin/skin-zlib1.1.4.exe
+
+CFLAGS  = -Os -DZLIB_DLL -DNOCRYPT -DWIN32 -I../zlib-1.1.4 -Ilib/unzip
+LFLAGS  = -s -mwindows
+RCFLAGS = --input-format rc --output-format coff
+
+all: $(OBJ) resource.res
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN) $(OBJ) $(LIB) resource.res
+
+resource.res : resource.rc resource.h
+	$(RC) $(RCFLAGS) -o resource.res -i resource.rc
+
+clean:
+	$(RM) lib/unzip/*.o
+	$(RM) ../zlib-1.1.4/*.o
+	$(RM) *.aps
+	$(RM) *.o
+	$(RM) *.res
+
+distclean: clean
+	$(RM) $(BIN)
