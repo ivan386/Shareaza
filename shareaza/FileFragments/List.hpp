@@ -305,7 +305,7 @@ List< FragmentT, ContainerT >::insert(
             _T( "FF::SimpleFragmentList - invalid arg for insert - " )
             _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
             _T( "Fragment - begin: %I64u - end: %I64u" ), size(), limit(), sumLength(),
-            insertFragment.begin, insertFragment.end );
+            insertFragment.begin(), insertFragment.end() );
         theApp.Message( MSG_ERROR, errorMsg );
         return 0;
     }
@@ -361,7 +361,7 @@ List< FragmentT, ContainerT >::erase(
             _T( "FF::SimpleFragmentList - invalid arg for erase - " )
             _T( "List - size: %u - limit: %I64u - sum: %I64u - " )
             _T( "Fragment - begin: %I64i - end: %I64u" ), size(), limit(), sumLength(),
-            eraseFragment.begin, eraseFragment.end );
+            eraseFragment.begin(), eraseFragment.end() );
         theApp.Message( MSG_ERROR, errorMsg );
         return 0;
     }
