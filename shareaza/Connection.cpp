@@ -311,13 +311,26 @@ BOOL CConnection::OnRead()
 	if ( m_mInput.pLimit && *m_mInput.pLimit && ( Settings.Live.BandwidthScale <= 100 || m_mInput.bUnscaled ) )
 	{
 		DWORD tCutoff	= tNow - METER_SECOND;
-		DWORD* pHistory	= m_mInput.pHistory;
+/*		DWORD* pHistory	= m_mInput.pHistory;
 		DWORD* pTime	= m_mInput.pTimes;
 		nLimit			= 0;
 		
 		for ( int nSeek = METER_LENGTH ; nSeek ; nSeek--, pHistory++, pTime++ )
 		{
 			if ( *pTime >= tCutoff ) nLimit += *pHistory;
+		}*/
+		__asm
+		{
+			mov		ecx, this
+			mov		ebx, -METER_LENGTH
+			mov		edx, tCutoff
+			xor		eax, eax
+_loop:		cmp		edx, [ecx + CConnection::m_mInput.pTimes + ebx*4 + METER_LENGTH*4]
+			jnbe	_ignore
+			add		eax, [ecx + CConnection::m_mInput.pHistory + ebx*4 + METER_LENGTH*4]
+_ignore:	inc		ebx
+			jnz		_loop
+			mov		nLimit, eax
 		}
 		
 		DWORD nActual = *m_mInput.pLimit;
@@ -387,7 +400,7 @@ BOOL CConnection::OnWrite()
 	if ( m_mOutput.pLimit && *m_mOutput.pLimit && ( Settings.Live.BandwidthScale <= 100 || m_mOutput.bUnscaled ) )
 	{
 		DWORD tCutoff	= tNow - METER_SECOND;
-		DWORD* pHistory	= m_mOutput.pHistory;
+/*		DWORD* pHistory	= m_mOutput.pHistory;
 		DWORD* pTime	= m_mOutput.pTimes;
 		DWORD nUsed		= 0;
 		
@@ -395,7 +408,22 @@ BOOL CConnection::OnWrite()
 		{
 			if ( *pTime >= tCutoff ) nUsed += *pHistory;
 		}
-		
+*/
+		DWORD nUsed;
+		__asm
+		{
+			mov		ecx, this
+			mov		ebx, -METER_LENGTH
+			mov		edx, tCutoff
+			xor		eax, eax
+_loop:		cmp		edx, [ecx + CConnection::m_mOutput.pTimes + ebx*4 + METER_LENGTH*4]
+			jnbe	_ignore
+			add		eax, [ecx + CConnection::m_mOutput.pHistory + ebx*4 + METER_LENGTH*4]
+_ignore:	inc		ebx
+			jnz		_loop
+			mov		nUsed, eax
+		}
+
 		nLimit = *m_mOutput.pLimit;
 		
 		if ( Settings.Live.BandwidthScale < 100 && ! m_mOutput.bUnscaled )
@@ -488,12 +516,12 @@ void CConnection::Measure()
 		xor		eax, eax
 		xor		esi, esi
 		mov		ecx, -METER_LENGTH
-_loop:	cmp		edx, [ebx + CConnection::m_mInput.pTimes+ecx*4+(METER_LENGTH-1)*4]
+_loop:	cmp		edx, [ebx + CConnection::m_mInput.pTimes+ecx*4+METER_LENGTH*4]
 		jnbe	_ignoreIn
-		add		eax, [ebx + CConnection::m_mInput.pHistory+ecx*4+(METER_LENGTH-1)*4]
-_ignoreIn:cmp	edx, [ebx + CConnection::m_mOutput.pTimes+ecx*4+(METER_LENGTH-1)*4]
+		add		eax, [ebx + CConnection::m_mInput.pHistory+ecx*4+METER_LENGTH*4]
+_ignoreIn:cmp	edx, [ebx + CConnection::m_mOutput.pTimes+ecx*4+METER_LENGTH*4]
 		jnbe	_ignoreOut
-		add		esi, [ebx + CConnection::m_mOutput.pHistory+ecx*4+(METER_LENGTH-1)*4]
+		add		esi, [ebx + CConnection::m_mOutput.pHistory+ecx*4+METER_LENGTH*4]
 _ignoreOut:inc	ecx
 		jnz		_loop
 		xor		edx, edx
