@@ -63,6 +63,7 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority)
 	m_nLeaves		= 0;
 	m_nQueryCount	= 0;
 
+	m_tLastG2		= 0;
 	m_tLastED2K		= 0;
 	m_tMoreResults	= 0;
 	m_nEDServers	= 0;
@@ -164,29 +165,28 @@ BOOL CManagedSearch::Execute()
 	DWORD tTicks	= GetTickCount();
 	DWORD tSecs		= time( NULL );
 	
-	if ( m_nPriority == spLowest )
-	{
-		if ( tTicks - m_tExecute < 30000 ) return FALSE;
-		m_tExecute = tTicks;
-	}
-	else if ( m_nPriority == spMedium )
-	{
-		if ( tTicks - m_tExecute < 1000 ) return FALSE;
-		m_tExecute = tTicks;
-	}
-	else
-	{
-		if ( tTicks - m_tExecute < 200 ) return FALSE;
-		m_tExecute = tTicks;
-	}
+	// Throttle this individual search (so it doesn't take up too many resources)
+	DWORD nThrottle = max( Settings.Search.GeneralThrottle, (DWORD)200 );
+	if ( m_nPriority == spLowest ) nThrottle += 30000;
+	else if ( m_nPriority == spMedium ) nThrottle += 800;
+
+	if ( tTicks - m_tExecute < nThrottle ) return FALSE;
+	m_tExecute = tTicks;
 	
+	// Search local neighbours- hubs, servers and ultrapeers. (TCP) 
 	BOOL bSuccess = ExecuteNeighbours( tTicks, tSecs );
-	
+
+	// G2 global search. (UDP)
 	if ( Settings.Gnutella2.EnableToday && m_bAllowG2 )
 	{
-		bSuccess |= ExecuteG2Mesh( tTicks, tSecs );
+		if ( tTicks > m_tLastG2 && tTicks - m_tLastG2 >= Settings.Gnutella2.QueryGlobalThrottle )
+		{
+			bSuccess |= ExecuteG2Mesh( tTicks, tSecs );
+			m_tLastG2 = tTicks;
+		}
 	}
 	
+	// ED2K global search. (UDP)
 	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K && Network.IsListening() )
 	{
 		if ( ( m_pSearch->m_bED2K ) || ( IsLastED2KSearch() ) )

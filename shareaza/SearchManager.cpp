@@ -105,10 +105,12 @@ CManagedSearch* CSearchManager::Find(GGUID* pGUID)
 
 void CSearchManager::OnRun()
 {
+	// Don't run too often to avoid excess CPU use (and router flooding)
 	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastTick < max( Settings.Gnutella2.QueryGlobalThrottle, DWORD(125) ) ) return;
+	if ( ( tNow - m_tLastTick ) < 125 ) return;	
 	m_tLastTick = tNow;
 
+	// Don't run if we aren't connected
 	if ( ! Network.IsWellConnected() ) return;
 	
 	HostCache.Gnutella2.PruneByQueryAck();
