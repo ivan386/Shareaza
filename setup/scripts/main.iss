@@ -168,6 +168,10 @@ Name: "{ini:{param:Settings|}\settings.ini,Locations,CollectionPath|{reg:HKCU\So
 Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
 
+; Clean up old Shareaza icons
+Type: files; Name: "{userdesktop}\Start Shareaza.lnk"
+Type: filesandordirs; Name: "{userprograms}\Shareaza"
+
 ; Delete extra components so installer can "uninstall" them
 Type: filesandordirs; Name: "{app}\Skins"
 Type: filesandordirs; Name: "{app}\Plugins"
