@@ -318,7 +318,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 32 );
 	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 128 );
 	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 8 );
-	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 3 );
+	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 0 );
 	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 30 );
 	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
 	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 250 );

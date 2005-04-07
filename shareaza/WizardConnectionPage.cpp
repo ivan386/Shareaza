@@ -269,7 +269,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 128;
 		Settings.Downloads.MaxFileTransfers		= 16;
 		Settings.Downloads.MaxConnectingSources	= 32;
-		Settings.Downloads.MaxFileSearches		= 5;
+		Settings.Downloads.MaxFileSearches		= 3;
 		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
@@ -278,7 +278,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 96;
 		Settings.Downloads.MaxFileTransfers		= 10;
 		Settings.Downloads.MaxConnectingSources	= 28;
-		Settings.Downloads.MaxFileSearches		= 5;
+		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	else if ( nSpeed > 256 && theApp.m_bNT )
 	{	//Slower broadband
@@ -286,7 +286,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 64;
 		Settings.Downloads.MaxFileTransfers		= 8;
 		Settings.Downloads.MaxConnectingSources	= 24;
-		Settings.Downloads.MaxFileSearches		= 4;
+		Settings.Downloads.MaxFileSearches		= 1;
+		Settings.Search.GeneralThrottle			= 250;
 	}
 	else if ( nSpeed > 80 && theApp.m_bNT )
 	{	//IDSN, Dual modems, etc
@@ -294,7 +295,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 32;
 		Settings.Downloads.MaxFileTransfers		= 6;
 		Settings.Downloads.MaxConnectingSources	= 20;
-		Settings.Downloads.MaxFileSearches		= 2;
+		Settings.Downloads.MaxFileSearches		= 0;
+		Settings.Search.GeneralThrottle			= 250;
 	}
 	else
 	{	//Modem users / Win9x
@@ -302,8 +304,9 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxTransfers			= 24;
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
-		Settings.Downloads.MaxFileSearches		= 1;
+		Settings.Downloads.MaxFileSearches		= 0;
 		Settings.Downloads.SourcesWanted		= 200; //Don't bother requesting so many sources
+		Settings.Search.GeneralThrottle			= 300;
 	}
 	
 	UploadQueues.CreateDefault();
@@ -317,7 +320,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Gnutella2.NumHubs				= min( Settings.Gnutella2.NumHubs, 2 );
 		Settings.Gnutella1.EnableAlways			= FALSE;
 		Settings.Gnutella1.EnableToday			= FALSE;
-		Settings.Downloads.MaxFileSearches		= 2;
 		Settings.Downloads.MaxConnectingSources	= 8;
 		//Settings.Connection.TimeoutConnect	= 30000;
 		//Settings.Connection.TimeoutHandshake	= 60000;
