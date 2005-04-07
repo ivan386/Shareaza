@@ -174,8 +174,7 @@ BOOL CEDClient::Connect()
 		// If we're really overloaded, we may have to drop some queued downloads
 		if ( EDClients.IsOverloaded() ) 
 		{
-			Beep(800,400);
-			theApp.Message( MSG_ERROR, _T("*** ED2K Queued download was dropped due to connection overloading") );
+			theApp.Message( MSG_ERROR, _T("**** ED2K Queued download was dropped due to connection overloading") );
 			return FALSE;
 		}
 	}

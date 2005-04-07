@@ -244,8 +244,8 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 	// If there are more clients current connected than there should be, set the full timer
 	if ( nCount >= Settings.eDonkey.MaxLinks ) m_tLastMaxClients = tNow;
 
-	// If we have not been full in the past 5 seconds, then we're okay to start new connections
-	if ( ( tNow - m_tLastMaxClients ) > (5*1000) ) return FALSE;
+	// If we have not been full in the past 2 seconds, then we're okay to start new connections
+	if ( ( tNow - m_tLastMaxClients ) > ( 2*1000 ) ) return FALSE;
 
 	// If we're checking a client that's already connected, say we aren't full. (don't drop it)
 	if ( ( pCheckThis != NULL ) && ( pCheckThis->m_hSocket != INVALID_SOCKET ) ) return FALSE;
@@ -329,6 +329,24 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 	
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
+	if ( IsFull() )
+	{
+		// Even if we're full, we still need to accept connections from clients we have queued, etc
+		if ( ( GetByIP( &pConnection->m_pHost.sin_addr ) == NULL ) || ( IsOverloaded() ) )
+		{
+			//*********** Debig stuff- test this
+			theApp.Message( MSG_ERROR, _T("**** Rejecting ed2k connection from %s, max client connections reached."),
+				(LPCTSTR)pConnection->m_sAddress );
+			return FALSE;
+		}
+		else 
+		{
+			theApp.Message( MSG_ERROR, _T("**** Accepting ed2k connection from %s despite client connection limit."),
+				(LPCTSTR)pConnection->m_sAddress );
+
+		}
+	}
 	
 	CEDClient* pClient = new CEDClient();
 	pClient->AttachTo( pConnection );
