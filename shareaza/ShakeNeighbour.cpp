@@ -807,7 +807,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 BOOL CShakeNeighbour::OnHeadersCompleteG2()
 {
 	// Report that a set of Gnutella2 headers from a remote computer are complete
-	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G2 client") );
+	theApp.Message( MSG_DEBUG, _T("Headers Complete: G2 client") );
 
 	// The remote computer replied to our headers with something other than "200 OK"
 	if ( m_nState == nrsRejected )
@@ -1036,7 +1036,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 BOOL CShakeNeighbour::OnHeadersCompleteG1()
 {
 	// Report that a set of Gnutella headers from a remote computer are complete
-	theApp.Message( MSG_DEFAULT, _T("Headers Complete: G1 client") );
+	theApp.Message( MSG_DEBUG, _T("Headers Complete: G1 client") );
 
 	// Check if Gnutella1 is enabled before connecting to a gnutella client
 	if ( ! Settings.Gnutella1.EnableToday && m_nState < nrsRejected ) // And make sure the state is before getting rejected
