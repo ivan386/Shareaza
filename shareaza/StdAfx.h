@@ -228,3 +228,5 @@ public:
 private:
 	TCHAR CLowerCaseTable::cTable[ 65537 ];
 };
+
+const CLowerCaseTable ToLowerCase;

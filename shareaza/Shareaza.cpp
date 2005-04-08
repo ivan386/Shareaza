@@ -764,8 +764,6 @@ BOOL LoadSourcesString(CString& str, DWORD num)
 	}
 }
 
-const CLowerCaseTable ToLowerCase;
-
 void ToLower(CString& strSource)
 {
 	const int nLength = strSource.GetLength();
