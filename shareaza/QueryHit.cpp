@@ -624,7 +624,18 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 				}
 			}
 			
-			if ( ! bDiff && tolower( *pszBase ) != tolower( *pszTest ) ) bDiff = TRUE;
+			TCHAR cBaseChar = {0}; TCHAR cTestChar = {0};
+			if ( *pszBase == 0x3C2 )
+				cBaseChar = ToLowerCase[ *pszBase + 1 ]; // replace the last greek sigma with an ordinary
+			else
+				cBaseChar = ToLowerCase[ *pszBase ];
+
+			if ( *pszTest == 0x3C2 )
+				cTestChar = ToLowerCase[ *pszTest + 1 ];
+			else
+				cTestChar = ToLowerCase[ *pszTest ];
+
+			if ( ! bDiff && cBaseChar != cTestChar ) bDiff = TRUE;
 			
 			pszBase++;
 			pszTest++;
