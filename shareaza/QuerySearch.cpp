@@ -872,6 +872,8 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 		{
 			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
 			{
+				// maybe return always true when metadata matched?
+				// only return WordMatch when negative terms are used?
 				return WordMatch( pszFilename, m_sSearch );
 			}
 		}
