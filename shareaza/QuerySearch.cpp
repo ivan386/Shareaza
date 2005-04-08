@@ -872,9 +872,23 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 		{
 			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
 			{
-				// maybe return always true when metadata matched?
-				// only return WordMatch when negative terms are used?
-				return WordMatch( pszFilename, m_sSearch );
+				// only return WordMatch when negative terms are used
+				// otherwise, prefer metadata over file name.
+				int nMinusPos = -1;
+				BOOL bNegative = FALSE;
+				if ( m_sSearch.GetLength() > 1 )
+				{
+					while ( !bNegative )
+					{
+						nMinusPos = m_sSearch.Find( '-', nMinusPos + 1 );
+						if ( nMinusPos != -1 )
+							bNegative = ( _istalnum( m_sSearch.GetAt( nMinusPos + 1 ) ) != 0 );
+						else break;
+					}
+				}
+				if ( bNegative )
+					return WordMatch( pszFilename, m_sSearch );
+				else return TRUE;
 			}
 		}
 	}
