@@ -870,7 +870,10 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 		if ( bResult != TS_UNKNOWN ) return ( bResult == TS_TRUE );
 		if ( m_sSearch.GetLength() > 0 )
 		{
-			if ( MatchMetadataShallow( pszSchemaURI, pXML ) ) return TRUE;
+			if ( MatchMetadataShallow( pszSchemaURI, pXML ) )
+			{
+				return WordMatch( pszFilename, m_sSearch );
+			}
 		}
 	}
 	return m_sSearch.GetLength() && WordMatch( pszFilename, m_sSearch );
@@ -983,7 +986,7 @@ BOOL CQuerySearch::WordMatch(LPCTSTR pszString, LPCTSTR pszFind)
 				bQuote = ! bQuote;
 				bSpace = TRUE;
 			}
-			else if ( *pszPtr == '-' && bSpace && ! bQuote )
+			else if ( *pszPtr == '-' && pszPtr[1] != ' ' && bSpace && ! bQuote )
 			{
 				bNegate = TRUE;
 				bSpace = FALSE;
@@ -1187,7 +1190,7 @@ void CQuerySearch::AddStringToWordList(LPCTSTR pszString)
 				bQuote = ! bQuote;
 				bSpace = TRUE;
 			}
-			else if ( *pszPtr == '-' && bSpace && ! bQuote )
+			else if ( *pszPtr == '-' && pszPtr[1] != ' ' && bSpace && ! bQuote )
 			{
 				bNegate = TRUE;
 				bSpace = FALSE;
