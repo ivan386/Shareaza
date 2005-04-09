@@ -57,7 +57,6 @@ END_MESSAGE_MAP()
 CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPage::IDD)
 {
 	//{{AFX_DATA_INIT(CLibrarySettingsPage)
-	//m_bSourceMesh = FALSE;
 	m_bWatchFolders = FALSE;
 	m_nRecentDays = 0;
 	m_nRecentTotal = 0;

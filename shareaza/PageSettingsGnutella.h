@@ -49,6 +49,7 @@ public:
 	BOOL	m_bG2Today;
 	BOOL	m_bG1Today;
 	BOOL	m_bG1Always;
+	CButton	m_wndG2Always;
 	CComboBox m_wndG1ClientMode;
 	int		m_nG1Hubs;
 	int		m_nG1Leafs;
@@ -79,9 +80,10 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnG2Today();
 	afx_msg void OnG1Today();
+	afx_msg void OnG2Always();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
+	
 };
 
 //{{AFX_INSERT_LOCATION}}

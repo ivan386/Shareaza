@@ -59,7 +59,6 @@ CUploadsSettingsPage::CUploadsSettingsPage() : CSettingsPage( CUploadsSettingsPa
 	m_nMaxPerHost = 0;
 	m_bHubUnshare = FALSE;
 	m_bSharePreviews = FALSE;
-	m_bVirtualFiles = FALSE;
 	m_bThrottleMode = FALSE;
 }
 
@@ -81,7 +80,6 @@ void CUploadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_MAX_HOST, m_nMaxPerHost);
 	DDX_Check(pDX, IDC_HUB_UNSHARE, m_bHubUnshare);
 	DDX_Check(pDX, IDC_SHARE_PREVIEW, m_bSharePreviews);
-	DDX_Check(pDX, IDC_VIRTUAL_FILES, m_bVirtualFiles);
 	DDX_Text(pDX, IDC_BANDWIDTH, m_sBandwidth);
 	DDX_CBIndex(pDX, IDC_THROTTLE_MODE, m_bThrottleMode);
 }
@@ -120,7 +118,6 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_bSharePreviews	= Settings.Uploads.SharePreviews;
 	m_bHubUnshare		= Settings.Uploads.HubUnshare;
 	m_bThrottleMode		= Settings.Uploads.ThrottleMode;
-	m_bVirtualFiles		= Settings.Library.VirtualFiles;
 	
 	for ( CString strList = Settings.Uploads.BlockAgents + '|' ; strList.GetLength() ; )
 	{
@@ -353,7 +350,6 @@ void CUploadsSettingsPage::OnOK()
 	Settings.Uploads.HubUnshare			= m_bHubUnshare;
 	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidth, TRUE ) / 8;
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
-	Settings.Library.VirtualFiles		= m_bVirtualFiles;
 	
 	Settings.Uploads.BlockAgents.Empty();
 	

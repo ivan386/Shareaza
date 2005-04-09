@@ -304,15 +304,15 @@ void CTextCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 
 BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	short nRows = (zDelta / WHEEL_DELTA);
+	short nRows = ( zDelta / WHEEL_DELTA );
 
-	if ( WHEEL_PAGESCROLL==m_nScrollWheelLines )
+	if ( WHEEL_PAGESCROLL == m_nScrollWheelLines )
 	{
 		// scroll by page is activated
 		SCROLLINFO si;
 
-		ZeroMemory( &si, sizeof(si) );
-		si.cbSize	= sizeof(si);
+		ZeroMemory( &si, sizeof( si ) );
+		si.cbSize	= sizeof( si );
 		si.fMask	= SIF_ALL;
 
 		GetScrollInfo( SB_VERT, &si );

@@ -25,6 +25,7 @@
 #include "WndSettingsSheet.h"
 #include "PageSettingsNetworks.h"
 #include "PageSettingsGnutella.h"
+#include ".\pagesettingsgnutella.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,6 +39,7 @@ BEGIN_MESSAGE_MAP(CGnutellaSettingsPage, CSettingsPage)
 	//{{AFX_MSG_MAP(CGnutellaSettingsPage)
 	ON_BN_CLICKED(IDC_G2_TODAY, OnG2Today)
 	ON_BN_CLICKED(IDC_G1_TODAY, OnG1Today)
+	ON_BN_CLICKED(IDC_G2_ALWAYS, OnG2Always)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -78,6 +80,7 @@ void CGnutellaSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_G1_LEAFS_SPIN, m_wndG1Leafs);
 	DDX_Control(pDX, IDC_G1_HUBS_SPIN, m_wndG1Hubs);
 	DDX_Check(pDX, IDC_G2_TODAY, m_bG2Today);
+	DDX_Control(pDX, IDC_G2_ALWAYS, m_wndG2Always);
 	DDX_Check(pDX, IDC_G1_TODAY, m_bG1Today);
 	DDX_Check(pDX, IDC_G1_ALWAYS, m_bG1Always);
 	DDX_Text(pDX, IDC_G1_HUBS, m_nG1Hubs);
@@ -145,6 +148,8 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 		m_wndG2ClientMode.EnableWindow( FALSE ); 
 	}
 	m_wndG2ClientMode.SetCurSel( Settings.Gnutella2.ClientMode );
+
+	m_wndG2Always.SetCheck( BST_INDETERMINATE );
 	
 	UpdateData( FALSE );
 	
@@ -259,4 +264,9 @@ void CGnutellaSettingsPage::OnOK()
 	}
 
 	CSettingsPage::OnOK();
+}
+
+void CGnutellaSettingsPage::OnG2Always()
+{
+	m_wndG2Always.SetCheck( BST_INDETERMINATE );
 }

@@ -57,7 +57,6 @@ public:
 	CComboBox	m_wndCloseMode;
 	CComboBox	m_wndTrayMinimise;
 	DWORD	m_nTipDelay;
-	BOOL	m_bHighlightNew;
 	//}}AFX_DATA
 
 protected:

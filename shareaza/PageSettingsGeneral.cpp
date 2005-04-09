@@ -61,7 +61,6 @@ CGeneralSettingsPage::CGeneralSettingsPage() : CSettingsPage(CGeneralSettingsPag
 	m_bHideSearch = FALSE;
 	m_bAdultFilter = FALSE;
 	m_nTipDelay = 0;
-	m_bHighlightNew = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -88,7 +87,6 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TIP_DISPLAY, m_wndTips);
 	DDX_Control(pDX, IDC_TIP_ALPHA, m_wndTipAlpha);
 	DDX_Text(pDX, IDC_TIP_DELAY, m_nTipDelay);
-	DDX_Check(pDX, IDC_HIGHLIGHT_NEW, m_bHighlightNew);
 	DDX_Control(pDX, IDC_CLOSE_MODE, m_wndCloseMode);
 	DDX_Control(pDX, IDC_TRAY_MINIMISE, m_wndTrayMinimise);
 	//}}AFX_DATA_MAP
@@ -105,7 +103,6 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_bAutoConnect			= Settings.Connection.AutoConnect;
 	m_nCloseMode			= Settings.General.CloseMode;
 	m_bTrayMinimise			= Settings.General.TrayMinimise;
-	m_bHighlightNew			= Settings.Search.HighlightNew;
 	m_bExpandMatches		= Settings.Search.ExpandMatches;
 	m_bSwitchToTransfers	= Settings.Search.SwitchToTransfers;
 	m_bExpandDownloads		= Settings.Downloads.AutoExpand;
@@ -182,7 +179,6 @@ void CGeneralSettingsPage::OnOK()
 	Settings.Connection.AutoConnect		= m_bAutoConnect;
 	Settings.General.CloseMode			= m_nCloseMode;
 	Settings.General.TrayMinimise		= m_bTrayMinimise;
-	Settings.Search.HighlightNew		= m_bHighlightNew;
 	Settings.Search.ExpandMatches		= m_bExpandMatches;
 	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers;
 	Settings.Downloads.AutoExpand		= m_bExpandDownloads;

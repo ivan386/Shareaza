@@ -665,6 +665,7 @@
 #define IDC_SCHEDULER_LIMITED_NETWORKS  1403
 #define IDC_SCHEDULER_ALLOWHUB          1404
 #define IDC_SCHEDULER_DISPLAY           1405
+#define IDC_G2_ALWAYS                   1409
 #define IDC_FILTERS                     1500
 #define IDC_SAVE_FILTER                 1501
 #define IDC_SET_DEFAULT_FILTER          1502
@@ -1636,9 +1637,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        268
+#define _APS_NEXT_RESOURCE_VALUE        270
 #define _APS_NEXT_COMMAND_VALUE         33121
-#define _APS_NEXT_CONTROL_VALUE         1406
+#define _APS_NEXT_CONTROL_VALUE         1410
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

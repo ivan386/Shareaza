@@ -48,7 +48,6 @@ public:
 	DWORD	m_nMaxPerHost;
 	BOOL	m_bHubUnshare;
 	BOOL	m_bSharePreviews;
-	BOOL	m_bVirtualFiles;
 	CString	m_sBandwidth;
 	int m_bThrottleMode;
 	BOOL	m_bQueuesChanged;				//Have the queues been changed? (Rebuild hash table)

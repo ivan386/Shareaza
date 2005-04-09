@@ -1159,7 +1159,8 @@ CAPTION "Gnutella"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Gnutella2 Network:",IDC_STATIC,8,13,130,60,WS_GROUP
-    LTEXT           "(G2 recommended)",IDC_STATIC,25,25,103,8
+    CONTROL         "Always connect to Gnutella2",IDC_G2_ALWAYS,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,25,125,8
     CONTROL         "Connect to Gnutella2 today",IDC_G2_TODAY,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,11,38,125,8
     LTEXT           "Mode: ",IDC_STATIC,16,56,55,8,0,WS_EX_RIGHT
@@ -1292,28 +1293,32 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&User Interface:",IDC_STATIC,5,5,160,208,WS_GROUP
+    GROUPBOX        "&General:",IDC_STATIC,7,5,160,85,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
                     140,10
     CONTROL         "Start Shareaza at Windows startup",IDC_AUTO_START,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,35,
                     140,10
-    CONTROL         "Highlight new search results in bold",IDC_HIGHLIGHT_NEW,
+    CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,50,140,10
+    LTEXT           "Show rates in:",IDC_STATIC,15,70,50,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,55,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,32
+    CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,108,140,10
+    GROUPBOX        "&Search:",IDC_STATIC,7,130,160,83
     CONTROL         "Expand multi-source files by default",
                     IDC_EXPAND_MATCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    15,65,140,10
+                    16,145,140,10
     CONTROL         "Switch to Transfers view on download",
                     IDC_SWITCH_TO_TRANSFERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,80,140,10
-    CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,95,140,10
-    CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,110,140,10
-    LTEXT           "Show rates in:",IDC_STATIC,15,186,50,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,70,186,80,55,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+                    WS_TABSTOP,15,160,140,10
+    CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,175,140,10
+    CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,190,140,10
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
@@ -1326,7 +1331,7 @@ BEGIN
     LTEXT           "Opacity:",IDC_STATIC,180,105,30,12,SS_CENTERIMAGE
     CONTROL         "Slider1",IDC_TIP_ALPHA,"msctls_trackbar32",TBS_TOP | 
                     TBS_NOTICKS | WS_TABSTOP,210,105,60,15
-    GROUPBOX        "&Tray:",IDC_STATIC,170,130,105,85,WS_GROUP
+    GROUPBOX        "&Tray:",IDC_STATIC,170,130,105,83,WS_GROUP
     LTEXT           "When I click close:",IDC_STATIC,180,145,85,10,
                     SS_CENTERIMAGE
     COMBOBOX        IDC_CLOSE_MODE,180,160,85,55,CBS_DROPDOWNLIST | 
@@ -1335,10 +1340,6 @@ BEGIN
                     SS_CENTERIMAGE
     COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,140,10
-    CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,140,140,10
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 292, 148
@@ -2072,28 +2073,28 @@ FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,135,85,WS_GROUP
     CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,17,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,115,12
     CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,31,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,115,12
     CONTROL         "Quick hashing (Uses more CPU)",IDC_HIGH_HASH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,59,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,115,12
     CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,115,12
     GROUPBOX        "&Recent Files:",IDC_STATIC,5,92,135,84,WS_GROUP
-    LTEXT           "Remember:",IDC_STATIC,15,115,40,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_RECENT_TOTAL,65,115,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Remember:",IDC_STATIC,15,112,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_RECENT_TOTAL,65,112,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_TOTAL_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,115,8,12
-    LTEXT           "files",IDC_STATIC,105,115,25,12,SS_CENTERIMAGE
-    LTEXT           "For up to:",IDC_STATIC,15,135,40,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_RECENT_DAYS,65,135,35,12,ES_AUTOHSCROLL | ES_NUMBER
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,112,8,12
+    LTEXT           "files",IDC_STATIC,105,112,25,12,SS_CENTERIMAGE
+    LTEXT           "For up to:",IDC_STATIC,15,132,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_RECENT_DAYS,65,132,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_DAYS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,135,8,12
-    LTEXT           "days",IDC_STATIC,105,135,25,12,SS_CENTERIMAGE
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,132,8,12
+    LTEXT           "days",IDC_STATIC,105,132,25,12,SS_CENTERIMAGE
     PUSHBUTTON      "Clear History Now",IDC_RECENT_CLEAR,34,153,75,15
-    GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,84,WS_GROUP
+    GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,85,WS_GROUP
     COMBOBOX        IDC_SAFE_TYPES,160,18,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | 
                     CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
                     WS_TABSTOP
@@ -2420,15 +2421,13 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Uploads"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,5,5,135,95,WS_GROUP
+    GROUPBOX        "&Options:",IDC_STATIC,5,5,135,96,WS_GROUP
     CONTROL         "Share NEW partial downloads",IDC_SHARE_PARTIALS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
     CONTROL         "Limit sharing in hub mode",IDC_HUB_UNSHARE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,120,13
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,38,120,13
     CONTROL         "Share preview files",IDC_SHARE_PREVIEW,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,120,13
-    CONTROL         "Strip tag metadata",IDC_VIRTUAL_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,120,13
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,56,120,13
     LTEXT           "Limit per unique host:",IDC_STATIC,15,80,80,12,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_MAX_HOST,100,80,30,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -2441,7 +2440,7 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "+",IDC_AGENT_ADD,230,19,16,16
     PUSHBUTTON      "-",IDC_AGENT_REMOVE,250,19,16,16
-    GROUPBOX        "&Bandwidth:",IDC_STATIC,150,48,125,52,WS_GROUP
+    GROUPBOX        "&Bandwidth:",IDC_STATIC,150,48,125,53,WS_GROUP
     LTEXT           "Limit:",IDC_STATIC,162,63,40,12,SS_CENTERIMAGE
     EDITTEXT        IDC_BANDWIDTH,205,63,60,12,ES_AUTOHSCROLL
     LTEXT           "Mode:",IDC_STATIC,162,80,40,12,SS_CENTERIMAGE

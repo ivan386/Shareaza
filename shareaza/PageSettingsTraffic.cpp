@@ -199,6 +199,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Search.MaxPreviewLength, 1024, 1, 4096, _T(" KB") );
 	AddSetting( &Settings.Search.AdvancedPanel, 1, 0, 1 );
 	AddSetting( &Settings.Search.GeneralThrottle, 1, 200, 1000 );
+	AddSetting( &Settings.Search.SchemaTypes, 1, 0, 1);
+	AddSetting( &Settings.Search.HighlightNew, 1, 0, 1);
 	
 	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
 	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
@@ -253,6 +255,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );
 	AddSetting( &Settings.Library.QueryRouteSize, 1, 8, 24 );
 	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
+	AddSetting( &Settings.Library.VirtualFiles, 1, 0, 1);
 	
 	AddSetting( &Settings.Bandwidth.Request, 128, 0, 8192, _T(" Kb/s") );
 	AddSetting( &Settings.Bandwidth.HubIn, 128, 0, 8192, _T(" Kb/s") );
