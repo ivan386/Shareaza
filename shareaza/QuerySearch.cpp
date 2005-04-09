@@ -460,7 +460,7 @@ theApp.Message( MSG_ERROR, _T("Adding additional hashes to GetSources2 packet") 
 
 					if ( ( bFewSources ) || ( bDataStarve ) || ( nFiles < 10 ) )
 					{
-theApp.Message( MSG_ERROR, ( CED2K::HashToString( &pDownload->m_pED2K ) + _T(" - ") + pDownload->m_sLocalName ) );
+theApp.Message( MSG_ERROR, ( CED2K::HashToString( &pDownload->m_pED2K ) + _T(" - ") + pDownload->m_sLocalName ) );//****debug
 						// Add the hash/size for this download
 						pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 						pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );

@@ -51,8 +51,6 @@ public:
 	BOOL	m_bPromptURLs;
 	BOOL	m_bHideSearch;
 	BOOL	m_bAdultFilter;
-	BOOL	m_bClearDownloads;
-	BOOL	m_bClearUploads;
 	CSpinButtonCtrl	m_wndTipSpin;
 	CListCtrl	m_wndTips;
 	CSliderCtrl	m_wndTipAlpha;

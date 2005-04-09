@@ -1,7 +1,7 @@
 //
 // PageSettingsProtocols.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hED, _T("PrimaryURN"), _T("ed2k (compound md4)") );
 	AddItem( hED, _T("NodeClass"), _T("Client") );
 	AddItem( hED, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hED, _T("ComponentVersion"), _T("2.0.0.0") );
+	AddItem( hED, _T("ComponentVersion"), _T("2.2.0.0") );
 	
 	HTREEITEM hTransfers = AddItem( NULL, _T("File Transfer Protocols") );
 	
@@ -110,7 +110,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hFTP, _T("Directions"), _T("Download") );
 	AddItem( hFTP, _T("Capabilities"), _T("Passive") );
 	AddItem( hFTP, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hFTP, _T("ComponentVersion"), _T("1.0.0.0") );
+	AddItem( hFTP, _T("ComponentVersion"), _T("2.2.0.0") );
 	
 	HTREEITEM hEFTP = AddItem( hTransfers, _T("eDonkey2000 Client Link (EFTP)") );
 	AddItem( hEFTP, _T("Name"), _T("eDonkey2000 Client Link FTP (EFTP)") );
@@ -119,7 +119,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hEFTP, _T("Directions"), _T("Download, Upload") );
 	AddItem( hEFTP, _T("Capabilities"), _T("Hashset, SourceExchange, Deflate") );
 	AddItem( hEFTP, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hEFTP, _T("ComponentVersion"), _T("2.0.0.0") );
+	AddItem( hEFTP, _T("ComponentVersion"), _T("2.2.0.0") );
 	
 	HTREEITEM hBT = AddItem( hTransfers, _T("BitTorrent Coupling (BT)") );
 	AddItem( hBT, _T("Name"), _T("BitTorrent Coupling (BT)") );
@@ -128,7 +128,7 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 	AddItem( hBT, _T("Directions"), _T("Download, Upload") );
 	// AddItem( hBT, _T("Capabilities"), _T("Hashset, SourceExchange, Deflate") );
 	AddItem( hBT, _T("ProtocolVersion"), _T("1.0") );
-	AddItem( hBT, _T("ComponentVersion"), _T("2.0.0.0") );
+	AddItem( hBT, _T("ComponentVersion"), _T("2.2.0.0") );
 	
 	return TRUE;
 }

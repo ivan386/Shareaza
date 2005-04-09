@@ -193,6 +193,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Discovery.BootstrapCount, 1, 0, 20 );
 	AddSetting( &Settings.Discovery.CacheCount, 1, 1, 256 );
 	
+	AddSetting( &Settings.Search.SchemaTypes, 1, 0, 1 );
 	AddSetting( &Settings.Search.ShowNames, 1, 0, 1 );
 	AddSetting( &Settings.Search.MonitorQueue, 1, 1, 4096 );
 	AddSetting( &Settings.Search.MaxPreviewLength, 1024, 1, 4096, _T(" KB") );
@@ -218,6 +219,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.SaveInterval, 1000, 1, 120, _T(" s") );
 	AddSetting( &Settings.Downloads.FlushSD, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.ShowPercent, 1, 0, 1 );
+	AddSetting( &Settings.Downloads.AutoClear, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.ClearDelay, 1000, 1, 1800, _T(" s") );
 	AddSetting( &Settings.Downloads.RetryDelay, 1000, 120, 60*60, _T(" s") );
 	AddSetting( &Settings.Downloads.SearchPeriod, 1000, 10, 4*60 );
@@ -236,6 +238,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Uploads.QueuePollMin, 1000, 0, 60, _T(" s") );
 	AddSetting( &Settings.Uploads.QueuePollMax, 1000, 30, 180, _T(" s") );
 	AddSetting( &Settings.Uploads.RotateChunkLimit, 1024, 0, 10240, _T(" KB") );
+	AddSetting( &Settings.Uploads.AutoClear, 1, 0, 1 );
 	AddSetting( &Settings.Uploads.ClearDelay, 1000, 1, 1800, _T(" s") );
 	AddSetting( &Settings.Uploads.AllowBackwards, 1, 0, 1 );
 	AddSetting( &Settings.Uploads.DynamicPreviews, 1, 0, 1 );
