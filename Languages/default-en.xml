@@ -3106,18 +3106,21 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="General">
-		<control caption="_User Interface:"/>
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
+		<control caption="_General:"/>
 		<control caption="Auto-connect on Shareaza startup"/>
 		<control caption="Start Shareaza at Windows startup"/>
-		<control caption="Highlight new search results in bold"/>
-		<control caption="Expand multi-source files by default"/>
-		<control caption="Switch to Transfers view on download"/>
-		<control caption="Expand new downloads by default"/>
 		<control caption="Show a prompt before opening URLs"/>
 		<control caption="Show rates in:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
-		<control caption="_Tooltips:"/>
+		<control caption="_Downloads:"/>
+		<control caption="Expand new downloads by default"/>
+		<control caption="_Search:"/>
+		<control caption="Expand multi-source files by default"/>
+		<control caption="Switch to Transfers view on download"/>
+		<control caption="Hide side bar when starting search"/>
+		<control caption="Filter adult content from searches"/>
+		<control caption="T_ooltips:"/>
 		<control/>
 		<control caption="Delay (ms):"/>
 		<control/><control/>
@@ -3128,10 +3131,6 @@
 		<control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers"/>
 		<control caption="When I click minimise:"/>
 		<control caption="Normal|Minimise to Tray"/>
-		<control caption="Hide side bar when starting search"/>
-		<control caption="Filter adult content from searches"/>
-		<control caption="Auto-clean downloads window"/>
-		<control caption="Auto-clean uploads window"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
@@ -3251,12 +3250,11 @@
 		<control caption="Only download and upload to networks which are connected."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Uploads">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Options:"/>
 		<control caption="Share NEW partial downloads"/>
 		<control caption="Limit sharing in hub mode"/>
 		<control caption="Share preview files"/>
-		<control caption="Strip tag metadata"/>
 		<control caption="Limit per unique host:"/>
 		<control/><control/>
 		<control caption="_User-Agent Filter:"/>
@@ -3327,9 +3325,9 @@
 		<control caption="Configure Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 Network:"/>
-		<control caption="(G2 recommended)"/>
+		<control caption="Always connect to Gnutella2"/>
 		<control caption="Connect to Gnutella2 today"/>
 		<control caption="Mode:"/>
 		<control caption="Optimal|Leaf|Hub"/>

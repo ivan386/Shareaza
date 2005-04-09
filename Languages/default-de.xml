@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Shareaza German Skin File -->
 <!-- Special characters used in German:
 
@@ -2462,18 +2462,21 @@ Other:
 		</dialog>
 		<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein" />
 
-		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Allgemein">
-			<control caption="_Benutzeroberfläche:" />
+		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
+			<control caption="_Allgemein:" />
 			<control caption="Bei Programmstart verbinden" />
 			<control caption="Shareaza mit Windows starten" />
-			<control caption="Neue Suchergebnisse in fett anzeigen" />
-			<control caption="Multi-source Downloads erweitern" />
-			<control caption="Bei D/L zur Transfer Ansicht wechseln" />
-			<control caption="Neue Downloads erweitern" />
 			<control caption="Dialog vor dem Öffnen von URLs" />
 			<control caption="Datenraten in:" />
 			<control caption="bits/Sekunde|bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
-			<control caption="_Tooltips:" />
+			<control caption="_Downloads" />
+			<control caption="Neue Downloads automatisch erweitern" />
+			<control caption="_Suche" />
+			<control caption="Multi-Source Dateien erweitern" />
+			<control caption="Bei D/L zur Transfer Ansicht wechseln"/>
+			<control caption="Suchleiste automatisch ausblenden" />
+			<control caption="Erotikfilter aktivieren"/>
+			<control caption="T_ooltips:" />
 			<control />
 			<control caption="Verzögerung:" />
 			<control />
@@ -2485,10 +2488,6 @@ Other:
 			<control caption="Fragen|Sofort beenden|In den Tray minimieren|Nach Transfer beenden"/>
 			<control caption="Bei Klick auf [-]:" />
 			<control caption="Normal|In den Tray minimieren"/>
-			<control caption="Suchleiste automatisch ausblenden" />
-			<control caption="Erotikfilter aktivieren"/>
-			<control caption="Downloads automatisch entfernen"/>
-			<control caption="Uploads automatisch entfernen"/>
 		</dialog>
 		<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothek">
 			<control caption="_Optionen:" />
@@ -2613,13 +2612,12 @@ Other:
 			<control caption="_Optionen:" />
 			<control caption="Nur von verbundenen Netzwerken hoch- und herunterladen." />
 		</dialog>
-		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt"
+		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt"
 			caption="Uploads">
 			<control caption="_Optionen:" />
 			<control caption="Unvollst. Dateien freigeben" />
 			<control caption="Freig. im HUB-Modus einschr." />
 			<control caption="Vorschau-Dateien freigeben" />
-			<control caption="ID3 Tags entfernen" />
 			<control caption="Uploads pro Host:" />
 			<control />
 			<control />
@@ -2654,7 +2652,7 @@ Other:
 			<control caption="Original Gnutella verwenden" />
 			<control caption="Gnutella1 konfigurieren" />
 		</dialog>
-		<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+		<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 			<control caption="Gnutella2 Netzwerk:" />
 			<control caption="Immer zu Gnutella2 verbinden" />
 			<control caption="Heute zu Gnutella2 verbinden" />
