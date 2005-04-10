@@ -327,7 +327,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		return TRUE;
 	}
-	else if ( StartsWith( m_sRequest, _T("/remote") ) )
+	else if ( StartsWith( m_sRequest, _T("/remote") ) || StartsWith( m_sRequest, _T("/favicon.ico") ) )
 	{
 		// A web client can start requesting remote pages on the same keep-alive
 		// connection after previously requesting other system objects
