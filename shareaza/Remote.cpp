@@ -86,7 +86,7 @@ BOOL CRemote::OnRun()
 {
 	DWORD tNow = GetTickCount();
 	
-	if ( tNow - m_mOutput.tLast > 180000 )
+	if ( ( tNow - m_mOutput.tLast > 180000 ) || ( ! Network.IsConnected() ) )
 	{
 		Close();
 		delete this;
