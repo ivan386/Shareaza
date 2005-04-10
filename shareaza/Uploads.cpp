@@ -331,9 +331,14 @@ BOOL CUploads::OnAccept(CConnection* pConnection, LPCTSTR pszHandshake)
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 	
-	if ( Settings.Remote.Enable &&
-		 _tcsncmp( pszHandshake, _T("GET /remote/"), 12 ) == 0 )
+	if ( Settings.Remote.Enable && ( _tcsncmp( pszHandshake, _T("GET /remote/"), 12 ) == 0 ) )
 	{
+		new CRemote( pConnection );
+		return TRUE;
+	}
+	else if ( Settings.Remote.Enable && ( _tcsncmp( pszHandshake, _T("GET /remote HTTP"), 16 ) == 0 ) )
+	{
+		// The user entered the remote page into a browser, but forgot the trailing '/'
 		new CRemote( pConnection );
 		return TRUE;
 	}
