@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.102"
+		version="2.1.0.121"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -447,7 +447,7 @@ Other:
 			    <separator/>				
 			    <item id="ID_VIEW_SECURITY" text="Sé_curité"/>
 			    <item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
-                <item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+                <item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Mode _normal"/>
@@ -520,7 +520,7 @@ Other:
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Sé_curité" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Hôtes en cache" shortcut="F8"/>
-				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
+				<item id="ID_VIEW_DISCOVERY" text="Décou_verte" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Graphique" shortcut="F10"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Packet dump" shortcut="Ctrl+F1"/>
@@ -597,7 +597,7 @@ Other:
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Sé_curité" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="_Hôtes en cache" shortcut="F8"/>
-			<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
+			<item id="ID_VIEW_DISCOVERY" text="Décou_verte" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graphique" shortcut="F10"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Packet dump" shortcut="Ctrl+F1"/>
@@ -673,7 +673,7 @@ Other:
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Sé_curité"/>
 		<item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet dump"/>
@@ -692,7 +692,7 @@ Other:
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Sé_curité"/>
 		<item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet dump"/>
@@ -758,7 +758,7 @@ Other:
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Sé_curité"/>
 		<item id="ID_VIEW_HOSTS" text="_Hôtes en cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet dump"/>
@@ -832,6 +832,7 @@ Other:
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Télécharger"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Télécharger Mai_ntenant"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Discuter avec l'utilisateur"/>
 		<separator/>
@@ -849,6 +850,7 @@ Other:
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Télécharger"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Télécharger Mai_ntenant"/>
 		<item id="ID_SEARCH_COPY" text="_Copier l'URI"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Discuter avec l'utilisateur"/>
@@ -901,6 +903,7 @@ Other:
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévisualiser"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Voir les revues"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reprendre le téléchargement"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Mettre en _pause"/>
@@ -917,6 +920,7 @@ Other:
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévisualiser"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pré_visualiser la copie"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Ajouter à la liste de _lecture"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Voir les Re_vues"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reprendre le téléchargement"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Mettre en _pause"/>
@@ -1103,6 +1107,7 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localiser les Métadonnées"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propriétés"/>
 	</menu>
@@ -1134,8 +1139,7 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-  	    <item id="ID_LIBRARY_REBUILD_ANSI" text="Reconstruire les métadonnées"/>
+  	    <item id="ID_LIBRARY_REBUILD_ANSI" text="_Localiser les Métadonnées"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choisir les _colonnes..."/>
 		<separator/>
@@ -1171,6 +1175,7 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localiser les Métadonnées"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propriétés"/>
 	</menu>
@@ -1204,8 +1209,7 @@ Other:
 			<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 			<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 		</menu>
-		<!-- Add the following entry if you need metadata conversion from ANSI -->
-  	    <item id="ID_LIBRARY_REBUILD_ANSI" text="Reconstruire les métadonnées"/>		
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_localiser les métadonnées"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choisir les _colonnes..."/>
 		<separator/>
@@ -1987,13 +1991,31 @@ Other:
 		<text>Vous devriez essayer de garder une quantité raisonnable d'espace disque libre.
 		Les programmes peuvent devenir instables si les disques deviennent pleins, et les fichiers temporaires peuvent ête perdus. Vous devriez éxecuter un nettoyage du disque-dur, effacer des fichiers inutiles, ou désinstaller des programmes dont vous n'avez plus l'utilité.</text>
 	</document>
+	
+	<document name="GeneralHelp.DiskWriteFail">
+  	    <text format="b">Un dossier requis est non-inscriptible</text>
+  	    <newline gap="8"/>
+  	    <text>Un disque ou un dossier requis par Shareaza ne peut pas être écrit.</text>
+  	    <newline gap="8"/>
+  	    <text>Un disque réseau est peut-être déconnecté, ou vous n'avez peut-être pas la permission d'écrire dans le dossier sélectionné. Merci de vérifier les dossiers et permissions, ou de changer l'emplacement des fichiers temporaires.</text>
+  	</document>
+  	 
+  	<document name="GeneralHelp.ConnectionFail">
+  	    <text format="b">La Connexion Internet à été perdue</text>
+  	    <newline gap="8"/>
+  	    <text>Windows rapporte qu'il n'y a pas de connexon internet disponible.</text>
+  	    <newline gap="8"/>
+  	    <text>Il est possible qu'un modem ou routeur pose problème, ce qui signifie que l'Internet ne peut pas être consulté. Vous aurez peut-être besoin de re-connecter ou de réinitialiser manuellement votre connexion.</text>
+  	    <newline gap="8"/>
+  	    <text>Shareaza a cessé ses tentatives de connexion afin d'éviter de perdre tous les hôtes de votre cache.</text>
+  	</document>
 
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 détecté</text>
 		<newline gap="8"/>
 		<text>Shareaza a détecté Windows XP service pack 2. Ceci restreint le nombre de connexions que les applications peuvent tenter en même temps.</text>
 		<newline gap="8"/>
-		<text>Shareaza a limité les connexions réseau et a mis en place les valeurs par défaut appropriées pour s'assurer une bonne opération, cependant les performances peuvent en être réduites. Merci de visiter les forums Shareaza pour plus d'information, et les nouvelles mise à jour.</text>
+		<text>Shareaza a limité les connexions réseau et a mis en place les valeurs appropriées par défaut pour assurer une bonne opérabilité, cependant les performances peuvent en être réduites. Merci de visiter les forums Shareaza pour plus d'information, et les nouvelles mise à jour.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
@@ -2001,18 +2023,46 @@ Other:
 		<newline gap="8"/>
 		<text>Merci de noter que, comme tout filtre automatique, il peut ne pas être efficace à 100% dans le ciblage du contenu. Il est simplement conçu pour filtrer des résultats non désirés excessifs, plutôt que d'être un blocage sûr à 100%.</text>
 		<newline gap="8"/>
-		<text>L'utilisation d'Internet par des enfants (le partage de fichiers via le P2P inclus) devrait toujours être sous la surveillance parentale.</text>
+		<text>L'utilisation d'Internet par des enfants (le partage de fichiers via le P2P inclus) devrait toujours se faire sous la surveillance parentale.</text>
 	</document>
+	
+	<document name="GeneralHelp.BadTorrentEncoding">
+  	    <text format="b">Ce torrent semble avoir une erreur de codage</text>
+  	    <newline gap="8"/>
+  	    <text>Windows a rapporté un défaut de traduction en décodant le texte dans ce torrent. Il est possible que le torrent soit corrompu, ou juste incorrectement codé. Le torrent peut peut-être télécharger correctement, bien que quelques noms de fichiers pourraient être incorrects.</text>
+  	    <newline gap="8"/>
+  	    <text>La plupart des programmes de création de torrent devraient vous permettre de réparer ce torrent, ce qui lui permettra de fonctionner correctement dans toutes les applications BitTorrent. Se rapporter aux forums de Shareaza si vous avez besoin d'une aide additionnelle.</text>
+  	    </document>
 
 	<!-- Search help documents -->
 
-	<document name="SearchHelp.BadSearch">
+	<document name="SearchHelp.BadSearch1">
 		<text format="b">Merci de reformuler votre recherche</text>
 		<newline gap="8"/>
 		<text>Cette recherche est pauvrement formatée, et peut ne pas fonctionner correctement.
 		Les recherches doivent si possible inclure plusieurs termes, spécifier un schéma (type de fichier). En outre, il est préférable de ne pas se limiter à des nombres ou à des seuls termes négatifs, et d'éviter les requêtes excessivements générales.</text>
 		<newline gap="8"/>
-		<text> La plupart des clients sur le réseau ignoreront une recherche avec un seul terme, &quot;MP3&quot; par exemple, peut précise elle génèrerait beaucoup trop de résultats.</text>
+		<text>La plupart des clients sur le réseau ignoreront une recherche avec un seul terme, &quot;MP3&quot; par exemple, peut précise, elle génèrerait beaucoup trop de résultats.</text>
+	</document>
+  	 
+  	<document name="SearchHelp.BadSearch2">
+  	    <text format="b">Merci de reformuler votre recherche</text>
+  	    <newline gap="8"/>
+  	    <text>Cette recherche ne contient pas assez de termes pour fonctionner correctement. Toutes les recherches ont besoin d'un nombre minimum de lettres valides pour pouvoir commencer.</text>
+  	    <newline gap="8"/>
+  	    <text>Bien que les extensions de fichier communes (et les nombres) peuvent être recherchés, vous devez aussi y ajouter d'autres termes en formulant la recherche. La ponctuation et les wildcards ne sont pas employés dans les recherches, juste le texte que vous écrivez.</text>
+  	</document>
+  	 
+  	<document name="SearchHelp.BadSearch3">
+  	    <text format="b">Merci de reformuler votre recherche</text>
+  	    <newline gap="8"/>
+  	    <text>Cette recherche semble ne contenir que des extensions de fichier communes, ou aucun mot rechercheable.</text>
+  	    <newline gap="8"/>
+  	    <text>Si vous avez des problèmes pour créer des recherches, gardez à l'esprit qu'elle est tout à fait semblable à une recherche web. Les termes ou les expressions spécifiques sont les plus pertinantes - des noms, des titres et des mots-clés uniques.</text>
+  	    <newline gap="8"/>
+  	    <text>Des termes généraux ne peuvent pas être recherchés efficacement et peuvent avoir comme conséquence des recherches pauvres, en sus d'une utilisation élevée de la bande passante pendant ces recherches.</text>
+  	    <newline gap="8"/>
+  	    <text>Davantage d'aide est disponible sur le site Web de Shareaza.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
@@ -2070,15 +2120,15 @@ Other:
 	<tip id="ID_CHILD_MAXIMISE" message="Elargir la fenêtre active afin qu'elle remplisse la fenêtre."/>
 	<tip id="ID_CHILD_MINIMISE" message="Minimiser la fenêtre sélectionnée vers la barre de tabulation."/>
 	<tip id="ID_CHILD_RESTORE" message="Ouvrir la fenêtre sélectionnée."/>
-	<tip id="ID_DISCOVERY_ADD" message="Ajouter un nouveau service &quot;Discovery&quot;..."/>
+	<tip id="ID_DISCOVERY_ADD" message="Ajouter un nouveau service &quot;Découverte&quot;..."/>
 	<tip id="ID_DISCOVERY_ADVERTISE" message="Fait connaître le service &quot;GWebCache&quot; sélectionné à un &quot;GWebcache&quot; existant aléatoire."/>
 	<tip id="ID_DISCOVERY_BROWSE" message="Parcourir sur le Web les statistiques du service &quot;GWebCache&quot; sélectionné."/>
-	<tip id="ID_DISCOVERY_EDIT" message="Voir les propriétés pour le service &quot;Discovery&quot; sélectionné."/>
-	<tip id="ID_DISCOVERY_GNUTELLA" message="Afficher les services &quot;bootstrap&quot; dans la fenêtre &quot;Discovery&quot;."/>
-	<tip id="ID_DISCOVERY_QUERY" message="Interroger maintenant cette sélection de services &quot;Discovery&quot;."/>
-	<tip id="ID_DISCOVERY_REMOVE" message="Supprimer cette sélection de services &quot;Discovery&quot;."/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="Afficher les services Server.met eDonkey2000 dans la fenêtre &quot;Discovery&quot;."/>
-	<tip id="ID_DISCOVERY_WEBCACHE" message="Afficher les services &quot;GWebCache&quot; dans la fenêtre &quot;Discovery&quot;."/>
+	<tip id="ID_DISCOVERY_EDIT" message="Voir les propriétés pour le service &quot;Découverte&quot; sélectionné."/>
+	<tip id="ID_DISCOVERY_GNUTELLA" message="Afficher les services &quot;bootstrap&quot; dans la fenêtre &quot;Découverte&quot;."/>
+	<tip id="ID_DISCOVERY_QUERY" message="Interroger maintenant cette sélection de services &quot;Découverte&quot;."/>
+	<tip id="ID_DISCOVERY_REMOVE" message="Supprimer cette sélection de services &quot;Découverte&quot;."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="Afficher les services Server.met eDonkey2000 dans la fenêtre &quot;Découverte&quot;."/>
+	<tip id="ID_DISCOVERY_WEBCACHE" message="Afficher les services &quot;GWebCache&quot; dans la fenêtre &quot;Découverte&quot;."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Annuler et enlever tous les téléchargements dans ce groupe."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Créer un nouveau groupe de téléchargement..."/>
 	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Mettre sur pause tous les téléchargements dans ce groupe."/>
@@ -2119,6 +2169,7 @@ Other:
 	<tip id="ID_DOWNLOADS_SOURCES" message="Rechercher plus de sources pour cette sélection de téléchargements."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Voir des informations sur le téléchargement BitTorrent sélectionné..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Ajouter une nouvelle source URL au téléchargement sélectionné..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Voir les revues pour le téléchargement sélectionné"/>
 	<tip id="ID_HELP_ABOUT" message="Affiche le dialogue &quot;A propos de Shareaza&quot;..."/>
 	<tip id="ID_HELP_FAQ" message="Visiter le guide utilisateurs Shareaza."/>
 	<tip id="ID_HELP_FIREWALLS" message="Obtenir de l'aide pour configurer son routeur NAT ou son firewall (pare-feu)."/>
@@ -2170,8 +2221,7 @@ Other:
 	<tip id="ID_LIBRARY_PARENT" message="Remonter vers le dossier parent."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Voir et éditer les propriétés de cette sélection de fichiers..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Reconstruire les métadonnées et recalculer les hash de cette sélection de dossiers ou fichiers."/>
-	<!-- Add the following line if you need it -->
-  	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruire les métadonnées en utilisant votre langue maternelle."/>
+  	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruire les métadonnées en utilisant une autre langue."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Rafraîchir l'affichage de la bibliothèque."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Enlever cette sélection de dossiers partagés."/>
 	<tip id="ID_LIBRARY_RENAME" message="Renommer le fichier sélectionné en interne."/>
@@ -2320,7 +2370,7 @@ Other:
 	<tip id="ID_UPLOADS_SETTINGS" message="Configurer les réglages des envois..."/>
 	<tip id="ID_UPLOADS_START" message="Démarrer cette sélection d'envois en queue."/>
 	<tip id="ID_VIEW_BASIC" message="Utiliser Shareaza en mode normal."/>
-	<tip id="ID_VIEW_DISCOVERY" message="Afficher ou masquer la fenêtre SERVICES DISCOVERY."/>
+	<tip id="ID_VIEW_DISCOVERY" message="Afficher ou masquer la fenêtre SERVICES DECOUVERTE."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Afficher ou masquer la fenêtre TELECHARGEMENTS."/>
 	<tip id="ID_VIEW_HELP" message="Affiche ou masquer la fenêtre AIDE."/>
 	<tip id="ID_VIEW_HOSTS" message="Afficher ou masquer la fenêtre HOTES EN CACHE."/>
@@ -2362,13 +2412,16 @@ Other:
 	<string id="WINDOW_TRAFFIC" value="Graphique"/>
 	<string id="WINDOW_CHAT" value="Chat"/>
 	<string id="WINDOW_SECURITY" value="Sécurité"/>
-	<string id="WINDOW_DISCOVERY" value="Services Discovery"/>
+	<string id="WINDOW_DISCOVERY" value="Services Découverte"/>
 	<string id="WINDOW_BROWSEHOST" value="Parcourir"/>
 	<string id="WINDOW_HOME" value="Accueil Shareaza"/>
 	<string id="WINDOW_MEDIA" value="Lecteur Multimédia"/>
 	<string id="WINDOW_SEARCHPAD" value="Rechercher"/>
 	<string id="WINDOW_HELP" value="Aide Shareaza"/>
 	<string id="7000" value="Êtes vous sûr de vouloir effacer ce filtre ?"/>
+	<string id="7001" value="&amp;Schemas"/>
+  	<string id="7002" value="Valeurs multiples"/>
+  	<string id="7003" value="Multiple"/>
 	<string id="8000" value="Réglages Shareaza"/>
 	<string id="8001" value="Shareaza vous souhaite la bienvenue!"/>
 	<string id="8002" value="Propriétés du fichier"/>
@@ -2431,7 +2484,7 @@ Other:
 	<string id="8156" value="Rechercher"/>
 	<string id="8157" value="Résultats"/>
 	<string id="8158" value="Vider"/>
-	<string id="8159" value="Avancée..."/>
+	<string id="8159" value="Avancée"/>
 	<string id="8160" value="Etablissement  d'une connexion à l'hôte..."/>
 	<string id="8161" value="Requête poussée (push) envoyée, en attente de connexion..."/>
 	<string id="8162" value="Connecté, demande de navigation..."/>
@@ -2444,6 +2497,8 @@ Other:
 	<string id="8177" value="Tapez les mots-clés à rechercher:"/>
 	<string id="8178" value="Quel type de fichier?"/>
 	<string id="8179" value="(Nettoyer l'historique des recherches)"/>
+	<string id="8180" value="La taille du fichier doit être"/>
+  	<string id="8181" value="&#160;à"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza créé les hashes pour %i fichier(s):"/>
 	<string id="8224" value="Shareaza télécharge:"/>
 	<string id="8225" value="Ce téléchargement est en pause:"/>
@@ -2551,7 +2606,7 @@ Other:
 	<string id="16155" value="Joue le rôle de &quot;hub&quot; pour la &quot;leaf&quot; voisine %s."/>
 	<string id="16156" value="Le voisin %s veut être un &quot;hub&quot;, fermeture de la connexion."/>
 	<string id="16157" value="Le voisin %s n'est pas un &quot;hub&quot;, fermeture de la connexion."/>
-	<string id="16158" value="La connexion avec le voisin Gnutella %s est établie avec succès (%s)."/>
+	<string id="16158" value="La connexion Gnutella2 avec le voisin %s est établie avec succès (%s)."/>
 	<string id="16159" value="Fermeture d'une connexion avec le voisin non-Gnutella2 %s."/>
 	<string id="16192" value="Le voisin %s a fait suivre un paquet de taille excessive, connexion relâchée."/>
 	<string id="16193" value="Le voisin %s a fait suivre un paquet de TTL nul, ignore."/>
@@ -2782,11 +2837,11 @@ Other:
 	<string id="16809" value="&amp;Quitter"/>
 	<string id="16810" value="ans"/>
     <string id="16811" value="Automatique"/>
-	<string id="16864" value="Interroge l'hôte du service Discovery..."/>
-	<string id="16865" value="Interroge le service Discovery &quot;%s&quot;..."/>
+	<string id="16864" value="Interroge l'hôte du service Découverte..."/>
+	<string id="16865" value="Interroge le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
-	<string id="16867" value="Echec au service Discovery &quot;%s&quot;, nombre d'échecs %i."/>
-	<string id="16868" value="Le service Discovery &quot;%s&quot; a échoué %i fois, enlève."/>
+	<string id="16867" value="Echec du service Découverte &quot;%s&quot;, nombre d'échecs %i."/>
+	<string id="16868" value="Le service Découverte &quot;%s&quot; a échoué %i fois, enlève."/>
 	<string id="16870" value="Envoi d'une mise à jour GWebCache au service &quot;%s&quot;..."/>
 	<string id="16871" value="Soumission GWebCache &quot;%s&quot; à un GWebCache aléatoire..."/>
 	<string id="16928" value="Initialisation d'une connexion à %s pour parcourir l'utilisateur..."/>
@@ -2987,6 +3042,13 @@ Other:
 	<string id="20204" value="Jeudi"/>
 	<string id="20205" value="Vendredi"/>
 	<string id="20206" value="Samedi"/>
+	<string id="20210" value="(Pas d'évaluation)"/>
+  	<string id="20211" value="Faux/Corrompu"/>
+  	<string id="20212" value="Pauvre"/>
+  	<string id="20213" value="Moyen"/>
+  	<string id="20214" value="Bon"/>
+  	<string id="20215" value="Très bon"/>
+  	<string id="20216" value="Excellent"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3001,17 +3063,20 @@ Other:
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Général"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Général">
-		<control caption="Interface _utilisateur:"/>
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Général">
+		<control caption="_Général:"/>
 		<control caption="Connexion auto. au démarrage"/>
 		<control caption="Démarrer Shareaza avec Windows"/>
-		<control caption="Nouveaux résultats d'une rech. en gras"/>
-		<control caption="Développer les fichiers multi-sources"/>
-		<control caption="Passage auto. à l'onglet Transferts"/>
-		<control caption="Développer les nouv. téléchargements"/>
-		<control caption="Prévenir avant d'ouvrir les URLs"/>
+		<control caption="Prévenir avant d'ouvrir les URIs"/>
 		<control caption="Vitesses en:"/>
 		<control caption="bits/seconde|bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+		<control caption="_Téléchargements:"/>
+  	    <control caption="Développer les nouv. téléchargements"/>
+  	    <control caption="_Recherche:"/>
+  	    <control caption="Développer les fichiers multi-sources"/>
+  	    <control caption="Passage auto. à l'onglet Transferts"/>
+  	    <control caption="Masquer auto. le panneau de recherche"/>
+  	    <control caption="Filtrer le contenu adulte des recherches"/>
 		<control caption="_Infobulles:"/>
 		<control/>
 		<control caption="Delai (ms):"/>
@@ -3023,20 +3088,14 @@ Other:
 		<control caption="Me demander|Fermer immédiatement|Minimiser dans la barre des tâches|Fermer à la fin des transferts"/>
 		<control caption="Qd je clique sur Minimiser:"/>
 		<control caption="Normal|Minimiser dans la barre des tâches"/>
-		<control caption="Masquer auto. le panneau de recherche"/>
-		<control caption="Filtrer le contenu adulte des recherches"/>
-		<control caption="Nettoyer automatiquement la fenêtre des téléchargements"/>
-  	    <control caption="Nettoyer automatiquement la fenêtre des envois"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothèque">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Bibliothèque">
 		<control caption="_Options:"/>
 		<control caption="Mémoriser l'affich. des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
 		<control caption="Hachage rapide (Utilise plus le CPU)"/>
 		<control caption="Filtrer les objets par extension"/>
-		<control/>
-		<control caption="Autoriser les util. à voir la biblio."/>
 		<control caption="Fichiers _récents:"/>
 		<control caption="Mémoriser:"/>
 		<control/><control/>
@@ -3146,14 +3205,14 @@ Other:
 		<control caption="Télécharger et envoyer uniquement sur les réseaux connectés."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Envois">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Envois">
 		<control caption="_Options:"/>
 		<control caption="Partager les téléch. partiels"/>
 		<control caption="Partage limité en mode Hub"/>
 		<control caption="Partager les prévisualisations"/>
-		<control caption="Retirer métadonnées du hash"/>
 		<control caption="Limite par hôte:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Filtre agent _utilisateur (User-Agent):"/>
 		<control/>
 		<control caption="+"/>
@@ -3222,10 +3281,10 @@ Other:
 		<control caption="Configurer Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Réseau Gnutella2:"/>
-		<control caption="(G2 recommandé)"/>
-		<control caption="Se connecter à Gnutella2 aujourd'hui"/>
+		<control caption="Toujours se connecter à Gnutella2"/>
+		<control caption="Connexion à Gnutella2 aujourd'hui"/>
 		<control caption="Mode:"/>
         <control caption="Optimal|Leaf|Hub"/>
         <control caption="Connexions G_2:"/>
@@ -3626,7 +3685,7 @@ Other:
   	    <control caption="Sauvegarder le filtre actuel sous"/>
   	</dialog>
 
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Service Discovery">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Services Découverte">
 		<control caption="_Adresse du service:"/>
 		<control/>
 		<control caption="Type de service:"/>
@@ -3901,7 +3960,8 @@ Other:
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Télécharger un fichier Server.met">
 		<control/>
 		<control caption="Vous pouvez télécharger un fichier server.met eDonkey2000 afin de mettre à jour votre liste de serveurs."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Annuler"/>
 	</dialog>
@@ -4021,6 +4081,20 @@ Other:
 		<control caption="_Mettre à niveau maintenant"/>
 		<control caption="Ne pas vérifier la disponibilité de nouvelles versions"/>
 		<control caption="Ne pas mettre à niveau"/>
+		
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Télécharger les Revues">
+  	    <control/>
+  	    <control caption="OK"/>
+  	    <control/><control/>
+  	</dialog>
+  	 
+  	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localisation des métadonnées">
+  	    <control caption="OK"/>
+  	    <control caption="Annuler"/>
+  	    <control caption="Merci de sélectionner la méthode de réencodage"/>
+  	    <control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+  	</dialog>
+		
 	</dialog>
 </dialogs>
 
@@ -4140,6 +4214,12 @@ Other:
 	<list name="CTorrentTrackerList">
   	    <column from="Filename" to="Nom du fichier"/>
   	    <column from="Size" to="Taille"/>
+  	</list>
+	<list name="CReviewList">
+  	    <column from="User" to="Utilisateur"/>
+  	    <column from="Rating" to="Evaluation"/>
+  	    <column from="Comments" to="Commentaires"/>
+  	    <column from="Order" to="Ordre"/>
   	</list>
 </listColumns>
 </skin>
