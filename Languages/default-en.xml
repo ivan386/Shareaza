@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.120"
+		version="2.1.0.121"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3110,7 +3110,7 @@
 		<control caption="_General:"/>
 		<control caption="Auto-connect on Shareaza startup"/>
 		<control caption="Start Shareaza at Windows startup"/>
-		<control caption="Show a prompt before opening URLs"/>
+		<control caption="Show a prompt before opening URIs"/>
 		<control caption="Show rates in:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Downloads:"/>
@@ -3133,13 +3133,11 @@
 		<control caption="Normal|Minimise to Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Library">
 		<control caption="_Options:"/>
 		<control caption="Remember folder views"/>
 		<control caption="Watch library folders"/>
 		<control caption="Quick hashing (Uses more CPU)"/>
-		<control caption="Filter objects by extension"/>
-		<control/>
 		<control caption="Allow others to browse shares"/>
 		<control caption="_Recent Files:"/>
 		<control caption="Remember:"/>
