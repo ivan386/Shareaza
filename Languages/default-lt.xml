@@ -3114,17 +3114,20 @@ right quote	&#147;
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Bendra"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Bendra">
-		<control caption="_Vartotojo sąsaja:"/>
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Bendra">
+		<control caption="_Bendra:"/>
 		<control caption="Paleidus „Shareaza“, jungtis prie tinklo"/>
 		<control caption="Paleisti „Shareaza“ startuojant Windows"/>
-		<control caption="Paryškinti naujus radinius"/>
-		<control caption="Visada išskleisti šaltinių medį"/>
-		<control caption="Eiti prie siuntimų pridėjus naują bylą"/>
-		<control caption="Visada išskleisti naujų bylų šaltinių medį"/>
 		<control caption="Klausti prieš pridedant nuorodas"/>
 		<control caption="Spartą rodyti:"/>
 		<control caption="bitai/sek.|baitai/sek.|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+		<control caption="_Atsisiuntimai"/>
+		<control caption="Visada išskleisti naujų bylų šaltinių medį"/>
+		<control caption="_Paieška"/>
+		<control caption="Visada išskleisti šaltinių medį"/>
+		<control caption="Eiti prie siuntimų pridėjus naują bylą"/>
+		<control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
+		<control caption="Paieškose filtruoti turinį suaugusiems"/>
 		<control caption="_Užuominos:"/>
 		<control/>
 		<control caption="Delsa (ms):"/>
@@ -3136,19 +3139,13 @@ right quote	&#147;
 		<control caption="Paklausti|Iškart užverti|Patalpinti juostelėn|Baigti atsisiuntus"/>
 		<control caption="Kai paspaudžiu sutraukti:"/>
 		<control caption="Įprastas veiksmas|Patalpinti juostelėn"/>
-		<control caption="Slėpti paieškos skydelį pradėjus paiešką"/>
-		<control caption="Paieškose filtruoti turinį suaugusiems"/>
-		<control caption="Savaiminis valymas atsisiuntimų lange"/>
-		<control caption="Savaiminis valymas išsiuntimų lange"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kolekcija">
 		<control caption="Pa_rinktys:"/>
 		<control caption="Prisiminti aplankų peržiūros būdą"/>
 		<control caption="Stebėti kolekcijos katalogus"/>
 		<control caption="Greita maiša (daugiau CPU)"/>
-		<control caption="Filtruoti pagal plėtinius"/>
-		<control/>
 		<control caption="Leisti peržiūrėti bendrintas bylas"/>
 		<control caption="Paskutinės _bylos:"/>
 		<control caption="Prisiminti:"/>
@@ -3259,12 +3256,11 @@ right quote	&#147;
 		<control caption="Bylų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Išsiuntimai">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Išsiuntimai">
 		<control caption="Pa_rinktys:"/>
 		<control caption="Siųsti nepilnai gautas bylas"/>
 		<control caption="Tapus mazgu, riboti siuntimą"/>
 		<control caption="Bendrinti bylų peržiūros turinį"/>
-		<control caption="Iškirpti ID3 žymas iš mp3 bylų"/>
 		<control caption="Limitas unikaliam IP:"/>
 		<control/><control/>
 		<control caption="_Vartotojų agentų filtras:"/>
@@ -3335,9 +3331,9 @@ right quote	&#147;
 		<control caption="Konfigūruoti Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 tinklas:"/>
-		<control caption="(G2 rekomenduojamas)"/>
+		<control caption="Visada jungtis prie Gnutella2"/>
 		<control caption="Jungtis prie Gnutella2 šiandien"/>
 		<control caption="Veiksena:"/>
 		<control caption="Optimali|Atšaka|Mazgas"/>
