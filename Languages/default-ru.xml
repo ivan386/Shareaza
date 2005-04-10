@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.120"
+		version="2.1.0.121"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3095,17 +3095,20 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Основное">
-		<control caption="_Интерфейс пользователя:"/>
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Основное">
+		<control caption="_Основное:"/>
 		<control caption="Соединяться с сетями при старте"/>
 		<control caption="Запуск Shareaza вместе с Windows"/>
-		<control caption="Выделять новые результаты поиска"/>
-		<control caption="Раскрывать дерево источн. поиска"/>
-		<control caption="При загрузке перейти к пересылкам"/>
-		<control caption="Раскрывать дерево новых эагрузок"/>
 		<control caption="Спрашивать о перехвате ссылок"/>
 		<control caption="Скорость в:"/>
 		<control caption="бит/сек.|байт/сек.|б/с|Б/с|Кб/с|КБ/с|Мб/с|МБ/с"/>
+		<control caption="_Загрузки:"/>
+		<control caption="Раскрывать дерево новых эагрузок"/>
+		<control caption="_Поиск:"/>
+		<control caption="Раскрывать дерево источн. поиска"/>
+		<control caption="При загрузке перейти к пересылкам"/>
+		<control caption="Скрыть панель поиска начав поиск"/>
+		<control caption="Фильтровать содерж. для взрослых"/>
 		<control caption="Показывать _подсказки для:"/>
 		<control/>
 		<control caption="Задерж.(мс):"/>
@@ -3117,19 +3120,13 @@
 		<control caption="Спрашивать|Сразу закрыть|Отправить в трей|Закрыть после пересылок"/>
 		<control caption="Когда щелкаю свернуть:"/>
 		<control caption="Обычное действие|Отправить в трей"/>
-		<control caption="Скрыть панель поиска начав поиск"/>
-		<control caption="Фильтровать содерж. для взрослых"/>
-		<control caption="Авто-очистка в окне загрузок"/>
-		<control caption="Авто-очистка в окне выгрузок"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Хранилище">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Хранилище">
 		<control caption="_Опции:"/>
 		<control caption="Запоминать вид папок"/>
 		<control caption="Следить за папками хранил."/>
 		<control caption="Быстрое хеш-ние (ЦПУ нагр.)"/>
-		<control caption="Фильтр объектов по типу"/>
-		<control/>
 		<control caption="Разделяемые видны другим"/>
 		<control caption="_Последние файлы:"/>
 		<control caption="Помнить:"/>
@@ -3240,12 +3237,11 @@
 		<control caption="Загрузки и выгрузки только с соединенными сетями."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Выгрузки">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Выгрузки">
 		<control caption="_Опции:"/>
 		<control caption="Разделять новые загрузки"/>
 		<control caption="Лимит. выгрузки в режиме узла"/>
 		<control caption="Разрешить предв. просмотр"/>
-		<control caption="Удалять ID3 теги из mp3"/>
 		<control caption="Лимит на уник. хост:"/>
 		<control/><control/>
 		<control caption="_Юзер-Агент фильтр:"/>
@@ -3316,9 +3312,9 @@
 		<control caption="Настроить Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Сеть Gnutella2:"/>
-		<control caption="(G2 рекомендуется)"/>
+		<control caption="Всегда соединяться с G2"/>
 		<control caption="Соединиться с G2 сегодня"/>
 		<control caption="Режим:"/>
 		<control caption="Оптимальный|Ветвь|Узел"/>
