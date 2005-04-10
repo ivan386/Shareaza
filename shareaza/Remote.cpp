@@ -201,8 +201,6 @@ BOOL CRemote::OnHeadersComplete()
 	m_sHandshake.Empty();
 	ClearHeaders();
 	OnWrite();
-	Close();
-	delete this;
 	
 	return TRUE;
 }
