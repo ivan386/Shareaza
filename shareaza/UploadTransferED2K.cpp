@@ -547,7 +547,7 @@ BOOL CUploadTransferED2K::StartNextRequest()
 BOOL CUploadTransferED2K::DispatchNextChunk()
 {
 	ASSERT( m_nState == upsUploading );
-	ASSERT( m_pDiskFile != NULL );
+	if ( !m_pDiskFile ) return FALSE;
 	ASSERT( m_nLength < SIZE_UNKNOWN );
 	ASSERT( m_nPosition < m_nLength );
 	
