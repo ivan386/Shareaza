@@ -120,7 +120,7 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableToolTips( TRUE );
 	
 	InsertColumn( MATCH_COL_NAME, _T("File"), HDF_LEFT, 200 );
-	InsertColumn( MATCH_COL_TYPE, _T("Type"), HDF_CENTER, 40 );
+	InsertColumn( MATCH_COL_TYPE, _T("Extension"), HDF_CENTER, 40 );
 	InsertColumn( MATCH_COL_SIZE, _T("Size"), HDF_CENTER, 60 );
 	InsertColumn( MATCH_COL_RATING, _T("Rating"), HDF_CENTER, 12*5 );
 	InsertColumn( MATCH_COL_STATUS, _T("Status"), HDF_CENTER, 16*3 );

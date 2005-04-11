@@ -4142,7 +4142,7 @@
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to=""/>
-		<column from="Type" to=""/>
+		<column from="Extension" to=""/>
 		<column from="Size" to=""/>
 		<column from="Folder" to=""/>
 		<column from="Hits" to=""/>
@@ -4224,7 +4224,7 @@
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to=""/>
-		<column from="Type" to=""/>
+		<column from="Extension" to=""/>
 		<column from="Size" to=""/>
 		<column from="Rating" to=""/>
 		<column from="Status" to=""/>

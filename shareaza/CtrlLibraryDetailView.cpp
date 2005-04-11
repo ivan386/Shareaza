@@ -138,7 +138,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	if ( m_nStyle == LVS_REPORT )
 	{
-		pList->InsertColumn( 1, _T("Type"), LVCFMT_CENTER, 40, 0 );
+		pList->InsertColumn( 1, _T("Extension"), LVCFMT_CENTER, 40, 0 );
 		pList->InsertColumn( 2, _T("Size"), LVCFMT_CENTER, 60, 1 );
 		pList->InsertColumn( 3, _T("Folder"), LVCFMT_LEFT, 0, 2 );
 		pList->InsertColumn( 4, _T("Hits"), LVCFMT_CENTER, 70, 3 );
