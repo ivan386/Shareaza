@@ -2789,7 +2789,7 @@
 	<string id="16373" value="Partial Files"/>
 	<string id="16374" value="New Queue"/>
 	<string id="16375" value="Partial"/>
-	<string id="16376" value="Complete Files"/>
+	<string id="16376" value="All Files"/>
 	<string id="16377" value="HTTP Guard"/>
 	<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 	<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>

@@ -2797,7 +2797,7 @@ right quote	&#147;
 	<string id="16373" value="Dalinės bylos"/>
 	<string id="16374" value="Nauja eilė"/>
 	<string id="16375" value="Daliniai"/>
-	<string id="16376" value="Pilnos bylos"/>
+	<string id="16376" value="Visos bylos"/>
 	<string id="16377" value="HTTP saugančioji"/>
 	<string id="16384" value="Ar tikrai norite vykdyti bylą „%s“ ?\n\nKai kurios bylos gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per byla, prieš vykdydami ją."/>
 	<string id="16385" value="Jūs ruošiatės pakeisti %i bylų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
