@@ -4131,7 +4131,7 @@
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Файл"/>
-		<column from="Type" to="Расширение"/>
+		<column from="Extension" to="Расширение"/>
 		<column from="Size" to="Размер"/>
 		<column from="Folder" to="Папка"/>
 		<column from="Hits" to="Обращений"/>
@@ -4213,7 +4213,7 @@
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Файл"/>
-		<column from="Type" to="Расширение"/>
+		<column from="Extension" to="Расширение"/>
 		<column from="Size" to="Размер"/>
 		<column from="Rating" to="Оценка"/>
 		<column from="Status" to="Статус"/>

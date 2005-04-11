@@ -4150,7 +4150,7 @@ right quote	&#147;
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Byla"/>
-		<column from="Type" to="Plėtinys"/>
+		<column from="Extension" to="Plėtinys"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Folder" to="Aplankas"/>
 		<column from="Hits" to="Kreipinių"/>
@@ -4229,7 +4229,7 @@ right quote	&#147;
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Byla"/>
-		<column from="Type" to="Plėtinys"/>
+		<column from="Extension" to="Plėtinys"/>
 		<column from="Size" to="Dydis"/>
 		<column from="Rating" to="Įvertinimas"/>
 		<column from="Status" to="Būklė"/>
