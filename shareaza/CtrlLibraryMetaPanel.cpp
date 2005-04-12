@@ -351,12 +351,27 @@ void CLibraryMetaPanel::OnPaint()
 	DrawText( &dc, rcWork.right - 125, rcWork.top, str + ':' );
 	dc.SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( &dc, rcWork.right - 60, rcWork.top, m_sSize );
+	
 	if ( m_sFolder.Find( '\\' ) >= 0 )
 	{
 		dc.SelectObject( &CoolInterface.m_fntUnder );
 		dc.SetTextColor( RGB( 0, 0, 255 ) );
+		str = m_sFolder;
+		long nTextLength = dc.GetTextExtent( str + _T('\x2026') ).cx;
+		const long nLimit = rcWork.Width() - 125 - 68 - 10;
+		if ( nTextLength > nLimit )
+		{
+			while ( nTextLength > nLimit )
+			{
+				str = str.Left( str.GetLength() - 1 );
+				nTextLength = dc.GetTextExtent( str + _T('\x2026') ).cx;
+			}
+			str += _T('\x2026');
+		}
 	}
-	DrawText( &dc, rcWork.left + 68, rcWork.top, m_sFolder, &m_rcFolder );
+	else str.Empty();
+
+	DrawText( &dc, rcWork.left + 68, rcWork.top, str, &m_rcFolder );
 	if ( m_sFolder.Find( '\\' ) < 0 ) m_rcFolder.SetRect( 0, 0, 0, 0 );
 	rcWork.top += 18;
 	
