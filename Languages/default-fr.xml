@@ -920,7 +920,7 @@ Other:
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévisualiser"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pré_visualiser la copie"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Ajouter à la liste de _lecture"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Voir les Re_vues"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Voir les revues"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reprendre le téléchargement"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Mettre en _pause"/>
@@ -2480,7 +2480,7 @@ Other:
 	<string id="8152" value="%lu hubs, %lu leaves"/>
 	<string id="8153" value="Ne recherche pas actuellement"/>
 	<string id="8154" value="Aucun fichier trouvé"/>
-	<string id="8155" value="%lu fichiers en %lu hit|%lu fichiers en %lu hits|%lu fichiers en %lu hits"/>
+	<string id="8155" value="%lu fichiers en %lu requêtes|%lu fichiers en %lu requêtes|%lu fichiers en %lu requêtes"/>
 	<string id="8156" value="Rechercher"/>
 	<string id="8157" value="Résultats"/>
 	<string id="8158" value="Vider"/>
@@ -2537,7 +2537,7 @@ Other:
 	<string id="8313" value="Ce fichier semble être un spam."/>
 	<string id="8314" value="Vous avez déjà précédemment téléchargé puis effacé ce fichier."/>
 	<string id="8315" value="Liste noire: "/>
-	<string id="8316" value="Hits"/>
+	<string id="8316" value="Requêtes"/>
 	<string id="8317" value="Envois"/>
 	<string id="8318" value="%lu aujourd'hui, %lu total"/>
 	<string id="8320" value="Statut:"/>
@@ -2737,21 +2737,21 @@ Other:
 	<string id="16364" value="Envois complétés"/>
 	<string id="16365" value="Êtes-vous certain de vouloir annuler tous les téléchargements dans ce groupe?"/>
 	<string id="16366" value="Queue"/>
-    <string id="16367" value="eDonkey Core"/>
-    <string id="16368" value="eDonkey Partiels"/>
-    <string id="16369" value="eDonkey Garde"/>
+    <string id="16367" value="eDonkey core"/>
+    <string id="16368" value="eDonkey partiels"/>
+    <string id="16369" value="eDonkey garde"/>
     <string id="16370" value="Fichiers petits"/>
     <string id="16371" value="Fichiers moyens"/>
     <string id="16372" value="Fichiers larges"/>
-    <string id="16373" value="Fichiers Partiels"/>
+    <string id="16373" value="Fichiers partiels"/>
     <string id="16374" value="Nouvelle queue"/>
     <string id="16375" value="Partiel"/>
-	<string id="16376" value="Fichiers Complétés"/>
+	<string id="16376" value="Tous les fichiers"/>
 	<string id="16377" value="Garde HTTP"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &quot;%s&quot;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnées de %i fichiers, voulez-vous continuer?"/>
 	<string id="16386" value="Edition des métadonnées de %i fichiers."/>
-	<string id="16387" value="Ce fichier &quot;%s&quot; n'a pas encore été haché.  Prière d'attendre que le fichier soit haché et réessayer."/>
+	<string id="16387" value="Ce fichier &quot;%s&quot; n'a pas encore été haché. Prière d'attendre que le fichier soit haché et réessayer."/>
 	<string id="16388" value="Cet option utilise les services de Bitzi.com pour la reconnaissance de l'information partagée du fichier(s) sélectionné(s).\n\nShareaza va transmettre le code SHA1 de ce fichier(s) pour interroger la base de donnée de Bitzi.  Si vous êtes inquiété par les question de vie privée, consultez la politique de Bitzi.com à ce sujet.\n\nVoulez-vous continuer?"/>
 	<string id="16389" value="Voulez-vous vraiment supprimer définitivement le(s) %i fichier(s) sélectionné(s)?\n\nCes fichiers seront déplacés vers votrp corbeille si vous répondez OK."/>
 	<string id="16390" value="Vous n'avez pas encore sélectionné un lecteur multimédia avec lequel mettre en queue les fichiers, comme par exemple Nullsoft WinAmp.  Voulez-vous en sélectionner un maintenant?\n\nShareaza enverra le nom de fichier à ce programme avec l'argument &quot;/ADD&quot;."/>
@@ -4102,10 +4102,10 @@ Other:
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Nom du fichier"/>
-		<column from="Type" to="Type"/>
+		<column from="Extension" to=""/>
 		<column from="Size" to="Taille"/>
 		<column from="Folder" to="Dossier"/>
-		<column from="Hits" to="Hits"/>
+		<column from="Hits" to="Requêtes"/>
 		<column from="Uploads" to="Envois"/>
 		<column from="Modified" to="Modifié"/>
 	</list>
@@ -4146,7 +4146,7 @@ Other:
 		<column from="Action" to=""/>
 		<column from="Expires" to="Expiration"/>
 		<column from="Precedence" to="Priorité"/>
-		<column from="Hits" to="Hits"/>
+		<column from="Hits" to="Requêtes"/>
 		<column from="Comment" to="Commentaire"/>
 	</list>
 	<list name="CHostCacheWnd">
@@ -4184,7 +4184,7 @@ Other:
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Nom du fichier"/>
-		<column from="Type" to=""/>
+		<column from="Extension" to=""/>
 		<column from="Size" to="Taille"/>
 		<column from="Rating" to="Evaluation"/>
 		<column from="Status" to="Statut"/>
