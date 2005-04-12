@@ -431,6 +431,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
 	m_bSelHttpSource = m_bSelDonkeySource = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
+	m_bSelMoreSourcesOK = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -459,7 +460,12 @@ void CDownloadsWnd::Prepare()
 			if ( pDownload->IsPaused() )
 				m_bSelPaused = TRUE;
 			else if ( ! pDownload->IsMoving() )
+			{
 				m_bSelNotPausedOrMoving = TRUE;
+				if ( pDownload->IsTrying() && pDownload->FindSourcesAllowed( tNow ) ) 
+					m_bSelMoreSourcesOK = TRUE;
+			}
+
 			if ( ! pDownload->IsPreviewVisible() )
 			{
 				m_bSelNoPreview = TRUE;
@@ -908,11 +914,12 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 void CDownloadsWnd::OnUpdateDownloadsSources(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelNotMoving && m_bSelTrying );
+	pCmdUI->Enable( m_bSelMoreSourcesOK );
 }
 
 void CDownloadsWnd::OnDownloadsSources() 
 {
+	int nCount = 0;
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
@@ -921,8 +928,15 @@ void CDownloadsWnd::OnDownloadsSources()
 		
 		if ( pDownload->m_bSelected )
 		{
-			if ( ! pDownload->IsMoving() ) pDownload->FindMoreSources();
+			if ( ! pDownload->IsMoving() )
+			{
+				pDownload->FindMoreSources();
+				nCount++;
+			}
 		}
+
+		// Only allow 3 FMS operations at once to avoid being blacklisted
+		if ( nCount >=3 ) break;
 	}
 	
 	Update();

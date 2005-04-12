@@ -72,13 +72,14 @@ protected:
 	BOOL			m_bSelNotMoving;
 	BOOL			m_bSelBoostable;
 	BOOL			m_bSelSHA1orED2K;
-	BOOL			m_bSelShareConsistent;
 	BOOL			m_bSelShareState;
 	BOOL			m_bSelTorrent;
 	BOOL			m_bSelIdleSource;
 	BOOL			m_bSelActiveSource;
 	BOOL			m_bSelHttpSource;
 	BOOL			m_bSelDonkeySource;
+	BOOL			m_bSelShareConsistent;
+	BOOL			m_bSelMoreSourcesOK;
 	BOOL			m_bSelSourceAcceptConnections;
 	BOOL			m_bSelSourceExtended;
 	BOOL			m_bSelHasReviews;
