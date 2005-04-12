@@ -359,7 +359,7 @@ void CLibraryMetaPanel::OnPaint()
 		str = m_sFolder;
 		long nTextLength = dc.GetTextExtent( str + _T('\x2026') ).cx;
 		const long nLimit = rcWork.Width() - 125 - 68 - 10;
-		if ( nTextLength > nLimit )
+		if ( nTextLength > nLimit && nLimit > 0 )
 		{
 			while ( nTextLength > nLimit )
 			{
@@ -368,6 +368,7 @@ void CLibraryMetaPanel::OnPaint()
 			}
 			str += _T('\x2026');
 		}
+		else str.Empty();
 	}
 	else str.Empty();
 
