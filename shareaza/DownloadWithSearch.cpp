@@ -51,6 +51,18 @@ CDownloadWithSearch::~CDownloadWithSearch()
 	if ( m_pSearch ) delete m_pSearch;
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithSearch Can Find Sources
+
+BOOL CDownloadWithSearch::FindSourcesAllowed(DWORD tNow) const
+{
+	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 15*1000 )
+		return TRUE;
+	else
+		return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSearch find additional sources
 

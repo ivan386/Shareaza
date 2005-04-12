@@ -47,6 +47,7 @@ public:
 	
 // Operations
 public:
+	BOOL	FindSourcesAllowed(DWORD tNow) const;
 	virtual BOOL	FindMoreSources();
 protected:
 	void	RunSearch(DWORD tNow);
