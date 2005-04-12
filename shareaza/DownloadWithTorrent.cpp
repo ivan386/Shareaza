@@ -190,7 +190,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			m_bTorrentStarted	= FALSE;
 			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
 			
-			CBTTrackerRequest::SendStarted( this, 0 );
+			CBTTrackerRequest::SendStarted( this );
 		}
 	}
 	else if ( ! bLive && m_bTorrentRequested )
@@ -199,7 +199,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = 0;
-		//ZeroMemory(m_pPeerID.n, 20);	//Okay to use the same one in a single session
+		//ZeroMemory(m_pPeerID.n, 20);	// Okay to use the same one in a single session
 	}
 	
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
@@ -207,7 +207,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		// Regular tracker update
 		int nSources = GetSourceCount();
 		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-		if ( IsMoving() )								//If we are seeding or completed, base requests on BT uploads
+		if ( IsMoving() )								// If we are seeding or completed, base requests on BT uploads
 		{
 			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
 			if ( ( ! IsCompleted() ) || ( ! Settings.Connection.Firewalled ) ||  ( nSources > (Settings.Downloads.SourcesWanted / 8) ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
@@ -216,9 +216,9 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 				CBTTrackerRequest::SendUpdate( this, 10 );	// We might need more peers.					
 		}
 		else if ( nSources > Settings.Downloads.SourcesWanted )
-			CBTTrackerRequest::SendUpdate( this, 5 );	//If we have many sources, just get a few to make sure we have some fresh ones. 
+			CBTTrackerRequest::SendUpdate( this, 5 );	// If we have many sources, just get a few to make sure we have some fresh ones. 
 		else
-			CBTTrackerRequest::SendUpdate( this );		//Otherwise, take the tracker default. (It should be an appropriate number.)
+			CBTTrackerRequest::SendUpdate( this );		// Otherwise, take the tracker default. (It should be an appropriate number.)
 	}
 	
 	return TRUE;
@@ -584,10 +584,14 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sLocalName = pszTarget;
 	SetModified();
 	
-	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); //Give tracker 30 seconds to respond before re-trying
+	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); // Give tracker 30 seconds to respond before re-trying
 	m_bTorrentRequested	= TRUE;
 	m_bTorrentStarted	= FALSE;
-	CBTTrackerRequest::SendStarted( this, 0 );	
+
+	if ( ( Settings.Connection.Firewalled ) && ( GetSourceCount() < 40 ) )
+		CBTTrackerRequest::SendStarted( this );
+	else
+		CBTTrackerRequest::SendStarted( this, 0 );	
 	
 	return TRUE;
 }
