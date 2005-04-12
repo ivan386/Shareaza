@@ -726,9 +726,10 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 	{
 		for ( int nSources = ar.ReadCount() ; nSources ; nSources-- )
 		{
+			// Create new source
 			CDownloadSource* pSource = new CDownloadSource( (CDownload*)this );
-			pSource->Serialize( ar, nVersion );
 			
+			// Add to the list
 			m_nSourceCount ++;
 			pSource->m_pPrev = m_pSourceLast;
 			pSource->m_pNext = NULL;
@@ -743,14 +744,16 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 				m_pSourceFirst = m_pSourceLast = pSource;
 			}
 
-			//Extract ed2k client ID from url (m_pAddress) because it wasn't saved
+			// Load details from disk
+			pSource->Serialize( ar, nVersion );
+
+			// Extract ed2k client ID from url (m_pAddress) because it wasn't saved
 			if ( ( !pSource->m_nPort ) && ( _tcsnicmp( pSource->m_sURL, _T("ed2kftp://"), 10 ) == 0 )  )
 			{
 				CString strURL = pSource->m_sURL.Mid(10);
 				if ( strURL.GetLength())
 					_stscanf( strURL, _T("%lu"), &pSource->m_pAddress.S_un.S_addr );
 			}
-			//
 		}
 		
 		if ( ar.ReadCount() )

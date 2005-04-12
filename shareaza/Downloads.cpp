@@ -1042,6 +1042,7 @@ void CDownloads::Load()
 			}
 			else
 			{
+				pDownload->ClearSources();
 				delete pDownload;
 			}
 		}
