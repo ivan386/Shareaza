@@ -1,7 +1,7 @@
 //
 // FragmentBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -141,36 +141,48 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 
 void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural)
 {
-	QWORD nvOffset, nvLength;
-	BOOL bvSuccess;
-	
-	if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
+	if ( Settings.Downloads.SimpleBar )
 	{
-		DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
-			RGB( 0, 255, 0 ), TRUE );
+		pDC->FillSolidRect( prcBar, crNatural );		
+		
+		if ( pDownload->IsStarted() )
+		{
+			DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
+				GetSysColor( COLOR_ACTIVECAPTION ), FALSE );
+		}
 	}
-	
-	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
+	else
 	{
-		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
-			bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
-		nvOffset += nvLength;
+		QWORD nvOffset, nvLength;
+		BOOL bvSuccess;
+		
+		if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
+		{
+			DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
+				RGB( 0, 255, 0 ), TRUE );
+		}
+		
+		for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
+		{
+			DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
+				bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
+			nvOffset += nvLength;
+		}
+		
+		for ( FF::SimpleFragmentList::ConstIterator pFragment = pDownload->GetEmptyFragmentList().begin();
+			pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
+		{
+			DrawFragment( pDC, prcBar, pDownload->m_nSize,
+				pFragment->begin(), pFragment->length(), crNatural, FALSE );
+		}
+		
+		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+		{
+			DrawSourceImpl( pDC, prcBar, pSource );
+		}
+
+		pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? GetSysColor( COLOR_ACTIVECAPTION ) : crNatural );
 	}
-	
-    for ( FF::SimpleFragmentList::ConstIterator pFragment = pDownload->GetEmptyFragmentList().begin();
-        pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
-	{
-		DrawFragment( pDC, prcBar, pDownload->m_nSize,
-			pFragment->begin(), pFragment->length(), crNatural, FALSE );
-	}
-	
-	for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
-	{
-		DrawSourceImpl( pDC, prcBar, pSource );
-	}
-	
-	pDC->FillSolidRect( prcBar, pDownload->IsStarted() ?
-		GetSysColor( COLOR_ACTIVECAPTION ) : crNatural );
 }
 
 //////////////////////////////////////////////////////////////////////
