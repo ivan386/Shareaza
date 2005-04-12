@@ -343,6 +343,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.SaveInterval"), &Downloads.SaveInterval, 60000 );
 	Add( _T("Downloads.FlushSD"), &Downloads.FlushSD, TRUE );
 	Add( _T("Downloads.ShowSources"), &Downloads.ShowSources, FALSE );
+	Add( _T("Downloads.SimpleBar"), &Downloads.SimpleBar, FALSE );
 	Add( _T("Downloads.ShowPercent"), &Downloads.ShowPercent, FALSE );
 	Add( _T("Downloads.ShowGroups"), &Downloads.ShowGroups, TRUE );
 	Add( _T("Downloads.AutoExpand"), &Downloads.AutoExpand, FALSE );

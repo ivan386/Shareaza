@@ -387,6 +387,7 @@ public:
 		DWORD		SaveInterval;
 		BOOL		FlushSD;
 		BOOL		ShowSources;
+		BOOL		SimpleBar;					// Displays a simplified progress bar (lower CPU use)
 		BOOL		ShowPercent;				// Display small green % complete bar on progress graphic
 		BOOL		ShowGroups;
 		BOOL		AutoExpand;

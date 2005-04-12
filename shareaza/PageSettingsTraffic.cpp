@@ -220,6 +220,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.RequestURLENC, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.SaveInterval, 1000, 1, 120, _T(" s") );
 	AddSetting( &Settings.Downloads.FlushSD, 1, 0, 1 );
+	AddSetting( &Settings.Downloads.SimpleBar, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.ShowPercent, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.AutoClear, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.ClearDelay, 1000, 1, 1800, _T(" s") );
