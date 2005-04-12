@@ -318,9 +318,7 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 		
 	if ( pSource->m_pTransfer != NULL ) 
 	{
-//******************************* (Temp debug check)
-theApp.Message( MSG_ERROR, _T("**** possibly unable to create m_pDownloadTransfer") );  
-//*******************debug
+		// A download transfer already exists
 		return NULL;
 	}
 	
