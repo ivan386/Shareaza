@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.120"
+		version="2.1.0.121"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -2055,7 +2055,7 @@
 
 	<!-- Search help documents -->
 
-	<document name="SearchHelp.BadSearch">
+	<document name="SearchHelp.BadSearch1">
 		<text format="b">请重新定义搜索</text>
 		<newline gap="8"/>
 		<text>此搜索格式不正确，可能无法正常工作。
@@ -2775,7 +2775,7 @@
 	<string id="16373" value="部分文件"/>
 	<string id="16374" value="新建队列"/>
 	<string id="16375" value="部分"/>
-	<string id="16376" value="完成文件"/>
+	<string id="16376" value="所有文件"/>
 	<string id="16377" value="HTTP 保护"/>
 	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 	<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
@@ -3092,17 +3092,20 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="常规">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="常规">
 		<control caption="用户界面(_U):"/>
 		<control caption="Shareaza 启动后自动连接"/>
 		<control caption="系统启动后运行 Shareaza"/>
-		<control caption="以粗体方式高亮新的搜索结果"/>
-		<control caption="默认展开多个资源文件"/>
-		<control caption="切换到下载的传输视图"/>
-		<control caption="默认展开新的下载"/>
-		<control caption="打开链接前显示提示"/>
+		<control caption="打开 URI 前弹出提示窗口"/>
 		<control caption="速率显示单位:"/>
 		<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+		<control caption="下载(_D):"/>
+		<control caption="默认展开新的下载"/>
+		<control caption="搜索(_S):"/>
+		<control caption="默认展开多个资源文件"/>
+		<control caption="下载时切换到传输视图"/>
+		<control caption="启动搜索时隐藏侧边栏"/>
+		<control caption="过滤搜索中的成人内容"/>
 		<control caption="工具提示(_T):"/>
 		<control/>
 		<control caption="迟延(ms):"/>
@@ -3114,19 +3117,13 @@
 		<control caption="询问我|立即关闭|最小化到系统托盘|传输完毕后关闭"/>
 		<control caption="点击最小化时:"/>
 		<control caption="标准|最小化到系统托盘"/>
-		<control caption="在启动搜索时隐藏侧边栏"/>
-		<control caption="过滤搜索中的成人内容"/>
-		<control caption="自动清除下载窗口"/>
-		<control caption="自动清除上传窗口"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="收藏">
 		<control caption="选项(_O):"/>
 		<control caption="记住文件夹视图"/>
 		<control caption="监视收藏文件夹"/>
 		<control caption="快速 Hash(占用更多 CPU 资源)"/>
-		<control caption="按扩展名过滤目标"/>
-		<control/>
 		<control caption="允许他人浏览共享"/>
 		<control caption="近期文件(_R):"/>
 		<control caption="记住:"/>
@@ -3237,13 +3234,12 @@
 		<control caption="只在已连接的网络下载和上传。"/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="上传">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="上传">
 		<control caption="选项(_O):"/>
 		<control caption="共享新的部分下载文件"/>
 		<control caption="集端模式下限制共享"/>
 		<control caption="共享预览文件"/>
-		<control caption="去除标记元数据"/>
-		<control caption="对每个用户进行限制:"/>
+		<control caption="对唯一的主机进行限制:"/>
 		<control/><control/>
 		<control caption="客户端过滤(_U):"/>
 		<control/>
@@ -3313,9 +3309,9 @@
 		<control caption="配置 Gnutella1"/>
 	</dialog>
 
-	<dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 网络:"/>
-		<control caption="(G2 推荐)"/>
+		<control caption="总是连接到 Gnutella2"/>
 		<control caption="今天连接到 Gnutella2"/>
 		<control caption="模式:"/>
 		<control caption="最优|子端|集端"/>
@@ -3336,9 +3332,9 @@
 		<control/><control/>
 		<control caption="超对等到子端:"/>
 		<control/><control/>
-		<control caption="点对点:"/>
+		<control caption="点到点:"/>
 		<control/><control/>
-		<control caption="链接压缩方式(_L):"/>
+		<control caption="链接压缩(_L):"/>
 		<control caption="集端到子端"/>
 		<control caption="子端到集端"/>
 		<control caption="集端到集端"/>
@@ -4132,7 +4128,7 @@
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="文件"/>
-		<column from="Type" to="类型"/>
+		<column from="Extension" to="扩展名"/>
 		<column from="Size" to="大小"/>
 		<column from="Folder" to="文件夹"/>
 		<column from="Hits" to="命中"/>
@@ -4214,7 +4210,7 @@
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="文件"/>
-		<column from="Type" to="类型"/>
+		<column from="Extension" to="扩展名"/>
 		<column from="Size" to="大小"/>
 		<column from="Rating" to="评级"/>
 		<column from="Status" to="状态"/>
