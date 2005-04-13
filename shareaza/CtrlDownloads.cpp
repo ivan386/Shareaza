@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/04/06 14:43:45 $"
-//	Revision:		"$Revision: 1.30 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/04/13 18:38:31 $"
+//	Revision:		"$Revision: 1.31 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -921,14 +921,15 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	ZeroMemory( &pColumn, sizeof(pColumn) );
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 	
-	int nTransfers	= pDownload->GetTransferCount();
-	int nSources	= pDownload->GetSourceCount();
+	int nTransfers		= pDownload->GetTransferCount();
+	int nSources		= pDownload->GetSourceCount();
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
 		CString strText;
 		CRect rcCell;
 		CString strSource;
+		BOOL bDisplayText	= TRUE;
 		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
@@ -965,13 +966,22 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			break;
 			
 		case DOWNLOAD_COLUMN_PROGRESS:
-			dc.Draw3dRect( &rcCell, crBack, crBack );
-			rcCell.DeflateRect( 1, 1 );
-			dc.Draw3dRect( &rcCell, crBack, crBack );
-			rcCell.DeflateRect( 0, 1 );
-			dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
-			rcCell.DeflateRect( 1, 1 );
-			CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
+			if ( rcCell.Width() > 50 )
+			{
+				bDisplayText = FALSE;
+				dc.Draw3dRect( &rcCell, crBack, crBack );
+				rcCell.DeflateRect( 1, 1 );
+				dc.Draw3dRect( &rcCell, crBack, crBack );
+				rcCell.DeflateRect( 0, 1 );
+				dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
+				rcCell.DeflateRect( 1, 1 );
+				CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
+			}
+			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
+			{
+				strText.Format( _T("%.0f%%"), pDownload->GetProgress() * 100.0 );
+			}
+
 			break;
 			
 		case DOWNLOAD_COLUMN_SPEED:
@@ -1008,7 +1018,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		case DOWNLOAD_COLUMN_PERCENTAGE:
 			if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{
-				strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0 );
+				if ( rcCell.Width() > 50 )
+					strText.Format( _T("%.2f%%"), pDownload->GetProgress() * 100.0 );
+				else
+					strText.Format( _T("%.0f%%"), pDownload->GetProgress() * 100.0 );
 			}
 			else
 				LoadString( strText, IDS_STATUS_UNKNOWN );
@@ -1018,7 +1031,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		nTextLeft	= min( nTextLeft, int(rcCell.left) );
 		nTextRight	= max( nTextRight, int(rcCell.right) );
 		
-		if ( pColumn.lParam == DOWNLOAD_COLUMN_PROGRESS ) continue;
+		if ( ! bDisplayText ) continue;
 		
 		if ( rcCell.Width() < 8 ) strText.Empty();
 		
