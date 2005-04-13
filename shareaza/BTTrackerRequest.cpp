@@ -136,12 +136,10 @@ void CBTTrackerRequest::SendUpdate(CDownloadBase* pDownload, WORD nNumWant)
 	new CBTTrackerRequest( (CDownload*)pDownload,  NULL , TRUE, nNumWant );
 }
 
-//ToDo: Confirm trackers don't send peers in response to a completed or stopped event. 
-//If they do, we can tell them not to. (change 0xFFFF to 0, below)
 void CBTTrackerRequest::SendCompleted(CDownloadBase* pDownload)
 {
 	if ( ((CDownload*)pDownload)->m_pTorrent.m_sTracker.IsEmpty() ) return;
-	new CBTTrackerRequest( (CDownload*)pDownload, _T("completed"), TRUE, 0xFFFF );
+	new CBTTrackerRequest( (CDownload*)pDownload, _T("completed"), TRUE, 0 );
 }
 
 void CBTTrackerRequest::SendStopped(CDownloadBase* pDownload)
