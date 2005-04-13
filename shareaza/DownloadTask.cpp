@@ -223,22 +223,64 @@ void CDownloadTask::RunCopySimple()
 	CString strName( nExt > 0 ? m_sName.Left( nExt ) : m_sName );
 	CString strExt(  nExt > 0 ? m_sName.Mid(  nExt ) : _T( "" ) );
 
-	CTransfers::Lock(), Uploads.OnRename( m_sFilename );
+	// Only try to move if the drive letters match else we copy always
+	if ( m_sFilename[ 0 ] == m_sPath[ 0 ] && m_sFilename[ 0 ] != '\\' )
+	{
+		TCHAR szOpFrom[MAX_PATH] = { 0 };
+		_tcsncpy( szOpFrom, m_sFilename, MAX_PATH - 2 );
+		TCHAR szOpTo[MAX_PATH] = { 0 }
+		SHFILEOPSTRUCT pOp = { 0 };
+		
+		pOp.wFunc  = FO_MOVE;
+		pOp.pFrom  = szOpFrom;
+		pOp.pTo    = szOpTo;
+		pOp.fFlags = FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
+		
+		CTransfers::Lock oLock;
+
+		// Disconnect all uploads for that file (i.e. close the file handle)
+		Uploads.OnRename( m_sFilename );
+
+		for ( int nCopy = 0 ; nCopy < 10 ; nCopy++ )
+		{
+			if ( nCopy )
+			{
+				strTarget.Format( _T("%s\\%s (%i)%s"),
+					(LPCTSTR)m_sPath, (LPCTSTR)strName, nCopy, (LPCTSTR)strExt );
+			}
+			else
+			{
+				strTarget.Format( _T("%s\\%s%s"),
+					(LPCTSTR)m_sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
+			}
+			
+			theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."),
+				(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
+			
+			_tcsncpy( szOpTo, strTarget, MAX_PATH - 2 );
+			
+			if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF &&
+				SHFileOperation( &pOp ) == 0 )
+			{
+				Uploads.OnRename( m_sFilename, strTarget );
+				m_bSuccess	= TRUE;
+				m_sFilename	= strTarget;
+				return;
+			}
+		}
+		
+		// Moving failed, so we allow uploads using the old filename for the time being
+		Uploads.OnRename( m_sFilename, m_sFilename );
+	}
 	
-	TCHAR szOpFrom[MAX_PATH], szOpTo[MAX_PATH];
-	SHFILEOPSTRUCT pOp;
+	// Moving failed or the destination drive differs from the source drive
+	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
+		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	
-	ZeroMemory( &pOp, sizeof(pOp) );
-	pOp.wFunc		= FO_MOVE;
-	pOp.pFrom		= szOpFrom;
-	pOp.pTo			= szOpTo;
-	pOp.fFlags		= FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
+	if ( hSource == INVALID_HANDLE_VALUE ) return;
 	
-	ZeroMemory( szOpFrom, sizeof(TCHAR) * MAX_PATH );
-	ZeroMemory( szOpTo, sizeof(TCHAR) * MAX_PATH );
-	_tcsncpy( szOpFrom, m_sFilename, MAX_PATH - 2 );
-	
-	for ( int nCopy = 0 ; nCopy < 10 ; nCopy++ )
+	for ( int nCopy = 0; !m_bSuccess && nCopy < 10; ++nCopy )
 	{
 		if ( nCopy )
 		{
@@ -255,38 +297,16 @@ void CDownloadTask::RunCopySimple()
 			(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
 		
 		_tcsncpy( szOpTo, strTarget, MAX_PATH - 2 );
-		
-		if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF &&
-			SHFileOperation( &pOp ) == 0 )
-		{
-			CTransfers::Lock oLock;
 
-			Uploads.OnRename( m_sFilename, strTarget );
-			m_bSuccess	= TRUE;
-			m_sFilename	= strTarget;
-			return;
-		}
-	}
-	
-	CTransfers::Lock(), Uploads.OnRename( m_sFilename, m_sFilename );
-	
-	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	
-	if ( hSource == INVALID_HANDLE_VALUE ) return;
-	
-	strTarget.Format( _T("%s\\%s%s"),
-		(LPCTSTR)m_sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
-	
-	theApp.Message( MSG_DEBUG, _T("Copying \"%s\" to \"%s\"..."),
+		theApp.Message( MSG_DEBUG, _T("Copying \"%s\" to \"%s\"..."),
 			(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
-	
-	m_bSuccess = CopyFile( hSource, strTarget, m_nSize );
+
+		m_bSuccess = CopyFile( hSource, strTarget, m_nSize );
+	}
 
 	CloseHandle( hSource );
 
-    if ( !m_bSuccess )
+	if ( !m_bSuccess )
 	{
 		// rename in place
 		strTarget.Format( _T( "%s\\%s%s" ), LPCTSTR( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ) ),
@@ -302,25 +322,26 @@ void CDownloadTask::RunCopySimple()
 		pOp.pTo			= szOpTo;
 		pOp.fFlags		= FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
 
+		CTransfers::Lock oLock;
+
+		Uploads.OnRename( m_sFilename );
+
 		if ( SHFileOperation( &pOp ) == 0 )
 		{
-			CTransfers::Lock oLock;
-
 			Uploads.OnRename( m_sFilename, strTarget );
 			m_bSuccess	= TRUE;
 			m_sFilename	= strTarget;
 			return;
 		}
+
+		Uploads.OnRename( m_sFilename, m_sFilename );
 	}
 	
 	if ( m_bSuccess )
 	{
-		{
-			CTransfers::Lock oLock;
-
-			Uploads.OnRename( m_sFilename, NULL );
+		CTransfers::Lock(),
+			Uploads.OnRename( m_sFilename, NULL ),
 			Uploads.OnRename( m_sFilename, strTarget );
-		}
 		
 		if ( ! DeleteFile( m_sFilename ) )
 			theApp.WriteProfileString( _T("Delete"), m_sFilename, _T("") );
