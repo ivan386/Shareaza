@@ -1042,6 +1042,7 @@ void CDownloads::Load()
 			}
 			else
 			{
+				theApp.Message( MSG_ERROR, _T("Error loading %s"), strPath );
 				pDownload->ClearSources();
 				delete pDownload;
 			}
