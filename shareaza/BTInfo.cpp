@@ -497,13 +497,12 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 		if ( m_nFiles == 1 )
 		{
-			Beep(500,500);
 			// Single file in a multi-file torrent
 
 			// Reset the name
 			m_sName = strPath;
 
-			// Set hashes if they aren't
+			// Set data/file hashes (if they aren't)
 			if ( m_pFiles[0].m_bSHA1 )
 			{
 				m_bDataSHA1 = m_pFiles[0].m_bSHA1;
@@ -515,8 +514,27 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_pFiles[0].m_pSHA1 = m_pDataSHA1;
 
 			}
+			if ( m_pFiles[0].m_bED2K )
+			{
+				m_bDataED2K = m_pFiles[0].m_bED2K;
+				m_pDataED2K = m_pFiles[0].m_pED2K;
+			}
+			else if ( m_bDataED2K )
+			{
+				m_pFiles[0].m_bED2K = m_bDataED2K;
+				m_pFiles[0].m_pED2K = m_pDataED2K;
+			}
+			if ( m_pFiles[0].m_bTiger )
+			{
+				m_bDataTiger = m_pFiles[0].m_bTiger;
+				m_pDataTiger = m_pFiles[0].m_pTiger;
+			}
+			else if ( m_bDataTiger )
+			{
+				m_pFiles[0].m_bTiger = m_bDataTiger;
+				m_pFiles[0].m_pTiger = m_pDataTiger;
+			}
 		}
-
 	}
 	else
 	{
