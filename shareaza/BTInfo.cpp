@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "BTInfo.h"
 #include "BENode.h"
 #include "Buffer.h"
@@ -313,15 +314,35 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode* pInfo = pRoot->GetNode( "info" );
 	if ( ! pInfo->IsType( CBENode::beDict ) ) return FALSE;
 	
+	// Get the name
 	CBENode* pName = pInfo->GetNode( "name" );
 	if ( pName->IsType( CBENode::beString ) ) m_sName = pName->GetString();
 	if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
 	{
+		// There was an error reading the name
 		m_bEncodingError = TRUE;
+		// Some torrents have an undocumented name key
 		pName = pInfo->GetNode( "name.utf-8" );
-		if ( ( pName ) && ( pName->IsType( CBENode::beString ) ) ) m_sName = pName->GetString();
-		else m_sName.Empty();
+		if ( pName )
+		{
+			if ( pName->IsType( CBENode::beString ) )
+				m_sName = pName->GetString();
+		}
+		// If that didn't get us a name, the torrent is not using the correct encoding
+		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
+		{
+			pName = pInfo->GetNode( "name" );
+			if ( pName->IsType( CBENode::beString ) ) 
+				m_sName = pName->DecodeString();
+		}
+		// If we still couldn't generate a name, there is nothing more we can do.
+		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
+		{
+			m_sName.Empty();
+		}
+
 	}
+	// If we still don't have a name, generate one
 	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
 	
 	CBENode* pPL = pInfo->GetNode( "piece length" );
@@ -402,16 +423,30 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( pPath->GetCount() > 32 ) return FALSE;
 
 			// Check the path is valid
+			CString strPath = _T("#ERROR#");
 			pPart = pPath->GetNode( 0 );
-			if ( pPart->IsType( CBENode::beString ) )
+			if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
+			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
 			{
-				if ( _tcsicmp( pPart->GetString().GetString() , _T("#ERROR#") ) == 0 )
+				// There was an error reading the path
+				m_bEncodingError = TRUE;
+				// Check for other possible path keys
+				pPath = pFile->GetNode( "path.utf-8" );
+				if ( pPath )
 				{
-					m_bEncodingError = TRUE;
-					pPath = pFile->GetNode( "path.utf-8" );
-					if ( ( ! pPath ) || ( ! pPath->IsType( CBENode::beList ) ) ) return FALSE;
-					if ( pPath->GetCount() > 32 ) return FALSE;
+					pPart = pPath->GetNode( 0 );
+					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
 				}
+				// If we still don't have a path, it must be an encoding failure
+				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
+				{
+					pPath = pFile->GetNode( "path" );
+					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString();
+				}
+						
+				if ( ! pPath ) return FALSE;
+				if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+				if ( pPath->GetCount() > 32 ) return FALSE;
 			}
 
 			// Hack to prefix all
@@ -425,8 +460,14 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				
 				if ( m_pFiles[ nFile ].m_sPath.GetLength() )
 					m_pFiles[ nFile ].m_sPath += '\\';
-				
-				m_pFiles[ nFile ].m_sPath += CDownloadTask::SafeFilename( pPart->GetString() );
+
+				// Get the path
+				strPath = pPart->GetString();
+				// Check for encoding error
+				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
+					strPath = pPart->DecodeString();
+
+				m_pFiles[ nFile ].m_sPath += CDownloadTask::SafeFilename( strPath );
 			}
 			
 			if ( CBENode* pSHA1 = pFile->GetNode( "sha1" ) )

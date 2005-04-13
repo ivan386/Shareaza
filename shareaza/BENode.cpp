@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "BENode.h"
 #include "Buffer.h"
 #include "SHA.h"
