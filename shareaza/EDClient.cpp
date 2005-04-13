@@ -617,6 +617,38 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CEDClient get comments
+
+BOOL CEDClient::SendCommentsPacket(int nRating, LPCTSTR pszComments)
+{
+	// If we have not sent comments yet, and this client supports comments
+	if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) && ( m_bEmule ) )
+	{ 
+		// Remove new lines and excess whitespace
+		CString strComments = pszComments;
+		strComments.Replace( '\n', ' ' );
+		strComments.Trim();
+
+		// If there's comments in the library
+		if ( ( nRating > 0 ) || ( strComments.GetLength() ) )
+		{
+			// Create the comments packet
+			CEDPacket* pComment = CEDPacket::New( ED2K_C2C_FILEDESC, ED2K_PROTOCOL_EMULE  );
+			pComment->WriteByte( (BYTE)min( nRating, 5 ) );
+			pComment->WriteLongEDString( strComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
+
+			// Send comments / rating
+			theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), m_sAddress );
+			m_bCommentSent = TRUE;
+			Send( pComment );
+			
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CEDClient HELLO packet exchange
 
 void CEDClient::SendHello(BYTE nType)
@@ -1122,7 +1154,9 @@ void CEDClient::DeriveVersion()
 
 BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 {
-	CEDPacket* pComment = NULL;
+	int nRating;
+	CString strComments;
+
 	if ( pPacket->GetRemaining() < sizeof(MD4) )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
@@ -1141,30 +1175,16 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	{
 		// Create the reply packet
 		pReply->WriteEDString( pFile->m_sName, m_bEmUnicode );
-
-		// If we have not sent comments yet, and this client supports comments
-		if ( ( ! m_bCommentSent ) && ( m_bEmComments > 0 ) && ( m_bEmule ) )
-		{ 
-			// If there's comments in the library
-			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
-			{
-				// Create the comments packet
-				pComment = CEDPacket::New( ED2K_C2C_FILEDESC, ED2K_PROTOCOL_EMULE  );
-				pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
-				pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_bEmUnicode );
-				m_bCommentSent = TRUE;
-			}
-		}
+		// Get the comments/rating data
+		nRating = pFile->m_nRating;
+		strComments = pFile->m_sComments;
 		oLock.Unlock();
 
 		// Send reply
 		Send( pReply );
-		// Send comments / rating
-		if ( pComment ) 
-		{
-			theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), m_sAddress );
-			Send( pComment );
-		}
+		// Send comments / rating (if required)
+		SendCommentsPacket( nRating, strComments );
+
 
 		return TRUE;
 	}

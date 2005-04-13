@@ -103,6 +103,34 @@ void CEDPacket::WriteEDString(LPCTSTR psz, BOOL bUnicode)
 	ASSERT( nLen <= 0xFFFF );
 }
 
+
+CString CEDPacket::ReadLongEDString(BOOL bUnicode)
+{
+	DWORD nLen = ReadLongLE();
+	if ( bUnicode )
+		return ReadStringUTF8( nLen );
+	else
+		return ReadString( nLen );
+}
+
+void CEDPacket::WriteLongEDString(LPCTSTR psz, BOOL bUnicode)
+{
+	DWORD nLen;
+	if ( bUnicode )
+	{
+		nLen = GetStringLenUTF8( psz );
+		WriteLongLE( nLen );
+		WriteStringUTF8( psz, FALSE );
+	}
+	else
+	{
+		nLen = GetStringLen( psz );
+		WriteLongLE( nLen );
+		WriteString( psz, FALSE );
+	}
+	ASSERT( nLen <= 0xFFFF );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CEDPacket buffers
 

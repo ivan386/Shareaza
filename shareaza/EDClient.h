@@ -102,6 +102,7 @@ public:
 	void	WritePartStatus(CEDPacket* pPacket, CDownload* pDownload);
 	BOOL	SeekNewDownload(CDownloadSource* pExcept = NULL);
 	inline  void OpenChat() { m_bOpenChat = TRUE; }
+	BOOL	SendCommentsPacket(int nRating, LPCTSTR pszComments);
 protected:
 	void	DeriveSoftwareVersion();		// ID clients using the newer 'SoftwareVersion' tag
 	void	DeriveVersion();				// ID clients using the older method(s)

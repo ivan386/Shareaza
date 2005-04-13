@@ -335,7 +335,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 		// Even if we're full, we still need to accept connections from clients we have queued, etc
 		if ( ( GetByIP( &pConnection->m_pHost.sin_addr ) == NULL ) || ( IsOverloaded() ) )
 		{
-			//*********** Debig stuff- test this
+			//*********** Debug stuff- test this
 			theApp.Message( MSG_ERROR, _T("**** Rejecting ed2k connection from %s, max client connections reached."),
 				(LPCTSTR)pConnection->m_sAddress );
 			return FALSE;

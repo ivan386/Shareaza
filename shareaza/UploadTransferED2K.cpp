@@ -85,22 +85,8 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 	CSingleLock oLock( &Library.m_pSection, TRUE );
 	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( pMD4, TRUE, TRUE ) )
 	{
-		// If we have not sent comments yet, and this client supports comments
-		if ( ( m_pClient ) && ( ! m_pClient->m_bCommentSent ) && ( m_pClient->m_bEmComments > 0 ) && ( m_pClient->m_bEmule ) )
-		{ 
-			// If there's comments in the library
-			if ( ( pFile->m_nRating > 0 ) || ( pFile->m_sComments.GetLength() ) )
-			{
-				// Create the comments packet
-				CEDPacket* pComment = CEDPacket::New( ED2K_C2C_FILEDESC, ED2K_PROTOCOL_EMULE  );
-				pComment->WriteByte( (BYTE)min( pFile->m_nRating, 5 ) );
-				pComment->WriteEDString( pFile->m_sComments.Left(ED2K_COMMENT_MAX), m_pClient->m_bEmUnicode );
-				// Send comments / rating
-				theApp.Message( MSG_DEBUG, _T("Sending file comments to %s"), m_sAddress );
-				Send( pComment );
-				m_pClient->m_bCommentSent = TRUE;
-			}
-		}
+		// Send comments if necessary
+		if ( m_pClient ) m_pClient->SendCommentsPacket( pFile->m_nRating, pFile->m_sComments );
 
 		RequestComplete( pFile );
 		oLock.Unlock();

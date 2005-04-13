@@ -81,9 +81,11 @@ public:
 // Operations
 public:
 	CString				ReadEDString(DWORD ServerFlags);
-	CString				ReadEDString(BOOL bUnicode);
 	void				WriteEDString(LPCTSTR psz, DWORD ServerFlags);
+	CString				ReadEDString(BOOL bUnicode);
 	void				WriteEDString(LPCTSTR psz, BOOL bUnicode);
+	CString				ReadLongEDString(BOOL bUnicode);
+	void				WriteLongEDString(LPCTSTR psz, BOOL bUnicode);
 	BOOL				Deflate();
 	BOOL				InflateOrRelease(BYTE nEdProtocol);
 public:
