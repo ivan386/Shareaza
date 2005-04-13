@@ -400,6 +400,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	}
 	else if ( CBENode* pFiles = pInfo->GetNode( "files" ) )
 	{
+		CString strPath;
+
 		if ( ! pFiles->IsType( CBENode::beList ) ) return FALSE;
 		m_nFiles = pFiles->GetCount();
 		if ( ! m_nFiles || m_nFiles > 8192 ) return FALSE;
@@ -423,7 +425,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( pPath->GetCount() > 32 ) return FALSE;
 
 			// Check the path is valid
-			CString strPath = _T("#ERROR#");
+			strPath = _T("#ERROR#");
 			pPart = pPath->GetNode( 0 );
 			if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
 			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
@@ -450,7 +452,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			}
 
 			// Hack to prefix all
-			//m_pFiles[ nFile ].m_sPath = m_sName;
 			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );
 			
 			for ( int nPath = 0 ; nPath < pPath->GetCount() ; nPath++ )
@@ -493,6 +494,29 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			
 			m_nTotalSize += m_pFiles[ nFile ].m_nSize;
 		}
+
+		if ( m_nFiles == 1 )
+		{
+			Beep(500,500);
+			// Single file in a multi-file torrent
+
+			// Reset the name
+			m_sName = strPath;
+
+			// Set hashes if they aren't
+			if ( m_pFiles[0].m_bSHA1 )
+			{
+				m_bDataSHA1 = m_pFiles[0].m_bSHA1;
+				m_pDataSHA1 = m_pFiles[0].m_pSHA1;
+			}
+			else if ( m_bDataSHA1 )
+			{
+				m_pFiles[0].m_bSHA1 = m_bDataSHA1;
+				m_pFiles[0].m_pSHA1 = m_pDataSHA1;
+
+			}
+		}
+
 	}
 	else
 	{
