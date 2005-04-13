@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/03/11 16:28:30 $"
-//	Revision:		"$Revision: 1.15 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/04/13 20:03:48 $"
+//	Revision:		"$Revision: 1.16 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -532,11 +532,38 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
-			CString strExtention = pFile->m_sName.Right(3);
-			CharLower( strExtention.GetBuffer() );
-			strExtention.ReleaseBuffer();
+			CString strExtension = pFile->m_sName.Right(3);
+			CharLower( strExtension.GetBuffer() );
+			strExtension.ReleaseBuffer();
 
-			if ( ( strExtention != _T("mp3") ) || ( ! pFile->m_bMetadataAuto ) )
+			HANDLE hFile = CreateFile( pFile->m_pFolder->m_sPath + _T("\\") + pFile->m_sName, GENERIC_READ, FILE_SHARE_READ,
+					NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+			
+			BOOL bXmlPossiblyModified = FALSE;
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				FILETIME pFileDataTime;
+				ULARGE_INTEGER nMetaDataTime;
+				ULARGE_INTEGER nFileDataTime;
+
+				GetFileTime( hFile, NULL, NULL, &pFileDataTime );
+				nFileDataTime.HighPart = pFileDataTime.dwHighDateTime;
+				nFileDataTime.LowPart = pFileDataTime.dwLowDateTime;
+				// Convert 100 ns into seconds
+				nFileDataTime.QuadPart /= 10000000;
+
+				nMetaDataTime.HighPart = pFile->m_pMetadataTime.dwHighDateTime;
+				nMetaDataTime.LowPart = pFile->m_pMetadataTime.dwLowDateTime;
+				nMetaDataTime.QuadPart /= 10000000;
+
+				// assume that XML was not modified during the first 10 sec. of creation
+				if ( nMetaDataTime.HighPart = nFileDataTime.HighPart &&
+					 nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 ) 
+					 bXmlPossiblyModified = TRUE;
+				CloseHandle( hFile );
+			}
+
+			if ( ( strExtension != _T("mp3") ) || bXmlPossiblyModified )
 				nSelected--;
 		}
 	}
@@ -553,13 +580,11 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 
 	for ( CLibraryFile* pFile ; pFile = GetNextSelectedFile() ; )
 	{
-		CString strExtention = pFile->m_sName.Right(3);
-		CharLower( strExtention.GetBuffer() );
-		strExtention.ReleaseBuffer();
+		CString strExtension = pFile->m_sName.Right(3);
+		CharLower( strExtension.GetBuffer() );
+		strExtension.ReleaseBuffer();
 
-		if ( ( strExtention == _T("mp3") ) && ( pFile->m_bMetadataAuto ) )
-			dlg.AddFile( pFile );
-
+		if ( strExtension == _T("mp3") ) dlg.AddFile( pFile );
 	}
 
 	pLock.Unlock();
