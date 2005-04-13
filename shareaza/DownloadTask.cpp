@@ -228,7 +228,7 @@ void CDownloadTask::RunCopySimple()
 	{
 		TCHAR szOpFrom[MAX_PATH] = { 0 };
 		_tcsncpy( szOpFrom, m_sFilename, MAX_PATH - 2 );
-		TCHAR szOpTo[MAX_PATH] = { 0 }
+		TCHAR szOpTo[MAX_PATH] = { 0 };
 		SHFILEOPSTRUCT pOp = { 0 };
 		
 		pOp.wFunc  = FO_MOVE;
@@ -293,11 +293,6 @@ void CDownloadTask::RunCopySimple()
 				(LPCTSTR)m_sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
 		}
 		
-		theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."),
-			(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
-		
-		_tcsncpy( szOpTo, strTarget, MAX_PATH - 2 );
-
 		theApp.Message( MSG_DEBUG, _T("Copying \"%s\" to \"%s\"..."),
 			(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
 
