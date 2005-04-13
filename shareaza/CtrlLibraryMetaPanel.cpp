@@ -368,7 +368,7 @@ void CLibraryMetaPanel::OnPaint()
 			}
 			str += _T('\x2026');
 		}
-		else str.Empty();
+		else if ( nLimit <= 0 ) str.Empty();
 	}
 	else str.Empty();
 
