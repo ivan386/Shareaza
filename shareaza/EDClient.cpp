@@ -627,6 +627,7 @@ BOOL CEDClient::SendCommentsPacket(int nRating, LPCTSTR pszComments)
 		// Remove new lines and excess whitespace
 		CString strComments = pszComments;
 		strComments.Replace( '\n', ' ' );
+		strComments.Replace( '\r', ' ' );
 		strComments.Trim();
 
 		// If there's comments in the library
