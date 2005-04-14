@@ -49,7 +49,6 @@ END_MESSAGE_MAP()
 // CDownloadsSettingsPage property page
 
 CDownloadsSettingsPage::CDownloadsSettingsPage() : CSettingsPage(CDownloadsSettingsPage::IDD)
-, m_nQueueLimit(0)
 {
 	//{{AFX_DATA_INIT(CDownloadsSettingsPage)
 	m_sDownloadsPath = _T("");
@@ -59,6 +58,7 @@ CDownloadsSettingsPage::CDownloadsSettingsPage() : CSettingsPage(CDownloadsSetti
 	m_nMaxDownTransfers = 0;
 	m_sBandwidth = _T("");
 	m_bRequireConnect = FALSE;
+	m_sQueueLimit = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -83,7 +83,7 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_BANDWIDTH, m_sBandwidth);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
 	//}}AFX_DATA_MAP
-	DDX_Text(pDX, IDC_QUEUE_LIMIT, m_nQueueLimit);
+	DDX_Text(pDX, IDC_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Control(pDX, IDC_QUEUE_LIMIT_SPIN, m_wndQueueLimit);
 }
 
@@ -99,7 +99,6 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nMaxDownFiles			= Settings.Downloads.MaxFiles;
 	m_nMaxDownTransfers		= Settings.Downloads.MaxTransfers;
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
-	m_nQueueLimit			= Settings.Downloads.QueueLimit;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
 	m_wndMaxDownFiles.SetRange( 1, 100 );
@@ -109,7 +108,12 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
-	
+
+	if ( Settings.Downloads.QueueLimit )
+		m_sQueueLimit.Format( _T("%d"), Settings.Downloads.QueueLimit );
+	else
+		m_sQueueLimit = _T("MAX");
+
 	m_bDownloadsChanged = FALSE;
 	
 	UpdateData( FALSE );
@@ -191,9 +195,32 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 
 void CDownloadsSettingsPage::OnOK() 
 {
-	UpdateData();
+	DWORD nQueueLimit = 0;
+	UpdateData( TRUE );
 
-	if ( ( m_nQueueLimit > 0 ) && ( m_nQueueLimit < 2000 ) && ( ! Settings.Live.QueueLimitWarning ) &&
+	// Figure out what the text in the queue limit box means
+	if ( ( m_sQueueLimit.Find( _T("MAX") ) > 0 ) || ( m_sQueueLimit.Find( _T("NONE") ) > 0 ) )
+	{
+		Beep(640,500);
+		// Max queue is not limited
+	}
+	else
+	{
+		int nPosition = 1, nCount = m_sQueueLimit.GetLength();
+		while ( nCount-- )
+		{
+			TCHAR cCharacter = m_sQueueLimit.GetAt( nCount );
+			if ( ( cCharacter >= '0' ) &&
+				 ( cCharacter <= '9' ) )
+			{
+				nQueueLimit += ( ( cCharacter - '0') * nPosition );
+				nPosition *= 10;
+			}
+		}
+	}
+
+	// Check the queue limit value is okay
+	if ( ( nQueueLimit > 0 ) && ( nQueueLimit < 2000 ) && ( ! Settings.Live.QueueLimitWarning ) &&
 		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) )
 	{
 		// Warn the user about setting the max queue wait limit too low
@@ -202,26 +229,33 @@ void CDownloadsSettingsPage::OnOK()
 					
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDNO )
 		{
-			m_nQueueLimit = 0;
-			UpdateData( FALSE );
+			nQueueLimit = 0;
 		}
 		else
 		{
 			// Don't need to warn the user again.
 			Settings.Live.QueueLimitWarning = TRUE;
 		}
-
 	}
+
+	// Redraw the text in the queue limit box (in case the limit changed)
+	if ( nQueueLimit > 0 )
+		m_sQueueLimit.Format( _T("%d"), nQueueLimit );
+	else
+		m_sQueueLimit = _T("MAX");
+	UpdateData( FALSE );
 
 	Settings.Downloads.CompletePath			= m_sDownloadsPath;
 	Settings.Downloads.IncompletePath		= m_sIncompletePath;
 	Settings.Downloads.MaxFiles				= min ( m_nMaxDownFiles, 100 );
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
-	Settings.Downloads.QueueLimit			= m_nQueueLimit;
+	Settings.Downloads.QueueLimit			= nQueueLimit;
 	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidth, TRUE ) / 8;
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
+
+
 	CreateDirectory( m_sDownloadsPath, NULL );
 	CreateDirectory( m_sIncompletePath, NULL );
 	//CreateDirectory( m_sTorrentPath, NULL );

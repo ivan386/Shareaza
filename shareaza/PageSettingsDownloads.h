@@ -54,7 +54,7 @@ public:
 	int		m_nMaxDownTransfers;
 	CString	m_sBandwidth;
 	BOOL	m_bRequireConnect;
-	int m_nQueueLimit;
+	CString m_sQueueLimit;
 	CSpinButtonCtrl m_wndQueueLimit;
 	//}}AFX_DATA
 
