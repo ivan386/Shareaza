@@ -193,6 +193,26 @@ void CDownloadsSettingsPage::OnOK()
 {
 	UpdateData();
 
+	if ( ( m_nQueueLimit > 0 ) && ( m_nQueueLimit < 2000 ) && ( ! Settings.Live.QueueLimitWarning ) &&
+		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) )
+	{
+		// Warn the user about setting the max queue wait limit too low
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_WARN_QUEUELIMIT );
+					
+		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDNO )
+		{
+			m_nQueueLimit = 0;
+			UpdateData( FALSE );
+		}
+		else
+		{
+			// Don't need to warn the user again.
+			Settings.Live.QueueLimitWarning = TRUE;
+		}
+
+	}
+
 	Settings.Downloads.CompletePath			= m_sDownloadsPath;
 	Settings.Downloads.IncompletePath		= m_sIncompletePath;
 	Settings.Downloads.MaxFiles				= min ( m_nMaxDownFiles, 100 );

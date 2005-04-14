@@ -416,6 +416,7 @@ CSettings::CSettings()
 	Live.DiskSpaceWarning	= FALSE;
 	Live.DiskWriteWarning	= FALSE;
 	Live.AdultWarning		= FALSE;
+	Live.QueueLimitWarning	= FALSE;
 
 	// Add all settings
 	Setup();

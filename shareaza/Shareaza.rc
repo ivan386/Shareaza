@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,129
- PRODUCTVERSION 2,1,0,129
+ FILEVERSION 2,1,0,130
+ PRODUCTVERSION 2,1,0,130
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 129"
+            VALUE "FileVersion", "2, 1, 0, 130"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 129"
+            VALUE "ProductVersion", "2, 1, 0, 130"
         END
     END
     BLOCK "VarFileInfo"
@@ -5740,6 +5740,12 @@ BEGIN
     IDS_RATING_4            "Good"
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SETTINGS_WARN_QUEUELIMIT 
+                            "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
 END
 
 #endif    // English (Australia) resources

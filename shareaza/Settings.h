@@ -450,6 +450,7 @@ public:
 		BOOL		DiskSpaceWarning;			// Has the user been warned of low disk space?
 		BOOL		DiskWriteWarning;			// Has the user been warned of write problems?
 		BOOL		AdultWarning;				// Has the user been warned about the adult filter?
+		BOOL		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
 		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
