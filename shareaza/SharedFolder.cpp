@@ -1,7 +1,7 @@
 //
 // SharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -501,7 +501,7 @@ BOOL CLibraryFolder::SetMonitor()
 
 		m_hMonitor = FindFirstChangeNotification( m_sPath, TRUE,
 			FILE_NOTIFY_CHANGE_FILE_NAME|FILE_NOTIFY_CHANGE_DIR_NAME|
-			FILE_NOTIFY_CHANGE_SIZE|FILE_NOTIFY_CHANGE_LAST_WRITE );
+			FILE_NOTIFY_CHANGE_LAST_WRITE );
 	}
 
 	return ( m_hMonitor != INVALID_HANDLE_VALUE );
