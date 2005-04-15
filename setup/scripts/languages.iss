@@ -261,7 +261,7 @@ no.icons_license=Lisens
 no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
 no.dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
-no.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+no.dialog_firewall=Installasjonen klarte ikke å lage unntak for Shareaza i Windows Brannmuren. %nVennligst legg til shareaza i brannmurens unntak manuelt.
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
