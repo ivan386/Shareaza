@@ -66,34 +66,34 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 		(QWORD)pDownload->m_nTorrentDownloaded,
 		(QWORD)pDownload->GetVolumeRemaining() );
 	
-	//If the IP is valid, add it.
+	// If the IP is valid, add it.
 	if ( Network.m_pHost.sin_addr.S_un.S_addr != 0 )
 	{	
 		strURL += _T("&ip=");
 		strURL += inet_ntoa( Network.m_pHost.sin_addr );
-		//Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
+		// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
 	}
 	
-	//If an event was specified, add it.
+	// If an event was specified, add it.
 	if ( pszVerb != NULL )
 	{	
 		strURL += _T("&event=");
 		strURL += pszVerb;
-		//Valid events: started, completed, stopped
+		// Valid events: started, completed, stopped
 	}
 
-	//If a (valid) number of peers was specified, request that many.
+	// If a (valid) number of peers was specified, request that many.
 	if ( nNumWant < 300 )
 	{	
 		CString strNumWant;
 		strNumWant.Format( _T("&numwant=%i"), nNumWant );
 		strURL += strNumWant;
-		//Note: If this is omitted, trackers usually respond with 50, which is a good default.
-		//Generally, it's not worth the bandwidth to send this. However, if we have plenty of 
-		//sources, then ask for a lower number. (Say, 5 just to ensure some sources are fresh)
+		// Note: If this is omitted, trackers usually respond with 50, which is a good default.
+		// Generally, it's not worth the bandwidth to send this. However, if we have plenty of 
+		// sources, then ask for a lower number. (EG 5, just to ensure some sources are fresh)
 	}	
 
-	//If a key is valid and keys active, use it.
+	// If the TrackerKey is true and we have a valid key, then use it.
 	if ( ( pDownload->m_sKey.GetLength() > 4 ) && ( Settings.BitTorrent.TrackerKey ) )
 	{	
 		ASSERT ( pDownload->m_sKey.GetLength() < 20 );		//Key too long
@@ -333,7 +333,7 @@ BOOL CBTTrackerRequest::Process(CBENode* pRoot)
 		}
 	}
 
-	//Okay, clear any errors and continue
+	// Okay, clear any errors and continue
 	m_pDownload->OnTrackerEvent( TRUE );
 
 	theApp.Message( MSG_DEFAULT, IDS_BT_TRACK_SUCCESS,
