@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,8 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( 
 	m_sAddress		= inet_ntoa( m_pHost.sin_addr );
 	m_sNick			= m_pClient->m_sNick;
 	
-	m_tRanking		= 0;
+	m_tRankingSent	= 0;
+	m_tRankingCheck	= 0;
 	
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 }
@@ -133,7 +134,7 @@ BOOL CUploadTransferED2K::Request(MD4* pMD4)
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
 	m_nRanking = -1;
-	return SendRanking();
+	return CheckRanking();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -188,9 +189,20 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 			Close();
 			return FALSE;
 		}
-		else if ( tNow > m_tRanking && tNow - m_tRanking >= Settings.eDonkey.QueueRankThrottle )	// If client hasn't had an update recently
-		{	// Then send them one. (Note: Updates are only sent if queue rank has changed)
-			if ( ! SendRanking() ) return FALSE;
+		else 
+		{
+			DWORD nCheckThrottle;	// Throttle for how often ED2K clients have queue rank checked
+			if ( m_nRanking <= 2 ) nCheckThrottle = 2 * 1000;
+			else if ( m_nRanking < 10 ) nCheckThrottle = 15 * 1000;
+			else if ( m_nRanking < 50 ) nCheckThrottle = 1 * 60 * 1000;
+			else if ( m_nRanking < 200 ) nCheckThrottle = 4 * 60 * 1000;
+			else nCheckThrottle = 8 * 60 * 1000;
+
+			if ( tNow > m_tRankingCheck && tNow - m_tRankingCheck >= nCheckThrottle )	
+			{	
+				// Check the queue rank. Start upload or send rank update if required.
+				if ( ! CheckRanking() ) return FALSE;
+			}
 		}
 	}
 	else if ( m_nState == upsUploading )
@@ -238,7 +250,7 @@ BOOL CUploadTransferED2K::OnConnected()
 	
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 	
-	return SendRanking();
+	return CheckRanking();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -283,7 +295,7 @@ void CUploadTransferED2K::OnQueueKick()
 	}
 	else
 	{
-		SendRanking();
+		CheckRanking();
 	}
 }
 
@@ -616,27 +628,31 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K ranking update
 
-BOOL CUploadTransferED2K::SendRanking()
+BOOL CUploadTransferED2K::CheckRanking()
 {
+	DWORD tNow = GetTickCount();
 	int nPosition = UploadQueues.GetPosition( this, TRUE );
 	
 	if ( nPosition < 0 )
-	{	// Invalid queue position or queue deleted
+	{	
+		// Invalid queue position, or queue deleted. Drop client and exit.
 		Cleanup();
 		Close( TRUE );
 		return FALSE;
 	}
 	
-	// If queue ranking hasn't changed, don't send (unless specifically requested: m_nRanking set to -1)
+	// Update 'ranking checked' timer
+	m_tRankingCheck = tNow;
+
+	// If queue ranking hasn't changed, don't bother sending an update
+	// Note: if a rank was requested by the remote client, then m_nRanking will be set to -1.
 	if ( m_nRanking == nPosition ) return TRUE;	
-	// Update the 'ranking sent' variables
-	m_nRanking = nPosition;
-	m_tRanking = GetTickCount();
+
 	
 	if ( nPosition == 0 )
-	{	//Ready to start uploading
-		m_tRequest = m_tRanking;
-		
+	{	
+		//Ready to start uploading
+
 		if ( m_pClient->IsOnline() )
 		{
 			m_nState = upsRequest;
@@ -647,36 +663,56 @@ BOOL CUploadTransferED2K::SendRanking()
 			m_nState = upsConnecting;
 			m_pClient->Connect();
 		}
+
+		// Update the 'request sent' timer
+		m_tRequest = m_tRankingCheck;
+
+		// Update the 'ranking sent' variables
+		m_nRanking = nPosition;
+		m_tRankingSent = tNow;
 	}
 	else if ( m_pClient->IsOnline() )
-	{	//Upload is queued
-		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-		
-		if ( UploadQueues.Check( m_pQueue ) )
+	{	
+		//Upload is queued
+
+		// Check if we should send a ranking packet- If we have not sent one in a while, or one was requested
+		if ( ( tNow > m_tRankingSent && tNow - m_tRankingSent >= Settings.eDonkey.QueueRankThrottle ) ||
+			 (  m_nRanking == -1 ) )
+			 
 		{
-			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
-				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
-				(LPCTSTR)m_pQueue->m_sName );
-		}
-		
-		pLock.Unlock();
-		
-		m_nState = upsQueued;
-		
-		if ( m_pClient->m_bEmule )
-		{	//eMule queue ranking
-			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANKING, ED2K_PROTOCOL_EMULE );
-			pPacket->WriteShortLE( nPosition );
-			pPacket->WriteShortLE( 0 );
-			pPacket->WriteLongLE( 0 );
-			pPacket->WriteLongLE( 0 );
-			Send( pPacket );
-		}
-		else
-		{	//older eDonkey style
-			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANK );
-			pPacket->WriteLongLE( nPosition );
-			Send( pPacket );
+			// Send a queue rank packet
+			CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
+			
+			if ( UploadQueues.Check( m_pQueue ) )
+			{
+				theApp.Message( MSG_DEFAULT, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
+					(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
+					(LPCTSTR)m_pQueue->m_sName );
+			}
+			
+			pLock.Unlock();
+			
+			m_nState = upsQueued;
+			
+			if ( m_pClient->m_bEmule )
+			{	//eMule queue ranking
+				CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANKING, ED2K_PROTOCOL_EMULE );
+				pPacket->WriteShortLE( nPosition );
+				pPacket->WriteShortLE( 0 );
+				pPacket->WriteLongLE( 0 );
+				pPacket->WriteLongLE( 0 );
+				Send( pPacket );
+			}
+			else
+			{	//older eDonkey style
+				CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_QUEUERANK );
+				pPacket->WriteLongLE( nPosition );
+				Send( pPacket );
+			}
+
+			// Update the 'ranking sent' variables
+			m_nRanking = nPosition;
+			m_tRankingSent = tNow;
 		}
 	}
 	

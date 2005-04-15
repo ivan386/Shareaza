@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,10 +39,11 @@ public:
 	
 // Attributes
 public:
-	CEDClient*		m_pClient;
-	DWORD			m_tRequest;
-	int				m_nRanking;
-	DWORD			m_tRanking;
+	CEDClient*		m_pClient;					// The remote client.
+	DWORD			m_tRequest;					// The time a request was sent.
+	int				m_nRanking;					// The last queue position the remote client was sent.
+	DWORD			m_tRankingSent;				// The time a queue ranking packet was last sent.
+	DWORD			m_tRankingCheck;			// The time the queue position was last checked.
 private:
     FF::SimpleFragmentQueue m_oRequested;
     FF::SimpleFragmentQueue m_oServed;
@@ -64,7 +65,7 @@ public:
 protected:
 	void	Cleanup(BOOL bDequeue = TRUE);
 	void	Send(CEDPacket* pPacket, BOOL bRelease = TRUE);
-	BOOL	SendRanking();
+	BOOL	CheckRanking();		// Check the client's Q rank. Start upload or send notification if required.
 	void	AddRequest(QWORD nOffset, QWORD nLength);
 	BOOL	ServeRequests();
 	BOOL	OpenFile();
