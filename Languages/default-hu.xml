@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.114"
+version="2.1.0.121"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -1411,7 +1411,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_CHAT_ITALIC" text="Dőlt"/>
                        <item id="ID_CHAT_UNDERLINE" text="Aláhúzott"/>
                        <item id="ID_CHAT_COLOUR" text="Színek"/>
-                       <item id="ID_CHAT_EMOTICONS" text="Szmájlik"/>
+                       <item id="ID_CHAT_EMOTICONS" text="Vigyorik"/>
                </menu>
                <separator/>
                <item id="ID_CHAT_TIMESTAMP" text="Időbélyegző"/>
@@ -2008,6 +2008,27 @@ prompt="Kattints ide a magyar nyelvhez."
     uninstaláld a nem használt programokat.</text>
 </document>
 
+<document name="GeneralHelp.DiskWriteFail">
+                   <text format="b">Egy fontos mappába nem lehet írni</text>
+                   <newline gap="8"/>
+                   <text>Egy, a Shareaza által használt mappa vagy lemez nem írható.</text>
+                   <newline gap="8"/>
+                   <text>Lehet, hogy egy hálózati vagy cserélhető meghajtó el lett távolítva vagy
+                   nincs írási jogod a megadott mappában. Kérlek, ellenőrizd a mappákat és a jogaidat vagy
+                   adj meg egy másik mappát.</text>
+        </document>
+
+       <document name="GeneralHelp.ConnectionFail">
+               <text format="b">Az internetkapcsolat megszakadt</text>
+               <newline gap="8"/>
+               <text>A Windows szerint nincs internetkapcsolat.</text>
+               <newline gap="8"/>
+               <text>Valószínű, hogy a modem vagy a router megszakította a kapcsolatot az
+               internettel. Újra kell kapcsolódnod az internethez.</text>
+               <newline gap="8"/>
+               <text>A Shareaza Nem próbálkozik tovább a kapcsolódással, hogy meggátolja a letárolt kiszolgálók elvesztését.</text>
+       </document>
+
 <document name="GeneralHelp.XPsp2">
                 <text format="b">Windows XP Service Pack 2 észlelve</text>
               <newline gap="8"/>
@@ -2042,7 +2063,7 @@ prompt="Kattints ide a magyar nyelvhez."
 
        <!-- Search help documents -->
 
-<document name="SearchHelp.BadSearch">
+<document name="SearchHelp.BadSearch1">
     <text format="b">Gyenge keresés</text>
     <newline gap="8"/>
     <text>Ez a keresés gyengén lett kivitelezve és nem működik megfelelően.
@@ -2062,8 +2083,22 @@ prompt="Kattints ide a magyar nyelvhez."
                    egy minimális betűszámból álló kifejezést kell használni a keresés elindításához.</text>
                    <newline gap="8"/>
                    <text>Számok és kiterjesztések után is lehet keresni, de ezekhez még egyébb kifejezéseket is
-                   hozzá kell venni a keresés előtt.</text>
-           </document>
+                   hozzá kell venni a keresés előtt. Az írásjeleket nem veszi figyelembe a kereső.</text>
+       </document>
+
+       <document name="SearchHelp.BadSearch3">
+               <text format="b">Gyenge keresés</text>
+               <newline gap="8"/>
+               <text>Ez a keresés csak fájlkiterjesztéseket vagy nem kereshető kifejezéseket tartalmaz.</text>
+               <newline gap="8"/>
+               <text>Ha problémáid vannak a kereséssel, akkor gondolj arra, hogy ez is olyan, mint a
+               weben való keresés.</text>
+               <newline gap="8"/>
+               <text>Az általános szavak használata valószínűleg nem adnak megfelelő eredményt,
+               így csökken a hatékonyság és a fölösleges eredmények csak növelik a sávszéligényét a programnak.</text>
+               <newline gap="8"/>
+               <text>További segítség a Shareaza weboldalán található.</text>
+       </document>
 
        <document name="SearchHelp.AdultSearch">
                <text format="b">Ezt a keresést nem lehet elkezdeni</text>
@@ -2114,8 +2149,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_CHAT_CLEAR" message="Szöveg törlése ebben az ablakban."/>
        <tip id="ID_CHAT_COLOUR" message="Betűszín kiválaztása (Ctrl+K)"/>
        <tip id="ID_CHAT_CONNECT" message="Kapcsolódik a chathez."/>
-       <tip id="ID_CHAT_DISCONNECT" message="Lekapcsolódik a chathről."/>
-       <tip id="ID_CHAT_EMOTICONS" message="Szmájli beszúrása."/>
+       <tip id="ID_CHAT_DISCONNECT" message="Lekapcsolódik a chatről."/>
+       <tip id="ID_CHAT_EMOTICONS" message="Vigyori beszúrása."/>
        <tip id="ID_CHAT_ITALIC" message="Dőlt betűk (Ctrl+I)"/>
        <tip id="ID_CHAT_PRIORITY" message="Feltöltési elsőbbséget ad a felhasználnak."/>
        <tip id="ID_CHAT_SEND_FILE" message="Fájl elküldése..."/>
@@ -2424,6 +2459,9 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="WINDOW_SEARCHPAD" value="Keresés"/>
        <string id="WINDOW_HELP" value="Súgó"/>
        <string id="7000" value="Biztos, hogy törölni akarod ezt a szűrőt?"/>
+       <string id="7001" value="&amp;Sémák"/>
+       <string id="7002" value="Több érték"/>
+       <string id="7003" value="Több"/>
        <string id="8000" value="Beállítások"/>
        <string id="8001" value="Üdvözöllek a Shareazában"/>
        <string id="8002" value="Fájl tulajdonságai"/>
@@ -2499,6 +2537,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8177" value="Ide írd a keresendő szót, szavakat:"/>
        <string id="8178" value="Milyen típusú fájl?"/>
        <string id="8179" value="(előzmények törlése)"/>
+       <string id="8180" value="Fájlméret"/>
+       <string id="8181" value="&#160;-"/><!-- size from xx TO xx-->
        <string id="8208" value="%i fájl hashelése:"/>
        <string id="8224" value="Letöltés folyamatban:"/>
        <string id="8225" value="Letöltés szüneteltetve:"/>
@@ -3049,7 +3089,6 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="20214" value="Jó"/>
        <string id="20215" value="Remek"/>
        <string id="20216" value="Kiváló"/>
-
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3064,17 +3103,20 @@ prompt="Kattints ide a magyar nyelvhez."
 
        <dialog name="CGeneralSettingsGroup" cookie="" caption="Általános"/>
 
-       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuBuBuBuBuStCoBuSyStEdmsStmsBuStCoStCoBuBuBuBu" caption="Általános">
+       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Általános">
                <control caption="Felhasználói felület:"/>
                <control caption="Automatikus kapcsolódás indításkor"/>
                <control caption="Együtt töltődik be a Windows-al"/>
-               <control caption="Keresésnél új találatok kiemelése"/>
-               <control caption="Többforrásos fájlok kibontása"/>
-               <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
-               <control caption="Új letöltések kibontása"/>
                <control caption="Ablak mutatása URL megyitása előtt"/>
                <control caption="Sebességérték:"/>
                <control caption="bit/másodperc|bájt/másodperc|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
+               <control caption="Letöltések:"/>
+               <control caption="Új letöltések kibontása"/>
+               <control caption="Keresés:"/>
+               <control caption="Többforrásos fájlok kibontása"/>
+               <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
+               <control caption="Keresőpanel elrejtése kereséskor"/>
+               <control caption="Felnőtt tartalmú fájlok kiszűrése"/>
                <control caption="Gyorstippek:"/>
                <control/>
                <control caption="Késés (ms):"/>
@@ -3086,22 +3128,16 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Rákérdez|Azonnal bezár|Leküldi az óra mellé|Forgalom után bezár"/>
                <control caption="Kis méret gomb:"/>
                <control caption="Normál|Leküldi az óra mellé"/>
-               <control caption="Keresőpanel elrejtése kereséskor"/>
-               <control caption="Felnőtt tartalmú fájlok kiszűrése"/>
-               <control caption="Kész letöltések automata törlése"/>
-               <control caption="Kész feltöltések automata törlése"/>
        </dialog>
 
-       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Könyvtár">
+       <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Könyvtár">
                <control caption="Opciók:"/>
                <control caption="Utolsó mappa megjegyzése"/>
                <control caption="Mappák figyelése"/>
                <control caption="Gyors hash (nagy CPUhasználat)"/>
-               <control caption="Szűrés kiterjesztés alapján"/>
-                      <control/>
-               <control caption="Fájllista letöltésének engedése"/>
+               <control caption="Mások is lássák a megosztásom"/>
                <control caption="Legutóbbi fájlok:"/>
-               <control caption="Jegyezz meg"/>
+               <control caption="Megjegyez"/>
                <control/><control/>
                <control caption="fájlt"/>
                <control caption="pontosan"/>
@@ -3209,12 +3245,11 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Csak a kapcsolatban lévő hálózatokon van forgalom"/>
        </dialog>
 
-       <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Feltöltések">
+       <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Feltöltések">
                <control caption="Opciók:"/>
                <control caption="Félig letöltött fájlok megosztása"/>
                <control caption="Megosztás korl. hubmódban"/>
                <control caption="Előnézetek megosztása"/>
-               <control caption="Metadata adatok eltávolítása"/>
                <control caption="Kapcsolatok száma:"/>
                <control/><control/>
                <control caption="Kliensprogram-szűrő:"/>
@@ -3285,9 +3320,9 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Részletes beállítás"/>
        </dialog>
 
-       <dialog name="CGnutellaSettingsPage" cookie="BuStBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+       <dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
                <control caption="Gnutella2 hálózat:"/>
-               <control caption="(G2 ajánlott)"/>
+               <control caption="Mindig kapcsolódjon a G2-höz"/>
                <control caption="Kapcsolódás a G2-höz"/>
                <control caption="Mód:"/>
                <control caption="Optimális|Leaf|Hub"/>
@@ -3299,7 +3334,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Hub a Hubhoz:"/>
                <control/><control/>
                <control caption="Gnutella1 hálózat:"/>
-               <control caption="Mindig kapcsolódjon a g1-hez"/>
+               <control caption="Mindig kapcsolódjon a G1-hez"/>
                <control caption="Egyszer kapcsolódjon a G1-hez"/>
                <control caption="Mód:"/>
                <control caption="Optimális|Leaf|Ultrapeer"/>
@@ -4104,7 +4139,7 @@ prompt="Kattints ide a magyar nyelvhez."
 <listColumns>
     <list name="CLibraryWnd">
         <column from="File" to="Fájl"/>
-        <column from="Type" to="Típus"/>
+        <column from="Extension" to="Típus"/>
         <column from="Size" to="Méret"/>
        <column from="Folder" to="Mappa"/>
         <column from="Hits" to="Találatok"/>
@@ -4186,7 +4221,7 @@ prompt="Kattints ide a magyar nyelvhez."
     </list>
     <list name="CMatchCtrl">
         <column from="File" to="Fájl"/>
-        <column from="Type" to="Típus"/>
+        <column from="Extension" to="Típus"/>
         <column from="Size" to="Méret"/>
         <column from="Rating" to="Osztályzat"/>
         <column from="Status" to="Státusz"/>
@@ -4213,15 +4248,15 @@ prompt="Kattints ide a magyar nyelvhez."
          <column from="URL" to=""/>
          <column from="Expires" to="Lejárat"/>
        </list>
-    <list name="CTorrentTrackerList">
-         <column from="Filename" to="Fájlnév"/>
-         <column from="Size" to="Méret"/>
-    </list>
-    <list name="CReviewList">
-         <column from="User" to="Felhasználó"/>
-         <column from="Rating" to="Osztályzat"/>
-         <column from="Comments" to="Vélemény"/>
-         <column from="Order" to="Sorszám"/>
-    </list>
+       <list name="CTorrentTrackerList">
+               <column from="Filename" to="Fájlnév"/>
+               <column from="Size" to="Méret"/>
+       </list>
+       <list name="CReviewList">
+               <column from="User" to="Felhasználó"/>
+               <column from="Rating" to="Osztályzat"/>
+               <column from="Comments" to="Vélemény"/>
+               <column from="Order" to="Sorszám"/>
+</list>
 </listColumns>
 </skin>
