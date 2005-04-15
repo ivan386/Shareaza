@@ -313,7 +313,7 @@ public:
 		DWORD		QueryFileThrottle;			// Max rate a file can have GetSources done
 		DWORD		GetSourcesThrottle;			// Max rate a general GetSources can done
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
-		DWORD		PacketThrottle;				// ED2K paket rate limit
+		DWORD		PacketThrottle;				// ED2K packet rate limiter
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;
