@@ -934,31 +934,46 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL b
 		
 		nVolume /= 1024;
 	}
-	
-	if ( nVolume < 1024 )
+
+
+	if ( nVolume < 1024 )							// Kilo
 	{
 		strVolume.Format( _T("%I64i K%s"), nVolume, pszUnit );
 	}
-	else if ( nVolume < 1024*1024 )
+	else if ( nVolume < 1024*1024 )					// Mega
 	{
 		if ( bTruncate )
 			strVolume.Format( _T("%.0lf M%s"), (double)nVolume / 1024, pszUnit );
 		else
 			strVolume.Format( _T("%.2lf M%s"), (double)nVolume / 1024, pszUnit );
 	}
-	else if ( nVolume < 1024*1024*1024 )
+	else if ( nVolume < 1024*1024*1024 )			// Giga
 	{
 		if ( bTruncate )
 			strVolume.Format( _T("%.0lf G%s"), (double)nVolume / (1024*1024), pszUnit );
 		else
 			strVolume.Format( _T("%.3lf G%s"), (double)nVolume / (1024*1024), pszUnit );
 	}
-	else
+	else if ( nVolume < 1099511627776.0f )			// Tera
 	{
 		if ( bTruncate )
 			strVolume.Format( _T("%.0lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
 		else
 			strVolume.Format( _T("%.3lf T%s"), (double)nVolume / (1024*1024*1024), pszUnit );
+	}
+	else  if ( nVolume < 1125899906842624.0f )		// Peta
+	{
+		if ( bTruncate )
+			strVolume.Format( _T("%.0lf P%s"), (double)nVolume / (1099511627776.0f), pszUnit );
+		else
+			strVolume.Format( _T("%.3lf P%s"), (double)nVolume / (1099511627776.0f), pszUnit );
+	}
+	else											// Exa
+	{
+		if ( bTruncate )
+			strVolume.Format( _T("%.0lf E%s"), (double)nVolume / (1125899906842624.0f), pszUnit );
+		else
+			strVolume.Format( _T("%.3lf E%s"), (double)nVolume / (1125899906842624.0f), pszUnit );
 	}
 	
 	return strVolume;
@@ -970,17 +985,23 @@ QWORD CSettings::ParseVolume(LPCTSTR psz, BOOL bSpeedInBits)
 	
 	if ( _stscanf( psz, _T("%lf"), &val ) != 1 ) return 0;
 	
-	if ( _tcsstr( psz, _T(" K") ) ) val *= 1024;
+	if ( _tcsstr( psz, _T(" K") ) ) val *= 1024;						// Kilo
 	if ( _tcsstr( psz, _T(" k") ) ) val *= 1024;
 	
-	if ( _tcsstr( psz, _T(" M") ) ) val *= 1024*1024;
+	if ( _tcsstr( psz, _T(" M") ) ) val *= 1024*1024;					// Mega
 	if ( _tcsstr( psz, _T(" m") ) ) val *= 1024*1024;
 	
-	if ( _tcsstr( psz, _T(" G") ) ) val *= 1024*1024*1024;
+	if ( _tcsstr( psz, _T(" G") ) ) val *= 1024*1024*1024;				// Giga
 	if ( _tcsstr( psz, _T(" g") ) ) val *= 1024*1024*1024;
 	
-	if ( _tcsstr( psz, _T(" T") ) ) val *= 1099511627776.0f;
+	if ( _tcsstr( psz, _T(" T") ) ) val *= 1099511627776.0f;			// Tera
 	if ( _tcsstr( psz, _T(" t") ) ) val *= 1099511627776.0f;
+
+	if ( _tcsstr( psz, _T(" P") ) ) val *= 1125899906842624.0f;			// Peta
+	if ( _tcsstr( psz, _T(" p") ) ) val *= 1125899906842624.0f;
+	
+	if ( _tcsstr( psz, _T(" E") ) ) val *= 1152921504606846976.0f;		// Exa
+	if ( _tcsstr( psz, _T(" e") ) ) val *= 1152921504606846976.0f;
 	
 	if ( bSpeedInBits )
 	{
