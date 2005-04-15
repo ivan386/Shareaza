@@ -69,19 +69,25 @@ CUploadsSettingsPage::~CUploadsSettingsPage()
 void CUploadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_QUEUE_DELETE, m_wndQueueDelete);
-	DDX_Control(pDX, IDC_QUEUE_EDIT, m_wndQueueEdit);
-	DDX_Control(pDX, IDC_QUEUES, m_wndQueues);
-	DDX_Control(pDX, IDC_AGENT_REMOVE, m_wndAgentRemove);
-	DDX_Control(pDX, IDC_AGENT_ADD, m_wndAgentAdd);
-	DDX_Control(pDX, IDC_AGENT_LIST, m_wndAgentList);
-	DDX_Control(pDX, IDC_MAX_HOST_SPIN, m_wndMaxPerHost);
 	DDX_Check(pDX, IDC_SHARE_PARTIALS, m_bSharePartials);
-	DDX_Text(pDX, IDC_MAX_HOST, m_nMaxPerHost);
 	DDX_Check(pDX, IDC_HUB_UNSHARE, m_bHubUnshare);
 	DDX_Check(pDX, IDC_SHARE_PREVIEW, m_bSharePreviews);
-	DDX_Text(pDX, IDC_BANDWIDTH, m_sBandwidth);
+	DDX_Text(pDX, IDC_MAX_HOST, m_nMaxPerHost);
+	DDX_Control(pDX, IDC_MAX_HOST_SPIN, m_wndMaxPerHost);
+	DDX_Control(pDX, IDC_AGENT_LIST, m_wndAgentList);
+	DDX_Control(pDX, IDC_AGENT_ADD, m_wndAgentAdd);
+	DDX_Control(pDX, IDC_AGENT_REMOVE, m_wndAgentRemove);
+
+	DDX_Control(pDX, IDC_UPLOADS_BANDWIDTH_LIMIT, m_wndBandwidthLimit);
+	DDX_CBString(pDX, IDC_UPLOADS_BANDWIDTH_LIMIT, m_sBandwidthLimit);
 	DDX_CBIndex(pDX, IDC_THROTTLE_MODE, m_bThrottleMode);
+
+	DDX_Control(pDX, IDC_QUEUES, m_wndQueues);
+	DDX_Control(pDX, IDC_QUEUE_EDIT, m_wndQueueEdit);
+	DDX_Control(pDX, IDC_QUEUE_DELETE, m_wndQueueDelete);
+
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -152,7 +158,7 @@ void CUploadsSettingsPage::UpdateQueues()
 	UpdateData( TRUE );
 	
 	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
-	DWORD nLimit = (DWORD)Settings.ParseVolume( m_sBandwidth, TRUE ) / 8;
+	DWORD nLimit = (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
 	
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
@@ -327,13 +333,13 @@ BOOL CUploadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( m_sBandwidth.GetLength() > 0 && m_sBandwidth.Find( _T("MAX") ) < 0 &&
-		 Settings.ParseVolume( m_sBandwidth, TRUE ) == 0 )
+	if ( m_sBandwidthLimit.GetLength() > 0 && m_sBandwidthLimit.Find( _T("MAX") ) < 0 &&
+		 Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
-		GetDlgItem( IDC_BANDWIDTH )->SetFocus();
+		GetDlgItem( IDC_UPLOADS_BANDWIDTH_LIMIT )->SetFocus();
 		return FALSE;
 	}
 	
@@ -348,7 +354,7 @@ void CUploadsSettingsPage::OnOK()
 	Settings.Uploads.SharePartials		= m_bSharePartials;
 	Settings.Uploads.SharePreviews		= m_bSharePreviews;
 	Settings.Uploads.HubUnshare			= m_bHubUnshare;
-	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidth, TRUE ) / 8;
+	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
 	
 	Settings.Uploads.BlockAgents.Empty();
@@ -389,14 +395,26 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Update speed units
 		if ( Settings.Bandwidth.Uploads )
 		{
-			m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+			m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
 		}
 		else
 		{
-			m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-			int nSpace		= m_sBandwidth.Find( ' ' );
-			m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+			m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
+			int nSpace		= m_sBandwidthLimit.Find( ' ' );
+			m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
 		}
+
+		// Update the bandwidth limit combo values
+
+		// Remove any existing strings
+		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
+		// Add the new ones
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed / 4, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed / 2, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( (Settings.Connection.OutSpeed/2)+(Settings.Connection.OutSpeed/4), TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.OutSpeed, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( _T("MAX") );
+
 		UpdateData( FALSE );
 	}
 }

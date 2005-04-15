@@ -47,15 +47,16 @@ public:
 	CSpinButtonCtrl	m_wndMaxDownFiles;
 	CIconButtonCtrl	m_wndIncompletePath;
 	CIconButtonCtrl	m_wndDownloadsPath;
-	CString	m_sDownloadsPath;
-	CString	m_sIncompletePath;
-	int		m_nMaxDownFiles;
-	int		m_nMaxFileTransfers;
-	int		m_nMaxDownTransfers;
-	CString	m_sBandwidth;
-	BOOL	m_bRequireConnect;
-	CString m_sQueueLimit;
-	CSpinButtonCtrl m_wndQueueLimit;
+	CComboBox		m_wndBandwidthLimit;
+	CComboBox		m_wndQueueLimit;
+	CString			m_sDownloadsPath;
+	CString			m_sIncompletePath;
+	int				m_nMaxDownFiles;
+	int				m_nMaxFileTransfers;
+	int				m_nMaxDownTransfers;
+	CString			m_sBandwidthLimit;
+	CString			m_sQueueLimit;
+	BOOL			m_bRequireConnect;
 	//}}AFX_DATA
 
 	BOOL m_bDownloadsChanged;

@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,130
- PRODUCTVERSION 2,1,0,130
+ FILEVERSION 2,1,0,133
+ PRODUCTVERSION 2,1,0,133
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 130"
+            VALUE "FileVersion", "2, 1, 0, 133"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 130"
+            VALUE "ProductVersion", "2, 1, 0, 133"
         END
     END
     BLOCK "VarFileInfo"
@@ -1275,13 +1275,12 @@ BEGIN
     GROUPBOX        "&Limits:",IDC_STATIC,145,86,130,76,WS_GROUP
     LTEXT           "Total Download Bandwidth:",IDC_STATIC,155,101,109,8,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH,204,114,60,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_DOWNLOADS_BANDWIDTH_LIMIT,204,114,60,68,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
     LTEXT           "Maximum Queue Length:",IDC_STATIC,156,130,108,8,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_QUEUE_LIMIT,204,140,60,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_QUEUE_LIMIT_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,264,140,8,12
+    COMBOBOX        IDC_DOWNLOADS_QUEUE_LIMIT,204,140,60,65,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_STATIC,5,170,270,42,WS_GROUP
     CONTROL         "Only download and upload to networks which are connected.",
                     IDC_REQUIRE_CONNECT,"Button",BS_AUTOCHECKBOX | 
@@ -2442,9 +2441,10 @@ BEGIN
     PUSHBUTTON      "-",IDC_AGENT_REMOVE,250,19,16,16
     GROUPBOX        "&Bandwidth:",IDC_STATIC,150,48,125,53,WS_GROUP
     LTEXT           "Limit:",IDC_STATIC,162,63,40,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH,205,63,60,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_UPLOADS_BANDWIDTH_LIMIT,205,63,60,72,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
     LTEXT           "Mode:",IDC_STATIC,162,80,40,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_THROTTLE_MODE,205,80,60,36,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_THROTTLE_MODE,205,80,60,45,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Queues:",IDC_STATIC,5,105,270,110,WS_GROUP
     CONTROL         "List1",IDC_QUEUES,"SysListView32",LVS_REPORT | 

@@ -56,9 +56,9 @@ CDownloadsSettingsPage::CDownloadsSettingsPage() : CSettingsPage(CDownloadsSetti
 	m_nMaxDownFiles = 0;
 	m_nMaxFileTransfers = 0;
 	m_nMaxDownTransfers = 0;
-	m_sBandwidth = _T("");
-	m_bRequireConnect = FALSE;
+	m_sBandwidthLimit = _T("");
 	m_sQueueLimit = _T("");
+	m_bRequireConnect = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -75,16 +75,18 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MAX_FILES_SPIN, m_wndMaxDownFiles);
 	DDX_Control(pDX, IDC_INCOMPLETE_BROWSE, m_wndIncompletePath);
 	DDX_Control(pDX, IDC_DOWNLOADS_BROWSE, m_wndDownloadsPath);
+	DDX_Control(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_wndBandwidthLimit);
+	DDX_Control(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_wndQueueLimit);
 	DDX_Text(pDX, IDC_DOWNLOADS_FOLDER, m_sDownloadsPath);
 	DDX_Text(pDX, IDC_INCOMPLETE_FOLDER, m_sIncompletePath);
 	DDX_Text(pDX, IDC_MAX_FILES, m_nMaxDownFiles);
 	DDX_Text(pDX, IDC_MAX_TPF, m_nMaxFileTransfers);
 	DDX_Text(pDX, IDC_MAX_TRANSFERS, m_nMaxDownTransfers);
-	DDX_Text(pDX, IDC_BANDWIDTH, m_sBandwidth);
+	DDX_CBString(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_sBandwidthLimit);
+	DDX_CBString(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
 	//}}AFX_DATA_MAP
-	DDX_Text(pDX, IDC_QUEUE_LIMIT, m_sQueueLimit);
-	DDX_Control(pDX, IDC_QUEUE_LIMIT_SPIN, m_wndQueueLimit);
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -104,7 +106,6 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_wndMaxDownFiles.SetRange( 1, 100 );
 	m_wndMaxDownTransfers.SetRange( 1, 128 );
 	m_wndMaxFileTransfers.SetRange( 1, 128 );
-	m_wndQueueLimit.SetRange( 0, 10000 );
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -180,13 +181,13 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( m_sBandwidth.GetLength() > 0 && m_sBandwidth.Find( _T("MAX") ) < 0 &&
-		 Settings.ParseVolume( m_sBandwidth, TRUE ) == 0 )
+	if ( m_sBandwidthLimit.GetLength() > 0 && m_sBandwidthLimit.Find( _T("MAX") ) < 0 &&
+		 Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
-		GetDlgItem( IDC_BANDWIDTH )->SetFocus();
+		GetDlgItem( IDC_DOWNLOADS_BANDWIDTH_LIMIT )->SetFocus();
 		return FALSE;
 	}
 	
@@ -251,7 +252,7 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= nQueueLimit;
-	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidth, TRUE ) / 8;
+	Settings.Bandwidth.Downloads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
 
@@ -301,17 +302,51 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	CSettingsPage::OnShowWindow(bShow, nStatus);
 	if ( bShow )
 	{
-		// Update speed units
+		CString str;
+
+		// Update speed units for the text in the bandwidth limit combo
 		if ( Settings.Bandwidth.Downloads )
 		{
-			m_sBandwidth = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+			m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
 		}
 		else
 		{
-			m_sBandwidth	= Settings.SmartVolume( 0, FALSE, TRUE );
-			int nSpace		= m_sBandwidth.Find( ' ' );
-			m_sBandwidth	= _T("MAX") + m_sBandwidth.Mid( nSpace );
+			m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
+			int nSpace			= m_sBandwidthLimit.Find( ' ' );
+			m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
 		}
+
+		// Update the bandwidth limit combo values
+
+		// Remove any existing strings
+		while ( m_wndBandwidthLimit.GetCount() ) m_wndBandwidthLimit.DeleteString( 0 );
+		// Add the new ones
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed / 4, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed / 2, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( (Settings.Connection.InSpeed/2)+(Settings.Connection.InSpeed/4), TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( Settings.SmartVolume( Settings.Connection.InSpeed, TRUE, TRUE ) );
+		m_wndBandwidthLimit.AddString( _T("MAX") );
+
+		// Update the queue limit combo values
+
+		// Remove any existing strings
+		while ( m_wndQueueLimit.GetCount() ) m_wndQueueLimit.DeleteString( 0 );
+		// Add the new ones
+		if ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways )
+		{
+			m_wndQueueLimit.AddString( _T("2000") );
+			m_wndQueueLimit.AddString( _T("5000") );
+			m_wndQueueLimit.AddString( _T("10000") );
+			m_wndQueueLimit.AddString( _T("MAX") );
+		}
+		else
+		{
+			m_wndQueueLimit.AddString( _T("5") );
+			m_wndQueueLimit.AddString( _T("10") );
+			m_wndQueueLimit.AddString( _T("20") );
+			m_wndQueueLimit.AddString( _T("MAX") );
+		}
+
 		UpdateData( FALSE );
 	}
 }
