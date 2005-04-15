@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -497,7 +497,7 @@ BOOL CDiscoveryServices::Update()
 
 //*** ToDo: If you don't have leafs, you aren't an UP. If you aren't an UP, you don't advertise 
 // for leafs! This means Neighbours.IsG1Ultrapeer() will never be true...
-
+	ASSERT ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) );
 
 	// Must have at least 4 peers
 	if ( Neighbours.GetCount( nProtocol, -1, ntNode ) < 4 ) return FALSE;	
@@ -838,18 +838,28 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode)
 	m_nWebCache	= nMode;
 	m_hRequest	= NULL;
 	
-	if ( nMode == wcmSubmit )
+	switch ( nMode )
 	{
-		ASSERT ( ( m_nLastQueryProtocol == PROTOCOL_G1 ) || ( m_nLastQueryProtocol == PROTOCOL_G2 ) );
+	case wcmHosts:
+		break;
+	case wcmCaches:
+		break;
 
+	case wcmUpdate:
+		ASSERT ( ( m_nLastUpdateProtocol == PROTOCOL_G1 ) || ( m_nLastUpdateProtocol == PROTOCOL_G2 ) );
+		m_pSubmit	= GetRandomWebCache( m_nLastUpdateProtocol, TRUE, m_pWebCache );
+		break;
+
+	case wcmSubmit:
+		ASSERT ( ( m_nLastQueryProtocol == PROTOCOL_G1 ) || ( m_nLastQueryProtocol == PROTOCOL_G2 ) );
 		m_pSubmit	= m_pWebCache;
 		m_pWebCache	= GetRandomWebCache( m_nLastQueryProtocol, FALSE, m_pSubmit, TRUE );
-	}
-	else if ( nMode == wcmUpdate )
-	{
-		ASSERT ( ( m_nLastUpdateProtocol == PROTOCOL_G1 ) || ( m_nLastUpdateProtocol == PROTOCOL_G2 ) );
+		break;
 
-		m_pSubmit	= GetRandomWebCache( m_nLastUpdateProtocol, TRUE, m_pWebCache );
+	case wcmServerMet:
+		ASSERT ( FALSE );
+	default:
+		ASSERT ( FALSE );
 	}
 	
 	if ( m_pWebCache == NULL ) return FALSE;
@@ -1420,6 +1430,11 @@ BOOL CDiscoveryService::Execute(int nMode)
 	}
 	else if ( m_nType == dsWebCache )
 	{
+		if  ( nMode == CDiscoveryServices::wcmUpdate )
+			DiscoveryServices.m_nLastUpdateProtocol = m_bGnutella2 ? PROTOCOL_G2 : PROTOCOL_G1;
+		else
+			DiscoveryServices.m_nLastQueryProtocol = m_bGnutella2 ? PROTOCOL_G2 : PROTOCOL_G1;
+
 		return DiscoveryServices.RequestWebCache( this, nMode );
 	}
 	else if ( m_nType == dsServerMet )
