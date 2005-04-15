@@ -236,7 +236,8 @@
 #define IDC_MAX_TRANSFERS_SPIN          1051
 #define IDC_MAX_TPF                     1052
 #define IDC_MAX_TPF_SPIN                1053
-#define IDC_QUEUE_LIMIT_SPIN            1054
+#define IDC_DOWNLOADS_BANDWIDTH_LIMIT   1055
+#define IDC_DOWNLOADS_QUEUE_LIMIT       1056
 #define IDC_MAX_HOST                    1059
 #define IDC_MAX_HOST_SPIN               1060
 #define IDC_SOURCE_MESH                 1061
@@ -587,8 +588,7 @@
 #define IDC_QUEUE_EDIT                  1317
 #define IDC_MATCH_CHECK                 1317
 #define IDC_QUEUE_DELETE                1318
-#define IDC_BANDWIDTH                   1319
-#define IDC_QUEUE_LIMIT                 1320
+#define IDC_UPLOADS_BANDWIDTH_LIMIT		1319
 #define IDC_MATCH_TEXT                  1321
 #define IDC_FILE_NETWORKS               1322
 #define IDC_FILE_TAGS                   1324
