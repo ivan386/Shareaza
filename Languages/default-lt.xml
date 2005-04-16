@@ -2888,6 +2888,7 @@ right quote	&#147;
 	<string id="16809" value="&amp;Užverti"/>
 	<string id="16810" value="m. amžiaus"/>
 	<string id="16811" value="Automatinis"/>
+	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
@@ -3235,7 +3236,7 @@ right quote	&#147;
 		<control caption="Aš galiu priimti įeinančias užklausas"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Atsisiuntimai">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Atsisiuntimai">
 		<control caption="Saugoti _parsiųstas bylas čia:"/>
 		<control/><control/>
 		<control caption="Laikyti _nebaigtas siųstis bylas čia:"/>
@@ -3251,12 +3252,12 @@ right quote	&#147;
 		<control caption="Visuminė parsisiuntimų greitaveika:"/>
 		<control/>
 		<control caption="Maksimalus eilės dydis:"/>
-		<control/><control/>
+		<control/>
 		<control/>
 		<control caption="Bylų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Išsiuntimai">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Išsiuntimai">
 		<control caption="Pa_rinktys:"/>
 		<control caption="Siųsti nepilnai gautas bylas"/>
 		<control caption="Tapus mazgu, riboti siuntimą"/>
