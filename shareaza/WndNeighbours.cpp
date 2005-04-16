@@ -57,6 +57,7 @@ BEGIN_MESSAGE_MAP(CNeighboursWnd, CPanelWnd)
 	ON_WM_TIMER()
 	ON_WM_CONTEXTMENU()
 	ON_WM_DESTROY()
+	ON_WM_ACTIVATE()
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_NEIGHBOURS, OnSortList)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_NEIGHBOURS, OnCustomDrawList)
 	ON_UPDATE_COMMAND_UI(ID_NEIGHBOURS_DISCONNECT, OnUpdateNeighboursDisconnect)
@@ -645,3 +646,8 @@ void CNeighboursWnd::DrawEmptyMessage(CDC* pDC)
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
 }
 
+void CNeighboursWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
+{
+	CPanelWnd::OnActivate(nState, pWndOther, bMinimized);
+	Update();
+}
