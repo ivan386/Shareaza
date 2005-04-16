@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.121"
+		version="2.1.0.134"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2869,6 +2869,7 @@
 	<string id="16809" value="Вы&amp;ход"/>
 	<string id="16810" value="лет"/>
 	<string id="16811" value="Автоматический"/>
+
 	<string id="16864" value="Запрашивается список ресурсов соединений..."/>
 	<string id="16865" value="Запрашивается список ресурсов соединений «%s»..."/>
 	<string id="16866" value="GWebCache транзакция успешна («%s»)."/>
