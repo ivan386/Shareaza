@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.121"
+		version="2.1.0.134"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2880,6 +2880,7 @@
 	<string id="16809" value="E&amp;xit"/>
 	<string id="16810" value="year old"/>
 	<string id="16811" value="Automatic"/>
+	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -3227,7 +3228,7 @@
 		<control caption="I can accept incoming connections"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Downloads">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 		<control caption="Save _Completed Files Here:"/>
 		<control/><control/>
 		<control caption="Store Temporary _Incomplete Files Here:"/>
@@ -3244,11 +3245,10 @@
 		<control/>
 		<control caption="Maximum Queue Length:"/>
 		<control/><control/>
-		<control/>
 		<control caption="Only download and upload to networks which are connected."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Uploads">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Options:"/>
 		<control caption="Share NEW partial downloads"/>
 		<control caption="Limit sharing in hub mode"/>
