@@ -13008,6 +13008,9 @@
 				RelativePath="Res\Discovery.ico">
 			</File>
 			<File
+				RelativePath=".\Res\DiscoveryBlue.ico">
+			</File>
+			<File
 				RelativePath="Res\DiscoveryGray.ico">
 			</File>
 			<File

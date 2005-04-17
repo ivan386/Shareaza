@@ -1,7 +1,7 @@
 //
 // WndDiscovery.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,6 +98,7 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_DISCOVERY_GRAY ) );
 	m_gdiImageList.Add( theApp.LoadIcon( IDR_DISCOVERYFRAME ) );
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_WEB_URL ) );
+	m_gdiImageList.Add( theApp.LoadIcon( IDI_DISCOVERY_BLUE ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 260, -1 );
@@ -157,7 +158,19 @@ void CDiscoveryWnd::Update()
 			if ( ! m_bShowWebCache ) continue;
 			pItem = pLiveList.Add( pService );
 			pItem->Set( 1, _T("GWebCache") );
-			pItem->m_nImage = pService->m_bGnutella2 ? 2 : 1;
+			if ( pService->m_bGnutella2 && pService->m_bGnutella1 )
+			{
+				pItem->m_nImage = 2;			// Multi-coloured icon
+			}
+			else
+			{
+				if ( pService->m_bGnutella2 )
+					pItem->m_nImage = 4;		// Blue icon
+				else if ( pService->m_bGnutella1 )
+					pItem->m_nImage = 1;		// Grey icon
+				else 
+					pItem->m_nImage = 3;		// Blank
+			}
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{

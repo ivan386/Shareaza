@@ -121,6 +121,7 @@
 #define IDD_WARNINGS                    213
 #define IDI_SEARCH_FOLDER               214
 #define IDD_PROMOTE                     214
+#define IDI_DISCOVERY_BLUE              215
 #define IDB_SMALL_STAR                  216
 #define IDD_EXISTING_FILE               217
 #define IDD_CLOSE_MODE                  218
