@@ -10,7 +10,7 @@
 <manifest	name="Raza-Ablaze"
 			author="kingmich"
 			description="It's hot, but it's fun ! :D"
-			version="1.0"
+			version="1.01"
 			type="skin"
 			language="en"/>
 
@@ -53,6 +53,7 @@
       <watermark target="CSearchInputBox.Caption" path="box.bmp"/>	
       <watermark target="CSearchResultsBox.Caption" path="box.bmp"/>
       <watermark target="CSearchSchemaBox.Caption" path="box.bmp"/>
+      <watermark target="CSearchAdvancedBox.Caption" path="box.bmp"/>
 	  <watermark target="CHomePanel" path="barre.bmp"/>
 	  <watermark target="CSearchPanel" path="barre.bmp"/>
 	  <watermark target="CHomeDownloadsBox" path="boxback.bmp"/>
@@ -63,6 +64,7 @@
       <watermark target="CSearchInputBox" path="boxback.bmp"/>	
       <watermark target="CSearchResultsBox" path="boxback.bmp"/>
       <watermark target="CSearchSchemaBox" path="boxback.bmp"/>
+      <watermark target="CSearchAdvancedBox" path="boxback.bmp"/>
 	     </watermarks>
       
 <windowSkins>

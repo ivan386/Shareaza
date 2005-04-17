@@ -48,7 +48,7 @@
    description="My first skin, first time with photoshop and XML too"
    link="http://www.shareaza.com/"
    email="isaac(dot)conrique(at)gmail(dot)com"
-   version="1.2"
+   version="1.21"
    type="Skin"
 />
 
@@ -104,6 +104,7 @@
    <watermark target="CSearchInputBox.Caption"		path="BoxTitle.bmp"/>	<!-- search -->
    <watermark target="CSearchResultsBox.Caption"	path="BoxTitle.bmp"/>	<!-- results -->
    <watermark target="CSearchSchemaBox.Caption" 	path="BoxTitle.bmp"/>
+   <watermark target="CSearchAdvancedBox.Caption" 	path="BoxTitle.bmp"/>
 
 </watermarks>
 

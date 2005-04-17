@@ -16,7 +16,7 @@
 			author="ogg123"
 			description="Ashes to ashes."
 			link="http://www.shareaza.com/"
-			version="2.4"
+			version="2.41"
 			type="Skin"
 			language="en"
 			/>
@@ -71,6 +71,7 @@
 		<watermark target="CSearchInputBox.Caption" path="InfoBox.bmp"/>
 		<watermark target="CSearchResultsBox.Caption" path="InfoBox.bmp"/>
 		<watermark target="CSearchSchemaBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CSearchAdvancedBox.Caption" path="InfoBox.bmp"/>
 </watermarks>
 
 

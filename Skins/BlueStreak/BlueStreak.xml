@@ -5,7 +5,7 @@
 			author="RocketX"
 			description="An Original Design for all you Shareaza Fans, oh, and it's Blue."
 			link="http://www.shareaza.com/"
-			version="1.2"
+			version="1.21"
 			type="Skin"
 			language="en"
 			/>
@@ -48,6 +48,7 @@
         <watermark target="CSearchInputBox.Caption" path="sts_bbox.bmp"/>    <!-- search -->
         <watermark target="CSearchResultsBox.Caption" path="sts_bbox.bmp"/>  <!-- results -->
         <watermark target="CSearchSchemaBox.Caption" path="sts_bbox.bmp"/>   <!-- application -->
+        <watermark target="CSearchAdvancedBox.Caption" path="sts_bbox.bmp"/>   <!-- advanced panel -->
       </watermarks>
       <!-- Window skins -->
       <windowSkins> 
