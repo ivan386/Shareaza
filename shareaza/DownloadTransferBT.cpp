@@ -428,14 +428,15 @@ BOOL CDownloadTransferBT::SendRequests()
 			break;
 		}
 	}
-	if ( oPossible.empty() && m_pDownload->m_bTorrentEndgame == FALSE )	// If there are no more possible chunks to request
+	// If there are no more possible chunks to request, and endgame is available but not active
+	if ( oPossible.empty() && Settings.BitTorrent.Endgame && ! m_pDownload->m_bTorrentEndgame )
 	{
-		if ( m_pDownload->GetProgress() > 0.95 ) // and the torrent is at least 95% complete
+		// And the torrent is at least 95% complete
+		if ( m_pDownload->GetProgress() > 0.95 )
 		{
-			// Then activate endgame (if it's enabled)
-			m_pDownload->m_bTorrentEndgame = Settings.BitTorrent.Endgame;
-			// Debug message
-			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated") );
+			// Then activate endgame
+			m_pDownload->m_bTorrentEndgame = TRUE;
+			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), m_pDownload->m_sLocalName );
 		}
 	}
 	

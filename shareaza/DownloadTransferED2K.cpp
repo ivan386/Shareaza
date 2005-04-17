@@ -834,11 +834,16 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		}
 	}
 
-	if ( oPossible.empty() && !m_pDownload->m_bTorrentEndgame )
+	// If there are no more possible chunks to request, and endgame is available but not active
+	if ( oPossible.empty() && Settings.eDonkey.Endgame && ! m_pDownload->m_bTorrentEndgame )
 	{
-		if ( m_pDownload->GetProgress() > 0.95 )
+		// And the file is at least 100MB, with less than 1MB to go
+		if ( ( m_pDownload->GetVolumeComplete() > 100*1024*1024 ) && 
+			 ( m_pDownload->GetVolumeRemaining() <  1*1024*1024 ) )
 		{
-			m_pDownload->m_bTorrentEndgame = Settings.BitTorrent.Endgame;
+			// Then activate endgame
+			m_pDownload->m_bTorrentEndgame = TRUE;
+			theApp.Message( MSG_DEBUG, _T("Activating endgame for ed2k transfer %s"), m_pDownload->m_sLocalName );
 		}
 	}
 

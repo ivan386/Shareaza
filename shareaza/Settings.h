@@ -326,6 +326,7 @@ public:
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
 		BOOL		TagNames;					// Add (Shareaza.com) to user name over ed2k
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
+		BOOL		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 	} eDonkey;
 	
 	struct sBitTorrent
