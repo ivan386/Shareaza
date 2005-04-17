@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.121"
+		version="2.1.0.134"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2837,6 +2837,7 @@ Other:
 	<string id="16809" value="&amp;Quitter"/>
 	<string id="16810" value="ans"/>
     <string id="16811" value="Automatique"/>
+	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nEtes-vous sûr de vouloir limiter le nombre de positions en file d'attente à accepter?"/>
 	<string id="16864" value="Interroge l'hôte du service Découverte..."/>
 	<string id="16865" value="Interroge le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
@@ -3184,7 +3185,7 @@ Other:
 		<control caption="Accepter les connexions entrantes"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Téléchargements">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Téléchargements">
 		<control caption="_Sauvegarder les fichiers complets ici:"/>
 		<control/><control/>
 		<control caption="Stocker les fichiers _incomplets ici:"/>
@@ -3201,11 +3202,10 @@ Other:
 		<control/>
 		<control caption="Taille de la queue d'attente:"/>
 		<control/><control/>
-		<control/>
 		<control caption="Télécharger et envoyer uniquement sur les réseaux connectés."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Envois">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Envois">
 		<control caption="_Options:"/>
 		<control caption="Partager les téléch. partiels"/>
 		<control caption="Partage limité en mode Hub"/>
