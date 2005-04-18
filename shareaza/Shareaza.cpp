@@ -314,7 +314,7 @@ void CShareazaApp::InitResources()
 	m_bLimitedConnections = FALSE;
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
-		if( _tcsnicmp( pVersion.szCSDVersion, _T("Service Pack 2"), 15 ) == 0 )
+		if( _tcsstr( pVersion.szCSDVersion, _T("Service Pack 2") ) )
 		{	//XP SP2 - Limit the networking.
 			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
 			m_bLimitedConnections = TRUE;
