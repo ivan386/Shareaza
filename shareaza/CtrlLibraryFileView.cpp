@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/04/13 20:03:48 $"
-//	Revision:		"$Revision: 1.16 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/04/19 16:16:44 $"
+//	Revision:		"$Revision: 1.17 $"
+//  Last change by:	"$Author: thetruecamper $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -383,7 +383,9 @@ void CLibraryFileView::OnLibraryURL()
 		{
 			dlg.AddFile( pFile );
 		}
-		
+
+		pLock.Unlock();
+
 		if ( dlg.m_pFiles.GetCount() ) dlg.DoModal();
 	}
 }
