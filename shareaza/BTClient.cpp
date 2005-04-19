@@ -197,7 +197,6 @@ BOOL CBTClient::OnRun()
 		}
 		
 
-		//*****debug check- this shouldn't happen
 		ASSERT ( m_pUpload != NULL );
 
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;

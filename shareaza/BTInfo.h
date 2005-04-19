@@ -80,6 +80,10 @@ public:
 	CString		m_sTracker;
 	int			m_nFiles;
 	CBTFile*	m_pFiles;
+public:
+	UINT		m_nEncoding;
+	CString		m_sComment;
+	DWORD		m_tDate;
 private:
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;

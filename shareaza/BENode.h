@@ -107,18 +107,16 @@ public:
 	}
 
 	// If a torrent is badly encoded, you can try forcing a code page.
-	inline CString DecodeString() const
+	inline CString DecodeString(UINT nCodePage) const
 	{
-		UINT nCodePage;
 		CString str;
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
 		int nSource = str.GetLength();
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 
-		// Use the user-specified code page
-		nCodePage = Settings.BitTorrent.TorrentCodePage;
-		int nLength = MultiByteToWideChar( GetOEMCP(), nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
+		// Use the torrent (or user-specified) code page
+		int nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
 		if ( GetLastError() != ERROR_NO_UNICODE_TRANSLATION )
 			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
 		else

@@ -51,6 +51,9 @@ CBTInfo::CBTInfo()
 	m_pBlockSHA1	= NULL;
 	m_nFiles		= 0;
 	m_pFiles		= NULL;
+
+	m_nEncoding		= Settings.BitTorrent.TorrentCodePage;
+	m_tDate			= 0;
 }
 
 CBTInfo::~CBTInfo()
@@ -303,14 +306,63 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	if ( ! pRoot->IsType( CBENode::beDict ) ) return FALSE;
 	
-	CBENode* pAnnounce = pRoot->GetNode( "announce" );
+
+
 	
+	// Get the encoding (from torrents that have it)
+	m_nEncoding = Settings.BitTorrent.TorrentCodePage;
+	CBENode* pEncoding = pRoot->GetNode( "encoding" );
+	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beString )  ) )
+	{
+		CString strEncoding = pEncoding->GetString();
+
+		if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
+			m_nEncoding = CP_UTF8;
+		else if ( _tcsistr( strEncoding.GetString() , _T("ANSI") ) != NULL ) 
+			m_nEncoding = CP_ACP;
+		else if ( _tcsistr( strEncoding.GetString() , _T("BIG5") ) != NULL ) 
+			m_nEncoding = 950;
+		else if ( _tcsistr( strEncoding.GetString() , _T("Korean") ) != NULL ) 
+			m_nEncoding = 949;
+		else if ( _tcsistr( strEncoding.GetString() , _T("UHC") ) != NULL ) 
+			m_nEncoding = 949;
+		else if ( _tcsistr( strEncoding.GetString() , _T("Chinese") ) != NULL ) 
+			m_nEncoding = 936;
+		else if ( _tcsistr( strEncoding.GetString() , _T("GBK") ) != NULL ) 
+			m_nEncoding = 936;
+		else if ( _tcsistr( strEncoding.GetString() , _T("Japanese") ) != NULL ) 
+			m_nEncoding = 932;
+		else if ( _tcsistr( strEncoding.GetString() , _T("Shift-JIS") ) != NULL ) 
+			m_nEncoding = 932;
+	}
+
+	// Get the comments (if present)
+	CBENode* pComment = pRoot->GetNode( "comment.utf-8" );
+	if ( ( ! pEncoding ) ||  ( ! pEncoding->IsType( CBENode::beString )  ) )
+		pComment = pRoot->GetNode( "comment" );
+	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beString )  ) )
+	{
+		m_sComment = pEncoding->GetString();
+	}
+
+	// Get the creation date (if present)
+	CBENode* pDate = pRoot->GetNode( "creation date" );
+	if ( ( pDate ) &&  ( pDate->IsType( CBENode::beInt )  ) )
+	{
+		m_tDate = (DWORD)pDate->GetInt();
+		// CTime pTime( (time_t)m_tDate );
+		// theApp.Message( MSG_SYSTEM, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
+	}
+
+	// Get announce
+	CBENode* pAnnounce = pRoot->GetNode( "announce" );
 	if ( pAnnounce->IsType( CBENode::beString ) )
 	{
 		m_sTracker = pAnnounce->GetString();
 		if ( m_sTracker.Find( _T("http") ) != 0 ) m_sTracker.Empty();
 	}
-	
+
+	// Get the info node
 	CBENode* pInfo = pRoot->GetNode( "info" );
 	if ( ! pInfo->IsType( CBENode::beDict ) ) return FALSE;
 	
@@ -333,7 +385,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		{
 			pName = pInfo->GetNode( "name" );
 			if ( pName->IsType( CBENode::beString ) ) 
-				m_sName = pName->DecodeString();
+				m_sName = pName->DecodeString( m_nEncoding );
 		}
 		// If we still couldn't generate a name, there is nothing more we can do.
 		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
@@ -345,6 +397,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	// If we still don't have a name, generate one
 	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
 	
+	// Get the piece stuff
 	CBENode* pPL = pInfo->GetNode( "piece length" );
 	if ( ! pPL->IsType( CBENode::beInt ) ) return FALSE;
 	m_nBlockSize = (DWORD)pPL->GetInt();
@@ -364,6 +417,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		CopyMemory( m_pBlockSHA1 + nBlock, pSource + nBlock, sizeof(SHA1) );
 	}
 	
+	// Hash info
 	if ( CBENode* pSHA1 = pInfo->GetNode( "sha1" ) )
 	{
 		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != sizeof(SHA1) ) return FALSE;
@@ -385,6 +439,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		CopyMemory( &m_pDataTiger, pTiger->m_pValue, sizeof(TIGEROOT) );
 	}
 	
+	// Details on file (or files).
 	if ( CBENode* pLength = pInfo->GetNode( "length" ) )
 	{
 		if ( ! pLength->IsType( CBENode::beInt ) ) return FALSE;
@@ -443,7 +498,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
 				{
 					pPath = pFile->GetNode( "path" );
-					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString();
+					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString( m_nEncoding );
 				}
 						
 				if ( ! pPath ) return FALSE;
@@ -466,7 +521,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				strPath = pPart->GetString();
 				// Check for encoding error
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
-					strPath = pPart->DecodeString();
+					strPath = pPart->DecodeString( m_nEncoding );
 
 				m_pFiles[ nFile ].m_sPath += CDownloadTask::SafeFilename( strPath );
 			}
