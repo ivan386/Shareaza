@@ -339,12 +339,23 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	}
 
 	// Get the comments (if present)
-	CBENode* pComment = pRoot->GetNode( "comment.utf-8" );
-	if ( ( ! pEncoding ) ||  ( ! pEncoding->IsType( CBENode::beString )  ) )
-		pComment = pRoot->GetNode( "comment" );
-	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beString )  ) )
+	CBENode*  pComment = pRoot->GetNode( "comment" );
+	if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
+		m_sComment = pComment->GetString();
+
+	if ( ( _tcsicmp( m_sComment.GetString() , _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
 	{
-		m_sComment = pEncoding->GetString();
+		m_bEncodingError = TRUE;
+		pComment = pRoot->GetNode( "comment.utf-8" );
+		if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
+			m_sComment = pComment->GetString();
+
+		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
+		{
+			pComment = pRoot->GetNode( "comment" );
+			if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
+				m_sComment = pComment->DecodeString( m_nEncoding );
+		}
 	}
 
 	// Get the creation date (if present)
@@ -506,6 +517,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				if ( ! pPath ) return FALSE;
 				if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
 				if ( pPath->GetCount() > 32 ) return FALSE;
+				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
 			}
 
 			// Hack to prefix all
@@ -520,12 +532,12 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					m_pFiles[ nFile ].m_sPath += '\\';
 
 				// Get the path
-				strPath = pPart->GetString();
+				strPath = CDownloadTask::SafeFilename( pPart->GetString() );
 				// Check for encoding error
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
-					strPath = pPart->DecodeString( m_nEncoding );
+					strPath = CDownloadTask::SafeFilename( pPart->DecodeString( m_nEncoding ) );
 
-				m_pFiles[ nFile ].m_sPath += CDownloadTask::SafeFilename( strPath );
+				m_pFiles[ nFile ].m_sPath += strPath;
 			}
 			
 			if ( CBENode* pSHA1 = pFile->GetNode( "sha1" ) )
