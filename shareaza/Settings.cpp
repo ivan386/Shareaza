@@ -276,7 +276,9 @@ void CSettings::Setup()
 	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
+	Add( _T("eDonkey.MetQueryTime"), &eDonkey.MetQueryTime, 0 );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
+	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
 	Add( _T("eDonkey.RequestSize"), &eDonkey.RequestSize, 180*1024/2 );
 	Add( _T("eDonkey.FrameSize"), &eDonkey.FrameSize, 10240 );
@@ -286,7 +288,6 @@ void CSettings::Setup()
 	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, TRUE );
 	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
 	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
-	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
 	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );	
 	Add( _T("eDonkey.Endgame"), &eDonkey.Endgame, TRUE );
 	
@@ -418,6 +419,7 @@ CSettings::CSettings()
 	Live.DiskWriteWarning	= FALSE;
 	Live.AdultWarning		= FALSE;
 	Live.QueueLimitWarning	= FALSE;
+	Live.DonkeyServerWarning= FALSE;
 
 	// Add all settings
 	Setup();

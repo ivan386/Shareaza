@@ -314,6 +314,7 @@ public:
 		DWORD		GetSourcesThrottle;			// Max rate a general GetSources can done
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
+		DWORD		MetQueryTime;				// Time we queried for a new server list
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;
@@ -452,6 +453,7 @@ public:
 		BOOL		DiskWriteWarning;			// Has the user been warned of write problems?
 		BOOL		AdultWarning;				// Has the user been warned about the adult filter?
 		BOOL		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
+		BOOL		DonkeyServerWarning;		// Has the user been warned about having an empty server list?
 		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
