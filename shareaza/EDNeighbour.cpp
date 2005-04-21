@@ -376,7 +376,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
         m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
         m_nTCPFlags & 0x00000040,
         m_nTCPFlags & 0x00000080 );
-	theApp.Message( MSG_DEBUG, strServerFlags );//debug
+	theApp.Message( MSG_DEBUG, strServerFlags );
 	
 	
 	return TRUE;
@@ -518,13 +518,15 @@ BOOL CEDNeighbour::OnCallbackRequest(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 {
+//*******************
+theApp.Message( MSG_ERROR, _T("CEDNeighbour::OnSearchResults") ); //**** Debug
 	if ( m_pQueries.GetCount() == 0 )
 	{
 		Statistics.Current.eDonkey.Dropped++;
 		m_nDropCount++;
 		return TRUE;
 	}
-	
+
 	GGUID* pGUID		= (GGUID*)m_pQueries.RemoveHead();
 	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, m_nTCPFlags, pGUID );
 	
@@ -563,7 +565,28 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 {
-	return OnSearchResults( pPacket );
+//****************
+theApp.Message( MSG_ERROR, _T("CEDNeighbour::OnFoundSources") ); //**** Debug
+
+	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, m_nTCPFlags );
+	
+	if ( pHits == NULL )
+	{
+		
+		if ( pPacket->m_nLength != 17 && pPacket->m_nLength != 5 )
+		{
+			pPacket->Debug( _T("BadSearchResult") );
+			theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
+			Statistics.Current.eDonkey.Dropped++;
+			m_nDropCount++;
+		}
+		
+		return TRUE;
+	}
+	
+	Network.OnQueryHits( pHits );
+	
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -838,8 +861,11 @@ BOOL CEDNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLoca
 	{
 		return FALSE;	// Packet is bad
 	}
-	
-	m_pQueries.AddTail( new GGUID( pSearch->m_pGUID ) );
+
+	// Don't add the GUID for GetSources
+	if ( ( ! pSearch->m_bED2K ) || ( pSearch->m_bWantDN && Settings.eDonkey.MagnetSearch ) )
+		m_pQueries.AddTail( new GGUID( pSearch->m_pGUID ) );
+
 	Send( pPacket, FALSE, FALSE );
 	
 	return TRUE;
