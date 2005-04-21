@@ -107,6 +107,7 @@ IDI_CONTACT_AOL         ICON                    "Res\\ContactAOL.ico"
 IDI_CONTACT_ICQ         ICON                    "Res\\ContactICQ.ico"
 IDI_COMPUTER_GRAY       ICON                    "Res\\ComputerGray.ICO"
 IDI_DISCOVERY_GRAY      ICON                    "Res\\DiscoveryGray.ico"
+IDI_DISCOVERY_BLUE      ICON                    "Res\\DiscoveryBlue.ico"
 IDI_CONTACT_MSN         ICON                    "Res\\ContactMSN.ico"
 IDR_HELPFRAME           ICON                    "Res\\Help.ico"
 IDI_SEARCH_FOLDER       ICON                    "Res\\SearchFolder.ico"
@@ -126,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,134
- PRODUCTVERSION 2,1,0,134
+ FILEVERSION 2,1,0,137
+ PRODUCTVERSION 2,1,0,137
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 134"
+            VALUE "FileVersion", "2, 1, 0, 137"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 134"
+            VALUE "ProductVersion", "2, 1, 0, 137"
         END
     END
     BLOCK "VarFileInfo"
