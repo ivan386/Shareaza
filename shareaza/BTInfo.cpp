@@ -63,8 +63,10 @@ CBTInfo::~CBTInfo()
 
 CBTInfo::CBTFile::CBTFile()
 {
-	m_nSize = 0;
-	m_bSHA1 = FALSE;
+	m_nSize		= 0;
+	m_bSHA1		= FALSE;
+	m_bED2K		= FALSE;
+	m_bTiger	= FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
