@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.134"
+		version="2.1.0.137"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2052,6 +2052,16 @@
 		</text>
 	</document>
 
+	<document name="GeneralHelp.DonkeyServerList">
+		<text format="b">Пустой список eDonkey серверов</text>
+		<newline gap="8"/>
+		<text>В списке eDonkey2000 серверов нет ни одного сервера. Вам необходимо скачать
+		новый список серверов (файл met), чтобы Вы смогли подключиться к ED2K.</text>
+		<newline gap="8"/>
+		<text>Вы можете скачать этот список со страницы опций edonkey2000 или с окна
+		служб ресурсов.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2154,7 +2164,7 @@
 	<tip id="ID_CHILD_RESTORE" message="Открыть выбранное окно."/>
 	<tip id="ID_DISCOVERY_ADD" message="Добавить новую службу ресурсов соединений..."/>
 	<tip id="ID_DISCOVERY_ADVERTISE" message="Рекламировать помеченную GWebCache службу в случайной GWebCache."/>
-	<tip id="ID_DISCOVERY_BROWSE" message="Просмотреть статистику помечкенной службы GWebCache в Интернете."/>
+	<tip id="ID_DISCOVERY_BROWSE" message="Просмотреть статистику помеченной службы GWebCache в Интернете."/>
 	<tip id="ID_DISCOVERY_EDIT" message="Просмотр свойств помеченной службы ресурсов соединений."/>
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Показывать bootstrap службы в окне Ресурсов Соединений."/>
 	<tip id="ID_DISCOVERY_QUERY" message="Запросить помеченную службу соединений ресурсов сейчас."/>
@@ -3217,7 +3227,7 @@
 		<control caption="Могу принять вход. соединения"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Загрузки">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Загрузки">
 		<control caption="Сохранять загруженные файлы в папке:"/>
 		<control/><control/>
 		<control caption="Держать незаконченные файлы в папке:"/>
@@ -3234,11 +3244,10 @@
 		<control/>
 		<control caption="Максимальный номер очереди:"/>
 		<control/><control/>
-		<control/>
 		<control caption="Загрузки и выгрузки только с соединенными сетями."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Выгрузки">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Выгрузки">
 		<control caption="_Опции:"/>
 		<control caption="Разделять новые загрузки"/>
 		<control caption="Лимит. выгрузки в режиме узла"/>
