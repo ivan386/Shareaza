@@ -1,7 +1,7 @@
 //
 // WizardNetworksPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -130,10 +130,13 @@ void CWizardNetworksPage::DoDonkeyImport()
 	
 	if ( strPrograms.IsEmpty() ) strPrograms = _T("C:\\Program Files");
 	
+	// Get the server list from eMule if possible
 	strFolder = strPrograms + _T("\\eMule\\server.met");
 	HostCache.eDonkey.Import( strFolder );
 	
-	if ( Settings.eDonkey.EnableToday ) DiscoveryServices.ExecuteDonkey();
+	// Get a server list from the web (if you need one)
+	if ( ( Settings.eDonkey.EnableToday ) && ( HostCache.eDonkey.CountHosts() < 10 ) ) 
+		DiscoveryServices.ExecuteDonkey();
 	
 	LPCTSTR pszFolders[] =
 	{
