@@ -83,7 +83,8 @@ public:
 public:
 	UINT		m_nEncoding;
 	CString		m_sComment;
-	DWORD		m_tDate;
+	DWORD		m_tCreationDate;
+	CString		m_sCreatedBy;
 private:
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;

@@ -53,7 +53,7 @@ CBTInfo::CBTInfo()
 	m_pFiles		= NULL;
 
 	m_nEncoding		= Settings.BitTorrent.TorrentCodePage;
-	m_tDate			= 0;
+	m_tCreationDate	= 0;
 }
 
 CBTInfo::~CBTInfo()
@@ -313,29 +313,39 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	
 	// Get the encoding (from torrents that have it)
 	m_nEncoding = Settings.BitTorrent.TorrentCodePage;
-	CBENode* pEncoding = pRoot->GetNode( "encoding" );
-	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beString )  ) )
+	CBENode* pEncoding = pRoot->GetNode( "codepage" );
+	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beInt )  ) )
 	{
-		CString strEncoding = pEncoding->GetString();
+		// "codepage" style (UNIT giving the exact Windows code page)
+		m_nEncoding = (UINT)pEncoding->GetInt();
+	}
+	else
+	{
+		// "encoding" style (String representing the encoding to use)
+		pEncoding = pRoot->GetNode( "encoding" );
+		if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beString )  ) )
+		{
+			CString strEncoding = pEncoding->GetString();
 
-		if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
-			m_nEncoding = CP_UTF8;
-		else if ( _tcsistr( strEncoding.GetString() , _T("ANSI") ) != NULL ) 
-			m_nEncoding = CP_ACP;
-		else if ( _tcsistr( strEncoding.GetString() , _T("BIG5") ) != NULL ) 
-			m_nEncoding = 950;
-		else if ( _tcsistr( strEncoding.GetString() , _T("Korean") ) != NULL ) 
-			m_nEncoding = 949;
-		else if ( _tcsistr( strEncoding.GetString() , _T("UHC") ) != NULL ) 
-			m_nEncoding = 949;
-		else if ( _tcsistr( strEncoding.GetString() , _T("Chinese") ) != NULL ) 
-			m_nEncoding = 936;
-		else if ( _tcsistr( strEncoding.GetString() , _T("GBK") ) != NULL ) 
-			m_nEncoding = 936;
-		else if ( _tcsistr( strEncoding.GetString() , _T("Japanese") ) != NULL ) 
-			m_nEncoding = 932;
-		else if ( _tcsistr( strEncoding.GetString() , _T("Shift-JIS") ) != NULL ) 
-			m_nEncoding = 932;
+			if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
+				m_nEncoding = CP_UTF8;
+			else if ( _tcsistr( strEncoding.GetString() , _T("ANSI") ) != NULL ) 
+				m_nEncoding = CP_ACP;
+			else if ( _tcsistr( strEncoding.GetString() , _T("BIG5") ) != NULL ) 
+				m_nEncoding = 950;
+			else if ( _tcsistr( strEncoding.GetString() , _T("Korean") ) != NULL ) 
+				m_nEncoding = 949;
+			else if ( _tcsistr( strEncoding.GetString() , _T("UHC") ) != NULL ) 
+				m_nEncoding = 949;
+			else if ( _tcsistr( strEncoding.GetString() , _T("Chinese") ) != NULL ) 
+				m_nEncoding = 936;
+			else if ( _tcsistr( strEncoding.GetString() , _T("GBK") ) != NULL ) 
+				m_nEncoding = 936;
+			else if ( _tcsistr( strEncoding.GetString() , _T("Japanese") ) != NULL ) 
+				m_nEncoding = 932;
+			else if ( _tcsistr( strEncoding.GetString() , _T("Shift-JIS") ) != NULL ) 
+				m_nEncoding = 932;
+		}
 	}
 
 	// Get the comments (if present)
@@ -362,10 +372,31 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode* pDate = pRoot->GetNode( "creation date" );
 	if ( ( pDate ) &&  ( pDate->IsType( CBENode::beInt )  ) )
 	{
-		m_tDate = (DWORD)pDate->GetInt();
+		m_tCreationDate = (DWORD)pDate->GetInt();
 		// CTime pTime( (time_t)m_tDate );
 		// theApp.Message( MSG_SYSTEM, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
 	}
+
+	// Get the creator (if present)
+	CBENode*  pCreator = pRoot->GetNode( "created by" );
+	if ( ( pCreator ) &&  ( pCreator->IsType( CBENode::beString )  ) )
+		m_sCreatedBy = pCreator->GetString();
+
+	// Multi-Tracker: We don't support this yet. (Add it properly later)
+	// *********************************
+	// Get announce-list (if present)
+	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
+	if ( ( pAnnounceList ) && ( pAnnounceList->IsType( CBENode::beList ) ) )
+	{
+		CBENode* pSubList = pAnnounceList->GetNode( 0 );
+		if ( ( pSubList ) && ( pSubList->IsType( CBENode::beList ) ) )
+		{
+			CBENode* pTracker = pSubList->GetNode( 0 );
+			if ( ( pTracker ) &&  ( pTracker->IsType( CBENode::beString )  ) )
+				m_sTracker = pTracker->GetString();
+		}
+	}
+	//*********************************
 
 	// Get announce
 	CBENode* pAnnounce = pRoot->GetNode( "announce" );
@@ -386,20 +417,22 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	{
 		// There was an error reading the name
 		m_bEncodingError = TRUE;
-		// Some torrents have an undocumented name key
-		pName = pInfo->GetNode( "name.utf-8" );
-		if ( pName )
-		{
-			if ( pName->IsType( CBENode::beString ) )
-				m_sName = pName->GetString();
-		}
-		// If that didn't get us a name, the torrent is not using the correct encoding
+
+		// Try to get it using the torrent or user specified encoding
+		if ( pName->IsType( CBENode::beString ) ) 
+			m_sName = pName->DecodeString( m_nEncoding );
+
+		// If that didn't work, some torrents have an undocumented name key
 		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
 		{
-			pName = pInfo->GetNode( "name" );
-			if ( pName->IsType( CBENode::beString ) ) 
-				m_sName = pName->DecodeString( m_nEncoding );
+			pName = pInfo->GetNode( "name.utf-8" );
+			if ( pName )
+			{
+				if ( pName->IsType( CBENode::beString ) )
+					m_sName = pName->GetString();
+			}
 		}
+
 		// If we still couldn't generate a name, there is nothing more we can do.
 		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
 		{
