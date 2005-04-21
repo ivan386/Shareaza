@@ -1632,6 +1632,7 @@
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
+#define ID_HELP_DONKEYSERVERS			33134
 
 // Next default values for new objects
 // 
@@ -1639,7 +1640,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        270
-#define _APS_NEXT_COMMAND_VALUE         33121
+#define _APS_NEXT_COMMAND_VALUE         33135
 #define _APS_NEXT_CONTROL_VALUE         1410
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
