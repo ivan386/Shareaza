@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.55 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.56 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.134"
+		version="2.1.0.137"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -2059,6 +2059,16 @@
 		<text>De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, som vil
 		sørge for at den fungerer korrekt i alle BitTorrent-programmer. Sjekk Shareazas forumer
 		hvis du trenger mer hjelp.</text>
+	</document>
+
+	<document name="GeneralHelp.DonkeyServerList">
+		<text format="b">Din eDonkey serverliste er tom</text>
+		<newline gap="8"/>
+		<text>Det er ingen servere i din eDonkey2000 serverliste. Du må laste ned en
+		oppdatert serverliste (met-fil) for å koble til ED2K.</text>
+		<newline gap="8"/>
+		<text>Du kan laste ned en serverliste i instillingene for ed2k, eller vinduet for
+		opppdagelsestjenester.</text>
 	</document>
 
 	<!-- Search help documents -->
