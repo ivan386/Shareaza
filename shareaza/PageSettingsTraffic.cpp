@@ -179,7 +179,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.BitTorrent.LinkTimeout, 1000, 10, 60*10, _T(" s") );
 	AddSetting( &Settings.BitTorrent.LinkPing, 1000, 10, 60*10, _T(" s") );
 	AddSetting( &Settings.BitTorrent.RequestPipe, 1, 1, 10 );
-	AddSetting( &Settings.BitTorrent.RequestSize, 1024, 32, 128, _T(" KB") );
+	AddSetting( &Settings.BitTorrent.RequestSize, 1024, 8, 128, _T(" KB") );
 	AddSetting( &Settings.BitTorrent.RequestLimit, 1024, 1, 1024, _T(" KB") );
 	AddSetting( &Settings.BitTorrent.RandomPeriod, 1000, 1, 60*5, _T(" s") );
 	AddSetting( &Settings.BitTorrent.SourceExchangePeriod, 1, 1, 60*5, _T(" m") );
