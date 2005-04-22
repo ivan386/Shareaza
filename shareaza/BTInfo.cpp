@@ -352,19 +352,18 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode*  pComment = pRoot->GetNode( "comment" );
 	if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
 		m_sComment = pComment->GetString();
-
 	if ( ( _tcsicmp( m_sComment.GetString() , _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
 	{
 		m_bEncodingError = TRUE;
-		pComment = pRoot->GetNode( "comment.utf-8" );
+		// Try decoding the comments
 		if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
-			m_sComment = pComment->GetString();
-
-		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
-		{
-			pComment = pRoot->GetNode( "comment" );
-			if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
 				m_sComment = pComment->DecodeString( m_nEncoding );
+		// Check for another node
+		if ( ( _tcsicmp( m_sComment.GetString() , _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
+		{
+			pComment = pRoot->GetNode( "comment.utf-8" );
+			if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
+				m_sComment = pComment->GetString();
 		}
 	}
 
@@ -373,7 +372,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	if ( ( pDate ) &&  ( pDate->IsType( CBENode::beInt )  ) )
 	{
 		m_tCreationDate = (DWORD)pDate->GetInt();
-		// CTime pTime( (time_t)m_tDate );
+		// CTime pTime( (time_t)m_tCreationDate );
 		// theApp.Message( MSG_SYSTEM, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
 	}
 
@@ -533,18 +532,17 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			{
 				// There was an error reading the path
 				m_bEncodingError = TRUE;
-				// Check for other possible path keys
-				pPath = pFile->GetNode( "path.utf-8" );
-				if ( pPath )
-				{
-					pPart = pPath->GetNode( 0 );
-					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
-				}
-				// If we still don't have a path, it must be an encoding failure
+				// Trt decoding it
+				if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString( m_nEncoding );
+				// If we still don't have a path, check for other possible path nodes
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
 				{
-					pPath = pFile->GetNode( "path" );
-					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString( m_nEncoding );
+					pPath = pFile->GetNode( "path.utf-8" );
+					if ( pPath )
+					{
+						pPart = pPath->GetNode( 0 );
+						if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
+					}
 				}
 						
 				if ( ! pPath ) return FALSE;
