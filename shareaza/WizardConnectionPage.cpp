@@ -249,7 +249,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	else if( nSpeed <= 4096 )
 		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL2 (4:1)
 	else
-		Settings.Connection.OutSpeed = nSpeed;		//Cable, SDSL, and the big boys.
+		Settings.Connection.OutSpeed = nSpeed;		// Cable, SDSL, and the big boys.
 
 	//Set upload limit to 90% of capacity, trimmed to the nearest KB.
 	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * 0.9 );
@@ -264,7 +264,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
 	if ( nSpeed > 2500 && theApp.m_bNT && !theApp.m_bLimitedConnections )
-	{	//Very high capacity connection
+	{	// Very high capacity connection
 		Settings.Downloads.MaxFiles				= 32;
 		Settings.Downloads.MaxTransfers			= 128;
 		Settings.Downloads.MaxFileTransfers		= 16;
@@ -273,7 +273,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
-	{	//Fast broadband
+	{	// Fast broadband
 		Settings.Downloads.MaxFiles				= 26;
 		Settings.Downloads.MaxTransfers			= 96;
 		Settings.Downloads.MaxFileTransfers		= 10;
@@ -281,7 +281,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileSearches		= 2;
 	}
 	else if ( nSpeed > 256 && theApp.m_bNT )
-	{	//Slower broadband
+	{	// Slower broadband
 		Settings.Downloads.MaxFiles				= 20;
 		Settings.Downloads.MaxTransfers			= 64;
 		Settings.Downloads.MaxFileTransfers		= 8;
@@ -290,7 +290,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Search.GeneralThrottle			= 250;
 	}
 	else if ( nSpeed > 80 && theApp.m_bNT )
-	{	//IDSN, Dual modems, etc
+	{	// IDSN, Dual modems, etc
 		Settings.Downloads.MaxFiles				= 14;
 		Settings.Downloads.MaxTransfers			= 32;
 		Settings.Downloads.MaxFileTransfers		= 6;
@@ -299,20 +299,20 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Search.GeneralThrottle			= 250;
 	}
 	else
-	{	//Modem users / Win9x
+	{	// Modem users / Win9x
 		Settings.Downloads.MaxFiles				= 8;
 		Settings.Downloads.MaxTransfers			= 24;
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 0;
-		Settings.Downloads.SourcesWanted		= 200; //Don't bother requesting so many sources
+		Settings.Downloads.SourcesWanted		= 200; // Don't bother requesting so many sources
 		Settings.Search.GeneralThrottle			= 300;
 	}
 	
 	UploadQueues.CreateDefault();
 
 	if ( ( theApp.m_bLimitedConnections ) && ( ! Settings.General.IgnoreXPsp2 ) ) 
-	{	//Window XP Service Pack 2
+	{	// Window XP Service Pack 2
 		theApp.Message( MSG_ERROR, _T("Warning  - Windows XP Service Pack 2 detected. Performance may be reduced.") );
 		Settings.Downloads.ConnectThrottle		= max( Settings.Downloads.ConnectThrottle, DWORD(800) );
 		Settings.Connection.ConnectThrottle		= max( Settings.Connection.ConnectThrottle, DWORD(250) );
