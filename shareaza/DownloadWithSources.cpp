@@ -222,13 +222,15 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 			}
 		}
 	}
-	
+
+	/*
 	if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
 		Neighbours.FindDonkeySources( &pHit->m_pED2K,
 			(IN_ADDR*)pHit->m_pClientID.w, (WORD)pHit->m_pClientID.w[1] );
 	}
-	
+	*/
+
 	// No URL, stop now with success
 	if ( pHit->m_sURL.IsEmpty() ) return TRUE;
 	
