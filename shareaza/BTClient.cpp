@@ -468,6 +468,7 @@ BOOL CBTClient::OnHandshake2()
 	m_bOnline = TRUE;
 	
 	DetermineUserAgent();
+	if ( m_bExtended ) m_sUserAgent = _T("Shareaza");
 	
 	return OnOnline();
 }
@@ -526,16 +527,28 @@ BOOL CBTClient::OnNoHandshake2()
 void CBTClient::DetermineUserAgent()
 {
 	CString strVer;
-	
+
 	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )	
 	{	//Azerus style
-		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'Z' )
+		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'R' )
+		{
+			m_sUserAgent = _T("Arctic");
+		}
+		else if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'Z' )
 		{
 			m_sUserAgent = _T("Azureus");
 		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'B' )
 		{
 			m_sUserAgent = _T("BitBuddy");
+		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'O' )
+		{
+			m_sUserAgent = _T("BO");
+		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'S' )
+		{
+			m_sUserAgent = _T("BitSlave");
 		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'X' )
 		{
@@ -558,9 +571,10 @@ void CBTClient::DetermineUserAgent()
 			m_sUserAgent = _T("Swarmscope");
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )	//ToDo: Make certain SZ isn't used before 2.2 final
-		{
-			m_sUserAgent = _T("RAZA");
-			if ( m_pGUID.b[3] > '1' ) m_bExtended = TRUE;
+		{	
+			//m_sUserAgent = _T("Shareaza");
+			// Shareaza versions don't always 'fit' into the BT numbering, so skip that
+			m_sUserAgent.Empty();	
 		}
 		else if ( m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'N' )
 		{
@@ -574,15 +588,30 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("XanTorrent");
 		}
+		else if ( m_pGUID.b[1] == 'Z' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("ZipTorrent");
+		}
 		else //Unknown client using this naming.
 		{
 			m_sUserAgent.Format( _T("%c%c"), m_pGUID.b[1], m_pGUID.b[2] );
 		}
 		
-		strVer.Format( _T(" %i.%i.%i.%i"),
-			( m_pGUID.b[3] - '0' ), ( m_pGUID.b[4] - '0' ),
-			( m_pGUID.b[5] - '0' ), ( m_pGUID.b[6] - '0' ) );
-		m_sUserAgent += strVer;
+		if ( m_sUserAgent.IsEmpty() ) 
+		{
+			// If we don't want the version, etc.
+			m_sUserAgent.Format( _T("BitTorrent (%c%c)"), m_pGUID.b[1], m_pGUID.b[2] );
+		}
+		else
+		{
+			// Add the version to the name
+			strVer.Format( _T(" %i.%i.%i.%i"),
+				( m_pGUID.b[3] - '0' ), ( m_pGUID.b[4] - '0' ),
+				( m_pGUID.b[5] - '0' ), ( m_pGUID.b[6] - '0' ) );
+			m_sUserAgent += strVer;
+		}
+		
+
 	}
 	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
 	{	//Shadow style
