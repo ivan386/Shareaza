@@ -137,7 +137,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 
 void CBTInfo::Serialize(CArchive& ar)
 {
-	int nVersion = 2;
+	int nVersion = 3;
 	
 	if ( ar.IsStoring() )
 	{
@@ -154,6 +154,11 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar.Write( m_pBlockSHA1, m_nBlockCount * sizeof(SHA1) );
 		
 		ar << m_sName;
+
+		ar << m_nEncoding;
+		ar << m_sComment;
+		ar << m_tCreationDate;
+		ar << m_sCreatedBy;
 		
 		ar.WriteCount( m_nFiles );
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
@@ -189,6 +194,14 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar.Read( m_pBlockSHA1, (DWORD)m_nBlockCount * sizeof(SHA1) );
 		
 		ar >> m_sName;
+
+		if ( nVersion >= 3 )
+		{
+			ar >> m_nEncoding;
+			ar >> m_sComment;
+			ar >> m_tCreationDate;
+			ar >> m_sCreatedBy;
+		}
 		
 		m_nFiles = ar.ReadCount();
 		m_pFiles = new CBTFile[ m_nFiles ];
