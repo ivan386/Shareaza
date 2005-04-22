@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -97,13 +97,14 @@ public:
 public:
 
 	BOOL    m_bAutomatic;
-	BOOL    m_bShareaza;     // True if the remote computer is running Shareaza also
-	NrsNode m_nNodeType;     // This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
+	BOOL    m_bShareaza;		// True if the remote computer is running Shareaza also
+	NrsNode m_nNodeType;		// This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
 	BOOL    m_bQueryRouting;
 	BOOL    m_bPongCaching;
-	BOOL    m_bVendorMsg;    // True if the remote computer told us it supports vendor-specific messages
+	BOOL    m_bVendorMsg;		// True if the remote computer told us it supports vendor-specific messages
 	BOOL    m_bGGEP;
-	DWORD   m_tLastQuery;    // The time we last got a query packet, recorded as the number of seconds since 1970
+	DWORD   m_tLastQuery;		// The time we last got a query packet, recorded as the number of seconds since 1970
+	BOOL    m_bObsoleteClient;	// Is the remote client running an 'old' version of software. (An old beta, etc)
 
 // Attributes: Statistics
 public:

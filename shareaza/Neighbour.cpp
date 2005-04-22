@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,6 +79,7 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_bPongCaching  = FALSE;
 	m_bVendorMsg    = FALSE;  // The remote computer hasn't told us it supports the vendor-specific messages yet
 	m_bGGEP         = FALSE;  // The remote computer hasn't told us it supports the GGEP block yet
+	m_bObsoleteClient= FALSE;
 
 	// Start out time variables as 0
 	m_tLastQuery  = 0; // We'll set these to the current tick or seconds count when we get a query or packet

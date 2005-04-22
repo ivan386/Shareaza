@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -131,6 +131,8 @@ protected:
 	void SendHostHeaders(LPCTSTR pszMessage = NULL);              // Send a 503 error message, and the "X-Try-Ultrapeers:" header
 	BOOL ReadResponse();                                          // Read the first line of a new group of headers from the remote computer
 	void OnHandshakeComplete();                                   // Turn this object into one specialized for Gnutella or Gnutella2
+
+	BOOL IsClientObsolete();			// Checks the user agent to see if it's an old client.
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom

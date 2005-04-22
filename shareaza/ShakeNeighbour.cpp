@@ -635,6 +635,8 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 		}
 
+		m_bObsoleteClient = IsClientObsolete();
+
 	} // The remote computer is telling us our IP address
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{
@@ -952,6 +954,19 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		{
 			// This connection is to a hub above us
 			m_nNodeType = ntHub;
+		}
+
+		// If it's a leaf and an old version
+		if ( ( m_nNodeType == ntLeaf ) && ( m_bObsoleteClient ) )
+		{
+			// Check our loading. (Old clients consume more resources)
+			if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
+			{
+				theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
+				SendHostHeaders( _T("GNUTELLA/0.6 503 Old client version, please update. www.shareaza.com") );
+				DelayClose( IDS_HANDSHAKE_SURPLUS );
+				return FALSE;
+			}
 		}
 
 		// If we don't need another connection to the role the remote computer is acting in
@@ -1368,3 +1383,24 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Delete this CShakeNeighbour object now that it has been turned into a CG1Neighbour or CG2Neighbour object
 	delete this;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// CShakeNeighbour IsClientObsolete
+
+// Checks the user agent to see if it's an outdated client. (An old Shareaza beta, or something)
+BOOL CShakeNeighbour::IsClientObsolete()
+{
+	if ( m_sUserAgent.IsEmpty() ) return FALSE;
+
+	if ( ( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.0."    ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("SlingerX 2.0." ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7.0." ) ) ) )
+		 return TRUE;
+
+	return FALSE;
+}
+
