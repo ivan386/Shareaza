@@ -216,6 +216,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_DISKSPACE, OnDiskSpace)
 	ON_COMMAND(ID_HELP_DISKWRITEFAIL, OnDiskWriteFail)
 	ON_COMMAND(ID_HELP_CONNECTIONFAIL, OnConnectionFail)
+	ON_COMMAND(ID_HELP_DONKEYSERVERS, OnNoDonkeyServers)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_MEDIA, OnUpdateViewMedia)
 	ON_COMMAND(ID_VIEW_MEDIA, OnViewMedia)
 	ON_UPDATE_COMMAND_UI(ID_TAB_MEDIA, OnUpdateTabMedia)
@@ -1377,6 +1378,17 @@ void CMainWnd::LocalSystemChecks()
 				}
 			}
 		}
+
+
+		// Check we have donkey servers
+		if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
+		{
+			if ( ( Settings.eDonkey.MetQueryTime ) && ( HostCache.eDonkey.CountHosts() < 1 ) )
+			{
+				Settings.Live.DonkeyServerWarning = TRUE;
+				PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
+			}
+		}
 	}
 
 }
@@ -2097,6 +2109,11 @@ void CMainWnd::OnDiskWriteFail()
 void CMainWnd::OnConnectionFail()
 {
 	CHelpDlg::Show( _T("GeneralHelp.ConnectionFail") );
+}
+
+void CMainWnd::OnNoDonkeyServers()
+{
+	CHelpDlg::Show( _T("GeneralHelp.DonkeyServerList") );
 }
 
 void CMainWnd::OnToolsProfile() 

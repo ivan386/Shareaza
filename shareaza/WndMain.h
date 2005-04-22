@@ -206,6 +206,7 @@ protected:
 	afx_msg void OnDiskSpace();
 	afx_msg void OnDiskWriteFail();
 	afx_msg void OnConnectionFail();
+	afx_msg void OnNoDonkeyServers();
 	afx_msg void OnUpdateViewMedia(CCmdUI* pCmdUI);
 	afx_msg void OnViewMedia();
 	afx_msg void OnUpdateTabMedia(CCmdUI* pCmdUI);
