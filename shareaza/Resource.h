@@ -227,6 +227,7 @@
 #define IDC_G1_PEERS                    1038
 #define IDC_G1_PEERS_SPIN               1039
 #define IDC_PROPERTIES                  1040
+#define IDC_REQUIRE_CONNECT             1043
 #define IDC_INCOMPLETE_FOLDER           1044
 #define IDC_INCOMPLETE_BROWSE           1045
 #define IDC_DOWNLOADS_FOLDER            1046
@@ -589,7 +590,7 @@
 #define IDC_QUEUE_EDIT                  1317
 #define IDC_MATCH_CHECK                 1317
 #define IDC_QUEUE_DELETE                1318
-#define IDC_UPLOADS_BANDWIDTH_LIMIT		1319
+#define IDC_UPLOADS_BANDWIDTH_LIMIT     1319
 #define IDC_MATCH_TEXT                  1321
 #define IDC_FILE_NETWORKS               1322
 #define IDC_FILE_TAGS                   1324
@@ -609,11 +610,15 @@
 #define IDC_TORRENT_INCOMPLETE          1339
 #define IDC_TORRENT_REFRESH             1340
 #define IDC_TORRENT_VIEW                1341
-#define IDC_BANNER                      1343
-#define IDC_REQUIRE_CONNECT             1344
+#define IDC_TORRENT_STARTDOWNLOADS      1342
+#define IDC_TORRENT_COMMENTS            1343
+#define IDC_TORRENT_CREATEDBY           1344
+#define IDC_TORRENT_CREATIONDATE        1345
+#define IDC_TORRENT_NAME2               1345
 #define IDC_RATE_COMMENTS               1346
 #define IDC_MESSAGE_AVAILABLE           1347
 #define IDC_MESSAGE_DELETED             1348
+#define IDC_BANNER                      1349
 #define IDC_RATE_VALUE_0                1350
 #define IDC_RATE_VALUE_1                1351
 #define IDC_RATE_VALUE_2                1352
@@ -644,7 +649,6 @@
 #define IDC_TORRENTS_BROWSE             1384
 #define IDC_TORRENT_LINKS_SPIN          1385
 #define IDC_TORRENT_DEFAULTTRACKER      1386
-#define IDC_STARTTORRENTDOWNLOADS       1386
 #define IDC_TORRENT_ENDGAME             1387
 #define IDC_TORRENT_INTERFACE           1388
 #define IDC_TORRENT_CLIENTLINKS         1389
@@ -1107,7 +1111,7 @@
 #define IDS_WIZARD_EXIT                 16809
 #define IDS_WIZARD_YEARS_OLD            16810
 #define IDS_SETTINGS_AUTOMATIC_IP       16811
-#define IDS_SETTINGS_WARN_QUEUELIMIT	16816
+#define IDS_SETTINGS_WARN_QUEUELIMIT    16816
 #define IDS_DISCOVERY_BOOTSTRAP         16864
 #define IDS_DISCOVERY_QUERY             16865
 #define IDS_DISCOVERY_WEB_SUCCESS       16866
@@ -1632,7 +1636,7 @@
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
-#define ID_HELP_DONKEYSERVERS			33134
+#define ID_HELP_DONKEYSERVERS           33134
 
 // Next default values for new objects
 // 
@@ -1641,7 +1645,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        270
 #define _APS_NEXT_COMMAND_VALUE         33135
-#define _APS_NEXT_CONTROL_VALUE         1410
+#define _APS_NEXT_CONTROL_VALUE         1412
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

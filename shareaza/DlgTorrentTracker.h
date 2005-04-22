@@ -1,7 +1,7 @@
 //
 // DlgTorrentTracker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,14 +40,17 @@ public:
 public:
 	//{{AFX_DATA(CTorrentTrackerDlg)
 	enum { IDD = IDD_TORRENT_TRACKER };
-	CComboBox	m_wndView;
-	CButton	m_wndRefresh;
-	CListCtrl	m_wndFiles;
-	CEdit	m_wndComplete;
-	CEdit	m_wndIncomplete;
-	CString	m_sName;
-	CString	m_sTracker;
-	CComboBox	m_wndStartDownloads;
+	CComboBox		m_wndView;
+	CButton			m_wndRefresh;
+	CListCtrl		m_wndFiles;
+	CEdit			m_wndComplete;
+	CEdit			m_wndIncomplete;
+	CString			m_sName;
+	CString			m_sTracker;
+	CString			m_sComment;
+	CString			m_sCreatedBy;
+	CString			m_sCreationDate;
+	CComboBox		m_wndStartDownloads;
 	//}}AFX_DATA
 	
 // Attributes
@@ -61,26 +64,26 @@ public:
 	
 // Thread
 protected:
-	static UINT	ThreadStart(LPVOID pParam);
-	void		OnRun();
-	BOOL		OnTree(CBENode* pNode);
+	static UINT		ThreadStart(LPVOID pParam);
+	void			OnRun();
+	BOOL			OnTree(CBENode* pNode);
 	
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CTorrentTrackerDlg)
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void	DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	//{{AFX_MSG(CTorrentTrackerDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelChangeTorrentView();
-	afx_msg void OnTorrentRefresh();
-	afx_msg void OnTimer(UINT nIDEvent);
-	virtual void OnOK();
-	afx_msg void OnDestroy();
+	virtual BOOL	OnInitDialog();
+	afx_msg void	OnSelChangeTorrentView();
+	afx_msg void	OnTorrentRefresh();
+	afx_msg void	OnTimer(UINT nIDEvent);
+	virtual void	OnOK();
+	afx_msg void	OnDestroy();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

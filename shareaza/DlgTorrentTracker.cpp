@@ -52,6 +52,9 @@ CTorrentTrackerDlg::CTorrentTrackerDlg(CBTInfo* pInfo, int* pStart, CWnd* pParen
 	//{{AFX_DATA_INIT(CTorrentTrackerDlg)
 	m_sName = _T("");
 	m_sTracker = _T("");
+	m_sComment = _T("");
+	m_sCreationDate = _T("");
+	m_sCreatedBy = _T("");
 	//}}AFX_DATA_INIT
 
 	m_pInfo.Copy( pInfo );
@@ -71,8 +74,13 @@ void CTorrentTrackerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TORRENT_INCOMPLETE, m_wndIncomplete);
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
-	DDX_Control(pDX, IDC_STARTTORRENTDOWNLOADS, m_wndStartDownloads);
+	DDX_Text(pDX, IDC_TORRENT_COMMENTS, m_sComment);
+	DDX_Text(pDX, IDC_TORRENT_CREATEDBY, m_sCreatedBy );
+	DDX_Text(pDX, IDC_TORRENT_CREATIONDATE, m_sCreationDate );
+	DDX_Control(pDX, IDC_TORRENT_STARTDOWNLOADS, m_wndStartDownloads);
 	//}}AFX_DATA_MAP
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -85,8 +93,16 @@ BOOL CTorrentTrackerDlg::OnInitDialog()
 	SetIcon( theApp.LoadIcon( IDR_MAINFRAME ), TRUE );
 	SkinMe( _T("CTorrentTrackerDlg") );
 	
-	m_sName		= m_pInfo.m_sName;
-	m_sTracker	= m_pInfo.m_sTracker;
+	m_sName			= m_pInfo.m_sName;
+	m_sTracker		= m_pInfo.m_sTracker;
+	m_sComment		= m_pInfo.m_sComment;
+	m_sCreatedBy	= m_pInfo.m_sCreatedBy;
+	if ( m_pInfo.m_tCreationDate > 0 )
+	{
+		CTime pTime( (time_t)m_pInfo.m_tCreationDate );
+		m_sCreationDate = pTime.Format( _T("%Y-%m-%d  %H:%M") );
+	}
+	
 	
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
