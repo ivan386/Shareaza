@@ -104,8 +104,8 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
 	m_wndMaxDownFiles.SetRange( 1, 100 );
-	m_wndMaxDownTransfers.SetRange( 1, 128 );
-	m_wndMaxFileTransfers.SetRange( 1, 128 );
+	m_wndMaxDownTransfers.SetRange( 1, 200 );
+	m_wndMaxFileTransfers.SetRange( 1, 100 );
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -202,8 +202,8 @@ void CDownloadsSettingsPage::OnOK()
 	// Figure out what the text in the queue limit box means
 	if ( ( m_sQueueLimit.Find( _T("MAX") ) > 0 ) || ( m_sQueueLimit.Find( _T("NONE") ) > 0 ) )
 	{
-		Beep(640,500);
 		// Max queue is not limited
+		nQueueLimit = 0;
 	}
 	else
 	{
@@ -244,11 +244,19 @@ void CDownloadsSettingsPage::OnOK()
 		m_sQueueLimit.Format( _T("%d"), nQueueLimit );
 	else
 		m_sQueueLimit = _T("MAX");
+
+	// Apply limits to display
+	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
+	m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
+
+	// Display any data changes
 	UpdateData( FALSE );
 
+	// Put new values in the settings.
 	Settings.Downloads.CompletePath			= m_sDownloadsPath;
 	Settings.Downloads.IncompletePath		= m_sIncompletePath;
-	Settings.Downloads.MaxFiles				= min ( m_nMaxDownFiles, 100 );
+	Settings.Downloads.MaxFiles				= m_nMaxDownFiles;
 	Settings.Downloads.MaxTransfers			= m_nMaxDownTransfers;
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= nQueueLimit;
