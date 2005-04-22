@@ -95,6 +95,7 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	Clear();
 	
 	m_bValid		= pSource->m_bValid;
+	m_bEncodingError= pSource->m_bEncodingError;
 	m_pInfoSHA1		= pSource->m_pInfoSHA1;
 	m_bDataSHA1		= pSource->m_bDataSHA1;
 	m_pDataSHA1		= pSource->m_pDataSHA1;
@@ -102,12 +103,19 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_pDataED2K		= pSource->m_pDataED2K;
 	m_bDataTiger	= pSource->m_bDataTiger;
 	m_pDataTiger	= pSource->m_pDataTiger;
+
 	m_nTotalSize	= pSource->m_nTotalSize;
 	m_nBlockSize	= pSource->m_nBlockSize;
 	m_nBlockCount	= pSource->m_nBlockCount;
+
 	m_sName			= pSource->m_sName;
 	m_sTracker		= pSource->m_sTracker;
 	m_nFiles		= pSource->m_nFiles;
+
+	m_nEncoding		= pSource->m_nEncoding;
+	m_sComment		= pSource->m_sComment;
+	m_tCreationDate	= pSource->m_tCreationDate;
+	m_sCreatedBy	= pSource->m_sCreatedBy;
 	
 	if ( pSource->m_pBlockSHA1 != NULL )
 	{
