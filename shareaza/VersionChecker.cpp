@@ -1,7 +1,7 @@
 //
 // VersionChecker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,13 +154,7 @@ void CVersionChecker::BuildRequest(CString& strRequest)
 
 BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 {
-
-#if 1
-	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version?") + strPost );
-#else
-	m_pRequest.SetURL( _T("http://127.0.0.1/raza/version") );
-	m_pRequest.SetPost( (LPCSTR)strPost, strPost.GetLength() );
-#endif
+	m_pRequest.SetURL( _T("http://update.trillinux.org/version/beta.php?") + strPost );
 	//Remember to set the update server for final releases.
 	
 	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
@@ -169,7 +163,6 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 	
 	CString strResponse = m_pRequest.GetResponseString();
-
 	CString strHack = theApp.GetProfileString( _T("VersionCheck"), _T("TestResponse"), _T("") );
 	if ( strHack.GetLength() ) strResponse = strHack;
 	
