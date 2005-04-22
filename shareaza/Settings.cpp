@@ -299,7 +299,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
 	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 45000 );
 	Add( _T("BitTorrent.RequestPipe"), &BitTorrent.RequestPipe, 4 );
-	Add( _T("BitTorrent.RequestSize"), &BitTorrent.RequestSize, 32768 );
+	Add( _T("BitTorrent.RequestSize"), &BitTorrent.RequestSize, 16384 );
 	Add( _T("BitTorrent.RequestLimit"), &BitTorrent.RequestLimit, 131072 );
 	Add( _T("BitTorrent.RandomPeriod"), &BitTorrent.RandomPeriod, 30000 );
 	Add( _T("BitTorrent.SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10 );
@@ -463,7 +463,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	29
+#define SMART_VERSION	30
 
 void CSettings::Load()
 {
@@ -575,9 +575,9 @@ void CSettings::SmartUpgrade()
 		Downloads.MaxFileTransfers		= max( Downloads.MaxFileTransfers, 16 );
 		Downloads.AutoExpand			= FALSE;
 		
-		Uploads.SharePartials	= TRUE;
-		Uploads.MaxPerHost		= 2;
-		Uploads.ShareTiger		= TRUE;
+		Uploads.SharePartials			= TRUE;
+		Uploads.MaxPerHost				= 2;
+		Uploads.ShareTiger				= TRUE;
 		
 		Replace( Library.PrivateTypes, _T("|nfo|"), _T("|") );
 		Replace( Library.SafeExecute, _T("|."), _T("|") );
@@ -585,50 +585,55 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 21 )
 	{
-		General.CloseMode		= 0;
-		Library.ThumbSize		= 96;
-		Library.SourceExpire	= 86400;
-		Gnutella1.TranslateTTL	= 2;
+		General.CloseMode				= 0;
+		Library.ThumbSize				= 96;
+		Library.SourceExpire			= 86400;
+		Gnutella1.TranslateTTL			= 2;
 	}
 	
 	if ( nVersion < 24 )
 	{
-		General.CloseMode			= 0;
-		Connection.TimeoutConnect	= 16000;
-		Connection.TimeoutHandshake	= 45000;
-		Downloads.RetryDelay		= 10*60000;
-		Uploads.FilterMask			= 0xFFFFFFFD;
+		General.CloseMode				= 0;
+		Connection.TimeoutConnect		= 16000;
+		Connection.TimeoutHandshake		= 45000;
+		Downloads.RetryDelay			= 10*60000;
+		Uploads.FilterMask				= 0xFFFFFFFD;
 	}
 	
 	if ( nVersion < 25 )
 	{
-		Connection.TimeoutTraffic = 140000;
-		Gnutella2.NumHubs = 2;
-		Gnutella2.NumLeafs = 300;
-		Gnutella2.NumPeers = 6;
+		Connection.TimeoutTraffic		= 140000;
+		Gnutella2.NumHubs				= 2;
+		Gnutella2.NumLeafs				= 300;
+		Gnutella2.NumPeers				= 6;
 	}
 	
 	if ( nVersion < 26 )
 	{
-		Downloads.ConnectThrottle = max( Downloads.ConnectThrottle, DWORD(200) );
-		Downloads.MaxTransfers = min( Downloads.MaxTransfers, 128 );
+		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, DWORD(200) );
+		Downloads.MaxTransfers			= min( Downloads.MaxTransfers, 128 );
 	}
 	
 	if ( nVersion < 28 )
 	{
-		Connection.Firewalled = TRUE;	// We now assume so until proven otherwise
-		Library.VirtualFiles = TRUE;	// Virtual files (stripping) on
-		BitTorrent.Endgame = TRUE;		// Endgame on
+		Connection.Firewalled	= TRUE;		// We now assume so until proven otherwise
+		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
+		BitTorrent.Endgame		= TRUE;		// Endgame on
 	}
 
 	if ( nVersion < 29 )
 	{
-		Downloads.MinSources = 1;		// Lower Max value- should reset it in case  
-		Downloads.StarveTimeout = 2700; // Increased due to ed2k queues (Tripping too often)
-		Gnutella.MaxResults = 100;      // No longer includes ed2k max files
-		Gnutella2.RequeryDelay = 4*3600;// Longer delay between sending same search to G2 hub
-		Uploads.QueuePollMin = 20000;	// Lower values for re-ask times- a dynamic multiplier
-		Uploads.QueuePollMax = 60000;	//  is now applied based on Q# (from 1x to 5x)
+		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case  
+		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
+		Gnutella.MaxResults		= 100;		// No longer includes ed2k max files
+		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
+		Uploads.QueuePollMin	= 20000;	// Lower values for re-ask times- a dynamic multiplier
+		Uploads.QueuePollMax	= 60000;	//  is now applied based on Q# (from 1x to 5x)
+	}
+
+	if ( nVersion < 30 )
+	{
+		BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented) 
 	}
 	
 	//Add OGG handling if needed
