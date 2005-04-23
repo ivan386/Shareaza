@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.137"
+		version="2.1.0.141"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -4081,9 +4081,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent Advanced Information">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Advanced Information">
 		<control caption="Torrent _Information:"/>
 		<control caption="Name:"/>
+		<control/>
+		<control caption="Created:"/>
+		<control/>
+		<control caption="By:"/>
+		<control/>
+		<control caption="Comments:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
@@ -4092,14 +4098,14 @@
 		<control/>
 		<control caption="Incomplete:"/>
 		<control/>
+		<control caption="Transfers:"/>
+		<control caption="Start new download transfers:"/>
+		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
 		<control caption="_Files:"/>
 		<control/>
 		<control caption="_Refresh"/>
 		<control/>
 		<control caption="Close"/>
-		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
-		<control caption="Start new download transfers:"/>
-		<control caption="Transfers:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
