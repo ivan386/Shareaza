@@ -4,6 +4,7 @@
 	Version="7.10"
 	Name="ImageViewer"
 	ProjectGUID="{DBF979BF-E64E-402E-AE56-ACF58E543C38}"
+	RootNamespace="ImageViewer"
 	SccProjectName=""
 	SccLocalPath=""
 	Keyword="AtlProj">
@@ -188,10 +189,11 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Outputs="$(OutDir)\regsvr32.trg"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib $(NOINHERIT)"
 				OutputFile=".\ReleaseUMinDependency/ImageViewer.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
 				ModuleDefinitionFile=".\ImageViewer.def"
 				ProgramDatabaseFile=".\ReleaseUMinDependency/ImageViewer.pdb"
 				SubSystem="2"
@@ -386,7 +388,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				AdditionalIncludeDirectories="..\..\shareaza"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				StringPooling="TRUE"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
@@ -405,10 +407,12 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Outputs="$(OutDir)\regsvr32.trg"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib $(NOINHERIT)"
 				OutputFile=".\ReleaseUMinSize/ImageViewer.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
 				ModuleDefinitionFile=".\ImageViewer.def"
 				ProgramDatabaseFile=".\ReleaseUMinSize/ImageViewer.pdb"
 				SubSystem="2"
