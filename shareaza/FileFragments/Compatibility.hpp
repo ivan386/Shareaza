@@ -199,7 +199,8 @@ inline void SerializeIn2(CArchive& ar, SimpleFragmentList& in, int version)
         {
             for( int count = ar.ReadCount(); count--; )
             {
-                in.insert( SerializeIn( ar, version ) );
+                if ( in.insert( SerializeIn( ar, version ) ) == 0 )
+					AfxThrowArchiveException( CArchiveException::generic );
             }
         }
         else if( version >= 5 )
