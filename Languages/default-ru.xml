@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.137"
+		version="2.1.0.141"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -4070,9 +4070,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Подробная информация BitTorrent">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Подробная информация BitTorrent">
 		<control caption="Torrent _информация:"/>
 		<control caption="Имя:"/>
+		<control/>
+		<control caption="Создан:"/>
+		<control/>
+		<control caption="Программа:"/>
+		<control/>
+		<control caption="Комментарии:"/>
 		<control/>
 		<control caption="Трекер:"/>
 		<control/>
@@ -4081,14 +4087,14 @@
 		<control/>
 		<control caption="Неполных:"/>
 		<control/>
+		<control caption="Пересылки:"/>
+		<control caption="Начать новые пересылки:"/>
+		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
 		<control caption="_Файлы:"/>
 		<control/>
 		<control caption="_Обновить"/>
 		<control/>
 		<control caption="Закрыть"/>
-		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
-		<control caption="Начать новые пересылки:"/>
-		<control caption="Пересылки:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Свойства группы загрузки">
