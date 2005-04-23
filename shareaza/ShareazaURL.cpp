@@ -214,6 +214,26 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			m_sName = strValue;
 			m_bSHA1 = FALSE;
 		}
+		else if ( _tcsicmp( strKey, _T("xl") ) == 0 )
+		{
+			QWORD nSize;
+			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+			{
+				m_nSize = nSize;
+				m_bSize = TRUE;
+			}
+		}
+		/* // Uncomment this if/when 'sz' is officially added
+		else if ( _tcsicmp( strKey, _T("sz") ) == 0 )	
+		{
+			QWORD nSize;
+			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+			{
+				m_nSize = nSize;
+				m_bSize = TRUE;
+			}
+		}
+		*/
 	}
 	
 	if ( m_bSHA1 || m_bTiger || m_bMD5 || m_bED2K || m_sURL.GetLength() )
