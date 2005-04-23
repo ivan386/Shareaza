@@ -243,9 +243,21 @@ void CHostCacheList::Clear()
 
 CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
 {
-	if ( ! nPort ) return NULL;
-	if ( ! pAddress->S_un.S_un_b.s_b1 ) return NULL;
+	// Don't add invalid addresses
+	if ( ! nPort ) 
+		return NULL;
+
+	if ( ! pAddress->S_un.S_un_b.s_b1 ) 
+		return NULL;
+
+	// Don't add blocked addresses
+	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) )
+		return NULL;
+
+	if ( Security.IsDenied( pAddress ) )
+		return NULL;
 	
+	// Check if we already have the host
 	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
 				+ pAddress->S_un.S_un_b.s_b3
