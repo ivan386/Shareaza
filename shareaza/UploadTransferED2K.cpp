@@ -440,6 +440,37 @@ BOOL CUploadTransferED2K::ServeRequests()
 	
 	if ( m_nLength == SIZE_UNKNOWN )
 	{
+		// Check has just finished
+		if ( m_bStopTransfer )
+		{
+theApp.Message( MSG_ERROR, _T("CUploadTransferED2K::ServeRequests(), de-queueing") );
+theApp.Message( MSG_ERROR, _T("User: %s File: %s"), m_sNick, m_sFileName );
+			m_tRotateTime = 0;
+			m_bStopTransfer	= FALSE;
+			
+			CUploadQueue* pQueue = m_pQueue;
+			if ( pQueue ) pQueue->Dequeue( this );
+			pQueue->Enqueue( this, TRUE, FALSE );
+			
+			int nQpos = UploadQueues.GetPosition( this, TRUE );
+			if ( nQpos != 0 )
+			{			
+				if ( m_pBaseFile != NULL && m_pClient->IsOnline() )
+				{
+					Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
+				}
+				
+				if ( nQpos > 0 )	// If we aren't uploading any more (the queue wasn't empty)
+				{
+					// Set state to queued, and reset ranking to send a queue ranking packet.
+					m_tRequest = GetTickCount();
+					m_nState = upsQueued;
+					m_nRanking = -1;
+				}
+
+				return TRUE;
+			}
+		}
 		if ( ! OpenFile() ) return FALSE;
 		if ( ! StartNextRequest() ) return FALSE;
 	}
@@ -655,8 +686,11 @@ BOOL CUploadTransferED2K::CheckRanking()
 
 		if ( m_pClient->IsOnline() )
 		{
-			m_nState = upsRequest;
-			Send( CEDPacket::New( ED2K_C2C_STARTUPLOAD ) );
+			if ( m_nState != upsUploading )
+			{
+				m_nState = upsRequest;
+				Send( CEDPacket::New( ED2K_C2C_STARTUPLOAD ) );
+			}
 		}
 		else
 		{

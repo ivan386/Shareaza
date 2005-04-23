@@ -249,6 +249,9 @@ BOOL CUploadTransferBT::ServeRequests()
 	
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->m_pOutput->m_nLength > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
+
+//theApp.Message( MSG_ERROR, _T("CUploadTransferBT::ServeRequests()") );
+//theApp.Message( MSG_ERROR, _T("File: %s IP: %s"), (LPCTSTR)m_sFileName , (LPCTSTR)m_sAddress );
 	
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{

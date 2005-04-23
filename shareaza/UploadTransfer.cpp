@@ -66,6 +66,7 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	m_nUserRating	= 0;
 	m_bClientExtended= FALSE;
 	
+	m_bStopTransfer	= FALSE;
 	m_tRotateTime	= 0;
 	m_tAverageTime	= 0;
 	m_nAveragePos	= 0;
@@ -294,7 +295,7 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
 	
 	if ( m_pQueue != NULL && UploadQueues.Check( m_pQueue ) &&	//Is this queue able to rotate?
-		 m_pQueue->m_bRotate && m_pQueue->IsActive( this ) )
+		 m_pQueue->m_bRotate && m_pQueue->IsActive( this ) && ! m_bStopTransfer )
 	{
 		DWORD tRotationLength = m_pQueue->m_nRotateTime * 1000;
 
@@ -308,14 +309,17 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 		}
 		else if ( tNow - m_tRotateTime >= tRotationLength )	//Otherwise check if it should rotate
 		{
-			m_tRotateTime = 0;
+theApp.Message( MSG_ERROR, _T("CUploadTransfer::RotatingQueue Queue is due to rotate") );
+theApp.Message( MSG_ERROR, _T("User: %s File: %s"), m_sNick, m_sFileName );
+			//m_tRotateTime = 0;
+			m_bStopTransfer	= TRUE;
 			
-			CUploadQueue* pQueue = m_pQueue;
-			pQueue->Dequeue( this );
-			pQueue->Enqueue( this, TRUE, FALSE );
+			//CUploadQueue* pQueue = m_pQueue;
+			//pQueue->Dequeue( this );
+			//pQueue->Enqueue( this, TRUE, FALSE );
 			
 			pLock.Unlock();
-			OnQueueKick();
+			//OnQueueKick();
 		}
 	}
 	else

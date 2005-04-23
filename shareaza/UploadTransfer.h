@@ -75,6 +75,7 @@ public:
 	QWORD			m_nLength;		// Fragment length
 	QWORD			m_nPosition;	// Send position
 protected:
+	BOOL			m_bStopTransfer;// Should this transfer stop? (to allow queue rotation, etc)
 	DWORD			m_tRotateTime;
 	DWORD			m_tAverageTime;
 	int				m_nAveragePos;
