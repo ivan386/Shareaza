@@ -103,12 +103,14 @@ inline SimpleFragment SerializeIn(CArchive& ar, int version)
         {
             u64 begin, length;
             ar >> begin >> length;
+			if ( begin + length < begin ) AfxThrowArchiveException( CArchiveException::generic );
             return SimpleFragment( begin, begin + length );
         }
         else
         {
             u32 begin, length;
             ar >> begin >> length;
+			if ( begin + length < begin ) AfxThrowArchiveException( CArchiveException::generic );
             return SimpleFragment( begin, begin + length );
         }
     }
@@ -144,8 +146,12 @@ inline void SerializeIn1(CArchive& ar, SimpleFragmentList& in, int version)
             ar >> nTotal >> nRemaining >> nFragments;
             in.swap( SimpleFragmentList( nTotal ) );
 
-            for ( ; nFragments--; ) in.insert( in.end(),
-                SerializeIn( ar, version ) );
+            for ( ; nFragments--; )
+			{
+				const SimpleFragment& fragment = SerializeIn( ar, version );
+				if ( fragment.end() > nTotal ) AfxThrowArchiveException( CArchiveException::generic );
+				in.insert( in.end(), fragment );
+			}
 
             // Sanity check
             if( in.sumLength() != nRemaining ) AfxThrowArchiveException( CArchiveException::generic );
@@ -165,8 +171,12 @@ inline void SerializeIn1(CArchive& ar, SimpleFragmentList& in, int version)
             ar >> nTotal >> nRemaining >> nFragments;
             in.swap( SimpleFragmentList( nTotal ) );
 
-            for ( ; nFragments--; ) in.insert( in.end(),
-                SerializeIn( ar, version ) );
+            for ( ; nFragments--; )
+			{
+				const SimpleFragment& fragment = SerializeIn( ar, version );
+				if ( fragment.end() > nTotal ) AfxThrowArchiveException( CArchiveException::generic );
+				in.insert( in.end(), fragment );
+			}
 
             // Sanity check
             if( in.sumLength() != nRemaining ) AfxThrowArchiveException( CArchiveException::generic );
@@ -198,17 +208,20 @@ inline void SerializeIn2(CArchive& ar, SimpleFragmentList& in, int version)
         if( version >= 20 )
         {
             for( int count = ar.ReadCount(); count--; )
-            {
-                if ( in.insert( SerializeIn( ar, version ) ) == 0 )
-					AfxThrowArchiveException( CArchiveException::generic );
-            }
+			{
+				const SimpleFragment& fragment = SerializeIn( ar, version );
+				if ( fragment.end() > in.limit() ) AfxThrowArchiveException( CArchiveException::generic );
+				in.insert( in.end(), fragment );
+			}
         }
         else if( version >= 5 )
         {
             while( ar.ReadCount() )
-            {
-                in.insert( SerializeIn( ar, version ) );
-            }
+			{
+				const SimpleFragment& fragment = SerializeIn( ar, version );
+				if ( fragment.end() > in.limit() ) AfxThrowArchiveException( CArchiveException::generic );
+				in.insert( in.end(), fragment );
+			}
         }
     }
     catch( Exception& )
