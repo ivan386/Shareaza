@@ -373,9 +373,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode*  pComment = pRoot->GetNode( "comment" );
 	if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
 		m_sComment = pComment->GetString();
-	if ( ( _tcsicmp( m_sComment.GetString() , _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
+	if ( ( _tcsicmp( m_sComment.GetString(), _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
 	{
-		m_bEncodingError = TRUE;
 		// Try decoding the comments
 		if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
 				m_sComment = pComment->DecodeString( m_nEncoding );
@@ -387,7 +386,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_sComment = pComment->GetString();
 		}
 	}
-	if ( m_sComment.IsEmpty() ) m_bEncodingError = FALSE;
+	if ( _tcsicmp( m_sComment.GetString(), _T("#ERROR#") ) == 0 ) m_bEncodingError = TRUE;
 
 	// Get the creation date (if present)
 	CBENode* pDate = pRoot->GetNode( "creation date" );
