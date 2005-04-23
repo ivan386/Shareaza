@@ -387,6 +387,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_sComment = pComment->GetString();
 		}
 	}
+	if ( m_sComment.IsEmpty() ) m_bEncodingError = FALSE;
 
 	// Get the creation date (if present)
 	CBENode* pDate = pRoot->GetNode( "creation date" );
