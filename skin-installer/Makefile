@@ -2,19 +2,6 @@ CC = gcc
 RM = rm -f
 RC = windres
 
-OBJZLIB =   lib/zlib/adler32.o \
-		lib/zlib/compress.o \
-    		lib/zlib/crc32.o \
-    		lib/zlib/deflate.o \
-    		lib/zlib/gzio.o \
-    		lib/zlib/inffast.o \
-    		lib/zlib/infback.o \
-    		lib/zlib/inflate.o \
-    		lib/zlib/inftrees.o \
-    		lib/zlib/trees.o \
-    		lib/zlib/uncompr.o \
-    		lib/zlib/zutil.o
-
 OBJ =	lib/unzip/ioapi.o \
 		lib/unzip/unzip.o \
 		extract.o \
@@ -23,10 +10,10 @@ OBJ =	lib/unzip/ioapi.o \
 		utils.o \
 		window.o
 
-LIB = -lgdi32 -lcomctl32 ../zlib/libzdll.a
-BIN = ../bin/skin.exe
+LIB = -lgdi32 -lcomctl32 ../shareaza/zlib/zdll.lib
+BIN = skin.exe
 
-CFLAGS  = -Os -DZLIB_DLL -DNOCRYPT -DWIN32 -I../zlib -Ilib/unzip
+CFLAGS  = -Os -DZLIB_DLL -DNOCRYPT -DWIN32 -I../shareaza/zlib -Ilib/unzip
 LFLAGS  = -s -mwindows
 RCFLAGS = --input-format rc --output-format coff
 
@@ -38,7 +25,6 @@ resource.res : resource.rc resource.h
 
 clean:
 	$(RM) lib/unzip/*.o
-	$(RM) ../zlib/*.o
 	$(RM) *.aps
 	$(RM) *.o
 	$(RM) *.res
