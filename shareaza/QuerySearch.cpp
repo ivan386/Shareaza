@@ -782,6 +782,9 @@ BOOL CQuerySearch::CheckValid()
 	// Searches by hash are okay
 	if ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) return TRUE;
 
+	// Really short searches (without a hash) are too broad
+	if ( m_sSearch.GetLength() < 3 ) return FALSE;
+
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
 	{
@@ -816,7 +819,7 @@ BOOL CQuerySearch::CheckValid()
 				_tcsnicmp( m_pWordPtr[nCount], _T("sex"),   m_pWordLen[nCount] ) == 0 ||
 				_tcsnicmp( m_pWordPtr[nCount], _T("fuck"),  m_pWordLen[nCount] ) == 0 ||
 				
-				_tcsnicmp( m_pWordPtr[nCount], _T("torrent"), 7 ) == 0 )
+				_tcsicmp( m_pWordPtr[nCount], _T("torrent") ) == 0 )
 		{
 			// Common term. Don't count it.
 		}
