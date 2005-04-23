@@ -12,8 +12,7 @@
 		link="http://www.shareaza.com/"
 		Description="Skin based on the Shareaza Website"
 		version="1.32"
-		type="Skin"
-		language="en" />
+		type="Skin" />
     <fonts> 
       <font name="Panel.Caption" face="Arial" size="12" weight="plain"/>
     </fonts>
