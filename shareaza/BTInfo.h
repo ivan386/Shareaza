@@ -112,6 +112,16 @@ public:
 	inline BOOL IsAvailable() const { return m_bValid; }
 	inline BOOL HasEncodingError() const { return m_bEncodingError; }
 
+	// Check if a string is a valid path/file name.
+	inline BOOL IsValid(LPCTSTR psz) const
+	{
+		if ( _tcsclen( psz ) == 0 ) return FALSE;
+		if ( _tcschr( psz, '?' ) != NULL ) return FALSE;
+		if ( _tcsicmp( psz , _T("#ERROR#") ) == 0 ) return FALSE;
+		
+		return TRUE;
+	}
+
 };
 
 

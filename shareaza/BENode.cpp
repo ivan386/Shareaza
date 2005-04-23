@@ -175,6 +175,84 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 	return NULL;
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// CBENode Extract a string from a node under this one. (Checks both normal and .utf-8)
+
+CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError)
+{
+	CBENode*	pSubNode;
+	CString		strValue;
+
+	// Open the supplied sub-node
+	pSubNode = GetNode( pszKey );
+	// If it exists and is a string, try reading it
+	strValue = GetStringFromNode( pSubNode, nEncoding, pEncodingError );
+
+	if ( ! IsValid( strValue ) )
+	{
+		// If we still don't have a valid name, check for undocumented nodes
+		char*	pszUTF8Key;
+		UINT	nUTF8Len = strlen( pszKey ) + 8;
+
+		pszUTF8Key = new char[ nUTF8Len ];
+		strncpy( pszUTF8Key, pszKey, nUTF8Len );
+		strncat( pszUTF8Key, ".utf-8", nUTF8Len );
+
+		// Open the supplied node + .utf-8
+		pSubNode = GetNode( pszUTF8Key );
+		// We found a back-up node
+		// If it exists and is a string, try reading it
+		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+		{
+			*pEncodingError = TRUE;
+			// Assumed to be UTF-8
+			strValue = pSubNode->GetString();
+		}
+		delete [] pszUTF8Key;
+	}
+	return strValue;
+}
+
+// CBENode Extract a string from a list/dictionary
+
+CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError)
+{
+	CBENode*	pSubNode;
+	CString		strValue;
+
+	// Check we are a list / dictionary type
+	if ( m_nType != beList && m_nType != beDict ) return strValue;
+	// Open the supplied list/dictionary item
+	pSubNode = GetNode( nItem );
+	// If it exists and is a string, try reading it
+	strValue = GetStringFromNode( pSubNode, nEncoding, pEncodingError );
+
+	return strValue;
+}
+
+// CBENode Reads a string, checking the encoding.
+
+CString CBENode::GetStringFromNode(CBENode* pNode, UINT nEncoding, BOOL* pEncodingError)
+{
+	CString		strValue;
+
+	// If it exists and is a string, try reading it
+	if ( ( pNode ) && ( pNode->m_nType == CBENode::beString ) )
+	{
+		// Read the string using the correct encoding. (UTF-8)
+		strValue = pNode->GetString();
+		if ( ! IsValid( strValue ) )
+		{
+			// If the name isn't valid, try forcing the code page.
+			*pEncodingError = TRUE;
+			strValue = pNode->DecodeString( nEncoding );
+		}
+	}
+
+	return strValue;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CBENode SHA1 computation
 

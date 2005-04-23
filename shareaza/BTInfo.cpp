@@ -328,10 +328,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	Clear();
 	
 	if ( ! pRoot->IsType( CBENode::beDict ) ) return FALSE;
-	
 
-
-	
 	// Get the encoding (from torrents that have it)
 	m_nEncoding = Settings.BitTorrent.TorrentCodePage;
 	CBENode* pEncoding = pRoot->GetNode( "codepage" );
@@ -348,7 +345,9 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		{
 			CString strEncoding = pEncoding->GetString();
 
-			if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
+			if ( strEncoding.GetLength() < 4 )
+				theApp.Message( MSG_ERROR, _T("Torrent 'encoding' node too short") );
+			else if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
 				m_nEncoding = CP_UTF8;
 			else if ( _tcsistr( strEncoding.GetString() , _T("ANSI") ) != NULL ) 
 				m_nEncoding = CP_ACP;
@@ -366,27 +365,29 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_nEncoding = 932;
 			else if ( _tcsistr( strEncoding.GetString() , _T("Shift-JIS") ) != NULL ) 
 				m_nEncoding = 932;
+			else if ( _tcsnicmp( strEncoding.GetString() , _T("Windows-"), 8 ) == 0 ) 
+			{
+				UINT nEncoding = 0;
+				strEncoding = strEncoding.Mid( 8 );
+				if ( ( _stscanf( strEncoding, _T("%u"), &nEncoding ) == 1 ) && ( nEncoding > 0 ) )
+				{
+					m_nEncoding = nEncoding;
+				}
+			}
+			else if ( _tcsnicmp( strEncoding.GetString() , _T("CP"), 2 ) == 0 ) 
+			{
+				UINT nEncoding = 0;
+				strEncoding = strEncoding.Mid( 2 );
+				if ( ( _stscanf( strEncoding, _T("%u"), &nEncoding ) == 1 ) && ( nEncoding > 0 ) )
+				{
+					m_nEncoding = nEncoding;
+				}
+			}
 		}
 	}
 
 	// Get the comments (if present)
-	CBENode*  pComment = pRoot->GetNode( "comment" );
-	if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
-		m_sComment = pComment->GetString();
-	if ( ( _tcsicmp( m_sComment.GetString(), _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
-	{
-		// Try decoding the comments
-		if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
-				m_sComment = pComment->DecodeString( m_nEncoding );
-		// Check for another node
-		if ( ( _tcsicmp( m_sComment.GetString() , _T("#ERROR#") ) == 0 ) || ( m_sComment.IsEmpty() ) )
-		{
-			pComment = pRoot->GetNode( "comment.utf-8" );
-			if ( ( pComment ) &&  ( pComment->IsType( CBENode::beString )  ) )
-				m_sComment = pComment->GetString();
-		}
-	}
-	if ( _tcsicmp( m_sComment.GetString(), _T("#ERROR#") ) == 0 ) m_bEncodingError = TRUE;
+	m_sComment = pRoot->GetStringFromSubNode( "comment", m_nEncoding, &m_bEncodingError );
 
 	// Get the creation date (if present)
 	CBENode* pDate = pRoot->GetNode( "creation date" );
@@ -398,9 +399,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	}
 
 	// Get the creator (if present)
-	CBENode*  pCreator = pRoot->GetNode( "created by" );
-	if ( ( pCreator ) &&  ( pCreator->IsType( CBENode::beString )  ) )
-		m_sCreatedBy = pCreator->GetString();
+	m_sCreatedBy = pRoot->GetStringFromSubNode( "created by", m_nEncoding, &m_bEncodingError );
 
 	// Multi-Tracker: We don't support this yet. (Add it properly later)
 	// *********************************
@@ -431,35 +430,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	if ( ! pInfo->IsType( CBENode::beDict ) ) return FALSE;
 	
 	// Get the name
-	CBENode* pName = pInfo->GetNode( "name" );
-	if ( pName->IsType( CBENode::beString ) ) m_sName = pName->GetString();
-	if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
-	{
-		// There was an error reading the name
-		m_bEncodingError = TRUE;
-
-		// Try to get it using the torrent or user specified encoding
-		if ( pName->IsType( CBENode::beString ) ) 
-			m_sName = pName->DecodeString( m_nEncoding );
-
-		// If that didn't work, some torrents have an undocumented name key
-		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
-		{
-			pName = pInfo->GetNode( "name.utf-8" );
-			if ( pName )
-			{
-				if ( pName->IsType( CBENode::beString ) )
-					m_sName = pName->GetString();
-			}
-		}
-
-		// If we still couldn't generate a name, there is nothing more we can do.
-		if ( _tcsicmp( m_sName.GetString() , _T("#ERROR#") ) == 0 ) 
-		{
-			m_sName.Empty();
-		}
-
-	}
+	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding, &m_bEncodingError );
 	// If we still don't have a name, generate one
 	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
 	
@@ -532,8 +503,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
 		{
-			CBENode* pPart;
-
 			CBENode* pFile = pFiles->GetNode( nFile );
 			if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;
 			
@@ -545,39 +514,35 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
 			if ( pPath->GetCount() > 32 ) return FALSE;
 
-			// Check the path is valid
-			strPath = _T("#ERROR#");
-			pPart = pPath->GetNode( 0 );
-			if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
-			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
+			// Verify the path is valid
+			strPath.Empty();
+			strPath = pPath->GetStringFromSubNode( 0,  m_nEncoding, &m_bEncodingError);
+			if ( ! IsValid( strPath ) )
 			{
 				// There was an error reading the path
 				m_bEncodingError = TRUE;
-				// Trt decoding it
-				if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString( m_nEncoding );
-				// If we still don't have a path, check for other possible path nodes
-				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
+				// Check for other possible path nodes
+				pPath = pFile->GetNode( "path.utf-8" );
+				if ( pPath )
 				{
-					pPath = pFile->GetNode( "path.utf-8" );
-					if ( pPath )
-					{
-						pPart = pPath->GetNode( 0 );
-						if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
-					}
+					CBENode* pPart = pPath->GetNode( 0 );
+					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
 				}
-						
-				if ( ! pPath ) return FALSE;
-				if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
-				if ( pPath->GetCount() > 32 ) return FALSE;
-				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
 			}
+		
+			if ( ! pPath ) return FALSE;
+			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+			if ( pPath->GetCount() > 32 ) return FALSE;
+			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
+			// 
+
 
 			// Hack to prefix all
 			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );
 			
 			for ( int nPath = 0 ; nPath < pPath->GetCount() ; nPath++ )
 			{
-				pPart = pPath->GetNode( nPath );
+				CBENode* pPart = pPath->GetNode( nPath );
 				if ( ! pPart->IsType( CBENode::beString ) ) return FALSE;
 				
 				if ( m_pFiles[ nFile ].m_sPath.GetLength() )

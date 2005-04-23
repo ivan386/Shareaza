@@ -49,6 +49,9 @@ public:
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
 	void		GetSHA1(SHA1* pSHA1) const;
+	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError);
+	CString		GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError);
+	CString		GetStringFromNode(CBENode* pNode, UINT nEncoding, BOOL* pEncodingError);
 	void		Encode(CBuffer* pBuffer) const;
 public:
 	static CBENode*	Decode(CBuffer* pBuffer);
@@ -136,6 +139,16 @@ public:
 		str.ReleaseBuffer( nLength );
 
 		return str;
+	}
+
+	// Check if a string is a valid path/file name.
+	inline BOOL IsValid(LPCTSTR psz) const
+	{
+		if ( _tcsclen( psz ) == 0 ) return FALSE;
+		if ( _tcschr( psz, '?' ) != NULL ) return FALSE;
+		if ( _tcsicmp( psz , _T("#ERROR#") ) == 0 ) return FALSE;
+		
+		return TRUE;
 	}
 
 	inline void SetString(LPCSTR psz)
