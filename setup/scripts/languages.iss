@@ -198,9 +198,9 @@ lt.icons_uninstall=Paрalinti
 lt.icons_downloads=Atsisiuntimai
 lt.dialog_shutdown=„%1“ рiuo metu dirba. Ar norite nutraukti „%1“ darbа, tam kad bыtш galima tжsti бdiegimа?
 lt.dialog_firewall=Бdiegimo programai nepavyko pridлti „Shareaza“ prie Windows ugniasienлs iрimиiш sаraрo.%nPridлkite jа б рб sаraра rankiniu bыdu.
-lt.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-lt.page_viruswarning_title=Virus Warning
-lt.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+lt.page_viruswarning_text=Visada, kai naudojatлs Internetu, бsitikinkite, jog turite naujausiа virusш skenerб, tam kad bыtumлte apsaugoti nuo trojanш, kirminш ir kitokiш kenkлjiрkш programш. Jыs galite rasti gerш virusш skeneriш sаraра ir kitokius kompiuterio apsaugojimo patarimus nuлjж рiuo adresu:
+lt.page_viruswarning_title=Бspлjimas apie virusus
+lt.page_viruswarning_subtitle=Ar Jыs turite бsidiegж antivirusinж programа?
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -387,9 +387,9 @@ ru.icons_uninstall=Деинсталляция
 ru.icons_downloads=Загрузки
 ru.dialog_shutdown=%1 в данный момент работает. Хотите ли завершить работу %1, чтобы продолжить установку?
 ru.dialog_firewall=Программа установки не смогла добавить Shareaza в список исключений брандмауэра Windows.%nПожалуйста, добавьте ее в этот список вручную.
-ru.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-ru.page_viruswarning_title=Virus Warning
-ru.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+ru.page_viruswarning_text=Всегда, когда пользуетесь интернетом, удостоверьтесь, что у Вас есть новейший сканер для вирусов, чтобы защитить компьютер от троянов, червей и других вредительских программ. Вы можете найти список хороших сканеров для вирусов и другие советы о защите компьютера по этому адресу:
+ru.page_viruswarning_title=Предостережение о вирусах
+ru.page_viruswarning_subtitle=Имеете ли Вы установленную антивирусную программу?
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
