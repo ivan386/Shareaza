@@ -1,4 +1,4 @@
-; This sub-script defines any custom wizard pages
+{ This sub-script defines any custom wizard pages }
 [Code]
 Var
   VirusPage: TWizardPage;
