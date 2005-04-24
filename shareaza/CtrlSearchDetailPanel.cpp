@@ -568,6 +568,38 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 					pt.y + 50 );
 				DrawText( pDC, ptText.x, ptText.y, str );
 			}
+			else
+			{
+				// split text to two lines and try to draw
+				int nLength = str.GetLength();
+				int nSpace = str.Find( ' ', nLength / 2 - 1 );
+				CString strFirstHalf = str.Left( nSpace );
+				str = str.Right( nLength - nSpace - 1 );
+				sz = pDC->GetTextExtent( strFirstHalf );
+
+				if ( sz.cx + 4 < rcThumb.Width() && pt.y + 50 < rcThumb.Height() )
+				{
+					pt.y -= sz.cy / 2;
+					CPoint ptText(
+						( rcThumb.left + rcThumb.right ) / 2 - sz.cx / 2,
+						pt.y + 50 );
+					DrawText( pDC, ptText.x, ptText.y, strFirstHalf );
+					CSize sz2 = pDC->GetTextExtent( str );
+
+					if ( sz2.cx + 4 < rcThumb.Width() && 
+						 pt.y + sz2.cy + 57 < rcThumb.Height() )
+					{
+						pt.y -= sz2.cy / 2;
+						CPoint ptText(
+							( rcThumb.left + rcThumb.right ) / 2 - sz2.cx / 2,
+							pt.y + sz.cy + 57 );
+						DrawText( pDC, ptText.x, ptText.y, str );						
+					}
+					else
+						// append ellipsis if the second half does not fit
+						DrawText( pDC, ptText.x + sz.cx + 1, ptText.y, _T("\x2026") );
+				}
+			}
 		}
 		
 		if ( m_nIcon48 >= 0 )
