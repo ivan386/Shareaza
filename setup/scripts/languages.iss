@@ -179,7 +179,7 @@ nl.dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installati
 nl.dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de Windows Firewall.%nVoeg Shareaza alstublieft manueel toe aan de uitzonderingenlijst.
 nl.page_viruswarning_text=Als u het internet gebruikt moet u een recente virusscanner gebruiken om u te beschermen tegen virussen, wormen en andere kwaadaardige programma's. U kan een lijst van virusscanners en andere veiligheidstips vinden om uw computer the beschermen door deze link te volgen:
 nl.page_viruswarning_title=Virus Waarschuwing
-nl.page_viruswarning_subtitle=Heeft u een Antivirus porgramma geïnstalleerd?
+nl.page_viruswarning_subtitle=Heeft u een antivirus programma geïnstalleerd?
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
