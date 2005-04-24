@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.56 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.57 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.137"
+		version="2.1.0.141"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -4081,25 +4081,31 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent tracker info">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Avansert BitTorrent-informason">
 		<control caption="Torrent _informasjon:"/>
 		<control caption="Navn:"/>
+		<control/>
+		<control caption="Laget:"/>
+		<control/>
+		<control caption="Av:"/>
+		<control/>
+		<control caption="Kommentar:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
 		<control caption="_Nedlastinger:"/>
-		<control caption="Komplette (kilder):"/>
+		<control caption="Komplette (delere):"/>
 		<control/>
 		<control caption="Uferdige:"/>
 		<control/>
-		<control caption="_Filer:"/>
+		<control caption="Overføringer:"/>
+		<control caption="Start nye nedlastinger:"/>
+		<control caption="Etter behov|Når delingsrate er over 100%|Kun ved forespørsel|Aldri"/>
+		<control caption="Filer:"/>
 		<control/>
 		<control caption="Oppdater"/>
 		<control/>
 		<control caption="Lukk"/>
-		<control caption="Etter behov|Når delingsrate er over 100%|Kun ved forespørsel|Aldri"/>
-		<control caption="Start nye nedlastingsoverføringer:"/>
-		<control caption="Overføringer:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Gruppeegenskaper">
