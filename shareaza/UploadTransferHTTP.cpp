@@ -684,17 +684,12 @@ BOOL CUploadTransferHTTP::QueueRequest()
 
 	if ( m_bStopTransfer )
 	{
-theApp.Message( MSG_ERROR, _T("CUploadTransferHTTP::QueueRequest(), de-queueing") );
-theApp.Message( MSG_ERROR, _T("User: %s File: %s"), m_sNick, m_sFileName );
+
 		m_tRotateTime = 0;
 		m_bStopTransfer	= FALSE;
 			
 		CUploadQueue* pQueue = m_pQueue;
 		if ( pQueue ) pQueue->Dequeue( this );
-		//pQueue->Enqueue( this, TRUE, FALSE );
-			
-		//pLock.Unlock();
-		//OnQueueKick();
 	}
 
 

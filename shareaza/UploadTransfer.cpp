@@ -301,25 +301,17 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 
 		// High ranked users can get a longer rotate time
 		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) ) 
-			tRotationLength <<= 1;			
+			tRotationLength <<= 1;	
 
-		if ( m_tRotateTime == 0 )	//If the upload hasn't started yet
+		pLock.Unlock();
+
+		if ( m_tRotateTime == 0 )									//If the upload hasn't started yet
 		{
-			if ( m_nState == upsUploading ) m_tRotateTime = tNow; //Set the upload as having started
+			if ( m_nState == upsUploading ) m_tRotateTime = tNow;	//Set the upload as having started
 		}
-		else if ( tNow - m_tRotateTime >= tRotationLength )	//Otherwise check if it should rotate
+		else if ( tNow - m_tRotateTime >= tRotationLength )			//Otherwise check if it should rotate
 		{
-theApp.Message( MSG_ERROR, _T("CUploadTransfer::RotatingQueue Queue is due to rotate") );
-theApp.Message( MSG_ERROR, _T("User: %s File: %s"), m_sNick, m_sFileName );
-			//m_tRotateTime = 0;
 			m_bStopTransfer	= TRUE;
-			
-			//CUploadQueue* pQueue = m_pQueue;
-			//pQueue->Dequeue( this );
-			//pQueue->Enqueue( this, TRUE, FALSE );
-			
-			pLock.Unlock();
-			//OnQueueKick();
 		}
 	}
 	else

@@ -443,8 +443,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 		// Check has just finished
 		if ( m_bStopTransfer )
 		{
-theApp.Message( MSG_ERROR, _T("CUploadTransferED2K::ServeRequests(), de-queueing") );
-theApp.Message( MSG_ERROR, _T("User: %s File: %s"), m_sNick, m_sFileName );
 			m_tRotateTime = 0;
 			m_bStopTransfer	= FALSE;
 			
