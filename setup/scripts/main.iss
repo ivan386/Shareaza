@@ -458,4 +458,7 @@ Begin
   End;
 End;
 
+{ Pull in custom wizard pages }
+#include "pages.iss"
+
 #expr SaveToFile("..\builds\Preprocessed.iss")
