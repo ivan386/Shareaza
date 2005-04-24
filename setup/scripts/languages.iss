@@ -177,6 +177,9 @@ nl.icons_uninstall=Verwijderen
 nl.icons_downloads=Downloads
 nl.dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installatie verder kan gaan?
 nl.dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de Windows Firewall.%nVoeg Shareaza alstublieft manueel toe aan de uitzonderingenlijst.
+nl.page_viruswarning_text=Als u het internet gebruikt moet u een recente virusscanner gebruiken om u te beschermen tegen virussen, wormen en andere kwaadaardige programma's. U kan een lijst van virusscanners en andere veiligheidstips vinden om uw computer the beschermen door deze link te volgen:
+nl.page_viruswarning_title=Virus Waarschuwing
+nl.page_viruswarning_subtitle=Heeft u een Antivirus porgramma geïnstalleerd?
 ; Lithuanian:
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
@@ -195,6 +198,9 @@ lt.icons_uninstall=Pağalinti
 lt.icons_downloads=Atsisiuntimai
 lt.dialog_shutdown=„%1“ ğiuo metu dirba. Ar norite nutraukti „%1“ darbà, tam kad bûtø galima tæsti ádiegimà?
 lt.dialog_firewall=Ádiegimo programai nepavyko pridëti „Shareaza“ prie Windows ugniasienës iğimèiø sàrağo.%nPridëkite jà á ğá sàrağà rankiniu bûdu.
+lt.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+lt.page_viruswarning_title=Virus Warning
+lt.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -213,6 +219,9 @@ de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
 de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren?
 de.dialog_firewall=Setup konnte Shareaza nicht zur Windows Firewall hinzufügen.%nBitte tragen Sie Shareaza manuell in die Ausnahmenliste ein.
+de.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+de.page_viruswarning_title=Virus Warning
+de.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Peles
@@ -231,6 +240,9 @@ pt.icons_uninstall=Desintalar
 pt.icons_downloads=Downloads
 pt.dialog_shutdown=O %1 está sendo executado. Você gostaria que o %1 fosse fechado para que a instalação continue?
 pt.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+pt.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+pt.page_viruswarning_title=Virus Warning
+pt.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -249,6 +261,9 @@ it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
 it.dialog_shutdown=%1 è attualmente in esecuzione. Vuoi che %1 sia chiuso così l'installazione può continuare?
 it.dialog_firewall=Impossibile aggiungere Shareaza a Windows Firewall.%nAggiungi Shareaza alla lista delle eccezioni manualmente.
+it.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+it.page_viruswarning_title=Virus Warning
+it.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -267,6 +282,9 @@ no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
 no.dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
 no.dialog_firewall=Installasjonen klarte ikke å lage unntak for Shareaza i Windows Brannmuren. %nVennligst legg til shareaza i brannmurens unntak manuelt.
+no.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+no.page_viruswarning_title=Virus Warning
+no.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
@@ -285,6 +303,9 @@ af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
 af.dialog_shutdown=%1 is op die oomblik besig om te loop. Wil jy graag %1 sluit sodat die installasie kan voortgaan?
 af.dialog_firewall=Die Opsteller kon nie Shareaza by die Windows netskans uitsonderings voeg nie.%nVoeg Shareaza asseblief met die hand op die uitsonderingslys.
+af.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+af.page_viruswarning_title=Virus Warning
+af.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
@@ -303,6 +324,9 @@ br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 br.dialog_shutdown=Você deseja fechar o %1?
 br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza à lista.
+br.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+br.page_viruswarning_title=Virus Warning
+br.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
@@ -321,6 +345,9 @@ fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
 fr.dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre?
 fr.dialog_firewall=L'installation n'a pas pu ajouter Shareaza au Pare-feu Windows.%nVeuillez ajouter Shareaza manuellement à la liste des exceptions.
+fr.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+fr.page_viruswarning_title=Virus Warning
+fr.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -339,6 +366,9 @@ es.icons_uninstall=Desinstalar
 es.icons_downloads=Descargas
 es.dialog_shutdown=%1 se encuentra ejecutándose. ¿Deseas que %1 sea cerrado para que la instalación pueda continuar?
 es.dialog_firewall=La instalación fallo al agregar la excepción de Shareaza al cortafuego Firewall.%n Por favor hágalo manualmente.
+es.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+es.page_viruswarning_title=Virus Warning
+es.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóğêè
@@ -357,6 +387,9 @@ ru.icons_uninstall=Äåèíñòàëëÿöèÿ
 ru.icons_downloads=Çàãğóçêè
 ru.dialog_shutdown=%1 â äàííûé ìîìåíò ğàáîòàåò. Õîòèòå ëè çàâåğøèòü ğàáîòó %1, ÷òîáû ïğîäîëæèòü óñòàíîâêó?
 ru.dialog_firewall=Ïğîãğàììà óñòàíîâêè íå ñìîãëà äîáàâèòü Shareaza â ñïèñîê èñêëş÷åíèé áğàíäìàóığà Windows.%nÏîæàëóéñòà, äîáàâüòå åå â ıòîò ñïèñîê âğó÷íóş.
+ru.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+ru.page_viruswarning_title=Virus Warning
+ru.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
@@ -375,6 +408,9 @@ gr.icons_uninstall=ÁğåãêáôÜóôáóç
 gr.icons_downloads=Êáôİâáóìá
 gr.dialog_shutdown=Ôï %1 áêüìá ôñİ÷åé. Èİëåôå íá ôåñìáôßóåôå ôçí ëåéôïõñãåßá ôïõ %1 ãéá íá óõíå÷éóôåß ç åãêáôÜóôáóç?
 gr.dialog_firewall=Ç åãêáôÜóôáóç ôïõ ğñïãñÜììáôïò áğİôõ÷å íá ğñïóèİóåé ôï Shareaza óôï Windows Firewall. % Ğáñáêáëş ğñïóèİóôå ôï Shareaza óôçí exception ëßóôá ÷åéñïêßíçôá
+gr.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+gr.page_viruswarning_title=Virus Warning
+gr.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Hungarian
 hu.components_plugins=Pluginek
 hu.components_skins=Kinézetek
@@ -393,6 +429,9 @@ hu.icons_uninstall=Törlés
 hu.icons_downloads=Letöltések
 hu.dialog_shutdown=A %1 jelenleg fut. Be akarod zárni a programot, hogy a telepítés folytatódhasson?
 hu.dialog_firewall=A telepíto nem tudta hozzáadni a Shareazát a Windows tuzfal kivételeihez.%nManuálisan kell hozzáadni a kivételekhez.
+hu.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+hu.page_viruswarning_title=Virus Warning
+hu.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Chinese Simp
 chs.components_plugins=²å¼ş
 chs.components_skins=Æ¤·ô
@@ -411,6 +450,9 @@ chs.icons_uninstall=Ğ¶ÔØ
 chs.icons_downloads=ÏÂÔØ
 chs.dialog_shutdown=%1 ÕıÔÚÔËĞĞ¡£ÄúÏ£Íû¹Ø±Õ %1 ÒÔ±ã¼ÌĞø°²×°Âğ£¿
 chs.dialog_firewall=°²×°Ìí¼Ó Shareaza µ½ Windows ·À»ğÇ½Ê§°Ü¡£%nÇë½« Shareaza ÊÖ¶¯Ìí¼ÓÖÁ³ıÍâÁĞ±í¡£
+chs.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+chs.page_viruswarning_title=Virus Warning
+chs.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
 ; Swedish
 sv.components_skins=Skinn
 sv.components_languages=Språk
@@ -428,3 +470,6 @@ sv.icons_uninstall=Avinstallera
 sv.icons_downloads=Nedladdningar
 sv.dialog_shutdown=%1 körs för tillfället. Vill du att %1 ska stängas ned så att installationen kan fortsätta?
 sv.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+sv.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+sv.page_viruswarning_title=Virus Warning
+sv.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
