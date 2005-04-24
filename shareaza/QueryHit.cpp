@@ -1125,8 +1125,10 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		{	//Codec - old style
 			strCodec = pTag.m_sValue;
 		}
-		else//*** Debug check. Remove this when it's working
+		else
 		{
+			/*
+			//*** Debug check. Remove this when it's working
 			CString s;
 			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
 			theApp.Message( MSG_SYSTEM, s );
@@ -1136,7 +1138,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			else
 				s.Format ( _T("Value: %d"), pTag.m_nValue);
 			theApp.Message( MSG_SYSTEM, s );
-
+			*/
 		}
 	}
 
