@@ -1,8 +1,3 @@
-D http://www.emule-server.de/server.met/min/server.met
-D http://www.de-site.de/ed2k/koeln.met
-D http://www.edonkey2000.com/server.met
-D http://www.emule-inside.net/server.met
-D http://web2k2.vivelared.com/server.met
 2 http://gwcrab2.sarcastro.com:8002/
 1 http://gwcrab.sarcastro.com:8001/
 2 http://bazooka.stealthspy.net/g2/bazooka.php
@@ -24,9 +19,13 @@ M http://pokerface.bishopston.net:3559/
 M http://ygwc.y-0.net/ygwc.php
 2 http://zafir.gratishost.com/gwc/bazooka.php
 1 http://gwebcache.koshoid.de/gwebcache
+D http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met
+D http://www.de-site.de/ed2k/koeln.met
+D http://www.edonkey2000.com/server.met
+D http://www.emule-server.de/server.met/min/server.met
 #
 # Keep these comments at the end
-# Last updated April 17, 2005
+# Last updated April 25, 2005
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
@@ -37,4 +36,4 @@ M http://ygwc.y-0.net/ygwc.php
 #
 # If you make changes to this file that cause problems for you
 # Then just delete the file and Shareaza will use internal defaults
-# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/shareaza/Data/gwebcache.txt?view=markup
+# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/shareaza/Data/DefaultServices?view=markup
