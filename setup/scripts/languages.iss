@@ -408,9 +408,9 @@ gr.icons_uninstall=Απεγκατάσταση
 gr.icons_downloads=Κατέβασμα
 gr.dialog_shutdown=Το %1 ακόμα τρέχει. Θέλετε να τερματίσετε την λειτουργεία του %1 για να συνεχιστεί η εγκατάσταση?
 gr.dialog_firewall=Η εγκατάσταση του προγράμματος απέτυχε να προσθέσει το Shareaza στο Windows Firewall. % Παρακαλώ προσθέστε το Shareaza στην exception λίστα χειροκίνητα
-gr.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-gr.page_viruswarning_title=Virus Warning
-gr.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+gr.page_viruswarning_text=Όταν χρησιμοποιείτε το internet, θα πρέπει πάντα να έχετε ένα πρόγραμμα προστασίας για ιούς ενημερωμένο για να σας προστατεύει απο αυτούς και άλλα επικίνδυνα προγράμματα. Μπορείτε να βρείτε μια λίστα με καλά προγράμματα προστασίας για ιούς και άλλα βοηθήματα για να προστατέψετε τον υπολογιστή σας ακολουθώντας αυτόν τον σύνδεσμο:
+gr.page_viruswarning_title=Προειδοποίηση για ιό
+gr.page_viruswarning_subtitle=Έχετε ένα πρόγραμμα προστασίας για ιούς εγκατεστημένο?
 ; Hungarian
 hu.components_plugins=Pluginek
 hu.components_skins=Kinιzetek
