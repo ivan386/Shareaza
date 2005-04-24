@@ -1,3 +1,4 @@
+; This sub-script defines any custom wizard pages
 [Code]
 Var
   VirusPage: TWizardPage;
@@ -18,6 +19,7 @@ Begin
     ExpandConstant('{cm:page_viruswarning_title}'),
     ExpandConstant('{cm:page_viruswarning_subtitle}')
   );
+
   VirusTextBox := TLabel.Create(VirusPage);
   VirusTextBox.Parent := VirusPage.Surface;
   VirusTextBox.Top := ScaleY(VirusTextBox.Font.Size);
