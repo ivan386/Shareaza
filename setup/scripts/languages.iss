@@ -282,9 +282,9 @@ no.icons_uninstall=Uninstall
 no.icons_downloads=Downloads
 no.dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
 no.dialog_firewall=Installasjonen klarte ikke å lage unntak for Shareaza i Windows Brannmuren. %nVennligst legg til shareaza i brannmurens unntak manuelt.
-no.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-no.page_viruswarning_title=Virus Warning
-no.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+no.page_viruswarning_text=Når du bruker internett bør du alltid ha et oppdatert antivirus-program, for å beskytte deg fra trojaner, ormer, og annen skadelig programvare. Du kan finne en liste over gode antivirus-prgrammer og andre sikkerhetstips, for å beskytte din datamaskin, ved å følge denne linken:
+no.page_viruswarning_title=Virusadvarsel
+no.page_viruswarning_subtitle=Har du et antivirus-program installert?
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
