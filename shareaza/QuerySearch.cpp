@@ -780,19 +780,18 @@ BOOL CQuerySearch::CheckValid()
 	// Searches by hash are okay
 	if ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) return TRUE;
 
+	// Search without any terms and no hash is invalid
+	if ( m_sSearch.GetLength() < 2 ) return FALSE;
 
 	// Check if it's an "extended search" (Using a character set with many symbols)
-	if ( m_pWordLen[0] >= 2 )
+	if ( ( m_nWords > 0 ) && ( m_pWordLen ) && ( m_pWordLen[0] >= 2 ) )
 	{
-			// theApp.Message( MSG_ERROR, _T(" %i %i "), (DWORD)m_pWordPtr[0][0], (DWORD)m_pWordPtr[0][1] );
+		// theApp.Message( MSG_ERROR, _T(" %i %i "), (DWORD)m_pWordPtr[0][0], (DWORD)m_pWordPtr[0][1] );
 		if ( ( (DWORD)m_pWordPtr[0][0] > 20000 ) && ( (DWORD)m_pWordPtr[0][1] > 20000 ) )
 		{
 			bExtendedSearch = TRUE;
 		}
 	}
-
-	// Really short searches (without a hash) are too broad
-	if ( ( ! bExtendedSearch ) && ( m_sSearch.GetLength() < 3 ) ) return FALSE;
 
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
