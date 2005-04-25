@@ -256,7 +256,65 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 
 	if ( Security.IsDenied( pAddress ) )
 		return NULL;
+
+	// Try adding it.
+	return AddInternal( pAddress, nPort, tSeen, pszVendor );
+}
+
+BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
+{
+	CString strHost( pszHost );
 	
+	strHost.TrimLeft();
+	strHost.TrimRight();
+	
+	int nPos = strHost.ReverseFind( ' ' );
+	
+	if ( nPos > 0 ) 
+	{
+		CString strTime = strHost.Mid( nPos + 1 );
+		strHost = strHost.Left( nPos );
+		strHost.TrimRight();
+		
+		tSeen = TimeFromString( strTime );
+	}
+	
+	nPos = strHost.Find( ':' );
+	if ( nPos < 0 ) return FALSE;
+	
+	int nPort = GNUTELLA_DEFAULT_PORT;
+	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ) return FALSE;
+	strHost = strHost.Left( nPos );
+	
+	USES_CONVERSION;
+	DWORD nAddress = inet_addr( T2CA( (LPCTSTR)strHost ) );
+
+	// Don't add invalid addresses
+	if ( ! nPort ) 
+		 return TRUE;
+
+	if ( ! nAddress ) 
+		 return TRUE;
+		
+	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ) 
+		return TRUE;
+
+	// Don't add blocked addresses
+	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == nAddress ) )
+		 return TRUE;
+
+	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
+		 return TRUE;
+
+	AddInternal( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor );
+	
+	return TRUE;
+}
+
+// This function actually add the remote client to the host cache. Private, but used by the public 
+// functions. No security checking, etc.
+CHostCacheHost* CHostCacheList::AddInternal(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor)
+{
 	// Check if we already have the host
 	BYTE nHash	= pAddress->S_un.S_un_b.s_b1
 				+ pAddress->S_un.S_un_b.s_b2
@@ -321,42 +379,6 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 	m_nCookie++;
 	
 	return pHost;
-}
-
-BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
-{
-	CString strHost( pszHost );
-	
-	strHost.TrimLeft();
-	strHost.TrimRight();
-	
-	int nPos = strHost.ReverseFind( ' ' );
-	
-	if ( nPos > 0 ) 
-	{
-		CString strTime = strHost.Mid( nPos + 1 );
-		strHost = strHost.Left( nPos );
-		strHost.TrimRight();
-		
-		tSeen = TimeFromString( strTime );
-	}
-	
-	nPos = strHost.Find( ':' );
-	if ( nPos < 0 ) return FALSE;
-	
-	int nPort = GNUTELLA_DEFAULT_PORT;
-	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ) return FALSE;
-	strHost = strHost.Left( nPos );
-	
-	USES_CONVERSION;
-	DWORD nAddress = inet_addr( T2CA( (LPCTSTR)strHost ) );
-	
-	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ) return TRUE;
-	
-	Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor );
-	
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
