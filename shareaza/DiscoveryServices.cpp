@@ -140,7 +140,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 {
 	CString strAddress( pszAddress );
 
-	// Trim garbage on the end- sometimes you get "//", "./", "./." etc.
+	// Trim garbage on the end- sometimes you get "//", "./", "./." etc. (Bad caches)
 	while ( strAddress.GetLength() >= 8 )
 	{
 		if ( strAddress.Right( 2 ) == _T("//") )
@@ -153,7 +153,8 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	}
 
-	if ( strAddress.GetLength() < 8 ) return NULL;
+	strAddress.TrimLeft();
+	strAddress.TrimRight();
 
 	/*
 	// Although this is part of the spec, it was removed at the request of the GDF.
@@ -161,6 +162,8 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 	if ( strAddress.GetAt( strAddress.GetLength() - 1 ) == '/' )
 		strAddress = strAddress.Left( strAddress.GetLength() - 1 );
 	*/
+
+	if ( strAddress.GetLength() < 8 ) return NULL;
 
 	CSingleLock pNetworkLock( &Network.m_pSection );
 	if ( ! pNetworkLock.Lock( 250 ) ) return NULL;
