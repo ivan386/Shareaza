@@ -431,9 +431,6 @@ BOOL CQuerySearch::WriteHashesToEDPacket( CEDPacket* pPacket, BOOL bUDP )
 	int nFiles = 1; // There's one hash in the packet to begin with
 	DWORD tNow = GetTickCount();
 
-// ***Debug
-theApp.Message( MSG_ERROR, _T("Adding additional hashes to GetSources2 packet") );
-
 	// Run through all active downloads
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -460,7 +457,6 @@ theApp.Message( MSG_ERROR, _T("Adding additional hashes to GetSources2 packet") 
 
 					if ( ( bFewSources ) || ( bDataStarve ) || ( nFiles < 10 ) )
 					{
-theApp.Message( MSG_ERROR, ( CED2K::HashToString( &pDownload->m_pED2K ) + _T(" - ") + pDownload->m_sLocalName ) );//****debug
 						// Add the hash/size for this download
 						pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
 						pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );
@@ -776,14 +772,27 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 BOOL CQuerySearch::CheckValid()
 {
 	DWORD nCount, nValidWords = 0, nValidCharacters = 0;
+	BOOL bExtendedSearch = FALSE;
+	CString strLastWord;
 
 	BuildWordList();
 
 	// Searches by hash are okay
 	if ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) return TRUE;
 
+
+	// Check if it's an "extended search" (Using a character set with many symbols)
+	if ( m_pWordLen[0] >= 2 )
+	{
+			// theApp.Message( MSG_ERROR, _T(" %i %i "), (DWORD)m_pWordPtr[0][0], (DWORD)m_pWordPtr[0][1] );
+		if ( ( (DWORD)m_pWordPtr[0][0] > 20000 ) && ( (DWORD)m_pWordPtr[0][1] > 20000 ) )
+		{
+			bExtendedSearch = TRUE;
+		}
+	}
+
 	// Really short searches (without a hash) are too broad
-	if ( m_sSearch.GetLength() < 3 ) return FALSE;
+	if ( ( ! bExtendedSearch ) && ( m_sSearch.GetLength() < 3 ) ) return FALSE;
 
 	// Check we aren't just searching for broad terms-  set counters, etc
 	for ( nCount = 0 ; nCount < m_nWords ; nCount++ )
@@ -825,9 +834,27 @@ BOOL CQuerySearch::CheckValid()
 		}
 		else
 		{
-			// Valid search term - add to list of valid words.
-			nValidWords++;
-			nValidCharacters += m_pWordLen[nCount];
+			// Valid search term.
+			if ( nCount > 0 )
+			{
+				// check if user has duplicated terms
+				if ( _tcsnicmp( m_pWordPtr[nCount], strLastWord.GetString(),  m_pWordLen[nCount] ) != 0 )
+				{
+					// Valid search term - add to list of valid words.
+					nValidWords++;
+					nValidCharacters += m_pWordLen[nCount];
+					// Update 'last word'
+					strLastWord = m_pWordPtr[nCount];
+				}
+			}
+			else
+			{
+				// First word- never a duplicate
+				nValidWords++;
+				nValidCharacters += m_pWordLen[nCount];
+				// Update previous word variable
+				strLastWord = m_pWordPtr[0];
+			}
 		}
 	}
 
@@ -835,13 +862,17 @@ BOOL CQuerySearch::CheckValid()
 	if ( ( nValidWords == 0 ) || ( nValidCharacters == 0) ) return FALSE;
 
 	// Check we have a reasonable amount of characters to search on
-	if ( ( m_pSchema == NULL ) || ( nValidWords > 1 ) )
+	if ( bExtendedSearch )										// Searching for Chinese characters (2)
 	{
-		if ( nValidCharacters < 4 ) return FALSE;
+		if ( nValidCharacters < 2 ) return FALSE;
 	}
-	else
+	else if ( m_pSchema != NULL )								// Search has schema (3)
 	{
 		if ( nValidCharacters < 3 ) return FALSE;
+	}
+	else														// No schema (4)
+	{
+		if ( nValidCharacters < 4 ) return FALSE;
 	}
 
 	return TRUE;
