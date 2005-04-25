@@ -57,6 +57,9 @@ protected:
 	HCURSOR			m_hCursMove;
 	HCURSOR			m_hCursCopy;
 protected:
+	DWORD			m_nMoreSourcesLimiter;
+	DWORD			m_tMoreSourcesTimer;
+protected:
 	DWORD			m_tSel;
 	BOOL			m_bSelAny;
 	BOOL			m_bSelDownload;

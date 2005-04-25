@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,7 @@ CDownloadWithSearch::~CDownloadWithSearch()
 
 BOOL CDownloadWithSearch::FindSourcesAllowed(DWORD tNow) const
 {
-	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 15*1000 )
+	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 20*1000 )
 		return TRUE;
 	else
 		return FALSE;

@@ -193,6 +193,9 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_hCursMove		= AfxGetApp()->LoadCursor( IDC_MOVE );
 	m_hCursCopy		= AfxGetApp()->LoadCursor( IDC_COPY );
 	m_tSel			= 0;
+
+	m_nMoreSourcesLimiter	= 8;
+	m_tMoreSourcesTimer		= 0;
 	
 	return 0;
 }
@@ -269,42 +272,54 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 	if ( nIDEvent == 5 ) m_tSel = 0;
 	
 	// If this is a clear event, and some kind of auto-clear is active
-	if ( nIDEvent == 4 && ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear ) )
+	if ( nIDEvent == 4 )
 	{
-		// Lock transfers section
-		CSingleLock pLock( &Transfers.m_pSection );
-		if ( ! pLock.Lock( 10 ) ) return;
-
 		DWORD tNow = GetTickCount();
-		
-		// Loop through all downloads
-		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+
+		if ( ( tNow - m_tMoreSourcesTimer ) > 5*60*1000 )
 		{
-			CDownload* pDownload = Downloads.GetNext( pos );
+			if ( m_nMoreSourcesLimiter < 12 ) m_nMoreSourcesLimiter ++;
+
+			m_tMoreSourcesTimer = tNow;
+		}
+
+		if ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear )
+		{
+			// Lock transfers section
+			CSingleLock pLock( &Transfers.m_pSection );
+			if ( ! pLock.Lock( 10 ) ) return;
+
 			
-			if ( pDownload->IsCompleted() &&					// If the download has completed
-				 pDownload->IsPreviewVisible() == FALSE &&		// And isn't previewing
-				 tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
+			
+			// Loop through all downloads
+			for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 			{
-				// We might want to clear this download
-				if ( pDownload->m_pTorrent.IsAvailable() == TRUE )	//If it's a torrent
-				{	
-					// Check the torrent clear settings
-					if ( Settings.BitTorrent.AutoClear )
-					{
-						// If we're not seeding and have reached the required ratio
-						if ( ( ! pDownload->IsSeeding() ) && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
+				CDownload* pDownload = Downloads.GetNext( pos );
+				
+				if ( pDownload->IsCompleted() &&					// If the download has completed
+					pDownload->IsPreviewVisible() == FALSE &&		// And isn't previewing
+					tNow - pDownload->m_tCompleted > Settings.Downloads.ClearDelay )
+				{
+					// We might want to clear this download
+					if ( pDownload->m_pTorrent.IsAvailable() == TRUE )	//If it's a torrent
+					{	
+						// Check the torrent clear settings
+						if ( Settings.BitTorrent.AutoClear )
+						{
+							// If we're not seeding and have reached the required ratio
+							if ( ( ! pDownload->IsSeeding() ) && ( Settings.BitTorrent.ClearRatio < pDownload->GetRatio() * 100.0f) ) 
+							{
+								pDownload->Remove();
+							}
+						}
+					}
+					else												// else (It's a normal download)
+					{	
+						// Check the general auto clear setting
+						if ( Settings.Downloads.AutoClear ) 
 						{
 							pDownload->Remove();
 						}
-					}
-				}
-				else												// else (It's a normal download)
-				{	
-					// Check the general auto clear setting
-					if ( Settings.Downloads.AutoClear ) 
-					{
-						pDownload->Remove();
 					}
 				}
 			}
@@ -930,8 +945,17 @@ void CDownloadsWnd::OnDownloadsSources()
 		{
 			if ( ! pDownload->IsMoving() )
 			{
-				pDownload->FindMoreSources();
-				nCount++;
+				if ( m_nMoreSourcesLimiter )
+				{
+					pDownload->FindMoreSources();
+					nCount++;
+					m_nMoreSourcesLimiter--;
+				}
+				else
+				{
+					m_tMoreSourcesTimer = GetTickCount();
+					theApp.Message( MSG_SYSTEM, _T("Find more sources unable to start due to exessive network traffic") );
+				}
 			}
 		}
 
