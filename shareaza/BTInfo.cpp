@@ -359,6 +359,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_nEncoding = 949;
 			else if ( _tcsistr( strEncoding.GetString() , _T("Chinese") ) != NULL ) 
 				m_nEncoding = 936;
+			else if ( _tcsistr( strEncoding.GetString() , _T("GB2312") ) != NULL ) 
+				m_nEncoding = 936;
 			else if ( _tcsistr( strEncoding.GetString() , _T("GBK") ) != NULL ) 
 				m_nEncoding = 936;
 			else if ( _tcsistr( strEncoding.GetString() , _T("Japanese") ) != NULL ) 
