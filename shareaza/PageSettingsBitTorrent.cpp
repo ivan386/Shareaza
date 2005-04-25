@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -114,7 +114,7 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 
 	m_wndClearPercentageSpin.SetRange( 100, 999 );
 
-	m_wndLinksSpin.SetRange( 0, 100 );
+	m_wndLinksSpin.SetRange( 0, 200 );
 	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
 	UpdateData( FALSE );
 
@@ -182,15 +182,28 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 
 void CBitTorrentSettingsPage::OnOK() 
 {
-	UpdateData();
+	UpdateData( TRUE );
 
 	m_nClearPercentage = min (m_nClearPercentage, 999);
 	m_nClearPercentage = max (m_nClearPercentage, 100);
 
+	if ( Settings.GetOutgoingBandwidth() < 16 )
+		m_nLinks = min ( m_nLinks, 200 );
+	else if ( Settings.GetOutgoingBandwidth() < 32 )
+		m_nLinks = min ( m_nLinks, 300 );
+	else if ( Settings.GetOutgoingBandwidth() < 64 )
+		m_nLinks = min ( m_nLinks, 500 );
+	else
+		m_nLinks = min ( m_nLinks, 800 );
+
+	m_nDownloads = min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
+
+	UpdateData( FALSE );
+
 	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
 	Settings.BitTorrent.Endgame				= m_bEndGame;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
-	Settings.BitTorrent.DownloadTorrents	= min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
+	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;
 	Settings.BitTorrent.AutoClear			= m_bAutoClear;
 	Settings.BitTorrent.ClearRatio			= m_nClearPercentage;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;

@@ -247,7 +247,14 @@ void CDownloadsSettingsPage::OnOK()
 
 	// Apply limits to display
 	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-	m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+	if ( Settings.GetOutgoingBandwidth() < 16 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+	else if ( Settings.GetOutgoingBandwidth() < 32 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
+	else if ( Settings.GetOutgoingBandwidth() < 64 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 500 );
+	else
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
 	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
 
 	// Display any data changes
