@@ -345,9 +345,9 @@ fr.icons_uninstall=Désinstaller
 fr.icons_downloads=Téléchargements
 fr.dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre?
 fr.dialog_firewall=L'installation n'a pas pu ajouter Shareaza au Pare-feu Windows.%nVeuillez ajouter Shareaza manuellement à la liste des exceptions.
-fr.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-fr.page_viruswarning_title=Virus Warning
-fr.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+fr.page_viruswarning_text=Lorsque vous utilisez internet, vous devriez toujours vous assurer que vous avez un scanner de virus à jour pour vous protéger des troyens (trojans), vers (worms), et autres programmes malveillants. Vous pouvez trouver une liste de bons antivirus et conseils de sécurité pour protéger votre ordinateur en suivant ce lien:
+fr.page_viruswarning_title=Avertissement sur les virus
+fr.page_viruswarning_subtitle=Avez-vous un antivirus installé?
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
