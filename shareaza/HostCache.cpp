@@ -246,18 +246,22 @@ CHostCacheHost* CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, 
 	// Don't add invalid addresses
 	if ( ! nPort ) 
 		return NULL;
-
 	if ( ! pAddress->S_un.S_un_b.s_b1 ) 
 		return NULL;
 
-	// Don't add blocked addresses
+	// Don't add own firewalled IPs
+	if ( Network.IsFirewalledAddress( &pAddress->S_un.S_addr, TRUE ) ) 
+		return NULL;
+
+	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) )
 		return NULL;
 
+	// Check security settings, don't add blocked IPs
 	if ( Security.IsDenied( pAddress ) )
 		return NULL;
 
-	// Try adding it.
+	// Try adding it to the cache. (duplicates will be rejected)
 	return AddInternal( pAddress, nPort, tSeen, pszVendor );
 }
 
@@ -292,20 +296,22 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor)
 	// Don't add invalid addresses
 	if ( ! nPort ) 
 		 return TRUE;
-
 	if ( ! nAddress ) 
 		 return TRUE;
-		
+	
+	// Don't add own firewalled IPs
 	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ) 
 		return TRUE;
 
-	// Don't add blocked addresses
+	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
 	if ( ( Settings.Connection.IgnoreOwnIP ) && ( Network.m_pHost.sin_addr.S_un.S_addr == nAddress ) )
 		 return TRUE;
 
+	// Check security settings, don't add blocked IPs
 	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 		 return TRUE;
 
+	// Try adding it to the cache. (duplicates will be rejected)
 	AddInternal( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor );
 	
 	return TRUE;
