@@ -233,6 +233,8 @@ void CVersionChecker::ProcessResponse()
 	
 	if ( m_pResponse.Lookup( _T("AddDiscovery"), strValue ) )
 	{
+		strValue.TrimLeft();
+		strValue.TrimRight();
 		DiscoveryServices.Add( strValue, CDiscoveryService::dsWebCache );
 	}
 	
