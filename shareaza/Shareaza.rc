@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,141
- PRODUCTVERSION 2,1,0,141
+ FILEVERSION 2,1,0,142
+ PRODUCTVERSION 2,1,0,142
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 141"
+            VALUE "FileVersion", "2, 1, 0, 142"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 141"
+            VALUE "ProductVersion", "2, 1, 0, 142"
         END
     END
     BLOCK "VarFileInfo"
@@ -2829,17 +2829,17 @@ BEGIN
     LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
                     ES_READONLY
-    LTEXT           "Created:",IDC_STATIC,14,28,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,28,66,12,ES_AUTOHSCROLL | 
+    LTEXT           "Created:",IDC_STATIC,14,27,44,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | 
                     ES_READONLY
-    LTEXT           "By:",IDC_STATIC,126,28,40,12,SS_CENTERIMAGE,WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CREATEDBY,167,28,108,12,ES_AUTOHSCROLL | 
+    LTEXT           "By:",IDC_STATIC,136,27,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
+    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,102,12,ES_AUTOHSCROLL | 
                     ES_READONLY
     LTEXT           "Comments:",IDC_STATIC,14,42,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,42,215,22,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,215,22,ES_AUTOHSCROLL | 
                     ES_READONLY
     LTEXT           "Tracker:",IDC_STATIC,14,67,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_TRACKER,60,67,215,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TORRENT_TRACKER,60,65,215,12,ES_AUTOHSCROLL
     GROUPBOX        "&Downloaders:",IDC_STATIC,5,85,280,24
     LTEXT           "Completed (Seeds):",IDC_STATIC,15,93,80,12,
                     SS_CENTERIMAGE
@@ -2855,7 +2855,7 @@ BEGIN
     GROUPBOX        "&Files:",IDC_STATIC,5,134,280,88
     CONTROL         "List1",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | 
                     LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,144,260,
-                    74
+                    75
     PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,5,225,50,14
     COMBOBOX        IDC_TORRENT_VIEW,60,227,65,40,CBS_DROPDOWNLIST | NOT 
                     WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
