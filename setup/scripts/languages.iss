@@ -303,9 +303,9 @@ af.icons_uninstall=Deïnstalleer
 af.icons_downloads=Aflaaie
 af.dialog_shutdown=%1 is op die oomblik besig om te loop. Wil jy graag %1 sluit sodat die installasie kan voortgaan?
 af.dialog_firewall=Die Opsteller kon nie Shareaza by die Windows netskans uitsonderings voeg nie.%nVoeg Shareaza asseblief met die hand op die uitsonderingslys.
-af.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-af.page_viruswarning_title=Virus Warning
-af.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+af.page_viruswarning_text=Maak altyd seker dat jy 'n opgedateerde anti-virus program geïnstalleer het wanneer jy die internet gebruik, om jou rekenaar te beskerm teen virusse, wurms, en ander ongewenste programme. Jy kan 'n lys van goeie anti-virus programme en ander sekuriteitswenke oor hoe om jou rekenaar te beskerm verkry deur die volgende skakel te volg:
+af.page_viruswarning_title=Virus Waarskuwing
+af.page_viruswarning_subtitle=Het jy 'n Anti-Virus program geïnstalleer?
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
