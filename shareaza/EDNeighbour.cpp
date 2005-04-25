@@ -518,8 +518,6 @@ BOOL CEDNeighbour::OnCallbackRequest(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 {
-//*******************
-theApp.Message( MSG_ERROR, _T("CEDNeighbour::OnSearchResults") ); //**** Debug
 	if ( m_pQueries.GetCount() == 0 )
 	{
 		Statistics.Current.eDonkey.Dropped++;
@@ -565,9 +563,6 @@ theApp.Message( MSG_ERROR, _T("CEDNeighbour::OnSearchResults") ); //**** Debug
 
 BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 {
-//****************
-theApp.Message( MSG_ERROR, _T("CEDNeighbour::OnFoundSources") ); //**** Debug
-
 	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, m_nTCPFlags );
 	
 	if ( pHits == NULL )
