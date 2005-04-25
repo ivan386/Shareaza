@@ -429,9 +429,9 @@ hu.icons_uninstall=Törlés
 hu.icons_downloads=Letöltések
 hu.dialog_shutdown=A %1 jelenleg fut. Be akarod zárni a programot, hogy a telepítés folytatódhasson?
 hu.dialog_firewall=A telepíto nem tudta hozzáadni a Shareazát a Windows tuzfal kivételeihez.%nManuálisan kell hozzáadni a kivételekhez.
-hu.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-hu.page_viruswarning_title=Virus Warning
-hu.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+hu.page_viruswarning_text=Ha az internetet használod, mindig legyen föltelepítve egy, a legfrissebb vírusadatbázissal rendelkezõ antivírus program, ami megvéd a férgektõl, trójai és egyéb kártékony programoktól. Ha követed ezt a linket, sok jó víruskeresõt találhatsz és hasznos tippeket kaphatsz a számítógép védelmérõl:
+hu.page_viruswarning_title=Vírusveszély
+hu.page_viruswarning_subtitle=Van feltelepített antivírus programod?
 ; Chinese Simp
 chs.components_plugins=²å¼þ
 chs.components_skins=Æ¤·ô
