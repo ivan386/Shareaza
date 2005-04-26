@@ -450,9 +450,9 @@ chs.icons_uninstall=卸载
 chs.icons_downloads=下载
 chs.dialog_shutdown=%1 正在运行。您希望关闭 %1 以便继续安装吗？
 chs.dialog_firewall=安装添加 Shareaza 到 Windows 防火墙失败。%n请将 Shareaza 手动添加至除外列表。
-chs.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-chs.page_viruswarning_title=Virus Warning
-chs.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+chs.page_viruswarning_text=在试用互联网时，您需要确定您拥有最新的病毒扫描软件以保护您免受木马、蠕虫和其他恶意程序的侵害。您可以在以下链接中找到较好的病毒扫描软件的列表以及其他保护您的计算机的安全建议:
+chs.page_viruswarning_title=病毒警告
+chs.page_viruswarning_subtitle=您安装了防病毒软件了吗？
 ; Swedish
 sv.components_skins=Skinn
 sv.components_languages=Spr錵
