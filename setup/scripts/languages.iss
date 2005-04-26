@@ -219,9 +219,9 @@ de.icons_uninstall=Shareaza deinstallieren
 de.icons_downloads=Downloads
 de.dialog_shutdown=%1 wird zur Zeit ausgeführt. Wollen Sie %1 beenden, um mit der Installation fortzufahren?
 de.dialog_firewall=Setup konnte Shareaza nicht zur Windows Firewall hinzufügen.%nBitte tragen Sie Shareaza manuell in die Ausnahmenliste ein.
-de.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-de.page_viruswarning_title=Virus Warning
-de.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+de.page_viruswarning_text=Wenn Sie das Internet benutzen, sollten Sie stets einen aktuellen Virenscanner installiert haben, der ihren Computer vor Trojanern, Würmern und anderen bösartigen Programmen beschützt. Sie finden eine Liste guter Virenscanner und andere Tipps, wie Sie ihren Computer schützen können, unter folgendem Link:
+de.page_viruswarning_title=Virenwarnung
+de.page_viruswarning_subtitle=Haben Sie ein Antivirenprogramm installiert?
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Peles
