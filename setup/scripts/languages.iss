@@ -366,9 +366,9 @@ es.icons_uninstall=Desinstalar
 es.icons_downloads=Descargas
 es.dialog_shutdown=%1 se encuentra ejecutándose. ¿Deseas que %1 sea cerrado para que la instalación pueda continuar?
 es.dialog_firewall=La instalación fallo al agregar la excepción de Shareaza al cortafuego Firewall.%n Por favor hágalo manualmente.
-es.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-es.page_viruswarning_title=Virus Warning
-es.page_viruswarning_subtitle=Do you have a AntiVirus program installed?
+es.page_viruswarning_text=Cuando estas usando Internet, debes siempre asegurarte que tienes un antivirus actualizado hasta la fecha para protegerte de troyanos, gusanos, y otros programas maliciosos. Puedes encontrar una lista de buenos antivirus y sugerencias de seguridad para proteger tu computadora en la siguiente dirección:
+es.page_viruswarning_title=Peligro de Virus
+es.page_viruswarning_subtitle=¿Tienes un programa antivirus instalado?
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóðêè
