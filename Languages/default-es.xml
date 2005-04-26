@@ -9,7 +9,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="lccolunga@hotmail.com"
-		version="2.1.0.134"
+		version="2.1.0.141"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -92,7 +92,7 @@
 		<button id="ID_SEARCH_STOP" text="Detener"/>
 		<separator/>
 	    <button id="ID_SEARCH_DOWNLOAD" text="Descargar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>bii
+		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Mostrar Búsqueda"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Búsqueda"/>
@@ -2047,6 +2047,16 @@
 		si necesitas ayuda adiccional.</text>
 	</document>
 
+	<document name="GeneralHelp.DonkeyServerList">
+		<text format="b">Tu lista de servidores eDonkey2000 está vacía</text>
+		<newline gap="8"/>
+		<text>No hay servidores eDonkey2000 en tu lista. Tu necesitas descargar
+		una lista actualizada (archivo met) para conectarte a ED2K.</text>
+		<newline gap="8"/>
+		<text>Puedes bajar una lista de servidores desde la configuración de ed2k, o de la lista 
+        de descubrimientos.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2514,7 +2524,7 @@
 	<string id="8156" value="Búsqueda"/>
 	<string id="8157" value="Resultados"/>
 	<string id="8158" value="Limpiar"/>
-	<string id="8159" value="Avanzado..."/>
+	<string id="8159" value="Avanzado"/>
 	<string id="8160" value="Estableciendo conexión con el usuario..."/>
 	<string id="8161" value="Un push fue enviado al usuario remoto, esperando respuesta..."/>
 	<string id="8162" value="Conectado, pidiendo listado de archivos..."/>
@@ -3114,11 +3124,11 @@
 		<control/><control/>
 		<control caption="Opacity:"/>
 		<control/>
-		<control caption="_Tray:"/>
-		<control caption="When I click close:"/>
-		<control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers"/>
-		<control caption="When I click minimise:"/>
-		<control caption="Normal|Minimise to Tray"/>
+		<control caption="_Barra de tareas:"/>
+		<control caption="Cuando hago click a cerrar:"/>
+		<control caption="Preguntarme|Cerrar Inmediatamente|Minimizar a barra de tareas|Cerrar después de transferencias"/>
+		<control caption="Cuando hago click a minimizar:"/>
+		<control caption="Normal|Minimizar a barra de tareas"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Mi Colección">
@@ -3423,7 +3433,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBu" caption="Upload Queue Properties">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
 		<control caption="_Nombre:"/>
 		<control/>
 		<control caption="_Criteria de Entrada:"/>
@@ -4064,6 +4074,12 @@
 		<control caption="Información _Torrent:"/>
 		<control caption="Nombre:"/>
 		<control/>
+		<control caption="Createdo:"/>
+		<control/>
+		<control caption="Por:"/>
+		<control/>
+		<control caption="Comentarios:"/>
+		<control/>
 		<control caption="Tracker:"/>
 		<control/>
 		<control caption="_Fuentes Descargando (Peers):"/>
@@ -4071,6 +4087,9 @@
 		<control/>
 		<control caption="Incompleto:"/>
 		<control/>
+        <control caption="Transferencias:"/>
+        <control caption="Empezar nuevas transferencias:"/>
+		<control caption="Como sea necesario|Cuando el ratio es más bajo de 100%|Nunca"/>
 		<control caption="_Archivos:"/>
 		<control/>
 		<control caption="_Actualizar"/>
