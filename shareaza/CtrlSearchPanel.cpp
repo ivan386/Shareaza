@@ -269,15 +269,15 @@ CManagedSearch* CSearchPanel::GetSearch()
 	CManagedSearch* pSearch = new CManagedSearch();
 	
 	m_boxSearch.m_wndSearch.GetWindowText( pSearch->m_pSearch->m_sSearch );
-	
+
 	if ( CSchema* pSchema = m_boxSearch.m_wndSchemas.GetSelected() )
 	{
 		pSearch->m_pSearch->m_pSchema	= pSchema;
 		pSearch->m_pSearch->m_pXML		= pSchema->Instantiate();
-		
+
 		m_boxSchema.m_wndSchema.UpdateData(
 			pSearch->m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
-		
+
 		Settings.Search.LastSchemaURI = pSchema->m_sURI;
 	}
 	else
@@ -451,7 +451,7 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 	m_wndSchemas.SendMessage( CB_SETDROPPEDWIDTH, 200 );
-	
+
 	LoadString( strCaption, IDS_SEARCH_PANEL_START );
 	m_wndStart.Create( rc, this, IDC_SEARCH_START );
 	m_wndStart.SetWindowText( strCaption );
@@ -491,8 +491,8 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27, cx - BOX_MARGIN * 2, 19, SWP_SHOWWINDOW|SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67, cx - BOX_MARGIN * 2, 256, SWP_SHOWWINDOW|SWP_NOZORDER );
 	
-	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 94, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 52, 102, 52, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 90, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24, SWP_SHOWWINDOW|SWP_NOZORDER );
 
 	
 	EndDeferWindowPos( hDWP );
@@ -535,7 +535,7 @@ void CSearchInputBox::OnPaint()
 	rct.OffsetRect( 0, 50 - rct.top );
 	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
 	pDC->ExcludeClipRect( &rct );
-	
+
 	pDC->SelectObject( pOldFont );
 	
 	if ( pDC != &dc )

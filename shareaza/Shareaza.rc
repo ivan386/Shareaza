@@ -1136,7 +1136,7 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "O&ptions:",IDC_STATIC,5,125,150,60
     CONTROL         "Ignore private/local IP addresses",IDC_IGNORE_LOCAL,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,160,130,12
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,160,136,12
     GROUPBOX        "&Timeouts:",IDC_STATIC,160,125,115,60
     LTEXT           "Connection:",IDC_STATIC,170,142,50,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TIMEOUT_CONNECTION,225,142,40,12,ES_AUTOHSCROLL | 
@@ -1151,7 +1151,7 @@ BEGIN
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,267,162,8,12
     CONTROL         "I can accept incoming connections",IDC_CAN_ACCEPT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,145,130,12
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,145,136,12
 END
 
 IDD_SETTINGS_GNUTELLA DIALOGEX 0, 0, 282, 220
@@ -1159,30 +1159,30 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Gnutella"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Gnutella2 Network:",IDC_STATIC,8,13,130,60,WS_GROUP
+    GROUPBOX        "Gnutella2 Network:",IDC_STATIC,7,13,131,60,WS_GROUP
     CONTROL         "Always connect to Gnutella2",IDC_G2_ALWAYS,"Button",
-                    BS_AUTO3STATE | WS_TABSTOP,11,25,125,8
+                    BS_AUTO3STATE | WS_TABSTOP,10,25,127,8
     CONTROL         "Connect to Gnutella2 today",IDC_G2_TODAY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,11,38,125,8
+                    BS_AUTOCHECKBOX | WS_TABSTOP,10,38,127,8
     LTEXT           "Mode: ",IDC_STATIC,16,56,55,8,0,WS_EX_RIGHT
     COMBOBOX        IDC_G2_CLIENTMODE,75,53,54,54,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "G&2 Connections:",IDC_STATIC,7,84,130,75,WS_GROUP
+    GROUPBOX        "G&2 Connections:",IDC_STATIC,7,84,131,75,WS_GROUP
     LTEXT           "Leaf to Hub:",IDC_STATIC,18,95,65,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_G2_HUBS,87,95,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_G2_HUBS,90,95,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_G2_HUBS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,123,95,11,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,95,11,12
     LTEXT           "Hub to Leaf:",IDC_STATIC,18,116,65,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_G2_LEAFS,87,116,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_G2_LEAFS,90,116,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_G2_LEAFS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,123,116,11,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,116,11,12
     LTEXT           "Hub to Hub:",IDC_STATIC,18,137,65,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_G2_PEERS,87,137,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_G2_PEERS,90,137,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_G2_PEERS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,123,137,11,12
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,137,11,12
     GROUPBOX        "Gnutella1 Network:",IDC_STATIC,142,13,133,60,WS_GROUP
     CONTROL         "Always connect to Gnutella1",IDC_G1_ALWAYS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,145,25,125,8
@@ -1296,29 +1296,29 @@ BEGIN
     GROUPBOX        "&General:",IDC_STATIC,7,5,160,85,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
-                    140,10
+                    148,10
     CONTROL         "Start Shareaza at Windows startup",IDC_AUTO_START,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,35,
-                    140,10
+                    148,10
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,50,140,10
-    LTEXT           "Show rates in:",IDC_STATIC,15,70,50,12,SS_CENTERIMAGE
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,50,148,10
+    LTEXT           "Show rates in:",IDC_STATIC,15,70,56,12,SS_CENTERIMAGE
     COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,32
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,108,140,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,108,148,10
     GROUPBOX        "&Search:",IDC_STATIC,7,130,160,83
     CONTROL         "Expand multi-source files by default",
                     IDC_EXPAND_MATCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    16,145,140,10
+                    16,145,148,10
     CONTROL         "Switch to Transfers view on download",
                     IDC_SWITCH_TO_TRANSFERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,160,140,10
+                    WS_TABSTOP,15,160,148,10
     CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,175,140,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,175,148,10
     CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,190,140,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,190,148,10
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
@@ -1332,11 +1332,11 @@ BEGIN
     CONTROL         "Slider1",IDC_TIP_ALPHA,"msctls_trackbar32",TBS_TOP | 
                     TBS_NOTICKS | WS_TABSTOP,210,105,60,15
     GROUPBOX        "&Tray:",IDC_STATIC,170,130,105,83,WS_GROUP
-    LTEXT           "When I click close:",IDC_STATIC,180,145,85,10,
+    LTEXT           "When I click close:",IDC_STATIC,178,145,94,10,
                     SS_CENTERIMAGE
     COMBOBOX        IDC_CLOSE_MODE,180,160,85,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_GROUP | WS_TABSTOP
-    LTEXT           "When I click minimise:",IDC_STATIC,180,180,85,10,
+    LTEXT           "When I click minimise:",IDC_STATIC,178,180,94,10,
                     SS_CENTERIMAGE
     COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
@@ -2073,26 +2073,26 @@ FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,135,85,WS_GROUP
     CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
     CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,35,120,12
     CONTROL         "Quick hashing (Uses more CPU)",IDC_HIGH_HASH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,65,120,12
     CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,115,12
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,50,120,12
     GROUPBOX        "&Recent Files:",IDC_STATIC,5,92,135,84,WS_GROUP
-    LTEXT           "Remember:",IDC_STATIC,15,112,40,12,SS_CENTERIMAGE
+    LTEXT           "Remember:",IDC_STATIC,15,112,46,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_TOTAL,65,112,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_TOTAL_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,112,8,12
-    LTEXT           "files",IDC_STATIC,105,112,25,12,SS_CENTERIMAGE
-    LTEXT           "For up to:",IDC_STATIC,15,132,40,12,SS_CENTERIMAGE
+    LTEXT           "files",IDC_STATIC,105,112,30,12,SS_CENTERIMAGE
+    LTEXT           "For up to:",IDC_STATIC,15,132,46,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_DAYS,65,132,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RECENT_DAYS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,132,8,12
-    LTEXT           "days",IDC_STATIC,105,132,25,12,SS_CENTERIMAGE
+    LTEXT           "days",IDC_STATIC,105,132,30,12,SS_CENTERIMAGE
     PUSHBUTTON      "Clear History Now",IDC_RECENT_CLEAR,34,153,75,15
     GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,85,WS_GROUP
     COMBOBOX        IDC_SAFE_TYPES,160,18,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | 
