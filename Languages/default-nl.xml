@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Dutch Skin File -->
 <!-- Special characters used in Dutch:
 	e with accent:  &#233;
@@ -3259,7 +3259,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Opties:"/>
-		<control caption="Deel NIEUWE gdltelijke downloads"/>
+		<control caption="Deel onvolledige downloads"/>
 		<control caption="Beperk delen in Hub-modus"/>
 		<control caption="Deel voorvertonings bestanden"/>
 		<control caption="Limiet per unieke gasthr:"/>
