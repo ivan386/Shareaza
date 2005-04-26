@@ -71,8 +71,60 @@ Source: "{app}\Uninstall\setup.exe"; DestDir: "{tmp}"; DestName: "temp.exe"; Fla
 Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{param:SETTINGS|{tmp}\settings.ini}"""
 
 [Messages]
-WelcomeLabel1=Welcome to the [name] Repair Wizard
-WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+; This section specifies phrazes and words not specified in the ISL files
+en.WelcomeLabel1=Welcome to the [name] Repair Wizard
+en.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+nl.WelcomeLabel1=Welkom bij de [name] reparatiewizard
+nl.WelcomeLabel2=Hiermee wordt [name] hersteld op deze computer.%n%nU wordt aanbevolen alle actieve programma's af te sluiten voordat u verder gaat. Dit helpt conflicten tijdens de installatie voorkomen.
+lt.WelcomeLabel1=Welcome to the [name] Repair Wizard
+lt.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+de.WelcomeLabel1=Welcome to the [name] Repair Wizard
+de.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+pt.WelcomeLabel1=Welcome to the [name] Repair Wizard
+pt.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+it.WelcomeLabel1=Welcome to the [name] Repair Wizard
+it.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+no.WelcomeLabel1=Welcome to the [name] Repair Wizard
+no.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+af.WelcomeLabel1=Welcome to the [name] Repair Wizard
+af.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+br.WelcomeLabel1=Welcome to the [name] Repair Wizard
+br.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+fr.WelcomeLabel1=Welcome to the [name] Repair Wizard
+fr.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+es.WelcomeLabel1=Welcome to the [name] Repair Wizard
+es.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+ru.WelcomeLabel1=Welcome to the [name] Repair Wizard
+ru.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+gr.WelcomeLabel1=Welcome to the [name] Repair Wizard
+gr.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+hu.WelcomeLabel1=Welcome to the [name] Repair Wizard
+hu.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+chs.WelcomeLabel1=Welcome to the [name] Repair Wizard
+chs.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+sv.WelcomeLabel1=Welcome to the [name] Repair Wizard
+sv.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+
+[Languages]
+; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license files
+; Note: first language specified is default > English
+
+Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"
+Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"
+Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"
+Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"
+Name: "pt"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-std.isl"
+Name: "it"; MessagesFile: "compiler:Default.isl,setup\isl\italian.isl"
+Name: "no"; MessagesFile: "compiler:Default.isl,setup\isl\norwegian.isl"
+Name: "af"; MessagesFile: "compiler:Default.isl,setup\isl\afrikaans.isl"
+Name: "br"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-braz.isl"
+Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"
+Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"
+Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"
+Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"
+Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"
+Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"
+Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"
 
 [Code]
 const
