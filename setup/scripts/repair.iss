@@ -71,7 +71,7 @@ Source: "{app}\Uninstall\setup.exe"; DestDir: "{tmp}"; DestName: "temp.exe"; Fla
 Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{param:SETTINGS|{tmp}\settings.ini}"""
 
 [Messages]
-; This section specifies phrazes and words not specified in the ISL files
+; This section overrides phrazes and words from the ISL files
 en.WelcomeLabel1=Welcome to the [name] Repair Wizard
 en.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 nl.WelcomeLabel1=Welkom bij de [name] reparatiewizard
