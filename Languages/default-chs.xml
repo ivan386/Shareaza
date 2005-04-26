@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.121"
+		version="2.1.0.141"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -2051,7 +2051,16 @@
 		<newline gap="8"/> 
 		<text>大多数 Torrent 制作程序允许您修复此 Torrent，以便保证其在所有的
 		BitTorrent 客户端中正常工作。如果您希望获得额外的帮助，请访问 Shareaza 论坛。</text> 
-	</document> 
+	</document>
+	
+	<document name="GeneralHelp.DonkeyServerList">
+		<text format="b">您的 eDonkey 服务器列表没有内容</text>
+		<newline gap="8"/>
+		<text>您的 eDonkey2000 服务器列表中没有服务器。
+		您需要下载一个较新的服务器列表 (met 文件) 以连接到 ED2K。</text>
+		<newline gap="8"/>
+		<text>您可以从 ED2K 设置页面或发现服务窗口下载服务器列表。</text>
+	</document>
 
 	<!-- Search help documents -->
 
@@ -2866,6 +2875,7 @@
 	<string id="16809" value="退出(_X)"/>
 	<string id="16810" value="岁"/>
 	<string id="16811" value="自动"/>
+	<string id="16816" value="eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\n您确定要限制您能接受的队列位置吗？"/>
 	<string id="16864" value="正在查询主机探索服务..."/>
 	<string id="16865" value="正在查询探索服务 &quot;%s&quot;..."/>
 	<string id="16866" value="G网缓存处理成功 (&quot;%s&quot;)。"/>
@@ -3213,7 +3223,7 @@
 		<control caption="我可以接收传入连接"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="下载">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="下载">
 		<control caption="在这里保存已完成文件(_C):"/>
 		<control/><control/>
 		<control caption="在这里保存未完成文件(_I):"/>
@@ -3230,11 +3240,10 @@
 		<control/>
 		<control caption="最大列队长度:"/>
 		<control/><control/>
-		<control/>
 		<control caption="只在已连接的网络下载和上传。"/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="上传">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="上传">
 		<control caption="选项(_O):"/>
 		<control caption="共享新的部分下载文件"/>
 		<control caption="集端模式下限制共享"/>
@@ -4057,9 +4066,15 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent 高级信息">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent 高级信息">
 		<control caption="Torrent 信息(_I):"/>
 		<control caption="名称:"/>
+		<control/>
+		<control caption="创建于:"/>
+		<control/>
+		<control caption="由:"/>
+		<control/>
+		<control caption="备注:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
@@ -4068,14 +4083,14 @@
 		<control/>
 		<control caption="未完成:"/>
 		<control/>
+		<control caption="传送:"/>
+		<control caption="启动新的下载传输:"/>
+		<control caption="需要时|当比率大于 100% 时|被请求时|从不"/>
 		<control caption="文件(_F):"/>
 		<control/>
 		<control caption="刷新(_R)"/>
 		<control/>
 		<control caption="关闭"/>
-		<control caption="需要时|当比率大于 100% 时|被请求时|从不"/>
-		<control caption="启动新的下载传输:"/>
-		<control caption="传送:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下载组属性">
