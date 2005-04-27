@@ -63,7 +63,7 @@ CRichSettingsPage::CRichSettingsPage(LPCTSTR pszName) : CSettingsPage(CRichSetti
 		m_sCaption = pXML->GetAttributeValue( _T("title"), m_sName );
 		
 		m_pDocument = new CRichDocument();
-		m_pDocument->CreateFonts( theApp.m_sFont1, 11 );
+		m_pDocument->CreateFonts( theApp.m_sDefaultFont, theApp.m_nDefaultFontSize );
 		m_pDocument->m_crBackground = CCoolInterface::GetDialogBkColor();
 		m_pDocument->LoadXML( pXML );
 	}

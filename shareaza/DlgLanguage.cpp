@@ -87,17 +87,17 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
 
-	m_fntNormal.CreateFont( -12, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_fntNormal.CreateFont( -(theApp.m_nDefaultFontSize + 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
-	m_fntBold.CreateFont( -16, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_fntBold.CreateFont( -(theApp.m_nDefaultFontSize + 5), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
-	m_fntSmall.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_fntSmall.CreateFont( -(theApp.m_nDefaultFontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
 	m_pImages.Create( 32, 32, ILC_COLOR16|ILC_MASK, 1, 1 );
 

@@ -394,8 +394,8 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		CharLower( strName.GetBuffer() );
 		strName.ReleaseBuffer();
 		
-		CString strFontFace = theApp.m_sFont1;
-		int nFontSize = 12;
+		CString strFontFace = theApp.m_sDefaultFont;
+		int nFontSize = theApp.m_nDefaultFontSize + 1;
 		int nFontWeight = FW_BOLD;
 		
 		if ( CXMLElement* pFont = pXML->GetElementByName( _T("font") ) )

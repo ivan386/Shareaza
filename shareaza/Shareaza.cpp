@@ -368,23 +368,23 @@ void CShareazaApp::InitResources()
 	}
 
 	// Get the fonts from the registry
-	theApp.m_sFont1 = theApp.GetProfileString( _T("Fonts"), _T("Font1"), _T("Tahoma") );
-	theApp.m_sFont2 = theApp.GetProfileString( _T("Fonts"), _T("Font2"), _T("Verdana") );
-	theApp.m_sFont3 = theApp.GetProfileString( _T("Fonts"), _T("Font3"), _T("Lucida Console") );
-	theApp.m_sFont4 = theApp.GetProfileString( _T("Fonts"), _T("Font4"), _T("Tahoma") );
+	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), _T("Tahoma") );
+	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
+	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), _T("Tahoma") );
+	theApp.m_nDefaultFontSize	= theApp.GetProfileInt( _T("Fonts"), _T("FontSize"), 11 );
 	
 	// Set up the default font
-	m_gdiFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_gdiFont.CreateFont( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 	
-	m_gdiFontBold.CreateFont( -11, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_gdiFontBold.CreateFont( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 	
-	m_gdiFontLine.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_gdiFontLine.CreateFont( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
 	srand( GetTickCount() );
 }

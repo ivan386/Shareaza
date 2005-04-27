@@ -195,9 +195,9 @@ int CHomeDownloadsBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CRichTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_pFont.CreateFont( -(theApp.m_nDefaultFontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 	
 	m_hHand = theApp.LoadCursor( IDC_HAND );
 	
@@ -623,9 +623,9 @@ int CHomeLibraryBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CRichTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_pFont.CreateFont( -(theApp.m_nDefaultFontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 	
 	m_hHand = theApp.LoadCursor( IDC_HAND );
 	

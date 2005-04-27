@@ -57,9 +57,9 @@ CTextCtrl::CTextCtrl()
 	m_crText[3]		= RGB( 192, 192, 192 );
 	m_crText[4]		= RGB( 0, 0, 255 );
 
-	m_pFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_pFont.CreateFont( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont4 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sSystemLogFont );
 	m_cCharacter = CSize( 0, 0 );
 }
 

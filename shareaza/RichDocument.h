@@ -72,7 +72,7 @@ public:
 	void			Clear();
 public:
 	BOOL			LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap = NULL, int nGroup = 0);
-	void			CreateFonts(LPCTSTR pszFaceName = theApp.m_sFont1, int nSize = 12);
+	void			CreateFonts(LPCTSTR pszFaceName = theApp.m_sDefaultFont, int nSize = 12);
 protected:
 	BOOL			LoadXMLStyles(CXMLElement* pParent);
 	BOOL			LoadXMLColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour);

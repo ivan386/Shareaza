@@ -51,10 +51,10 @@ public:
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 
-	CString				m_sFont1;					// Main font
-	CString				m_sFont2;					// Media frame
-	CString				m_sFont3;					// Packet Window
-	CString				m_sFont4;					// System Window
+	int					m_nDefaultFontSize;			// The basic font size. (11)
+	CString				m_sDefaultFont;				// Main font. (Tahoma)
+	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
+	CString				m_sSystemLogFont;			// System Window. (Courier New)
 
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);

@@ -97,9 +97,9 @@ int CSearchPadWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSearch.SetIcon( CoolInterface.ExtractIcon( ID_SEARCH_SEARCH ) );
 	m_wndSearch.SetHandCursor( TRUE );
 
-	m_pFont.CreateFont( -20, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_pFont.CreateFont( -(theApp.m_nDefaultFontSize + 9), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
 	LoadState();
 

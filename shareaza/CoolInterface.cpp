@@ -233,8 +233,8 @@ BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int n
 
 void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 {
-	if ( ! pszFace ) pszFace = theApp.m_sFont1;
-	if ( ! nSize ) nSize = 11;
+	if ( ! pszFace ) pszFace = theApp.m_sDefaultFont;
+	if ( ! nSize ) nSize = theApp.m_nDefaultFontSize;
 	
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();
 	if ( m_fntBold.m_hObject ) m_fntBold.DeleteObject();
