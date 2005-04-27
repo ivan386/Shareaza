@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,6 +51,7 @@ public:
 public:
 	CString				GetSourceURLs(CStringList* pState, int nMaximum, BOOL bHTTP, CDownloadSource* pExcept);
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
+	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	int					GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
 	void				ClearSources();
