@@ -305,14 +305,13 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	IImageServicePlugin* pService = LoadService( pszPath );
 	
 	// Make sure it worked
-	
+
 	if ( pService == NULL )
 	{
-		MessageBox(NULL,_T("Schlecht"),_T("BÄH"),MB_OK);
 		CloseHandle( hFile );
 		return FALSE;
 	}
-	
+
 	// Setup the IMAGESERVICEDATA structure
 	
 	IMAGESERVICEDATA pParams;
