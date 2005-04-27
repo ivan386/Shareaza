@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@
 #include "DownloadTransferBT.h"
 #include "Uploads.h"
 #include "UploadFile.h"
+#include "UploadFiles.h"
 #include "UploadTransferBT.h"
 #include "FragmentedFile.h"
 #include "TransferFile.h"
@@ -82,7 +83,16 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	m_oRequested.clear();
 	m_oServed.clear();
 	
-	if ( bChoke ) m_nState = upsReady;
+	if ( bChoke )
+	{
+		m_nState = upsReady;
+		UploadFiles.MoveToTail( this );
+	}
+	else
+	{
+		UploadFiles.MoveToHead( this );
+	}
+		
 	
 	m_pClient->Send( CBTPacket::New( bChoke ? BT_PACKET_CHOKE : BT_PACKET_UNCHOKE ) );
 	
@@ -249,9 +259,6 @@ BOOL CUploadTransferBT::ServeRequests()
 	
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->m_pOutput->m_nLength > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
-
-//theApp.Message( MSG_ERROR, _T("CUploadTransferBT::ServeRequests()") );
-//theApp.Message( MSG_ERROR, _T("File: %s IP: %s"), (LPCTSTR)m_sFileName , (LPCTSTR)m_sAddress );
 	
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
@@ -300,7 +307,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		
         m_oServed.pushBack( FF::SimpleFragment( m_nOffset, m_nOffset + m_nLength ) );
 		m_pBaseFile->AddFragment( m_nOffset, m_nLength );
-		
+
 		m_nState	= upsUploading;
 		m_nLength	= SIZE_UNKNOWN;
 	}

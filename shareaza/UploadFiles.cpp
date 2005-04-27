@@ -1,7 +1,7 @@
 //
 // UploadFiles.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,3 +101,37 @@ void CUploadFiles::Remove(CUploadTransfer* pTransfer)
 		}
 	}
 }
+
+//////////////////////////////////////////////////////////////////////
+// CUploadFiles move a file with this transfer to the head/tail. (Cheap BT sorting)
+
+void CUploadFiles::MoveToHead(CUploadTransfer* pTransfer)
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posRemove = pos;
+		CUploadFile* pFile = GetNext( pos );
+
+		if ( pFile->GetActive() == pTransfer )
+		{
+			m_pList.RemoveAt( posRemove );
+			m_pList.AddHead( pFile );
+		}
+	}
+}
+
+void CUploadFiles::MoveToTail(CUploadTransfer* pTransfer)
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posRemove = pos;
+		CUploadFile* pFile = GetNext( pos );
+
+		if ( pFile->GetActive() == pTransfer )
+		{
+			m_pList.RemoveAt( posRemove );
+			m_pList.AddTail( pFile );
+		}
+	}
+}
+

@@ -1,7 +1,7 @@
 //
 // UploadFiles.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,8 @@ public:
 	void			Clear();
 	CUploadFile*	GetFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
 	void			Remove(CUploadTransfer* pTransfer);
+	void			MoveToHead(CUploadTransfer* pTransfer);
+	void			MoveToTail(CUploadTransfer* pTransfer);
 	
 // List Access
 public:
