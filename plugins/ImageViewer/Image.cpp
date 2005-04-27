@@ -466,7 +466,7 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	USES_CONVERSION;
 	if ( UuidFromString( &szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK )
 	{
-		// If the normal call didn't work, try to call using an ANSI string.
+		// If the normal call didn't work, try to call using an ANSI string. We might run on Win 9x.
 		// I think we don't even need to try the normal call first, because the ANSI version also works
 		// on Win NT/2k/XP, because a GUID always consists of numbers, but just to be sure...
 		if ( UuidFromStringA( (LPBYTE)&W2A(szCLSID)[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
