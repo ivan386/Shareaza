@@ -293,9 +293,9 @@ BOOL CImage::Load(LPCTSTR pszPath)
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 	
 	// Make sure it worked
-	
+
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-	
+
 	// Get the file length
 	
 	DWORD nLength = GetFileSize( hFile, NULL );
@@ -308,6 +308,7 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	
 	if ( pService == NULL )
 	{
+		MessageBox(NULL,_T("Schlecht"),_T("BÄH"),MB_OK);
 		CloseHandle( hFile );
 		return FALSE;
 	}
@@ -463,9 +464,16 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 
 	szCLSID[ 37 ] = 0;
 	#ifdef _UNICODE
-	if ( UuidFromString( &szCLSID[1], (GUID*)&pCLSID ) != 0 ) return NULL;
+	USES_CONVERSION;
+	if ( UuidFromString( &szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK )
+	{
+		// If the normal call didn't work, try to call using an ANSI string.
+		// I think we don't even need to try the normal call first, because the ANSI version also works
+		// on Win NT/2k/XP, because a GUID always consists of numbers, but just to be sure...
+		if ( UuidFromStringA( (LPBYTE)&W2A(szCLSID)[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
+	}
 	#else
-	if ( UuidFromString( (LPBYTE)&szCLSID[1], (GUID*)&pCLSID ) != 0 ) return NULL;
+	if ( UuidFromString( (LPBYTE)&szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
 	#endif
 
 	IImageServicePlugin* pService = NULL;
