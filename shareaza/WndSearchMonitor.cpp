@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,6 +91,8 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 0, _T("Search"), LVCFMT_LEFT, 200, -1 );
 	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 120, 0 );
 	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 120, 1 );
+
+	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CSearchMonitorWnd"), TRUE );
 	
