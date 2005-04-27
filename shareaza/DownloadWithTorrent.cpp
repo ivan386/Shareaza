@@ -205,20 +205,33 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
-		int nSources = GetSourceCount();
+		int nSources = GetBTSourceCount();
+		int nSourcesWanted = (int)( Settings.BitTorrent.DownloadConnections * 1.5 );
+		nSourcesWanted = max( nSourcesWanted, Settings.Downloads.SourcesWanted / 10 );
 		m_tTorrentTracker = tNow + Settings.BitTorrent.DefaultTrackerPeriod;
-		if ( IsMoving() )								// If we are seeding or completed, base requests on BT uploads
-		{
+		if ( IsMoving() )
+		{	// We are seeding or completed, base requests on BT uploads
 			// If we're still moving the file, not firewalled, have enough sources or have maxxed out uploads
-			if ( ( ! IsCompleted() ) || ( ! Settings.Connection.Firewalled ) ||  ( nSources > (Settings.Downloads.SourcesWanted / 8) ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
+			if ( ( ! IsCompleted() ) || ( ! Settings.Connection.Firewalled ) ||  ( nSources > (nSourcesWanted / 2) ) || ( Uploads.GetTorrentUploadCount() >= Settings.BitTorrent.UploadCount ) )
 				CBTTrackerRequest::SendUpdate( this, 0 );	// We don't need to request peers.
 			else
-				CBTTrackerRequest::SendUpdate( this, 10 );	// We might need more peers.					
+				CBTTrackerRequest::SendUpdate( this, 10 );	// We might need more peers to 'push seed' to.
 		}
-		else if ( nSources > Settings.Downloads.SourcesWanted )
-			CBTTrackerRequest::SendUpdate( this, 5 );	// If we have many sources, just get a few to make sure we have some fresh ones. 
+		else if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections ) ) 
+		{	// We have enough transfers
+			if ( nSources > nSourcesWanted )
+				CBTTrackerRequest::SendUpdate( this, 0 );	// we have enough sources and transfers, don't get any more.
+			else
+				CBTTrackerRequest::SendUpdate( this, 10 );	// We should request a few sources, just in case some existing ones drop. 
+		}
 		else
-			CBTTrackerRequest::SendUpdate( this );		// Otherwise, take the tracker default. (It should be an appropriate number.)
+		{	// We need more transfers
+			if ( nSources > nSourcesWanted )
+				CBTTrackerRequest::SendUpdate( this, 5 );	// We have many sources, but not enough transfers. Get a few new ones, so we have some fresh ones. 
+			else
+				CBTTrackerRequest::SendUpdate( this );		// We need source and transfers. Take the tracker default. (It should be an appropriate number.)
+		}
+
 	}
 	
 	return TRUE;
