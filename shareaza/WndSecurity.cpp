@@ -1,7 +1,7 @@
 //
 // WndSecurity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,6 +110,8 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 3, _T("Precedence"), LVCFMT_CENTER, 00, 2 );
 	m_wndList.InsertColumn( 4, _T("Hits"), LVCFMT_CENTER, 60, 3 );
 	m_wndList.InsertColumn( 5, _T("Comment"), LVCFMT_LEFT, 100, 4 );
+
+	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CSecurityWnd"), TRUE );
 

@@ -125,6 +125,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 6, _T("CurUsers"), LVCFMT_CENTER, 60, 5 );
 	m_wndList.InsertColumn( 7, _T("MaxUsers"), LVCFMT_CENTER, 60, 6 );
 
+	m_wndList.SetFont( &theApp.m_gdiFont );
+
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	LoadState( _T("CHostCacheWnd"), TRUE );
 

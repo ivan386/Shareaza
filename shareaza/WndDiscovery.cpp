@@ -108,6 +108,8 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 4, _T("Accesses"), LVCFMT_CENTER, 70, 3 );
 	m_wndList.InsertColumn( 5, _T("Updates"), LVCFMT_CENTER, 55, 4 );
 	m_wndList.InsertColumn( 6, _T("Failures"), LVCFMT_CENTER, 55, 5 );
+
+	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CDiscoveryWnd"), TRUE );
 
