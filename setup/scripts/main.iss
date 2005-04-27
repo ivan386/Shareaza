@@ -69,10 +69,12 @@ Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
 #ifndef debug
 ; Install unicows.dll on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+Source: "setup\builds\unicows.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall; MinVersion: 4.0,0
+; Install unicows.dll into Plugins dir with deleteafterinstall flag to allow plugins to register, same for zlib
 
 ; Main files
-Source: "setup\builds\1.dll"; DestDir: "{app}\Plugins"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\1.dll"; DestDir: "{app}"; DestName: "zlib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\builds\zlib1.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "setup\builds\zlib1.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 Source: "setup\builds\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -269,7 +271,8 @@ Name: "{userappdata}\Shareaza\Data"; Flags: uninsalwaysuninstall; Tasks: multius
 
 [InstallDelete]
 ; Clean up old files from Shareaza
-Type: files; Name: "{app}\zlib1.dll"
+Type: files; Name: "{app}\zlib.dll"
+Type: files; Name: "{app}\Plugins\zlib.dll"
 Type: files; Name: "{app}\LICENSE.txt"
 Type: files; Name: "{app}\uninstall.exe"
 Type: files; Name: "{app}\Plugins\DivFix.dll"

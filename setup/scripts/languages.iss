@@ -157,7 +157,7 @@ dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease ad
 page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
 page_viruswarning_title=Virus Warning
 page_viruswarning_subtitle=Do you have an AntiVirus program installed?
-page_viruswarning_link=www.shareaza.com/securityhelp
+page_viruswarning_link=http://www.shareaza.com/securityhelp
 page_viruswarning_destination=http://www.shareaza.com/securityhelp/
 ; Dutch:
 nl.components_plugins=Plugins
