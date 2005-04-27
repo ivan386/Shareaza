@@ -175,7 +175,7 @@
 				OutputFile="$(OutDir)/ImageServices.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
-				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
+				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib."
 				ModuleDefinitionFile=".\ImageServices.def"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
