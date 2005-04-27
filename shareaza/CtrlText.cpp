@@ -59,7 +59,7 @@ CTextCtrl::CTextCtrl()
 
 	m_pFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") ); //_T("Courier New") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont4 );
 	m_cCharacter = CSize( 0, 0 );
 }
 

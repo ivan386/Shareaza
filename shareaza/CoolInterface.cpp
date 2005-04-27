@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -233,7 +233,7 @@ BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int n
 
 void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 {
-	if ( ! pszFace ) pszFace = _T("Tahoma");
+	if ( ! pszFace ) pszFace = theApp.m_sFont1;
 	if ( ! nSize ) nSize = 11;
 	
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();

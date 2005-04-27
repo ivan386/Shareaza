@@ -394,7 +394,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		CharLower( strName.GetBuffer() );
 		strName.ReleaseBuffer();
 		
-		CString strFontFace = _T("Tahoma");
+		CString strFontFace = theApp.m_sFont1;
 		int nFontSize = 12;
 		int nFontWeight = FW_BOLD;
 		

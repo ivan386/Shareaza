@@ -51,6 +51,11 @@ public:
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 
+	CString				m_sFont1;					// Main font
+	CString				m_sFont2;					// Media frame
+	CString				m_sFont3;					// Packet Window
+	CString				m_sFont4;					// System Window
+
 	HINSTANCE m_hUser32;
 	BOOL (WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
 	BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);

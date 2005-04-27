@@ -1,7 +1,7 @@
 //
 // RichDocument.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,7 +72,7 @@ public:
 	void			Clear();
 public:
 	BOOL			LoadXML(CXMLElement* pBase, CMapStringToPtr* pMap = NULL, int nGroup = 0);
-	void			CreateFonts(LPCTSTR pszFaceName = _T("Tahoma"), int nSize = 12);
+	void			CreateFonts(LPCTSTR pszFaceName = theApp.m_sFont1, int nSize = 12);
 protected:
 	BOOL			LoadXMLStyles(CXMLElement* pParent);
 	BOOL			LoadXMLColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour);

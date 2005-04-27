@@ -1,7 +1,7 @@
 //
 // PageSettingsRich.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ CRichSettingsPage::CRichSettingsPage(LPCTSTR pszName) : CSettingsPage(CRichSetti
 		m_sCaption = pXML->GetAttributeValue( _T("title"), m_sName );
 		
 		m_pDocument = new CRichDocument();
-		m_pDocument->CreateFonts( _T("Tahoma"), 11 );
+		m_pDocument->CreateFonts( theApp.m_sFont1, 11 );
 		m_pDocument->m_crBackground = CCoolInterface::GetDialogBkColor();
 		m_pDocument->LoadXML( pXML );
 	}

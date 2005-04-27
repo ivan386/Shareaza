@@ -1,7 +1,7 @@
 //
 // WndPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -100,7 +100,7 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Lucida Console") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont3 );
 
 	m_wndList.SetFont( &m_pFont );
 

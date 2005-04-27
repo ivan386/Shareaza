@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,143
- PRODUCTVERSION 2,1,0,143
+ FILEVERSION 2,1,0,145
+ PRODUCTVERSION 2,1,0,145
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 143"
+            VALUE "FileVersion", "2, 1, 0, 145"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 143"
+            VALUE "ProductVersion", "2, 1, 0, 145"
         END
     END
     BLOCK "VarFileInfo"
@@ -2613,21 +2613,21 @@ BEGIN
     LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",
                     IDC_STATIC,15,50,250,18
     CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,73,147,10
-    RTEXT           "Configure Gnutella2",IDC_G2_SETUP,175,73,90,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
+    RTEXT           "Configure Gnutella2",IDC_G2_SETUP,165,73,100,10
     GROUPBOX        "eDonkey2000 Network:",IDC_STATIC,5,95,270,55,WS_GROUP
     LTEXT           "The eDonkey2000 network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey2000 has an impressive file collection.",
                     IDC_STATIC,15,110,250,18
     CONTROL         "Connect to eDonkey2000",IDC_ED2K_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,132,147,10
-    RTEXT           "Configure eDonkey2000",IDC_ED2K_SETUP,175,132,90,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,132,145,10
+    RTEXT           "Configure eDonkey2000",IDC_ED2K_SETUP,165,132,100,10
     GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,155,270,55,
                     WS_GROUP
     LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey2000, it remains a valuable resource.",
                     IDC_STATIC,15,170,250,18
     CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,193,147,10
-    RTEXT           "Configure Gnutella1",IDC_G1_SETUP,175,193,90,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,193,145,10
+    RTEXT           "Configure Gnutella1",IDC_G1_SETUP,165,193,100,10
 END
 
 IDD_SETTINGS_PROTOCOLS DIALOG  0, 0, 282, 220

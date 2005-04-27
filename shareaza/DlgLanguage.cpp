@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,15 +89,15 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	m_fntNormal.CreateFont( -12, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 
 	m_fntBold.CreateFont( -16, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 
 	m_fntSmall.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 
 	m_pImages.Create( 32, 32, ILC_COLOR16|ILC_MASK, 1, 1 );
 

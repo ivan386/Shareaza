@@ -197,7 +197,7 @@ int CHomeDownloadsBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 	
 	m_hHand = theApp.LoadCursor( IDC_HAND );
 	
@@ -625,7 +625,7 @@ int CHomeLibraryBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_pFont.CreateFont( -10, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 	
 	m_hHand = theApp.LoadCursor( IDC_HAND );
 	

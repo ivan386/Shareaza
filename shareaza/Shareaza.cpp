@@ -98,7 +98,6 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-
 	// ***********
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
@@ -367,18 +366,25 @@ void CShareazaApp::InitResources()
         m_pfnMonitorFromRect = NULL; 
 		m_pfnMonitorFromWindow = NULL;
 	}
+
+	// Get the fonts from the registry
+	theApp.m_sFont1 = theApp.GetProfileString( _T("Fonts"), _T("Font1"), _T("Tahoma") );
+	theApp.m_sFont2 = theApp.GetProfileString( _T("Fonts"), _T("Font2"), _T("Verdana") );
+	theApp.m_sFont3 = theApp.GetProfileString( _T("Fonts"), _T("Font3"), _T("Lucida Console") );
+	theApp.m_sFont4 = theApp.GetProfileString( _T("Fonts"), _T("Font4"), _T("Tahoma") );
 	
+	// Set up the default font
 	m_gdiFont.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 	
 	m_gdiFontBold.CreateFont( -11, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 	
 	m_gdiFontLine.CreateFont( -11, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 
 	srand( GetTickCount() );
 }

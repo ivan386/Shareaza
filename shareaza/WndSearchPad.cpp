@@ -1,7 +1,7 @@
 //
 // WndSearchPad.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,7 +99,7 @@ int CSearchPadWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_pFont.CreateFont( -20, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sFont1 );
 
 	LoadState();
 
