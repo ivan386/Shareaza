@@ -71,13 +71,13 @@ Source: "{app}\Uninstall\setup.exe"; DestDir: "{tmp}"; DestName: "temp.exe"; Fla
 Filename: "{tmp}\temp.exe"; WorkingDir: "{app}"; Flags: hidewizard; Parameters: "/SILENT /NOCANCEL /DIR=""{app}"" /GROUP=""{groupname}"" /SETTINGS=""{param:SETTINGS|{tmp}\settings.ini}"""
 
 [Messages]
-; This section overrides phrazes and words from the ISL files
+; This section overrides phrases and words from the ISL files
 en.WelcomeLabel1=Welcome to the [name] Repair Wizard
 en.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 nl.WelcomeLabel1=Welkom bij de [name] reparatiewizard
 nl.WelcomeLabel2=Hiermee wordt [name] hersteld op deze computer.%n%nU wordt aanbevolen alle actieve programma's af te sluiten voordat u verder gaat. Dit helpt conflicten tijdens de installatie voorkomen.
-lt.WelcomeLabel1=Welcome to the [name] Repair Wizard
-lt.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+lt.WelcomeLabel1=Sveiki! »ia Д[name]У taisymo vedlys.
+lt.WelcomeLabel2=Jis pataisys Д[name]У, бdiegtа Jыsш kompiuteryje.%n%nPatariama baigti darbа su visomis programomis prieр tжsiant.
 de.WelcomeLabel1=Welcome to the [name] Repair Wizard
 de.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 pt.WelcomeLabel1=Welcome to the [name] Repair Wizard
@@ -94,14 +94,14 @@ fr.WelcomeLabel1=Welcome to the [name] Repair Wizard
 fr.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 es.WelcomeLabel1=Welcome to the [name] Repair Wizard
 es.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
-ru.WelcomeLabel1=Welcome to the [name] Repair Wizard
-ru.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+ru.WelcomeLabel1=ƒобро пожаловать в мастер исправлений [name]
+ru.WelcomeLabel2=ќн исправит установку [name] в ¬ашем компьютере.%n%n–екомендуетс€ завершить работу всех программ прежде чем приступать к далнейшим действи€м.
 gr.WelcomeLabel1=Welcome to the [name] Repair Wizard
 gr.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 hu.WelcomeLabel1=Welcome to the [name] Repair Wizard
 hu.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
-chs.WelcomeLabel1=Welcome to the [name] Repair Wizard
-chs.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+chs.WelcomeLabel1=їґ”≠ є”√ [name] –ёЄіѕтµЉ
+chs.WelcomeLabel2=іЋ≤ў„чљЂ–ёЄіƒъµзƒ‘…ѕµƒ [name]°£%n%nљ®“йƒъ‘ЏЉћ–шіЋ≤ў„ч«∞єЎ±’Ћщ”–∆дЋы≥ћ–т°£
 sv.WelcomeLabel1=Welcome to the [name] Repair Wizard
 sv.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
 
