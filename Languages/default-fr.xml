@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.134"
+		version="2.1.0.141"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2032,8 +2032,16 @@ Other:
   	    <text>Windows a rapporté un défaut de traduction en décodant le texte dans ce torrent. Il est possible que le torrent soit corrompu, ou juste incorrectement codé. Le torrent peut peut-être télécharger correctement, bien que quelques noms de fichiers pourraient être incorrects.</text>
   	    <newline gap="8"/>
   	    <text>La plupart des programmes de création de torrent devraient vous permettre de réparer ce torrent, ce qui lui permettra de fonctionner correctement dans toutes les applications BitTorrent. Se rapporter aux forums de Shareaza si vous avez besoin d'une aide additionnelle.</text>
-  	    </document>
-
+  	</document>
+		
+	<document name="GeneralHelp.DonkeyServerList">
+        <text format="b">Votre liste de serveurs eDonkey est vide</text>
+        <newline gap="8"/>
+        <text>Il n'y a pas de serveur dans votre liste de serveurs eDonkey2000. Vous devez télécharger une liste de serveur (fichier met) mise à jour pour vous connecter à ED2K.</text>
+        <newline gap="8"/>
+        <text>Vous pouvez télécharger une liste de serveurs depuis la page des réglages eDonkey, ou depuis la fenêtre du service découverte.</text>
+    </document>
+	
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -4030,10 +4038,17 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Informations avancés BitTorrent">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Informations avancés BitTorrent">
 		<control caption="_Information du Torrent:"/>
 		<control caption="Nom:"/>
 		<control/>
+		<control caption="Créé:"/> 
+        <control/> 
+        <control caption="Par:"/> 
+        <control/> 
+        <control caption="Commentaires:"/> 
+        <control/> 
+
 		<control caption="Tracker:"/>
 		<control/>
 		<control caption="Utils. téléchargeant:"/>
@@ -4041,14 +4056,14 @@ Other:
 		<control/>
 		<control caption="Incomplets:"/>
 		<control/>
+		<control caption="Transferts:"/> 
+        <control caption="Commencer les transferts du nouveau téléchargement:"/> 
+        <control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/> 
 		<control caption="_Fichiers:"/>
 		<control/>
 		<control caption="_Rafraîchir"/>
 		<control/>
 		<control caption="Fermer"/>
-		<control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/>
-  	    <control caption="Commencer les transferts du nouveau téléchargement:"/>
-  	    <control caption="Transfers:"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriétés du groupe de téléchargement">
