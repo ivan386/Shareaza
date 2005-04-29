@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.121"
+version="2.1.0.141"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -1479,7 +1479,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <newline gap="8" indent="42"/>
                        <text colour="FF0000">A Shareaza észlelte, hogy egy NAT router vagy tűzfal mögött vagy
                        és ezért nem tudsz bejövő kapcsolatokat fogadni az Internetről (passzív kapcsolat). &#160;</text>
-                       <text colour="FF0000" format="b">Ez gyenge letöltési sebességhez vezethet.</text>
+                       <text colour="FF0000" format="b">Ez csökkenti a számodra használható források számát.</text>
                        <newline gap="6"/>
                        <link target="raza:command:ID_HELP_FIREWALLS">Kattints ide a router vagy tűzfal helyes beállításához</link>
                        <newline gap="18" indent="0"/>
@@ -2061,6 +2061,16 @@ prompt="Kattints ide a magyar nyelvhez."
                    Shareaza fórumait.</text>
            </document>
 
+           <document name="GeneralHelp.DonkeyServerList">
+                   <text format="b">Az eDonkey szerverlista üres</text>
+                   <newline gap="8"/>
+                   <text>Egy szerver sincs az eDonkey2000 szerverlistában. Le kell töltened egy
+                   friss listát (met fájlt) , hogy tudj kapcsolódni az eD2k hálózathoz.</text>
+                   <newline gap="8"/>
+                   <text>Ezt megteheted az ed2k beállításoknál vagy a szerverkereső
+                   ablakban.</text>
+           </document>
+
        <!-- Search help documents -->
 
 <document name="SearchHelp.BadSearch1">
@@ -2524,7 +2534,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8156" value="Keresés"/>
        <string id="8157" value="Eredmények"/>
        <string id="8158" value="Töröl"/>
-       <string id="8159" value="Fejlett..."/>
+       <string id="8159" value="Fejlett"/>
        <string id="8160" value="Kapcsolat létrehozása..."/>
        <string id="8161" value="Viszontválaszra várok..."/>
        <string id="8162" value="Kapcsolódva, fájllista lekérése..."/>
@@ -2646,7 +2656,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16155" value="Hubként viselkedik a leafnek: %s."/>
        <string id="16156" value="%s hub akar lenni, kapcsolat bezárása."/>
        <string id="16157" value="%s nem hub, kapcsolat bezárása."/>
-       <string id="16158" value="Gnutella][ kapcsolódás eredményes: %s.  (%s)."/>
+       <string id="16158" value="Gnutella2 kapcsolódás eredményes: %s.  (%s)."/>
        <string id="16159" value="Nem Gnutella2 kapcsolatok bezárása: %s."/>
        <string id="16192" value="%s túl nagy csomagot küldött tovább, kapcsolat megszakítása."/>
        <string id="16193" value="%s TTL=0 csomagot küldött tovább, ignorálás."/>
@@ -2786,7 +2796,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16373" value="Félkész fájlok"/>
        <string id="16374" value="Új sor"/>
        <string id="16375" value="Félkész"/>
-       <string id="16376" value="Kész fájlok"/>
+       <string id="16376" value="Minden fájl"/>
        <string id="16377" value="HTTP őr"/>
        <string id="16384" value="Biztos, hogy futtatni akarod: &quot;%s&quot; ?\n\nNéhány fájl káros a számítógépnek. Ha nem bízol meg a fájlban, inkább futtass le egy vírusellenőrzét."/>
        <string id="16385" value="%i fájl metadatáját akarod módosítani. Biztos ezt akarod?"/>
@@ -2877,6 +2887,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16809" value="Kilépés"/>
        <string id="16810" value="éves"/>
        <string id="16811" value="Automatikus"/>
+       <string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkented a sorok maximális számát, valószínűleg nem fognak elidulni a letöltéseid. \nBiztos csökkenteni akarod a számodra kirendelt sorszámot?"/>
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
@@ -3224,7 +3235,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Tudok fogadni bejövő kapcsolatokat"/>
        </dialog>
 
-       <dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Letöltések">
+       <dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Letöltések">
                <control caption="Kész letöltések mappája:"/>
                <control/><control/>
                <control caption="Félkész letöltések mappája:"/>
@@ -3241,11 +3252,10 @@ prompt="Kattints ide a magyar nyelvhez."
                <control/>
                <control caption="Maximum sorbanállás:"/>
                <control/><control/>
-               <control caption="Opciók:"/>
                <control caption="Csak a kapcsolatban lévő hálózatokon van forgalom"/>
        </dialog>
 
-       <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Feltöltések">
+       <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Feltöltések">
                <control caption="Opciók:"/>
                <control caption="Félig letöltött fájlok megosztása"/>
                <control caption="Megosztás korl. hubmódban"/>
@@ -4068,9 +4078,15 @@ prompt="Kattints ide a magyar nyelvhez."
            <control/>
        </dialog>
 
-       <dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent információk">
+       <dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent információk">
            <control caption="Torrent adatok:"/>
            <control caption="Név:"/>
+           <control/>
+           <control caption="Készült:"/>
+           <control/>
+           <control caption="Készítő:"/>
+           <control/>
+           <control caption="Megjegyzés:"/>
            <control/>
            <control caption="Tracker:"/>
            <control/>
@@ -4079,14 +4095,15 @@ prompt="Kattints ide a magyar nyelvhez."
            <control/>
            <control caption="Flélkész:"/>
            <control/>
+           <control caption="Forgalom:"/>
+           <control caption="Új letöltés indítása:"/>
+           <control caption="Ha szükséges|Ha az arány több, mint 100%|Csak ha felajánlják|Soha"/>
            <control caption="Fájlok:"/>
            <control/>
            <control caption="Frissítés"/>
            <control/>
            <control caption="Bezár"/>
-           <control caption="Ha szükséges|Ha az arány több, mint 100%|Csak ha felajánlják|Soha"/>
-           <control caption="Új letöltés indítása:"/>
-           <control caption="Forgalom:"/>
+
        </dialog>
 
        <dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Letöltési csoportok tulajdonságai">
