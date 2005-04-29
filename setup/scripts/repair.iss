@@ -44,6 +44,8 @@ Filename: "{param:SETTINGS|{tmp}\settings.ini}"; Section: "Locations"; key: "Use
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey deletekey
 Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey deletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "Shareaza"; Flags: dontcreatekey deletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Windows"; ValueType: dword; ValueName: "RunLanguage"; ValueData: "0"; Flags: deletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Windows"; ValueType: dword; ValueName: "RunWizard"; ValueData: "0"; Flags: deletevalue
 
 [InstallDelete]
 ; Delete all files exept uninstall dir
