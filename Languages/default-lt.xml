@@ -959,14 +959,14 @@ right quote	&#147;
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Val_yti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent duomenys"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _aprašas"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Trinti bylą"/>
 		<item id="ID_DOWNLOADS_RATE" text="Įve_rtinti bylą..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Atverti"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _duomenys"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent aprašas"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Nutraukti skleidimą"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
