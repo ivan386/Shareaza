@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/04/19 16:16:44 $"
-//	Revision:		"$Revision: 1.17 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/04/30 11:27:19 $"
+//	Revision:		"$Revision: 1.18 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -538,33 +538,35 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 			CharLower( strExtension.GetBuffer() );
 			strExtension.ReleaseBuffer();
 
-			HANDLE hFile = CreateFile( pFile->m_pFolder->m_sPath + _T("\\") + pFile->m_sName, GENERIC_READ, FILE_SHARE_READ,
-					NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-			
 			BOOL bXmlPossiblyModified = FALSE;
-			if ( hFile != INVALID_HANDLE_VALUE )
+			if ( !pFile->m_bMetadataAuto )
 			{
-				FILETIME pFileDataTime;
-				ULARGE_INTEGER nMetaDataTime;
-				ULARGE_INTEGER nFileDataTime;
+				HANDLE hFile = CreateFile( pFile->m_pFolder->m_sPath + _T("\\") + pFile->m_sName, GENERIC_READ, FILE_SHARE_READ,
+						NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+				
+				if ( hFile != INVALID_HANDLE_VALUE )
+				{
+					FILETIME pFileDataTime;
+					ULARGE_INTEGER nMetaDataTime;
+					ULARGE_INTEGER nFileDataTime;
 
-				GetFileTime( hFile, NULL, NULL, &pFileDataTime );
-				nFileDataTime.HighPart = pFileDataTime.dwHighDateTime;
-				nFileDataTime.LowPart = pFileDataTime.dwLowDateTime;
-				// Convert 100 ns into seconds
-				nFileDataTime.QuadPart /= 10000000;
+					GetFileTime( hFile, NULL, NULL, &pFileDataTime );
+					nFileDataTime.HighPart = pFileDataTime.dwHighDateTime;
+					nFileDataTime.LowPart = pFileDataTime.dwLowDateTime;
+					// Convert 100 ns into seconds
+					nFileDataTime.QuadPart /= 10000000;
 
-				nMetaDataTime.HighPart = pFile->m_pMetadataTime.dwHighDateTime;
-				nMetaDataTime.LowPart = pFile->m_pMetadataTime.dwLowDateTime;
-				nMetaDataTime.QuadPart /= 10000000;
+					nMetaDataTime.HighPart = pFile->m_pMetadataTime.dwHighDateTime;
+					nMetaDataTime.LowPart = pFile->m_pMetadataTime.dwLowDateTime;
+					nMetaDataTime.QuadPart /= 10000000;
 
-				// assume that XML was not modified during the first 10 sec. of creation
-				if ( nMetaDataTime.HighPart = nFileDataTime.HighPart &&
-					 nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 ) 
-					 bXmlPossiblyModified = TRUE;
-				CloseHandle( hFile );
+					// assume that XML was not modified during the first 10 sec. of creation
+					if ( nMetaDataTime.HighPart = nFileDataTime.HighPart &&
+						nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 ) 
+						bXmlPossiblyModified = TRUE;
+					CloseHandle( hFile );
+				}
 			}
-
 			if ( ( strExtension != _T("mp3") ) || bXmlPossiblyModified )
 				nSelected--;
 		}
