@@ -644,7 +644,7 @@ void CBTClient::DetermineUserAgent()
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
 	{	//BitComet
-		m_sUserAgent.Format( _T("BitComet %i"), m_pGUID.b[5] - '0' );
+		m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
 	{	//Burst
