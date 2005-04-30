@@ -310,7 +310,7 @@ void CShakeNeighbour::SendMinimalHeaders()
 	}
 
 	// The user has checked the box to connect to Gnutella2 today
-	if ( Settings.Gnutella2.EnableToday )
+	if ( Settings.Gnutella2.EnableToday && ( m_nProtocol != PROTOCOL_G1 ) )
 	{
 		// If we initiated the connection to the remote computer
 		if ( m_bInitiated )
@@ -327,9 +327,8 @@ void CShakeNeighbour::SendMinimalHeaders()
 	}
 }
 
-// Takes a protocol id, like PROTOCOL_G1, or 0 for unknown
 // Sends Gnutella headers to the other computer
-void CShakeNeighbour::SendPublicHeaders(PROTOCOLID nProtocol)
+void CShakeNeighbour::SendPublicHeaders()
 {
 	// Tell the remote we are running Shareza with a header like "User-Agent: Shareaza 2.1.0.97"
 	CString strHeader = Settings.SmartAgent( Settings.General.UserAgent ); // UserAgent is just "."
@@ -347,7 +346,7 @@ void CShakeNeighbour::SendPublicHeaders(PROTOCOLID nProtocol)
 	m_pOutput->Print( strHeader );
 
 	// If the settings say connect to Gnutella2 and this function got passed Gnutella2 or the unknown network
-	if ( ( Settings.Gnutella2.EnableToday ) && ( nProtocol != PROTOCOL_G1 ) ) // The protocol ID is Gnutella2 or unknown
+	if ( ( Settings.Gnutella2.EnableToday ) && ( m_nProtocol != PROTOCOL_G1 ) ) // The protocol ID is Gnutella2 or unknown
 	{
 		// If we initiated the connection to the remote computer
 		if ( m_bInitiated )
@@ -378,7 +377,7 @@ void CShakeNeighbour::SendPublicHeaders(PROTOCOLID nProtocol)
 	}
 
 	// If the settings say connect to Gnutella and this function got passed Gnutella or the unknown network
-	if ( ( Settings.Gnutella1.EnableToday ) && ( nProtocol != PROTOCOL_G2 ) ) // The protocol ID is Gnutella or unknown
+	if ( ( Settings.Gnutella1.EnableToday ) && ( m_nProtocol != PROTOCOL_G2 ) ) // The protocol ID is Gnutella or unknown
 	{
 		// Tell the remote computer all the Gnutella features we support
 		if ( Settings.Gnutella1.EnableGGEP ) m_pOutput->Print( "GGEP: 0.5\r\n" );			// We support GGEP blocks
@@ -396,8 +395,7 @@ void CShakeNeighbour::SendPublicHeaders(PROTOCOLID nProtocol)
 	} // The remote computer called us, or we called them and it's an ultrapeer or hasn't said yet
 	else
 	{
-		// This method got passed the Gnutella protocol ID
-		if ( nProtocol == PROTOCOL_G1 )
+		if ( m_nProtocol == PROTOCOL_G1 )
 		{
 			// Find out if we are an ultrapeer or at least eligible to become one soon
 			if ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
@@ -437,7 +435,7 @@ void CShakeNeighbour::SendPrivateHeaders()
 	if ( ! m_bSentAddress ) m_bSentAddress = SendMyAddress();
 
 	// We initiated the connection to the remote computer, it's going to send us Gnutella2 packets, and it accepts them
-	if ( m_bInitiated && m_bG2Send && m_bG2Accept )
+	if ( m_bInitiated && m_bG2Send && m_bG2Accept && ( m_nProtocol != PROTOCOL_G1 ) )
 	{
 		// Tell it we also accept gnutella2 packets, and we're also going to send them
 		m_pOutput->Print( "Accept: application/x-gnutella2\r\n" );
@@ -635,6 +633,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 		}
 
+		// Check if it's an old version of Shareaza
 		m_bObsoleteClient = IsClientObsolete();
 
 	} // The remote computer is telling us our IP address
@@ -793,14 +792,17 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 {
 	// If the remote computer doesn't accept Gnutella2 packets, or it does but we contacted it and it's not going to send them
 	if ( ! m_bG2Accept || ( m_bInitiated && ! m_bG2Send ) )
-
-		// (do), returning the result
+	{
+		// This is a Gnutella connection
+		m_nProtocol = PROTOCOL_G1;
 		return OnHeadersCompleteG1();
-
+	}
 	else
-
-		// (do), returning the result
+	{
+		// This is a G2 connection
+		m_nProtocol = PROTOCOL_G2;
 		return OnHeadersCompleteG2();
+	}
 }
 
 // Called when CConnection::ReadHeaders calls ReadLine and gets a blank line, meaning a group of headers from the remote computer is done
@@ -1009,10 +1011,10 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		else
 		{
 			// Send reply headers to the remote computer
-			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" ); // Start our group of response headers to the other computer with the 200 OK message
-			SendPublicHeaders( PROTOCOL_G2 );              // Send the initial Gnutella2 headers
-			SendPrivateHeaders();                          // Send headers in response to those we got from the remote computer
-			SendHostHeaders();                             // Send the "X-Try-Ultrapeers" header with a list of other IP addresses running Gnutella
+			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );	// Start our group of response headers to the other computer with the 200 OK message
+			SendPublicHeaders();							// Send the initial Gnutella2 headers
+			SendPrivateHeaders();							// Send headers in response to those we got from the remote computer
+			SendHostHeaders();								// Send the "X-Try-Ultrapeers" header with a list of other IP addresses running Gnutella
 
 			// If this connection is up to a hub or to a hub like us, and we need more hubs
 			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
@@ -1248,10 +1250,10 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		else
 		{
 			// Send reply headers to the remote computer
-			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" ); // Start our group of response headers to the other computer with the 200 OK message
-			SendPublicHeaders( PROTOCOL_G1 );              // Send the initial Gnutella headers
-			SendPrivateHeaders();                          // Send headers in response to those we got from the remote computer
-			SendHostHeaders();                             // Send the "X-Try-Ultrapeers" header with a list of other IP addresses running Gnutella
+			m_pOutput->Print( "GNUTELLA/0.6 200 OK\r\n" );	// Start our group of response headers to the other computer with the 200 OK message
+			SendPublicHeaders();							// Send the initial Gnutella headers
+			SendPrivateHeaders();							// Send headers in response to those we got from the remote computer
+			SendHostHeaders();								// Send the "X-Try-Ultrapeers" header with a list of other IP addresses running Gnutella
 
 			// If this connection is up to a hub or to a hub like us, and we need more hubs
 			if ( m_nNodeType != ntLeaf && Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
@@ -1341,8 +1343,8 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Make a pointer for a new object that will be a copy of this one, but in a different place on the CConnection inheritance tree
 	CNeighbour* pNeighbour = NULL;
 
-	// If the remote computer can send and understand Gnutella2 packets
-	if ( m_bG2Send && m_bG2Accept )
+	// If the remote computer is G2, or can send and understand Gnutella2 packets and isn't G1
+	if ( ( m_nProtocol == PROTOCOL_G2 ) || ( m_bG2Send && m_bG2Accept && ( m_nProtocol != PROTOCOL_G1 ) ) )
 	{
 		// Record that the remote computer supports query routing
 		m_bQueryRouting = TRUE;
@@ -1350,8 +1352,8 @@ void CShakeNeighbour::OnHandshakeComplete()
 		// Make a new Gnutella2 neighbour object by copying values from this ShakeNeighbour one
 		pNeighbour = new CG2Neighbour( this );
 
-	} // The remote computer is just Gnutella, not Gnutella2
-	else
+	}
+	else	// The remote computer is just Gnutella, not Gnutella2
 	{
 		// Record that the remote computer is not running Shareaza
 		m_bShareaza = FALSE;
@@ -1395,10 +1397,15 @@ BOOL CShakeNeighbour::IsClientObsolete()
 
 	if ( ( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||
 		 ( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.0."    ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("SlingerX 2.0." ) ) ) ||
 		 ( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7.0." ) ) ) )
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7.0." ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("K-Lite 2.1"	  ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("SlingerX 2."   ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.0."    ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.1."    ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("360Share"      ) ) ) )
+
+
 		 return TRUE;
 
 	return FALSE;

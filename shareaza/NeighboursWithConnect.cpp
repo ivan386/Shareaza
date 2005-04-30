@@ -31,6 +31,7 @@
 #include "NeighboursWithConnect.h"
 #include "ShakeNeighbour.h"
 #include "EDNeighbour.h"
+#include "Neighbours.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -105,7 +106,15 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 	else
 	{
 		CShakeNeighbour* pNeighbour = new CShakeNeighbour();
-		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic, bNoUltraPeer ) ) return pNeighbour;
+		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic, bNoUltraPeer ) ) 
+		{
+		/*
+			// If we only want G1 connections now, specify that to begin with.
+			if ( ( nProtocol == PROTOCOL_G1 ) && ( ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) )
+				pNeighbour->m_nProtocol = PROTOCOL_G1;
+		*/
+			return pNeighbour;
+		}
 		delete pNeighbour;
 	}
 	
