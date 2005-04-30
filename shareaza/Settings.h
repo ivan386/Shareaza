@@ -457,7 +457,7 @@ public:
 		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;
-		BOOL		FirstRun;					// Is this the firt time Shareaza is being run?
+		BOOL		FirstRun;					// Is this the first time Shareaza is being run?
 	} Live;
 
 // Attributes : Item List
