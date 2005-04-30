@@ -208,54 +208,61 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pt.y += TIP_TEXTHEIGHT;
 	
-	switch ( pNeighbour->m_nProtocol )
+	if ( pNeighbour->m_nState < nrsConnected )
 	{
-	case PROTOCOL_G1:
-		switch ( pNeighbour->m_nNodeType )
-		{
-		case ntNode:
-			LoadString( str, IDS_NEIGHBOUR_G1PP );
-			break;
-		case ntHub:
-			LoadString( str, IDS_NEIGHBOUR_G1LU );
-			break;
-		case ntLeaf:
-			LoadString( str, IDS_NEIGHBOUR_G1UL );
-			break;
-		}
-		break;
-	case PROTOCOL_G2:
-		switch ( pNeighbour->m_nNodeType )
-		{
-		case ntNode:
-			LoadString( str, IDS_NEIGHBOUR_G2HH );
-			break;
-		case ntHub:
-			LoadString( str, IDS_NEIGHBOUR_G2LH );
-			break;
-		case ntLeaf:
-			LoadString( str, IDS_NEIGHBOUR_G2HL );
-			break;
-		}
-		break;
-	case PROTOCOL_ED2K:
-		if ( CEDNeighbour* pED = (CEDNeighbour*)pNeighbour )
-		{
-			if ( CEDPacket::IsLowID( pED->m_nClientID ) )
-			{
-				CString sFormat;
-				LoadString( sFormat, IDS_NEIGHBOUR_ED2K_LOW );
-				str.Format( sFormat, pED->m_nClientID );
-			}
-			else
-			{
-				LoadString( str, IDS_NEIGHBOUR_ED2K_HIGH );
-			}
-		}
-		break;
-	default:
 		LoadString( str, IDS_NEIGHBOUR_HANDSHAKE );
-		break;
+	}
+	else
+	{
+		switch ( pNeighbour->m_nProtocol )
+		{
+		case PROTOCOL_G1:
+			switch ( pNeighbour->m_nNodeType )
+			{
+			case ntNode:
+				LoadString( str, IDS_NEIGHBOUR_G1PP );
+				break;
+			case ntHub:
+				LoadString( str, IDS_NEIGHBOUR_G1LU );
+				break;
+			case ntLeaf:
+				LoadString( str, IDS_NEIGHBOUR_G1UL );
+				break;
+			}
+			break;
+		case PROTOCOL_G2:
+			switch ( pNeighbour->m_nNodeType )
+			{
+			case ntNode:
+				LoadString( str, IDS_NEIGHBOUR_G2HH );
+				break;
+			case ntHub:
+				LoadString( str, IDS_NEIGHBOUR_G2LH );
+				break;
+			case ntLeaf:
+				LoadString( str, IDS_NEIGHBOUR_G2HL );
+				break;
+			}
+			break;
+		case PROTOCOL_ED2K:
+			if ( CEDNeighbour* pED = (CEDNeighbour*)pNeighbour )
+			{
+				if ( CEDPacket::IsLowID( pED->m_nClientID ) )
+				{
+					CString sFormat;
+					LoadString( sFormat, IDS_NEIGHBOUR_ED2K_LOW );
+					str.Format( sFormat, pED->m_nClientID );
+				}
+				else
+				{
+					LoadString( str, IDS_NEIGHBOUR_ED2K_HIGH );
+				}
+			}
+			break;
+		default:
+			LoadString( str, IDS_NEIGHBOUR_HANDSHAKE );
+			break;
+		}
 	}
 	
 	if ( pNeighbour->m_sUserAgent.GetLength() )

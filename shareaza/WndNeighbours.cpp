@@ -219,88 +219,95 @@ void CNeighboursWnd::Update()
 		
 		pItem->Set( 9, pNeighbour->m_sUserAgent );
 		
-		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
+		if ( pNeighbour->m_nState >= nrsConnected )
 		{
-			CG1Neighbour* pG1 = reinterpret_cast<CG1Neighbour*>(pNeighbour);
-			
-			switch ( pNeighbour->m_nNodeType )
+			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
-			case ntNode:
-				LoadString ( str,IDS_NEIGHBOUR_G1PEER );
-				break;
-			case ntHub:
-				LoadString ( str,IDS_NEIGHBOUR_G1ULTRA );
-				break;
-			case ntLeaf:
-				LoadString ( str,IDS_NEIGHBOUR_G1LEAF );
-				break;
-			}
-			
-			pItem->Set( 8, str );
-			pItem->m_nImage = PROTOCOL_G1;
-		}
-		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-		{
-			CG2Neighbour* pG2 = reinterpret_cast<CG2Neighbour*>(pNeighbour);
-			
-			switch ( pNeighbour->m_nNodeType )
-			{
-			case ntNode:
-				LoadString ( str,IDS_NEIGHBOUR_G2PEER );
-				break;
-			case ntHub:
-				LoadString ( str,IDS_NEIGHBOUR_G2HUB );
-				break;
-			case ntLeaf:
-				LoadString ( str,IDS_NEIGHBOUR_G2LEAF );
-				break;
-			}
-			pItem->Set( 8, str );
-			
-			if ( pG2->m_nLeafCount > 0 )
-			{
-				if ( pG2->m_nLeafLimit > 0 )
+				CG1Neighbour* pG1 = reinterpret_cast<CG1Neighbour*>(pNeighbour);
+				
+				switch ( pNeighbour->m_nNodeType )
 				{
-					pItem->Format( 7, _T("%u/%u"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
-				}
-				else
-				{
-					pItem->Format( 7, _T("%u"), pG2->m_nLeafCount );
-				}
-			}
-			else if ( pG2->m_nNodeType != ntLeaf )
-			{
-				pItem->Set( 7, _T("?") );
-			}
-			
-			pItem->m_nImage = PROTOCOL_G2;
-		}
-		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
-		{
-			CEDNeighbour* pED2K = reinterpret_cast<CEDNeighbour*>(pNeighbour);
-			
-			pItem->m_nImage = PROTOCOL_ED2K;
-			pItem->Set( 8, _T("eDonkey") );
-			pItem->Set( 10, pED2K->m_sServerName );
-			
-			if ( pED2K->m_nClientID > 0 )
-			{
-				if ( pED2K->m_nUserLimit > 0 )
-				{
-					pItem->Format( 7, _T("%u/%u"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
-				}
-				else
-				{
-					pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
+				case ntNode:
+					LoadString ( str,IDS_NEIGHBOUR_G1PEER );
+					break;
+				case ntHub:
+					LoadString ( str,IDS_NEIGHBOUR_G1ULTRA );
+					break;
+				case ntLeaf:
+					LoadString ( str,IDS_NEIGHBOUR_G1LEAF );
+					break;
 				}
 				
-				LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );
-				pItem->Set( 9, str );
+				pItem->Set( 8, str );
+				pItem->m_nImage = PROTOCOL_G1;
+			}
+			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
+			{
+				CG2Neighbour* pG2 = reinterpret_cast<CG2Neighbour*>(pNeighbour);
+				
+				switch ( pNeighbour->m_nNodeType )
+				{
+				case ntNode:
+					LoadString ( str,IDS_NEIGHBOUR_G2PEER );
+					break;
+				case ntHub:
+					LoadString ( str,IDS_NEIGHBOUR_G2HUB );
+					break;
+				case ntLeaf:
+					LoadString ( str,IDS_NEIGHBOUR_G2LEAF );
+					break;
+				}
+				pItem->Set( 8, str );
+				
+				if ( pG2->m_nLeafCount > 0 )
+				{
+					if ( pG2->m_nLeafLimit > 0 )
+					{
+						pItem->Format( 7, _T("%u/%u"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
+					}
+					else
+					{
+						pItem->Format( 7, _T("%u"), pG2->m_nLeafCount );
+					}
+				}
+				else if ( pG2->m_nNodeType != ntLeaf )
+				{
+					pItem->Set( 7, _T("?") );
+				}
+				
+				pItem->m_nImage = PROTOCOL_G2;
+			}
+			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+			{
+				CEDNeighbour* pED2K = reinterpret_cast<CEDNeighbour*>(pNeighbour);
+				
+				pItem->m_nImage = PROTOCOL_ED2K;
+				pItem->Set( 8, _T("eDonkey") );
+				pItem->Set( 10, pED2K->m_sServerName );
+				
+				if ( pED2K->m_nClientID > 0 )
+				{
+					if ( pED2K->m_nUserLimit > 0 )
+					{
+						pItem->Format( 7, _T("%u/%u"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
+					}
+					else
+					{
+						pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
+					}
+					
+					LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );
+					pItem->Set( 9, str );
+				}
+				else
+				{
+					LoadString ( str,IDS_NEIGHBOUR_ED2K_SERVER );
+					pItem->Set( 9, str );
+				}
 			}
 			else
 			{
-				LoadString ( str,IDS_NEIGHBOUR_ED2K_SERVER );
-				pItem->Set( 9, str );
+				pItem->m_nImage = PROTOCOL_NULL;
 			}
 		}
 		else
