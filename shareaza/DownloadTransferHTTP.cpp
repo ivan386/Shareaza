@@ -117,7 +117,7 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 
 void CDownloadTransferHTTP::Close(TRISTATE bKeepSource)
 {
-	if ( m_pSource != NULL && m_nState == dtsDownloading )
+	if ( m_pSource != NULL && m_nState == dtsDownloading && m_nPosition )
 	{
 		if ( m_bRecvBackwards )
 		{
