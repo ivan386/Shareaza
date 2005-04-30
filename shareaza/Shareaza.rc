@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,145
- PRODUCTVERSION 2,1,0,145
+ FILEVERSION 2,1,0,146
+ PRODUCTVERSION 2,1,0,146
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 145"
+            VALUE "FileVersion", "2, 1, 0, 146"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 145"
+            VALUE "ProductVersion", "2, 1, 0, 146"
         END
     END
     BLOCK "VarFileInfo"
@@ -3056,7 +3056,7 @@ BEGIN
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
-    CONTROL         " &Restrict networks when limited",
+    CONTROL         "&Connect to G2 only when limited",
                     IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
                     WS_GROUP | WS_TABSTOP,10,195,142,15,WS_EX_TRANSPARENT
     GROUPBOX        "Key:",IDC_STATIC,3,104,154,49
@@ -3073,7 +3073,7 @@ BEGIN
                     WS_EX_TRANSPARENT
     LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,116,8,0,
                     WS_EX_TRANSPARENT
-    LTEXT           "% of &bandwidth under limit",IDC_STATIC,40,181,114,12,
+    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,181,114,12,
                     SS_CENTERIMAGE,WS_EX_TRANSPARENT
     EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
                     ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
