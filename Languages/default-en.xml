@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3299,7 +3299,7 @@
 		<control caption="_Options:"/>
 		<control caption="_Enable Scheduler"/>
 		<control/><control/>
-		<control caption="_Restrict networks when limited"/>
+		<control caption="_Connect to G2 only when limited"/>
 		<control caption="Key:"/>
 		<control caption="Sun"/>
 		<control caption="Mon"/>
