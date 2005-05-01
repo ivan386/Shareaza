@@ -1,15 +1,14 @@
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 6.00.0347 */
-/* at Sun Feb 20 12:51:56 2005
+ /* File created by MIDL compiler version 6.00.0361 */
+/* at Mon Apr 25 11:44:26 2005
  */
 /* Compiler settings for .\Shareaza.idl:
-    Os, W1, Zp8, env=Win32 (32b run)
-    protocol : dce , ms_ext, c_ext
+    Oicf, W1, Zp8, env=Win32 (32b run)
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -17,14 +16,21 @@
 */
 //@@MIDL_FILE_HEADING(  )
 
+#pragma warning( disable: 4049 )  /* more than 64k source lines */
+
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
-#define __REQUIRED_RPCNDR_H_VERSION__ 440
+#define __REQUIRED_RPCNDR_H_VERSION__ 475
 #endif
 
 #include "rpc.h"
 #include "rpcndr.h"
+
+#ifndef __RPCNDR_H_VERSION__
+#error this stub requires an updated version of <rpcndr.h>
+#endif // __RPCNDR_H_VERSION__
+
 
 #ifndef __ShareazaOM_h__
 #define __ShareazaOM_h__
@@ -244,7 +250,7 @@ enum __MIDL___MIDL_itf_Shareaza_0000_0002
     } 	SXMLNodeType;
 
 
-typedef struct __MIDL___MIDL_itf_Shareaza_0121_0001
+typedef struct __MIDL___MIDL_itf_Shareaza_0125_0001
     {
     int cbSize;
     int nFlags;
@@ -255,7 +261,7 @@ typedef struct __MIDL___MIDL_itf_Shareaza_0121_0001
     } 	IMAGESERVICEDATA;
 
 typedef 
-enum __MIDL___MIDL_itf_Shareaza_0121_0002
+enum __MIDL___MIDL_itf_Shareaza_0125_0002
     {	IMAGESERVICE_SCANONLY	= 0x1,
 	IMAGESERVICE_PARTIAL_IN	= 0x2,
 	IMAGESERVICE_PARTIAL_OUT	= 0x4
@@ -263,7 +269,7 @@ enum __MIDL___MIDL_itf_Shareaza_0121_0002
 
 
 typedef 
-enum __MIDL___MIDL_itf_Shareaza_0124_0001
+enum __MIDL___MIDL_itf_Shareaza_0128_0001
     {	smsNull	= 0,
 	smsOpen	= smsNull + 1,
 	smsPaused	= smsOpen + 1,
@@ -271,7 +277,7 @@ enum __MIDL___MIDL_itf_Shareaza_0124_0001
     } 	MediaState;
 
 typedef 
-enum __MIDL___MIDL_itf_Shareaza_0124_0002
+enum __MIDL___MIDL_itf_Shareaza_0128_0002
     {	smaDefault	= 0,
 	smzDistort	= -1,
 	smzFill	= 0,
@@ -279,7 +285,7 @@ enum __MIDL___MIDL_itf_Shareaza_0124_0002
 	smzDouble	= 2
     } 	MediaZoom;
 
-typedef struct __MIDL___MIDL_itf_Shareaza_0125_0001
+typedef struct __MIDL___MIDL_itf_Shareaza_0129_0001
     {
     DWORD nTime;
     BYTE nWaveform[ 2 ][ 512 ];
@@ -294,14 +300,14 @@ typedef struct __MIDL___MIDL_itf_Shareaza_0125_0001
 
 
 typedef 
-enum __MIDL___MIDL_itf_Shareaza_0129_0001
+enum __MIDL___MIDL_itf_Shareaza_0133_0001
     {	mnuMenu	= 0,
 	mnuSeparator	= mnuMenu + 1,
 	mnuCommand	= mnuSeparator + 1
     } 	SMenuType;
 
 typedef 
-enum __MIDL___MIDL_itf_Shareaza_0130_0001
+enum __MIDL___MIDL_itf_Shareaza_0134_0001
     {	tbSeparator	= 0,
 	tbButton	= tbSeparator + 1,
 	tbControl	= tbButton + 1
