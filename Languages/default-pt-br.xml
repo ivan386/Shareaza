@@ -16,7 +16,7 @@
 			description="Tradução para o português do Brasil do  Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
-			version="2.1.0.141"
+			version="2.1.0.147"
 			type="Language"
 			language="br"
 			prompt="Clique aqui para selecionar a tradução do Shareaza em português do Brasil."
@@ -891,16 +891,16 @@
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévia"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Análises"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Continuar"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ausar"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancelar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Procurar Mais Fontes"/>
-                <!-- <separator/> -->
+                <!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impar Baixados"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Li_mpar Automaticamente"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Li_mpar Automaticamente"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>
 	</menu>
@@ -908,7 +908,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévia"/>
 	         <!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Ver Prévia da _cópia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Ver no Tocador de Mídia"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Análises"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Continuar"/>
 	   	<item id="ID_DOWNLOADS_PAUSE" text="P_ausar"/>
@@ -2231,10 +2231,10 @@
 <tip id="ID_DOWNLOADS_SETTINGS" message="Configurar as opções de download..."/>
 <tip id="ID_DOWNLOADS_SHARE" message="Compartilhar este arquivo parcialmente baixado com outros usuário."/>
 <tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Exibir fontes que não estão sendo usadas."/>
-
+<tip id="ID_DOWNLOADS_SOURCES" message="Procurar por mais fontes para o(s) download(s) selecionado(s)."/>
 <tip id="ID_DOWNLOADS_TORRENT_INFO" message="Ver informação sobre o BitTorrent Selecionado..."/>
 <tip id="ID_DOWNLOADS_URL" message="Adicionar uma fonte ao download selecionado..."/>
-
+<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Ver Análises do download selecionado"/>
 <tip id="ID_HELP_ABOUT" message="Mostrar informações sobre o Shareaza..."/>
 <tip id="ID_HELP_FAQ" message="Visitar o Guia do Usuário do Shareaza."/>
 <tip id="ID_HELP_FIREWALLS" message="Consiga ajuda para Configurar o seu Router ou Firewall."/>
@@ -2902,7 +2902,7 @@
 	<string id="16809" value="S&amp;air"/>
 	<string id="16810" value="um ano"/>
 	<string id="16811" value="Automático"/>
-
+	<string id="16816" value="A rede eDonkey faz uso de longas filas e um longo tempo de espera. Limitando tão estritamente a posição máxima na fila você poderá ter problemas para iniciar seu downloas.\nTem certeza que deseja limitar a posição máxima que você aceitará para a fila?"/>
 	<string id="16864" value="Pesquisando host de Descobrimento de Serviço..."/>
 	<string id="16865" value="Pesquisando Serviço de Descobrimento &quot;%s&quot;..."/>
 	<string id="16866" value="Transação GWebCache obteve sucesso(&quot;%s&quot;)."/>
