@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3288,7 +3288,7 @@
 		<control caption="_Опции:"/>
 		<control caption="_Включить планировщик"/>
 		<control/><control/>
-		<control caption="_Лимитировать сети тоже"/>
+		<control caption="_Соединиться только с G2 при лимите"/>
 		<control caption="Ключ:"/>
 		<control caption="Вос"/>
 		<control caption="Пон"/>

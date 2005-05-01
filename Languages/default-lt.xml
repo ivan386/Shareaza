@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3307,7 +3307,7 @@ right quote	&#147;
 		<control caption="_Parinktys:"/>
 		<control caption="Į_galinti planuotoją"/>
 		<control/><control/>
-		<control caption="_Apriboti taip pat tinklus"/>
+		<control caption="_Jungtis tik prie G2, kai ribojama"/>
 		<control caption="Raktai:"/>
 		<control caption="Sek"/>
 		<control caption="Pir"/>
