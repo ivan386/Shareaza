@@ -46,6 +46,8 @@ public:
 	CString		m_sUpgradeSize;
 	CString		m_sUpgradeSources;
 	CString		m_sUpgradePath;
+	CString		m_sUpgradeVersion;
+
 protected:
 	HANDLE				m_hThread;
 	CHttpRequest		m_pRequest;

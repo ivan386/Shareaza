@@ -60,10 +60,22 @@ CVersionChecker::~CVersionChecker()
 
 BOOL CVersionChecker::NeedToCheck()
 {
-	if(!Settings.General.UpdateCheck)
-		return FALSE;
-	
+	m_sUpgradeVersion	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeVersion"), _T("") );
 	DWORD nNextCheck = theApp.GetProfileInt( _T("VersionCheck"), _T("NextCheck"), 0 );
+
+	if ( theApp.m_sVersion.Compare( m_sUpgradeVersion ) >= 0 ) // user manually upgraded
+	{
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradePrompt"), NULL );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeFile"), NULL );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), NULL );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeTiger"), NULL);
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSize"), NULL );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSources"), NULL );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeVersion"), NULL );
+		return (DWORD)CTime::GetCurrentTime().GetTime() >= nNextCheck;
+	}
+
+	if ( !Settings.General.UpdateCheck ) return FALSE;
 	
 	m_sQuote = theApp.GetProfileString( _T("VersionCheck"), _T("Quote"), _T("") );
 	
@@ -227,6 +239,7 @@ void CVersionChecker::ProcessResponse()
 		m_pResponse.Lookup( _T("UpgradeTiger"), m_sUpgradeTiger );
 		m_pResponse.Lookup( _T("UpgradeSize"), m_sUpgradeSize );
 		m_pResponse.Lookup( _T("UpgradeSources"), m_sUpgradeSources );
+		m_pResponse.Lookup( _T("UpgradeVersion"), m_sUpgradeVersion );
 
 		// Old name
 		if ( ! m_sUpgradeSHA1.GetLength() )
@@ -238,6 +251,7 @@ void CVersionChecker::ProcessResponse()
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeTiger"), m_sUpgradeTiger);
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSize"), m_sUpgradeSize );
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSources"), m_sUpgradeSources );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeVersion"), m_sUpgradeVersion );
 		
 		m_bUpgrade = TRUE;
 	}
