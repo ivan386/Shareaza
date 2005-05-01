@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -3299,7 +3299,7 @@
 		<control caption="_Innstillinger:"/>
 		<control caption="_Aktiver planlegger"/>
 		<control/><control/>
-		<control caption="_Begrens nettverk når begrenset"/>
+		<control caption="Koble kun til G2 når begrenset"/>
 		<control caption="Valg:"/>
 		<control caption="Søn"/>
 		<control caption="Man"/>
