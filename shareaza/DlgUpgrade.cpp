@@ -90,7 +90,7 @@ void CUpgradeDlg::OnOK()
 	pURL.m_sName		= VersionChecker.m_sUpgradeFile;
 	pURL.m_sURL			= VersionChecker.m_sUpgradeSources;
 	
-	CSHA::HashFromString( VersionChecker.m_sUpgradeHash, &pURL.m_pSHA1 );
+	CSHA::HashFromString( VersionChecker.m_sUpgradeSHA1, &pURL.m_pSHA1 );
 	
 	Downloads.Add( &pURL );
 	
