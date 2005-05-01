@@ -26,6 +26,7 @@
 #include "Downloads.h"
 #include "ShareazaURL.h"
 #include "SHA.h"
+#include "TigerTree.h"
 #include "DlgUpgrade.h"
 #include "WndMain.h"
 #include "WndDownloads.h"
@@ -86,11 +87,30 @@ void CUpgradeDlg::OnOK()
 	CShareazaURL pURL;
 	
 	pURL.m_nAction		= CShareazaURL::uriDownload;
-	pURL.m_bSHA1		= TRUE;
 	pURL.m_sName		= VersionChecker.m_sUpgradeFile;
 	pURL.m_sURL			= VersionChecker.m_sUpgradeSources;
 	
-	CSHA::HashFromString( VersionChecker.m_sUpgradeSHA1, &pURL.m_pSHA1 );
+	if ( VersionChecker.m_sUpgradeSHA1.GetLength() )
+	{
+		pURL.m_bSHA1 = TRUE;
+		CSHA::HashFromString( VersionChecker.m_sUpgradeSHA1, &pURL.m_pSHA1 );
+	}
+
+	if ( VersionChecker.m_sUpgradeTiger.GetLength() )
+	{
+		pURL.m_bTiger = TRUE;
+		CTigerNode::HashFromString( VersionChecker.m_sUpgradeTiger, &pURL.m_pTiger );
+	}
+
+	if ( VersionChecker.m_sUpgradeSize.GetLength() )
+	{
+		QWORD nSize;
+		if ( ( _stscanf( VersionChecker.m_sUpgradeSize.GetString(), _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+		{
+			pURL.m_bSize = TRUE;
+			pURL.m_nSize = nSize;
+		}
+	}
 	
 	Downloads.Add( &pURL );
 	
