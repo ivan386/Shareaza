@@ -1,7 +1,7 @@
 //
 // ComToolbar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -100,7 +100,7 @@ STDMETHODIMP CComToolbar::XSToolbar::get__NewEnum(IUnknown FAR* FAR* ppEnum)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
 	if ( pThis->m_pBar == NULL ) return E_UNEXPECTED;
-	
+
 	AddRef();
 	*ppEnum = &pThis->m_xEnumVARIANT;
 	pThis->m_xEnumVARIANT.m_nIndex = 0;
@@ -112,7 +112,7 @@ STDMETHODIMP CComToolbar::XSToolbar::get_Item(VARIANT vIndex, ISToolbarItem FAR*
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
 	if ( pThis->m_pBar == NULL ) return E_UNEXPECTED;
-	
+
 	VARIANT va;
 	VariantInit( &va );
 
@@ -121,7 +121,7 @@ STDMETHODIMP CComToolbar::XSToolbar::get_Item(VARIANT vIndex, ISToolbarItem FAR*
 		*ppItem = NULL;
 		return E_FAIL;
 	}
-	
+
 	if ( va.lVal >= 0 && va.lVal < pThis->m_pBar->GetCount() )
 	{
 		*ppItem = CComToolbar::Wrap( pThis->m_pBar, pThis->m_pBar->GetIndex( va.lVal ) );
@@ -274,10 +274,10 @@ STDMETHODIMP CComToolbar::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULO
 	return S_OK;
 }
 
-STDMETHODIMP CComToolbar::XEnumVARIANT::Skip(ULONG celt) 
+STDMETHODIMP CComToolbar::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CComToolbar, EnumVARIANT )
-	
+
 	int nCount = pThis->m_pBar->GetCount();
 
 	while ( celt-- && m_nIndex++ < (UINT)nCount );
@@ -292,7 +292,7 @@ STDMETHODIMP CComToolbar::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CComToolbar::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum) 
+STDMETHODIMP CComToolbar::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
 {
     METHOD_PROLOGUE( CComToolbar, EnumVARIANT )
     return E_NOTIMPL;

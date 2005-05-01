@@ -1,7 +1,7 @@
 //
 // ID3.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -104,7 +104,7 @@ typedef struct
 
 typedef struct
 {
-	char cID[8];			// should equal 'APETAGEX'	
+	char cID[8];			// should equal 'APETAGEX'
 	int nVersion;			// equals CURRENT_APE_TAG_VERSION
 	int nSize;				// the complete size of the tag, including this footer
 	int nFields;			// the number of fields in the tag
@@ -123,10 +123,10 @@ typedef struct
     DWORD		dwInitialFrames;
     DWORD		dwStreams;
     DWORD		dwSuggestedBufferSize;
-    
+
     DWORD		dwWidth;
     DWORD		dwHeight;
-    
+
     DWORD		dwReserved[4];
 } AVI_HEADER;
 

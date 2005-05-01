@@ -1,7 +1,7 @@
 //
 // WizardFinishedPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,10 +72,10 @@ void CWizardFinishedPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardFinishedPage message handlers
 
-BOOL CWizardFinishedPage::OnInitDialog() 
+BOOL CWizardFinishedPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	Skin.Apply( _T("CWizardFinishedPage"), this );
 
 	m_bConnect		= TRUE;
@@ -87,13 +87,13 @@ BOOL CWizardFinishedPage::OnInitDialog()
 	return TRUE;
 }
 
-BOOL CWizardFinishedPage::OnSetActive() 
+BOOL CWizardFinishedPage::OnSetActive()
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_FINISH );
 	return CWizardPage::OnSetActive();
 }
 
-BOOL CWizardFinishedPage::OnWizardFinish() 
+BOOL CWizardFinishedPage::OnWizardFinish()
 {
 	UpdateData();
 
@@ -110,6 +110,6 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 
 	if ( m_bConnect ) Network.Connect( TRUE );
 	Settings.SetStartup( m_bStartup );
-	
+
 	return CWizardPage::OnWizardFinish();
 }

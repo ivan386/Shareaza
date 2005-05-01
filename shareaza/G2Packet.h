@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,14 +35,14 @@ class CG2Packet : public CPacket
 protected:
 	CG2Packet();
 	virtual ~CG2Packet();
-	
+
 // Attributes
 public:
 	CHAR	m_sType[9];
 	BOOL	m_bCompound;
 
 	CString	m_sTypeCache;
-	
+
 // Operations
 public:
 	void	WritePacket(CG2Packet* pPacket);
@@ -62,7 +62,7 @@ public:
 	virtual void	Debug(LPCTSTR pszReason) const;
 public:
 	static CG2Packet* ReadBuffer(CBuffer* pBuffer);
-	
+
 	virtual void	WriteString(LPCSTR pszString, BOOL bNull = TRUE);
 
 // Inlines
@@ -88,7 +88,7 @@ protected:
 		virtual void NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch);
 		virtual void FreePoolImpl(CPacket* pPool);
 	};
-	
+
 	static CG2PacketPool POOL;
 
 // Construction
@@ -96,27 +96,27 @@ public:
 	inline static CG2Packet* New(LPCSTR pszType = NULL, BOOL bCompound = FALSE)
 	{
 		CG2Packet* pPacket = (CG2Packet*)POOL.New();
-		
+
 		if ( pszType != NULL )
 		{
 			strncpy( pPacket->m_sType, pszType, 9 );
 			pPacket->m_sType[8] = 0;
 		}
-		
+
 		pPacket->m_bCompound = bCompound;
 		pPacket->m_sTypeCache.Empty();
-		
+
 		return pPacket;
 	}
-	
+
 	static CG2Packet* New(BYTE* pSource);
 	static CG2Packet* New(LPCSTR pszType, CG1Packet* pWrap, int nMinTTL = 255);
-	
+
 	inline virtual void Delete()
 	{
 		POOL.Delete( this );
 	}
-	
+
 	friend class CG2Packet::CG2PacketPool;
 };
 

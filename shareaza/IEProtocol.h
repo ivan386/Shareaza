@@ -1,7 +1,7 @@
 //
 // IEProtocol.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CIEProtocol : public CCmdTarget
 public:
 	CIEProtocol();
 	virtual ~CIEProtocol();
-	
+
 	DECLARE_DYNAMIC(CIEProtocol)
 
 // Operations
@@ -41,7 +41,7 @@ public:
 	BOOL		Create();
 	void		Close();
 	BOOL		SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
-	
+
 // Attributes
 protected:
 	CCriticalSection			m_pSection;
@@ -54,7 +54,7 @@ protected:
 public:
 	static CLSID				clsidProtocol;
 	static LPCWSTR				pszProtocols[];
-	
+
 // Implementation
 protected:
 	CIEProtocolRequest*	CreateRequest();
@@ -62,16 +62,16 @@ protected:
 	void				OnRequestDestruct(CIEProtocolRequest* pRequest);
 	HRESULT				OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
 	HRESULT				OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
-	
+
 // COM
 protected:
 	BEGIN_INTERFACE_PART(ClassFactory, IClassFactory)
 		STDMETHOD(CreateInstance)(IUnknown* pUnkOuter, REFIID riid, void** ppvObject);
 		STDMETHOD(LockServer)(BOOL fLock);
 	END_INTERFACE_PART(ClassFactory)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 	friend class CIEProtocolRequest;
 };
 
@@ -82,22 +82,22 @@ class CIEProtocolRequest : public CCmdTarget
 protected:
 	CIEProtocolRequest(CIEProtocol* pProtocol);
 	virtual ~CIEProtocolRequest();
-	
+
 	DECLARE_DYNAMIC(CIEProtocolRequest)
-	
+
 // Attributes
 protected:
 	CCriticalSection				m_pSection;
 	CIEProtocol*					m_pProtocol;
 	CComPtr<IInternetProtocolSink>	m_pSink;
 	CBuffer*						m_pBuffer;
-	
+
 // Implementation
 protected:
 	HRESULT		OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* pBindInfo, DWORD dwFlags);
 	HRESULT		OnRead(void* pv, ULONG cb, ULONG* pcbRead);
 	HRESULT		OnTerminate();
-	
+
 // COM
 protected:
 	BEGIN_INTERFACE_PART(InternetProtocol, IInternetProtocol)
@@ -121,7 +121,7 @@ protected:
 	END_INTERFACE_PART(InternetProtocolInfo )
 
 	DECLARE_INTERFACE_MAP()
-	
+
 	friend class CIEProtocol;
 };
 

@@ -1,7 +1,7 @@
 //
 // WndHome.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,15 +81,15 @@ CHomeWnd::~CHomeWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CHomeWnd message handlers
 
-int CHomeWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CHomeWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( ! m_wndView.Create( rectDefault, this ) ) return -1;
 	if ( ! m_wndPanel.Create( this ) ) return -1;
-	
+
 	OnSkinChange();
-	
+
 	return 0;
 }
 
@@ -100,20 +100,20 @@ void CHomeWnd::OnSkinChange()
 	CChildWnd::OnSkinChange();
 }
 
-void CHomeWnd::OnSize(UINT nType, int cx, int cy) 
+void CHomeWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
-	
+
 	m_wndPanel.SetWindowPos( NULL, 0, 0, PANEL_WIDTH, cy, SWP_NOZORDER );
 	m_wndView.SetWindowPos( NULL, PANEL_WIDTH + 1, 0, cx - PANEL_WIDTH - 1, cy, SWP_NOZORDER|SWP_SHOWWINDOW );
 }
 
-void CHomeWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CHomeWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	TrackPopupMenu( _T("CHomeWnd"), point );
 }
 
-void CHomeWnd::OnTimer(UINT nIDEvent) 
+void CHomeWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 2 || ( nIDEvent == 1 && IsActive() ) )
 	{
@@ -122,7 +122,7 @@ void CHomeWnd::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CHomeWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 
+void CHomeWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
 	if ( bActivate )
 	{
@@ -130,18 +130,18 @@ void CHomeWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactiva
 		m_wndPanel.Update();
 		m_wndView.SetFocus();
 	}
-	
+
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
 }
 
-void CHomeWnd::OnPaint() 
+void CHomeWnd::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	m_wndPanel.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	dc.MoveTo( rc.right, rc.top );
 	dc.LineTo( rc.right, rc.bottom + 1 );
 }
@@ -152,6 +152,6 @@ void CHomeWnd::OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult)
 	{
 		theApp.InternalURI( pElement->m_sLink );
 	}
-	
+
 	PostMessage( WM_TIMER, 2 );
 }

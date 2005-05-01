@@ -1,7 +1,7 @@
 //
 // PageProfileAvatar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,10 +69,10 @@ void CAvatarProfilePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CAvatarProfilePage message handlers
 
-BOOL CAvatarProfilePage::OnInitDialog() 
+BOOL CAvatarProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	if ( CXMLElement* pAvatar = MyProfile.GetXML( _T("avatar") ) )
 	{
 		m_sAvatar = pAvatar->GetAttributeValue( _T("path") );
@@ -82,27 +82,27 @@ BOOL CAvatarProfilePage::OnInitDialog()
 	return TRUE;
 }
 
-void CAvatarProfilePage::OnOK() 
+void CAvatarProfilePage::OnOK()
 {
 	if ( CXMLElement* pAvatar = MyProfile.GetXML( _T("avatar"), TRUE ) )
 	{
 		pAvatar->AddAttribute( _T("path"), m_sAvatar );
 	}
-	
+
 	CSettingsPage::OnOK();
 }
 
-void CAvatarProfilePage::OnPaint() 
+void CAvatarProfilePage::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	m_wndPreview.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	rc.right = rc.left + 128;
 	rc.bottom = rc.top + 128;
-	
+
 	if ( m_bmAvatar.m_hObject != NULL )
 	{
 		CDC dcMem;
@@ -118,11 +118,11 @@ void CAvatarProfilePage::OnPaint()
 	}
 }
 
-void CAvatarProfilePage::OnAvatarBrowse() 
+void CAvatarProfilePage::OnAvatarBrowse()
 {
 	CFileDialog dlg( TRUE, _T("png"), m_sAvatar, OFN_HIDEREADONLY,
 		_T("Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*||"), this );
-	
+
 	if ( dlg.DoModal() == IDOK )
 	{
 		m_sAvatar = dlg.GetPathName();
@@ -131,7 +131,7 @@ void CAvatarProfilePage::OnAvatarBrowse()
 	}
 }
 
-void CAvatarProfilePage::OnAvatarRemove() 
+void CAvatarProfilePage::OnAvatarRemove()
 {
 	m_sAvatar.Empty();
 	if ( m_bmAvatar.m_hObject != NULL ) m_bmAvatar.DeleteObject();
@@ -142,13 +142,13 @@ void CAvatarProfilePage::PrepareImage()
 {
 	if ( m_bmAvatar.m_hObject != NULL ) m_bmAvatar.DeleteObject();
 	if ( m_sAvatar.IsEmpty() ) return;
-	
+
 	CImageServices pService;
 	CImageFile pFile( &pService );
-	
+
 	CClientDC dc( this );
 	SendMessage( WM_CTLCOLORSTATIC, (WPARAM)dc.GetSafeHdc(), (LPARAM)m_wndPreview.GetSafeHwnd() );
-	
+
 	if ( pFile.LoadFromFile( m_sAvatar ) && pFile.EnsureRGB( dc.GetBkColor() ) )
 	{
 		pFile.Resample( 128, 128 );

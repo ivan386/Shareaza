@@ -1,7 +1,7 @@
 //
 // BTPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,7 +51,7 @@ CBTPacket::~CBTPacket()
 void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 {
 	ASSERT( pBuffer != NULL );
-	
+
 	if ( m_nType == BT_PACKET_KEEPALIVE )
 	{
 		DWORD nZero = 0;
@@ -73,20 +73,20 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 {
 	ASSERT( pBuffer != NULL );
 	if ( pBuffer->m_nLength < 4 ) return NULL;
-	
+
 	DWORD nLength = *(DWORD*)pBuffer->m_pBuffer;
 	nLength = SWAP_LONG( nLength );
 	if ( pBuffer->m_nLength < 4 + nLength ) return NULL;
-	
+
 	if ( nLength == 0 )
 	{
 		pBuffer->Remove( 4 );
 		return CBTPacket::New( BT_PACKET_KEEPALIVE );
 	}
-	
+
 	CBTPacket* pPacket = CBTPacket::New( pBuffer->m_pBuffer[4] );
 	pPacket->Write( pBuffer->m_pBuffer + 5, nLength - 1 );
-	
+
 	pBuffer->Remove( 4 + nLength );
 	return pPacket;
 }

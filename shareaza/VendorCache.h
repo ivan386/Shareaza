@@ -1,7 +1,7 @@
 //
 // VendorCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CVendor;
 class CXMLElement;
 
 
-class CVendorCache  
+class CVendorCache
 {
 // Construction
 public:
 	CVendorCache();
 	virtual ~CVendorCache();
-	
+
 // Attributes
 public:
 	CVendor*		m_pNull;
@@ -65,7 +65,7 @@ class CVendor
 public:
 	CVendor(LPCTSTR pszCode = NULL);
 	virtual ~CVendor();
-	
+
 // Attributes
 public:
 	CString		m_sCode;
@@ -75,11 +75,11 @@ public:
 public:
 	BOOL		m_bChatFlag;
 	BOOL		m_bHTMLBrowse;
-	
+
 // Operations
 protected:
 	BOOL		LoadFrom(CXMLElement* pXML);
-	
+
 	friend class CVendorCache;
 
 };

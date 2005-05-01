@@ -1,7 +1,7 @@
 //
 // CtrlSharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@ protected:
 	BOOL		m_bFirstClick;
 	BOOL		m_bMultiSelect;
 	BOOL		m_bSaveExpand;
-	
+
 // Operations
 public:
 	void		SetMultiSelect(BOOL bMultiSelect);

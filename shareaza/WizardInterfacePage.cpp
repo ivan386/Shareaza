@@ -1,7 +1,7 @@
 //
 // WizardInterfacePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,28 +70,28 @@ void CWizardInterfacePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardInterfacePage message handlers
 
-BOOL CWizardInterfacePage::OnInitDialog() 
+BOOL CWizardInterfacePage::OnInitDialog()
 {
 	CWizardPage::OnInitDialog();
-	
+
 	Skin.Apply( _T("CWizardInterfacePage"), this );
-	
+
 	m_bExpert = Settings.General.GUIMode != GUI_BASIC;
 	UpdateData( FALSE );
-	
+
 	m_wndInterface0.SetFont( &theApp.m_gdiFontBold );
 	m_wndInterface1.SetFont( &theApp.m_gdiFontBold );
-	
+
 	return TRUE;
 }
 
-BOOL CWizardInterfacePage::OnSetActive() 
+BOOL CWizardInterfacePage::OnSetActive()
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
 	return CWizardPage::OnSetActive();
 }
 
-void CWizardInterfacePage::OnLButtonDown(UINT nFlags, CPoint point) 
+void CWizardInterfacePage::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rc;
 
@@ -114,14 +114,14 @@ void CWizardInterfacePage::OnLButtonDown(UINT nFlags, CPoint point)
 	CWizardPage::OnLButtonDown(nFlags, point);
 }
 
-LRESULT CWizardInterfacePage::OnWizardNext() 
+LRESULT CWizardInterfacePage::OnWizardNext()
 {
 	UpdateData( TRUE );
 
 	CWaitCursor pCursor;
 
 	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-	
+
 	if ( m_bExpert )
 	{
 		if ( Settings.General.GUIMode == GUI_BASIC )
@@ -132,7 +132,7 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 		if ( Settings.General.GUIMode != GUI_BASIC )
 			pMainWnd->SetGUIMode( GUI_BASIC );
 	}
-	
+
 	Settings.Save();
 
 	return 0;

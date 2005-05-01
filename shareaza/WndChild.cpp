@@ -1,7 +1,7 @@
 //
 // WndChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,13 +83,13 @@ CChildWnd::~CChildWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CChildWnd operations
 
-BOOL CChildWnd::Create(UINT nID, BOOL bVisible) 
+BOOL CChildWnd::Create(UINT nID, BOOL bVisible)
 {
 	m_nResID = nID;
-	
+
 	CString strCaption;
 	LoadString( strCaption, m_nResID );
-	
+
 	return CMDIChildWnd::Create( NULL, strCaption, WS_CHILD |
 		 WS_OVERLAPPEDWINDOW | ( bVisible ? WS_VISIBLE : 0 ) );
 }
@@ -107,14 +107,14 @@ CWindowManager* CChildWnd::GetManager()
 BOOL CChildWnd::IsActive(BOOL bFocused)
 {
 	CMainWnd* pMainWnd = GetMainWnd();
-	
+
 	if ( bFocused && GetForegroundWindow() != pMainWnd ) return FALSE;
-	
+
 	CChildWnd* pActive = (CChildWnd*)pMainWnd->MDIGetActive();
-	
+
 	if ( pActive == this ) return TRUE;
 	if ( bFocused ) return FALSE;
-	
+
 	return	( pActive != NULL && m_pGroupParent == pActive ) ||
 			( pActive != NULL && pActive->m_pGroupParent == this );
 }
@@ -122,11 +122,11 @@ BOOL CChildWnd::IsActive(BOOL bFocused)
 BOOL CChildWnd::IsPartiallyVisible()
 {
 	if ( IsWindowVisible() == FALSE || IsIconic() == TRUE ) return FALSE;
-	
+
 	CRect rc;
 	GetClientRect( &rc );
 	ClientToScreen( &rc );
-	
+
 	return	TestPoint( rc.CenterPoint() )						||
 			TestPoint( CPoint( rc.left + 1, rc.top + 1 ) )		||
 			TestPoint( CPoint( rc.right - 1, rc.top + 1 ) )		||
@@ -137,24 +137,24 @@ BOOL CChildWnd::IsPartiallyVisible()
 BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 {
 	CWnd* pHit = WindowFromPoint( ptScreen );
-	
+
 	if ( pHit == NULL ) return FALSE;
 	if ( pHit == this ) return TRUE;
-	
+
 	if ( pHit->GetTopLevelParent() != GetTopLevelParent() ) return FALSE;
-	
+
 	CPoint ptChild( ptScreen );
 	pHit->ScreenToClient( &ptChild );
-	
+
 	CWnd* pChild = pHit->ChildWindowFromPoint( ptChild, CWP_SKIPINVISIBLE );
 	if ( pChild == NULL ) pChild = pHit;
-	
+
 	while ( pChild != NULL )
 	{
 		if ( pChild == this ) return TRUE;
 		pChild = pChild->GetParent();
 	}
-	
+
 	return FALSE;
 }
 
@@ -167,14 +167,14 @@ BOOL CChildWnd::LoadState(LPCTSTR pszName, BOOL bDefaultMaximise)
 {
 	CRect rcParent, rcChild;
 	GetParent()->GetClientRect( &rcParent );
-	
+
 	if ( ! m_bPanelMode && Settings.LoadWindow( pszName, this ) )
 	{
 		if ( rcParent.Width() > 64 && rcParent.Height() > 32 )
 		{
 			GetWindowRect( &rcChild );
 			GetParent()->ScreenToClient( &rcChild );
-			
+
 			if ( rcChild.right > rcParent.right || rcChild.bottom > rcParent.bottom )
 			{
 				rcChild.right	= min( rcChild.right, rcParent.right );
@@ -182,9 +182,9 @@ BOOL CChildWnd::LoadState(LPCTSTR pszName, BOOL bDefaultMaximise)
 				MoveWindow( &rcChild );
 			}
 		}
-		
+
 		OnSkinChange();
-		
+
 		return TRUE;
 	}
 	else if ( m_bPanelMode || bDefaultMaximise )	// was m_bGroupMode
@@ -195,15 +195,15 @@ BOOL CChildWnd::LoadState(LPCTSTR pszName, BOOL bDefaultMaximise)
 			strName += _T(".Splitter");
 			m_nGroupSize = (float)theApp.GetProfileInt( _T("Windows"), strName, 500 ) / 1000;
 		}
-		
+
 		if ( rcParent.Width() > 64 && rcParent.Height() > 32 )
 		{
 			MoveWindow( &rcParent );
 		}
 	}
-	
+
 	OnSkinChange();
-	
+
 	return FALSE;
 }
 
@@ -230,70 +230,70 @@ BOOL CChildWnd::SaveState(LPCTSTR pszName)
 BOOL CChildWnd::SetAlert(BOOL bAlert)
 {
 	if ( m_bAlert == bAlert ) return FALSE;
-	
+
 	CMainWnd* pMainWnd = GetMainWnd();
-	
+
 	if ( bAlert && pMainWnd->MDIGetActive() == this ) return FALSE;
-	
+
 	m_bAlert = bAlert;
-	
+
 	pMainWnd->OnUpdateFrameTitle( FALSE );
-	
+
 	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildWnd message handlers
 
-int CChildWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CChildWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CMDIChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_bAlert = 1982;
 	CChildWnd::OnSkinChange();
 	m_bAlert = FALSE;
-	
+
 	GetManager()->Add( this );
-	
+
 	return 0;
 }
 
-void CChildWnd::OnDestroy() 
+void CChildWnd::OnDestroy()
 {
 	GetManager()->Remove( this );
-	
+
 	CMDIChildWnd::OnDestroy();
 }
 
-BOOL CChildWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CChildWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_pCmdMsg == this ) return FALSE;
-	
+
 	if ( CMDIChildWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
-	
+
 	if ( m_pCmdMsg != NULL ) return FALSE;
-	
+
 	m_pCmdMsg = this;
 	BOOL bResult = GetMainWnd()->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 	m_pCmdMsg = NULL;
-	
+
 	return bResult;
 }
 
-BOOL CChildWnd::OnEraseBkgnd(CDC* pDC) 
+BOOL CChildWnd::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CChildWnd::OnSize(UINT nType, int cx, int cy) 
+void CChildWnd::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_pSkin ) m_pSkin->OnSize( this );
-	
+
 	CMDIChildWnd::OnSize( nType, cx, cy );
-	
+
 	BOOL bMinimized	= IsIconic();
 	BOOL bVisible	= IsWindowVisible();
-	
+
 	if ( bMinimized && bVisible )
 		ShowWindow( SW_HIDE );
 	else if ( ! bMinimized && ! bVisible )
@@ -304,7 +304,7 @@ void CChildWnd::SizeListAndBar(CWnd* pList, CWnd* pBar)
 {
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	rc.bottom -= 28;
 	HDWP hPos = BeginDeferWindowPos( 2 );
 	DeferWindowPos( hPos, pBar->GetSafeHwnd(), NULL,
@@ -314,10 +314,10 @@ void CChildWnd::SizeListAndBar(CWnd* pList, CWnd* pBar)
 	EndDeferWindowPos( hPos );
 }
 
-void CChildWnd::OnSysCommand(UINT nID, LPARAM lParam) 
+void CChildWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	CRect rc;
-	
+
 	switch ( nID & 0xFFF0 )
 	{
 	case SC_MINIMIZE:
@@ -357,21 +357,21 @@ void CChildWnd::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-void CChildWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 
+void CChildWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
 	if ( GetManager()->m_bIgnoreActivate ) return;
-	
+
 	if ( bActivate && m_bAlert ) SetAlert( FALSE );
-	
+
 	CMDIChildWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
-	
+
 	if ( bActivate && m_bGroupMode )
 	{
 		GetManager()->ActivateGrouped( this );
 	}
 }
 
-void CChildWnd::OnNcRButtonUp(UINT nHitTest, CPoint point) 
+void CChildWnd::OnNcRButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( nHitTest == HTCAPTION )
 	{
@@ -379,14 +379,14 @@ void CChildWnd::OnNcRButtonUp(UINT nHitTest, CPoint point)
 		pWnd->PostMessage( WM_CONTEXTMENU, (WPARAM)pWnd->GetSafeHwnd(), MAKELONG( point.x, point.y ) );
 		return;
 	}
-	
+
 	CMDIChildWnd::OnNcRButtonUp( nHitTest, point );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildWnd skin forwarders
 
-void CChildWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CChildWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
@@ -394,7 +394,7 @@ void CChildWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 		CMDIChildWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CChildWnd::OnNcHitTest(CPoint point) 
+UINT CChildWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ! m_bPanelMode );
@@ -402,7 +402,7 @@ UINT CChildWnd::OnNcHitTest(CPoint point)
 		return CMDIChildWnd::OnNcHitTest( point );
 }
 
-void CChildWnd::OnNcPaint() 
+void CChildWnd::OnNcPaint()
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcPaint( this );
@@ -410,10 +410,10 @@ void CChildWnd::OnNcPaint()
 		CMDIChildWnd::OnNcPaint();
 }
 
-BOOL CChildWnd::OnNcActivate(BOOL bActive) 
+BOOL CChildWnd::OnNcActivate(BOOL bActive)
 {
 	// if ( bActive ) OnMDIActivate( TRUE, this, NULL );
-	
+
 	if ( m_pSkin != NULL )
 	{
 		BOOL bVisible = IsWindowVisible();
@@ -429,25 +429,25 @@ BOOL CChildWnd::OnNcActivate(BOOL bActive)
 	}
 }
 
-void CChildWnd::OnNcMouseMove(UINT nHitTest, CPoint point) 
+void CChildWnd::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
 	CMDIChildWnd::OnNcMouseMove(nHitTest, point);
 }
 
-void CChildWnd::OnNcLButtonDown(UINT nHitTest, CPoint point) 
+void CChildWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CMDIChildWnd::OnNcLButtonDown( nHitTest, point );
 }
 
-void CChildWnd::OnNcLButtonUp(UINT nHitTest, CPoint point) 
+void CChildWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
 	CMDIChildWnd::OnNcLButtonUp( nHitTest, point );
 }
 
-void CChildWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point) 
+void CChildWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
 	CMDIChildWnd::OnNcLButtonDblClk( nHitTest, point );
@@ -476,26 +476,26 @@ LONG CChildWnd::OnSetText(WPARAM wParam, LPARAM lParam)
 void CChildWnd::OnSkinChange()
 {
 	m_pSkin = Skin.GetWindowSkin( this );
-	
+
 	if ( m_nResID )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( m_nResID );
-		
+
 		if ( NULL == hIcon )
 		{
 			hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 				MAKEINTRESOURCE( m_nResID ), IMAGE_ICON, 16, 16, 0 );
 		}
-		
+
 		SetIcon( hIcon, FALSE );
-		
+
 		CString strCaption;
 		LoadString( strCaption, m_nResID );
-		
+
 		SetWindowText( _T("") );
 		SetWindowText( strCaption );
 	}
-	
+
 	if ( m_bAlert != 1982 )
 	{
 		SetWindowRgn( NULL, FALSE );

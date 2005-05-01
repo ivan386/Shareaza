@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,9 +72,9 @@ CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
 		if ( ! bCreate ) return NULL;
 		Create();
 	}
-	
+
 	if ( pszElement == NULL ) return m_pXML;
-	
+
 	return m_pXML->GetElementByName( pszElement, bCreate );
 }
 
@@ -88,7 +88,7 @@ void CGProfile::Create()
 	GGUID tmp( GUID );
 	CoCreateGuid( (::GUID*)&tmp );
 	srand( GetTickCount() );
-	
+
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp.n[ nByte ] += rand();
 
 	wchar_t szGUID[39];
@@ -98,7 +98,7 @@ void CGProfile::Create()
 
 	m_pXML = new CXMLElement( NULL, _T("gProfile") );
 	m_pXML->AddAttribute( _T("xmlns"), xmlns );
-	
+
 	CXMLElement* pGnutella = m_pXML->AddElement( _T("gnutella") );
 	pGnutella->AddAttribute( _T("guid"), (CString)&szGUID[1] );
 }
@@ -115,23 +115,23 @@ void CGProfile::Clear()
 BOOL CGProfile::Load(LPCTSTR pszFile)
 {
 	CString strFile;
-	
+
 	if ( pszFile != NULL )
 		strFile = pszFile;
 	else
 		strFile = Settings.General.UserPath + _T("\\Data\\Profile.xml");
-	
+
 	CXMLElement* pXML = CXMLElement::FromFile( strFile, TRUE );
-	
+
 	if ( pXML == NULL )
 	{
 		if ( pszFile == NULL ) Create();
 		return FALSE;
 	}
-	
+
 	if ( FromXML( pXML ) ) return TRUE;
 	delete pXML;
-	
+
 	return FALSE;
 }
 
@@ -139,27 +139,27 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 {
 	CString strXML;
 	CFile pFile;
-	
+
 	if ( pszFile != NULL )
 		strXML = pszFile;
 	else
 		strXML = Settings.General.UserPath + _T("\\Data\\Profile.xml");
-	
+
 	if ( ! pFile.Open( strXML, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
-	
+
 	if ( m_pXML != NULL )
 		strXML = m_pXML->ToString( TRUE, TRUE );
 	else
 		strXML.Empty();
-	
+
 	int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszASCII = new CHAR[ nASCII ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
 	pFile.Write( pszASCII, nASCII );
 	delete [] pszASCII;
-	
+
 	pFile.Close();
-	
+
 	return TRUE;
 }
 
@@ -169,22 +169,22 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 BOOL CGProfile::FromXML(CXMLElement* pXML)
 {
 	Clear();
-	
+
 	if ( pXML == NULL ) return FALSE;
 	if ( pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) ) return FALSE;
 	if ( pXML->IsNamed( _T("gProfile") ) == FALSE ) return FALSE;
-	
+
 	CXMLElement* pGnutella = pXML->GetElementByName( _T("gnutella") );
 	if ( pGnutella == NULL ) return FALSE;
-	
+
 	CString strGUID = pGnutella->GetAttributeValue( _T("guid") );
-	
+
 	GGUID tmp;
 	if ( ! GUIDX::Decode( strGUID, &tmp ) ) return FALSE;
 	GUID = tmp;
 
 	m_pXML = pXML;
-	
+
 	return TRUE;
 }
 
@@ -234,15 +234,15 @@ CString CGProfile::GetLocation() const
 CString CGProfile::GetContact(LPCTSTR pszType) const
 {
 	CString str;
-	
+
 	if ( m_pXML == NULL ) return str;
 	CXMLElement* pContacts = m_pXML->GetElementByName( _T("contacts") );
 	if ( pContacts == NULL ) return str;
-	
+
 	for ( POSITION pos = pContacts->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pGroup = pContacts->GetNextElement( pos );
-		
+
 		if ( pGroup->IsNamed( _T("group") ) &&
 			 pGroup->GetAttributeValue( _T("class") ).CompareNoCase( pszType ) == 0 )
 		{
@@ -253,7 +253,7 @@ CString CGProfile::GetContact(LPCTSTR pszType) const
 			}
 		}
 	}
-	
+
 	return str;
 }
 
@@ -264,17 +264,17 @@ DWORD CGProfile::GetPackedGPS() const
 	if ( pLocation == NULL ) return 0;
 	CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates") );
 	if ( pCoordinates == NULL ) return 0;
-	
+
 	float nLatitude = 0, nLongitude = 0;
 	_stscanf( pCoordinates->GetAttributeValue( _T("latitude") ), _T("%f"), &nLatitude );
 	_stscanf( pCoordinates->GetAttributeValue( _T("longitude") ), _T("%f"), &nLongitude );
 	if ( nLatitude == 0 || nLongitude == 0 ) return 0;
-	
+
 #define WORDLIM(x)  (WORD)( (x) < 0 ? 0 : ( (x) > 65535 ? 65535 : (x) ) )
 	WORD nLat = WORDLIM( ( nLatitude + 90.0f )   * 65535.0f / 180.0f );
 	WORD nLon = WORDLIM( ( nLongitude + 180.0f ) * 65535.0f / 360.0f );
 #undef WORDLIM
-	
+
 	return (DWORD)nLon + ( (DWORD)nLat << 16 );
 }
 
@@ -284,28 +284,28 @@ DWORD CGProfile::GetPackedGPS() const
 CG2Packet* CGProfile::CreateAvatar()
 {
 	if ( m_pXML == NULL ) return NULL;
-	
+
 	CXMLElement* pAvatar = m_pXML->GetElementByName( _T("avatar") );
 	if ( pAvatar == NULL ) return NULL;
 	CString strPath = pAvatar->GetAttributeValue( _T("path") );
 	if ( strPath.IsEmpty() ) return NULL;
-	
+
 	CFile pFile;
 	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return NULL;
-	
+
 	int nPos = strPath.ReverseFind( '\\' );
 	if ( nPos >= 0 ) strPath = strPath.Mid( nPos + 1 );
-	
+
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PROFILE_AVATAR );
-	
+
 	pPacket->WritePacket( "NAME", pPacket->GetStringLen( strPath ) );
 	pPacket->WriteString( strPath, FALSE );
-	
+
 	pPacket->WritePacket( "BODY", (DWORD)pFile.GetLength() );
 	LPBYTE pBody = pPacket->WriteGetPointer( (DWORD)pFile.GetLength() );
-	
+
 	pFile.Read( pBody, (DWORD)pFile.GetLength() );
 	pFile.Close();
-	
+
 	return pPacket;
 }

@@ -1,7 +1,7 @@
 //
 // UploadQueues.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CLibraryFile;
 class CDownload;
 
 
-class CUploadQueues  
+class CUploadQueues
 {
 // Construction
 public:
 	CUploadQueues();
 	virtual ~CUploadQueues();
-	
+
 // Attributes
 public:
 	CCriticalSection	m_pSection;
@@ -42,7 +42,7 @@ public:
 	CUploadQueue*		m_pHistoryQueue;
 protected:
 	CPtrList			m_pList;
-	
+
 // Operations
 public:
 	BOOL	Enqueue(CUploadTransfer* pUpload, BOOL bForce = FALSE);
@@ -82,12 +82,12 @@ public:
 	{
 		return m_pList.GetHeadPosition();
 	}
-	
+
 	inline CUploadQueue* GetNext(POSITION& pos) const
 	{
 		return (CUploadQueue*)m_pList.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pList.GetCount();

@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -174,10 +174,10 @@ BOOL CEDPacket::Deflate()
 {
 	if ( m_nEdProtocol != ED2K_PROTOCOL_EDONKEY &&
 		 m_nEdProtocol != ED2K_PROTOCOL_EMULE ) return FALSE;
-	
+
 	DWORD nOutput = 0;
 	BYTE* pOutput = CZLib::Compress( m_pBuffer, m_nLength, &nOutput );
-	
+
 	if ( pOutput != NULL )
 	{
 		if ( nOutput >= m_nLength )
@@ -185,14 +185,14 @@ BOOL CEDPacket::Deflate()
 			delete [] pOutput;
 			return FALSE;
 		}
-		
+
 		m_nEdProtocol = ED2K_PROTOCOL_PACKED;
-		
+
 		CopyMemory( m_pBuffer, pOutput, nOutput );
 		m_nLength = nOutput;
 
 		delete [] pOutput;
-		
+
 		return TRUE;
 	}
 	else
@@ -204,14 +204,14 @@ BOOL CEDPacket::Deflate()
 BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 {
 	if ( m_nEdProtocol != ED2K_PROTOCOL_PACKED ) return FALSE;
-	
+
 	DWORD nOutput = 0;
 	BYTE* pOutput = CZLib::Decompress( m_pBuffer, m_nLength, &nOutput );
-	
+
 	if ( pOutput != NULL )
 	{
 		m_nEdProtocol = nEdProtocol;
-		
+
 		if ( m_nBuffer >= nOutput )
 		{
 			CopyMemory( m_pBuffer, pOutput, nOutput );
@@ -225,7 +225,7 @@ BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 			m_nLength = nOutput;
 			m_nBuffer = nOutput;
 		}
-		
+
 		return FALSE;
 	}
 	else
@@ -237,7 +237,7 @@ BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 
 //////////////////////////////////////////////////////////////////////
 // CEDPacket debug tools
-	
+
 LPCTSTR CEDPacket::GetType() const
 {
 	static TCHAR szTypeBuffer[16];
@@ -249,7 +249,7 @@ LPCTSTR CEDPacket::GetType() const
 	{
 		if ( pType->nType == m_nType ) return pType->pszName;
 	}
-	
+
 	return NULL;
 	*/
 }
@@ -258,14 +258,14 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 {
 #ifdef _DEBUG
 	if ( ! Settings.General.Debug ) return;
-	
+
 	if ( m_nType == ED2K_C2C_SENDINGPART ) return;
 	if ( m_nType == ED2K_C2C_HASHSETANSWER ) return;
 	if ( m_nType == ED2K_C2C_COMPRESSEDPART ) return;
-	
+
 	CString strOutput;
 	CFile pFile;
-	
+
 	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
 		pFile.Seek( 0, CFile::end );
@@ -274,14 +274,14 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 	{
 		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
 	}
-	
+
 	strOutput.Format( _T("[ED2K]: '%s' %s %s\r\n\r\n"),
 		pszReason, GetType(), (LPCTSTR)ToASCII() );
-	
+
 	USES_CONVERSION;
 	LPCSTR pszOutput = T2CA( (LPCTSTR)strOutput );
 	pFile.Write( pszOutput, strlen(pszOutput) );
-	
+
 	for ( DWORD i = 0 ; i < m_nLength ; i++ )
 	{
 		int nChar = m_pBuffer[i];
@@ -289,9 +289,9 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 		pszOutput = T2CA( (LPCTSTR)strOutput );
 		pFile.Write( pszOutput, strlen(pszOutput) );
 	}
-	
+
 	pFile.Write( "\r\n\r\n", 4 );
-	
+
 	pFile.Close();
 #endif
 }
@@ -369,7 +369,7 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 	BOOL bSmallTags = ServerFlags & ED2K_SERVER_TCP_SMALLTAGS, bUnicode = ServerFlags & ED2K_SERVER_TCP_UNICODE;
 	DWORD nPos = pPacket->m_nLength;
 	pPacket->WriteByte( m_nType );
-	
+
 	if ( int nKeyLen = m_sKey.GetLength() )
 	{
 		pPacket->WriteEDString( m_sKey, ServerFlags );
@@ -384,32 +384,32 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 	{
 		if ( bSmallTags )// If we're supporting small tags
 		{
-			int nLength; 
+			int nLength;
 			if ( bUnicode )
 				nLength = pPacket->GetStringLenUTF8( m_sValue );
 			else
 				nLength = pPacket->GetStringLen( m_sValue );
 
-			if ( ( nLength <= 16 ) )	
-			{	
+			if ( ( nLength <= 16 ) )
+			{
 				// We should use a 'short' string tag
 				// Correct the packet type
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ( ED2K_TAG_SHORTSTRING - 1 ) + nLength ) ;	
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ( ( ED2K_TAG_SHORTSTRING - 1 ) + nLength ) ;
 
 				// Write the string
 				if ( bUnicode ) pPacket->WriteStringUTF8( m_sValue, FALSE );
 				else pPacket->WriteString( m_sValue, FALSE );
 			}
-			else					
+			else
 			{	// We should use a normal string tag
 				// Correct the packet type
-				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_STRING ;	
+				(BYTE)pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_STRING ;
 
 				// Write the string
 				pPacket->WriteEDString( m_sValue, ServerFlags );
 			}
 		}
-		else					
+		else
 		{
 			// Write the string
 			pPacket->WriteEDString( m_sValue, ServerFlags );
@@ -454,7 +454,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	int nLen;
 
 	Clear();
-	
+
 	if ( pPacket->GetRemaining() < 3 ) return FALSE;
 	m_nType = pPacket->ReadByte();
 
@@ -462,11 +462,11 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	{	//This is a short tag (No length)
 
 		//Remove the 0x80
-		m_nType -= 0x80;	
+		m_nType -= 0x80;
 		// No length in packet
 		nLen = 1;
 	}
-	else 
+	else
 	{	// Read in length
 		nLen = pPacket->ReadShortLE();
 	}
@@ -475,7 +475,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 
 
 	if ( pPacket->GetRemaining() < nLen ) return FALSE;
-	
+
 	if ( nLen == 1 )
 	{
 		m_nKey = pPacket->ReadByte();
@@ -487,7 +487,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 		else
 			m_sKey = pPacket->ReadString( nLen );
 	}
-	
+
 	if ( m_nType == ED2K_TAG_STRING )					// Length prefixed string
 	{
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
@@ -537,7 +537,7 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	{
 		theApp.Message( MSG_DEBUG, _T("Unrecognised ed2k packet") );
 	}
-	
+
 	return TRUE;
 }
 
@@ -547,13 +547,13 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 BOOL CEDTag::Read(CFile* pFile)
 {
 	Clear();
-	
+
 	if ( pFile->Read( &m_nType, sizeof(m_nType) ) != sizeof(m_nType) ) return FALSE;
 	if ( m_nType < ED2K_TAG_HASH || m_nType > ED2K_TAG_INT ) return FALSE;
-	
+
 	WORD nLen;
 	if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) ) return FALSE;
-	
+
 	if ( nLen == 1 )
 	{
 		if ( pFile->Read( &m_nKey, sizeof(m_nKey) ) != sizeof(m_nKey) ) return FALSE;
@@ -561,7 +561,7 @@ BOOL CEDTag::Read(CFile* pFile)
 	else if ( nLen > 1 )
 	{
 		LPSTR psz = new CHAR[ nLen + 1 ];
-		
+
 		if ( pFile->Read( psz, nLen ) == nLen )
 		{
 			psz[ nLen ] = 0;
@@ -574,7 +574,7 @@ BOOL CEDTag::Read(CFile* pFile)
 			return FALSE;
 		}
 	}
-	
+
 	if ( m_nType == ED2K_TAG_STRING )
 	{
 		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) ) return FALSE;
@@ -603,7 +603,7 @@ BOOL CEDTag::Read(CFile* pFile)
 	{
 		if ( pFile->Read( &m_nValue, sizeof(m_nValue) ) != sizeof(m_nValue) ) return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -629,7 +629,7 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_S2C_SERVERSTATUS,		_T("Status") },
 	{ ED2K_S2C_SERVERIDENT,			_T("Identity") },
 	{ ED2K_S2C_CALLBACKREQUESTED,	_T("Push2") },
-	
+
 	{ ED2K_C2SG_SERVERSTATUSREQUEST,_T("GetStatus") },
 	{ ED2K_S2CG_SERVERSTATUS,		_T("Status") },
 	{ ED2K_C2SG_SEARCHREQUEST,		_T("Search") },
@@ -637,7 +637,7 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2SG_GETSOURCES,			_T("FindSource") },
 	{ ED2K_S2CG_FOUNDSOURCES,		_T("Sources") },
 	{ ED2K_C2SG_CALLBACKREQUEST,	_T("Push1") },
-	
+
 	{ ED2K_C2C_HELLO,				_T("Handshake1") },
 	{ ED2K_C2C_HELLOANSWER,			_T("Handshake2") },
 	{ ED2K_C2C_FILEREQUEST,			_T("FileRequest") },
@@ -657,6 +657,6 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2C_ASKSHAREDFILES,		_T("Browse") },
 	{ ED2K_C2C_ASKSHAREDFILESANSWER,_T("BrowseResp") },
 	{ ED2K_C2C_MESSAGE,				_T("Message") },
-	
+
 	{ 0, NULL }
 };

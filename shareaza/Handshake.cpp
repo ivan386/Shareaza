@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,9 +71,9 @@ CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 	// We did not connect to the remote computer as part of a push
 	m_bPushing = FALSE;
 
-	// Call CConnection::AcceptFrom to setup this object with the socket and 
+	// Call CConnection::AcceptFrom to setup this object with the socket and
 	AcceptFrom( hSocket, pHost );
-	
+
 	// Set pointers so the input and output bandwidth limits are read from the DWORD in settings
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 
@@ -91,7 +91,7 @@ CHandshake::CHandshake(CHandshake* pCopy)
 	// Then, copy across the CHandshake member variables, since AttachTo just does the CConnection ones
 	m_bPushing		= pCopy->m_bPushing;	// Copy in whether or not we connected to the remote computer as part of a push
 	m_nIndex		= pCopy->m_nIndex;		// Copy across the handshake index (do)
-	
+
 	// Set pointers so the input and output bandwidth limits are read from the DWORD in settings
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 }
@@ -204,7 +204,7 @@ BOOL CHandshake::OnRead()
 {
 	// Read data waiting in the socket into the input buffer
 	CConnection::OnRead();
-	
+
 	// We need at least 7 bytes of headers from the remote compuer to figure out what network its talking about
 	if ( m_pInput->m_nLength < 7 ) return TRUE; // Not enough information yet, leave now returning true
 
@@ -218,7 +218,7 @@ BOOL CHandshake::OnRead()
 		EDClients.OnAccept( this );
 		return FALSE; // Return false to indicate that we are done sorting the handshake
 	}
-	
+
 	// See if the remote computer is speaking BitTorrent
 	if ( m_pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
 		 memcmp( m_pInput->m_pBuffer, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) == 0 ) // They are "\023BitTorrent protocol"

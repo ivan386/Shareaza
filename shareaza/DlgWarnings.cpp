@@ -1,7 +1,7 @@
 //
 // DlgWarnings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,37 +62,37 @@ void CWarningsDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWarningsDlg message handlers
 
-BOOL CWarningsDlg::OnInitDialog() 
+BOOL CWarningsDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CWarningsDlg"), IDR_MAINFRAME );
-	
+
 	m_crWhite = CCoolInterface::GetDialogBkColor();
 	m_brWhite.CreateSolidBrush( m_crWhite );
-	
+
 	return TRUE;
 }
 
-void CWarningsDlg::OnPaint() 
+void CWarningsDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	GetClientRect( &rc );
 	rc.top += 51;
-	
+
 	dc.Draw3dRect( 0, 50, rc.right + 1, 0,
 		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
 	dc.FillSolidRect( &rc, m_crWhite );
 }
 
-HBRUSH CWarningsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CWarningsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	pDC->SetBkColor( m_crWhite );
-	
+
 	if ( pWnd == &m_wndTitle || pWnd == &m_wndRespect )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontBold );
@@ -102,35 +102,35 @@ HBRUSH CWarningsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pDC->SetTextColor( RGB( 0, 0, 255 ) );
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
-	
+
 	return m_brWhite;
 }
 
-BOOL CWarningsDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CWarningsDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CPoint point;
 	CRect rc;
-	
+
 	GetCursorPos( &point );
 	m_wndWeb.GetWindowRect( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CWarningsDlg::OnLButtonUp(UINT nFlags, CPoint point) 
+void CWarningsDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CSkinDialog::OnLButtonUp( nFlags, point );
-	
+
 	CRect rc;
 	m_wndWeb.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		ShellExecute( GetSafeHwnd(), _T("open"),

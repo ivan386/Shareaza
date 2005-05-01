@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@ class CHashProgressBar : public CWnd
 public:
 	CHashProgressBar();
 	virtual ~CHashProgressBar();
-	
+
 // Attributes
 protected:
 	CWnd*		m_pParent;
@@ -43,7 +43,7 @@ protected:
 	int			m_nRemaining;
 	int			m_nFlash;
 	CString		m_sCurrent;
-	
+
 // Operations
 public:
 	void	Create(CWnd* pParent);
@@ -51,12 +51,12 @@ public:
 	void	Update();
 protected:
 	void	Show(int nWidth, BOOL bShow);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CHashProgressBar)
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CHashProgressBar)
@@ -65,7 +65,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
 };
 

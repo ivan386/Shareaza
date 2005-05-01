@@ -1,7 +1,7 @@
 //
 // RichElement.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,13 @@ class CRichFragment;
 class CRichViewCtrl;
 
 
-class CRichElement  
+class CRichElement
 {
 // Construction
 public:
 	CRichElement(int nType = 0, LPCTSTR pszText = NULL, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0);
 	virtual ~CRichElement();
-	
+
 // Attributes
 public:
 	CRichDocument*	m_pDocument;
@@ -58,7 +58,7 @@ protected:
 	void	PrePaintBitmap(CDC* pDC);
 	void	PrePaintIcon(CDC* pDC);
 	CSize	GetSize();
-	
+
 	friend class CRichFragment;
 	friend class CRichViewCtrl;
 };

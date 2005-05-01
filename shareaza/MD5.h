@@ -1,7 +1,7 @@
 //
 // MD5.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,13 +25,13 @@
 #pragma once
 
 
-class CMD5  
+class CMD5
 {
 // Construction
 public:
 	CMD5();
 	virtual ~CMD5();
-	
+
 // Attributes
 public:
 	DWORD	m_nCount[2];

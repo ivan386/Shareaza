@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,29 +58,29 @@ CHashDatabase::~CHashDatabase()
 BOOL CHashDatabase::Create()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	Close();
-	
+
 	m_sPath = Settings.General.UserPath + _T("\\Data\\TigerTree.dat");
-	
+
 	if ( m_pFile.Open( m_sPath, CFile::modeReadWrite ) )
 	{
 		CHAR szID[8];
 		m_pFile.Read( szID, 8 );
-		
+
 		if ( memcmp( szID, "HFDB1000", 8 ) && memcmp( szID, "HFDB1001", 8 ) )
 		{
 			m_pFile.Close();
 			return FALSE;
 		}
-		
+
 		m_pFile.Read( &m_nOffset, 4 );
 		m_pFile.Read( &m_nIndex, 4 );
 		m_pFile.Seek( m_nOffset, 0 );
-		
+
 		for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
 		m_pIndex = new HASHDB_INDEX[ m_nBuffer ];
-		
+
 		if ( memcmp( szID, "HFDB1001", 8 ) == 0 )
 		{
 			m_pFile.Read( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
@@ -88,7 +88,7 @@ BOOL CHashDatabase::Create()
 		else if ( memcmp( szID, "HFDB1000", 8 ) == 0 )
 		{
 			HASHDB_INDEX_1000 pIndex1;
-			
+
 			for ( DWORD nIndex = 0 ; nIndex < m_nIndex ; nIndex++ )
 			{
 				m_pFile.Read( &pIndex1, sizeof(pIndex1) );
@@ -109,15 +109,15 @@ BOOL CHashDatabase::Create()
 		{
 			return FALSE;
 		}
-		
+
 		m_nOffset = 16;
 		m_pFile.Write( "HFDB1001", 8 );
 		m_pFile.Write( &m_nOffset, 4 );
 		m_pFile.Write( &m_nIndex, 4 );
 	}
-	
+
 	m_bOpen = TRUE;
-	
+
 	return TRUE;
 }
 
@@ -127,10 +127,10 @@ BOOL CHashDatabase::Create()
 void CHashDatabase::Close()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pIndex != NULL ) delete [] m_pIndex;
 	if ( m_pFile.m_hFile != CFile::hFileNull ) m_pFile.Close();
-	
+
 	m_bOpen		= FALSE;
 	m_nOffset	= 0;
 	m_pIndex	= NULL;
@@ -145,12 +145,12 @@ HASHDB_INDEX* CHashDatabase::Lookup(DWORD nIndex, DWORD nType)
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = m_pIndex;
-	
+
 	for ( DWORD nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex && pIndex->nType == nType ) return pIndex;
 	}
-	
+
 	return NULL;
 }
 
@@ -161,25 +161,25 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 {
 	ASSERT( m_bOpen );
 	HASHDB_INDEX* pIndex = Lookup( nIndex, nType );
-	
+
 	if ( pIndex != NULL && pIndex->nLength != nLength )
 	{
 		pIndex->nIndex = 0;
 		pIndex = NULL;
 	}
-	
+
 	if ( pIndex != NULL ) return pIndex;
-	
+
 	HASHDB_INDEX* pBestIndex	= NULL;
 	DWORD nBestOverhead			= 0xFFFFFFFF;
 	DWORD nCount;
-	
+
 	for ( pIndex = m_pIndex, nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == 0 && pIndex->nLength >= nLength )
 		{
 			DWORD nOverhead = pIndex->nLength - nLength;
-			
+
 			if ( nOverhead < nBestOverhead )
 			{
 				pBestIndex = pIndex;
@@ -188,7 +188,7 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 			}
 		}
 	}
-	
+
 	if ( pBestIndex != NULL )
 	{
 		pIndex = pBestIndex;
@@ -203,17 +203,17 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 			if ( m_pIndex ) delete [] m_pIndex;
 			m_pIndex = pNew;
 		}
-		
+
 		pIndex = m_pIndex + m_nIndex++;
 		pIndex->nOffset = m_nOffset;
 		pIndex->nLength = nLength;
-		
+
 		m_nOffset += nLength;
 	}
-	
+
 	pIndex->nIndex	= nIndex;
 	pIndex->nType	= nType;
-	
+
 	return pIndex;
 }
 
@@ -223,12 +223,12 @@ HASHDB_INDEX* CHashDatabase::PrepareToStore(DWORD nIndex, DWORD nType, DWORD nLe
 BOOL CHashDatabase::Erase(DWORD nIndex, DWORD nType)
 {
 	ASSERT( m_bOpen );
-	
+
 	HASHDB_INDEX* pIndex = Lookup( nIndex, nType );
 	if ( pIndex == NULL ) return FALSE;
 	pIndex->nIndex = 0;
 	Commit();
-	
+
 	return TRUE;
 }
 
@@ -238,7 +238,7 @@ BOOL CHashDatabase::Erase(DWORD nIndex, DWORD nType)
 void CHashDatabase::Commit()
 {
 	ASSERT( m_bOpen );
-	
+
 	m_pFile.SetLength( m_nOffset + sizeof(HASHDB_INDEX) * m_nIndex );
 	m_pFile.Seek( 0, 0 );
 	m_pFile.Write( "HFDB1001", 8 );
@@ -246,7 +246,7 @@ void CHashDatabase::Commit()
 	m_pFile.Write( &m_nIndex, 4 );
 	m_pFile.Seek( m_nOffset, 0 );
 	m_pFile.Write( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
-	
+
 	m_pFile.Flush();
 }
 
@@ -258,10 +258,10 @@ BOOL CHashDatabase::DeleteAll(DWORD nIndex)
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
 	if ( nIndex == 0 ) return FALSE;
-	
+
 	HASHDB_INDEX* pIndex = m_pIndex;
 	DWORD nChanged = 0;
-	
+
 	for ( DWORD nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex )
@@ -270,7 +270,7 @@ BOOL CHashDatabase::DeleteAll(DWORD nIndex)
 			nChanged++;
 		}
 	}
-	
+
 	if ( nChanged != 0 ) Commit();
 	return nChanged != 0;
 }
@@ -281,13 +281,13 @@ BOOL CHashDatabase::DeleteAll(DWORD nIndex)
 BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 {
 	pTree->Clear();
-	
+
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
-	
+
 	HASHDB_INDEX* pIndex = Lookup( nIndex, HASH_TIGERTREE );
 	if ( pIndex == NULL ) return FALSE;
-	
+
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
@@ -299,7 +299,7 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 		pException->Delete();
 		return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -307,12 +307,12 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
-	
+
 	DWORD nLength = pTree->GetSerialSize();
-	
+
 	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_TIGERTREE, nLength );
 	if ( pIndex == NULL ) return FALSE;
-	
+
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
@@ -323,9 +323,9 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 	{
 		pException->Delete();
 	}
-	
+
 	Commit();
-	
+
 	return TRUE;
 }
 
@@ -342,13 +342,13 @@ BOOL CHashDatabase::DeleteTiger(DWORD nIndex)
 BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 {
 	pSet->Clear();
-	
+
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
-	
+
 	HASHDB_INDEX* pIndex = Lookup( nIndex, HASH_ED2K );
 	if ( pIndex == NULL ) return FALSE;
-	
+
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
@@ -360,7 +360,7 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 		pException->Delete();
 		return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -368,12 +368,12 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
-	
+
 	DWORD nLength = pSet->GetSerialSize();
-	
+
 	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_ED2K, nLength );
 	if ( pIndex == NULL ) return FALSE;
-	
+
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
@@ -384,9 +384,9 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 	{
 		pException->Delete();
 	}
-	
+
 	Commit();
-	
+
 	return TRUE;
 }
 

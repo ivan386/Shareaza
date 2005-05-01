@@ -1,7 +1,7 @@
 //
 // PageSettingsBandwidth.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -108,16 +108,16 @@ void CBandwidthSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CBandwidthSettingsPage message handlers
 
-BOOL CBandwidthSettingsPage::OnInitDialog() 
+BOOL CBandwidthSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	/*
 	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
 		TCHAR szClass[64];
 		GetClassName( *pWnd, szClass, 64 );
-		
+
 		if ( _tcsistr( szClass, _T("UPDOWN") ) )
 		{
 			theApp.Message( MSG_DEBUG, _T("Class : %s"), szClass );
@@ -137,13 +137,13 @@ BOOL CBandwidthSettingsPage::OnInitDialog()
 	m_sDLTotal		= ToString( Settings.Bandwidth.Downloads, TRUE, TRUE );
 	m_sULTotal		= ToString( Settings.Bandwidth.Uploads, TRUE, TRUE );
 	m_sUDPTotal		= ToString( Settings.Bandwidth.UdpOut, TRUE, TRUE );
-	
+
 	Calculate( TRUE );
 
 	return TRUE;
 }
 
-BOOL CBandwidthSettingsPage::OnSetActive() 
+BOOL CBandwidthSettingsPage::OnSetActive()
 {
 	Calculate( TRUE );
 	return CSettingsPage::OnSetActive();
@@ -170,19 +170,19 @@ void CBandwidthSettingsPage::Calculate(BOOL bForeward)
 	Calculate( m_sLInLimit, nNumLeafs, m_sLInMax, m_sLInTotal, bForeward );
 	Calculate( m_sPInLimit, nNumPeers, m_sPInMax, m_sPInTotal, bForeward );
 	// Calculate( m_sDLLimit, nDownloads, m_sDLMax, m_sDLTotal, bForeward );
-	
+
 	m_sInTotal = ToString( AddString( m_sUPInTotal + ';' + m_sLInTotal + ';' + m_sPInTotal + ';' + m_sDLTotal ), TRUE, TRUE );
 
 	Calculate( m_sUPOutLimit, nNumHubs, m_sUPOutMax, m_sUPOutTotal, bForeward );
 	Calculate( m_sLOutLimit, nNumLeafs, m_sLOutMax, m_sLOutTotal, bForeward );
 	Calculate( m_sPOutLimit, nNumPeers, m_sPOutMax, m_sPOutTotal, bForeward );
 	// Calculate( m_sULLimit, nUploads, m_sULMax, m_sULTotal, bForeward );
-	
+
 	// CString strDummy;
 	// Calculate( m_sUDPLimit, 1, strDummy, m_sUDPTotal, bForeward );
-	
+
 	m_sOutTotal = ToString( AddString( m_sUPOutTotal + ';' + m_sLOutTotal + ';' + m_sPOutTotal + ';' + m_sULTotal + ';' + m_sUDPTotal ), TRUE, TRUE );
-	
+
 	m_bActive = FALSE;
 	UpdateData( FALSE );
 	m_bActive = TRUE;
@@ -191,7 +191,7 @@ void CBandwidthSettingsPage::Calculate(BOOL bForeward)
 void CBandwidthSettingsPage::Calculate(CString& strLimit, int nCount, CString& strCount, CString& strTotal, BOOL bForeward)
 {
 	strCount.Format( _T("%lu"), nCount );
-	
+
 	if ( bForeward )
 	{
 		DWORD nSpeed = ToSpeed( strLimit ) * nCount;
@@ -216,7 +216,7 @@ DWORD CBandwidthSettingsPage::ToSpeed(CString& str)
 CString CBandwidthSettingsPage::ToString(DWORD nSpeed, BOOL bUnlimited, BOOL bUnit)
 {
 	CString str;
-	
+
 	if ( nSpeed || ! bUnlimited )
 	{
 		float nValue = (float)nSpeed / 1024.0f;
@@ -261,7 +261,7 @@ void CBandwidthSettingsPage::SwapBytesBits(CString& str)
 	str = ToString( nSpeed, TRUE );
 }
 
-BOOL CBandwidthSettingsPage::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CBandwidthSettingsPage::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if ( HIWORD( wParam ) == EN_CHANGE && m_bActive )
 	{
@@ -289,49 +289,49 @@ BOOL CBandwidthSettingsPage::OnCommand(WPARAM wParam, LPARAM lParam)
 			break;
 		}
 	}
-	
+
 	return CSettingsPage::OnCommand( wParam, lParam );
 }
 
-BOOL CBandwidthSettingsPage::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CBandwidthSettingsPage::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 	NM_UPDOWN* pNotify = reinterpret_cast<NM_UPDOWN*>( lParam );
-	
+
 	if ( pNotify->hdr.code == UDN_DELTAPOS )
 	{
 		CWnd* pWnd		= CWnd::FromHandle( pNotify->hdr.hwndFrom );
 		CEdit* pEdit	= reinterpret_cast<CEdit*>( pWnd->GetNextWindow( GW_HWNDPREV ) );
 		CString str;
-		
+
 		pEdit->GetWindowText( str );
 		DWORD nSpeed = ToSpeed( str );
-		
+
 		if ( m_bBytes )
 			nSpeed -= pNotify->iDelta * 103;
 		else
 			nSpeed -= pNotify->iDelta * 128;
-		
+
 		if ( nSpeed > 0xF0000000 ) nSpeed = 0;
-		
+
 		str = ToString( nSpeed, TRUE, TRUE );
 		pEdit->SetWindowText( str );
-		
+
 		return TRUE;
 	}
-	
+
 	return CSettingsPage::OnNotify( wParam, lParam, pResult );
 }
 
-void CBandwidthSettingsPage::OnTimer(UINT nIDEvent) 
+void CBandwidthSettingsPage::OnTimer(UINT nIDEvent)
 {
 	UpdateData( TRUE );
 	Calculate( nIDEvent == 1 );
 }
 
-HBRUSH CBandwidthSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CBandwidthSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSettingsPage::OnCtlColor(pDC, pWnd, nCtlColor);
-	
+
 	if ( pWnd == &m_wndHeadReceive || pWnd == &m_wndHeadTransmit )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontBold );
@@ -340,7 +340,7 @@ HBRUSH CBandwidthSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-void CBandwidthSettingsPage::OnOK() 
+void CBandwidthSettingsPage::OnOK()
 {
 	UpdateData();
 
@@ -353,7 +353,7 @@ void CBandwidthSettingsPage::OnOK()
 	Settings.Bandwidth.Downloads	= ToSpeed( m_sDLTotal );
 	Settings.Bandwidth.Uploads		= ToSpeed( m_sULTotal );
 	Settings.Bandwidth.UdpOut		= ToSpeed( m_sUDPTotal );
-	
+
 	CSettingsPage::OnOK();
 }
 

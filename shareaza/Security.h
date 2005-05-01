@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CSecureRule;
 class CXMLElement;
 
 
-class CSecurity  
+class CSecurity
 {
 // Construction
 public:
 	CSecurity();
 	virtual ~CSecurity();
-	
+
 // Attributes
 public:
 	BOOL		m_bDenyPolicy;
@@ -42,7 +42,7 @@ protected:
 	CPtrList	m_pRules;
 public:
 	static LPCTSTR xmlns;
-	
+
 // Operations
 public:
 	POSITION		GetIterator() const;
@@ -125,12 +125,12 @@ class CAdultFilter
 public:
 	CAdultFilter();
 	virtual ~CAdultFilter();
-	
+
 // Attributes
 private:
 	LPTSTR		m_pszBlockedWords;			// Definitely adult content
 	LPTSTR		m_pszDubiousWords;			// Possibly adult content
-	
+
 // Operations
 public:
 	void		Load();
@@ -148,12 +148,12 @@ class CMessageFilter
 public:
 	CMessageFilter();
 	virtual ~CMessageFilter();
-	
+
 // Attributes
 private:
 	LPTSTR		m_pszED2KSpam;				// Known ED2K spam phrases
 	LPTSTR		m_pszFilteredPhrases;		// Known spam phrases
-	
+
 // Operations
 public:
 	void		Load();

@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,10 +59,10 @@ CLibrary Library;
 CLibrary::CLibrary()
 {
 	EnableDispatch( IID_ILibrary );
-	
+
 	m_nUpdateSaved	= 0;
 	m_nScanCount	= 0;
-	
+
 	m_hThread		= NULL;
 	m_bThread		= TRUE;
 	m_nScanCookie	= 1;
@@ -70,10 +70,10 @@ CLibrary::CLibrary()
 	m_nUpdateSaved	= 0;
 	m_nFileSwitch	= 0;
 	m_nInhibit		= 0;
-	
+
 	m_pfnGFAEW		= NULL;
 	m_pfnGFAEA		= NULL;
-	
+
 	if ( m_hKernel = LoadLibrary( _T("kernel32") ) )
 	{
 		(FARPROC&)m_pfnGFAEW = GetProcAddress( m_hKernel, "GetFileAttributesExW" );
@@ -113,12 +113,12 @@ CAlbumFolder* CLibrary::GetAlbumRoot()
 void CLibrary::AddFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileAdd( pFile );
-	
+
 	if ( pFile->m_bSHA1 )
 	{
 		LibraryDictionary.Add( pFile );
 	}
-	
+
 	if ( pFile->IsAvailable() )
 	{
 		if ( pFile->m_bSHA1 || pFile->m_bTiger || pFile->m_bMD5 || pFile->m_bED2K )
@@ -126,7 +126,7 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 			LibraryHistory.Submit( pFile );
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
-		
+
 		if ( ! pFile->m_bSHA1 || ! pFile->m_bTiger || ! pFile->m_bMD5 || ! pFile->m_bED2K )
 		{
 			LibraryBuilder.Add( pFile );
@@ -137,7 +137,7 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 void CLibrary::RemoveFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileRemove( pFile );
-	
+
 	if ( pFile->m_nIndex )
 	{
 		LibraryBuilder.Remove( pFile );
@@ -160,14 +160,14 @@ CPtrList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 	CSingleLock oLock( &m_pSection );
 
 	if ( !oLock.Lock( 50 ) ) return NULL;
-	
+
 	CPtrList* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal );
-	
+
 	if ( pHits == NULL && pSearch != NULL )
 	{
 		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal );
 	}
-	
+
 	return pHits;
 }
 
@@ -177,14 +177,14 @@ CPtrList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal)
 void CLibrary::Clear()
 {
 	StopThread();
-	
+
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	LibraryHistory.Clear();
 	LibraryDictionary.Clear();
 	LibraryFolders.Clear();
 	LibraryMaps.Clear();
-	
+
 	m_nUpdateCookie++;
 }
 
@@ -194,19 +194,19 @@ void CLibrary::Clear()
 BOOL CLibrary::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	GetAlbumRoot();
-	
+
 	FILETIME pFileTime1 = { 0, 0 }, pFileTime2 = { 0, 0 };
 	CFile pFile1, pFile2;
 	BOOL bFile1, bFile2;
 	CString strFile;
-	
+
 	strFile = Settings.General.UserPath + _T("\\Data\\Library");
-	
+
 	bFile1 = pFile1.Open( strFile + _T("1.dat"), CFile::modeRead );
 	bFile2 = pFile2.Open( strFile + _T("2.dat"), CFile::modeRead );
-	
+
 	if ( bFile1 || bFile2 )
 	{
 		if ( bFile1 ) bFile1 = pFile1.Read( &pFileTime1, sizeof(FILETIME) ) == sizeof(FILETIME);
@@ -217,12 +217,12 @@ BOOL CLibrary::Load()
 		bFile1 = pFile1.Open( strFile + _T(".dat"), CFile::modeRead );
 		pFileTime1.dwHighDateTime++;
 	}
-	
+
 	if ( bFile1 || bFile2 )
 	{
 		CFile* pNewest	= ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 )
 						? &pFile1 : &pFile2;
-		
+
 		try
 		{
 			CArchive ar( pNewest, CArchive::load, 40960 );
@@ -233,14 +233,14 @@ BOOL CLibrary::Load()
 		{
 			pException->Delete();
 			Clear();
-			
+
 			if ( pNewest == &pFile1 && bFile2 )
 				pNewest = &pFile2;
 			else if ( pNewest == &pFile2 && bFile1 )
 				pNewest = &pFile1;
 			else
 				pNewest = NULL;
-			
+
 			if ( pNewest != NULL )
 			{
 				try
@@ -255,7 +255,7 @@ BOOL CLibrary::Load()
 				}
 			}
 		}
-		
+
 		pNewest->Close();
 	}
 	else
@@ -269,13 +269,13 @@ BOOL CLibrary::Load()
 		//CreateDirectory( Settings.Downloads.TorrentPath, NULL );
 		//LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	}
-	
+
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
 	StartThread();
 
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
-	
+
 	return TRUE;
 }
 
@@ -285,26 +285,26 @@ BOOL CLibrary::Load()
 void CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	FILETIME pFileTime = { 0, 0 };
 	SYSTEMTIME pSystemTime;
 	CString strFile;
 	CFile pFile;
-	
+
 	strFile.Format( _T("%s\\Data\\Library%i.dat"),
 		(LPCTSTR)Settings.General.UserPath, m_nFileSwitch + 1 );
-	
+
 	m_nFileSwitch = ( m_nFileSwitch == 0 ) ? 1 : 0;
-	
+
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;
-	
+
 	pFile.Write( &pFileTime, sizeof(FILETIME) );
-	
+
 	CArchive ar( &pFile, CArchive::store, 40960 );
 	Serialize( ar );
 	ar.Close();
 	pFile.Flush();
-	
+
 	GetSystemTime( &pSystemTime );
 	SystemTimeToFileTime( &pSystemTime, &pFileTime );
 	pFile.Seek( 0, 0 );
@@ -320,7 +320,7 @@ void CLibrary::Save()
 void CLibrary::Serialize(CArchive& ar)
 {
 	int nVersion = LIBRARY_SER_VERSION;
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
@@ -331,7 +331,7 @@ void CLibrary::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 1 || nVersion > LIBRARY_SER_VERSION ) AfxThrowUserException();
 	}
-	
+
 	LibraryMaps.Serialize1( ar, nVersion );
 	LibraryFolders.Serialize( ar, nVersion );
 	LibraryHistory.Serialize( ar, nVersion );
@@ -349,19 +349,19 @@ void CLibrary::StartThread()
 		CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
 		m_hThread = pThread->m_hThread;
 	}
-	
+
 	LibraryBuilder.StartThread();
 }
 
 void CLibrary::StopThread()
 {
 	LibraryBuilder.StopThread();
-	
+
 	if ( m_hThread != NULL )
 	{
 		m_bThread = FALSE;
 		m_pWakeup.SetEvent();
-		
+
         int nAttempt = 10;
 		for ( ; nAttempt > 0 ; nAttempt-- )
 		{
@@ -370,14 +370,14 @@ void CLibrary::StopThread()
 			if ( nCode != STILL_ACTIVE ) break;
 			Sleep( 200 );
 		}
-		
+
 		if ( nAttempt == 0 )
 		{
 			TerminateThread( m_hThread, 0 );
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CLibrary thread.") );
 			Sleep( 100 );
 		}
-		
+
 		m_hThread = NULL;
 	}
 }
@@ -407,21 +407,21 @@ void CLibrary::OnRun()
 BOOL CLibrary::ThreadScan()
 {
 	BOOL bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
-	
+
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	m_nScanCount++;
 	if ( bChanged ) m_nUpdateCookie = GetTickCount();
-	
+
 	if ( m_nUpdateCookie - m_nUpdateSaved > 5000 )
 	{
 		Save();
 		m_nUpdateSaved = m_nUpdateCookie = GetTickCount();
 	}
-	
+
 	LibraryDictionary.BuildHashTable();
 	StartThread();
-	
+
 	return bChanged;
 }
 

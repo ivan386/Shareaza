@@ -1,7 +1,7 @@
 //
 // Registry.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,13 +22,13 @@
 #pragma once
 
 
-class CRegistry 
+class CRegistry
 {
 // Construction
 public:
 	CRegistry();
 	~CRegistry();
-	
+
 // Operations
 public:
 	CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL);
@@ -38,7 +38,7 @@ public:
 public:
 	BOOL	SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue);
 	BOOL	SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue);
-	
+
 // Implementation
 protected:
 	void	DisplayErrorMessageBox(LPCTSTR pszName, DWORD nErrorCode);

@@ -1,7 +1,7 @@
 //
 // ComMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -108,7 +108,7 @@ STDMETHODIMP CComMenu::XSMenu::get_Item(VARIANT vIndex, ISMenu FAR* FAR* ppMenu)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	if ( pThis->m_hMenu == NULL ) return E_FAIL;
-	
+
 	VARIANT va;
 	VariantInit( &va );
 
@@ -117,7 +117,7 @@ STDMETHODIMP CComMenu::XSMenu::get_Item(VARIANT vIndex, ISMenu FAR* FAR* ppMenu)
 		*ppMenu = NULL;
 		return S_OK;
 	}
-	
+
 	if ( va.lVal < 0 || va.lVal >= GetMenuItemCount( pThis->m_hMenu ) )
 	{
 		*ppMenu = NULL;
@@ -166,7 +166,7 @@ STDMETHODIMP CComMenu::XSMenu::put_CommandID(LONG nCommandID)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	if ( pThis->m_hMenu != NULL ) return E_FAIL;
-	
+
 	MENUITEMINFO pItem;
 	ZeroMemory( &pItem, sizeof(pItem) );
 	pItem.cbSize	= sizeof(pItem);
@@ -182,7 +182,7 @@ STDMETHODIMP CComMenu::XSMenu::get_Text(BSTR FAR* psText)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	if ( pThis->m_hParent == NULL ) return E_FAIL;
-	
+
 	CString str;
 	GetMenuString( pThis->m_hParent, pThis->m_nPosition,
 		str.GetBuffer( 256 ), 256, MF_BYPOSITION );
@@ -255,7 +255,7 @@ STDMETHODIMP CComMenu::XSMenu::InsertMenu(LONG nPosition, BSTR sText, ISMenu FAR
 		(UINT)CreatePopupMenu(), CString( sText ) );
 
 	if ( ppMenu ) *ppMenu = CComMenu::Wrap( pThis->m_hMenu, nPosition );
-	
+
 	return S_OK;
 }
 
@@ -299,10 +299,10 @@ STDMETHODIMP CComMenu::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULONG 
 	return S_OK;
 }
 
-STDMETHODIMP CComMenu::XEnumVARIANT::Skip(ULONG celt) 
+STDMETHODIMP CComMenu::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CComMenu, EnumVARIANT )
-	
+
 	int nCount = GetMenuItemCount( pThis->m_hMenu );
 
 	while ( celt-- && m_nIndex++ < (UINT)nCount );
@@ -317,7 +317,7 @@ STDMETHODIMP CComMenu::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CComMenu::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum) 
+STDMETHODIMP CComMenu::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
 {
     METHOD_PROLOGUE( CComMenu, EnumVARIANT )
     return E_NOTIMPL;

@@ -1,7 +1,7 @@
 //
 // Transfers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,12 +83,12 @@ public:
 	{
 		return m_pList.GetHeadPosition();
 	}
-	
+
 	inline CTransfer* GetNext(POSITION& pos) const
 	{
 		return (CTransfer*)m_pList.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pList.GetCount();

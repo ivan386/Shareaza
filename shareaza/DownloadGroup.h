@@ -1,7 +1,7 @@
 //
 // DownloadGroup.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,13 +24,13 @@
 class CDownload;
 
 
-class CDownloadGroup  
+class CDownloadGroup
 {
 // Construction
 public:
 	CDownloadGroup();
 	virtual ~CDownloadGroup();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pDownloads;
@@ -42,7 +42,7 @@ public:
 public:
 	int			m_nImage;
 	BOOL		m_bRemoteSelected;
-	
+
 // Operations
 public:
 	void		Add(CDownload* pDownload);
@@ -54,28 +54,28 @@ public:
 	void		AddFilter(LPCTSTR pszFilter);
 	void		SetSchema(LPCTSTR pszURI);
 	void		Serialize(CArchive& ar, int nVersion);
-	
+
 // Inlines
 public:
 	inline POSITION GetIterator() const
 	{
 		return m_pDownloads.GetHeadPosition();
 	}
-	
+
 	inline CDownload* GetNext(POSITION& pos) const
 	{
 		return (CDownload*)m_pDownloads.GetNext( pos );
 	}
-	
+
 	inline BOOL Contains(CDownload* pDownload) const
 	{
 		return m_pDownloads.Find( pDownload ) != NULL;
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pDownloads.GetCount();
 	}
-	
-	
+
+
 };

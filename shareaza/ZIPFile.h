@@ -1,7 +1,7 @@
 //
 // ZIPFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,14 +51,14 @@ public:
 		int			m_nCompression;
 		BOOL		PrepareToDecompress(LPVOID pStream);
 	};
-	
+
 // Attributes
 protected:
 	BOOL	m_bAttach;
 	HANDLE	m_hFile;
 	File*	m_pFile;
 	int		m_nFile;
-	
+
 // Operations
 public:
 	BOOL	Open(LPCTSTR pszFile);
@@ -73,5 +73,5 @@ protected:
 	BOOL	LocateCentralDirectory();
 	BOOL	ParseCentralDirectory(BYTE* pDirectory, DWORD nDirectory);
 	BOOL	SeekToFile(File* pFile);
-	
+
 };

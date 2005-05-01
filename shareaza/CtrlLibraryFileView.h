@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CLibraryFileView : public CLibraryView
 public:
 	CLibraryFileView();
 	virtual ~CLibraryFileView();
-	
+
 	DECLARE_DYNAMIC(CLibraryFileView)
 
 // Attributes
@@ -105,9 +105,9 @@ protected:
 	afx_msg void OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryRebuildAnsi();
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

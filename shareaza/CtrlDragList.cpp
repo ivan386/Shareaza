@@ -1,7 +1,7 @@
 //
 // CtrlDragList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,42 +57,42 @@ CDragListCtrl::~CDragListCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CDragListCtrl message handlers
 
-void CDragListCtrl::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
+void CDragListCtrl::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
-	
+
 	CPoint ptAction( pNMListView->ptAction );
-	
+
 	m_bCreateDragImage = TRUE;
 	m_pDragImage = CLiveList::CreateDragImage( this, ptAction );
 	m_bCreateDragImage = FALSE;
-	
+
 	if ( m_pDragImage == NULL ) return;
 	m_nDragDrop = -1;
-	
+
 	UpdateWindow();
-	
+
 	CRect rcClient;
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
 	SetCapture();
-	
+
 	SetFocus();
 	UpdateWindow();
-	
+
 	m_pDragImage->DragEnter( this, ptAction );
 }
 
-void CDragListCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CDragListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_pDragImage != NULL )
 	{
 		int nHit = HitTest( point );
-		
+
 		m_pDragImage->DragMove( point );
-		
+
 		if ( nHit != m_nDragDrop )
 		{
 			CImageList::DragShowNolock( FALSE );
@@ -103,31 +103,31 @@ void CDragListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 			CImageList::DragShowNolock( TRUE );
 		}
 	}
-	
+
 	CListCtrl::OnMouseMove( nFlags, point );
 }
 
-void CDragListCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CDragListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( m_pDragImage == NULL )
 	{
 		CListCtrl::OnLButtonUp( nFlags, point );
 		return;
 	}
-	
+
 	ClipCursor( NULL );
 	ReleaseCapture();
-	
+
 	m_pDragImage->DragLeave( this );
 	m_pDragImage->EndDrag();
 	delete m_pDragImage;
 	m_pDragImage = NULL;
-	
+
 	if ( m_nDragDrop >= 0 )
 		SetItemState( m_nDragDrop, 0, LVIS_DROPHILITED );
 	//else
 	//	m_nDragDrop = GetItemCount();
-	
+
 	OnDragDrop( m_nDragDrop );
 }
 

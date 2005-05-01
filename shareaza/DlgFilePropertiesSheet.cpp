@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ END_MESSAGE_MAP()
 CFilePropertiesSheet::CFilePropertiesSheet(UINT nIndex) : CPropertySheet( _T("") )
 {
 	if ( nIndex > 0 ) m_pList.AddTail( nIndex );
-	
+
 	m_pSkin = NULL;
 	m_psh.dwFlags &= ~PSP_HASHELP;
 }
@@ -85,7 +85,7 @@ void CFilePropertiesSheet::Add(CLibraryList* pList)
 	m_pList.Merge( pList );
 }
 
-int CFilePropertiesSheet::DoModal(int nPage) 
+int CFilePropertiesSheet::DoModal(int nPage)
 {
 	//TODO: Get page title from defined caption in resources (Rolandas)
 	CFileGeneralPage	pGeneral;
@@ -93,9 +93,9 @@ int CFilePropertiesSheet::DoModal(int nPage)
 	CFileCommentsPage	pComments;
 	CFileSharingPage	pSharing;
 	CFileSourcesPage	pSources;
-		
+
 	CString strTabLabel;
-		
+
 	switch ( m_pList.GetCount() )
 	{
 	case 0:
@@ -139,7 +139,7 @@ int CFilePropertiesSheet::DoModal(int nPage)
 		else if ( nPage == 2 ) nPage = 1;
 		break;
 	}
-	
+
 	m_psh.nStartPage = nPage;
 	return CPropertySheet::DoModal();
 }
@@ -147,10 +147,10 @@ int CFilePropertiesSheet::DoModal(int nPage)
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet message handlers
 
-BOOL CFilePropertiesSheet::OnInitDialog() 
+BOOL CFilePropertiesSheet::OnInitDialog()
 {
 	BOOL bResult = CPropertySheet::OnInitDialog();
-	
+
 	SetFont( &theApp.m_gdiFont );
 	SetIcon( theApp.LoadIcon( IDI_PROPERTIES ), TRUE );
 
@@ -161,7 +161,7 @@ BOOL CFilePropertiesSheet::OnInitDialog()
 	m_pSkin = Skin.GetWindowSkin( _T("CFilePropertiesSheet") );
 	if ( m_pSkin == NULL ) m_pSkin = Skin.GetWindowSkin( this );
 	if ( m_pSkin == NULL ) m_pSkin = Skin.GetWindowSkin( _T("CDialog") );
-	
+
 	if ( m_pSkin != NULL )
 	{
 		CRect rc;
@@ -183,14 +183,14 @@ BOOL CFilePropertiesSheet::OnInitDialog()
 
 	if ( GetDlgItem( 0x3021 ) ) GetDlgItem( 0x3021 )->ShowWindow( SW_HIDE );
 	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
-	
+
 	return bResult;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet skin support
 
-void CFilePropertiesSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CFilePropertiesSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
@@ -198,7 +198,7 @@ void CFilePropertiesSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS 
 		CPropertySheet::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CFilePropertiesSheet::OnNcHitTest(CPoint point) 
+UINT CFilePropertiesSheet::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ( GetStyle() & WS_THICKFRAME ) ? TRUE : FALSE );
@@ -206,7 +206,7 @@ UINT CFilePropertiesSheet::OnNcHitTest(CPoint point)
 		return CPropertySheet::OnNcHitTest( point );
 }
 
-BOOL CFilePropertiesSheet::OnNcActivate(BOOL bActive) 
+BOOL CFilePropertiesSheet::OnNcActivate(BOOL bActive)
 {
 	if ( m_pSkin )
 	{
@@ -223,7 +223,7 @@ BOOL CFilePropertiesSheet::OnNcActivate(BOOL bActive)
 	}
 }
 
-void CFilePropertiesSheet::OnNcPaint() 
+void CFilePropertiesSheet::OnNcPaint()
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcPaint( this );
@@ -231,31 +231,31 @@ void CFilePropertiesSheet::OnNcPaint()
 		CPropertySheet::OnNcPaint();
 }
 
-void CFilePropertiesSheet::OnNcLButtonDown(UINT nHitTest, CPoint point) 
+void CFilePropertiesSheet::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonDown(nHitTest, point);
 }
 
-void CFilePropertiesSheet::OnNcLButtonUp(UINT nHitTest, CPoint point) 
+void CFilePropertiesSheet::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonUp( nHitTest, point );
 }
 
-void CFilePropertiesSheet::OnNcLButtonDblClk(UINT nHitTest, CPoint point) 
+void CFilePropertiesSheet::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonDblClk( nHitTest, point );
 }
 
-void CFilePropertiesSheet::OnNcMouseMove(UINT nHitTest, CPoint point) 
+void CFilePropertiesSheet::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
 	CPropertySheet::OnNcMouseMove( nHitTest, point );
 }
 
-void CFilePropertiesSheet::OnSize(UINT nType, int cx, int cy) 
+void CFilePropertiesSheet::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_pSkin ) m_pSkin->OnSize( this );
 

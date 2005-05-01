@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,7 @@ CLibraryTreeView::~CLibraryTreeView()
 void CLibraryTreeView::SetVirtual(BOOL bVirtual)
 {
 	if ( bVirtual == m_bVirtual ) return;
-	
+
 	m_bVirtual = bVirtual;
 	SetToolTip( m_bVirtual ? (CCoolTipCtrl*)&m_wndAlbumTip : (CCoolTipCtrl*)&m_wndFolderTip );
 
@@ -139,7 +139,7 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 		CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
 
 		CLibraryTreeItem** pChild = m_pRoot->m_pList;
-		
+
         int nChild = m_pRoot->m_nCount;
 		for ( ; nChild ; nChild--, pChild++ )
 		{
@@ -181,13 +181,13 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 	{
 		pItem = pParent->Add( pFolder->m_sName );
 		if ( bVisible ) m_nTotal++;
-		
+
 		pItem->m_bExpanded	= pFolder->m_bExpanded;
 		pItem->m_pPhysical	= pFolder;
 		pItem->m_sText		= pFolder->m_sName;
 		pItem->m_bShared	= bShared;
 		pItem->m_bBold		= ( pFolder->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 );
-		
+
 		if ( pFolder->m_pParent == NULL )
 		{
 			if ( pFolder->m_sPath.Find( _T(":\\") ) == 1 || pFolder->m_sPath.GetLength() == 2 )
@@ -201,7 +201,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 				pItem->m_sText += _T(" (Net)");
 			}
 		}
-		
+
 		bChanged = bVisible;
 	}
 	else
@@ -209,51 +209,51 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 		if ( pFolder->m_pParent == NULL )
 		{
 			BOOL bBold = ( pFolder->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 );
-			
+
 			if ( bBold != pItem->m_bBold )
 			{
 				pItem->m_bBold = bBold;
 				bChanged |= bVisible;
 			}
 		}
-		
+
 		if ( pItem->m_bShared != bShared )
 		{
 			pItem->m_bShared = bShared;
 			bChanged |= bVisible;
 		}
 	}
-	
+
 	pItem->m_nCleanCookie = nCleanCookie;
-	
+
 	bVisible = bVisible && pItem->m_bExpanded;
-	
+
 	if ( nSelectCookie )
 	{
 		if ( bRecurse || pItem->m_bSelected )
 		{
 			CLibraryFile* pFile;
 			CString strTemp;
-			
+
 			for ( POSITION pos = pFolder->m_pFiles.GetStartPosition() ; pos ; )
 			{
 				pFolder->m_pFiles.GetNextAssoc( pos, strTemp, (CObject*&)pFile );
 				pFile->m_nSelectCookie = nSelectCookie;
 			}
-			
+
 			pFolder->m_nSelectCookie = nSelectCookie;
 			bRecurse |= ( ! pItem->m_bExpanded );
 		}
 	}
-	
+
 	nCleanCookie = m_nCleanCookie++;
-	
+
 	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pSub = pFolder->GetNextFolder( pos );
-		
+
 		CLibraryTreeItem** pChild = pItem->m_pList;
-		
+
         int nChild = pItem->m_nCount;
 		for ( ; nChild ; nChild--, pChild++ )
 		{
@@ -266,18 +266,18 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 				break;
 			}
 		}
-		
+
 		if ( nChild == 0 )
 		{
 			bChanged |= Update( pSub, NULL, pItem, bVisible, bShared,
 				nCleanCookie, nSelectCookie, bRecurse );
 		}
 	}
-	
+
 	bChanged |= CleanItems( pItem, nCleanCookie, bVisible );
-	
+
 	pItem->m_nCookie = pFolder->m_nUpdateCookie;
-	
+
 	return bChanged;
 }
 
@@ -287,7 +287,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 void CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
 {
 	BOOL bChanged = Update( Library.GetAlbumRoot(), m_pRoot, NULL, TRUE, 0, nSelectCookie );
-	
+
 	if ( bChanged )
 	{
 		UpdateScroll();
@@ -299,24 +299,24 @@ void CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
 BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CLibraryTreeItem* pParent, BOOL bVisible, DWORD nCleanCookie, DWORD nSelectCookie)
 {
 	BOOL bChanged = FALSE;
-	
+
 	if ( pItem != NULL && pParent != NULL && pItem->m_sText != pFolder->m_sName )
 	{
 		// CleanCookie is not updated so it will be dropped later
 		pItem = NULL;
 	}
-	
+
 	if ( pItem == NULL )
 	{
 		pItem = pParent->Add( pFolder->m_sName );
 		if ( bVisible ) m_nTotal++;
-		
+
 		pItem->m_bExpanded	= pFolder->m_bExpanded;
 		pItem->m_pVirtual	= pFolder;
 		pItem->m_sText		= pFolder->m_sName;
 		pItem->m_nIcon16	= pFolder->m_pSchema ? pFolder->m_pSchema->m_nIcon16 : -1;
 		pItem->m_bBold		= pItem->m_bCollection = pFolder->m_bCollSHA1;
-		
+
 		bChanged = bVisible;
 	}
 	else
@@ -326,18 +326,18 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 			pItem->m_nIcon16 = pFolder->m_pSchema->m_nIcon16;
 			bChanged = bVisible;
 		}
-		
+
 		if ( pItem->m_bCollection != pFolder->m_bCollSHA1 )
 		{
 			pItem->m_bBold = pItem->m_bCollection = pFolder->m_bCollSHA1;
 			bChanged = bVisible;
 		}
 	}
-	
+
 	pItem->m_nCleanCookie = nCleanCookie;
-	
+
 	bVisible = bVisible && pItem->m_bExpanded;
-	
+
 	if ( nSelectCookie && pItem->m_bSelected )
 	{
 		for ( POSITION pos = pFolder->m_pFiles.GetHeadPosition() ; pos ; )
@@ -345,23 +345,23 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 			CLibraryFile* pFile = (CLibraryFile*)pFolder->m_pFiles.GetNext( pos );
 			pFile->m_nSelectCookie = nSelectCookie;
 		}
-		
+
 		pFolder->m_nSelectCookie = nSelectCookie;
 	}
-	
+
 	nCleanCookie = m_nCleanCookie++;
-	
+
 	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
 	{
 		CAlbumFolder* pSub = pFolder->GetNextFolder( pos );
-		
+
 		CLibraryTreeItem** pChild = pItem->m_pList;
-		
+
         int nChild = pItem->m_nCount;
 		for ( ; nChild ; nChild--, pChild++ )
 		{
 			CAlbumFolder* pOld = (*pChild)->m_pVirtual;
-			
+
 			if ( pOld == pSub )
 			{
 				bChanged |= Update( pSub, *pChild, pItem, bVisible,
@@ -369,18 +369,18 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 				break;
 			}
 		}
-		
+
 		if ( nChild == 0 )
 		{
 			bChanged |= Update( pSub, NULL, pItem, bVisible,
 				nCleanCookie, nSelectCookie );
 		}
 	}
-	
+
 	bChanged |= CleanItems( pItem, nCleanCookie, bVisible );
-	
+
 	pItem->m_nCookie = pFolder->m_nUpdateCookie;
-	
+
 	return bChanged;
 }
 
@@ -402,7 +402,7 @@ BOOL CLibraryTreeView::SelectFolder(LPVOID pSearch)
 	Select( pItem, TS_TRUE, FALSE );
 	Highlight( pItem );
 	NotifySelection();
-	
+
 	return TRUE;
 }
 
@@ -453,16 +453,16 @@ BOOL CLibraryTreeView::DropShowTarget(CLibraryList* pList, const CPoint& point)
 BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock& oLock)
 {
 	if ( m_pDropItem == NULL ) return FALSE;
-	
+
 	CWaitCursor pCursor;
-	
+
 	if ( pList == NULL )
 	{
 	}
 	else if ( m_pDropItem->m_pPhysical != NULL )
 	{
 		CFileCopyDlg dlg( NULL, ! bCopy );
-		
+
 		for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 		{
 			DWORD nObject = pList->GetNext( pos );
@@ -527,27 +527,27 @@ BOOL CLibraryTreeView::DropObjects(CLibraryList* pList, BOOL bCopy, CSingleLock&
 			}
 		}
 	}
-	
+
 	m_pDropItem = NULL;
 	Invalidate();
-	
+
 	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView message handlers
 
-int CLibraryTreeView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryTreeView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryTreeCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_wndFolderTip.Create( this );
 	m_wndAlbumTip.Create( this );
 
 	return 0;
 }
 
-BOOL CLibraryTreeView::PreTranslateMessage(MSG* pMsg) 
+BOOL CLibraryTreeView::PreTranslateMessage(MSG* pMsg)
 {
 	if ( m_bVirtual )
 	{
@@ -574,7 +574,7 @@ BOOL CLibraryTreeView::PreTranslateMessage(MSG* pMsg)
 	return CLibraryTreeCtrl::PreTranslateMessage( pMsg );
 }
 
-void CLibraryTreeView::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CLibraryTreeView::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bVirtual )
 	{
@@ -586,10 +586,10 @@ void CLibraryTreeView::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	CLibraryTreeCtrl::OnLButtonDblClk( nFlags, point );
-	
+
 	if ( m_pFocus == NULL && ! m_bVirtual )
 	{
 		SelectAll();
@@ -597,7 +597,7 @@ void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryTreeView::OnUpdateLibraryParent(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryParent(CCmdUI* pCmdUI)
 {
 	CLibraryFrame* pFrame = (CLibraryFrame*)GetParent();
 	ASSERT_KINDOF(CLibraryFrame, pFrame);
@@ -611,7 +611,7 @@ void CLibraryTreeView::OnUpdateLibraryParent(CCmdUI* pCmdUI)
 	pCmdUI->Enable( bAvailable );
 }
 
-void CLibraryTreeView::OnLibraryParent() 
+void CLibraryTreeView::OnLibraryParent()
 {
 	CLibraryTreeItem* pNew = NULL;
 
@@ -635,29 +635,29 @@ void CLibraryTreeView::OnLibraryParent()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView physical command handlers
 
-void CLibraryTreeView::OnUpdateLibraryExplore(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryExplore(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( ! m_bVirtual && m_nSelected == 1 );
 }
 
-void CLibraryTreeView::OnLibraryExplore() 
+void CLibraryTreeView::OnLibraryExplore()
 {
 	if ( m_bVirtual || m_nSelected != 1 || m_pSelFirst == NULL ) return;
-	
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	if ( ! LibraryFolders.CheckFolder( m_pSelFirst->m_pPhysical, TRUE ) ) return;
 	CString strPath = m_pSelFirst->m_pPhysical->m_sPath;
 	pLock.Unlock();
-	
+
 	CFileExecutor::Execute( strPath, TRUE );
 }
 
-void CLibraryTreeView::OnUpdateLibraryScan(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryScan(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( ! m_bVirtual && m_nSelected > 0 );
 }
 
-void CLibraryTreeView::OnLibraryScan() 
+void CLibraryTreeView::OnLibraryScan()
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
@@ -667,7 +667,7 @@ void CLibraryTreeView::OnLibraryScan()
 	}
 }
 
-void CLibraryTreeView::OnUpdateLibraryShared(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
@@ -694,7 +694,7 @@ void CLibraryTreeView::OnUpdateLibraryShared(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck( bShared == TS_TRUE );
 }
 
-void CLibraryTreeView::OnLibraryShared() 
+void CLibraryTreeView::OnLibraryShared()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -705,7 +705,7 @@ void CLibraryTreeView::OnLibraryShared()
 			{
 				BOOL bShared = pItem->m_pPhysical->IsShared();
 				pItem->m_pPhysical->m_bShared = TS_UNKNOWN;
-				
+
 				if ( bShared )
 					pItem->m_pPhysical->m_bShared = pItem->m_pPhysical->IsShared() ? TS_FALSE : TS_UNKNOWN;
 				else
@@ -719,7 +719,7 @@ void CLibraryTreeView::OnLibraryShared()
 	PostUpdate();
 }
 
-void CLibraryTreeView::OnUpdateLibraryRemove(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryRemove(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
@@ -739,7 +739,7 @@ void CLibraryTreeView::OnUpdateLibraryRemove(CCmdUI* pCmdUI)
 	pCmdUI->Enable( FALSE );
 }
 
-void CLibraryTreeView::OnLibraryRemove() 
+void CLibraryTreeView::OnLibraryRemove()
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
@@ -758,19 +758,19 @@ void CLibraryTreeView::OnLibraryRemove()
 	PostUpdate();
 }
 
-void CLibraryTreeView::OnLibraryAdd() 
+void CLibraryTreeView::OnLibraryAdd()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
-		
+
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-	
+
 	pPath = SHBrowseForFolder( &pBI );
 
 	if ( pPath == NULL ) return;
@@ -789,7 +789,7 @@ void CLibraryTreeView::OnLibraryAdd()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView virtual command handlers
 
-void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI)
 {
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 50 ) ) return;
@@ -806,7 +806,7 @@ void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI)
 	pCmdUI->Enable( FALSE );
 }
 
-void CLibraryTreeView::OnLibraryFolderEnqueue() 
+void CLibraryTreeView::OnLibraryFolderEnqueue()
 {
 	CStringList pList;
 
@@ -834,15 +834,15 @@ void CLibraryTreeView::OnLibraryFolderEnqueue()
 	}
 }
 
-void CLibraryTreeView::OnUpdateLibraryFolderMetadata(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderMetadata(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected > 0 && m_pSelFirst->m_pVirtual != NULL );
 }
 
-void CLibraryTreeView::OnLibraryFolderMetadata() 
+void CLibraryTreeView::OnLibraryFolderMetadata()
 {
 	CQuickLock oLock( Library.m_pSection );
-	
+
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
 		CAlbumFolder* pFolder = pItem->m_pVirtual;
@@ -852,15 +852,15 @@ void CLibraryTreeView::OnLibraryFolderMetadata()
 	Library.Update();
 }
 
-void CLibraryTreeView::OnUpdateLibraryFolderDelete(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderDelete(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected > 0 && m_pSelFirst->m_pVirtual != NULL );
 }
 
-void CLibraryTreeView::OnLibraryFolderDelete() 
+void CLibraryTreeView::OnLibraryFolderDelete()
 {
 	if ( m_pSelFirst == NULL || m_pSelFirst->m_pVirtual == NULL ) return;
-	
+
 	CString strFormat, strMessage;
 	Skin.LoadString( strFormat, IDS_LIBRARY_FOLDER_DELETE );
 	strMessage.Format( strFormat, m_nSelected );
@@ -880,12 +880,12 @@ void CLibraryTreeView::OnLibraryFolderDelete()
 	NotifySelection();
 }
 
-void CLibraryTreeView::OnUpdateLibraryFolderNew(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderNew(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected == 0 || ( m_nSelected == 1 && m_pSelFirst->m_pVirtual != NULL ) );
 }
 
-void CLibraryTreeView::OnLibraryFolderNew() 
+void CLibraryTreeView::OnLibraryFolderNew()
 {
 	if ( m_pSelFirst != NULL && m_pSelFirst->m_pVirtual == NULL ) return;
 
@@ -896,7 +896,7 @@ void CLibraryTreeView::OnLibraryFolderNew()
 		pFolder = Library.GetAlbumRoot();
 
 		if ( m_pSelFirst ) pFolder = m_pSelFirst->m_pVirtual;
-			
+
 		pFolder = pFolder->AddFolder( NULL, _T("New Folder") );
 
 		if ( m_pSelFirst ) Expand( m_pSelFirst, TS_TRUE, FALSE );
@@ -915,23 +915,23 @@ void CLibraryTreeView::OnLibraryFolderNew()
 	if ( pFolder ) PostMessage( WM_COMMAND, ID_LIBRARY_FOLDER_PROPERTIES );
 }
 
-void CLibraryTreeView::OnUpdateLibraryRebuild(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryRebuild(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected > 0 );
 }
 
-void CLibraryTreeView::OnLibraryRebuild() 
+void CLibraryTreeView::OnLibraryRebuild()
 {
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 50 ) ) return;
-	
+
 	CLibraryList pList;
-	
+
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
 		pItem->GetFileList( &pList, TRUE );
 	}
-	
+
 	for ( POSITION pos = pList.GetIterator() ; pos ; )
 	{
 		if ( CLibraryFile* pFile = pList.GetNextFile( pos ) )
@@ -939,16 +939,16 @@ void CLibraryTreeView::OnLibraryRebuild()
 			pFile->Rebuild();
 		}
 	}
-	
+
 	Library.Update();
 }
 
-void CLibraryTreeView::OnUpdateLibraryFolderProperties(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderProperties(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected == 1 && m_pSelFirst->m_pVirtual != NULL );
 }
 
-void CLibraryTreeView::OnLibraryFolderProperties() 
+void CLibraryTreeView::OnLibraryFolderProperties()
 {
 	if ( m_pSelFirst == NULL || m_pSelFirst->m_pVirtual == NULL ) return;
 
@@ -970,23 +970,23 @@ void CLibraryTreeView::OnLibraryFolderProperties()
 	}
 }
 
-void CLibraryTreeView::OnUpdateLibraryFolderFileProperties(CCmdUI* pCmdUI) 
+void CLibraryTreeView::OnUpdateLibraryFolderFileProperties(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nSelected > 0 );
 }
 
-void CLibraryTreeView::OnLibraryFolderFileProperties() 
+void CLibraryTreeView::OnLibraryFolderFileProperties()
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CLibraryList pList;
-	
+
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
 		pItem->GetFileList( &pList, TRUE );
 	}
-	
+
 	pLock.Unlock();
-	
+
 	CFilePropertiesSheet dlg;
 	dlg.Add( &pList );
 	dlg.DoModal();
@@ -1002,7 +1002,7 @@ void CLibraryTreeView::OnLibraryExportCollection()
 	if ( m_pSelFirst == NULL || m_pSelFirst->m_pSelNext != NULL ) return;
 	if ( m_pSelFirst->m_pVirtual == NULL ) return;
 	if ( m_pSelFirst->m_pVirtual->m_pXML == NULL ) return;
-	
+
 	CCollectionExportDlg dlg( m_pSelFirst->m_pVirtual );
 	dlg.DoModal();
 }

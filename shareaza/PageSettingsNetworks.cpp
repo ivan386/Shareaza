@@ -1,7 +1,7 @@
 //
 // PageSettingsNetworks.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,26 +79,26 @@ void CNetworksSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CNetworksSettingsPage message handlers
 
-BOOL CNetworksSettingsPage::OnInitDialog() 
+BOOL CNetworksSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bG2Enable		= Settings.Gnutella2.EnableToday;
 	m_bG1Enable		= Settings.Gnutella1.EnableToday;
 	m_bEDEnable		= Settings.eDonkey.EnableToday;
-	
+
 	UpdateData( FALSE );
 	// m_wndG2Setup.EnableWindow( m_bG2Enable );
 	// m_wndG1Setup.EnableWindow( m_bG1Enable );
 	// m_wndEDSetup.EnableWindow( m_bEDEnable );
-	
+
 	return TRUE;
 }
 
-HBRUSH CNetworksSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CNetworksSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSettingsPage::OnCtlColor(pDC, pWnd, nCtlColor);
-	
+
 	if ( pWnd == &m_wndG2Setup || pWnd == &m_wndG1Setup || pWnd == &m_wndEDSetup )
 	{
 		if ( pWnd->IsWindowEnabled() )
@@ -107,36 +107,36 @@ HBRUSH CNetworksSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 			pDC->SelectObject( &theApp.m_gdiFontLine );
 		}
 	}
-	
+
 	return hbr;
 }
 
-BOOL CNetworksSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CNetworksSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CWnd* pLinks[] = { &m_wndG2Setup, &m_wndG1Setup, &m_wndEDSetup, NULL };
 	CPoint point;
 	CRect rc;
-	
+
 	GetCursorPos( &point );
 
 	for ( int nLink = 0 ; pLinks[ nLink ] ; nLink++ )
 	{
 		pLinks[ nLink ]->GetWindowRect( &rc );
-		
+
 		if ( pLinks[ nLink ]->IsWindowEnabled() && rc.PtInRect( point ) )
 		{
 			SetCursor( theApp.LoadCursor( IDC_HAND ) );
 			return TRUE;
 		}
 	}
-	
+
 	return CSettingsPage::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CNetworksSettingsPage::OnLButtonUp(UINT nFlags, CPoint point) 
+void CNetworksSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rc;
-	
+
 	ClientToScreen( &point );
 
 	m_wndG2Setup.GetWindowRect( &rc );
@@ -144,19 +144,19 @@ void CNetworksSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		GetSheet()->SetActivePage( GetSheet()->GetPage( RUNTIME_CLASS(CGnutellaSettingsPage) ) );
 	}
-	
+
 	m_wndG1Setup.GetWindowRect( &rc );
 	if ( m_wndG1Setup.IsWindowEnabled() && rc.PtInRect( point ) )
 	{
 		GetSheet()->SetActivePage( GetSheet()->GetPage( RUNTIME_CLASS(CGnutellaSettingsPage) ) );
 	}
-	
+
 	m_wndEDSetup.GetWindowRect( &rc );
 	if ( m_wndEDSetup.IsWindowEnabled() && rc.PtInRect( point ) )
 	{
 		GetSheet()->SetActivePage( GetSheet()->GetPage( RUNTIME_CLASS(CDonkeySettingsPage) ) );
 	}
-	
+
 	CSettingsPage::OnLButtonUp( nFlags, point );
 }
 
@@ -164,32 +164,32 @@ BOOL CNetworksSettingsPage::OnSetActive()
 {
 	CGnutellaSettingsPage* ppGnutella =
 		(CGnutellaSettingsPage*)GetPage( RUNTIME_CLASS(CGnutellaSettingsPage) );
-	
+
 	if ( ppGnutella->GetSafeHwnd() != NULL )
 	{
 		ppGnutella->UpdateData();
 		m_bG2Enable = ppGnutella->m_bG2Today;
 		m_bG1Enable = ppGnutella->m_bG1Today;
 	}
-	
+
 	CDonkeySettingsPage* ppDonkey =
 		(CDonkeySettingsPage*)GetPage( RUNTIME_CLASS(CDonkeySettingsPage) );
-	
+
 	if ( ppDonkey->GetSafeHwnd() != NULL )
 	{
 		ppDonkey->UpdateData();
 		m_bEDEnable = ppDonkey->m_bEnableToday;
 	}
-	
+
 	UpdateData( FALSE );
 	// m_wndG2Setup.EnableWindow( m_bG2Enable );
 	// m_wndG1Setup.EnableWindow( m_bG1Enable );
 	// m_wndEDSetup.EnableWindow( m_bEDEnable );
-	
+
 	return CSettingsPage::OnSetActive();
 }
 
-void CNetworksSettingsPage::OnG2Enable() 
+void CNetworksSettingsPage::OnG2Enable()
 {
 	UpdateData();
 
@@ -197,45 +197,45 @@ void CNetworksSettingsPage::OnG2Enable()
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_DISABLE_G2 );
-		
+
 		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
 		{
 			m_bG2Enable = TRUE;
 			UpdateData( FALSE );
 		}
 	}
-	
+
 	CGnutellaSettingsPage* ppGnutella =
 		(CGnutellaSettingsPage*)GetPage( RUNTIME_CLASS(CGnutellaSettingsPage) );
-	
+
 	if ( ppGnutella->GetSafeHwnd() != NULL )
 	{
 		ppGnutella->UpdateData( TRUE );
 		ppGnutella->m_bG2Today = m_bG2Enable;
 		ppGnutella->UpdateData( FALSE );
 	}
-	
+
 	// m_wndG2Setup.EnableWindow( m_bG2Enable );
 }
 
-void CNetworksSettingsPage::OnG1Enable() 
+void CNetworksSettingsPage::OnG1Enable()
 {
 	UpdateData();
-	
+
 	CGnutellaSettingsPage* ppGnutella =
 		(CGnutellaSettingsPage*)GetPage( RUNTIME_CLASS(CGnutellaSettingsPage) );
-	
+
 	if ( ppGnutella->GetSafeHwnd() != NULL )
 	{
 		ppGnutella->UpdateData( TRUE );
 		ppGnutella->m_bG1Today = m_bG1Enable;
 		ppGnutella->UpdateData( FALSE );
 	}
-	
+
 	// m_wndG1Setup.EnableWindow( m_bG1Enable );
 }
 
-void CNetworksSettingsPage::OnEd2kEnable() 
+void CNetworksSettingsPage::OnEd2kEnable()
 {
 	UpdateData();
 
@@ -247,28 +247,28 @@ void CNetworksSettingsPage::OnEd2kEnable()
 		m_bEDEnable = FALSE;
 		UpdateData( FALSE );
 	}
-	
+
 	CDonkeySettingsPage* ppDonkey =
 		(CDonkeySettingsPage*)GetPage( RUNTIME_CLASS(CDonkeySettingsPage) );
-	
+
 	if ( ppDonkey->GetSafeHwnd() != NULL )
 	{
 		ppDonkey->UpdateData( TRUE );
 		ppDonkey->m_bEnableToday = m_bEDEnable;
 		ppDonkey->UpdateData( FALSE );
 	}
-	
+
 	// m_wndEDSetup.EnableWindow( m_bEDEnable );
 }
 
 void CNetworksSettingsPage::OnOK()
 {
 	UpdateData( TRUE );
-	
+
 	Settings.Gnutella2.EnableToday	= m_bG2Enable;
 	Settings.Gnutella1.EnableToday	= m_bG1Enable;
 	Settings.eDonkey.EnableToday	= m_bEDEnable;
-	
+
 	CSettingsPage::OnOK();
 }
 

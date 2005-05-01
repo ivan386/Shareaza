@@ -1,7 +1,7 @@
 //
 // UploadQueues.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,19 +61,19 @@ CUploadQueues::~CUploadQueues()
 BOOL CUploadQueues::Enqueue(CUploadTransfer* pUpload, BOOL bForce)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	ASSERT( pUpload != NULL );
-	
+
 	Dequeue( pUpload );
-	
+
 	ASSERT( pUpload->m_pQueue == NULL );
-	
+
 	if ( pUpload->m_nFileSize == 0 ) return FALSE;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
-		
+
 		if ( pQueue->CanAccept(	pUpload->m_nProtocol,
 								pUpload->m_sFileName,
 								pUpload->m_nFileSize,
@@ -83,16 +83,16 @@ BOOL CUploadQueues::Enqueue(CUploadTransfer* pUpload, BOOL bForce)
 			if ( pQueue->Enqueue( pUpload, bForce, bForce ) ) return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
 BOOL CUploadQueues::Dequeue(CUploadTransfer* pUpload)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	ASSERT( pUpload != NULL );
-	
+
 	if ( Check( pUpload->m_pQueue ) )
 	{
 		return pUpload->m_pQueue->Dequeue( pUpload );
@@ -110,9 +110,9 @@ BOOL CUploadQueues::Dequeue(CUploadTransfer* pUpload)
 int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	ASSERT( pUpload != NULL );
-	
+
 	if ( Check( pUpload->m_pQueue ) )
 	{
 		return pUpload->m_pQueue->GetPosition( pUpload, bStart );
@@ -130,14 +130,14 @@ int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 BOOL CUploadQueues::StealPosition(CUploadTransfer* pTarget, CUploadTransfer* pSource)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	ASSERT( pTarget != NULL );
 	ASSERT( pSource != NULL );
-	
+
 	Dequeue( pTarget );
-	
+
 	if ( ! Check( pSource->m_pQueue ) ) return FALSE;
-	
+
 	return pSource->m_pQueue->StealPosition( pTarget, pSource );
 }
 
@@ -147,16 +147,16 @@ BOOL CUploadQueues::StealPosition(CUploadTransfer* pTarget, CUploadTransfer* pSo
 CUploadQueue* CUploadQueues::Create(LPCTSTR pszName, BOOL bTop)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CUploadQueue* pQueue = new CUploadQueue();
 	if ( pszName != NULL ) pQueue->m_sName = pszName;
 	pQueue->m_bEnable = ! bTop;
-	
+
 	if ( bTop )
 		m_pList.AddHead( pQueue );
 	else
 		m_pList.AddTail( pQueue );
-	
+
 	return pQueue;
 }
 
@@ -171,10 +171,10 @@ void CUploadQueues::Delete(CUploadQueue* pQueue)
 BOOL CUploadQueues::Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	POSITION pos1 = m_pList.Find( pQueue );
 	if ( pos1 == NULL ) return FALSE;
-	
+
 	if ( pBefore != NULL )
 	{
 		POSITION pos2 = m_pList.Find( pBefore );
@@ -187,7 +187,7 @@ BOOL CUploadQueues::Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore)
 		m_pList.RemoveAt( pos1 );
 		m_pList.AddTail( pQueue );
 	}
-	
+
 	return TRUE;
 }
 
@@ -208,14 +208,14 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, 
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nIndex = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; nIndex++ )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
 		pQueue->m_nIndex = nIndex;
 		if ( pQueue->CanAccept( nProtocol, pszName, nSize, bPartial, pszShareTags ) ) return pQueue;
 	}
-	
+
 	return NULL;
 }
 
@@ -227,7 +227,7 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
 	CUploadQueue *pQptr;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		pQptr=GetNext( pos );
@@ -237,7 +237,7 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 			{
 				if ( ( ( pQptr->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 ) && ( Settings.Connection.RequireForTransfers ) )
 				{
-					if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) ) 
+					if ( ! ( Settings.eDonkey.EnableAlways | Settings.eDonkey.EnableToday ) )
 						continue;
 				}
 			}
@@ -246,7 +246,7 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 		}
 		nCount += pQptr->m_nBandwidthPoints;
 	}
-	
+
 	return nCount;
 }
 
@@ -254,12 +254,12 @@ int CUploadQueues::GetQueueCapacity()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nCount += GetNext( pos )->GetQueueCapacity();
 	}
-	
+
 	return nCount;
 }
 
@@ -267,12 +267,12 @@ int CUploadQueues::GetQueuedCount()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nCount += GetNext( pos )->GetQueuedCount();
 	}
-	
+
 	return nCount;
 }
 
@@ -280,12 +280,12 @@ int CUploadQueues::GetQueueRemaining()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nCount += GetNext( pos )->GetQueueRemaining();
 	}
-	
+
 	return nCount;
 }
 
@@ -293,24 +293,24 @@ int CUploadQueues::GetTransferCount()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nCount += GetNext( pos )->GetTransferCount();
 	}
-	
+
 	return nCount;
 }
 
 BOOL CUploadQueues::IsTransferAvailable()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		if ( GetNext( pos )->GetAvailableBandwidth() > 0 ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -318,15 +318,15 @@ DWORD CUploadQueues::GetDonkeyBandwidth()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	DWORD nBandwidth = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
-		
+
 		if ( pQueue->m_nProtocols == 0 || ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
 			nBandwidth += pQueue->GetBandwidthLimit( pQueue->m_nMaxTransfers );
 	}
-	
+
 	return nBandwidth;
 }
 
@@ -341,18 +341,18 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bC
 
 	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
 	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
-		nProtocol = PROTOCOL_HTTP;		
+		nProtocol = PROTOCOL_HTTP;
 
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	//Check each queue
-	for ( POSITION pos = GetIterator() ; pos ; )		
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
-		
+
 		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
-			if ( ( ! bCanQueue ) || ( pQueue->GetQueueRemaining() > 0 ) ) 
+			if ( ( ! bCanQueue ) || ( pQueue->GetQueueRemaining() > 0 ) )
 			{	// And we don't care if there is space now, or the queue isn't full)
 				return TRUE; // Then this file can be uploaded
 			}
@@ -375,15 +375,15 @@ int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile )
 
 	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
 	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
-		nProtocol = PROTOCOL_HTTP;		
+		nProtocol = PROTOCOL_HTTP;
 
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	//Check each queue
-	for ( POSITION pos = GetIterator() ; pos ; )		
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
-		
+
 		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, FALSE, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
 
@@ -401,12 +401,12 @@ int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile )
 void CUploadQueues::Clear()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		delete GetNext( pos );
 	}
-	
+
 	m_pList.RemoveAll();
 }
 
@@ -417,18 +417,18 @@ BOOL CUploadQueues::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CFile pFile;
-	
+
 	LoadString( m_pTorrentQueue->m_sName, IDS_UPLOAD_QUEUE_TORRENT );
 	LoadString( m_pHistoryQueue->m_sName, IDS_UPLOAD_QUEUE_HISTORY );
 
 	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
-	
+
 	if ( ! pFile.Open( strFile, CFile::modeRead ) )
 	{
 		CreateDefault();
 		return FALSE;
 	}
-	
+
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );
@@ -442,11 +442,11 @@ BOOL CUploadQueues::Load()
 		CreateDefault();
 		return FALSE;
 	}
-	
+
 	if ( GetCount() == 0 ) CreateDefault();
 
 	Validate();
-	
+
 	return TRUE;
 }
 
@@ -454,15 +454,15 @@ BOOL CUploadQueues::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CFile pFile;
-	
+
 	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
 	if ( !pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 		return FALSE;
-	
+
 	CArchive ar( &pFile, CArchive::store );
 	Serialize( ar );
 	ar.Close();
-	
+
 	return TRUE;
 }
 
@@ -472,13 +472,13 @@ BOOL CUploadQueues::Save()
 void CUploadQueues::Serialize(CArchive& ar)
 {
 	int nVersion = 5;
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
-		
+
 		ar.WriteCount( GetCount() );
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			GetNext( pos )->Serialize( ar, nVersion );
@@ -487,10 +487,10 @@ void CUploadQueues::Serialize(CArchive& ar)
 	else
 	{
 		Clear();
-		
+
 		ar >> nVersion;
 		if ( nVersion < 2 ) AfxThrowUserException();
-		
+
 		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			Create()->Serialize( ar, nVersion );
@@ -504,12 +504,12 @@ void CUploadQueues::Serialize(CArchive& ar)
 void CUploadQueues::CreateDefault()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CUploadQueue* pQueue = NULL;
-	
+
 	Clear();
 	CString strQueueName;
-	
+
 	if ( Settings.Connection.OutSpeed > 1200 )  // 1200 Kb/s (Massive connection)
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
@@ -534,7 +534,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
@@ -545,7 +545,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -555,7 +555,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -566,7 +566,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
@@ -603,7 +603,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 50;
@@ -614,7 +614,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -624,7 +624,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_MEDIUM_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -635,7 +635,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
@@ -683,7 +683,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -693,7 +693,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
@@ -730,7 +730,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 10*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
@@ -741,7 +741,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-	
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 10;
@@ -751,7 +751,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nMinTransfers		= 1;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRewardUploaders	= FALSE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 40;
@@ -776,7 +776,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_PARTIAL_FILES );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
@@ -788,7 +788,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_COMPLETE );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 20;
@@ -813,7 +813,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 30*60;
 		pQueue->m_bRewardUploaders	= TRUE;
-		
+
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_QUEUE );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 30;
@@ -825,7 +825,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nRotateTime		= 20*60;
 		pQueue->m_bRewardUploaders	= FALSE;
 	}
-	
+
 	Save();
 }
 
@@ -844,7 +844,7 @@ void CUploadQueues::Validate()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
-		
+
 		if ( Settings.Connection.OutSpeed > 100 )
 		{
 			pQueue->m_nMinTransfers		= 2;
@@ -873,7 +873,7 @@ void CUploadQueues::Validate()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
-		
+
 		if ( Settings.Connection.OutSpeed > 100 )
 		{
 			pQueue->m_nMinTransfers		= 2;

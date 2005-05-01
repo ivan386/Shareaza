@@ -1,7 +1,7 @@
 //
 // WizardSharePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,32 +74,32 @@ void CWizardSharePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardSharePage message handlers
 
-BOOL CWizardSharePage::OnInitDialog() 
+BOOL CWizardSharePage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	Skin.Apply( _T("CWizardSharePage"), this );
-	
+
 	CBitmap bmBase;
 	bmBase.LoadBitmap( IDB_FOLDERS );
-	
+
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	m_wndList.InsertColumn( 0, _T("Folder"), LVCFMT_LEFT, rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) );
 	m_wndList.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndList.EnableToolTips( TRUE );
-	
+
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 		{
 			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
-			
+
 			m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
 				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 		}
-		
+
 		CreateDirectory( Settings.Downloads.CompletePath, NULL );
 		AddPhysicalFolder( Settings.Downloads.CompletePath );
 
@@ -112,16 +112,16 @@ BOOL CWizardSharePage::OnInitDialog()
 		AddPhysicalFolder( _T("C:\\Program Files\\Ares\\My Shared Folder") );
 		AddPhysicalFolder( _T("C:\\Program Files\\morpheus\\My Shared Folder") );
 
-		
+
 		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Kazaa\\Transfer"), _T("DlDir0") );
 		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("completedir") );
 		AddRegistryFolder( HKEY_CURRENT_USER, _T("Software\\Xolox"), _T("sharedir") );
 	}
-	
+
 	return TRUE;
 }
 
-BOOL CWizardSharePage::OnSetActive() 
+BOOL CWizardSharePage::OnSetActive()
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
 	return CWizardPage::OnSetActive();
@@ -133,12 +133,12 @@ void CWizardSharePage::AddPhysicalFolder(LPCTSTR pszFolder)
 
 	if ( nFlags == 0xFFFFFFFF ) return;
 	if ( ( nFlags & FILE_ATTRIBUTE_DIRECTORY ) == 0 ) return;
-	
+
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		if ( m_wndList.GetItemText( nItem, 0 ).CompareNoCase( pszFolder ) == 0 ) return;
 	}
-	
+
 	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
 		pszFolder, 0, 0, SHI_FOLDER_OPEN, 0 );
 }
@@ -148,9 +148,9 @@ void CWizardSharePage::AddRegistryFolder(HKEY hRoot, LPCTSTR pszKey, LPCTSTR psz
 	TCHAR szFolder[MAX_PATH];
 	DWORD dwType, dwFolder;
 	HKEY hKey = NULL;
-		
+
 	if ( RegOpenKeyEx( hRoot, pszKey, 0, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
-	
+
 	dwType = REG_SZ;
 	dwFolder = MAX_PATH - 1;
 
@@ -160,7 +160,7 @@ void CWizardSharePage::AddRegistryFolder(HKEY hRoot, LPCTSTR pszKey, LPCTSTR psz
 		RegCloseKey( hKey );
 		return;
 	}
-	
+
 	RegCloseKey( hKey );
 
 	szFolder[ dwFolder ] = 0;
@@ -168,14 +168,14 @@ void CWizardSharePage::AddRegistryFolder(HKEY hRoot, LPCTSTR pszKey, LPCTSTR psz
 	AddPhysicalFolder( szFolder );
 }
 
-void CWizardSharePage::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult) 
+void CWizardSharePage::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 	*pResult = 0;
 }
 
-void CWizardSharePage::OnShareAdd() 
+void CWizardSharePage::OnShareAdd()
 {
 	//Let user select path to share
 	TCHAR szPath[MAX_PATH];
@@ -265,7 +265,7 @@ void CWizardSharePage::OnShareAdd()
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
 		CharLower( strOldLC.GetBuffer() );
 		strOldLC.ReleaseBuffer();
-		
+
 		if ( strPathLC == strOldLC )
 		{
 			// Matches exactly
@@ -292,13 +292,13 @@ void CWizardSharePage::OnShareAdd()
 		//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
 		return;
 	}
-	
+
 	//Add path to shared list
 	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
 		szPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 }
 
-void CWizardSharePage::OnShareRemove() 
+void CWizardSharePage::OnShareRemove()
 {
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
@@ -309,7 +309,7 @@ void CWizardSharePage::OnShareRemove()
 	}
 }
 
-LRESULT CWizardSharePage::OnWizardNext() 
+LRESULT CWizardSharePage::OnWizardNext()
 {
 	CWaitCursor pCursor;
 

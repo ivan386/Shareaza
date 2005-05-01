@@ -1,7 +1,7 @@
 //
 // WndMonitor.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -136,7 +136,7 @@ protected:
 	CRect				m_rcMediaVolTab;
 	BOOL				m_bsMediaStates[2][3];
 	CRect				m_rcsMediaStates[2][3];
-	
+
 // Message Map
 protected:
 	DECLARE_MESSAGE_MAP()

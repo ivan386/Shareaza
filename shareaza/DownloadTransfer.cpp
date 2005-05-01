@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,19 +52,19 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 	m_pDlPrev		= NULL;
 	m_pDlNext		= NULL;
 	m_pSource		= pSource;
-	
+
 	m_nState		= dtsNull;
-	
+
 	m_nQueuePos		= 0;
 	m_nQueueLen		= 0;
-	
+
 	m_nOffset		= SIZE_UNKNOWN;
 	m_nLength		= 0;
 	m_nPosition		= 0;
 	m_nDownloaded	= 0;
-	
+
 	m_bWantBackwards = m_bRecvBackwards = FALSE;
-	
+
 	m_pDownload->AddTransfer( this );
 }
 
@@ -81,7 +81,7 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource)
 	SetState( dtsNull );
 
 	CTransfer::Close();
-	
+
 	if ( m_pSource != NULL )
 	{
 		switch ( bKeepSource )
@@ -96,10 +96,10 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource)
 			m_pSource->Remove( FALSE, TRUE );
 			break;
 		}
-		
+
 		m_pSource = NULL;
 	}
-	
+
 	ASSERT( m_pDownload != NULL );
 	m_pDownload->RemoveTransfer( this );
 }
@@ -129,7 +129,7 @@ DWORD CDownloadTransfer::GetMeasuredSpeed()
 CString CDownloadTransfer::GetStateText(BOOL bLong)
 {
 	CString str, strQ, strQueued, strOf;
-	
+
 	switch ( m_nState )
 	{
 	case dtsConnecting:
@@ -176,7 +176,7 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		}
 		else
 		{
-			str.Format( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i"), strQueued, 
+			str.Format( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i"), strQueued,
 				m_nQueuePos, strOf, m_nQueueLen );
 		}
 		break;
@@ -184,7 +184,7 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		LoadString( str, IDS_STATUS_UNKNOWN );
 		break;
 	}
-	
+
 	return str;
 }
 
@@ -207,7 +207,7 @@ void CDownloadTransfer::SetState(int nState)
 		{	//Proper sort
 
 			static BYTE StateSortOrder[13]={ 13 ,12 ,10 ,4 ,0 ,4 ,1 ,2 ,3 ,12 ,8 ,6 ,9};
-				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing, 
+				//dtsNull, dtsConnecting, dtsRequesting, dtsHeaders, dtsDownloading, dtsFlushing,
 				//dtsTiger, dtsHashset, dtsMetadata, dtsBusy, dtsEnqueue, dtsQueued, dtsTorrent
 
 
@@ -225,14 +225,14 @@ void CDownloadTransfer::SetState(int nState)
 				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
 				{       //Choked torrents after queued, requesting = requesting, uninterested near end
 					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
-					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11; 
-					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7; 
-					else m_pSource->m_nSortOrder = 10; 
+					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11;
+					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7;
+					else m_pSource->m_nSortOrder = 10;
 				}
 				m_pSource->m_nSortOrder <<=  8;									//Sort by state
 
 				if ( m_nProtocol != PROTOCOL_HTTP )
-					m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );		
+					m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );
 				m_pSource->m_nSortOrder <<=  16;								//Then protocol
 
 				if ( nState == dtsQueued )										//Then queue postion
@@ -264,11 +264,11 @@ void CDownloadTransfer::SetState(int nState)
 void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock)
 {
 	ASSERT( pnOffset != NULL && pnLength != NULL );
-	
+
 	if ( m_pSource->m_bCloseConn ) return;
-	
+
 	nChunk = min( nChunk, (QWORD)Settings.Downloads.ChunkSize );
-	
+
 	if ( bVerifyLock )
 	{
 		if ( QWORD nVerify = m_pDownload->GetVerifyLength() )
@@ -276,15 +276,15 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 			nVerify = nVerify * 3 / 2;
 			nChunk = max( nChunk, nVerify );
 		}
-		
+
 		if ( Settings.Downloads.ChunkStrap > 0 && m_nDownloaded == 0 )
 		{
 			nChunk = Settings.Downloads.ChunkStrap;
 		}
 	}
-	
+
 	if ( nChunk == 0 || *pnLength <= nChunk ) return;
-	
+
 	if ( m_pDownload->GetVolumeComplete() == 0 || *pnOffset == 0 )
 	{
 		*pnLength = nChunk;
@@ -299,7 +299,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 		QWORD nCount = *pnLength / nChunk;
 		if ( *pnLength % nChunk ) nCount++;
 		nCount = rand() % nCount;
-		
+
 		QWORD nStart = *pnOffset + nChunk * nCount;
 		*pnLength = min( nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;

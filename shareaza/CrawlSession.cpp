@@ -1,7 +1,7 @@
 //
 // CrawlSession.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,7 +60,7 @@ void CCrawlSession::Clear()
 	{
 		delete (CCrawlNode*)m_pNodes.GetNext( pos );
 	}
-	
+
 	m_pNodes.RemoveAll();
 }
 
@@ -72,7 +72,7 @@ void CCrawlSession::Bootstrap()
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		
+
 		if ( pNeighbour->m_nNodeType != ntLeaf &&
 			 pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
@@ -88,7 +88,7 @@ void CCrawlSession::SendCrawl(SOCKADDR_IN* pHost)
 {
 	theApp.Message( MSG_TEMP, _T("CRAWL: Crawling host %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
-	
+
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CRAWL_REQ, TRUE );
 	pPacket->WritePacket( "RLEAF", 0 );
 	pPacket->WritePacket( "RNAME", 0 );
@@ -102,26 +102,26 @@ void CCrawlSession::SendCrawl(SOCKADDR_IN* pHost)
 int CCrawlSession::GetHubCount()
 {
 	int nCount = 0;
-	
+
 	for ( POSITION pos = m_pNodes.GetHeadPosition() ; pos ; )
 	{
 		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetNext( pos );
 		if ( pNode->m_nType == CCrawlNode::ntHub ) nCount ++;
 	}
-	
+
 	return nCount;
 }
 
 int CCrawlSession::GetLeafCount()
 {
 	int nCount = 0;
-	
+
 	for ( POSITION pos = m_pNodes.GetHeadPosition() ; pos ; )
 	{
 		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetNext( pos );
 		if ( pNode->m_nType == CCrawlNode::ntLeaf ) nCount ++;
 	}
-	
+
 	return nCount;
 }
 
@@ -131,13 +131,13 @@ int CCrawlSession::GetLeafCount()
 void CCrawlSession::OnRun()
 {
 	if ( ! m_bActive ) return;
-	
+
 	DWORD tNow = time( NULL );
-	
+
 	for ( POSITION pos = m_pNodes.GetTailPosition() ; pos ; )
 	{
 		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetPrev( pos );
-		
+
 		if ( pNode->m_nType == CCrawlNode::ntHub &&
 			 pNode->m_tResponse == 0 &&
 			 tNow - pNode->m_tCrawled >= 30 )
@@ -155,14 +155,14 @@ void CCrawlSession::OnRun()
 void CCrawlSession::OnCrawl(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	if ( ! m_bActive ) return;
-	
+
 	theApp.Message( MSG_TEMP, _T("CRAWL: Response from %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
-	
+
 	CCrawlNode* pNode = Find( &pHost->sin_addr, TRUE );
-	
+
 	pNode->OnCrawl( this, pPacket );
-	
+
 	// pNode->Dump();
 }
 
@@ -174,18 +174,18 @@ CCrawlNode* CCrawlSession::Find(IN_ADDR* pAddress, BOOL bCreate)
 	for ( POSITION pos = m_pNodes.GetTailPosition() ; pos ; )
 	{
 		CCrawlNode* pNode = (CCrawlNode*)m_pNodes.GetPrev( pos );
-		
+
 		if ( pNode->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
 		{
 			return pNode;
 		}
 	}
-	
+
 	if ( ! bCreate ) return NULL;
-	
+
 	CCrawlNode* pNode = new CCrawlNode();
 	pNode->m_nUnique = (DWORD)m_pNodes.AddTail( pNode );
-	
+
 	return pNode;
 }
 
@@ -196,12 +196,12 @@ CCrawlNode* CCrawlSession::Find(IN_ADDR* pAddress, BOOL bCreate)
 CCrawlNode::CCrawlNode()
 {
 	ZeroMemory( &m_pHost, sizeof(m_pHost) );
-	
+
 	m_nType			= ntUnknown;
 	m_nLeaves		= 0;
 	m_nLatitude		= 0;
 	m_nLongitude	= 0;
-	
+
 	m_tDiscovered	= time( NULL );
 	m_tCrawled		= 0;
 	m_tResponse		= 0;
@@ -219,14 +219,14 @@ void CCrawlNode::OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket)
 	BOOL bCompound;
 	CHAR szType[9];
 	DWORD nLength;
-	
+
 	m_tResponse = time( NULL );
 	if ( m_tCrawled == 0 ) m_tCrawled = m_tResponse;
-	
+
 	while ( pPacket->ReadPacket( szType, nLength, &bCompound ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
-		
+
 		if ( strcmp( szType, "SELF" ) == 0 )
 		{
 			OnNode( pSession, pPacket, nLength, parseSelf );
@@ -239,7 +239,7 @@ void CCrawlNode::OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket)
 		{
 			OnNode( pSession, pPacket, nLength, parseLeaf );
 		}
-		
+
 		pPacket->m_nPosition = nNext;
 	}
 }
@@ -251,21 +251,21 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 {
 	SOCKADDR_IN pHost;
 	pHost.sin_family = PF_INET + 1;
-	
+
 	BOOL bHub = FALSE;
 	int nLeafs = 0;
-	
+
 	CString strNick;
 	float nLatitude = 0;
 	float nLongitude = 0;
-	
+
 	CHAR szType[9];
 	DWORD nLength;
-	
+
 	while ( pPacket->ReadPacket( szType, nLength ) )
 	{
 		DWORD nNext = pPacket->m_nPosition + nLength;
-		
+
 		if ( strcmp( szType, "NA" ) == 0 && nLength >= 6 )
 		{
 			pHost.sin_family = PF_INET;
@@ -287,7 +287,7 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 			nLatitude	= (float)HIWORD( nGPS ) / 65535.0f * 180.0f - 90.0f;
 			nLongitude	= (float)LOWORD( nGPS ) / 65535.0f * 360.0f - 180.0f;
 		}
-		
+
 		pPacket->m_nPosition = nNext;
 	}
 
@@ -309,7 +309,7 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 	else
 	{
 		CCrawlNode* pNode = pSession->Find( &pHost.sin_addr, TRUE );
-		
+
 		if ( pNode->m_tResponse == 0 )
 		{
 			pNode->m_pHost		= pHost;
@@ -319,12 +319,12 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPack
 			pNode->m_nLatitude	= nLatitude;
 			pNode->m_nLongitude	= nLongitude;
 		}
-		
+
 		if ( m_pNeighbours.Find( pNode ) == NULL )
 		{
 			m_pNeighbours.AddTail( pNode );
 		}
-		
+
 		theApp.Message( MSG_TEMP, _T("CRAWL:    %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f"),
 			(LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ), bHub ? _T("hub") : _T("leaf"),
 			nLeafs, (LPCTSTR)strNick, double( nLatitude ), double( nLongitude ) );

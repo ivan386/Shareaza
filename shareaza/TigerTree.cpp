@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,32 +80,32 @@ CTigerTree::~CTigerTree()
 void CTigerTree::SetupAndAllocate(DWORD nHeight, QWORD nLength)
 {
 	Clear();
-	
+
 	QWORD nCount = (DWORD)( nLength / BLOCK_SIZE );
 	if ( nLength % BLOCK_SIZE ) nCount++;
-	
+
 	DWORD nActualHeight = 1;
-	
+
 	for ( DWORD nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
-	
+
 	m_nHeight = min( nActualHeight, nHeight );
-	
+
 	m_nBlockCount	= 1;
 	m_nBlockPos		= 0;
-	
+
 	if ( nActualHeight > nHeight )
 	{
 		for ( DWORD nStep = nActualHeight - nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
-	
+
 	m_nNodeCount = 1;
-	
+
 	for ( DWORD nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-	
+
 	m_nNodeBase	= ( m_nNodeCount / 2 );
 	m_nBaseUsed	= (DWORD)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
-	
+
 	m_pNode		= new CTigerNode[ --m_nNodeCount ];
 	m_nNodePos	= 0;
 }
@@ -114,23 +114,23 @@ void CTigerTree::SetupParameters(QWORD nLength)
 {
 	QWORD nCount = nLength / BLOCK_SIZE;
 	if ( nLength % BLOCK_SIZE ) nCount++;
-	
+
 	DWORD nActualHeight = 1;
 	for ( DWORD nStep = 1 ; nStep < nCount ; nStep *= 2 ) nActualHeight++;
-	
+
 	m_nBlockCount	= 1;
 	m_nBlockPos		= 0;
-	
+
 	if ( nActualHeight > m_nHeight )
 	{
 		for ( DWORD nStep = nActualHeight - m_nHeight ; nStep ; nStep-- ) m_nBlockCount *= 2;
 	}
-	
+
 	m_nNodeCount = 1;
 	for ( DWORD nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
-	
+
 	m_nNodeBase = ( m_nNodeCount-- / 2 );
-	
+
 	m_nBaseUsed	= (DWORD)( nCount / m_nBlockCount );
 	if ( nCount % m_nBlockCount ) m_nBaseUsed++;
 }
@@ -141,7 +141,7 @@ void CTigerTree::SetupParameters(QWORD nLength)
 void CTigerTree::Clear()
 {
 	if ( m_pNode != NULL ) delete [] m_pNode;
-	
+
 	m_nHeight		= 0;
 	m_pNode			= NULL;
 	m_nNodeCount	= 0;
@@ -154,16 +154,16 @@ void CTigerTree::Serialize(CArchive& ar)
 {
 	CTigerNode* pNode;
 	DWORD nStep;
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar << m_nHeight;
-		
+
 		if ( m_nHeight == 0 ) return;
 		ASSERT( m_pNode != NULL );
-		
+
 		pNode = m_pNode;
-		
+
 		for ( nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
 		{
 			ar.Write( pNode->value, TIGER_SIZE );
@@ -173,16 +173,16 @@ void CTigerTree::Serialize(CArchive& ar)
 	else
 	{
 		Clear();
-		
+
 		ar >> m_nHeight;
 		if ( m_nHeight == 0 ) return;
-		
+
 		m_nNodeCount = 1;
 		for ( nStep = m_nHeight ; nStep ; nStep-- ) m_nNodeCount *= 2;
 		m_nNodeCount --;
-		
+
 		m_pNode = pNode = new CTigerNode[ m_nNodeCount ];
-		
+
 		for ( nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
 		{
 			ar.Read( pNode->value, TIGER_SIZE );
@@ -240,9 +240,9 @@ void CTigerTree::Assume(CTigerTree* pSource)
 void CTigerTree::BeginFile(DWORD nHeight, QWORD nLength)
 {
 	ASSERT( ! IsAvailable() );
-	
+
 	SetupAndAllocate( nHeight, nLength );
-	
+
 	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
@@ -254,13 +254,13 @@ void CTigerTree::BeginFile(DWORD nHeight, QWORD nLength)
 void CTigerTree::AddToFile(LPCVOID pInput, DWORD nLength)
 {
 	ASSERT( m_pNode != NULL );
-	
+
 	LPBYTE pBlock = (LPBYTE)pInput;
-	
+
 	while ( nLength > 0 )
 	{
 		DWORD nBlock = min( nLength, DWORD(BLOCK_SIZE) );
-		
+
 		Tiger( pBlock, (WORD64)nBlock, m_pStackTop->value );
 		m_pStackTop ++;
 
@@ -293,23 +293,23 @@ BOOL CTigerTree::FinishFile()
 		Tiger( this, 0, (m_pStackTop++)->value );
 		m_nBlockPos++;
 	}
-	
+
 	BlocksToNode();
-	
+
 	if ( m_nNodePos > m_nNodeBase ) return FALSE;
-	
+
 	if ( m_pStackBase != NULL ) delete [] m_pStackBase;
-	
+
 	m_pStackBase	= NULL;
 	m_pStackTop		= NULL;
-	
+
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
-	
+
 	for ( DWORD nCombine = m_nNodeBase ; nCombine > 1 ; nCombine /= 2 )
 	{
 		CTigerNode* pIn		= pBase;
 		CTigerNode* pOut	= pBase - nCombine / 2;
-		
+
 		for ( DWORD nIterate = nCombine / 2 ; nIterate ; nIterate--, pIn += 2, pOut++ )
 		{
 			if ( pIn[0].bValid && pIn[1].bValid )
@@ -322,10 +322,10 @@ BOOL CTigerTree::FinishFile()
 				*pOut = *pIn;
 			}
 		}
-		
+
 		pBase -= nCombine / 2;
 	}
-	
+
 	return TRUE;
 }
 
@@ -335,7 +335,7 @@ BOOL CTigerTree::FinishFile()
 void CTigerTree::BeginBlockTest()
 {
 	ASSERT( m_pNode != NULL );
-	
+
 	if ( m_pStackBase == NULL ) m_pStackBase = new CTigerNode[ STACK_SIZE ];
 	m_pStackTop	= m_pStackBase;
 	m_nBlockPos = 0;
@@ -347,26 +347,26 @@ void CTigerTree::BeginBlockTest()
 void CTigerTree::AddToTest(LPCVOID pInput, DWORD nLength)
 {
 	ASSERT( m_pNode != NULL );
-	
+
 	LPBYTE pBlock = (LPBYTE)pInput;
-	
+
 	while ( nLength > 0 )
 	{
 		DWORD nBlock = min( nLength, DWORD(BLOCK_SIZE) );
-		
+
 		Tiger( pBlock, (WORD64)nBlock, m_pStackTop->value );
 		m_pStackTop ++;
-		
+
 		ASSERT( m_nBlockPos < m_nBlockCount );
-		
+
 		DWORD nCollapse = ++m_nBlockPos;
-		
+
 		while ( ! ( nCollapse & 1 ) )
 		{
 			Collapse();
 			nCollapse >>= 1;
 		}
-		
+
 		pBlock += nBlock;
 		nLength -= nBlock;
 	}
@@ -379,15 +379,15 @@ BOOL CTigerTree::FinishBlockTest(DWORD nBlock)
 {
 	ASSERT( nBlock < m_nBaseUsed );
 	if ( nBlock >= m_nBaseUsed ) return FALSE;
-	
+
 	while ( m_pStackTop - 1 > m_pStackBase ) Collapse();
-	
+
 	CTigerNode* pNode = m_pNode + m_nNodeCount - m_nNodeBase + nBlock;
-	
+
 	if ( pNode->v1 != m_pStackBase->v1 ) return FALSE;
 	if ( pNode->v2 != m_pStackBase->v2 ) return FALSE;
 	if ( pNode->v3 != m_pStackBase->v3 ) return FALSE;
-	
+
 	return TRUE;
 }
 
@@ -397,20 +397,20 @@ BOOL CTigerTree::FinishBlockTest(DWORD nBlock)
 BOOL CTigerTree::ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight)
 {
 	if ( m_pNode == NULL ) return FALSE;
-	
+
 	if ( nHeight < 1 || nHeight > m_nHeight ) nHeight = m_nHeight;
-	
+
 	DWORD nNodeCount = 1;
 	while ( nHeight-- ) nNodeCount *= 2;
 	nNodeCount --;
-	
+
 	nNodeCount	= min( nNodeCount, m_nNodeCount );
 	*pnOutput	= nNodeCount * TIGER_SIZE;
 	*pOutput	= new BYTE[ *pnOutput ];
-	
+
 	CTigerNode* pNode = m_pNode;
 	BYTE* pOut = *pOutput;
-	
+
 	for ( DWORD nNode = 0 ; nNode < nNodeCount ; nNode++, pNode++ )
 	{
 		if ( pNode->bValid )
@@ -423,7 +423,7 @@ BOOL CTigerTree::ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight)
 			*pnOutput -= TIGER_SIZE;
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -433,33 +433,33 @@ BOOL CTigerTree::ToBytes(BYTE** pOutput, DWORD* pnOutput, DWORD nHeight)
 BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, QWORD nLength)
 {
 	SetupAndAllocate( nHeight, nLength );
-	
+
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
-	
+
 	for ( DWORD nStep = m_nBaseUsed ; nStep ; nStep-- )
 	{
 		pBase[ nStep - 1 ].bValid = TRUE;
 	}
-	
+
 	for ( DWORD nCombine = m_nNodeBase ; nCombine > 1 ; nCombine /= 2 )
 	{
 		CTigerNode* pIn		= pBase;
 		CTigerNode* pOut	= pBase - nCombine / 2;
-		
+
 		for ( DWORD nIterate = nCombine / 2 ; nIterate ; nIterate--, pIn += 2, pOut++ )
 		{
 			if ( pIn[0].bValid ) pOut->bValid = TRUE;
 		}
-		
+
 		pBase -= nCombine / 2;
 	}
-	
+
 	TIGEROOT* pTiger = (TIGEROOT*)pInput;
 	nInput /= TIGER_SIZE;
-	
+
 	DWORD nRowPos = 0, nRowCount = 1;
 	m_nHeight = 0;
-	
+
 	for ( DWORD nStep = 0 ; nStep < m_nNodeCount && nInput > 0 ; nStep++ )
 	{
 		if ( m_pNode[ nStep ].bValid )
@@ -476,13 +476,13 @@ BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, QWORD nLen
 			nRowPos = 0;
 		}
 	}
-	
+
 	if ( m_nHeight == 0 || m_nHeight > nHeight )
 	{
 		Clear();
 		return FALSE;
 	}
-	
+
 	SetupParameters( nLength );
 
 	if ( ! CheckIntegrity() )
@@ -490,7 +490,7 @@ BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, QWORD nLen
 		Clear();
 		return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -500,17 +500,17 @@ BOOL CTigerTree::FromBytes(BYTE* pInput, DWORD nInput, DWORD nHeight, QWORD nLen
 BOOL CTigerTree::CheckIntegrity()
 {
 	if ( m_pNode == NULL ) return FALSE;
-	
+
 	m_nNodeBase = ( m_nNodeCount + 1 ) / 2;
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
-	
+
 	for ( DWORD nCombine = m_nNodeBase ; nCombine > 1 ; nCombine /= 2 )
 	{
 		CTigerNode* pIn		= pBase;
 		CTigerNode* pOut	= pBase - nCombine / 2;
-		
+
 		if ( nCombine == 2 && pOut->bValid == FALSE ) return FALSE;
-		
+
 		for ( DWORD nIterate = nCombine / 2 ; nIterate ; nIterate--, pIn += 2, pOut++ )
 		{
 			if ( pIn[0].bValid && pIn[1].bValid )
@@ -528,10 +528,10 @@ BOOL CTigerTree::CheckIntegrity()
 				// pOut is bValid=FALSE
 			}
 		}
-		
+
 		pBase -= nCombine / 2;
 	}
-	
+
 	return TRUE;
 }
 
@@ -545,7 +545,7 @@ void CTigerTree::Dump()
 
 	DWORD nRowPos = 0, nRowCount = 1;
 	m_nHeight = 0;
-	
+
 	for ( DWORD nStep = 0 ; nStep < m_nNodeCount ; nStep++ )
 	{
 		if ( m_pNode[ nStep ].bValid )
@@ -553,21 +553,21 @@ void CTigerTree::Dump()
 		else
 			strLine += _T("_______________________________________");
 		strLine += ' ';
-		
+
 		if ( ++nRowPos == nRowCount )
 		{
 			strOutput += strLine;
 			strOutput += _T("\r\n");
 			strLine.Empty();
-			
+
 			m_nHeight ++;
 			nRowCount *= 2;
 			nRowPos = 0;
 		}
 	}
-	
+
 	CFile pFile;
-	
+
 	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
 		pFile.Seek( 0, CFile::end );
@@ -579,7 +579,7 @@ void CTigerTree::Dump()
 	}
 
 	strOutput += _T("\r\n");
-	
+
 	USES_CONVERSION;
 	LPCSTR pszOutput = T2A(strOutput);
 	pFile.Write( pszOutput, strlen(pszOutput) );
@@ -599,31 +599,31 @@ CString CTigerNode::ToString()
 CString CTigerNode::HashToString(const TIGEROOT* pInHash, BOOL bURN)
 {
 	static LPCTSTR pszBase64 = _T("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567");
-	
+
 	CString strHash;
 	LPTSTR pszHash	= strHash.GetBuffer( bURN ? 16 + 39 : 39 );
-	
+
 	if ( bURN )
 	{
-		*pszHash++ = 'u'; *pszHash++ = 'r'; *pszHash++ = 'n'; *pszHash++ = ':'; 
-		*pszHash++ = 't'; *pszHash++ = 'r'; *pszHash++ = 'e'; *pszHash++ = 'e'; *pszHash++ = ':'; 
-		*pszHash++ = 't'; *pszHash++ = 'i'; *pszHash++ = 'g'; *pszHash++ = 'e'; *pszHash++ = 'r'; *pszHash++ = '/'; *pszHash++ = ':'; 
+		*pszHash++ = 'u'; *pszHash++ = 'r'; *pszHash++ = 'n'; *pszHash++ = ':';
+		*pszHash++ = 't'; *pszHash++ = 'r'; *pszHash++ = 'e'; *pszHash++ = 'e'; *pszHash++ = ':';
+		*pszHash++ = 't'; *pszHash++ = 'i'; *pszHash++ = 'g'; *pszHash++ = 'e'; *pszHash++ = 'r'; *pszHash++ = '/'; *pszHash++ = ':';
 	}
-	
+
 	LPBYTE pHash	= (LPBYTE)pInHash;
 	BYTE pZero		= 0;
 	int nShift		= 7;
 	int nHash		= 0;
-	
+
 	for ( int nChar = 39 ; nChar ; nChar-- )
 	{
 		BYTE nBits = 0;
-		
+
 		for ( int nBit = 0 ; nBit < 5 ; nBit++ )
 		{
 			if ( nBit ) nBits <<= 1;
 			nBits |= ( *pHash >> nShift ) & 1;
-			
+
 			if ( ! nShift-- )
 			{
 				nShift = 7;
@@ -633,12 +633,12 @@ CString CTigerNode::HashToString(const TIGEROOT* pInHash, BOOL bURN)
 					pHash = &pZero;
 			}
 		}
-		
+
 		*pszHash++ = pszBase64[ nBits ];
 	}
-	
+
 	strHash.ReleaseBuffer( bURN ? 16 + 39 : 39 );
-	
+
 	return strHash;
 }
 
@@ -648,7 +648,7 @@ CString CTigerNode::HashToString(const TIGEROOT* pInHash, BOOL bURN)
 BOOL CTigerNode::HashFromString(LPCTSTR pszHash, TIGEROOT* pTiger)
 {
 	if ( ! pszHash || _tcslen( pszHash ) < 39 ) return FALSE; //Invalid hash
-	
+
 	if ( _tcsnicmp(pszHash, _T("BVBCHUUIDO4TRQL3C2QL3RIA3KB3TDWJDZ7AHCQ"), 39 ) == 0 ) return FALSE; //Bad hash
 
 	LPBYTE pHash = (LPBYTE)pTiger;
@@ -665,7 +665,7 @@ BOOL CTigerNode::HashFromString(LPCTSTR pszHash, TIGEROOT* pTiger)
 			nBits |= ( *pszHash - '2' + 26 );
 		else
 			return FALSE;
-		
+
 		nCount += 5;
 
 		if ( nCount >= 8 )
@@ -710,7 +710,7 @@ BOOL CTigerNode::HashFromURN(LPCTSTR pszHash, TIGEROOT* pTiger)
 	{
 		return HashFromString( pszHash + 42, pTiger );
 	}
-	
+
 	return FALSE;
 }
 
@@ -732,11 +732,11 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 {
 	register WORD64 i, j;
 	BYTE pTemp[64];
-	
+
 	pOutput[0] = 0x0123456789ABCDEF;
 	pOutput[1] = 0xFEDCBA9876543210;
 	pOutput[2] = 0xF096A5B4C3B2E187;
-	
+
 	if ( pInput != NULL )
 	{
 #ifdef NEW_TIGER_ALG
@@ -751,27 +751,27 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 			pTemp[0] = 0x00;
 			CopyMemory( pTemp + 1, pInput, 63 );
 			pTiger( (WORD64*)pTemp, pOutput );
-			
+
 			const WORD64* pWords = (const WORD64*)( (const BYTE*)pInput + 63 );
-			
+
 			for ( i = nInput - 63 ; i >= 64 ; i -= 64 )
 			{
 				pTiger( (WORD64*) pWords, pOutput );
 				pWords += 8;
 			}
-			
+
 			for ( j = 0 ; j < i ; j++ ) pTemp[j] = ((BYTE*)pWords)[j];
 		}
 		nInput++;
 #else
 		const WORD64* pWords = (const WORD64*)pInput;
-		
+
 		for ( i = nInput ; i >= 64 ; i -= 64 )
 		{
 			pTiger( pWords, pOutput );
 			pWords += 8;
 		}
-		
+
 		for ( j = 0 ; j < i ; j++ ) pTemp[j] = ((BYTE*)pWords)[j];
 #endif
 	}
@@ -793,22 +793,22 @@ void CTigerTree::Tiger(LPCVOID pInput, WORD64 nInput, WORD64* pOutput, WORD64* p
 	{
 		ASSERT( FALSE );
 	}
-	
+
 	pTemp[j++] = 0x01;
-	
+
 	for ( ; j & 7 ; j++ ) pTemp[j] = 0;
-	
+
 	if ( j > 56 )
 	{
 		for ( ; j < 64 ; j++ ) pTemp[j] = 0;
 		pTiger( ((WORD64*)pTemp), pOutput );
 		j = 0;
 	}
-	
+
 	for ( ; j < 56 ; j++ ) pTemp[j] = 0;
-	
+
 	((WORD64*)(&(pTemp[56])))[0] = ((WORD64)nInput) << 3;
-	
+
 	pTiger( ((WORD64*)pTemp), pOutput );
 }
 
@@ -920,16 +920,16 @@ void CTigerTree::Collapse()
 void CTigerTree::BlocksToNode()
 {
 	if ( m_pStackTop == m_pStackBase ) return;
-	
+
 	while ( m_pStackTop - 1 > m_pStackBase ) Collapse();
-	
+
 	CTigerNode* pNode = m_pNode + m_nNodeCount - m_nNodeBase + m_nNodePos++;
-	
+
 	pNode->v1		= m_pStackBase->v1;
 	pNode->v2		= m_pStackBase->v2;
 	pNode->v3		= m_pStackBase->v3;
 	pNode->bValid	= TRUE;
-	
+
 	m_nBlockPos		= 0;
 	m_pStackTop		= m_pStackBase;
 }

@@ -1,7 +1,7 @@
 //
 // DownloadBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,18 +75,18 @@ void CDownloadBase::SetModified()
 void CDownloadBase::GenerateLocalName()
 {
 	if ( m_sLocalName.GetLength() > 0 ) return;
-	
+
 	if ( m_bSHA1 ) m_sLocalName += CSHA::HashToString( &m_pSHA1 );
 	else if ( m_bTiger ) m_sLocalName += CTigerNode::HashToString( &m_pTiger );
 	else if ( m_bED2K ) m_sLocalName += CED2K::HashToString( &m_pED2K );
 	else if ( m_bBTH ) m_sLocalName += CSHA::HashToString( &m_pBTH );
-	
+
 	if ( m_sRemoteName.GetLength() > 0 )
 	{
 		if ( m_sLocalName.GetLength() > 0 ) m_sLocalName += _T(" ");
 		m_sLocalName += CDownloadTask::SafeFilename( m_sRemoteName );
 	}
-	
+
 	if ( m_sLocalName.GetLength() > 0 )
 	{
 		CreateDirectory( Settings.Downloads.IncompletePath, NULL );
@@ -103,7 +103,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 	{
 		ar << m_sRemoteName;
 		ar << m_nSize;
-		
+
 		ar << m_bSHA1;
 		if ( m_bSHA1 ) ar.Write( &m_pSHA1, sizeof(SHA1) );
 		ar << m_bSHA1Trusted;
@@ -123,7 +123,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 	else
 	{
 		ar >> m_sRemoteName;
-		
+
 		if ( nVersion >= 29 )
 		{
 			ar >> m_nSize;
@@ -134,7 +134,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 			ar >> nSize;
 			m_nSize = nSize;
 		}
-		
+
 		ar >> m_bSHA1;
 		if ( m_bSHA1 ) ar.Read( &m_pSHA1, sizeof(SHA1) );
 		if ( nVersion >= 31 ) ar >> m_bSHA1Trusted;

@@ -1,7 +1,7 @@
 //
 // CtrlMonitorBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CMonitorBarCtrl : public CControlBar
 public:
 	CMonitorBarCtrl();
 	virtual ~CMonitorBarCtrl();
-	
+
 // Operations
 public:
 	BOOL	Create(CWnd* pParentWnd, DWORD dwStyle, UINT nID);
@@ -60,7 +60,7 @@ protected:
 	void			PaintHistory(CDC* pDC, CRect* prc);
 	void			PaintCurrent(CDC* pDC, CRect* prc, CGraphItem* pItem);
 	void			PaintTab(CDC* pDC);
-	
+
 // Message Map
 protected:
 	DECLARE_MESSAGE_MAP()

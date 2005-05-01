@@ -1,7 +1,7 @@
 //
 // RouteCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,18 +69,18 @@ BOOL CRouteCache::Add(const GGUID* pGUID, const CNeighbour* pNeighbour)
 		pItem->m_pNeighbour = pNeighbour;
 		return FALSE;
 	}
-	
+
 	if ( m_pRecent->IsFull() )
 	{
 		CRouteCacheTable* pTemp = m_pRecent;
 		m_pRecent = m_pHistory;
 		m_pHistory = pTemp;
-		
+
 		m_pRecent->Resize( m_pHistory->GetNextSize( m_nSeconds ) );
 	}
-	
+
 	m_pRecent->Add( pGUID, pNeighbour, NULL );
-	
+
 	return TRUE;
 }
 
@@ -92,18 +92,18 @@ BOOL CRouteCache::Add(const GGUID* pGUID, const SOCKADDR_IN* pEndpoint)
 		pItem->m_pEndpoint	= *pEndpoint;
 		return FALSE;
 	}
-	
+
 	if ( m_pRecent->IsFull() )
 	{
 		CRouteCacheTable* pTemp = m_pRecent;
 		m_pRecent = m_pHistory;
 		m_pHistory = pTemp;
-		
+
 		m_pRecent->Resize( m_pHistory->GetNextSize( m_nSeconds ) );
 	}
-	
+
 	m_pRecent->Add( pGUID, NULL, pEndpoint );
-	
+
 	return TRUE;
 }
 
@@ -187,14 +187,14 @@ CRouteCacheItem* CRouteCacheTable::Find(const GGUID* pGUID)
 {
 	WORD nGUID = 0, *ppGUID = (WORD*)pGUID;
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID += *ppGUID++;
-	
+
 	CRouteCacheItem* pItem = *( m_pHash + ( nGUID & HASH_MASK ) );
-	
+
 	for ( ; pItem ; pItem = pItem->m_pNext )
 	{
 		if ( *pGUID == pItem->m_pGUID ) return pItem;
 	}
-	
+
 	return NULL;
 }
 
@@ -204,7 +204,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const GGUID* pGUID, const CNeighbour* pNe
 
 	WORD nGUID = 0, *ppGUID = (WORD*)pGUID;
 	for ( int nIt = 8 ; nIt ; nIt-- ) nGUID += *ppGUID++;
-	
+
 	CRouteCacheItem** pHash = m_pHash + ( nGUID & HASH_MASK );
 
 	CRouteCacheItem* pItem = m_pFree;
@@ -217,8 +217,8 @@ CRouteCacheItem* CRouteCacheTable::Add(const GGUID* pGUID, const CNeighbour* pNe
 	pItem->m_tAdded			= nTime ? nTime : GetTickCount();
 	pItem->m_pNeighbour		= pNeighbour;
 	if ( pEndpoint ) pItem->m_pEndpoint = *pEndpoint;
-	
-	if ( ! m_nUsed++ ) 
+
+	if ( ! m_nUsed++ )
 	{
 		m_tFirst = GetTickCount();
 	}
@@ -226,7 +226,7 @@ CRouteCacheItem* CRouteCacheTable::Add(const GGUID* pGUID, const CNeighbour* pNe
 	{
 		m_tLast = GetTickCount();
 	}
-	
+
 	return pItem;
 }
 

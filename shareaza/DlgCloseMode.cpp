@@ -1,7 +1,7 @@
 //
 // DlgCloseMode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,12 +57,12 @@ void CCloseModeDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CCloseModeDlg message handlers
 
-BOOL CCloseModeDlg::OnInitDialog() 
+BOOL CCloseModeDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CCloseModeDlg") );
-	
+
 	switch ( Settings.General.CloseMode )
 	{
 	case 0: case 2:
@@ -75,16 +75,16 @@ BOOL CCloseModeDlg::OnInitDialog()
 		m_nMode = 2;
 		break;
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CCloseModeDlg::OnOK() 
+void CCloseModeDlg::OnOK()
 {
 	UpdateData();
-	
+
 	switch ( m_nMode )
 	{
 	case 0:
@@ -97,6 +97,6 @@ void CCloseModeDlg::OnOK()
 		Settings.General.CloseMode = 3;
 		break;
 	}
-	
+
 	CSkinDialog::OnOK();
 }

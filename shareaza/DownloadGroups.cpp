@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,9 +59,9 @@ CDownloadGroups::~CDownloadGroups()
 CDownloadGroup* CDownloadGroups::GetSuperGroup()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pSuper != NULL ) return m_pSuper;
-	
+
 	return m_pSuper = Add( _T("All") );
 }
 
@@ -71,14 +71,14 @@ CDownloadGroup* CDownloadGroups::GetSuperGroup()
 CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CDownloadGroup* pGroup = new CDownloadGroup();
 	if ( pszName != NULL ) pGroup->m_sName = pszName;
 	m_pList.AddTail( pGroup );
-	
+
 	m_nBaseCookie ++;
 	m_nGroupCookie ++;
-	
+
 	return pGroup;
 }
 
@@ -88,13 +88,13 @@ CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName)
 void CDownloadGroups::Remove(CDownloadGroup* pGroup)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( POSITION pos = m_pList.Find( pGroup ) )
 	{
 		if ( pGroup == m_pSuper ) return;
 		m_pList.RemoveAt( pos );
 		delete pGroup;
-		
+
 		m_nBaseCookie ++;
 		m_nGroupCookie ++;
 	}
@@ -106,9 +106,9 @@ void CDownloadGroups::Remove(CDownloadGroup* pGroup)
 void CDownloadGroups::Link(CDownload* pDownload)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	GetSuperGroup()->Add( pDownload );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownloadGroup* pGroup = GetNext( pos );
@@ -122,7 +122,7 @@ void CDownloadGroups::Link(CDownload* pDownload)
 void CDownloadGroups::Unlink(CDownload* pDownload, BOOL bAndSuper)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownloadGroup* pGroup = GetNext( pos );
@@ -136,16 +136,16 @@ void CDownloadGroups::Unlink(CDownload* pDownload, BOOL bAndSuper)
 void CDownloadGroups::CreateDefault()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CDownloadGroup* pGroup	= GetSuperGroup();
-	
+
 	pGroup = Add( _T("Audio") );
 	pGroup->AddFilter( _T(".mp3") );
 	pGroup->AddFilter( _T(".ogg") );
 	pGroup->AddFilter( _T(".wav") );
 	pGroup->AddFilter( _T(".wma") );
 	pGroup->SetSchema( CSchema::uriMusicAlbum );
-	
+
 	pGroup = Add( _T("Video") );
 	pGroup->AddFilter( _T(".asf") );
 	pGroup->AddFilter( _T(".avi") );
@@ -155,7 +155,7 @@ void CDownloadGroups::CreateDefault()
 	pGroup->AddFilter( _T(".ogm") );
 	pGroup->AddFilter( _T(".wmv") );
 	pGroup->SetSchema( CSchema::uriVideo );
-	
+
 	pGroup = Add( _T("BitTorrent") );
 	pGroup->AddFilter( _T("torrent") );
 	pGroup->SetSchema( CSchema::uriROM );
@@ -167,17 +167,17 @@ void CDownloadGroups::CreateDefault()
 CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownloadGroup* pGroup = GetNext( pos );
-		
+
 		if ( pGroup != m_pSuper && pGroup->Contains( pDownload ) )
 		{
 			if ( pGroup->m_sFolder.GetLength() ) return pGroup->m_sFolder;
 		}
 	}
-	
+
 	return Settings.Downloads.CompletePath;
 }
 
@@ -187,10 +187,10 @@ CString CDownloadGroups::GetCompletedPath(CDownload* pDownload)
 void CDownloadGroups::Clear()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );
 	m_pList.RemoveAll();
-	
+
 	m_pSuper = NULL;
 	m_nBaseCookie ++;
 	m_nGroupCookie ++;
@@ -202,11 +202,11 @@ void CDownloadGroups::Clear()
 BOOL CDownloadGroups::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CFile pFile;
 	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
 	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return FALSE;
-	
+
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );
@@ -217,27 +217,27 @@ BOOL CDownloadGroups::Load()
 		pException->Delete();
 		return FALSE;
 	}
-	
+
 	m_nSaveCookie = m_nBaseCookie;
-	
+
 	return TRUE;
 }
 
 BOOL CDownloadGroups::Save(BOOL bForce)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( ! bForce && m_nBaseCookie == m_nSaveCookie ) return FALSE;
 	m_nSaveCookie = m_nBaseCookie;
-	
+
 	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
 	DeleteFile( strPath + _T(".tmp") );
-	
+
 	CFile pFile;
 	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
-	
+
 	BYTE* pBuffer = new BYTE[ 4096 ];
-	
+
 	try
 	{
 		CArchive ar( &pFile, CArchive::store, 4096, pBuffer );
@@ -249,14 +249,14 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 		pException->Delete();
 		return FALSE;
 	}
-	
+
 	delete [] pBuffer;
-	
+
 	pFile.Close();
-	
+
 	DeleteFile( strPath );
 	MoveFile( strPath + _T(".tmp"), strPath );
-	
+
 	return TRUE;
 }
 
@@ -269,27 +269,27 @@ void CDownloadGroups::Serialize(CArchive& ar)
 {
 	int nVersion = GROUPS_SER_VERSION;
 	BYTE nState;
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
-		
+
 		ar.WriteCount( Downloads.GetCount() );
-		
+
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			ar << Downloads.GetNext( pos )->m_nSerID;
 		}
-		
+
 		ar.WriteCount( GetCount() );
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CDownloadGroup* pGroup = GetNext( pos );
-			
+
 			nState = ( pGroup == m_pSuper ) ? 1 : 0;
 			ar << nState;
-			
+
 			pGroup->Serialize( ar, nVersion );
 		}
 	}
@@ -297,9 +297,9 @@ void CDownloadGroups::Serialize(CArchive& ar)
 	{
 		ar >> nVersion;
 		if ( nVersion <= 1 || nVersion > GROUPS_SER_VERSION ) AfxThrowUserException();
-		
+
 		int nCount = ar.ReadCount();
-		
+
 		for ( ; nCount > 0 ; nCount-- )
 		{
 			DWORD nDownload;
@@ -307,21 +307,21 @@ void CDownloadGroups::Serialize(CArchive& ar)
 			if ( CDownload* pDownload = Downloads.FindBySID( nDownload ) )
 				Downloads.Reorder( pDownload, NULL );
 		}
-		
+
 		if ( nCount = ar.ReadCount() ) Clear();
-		
+
 		for ( ; nCount > 0 ; nCount-- )
 		{
 			CDownloadGroup* pGroup = Add();
-			
+
 			ar >> nState;
 			if ( nState == 1 ) m_pSuper = pGroup;
-			
+
 			pGroup->Serialize( ar, nVersion );
 		}
-		
+
 		GetSuperGroup();
-		
+
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			m_pSuper->Add( Downloads.GetNext( pos ) );

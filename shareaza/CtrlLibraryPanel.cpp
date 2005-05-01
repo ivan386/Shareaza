@@ -1,7 +1,7 @@
 //
 // CtrlLibraryPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,7 @@ CLibraryPanel::~CLibraryPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryPanel operations
 
-BOOL CLibraryPanel::Create(CWnd* pParentWnd) 
+BOOL CLibraryPanel::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	return CWnd::Create( NULL, NULL, WS_CHILD, rect, pParentWnd, IDC_LIBRARY_PANEL, NULL );

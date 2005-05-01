@@ -1,7 +1,7 @@
 //
 // SearchManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,7 +96,7 @@ CManagedSearch* CSearchManager::Find(GGUID* pGUID)
 		CManagedSearch* pSearch = (CManagedSearch*)m_pList.GetNext( pos );
 		if ( pSearch->m_pSearch->m_pGUID == *pGUID ) return pSearch;
 	}
-	
+
 	return NULL;
 }
 
@@ -107,19 +107,19 @@ void CSearchManager::OnRun()
 {
 	// Don't run too often to avoid excess CPU use (and router flooding)
 	DWORD tNow = GetTickCount();
-	if ( ( tNow - m_tLastTick ) < 125 ) return;	
+	if ( ( tNow - m_tLastTick ) < 125 ) return;
 	m_tLastTick = tNow;
 
 	// Don't run if we aren't connected
 	if ( ! Network.IsWellConnected() ) return;
-	
+
 	HostCache.Gnutella2.PruneByQueryAck();
-	
+
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
 	static int nPriorityFactor[ 3 ] = { 8, 4, 1 };
-	
+
 	if ( m_nPriorityCount >= nPriorityFactor[ m_nPriorityClass ] )
 	{
 		m_nPriorityCount = 0;
@@ -132,7 +132,7 @@ void CSearchManager::OnRun()
 		{
 			POSITION posCur = pos;
 			CManagedSearch* pSearch = GetNext( pos );
-			
+
 			if ( pSearch->m_nPriority == m_nPriorityClass && pSearch->Execute() )
 			{
 				m_pList.RemoveAt( posCur );
@@ -153,40 +153,40 @@ void CSearchManager::OnRun()
 BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* ppGUID)
 {
 	if ( ! pPacket->m_bCompound ) return FALSE;
-	
+
 	DWORD nFromIP = pHost->sin_addr.S_un.S_addr;
 	DWORD tAdjust = 0, tNow = time( NULL );
 	DWORD nHubs = 0, nLeaves = 0;
 	CDWordArray pDone;
-	
+
 	CHAR szType[9];
 	DWORD nLength;
-	
+
 	theApp.Message( MSG_DEBUG, _T("Processing query acknowledge from %s:"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
-	
+
 	while ( pPacket->ReadPacket( szType, nLength ) )
 	{
 		DWORD nOffset = pPacket->m_nPosition + nLength;
-		
+
 		if ( strcmp( szType, "D" ) == 0 && nLength >= 4 )
 		{
 			DWORD nAddress = pPacket->ReadLongLE();
 			pDone.Add( nAddress );
-			
+
 			if ( nLength >= 6 )
 			{
 				WORD nPort = pPacket->ReadShortBE();
-				
+
 				if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort )
 				{
 					HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, tNow );
 				}
 			}
-			
+
 			if ( nLength >= 8 ) nLeaves += pPacket->ReadShortBE();
 			nHubs ++;
-			
+
 			theApp.Message( MSG_DEBUG, _T("  Done %s"),
 				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ) );
 		}
@@ -195,10 +195,10 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* p
 			DWORD nAddress	= pPacket->ReadLongLE();
 			WORD nPort		= pPacket->ReadShortBE();
 			DWORD tSeen		= ( nLength >= 10 ) ? pPacket->ReadLongBE() + tAdjust : tNow;
-			
+
 			theApp.Message( MSG_DEBUG, _T("  Try %s:%lu"),
 				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort );
-			
+
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort )
 			{
 				HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, min( tNow, tSeen ) );
@@ -211,7 +211,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* p
 		else if ( strcmp( szType, "RA" ) == 0 && nLength >= 2 )
 		{
 			DWORD nRetryAfter = 0;
-			
+
 			if ( nLength >= 4 )
 			{
 				nRetryAfter = pPacket->ReadLongBE();
@@ -220,7 +220,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* p
 			{
 				nRetryAfter = pPacket->ReadShortBE();
 			}
-			
+
 			if ( CHostCacheHost* pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
 			{
 				pHost->m_tRetryAfter = tNow + nRetryAfter;
@@ -230,38 +230,38 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, GGUID* p
 		{
 			nFromIP = pPacket->ReadLongLE();
 		}
-		
+
 		pPacket->m_nPosition = nOffset;
 	}
-	
+
 	if ( pPacket->GetRemaining() < 16 ) return FALSE;
-	
+
 	GGUID pGUID;
 	pPacket->Read( &pGUID, sizeof(GGUID) );
 	if ( ppGUID ) *ppGUID = pGUID;
-	
+
 	CSingleLock pLock( &m_pSection );
-	
+
 	if ( pLock.Lock( 100 ) )
 	{
 		if ( CManagedSearch* pSearch = Find( &pGUID ) )
 		{
 			pSearch->m_nHubs += nHubs;
 			pSearch->m_nLeaves += nLeaves;
-			
+
 			// (technically not required, but..)
 			pSearch->OnHostAcknowledge( nFromIP );
-			
+
 			for ( int nItem = 0 ; nItem < pDone.GetSize() ; nItem++ )
 			{
 				DWORD nAddress = pDone.GetAt( nItem );
 				pSearch->OnHostAcknowledge( nAddress );
 			}
-			
+
 			return FALSE;
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -272,18 +272,18 @@ BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return TRUE;
-	
+
 	CManagedSearch* pSearch = Find( &pHits->m_pSearchID );
 	if ( pSearch == NULL ) return TRUE;
-	
+
 	pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
-	
+
 	while ( pHits != NULL )
 	{
 		pSearch->m_nHits ++;
 		pHits = pHits->m_pNext;
 	}
-	
+
 	return FALSE;
 }
 
@@ -294,9 +294,9 @@ WORD CSearchManager::OnQueryStatusRequest(GGUID* pGUID)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return 0xFFFF;
-	
+
 	CManagedSearch* pSearch = Find( pGUID );
 	if ( pSearch == NULL ) return 0xFFFF;
-	
+
 	return (WORD)min( DWORD(0xFFFE), pSearch->m_nHits );
 }

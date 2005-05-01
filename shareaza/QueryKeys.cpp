@@ -1,7 +1,7 @@
 //
 // QueryKeys.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,19 +39,19 @@ CQueryKeys::CQueryKeys()
 	m_nTable	= (DWORD)pow( 2, m_nBits );
 	m_pTable	= new DWORD[ m_nTable ];
 	m_pMap		= new DWORD[ m_nBits * 2 ];
-	
+
 	DWORD* pMap = m_pMap;
-	
+
 	srand( GetTickCount() );
-	
+
 	for ( DWORD nCount = m_nBits ; nCount ; nCount-- )
 	{
 		*pMap++ = 1 << ( rand() % 32 );
 		*pMap++ = 1 << ( rand() % 32 );
 	}
-	
+
 	BYTE* pFill = (BYTE*)m_pTable;
-	
+
 	for ( DWORD nCount = m_nTable ; nCount ; nCount-- )
 	{
 		*pFill++ = (BYTE)( rand() & 0xFF );
@@ -74,14 +74,14 @@ DWORD CQueryKeys::Create(DWORD nAddress)
 {
 	DWORD* pMap = m_pMap;
 	DWORD nHash = 0;
-	
+
 	for ( DWORD nCount = m_nBits, nBit = 1 ; nCount ; nCount--, nBit <<= 1 )
 	{
 		BOOL bOne = ( nAddress & (*pMap++) ) != 0;
 		BOOL bTwo = ( nAddress & (*pMap++) ) != 0;
 		if ( bOne ^ bTwo ) nHash |= nBit;
 	}
-	
+
 	return m_pTable[ nHash & ( m_nTable - 1 ) ];
 }
 
@@ -92,14 +92,14 @@ BOOL CQueryKeys::Check(DWORD nAddress, DWORD nKey)
 {
 	DWORD* pMap = m_pMap;
 	DWORD nHash = 0;
-	
+
 	for ( DWORD nCount = m_nBits, nBit = 1 ; nCount ; nCount--, nBit <<= 1 )
 	{
 		BOOL bOne = ( nAddress & (*pMap++) ) != 0;
 		BOOL bTwo = ( nAddress & (*pMap++) ) != 0;
 		if ( bOne ^ bTwo ) nHash |= nBit;
 	}
-	
+
 	return nKey == m_pTable[ nHash & ( m_nTable - 1 ) ];
 }
 

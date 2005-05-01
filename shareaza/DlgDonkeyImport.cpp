@@ -1,7 +1,7 @@
 //
 // DlgDonkeyImport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,12 +63,12 @@ void CDonkeyImportDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CDonkeyImportDlg message handlers
 
-BOOL CDonkeyImportDlg::OnInitDialog() 
+BOOL CDonkeyImportDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CDonkeyImportDlg"), IDR_MAINFRAME );
-	
+
 	CString str;
 	m_wndCancel.GetWindowText( str );
 	int nPos = str.Find( '|' );
@@ -77,11 +77,11 @@ BOOL CDonkeyImportDlg::OnInitDialog()
 		m_sCancel = str.Mid( nPos + 1 );
 		m_wndCancel.SetWindowText( str.Left( nPos ) );
 	}
-	
+
 	return TRUE;
 }
 
-void CDonkeyImportDlg::OnImport() 
+void CDonkeyImportDlg::OnImport()
 {
 	m_wndImport.EnableWindow( FALSE );
 	m_wndCancel.SetWindowText( m_sCancel );
@@ -89,13 +89,13 @@ void CDonkeyImportDlg::OnImport()
 	SetTimer( 1, 1000, NULL );
 }
 
-void CDonkeyImportDlg::OnCancel() 
+void CDonkeyImportDlg::OnCancel()
 {
 	m_pImporter.Stop();
 	CSkinDialog::OnCancel();
 }
 
-void CDonkeyImportDlg::OnTimer(UINT nIDEvent) 
+void CDonkeyImportDlg::OnTimer(UINT nIDEvent)
 {
 	if ( ! m_pImporter.IsRunning() )
 	{
@@ -107,7 +107,7 @@ void CDonkeyImportDlg::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CDonkeyImportDlg::OnClose() 
+void CDonkeyImportDlg::OnClose()
 {
 	EndDialog( IDOK );
 }

@@ -1,7 +1,7 @@
 //
 // BitziDownloader.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,13 @@ class CXMLElement;
 class CBitziDownloadDlg;
 
 
-class CBitziDownloader  
+class CBitziDownloader
 {
 // Construction
 public:
 	CBitziDownloader();
 	virtual ~CBitziDownloader();
-	
+
 // Attributes
 protected:
 	CPtrList			m_pFiles;
@@ -74,7 +74,7 @@ protected:
 	CXMLElement*	ImportData(CSchema* pSchema);
 	BOOL			SubmitMetaData(CXMLElement* pXML);
 	BOOL			MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput);
-	
+
 };
 
 #endif // !defined(AFX_BITZIDOWNLOADER_H__08C21C98_E7E8_4E32_B3E9_2E149A72CE69__INCLUDED_)

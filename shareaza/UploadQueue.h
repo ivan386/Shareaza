@@ -1,7 +1,7 @@
 //
 // UploadQueue.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,13 +27,13 @@
 class CUploadTransfer;
 
 
-class CUploadQueue  
+class CUploadQueue
 {
 // Construction
 public:
 	CUploadQueue();
 	virtual ~CUploadQueue();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pActive;
@@ -61,7 +61,7 @@ public:
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;
 	DWORD		m_nMeasured;
-	
+
 // Operations
 public:
 	CString		GetCriteriaString() const;
@@ -82,7 +82,7 @@ public:
 	void		RescaleBandwidth();
 protected:
 	void		StartImpl(CUploadTransfer* pUpload);
-	
+
 // Utilities
 public:
 	inline int GetTransferCount(BOOL bMax = FALSE) const
@@ -96,23 +96,23 @@ public:
 	{
 		return m_nCapacity;
 	}
-	
+
 	inline int GetQueuedCount() const
 	{
 		return m_pQueued.GetSize();
 	}
-	
+
 	inline int GetQueueRemaining() const
 	{
 		return GetQueueCapacity() - GetQueuedCount();
 	}
-	
+
 	inline BOOL IsActive(CUploadTransfer* pUpload) const
 	{
 		ASSERT( pUpload != NULL );
 		return ( m_pActive.Find( pUpload ) != NULL );
 	}
-	
+
 	inline DWORD GetMeasuredSpeed() const
 	{
 		return m_nMeasured;

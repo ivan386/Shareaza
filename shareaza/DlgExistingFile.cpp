@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,9 +56,9 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDi
 	m_sURN = _T("");
 	m_nAction = 0;
 	//}}AFX_DATA_INIT
-	
+
 	m_sName = pFile->m_sName;
-	
+
 	if ( pFile->m_bSHA1 && pFile->m_bTiger )
 	{
 		m_sURN	= _T("bitprint:") + CSHA::HashToString( &pFile->m_pSHA1 )
@@ -72,7 +72,7 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent) : CSkinDi
 	{
 		m_sURN = CTigerNode::HashToString( &pFile->m_pTiger, TRUE );
 	}
-	
+
 	m_bAvailable	= pFile->IsAvailable();
 	m_sComments		= pFile->m_sComments;
 }
@@ -97,51 +97,51 @@ void CExistingFileDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CExistingFileDlg message handlers
 
-BOOL CExistingFileDlg::OnInitDialog() 
+BOOL CExistingFileDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( NULL, IDR_DOWNLOADSFRAME );
-	
+
 	if ( ! m_bAvailable ) m_nAction = 1;
 	UpdateData( FALSE );
-	
+
 	m_wndComments.ShowWindow( m_sComments.GetLength() > 0 ? SW_SHOW : SW_HIDE );
 	m_wndMessageAvailable.ShowWindow( m_bAvailable ? SW_SHOW : SW_HIDE );
 	m_wndMessageDeleted.ShowWindow( m_bAvailable ? SW_HIDE : SW_SHOW );
 	m_wndLocate.EnableWindow( m_bAvailable );
-	
+
 	return TRUE;
 }
 
-HBRUSH CExistingFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CExistingFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( pWnd == &m_wndName || pWnd == &m_wndMessageAvailable || pWnd == &m_wndMessageDeleted )
 		pDC->SelectObject( &theApp.m_gdiFontBold );
 	if ( pWnd == &m_wndComments && ! m_bAvailable )
 		pDC->SetTextColor( RGB( 255, 0, 0 ) );
-	
+
 	return hbr;
 }
 
-void CExistingFileDlg::OnAction0() 
+void CExistingFileDlg::OnAction0()
 {
 	if ( m_wndLocate.IsWindowEnabled() ) m_wndOK.EnableWindow( TRUE );
 }
 
-void CExistingFileDlg::OnAction1() 
+void CExistingFileDlg::OnAction1()
 {
 	m_wndOK.EnableWindow( TRUE );
 }
 
-void CExistingFileDlg::OnAction2() 
+void CExistingFileDlg::OnAction2()
 {
 	m_wndOK.EnableWindow( TRUE );
 }
 
-void CExistingFileDlg::OnOK() 
+void CExistingFileDlg::OnOK()
 {
 	UpdateData();
 	if ( ! m_bAvailable && m_nAction == 0 ) return;

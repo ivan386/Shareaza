@@ -1,7 +1,7 @@
 //
 // GraphBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,7 +110,7 @@ void CGraphBase::BufferedPaint(CDC* pDC, CRect* pRect)
 		m_pDC.CreateCompatibleDC( pDC );
 		m_hOldImage = (HBITMAP)m_pDC.SelectObject( &m_pImage )->GetSafeHandle();
 	}
-	
+
 	CRect rc( 0, 0, sz.cx, sz.cy );
 	Paint( &m_pDC, &rc );
 

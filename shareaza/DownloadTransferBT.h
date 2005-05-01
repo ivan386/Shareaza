@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,7 @@ class CDownloadTransferBT : public CDownloadTransfer
 public:
 	CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pClient);
 	virtual ~CDownloadTransferBT();
-	
+
 // Attributes
 public:
 	CBTClient*		m_pClient;

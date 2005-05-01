@@ -1,7 +1,7 @@
 //
 // GraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -131,26 +131,26 @@ void CGraphItem::SetHistory(DWORD nSize, BOOL bMax)
 {
 	if ( bMax && m_nData >= nSize ) return;
 	else if ( ! bMax && m_nData == nSize ) return;
-	
+
 	DWORD* pOldData		= m_pData;
 	DWORD nOldTotal		= m_nData;
 	DWORD nOldLength	= min( m_nLength, nSize );
 	DWORD nOldPosition	= m_nPosition;
-	
+
 	m_nData		= nSize;
 	m_pData		= new DWORD[ m_nData ];
 	m_nPosition	= 0;
 	m_nLength	= 0;
-	
+
 	if ( pOldData == NULL ) return;
-	
+
 	for ( DWORD nPosition = 0 ; nPosition < nOldLength ; nPosition++ )
 	{
 		DWORD nPos = nOldTotal + nOldPosition - nOldLength + nPosition;
 		if ( nPos >= nOldTotal ) nPos -= nOldTotal;
 		Add( pOldData[ nPos ] );
 	}
-	
+
 	delete [] pOldData;
 }
 
@@ -317,7 +317,7 @@ QWORD CGraphItem::GetValue(DWORD nCode, DWORD nParam)
 		break;
 
 	};
-	
+
 	return nValue;
 }
 

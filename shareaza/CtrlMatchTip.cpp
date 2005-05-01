@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,7 +74,7 @@ CMatchTipCtrl::CMatchTipCtrl()
 	m_pHit		= NULL;
 	m_tOpen		= 0;
 	m_nIcon		= 0;
-	
+
 	if ( m_hUser32 = LoadLibrary( _T("User32.dll") ) )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
@@ -84,14 +84,14 @@ CMatchTipCtrl::CMatchTipCtrl()
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
 	}
-	
+
 	if ( ! m_hClass ) m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
-	
+
 	m_crBack	= CoolInterface.m_crTipBack;
 	m_crText	= CoolInterface.m_crTipText;
 	m_crBorder	= CCoolInterface::CalculateColour( m_crBack, (COLORREF)0, 100 );
 	m_crWarnings = CoolInterface.m_crTipWarnings; // Set colour of warning messages
-	
+
 	if ( m_brBack.m_hObject ) m_brBack.DeleteObject();
 	m_brBack.CreateSolidBrush( m_crBack );
 }
@@ -111,7 +111,7 @@ COLORREF	CMatchTipCtrl::m_crWarnings;
 /////////////////////////////////////////////////////////////////////////////
 // CMatchTipCtrl operations
 
-BOOL CMatchTipCtrl::Create(CWnd* pParentWnd) 
+BOOL CMatchTipCtrl::Create(CWnd* pParentWnd)
 {
 	CRect rc( 0, 0, 0, 0 );
 	m_pOwner = pParentWnd;
@@ -122,19 +122,19 @@ void CMatchTipCtrl::Show(CMatchFile* pFile, CQueryHit* pHit)
 {
 	if ( AfxGetMainWnd() != GetForegroundWindow() ) return;
 	if ( ! Settings.Interface.TipSearch ) return;
-	
+
 	CPoint point;
 	GetCursorPos( &point );
-	
+
 	if ( m_bVisible )
 	{
 		if ( pFile == m_pFile && pHit == m_pHit ) return;
-		
+
 		Hide();
-		
+
 		m_pFile	= pFile;
 		m_pHit	= pHit;
-		
+
 		ShowInternal();
 	}
 	else if ( point != m_pOpen )
@@ -151,7 +151,7 @@ void CMatchTipCtrl::Hide()
 	m_pFile	= NULL;
 	m_pHit	= NULL;
 	m_tOpen	= 0;
-	
+
 	if ( m_bVisible )
 	{
 		ShowWindow( SW_HIDE );
@@ -164,16 +164,16 @@ void CMatchTipCtrl::Hide()
 /////////////////////////////////////////////////////////////////////////////
 // CMatchTipCtrl system message handlers
 
-int CMatchTipCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CMatchTipCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	SetTimer( 1, 250, NULL );
-	
+
 	return 0;
 }
 
-void CMatchTipCtrl::OnDestroy() 
+void CMatchTipCtrl::OnDestroy()
 {
 	KillTimer( 1 );
 	CWnd::OnDestroy();
@@ -182,11 +182,11 @@ void CMatchTipCtrl::OnDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CMatchTipCtrl show logic message handlers
 
-void CMatchTipCtrl::OnTimer(UINT nIDEvent) 
+void CMatchTipCtrl::OnTimer(UINT nIDEvent)
 {
 	CPoint point;
 	GetCursorPos( &point );
-	
+
 	if ( WindowFromPoint( point ) != m_pOwner )
 	{
 		if ( m_bVisible ) Hide();
@@ -195,14 +195,14 @@ void CMatchTipCtrl::OnTimer(UINT nIDEvent)
 	else
 	{
 		CWnd* pWnd = GetForegroundWindow();
-		
+
 		if ( pWnd != this && pWnd != AfxGetMainWnd() )
 		{
 			if ( m_bVisible ) Hide();
 			return;
 		}
 	}
-	
+
 	if ( ! m_bVisible && m_tOpen && GetTickCount() >= m_tOpen )
 	{
 		m_tOpen = 0;
@@ -213,7 +213,7 @@ void CMatchTipCtrl::OnTimer(UINT nIDEvent)
 void CMatchTipCtrl::ShowInternal()
 {
 	if ( m_bVisible ) return;
-	
+
 	if ( m_pHit != NULL )
 	{
 		LoadFromHit();
@@ -226,11 +226,11 @@ void CMatchTipCtrl::ShowInternal()
 	{
 		return;
 	}
-	
+
 	if ( m_sName.GetLength() > 128 ) m_sName = m_sName.Left( 128 );
-	
+
 	m_bVisible = TRUE;
-	
+
 	CSize sz = ComputeSize();
 
 	//** Multimonitor update
@@ -241,7 +241,7 @@ void CMatchTipCtrl::ShowInternal()
 	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
 	rc.right = rc.left + sz.cx;
 	rc.bottom = rc.top + sz.cy;
-	
+
 
 	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) && (theApp.m_pfnMonitorFromRect) )
 	{
@@ -279,17 +279,17 @@ void CMatchTipCtrl::ShowInternal()
 	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
 	rc.right = rc.left + sz.cx;
 	rc.bottom = rc.top + sz.cy;
-	
+
 	if ( rc.right >= GetSystemMetrics( SM_CXSCREEN ) )
 	{
 		rc.OffsetRect( GetSystemMetrics( SM_CXSCREEN ) - rc.right - 4, 0 );
 	}
-	
+
 	if ( rc.bottom >= GetSystemMetrics( SM_CYSCREEN ) )
 	{
 		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
 	}*/
-	
+
 	if ( Settings.Interface.TipAlpha == 255 || m_pfnSetLayeredWindowAttributes == NULL )
 	{
 		ModifyStyleEx( WS_EX_LAYERED, 0 );
@@ -300,7 +300,7 @@ void CMatchTipCtrl::ShowInternal()
 		(*m_pfnSetLayeredWindowAttributes)( GetSafeHwnd(),
 			0, (BYTE)Settings.Interface.TipAlpha, LWA_ALPHA );
 	}
-	
+
 	SetWindowPos( &wndTopMost, rc.left, rc.top, rc.Width(), rc.Height(),
 		SWP_SHOWWINDOW|SWP_NOACTIVATE );
 	UpdateWindow();
@@ -314,7 +314,7 @@ void CMatchTipCtrl::LoadFromFile()
 	m_sName = m_pFile->m_pBest->m_sName;
 	m_sSize = m_pFile->m_sSize;
 	LoadTypeInfo();
-	
+
 	if ( m_pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &m_pFile->m_pSHA1 );
@@ -323,7 +323,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		m_sSHA1.Empty();
 	}
-	
+
 	if ( m_pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &m_pFile->m_pTiger );
@@ -332,7 +332,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		m_sTiger.Empty();
 	}
-	
+
 	if ( m_pFile->m_bED2K && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sED2K = _T("ed2k:") + CED2K::HashToString( &m_pFile->m_pED2K );
@@ -352,7 +352,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		m_sPartial.Empty();
 	}
-	
+
 	if ( m_pFile->m_nFiltered == 1 && m_pFile->m_pBest->m_nUpSlots )
 	{
 		CString strFormat;
@@ -364,17 +364,17 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		m_sQueue.Empty();
 	}
-	
+
 	m_pSchema = NULL;
-	
+
 	for ( CQueryHit* pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
 		m_pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
 		if ( m_pSchema ) break;
 	}
-	
+
 	m_pMetadata.Setup( m_pSchema );
-	
+
 	if ( m_pSchema != NULL )
 	{
 		for ( CQueryHit* pHit = m_pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
@@ -384,19 +384,19 @@ void CMatchTipCtrl::LoadFromFile()
 				m_pMetadata.Combine( pHit->m_pXML );
 			}
 		}
-		
+
 		m_pMetadata.Vote();
 		m_pMetadata.Clean( 72 );
 	}
-	
+
 	m_nRating = m_pFile->m_nRated ? m_pFile->m_nRating / m_pFile->m_nRated : 0;
-	
+
 	m_sStatus.Empty();
-	
+
 	if ( m_pFile->m_bExisting )
 	{
 		CLibraryFile* pExisting = NULL;
-		
+
 		CQuickLock oLock( Library.m_pSection );
 		if ( pExisting == NULL && m_pFile->m_bSHA1 == TRUE )
 			pExisting = LibraryMaps.LookupFileBySHA1( &m_pFile->m_pSHA1 );
@@ -404,7 +404,7 @@ void CMatchTipCtrl::LoadFromFile()
 			pExisting = LibraryMaps.LookupFileByTiger( &m_pFile->m_pTiger );
 		if ( pExisting == NULL && m_pFile->m_bED2K == TRUE )
 			pExisting = LibraryMaps.LookupFileByED2K( &m_pFile->m_pED2K );
-		
+
 		if ( pExisting != NULL )
 		{
 			if ( pExisting->IsAvailable() )
@@ -416,14 +416,14 @@ void CMatchTipCtrl::LoadFromFile()
 			{
 				LoadString( m_sStatus, IDS_TIP_EXISTS_DELETED );
 				m_crStatus = RGB( 255, 0, 0 );
-				
+
 				if ( pExisting->m_sComments.GetLength() )
 				{
 					LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
 					m_sStatus += pExisting->m_sComments;
 				}
 			}
-			
+
 		}
 	}
 	else if ( m_pFile->m_bDownload || m_pFile->m_pBest->m_bDownload )
@@ -450,7 +450,7 @@ void CMatchTipCtrl::LoadFromFile()
 		{
 			if( ( m_pFile->m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pFile->m_pBest->m_bPush == TS_TRUE ) )
 			{
-				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_pClientID.w[2], 
+				m_sUser.Format( _T("%lu@%s - %s"), m_pFile->m_pBest->m_pClientID.w[2],
 					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pFile->m_pBest->m_pClientID.w[0]) ),
 					(LPCTSTR)m_pFile->m_pBest->m_pVendor->m_sName );
 			}
@@ -471,7 +471,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		LoadString( m_sBusy, IDS_TIP_FILE_BUSY );
 	}
-	else 
+	else
 	{
 		m_sBusy.Empty();
 	}
@@ -479,7 +479,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		LoadString( m_sPush, IDS_TIP_FILE_FIREWALLED );
 	}
-	else 
+	else
 	{
 		m_sPush.Empty();
 	}
@@ -487,7 +487,7 @@ void CMatchTipCtrl::LoadFromFile()
 	{
 		LoadString( m_sUnstable, IDS_TIP_FILE_UNSTABLE );
 	}
-	else 
+	else
 	{
 		m_sUnstable.Empty();
 	}
@@ -498,7 +498,7 @@ void CMatchTipCtrl::LoadFromHit()
 	m_sName = m_pHit->m_sName;
 	m_sSize = Settings.SmartVolume( m_pHit->m_nSize, FALSE );
 	LoadTypeInfo();
-	
+
 	if ( m_pHit->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &m_pHit->m_pSHA1 );
@@ -507,7 +507,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		m_sSHA1.Empty();
 	}
-	
+
 	if ( m_pHit->m_bTiger && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &m_pHit->m_pTiger );
@@ -516,7 +516,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		m_sTiger.Empty();
 	}
-	
+
 	if ( m_pHit->m_bED2K && Settings.General.GUIMode != GUI_BASIC)
 	{
 		m_sED2K = _T("ed2k:") + CED2K::HashToString( &m_pHit->m_pED2K );
@@ -525,7 +525,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		m_sED2K.Empty();
 	}
-	
+
 	if ( m_pHit->m_nPartial )
 	{
 		CString strFormat;
@@ -536,7 +536,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		m_sPartial.Empty();
 	}
-	
+
 	if ( m_pHit->m_nUpSlots )
 	{
 		CString strFormat;
@@ -548,11 +548,11 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		m_sQueue.Empty();
 	}
-	
+
 	m_pSchema = SchemaCache.Get( m_pHit->m_sSchemaURI );
-	
+
 	m_pMetadata.Setup( m_pSchema );
-	
+
 	if ( m_pSchema != NULL )
 	{
 		if ( m_pHit->m_pXML && m_pSchema->CheckURI( m_pHit->m_sSchemaURI ) )
@@ -561,11 +561,11 @@ void CMatchTipCtrl::LoadFromHit()
 		}
 		m_pMetadata.Clean( 72 );
 	}
-	
+
 	m_nRating = m_pHit->m_nRating;
-	
+
 	m_sStatus.Empty();
-	
+
 	if ( m_pFile->m_bExisting )
 	{
 		LoadString( m_sStatus, IDS_TIP_EXISTS_LIBRARY );
@@ -581,7 +581,7 @@ void CMatchTipCtrl::LoadFromHit()
 		LoadString( m_sStatus, IDS_TIP_BOGUS );
 		m_crStatus = RGB( 255, 0, 0 );
 	}
-	
+
 	if ( m_pHit->m_sNick.GetLength() )
 	{
 		m_sUser.Format( _T("%s (%s - %s)"),
@@ -594,7 +594,7 @@ void CMatchTipCtrl::LoadFromHit()
 		if( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TS_TRUE ) )
 		{
 			m_sUser.Format( _T("%lu@%s - %s"),
-				m_pHit->m_pClientID.w[2], 
+				m_pHit->m_pClientID.w[2],
 				(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)m_pHit->m_pClientID.w[0]) ),
 				(LPCTSTR)m_pHit->m_pVendor->m_sName );
 		}
@@ -610,7 +610,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		LoadString( m_sBusy, IDS_TIP_SOURCE_BUSY );
 	}
-	else 
+	else
 	{
 		m_sBusy.Empty();
 	}
@@ -618,7 +618,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		LoadString( m_sPush, IDS_TIP_SOURCE_FIREWALLED );
 	}
-	else 
+	else
 	{
 		m_sPush.Empty();
 	}
@@ -626,7 +626,7 @@ void CMatchTipCtrl::LoadFromHit()
 	{
 		LoadString( m_sUnstable, IDS_TIP_SOURCE_UNSTABLE );
 	}
-	else 
+	else
 	{
 		m_sUnstable.Empty();
 	}
@@ -659,7 +659,7 @@ BOOL CMatchTipCtrl::LoadTypeInfo()
 	}
 
 	if ( m_sType.IsEmpty() ) m_sType = _T("Unknown");
-	
+
 	return FALSE;
 }
 
@@ -670,12 +670,12 @@ CSize CMatchTipCtrl::ComputeSize()
 {
 	CClientDC dc( this );
 	CSize sz( 0, 0 );
-	
+
 	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntBold );
-	
+
 	ExpandSize( dc, sz, m_sName );
 	sz.cy += TIP_TEXTHEIGHT;
-	
+
 	dc.SelectObject( &CoolInterface.m_fntNormal );
 
 	if ( m_sUser.GetLength() )
@@ -683,9 +683,9 @@ CSize CMatchTipCtrl::ComputeSize()
 		ExpandSize( dc, sz, m_sUser );
 		sz.cy += TIP_TEXTHEIGHT;
 	}
-	
+
 	sz.cy += 5 + 6;
-	
+
 	if ( m_sStatus.GetLength() )
 	{
 		dc.SelectObject( &CoolInterface.m_fntBold );
@@ -694,43 +694,43 @@ CSize CMatchTipCtrl::ComputeSize()
 		sz.cy += TIP_TEXTHEIGHT;
 		sz.cy += 5 + 6;
 	}
-	
+
 	sz.cy += 32;
 	ExpandSize( dc, sz, m_sSize, 80 );
 	ExpandSize( dc, sz, m_sType, 80 );
-	
+
 	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() )
 	{
 		sz.cy += 5 + 6;
-		
+
 		if ( m_sSHA1.GetLength() )
 		{
 			ExpandSize( dc, sz, m_sSHA1 );
 			sz.cy += TIP_TEXTHEIGHT;
 		}
-		
+
 		if ( m_sTiger.GetLength() )
 		{
 			ExpandSize( dc, sz, m_sTiger );
 			sz.cy += TIP_TEXTHEIGHT;
 		}
-		
+
 		if ( m_sED2K.GetLength() )
 		{
 			ExpandSize( dc, sz, m_sED2K );
 			sz.cy += TIP_TEXTHEIGHT;
 		}
 	}
-	
+
 	if ( m_pMetadata.GetCount() )
 	{
 		sz.cy += 5 + 6;
-		
+
 		int nValueWidth = 0;
 		m_nKeyWidth = 0;
-		
+
 		m_pMetadata.ComputeWidth( &dc, m_nKeyWidth, nValueWidth );
-		
+
 		if ( m_nKeyWidth ) m_nKeyWidth += TIP_MARGIN;
 		sz.cx = max( sz.cx, LONG(m_nKeyWidth + nValueWidth) );
 		sz.cy += TIP_TEXTHEIGHT * m_pMetadata.GetCount();
@@ -784,12 +784,12 @@ CSize CMatchTipCtrl::ComputeSize()
 		sz.cy += TIP_TEXTHEIGHT;
 	}
 
-	
+
 	dc.SelectObject( pOldFont );
-	
+
 	sz.cx += TIP_MARGIN * 2;
 	sz.cy += TIP_MARGIN * 2;
-	
+
 	return sz;
 }
 
@@ -803,44 +803,44 @@ void CMatchTipCtrl::ExpandSize(CDC& dc, CSize& sz, LPCTSTR pszText, int nBase)
 /////////////////////////////////////////////////////////////////////////////
 // CMatchTipCtrl painting
 
-BOOL CMatchTipCtrl::OnEraseBkgnd(CDC* pDC) 
+BOOL CMatchTipCtrl::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CMatchTipCtrl::OnPaint() 
+void CMatchTipCtrl::OnPaint()
 {
 	CPaintDC dc( this );
 	CString str;
 	CRect rc;
-	
+
 	GetClientRect( &rc );
-	
+
 	dc.Draw3dRect( &rc, m_crBorder, m_crBorder );
 	rc.DeflateRect( 1, 1 );
-	
+
 	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntBold );
 	CPoint pt( TIP_MARGIN, TIP_MARGIN );
-	
+
 	dc.SetTextColor( m_crText );
-	
+
 	DrawText( dc, pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
-	
+
 	dc.SelectObject( &CoolInterface.m_fntNormal );
-	
+
 	if ( m_sUser.GetLength() )
 	{
 		DrawText( dc, pt, m_sUser );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	
+
 	pt.y += 5;
 	dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
 		m_crBorder, m_crBorder );
 	dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
 	pt.y += 6;
-	
+
 	if ( m_sStatus.GetLength() )
 	{
 		dc.SetTextColor( m_crStatus );
@@ -849,27 +849,27 @@ void CMatchTipCtrl::OnPaint()
 		dc.SelectObject( &CoolInterface.m_fntNormal );
 		dc.SetTextColor( m_crText );
 		pt.y += TIP_TEXTHEIGHT;
-		
+
 		pt.y += 5;
 		dc.Draw3dRect( rc.left + 2, pt.y, rc.Width() - 4, 1,
 			m_crBorder, m_crBorder );
 		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
 		pt.y += 6;
 	}
-	
+
 	ShellIcons.Draw( &dc, m_nIcon, 32, pt.x, pt.y, m_crBack );
-	
+
 	if ( m_nRating > 1 )
 	{
 		CPoint ptStar( rc.right - 3, pt.y - 2 );
-		
+
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
 		{
 			ptStar.x -= 16;
 			ShellIcons.Draw( &dc, SHI_STAR, 16, ptStar.x, ptStar.y, m_crBack );
 		}
 	}
-	
+
 	pt.x += 40;
 	LoadString( str, IDS_TIP_SIZE );
 	DrawText( dc, pt, str + ':' );
@@ -893,19 +893,19 @@ void CMatchTipCtrl::OnPaint()
 			m_crBorder, m_crBorder );
 		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
 		pt.y += 6;
-		
+
 		if ( m_sSHA1.GetLength() )
 		{
 			DrawText( dc, pt, m_sSHA1 );
 			pt.y += TIP_TEXTHEIGHT;
 		}
-		
+
 		if ( m_sTiger.GetLength() )
 		{
 			DrawText( dc, pt, m_sTiger );
 			pt.y += TIP_TEXTHEIGHT;
 		}
-		
+
 		if ( m_sED2K.GetLength() )
 		{
 			DrawText( dc, pt, m_sED2K );
@@ -973,7 +973,7 @@ void CMatchTipCtrl::OnPaint()
 
 		//Source unstable warning
 		if (m_sUnstable.GetLength())
-		{	
+		{
 			ShellIcons.Draw( &dc, SHI_UNSTABLE, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
 
 			CPoint ptTextWithIcon = pt;
@@ -986,7 +986,7 @@ void CMatchTipCtrl::OnPaint()
 		dc.SetTextColor( m_crText );
 		dc.SelectObject( &CoolInterface.m_fntNormal );
 	}
-	
+
 	//Partial warning
 	if ( m_sPartial.GetLength() )
 	{
@@ -999,7 +999,7 @@ void CMatchTipCtrl::OnPaint()
 		DrawText( dc, pt, m_sPartial );
 		pt.y += TIP_TEXTHEIGHT;
 	}
-	
+
 	//Metadata
 	if ( m_pMetadata.GetCount() )
 	{
@@ -1008,7 +1008,7 @@ void CMatchTipCtrl::OnPaint()
 			m_crBorder, m_crBorder );
 		dc.ExcludeClipRect( rc.left + 2, pt.y, rc.right - 2, pt.y + 1 );
 		pt.y += 6;
-		
+
 		for ( POSITION pos = m_pMetadata.GetIterator() ; pos ; )
 		{
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
@@ -1020,7 +1020,7 @@ void CMatchTipCtrl::OnPaint()
 			pt.y += TIP_TEXTHEIGHT;
 		}
 	}
-	
+
 	dc.SelectObject( pOldFont );
 	dc.FillSolidRect( &rc, m_crBack );
 }
@@ -1035,12 +1035,12 @@ void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, LPCTSTR pszText)
 	dc.ExcludeClipRect( &rc );
 }
 
-void CMatchTipCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CMatchTipCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	Hide();
 }
 
-void CMatchTipCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CMatchTipCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	Hide();
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );

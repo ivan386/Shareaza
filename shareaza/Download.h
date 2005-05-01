@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -84,7 +84,7 @@ protected:
 	void			OnDownloaded();
 	void			OnMoved(CDownloadTask* pTask);
 	void			SerializeOld(CArchive& ar, int nVersion);
-	
+
 	friend class CDownloadTask;
 	friend class CDownloadTransfer;
 	friend class CDownloadWithTorrent;

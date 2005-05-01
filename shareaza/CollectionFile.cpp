@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,10 +85,10 @@ void CCollectionFile::Close()
 {
 	for ( POSITION pos = GetFileIterator() ; pos ; ) delete GetNextFile( pos );
 	m_pFiles.RemoveAll();
-	
+
 	if ( m_pMetadata != NULL ) delete m_pMetadata;
 	m_pMetadata = NULL;
-	
+
 	m_sTitle.Empty();
 	m_sThisURI.Empty();
 	m_sParentURI.Empty();
@@ -100,22 +100,22 @@ void CCollectionFile::Close()
 CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
 {
 	SHA1 pSHA1; MD5 pMD5; TIGEROOT pTiger; MD4 pED2K;
-	
+
 	BOOL bSHA1	= CSHA::HashFromURN( pszURN, &pSHA1 );
 	BOOL bMD5	= CMD5::HashFromURN( pszURN, &pMD5 );
 	BOOL bTiger	= CTigerNode::HashFromURN( pszURN, &pTiger );
 	BOOL bED2K	= CED2K::HashFromURN( pszURN, &pED2K );
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		File* pFile = GetNextFile( pos );
-		
+
 		if ( bSHA1 && pFile->m_bSHA1 && pSHA1 == pFile->m_pSHA1 ) return pFile;
 		if ( bMD5 && pFile->m_bMD5 && pMD5 == pFile->m_pMD5 ) return pFile;
 		if ( bTiger && pFile->m_bTiger && pTiger == pFile->m_pTiger ) return pFile;
 		if ( bED2K && pFile->m_bED2K && pED2K == pFile->m_pED2K ) return pFile;
 	}
-	
+
 	return NULL;
 }
 
@@ -125,7 +125,7 @@ CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
 CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bApply)
 {
 	File* pFile = NULL;
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		pFile = GetNextFile( pos );
@@ -135,9 +135,9 @@ CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bAp
 		if ( pShared->m_bED2K && pFile->m_bED2K && pShared->m_pED2K == pFile->m_pED2K ) break;
 		pFile = NULL;
 	}
-	
+
 	if ( bApply && pFile != NULL ) pFile->ApplyMetadata( pShared );
-	
+
 	return pFile;
 }
 
@@ -147,13 +147,13 @@ CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bAp
 int CCollectionFile::GetMissingCount()
 {
 	int nCount =0;
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		File* pFile = GetNextFile( pos );
 		if ( ! pFile->IsComplete() && ! pFile->IsDownloading() ) nCount++;
 	}
-	
+
 	return nCount;
 }
 
@@ -164,25 +164,25 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 {
 	CZIPFile::File* pFile = pZIP.GetFile( _T("Collection.xml"), TRUE );
 	if ( pFile == NULL ) return FALSE;
-	
+
 	CBuffer* pBuffer = pFile->Decompress();
 	if ( pBuffer == NULL ) return FALSE;
-	
+
 	CXMLElement* pXML = CXMLElement::FromString( pBuffer->ReadString( pBuffer->m_nLength, CP_UTF8 ), TRUE );
 	delete pBuffer;
-	
+
 	if ( pXML == NULL ) return FALSE;
 	if ( ! pXML->IsNamed( _T("collection") ) ) return FALSE;
-	
+
 	CXMLElement* pProperties = pXML->GetElementByName( _T("properties") );
 	if ( pProperties == NULL ) return FALSE;
 	CXMLElement* pContents = pXML->GetElementByName( _T("contents") );
 	if ( pContents == NULL ) return FALSE;
-	
+
 	for ( POSITION pos = pContents->GetElementIterator() ; pos ; )
 	{
 		File* pFile = new File( this );
-		
+
 		if ( pFile->Parse( pContents->GetNextElement( pos ) ) )
 		{
 			m_pFiles.AddTail( pFile );
@@ -194,18 +194,18 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 			return FALSE;
 		}
 	}
-	
+
 	if ( CXMLElement* pMetadata = pProperties->GetElementByName( _T("metadata") ) )
 	{
 		m_pMetadata = CloneMetadata( pMetadata );
 		if ( m_pMetadata != NULL ) m_sThisURI = m_pMetadata->GetAttributeValue( CXMLAttribute::schemaName );
 	}
-	
+
 	if ( CXMLElement* pTitle = pProperties->GetElementByName( _T("title") ) )
 	{
 		m_sTitle = pTitle->GetValue();
 	}
-	
+
 	if ( CXMLElement* pMounting = pProperties->GetElementByName( _T("mounting") ) )
 	{
 		if ( CXMLElement* pParent = pMounting->GetElementByName( _T("parent") ) )
@@ -217,7 +217,7 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 			m_sThisURI = pThis->GetAttributeValue( _T("uri") );
 		}
 	}
-	
+
 	delete pXML;
 	return TRUE;
 }
@@ -229,10 +229,10 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 {
 	CString strURI = pMetadata->GetAttributeValue( _T("xmlns:s") );
 	if ( strURI.IsEmpty() ) return NULL;
-	
+
 	CXMLElement* pCore = pMetadata->GetFirstElement();
 	if ( pCore == NULL ) return NULL;
-	
+
 	if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
 	{
 		pMetadata = pSchema->Instantiate();
@@ -242,30 +242,30 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 		pMetadata = new CXMLElement( NULL, pCore->GetName() + 's' );
 		pMetadata->AddAttribute( CXMLAttribute::schemaName, strURI );
 	}
-	
+
 	pCore = pCore->Clone();
 	pMetadata->AddElement( pCore );
-	
+
 	CString strName = pMetadata->GetName();
 	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pMetadata->SetName( strName.Mid( 2 ) );
-	
+
 	strName = pCore->GetName();
 	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pCore->SetName( strName.Mid( 2 ) );
-	
+
 	for ( POSITION pos = pCore->GetElementIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pCore->GetNextElement( pos );
 		CString strName = pNode->GetName();
 		if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pNode->SetName( strName.Mid( 2 ) );
 	}
-	
+
 	for ( POSITION pos = pCore->GetAttributeIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pCore->GetNextAttribute( pos );
 		CString strName = pNode->GetName();
 		if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pNode->SetName( strName.Mid( 2 ) );
 	}
-	
+
 	return pMetadata;
 }
 
@@ -295,11 +295,11 @@ CCollectionFile::File::~File()
 BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 {
 	if ( ! pRoot->IsNamed( _T("file") ) ) return FALSE;
-	
+
 	for ( POSITION pos = pRoot->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pRoot->GetNextElement( pos );
-		
+
 		if ( pXML->IsNamed( _T("id") ) )
 		{
 			m_bSHA1		|= CSHA::HashFromURN( pXML->GetValue(), &m_pSHA1 );
@@ -331,7 +331,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 			}
 		}
 	}
-	
+
 	return m_bSHA1 || m_bMD5 || m_bTiger || m_bED2K;
 }
 
@@ -366,9 +366,9 @@ BOOL CCollectionFile::File::IsDownloading() const
 BOOL CCollectionFile::File::Download()
 {
 	CShareazaURL pURL;
-	
+
 	if ( IsComplete() || IsDownloading() ) return FALSE;
-	
+
 	pURL.m_nAction	= CShareazaURL::uriDownload;
 	pURL.m_bSHA1	= m_bSHA1;
 	pURL.m_pSHA1	= m_pSHA1;
@@ -381,7 +381,7 @@ BOOL CCollectionFile::File::Download()
 	pURL.m_sName	= m_sName;
 	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;
-	
+
 	return Downloads.Add( &pURL ) != NULL;
 }
 
@@ -392,10 +392,10 @@ BOOL CCollectionFile::File::ApplyMetadata(CLibraryFile* pShared)
 {
 	ASSERT( pShared != NULL );
 	if ( m_pMetadata == NULL ) return FALSE;
-	
+
 	CXMLElement* pXML = m_pMetadata->Clone();
 	BOOL bResult = pShared->SetMetadata( pXML );
 	delete pXML;
-	
+
 	return bResult;
 }

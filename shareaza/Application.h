@@ -1,7 +1,7 @@
 //
 // Application.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ protected:
 		STDMETHOD(get_UserInterface)(IUserInterface FAR* FAR* ppUserInterface);
 		STDMETHOD(get_Library)(ILibrary FAR* FAR* ppLibrary);
 	END_INTERFACE_PART(Application)
-	
+
 	BEGIN_INTERFACE_PART(UserInterface, IUserInterface)
 		DECLARE_DISPATCH()
 		STDMETHOD(get_Application)(IApplication FAR* FAR* ppApplication);

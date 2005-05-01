@@ -1,7 +1,7 @@
 //
 // WorldGPS.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,7 +60,7 @@ BOOL CWorldGPS::Load(LPCTSTR pszFile)
 	if ( ! pszFile ) pszFile = strFile;
 
 	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return FALSE;
-	
+
 	if ( _tcsstr( pszFile, _T(".xml") ) == NULL )
 	{
 		CArchive ar( &pFile, CArchive::load );
@@ -70,23 +70,23 @@ BOOL CWorldGPS::Load(LPCTSTR pszFile)
 
 		return TRUE;
 	}
-	
+
 	CBuffer pBuffer;
 	pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
 	pBuffer.m_nLength = (DWORD)pFile.GetLength();
 	pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pFile.Close();
-	
+
 	CXMLElement* pXML = CXMLElement::FromBytes( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	if ( NULL == pXML ) return FALSE;
-	
+
 	BOOL bSuccess = LoadFrom( pXML );
 	delete pXML;
-	
+
 	if ( ! bSuccess ) return FALSE;
-	
+
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
-	
+
 	CArchive ar( &pFile, CArchive::store );
 	Serialize( ar );
 	ar.Close();

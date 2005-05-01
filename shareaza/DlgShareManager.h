@@ -1,7 +1,7 @@
 //
 // DlgShareManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,7 +34,7 @@ public:
 	CShareManagerDlg(CWnd* pParent = NULL);
 
 	DECLARE_DYNAMIC(CShareManagerDlg)
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CShareManagerDlg)
@@ -42,14 +42,14 @@ public:
 	CButton	m_wndRemove;
 	CListCtrl	m_wndList;
 	//}}AFX_DATA
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CShareManagerDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CShareManagerDlg)
@@ -59,9 +59,9 @@ protected:
 	afx_msg void OnShareRemove();
 	afx_msg void OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

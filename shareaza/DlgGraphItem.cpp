@@ -1,7 +1,7 @@
 //
 // DlgGraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,12 +69,12 @@ void CGraphItemDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CGraphItemDlg message handlers
 
-BOOL CGraphItemDlg::OnInitDialog() 
+BOOL CGraphItemDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CGraphItemDlg"), IDR_TRAFFICFRAME );
-	
+
 	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
 	m_gdiImageList.Add( theApp.LoadIcon( IDR_TRAFFICFRAME ) );
 
@@ -93,17 +93,17 @@ BOOL CGraphItemDlg::OnInitDialog()
 	m_crColour = m_pItem->m_nColour;
 
 	OnSelChangeGraphSource();
-	
+
 	return TRUE;
 }
 
-void CGraphItemDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CGraphItemDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 1024;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CGraphItemDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CGraphItemDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&
@@ -126,7 +126,7 @@ void CGraphItemDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 
 	ImageList_Draw( m_gdiImageList.GetSafeHandle(),
-		0, dc.GetSafeHdc(), pt.x, pt.y, 
+		0, dc.GetSafeHdc(), pt.x, pt.y,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 
 	rcItem.left += 20; rcItem.right -= 2;
@@ -137,11 +137,11 @@ void CGraphItemDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	dc.DrawText( strText, &rcItem, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_NOPREFIX );
 	dc.SelectObject( pOldFont );
-	
+
 	dc.Detach();
 }
 
-void CGraphItemDlg::OnSelChangeGraphSource() 
+void CGraphItemDlg::OnSelChangeGraphSource()
 {
 	int nItem = m_wndSource.GetCurSel();
 	if ( nItem < 0 ) return;
@@ -168,7 +168,7 @@ void CGraphItemDlg::OnSelChangeGraphSource()
 	m_wndOK.EnableWindow( TRUE );
 }
 
-void CGraphItemDlg::OnGraphColour() 
+void CGraphItemDlg::OnGraphColour()
 {
 	CColorDialog dlg( m_crColour, CC_ANYCOLOR|CC_SOLIDCOLOR, this );
 
@@ -179,21 +179,21 @@ void CGraphItemDlg::OnGraphColour()
 	}
 }
 
-void CGraphItemDlg::OnPaint() 
+void CGraphItemDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
 
 	m_wndColourBox.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	dc.Draw3dRect( &rc, 0, 0 );
 	rc.DeflateRect( 1, 1 );
 	dc.FillSolidRect( &rc, 0 );
 	dc.Draw3dRect( rc.left, ( rc.top + rc.bottom ) / 2, rc.Width() + 1, 2, m_crColour, 0 );
 }
 
-void CGraphItemDlg::OnOK() 
+void CGraphItemDlg::OnOK()
 {
 	int nItem = m_wndSource.GetCurSel();
 	if ( nItem < 0 ) return;
@@ -203,6 +203,6 @@ void CGraphItemDlg::OnOK()
 
 	m_pItem->SetCode( pItem->m_nCode );
 	m_pItem->m_nColour = m_crColour;
-	
+
 	CSkinDialog::OnOK();
 }

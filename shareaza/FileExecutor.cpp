@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,9 +80,9 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 {
 	CString strPath, strType;
 	CWaitCursor pCursor;
-	
+
 	GetFileComponents( pszFile, strPath, strType );
-	
+
 	if ( strType.GetLength() > 0 && _tcsistr( _T("|co|collection|"), strType ) != NULL )
 	{
 		if ( CLibraryWnd* pWnd = GetLibraryWindow() )
@@ -91,31 +91,31 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 			return TRUE;
 		}
 	}
-	
+
 	if ( bForce == NULL && strType.GetLength() &&
 		_tcsistr( Settings.Library.SafeExecute, strType ) == NULL )
 	{
 		CString strFormat, strPrompt;
-		
+
 		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
 		strPrompt.Format( strFormat, pszFile );
-		
+
 		int nResult = AfxMessageBox( strPrompt,
 			MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-		
+
 		if ( nResult == IDCANCEL ) return FALSE;
 		else if ( nResult == IDNO ) return TRUE;
 	}
-	
+
 	if ( Plugins.OnExecuteFile( pszFile ) ) return TRUE;
-	
+
 	if ( Settings.MediaPlayer.EnablePlay && strType.GetLength() &&
 		 ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 	{
 		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
 		{
 			BOOL bAudio = _tcsistr( _T("|ape|mid|mp3|ogg|wav|wma|"), strType ) != NULL;
-			
+
 			if ( CMediaWnd* pWnd = GetMediaWindow( ! bAudio ) )
 			{
 				pWnd->PlayFile( pszFile );
@@ -123,10 +123,10 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 			}
 		}
 	}
-	
+
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
 		NULL, pszFile, NULL, strPath, SW_SHOWNORMAL );
-	
+
 	return TRUE;
 }
 
@@ -137,11 +137,11 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL bForce)
 {
 	CString strPath, strType;
 	CWaitCursor pCursor;
-	
+
 	GetFileComponents( pszFile, strPath, strType );
-	
+
 	if ( Plugins.OnEnqueueFile( pszFile ) ) return TRUE;
-	
+
 	if ( Settings.MediaPlayer.EnableEnqueue && strType.GetLength() &&
 		 ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 	{
@@ -154,10 +154,10 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL bForce)
 			}
 		}
 	}
-	
+
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
 		_T("Enqueue"), pszFile, NULL, strPath, SW_SHOWNORMAL );
-	
+
 	return TRUE;
 }
 
@@ -167,7 +167,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL bForce)
 BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 {
 	CString str;
-	
+
 	if ( ! Settings.Library.BitziOkay )
 	{
 		Skin.LoadString( str, IDS_LIBRARY_BITZI_MESSAGE );
@@ -175,12 +175,12 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 		Settings.Library.BitziOkay = TRUE;
 		Settings.Save();
 	}
-	
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
-	
+
 	CLibraryFile* pFile = Library.LookupFile( nIndex );
 	if ( pFile == NULL ) return FALSE;
-	
+
 	if ( pFile->m_bSHA1 == FALSE || pFile->m_bTiger == FALSE )
 	{
 		CString strFormat;
@@ -190,10 +190,10 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 		AfxMessageBox( str, MB_ICONINFORMATION );
 		return FALSE;
 	}
-	
+
 	CString strURL = Settings.Library.BitziWebView;
 	CFile hFile;
-	
+
 	if ( hFile.Open( pFile->GetPath(), CFile::modeRead|CFile::shareDenyNone ) && hFile.GetLength() > 0 )
 	{
 		static LPCTSTR pszHex = _T("0123456789ABCDEF");
@@ -201,29 +201,29 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 		int nPeek = hFile.Read( nBuffer, 20 );
 		hFile.Close();
 		str.Empty();
-		
+
 		for ( int nByte = 0 ; nByte < nPeek ; nByte++ )
 		{
 			str += pszHex[ (BYTE)nBuffer[ nByte ] >> 4 ];
 			str += pszHex[ (BYTE)nBuffer[ nByte ] & 15 ];
 		}
-		
+
 		strURL = Settings.Library.BitziWebSubmit;
 		Replace( strURL, _T("(FIRST20)"), str );
 	}
-	
+
 	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( pFile->m_sName ) );
 	Replace( strURL, _T("(SHA1)"), CSHA::HashToString( &pFile->m_pSHA1 ) );
 	Replace( strURL, _T("(TTH)"), CTigerNode::HashToString( &pFile->m_pTiger ) );
 	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent( Settings.Library.BitziAgent ) ) );
-	
+
 	str.Format( _T("%I64i"), pFile->GetSize() );
 	Replace( strURL, _T("(SIZE)"), str );
-	
+
 	pLock.Unlock();
-	
+
 	DisplayURL( strURL );
-	
+
 	return TRUE;
 }
 
@@ -234,37 +234,37 @@ BOOL CFileExecutor::DisplayURL(LPCTSTR pszURL)
 {
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"), pszURL, NULL, NULL, SW_SHOWNORMAL );
 	return TRUE;
-	
+
 #if 0
 	DWORD dwFilterFlags = 0;
 	BOOL bSuccess = FALSE;
 	DWORD hInstance = 0;
-	
+
 	UINT uiResult = DdeInitialize( &hInstance, DDECallback, dwFilterFlags, 0 );
 	if ( uiResult != DMLERR_NO_ERROR ) return FALSE;
-	
+
 	HSZ hszService	= DdeCreateStringHandle( hInstance, L"IExplore", CP_WINUNICODE );
 	HSZ hszTopic	= DdeCreateStringHandle( hInstance, L"WWW_OpenURL", CP_WINUNICODE );
-	
+
 	if ( HCONV hConv = DdeConnect( hInstance, hszService, hszTopic, NULL ) )
 	{
 		CString strCommand;
 		USES_CONVERSION;
-		
+
 		strCommand.Format( _T("\"%s\",,0"), pszURL );
 		LPCSTR pszCommand = T2CA( (LPCTSTR)strCommand );
-		
+
 		DdeClientTransaction( (LPBYTE)pszCommand, pszCommand,
 			 hConv, 0, 0, XTYP_EXECUTE, 4000, NULL );
-		
+
 		DdeDisconnect( hConv );
 	}
-	
+
 	DdeFreeStringHandle( hInstance, hszTopic );
 	DdeFreeStringHandle( hInstance, hszService );
-	
+
 	DdeUninitialize( hInstance );
-	
+
 	return bSuccess;
 #endif
 }

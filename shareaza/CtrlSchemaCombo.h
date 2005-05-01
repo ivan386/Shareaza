@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CSchemaCombo : public CComboBox
 public:
 	CSchemaCombo();
 	virtual ~CSchemaCombo();
-	
+
 // Attributes
 public:
 	CString		m_sNoSchemaText;
@@ -40,7 +40,7 @@ protected:
 	HWND		m_hListBox;
 	WNDPROC		m_pWndProc;
 	CString		m_sPreDrop;
-	
+
 // Operations
 public:
 	void		SetEmptyString(UINT nID);
@@ -53,7 +53,7 @@ protected:
 	static LRESULT PASCAL ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 	int			FindParam(DWORD nParam);
 	BOOL		OnClickItem(int nItem, BOOL bDown);
-	
+
 // Overrides
 public:
 	virtual BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);

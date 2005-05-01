@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,12 +67,12 @@ BOOL CDDEServer::Create()
 
 	uiResult = DdeInitialize( &m_hInstance, DDECallback, dwFilterFlags, 0 );
 	if ( uiResult != DMLERR_NO_ERROR ) return FALSE;
-	
+
 	m_hszService = DdeCreateStringHandle( m_hInstance, (LPCTSTR)m_sService, CP_WINUNICODE );
 
-	
+
     DdeNameService( m_hInstance, m_hszService, NULL, DNS_REGISTER );
-	
+
 	return TRUE;
 }
 
@@ -82,11 +82,11 @@ BOOL CDDEServer::Create()
 void CDDEServer::Close()
 {
 	if ( m_hInstance == NULL ) return;
-	
+
 	DdeNameService( m_hInstance, m_hszService, NULL, DNS_UNREGISTER );
-	
+
 	DdeFreeStringHandle( m_hInstance, m_hszService );
-	
+
 	DdeUninitialize( m_hInstance );
 	m_hInstance = NULL;
 }
@@ -97,36 +97,36 @@ void CDDEServer::Close()
 HDDEDATA CALLBACK CDDEServer::DDECallback(UINT wType, UINT wFmt, HCONV hConv, HSZ hsz1, HSZ hsz2, HDDEDATA hData, DWORD dwData1, DWORD dwData2)
 {
 	HDDEDATA hResult = NULL;
-	
+
 	if ( ! m_pServer ) return hResult;
-	
+
 	switch ( wType )
 	{
 	case XTYP_CONNECT:
-		
+
 		hResult = m_pServer->CheckAccept( m_pServer->StringFromHsz( hsz1 ) ) ?
 			(HDDEDATA)TRUE : (HDDEDATA)FALSE;
 		break;
 
 	case XTYP_CONNECT_CONFIRM:
-		
+
 		// m_pServer->AddConversation( hConv, hsz1 );
 		break;
-		
+
 	case XTYP_DISCONNECT:
 
 		// m_pServer->RemoveConversation( hConv );
 		break;
 
 	case XTYP_EXECUTE:
-		
+
 		m_pServer->Execute( m_pServer->StringFromHsz( hsz1 ), hData, &hResult );
 		break;
 
 	}
-	
+
 	return hResult;
-}                                                                            
+}
 
 //////////////////////////////////////////////////////////////////////
 // CDDEServer HSZ to string helper
@@ -144,7 +144,7 @@ CString CDDEServer::StringFromHsz(HSZ hsz)
 
 	str = pBuf;
 	delete [] pBuf;
-	
+
 	return str;
 }
 
@@ -155,7 +155,7 @@ CString CDDEServer::ReadArgument(LPCTSTR& pszMessage)
 {
 	BOOL bEscape = FALSE;
 	CString strPath;
-	
+
 	for ( pszMessage += 7 ; *pszMessage ; pszMessage++ )
 	{
 		if ( bEscape )
@@ -184,7 +184,7 @@ CString CDDEServer::ReadArgument(LPCTSTR& pszMessage)
 			strPath += *pszMessage;
 		}
 	}
-	
+
 	return strPath;
 }
 
@@ -205,13 +205,13 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData, HDDEDATA* phResult)
 {
 	DWORD nLength	= 0;
 	LPVOID pData	= DdeAccessData( hData, &nLength );
-	
+
 	BOOL bResult = Execute( pszTopic, pData, nLength );
-	
+
 	DdeUnaccessData( hData );
-	
+
 	*phResult = (HDDEDATA)( bResult ? DDE_FACK : DDE_FNOTPROCESSED );
-	
+
 	return bResult;
 }
 
@@ -250,35 +250,35 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 {
 	CWnd* pWnd = AfxGetMainWnd();
-	
+
 	if ( _tcscmp( pszTopic, _T("URL") ) == 0 )
 	{
 		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, pszMessage );
-		
+
 		CShareazaURL* pURL = new CShareazaURL();
-		
+
 		if ( pURL->Parse( pszMessage ) )
 		{
 			if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 			return TRUE;
 		}
-		
+
 		delete pURL;
 		theApp.Message( MSG_ERROR, IDS_URL_PARSE_ERROR );
 	}
 	else if ( _tcscmp( pszTopic, _T("TORRENT") ) == 0 )
 	{
 		theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, pszMessage );
-		
+
 		CBTInfo* pTorrent = new CBTInfo();
-		
+
 		if ( pTorrent->LoadTorrentFile( pszMessage ) )
 		{
 			CShareazaURL* pURL = new CShareazaURL( pTorrent );
 			if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 			return TRUE;
 		}
-		
+
 		delete pTorrent;
 		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, pszMessage );
 	}
@@ -286,7 +286,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	{
 		LPTSTR pszPath = new TCHAR[ _tcslen(pszMessage) + 1 ];
 		CopyMemory( pszPath, pszMessage, sizeof(TCHAR) * ( _tcslen(pszMessage) + 1 ) );
-		
+
 		if ( pWnd->PostMessage( WM_COLLECTION, (WPARAM)pszPath ) )
 		{
 			return TRUE;
@@ -296,7 +296,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 			delete [] pszPath;
 		}
 	}
-	
+
 	return FALSE;
 }
 

@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ CURLActionDlg::CURLActionDlg(CWnd* pParent, CShareazaURL* pURL, BOOL bMultiple) 
 	m_bNewWindow = FALSE;
 	m_bAlwaysOpen = FALSE;
 	//}}AFX_DATA_INIT
-	
+
 	m_pURLs.AddTail( pURL );
 	m_bMultiple = bMultiple;
 }
@@ -107,17 +107,17 @@ void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CURLActionDlg message handlers
 
-BOOL CURLActionDlg::OnInitDialog() 
+BOOL CURLActionDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CURLActionDlg"), IDR_MAINFRAME );
-	
+
 	m_bAlwaysOpen	= Settings.General.AlwaysOpenURLs;
 	m_bNewWindow	= Settings.Downloads.ShowMonitorURLs;
-	
+
 	Update();
-	
+
 	if ( m_bAlwaysOpen )
 	{
 		if ( m_wndDownload.IsWindowEnabled() )
@@ -128,7 +128,7 @@ BOOL CURLActionDlg::OnInitDialog()
 	else
 	{
 		m_bMultiple = FALSE;
-		
+
 		if ( CWnd* pWnd = AfxGetMainWnd() )
 		{
 			if ( pWnd->IsWindowVisible() && ! pWnd->IsIconic() )
@@ -138,7 +138,7 @@ BOOL CURLActionDlg::OnInitDialog()
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -147,7 +147,7 @@ void CURLActionDlg::AddURL(CShareazaURL* pURL)
 	if ( IsWindowVisible() && m_pURLs.GetCount() > 0 )
 	{
 		CShareazaURL* pFirst = (CShareazaURL*)m_pURLs.GetHead();
-		
+
 		if ( pFirst->m_nAction == pURL->m_nAction )
 		{
 			m_pURLs.AddTail( pURL );
@@ -155,7 +155,7 @@ void CURLActionDlg::AddURL(CShareazaURL* pURL)
 			return;
 		}
 	}
-	
+
 	delete pURL;
 }
 
@@ -164,7 +164,7 @@ void CURLActionDlg::Update()
 	CShareazaURL* pURL = (CShareazaURL*)m_pURLs.GetHead();
 
 	CString strMessage;
-	
+
 	if ( pURL->m_nAction == CShareazaURL::uriHost ||
 		 pURL->m_nAction == CShareazaURL::uriDonkeyServer )
 	{
@@ -180,7 +180,7 @@ void CURLActionDlg::Update()
 		LoadString( strMessage, IDS_URL_CONNECT );
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
-		
+
 		if ( pURL->m_nAction == CShareazaURL::uriHost )
 		{
 			LoadString(strMessage, IDS_URL_BROWSE );
@@ -210,7 +210,7 @@ void CURLActionDlg::Update()
 	{
 		LoadString(m_sNameTitle, IDS_URL_URL );
 		LoadString(m_sHashTitle, IDS_URL_TYPE );
-		
+
 		if ( m_pURLs.GetCount() == 1 )
 		{
 			m_sNameValue = pURL->m_sURL;
@@ -219,7 +219,7 @@ void CURLActionDlg::Update()
 		{
 			m_sNameValue.Format( _T("%i URL(s)"), m_pURLs.GetCount() );
 		}
-		
+
 		switch ( pURL->m_nSize )
 		{
 		case CDiscoveryService::dsWebCache:
@@ -229,7 +229,7 @@ void CURLActionDlg::Update()
 			m_sHashValue = _T("Server.met URL");
 			break;
 		}
-		
+
 		m_wndMessage4.ShowWindow( SW_SHOW );
 		LoadString(strMessage, IDS_URL_ADD );
 		m_wndDownload.SetWindowText( strMessage );
@@ -239,7 +239,7 @@ void CURLActionDlg::Update()
 	else if ( pURL->m_nAction == CShareazaURL::uriSource )
 	{
 		LoadString(m_sNameTitle, IDS_URL_URL );
-		
+
 		if ( m_pURLs.GetCount() == 1 )
 		{
 			m_sNameValue = pURL->m_sURL;
@@ -248,7 +248,7 @@ void CURLActionDlg::Update()
 		{
 			m_sNameValue.Format( _T("%i URL(s)"), m_pURLs.GetCount() );
 		}
-		
+
 		m_wndMessage1.ShowWindow( SW_SHOW );
 		m_wndSearch.ShowWindow( SW_HIDE );
 	}
@@ -256,7 +256,7 @@ void CURLActionDlg::Update()
 	{
 		LoadString(m_sNameTitle, IDS_URL_FILENAME );
 		m_sHashTitle = _T("URN:");
-		
+
 		if ( m_pURLs.GetCount() > 1 )
 		{
 			m_sNameValue.Format( _T("%i file(s)"), m_pURLs.GetCount() );
@@ -276,7 +276,7 @@ void CURLActionDlg::Update()
 		{
 			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
-		
+
 		if ( m_pURLs.GetCount() > 1 )
 		{
 			m_sHashValue.Format( _T("%i file(s)"), m_pURLs.GetCount() );
@@ -319,11 +319,11 @@ void CURLActionDlg::Update()
 			m_wndNewWindow.ShowWindow( SW_HIDE );
 		}
 	}
-	
+
 	UpdateData( FALSE );
 }
 
-BOOL CURLActionDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CURLActionDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN )
 	{
@@ -335,26 +335,26 @@ BOOL CURLActionDlg::PreTranslateMessage(MSG* pMsg)
 			PostMessage( WM_COMMAND, IDC_URL_SEARCH );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-void CURLActionDlg::OnUrlDownload() 
+void CURLActionDlg::OnUrlDownload()
 {
 	UpdateData();
-	
+
 	Settings.General.AlwaysOpenURLs		= m_bAlwaysOpen;
 	Settings.Downloads.ShowMonitorURLs	= m_bNewWindow;
-	
+
 	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
 	{
 		CShareazaURL* pURL = (CShareazaURL*)m_pURLs.GetNext( pos );
-	
+
 		if ( pURL->m_nAction == CShareazaURL::uriDownload ||
 			 pURL->m_nAction == CShareazaURL::uriSource )
 		{
 			CLibraryFile* pFile;
-			
+
 			{
 				CSingleLock oLock( &Library.m_pSection, TRUE );
 				if ( ( pURL->m_bSHA1 && ( pFile = LibraryMaps.LookupFileBySHA1( &pURL->m_pSHA1 ) ) ) ||
@@ -364,30 +364,30 @@ void CURLActionDlg::OnUrlDownload()
 					::Skin.LoadString( strFormat, IDS_URL_ALREADY_HAVE );
 					strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
 					oLock.Unlock();
-					
+
 					UINT nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
 					if ( nMBOX == IDCANCEL ) return;
 					if ( nMBOX == IDNO ) continue;
 				}
 			}
-			
+
 			CDownload* pDownload = Downloads.Add( pURL );
-			
+
 			if ( pDownload == NULL ) continue;
-			
+
 			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 			{
 //				if ( pURL->m_bED2K && HostCache.eDonkey.GetNewest() != NULL )
 //					Settings.eDonkey.EnableToday = TRUE;
-				
+
 				if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 			}
-			
+
 			if ( m_bMultiple == FALSE )
 			{
 				CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 				pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-				
+
 				if ( Settings.Downloads.ShowMonitorURLs && m_pURLs.GetCount() == 1 )
 				{
 					CSingleLock pLock( &Transfers.m_pSection, TRUE );
@@ -406,7 +406,7 @@ void CURLActionDlg::OnUrlDownload()
 		else if ( pURL->m_nAction == CShareazaURL::uriBrowse )
 		{
 			SOCKADDR_IN pAddress;
-			
+
 			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
 			{
 				new CBrowseHostWnd( &pAddress );
@@ -417,22 +417,22 @@ void CURLActionDlg::OnUrlDownload()
 			DiscoveryServices.Add( pURL->m_sURL, (int)pURL->m_nSize );
 		}
 	}
-	
+
 	CSkinDialog::OnOK();
 }
 
-void CURLActionDlg::OnUrlSearch() 
+void CURLActionDlg::OnUrlSearch()
 {
 	Settings.General.AlwaysOpenURLs = m_bAlwaysOpen;
-	
+
 	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
 	{
 		CShareazaURL* pURL = (CShareazaURL*)m_pURLs.GetNext( pos );
-		
+
 		if ( pURL->m_nAction == CShareazaURL::uriHost )
 		{
 			SOCKADDR_IN pAddress;
-			
+
 			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
 			{
 				new CBrowseHostWnd( &pAddress );
@@ -446,12 +446,12 @@ void CURLActionDlg::OnUrlSearch()
 					pURL->m_nAction == CShareazaURL::uriSearch )
 		{
 			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-			
+
 			CQuerySearch* pSearch = pURL->ToQuery();
-			
+
 			new CSearchWnd( pSearch );
 		}
 	}
-	
+
 	CSkinDialog::OnOK();
 }

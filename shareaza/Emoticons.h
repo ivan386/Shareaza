@@ -1,7 +1,7 @@
 //
 // Emoticons.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,20 +28,20 @@ class CImageFile;
 class CRichDocument;
 
 
-class CEmoticons  
+class CEmoticons
 {
 // Construction
 public:
 	CEmoticons();
 	virtual ~CEmoticons();
-	
+
 // Attributes
 public:
 	CImageList		m_pImage;
 	CStringArray	m_pIndex;
 	LPTSTR			m_pTokens;
 	CUIntArray		m_pButtons;
-	
+
 // Operations
 public:
 	LPCTSTR	FindNext(LPCTSTR pszText, int* pnIndex);
@@ -57,8 +57,8 @@ protected:
 	int		AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, COLORREF crBack, BOOL bButton);
 	void	BuildTokens();
 	BOOL	LoadTrillian(LPCTSTR pszFile);
-	
-	
+
+
 };
 
 extern CEmoticons Emoticons;

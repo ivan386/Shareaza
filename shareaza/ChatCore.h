@@ -1,7 +1,7 @@
 //
 // ChatCore.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CConnection;
 class CChatSession;
 
 
-class CChatCore  
+class CChatCore
 {
 // Construction
 public:
 	CChatCore();
 	virtual ~CChatCore();
-	
+
 // Attributes
 public:
 	CMutex		m_pSection;
@@ -43,7 +43,7 @@ protected:
 	HANDLE		m_hThread;
 	BOOL		m_bThread;
 	CEvent		m_pWakeup;
-	
+
 // Operations
 public:
 	POSITION		GetIterator() const;
@@ -63,7 +63,7 @@ protected:
 protected:
 	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
-	
+
 	friend class CChatSession;
 };
 

@@ -1,7 +1,7 @@
 //
 // EDNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,7 @@ public:
 	DWORD		m_nUDPFlags;
 	CString		m_sServerName;
 	CPtrList	m_pQueries;
-	
+
 // Operations
 public:
 	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
@@ -72,7 +72,7 @@ protected:
 	BOOL	OnSearchResults(CEDPacket* pPacket);
 	BOOL	OnFoundSources(CEDPacket* pPacket);
 	void	SendSharedFiles();
-	
+
 };
 
 #endif // !defined(AFX_EDNEIGHBOUR_H__7E77CD2A_D3AA_4E53_981B_3B4624968921__INCLUDED_)

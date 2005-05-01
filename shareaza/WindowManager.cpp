@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ CWindowManager::CWindowManager(CMDIFrameWnd* pParent)
 {
 	m_bIgnoreActivate	= FALSE;
 	m_bClosing			= FALSE;
-	
+
 	if ( pParent ) SetOwner( pParent );
 }
 
@@ -97,7 +97,7 @@ void CWindowManager::Remove(CChildWnd* pChild)
 CChildWnd* CWindowManager::GetActive() const
 {
 	if ( m_hWnd == NULL ) return NULL;
-	
+
 	CWnd* pActive = m_pParent->MDIGetActive();
 
 	if ( pActive && pActive->IsKindOf( RUNTIME_CLASS(CChildWnd) ) )
@@ -150,29 +150,29 @@ CChildWnd* CWindowManager::Find(CRuntimeClass* pClass, CChildWnd* pAfter, CChild
 CChildWnd* CWindowManager::Open(CRuntimeClass* pClass, BOOL bToggle, BOOL bFocus)
 {
 	CSingleLock pLock( &theApp.m_pSection, TRUE );
-	
+
 	CChildWnd* pChild = Find( pClass );
-	
+
 	if ( pChild && pChild->IsIconic() )
 	{
 		pChild->ShowWindow( SW_SHOWNORMAL );
 		bToggle = FALSE;
 	}
-	
+
 	if ( pChild && pChild->m_bTabMode ) bToggle = FALSE;
-	
+
 	if ( pChild && bToggle && GetActive() == pChild )
 	{
 		pChild->DestroyWindow();
 		return NULL;
 	}
-	
+
 	pLock.Unlock();
-	
+
 	if ( ! pChild ) pChild = (CChildWnd*)pClass->CreateObject();
-	
+
 	if ( bFocus ) pChild->BringWindowToTop();
-	
+
 	return pChild;
 }
 
@@ -182,10 +182,10 @@ CChildWnd* CWindowManager::Open(CRuntimeClass* pClass, BOOL bToggle, BOOL bFocus
 CChildWnd* CWindowManager::FindFromPoint(const CPoint& point) const
 {
 	CPoint pt( point );
-	
+
 	ScreenToClient( &pt );
 	CChildWnd* pWnd = (CChildWnd*)ChildWindowFromPoint( pt );
-	
+
 	return ( pWnd != NULL && pWnd->IsKindOf( RUNTIME_CLASS(CChildWnd) ) ) ? pWnd : NULL;
 }
 
@@ -196,12 +196,12 @@ void CWindowManager::Close()
 {
 	CSingleLock pLock( &theApp.m_pSection, TRUE );
 	CPtrList pClose;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		pClose.AddTail( GetNext( pos ) );
 	}
-	
+
 	for ( POSITION pos = pClose.GetHeadPosition() ; pos ; )
 	{
 		CChildWnd* pChild = (CChildWnd*)pClose.GetNext( pos );
@@ -216,35 +216,35 @@ void CWindowManager::AutoResize()
 {
 	CChildWnd* pChild;
 	CRect rcSize;
-	
+
 	GetClientRect( &rcSize );
 	if ( rcSize.right < 64 || rcSize.bottom < 64 ) return;
-	
+
 	for ( pChild = (CChildWnd*)GetWindow( GW_CHILD ) ; pChild ; pChild = (CChildWnd*)pChild->GetNextWindow() )
 	{
 		if ( ! pChild->IsKindOf( RUNTIME_CLASS(CChildWnd) ) ) continue;
-		
+
 		CRect rcChild;
 		pChild->GetWindowRect( &rcChild );
 		ScreenToClient( &rcChild );
-		
+
 		if ( rcChild.right == m_rcSize.right || rcChild.bottom == m_rcSize.bottom )
 		{
 			if ( rcChild.right == m_rcSize.right ) rcChild.right = rcSize.right;
 			if ( rcChild.bottom == m_rcSize.bottom ) rcChild.bottom = rcSize.bottom;
-			
+
 			pChild->MoveWindow( &rcChild );
 		}
 	}
-	
+
 	m_rcSize = rcSize;
-	
+
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{
 		for ( pChild = (CChildWnd*)GetWindow( GW_CHILD ) ; pChild ; pChild = (CChildWnd*)pChild->GetNextWindow() )
 		{
 			if ( ! pChild->IsKindOf( RUNTIME_CLASS(CChildWnd) ) ) continue;
-			
+
 			if ( pChild->m_bGroupMode && pChild->m_pGroupParent )
 			{
 				CRect rcChild( &rcSize );
@@ -295,7 +295,7 @@ void CWindowManager::Cascade(BOOL bActiveOnly)
 void CWindowManager::ActivateGrouped(CChildWnd* pExcept)
 {
 	CSingleLock pLock( &theApp.m_pSection, TRUE );
-	
+
 	if ( m_bIgnoreActivate ) return;
 	m_bIgnoreActivate = TRUE;
 
@@ -325,19 +325,19 @@ void CWindowManager::ActivateGrouped(CChildWnd* pExcept)
 void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 {
 	ModifyStyle( WS_VISIBLE, 0 );
-	
+
 	if ( bSaveState )
 	{
 		SaveSearchWindows();
 		if ( Settings.General.GUIMode == GUI_WINDOWED )
 			SaveWindowStates();
 	}
-	
+
 	Close();
-	
+
 	Settings.General.GUIMode = nMode;
 	theApp.WriteProfileInt( _T("Settings"), _T("GUIMode"), nMode );
-	
+
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{
 		CreateTabbedWindows();
@@ -346,9 +346,9 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	{
 		LoadWindowStates();
 	}
-	
+
 	LoadSearchWindows();
-	
+
 	AutoResize();
 	ShowWindow( SW_SHOW );
 }
@@ -359,17 +359,17 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 void CWindowManager::CreateTabbedWindows()
 {
 	CDownloadsWnd* pDownloads = new CDownloadsWnd();
-	
+
 	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
 		CUploadsWnd* pUploads = new CUploadsWnd();
 		pUploads->m_pGroupParent = pDownloads;
-		
+
 		CNeighboursWnd* pNeighbours = new CNeighboursWnd();
 		CSystemWnd* pSystem = new CSystemWnd();
 		pSystem->m_pGroupParent = pNeighbours;
 	}
-	
+
 	CHomeWnd* pHome = new CHomeWnd();
 }
 
@@ -379,15 +379,15 @@ void CWindowManager::CreateTabbedWindows()
 void CWindowManager::LoadWindowStates()
 {
 	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
-	
+
 	CString strWindows = theApp.GetProfileString( _T("Windows"), _T("State"),
 		_T("CSystemWnd|CNeighboursWnd") );
-	
+
 	for ( strWindows += '|' ; strWindows.GetLength() ; )
 	{
 		CString strClass = strWindows.SpanExcluding( _T("| ,.\t") );
 		strWindows = strWindows.Mid( strClass.GetLength() + 1 );
-		
+
 		if ( strClass.Find( _T("TG#") ) == 0 )
 		{
 			DWORD nUnique;
@@ -415,15 +415,15 @@ void CWindowManager::LoadWindowStates()
 void CWindowManager::SaveWindowStates()
 {
 	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
-	
+
 	CString strWindows;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CChildWnd* pChild = GetNext( pos );
-		
+
 		if ( strWindows.GetLength() ) strWindows += '|';
-		
+
 		if ( pChild->IsKindOf( RUNTIME_CLASS(CTrafficWnd) ) )
 		{
 			CTrafficWnd* pTraffic = (CTrafficWnd*)pChild;
@@ -436,7 +436,7 @@ void CWindowManager::SaveWindowStates()
 			strWindows += pChild->GetRuntimeClass()->m_lpszClassName;
 		}
 	}
-	
+
 	theApp.WriteProfileString( _T("Windows"), _T("State"), strWindows );
 }
 
@@ -453,7 +453,7 @@ BOOL CWindowManager::LoadSearchWindows()
 	CArchive ar( &pFile, CArchive::load );
 	CWaitCursor pCursor;
 	BOOL bSuccess = TRUE;
-	
+
 	try
 	{
 		while ( ar.ReadCount() == 1 )
@@ -467,9 +467,9 @@ BOOL CWindowManager::LoadSearchWindows()
 		pException->Delete();
 		bSuccess = FALSE;
 	}
-	
+
 	if ( Settings.General.GUIMode != GUI_WINDOWED ) Open( RUNTIME_CLASS(CHomeWnd) );
-	
+
 	return bSuccess;
 }
 
@@ -575,7 +575,7 @@ BOOL CWindowManager::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void CWindowManager::OnPaint() 
+void CWindowManager::OnPaint()
 {
 	CPaintDC dc( this );
 }

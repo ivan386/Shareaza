@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,11 +30,11 @@ class CLibraryFile;
 
 class CDeleteFileDlg : public CSkinDialog
 {
-// Construction	
+// Construction
 public:
 	CDeleteFileDlg(CWnd* pParent = NULL);
 	virtual ~CDeleteFileDlg();
-	
+
 	DECLARE_DYNAMIC(CDeleteFileDlg)
 	enum { IDD = IDD_DELETE_FILE };
 
@@ -54,7 +54,7 @@ public:
 public:
 	void	Apply(CLibraryFile* pFile);
 	void	Create(CDownload* pDownload, BOOL bShare);
-	
+
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()

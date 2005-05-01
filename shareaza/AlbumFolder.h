@@ -1,7 +1,7 @@
 //
 // AlbumFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,9 +38,9 @@ class CAlbumFolder : public CComObject
 public:
 	CAlbumFolder(CAlbumFolder* pParent = NULL, LPCTSTR pszSchemaURI = NULL, LPCTSTR pszName = NULL, BOOL bAutoDelete = FALSE);
 	virtual ~CAlbumFolder();
-	
+
 	DECLARE_DYNAMIC(CAlbumFolder)
-	
+
 // Attributes
 public:
 	CAlbumFolder*	m_pParent;
@@ -62,7 +62,7 @@ public:
 	DWORD				m_nSelectCookie;
 	DWORD				m_nListCookie;
 	CCollectionFile*	m_pCollection;
-	
+
 // Operations
 public:
 	CAlbumFolder*	AddFolder(LPCTSTR pszSchemaURI = NULL, LPCTSTR pszName = NULL, BOOL bAutoDelete = FALSE);
@@ -98,7 +98,7 @@ protected:
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			Serialize(CArchive& ar, int nVersion);
 	void			Clear();
-	
+
 	friend class CLibrary;
 	friend class CLibraryFolders;
 	friend class CLibraryFrame;

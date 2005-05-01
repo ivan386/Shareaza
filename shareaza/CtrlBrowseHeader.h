@@ -1,7 +1,7 @@
 //
 // CtrlBrowseHeader.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,14 +35,14 @@ class CBrowseHeaderCtrl : public CCoolBarCtrl
 public:
 	CBrowseHeaderCtrl();
 	virtual ~CBrowseHeaderCtrl();
-	
+
 // Attributes
 protected:
 	CString	m_sTitle;
 	CString	m_sIntro;
 	int		m_nIcon32;
 	int		m_nIcon48;
-	
+
 // Operations
 public:
 	void	Update(CHostBrowser* pBrowser);
@@ -50,23 +50,23 @@ public:
 protected:
 	virtual void PrepareRect(CRect* pRect) const;
 	virtual void DoPaint(CDC* pDC, CRect& rcBar, BOOL bTransparent);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CBrowseHeaderCtrl)
 	public:
 	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CBrowseHeaderCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

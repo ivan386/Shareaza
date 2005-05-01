@@ -1,7 +1,7 @@
 //
 // DlgUpgrade.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,7 @@ void CUpgradeDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CUpgradeDlg message handlers
 
-BOOL CUpgradeDlg::OnInitDialog() 
+BOOL CUpgradeDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
@@ -76,20 +76,20 @@ BOOL CUpgradeDlg::OnInitDialog()
 	m_bCheck	= FALSE;
 
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CUpgradeDlg::OnOK() 
+void CUpgradeDlg::OnOK()
 {
 	ParseCheckAgain();
-	
+
 	CShareazaURL pURL;
-	
+
 	pURL.m_nAction		= CShareazaURL::uriDownload;
 	pURL.m_sName		= VersionChecker.m_sUpgradeFile;
 	pURL.m_sURL			= VersionChecker.m_sUpgradeSources;
-	
+
 	if ( VersionChecker.m_sUpgradeSHA1.GetLength() )
 	{
 		pURL.m_bSHA1 = TRUE;
@@ -111,28 +111,28 @@ void CUpgradeDlg::OnOK()
 			pURL.m_nSize = nSize;
 		}
 	}
-	
+
 	Downloads.Add( &pURL );
-	
+
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-	
+
 	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 	pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-	
+
 	CSkinDialog::OnOK();
 }
 
-void CUpgradeDlg::OnCancel() 
+void CUpgradeDlg::OnCancel()
 {
 	ParseCheckAgain();
-	
+
 	CSkinDialog::OnCancel();
 }
 
 void CUpgradeDlg::ParseCheckAgain()
 {
 	UpdateData();
-	
+
 	if ( m_bCheck )
 	{
 		VersionChecker.SetNextCheck( 31 );

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHeaderPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,13 +78,13 @@ int CLibraryHeaderPanel::Update()
 {
 	CAlbumFolder* pFolder = GetSelectedAlbum();
 	if ( pFolder == NULL || pFolder->m_pSchema == NULL ) return 0;
-	
+
 	m_nIcon32	= pFolder->m_pSchema->m_nIcon32;
 	m_nIcon48	= pFolder->m_pSchema->m_nIcon48;
-	
+
 	m_sTitle	= pFolder->m_pSchema->m_sHeaderTitle;
 	m_sSubtitle	= pFolder->m_pSchema->m_sHeaderSubtitle;
-	
+
 	if ( pFolder->m_pParent == NULL )
 	{
 		QWORD nTotalVolume;
@@ -107,10 +107,10 @@ int CLibraryHeaderPanel::Update()
 	m_pMetadata.Remove( pFolder->m_pSchema->GetFirstMemberName() );
 
 	m_pMetadata.Combine( pFolder->m_pXML );
-	
+
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 54 );
-	
+
 	if ( m_pMetadata.GetCount() )
 	{
 		CClientDC dc( this );
@@ -121,7 +121,7 @@ int CLibraryHeaderPanel::Update()
 		m_nMetaWidth += m_nKeyWidth;
 		dc.SelectObject( pFont );
 	}
-	
+
 	if (m_hWnd) Invalidate();
 
 	int nHeight = m_pMetadata.GetCount() * 12 + 8;
@@ -141,7 +141,7 @@ int CLibraryHeaderPanel::Update()
 void CLibraryHeaderPanel::OnSkinChange()
 {
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
-	
+
 	if ( HBITMAP hMark = Skin.GetWatermark( _T("CLibraryHeaderPanel") ) )
 	{
 		m_bmWatermark.Attach( hMark );
@@ -161,27 +161,27 @@ CAlbumFolder* CLibraryHeaderPanel::GetSelectedAlbum() const
 	CLibraryTreeItem* pItem	= pFrame->m_pFolderSelection;
 	if ( pItem == NULL ) return Library.GetAlbumRoot();
 	if ( pItem->m_pSelNext != NULL ) return NULL;
-	
+
 	return pItem->m_pVirtual;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHeaderPanel message handlers
 
-int CLibraryHeaderPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryHeaderPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_szBuffer = CSize( 0, 0 );
 	OnSkinChange();
-	
+
 	return 0;
 }
 
-void CLibraryHeaderPanel::OnDestroy() 
+void CLibraryHeaderPanel::OnDestroy()
 {
 	CWnd::OnDestroy();
-	
+
 	if ( m_bmBuffer.m_hObject != NULL )
 	{
 		m_dcBuffer.SelectObject( m_hBuffer );
@@ -190,20 +190,20 @@ void CLibraryHeaderPanel::OnDestroy()
 	}
 }
 
-void CLibraryHeaderPanel::OnSize(UINT nType, int cx, int cy) 
+void CLibraryHeaderPanel::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
 	Invalidate();
 }
 
-void CLibraryHeaderPanel::OnPaint() 
+void CLibraryHeaderPanel::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rcClient;
-	
+
 	GetClientRect( &rcClient );
 	if ( rcClient.IsRectEmpty() ) return;
-	
+
 	if ( rcClient.Width() > m_szBuffer.cx || rcClient.Height() > m_szBuffer.cy )
 	{
 		if ( m_bmBuffer.m_hObject != NULL )
@@ -212,20 +212,20 @@ void CLibraryHeaderPanel::OnPaint()
 			m_dcBuffer.DeleteDC();
 			m_bmBuffer.DeleteObject();
 		}
-		
+
 		m_szBuffer = rcClient.Size();
 		m_bmBuffer.CreateCompatibleBitmap( &dc, m_szBuffer.cx, m_szBuffer.cy );
 		m_dcBuffer.CreateCompatibleDC( &dc );
 		m_hBuffer = (HBITMAP)m_dcBuffer.SelectObject( &m_bmBuffer )->m_hObject;
 	}
-	
+
 	if ( ! CoolInterface.DrawWatermark( &m_dcBuffer, &rcClient, &m_bmWatermark, 0, 0 ) )
 	{
 		m_dcBuffer.FillSolidRect( &rcClient, Skin.m_crBannerBack );
 	}
-	
+
 	DoPaint( &m_dcBuffer, rcClient );
-	
+
 	dc.BitBlt( rcClient.left, rcClient.top, rcClient.Width(),
 		rcClient.Height(), &m_dcBuffer, 0, 0, SRCCOPY );
 }
@@ -233,9 +233,9 @@ void CLibraryHeaderPanel::OnPaint()
 void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 {
 	CFont* pOldFont = pDC->GetCurrentFont();
-	
+
 	CPoint ptIcon( 8, ( rcClient.top + rcClient.bottom ) / 2 - 24 );
-	
+
 	if ( m_nIcon48 >= 0 )
 	{
 		ShellIcons.Draw( pDC, m_nIcon48, 48, ptIcon.x, ptIcon.y );
@@ -245,64 +245,64 @@ void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 		ptIcon.x += 8; ptIcon.y += 8;
 		ShellIcons.Draw( pDC, m_nIcon32, 32, ptIcon.x, ptIcon.y );
 	}
-	
+
 	pDC->SetTextColor( Skin.m_crBannerText );
 	pDC->SetBkMode( TRANSPARENT );
-	
+
 	CRect rcWork( &rcClient );
 	rcWork.DeflateRect( 8, 4 );
 	rcWork.left += 48 + 16;
-	
+
 	if ( m_pMetadata.GetCount() )
 	{
 		CRect rcMeta( &rcWork );
 		rcMeta.left		= rcWork.right - m_nMetaWidth;
 		rcWork.right	= rcMeta.left - 8;
-		
+
 		int nY = rcMeta.top;
-		
+
 		for ( POSITION pos = m_pMetadata.GetIterator() ; pos && nY + 12 < rcMeta.bottom ; nY += 12 )
 		{
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
-			
+
 			pDC->SelectObject( &CoolInterface.m_fntNormal );
 			DrawText( pDC, rcMeta.left, nY, pItem->m_sKey + ':' );
-			
+
 			if ( pItem->m_bLink ) pDC->SelectObject( &CoolInterface.m_fntUnder );
 			DrawText( pDC, rcMeta.left + m_nKeyWidth, nY, pItem->m_sValue );
-			
+
 			pItem->SetRect( rcMeta.left + m_nKeyWidth, nY, rcMeta.right, nY + 12 );
 		}
 	}
-	
+
 	rcWork.DeflateRect( 0, 4 );
-	
+
 	pDC->SelectObject( &CoolInterface.m_fntCaption );
 	Skin.DrawWrappedText( pDC, &rcWork, m_sTitle, FALSE );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	Skin.DrawWrappedText( pDC, &rcWork, m_sSubtitle, FALSE );
-	
+
 	pDC->SelectObject( pOldFont );
 }
 
 void CLibraryHeaderPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 {
 	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
-	
+
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
-	
+
 	pDC->ExtTextOut( nX, nY, ETO_CLIPPED /*|ETO_OPAQUE*/, &rc, pszText, _tcslen( pszText ), NULL );
 	// pDC->ExcludeClipRect( &rc );
 }
 
-BOOL CLibraryHeaderPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CLibraryHeaderPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( m_pMetadata.OnSetCursor( this ) ) return TRUE;
-	
+
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CLibraryHeaderPanel::OnLButtonUp(UINT nFlags, CPoint point) 
+void CLibraryHeaderPanel::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( CMetaItem* pItem = m_pMetadata.HitTest( point, TRUE ) )
 	{
@@ -313,6 +313,6 @@ void CLibraryHeaderPanel::OnLButtonUp(UINT nFlags, CPoint point)
 			pFrame->Display( pFolder );
 		}
 	}
-	
+
 	CWnd::OnLButtonUp( nFlags, point );
 }

@@ -1,7 +1,7 @@
 //
 // WizardProfilePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,12 +78,12 @@ void CWizardProfilePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardProfilePage message handlers
 
-BOOL CWizardProfilePage::OnInitDialog() 
+BOOL CWizardProfilePage::OnInitDialog()
 {
 	CWizardPage::OnInitDialog();
-	
+
 	Skin.Apply( _T("CWizardProfilePage"), this );
-	
+
 	for ( int nAge = 13 ; nAge < 110 ; nAge++ )
 	{
 		CString str, strYearsOld;
@@ -91,31 +91,31 @@ BOOL CWizardProfilePage::OnInitDialog()
 		str.Format( _T(" %i ") + strYearsOld, nAge );
 		m_wndAge.SetItemData( m_wndAge.AddString( str ), nAge );
 	}
-	
+
 	m_pWorld = new CWorldGPS();
 	m_pWorld->Load();
-	
+
 	CWorldCountry* pCountry = m_pWorld->m_pCountry;
-	
+
 	for ( int nCountry = m_pWorld->m_nCountry ; nCountry ; nCountry--, pCountry++ )
 	{
 		m_wndCountry.SetItemData( m_wndCountry.AddString( pCountry->m_sName ), (LPARAM)pCountry );
 	}
-	
+
 	return TRUE;
 }
 
-BOOL CWizardProfilePage::OnSetActive() 
+BOOL CWizardProfilePage::OnSetActive()
 {
-	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );	
-	
+	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+
 	m_sNick = MyProfile.GetNick();
-	
+
 	if ( CXMLElement* pVitals = MyProfile.GetXML( _T("vitals") ) )
 	{
 		CString strGender	= pVitals->GetAttributeValue( _T("gender") );
 		CString strAge		= pVitals->GetAttributeValue( _T("age") );
-		
+
 		if ( strGender.CompareNoCase( _T("male") ) == 0 )
 		{
 			m_nGender = 1;
@@ -124,10 +124,10 @@ BOOL CWizardProfilePage::OnSetActive()
 		{
 			m_nGender = 2;
 		}
-		
+
 		int nAge = 0;
 		_stscanf( strAge, _T("%i"), &nAge );
-		
+
 		for ( int nAgeItem = 0 ; nAgeItem < m_wndAge.GetCount() ; nAgeItem ++ )
 		{
 			if ( m_wndAge.GetItemData( nAgeItem ) == nAge )
@@ -137,7 +137,7 @@ BOOL CWizardProfilePage::OnSetActive()
 			}
 		}
 	}
-	
+
 	if ( CXMLElement* pLocation = MyProfile.GetXML( _T("location") ) )
 	{
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") ) )
@@ -147,26 +147,26 @@ BOOL CWizardProfilePage::OnSetActive()
 							+ pPolitical->GetAttributeValue( _T("state") );
 		}
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	return CWizardPage::OnSetActive();
 }
 
-void CWizardProfilePage::OnCloseUpCountry() 
+void CWizardProfilePage::OnCloseUpCountry()
 {
 	CWaitCursor pCursor;
-	
+
 	int nSel = m_wndCountry.GetCurSel();
 	if ( nSel < 0 ) return;
 	CWorldCountry* pCountry = (CWorldCountry*)m_wndCountry.GetItemData( nSel );
 	if ( ! pCountry ) return;
-	
+
 	if ( m_wndCity.GetCount() ) m_wndCity.ResetContent();
-	
+
 	CWorldCity* pCity = pCountry->m_pCity;
 	CString strCity;
-	
+
 	for ( int nCity = pCountry->m_nCity ; nCity ; nCity--, pCity++ )
 	{
 		if ( pCity->m_sName.GetLength() )
@@ -188,17 +188,17 @@ void CWizardProfilePage::OnCloseUpCountry()
 	}
 }
 
-LRESULT CWizardProfilePage::OnWizardBack() 
+LRESULT CWizardProfilePage::OnWizardBack()
 {
 	return CWizardPage::OnWizardBack();
 }
 
-LRESULT CWizardProfilePage::OnWizardNext() 
+LRESULT CWizardProfilePage::OnWizardNext()
 {
 	CString strMessage;
-	
+
 	UpdateData( TRUE );
-	
+
 	if ( CXMLElement* pIdentity = MyProfile.GetXML( _T("identity"), TRUE ) )
 	{
 		if ( CXMLElement* pHandle = pIdentity->GetElementByName( _T("handle"), TRUE ) )
@@ -207,7 +207,7 @@ LRESULT CWizardProfilePage::OnWizardNext()
 			if ( m_sNick.IsEmpty() ) pHandle->Delete();
 		}
 	}
-	
+
 	if ( CXMLElement* pVitals = MyProfile.GetXML( _T("vitals"), TRUE ) )
 	{
 		if ( m_nAge > 0 )
@@ -220,18 +220,18 @@ LRESULT CWizardProfilePage::OnWizardNext()
 		{
 			pVitals->DeleteAttribute( _T("age") );
 		}
-		
+
 		if ( m_nGender == 1 || m_nGender == 3 )
 			pVitals->AddAttribute( _T("gender"), _T("male") );
 		else if ( m_nGender == 2 || m_nGender == 4 )
 			pVitals->AddAttribute( _T("gender"), _T("female") );
 		else
 			pVitals->DeleteAttribute( _T("gender") );
-		
+
 		if ( pVitals->GetElementCount() == 0 &&
 			 pVitals->GetAttributeCount() == 0 ) pVitals->Delete();
 	}
-	
+
 	if ( CXMLElement* pLocation = MyProfile.GetXML( _T("location"), TRUE ) )
 	{
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political"), TRUE ) )
@@ -244,9 +244,9 @@ LRESULT CWizardProfilePage::OnWizardNext()
 			{
 				pPolitical->DeleteAttribute( _T("country") );
 			}
-			
+
 			int nPos = m_sLocCity.Find( _T(", ") );
-			
+
 			if ( nPos >= 0 )
 			{
 				pPolitical->AddAttribute( _T("city"), m_sLocCity.Left( nPos ) );
@@ -262,7 +262,7 @@ LRESULT CWizardProfilePage::OnWizardNext()
 				pPolitical->DeleteAttribute( _T("city") );
 				pPolitical->DeleteAttribute( _T("state") );
 			}
-			
+
 			if ( pPolitical->GetElementCount() == 0 && pPolitical->GetAttributeCount() == 0 )
 				pPolitical->Delete();
 		}
@@ -271,14 +271,14 @@ LRESULT CWizardProfilePage::OnWizardNext()
 		{
 			int nSel = m_wndCity.GetCurSel();
 			CWorldCity* pCity = (CWorldCity*)m_wndCity.GetItemData( m_wndCity.GetCurSel() );
-			
+
 			if ( nSel >= 0 && pCity != NULL )
 			{
 				CString strValue;
-				
+
 				strValue.Format( _T("%f"), pCity->m_nLatitude );
 				pCoordinates->AddAttribute( _T("latitude"), strValue );
-				
+
 				strValue.Format( _T("%f"), pCity->m_nLongitude );
 				pCoordinates->AddAttribute( _T("longitude"), strValue );
 			}
@@ -287,30 +287,30 @@ LRESULT CWizardProfilePage::OnWizardNext()
 				pCoordinates->Delete();
 			}
 		}
-		
+
 		if ( pLocation->GetElementCount() == 0 ) pLocation->Delete();
 	}
-	
+
 	if ( MyProfile.GetNick().IsEmpty() )
 	{
 		LoadString( strMessage, IDS_PROFILE_NO_NICK );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return -1;
 	}
-	
+
 	if ( MyProfile.GetXML( _T("vitals") ) == NULL )
 	{
 		LoadString( strMessage, IDS_PROFILE_NO_VITALS );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return -1;
 	}
-	
+
 	if ( MyProfile.GetLocation().IsEmpty() )
 	{
 		LoadString( strMessage, IDS_PROFILE_NO_LOCATION );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return -1;
 	}
-	
+
 	MyProfile.Save();
-	
+
 	return ( (Settings.Connection.InSpeed > 128) && (theApp.m_bNT) && (!Settings.Connection.Firewalled) && (!theApp.m_bLimitedConnections) ) ? 0 : IDD_WIZARD_FINISHED;
 }

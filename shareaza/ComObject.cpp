@@ -1,7 +1,7 @@
 //
 // ComObject.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -145,7 +145,7 @@ STDMETHODIMP CComObject::ComGetIDsOfNames(	LPUNKNOWN pUnk, REFIID riid,
 
 	LPTYPEINFO pTypeInfo;
 	SCODE sc;
-	
+
 	sc = ComGetTypeInfo( pUnk, 0, lcid, &pTypeInfo );
 
 	if ( SUCCEEDED( sc ) )
@@ -171,7 +171,7 @@ STDMETHODIMP CComObject::ComInvoke(	LPUNKNOWN pUnk, DISPID dispidMember, REFIID 
 	LPTYPEINFO pTypeInfo;
 	HRESULT hr;
 	SCODE sc;
-	
+
 	sc = ComGetTypeInfo( pUnk, 0, lcid, &pTypeInfo );
 	if ( FAILED( sc ) ) return sc;
 
@@ -200,9 +200,9 @@ CString GUIDX::Encode(const void * pInGUID)
 bool GUIDX::Decode(LPCTSTR pszIn, LPVOID pOutGUID)
 {
 	ASSERT( pOutGUID != NULL );
-	
+
 	if ( pszIn == NULL ) return false;
-	
+
 	if ( _tcslen(pszIn) == 38 )
 	{
 		if ( pszIn[0] != '{' || pszIn[37] != '}' ) return false;
@@ -212,9 +212,9 @@ bool GUIDX::Decode(LPCTSTR pszIn, LPVOID pOutGUID)
 		pszIn --;
 	}
 	else return false;
-	
+
 	BYTE* pGUID = reinterpret_cast<BYTE*>(pOutGUID);
-	
+
 	if ( ! Unhex( pszIn + 1, pGUID + 3 ) ) return false;
 	if ( ! Unhex( pszIn + 3, pGUID + 2 ) ) return false;
 	if ( ! Unhex( pszIn + 5, pGUID + 1 ) ) return false;
@@ -231,7 +231,7 @@ bool GUIDX::Decode(LPCTSTR pszIn, LPVOID pOutGUID)
 	if ( ! Unhex( pszIn + 31, pGUID + 13 ) ) return false;
 	if ( ! Unhex( pszIn + 33, pGUID + 14 ) ) return false;
 	if ( ! Unhex( pszIn + 35, pGUID + 15 ) ) return false;
-	
+
 	return true;
 }
 

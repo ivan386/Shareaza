@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,34 +65,34 @@ void CDeleteFileDlg::DoDataExchange(CDataExchange* pDX)
 BOOL CDeleteFileDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( NULL, ID_LIBRARY_DELETE );
-	
+
 	if ( m_bAll )
 	{
 		m_wndAll.EnableWindow( TRUE );
 		m_bAll = FALSE;
 	}
-	
+
 	return FALSE;
 }
 
 HBRUSH CDeleteFileDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( pWnd == &m_wndName )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontBold );
 	}
-	
+
 	return hbr;
 }
 
 void CDeleteFileDlg::OnBnClickedRateValue()
 {
 	UpdateData();
-	
+
 	switch ( m_nRateValue )
 	{
 	case 0: // None
@@ -108,17 +108,17 @@ void CDeleteFileDlg::OnBnClickedRateValue()
 		m_sComments = _T("Fake/corrupt");
 		break;
 	}
-	
+
 	m_wndComments.SetWindowText( m_sComments );
-	
+
 	BOOL bComments = ( m_nRateValue > 0 || m_sComments.GetLength() );
-	
+
 	if ( bComments != m_wndComments.IsWindowEnabled() )
 	{
 		m_wndPrompt.EnableWindow( bComments );
 		m_wndComments.EnableWindow( bComments );
 	}
-	
+
 	if ( bComments )
 	{
 		m_wndComments.SetFocus();
@@ -138,7 +138,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 	{
 		if ( m_sComments.GetLength() > 0 )
 			pFile->m_sComments = m_sComments;
-		
+
 		switch ( m_nRateValue )
 		{
 		case 1:	// Misnamed
@@ -151,7 +151,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 			pFile->m_nRating = 1;
 			break;
 		}
-		
+
 		pFile->SaveMetadata();
 	}
 }
@@ -160,19 +160,19 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 {
 	if ( ! pDownload->m_bSHA1 && ! pDownload->m_bTiger && ! pDownload->m_bED2K ) return;
 	if ( m_sComments.IsEmpty() ) return;
-	
+
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 500 ) ) return;
-	
+
 	CLibraryFile* pFile = NULL;
-	
+
 	if ( pFile == NULL && pDownload->m_bSHA1 )
 		pFile = LibraryMaps.LookupFileBySHA1( &pDownload->m_pSHA1 );
 	if ( pFile == NULL && pDownload->m_bTiger )
 		pFile = LibraryMaps.LookupFileByTiger( &pDownload->m_pTiger );
 	if ( pFile == NULL && pDownload->m_bED2K )
 		pFile = LibraryMaps.LookupFileByED2K( &pDownload->m_pED2K );
-	
+
 	if ( pFile == NULL )
 	{
 		pFile = new CLibraryFile( NULL, pDownload->m_sRemoteName );
@@ -188,8 +188,8 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile->m_bShared	= bShare ? TS_TRUE : TS_FALSE;
 		pFile->Ghost();
 	}
-	
+
 	Apply( pFile );
-	
+
 	Library.Update();
 }

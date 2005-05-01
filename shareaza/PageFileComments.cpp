@@ -1,7 +1,7 @@
 //
 // PageFileComments.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,28 +72,28 @@ void CFileCommentsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFileCommentsPage message handlers
 
-BOOL CFileCommentsPage::OnInitDialog() 
+BOOL CFileCommentsPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
-	
+
 	CLibraryList* pFiles = GetList();
 	if ( pFiles == NULL ) return TRUE;
-	
+
 	if ( pFiles->GetCount() == 1 )
 	{
 		CQuickLock oLock( Library.m_pSection );
 		CLibraryFile* pFile = GetFile();
 		if ( pFile == NULL ) return TRUE;
-		
+
 		m_nRating	= pFile->m_nRating;
 		m_sComments	= pFile->m_sComments;
 	}
 	else
 	{
 		m_wndComments.EnableWindow( FALSE );
-		
+
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
@@ -101,51 +101,51 @@ BOOL CFileCommentsPage::OnInitDialog()
 				m_nRating = pFile->m_nRating;
 			}
 		}
-		
+
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CFileCommentsPage::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CFileCommentsPage::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 1024;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&
 		 ( lpDrawItemStruct->itemAction & ODA_DRAWENTIRE ) == 0 ) return;
-	
+
 	CRect rcItem( &lpDrawItemStruct->rcItem );
 	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 	CDC dc;
-	
+
 	dc.Attach( lpDrawItemStruct->hDC );
-	
+
 	int nRating = lpDrawItemStruct->itemID;
-	
+
 	CFont* pOldFont = (CFont*)dc.SelectObject( nRating > 0 ? &theApp.m_gdiFontBold : &theApp.m_gdiFont );
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
-	
+
 	dc.FillSolidRect( &rcItem,
 		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
 	dc.SetBkMode( TRANSPARENT );
-	
+
 	rcItem.DeflateRect( 4, 1 );
-	
+
 	if ( nRating > 1 )
 	{
 		for ( int nStar = nRating - 1 ; nStar ; nStar-- )
 		{
 			rcItem.right -= 16;
-			ShellIcons.Draw( &dc, SHI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE, 
+			ShellIcons.Draw( &dc, SHI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE,
 				( lpDrawItemStruct->itemState & ODS_SELECTED ) );
 			rcItem.right -= 2;
 		}
@@ -153,10 +153,10 @@ void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct
 	else if ( nRating == 1 )
 	{
 		rcItem.right -= 16;
-		ShellIcons.Draw( &dc, SHI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE, 
+		ShellIcons.Draw( &dc, SHI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE,
 			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
 	}
-	
+
 	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 )
 	{
 		static COLORREF crRating[7] =
@@ -169,26 +169,26 @@ void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct
 			RGB( 0, 128, 0 ),		// 4 - Very good
 			RGB( 0, 0, 255 ),		// 5 - Excellent
 		};
-		
+
 		dc.SetTextColor( crRating[ nRating ] );
 	}
-	
+
 	CString str;
 	m_wndRating.GetLBText( nRating, str );
 	dc.DrawText( str, &rcItem, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_NOPREFIX );
-	
+
 	dc.SelectObject( pOldFont );
 	dc.Detach();
 }
 
-void CFileCommentsPage::OnOK() 
+void CFileCommentsPage::OnOK()
 {
 	UpdateData();
 	m_sComments.TrimLeft();
 	m_sComments.TrimRight();
-	
+
 	CLibraryList* pFiles = GetList();
-	
+
 	if ( pFiles == NULL || pFiles->GetCount() == 1 )
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -196,7 +196,7 @@ void CFileCommentsPage::OnOK()
 		{
 			pFile->m_nRating	= m_nRating;
 			pFile->m_sComments	= m_sComments;
-			
+
 			pFile->SaveMetadata();
 			Library.Update();
 		}
@@ -204,7 +204,7 @@ void CFileCommentsPage::OnOK()
 	else
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
@@ -212,9 +212,9 @@ void CFileCommentsPage::OnOK()
 				pFile->m_nRating = m_nRating;
 			}
 		}
-		
+
 		Library.Update();
 	}
-	
+
 	CFilePropertiesPage::OnOK();
 }

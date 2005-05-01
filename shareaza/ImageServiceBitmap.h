@@ -1,7 +1,7 @@
 //
 // ImageServiceBitmap.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@ class CBitmapImageService : public CCmdTarget
 public:
 	CBitmapImageService();
 	virtual ~CBitmapImageService();
-	
+
 	DECLARE_DYNAMIC(CBitmapImageService)
 
 // Operations
@@ -46,9 +46,9 @@ protected:
 		STDMETHOD(SaveToFile)(HANDLE hFile, IMAGESERVICEDATA FAR* pParams, SAFEARRAY FAR* pImage);
 		STDMETHOD(SaveToMemory)(SAFEARRAY FAR* FAR* ppMemory, IMAGESERVICEDATA FAR* pParams, SAFEARRAY FAR* pImage);
 	END_INTERFACE_PART(Service)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 // Implementation
 protected:
 	//{{AFX_VIRTUAL(CBitmapImageService)

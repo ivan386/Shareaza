@@ -1,7 +1,7 @@
 //
 // XMLCOM.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ CXMLCOM::~CXMLCOM()
 IUnknown* CXMLCOM::Wrap(CXMLNode* pNode, REFIID pIID)
 {
 	if ( pNode == NULL ) return NULL;
-	
+
 	if ( pIID == IID_ISXMLElement )
 	{
 		if ( pNode->m_nNode != CXMLNode::xmlElement ) return NULL;
@@ -74,12 +74,12 @@ IUnknown* CXMLCOM::Wrap(CXMLNode* pNode, REFIID pIID)
 	{
 		if ( pNode->m_nNode != CXMLNode::xmlAttribute ) return NULL;
 	}
-	
+
 	CXMLCOM* pWrap = new CXMLCOM( pNode );
-	
+
 	IUnknown* pCom = pWrap->GetInterface( pIID, FALSE );
 	if ( pCom == NULL ) delete pWrap;
-	
+
 	return pCom;
 }
 
@@ -374,7 +374,7 @@ STDMETHODIMP CXMLCOM::XXMLAttribute::get_Type(SXMLNodeType FAR* pnType)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLAttribute )
 	if ( pnType == NULL ) return E_INVALIDARG;
-	*pnType = (SXMLNodeType)pThis->m_pNode->GetType();	
+	*pnType = (SXMLNodeType)pThis->m_pNode->GetType();
 	return S_OK;
 }
 
@@ -382,7 +382,7 @@ STDMETHODIMP CXMLCOM::XXMLAttribute::get_AsNode(ISXMLNode FAR* FAR* ppNode)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLAttribute )
 	if ( ppNode == NULL ) return E_INVALIDARG;
-	*ppNode = (ISXMLNode*)Wrap( pThis->m_pNode, IID_ISXMLNode );	
+	*ppNode = (ISXMLNode*)Wrap( pThis->m_pNode, IID_ISXMLNode );
 	return S_OK;
 }
 
@@ -390,7 +390,7 @@ STDMETHODIMP CXMLCOM::XXMLAttribute::get_AsElement(ISXMLNode FAR* FAR* ppElement
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLAttribute )
 	if ( ppElement == NULL ) return E_INVALIDARG;
-	*ppElement = (ISXMLElement*)Wrap( pThis->m_pNode, IID_ISXMLElement );	
+	*ppElement = (ISXMLElement*)Wrap( pThis->m_pNode, IID_ISXMLElement );
 	return S_OK;
 }
 
@@ -520,7 +520,7 @@ STDMETHODIMP CXMLCOMCol::XXMLElements::get__NewEnum(IUnknown FAR* FAR* ppEnum)
 STDMETHODIMP CXMLCOMCol::XXMLElements::get_Item(VARIANT vIndex, ISXMLElement FAR* FAR* ppElement)
 {
 	METHOD_PROLOGUE( CXMLCOMCol, XMLElements )
-	
+
 	CXMLElement* pElement = NULL;
 
 	if ( vIndex.vt == VT_BSTR )
@@ -541,7 +541,7 @@ STDMETHODIMP CXMLCOMCol::XXMLElements::get_Item(VARIANT vIndex, ISXMLElement FAR
 				pElement = NULL;
 			}
 		}
-	}                 
+	}
 
 	*ppElement = (ISXMLElement*)CXMLCOM::Wrap( pElement, IID_ISXMLElement );
 
@@ -630,7 +630,7 @@ STDMETHODIMP CXMLCOMCol::XXMLAttributes::get_Item(VARIANT vIndex, ISXMLAttribute
 				pAttribute = NULL;
 			}
 		}
-	}                 
+	}
 
 	*ppAttribute = (ISXMLAttribute*)CXMLCOM::Wrap( pAttribute, IID_ISXMLAttribute );
 
@@ -662,7 +662,7 @@ STDMETHODIMP CXMLCOMCol::XXMLAttributes::Attach(ISXMLAttribute FAR* pAttribute)
 {
 	METHOD_PROLOGUE( CXMLCOMCol, XMLAttributes )
 	INTERFACE_TO_CLASS( CXMLCOM, XMLAttribute, pAttribute, prWrap )
-	pThis->m_pElement->AddAttribute( (CXMLAttribute*)prWrap->m_pNode );	
+	pThis->m_pElement->AddAttribute( (CXMLAttribute*)prWrap->m_pNode );
 	return S_OK;
 }
 
@@ -704,7 +704,7 @@ STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULON
 	for ( i = 0 ; i < celt ; i++ ) VariantInit( &rgvar[i] );
 
 	for ( i = 0 ; i < celt ; i++ )
-	{   
+	{
 		if ( m_bAttributes )
 		{
 			CXMLAttribute* pAttribute = pThis->m_pElement->GetNextAttribute( m_posCurrent );
@@ -730,7 +730,7 @@ STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULON
 	return S_OK;
 }
 
-STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Skip(ULONG celt) 
+STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CXMLCOMCol, EnumVARIANT )
 
@@ -742,7 +742,7 @@ STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Skip(ULONG celt)
 	{
 		while ( celt > 0 && pThis->m_pElement->GetNextElement( m_posCurrent ) ) celt--;
 	}
-    
+
     return ( celt == 0 ? S_OK : ResultFromScode( S_FALSE ) );
 }
 
@@ -753,7 +753,7 @@ STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum) 
+STDMETHODIMP CXMLCOMCol::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
 {
     METHOD_PROLOGUE( CXMLCOMCol, EnumVARIANT )
     return E_NOTIMPL;

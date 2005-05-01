@@ -1,7 +1,7 @@
 //
 // ThumbCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,11 +58,11 @@ CThumbCache::~CThumbCache()
 BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 {
 	CString strPath( pszPath );
-	
+
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash );
 	strPath += _T("\\SThumbs.dat");
-	
+
 	if ( m_bOpen && strPath.CompareNoCase( m_sPath ) == 0 )
 	{
 		if ( m_szThumb != *pszThumb )
@@ -77,35 +77,35 @@ BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 	{
 		Close();
 	}
-	
+
 	if ( m_pFile.Open( strPath, CFile::modeReadWrite ) )
 	{
 		CHAR szID[8];
 		m_pFile.Read( szID, 8 );
-		
+
 		if ( memcmp( szID, THUMB_SIGNATURE, 8 ) )
 		{
 			m_pFile.Close();
 			if ( memcmp( szID, THUMB_SIGNATURE, 7 ) ) return FALSE;
 			return DeleteFile( strPath ) && Prepare( pszPath, pszThumb, bCreate );
 		}
-		
+
 		m_pFile.Read( &m_szThumb.cx, 4 );
 		m_pFile.Read( &m_szThumb.cy, 4 );
-		
+
 		if ( pszThumb->cx == 0 && pszThumb->cy == 0 ) *pszThumb = m_szThumb;
-		
+
 		if ( m_szThumb == *pszThumb )
 		{
 			m_pFile.Read( &m_nOffset, 4 );
 			m_pFile.Read( &m_nIndex, 4 );
-			
+
 			for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
 			m_pIndex = new THUMB_INDEX[ m_nBuffer ];
-			
+
 			m_pFile.Seek( m_nOffset, 0 );
 			m_pFile.Read( m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
-			
+
 			m_sPath = strPath;
 			m_bOpen = TRUE;
 		}
@@ -115,30 +115,30 @@ BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 			DeleteFile( strPath );
 		}
 	}
-	
+
 	if ( ! m_bOpen )
 	{
 		if ( ! bCreate ) return FALSE;
-		
+
 		if ( ! m_pFile.Open( strPath, CFile::modeReadWrite|CFile::modeCreate ) ) return FALSE;
-		
+
 		SetFileAttributes( strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
-		
+
 		if ( pszThumb->cx == 0 && pszThumb->cy == 0 ) *pszThumb = CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
-		
+
 		m_szThumb = *pszThumb;
-		
+
 		m_pFile.Write( THUMB_SIGNATURE, 8 );
 		m_pFile.Write( &m_szThumb.cx, 4 );
 		m_pFile.Write( &m_szThumb.cy, 4 );
 		m_pFile.Write( &m_nOffset, 4 );
 		m_pFile.Write( &m_nIndex, 4 );
 		m_nOffset = 24;
-		
+
 		m_sPath = strPath;
 		m_bOpen = TRUE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -148,15 +148,15 @@ BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 void CThumbCache::Close()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_bOpen == FALSE ) return;
-	
+
 	m_sPath.Empty();
 	m_pFile.Close();
 	m_bOpen = FALSE;
-	
+
 	if ( m_pIndex != NULL ) delete [] m_pIndex;
-	
+
 	m_pIndex	= NULL;
 	m_nIndex	= 0;
 	m_nBuffer	= 0;
@@ -168,25 +168,25 @@ void CThumbCache::Close()
 BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( ! Prepare( pszPath, pszThumb, FALSE ) ) return FALSE;
-	
+
 	THUMB_INDEX* pIndex = m_pIndex;
-	
+
     DWORD nCount = m_nIndex;
 	for ( ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex ) break;
 	}
-	
+
 	if ( nCount == 0 ) return FALSE;
-	
+
 	FILETIME pTime;
 	GetFileTime( pszPath, &pTime );
 	if ( CompareFileTime( &pIndex->pTime, &pTime ) != 0 ) return FALSE;
-	
+
 	m_pFile.Seek( pIndex->nOffset, 0 );
-	
+
 	try
 	{
 		CArchive ar( &m_pFile, CArchive::load );
@@ -197,7 +197,7 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFil
 		pException->Delete();
 		return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -207,37 +207,37 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFil
 BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( ! Prepare( pszPath, pszThumb, TRUE ) ) return FALSE;
-	
+
 	DWORD nBlock = pImage->GetSerialSize();
-	
+
 	THUMB_INDEX* pIndex = m_pIndex;
-	
+
     DWORD nCount = m_nIndex;
 	for ( ; nCount ; nCount--, pIndex++ )
 	{
 		if ( pIndex->nIndex == nIndex ) break;
 	}
-	
+
 	if ( nCount != 0 && pIndex->nLength != nBlock )
 	{
 		pIndex->nIndex = 0;
 		nCount = 0;
 	}
-	
+
 	if ( nCount == 0 )
 	{
 		THUMB_INDEX* pBestIndex		= NULL;
 		DWORD nBestOverhead			= 0xFFFFFFFF;
-		
+
 		for ( pIndex = m_pIndex, nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
 		{
 			if ( pIndex->nLength >= nBlock &&
 				( pIndex->nIndex == 0 || Library.LookupFile( pIndex->nIndex ) == NULL ) )
 			{
 				DWORD nOverhead = pIndex->nLength - nBlock;
-				
+
 				if ( nOverhead < nBestOverhead )
 				{
 					pBestIndex = pIndex;
@@ -246,7 +246,7 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 				}
 			}
 		}
-		
+
 		if ( pBestIndex != NULL )
 		{
 			pIndex = pBestIndex;
@@ -261,21 +261,21 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 				if ( m_pIndex ) delete [] m_pIndex;
 				m_pIndex = pNew;
 			}
-			
+
 			pIndex = m_pIndex + m_nIndex++;
 			pIndex->nOffset = m_nOffset;
 			pIndex->nLength = nBlock;
-			
+
 			m_nOffset += nBlock;
 		}
-		
+
 		pIndex->nIndex = nIndex;
 	}
-	
+
 	GetFileTime( pszPath, &pIndex->pTime );
-	
+
 	m_pFile.Seek( pIndex->nOffset, 0 );
-	
+
 	try
 	{
 		CArchive ar( &m_pFile, CArchive::store );
@@ -285,16 +285,16 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 	{
 		pException->Delete();
 	}
-	
+
 	m_pFile.SetLength( m_nOffset + sizeof(THUMB_INDEX) * m_nIndex );
 	m_pFile.Seek( 16, 0 );
 	m_pFile.Write( &m_nOffset, 4 );
 	m_pFile.Write( &m_nIndex, 4 );
 	m_pFile.Seek( m_nOffset, 0 );
 	m_pFile.Write( m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
-	
+
 	m_pFile.Flush();
-	
+
 	return TRUE;
 }
 
@@ -304,15 +304,15 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 BOOL CThumbCache::Purge(LPCTSTR pszPath)
 {
 	CString strPath( pszPath );
-	
+
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash );
 	strPath += _T("\\SThumbs.dat");
-	
+
 	if ( GetFileAttributes( strPath ) == 0xFFFFFFFF ) return FALSE;
-	
+
 	DeleteFile( strPath );
-	
+
 	return TRUE;
 }
 
@@ -322,7 +322,7 @@ BOOL CThumbCache::Purge(LPCTSTR pszPath)
 BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 {
 	BOOL bSuccess = FALSE;
-	
+
 	if ( Library.m_pfnGFAEW != NULL )
 	{
 		USES_CONVERSION;
@@ -341,13 +341,13 @@ BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
 	{
 		HANDLE hFile = CreateFile( pszPath, 0, FILE_SHARE_READ|FILE_SHARE_WRITE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-		
+
 		if ( hFile != INVALID_HANDLE_VALUE )
 		{
 			::GetFileTime( hFile, NULL, NULL, pTime );
 			CloseHandle( hFile );
 		}
 	}
-	
+
 	return bSuccess;
 }

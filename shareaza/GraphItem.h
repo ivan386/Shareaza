@@ -1,7 +1,7 @@
 //
 // GraphItem.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,13 +32,13 @@ typedef struct
 } GRAPHITEM;
 
 
-class CGraphItem  
+class CGraphItem
 {
 // Construction
 public:
 	CGraphItem(DWORD nCode = 0, DWORD nParam = 0, COLORREF nColour = RGB(255,255,255));
 	virtual ~CGraphItem();
-	
+
 // Attributes
 public:
 	DWORD		m_nCode;

@@ -1,7 +1,7 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,16 +106,16 @@ STDMETHODIMP CApplication::XApplication::CheckVersion(BSTR sVersion)
 {
 	METHOD_PROLOGUE( CApplication, Application )
 	if ( sVersion == NULL ) return E_INVALIDARG;
-	
+
 	int nDesired[4];
-	
+
 	if ( swscanf( sVersion, L"%i.%i.%i.%i", &nDesired[3], &nDesired[2],
 		&nDesired[1], &nDesired[0] ) != 4 ) return E_INVALIDARG;
-	
+
 	// NOTE: Assumes each version component is 8 bit
 	BOOL bOk = ( theApp.m_nVersion[0] << 24 ) + ( theApp.m_nVersion[1] << 16 ) + ( theApp.m_nVersion[2] << 8 ) + theApp.m_nVersion[3]
 			>= ( nDesired[3] << 24 ) + ( nDesired[2] << 16 ) + ( nDesired[1] << 8 ) + nDesired[0];
-	
+
 	return bOk ? S_OK : S_FALSE;
 }
 
@@ -168,18 +168,18 @@ STDMETHODIMP CApplication::XUserInterface::get_UserInterface(IUserInterface FAR*
 STDMETHODIMP CApplication::XUserInterface::NewWindow(BSTR bsName, IPluginWindowOwner FAR* pOwner, IPluginWindow FAR* FAR* ppWindow)
 {
 	METHOD_PROLOGUE( CApplication, UserInterface )
-	
+
 	if ( bsName == NULL || pOwner == NULL || ppWindow == NULL ) return E_INVALIDARG;
 	if ( theApp.SafeMainWnd() == NULL ) return E_UNEXPECTED;
-	
+
 	IPluginWindowOwner* pOwner2;
 	if ( FAILED( pOwner->QueryInterface( IID_IPluginWindowOwner, (void**)&pOwner2 ) ) ) return E_NOINTERFACE;
-		
+
 	CPluginWnd* pWnd = new CPluginWnd( CString( bsName ), pOwner2 );
 	pOwner2->Release();
-	
+
 	*ppWindow = (IPluginWindow*)pWnd->GetInterface( &IID_IPluginWindow );
-	
+
 	return S_OK;
 }
 
@@ -195,15 +195,15 @@ STDMETHODIMP CApplication::XUserInterface::get_MainWindowHwnd(HWND FAR* phWnd)
 STDMETHODIMP CApplication::XUserInterface::get_ActiveView(IGenericView FAR* FAR* ppView)
 {
 	METHOD_PROLOGUE( CApplication, UserInterface )
-	
+
 	if ( ppView == NULL ) return E_INVALIDARG;
 	*ppView = NULL;
-	
+
 	CMainWnd* pMainWnd = (CMainWnd*)theApp.SafeMainWnd();
 	if ( pMainWnd == NULL ) return E_UNEXPECTED;
 	CChildWnd* pChildWnd = pMainWnd->m_pWindows.GetActive();
 	if ( pChildWnd == NULL ) return S_FALSE;
-	
+
 	return pChildWnd->GetGenericView( ppView );
 }
 
@@ -242,10 +242,10 @@ STDMETHODIMP CApplication::XUserInterface::AddFromXML(ISXMLElement FAR* pXML)
 STDMETHODIMP CApplication::XUserInterface::GetMenu(BSTR bsName, VARIANT_BOOL bCreate, ISMenu FAR* FAR* ppMenu)
 {
 	METHOD_PROLOGUE( CApplication, UserInterface )
-	
+
 	if ( bsName == NULL || ppMenu == NULL ) return E_INVALIDARG;
 	*ppMenu = NULL;
-	
+
 	CMenu* pMenu = Skin.GetMenu( CString( bsName ) );
 
 	if ( pMenu == NULL )
@@ -264,14 +264,14 @@ STDMETHODIMP CApplication::XUserInterface::GetMenu(BSTR bsName, VARIANT_BOOL bCr
 STDMETHODIMP CApplication::XUserInterface::GetToolbar(BSTR bsName, VARIANT_BOOL bCreate, ISToolbar FAR* FAR* ppToolbar)
 {
 	METHOD_PROLOGUE( CApplication, UserInterface )
-	
+
 	if ( bsName == NULL || ppToolbar == NULL ) return E_INVALIDARG;
 	*ppToolbar = NULL;
-	
+
 	CCoolBarCtrl* pBar = NULL;
-	
+
 	Skin.m_pToolbars.Lookup( CString( bsName ), (void*&)pBar );
-	
+
 	if ( pBar == NULL )
 	{
 		if ( bCreate == VARIANT_FALSE ) return E_FAIL;
@@ -280,6 +280,6 @@ STDMETHODIMP CApplication::XUserInterface::GetToolbar(BSTR bsName, VARIANT_BOOL 
 	}
 
 	*ppToolbar = CComToolbar::Wrap( pBar );
-	
+
 	return S_OK;
 }

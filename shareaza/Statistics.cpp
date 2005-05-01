@@ -1,7 +1,7 @@
 //
 // Statistics.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,10 +56,10 @@ CStatistics::~CStatistics()
 void CStatistics::Update()
 {
 	DWORD tNow = GetTickCount();
-	
+
 	if ( tNow - m_tUpdate < 100 ) return;
 	m_tUpdate = tNow;
-	
+
 	if ( tNow - m_tSeconds >= 1000 )
 	{
 		if ( Network.IsWellConnected() )
@@ -68,10 +68,10 @@ void CStatistics::Update()
 			if ( Neighbours.IsG2Hub() ) Current.Timer.Hub ++;
 			if ( Neighbours.IsG1Ultrapeer() ) Current.Timer.Ultrapeer ++;
 		}
-		
+
 		m_tSeconds = tNow;
 	}
-	
+
 	CopyMemory( &Last, &Current, sizeof(Current) );
 	Add( &Today, &Current, sizeof(Current) );
 	Add( &Ever, &Current, sizeof(Current) );
@@ -89,7 +89,7 @@ void CStatistics::Add(LPVOID pTarget, LPCVOID pSource, int nCount)
 	for ( nCount /= sizeof(QWORD) ; nCount ; nCount-- )
 	{
 		*pqwTarget += *pqwSource;
-		
+
 		pqwTarget++;
 		pqwSource++;
 	}

@@ -1,7 +1,7 @@
 //
 // PageProfileCertificate.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,38 +68,38 @@ void CCertificateProfilePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CCertificateProfilePage message handlers
 
-BOOL CCertificateProfilePage::OnInitDialog() 
+BOOL CCertificateProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	wchar_t szGUID[39];
 	GGUID tmp( MyProfile.GUID );
 	szGUID[ StringFromGUID2( *(GUID*)&tmp, szGUID, 39 ) - 2 ] = 0;
 	m_sGUID = (CString)&szGUID[1];
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CCertificateProfilePage::OnGuidCreate() 
+void CCertificateProfilePage::OnGuidCreate()
 {
 	MyProfile.Create();
 
 	UpdateData( TRUE );
-	
+
 	wchar_t szGUID[39];
 	GGUID tmp( MyProfile.GUID );
 	szGUID[ StringFromGUID2( *(GUID*)&tmp, szGUID, 39 ) - 2 ] = 0;
 	m_sGUID = (CString)&szGUID[1];
-	
+
 	UpdateData( FALSE );
 }
 
-void CCertificateProfilePage::OnOK() 
+void CCertificateProfilePage::OnOK()
 {
 	UpdateData();
-	
+
 	CSettingsPage::OnOK();
 }
 

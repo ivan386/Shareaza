@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -116,7 +116,7 @@ BOOL CSettingsPage::Create(CRect& rcPage, CWnd* pSheetWnd)
 
 	CDialogTemplate pTemplate;
 	LPDLGTEMPLATE pData;
-	
+
 	if ( ! pTemplate.Load( m_lpszTemplateName ) ) return FALSE;
 	pData = (LPDLGTEMPLATE)GlobalLock( pTemplate.m_hTemplate );
 
@@ -149,10 +149,10 @@ CSettingsPage* CSettingsPage::GetPage(CRuntimeClass* pClass) const
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsPage message handlers
 
-BOOL CSettingsPage::OnInitDialog() 
+BOOL CSettingsPage::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	Skin.Apply( NULL, this );
 
 	return TRUE;
@@ -218,12 +218,12 @@ BOOL CSettingsPage::OnEraseBkgnd(CDC* pDC)
 HBRUSH CSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
 	{
 		pDC->SetBkColor( Skin.m_crDialog );
 		hbr = Skin.m_brDialog;
 	}
-	
+
 	return hbr;
 }

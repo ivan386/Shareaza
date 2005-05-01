@@ -1,7 +1,7 @@
 //
 // QueryHashMaster.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,37 +35,37 @@ class CQueryHashMaster : public CQueryHashTable
 public:
 	CQueryHashMaster();
 	virtual ~CQueryHashMaster();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pGroups;
 	int			m_nPerGroup;
 	BOOL		m_bValid;
-	
+
 // Operations
 public:
 	void		Create();
 	void		Add(CQueryHashTable* pTable);
 	void		Remove(CQueryHashTable* pTable);
 	void		Build();
-	
+
 // Inlines
 public:
 	inline POSITION GetIterator() const
 	{
 		return m_pGroups.GetHeadPosition();
 	}
-	
+
 	inline CQueryHashGroup* GetNext(POSITION& pos) const
 	{
 		return (CQueryHashGroup*)m_pGroups.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pGroups.GetCount();
 	}
-	
+
 	inline void Invalidate()
 	{
 		m_bValid = FALSE;

@@ -1,7 +1,7 @@
 //
 // PageSettingsScheduler.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,7 +79,7 @@ void CSchedulerSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSchedulerSettingsPage message handlers
 
-BOOL CSchedulerSettingsPage::OnInitDialog() 
+BOOL CSchedulerSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
@@ -91,7 +91,7 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	m_pTimeSlices.Add( &bmTimeSlices, RGB( 0, 255, 0 ) );
 
 	CopyMemory( m_pSchedule, Schedule.m_pSchedule, 7 * 24 );
-	
+
 	m_bSchedulerEnable	= Settings.Scheduler.Enable;
 	m_nLimited			= Settings.Scheduler.LimitedBandwidth;
 	m_bLimitedNetworks	= Settings.Scheduler.LimitedNetworks;
@@ -108,14 +108,14 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 	LoadString (m_sDayName[4], IDS_DAY_THURSDAY);
 	LoadString (m_sDayName[5], IDS_DAY_FRIDAY);
 	LoadString (m_sDayName[6], IDS_DAY_SATURDAY);
-	
+
 	UpdateData( FALSE );
 
 	return TRUE;
 }
 
 
-void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point) 
+void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CRect rc;
 	CString strSliceDisplay;
@@ -140,7 +140,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 
 			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 			m_wndDisplay.SetWindowText( strSliceDisplay );
-			
+
 			Invalidate();
 		}
 		if ( nHoverHour != m_nHoverHour )
@@ -149,11 +149,11 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 
 			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
 			m_wndDisplay.SetWindowText( strSliceDisplay );
-			
+
 			Invalidate();
 		}
 	}
-	else 
+	else
 	{
 		m_wndDisplay.SetWindowText( _T("") );
 
@@ -171,7 +171,7 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 
-void CSchedulerSettingsPage::OnLButtonDown(UINT nFlags, CPoint point) 
+void CSchedulerSettingsPage::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
 	m_nDownDay = m_nHoverDay;
@@ -180,7 +180,7 @@ void CSchedulerSettingsPage::OnLButtonDown(UINT nFlags, CPoint point)
 	Invalidate();
 }
 
-void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point) 
+void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( m_nDownDay != m_nHoverDay ) return;
 	if ( m_nDownHour != m_nHoverHour ) return;
@@ -197,7 +197,7 @@ void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	UpdateWindow();
 }
 
-void CSchedulerSettingsPage::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CSchedulerSettingsPage::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
 
@@ -212,12 +212,12 @@ void CSchedulerSettingsPage::OnLButtonDblClk(UINT nFlags, CPoint point)
 	UpdateWindow();
 }
 
-BOOL CSchedulerSettingsPage::OnEraseBkgnd(CDC* pDC) 
+BOOL CSchedulerSettingsPage::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CSchedulerSettingsPage::OnPaint() 
+void CSchedulerSettingsPage::OnPaint()
 {
 	//Draw the schedule box
 	int nDay, nHour;
@@ -241,10 +241,10 @@ void CSchedulerSettingsPage::OnPaint()
 		for ( nHour = 0 ; nHour < 24 ; nHour++ )
 		{
 			if ( ( nDay == m_nHoverDay ) && ( nHour == m_nHoverHour ) )
-				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ), 
+				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ),
 					rc.top + ( nDay * 16 ) , 16, 16, CLR_DEFAULT, RGB( 180, 180, 180), ILD_SELECTED );
 			else
-				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ), 
+				ImageList_DrawEx( m_pTimeSlices, m_pSchedule[nDay][nHour], dc.GetSafeHdc(), rc.left + ( nHour * 16 ),
 					rc.top + ( nDay * 16 ) , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 		}
 	}
@@ -265,7 +265,7 @@ void CSchedulerSettingsPage::OnPaint()
 	//CSettingsPage::OnPaint();
 }
 
-void CSchedulerSettingsPage::OnOK() 
+void CSchedulerSettingsPage::OnOK()
 {
 	UpdateData();
 
@@ -275,6 +275,6 @@ void CSchedulerSettingsPage::OnOK()
 
 	CopyMemory( Schedule.m_pSchedule , m_pSchedule, 7 * 24 );
 	Schedule.Save();
-	
+
 	CSettingsPage::OnOK();
 }

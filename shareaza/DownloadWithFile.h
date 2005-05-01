@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,13 +35,13 @@ class CDownloadWithFile : public CDownloadWithTransfers
 public:
 	CDownloadWithFile();
 	virtual ~CDownloadWithFile();
-	
+
 // Attributes
 public:
 	CFragmentedFile*	m_pFile;
 	DWORD				m_tReceived;
 	BOOL				m_bDiskFull;
-	
+
 // Operations
 public:
 	float			GetProgress() const;
@@ -73,7 +73,7 @@ protected:
 	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
 protected:
 	virtual void	Serialize(CArchive& ar, int nVersion);
-	
+
 	friend class CDownloadTransfer;
 };
 

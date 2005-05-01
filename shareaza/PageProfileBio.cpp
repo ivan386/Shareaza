@@ -1,7 +1,7 @@
 //
 // PageProfileBio.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,14 +66,14 @@ void CBioProfilePage::DoDataExchange(CDataExchange* pDX)
 BOOL CBioProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	if ( CXMLElement* pNotes = MyProfile.GetXML( _T("notes") ) )
 	{
 		m_wndText.SetWindowText( pNotes->GetValue() );
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
@@ -89,6 +89,6 @@ void CBioProfilePage::OnOK()
 		else
 			pNotes->Delete();
 	}
-	
+
 	CSettingsPage::OnOK();
 }

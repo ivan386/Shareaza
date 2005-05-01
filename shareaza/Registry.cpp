@@ -1,7 +1,7 @@
 //
 // Registry.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,30 +43,30 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 	CString strKey, strValue;
 	DWORD nErrorCode;
 	HKEY hKey;
-	
+
 	if ( pszDefault != NULL ) strValue = pszDefault;
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	
+
 	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
 
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		DWORD nType = 0, nSize = 0;
-		
-		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, NULL, &nSize ); 
+
+		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, NULL, &nSize );
 
 		if ( nErrorCode == ERROR_SUCCESS && nType == REG_SZ && nSize >= sizeof(TCHAR) )
 		{
 			LPTSTR pszValue = strValue.GetBuffer( nSize / sizeof(TCHAR) - 1 );
-			nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)pszValue, &nSize ); 
+			nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)pszValue, &nSize );
 			strValue.ReleaseBuffer( nSize / sizeof(TCHAR) - 1 );
 		}
-		
+
 		RegCloseKey( hKey );
 	}
-	
+
 	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( pszName, nErrorCode );
-	
+
 	return strValue;
 }
 
@@ -79,28 +79,28 @@ int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault)
 	DWORD nErrorCode;
 	CString strKey;
 	HKEY hKey;
-	
+
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	
+
 	nErrorCode = RegOpenKeyEx( HKEY_CURRENT_USER, strKey, 0, KEY_READ, &hKey );
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		DWORD nType = 0, nSize = sizeof(nValue);
-		
-		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)&nValue, &nSize ); 
-		
+
+		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)&nValue, &nSize );
+
 		if ( nType != REG_DWORD || nSize != sizeof(nValue) )
 		{
 			nErrorCode = ERROR_MORE_DATA;
 			nValue = nDefault;
 		}
-		
+
 		RegCloseKey( hKey );
 	}
-	
+
 	if ( nErrorCode != ERROR_SUCCESS ) DisplayErrorMessageBox( pszName, nErrorCode );
-	
+
 	return nValue;
 }
 
@@ -127,19 +127,19 @@ BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue)
 	DWORD nErrorCode;
 	CString strKey;
 	HKEY hKey;
-	
+
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	
+
 	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_SZ, (const BYTE *)pszValue,
 								_tcslen(pszValue) * sizeof(TCHAR) + sizeof(TCHAR) );
-		
+
 		RegCloseKey( hKey );
 	}
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		return TRUE;
@@ -159,19 +159,19 @@ BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue)
 	DWORD nErrorCode;
 	CString strKey;
 	HKEY hKey;
-	
+
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	
+
 	nErrorCode = RegCreateKeyEx( HKEY_CURRENT_USER, strKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_DWORD,
 							(const BYTE *)&nValue, sizeof(nValue) );
-		
+
 		RegCloseKey( hKey );
 	}
-	
+
 	if ( nErrorCode == ERROR_SUCCESS )
 	{
 		return TRUE;
@@ -191,7 +191,7 @@ void CRegistry::DisplayErrorMessageBox(LPCTSTR pszName, DWORD nErrorCode)
 #ifdef _DEBUG
 	CString sMessage;
 	LPVOID lpMsgBuf;
-	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL, nErrorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPTSTR) &lpMsgBuf,	0, NULL );

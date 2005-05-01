@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,17 +50,17 @@ CSplashDlg::CSplashDlg(int nMax, BOOL bSilent) : CDialog( CSplashDlg::IDD, NULL 
 {
 	m_nPos		= 0;
 	m_nMax		= nMax;
-	
+
 	m_bSilent	= bSilent;
 	m_sState	= _T("Version ") + theApp.m_sVersion + _T("...");
-	
+
 	m_hUser32			= NULL;
 	m_pfnAnimateWindow	= NULL;
-	
+
 #ifdef _DEBUG
 	// m_bSilent = TRUE;
 #endif
-	
+
 	Create( IDD );
 }
 
@@ -77,36 +77,36 @@ void CSplashDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSplashDlg message handlers
 
-BOOL CSplashDlg::OnInitDialog() 
+BOOL CSplashDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	CClientDC dcScreen( this );
-	
+
 	CImageServices::LoadBitmap( &m_bmSplash, IDR_SPLASH, RT_PNG );
-	
+
 	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
 	m_dcBuffer1.CreateCompatibleDC( &dcScreen );
 	m_dcBuffer2.CreateCompatibleDC( &dcScreen );
-	
+
 	if ( m_bSilent ) return TRUE;
-	
+
 	SetWindowPos( NULL, 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, SWP_NOMOVE );
 	CenterWindow();
-	
+
 	if ( theApp.m_bNT && ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) )
 	{
 		(FARPROC&)m_pfnAnimateWindow = GetProcAddress( m_hUser32, "AnimateWindow" );
-		
+
 		if ( m_pfnAnimateWindow != NULL )
 		{
 			(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_BLEND );
 		}
 	}
-	
+
 	SetWindowPos( &wndTop, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW );
 	UpdateWindow();
-	
+
 	return TRUE;
 }
 
@@ -114,7 +114,7 @@ void CSplashDlg::Step(LPCTSTR pszText)
 {
 	m_nPos ++;
 	m_sState.Format( _T("Starting %s..."), pszText );
-	
+
 	CClientDC dc( this );
 	DoPaint( &dc );
 }
@@ -131,12 +131,12 @@ void CSplashDlg::Hide()
 {
 	m_sState = _T("Ready");
 	Invalidate();
-	
+
 	if ( m_pfnAnimateWindow != NULL )
 	{
 		(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_HIDE|AW_BLEND );
 	}
-	
+
 	DestroyWindow();
 	delete this;
 }
@@ -144,14 +144,14 @@ void CSplashDlg::Hide()
 LONG CSplashDlg::OnPrintClient(WPARAM wParam, LPARAM lParam)
 {
 	LONG lResult = Default();
-	
+
 	CDC* pDC = CDC::FromHandle( (HDC)wParam );
 	DoPaint( pDC );
-	
+
 	return lResult;
 }
 
-void CSplashDlg::OnPaint() 
+void CSplashDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	DoPaint( &dc );
@@ -161,16 +161,16 @@ void CSplashDlg::DoPaint(CDC* pDC)
 {
 	CBitmap* pOld1 = (CBitmap*)m_dcBuffer1.SelectObject( &m_bmSplash );
 	CBitmap* pOld2 = (CBitmap*)m_dcBuffer2.SelectObject( &m_bmBuffer );
-	
+
 	m_dcBuffer2.BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &m_dcBuffer1, 0, 0, SRCCOPY );
-	
+
 	CFont* pOld3 = (CFont*)m_dcBuffer2.SelectObject( &theApp.m_gdiFontBold );
 	m_dcBuffer2.SetBkMode( TRANSPARENT );
 	m_dcBuffer2.SetTextColor( RGB( 0, 0, 0 ) );
-	
+
 	CRect rc( 8, 201, 520, SPLASH_HEIGHT );
 	UINT nFormat = DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX;
-	
+
 	rc.OffsetRect( -1, 0 );
 	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( 2, 0 );
@@ -180,23 +180,23 @@ void CSplashDlg::DoPaint(CDC* pDC)
 	rc.OffsetRect( 0, 2 );
 	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
 	rc.OffsetRect( 0, -1 );
-	
+
 	m_dcBuffer2.SetTextColor( RGB( 255, 255, 255 ) );
 	m_dcBuffer2.DrawText( m_sState, &rc, nFormat );
-	
+
 	m_dcBuffer2.SelectObject( pOld3 );
-	
+
 	rc.SetRect( 440, 223, 522, 231 );
 	m_dcBuffer2.Draw3dRect( &rc, RGB( 0x40, 0x40, 0x40 ), RGB( 0x40, 0x40, 0x40 ) );
 	rc.DeflateRect( 1, 1 );
 	m_dcBuffer2.FillSolidRect( &rc, RGB( 0x25, 0x25, 0x25 ) );
-	
+
 	CFragmentBar::DrawFragment( &m_dcBuffer2, &rc, m_nMax, 0, min( m_nPos, m_nMax ),
 		RGB( 0x20, 0xB0, 0x20 ), TRUE );
 	m_dcBuffer2.SelectClipRgn( NULL );
-	
+
 	pDC->BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &m_dcBuffer2, 0, 0, SRCCOPY );
-	
+
 	m_dcBuffer2.SelectObject( pOld2 );
 	m_dcBuffer1.SelectObject( pOld1 );
 }

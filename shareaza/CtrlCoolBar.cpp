@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,7 +72,7 @@ CCoolBarCtrl::CCoolBarCtrl()
 	m_pSyncObject	= NULL;
 	m_bBuffered		= FALSE;
 	m_bMenuGray		= FALSE;
-	
+
 	m_pDown		= NULL;
 	m_pHot		= NULL;
 	m_bTimer	= FALSE;
@@ -148,7 +148,7 @@ void CCoolBarCtrl::SetSyncObject(CSyncObject* pSyncObject)
 CCoolBarItem* CCoolBarCtrl::Add(UINT nID, LPCTSTR pszText, int nPosition)
 {
 	CCoolBarItem* pItem = new CCoolBarItem( this, nID );
-	
+
 	if ( nPosition == -1 )
 	{
 		m_pItems.AddTail( pItem );
@@ -158,11 +158,11 @@ CCoolBarItem* CCoolBarCtrl::Add(UINT nID, LPCTSTR pszText, int nPosition)
 		POSITION pos = m_pItems.FindIndex( nPosition );
 		if ( pos ) m_pItems.InsertBefore( pos, pItem ); else m_pItems.AddTail( pItem );
 	}
-	
+
 	pItem->m_nImage = CoolInterface.ImageForID( nID );
-	
+
 	if ( pszText ) pItem->SetText( pszText );
-	
+
 	return pItem;
 }
 
@@ -170,11 +170,11 @@ CCoolBarItem* CCoolBarCtrl::Add(UINT nCtrlID, int nWidth, int nHeight)
 {
 	CCoolBarItem* pItem = new CCoolBarItem( this, nCtrlID );
 	m_pItems.AddTail( pItem );
-	
+
 	pItem->m_nCtrlID		= nCtrlID;
 	pItem->m_nWidth			= nWidth;
 	pItem->m_nCtrlHeight	= nHeight ? nHeight : CONTROL_HEIGHT;
-	
+
 	return pItem;
 }
 
@@ -185,7 +185,7 @@ CCoolBarItem* CCoolBarCtrl::GetIndex(int nIndex) const
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
 		if ( ! nIndex-- ) return pItem;
 	}
-	
+
 	return NULL;
 }
 
@@ -196,20 +196,20 @@ CCoolBarItem* CCoolBarCtrl::GetID(UINT nID) const
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
 		if ( pItem->m_nID == nID ) return pItem;
 	}
-	
+
 	return NULL;
 }
 
 int CCoolBarCtrl::GetIndexForID(UINT nID) const
 {
 	int nIndex = 0;
-	
+
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; nIndex++ )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
 		if ( pItem->m_nID == nID ) return nIndex;
 	}
-	
+
 	return -1;
 }
 
@@ -221,19 +221,19 @@ int CCoolBarCtrl::GetCount() const
 BOOL CCoolBarCtrl::LoadToolBar(UINT nIDToolBar)
 {
 	CToolBar pToolBar;
-	
+
 	if ( ! pToolBar.Create( this ) || ! pToolBar.LoadToolBar( nIDToolBar ) ) return FALSE;
-	
+
 	for ( int i = 0 ; i < pToolBar.GetCount(); i++ )
 	{
 		UINT nID, nStyle;
 		int nImage;
-		
+
 		pToolBar.GetButtonInfo( i, nID, nStyle, nImage );
-		
+
 		Add( nID );
 	}
-	
+
 	return TRUE;
 }
 
@@ -243,14 +243,14 @@ void CCoolBarCtrl::Clear()
 	{
 		delete (CCoolBarItem*)m_pItems.GetNext( pos );
 	}
-	
+
 	m_pItems.RemoveAll();
 }
 
 void CCoolBarCtrl::Copy(CCoolBarCtrl* pOther)
 {
 	Clear();
-	
+
 	for ( POSITION pos = pOther->m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)pOther->m_pItems.GetNext( pos );
@@ -263,42 +263,42 @@ UINT CCoolBarCtrl::ThrowMenu(UINT nID, CMenu* pMenu, CWnd* pParent, BOOL bComman
 	if ( pMenu == NULL ) return 0;
 	if ( pParent == NULL ) pParent = AfxGetMainWnd();
 	if ( pParent == NULL ) pParent = this;
-	
+
 	m_pDown = GetID( nID );
 	if ( m_pDown == NULL ) return 0;
-	
+
 	m_bMenuGray = TRUE;
 	Invalidate();
 	UpdateWindow();
-	
+
 	CRect rcButton;
 	GetItemRect( m_pDown, &rcButton );
 	ClientToScreen( &rcButton );
 	rcButton.DeflateRect( 1, 2 );
-	
+
 	TPMPARAMS tpm;
 	tpm.cbSize = sizeof(tpm);
 	tpm.rcExclude = rcButton;
-	
+
 	DWORD nFlags = TPM_LEFTBUTTON|TPM_VERTICAL;
-	
+
 	if ( bCommand ) nFlags |= TPM_RETURNCMD;
-	
+
 #if 1
 	CoolMenu.RegisterEdge( rcButton.left, rcButton.bottom, rcButton.Width() );
 	bRight = FALSE;
 #endif
-	
+
 	nFlags |= ( bRight ? TPM_RIGHTALIGN : TPM_LEFTALIGN );
-	
+
 	UINT nCmd = TrackPopupMenuEx( pMenu->GetSafeHmenu(), nFlags,
 		bRight ? rcButton.right : rcButton.left, rcButton.bottom,
 		pParent->GetSafeHwnd(), &tpm );
-	
+
 	m_bMenuGray = FALSE;
 	m_pDown = NULL;
 	Invalidate();
-	
+
 	return nCmd;
 }
 
@@ -307,7 +307,7 @@ void CCoolBarCtrl::OnUpdated()
 	if ( ! m_bStretch )
 	{
 		CSize czLast = m_czLast;
-		
+
 		if ( CalcFixedLayout( FALSE, TRUE ) != czLast && m_hWnd)
 		{
 			CMDIFrameWnd* pOwner = (CMDIFrameWnd*)GetOwner();
@@ -321,14 +321,14 @@ void CCoolBarCtrl::OnUpdated()
 			}
 		}
 	}
-	
+
 	if (m_hWnd) Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CCoolBar message handlers
 
-int CCoolBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CCoolBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	m_dwStyle |= CBRS_BORDER_3D;
@@ -393,23 +393,23 @@ CCoolBarItem* CCoolBarCtrl::HitTest(const CPoint& point, CRect* pItemRect, BOOL 
 
 	PrepareRect( &rcClient );
 	rcItem.CopyRect( &rcClient );
-	
+
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
 		if ( ! pItem->m_bVisible ) continue;
-		
+
 		if ( pItem->m_nID == ID_RIGHTALIGN && ! bRight )
 		{
 			int nRight = 0;
 			bRight = TRUE;
-			
+
 			for ( POSITION pos2 = pos ; pos2 ; )
 			{
 				CCoolBarItem* pRight = (CCoolBarItem*)m_pItems.GetNext( pos2 );
 				if ( pRight->m_bVisible ) nRight += pRight->m_nWidth;
 			}
-			
+
 			if ( rcClient.right - rcItem.left >= nRight )
 			{
 				rcItem.left = rcClient.right - nRight;
@@ -418,13 +418,13 @@ CCoolBarItem* CCoolBarCtrl::HitTest(const CPoint& point, CRect* pItemRect, BOOL 
 		else
 		{
 			rcItem.right = rcItem.left + pItem->m_nWidth;
-			
+
 			if ( rcItem.PtInRect( point ) )
 			{
 				if ( pItemRect ) *pItemRect = rcItem;
 				return ( pItem->m_nID != ID_SEPARATOR || bSeparators ) ? pItem : NULL;
 			}
-			
+
 			rcItem.OffsetRect( rcItem.Width(), 0 );
 		}
 	}
@@ -435,13 +435,13 @@ CCoolBarItem* CCoolBarCtrl::HitTest(const CPoint& point, CRect* pItemRect, BOOL 
 BOOL CCoolBarCtrl::GetItemRect(CCoolBarItem* pFind, CRect* pRect) const
 {
 	if ( m_pItems.IsEmpty() ) return FALSE;
-	
+
 	BOOL bRight = FALSE;
 	CRect rcClient, rcItem;
-	
+
 	PrepareRect( &rcClient );
 	rcItem.CopyRect( &rcClient );
-	
+
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
@@ -451,13 +451,13 @@ BOOL CCoolBarCtrl::GetItemRect(CCoolBarItem* pFind, CRect* pRect) const
 		{
 			int nRight = 0;
 			bRight = TRUE;
-			
+
 			for ( POSITION pos2 = pos ; pos2 ; )
 			{
 				CCoolBarItem* pRight = (CCoolBarItem*)m_pItems.GetNext( pos2 );
 				if ( pRight->m_bVisible ) nRight += pRight->m_nWidth;
 			}
-			
+
 			if ( rcClient.right - rcItem.left >= nRight )
 			{
 				rcItem.left = rcClient.right - nRight;
@@ -466,13 +466,13 @@ BOOL CCoolBarCtrl::GetItemRect(CCoolBarItem* pFind, CRect* pRect) const
 		else
 		{
 			rcItem.right = rcItem.left + pItem->m_nWidth;
-			
+
 			if ( pItem == pFind )
 			{
 				*pRect = rcItem;
 				return TRUE;
 			}
-			
+
 			rcItem.OffsetRect( rcItem.Width(), 0 );
 		}
 	}
@@ -523,14 +523,14 @@ void CCoolBarCtrl::DoPaint(CDC* pDC)
 {
 	ASSERT_VALID( this );
 	ASSERT_VALID( pDC );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	if ( m_bBuffered || m_bmImage.m_hObject != NULL )
 	{
 		CDC* pBuffer = CoolInterface.GetBuffer( *pDC, rc.Size() );
-		
+
 		if ( CoolInterface.DrawWatermark( pBuffer, &rc, &m_bmImage ) )
 		{
 			CalcInsideRect( rc, FALSE );
@@ -543,9 +543,9 @@ void CCoolBarCtrl::DoPaint(CDC* pDC)
 		{
 			DrawBorders( pBuffer, rc );
 		}
-		
+
 		DoPaint( pBuffer, rc, TRUE );
-		
+
 		GetClientRect( &rc );
 		pDC->BitBlt( 0, 0, rc.Width(), rc.Height(), pBuffer, 0, 0, SRCCOPY );
 		pBuffer->SelectClipRgn( NULL );
@@ -562,7 +562,7 @@ void CCoolBarCtrl::DoPaint(CDC* pDC, CRect& rcClient, BOOL bTransparent)
 {
 	CRect rcItem( rcClient.left + MARGIN_WIDTH, rcClient.top + 1, rcClient.right - MARGIN_WIDTH, rcClient.bottom - 1 );
 	CRect rcCopy;
-	
+
 	if ( m_bGripper )
 	{
 		if ( bTransparent )
@@ -580,33 +580,33 @@ void CCoolBarCtrl::DoPaint(CDC* pDC, CRect& rcClient, BOOL bTransparent)
 				pDC->Draw3dRect( rcClient.left + 3, nY, GRIPPER_WIDTH, 2,
 					CoolInterface.m_crDisabled, CoolInterface.m_crMidtone );
 			}
-			
+
 			pDC->ExcludeClipRect( rcClient.left + 3, rcClient.top + 4, rcClient.left + GRIPPER_WIDTH + 2, rcClient.bottom - 4 );
 		}
-		
+
 		rcItem.left += GRIPPER_WIDTH;
 	}
-	
+
 	if ( m_pItems.GetCount() == 0 ) return;
-	
+
 	CFont* pOldFont = (CFont*)pDC->SelectObject( m_bBold ? &CoolInterface.m_fntBold : &CoolInterface.m_fntNormal );
 	BOOL bRight = FALSE;
-	
+
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
-		
+
 		if ( pItem->m_nID == ID_RIGHTALIGN && ! bRight )
 		{
 			int nRight = 0;
 			bRight = TRUE;
-			
+
 			for ( POSITION pos2 = pos ; pos2 ; )
 			{
 				CCoolBarItem* pRight = (CCoolBarItem*)m_pItems.GetNext( pos2 );
 				if ( pRight->m_bVisible ) nRight += pRight->m_nWidth;
 			}
-			
+
 			if ( rcClient.right - rcItem.left >= nRight + MARGIN_WIDTH )
 			{
 				rcItem.left = rcClient.right - nRight - MARGIN_WIDTH;
@@ -614,19 +614,19 @@ void CCoolBarCtrl::DoPaint(CDC* pDC, CRect& rcClient, BOOL bTransparent)
 		}
 		else if ( pItem->m_bVisible )
 		{
-			
+
 			rcItem.right = rcItem.left + pItem->m_nWidth;
 			rcCopy.CopyRect( &rcItem );
-			
+
 			CWnd* pCtrl = ( pItem->m_nCtrlID ) ? GetDlgItem( pItem->m_nCtrlID ) : NULL;
-			
+
 			pItem->Paint( pDC, rcCopy, m_pDown == pItem,
 				m_pHot == pItem || ( pCtrl && pCtrl == GetFocus() ),
 				m_bMenuGray, bTransparent );
-			
+
 			if ( ! bTransparent ) pDC->ExcludeClipRect( &rcItem );
 			if ( pCtrl ) SmartMove( pCtrl, &rcCopy );
-			
+
 			rcItem.OffsetRect( rcItem.Width(), 0 );
 		}
 		else if ( pItem->m_nCtrlID )
@@ -635,7 +635,7 @@ void CCoolBarCtrl::DoPaint(CDC* pDC, CRect& rcClient, BOOL bTransparent)
 			if ( pCtrl && pCtrl->IsWindowVisible() ) pCtrl->ShowWindow( SW_HIDE );
 		}
 	}
-	
+
 	pDC->SelectObject( pOldFont );
 }
 
@@ -644,7 +644,7 @@ void CCoolBarCtrl::SmartMove(CWnd* pCtrl, CRect* pRect)
 	CRect rc;
 	pCtrl->GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc != *pRect )
 	{
 		pCtrl->SetWindowPos( NULL, pRect->left, pRect->top, pRect->Width(),
@@ -656,14 +656,14 @@ void CCoolBarCtrl::SmartMove(CWnd* pCtrl, CRect* pRect)
 	}
 }
 
-HBRUSH CCoolBarCtrl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CCoolBarCtrl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CControlBar::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( nCtlColor == CTLCOLOR_STATIC )
 	{
 		pDC->SetBkColor( CoolInterface.m_crMidtone );
-		
+
 		if ( m_crBack != CoolInterface.m_crMidtone )
 		{
 			if ( m_brBack.m_hObject ) m_brBack.DeleteObject();
@@ -672,7 +672,7 @@ HBRUSH CCoolBarCtrl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 		hbr = m_brBack;
 	}
-	
+
 	return hbr;
 }
 
@@ -681,45 +681,45 @@ void CCoolBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 	UINT nIndex		= 0;
 	BOOL bDirty		= FALSE;
 	BOOL bLocked	= FALSE;
-	
+
 	if ( m_pSyncObject != NULL )
 	{
 		bLocked = m_pSyncObject->Lock( 200 );
 	}
-	
+
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = (CCoolBarItem*)m_pItems.GetNext( pos );
-		
+
 		if ( pItem->m_nID == ID_SEPARATOR ) continue;
 		if ( pItem->m_nCtrlID ) continue;
-		
+
 		pItem->m_pOther		= this;
 		pItem->m_nIndex		= nIndex++;
 		pItem->m_nIndexMax	= m_pItems.GetCount();
 		pItem->m_bDirty		= FALSE;
 		BOOL bEnabled		= pItem->m_bEnabled;
-		
+
 		if ( ! CWnd::OnCmdMsg( pItem->m_nID, CN_UPDATE_COMMAND_UI, pItem, NULL ) )
 		{
 			pItem->DoUpdate( pTarget, bDisableIfNoHndler );
 		}
-		
+
 		pItem->m_bDirty |= ( pItem->m_bEnabled != bEnabled );
-		bDirty |= pItem->m_bDirty; 
+		bDirty |= pItem->m_bDirty;
 	}
-	
+
 	if ( bLocked ) m_pSyncObject->Unlock();
-	
+
 	if ( bDirty ) OnUpdated();
 }
 
-void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CCoolBarItem* pItem = HitTest( point );
-	
+
 	if ( m_pDown && m_pDown != pItem ) pItem = NULL;
-	
+
 	if ( pItem != m_pHot )
 	{
 		m_pHot = pItem;
@@ -735,7 +735,7 @@ void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	CControlBar::OnMouseMove( nFlags, point );
 }
 
-void CCoolBarCtrl::OnTimer(UINT nIDEvent) 
+void CCoolBarCtrl::OnTimer(UINT nIDEvent)
 {
 	if ( m_bRecalc )
 	{
@@ -788,14 +788,14 @@ void CCoolBarCtrl::OnTimer(UINT nIDEvent)
 	CControlBar::OnTimer( nIDEvent );
 }
 
-void CCoolBarCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CCoolBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CWnd* pFocus = GetFocus();
-	
+
 	if ( pFocus && pFocus->GetParent() == this ) SetFocus();
-	
+
 	CCoolBarItem* pItem = HitTest( point );
-	
+
 	if ( pItem && pItem->m_bEnabled )
 	{
 		m_pDown = m_pHot = pItem;
@@ -803,39 +803,39 @@ void CCoolBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		Invalidate();
 		return;
 	}
-	
+
 	if ( m_bDragForward )
 		GetParent()->SendMessage( WM_LBUTTONDOWN, nFlags, MAKELONG( point.x, point.y ) );
 	else
 		CControlBar::OnLButtonDown( nFlags, point );
 }
 
-void CCoolBarCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CCoolBarCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CCoolBarItem* pItem = HitTest( point );
-	
+
 	if ( m_pDown != NULL )
 	{
 		BOOL bOn = ( m_pDown == pItem );
-		
+
 		m_pDown	= NULL;
 		m_pHot	= pItem;
-		
+
 		ReleaseCapture();
 		Invalidate();
-		
+
 		if ( bOn ) GetOwner()->PostMessage( WM_COMMAND, pItem->m_nID );
-		
+
 		return;
 	}
-	
+
 	if ( m_bDragForward )
 		GetParent()->SendMessage( WM_LBUTTONUP, nFlags, MAKELONG( point.x, point.y ) );
 	else
 		CControlBar::OnRButtonUp( nFlags, point );
 }
 
-void CCoolBarCtrl::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CCoolBarCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	CCoolBarCtrl::OnLButtonDown( nFlags, point );
 }
@@ -845,18 +845,18 @@ void CCoolBarCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 	if ( m_pDown != NULL || m_pHot != NULL )
 	{
 		m_pDown = m_pHot = NULL;
-		
+
 		ReleaseCapture();
 		Invalidate();
 	}
-	
+
 	CControlBar::OnRButtonDown( nFlags, point );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CCoolBar message forwarding
 
-BOOL CCoolBarCtrl::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CCoolBarCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if ( HIWORD( wParam ) == EN_SETFOCUS ||
 		 HIWORD( wParam ) == EN_KILLFOCUS ) Invalidate();
@@ -866,7 +866,7 @@ BOOL CCoolBarCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 	return CControlBar::OnCommand( wParam, lParam );
 }
 
-BOOL CCoolBarCtrl::PreTranslateMessage(MSG* pMsg) 
+BOOL CCoolBarCtrl::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
@@ -883,7 +883,7 @@ BOOL CCoolBarCtrl::PreTranslateMessage(MSG* pMsg)
 	return CControlBar::PreTranslateMessage( pMsg );
 }
 
-void CCoolBarCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CCoolBarCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	GetParent()->SendMessage( WM_HSCROLL, MAKELONG( nSBCode, nPos ), (LPARAM)pScrollBar->GetSafeHwnd() );
 }
@@ -901,7 +901,7 @@ CCoolBarItem::CCoolBarItem(CCoolBarCtrl* pBar, UINT nID, int nImage)
 	m_bEnabled	= TRUE;
 	m_bChecked	= FALSE;
 	m_crText	= 0xFFFFFFFF;
-	
+
 	switch ( nID )
 	{
 	case ID_SEPARATOR:
@@ -1124,8 +1124,8 @@ void CCoolBarItem::Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuG
 
 		rc.left += ( m_nImage >= 0 ) ? 20 : 1;
 		int nY = ( rc.top + rc.bottom ) / 2 - pDC->GetTextExtent( m_sText ).cy / 2 - 1;
-		
-		if ( crBackground == CLR_NONE ) 
+
+		if ( crBackground == CLR_NONE )
 			pDC->ExtTextOut( rc.left + 2, nY, ETO_CLIPPED, &rc, m_sText, NULL );
 		else
 			pDC->ExtTextOut( rc.left + 2, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, m_sText, NULL );
@@ -1178,6 +1178,6 @@ void CCoolBarItem::Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuG
 			pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
 		}
 	}
-	
+
 	if ( crBackground != CLR_NONE ) pDC->FillSolidRect( &rc, crBackground );
 }

@@ -1,7 +1,7 @@
 //
 // PageFileSharing.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,20 +77,20 @@ void CFileSharingPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFileSharingPage message handlers
 
-BOOL CFileSharingPage::OnInitDialog() 
+BOOL CFileSharingPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
-	
+
 	m_wndTags.AddString( _T("") );
 
 	if ( UploadQueues.m_pSection.Lock() )
 	{
 		CStringList pAdded;
-		
+
 		for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
 		{
 			CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-			
+
 			if ( pQueue->m_sShareTag.GetLength() )
 			{
 				if ( pAdded.Find( pQueue->m_sShareTag ) == NULL )
@@ -100,9 +100,9 @@ BOOL CFileSharingPage::OnInitDialog()
 				}
 			}
 		}
-		
+
 		UploadQueues.m_pSection.Unlock();
-		
+
 		if ( pAdded.IsEmpty() )
 		{
 			m_wndTags.AddString( _T("Release") );
@@ -130,17 +130,17 @@ BOOL CFileSharingPage::OnInitDialog()
 					m_sTags		= pFile->m_sShareTags;
 				}
 			}
-			
+
 		}
 	}
-	
+
 	UpdateData( FALSE );
 	m_wndShare.EnableWindow( m_bOverride );
-	
+
 	return TRUE;
 }
 
-void CFileSharingPage::OnShareOverride0() 
+void CFileSharingPage::OnShareOverride0()
 {
 	UpdateData();
 
@@ -155,26 +155,26 @@ void CFileSharingPage::OnShareOverride0()
 			pFile->m_bShared = TS_UNKNOWN;
 			m_bShare = pFile->IsShared();
 			pFile->m_bShared = bSave;
-			
+
 			oLock.Unlock();
 			UpdateData( FALSE );
 		}
 	}
 }
 
-void CFileSharingPage::OnShareOverride1() 
+void CFileSharingPage::OnShareOverride1()
 {
 	OnShareOverride0();
 }
 
-void CFileSharingPage::OnOK() 
+void CFileSharingPage::OnOK()
 {
 	UpdateData();
-	
+
 	if ( CLibraryList* pList = GetList() )
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = pList->GetIterator() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
@@ -187,12 +187,12 @@ void CFileSharingPage::OnOK()
 				{
 					pFile->m_bShared = TS_UNKNOWN;
 				}
-				
+
 				pFile->m_sShareTags = m_sTags;
 			}
 		}
-		
+
 	}
-	
+
 	CFilePropertiesPage::OnOK();
 }

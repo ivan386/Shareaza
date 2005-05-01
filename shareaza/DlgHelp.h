@@ -1,7 +1,7 @@
 //
 // DlgHelp.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,33 +34,33 @@ class CHelpDlg : public CSkinDialog
 // Construction
 public:
 	CHelpDlg(LPCTSTR pszName, CWnd* pParent = NULL);
-	
+
 	DECLARE_DYNAMIC(CHelpDlg)
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CHelpDlg)
 	enum { IDD = IDD_HELP };
 	CStatic	m_wndBanner;
 	//}}AFX_DATA
-	
+
 // Attributes
 public:
 	CRichViewCtrl	m_wndView;
 	CRichDocument	m_pDocument;
 	CString			m_sDocument;
-	
+
 // Operations
 public:
 	static BOOL Show(LPCTSTR pszName, CWnd* pParent = NULL);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CHelpDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CHelpDlg)
@@ -68,9 +68,9 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

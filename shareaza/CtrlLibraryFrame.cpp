@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,10 +103,10 @@ CLibraryFrame::CLibraryFrame()
 	m_pViews.AddTail( new CLibraryTileView() );
 	m_pViews.AddTail( new CLibraryHomeView() );
 	m_pViews.AddTail( new CLibraryCollectionView() );
-	
+
 	m_pPanels.AddTail( new CLibraryMetaPanel() );
 	m_pPanels.AddTail( new CLibraryHistoryPanel() );
-	
+
 	m_pView			= NULL;
 	m_pPanel		= NULL;
 	m_nTreeSize		= Settings.Library.TreeSize;
@@ -115,7 +115,7 @@ CLibraryFrame::CLibraryFrame()
 	m_nHeaderSize	= 0;
 	m_bUpdating		= FALSE;
 	m_bMouseWheel	= FALSE;
-	
+
 	m_pDragList		= NULL;
 	m_pDragImage	= NULL;
 	m_hCursMove		= theApp.LoadCursor( IDC_MOVE );
@@ -128,7 +128,7 @@ CLibraryFrame::~CLibraryFrame()
 	{
 		delete (CLibraryView*)m_pViews.GetNext( pos );
 	}
-	
+
 	for ( POSITION pos = m_pPanels.GetHeadPosition() ; pos ; )
 	{
 		delete (CLibraryPanel*)m_pPanels.GetNext( pos );
@@ -138,58 +138,58 @@ CLibraryFrame::~CLibraryFrame()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame system message handlers
 
-BOOL CLibraryFrame::Create(CWnd* pParentWnd) 
+BOOL CLibraryFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	return CWnd::Create( NULL, _T("CLibraryFrame"),
 		WS_CHILD|WS_VISIBLE|WS_TABSTOP, rect, pParentWnd, IDC_LIBRARY_FRAME, NULL );
 }
 
-int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( ! m_wndTreeTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTop.SetBarStyle( m_wndTreeTop.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_BOTTOM );
 	m_wndTreeTop.SetOwner( GetOwner() );
-	
+
 	if ( ! m_wndTreeBottom.Create( this, WS_CHILD|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeBottom.SetBarStyle( m_wndTreeBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndTreeBottom.SetOwner( GetOwner() );
-	
+
 	CRect rcTypes( 0, 0, 128, BAR_HEIGHT );
 	if ( ! m_wndTreeTypes.Create( WS_CHILD, rcTypes, this, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTypes.GetWindowRect( &rcTypes );
 	m_nTreeTypesHeight = rcTypes.Height();
-	
+
 	if ( ! m_wndViewTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndViewTop.SetBarStyle( m_wndViewTop.GetBarStyle() | CBRS_TOOLTIPS );
 	m_wndViewTop.SetOwner( GetOwner() );
-	
+
 	if ( ! m_wndViewBottom.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
-	
+
 	if ( ! m_wndSearch.Create( WS_CHILD|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
-	
+
 	m_wndTree.Create( this );
 	m_wndHeader.Create( this );
 	m_wndViewTip.Create( this, &Settings.Interface.TipLibrary );
-	
+
 	return 0;
 }
 
-void CLibraryFrame::OnDestroy() 
+void CLibraryFrame::OnDestroy()
 {
 	CancelDrag();
-	
+
 	if ( m_wndViewTip.m_hWnd ) m_wndViewTip.DestroyWindow();
-	
+
 	Settings.Library.TreeSize	= m_nTreeSize;
 	Settings.Library.PanelSize	= m_nPanelSize;
 	Settings.Library.ShowPanel	= m_bPanelShow;
-	
+
 	CWnd::OnDestroy();
 }
 
@@ -198,7 +198,7 @@ BOOL CLibraryFrame::PreTranslateMessage(MSG* pMsg)
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		CWnd* pFocus = GetFocus();
-		
+
 		if ( pFocus == &m_wndTree && m_pView != NULL )
 		{
 			m_pView->SetFocus();
@@ -210,7 +210,7 @@ BOOL CLibraryFrame::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 	}
-	
+
 	return CWnd::PreTranslateMessage( pMsg );
 }
 
@@ -220,9 +220,9 @@ BOOL CLibraryFrame::PreTranslateMessage(MSG* pMsg)
 void CLibraryFrame::OnSkinChange()
 {
 	m_wndTree.SetVirtual( Settings.Library.ShowVirtual );
-	
+
 	Skin.CreateToolBar( _T("CLibraryTree.Top"), &m_wndTreeTop );
-	
+
 	if ( Settings.Library.ShowVirtual )
 	{
 		Skin.CreateToolBar( _T("CLibraryHeaderBar.Virtual"), &m_wndViewTop );
@@ -232,18 +232,18 @@ void CLibraryFrame::OnSkinChange()
 	{
 		Skin.CreateToolBar( _T("CLibraryHeaderBar.Physical"), &m_wndViewTop );
 		Skin.CreateToolBar( _T("CLibraryTree.Physical"), &m_wndTreeBottom );
-		
+
 		m_wndTreeTypes.SetEmptyString( IDS_LIBRARY_TYPE_FILTER_ALL );
 		m_wndTreeTypes.Load( Settings.Library.FilterURI );
 	}
-	
+
 	m_wndTreeBottom.ShowWindow( Settings.Library.ShowVirtual ? SW_SHOW : SW_HIDE );
 	m_wndTreeTypes.ShowWindow( Settings.Library.ShowVirtual ? SW_HIDE : SW_SHOW );
 	m_wndHeader.OnSkinChange();
-	
+
 	CLibraryView* pView		= m_pView;
 	CLibraryPanel* pPanel	= m_pPanel;
-	
+
 	SetView( NULL, TRUE, FALSE );
 	SetView( pView, TRUE, FALSE );
 	SetPanel( pPanel );
@@ -252,7 +252,7 @@ void CLibraryFrame::OnSkinChange()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame more system message handlers
 
-BOOL CLibraryFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CLibraryFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndTreeTop.m_hWnd )
 	{
@@ -282,19 +282,19 @@ BOOL CLibraryFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 	{
 		if ( m_pPanel->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CLibraryFrame::OnSize(UINT nType, int cx, int cy) 
+void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	if ( rc.Width() < 32 || rc.Height() < 32 ) return;
-	
+
 	if ( rc.Width() < m_nTreeSize + SPLIT_SIZE )
 	{
 		m_nTreeSize = max( 0, rc.Width() - SPLIT_SIZE );
@@ -306,16 +306,16 @@ void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 
 	HDWP hDWP = BeginDeferWindowPos(
 		6 + ( m_pView != NULL ) + ( m_pPanel != NULL ) + ( m_nHeaderSize > 0 ) );
-	
+
 	DeferWindowPos( hDWP, m_wndTreeTop.GetSafeHwnd(), NULL,
 		rc.left, rc.top, m_nTreeSize, BAR_HEIGHT, SWP_NOZORDER );
-	
+
 	DeferWindowPos( hDWP, m_wndTreeBottom.GetSafeHwnd(), NULL,
 		rc.left, rc.bottom - BAR_HEIGHT, m_nTreeSize, BAR_HEIGHT, SWP_NOZORDER );
-	
+
 	DeferWindowPos( hDWP, m_wndTreeTypes.GetSafeHwnd(), NULL,
 		rc.left, rc.bottom - m_nTreeTypesHeight, m_nTreeSize, 256, SWP_NOZORDER );
-	
+
 	DeferWindowPos( hDWP, m_wndViewTop.GetSafeHwnd(), NULL,
 		rc.left + m_nTreeSize + SPLIT_SIZE, rc.top,
 		rc.Width() - m_nTreeSize - SPLIT_SIZE, BAR_HEIGHT - 1, SWP_NOZORDER );
@@ -330,7 +330,7 @@ void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 	if ( m_pView != NULL )
 	{
 		int nTop = rc.top + BAR_HEIGHT - 1;
-		
+
 		if ( m_nHeaderSize > 0 )
 		{
 			DeferWindowPos( hDWP, m_wndHeader.GetSafeHwnd(), NULL,
@@ -358,13 +358,13 @@ void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 	EndDeferWindowPos( hDWP );
 }
 
-void CLibraryFrame::OnPaint() 
+void CLibraryFrame::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rcClient, rc;
 
 	GetClientRect( &rcClient );
-	
+
 	rc.SetRect(	rcClient.left + m_nTreeSize,
 				rcClient.top,
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
@@ -375,13 +375,13 @@ void CLibraryFrame::OnPaint()
 	dc.FillSolidRect( rc.right - 1, rc.top, 1, rc.Height(), GetSysColor( COLOR_3DSHADOW ) );
 	dc.FillSolidRect( rc.left + 2, rc.top, rc.Width() - 3, rc.Height(),
 		GetSysColor( COLOR_BTNFACE ) );
-	
+
 	if ( m_nHeaderSize > 0 )
 	{
 		dc.FillSolidRect( rc.right, rcClient.top + BAR_HEIGHT - 1 + m_nHeaderSize,
 			rcClient.right - rc.right, 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
 	}
-	
+
 	if ( Settings.Library.ShowVirtual == FALSE )
 	{
 		rc.SetRect( rcClient.left, rcClient.bottom - BAR_HEIGHT,
@@ -406,7 +406,7 @@ void CLibraryFrame::OnPaint()
 	}
 }
 
-BOOL CLibraryFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CLibraryFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	CWnd* pWnd = ChildWindowFromPoint( pt );
 
@@ -421,12 +421,12 @@ BOOL CLibraryFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	return TRUE;
 }
 
-void CLibraryFrame::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CLibraryFrame::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_pView ) m_pView->SendMessage( (WPARAM)pWnd->GetSafeHwnd(), MAKELONG( point.x, point.y ) );
 }
 
-void CLibraryFrame::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CLibraryFrame::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemHeight = 18;
 }
@@ -434,7 +434,7 @@ void CLibraryFrame::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemS
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame resizing behaviour
 
-BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( m_pDragList != NULL )
 	{
@@ -487,41 +487,41 @@ BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 			return TRUE;
 		}
 	}
-	
+
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CLibraryFrame::OnLButtonDown(UINT nFlags, CPoint point) 
+void CLibraryFrame::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rcClient, rc;
-	
+
 	GetClientRect( &rcClient );
-	
+
 	rc.SetRect(	rcClient.left + m_nTreeSize,
 				rcClient.top,
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		DoSizeTree();
 		return;
 	}
-	
+
 	if ( m_pPanel != NULL )
 	{
 		rc.SetRect(	rcClient.left + m_nTreeSize + SPLIT_SIZE,
 					rcClient.bottom - BAR_HEIGHT - m_nPanelSize - SPLIT_SIZE,
 					rcClient.right,
 					rcClient.bottom - BAR_HEIGHT - m_nPanelSize );
-		
+
 		if ( rc.PtInRect( point ) )
 		{
 			DoSizePanel();
 			return;
 		}
 	}
-	
+
 	CWnd::OnLButtonDown( nFlags, point );
 }
 
@@ -530,42 +530,42 @@ BOOL CLibraryFrame::DoSizeTree()
 	MSG* pMsg = &AfxGetThreadState()->m_msgCur;
 	CRect rcClient;
 	CPoint point;
-	
+
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
 	SetCapture();
-	
+
 	GetClientRect( &rcClient );
-	
+
 	int nOffset = 0xFFFF;
-	
+
 	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
 	{
 		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );
-		
+
 		if ( ! AfxGetThread()->PumpMessage() )
 		{
 			AfxPostQuitMessage( 0 );
 			break;
 		}
-		
+
 		GetCursorPos( &point );
 		ScreenToClient( &point );
-		
+
 		int nSplit = point.x - rcClient.left;
-		
+
 		if ( nOffset == 0xFFFF ) nOffset = m_nTreeSize - nSplit;
 		nSplit += nOffset;
-		
+
 		nSplit = max( nSplit, 0 );
 		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
-		
+
 		if ( nSplit < 8 )
 			nSplit = 0;
 		if ( nSplit > rcClient.right - SPLIT_SIZE - 8 )
 			nSplit = rcClient.right - SPLIT_SIZE;
-		
+
 		if ( nSplit != m_nTreeSize )
 		{
 			m_nTreeSize = nSplit;
@@ -573,10 +573,10 @@ BOOL CLibraryFrame::DoSizeTree()
 			Invalidate();
 		}
 	}
-	
+
 	ReleaseCapture();
 	ClipCursor( NULL );
-	
+
 	return TRUE;
 }
 
@@ -585,7 +585,7 @@ BOOL CLibraryFrame::DoSizePanel()
 	MSG* pMsg = &AfxGetThreadState()->m_msgCur;
 	CRect rcClient;
 	CPoint point;
-	
+
 	GetClientRect( &rcClient );
 	rcClient.left += m_nTreeSize + SPLIT_SIZE;
 	rcClient.top += BAR_HEIGHT + m_nHeaderSize;
@@ -593,34 +593,34 @@ BOOL CLibraryFrame::DoSizePanel()
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
 	SetCapture();
-	
+
 	ScreenToClient( &rcClient );
-	
+
 	int nOffset = 0xFFFF;
-	
+
 	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
 	{
 		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );
-		
+
 		if ( ! AfxGetThread()->PumpMessage() )
 		{
 			AfxPostQuitMessage( 0 );
 			break;
 		}
-		
+
 		GetCursorPos( &point );
 		ScreenToClient( &point );
-		
+
 		int nSplit = rcClient.bottom - point.y;
-		
+
 		if ( nOffset == 0xFFFF ) nOffset = m_nPanelSize - nSplit;
 		nSplit += nOffset;
-		
+
 		if ( nSplit < 8 )
 			nSplit = 0;
 		if ( nSplit > rcClient.Height() - SPLIT_SIZE - 8 )
 			nSplit = rcClient.Height() - SPLIT_SIZE;
-		
+
 		if ( nSplit != m_nPanelSize )
 		{
 			m_nPanelSize = nSplit;
@@ -628,10 +628,10 @@ BOOL CLibraryFrame::DoSizePanel()
 			Invalidate();
 		}
 	}
-	
+
 	ReleaseCapture();
 	ClipCursor( NULL );
-	
+
 	return TRUE;
 }
 
@@ -733,27 +733,27 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( bForce ? 500 : 50 ) ) return FALSE;
-	
+
 	if ( ! bForce && m_nLibraryCookie == Library.m_nUpdateCookie ) return FALSE;
 	m_nLibraryCookie = Library.m_nUpdateCookie;
-	
+
 	m_bUpdating = TRUE;
-	
+
 	m_nFolderCookie		= GetTickCount();
 	m_wndTree.Update( m_nFolderCookie );
 	m_pFolderSelection	= m_wndTree.GetFirstSelected();
-	
+
 	CLibraryView* pFirstView	= NULL;
 	CLibraryView* pBestView		= NULL;
 	CString strBest;
-	
+
 	if ( m_pFolderSelection != NULL && m_pFolderSelection->m_pVirtual != NULL )
 		strBest = m_pFolderSelection->m_pVirtual->GetBestView();
-	
+
 	for ( POSITION pos = m_pViews.GetHeadPosition() ; pos ; )
 	{
 		CLibraryView* pView = (CLibraryView*)m_pViews.GetNext( pos );
-		
+
 		if ( pView->CheckAvailable( m_pFolderSelection ) )
 		{
 			if ( pFirstView == NULL ) pFirstView = pView;
@@ -761,29 +761,29 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 				pBestView = pView;
 		}
 	}
-	
+
 	int nHeaderSize = m_wndHeader.Update();
-	
+
 	if ( bBestView && pBestView != NULL )
 	{
 		if ( pBestView->IsKindOf( RUNTIME_CLASS(CLibraryCollectionView) ) )
 			nHeaderSize = 0;
 	}
-	
+
 	if ( nHeaderSize != m_nHeaderSize )
 	{
 		m_nHeaderSize = nHeaderSize;
 		if ( m_nHeaderSize == 0 ) m_wndHeader.ShowWindow( SW_HIDE );
 		OnSize( 1982, 0, 0 );
 	}
-	
+
 	if ( pFirstView == NULL )
 	{
 		ASSERT( FALSE );
 		m_bUpdating = FALSE;
 		return TRUE;
 	}
-	
+
 	if ( pBestView != NULL && bBestView )
 	{
 		SetView( pBestView, FALSE, FALSE );
@@ -796,11 +796,11 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 	{
 		SetView( m_pView, FALSE, FALSE );
 	}
-	
+
 	UpdatePanel( TRUE );
-	
+
 	m_bUpdating = FALSE;
-	
+
 	return TRUE;
 }
 
@@ -811,7 +811,7 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 
 	m_pViewSelection			= m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
 	CLibraryPanel* pFirstPanel	= NULL;
-	
+
 	for ( POSITION pos = m_pPanels.GetHeadPosition() ; pos ; )
 	{
 		CLibraryPanel* pPanel = (CLibraryPanel*)m_pPanels.GetNext( pos );
@@ -863,7 +863,7 @@ BOOL CLibraryFrame::Display(CLibraryFile* pFile)
 		Settings.Library.FilterURI.Empty();
 		Display( pFile->m_pFolder );
 	}
-	
+
 	return Select( pFile->m_nIndex );
 }
 
@@ -899,7 +899,7 @@ void CLibraryFrame::OnViewSelection()
 	PostMessage( WM_TIMER, 1 );
 }
 
-void CLibraryFrame::OnTimer(UINT nIDEvent) 
+void CLibraryFrame::OnTimer(UINT nIDEvent)
 {
 	if ( m_bViewSelection ) UpdatePanel( FALSE );
 }
@@ -914,7 +914,7 @@ void CLibraryFrame::OnFilterTypes()
 	{
 		Settings.Library.FilterURI.Empty();
 	}
-	
+
 	Update();
 }
 
@@ -934,7 +934,7 @@ void CLibraryFrame::DragObjects(CLibraryList* pList, CImageList* pImage, const C
 	CRect rcClient;
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
-	
+
 	ClipCursor( &rcClient );
 	SetCapture();
 
@@ -949,47 +949,47 @@ void CLibraryFrame::DragObjects(CLibraryList* pList, CImageList* pImage, const C
 void CLibraryFrame::CancelDrag()
 {
 	if ( m_pDragList == NULL ) return;
-	
+
 	ClipCursor( NULL );
 	ReleaseCapture();
-	
+
 	m_pDragImage->DragLeave( this );
 	m_pDragImage->EndDrag();
 	delete m_pDragImage;
 	m_pDragImage = NULL;
-	
+
 	delete m_pDragList;
 	m_pDragList = NULL;
-	
+
 	m_wndTree.DropObjects( NULL, FALSE, CSingleLock( &Library.m_pSection ) ); // no lock, just serves as a dummy
 }
 
-void CLibraryFrame::OnMouseMove(UINT nFlags, CPoint point) 
+void CLibraryFrame::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_pDragList == NULL ) return;
 
 	m_pDragImage->DragMove( point );
-	
+
 	ClientToScreen( &point );
 	m_wndTree.DropShowTarget( m_pDragList, point );
 }
 
-void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point) 
+void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( m_pDragList == NULL ) return;
-	
+
 	ClipCursor( NULL );
 	ReleaseCapture();
-	
+
 	m_pDragImage->DragLeave( this );
 	m_pDragImage->EndDrag();
 	delete m_pDragImage;
 	m_pDragImage = NULL;
-	
+
 	ClientToScreen( &point );
-	
+
 	BOOL bCopy = FALSE;
-	
+
 	if ( Settings.Library.ShowVirtual )
 	{
 		bCopy = ( nFlags & MK_SHIFT ) == 0;
@@ -998,36 +998,36 @@ void CLibraryFrame::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		bCopy = ( nFlags & MK_CONTROL ) != 0;
 	}
-	
+
 	{
 		CSingleLock oLock( &Library.m_pSection, TRUE );
 		m_wndTree.DropObjects( m_pDragList, bCopy, oLock );
 		Library.Update();
 	}
-	
+
 	delete m_pDragList;
 	m_pDragList = NULL;
 }
 
-void CLibraryFrame::OnRButtonDown(UINT nFlags, CPoint point) 
+void CLibraryFrame::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	if ( m_pDragList != NULL )
 	{
 		CancelDrag();
 		return;
 	}
-	
+
 	CWnd::OnRButtonDown( nFlags, point );
 }
 
-void CLibraryFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLibraryFrame::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if ( nChar == VK_ESCAPE ) CancelDrag();
 	if ( m_pDragList ) OnSetCursor( NULL, 0, 0 );
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
-void CLibraryFrame::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLibraryFrame::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if ( m_pDragList ) OnSetCursor( NULL, 0, 0 );
 	CWnd::OnKeyUp( nChar, nRepCnt, nFlags );
@@ -1036,12 +1036,12 @@ void CLibraryFrame::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame command handlers
 
-void CLibraryFrame::OnUpdateLibraryTreePhysical(CCmdUI* pCmdUI) 
+void CLibraryFrame::OnUpdateLibraryTreePhysical(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.Library.ShowVirtual == FALSE );
 }
 
-void CLibraryFrame::OnLibraryTreePhysical() 
+void CLibraryFrame::OnLibraryTreePhysical()
 {
 	if ( Settings.Library.ShowVirtual != FALSE )
 	{
@@ -1051,12 +1051,12 @@ void CLibraryFrame::OnLibraryTreePhysical()
 	}
 }
 
-void CLibraryFrame::OnUpdateLibraryTreeVirtual(CCmdUI* pCmdUI) 
+void CLibraryFrame::OnUpdateLibraryTreeVirtual(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.Library.ShowVirtual == TRUE );
 }
 
-void CLibraryFrame::OnLibraryTreeVirtual() 
+void CLibraryFrame::OnLibraryTreeVirtual()
 {
 	if ( Settings.Library.ShowVirtual != TRUE )
 	{
@@ -1066,18 +1066,18 @@ void CLibraryFrame::OnLibraryTreeVirtual()
 	}
 }
 
-void CLibraryFrame::OnLibraryRefresh() 
+void CLibraryFrame::OnLibraryRefresh()
 {
 	CWaitCursor pCursor;
-	Update( TRUE );	
+	Update( TRUE );
 }
 
-void CLibraryFrame::OnUpdateLibraryPanel(CCmdUI* pCmdUI) 
+void CLibraryFrame::OnUpdateLibraryPanel(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pPanel != NULL );
 }
 
-void CLibraryFrame::OnLibraryPanel() 
+void CLibraryFrame::OnLibraryPanel()
 {
 	if ( m_pPanel )
 	{
@@ -1091,21 +1091,21 @@ void CLibraryFrame::OnLibraryPanel()
 	}
 }
 
-void CLibraryFrame::OnLibrarySearch() 
+void CLibraryFrame::OnLibrarySearch()
 {
 	CNewSearchDlg dlg( NULL, NULL, TRUE );
-	
+
 	if ( dlg.DoModal() == IDOK )
 	{
 		RunLocalSearch( dlg.GetSearch() );
 	}
 }
 
-void CLibraryFrame::OnLibrarySearchQuick() 
+void CLibraryFrame::OnLibrarySearchQuick()
 {
 	CString str;
 	m_wndSearch.GetWindowText( str );
-	
+
 	if ( str.GetLength() > 0 )
 	{
 		CQuerySearch* pSearch = new CQuerySearch();
@@ -1142,12 +1142,12 @@ void CLibraryFrame::OnToolbarEscape()
 void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 {
 	CWaitCursor pCursor;
-	
+
 	pSearch->BuildWordList();
-	
+
 	CAlbumFolder* pRoot		= Library.GetAlbumRoot();
 	CAlbumFolder* pFolder	= pRoot->GetFolderByURI( CSchema::uriSearchFolder );
-	
+
 	if ( pFolder == NULL )
 	{
 		pFolder = pRoot->AddFolder( CSchema::uriSearchFolder, _T("Search Results") );
@@ -1159,17 +1159,17 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 	}
 	else
 		pFolder->Clear();
-	
+
 	if ( pFolder->m_pSchema != NULL )
 	{
 		CString strDate, strTime;
 		SYSTEMTIME pTime;
-		
+
 		GetLocalTime( &pTime );
 		GetDateFormat( LOCALE_USER_DEFAULT, 0, &pTime, _T("yyyy-MM-dd"), strDate.GetBuffer( 64 ), 64 );
 		GetTimeFormat( LOCALE_USER_DEFAULT, 0, &pTime, _T("hh:mm tt"), strTime.GetBuffer( 64 ), 64 );
 		strDate.ReleaseBuffer(); strTime.ReleaseBuffer();
-		
+
 		CXMLElement* pOuter = pFolder->m_pSchema->Instantiate();
 		CXMLElement* pInner = pOuter->AddElement( _T("searchFolder") );
 		pInner->AddAttribute( _T("title"), pFolder->m_sName );
@@ -1179,33 +1179,33 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 		pFolder->SetMetadata( pOuter );
 		delete pOuter;
 	}
-	
+
 	{
 		CQuickLock oLock( Library.m_pSection );
 
 		CPtrList* pFiles = Library.Search( pSearch, 0, TRUE );
-		
+
 		if ( pFiles != NULL )
 		{
 			for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 			{
 				CLibraryFile* pFile = (CLibraryFile*)pFiles->GetNext( pos );
-				
+
 				if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
 				{
 					if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
 						pFile = NULL;
 				}
-				
+
 				if ( pFile != NULL && pFile->IsAvailable() ) pFolder->AddFile( pFile );
 			}
-			
+
 			delete pFiles;
 		}
 	}
-	
+
 	delete pSearch;
-	
+
 	Update();
 	Display( pFolder );
 }

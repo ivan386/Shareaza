@@ -1,7 +1,7 @@
 //
 // CtrlCoolMenuBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,7 @@ CCoolMenuBarCtrl::CCoolMenuBarCtrl()
 {
 	m_bMenuGray	= TRUE;
 	m_bGripper	= TRUE;
-	
+
 	m_bStretch	= theApp.GetProfileInt( _T(""), _T("MenuStretch"), TRUE );
 	if ( theApp.GetProfileInt( _T(""), _T("MenuHalfHeight"), TRUE ) ) m_nHeight = 28;
 
@@ -74,27 +74,27 @@ CCoolMenuBarCtrl::~CCoolMenuBarCtrl()
 void CCoolMenuBarCtrl::SetMenu(HMENU hMenu)
 {
 	m_hMenu = hMenu;
-	
+
 	Clear();
-	
+
 	if ( ! m_hMenu ) return;
-	
+
 	CMenu pMenu;
 	pMenu.Attach( m_hMenu );
-	
+
 	for ( UINT nItem = 0 ; nItem < pMenu.GetMenuItemCount() ; nItem++ )
 	{
 		CString strMenu;
 		pMenu.GetMenuString( nItem, strMenu, MF_BYPOSITION );
-		
+
 		int nAmp = strMenu.Find( '&' );
 		if ( nAmp >= 0 ) strMenu = strMenu.Left( nAmp ) + strMenu.Mid( nAmp + 1 );
-		
+
 		CCoolBarItem* pItem = new CCoolBarItem( this, nItem + 1 );
 		pItem->SetText( _T(" ") + strMenu + _T(" ") );
 		m_pItems.AddTail( pItem );
 	}
-	
+
 	pMenu.Detach();
 }
 
@@ -154,48 +154,48 @@ void CCoolMenuBarCtrl::ShowMenu()
 	{
 		UpdateWindowMenu( pMenu );
 	}
-	
+
 	m_pDown = m_pHot;
 	Invalidate();
-	
+
 	KillTimer( 1 );
-	
+
 	TPMPARAMS tpm;
 	CRect rc;
-	
+
 	GetItemRect( m_pDown, &rc );
 	ClientToScreen( &rc );
 	rc.DeflateRect( 1, 2 );
-	
+
 	tpm.cbSize = sizeof(tpm);
 	tpm.rcExclude = rc;
-	
+
 	m_pMenuBar = this;
 	m_hMsgHook = SetWindowsHookEx( WH_MSGFILTER, MenuFilter, NULL, GetCurrentThreadId() );
-	
+
 	CoolMenu.RegisterEdge( rc.left, rc.bottom, rc.Width() );
-	
+
 	UINT nCmd = TrackPopupMenuEx( pMenu->GetSafeHmenu(),
 		TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_VERTICAL|TPM_RETURNCMD,
 		rc.left, rc.bottom, GetSafeHwnd(), &tpm );
-	
+
 	UnhookWindowsHookEx( m_hMsgHook );
-	
+
 	m_hMsgHook = NULL;
 	m_pMenuBar = NULL;
-	
+
 	m_pDown = NULL;
 	OnTimer( 1 );
-	
+
 	if ( m_pHot != NULL )
 	{
 		SetTimer( 1, 100, NULL );
 		m_bTimer = TRUE;
 	}
-	
+
 	Invalidate();
 	UpdateWindow();
-	
+
 	if ( nCmd ) GetOwner()->PostMessage( WM_COMMAND, nCmd );
 }
 
@@ -204,7 +204,7 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 	for ( UINT nItem = 0 ; nItem < pMenu->GetMenuItemCount() ; nItem++ )
 	{
 		UINT nID = pMenu->GetMenuItemID( nItem );
-		
+
 		if ( nID >= AFX_IDM_FIRST_MDICHILD )
 		{
 			for ( UINT nRemove = nItem ; nRemove < pMenu->GetMenuItemCount() ; )
@@ -213,10 +213,10 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 			break;
 		}
 	}
-	
+
 	CMDIFrameWnd* pFrame = (CMDIFrameWnd*)AfxGetMainWnd();
 	if ( ! pFrame->IsKindOf( RUNTIME_CLASS(CMDIFrameWnd) ) ) return;
-	
+
     CWnd* pClient = pFrame->GetWindow( GW_CHILD );
 	for ( ; pClient ; pClient = pClient->GetNextWindow() )
 	{
@@ -224,17 +224,17 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 		GetClassName( pClient->GetSafeHwnd(), szClass, 64 );
 		if ( _tcsicmp( szClass, _T("MDIClient") ) == 0 ) break;
 	}
-	
+
 	if ( pClient == NULL ) return;
-	
+
 	CMDIChildWnd* pActive = pFrame->MDIGetActive();
 	BOOL bSeparator = TRUE;
-	
+
 	for ( UINT nIndex = 1, nID = AFX_IDM_FIRST_MDICHILD ; nIndex <= 10 ; nIndex++, nID++ )
 	{
 		CWnd* pWnd = pClient->GetDlgItem( nID );
 		if ( ! pWnd ) break;
-		
+
 #ifdef _SHAREAZA
 		CChildWnd* pChildWnd = (CChildWnd*)pWnd;
 		if ( pChildWnd->m_bTabMode )
@@ -243,18 +243,18 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 			continue;
 		}
 #endif
-		
+
 		if ( bSeparator )
 		{
 			pMenu->AppendMenu( MF_SEPARATOR, ID_SEPARATOR );
 			bSeparator = FALSE;
 		}
-		
+
 		CString strMenu, strWindow;
 		pWnd->GetWindowText( strWindow );
-		
+
 		strMenu.Format( _T("&%i %s"), nIndex, (LPCTSTR)strWindow );
-		
+
 		pMenu->AppendMenu( MF_STRING | ( pWnd == pActive ? MF_CHECKED : 0 ),
 			nID, strMenu );
 	}
@@ -263,21 +263,21 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 void CCoolMenuBarCtrl::ShiftMenu(int nOffset)
 {
 	int nIndex = 0;
-	
+
 	if ( m_pDown )
 	{
 		nIndex = (int)m_pDown->m_nID - 1 + nOffset;
 		if ( nIndex < 0 ) nIndex = GetCount() - 1;
 		if ( nIndex >= GetCount() ) nIndex = 0;
 	}
-	
+
 	SendMessage( WM_CANCELMODE, 0, 0 );
 	m_pSelect = GetIndex( nIndex );
 	m_pHot = m_pDown = NULL;
 	PostMessage( WM_TIMER, 5 );
 }
 
-void CCoolMenuBarCtrl::OnTimer(UINT nIDEvent) 
+void CCoolMenuBarCtrl::OnTimer(UINT nIDEvent)
 {
 	switch ( nIDEvent )
 	{
@@ -292,7 +292,7 @@ void CCoolMenuBarCtrl::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CCoolMenuBarCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CCoolMenuBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CCoolBarItem* pHit = HitTest( point );
 
@@ -301,7 +301,7 @@ void CCoolMenuBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		ShowMenu();
 		return;
 	}
-	
+
 	CCoolBarCtrl::OnLButtonDown( nFlags, point );
 }
 
@@ -312,23 +312,23 @@ void CCoolMenuBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler
 {
 }
 
-void CCoolMenuBarCtrl::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
+void CCoolMenuBarCtrl::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	GetOwner()->SendMessage( WM_INITMENUPOPUP, (WPARAM)pPopupMenu->GetSafeHmenu(),
 		MAKELONG( nIndex, bSysMenu ) );
 }
 
-void CCoolMenuBarCtrl::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CCoolMenuBarCtrl::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	GetOwner()->SendMessage( WM_MEASUREITEM, (WPARAM)nIDCtl, (LPARAM)lpMeasureItemStruct );
 }
 
-void CCoolMenuBarCtrl::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CCoolMenuBarCtrl::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	GetOwner()->SendMessage( WM_DRAWITEM, (WPARAM)nIDCtl, (LPARAM)lpDrawItemStruct );
 }
 
-void CCoolMenuBarCtrl::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu) 
+void CCoolMenuBarCtrl::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu)
 {
 	GetOwner()->SendMessage( WM_MENUSELECT, MAKELONG( nItemID, nFlags ), (LPARAM)hSysMenu );
 }
@@ -343,7 +343,7 @@ void CCoolMenuBarCtrl::OnExitMenuLoop(BOOL bIsTrackPopupMenu)
 	GetOwner()->SendMessage( WM_EXITMENULOOP, (WPARAM)bIsTrackPopupMenu );
 }
 
-void CCoolMenuBarCtrl::OnEnterIdle(UINT nWhy, CWnd* pWho) 
+void CCoolMenuBarCtrl::OnEnterIdle(UINT nWhy, CWnd* pWho)
 {
 	GetOwner()->SendMessage( WM_ENTERIDLE, (WPARAM)nWhy, (LPARAM)pWho->GetSafeHwnd() );
 }
@@ -357,12 +357,12 @@ HHOOK CCoolMenuBarCtrl::m_hMsgHook = NULL;
 LRESULT CCoolMenuBarCtrl::MenuFilter(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	MSG* pMsg = (MSG*)lParam;
-	
+
 	if ( m_pMenuBar && nCode == MSGF_MENU )
 	{
 		if ( m_pMenuBar->OnMenuMessage( pMsg ) ) return TRUE;
 	}
-	
+
 	return CallNextHookEx( m_hMsgHook, nCode, wParam, lParam );
 }
 

@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -84,11 +84,11 @@ CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
-		
+
 		if ( pNeighbour->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
 			return pNeighbour;
 	}
-	
+
 	return NULL;
 }
 
@@ -98,19 +98,19 @@ CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const
 int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
 	int nCount = 0;
-	
+
 	for ( POSITION pos = m_pUniques.GetStartPosition() ; pos ; )
 	{
 		CNeighbour* pNeighbour;
 		LPVOID nUnique;
-		
+
 		m_pUniques.GetNextAssoc( pos, nUnique, (void*&)pNeighbour );
-		
+
 		if ( nProtocol < 0 || nProtocol == pNeighbour->m_nProtocol )
 		{
 			// Hack to count only Gnutella (No longer needed)
 			//if ( nProtocol == -2 && pNeighbour->m_nProtocol > PROTOCOL_G2 ) continue;
-			
+
 			if ( nState < 0 || nState == pNeighbour->m_nState )
 			{
 				if ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType )
@@ -120,7 +120,7 @@ int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) c
 			}
 		}
 	}
-	
+
 	return nCount;
 }
 
@@ -140,7 +140,7 @@ void CNeighboursBase::Close()
 	{
 		GetNext( pos )->Close();
 	}
-	
+
 	m_nStableCount	= 0;
 	m_nLeafCount	= 0;
 	m_nLeafContent	= 0;
@@ -155,55 +155,55 @@ void CNeighboursBase::OnRun()
 {
 	DWORD tNow			= GetTickCount();
 	DWORD tEstablish	= tNow - 1500;
-	
+
 	int nStableCount	= 0;
 	int nLeafCount		= 0;
 	DWORD nLeafContent	= 0;
 	DWORD nBandwidthIn	= 0;
 	DWORD nBandwidthOut	= 0;
-	
+
 	m_nRunCookie++;
-	
+
 	while ( TRUE )
 	{
 		Network.m_pSection.Lock();
 		BOOL bWorked = FALSE;
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CNeighbour* pNeighbour = GetNext( pos );
-			
+
 			if ( pNeighbour->m_nRunCookie != m_nRunCookie )
 			{
 				pNeighbour->m_nRunCookie = m_nRunCookie;
-				
+
 				if ( pNeighbour->m_nState == nrsConnected &&
 					 pNeighbour->m_tConnected < tEstablish )
 					 nStableCount ++;
-				
+
 				if ( pNeighbour->m_nNodeType == ntLeaf )
 				{
 					nLeafCount ++;
 					nLeafContent += pNeighbour->m_nFileVolume;
 				}
-				
+
 				pNeighbour->Measure();
-				
+
 				nBandwidthIn	+= pNeighbour->m_mInput.nMeasure;
 				nBandwidthOut	+= pNeighbour->m_mOutput.nMeasure;
-				
+
 				pNeighbour->DoRun();
-				
+
 				bWorked = TRUE;
 				break;
 			}
 		}
-		
+
 		Network.m_pSection.Unlock();
-		
+
 		if ( ! bWorked ) break;
 	}
-	
+
 	m_nStableCount	= nStableCount;
 	m_nLeafCount	= nLeafCount;
 	m_nLeafContent	= nLeafContent;
@@ -219,7 +219,7 @@ void CNeighboursBase::Add(CNeighbour* pNeighbour, BOOL bAssignUnique)
 	if ( bAssignUnique )
 	{
 		CNeighbour* pExisting = NULL;
-		
+
 		do
 		{
 			pNeighbour->m_nUnique = m_nUnique++;
@@ -227,7 +227,7 @@ void CNeighboursBase::Add(CNeighbour* pNeighbour, BOOL bAssignUnique)
 		while (	pNeighbour->m_nUnique < 2 ||
 				m_pUniques.Lookup( (LPVOID)pNeighbour->m_nUnique, (void*&)pExisting ) );
 	}
-	
+
 	m_pUniques.SetAt( (LPVOID)pNeighbour->m_nUnique, pNeighbour );
 }
 
@@ -235,7 +235,7 @@ void CNeighboursBase::Remove(CNeighbour* pNeighbour)
 {
 	Network.QueryRoute->Remove( pNeighbour );
 	Network.NodeRoute->Remove( pNeighbour );
-	
+
 	m_pUniques.RemoveKey( (LPVOID)pNeighbour->m_nUnique );
 }
 

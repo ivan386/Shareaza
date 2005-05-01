@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,27 +52,27 @@ static char THIS_FILE[]=__FILE__;
 CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 {
 	ClearRequest();
-	
+
 	m_nProtocol		= nProtocol;
 	m_nState		= upsNull;
 	m_pQueue		= NULL;
 	m_pBaseFile		= NULL;
 	m_pDiskFile		= NULL;
 	m_nBandwidth	= Settings.Bandwidth.Request;
-	
+
 	m_bLive			= TRUE;
 	m_nRequests		= 0;
 	m_nUploaded		= 0;
 	m_nUserRating	= 0;
 	m_bClientExtended= FALSE;
-	
+
 	m_bStopTransfer	= FALSE;
 	m_tRotateTime	= 0;
 	m_tAverageTime	= 0;
 	m_nAveragePos	= 0;
 	ZeroMemory( m_nAverageRate, sizeof(m_nAverageRate) );
 	m_tRatingTime	= 0;
-	
+
 	Uploads.Add( this );
 }
 
@@ -89,16 +89,16 @@ CUploadTransfer::~CUploadTransfer()
 void CUploadTransfer::Remove(BOOL bMessage)
 {
 	ASSERT( this != NULL );
-	
+
 	if ( bMessage && m_sFileName.GetLength() > 0 )
 	{
 		theApp.Message( MSG_SYSTEM, IDS_UPLOAD_REMOVE,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	}
-	
+
 	m_nUploaded = 1;
 	Close( FALSE );
-	
+
 	delete this;
 }
 
@@ -109,11 +109,11 @@ void CUploadTransfer::Close(BOOL bMessage)
 {
 	if ( m_nState == upsNull ) return;
 	m_nState = upsNull;
-	
+
 	CTransfer::Close();
 	UploadQueues.Dequeue( this );
 	CloseFile();
-	
+
 	if ( bMessage ) theApp.Message( MSG_SYSTEM, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 	if ( m_nUploaded == 0 ) Remove( FALSE );
 }
@@ -134,14 +134,14 @@ BOOL CUploadTransfer::Promote()
 BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
 	if ( m_nState != upsUploading || _tcsicmp( m_sFilePath, pszSource ) ) return FALSE;
-	
+
 	if ( pszTarget == NULL )
 	{
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 		Close();
 		return TRUE;
 	}
-	
+
 	if ( pszTarget == (LPCTSTR)1 )
 	{
 		if ( m_pDiskFile != NULL )
@@ -154,14 +154,14 @@ BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	{
 		m_sFilePath = pszTarget;
 		m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
-		
+
 		if ( m_pDiskFile == NULL )
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			Close();
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -214,30 +214,30 @@ BOOL CUploadTransfer::OnRun()
 BOOL CUploadTransfer::OnRead()
 {
 	DWORD tLastRead = m_mInput.tLast;
-	
+
 	if ( ! CTransfer::OnRead() ) return FALSE;
-	
+
 	if ( m_mInput.tLast != tLastRead && ! m_bLive )
 	{
 		m_bLive = TRUE;
 		Uploads.EnforcePerHostLimit( this );
 	}
-	
+
 	return TRUE;
 }
 
 BOOL CUploadTransfer::OnWrite()
 {
 	DWORD tLastSend = m_mOutput.tLast;
-	
+
 	if ( ! CTransfer::OnWrite() ) return FALSE;
-	
+
 	if ( m_mOutput.tLast != tLastSend && ! m_bLive )
 	{
 		m_bLive = TRUE;
 		Uploads.EnforcePerHostLimit( this );
 	}
-	
+
 	return TRUE;
 }
 
@@ -247,39 +247,39 @@ BOOL CUploadTransfer::OnWrite()
 void CUploadTransfer::LongTermAverage(DWORD tNow)
 {
 	if ( m_nState != upsUploading || m_nLength == 0 || m_nLength == SIZE_UNKNOWN ) return;
-	
+
 	DWORD nSpeed = GetMeasuredSpeed();
-	
+
 	if ( Settings.Live.BandwidthScale < 100 )
 	{
 		nSpeed = nSpeed * 100 / max( DWORD(1), Settings.Live.BandwidthScale );
 	}
-	
+
 	m_nAverageRate[ m_nAveragePos ] = max( m_nAverageRate[ m_nAveragePos ], nSpeed );
-	
+
 	if ( tNow - m_tAverageTime < 2000 || m_nAverageRate[ m_nAveragePos ] == 0 ) return;
-	
+
 	m_tAverageTime = tNow;
 	m_nAveragePos = ( m_nAveragePos + 1 ) % ULA_SLOTS;
-	
+
 	DWORD nAverage = 0;
-	
+
 	for ( int nPos = 0 ; nPos < ULA_SLOTS ; nPos++ )
 	{
 		if ( m_nAverageRate[ nPos ] == 0 ) return;
 		nAverage += m_nAverageRate[ nPos ];
 	}
-	
+
 	m_nAverageRate[ m_nAveragePos ] = 0;
 	nAverage = nAverage / ULA_SLOTS * 9 / 8;
 	nAverage = max( nAverage, Settings.Uploads.ClampdownFloor );
-	
+
 	if ( nAverage < m_nBandwidth * ( 100 - Settings.Uploads.ClampdownFactor ) / 100 )
 	{
 		DWORD nOld = m_nBandwidth;	// Save
-		
+
 		m_nBandwidth = min( nAverage, m_nBandwidth );
-		
+
 		theApp.Message( MSG_DEBUG, _T("Changing upload throttle on %s from %s to %s"),
 			(LPCTSTR)m_sAddress,
 			(LPCTSTR)Settings.SmartVolume( nOld * 8, FALSE, TRUE ),
@@ -293,15 +293,15 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 void CUploadTransfer::RotatingQueue(DWORD tNow)
 {
 	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-	
+
 	if ( m_pQueue != NULL && UploadQueues.Check( m_pQueue ) &&	//Is this queue able to rotate?
 		 m_pQueue->m_bRotate && m_pQueue->IsActive( this ) && ! m_bStopTransfer )
 	{
 		DWORD tRotationLength = m_pQueue->m_nRotateTime * 1000;
 
 		// High ranked users can get a longer rotate time
-		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) ) 
-			tRotationLength <<= 1;	
+		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) )
+			tRotationLength <<= 1;
 
 		pLock.Unlock();
 
@@ -339,7 +339,7 @@ void CUploadTransfer::CalculateRating(DWORD tNow)
 		else							//They have not uploaded to us.
 		{
 			if ( m_nUploaded < 4*1024*1024 ) //If they have not gotten at least 4MB
-				m_nUserRating = 3;				//They are a new user- give uncertain rating 
+				m_nUserRating = 3;				//They are a new user- give uncertain rating
 			else
 				m_nUserRating = 4;				//Else, probably not uploading to us.
 		}
@@ -372,16 +372,16 @@ void CUploadTransfer::ClearRequest()
 	m_sFileName.Empty();
 	m_sFilePath.Empty();
 	m_sFileTags.Empty();
-	
+
 	m_nFileBase		= 0;
 	m_nFileSize		= 0;
 	m_bFilePartial	= FALSE;
-	
+
 	m_nOffset		= 0;
 	m_nLength		= SIZE_UNKNOWN;
 	m_nPosition		= 0;
 	m_nRequests ++;
-	
+
 	ClearHashes();
 	ClearHeaders();
 }
@@ -389,40 +389,40 @@ void CUploadTransfer::ClearRequest()
 BOOL CUploadTransfer::RequestComplete(CLibraryFile* pFile)
 {
 	ASSERT( pFile != NULL );
-	
+
 	if ( m_bSHA1 && pFile->m_bSHA1 && m_pSHA1 != pFile->m_pSHA1 ) return FALSE;
 	if ( m_bTiger && pFile->m_bTiger && m_pTiger != pFile->m_pTiger ) return FALSE;
 	if ( m_bED2K && pFile->m_bED2K && m_pED2K != pFile->m_pED2K ) return FALSE;
-	
+
 	m_sFileName	= pFile->m_sName;
 	m_sFilePath	= pFile->GetPath();
 	m_nFileBase	= pFile->m_nVirtualSize > 0 ? pFile->m_nVirtualBase : 0;
 	m_nFileSize	= pFile->m_nVirtualSize > 0 ? pFile->m_nVirtualSize : pFile->m_nSize;
 	m_sFileTags	= pFile->m_sShareTags;
 	m_bFilePartial = FALSE;
-	
+
 	if ( m_bSHA1 = pFile->m_bSHA1 ) m_pSHA1 = pFile->m_pSHA1;
 	if ( m_bTiger = pFile->m_bTiger ) m_pTiger = pFile->m_pTiger;
 	if ( m_bED2K = pFile->m_bED2K ) m_pED2K = pFile->m_pED2K;
-	
+
 	return TRUE;
 }
 
 BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 {
 	ASSERT( pFile != NULL );
-	
+
 	if ( m_bSHA1 && pFile->m_bSHA1 && m_pSHA1 != pFile->m_pSHA1 ) return FALSE;
 	if ( m_bTiger && pFile->m_bTiger && m_pTiger != pFile->m_pTiger ) return FALSE;
 	if ( m_bED2K && pFile->m_bED2K && m_pED2K != pFile->m_pED2K ) return FALSE;
-	
+
 	m_sFileName	= pFile->m_sRemoteName;
 	m_sFilePath	= pFile->m_sLocalName;
 	m_nFileBase	= 0;
 	m_nFileSize	= pFile->m_nSize;
 	m_bFilePartial = TRUE;
 	m_sFileTags.Empty();
-	
+
 	if ( m_bSHA1 && ! pFile->m_bSHA1 )
 	{
 		pFile->m_bSHA1 = TRUE;
@@ -432,7 +432,7 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	{
 		m_pSHA1 = pFile->m_pSHA1;
 	}
-	
+
 	if ( m_bTiger && ! pFile->m_bTiger )
 	{
 		pFile->m_bTiger = TRUE;
@@ -442,7 +442,7 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	{
 		m_pTiger = pFile->m_pTiger;
 	}
-	
+
 	if ( m_bED2K && ! pFile->m_bED2K )
 	{
 		pFile->m_bED2K = TRUE;
@@ -452,7 +452,7 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	{
 		m_pED2K = pFile->m_pED2K;
 	}
-	
+
 	return TRUE;
 }
 

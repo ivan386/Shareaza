@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ protected:
 	// Make a new CG1Packet object, and delete this one
 	CG1Packet();
 	virtual ~CG1Packet(); // Why is this virtual, it's at the top of the inheritance tree (do)
-	
+
 public:
 
 	// Data in the packet

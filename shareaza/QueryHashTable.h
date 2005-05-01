@@ -1,7 +1,7 @@
 //
 // QueryHashTable.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,13 +32,13 @@ class CNeighbour;
 class CQueryHashGroup;
 
 
-class CQueryHashTable  
+class CQueryHashTable
 {
 // Construction
 public:
 	CQueryHashTable();
 	virtual ~CQueryHashTable();
-	
+
 // Attributes
 public:
 	BOOL		m_bLive;
@@ -52,7 +52,7 @@ public:
 	CBuffer*	m_pBuffer;
 public:
 	CQueryHashGroup*	m_pGroup;
-	
+
 // Operations
 public:
 	void	Create();
@@ -75,7 +75,7 @@ protected:
 protected:
 	static inline DWORD	HashWord(LPCTSTR pszString, int nStart, int nLength, int nBits);
 	static inline DWORD	HashNumber(DWORD nNumber, int nBits);
-	
+
 };
 
 #endif // !defined(AFX_QUERYHASHTABLE_H__4D0F77C8_D0BB_4AA5_97EA_3859BA3590B5__INCLUDED_)

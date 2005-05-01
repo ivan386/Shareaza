@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,9 @@ class CLibraryMetaPanel : public CLibraryPanel
 public:
 	CLibraryMetaPanel();
 	virtual ~CLibraryMetaPanel();
-	
+
 	DECLARE_DYNCREATE(CLibraryMetaPanel)
-	
+
 // Attributes
 protected:
 	int				m_nSelected;
@@ -66,7 +66,7 @@ protected:
 	COLORREF			m_crLight;
 	int					m_nThumbSize;
 	CString				m_sThumb;
-	
+
 // Operations
 public:
 	virtual BOOL CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects);

@@ -1,7 +1,7 @@
 //
 // DlgFolderProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,18 +83,18 @@ void CFolderPropertiesDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFolderPropertiesDlg message handlers
 
-BOOL CFolderPropertiesDlg::OnInitDialog() 
+BOOL CFolderPropertiesDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CFolderPropertiesDlg"), IDR_LIBRARYFRAME );
 
 	CRect rc;
 	GetWindowRect( &rc );
 	m_nWidth = rc.Width();
-	
+
 	m_wndData.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rc, this, IDC_METADATA );
-	
+
 	if ( ! Settings.LoadWindow( _T("CFolderPropertiesDlg"), this ) )
 	{
 		CRect rc;
@@ -102,7 +102,7 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 		rc.bottom++;
 		MoveWindow( &rc );
 	}
-	
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
@@ -111,9 +111,9 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 		m_wndTitle.SetWindowText( m_pFolder->m_sName );
 		m_wndSchemas.Load( m_pFolder->m_sSchemaURI, CSchema::stFolder );
 		if ( m_wndSchemas.GetCurSel() < 0 ) m_wndSchemas.SetCurSel( 0 );
-		
+
 		OnSelChangeSchemas();
-		
+
 		if ( m_pFolder->m_pXML ) m_wndData.UpdateData( m_pFolder->m_pXML, FALSE );
 		m_bUpdating = FALSE;
 	}
@@ -121,27 +121,27 @@ BOOL CFolderPropertiesDlg::OnInitDialog()
 	{
 		PostMessage( WM_CLOSE );
 	}
-	
+
 	return TRUE;
 }
 
-void CFolderPropertiesDlg::OnDestroy() 
+void CFolderPropertiesDlg::OnDestroy()
 {
 	Settings.SaveWindow( _T("CFolderPropertiesDlg"), this );
 	CSkinDialog::OnDestroy();
 }
 
-BOOL CFolderPropertiesDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CFolderPropertiesDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		if ( m_wndData.OnTab() ) return TRUE;
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-void CFolderPropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
+void CFolderPropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	CSkinDialog::OnGetMinMaxInfo( lpMMI );
 
@@ -153,43 +153,43 @@ void CFolderPropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 	}
 }
 
-void CFolderPropertiesDlg::OnSize(UINT nType, int cx, int cy) 
+void CFolderPropertiesDlg::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CSkinDialog::OnSize( nType, cx, cy );
-	
+
 	if ( ! IsWindow( m_wndData.m_hWnd ) ) return;
-	
+
 	CRect rc, rcClient;
 	GetClientRect( &rcClient );
-	
+
 	m_wndTitle.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	int nRight = rc.right;
-	
+
 	m_wndSchemas.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.right	= nRight;
 	rc.left		= rcClient.right - rc.right;
-	
+
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndData, NULL, rc.left, rc.bottom + 18,
 		rc.Width(), cy - 24 - 16 - 16 - ( rc.bottom + 18 ), SWP_NOZORDER );
-	
+
 	m_wndApply.GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	DeferWindowPos( hDWP, m_wndApply, NULL, rc.left, cy - 32 - 19, 0, 0, SWP_NOSIZE );
 
 	m_wndOK.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	DeferWindowPos( hDWP, m_wndOK, NULL, rc.left, cy - 32, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
 	DeferWindowPos( hDWP, m_wndCancel, NULL, rc.right + 8, cy - 32, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
 
 	EndDeferWindowPos( hDWP );
 }
 
-void CFolderPropertiesDlg::OnPaint() 
+void CFolderPropertiesDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc( 8, 6, 8 + 98, 6 + 98 );
@@ -236,58 +236,58 @@ void CFolderPropertiesDlg::OnPaint()
 	dc.FillSolidRect( &rc, crBack );
 }
 
-HBRUSH CFolderPropertiesDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CFolderPropertiesDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( pWnd == &m_wndApply )
 	{
 		pDC->SetTextColor( RGB( 0, 0, 255 ) );
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
-	
+
 	return hbr;
 }
 
-BOOL CFolderPropertiesDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CFolderPropertiesDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CPoint point;
 	CRect rc;
-	
+
 	GetCursorPos( &point );
 	m_wndApply.GetWindowRect( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CFolderPropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point) 
+void CFolderPropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CSkinDialog::OnLButtonUp( nFlags, point );
-	
+
 	CRect rc;
 	m_wndApply.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		DoApply( TRUE );
 	}
 }
 
-void CFolderPropertiesDlg::OnSelChangeSchemas() 
+void CFolderPropertiesDlg::OnSelChangeSchemas()
 {
 	m_wndData.SetSchema( m_wndSchemas.GetSelected() );
 	OnChangeTitle();
 	Invalidate();
 }
 
-void CFolderPropertiesDlg::OnCloseUpSchemas() 
+void CFolderPropertiesDlg::OnCloseUpSchemas()
 {
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
 	{
@@ -331,7 +331,7 @@ void CFolderPropertiesDlg::OnChangeData()
 	m_bUpdating = FALSE;
 }
 
-void CFolderPropertiesDlg::OnOK() 
+void CFolderPropertiesDlg::OnOK()
 {
 	DoApply( FALSE );
 	CSkinDialog::OnOK();
@@ -340,17 +340,17 @@ void CFolderPropertiesDlg::OnOK()
 void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 {
 	CWaitCursor pCursor;
-	
+
 	CString str;
 	m_wndTitle.GetWindowText( str );
 	if ( str.IsEmpty() ) return;
 
 	CQuickLock oLock( Library.m_pSection );
-	
+
 	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
 	{
 		m_wndTitle.GetWindowText( m_pFolder->m_sName );
-		
+
 		if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
 		{
 			CXMLElement* pXML		= pSchema->Instantiate( TRUE );
@@ -364,11 +364,11 @@ void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 		{
 			m_pFolder->SetMetadata( NULL );
 		}
-		
+
 		m_pFolder->m_nUpdateCookie++;
-		
+
 		m_pFolder->MetaToFiles( bMetaToFiles );
-		
+
 		Library.Update();
 	}
 }

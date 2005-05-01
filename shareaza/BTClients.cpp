@@ -1,7 +1,7 @@
 //
 // BTClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,13 +59,13 @@ void CBTClients::Clear()
 	{
 		GetNext( pos )->Close();
 	}
-	
+
 	ShutdownRequests();
 }
 
 
 //////////////////////////////////////////////////////////////////////
-// CBTClients GUID->SHA1 filter	
+// CBTClients GUID->SHA1 filter
 
   //Note: This was removed and placed in the transfer, after a request from people running trackers.
   // They wanted a per-download generated ID, not static. (Do not retain between sessions.)
@@ -94,13 +94,13 @@ SHA1* CBTClients::GetGUID()
 BOOL CBTClients::OnAccept(CConnection* pConnection)
 {
 	ASSERT( pConnection != NULL );
-	
+
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
+
 	CBTClient* pClient = new CBTClient();
 	pClient->AttachTo( pConnection );
-	
+
 	return TRUE;
 }
 
@@ -142,13 +142,13 @@ void CBTClients::Remove(CBTTrackerRequest* pRequest)
 void CBTClients::ShutdownRequests()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pRequests.GetCount() == 0 ) return;
 	m_bShutdown = TRUE;
 	pLock.Unlock();
-	
+
 	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) return;
-	
+
 	while ( TRUE )
 	{
 		pLock.Lock();

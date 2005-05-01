@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,7 +107,7 @@ public:
 	BOOL ReadHeaders();    // Read text headers sitting in the input buffer
 	BOOL SendMyAddress();  // If we are listening on a port, tell the other computer our IP address and port number
 	BOOL IsAgentBlocked(); // Check the other computer's software title against our list of programs not to talk to
-	
+
 protected:
 
 	// Read and write data through the socket, and look at headers

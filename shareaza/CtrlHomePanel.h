@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,7 @@ public:
 	CHomeDownloadsBox();
 	virtual ~CHomeDownloadsBox();
 	DECLARE_DYNAMIC(CHomeDownloadsBox)
-	
+
 // Attributes
 protected:
 	CRichElement*	m_pdDownloadsNone;
@@ -50,7 +50,7 @@ protected:
 	CFont				m_pFont;
 	HCURSOR				m_hHand;
 	CDownloadTipCtrl	m_wndTip;
-	
+
 	struct Item
 	{
 		CDownload*	m_pDownload;
@@ -60,9 +60,9 @@ protected:
 		QWORD		m_nComplete;
 		BOOL		m_bPaused;
 	};
-	
+
 	Item*		m_pHover;
-	
+
 // Operations
 public:
 	void	Setup();
@@ -97,7 +97,7 @@ public:
 	CHomeLibraryBox();
 	virtual ~CHomeLibraryBox();
 	DECLARE_DYNAMIC(CHomeLibraryBox)
-	
+
 // Attributes
 protected:
 	CRichElement*	m_pdLibraryFiles;
@@ -107,7 +107,7 @@ protected:
 	CPtrArray		m_pList;
 	CFont			m_pFont;
 	HCURSOR			m_hHand;
-	
+
 	struct Item
 	{
 		CLibraryRecent*	m_pRecent;
@@ -115,9 +115,9 @@ protected:
 		CString			m_sText;
 		int				m_nIcon16;
 	};
-	
+
 	Item*		m_pHover;
-	
+
 // Operations
 public:
 	void	Setup();
@@ -151,7 +151,7 @@ public:
 	CHomeUploadsBox();
 	virtual ~CHomeUploadsBox();
 	DECLARE_DYNAMIC(CHomeUploadsBox)
-	
+
 // Attributes
 protected:
 	CRichElement*	m_pdUploadsNone;
@@ -163,7 +163,7 @@ protected:
 	CString			m_sUploadsMany;
 	CString			m_sUploadedOne;
 	CString			m_sUploadedMany;
-		
+
 // Operations
 public:
 	void		Setup();
@@ -190,7 +190,7 @@ public:
 	CHomeConnectionBox();
 	virtual ~CHomeConnectionBox();
 	DECLARE_DYNAMIC(CHomeConnectionBox)
-	
+
 // Attributes
 protected:
 	CRichElement*	m_pdConnectedHours;
@@ -223,7 +223,7 @@ public:
 	CHomeTorrentsBox();
 	virtual ~CHomeTorrentsBox();
 	DECLARE_DYNAMIC(CHomeTorrentsBox)
-	
+
 // Attributes
 protected:
 	CRichElement*	m_pdTorrentsNone;
@@ -232,7 +232,7 @@ protected:
 	CString			m_sTorrentsMany;
 	CRichElement*	m_pdReseedTorrent;
 	CString			m_sReseedTorrent;
-	
+
 // Operations
 public:
 	void	Setup();
@@ -258,7 +258,7 @@ public:
 	CHomePanel();
 	virtual ~CHomePanel();
 	DECLARE_DYNAMIC(CHomePanel)
-	
+
 // Attributes
 public:
 	CHomeDownloadsBox	m_boxDownloads;

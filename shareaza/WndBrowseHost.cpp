@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,98 +83,98 @@ CBrowseHostWnd::~CBrowseHostWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseHostWnd message handlers
 
-int CBrowseHostWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CBrowseHostWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CBaseMatchWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( CSchema* pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
 	{
 		CPtrList pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
 		m_wndList.SelectSchema( pSchema, &pColumns );
 	}
-	
+
 	m_wndHeader.Create( this );
 	m_wndProfile.Create( this );
 	m_wndFrame.Create( this, &m_wndList );
-	
+
 	LoadState( _T("CBrowseHostWnd"), TRUE );
-	
+
 	m_pBrowser->Browse();
-	
+
 	OnSkinChange();
-	
+
 	m_bOnFiles = FALSE;
-	
+
 	return 0;
 }
 
-void CBrowseHostWnd::OnDestroy() 
+void CBrowseHostWnd::OnDestroy()
 {
 	m_pBrowser->Stop();
-	
+
 	delete m_pBrowser;
 	m_pBrowser = NULL;
-	
+
 	if ( m_wndList.m_pSchema != NULL )
 		Settings.Search.BlankSchemaURI = m_wndList.m_pSchema->m_sURI;
 	else
 		Settings.Search.BlankSchemaURI.Empty();
-	
+
 	SaveState( _T("CBrowseHostWnd") );
-	
+
 	CBaseMatchWnd::OnDestroy();
 }
 
 void CBrowseHostWnd::OnSkinChange()
 {
 	CBaseMatchWnd::OnSkinChange();
-	
+
 	Skin.CreateToolBar( _T("CBrowseHostWnd"), &m_wndToolBar );
 	m_wndFrame.OnSkinChange();
 	m_wndHeader.OnSkinChange();
 	m_wndProfile.OnSkinChange();
-	
+
 	UpdateMessages();
 }
 
-BOOL CBrowseHostWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CBrowseHostWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndHeader.m_hWnd != NULL )
 	{
 		if ( m_wndHeader.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	if ( m_wndProfile.m_hWnd != NULL )
 	{
 		if ( m_wndProfile.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	if ( m_wndFrame.m_hWnd != NULL )
 	{
 		if ( m_wndFrame.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CBaseMatchWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CBrowseHostWnd::OnSize(UINT nType, int cx, int cy) 
+void CBrowseHostWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	rc.top += 64;
 	rc.bottom -= 28;
-	
+
 	m_wndHeader.SetWindowPos( NULL, rc.left, 0, rc.Width(), rc.top, SWP_NOZORDER );
 	m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom, rc.Width(), 28, SWP_NOZORDER );
 	m_wndProfile.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
 	m_wndFrame.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
 }
 
-void CBrowseHostWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CBrowseHostWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bContextMenu )
 	{
@@ -186,58 +186,58 @@ void CBrowseHostWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CBrowseHostWnd::OnUpdateBrowseProfile(CCmdUI* pCmdUI) 
+void CBrowseHostWnd::OnUpdateBrowseProfile(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_wndProfile.IsWindowVisible() );
 }
 
-void CBrowseHostWnd::OnBrowseProfile() 
+void CBrowseHostWnd::OnBrowseProfile()
 {
 	m_wndProfile.SetWindowPos( &wndTop, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW );
 	m_wndFrame.ShowWindow( SW_HIDE );
 	m_wndProfile.Update( m_pBrowser );
 }
 
-void CBrowseHostWnd::OnUpdateBrowseFiles(CCmdUI* pCmdUI) 
+void CBrowseHostWnd::OnUpdateBrowseFiles(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_wndList.IsWindowVisible() );
 }
 
-void CBrowseHostWnd::OnBrowseFiles() 
+void CBrowseHostWnd::OnBrowseFiles()
 {
 	m_wndFrame.SetWindowPos( &wndTop, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW );
 	m_wndProfile.ShowWindow( SW_HIDE );
 	m_bOnFiles = TRUE;
 }
 
-void CBrowseHostWnd::OnUpdateBrowseHostStop(CCmdUI* pCmdUI) 
+void CBrowseHostWnd::OnUpdateBrowseHostStop(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pBrowser->IsBrowsing() );
 }
 
-void CBrowseHostWnd::OnBrowseHostStop() 
+void CBrowseHostWnd::OnBrowseHostStop()
 {
 	m_pBrowser->Stop();
 }
 
-void CBrowseHostWnd::OnBrowseHostRefresh() 
+void CBrowseHostWnd::OnBrowseHostRefresh()
 {
 	m_pBrowser->Stop();
 	m_pBrowser->Browse();
-	
+
 	m_wndList.DestructiveUpdate();
 	m_pMatches->Clear();
-	
+
 	m_bUpdate = TRUE;
 	PostMessage( WM_TIMER, 2 );
 }
 
-void CBrowseHostWnd::OnUpdateSearchChat(CCmdUI* pCmdUI) 
+void CBrowseHostWnd::OnUpdateSearchChat(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pBrowser && m_pBrowser->m_bCanChat );
 }
 
-void CBrowseHostWnd::OnSearchChat() 
+void CBrowseHostWnd::OnSearchChat()
 {
 	if ( m_pBrowser != NULL )
 	{
@@ -257,12 +257,12 @@ void CBrowseHostWnd::OnSelChangeMatches()
 void CBrowseHostWnd::UpdateMessages(BOOL bActive)
 {
 	CString strCaption, strOld;
-	
+
 	m_wndHeader.Update( m_pBrowser );
-	
+
 	LoadString( strCaption, IDR_BROWSEHOSTFRAME );
 	strCaption += _T(" : ");
-	
+
 	if ( m_pBrowser->m_pProfile != NULL && m_pBrowser->m_pProfile->IsValid() )
 	{
 		strOld.Format( _T("%s (%s:%lu)"),
@@ -278,18 +278,18 @@ void CBrowseHostWnd::UpdateMessages(BOOL bActive)
 			m_pBrowser->m_nPort );
 		strCaption += strOld;
 	}
-	
+
 	if ( m_pMatches->m_nFilteredFiles || m_pMatches->m_nFilteredHits )
 	{
 		strOld.Format( _T(" [%lu/%lu]"),
 			m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
 		strCaption += strOld;
 	}
-	
+
 	GetWindowText( strOld );
-	
+
 	if ( strOld != strCaption ) SetWindowText( strCaption );
-	
+
 	if ( m_pMatches->m_nFilteredFiles == 0 )
 	{
 		if ( m_pMatches->m_nFiles > 0 )
@@ -297,7 +297,7 @@ void CBrowseHostWnd::UpdateMessages(BOOL bActive)
 			m_wndList.SetMessage( IDS_SEARCH_FILTERED, FALSE );
 			return;
 		}
-		
+
 		switch ( m_pBrowser->m_nState )
 		{
 		case CHostBrowser::hbsNull:
@@ -327,7 +327,7 @@ void CBrowseHostWnd::OnProfileReceived()
 		{
 			PostMessage( WM_COMMAND, ID_BROWSE_PROFILE );
 		}
-		
+
 		m_bUpdate = TRUE;
 	}
 }
@@ -335,9 +335,9 @@ void CBrowseHostWnd::OnProfileReceived()
 void CBrowseHostWnd::OnBrowseHits(CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
-	
+
 	CSingleLock pLock( &m_pMatches->m_pSection );
-	
+
 	if ( pLock.Lock( 100 ) && ! m_bPaused )
 	{
 		m_pMatches->AddHits( pHits );
@@ -348,21 +348,21 @@ void CBrowseHostWnd::OnBrowseHits(CQueryHit* pHits)
 void CBrowseHostWnd::OnHeadPacket(CG2Packet* pPacket)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
-	
+
 	m_wndProfile.OnHeadPacket( pPacket );
 }
 
 void CBrowseHostWnd::OnPhysicalTree(CG2Packet* pPacket)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
-	
+
 	m_wndFrame.OnPhysicalTree( pPacket );
 }
 
 void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
-	
+
 	m_wndFrame.OnVirtualTree( pPacket );
 }
 

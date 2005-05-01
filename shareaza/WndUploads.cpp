@@ -1,7 +1,7 @@
 //
 // WndUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -111,47 +111,47 @@ CUploadsWnd::~CUploadsWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CUploadsWnd message handlers
 
-int CUploadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CUploadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_wndUploads.Create( this, IDC_UPLOADS );
-	
+
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndToolBar.SetSyncObject( &Transfers.m_pSection );
-	
+
 	LoadState( NULL, TRUE );
-	
+
 	SetTimer( 2, 2000, NULL );
 	PostMessage( WM_TIMER, 2 );
-	
+
 	SetTimer( 4, 5000, NULL );
 	PostMessage( WM_TIMER, 4 );
-	
+
 	m_tSel = 0;
-	
+
 	return 0;
 }
 
-void CUploadsWnd::OnDestroy() 
+void CUploadsWnd::OnDestroy()
 {
 	KillTimer( 4 );
 	SaveState();
 	CPanelWnd::OnDestroy();
 }
 
-BOOL CUploadsWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CUploadsWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndToolBar.m_hWnd )
 	{
 		if ( m_wndToolBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CUploadsWnd::OnSize(UINT nType, int cx, int cy) 
+void CUploadsWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 	SizeListAndBar( &m_wndUploads, &m_wndToolBar );
@@ -164,22 +164,22 @@ void CUploadsWnd::OnSkinChange()
 	Skin.CreateToolBar( _T("CUploadsWnd"), &m_wndToolBar );
 }
 
-void CUploadsWnd::OnTimer(UINT nIDEvent) 
+void CUploadsWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 5 ) m_tSel = 0;
-	
+
 	if ( nIDEvent == 4 )
 	{
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
-		
+
 		DWORD nNow = GetTickCount();
 		BOOL bCull = Uploads.GetCount( NULL ) > 75;
-		
+
 		for ( POSITION pos = Uploads.GetIterator() ; pos ; )
 		{
 			CUploadTransfer* pUpload = Uploads.GetNext( pos );
-			
+
 			if ( pUpload->m_nState == upsNull &&
 				 nNow - pUpload->m_tConnected > Settings.Uploads.ClearDelay )
 			{
@@ -190,20 +190,20 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 			}
 		}
 	}
-	
+
 	if ( nIDEvent != 1 ) m_wndUploads.Update();
 }
 
-void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CUploadQueue* pQueue;
 	CUploadFile* pUpload;
-	
+
 	CPoint ptLocal( point );
 	m_wndUploads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
-	
+
 	if ( m_wndUploads.HitTest( ptLocal, &pQueue, &pUpload, NULL, NULL ) )
 	{
 		if ( pUpload != NULL )
@@ -213,7 +213,7 @@ void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 			return;
 		}
 	}
-	
+
 	if( ( pQueue == NULL ) || ( Settings.General.GUIMode == GUI_BASIC ) ||		//If we're not pointing at a queue, or in basic mode
 		( pQueue == UploadQueues.m_pHistoryQueue ) || ( pQueue == UploadQueues.m_pTorrentQueue ) )	//Or pointing at a pre-defined queue
 		TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
@@ -232,7 +232,7 @@ void CUploadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
 {
 	if ( ! pFile->m_bSelected ) return FALSE;
-	
+
 	if ( CUploadTransfer* pTransfer = pFile->GetActive() )
 	{
 		if ( pTransfer->m_nProtocol == PROTOCOL_BT )
@@ -242,7 +242,7 @@ BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
 		else if ( pTransfer->m_pQueue != NULL )
 		{
 			if ( pTransfer->m_pQueue->m_bExpanded == FALSE ) return FALSE;
-			
+
 			if ( pTransfer->m_pQueue->m_pActive.Find( pTransfer ) != NULL )
 			{
 				if ( 0 == ( Settings.Uploads.FilterMask & ULF_ACTIVE ) ) return FALSE;
@@ -261,7 +261,7 @@ BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
 	{
 		if ( 0 == ( Settings.Uploads.FilterMask & ULF_HISTORY ) ) return FALSE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -270,28 +270,28 @@ void CUploadsWnd::Prepare()
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tSel < 250 ) return;
 	m_tSel = tNow;
-	
+
 	m_bSelFile = m_bSelUpload = FALSE;
 	m_bSelActive = m_bSelQueued = FALSE;
 	m_bSelHttp = m_bSelDonkey = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
-	
+
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION posFile = UploadFiles.GetIterator() ; posFile ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( posFile );
-		
+
 		if ( pFile->m_bSelected && IsSelected( pFile ) )
 		{
 			m_bSelFile = TRUE;
-			
+
 			if ( CUploadTransfer* pTransfer = pFile->GetActive() )
 			{
 				m_bSelUpload = TRUE;
 				if ( pTransfer->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttp = TRUE;
 				if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) m_bSelDonkey = TRUE;
-				
+
 				if ( pTransfer->m_pQueue != NULL )
 				{
 					if ( pTransfer->m_pQueue->m_pActive.Find( pTransfer ) != NULL )
@@ -317,31 +317,31 @@ void CUploadsWnd::Prepare()
 /////////////////////////////////////////////////////////////////////////////
 // CUploadsWnd command handlers
 
-void CUploadsWnd::OnUpdateUploadsDisconnect(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsDisconnect(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( m_bSelActive );
 }
 
-void CUploadsWnd::OnUploadsDisconnect() 
+void CUploadsWnd::OnUploadsDisconnect()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CUploadFile*> pList;
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
 	}
-	
+
 	while ( ! pList.IsEmpty() )
 	{
 		CUploadFile* pFile = pList.RemoveHead();
-		
+
 		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
 		{
 			CUploadTransfer* pUpload = pFile->GetActive();
-			
+
 			if ( pUpload->m_nProtocol == PROTOCOL_ED2K && pUpload->m_nState != upsNull )
 			{
 				CString strFormat, strMessage;
@@ -353,26 +353,26 @@ void CUploadsWnd::OnUploadsDisconnect()
 				if ( nResp == IDCANCEL ) break;
 				if ( nResp != IDYES || ! Uploads.Check( pUpload ) ) continue;
 			}
-			
+
 			pUpload->Close( TRUE );
 		}
 	}
 }
 
-void CUploadsWnd::OnUpdateUploadsStart(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsStart(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( m_bSelQueued );
 }
 
-void CUploadsWnd::OnUploadsStart() 
+void CUploadsWnd::OnUploadsStart()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
-		
+
 		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
 		{
 			pFile->GetActive()->Promote();
@@ -380,31 +380,31 @@ void CUploadsWnd::OnUploadsStart()
 	}
 }
 
-void CUploadsWnd::OnUpdateUploadsClear(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsClear(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( m_bSelFile );
 }
 
-void CUploadsWnd::OnUploadsClear() 
+void CUploadsWnd::OnUploadsClear()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CUploadFile*> pList;
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
 	}
-	
+
 	while ( ! pList.IsEmpty() )
 	{
 		CUploadFile* pFile = pList.RemoveHead();
-		
+
 		if ( UploadFiles.Check( pFile ) )
 		{
 			CUploadTransfer* pUpload = pFile->GetActive();
-			
+
 			if ( pUpload != NULL && pUpload->m_nProtocol == PROTOCOL_ED2K && pUpload->m_nState != upsNull )
 			{
 				CString strFormat, strMessage;
@@ -416,33 +416,33 @@ void CUploadsWnd::OnUploadsClear()
 				if ( nResp == IDCANCEL ) break;
 				if ( nResp != IDYES || ! UploadFiles.Check( pFile ) ) continue;
 			}
-			
+
 			pFile->Remove();
 		}
 	}
 }
 
-void CUploadsWnd::OnUpdateUploadsLaunch(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsLaunch(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( m_bSelFile );
 }
 
-void CUploadsWnd::OnUploadsLaunch() 
+void CUploadsWnd::OnUploadsLaunch()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CUploadFile*> pList;
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
 	}
-	
+
 	while ( ! pList.IsEmpty() )
 	{
 		CUploadFile* pFile = pList.RemoveHead();
-		
+
 		if ( UploadFiles.Check( pFile ) )
 		{
 			CString strPath = pFile->m_sPath;
@@ -454,10 +454,10 @@ void CUploadsWnd::OnUploadsLaunch()
 	}
 }
 
-void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 {
 	// If chat is disabled, grey out the option
-	if ( ! Settings.Community.ChatEnable ) 
+	if ( ! Settings.Community.ChatEnable )
 	{
 		pCmdUI->Enable( FALSE );
 		return;
@@ -466,18 +466,18 @@ void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 	// Check to see if chat is possible
 	Prepare();
 	pCmdUI->Enable( m_bSelHttp ||									// Enable chat for HTTP clients
-		( m_bSelDonkey && Settings.Community.ChatAllNetworks ) ||	// ED2K clients, 
+		( m_bSelDonkey && Settings.Community.ChatAllNetworks ) ||	// ED2K clients,
 		( m_bSelSourceExtended ) );									// or for any client supporting G2 chat
 }
 
-void CUploadsWnd::OnUploadsChat() 
+void CUploadsWnd::OnUploadsChat()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
-		
+
 		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
 		{
 			if ( pFile->GetActive()->m_nProtocol == PROTOCOL_HTTP )		// HTTP chat. (G2, G1)
@@ -492,31 +492,31 @@ void CUploadsWnd::OnUploadsChat()
 	}
 }
 
-void CUploadsWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( m_bSelUpload );
 }
 
-void CUploadsWnd::OnSecurityBan() 
+void CUploadsWnd::OnSecurityBan()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CUploadFile*> pList;
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
 	}
-	
+
 	while ( ! pList.IsEmpty() )
 	{
 		CUploadFile* pFile = pList.RemoveHead();
-		
+
 		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
 		{
 			CUploadTransfer* pUpload = pFile->GetActive();
-			
+
 			IN_ADDR pAddress = pUpload->m_pHost.sin_addr;
 			pUpload->Remove( FALSE );
 			pLock.Unlock();
@@ -526,27 +526,27 @@ void CUploadsWnd::OnSecurityBan()
 	}
 }
 
-void CUploadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	Prepare();
 	pCmdUI->Enable( ( m_bSelHttp || m_bSelSourceExtended ) );
 }
 
-void CUploadsWnd::OnBrowseLaunch() 
+void CUploadsWnd::OnBrowseLaunch()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList<CUploadFile*> pList;
-	
+
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
 	}
-	
+
 	while ( ! pList.IsEmpty() )
 	{
 		CUploadFile* pFile = pList.RemoveHead();
-		
+
 		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
 		{
 			SOCKADDR_IN pAddress = pFile->GetActive()->m_pHost;
@@ -557,31 +557,31 @@ void CUploadsWnd::OnBrowseLaunch()
 	}
 }
 
-void CUploadsWnd::OnUploadsClearCompleted() 
+void CUploadsWnd::OnUploadsClearCompleted()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION pos = Uploads.GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = Uploads.GetNext( pos );
 		if ( pUpload->m_nState == upsNull ) pUpload->Remove( FALSE );
 	}
-	
+
 	m_wndUploads.Update();
 }
 
-void CUploadsWnd::OnUpdateUploadsAutoClear(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsAutoClear(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.Uploads.AutoClear );
 }
 
-void CUploadsWnd::OnUploadsAutoClear() 
+void CUploadsWnd::OnUploadsAutoClear()
 {
 	Settings.Uploads.AutoClear = ! Settings.Uploads.AutoClear;
 	if ( Settings.Uploads.AutoClear ) OnTimer( 4 );
 }
 
-void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI)
 {
 	Prepare();
 	//pCmdUI->Enable( ! m_bSelFile );
@@ -590,23 +590,23 @@ void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI)
 	pCmdUI->Enable( FALSE );
 }
 
-void CUploadsWnd::OnEditQueue() 
+void CUploadsWnd::OnEditQueue()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
+
 	for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-		
+
 		if ( pQueue->m_bSelected )
 		{
 			pLock.Unlock();
 
 			CQueuePropertiesDlg dlg( pQueue, FALSE, this );
 
-			//dlg.DoModal();  //Note: the CSkinDialog::OnOK() at the end will sometimes lock 
+			//dlg.DoModal();  //Note: the CSkinDialog::OnOK() at the end will sometimes lock
 			// up Raza? Needs to be fixed
-			
+
 			UploadQueues.Save();
 
 			if ( UploadQueues.GetCount() == 0 )
@@ -615,7 +615,7 @@ void CUploadsWnd::OnEditQueue()
 				UploadQueues.Validate();
 
 			// Changing queues might change what files are in the hash table
-			LibraryDictionary.RebuildHashTable(); 
+			LibraryDictionary.RebuildHashTable();
 			// ED2k file list will automatically update on next server connection
 
 			return;
@@ -624,17 +624,17 @@ void CUploadsWnd::OnEditQueue()
 
 }
 
-void CUploadsWnd::OnUploadsHelp() 
+void CUploadsWnd::OnUploadsHelp()
 {
 	CHelpDlg::Show( _T("UploadHelp") );
 }
 
-void CUploadsWnd::OnUploadsSettings() 
+void CUploadsWnd::OnUploadsSettings()
 {
 	CSettingsManagerDlg::Run( _T("CUploadsSettingsPage") );
 }
 
-BOOL CUploadsWnd::PreTranslateMessage(MSG* pMsg) 
+BOOL CUploadsWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_DELETE )
 	{
@@ -646,55 +646,55 @@ BOOL CUploadsWnd::PreTranslateMessage(MSG* pMsg)
 		GetManager()->Open( RUNTIME_CLASS(CDownloadsWnd) );
 		return TRUE;
 	}
-	
+
 	return CPanelWnd::PreTranslateMessage( pMsg );
 }
 
-void CUploadsWnd::OnUploadsFilterMenu() 
+void CUploadsWnd::OnUploadsFilterMenu()
 {
 	CMenu* pMenu = Skin.GetMenu( _T("CUploadsWnd.Filter") );
 	m_wndToolBar.ThrowMenu( ID_UPLOADS_FILTER_MENU, pMenu, NULL, FALSE, TRUE );
 }
 
-void CUploadsWnd::OnUpdateUploadsFilterAll(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsFilterAll(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( ( Settings.Uploads.FilterMask & ULF_ALL ) == ULF_ALL );
 }
 
-void CUploadsWnd::OnUploadsFilterAll() 
+void CUploadsWnd::OnUploadsFilterAll()
 {
 	Settings.Uploads.FilterMask |= ULF_ALL;
 	m_wndUploads.Update();
 }
 
-void CUploadsWnd::OnUpdateUploadsFilterActive(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsFilterActive(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( ( Settings.Uploads.FilterMask & ULF_ACTIVE ) > 0 );
 }
 
-void CUploadsWnd::OnUploadsFilterActive() 
+void CUploadsWnd::OnUploadsFilterActive()
 {
 	Settings.Uploads.FilterMask ^= ULF_ACTIVE;
 	m_wndUploads.Update();
 }
 
-void CUploadsWnd::OnUpdateUploadsFilterQueued(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsFilterQueued(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( ( Settings.Uploads.FilterMask & ULF_QUEUED ) > 0 );
 }
 
-void CUploadsWnd::OnUploadsFilterQueued() 
+void CUploadsWnd::OnUploadsFilterQueued()
 {
 	Settings.Uploads.FilterMask ^= ULF_QUEUED;
 	m_wndUploads.Update();
 }
 
-void CUploadsWnd::OnUpdateUploadsFilterHistory(CCmdUI* pCmdUI) 
+void CUploadsWnd::OnUpdateUploadsFilterHistory(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( ( Settings.Uploads.FilterMask & ULF_HISTORY ) > 0 );
 }
 
-void CUploadsWnd::OnUploadsFilterHistory() 
+void CUploadsWnd::OnUploadsFilterHistory()
 {
 	Settings.Uploads.FilterMask ^= ULF_HISTORY;
 	m_wndUploads.Update();

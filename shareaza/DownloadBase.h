@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,13 +27,13 @@
 class CDownloadTask;
 
 
-class CDownloadBase  
+class CDownloadBase
 {
 // Construction
 public:
 	CDownloadBase();
 	virtual ~CDownloadBase();
-	
+
 // Attributes
 public:
 	int			m_nCookie;
@@ -59,7 +59,7 @@ public:
 	BOOL		m_bBTHTrusted;
 protected:
 	CDownloadTask*	m_pTask;
-		
+
 // Operations
 public:
 	virtual void	Pause() = 0;
@@ -76,7 +76,7 @@ public:
 protected:
 	void			GenerateLocalName();
 	virtual void	Serialize(CArchive& ar, int nVersion);
-	
+
 };
 
 #endif // !defined(AFX_DOWNLOADBASE_H__71956CAE_7D13_4809_837B_5F17DE46856E__INCLUDED_)

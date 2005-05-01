@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHeaderBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,9 +70,9 @@ void CLibraryHeaderBar::Update(CLibraryView* pView)
 {
 	CString strTitle;
 	int nImage = SHI_FOLDER_CLOSED;
-	
+
 	if ( pView != NULL ) pView->GetHeaderContent( nImage, strTitle );
-	
+
 	if ( nImage != m_nImage || strTitle != m_sTitle )
 	{
 		m_nImage	= nImage;
@@ -80,7 +80,7 @@ void CLibraryHeaderBar::Update(CLibraryView* pView)
 
 		if (m_hWnd) Invalidate();
 	}
-	
+
 	if ( pView != m_pLastView && ( m_pLastView = pView ) )
 	{
 		if ( CCoolBarItem* pItem = GetID( ID_LIBRARY_VIEW ) )
@@ -92,7 +92,7 @@ void CLibraryHeaderBar::Update(CLibraryView* pView)
 			pItem->SetImage( pView->m_nCommandID );
 			pItem->SetText( pszName );
 		}
-		
+
 		OnUpdated();
 	}
 }
@@ -114,14 +114,14 @@ void CLibraryHeaderBar::DoPaint(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 	pDC->FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1,
 		GetSysColor( COLOR_3DSHADOW ) );
 	rcBar.bottom --;
-	
+
 	if ( m_czLast.cx < rcBar.Width() - 22 )
 	{
 		CRect rcHeader( &rcBar );
 		rcHeader.right = rcBar.left = rcBar.right - m_czLast.cx;
 		PaintHeader( pDC, rcHeader, bTransparent );
 	}
-	
+
 	CCoolBarCtrl::DoPaint( pDC, rcBar, bTransparent );
 }
 
@@ -133,7 +133,7 @@ void CLibraryHeaderBar::PaintHeader(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 
 	pDC->SetTextColor( CoolInterface.m_crCmdText );
 	pDC->SetBkColor( CoolInterface.m_crMidtone );
-	
+
 	int nMiddle = ( rcBar.top + rcBar.bottom ) / 2;
 
 	CString strText = m_sTitle;
@@ -156,7 +156,7 @@ void CLibraryHeaderBar::PaintHeader(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 				rcBar.left + 4, nMiddle - 8, 16, 16, CLR_NONE, CLR_NONE,
 				ILD_NORMAL );
 		}
-		
+
 		pDC->SetBkMode( TRANSPARENT );
 		pDC->ExtTextOut( rcBar.left + 22, nMiddle - szText.cy / 2,
 			ETO_CLIPPED, &rcBar, strText, NULL );
@@ -189,10 +189,10 @@ void CLibraryHeaderBar::PaintHeader(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHeaderBar view menu
 
-void CLibraryHeaderBar::OnLibraryView() 
+void CLibraryHeaderBar::OnLibraryView()
 {
 	CMenu pMenu;
-	
+
 	pMenu.CreatePopupMenu();
 
 	CLibraryFrame* pFrame	= (CLibraryFrame*)GetParent();
@@ -233,22 +233,22 @@ void CLibraryHeaderBar::OnLibraryView()
 	m_pCoolMenu = NULL;
 }
 
-void CLibraryHeaderBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CLibraryHeaderBar::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CLibraryHeaderBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CLibraryHeaderBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnDrawItem( lpDrawItemStruct );
 }
 
-void CLibraryHeaderBar::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu) 
+void CLibraryHeaderBar::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu)
 {
 	AfxGetMainWnd()->SendMessage( WM_MENUSELECT, MAKELONG( nItemID, nFlags ), (LPARAM)hSysMenu );
 }
 
-void CLibraryHeaderBar::OnEnterIdle(UINT nWhy, CWnd* pWho) 
+void CLibraryHeaderBar::OnEnterIdle(UINT nWhy, CWnd* pWho)
 {
 	AfxGetMainWnd()->SendMessage( WM_ENTERIDLE, (WPARAM)nWhy, (LPARAM)pWho->GetSafeHwnd() );
 }

@@ -1,7 +1,7 @@
 //
 // DlgHelp.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,10 +71,10 @@ void CHelpDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CHelpDlg message handlers
 
-BOOL CHelpDlg::OnInitDialog() 
+BOOL CHelpDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	if ( CXMLElement* pXML = Skin.GetDocument( m_sDocument ) )
 	{
 		m_pDocument.LoadXML( pXML );
@@ -83,34 +83,34 @@ BOOL CHelpDlg::OnInitDialog()
 	{
 		PostMessage( WM_CLOSE );
 	}
-	
+
 	m_pDocument.m_crBackground = Skin.m_crDialog;
-	
+
 	CRect rect( 0, 0, 0, 0 );
 	m_wndView.Create( WS_CHILD, rect, this, IDC_HELP_VIEW );
 	m_wndView.SetDocument( &m_pDocument );
 	m_wndView.SetSelectable( TRUE );
-	
+
 	SkinMe( _T("CHelpDlg"), ID_HELP_ABOUT );
 	OnSize( 1982, 0, 0 );
-	
+
 	return TRUE;
 }
 
-void CHelpDlg::OnSize(UINT nType, int cx, int cy) 
+void CHelpDlg::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CSkinDialog::OnSize( nType, cx, cy );
-	
+
 	if ( m_wndBanner.m_hWnd != NULL && m_wndView.m_hWnd != NULL )
 	{
 		CRect rcClient, rcBanner;
-		
+
 		GetClientRect( &rcClient );
 		m_wndBanner.GetClientRect( &rcBanner );
-		
+
 		rcClient.top += rcBanner.Height();
 		rcClient.bottom -= 32;
-		
+
 		m_wndView.SetWindowPos( NULL, rcClient.left, rcClient.top,
 			rcClient.Width(), rcClient.Height(), SWP_NOZORDER|SWP_SHOWWINDOW );
 	}

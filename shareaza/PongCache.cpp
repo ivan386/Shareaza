@@ -1,7 +1,7 @@
 //
 // PongCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,7 +83,7 @@ CPongItem* CPongCache::Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort
 
 		if ( pItem->m_nPort != nPort ) continue;
 		if ( pItem->m_nHops != nHops ) continue;
-		
+
 		if ( memcmp( &pItem->m_pAddress, pAddress, sizeof(IN_ADDR) ) == 0 )
 		{
 			pItem->m_nFiles		= nFiles;
@@ -112,7 +112,7 @@ CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CPtrList* pIgnor
 		if ( pItem->m_pNeighbour == pNotFrom ) continue;
 
 		if ( pIgnore && pIgnore->Find( pItem ) ) continue;
-		
+
 		return pItem;
 	}
 

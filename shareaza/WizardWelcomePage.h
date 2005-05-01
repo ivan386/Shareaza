@@ -1,7 +1,7 @@
 //
 // WizardWelcomePage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ protected:
 	virtual BOOL OnSetActive();
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
-	
+
 };
 
 #endif // !defined(AFX_WIZARDWELCOMEPAGE_H__BCED7BDA_0D4D_4CF2_835A_55F0A6CF0AC8__INCLUDED_)

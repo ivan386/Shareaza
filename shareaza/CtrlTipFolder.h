@@ -1,7 +1,7 @@
 //
 // CtrlTipFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,9 +33,9 @@ class CFolderTipCtrl : public CCoolTipCtrl
 public:
 	CFolderTipCtrl();
 	virtual ~CFolderTipCtrl();
-	
+
 	DECLARE_DYNAMIC(CFolderTipCtrl)
-	
+
 // Attributes
 protected:
 	CString		m_sName;
@@ -43,23 +43,23 @@ protected:
 	CString		m_sFiles;
 	CString		m_sVolume;
 	CString		m_sPercentage;
-	
+
 // Operations
 public:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnPaint(CDC* pDC);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CFolderTipCtrl)
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CFolderTipCtrl)
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
 };
 

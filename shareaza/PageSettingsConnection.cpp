@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,10 +95,10 @@ void CConnectionSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CConnectionSettingsPage message handlers
 
-BOOL CConnectionSettingsPage::OnInitDialog() 
+BOOL CConnectionSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	CString strAutomatic = GetInOutHostTranslation();
 	CComboBox* pOutHost = (CComboBox*) GetDlgItem( IDC_OUTBOUND_HOST );
 
@@ -126,7 +126,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	m_wndTimeoutHandshake.SetRange( 1, 480 );
 
 	UpdateData( FALSE );
-	
+
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
 
 	return TRUE;
@@ -142,7 +142,7 @@ DWORD CConnectionSettingsPage::ParseSpeed(LPCTSTR psz)
 	return (DWORD)Settings.ParseVolume( psz, TRUE ) / 1024;
 }
 
-void CConnectionSettingsPage::OnEditChangeInboundHost() 
+void CConnectionSettingsPage::OnEditChangeInboundHost()
 {
 	CString strAutomatic = GetInOutHostTranslation();
 
@@ -151,12 +151,12 @@ void CConnectionSettingsPage::OnEditChangeInboundHost()
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic );
 }
 
-void CConnectionSettingsPage::OnCloseUpInboundHost() 
+void CConnectionSettingsPage::OnCloseUpInboundHost()
 {
 	m_wndInBind.EnableWindow( m_wndInHost.GetCurSel() != 0 );
 }
 
-void CConnectionSettingsPage::OnChangeInboundPort() 
+void CConnectionSettingsPage::OnChangeInboundPort()
 {
 	UpdateData();
 	BOOL bRandom = m_nInPort == 0;
@@ -168,10 +168,10 @@ void CConnectionSettingsPage::OnChangeInboundPort()
 	}
 }
 
-void CConnectionSettingsPage::OnInboundRandom() 
+void CConnectionSettingsPage::OnInboundRandom()
 {
 	UpdateData();
-	
+
 	if ( m_bInRandom && m_nInPort != 0 )
 	{
 		m_nInPort = 0;
@@ -182,7 +182,7 @@ void CConnectionSettingsPage::OnInboundRandom()
 BOOL CConnectionSettingsPage::OnKillActive()
 {
 	UpdateData();
-	
+
 	if ( ParseSpeed( m_sInSpeed ) == 0 )
 	{
 		CString strMessage;
@@ -191,7 +191,7 @@ BOOL CConnectionSettingsPage::OnKillActive()
 		m_wndInSpeed.SetFocus();
 		return FALSE;
 	}
-	
+
 	if ( ParseSpeed( m_sOutSpeed ) == 0 )
 	{
 		CString strMessage;
@@ -200,21 +200,21 @@ BOOL CConnectionSettingsPage::OnKillActive()
 		m_wndOutSpeed.SetFocus();
 		return FALSE;
 	}
-	
+
 	return CSettingsPage::OnKillActive();
 }
 
-void CConnectionSettingsPage::OnOK() 
+void CConnectionSettingsPage::OnOK()
 {
 	UpdateData();
-	
+
 	CString strAutomatic = GetInOutHostTranslation();
 
-	if ( m_sInHost.CompareNoCase( strAutomatic ) == 0 ) 
+	if ( m_sInHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sInHost.Empty();
-	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 ) 
+	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sOutHost.Empty();
-	
+
 	Settings.Connection.Firewalled			= ! m_bCanAccept;
 	Settings.Connection.InHost				= m_sInHost;
 	Settings.Connection.InPort				= m_nInPort;
@@ -230,7 +230,7 @@ void CConnectionSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
-CString CConnectionSettingsPage::GetInOutHostTranslation() 
+CString CConnectionSettingsPage::GetInOutHostTranslation()
 {
 	CString strAutomatic, strInCombo, strOutCombo, strNew;
 
@@ -253,7 +253,7 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Update speed units
 		m_sOutSpeed	= FormatSpeed( Settings.Connection.OutSpeed );
 		m_sInSpeed	= FormatSpeed( Settings.Connection.InSpeed );
-		
+
 		// Dropdown
 		m_wndInSpeed.ResetContent();
 		m_wndOutSpeed.ResetContent();

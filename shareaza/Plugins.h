@@ -1,7 +1,7 @@
 //
 // Plugins.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CPlugin;
 class CChildWnd;
 
 
-class CPlugins  
+class CPlugins
 {
 // Construction
 public:
 	CPlugins();
 	virtual ~CPlugins();
-	
+
 // Attributes
 public:
 	CPtrList	m_pList;
@@ -81,7 +81,7 @@ class CPlugin
 public:
 	CPlugin(REFCLSID pCLSID, LPCTSTR pszName);
 	virtual ~CPlugin();
-	
+
 // Attributes
 public:
 	CLSID		m_pCLSID;
@@ -92,7 +92,7 @@ public:
 	IGeneralPlugin*	m_pPlugin;
 	ICommandPlugin*	m_pCommand;
 	IExecutePlugin*	m_pExecute;
-	
+
 // Operations
 public:
 	BOOL		Start();

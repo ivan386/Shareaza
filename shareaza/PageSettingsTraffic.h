@@ -1,7 +1,7 @@
 //
 // PageSettingsTraffic.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,14 +42,14 @@ public:
 public:
 	void	AddSetting(LPVOID pValue, DWORD nScale = 1, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR pszSuffix = NULL);
 	void	UpdateItem(int nItem);
-	
+
 	class EditItem
 	{
 	// Construction
 	public:
 		EditItem(CSettings::Item* pItem, DWORD nScale = 1, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR pszSuffix = NULL);
 		virtual ~EditItem();
-	
+
 	// Attributes
 	public:
 		CSettings::Item* m_pItem;
@@ -60,13 +60,13 @@ public:
 		DWORD		m_nMax;
 		CString		m_sSuffix;
 		DWORD		m_nValue;
-		
+
 	// Operations
 	public:
 		void		Commit();
 
 	};
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CAdvancedSettingsPage)

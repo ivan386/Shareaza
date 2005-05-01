@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,7 @@ class CDatagrams
 public:
 	CDatagrams();
 	virtual ~CDatagrams();
-	
+
 // Attributes
 protected:
 	SOCKET		m_hSocket;
@@ -102,7 +102,7 @@ public:
 	DWORD				m_nOutBandwidth;
 	DWORD				m_nOutFrags;
 	DWORD				m_nOutPackets;
-	
+
 // Operations
 public:
 	BOOL	Listen();
@@ -137,7 +137,7 @@ protected:
 	BOOL	OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	
+
 };
 
 extern CDatagrams Datagrams;

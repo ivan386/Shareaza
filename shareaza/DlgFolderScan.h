@@ -1,7 +1,7 @@
 //
 // DlgFolderScan.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,7 +42,7 @@ public:
 	CStatic	m_wndFiles;
 	CStatic	m_wndFile;
 	//}}AFX_DATA
-	
+
 // Operations
 public:
 	static void Update(LPCTSTR pszName, DWORD nVolume);//, BOOL bLock);
@@ -56,7 +56,7 @@ protected:
 	DWORD	m_nVolume;
 	DWORD	m_tLastUpdate;
 	BOOL	m_bActive;
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CFolderScanDlg)

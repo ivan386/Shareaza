@@ -1,7 +1,7 @@
 //
 // PageProfileCertificate.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,7 +59,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGuidCreate();
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
 
 };

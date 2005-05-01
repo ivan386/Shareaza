@@ -1,7 +1,7 @@
 //
 // PageProfileIdentity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,17 +77,17 @@ void CIdentityProfilePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CIdentityProfilePage message handlers
 
-BOOL CIdentityProfilePage::OnInitDialog() 
+BOOL CIdentityProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	if ( CXMLElement* pIdentity = MyProfile.GetXML( _T("identity") ) )
 	{
 		if ( CXMLElement* pHandle = pIdentity->GetElementByName( _T("handle") ) )
 		{
 			m_sNick = pHandle->GetAttributeValue( _T("primary") );
 		}
-		
+
 		if ( CXMLElement* pName = pIdentity->GetElementByName( _T("name") ) )
 		{
 			m_sFirst	= pName->GetAttributeValue( _T("first") );
@@ -104,7 +104,7 @@ BOOL CIdentityProfilePage::OnInitDialog()
 
 		m_sGender = pVitals->GetAttributeValue( _T("gender") );
 
-		if ( m_sGender.GetLength() ) 
+		if ( m_sGender.GetLength() )
 		{
 			CComboBox* pGender = (CComboBox*) GetDlgItem( IDC_PROFILE_GENDER );
 			if ( m_sGender.CompareNoCase( _T("male") ) == 0 )
@@ -120,7 +120,7 @@ BOOL CIdentityProfilePage::OnInitDialog()
 			else
 				m_sGender.Empty();
 		}
-		else 
+		else
 			m_sGender.Empty();
 
 		int nAge = 0;
@@ -137,20 +137,20 @@ BOOL CIdentityProfilePage::OnInitDialog()
 		str.Format( _T("%i"), nAge );
 		m_wndAge.AddString( str );
 	}
-	
+
 	m_bBrowseUser = Settings.Community.ServeProfile;
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
 void CIdentityProfilePage::OnOK()
 {
 	UpdateData();
-	
+
 	Settings.Community.ServeProfile = m_bBrowseUser;
-	
+
 	if ( CXMLElement* pIdentity = MyProfile.GetXML( _T("identity"), TRUE ) )
 	{
 		if ( CXMLElement* pHandle = pIdentity->GetElementByName( _T("handle"), TRUE ) )
@@ -158,7 +158,7 @@ void CIdentityProfilePage::OnOK()
 			pHandle->AddAttribute( _T("primary"), m_sNick );
 			if ( m_sNick.IsEmpty() ) pHandle->Delete();
 		}
-		
+
 		if ( CXMLElement* pName = pIdentity->GetElementByName( _T("name"), TRUE ) )
 		{
 			pName->AddAttribute( _T("first"), m_sFirst );
@@ -168,7 +168,7 @@ void CIdentityProfilePage::OnOK()
 
 		if ( pIdentity->GetElementCount() == 0 ) pIdentity->Delete();
 	}
-	
+
 	if ( CXMLElement* pVitals = MyProfile.GetXML( _T("vitals"), TRUE ) )
 	{
 		int nAge = 0;
@@ -192,7 +192,7 @@ void CIdentityProfilePage::OnOK()
 			pVitals->AddAttribute( _T("age"), m_sAge );
 		else
 			pVitals->DeleteAttribute( _T("age") );
-		
+
 		if ( pVitals->GetElementCount() == 0 &&
 			 pVitals->GetAttributeCount() == 0 ) pVitals->Delete();
 	}
@@ -200,7 +200,7 @@ void CIdentityProfilePage::OnOK()
 
 void CIdentityProfilePage::GetGenderTranslations(CString& pMale, CString& pFemale)
 {
-	// Using data from CBrowseHostProfile.1 translation since the control in the dialog 
+	// Using data from CBrowseHostProfile.1 translation since the control in the dialog
 	// may change its order and it does not have its identifier.
 
 	BOOL bCollected = FALSE;

@@ -1,7 +1,7 @@
 //
 // GraphLine.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,7 +29,7 @@
 class CGraphItem;
 
 
-class CLineGraph : public CGraphBase  
+class CLineGraph : public CGraphBase
 {
 // Construction
 public:
@@ -53,7 +53,7 @@ public:
 protected:
 	CPtrList	m_pItems;
 	CPen		m_pGridPen;
-	
+
 // Operations
 public:
 	void		AddItem(CGraphItem* pItem);
@@ -72,7 +72,7 @@ public:
 protected:
 	void	PaintGrid(CDC* pDC, CRect* pRect);
 	void	PaintLegend(CDC* pDC, CRect* pRect);
-	
+
 };
 
 #endif // !defined(AFX_GRAPHLINE_H__90D244AB_D902_42D6_BD55_E8F34845EB1A__INCLUDED_)

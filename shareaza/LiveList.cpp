@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,7 @@ void CLiveList::Apply(CListCtrl* pCtrl, BOOL bSort)
 
 		pItem->Add( pCtrl, nCount++, m_nColumns );
 		bModified = TRUE;
-		
+
 		delete pItem;
 	}
 
@@ -304,20 +304,20 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 #endif
 
 	if ( nColumn ) pCtrl->SendMessage( LVM_SORTITEMS, (WPARAM)pCtrl, (LPARAM)SortCallback );
-	
+
 	if ( bWaiting ) theApp.EndWaitCursor();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLiveList sort callback
-	
+
 int CALLBACK CLiveList::SortCallback(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	CListCtrl* pList	= (CListCtrl*)lParamSort;
 	int nColumn			= (int)GetWindowLong( pList->GetSafeHwnd(), GWL_USERDATA );
 	LV_FINDINFO pFind;
 	int nA, nB;
-	
+
 	pFind.flags		= LVFI_PARAM;
 	pFind.lParam	= lParam1;
 	nA = pList->FindItem( &pFind );
@@ -340,27 +340,27 @@ int CLiveList::SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric)
 	if ( bNumeric || ( IsNumber( sA ) && IsNumber( sB ) ) )
 	{
 		double nA = 0, nB = 0;
-		
+
 		if ( *sA == '(' || *sA == 'Q' )
 			_stscanf( sA+1, _T("%lf"), &nA );
 		else
 			_stscanf( sA, _T("%lf (%lf)"), &nA, &nA );
-		
+
 		if ( *sB == '(' || *sB == 'Q' )
 			_stscanf( sB+1, _T("%lf"), &nB );
 		else
 			_stscanf( sB, _T("%lf (%lf)"), &nB, &nB );
-		
+
 		if ( _tcsstr( sA, _T(" K") ) ) nA *= 1024;
 		if ( _tcsstr( sA, _T(" M") ) ) nA *= 1024*1024;
 		if ( _tcsstr( sA, _T(" G") ) ) nA *= 1024*1024*1024;
 		if ( _tcsstr( sA, _T(" T") ) ) nA *= 1099511627776.0f;
-		
+
 		if ( _tcsstr( sB, _T(" K") ) ) nB *= 1024;
 		if ( _tcsstr( sB, _T(" M") ) ) nB *= 1024*1024;
 		if ( _tcsstr( sB, _T(" G") ) ) nB *= 1024*1024*1024;
 		if ( _tcsstr( sB, _T(" T") ) ) nB *= 1099511627776.0f;
-		
+
 		if ( nA < nB )
 			return -1;
 		else if ( nA > nB )
@@ -377,14 +377,14 @@ int CLiveList::SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric)
 BOOL CLiveList::IsNumber(LPCTSTR pszString)
 {
 	if ( ! *pszString ) return FALSE;
-	
+
 	// TODO: Is this the best way to do this?
 	if ( *pszString == '(' && _tcsstr( pszString, _T(" source") ) != NULL ) return TRUE;
 	if ( *pszString == 'Q' && _istdigit( pszString[1] ) ) return TRUE;
-	
+
 	BOOL bSpace = FALSE;
 	int nNonDigit = 0;
-	
+
 	for ( ; *pszString ; pszString++ )
 	{
 		if ( _istdigit( *pszString ) || *pszString == '.' )
@@ -410,7 +410,7 @@ BOOL CLiveList::IsNumber(LPCTSTR pszString)
 			if ( ++nNonDigit > 4 ) return FALSE;
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -435,7 +435,7 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	for ( nIndex = -1 ; ( nIndex = pList->GetNextItem( nIndex, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		pList->GetItemRect( nIndex, rcOne, LVIR_BOUNDS );
-		
+
 		if ( rcOne.IntersectRect( &rcClient, &rcOne ) )
 		{
 			rcAll.left		= min( rcAll.left, rcOne.left );
@@ -460,7 +460,7 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	CClientDC dcClient( pList );
 	CBitmap bmAll, bmDrag;
 	CDC dcAll, dcDrag;
-			
+
 	if ( ! dcAll.CreateCompatibleDC( &dcClient ) )
 		return NULL;
 	if ( ! bmAll.CreateCompatibleBitmap( &dcClient, rcClient.Width(), rcClient.Height() ) )
@@ -474,7 +474,7 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	CBitmap *pOldAll = dcAll.SelectObject( &bmAll );
 
 	dcAll.FillSolidRect( &rcClient, crDrag );
-	
+
 	COLORREF crBack = pList->GetBkColor();
 	pList->SetBkColor( crDrag );
 	pList->SendMessage( WM_PAINT, (WPARAM)dcAll.GetSafeHdc() );
@@ -483,9 +483,9 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
 	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), crDrag );
-	
+
 	CRgn pRgn;
-	
+
 	if ( bClipped )
 	{
 		CPoint ptMiddle( ptMouse.x - rcAll.left, ptMouse.y - rcAll.top );
@@ -493,32 +493,32 @@ CImageList* CLiveList::CreateDragImage(CListCtrl* pList, const CPoint& ptMouse)
 								ptMiddle.x + MAX_DRAG_SIZE_2, ptMiddle.y + MAX_DRAG_SIZE_2 );
 		dcDrag.SelectClipRgn( &pRgn );
 	}
-	
+
 	for ( nIndex = -1 ; ( nIndex = pList->GetNextItem( nIndex, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		pList->GetItemRect( nIndex, rcOne, LVIR_BOUNDS );
-		
+
 		if ( rcOne.IntersectRect( &rcAll, &rcOne ) )
 		{
 			dcDrag.BitBlt( rcOne.left - rcAll.left, rcOne.top - rcAll.top,
 				rcOne.Width(), rcOne.Height(), &dcAll, rcOne.left, rcOne.top, SRCCOPY );
 		}
 	}
-	
+
 	dcDrag.SelectObject( pOldDrag );
 	dcAll.SelectObject( pOldAll );
-	
+
 	dcDrag.DeleteDC();
 	bmAll.DeleteObject();
 	dcAll.DeleteDC();
-	
+
 	CImageList* pAll = new CImageList();
 	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, crDrag ); 
-	
+	pAll->Add( &bmDrag, crDrag );
+
 	bmDrag.DeleteObject();
-	
+
 	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
-	
+
 	return pAll;
 }

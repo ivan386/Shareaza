@@ -1,7 +1,7 @@
 //
 // PageSettingsMedia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,13 +78,13 @@ void CMediaSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaSettingsPage message handlers
 
-BOOL CMediaSettingsPage::OnInitDialog() 
+BOOL CMediaSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bEnablePlay		= Settings.MediaPlayer.EnablePlay;
 	m_bEnableEnqueue	= Settings.MediaPlayer.EnableEnqueue;
-	
+
 	for ( CString strList = Settings.MediaPlayer.FileTypes + '|' ; strList.GetLength() ; )
 	{
 		CString strType = strList.SpanExcluding( _T(" |") );
@@ -99,11 +99,11 @@ BOOL CMediaSettingsPage::OnInitDialog()
 	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
 	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
 	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
-	
+
 	return TRUE;
 }
 
-void CMediaSettingsPage::OnMediaPlay() 
+void CMediaSettingsPage::OnMediaPlay()
 {
 	UpdateData();
 	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
@@ -111,7 +111,7 @@ void CMediaSettingsPage::OnMediaPlay()
 	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
 }
 
-void CMediaSettingsPage::OnMediaEnqueue() 
+void CMediaSettingsPage::OnMediaEnqueue()
 {
 	UpdateData();
 	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
@@ -119,17 +119,17 @@ void CMediaSettingsPage::OnMediaEnqueue()
 	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
 }
 
-void CMediaSettingsPage::OnSelChangeMediaTypes() 
+void CMediaSettingsPage::OnSelChangeMediaTypes()
 {
 	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
 }
 
-void CMediaSettingsPage::OnEditChangeMediaTypes() 
+void CMediaSettingsPage::OnEditChangeMediaTypes()
 {
 	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
 }
 
-void CMediaSettingsPage::OnMediaAdd() 
+void CMediaSettingsPage::OnMediaAdd()
 {
 	UpdateData();
 
@@ -146,26 +146,26 @@ void CMediaSettingsPage::OnMediaAdd()
 	UpdateData( FALSE );
 }
 
-void CMediaSettingsPage::OnMediaRemove() 
+void CMediaSettingsPage::OnMediaRemove()
 {
 	int nItem = m_wndList.GetCurSel();
 	if ( nItem >= 0 ) m_wndList.DeleteString( nItem );
 	m_wndRemove.EnableWindow( FALSE );
 }
 
-void CMediaSettingsPage::OnMediaVis() 
+void CMediaSettingsPage::OnMediaVis()
 {
 	CMediaVisDlg dlg( NULL );
 	dlg.DoModal();
 }
 
-void CMediaSettingsPage::OnOK() 
+void CMediaSettingsPage::OnOK()
 {
 	UpdateData();
 
 	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay;
 	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue;
-	
+
 	Settings.MediaPlayer.FileTypes.Empty();
 
 	for ( int nItem = 0 ; nItem < m_wndList.GetCount() ; nItem++ )

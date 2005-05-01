@@ -1,7 +1,7 @@
 //
 // SchemaChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ BOOL CSchemaChild::Load(CXMLElement* pXML)
 		m_nType = CSchema::stFile;
 	else
 		return FALSE;
-	
+
 	for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pElement = pXML->GetNextElement( pos );
@@ -72,7 +72,7 @@ BOOL CSchemaChild::Load(CXMLElement* pXML)
 				pElement->IsNamed( _T("shared") ) )
 		{
 			CSchemaChildMap* pMap = new CSchemaChildMap();
-			
+
 			if ( pMap->Load( pElement ) )
 			{
 				m_pMap.AddTail( pMap );
@@ -106,7 +106,7 @@ void CSchemaChild::Clear()
 BOOL CSchemaChild::MemberCopy(CXMLElement* pLocal, CXMLElement* pRemote, BOOL bToRemote, BOOL bAggressive)
 {
 	if ( ! pLocal || ! pRemote ) return FALSE;
-	
+
 	BOOL bChanged = FALSE;
 
 	for ( POSITION pos = m_pMap.GetHeadPosition() ; pos ; )
@@ -166,10 +166,10 @@ BOOL CSchemaChildMap::Load(CXMLElement* pXML)
 		m_bIdentity = FALSE;
 	else
 		return FALSE;
-	
+
 	m_sLocal	= pXML->GetAttributeValue( _T("local") );
 	m_sRemote	= pXML->GetAttributeValue( _T("remote") );
-	
+
 	if ( m_sLocal.IsEmpty() || m_sRemote.IsEmpty() ) return FALSE;
 
 	return TRUE;

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHomeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,9 +34,9 @@ class CLibraryHomeView : public CLibraryView
 public:
 	CLibraryHomeView();
 	virtual ~CLibraryHomeView();
-	
+
 	DECLARE_DYNCREATE(CLibraryHomeView)
-	
+
 // Attributes
 protected:
 	CLibraryTileView	m_wndTile;

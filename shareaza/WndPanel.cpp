@@ -1,7 +1,7 @@
 //
 // WndPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,13 +59,13 @@ END_MESSAGE_MAP()
 CPanelWnd::CPanelWnd(BOOL bTabMode, BOOL bGroupMode)
 {
 	m_bPanelMode = Settings.General.GUIMode != GUI_WINDOWED;
-	
+
 	if ( m_bPanelMode )
 	{
 		m_bTabMode |= bTabMode;
 		m_bGroupMode |= bGroupMode;
 	}
-	
+
 	m_bPanelClose = ( m_bPanelMode && ! m_bTabMode );
 }
 
@@ -76,14 +76,14 @@ CPanelWnd::~CPanelWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CPanelWnd message handlers
 
-int CPanelWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CPanelWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	return 0;
 }
 
-void CPanelWnd::OnSize(UINT nType, int cx, int cy) 
+void CPanelWnd::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_bPanelMode && ! m_pSkin && CCoolInterface::IsNewWindows() && ! IsIconic() )
 	{
@@ -97,7 +97,7 @@ void CPanelWnd::OnSize(UINT nType, int cx, int cy)
 	CChildWnd::OnSize( nType, cx, cy );
 }
 
-void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_bPanelMode && m_pSkin == NULL )
 	{
@@ -105,11 +105,11 @@ void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 		pSize->rgrc[0].top += CAPTION_HEIGHT;
 		return; // ( bCalcValidRects ) ? WVR_REDRAW|WVR_ALIGNTOP|WVR_ALIGNLEFT : 0;
 	}
-	
+
 	CChildWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CPanelWnd::OnNcHitTest(CPoint point) 
+UINT CPanelWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{
@@ -122,7 +122,7 @@ UINT CPanelWnd::OnNcHitTest(CPoint point)
 	return CChildWnd::OnNcHitTest( point );
 }
 
-void CPanelWnd::OnNcPaint() 
+void CPanelWnd::OnNcPaint()
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{
@@ -135,7 +135,7 @@ void CPanelWnd::OnNcPaint()
 	}
 }
 
-BOOL CPanelWnd::OnNcActivate(BOOL bActive) 
+BOOL CPanelWnd::OnNcActivate(BOOL bActive)
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{
@@ -143,7 +143,7 @@ BOOL CPanelWnd::OnNcActivate(BOOL bActive)
 		PaintCaption( dc );
 		return TRUE;
 	}
-	
+
 	return CChildWnd::OnNcActivate( bActive );
 }
 
@@ -182,27 +182,27 @@ void CPanelWnd::PaintCaption(CDC& dc)
 {
 	CString strCaption;
 	CRect rc, rcWnd;
-	
+
 	GetWindowRect( &rcWnd );
 	rc.SetRect( 0, 0, rcWnd.Width(), CAPTION_HEIGHT );
 	GetWindowText( strCaption );
-	
+
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, rc.Size() );
-	
+
 	if ( ! CoolInterface.DrawWatermark( pBuffer, &rc, &Skin.m_bmPanelMark, 0, 0 ) )
 	{
 		pBuffer->FillSolidRect( &rc, Skin.m_crPanelBack );
 	}
-	
+
 	int nIconY = rc.Height() / 2 - 8;
 	DrawIconEx( pBuffer->GetSafeHdc(), 4, nIconY,
 		GetIcon( FALSE ), 16, 16, 0, NULL, DI_NORMAL );
-	
+
 	CFont* pOldFont	= (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntCaption );
 	CSize szCaption	= pBuffer->GetTextExtent( strCaption );
-	
+
 	pBuffer->SetBkMode( TRANSPARENT );
-	
+
 	if ( Skin.m_crPanelBorder != CLR_NONE )
 	{
 		pBuffer->SetTextColor( Skin.m_crPanelBorder );
@@ -215,30 +215,30 @@ void CPanelWnd::PaintCaption(CDC& dc)
 		pBuffer->ExtTextOut( 8 + 16, rc.Height() / 2 - szCaption.cy / 2 - 1 + 1,
 			ETO_CLIPPED, &rc, strCaption, NULL );
 	}
-	
+
 	pBuffer->SetTextColor( Skin.m_crPanelText );
 	pBuffer->ExtTextOut( 8 + 16, rc.Height() / 2 - szCaption.cy / 2 - 1,
 		ETO_CLIPPED, &rc, strCaption, NULL );
-	
+
 	if ( m_bPanelClose )
 	{
 		pBuffer->SelectObject( &theApp.m_gdiFont );
 		CString strText	= _T("Close");
 		CSize szText	= pBuffer->GetTextExtent( strText );
-		
+
 		m_rcClose.SetRect( rc.right - szText.cx - 8, rc.top, rc.right, rc.bottom );
 		pBuffer->ExtTextOut( m_rcClose.left + 2,
 			( m_rcClose.top + m_rcClose.bottom ) / 2 - szText.cy / 2 - 1,
 			ETO_CLIPPED, &m_rcClose, strText, NULL );
 		m_rcClose.OffsetRect( rcWnd.left, rcWnd.top );
 	}
-	
+
 	pBuffer->SelectObject( pOldFont );
-	
+
 	dc.BitBlt( rc.left, rc.top, rc.Width(), rc.Height(), pBuffer, 0, 0, SRCCOPY );
 }
 
-BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( nHitTest == HTCAPTION && m_bGroupMode && m_pGroupParent )
 	{
@@ -249,18 +249,18 @@ BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	{
 		CPoint pt;
 		GetCursorPos( &pt );
-		
+
 		if ( m_rcClose.PtInRect( pt ) )
 		{
 			SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 			return TRUE;
 		}
 	}
-	
+
 	return CChildWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CPanelWnd::OnNcLButtonDown(UINT nHitTest, CPoint point) 
+void CPanelWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( nHitTest == HTCAPTION && m_bGroupMode && m_pGroupParent )
 	{
@@ -286,13 +286,13 @@ void CPanelWnd::PanelSizeLoop()
 	float nOffset = 10;
 	CPoint point;
 	CRect rcMDI;
-		
+
 	SendMessage( WM_ENTERSIZEMOVE );
 
 	GetParent()->GetWindowRect( &rcMDI );
 	GetParent()->SetCapture();
 	ClipCursor( &rcMDI );
-	
+
 	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
 	{
 		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );

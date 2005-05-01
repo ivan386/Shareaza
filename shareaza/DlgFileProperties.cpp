@@ -1,7 +1,7 @@
 //
 // DlgFileProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,16 +95,16 @@ void CFilePropertiesDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesDlg message handlers
 
-BOOL CFilePropertiesDlg::OnInitDialog() 
+BOOL CFilePropertiesDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CFilePropertiesDlg"), IDI_PROPERTIES );
 
 	CRect rc;
 	GetWindowRect( &rc );
 	m_nWidth = rc.Width();
-	
+
 	m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rc, this, IDC_METADATA );
 
 	Update();
@@ -118,7 +118,7 @@ BOOL CFilePropertiesDlg::OnInitDialog()
 	}
 
 	PostMessage( WM_TIMER, 1 );
-	
+
 	return TRUE;
 }
 
@@ -133,7 +133,7 @@ void CFilePropertiesDlg::Update()
 		PostMessage( WM_COMMAND, IDCANCEL );
 		return;
 	}
-	
+
 	m_sName = pFile->m_sName;
 	if ( pFile->IsAvailable() ) m_sPath = pFile->m_pFolder->m_sPath;
 	m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
@@ -163,7 +163,7 @@ void CFilePropertiesDlg::Update()
 	CString strExt = pFile->m_sName;
 	int nPeriod = strExt.ReverseFind( '.' );
 	if ( nPeriod > 0 ) strExt = strExt.Mid( nPeriod );
-	
+
 	CString strMIME, strText;
 	HICON hIcon;
 
@@ -175,9 +175,9 @@ void CFilePropertiesDlg::Update()
 	LoadString ( strText, IDS_SEARCH_NO_METADATA );
 	m_wndSchemas.m_sNoSchemaText = strText;
 	m_wndSchemas.Load( pFile->m_pSchema ? (LPCTSTR)pFile->m_pSchema->m_sURI : NULL );
-	
+
 	OnSelChangeSchemas();
-	
+
 	if ( pFile->m_pMetadata )
 	{
 		CXMLElement* pXML = pFile->m_pMetadata->Clone();
@@ -188,13 +188,13 @@ void CFilePropertiesDlg::Update()
 			pSHA1->Delete();
 
 		m_wndSchema.UpdateData( pXML, FALSE );
-		
+
 		delete pXML;
 	}
 
 }
 
-void CFilePropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
+void CFilePropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	CSkinDialog::OnGetMinMaxInfo( lpMMI );
 
@@ -206,10 +206,10 @@ void CFilePropertiesDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 	}
 }
 
-void CFilePropertiesDlg::OnSize(UINT nType, int cx, int cy) 
+void CFilePropertiesDlg::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CSkinDialog::OnSize( nType, cx, cy );
-	
+
 	if ( ! IsWindow( m_wndSchema.m_hWnd ) ) return;
 
 	CRect rc;
@@ -227,20 +227,20 @@ void CFilePropertiesDlg::OnSize(UINT nType, int cx, int cy)
 	m_wndCancel.SetWindowPos( NULL, rc.right + 8, cy - 32, 0, 0, SWP_NOZORDER|SWP_NOSIZE );
 }
 
-void CFilePropertiesDlg::OnTimer(UINT nIDEvent) 
+void CFilePropertiesDlg::OnTimer(UINT nIDEvent)
 {
 	CRect rc;
 	GetClientRect( &rc );
 	OnSize( 1982, rc.Width(), rc.Height() );
 }
 
-void CFilePropertiesDlg::OnSelChangeSchemas() 
+void CFilePropertiesDlg::OnSelChangeSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 	m_wndSchema.SetSchema( pSchema );
 }
 
-void CFilePropertiesDlg::OnCloseUpSchemas() 
+void CFilePropertiesDlg::OnCloseUpSchemas()
 {
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
 	{
@@ -248,17 +248,17 @@ void CFilePropertiesDlg::OnCloseUpSchemas()
 	}
 }
 
-BOOL CFilePropertiesDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CFilePropertiesDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		if ( m_wndSchema.OnTab() ) return TRUE;
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-void CFilePropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point) 
+void CFilePropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rc;
 
@@ -274,7 +274,7 @@ void CFilePropertiesDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	CSkinDialog::OnLButtonUp(nFlags, point);
 }
 
-void CFilePropertiesDlg::OnOK() 
+void CFilePropertiesDlg::OnOK()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -287,7 +287,7 @@ void CFilePropertiesDlg::OnOK()
 				CXMLElement* pSingular	= pXML->AddElement( pSchema->m_sSingular );
 
 				m_wndSchema.UpdateData( pSingular, TRUE );
-				
+
 				if ( CXMLAttribute* pSHA1 = pSingular->GetAttribute( _T("SHA1") ) )
 					pSHA1->Delete();
 
@@ -298,7 +298,7 @@ void CFilePropertiesDlg::OnOK()
 			{
 				pFile->SetMetadata( NULL );
 			}
-			
+
 			Library.Update();
 		}
 	}
@@ -306,9 +306,9 @@ void CFilePropertiesDlg::OnOK()
 	CSkinDialog::OnOK();
 }
 
-void CFilePropertiesDlg::OnDestroy() 
+void CFilePropertiesDlg::OnDestroy()
 {
-	Settings.SaveWindow( _T("CFilePropertiesDlg"), this );	
+	Settings.SaveWindow( _T("CFilePropertiesDlg"), this );
 	CSkinDialog::OnDestroy();
 }
 

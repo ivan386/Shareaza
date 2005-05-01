@@ -1,7 +1,7 @@
 //
 // ResultFilters.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,7 @@ CResultFilters::~CResultFilters(void)
 void CResultFilters::Serialize(CArchive & ar)
 {
 	int nVersion = 1;
-	
+
 	if (ar.IsStoring())
 	{
 		ar << nVersion;
@@ -64,7 +64,7 @@ void CResultFilters::Serialize(CArchive & ar)
 			CFilterOptions* pFilter = m_pFilters[ i ];
 			pFilter->Serialize( ar );
 		}
-		
+
 		ar << m_nDefault;
 	}
 	else

@@ -1,7 +1,7 @@
 //
 // PageFileSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,7 +73,7 @@ void CFileSourcesPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFileSourcesPage message handlers
 
-BOOL CFileSourcesPage::OnInitDialog() 
+BOOL CFileSourcesPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
 
@@ -82,7 +82,7 @@ BOOL CFileSourcesPage::OnInitDialog()
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
 	m_wndList.InsertColumn( 0, _T("URL"), LVCFMT_LEFT, rc.right - 128, -1 );
 	m_wndList.InsertColumn( 1, _T("Expires"), LVCFMT_RIGHT, 128, 0 );
-	
+
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_WEB_URL ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
@@ -104,14 +104,14 @@ BOOL CFileSourcesPage::OnInitDialog()
 	Skin.Translate( _T("CFileSourcesPageList"), m_wndList.GetHeaderCtrl() );
 	m_wndNew.EnableWindow( FALSE );
 	m_wndRemove.EnableWindow( FALSE );
-	
+
 	return TRUE;
 }
 
 void CFileSourcesPage::AddSource(CSharedSource* pSource)
 {
 	LV_ITEM pItem;
-	
+
 	ZeroMemory( &pItem, sizeof(pItem) );
 	pItem.mask		= LVIF_TEXT|LVIF_PARAM|LVIF_IMAGE;
 	pItem.pszText	= (LPTSTR)(LPCTSTR)pSource->m_sURL;
@@ -119,39 +119,39 @@ void CFileSourcesPage::AddSource(CSharedSource* pSource)
 	pItem.lParam	= (LPARAM)pSource;
 	pItem.iItem		= m_wndList.GetItemCount();
 	pItem.iItem		= m_wndList.InsertItem( &pItem );
-	
+
 	FILETIME pFileTime = pSource->m_pTime;
 	CString strDate, strTime;
 	SYSTEMTIME pSystemTime;
-	
+
 	(LONGLONG&)pFileTime += (LONGLONG)Settings.Library.SourceExpire * 10000000;
 	FileTimeToSystemTime( &pFileTime, &pSystemTime );
 	SystemTimeToTzSpecificLocalTime( NULL, &pSystemTime, &pSystemTime );
-	
+
 	GetDateFormat( LOCALE_USER_DEFAULT, 0, &pSystemTime, _T("yyyy-MM-dd"), strDate.GetBuffer( 64 ), 64 );
 	GetTimeFormat( LOCALE_USER_DEFAULT, 0, &pSystemTime, _T("HH:mm"), strTime.GetBuffer( 64 ), 64 );
 	strDate.ReleaseBuffer(); strTime.ReleaseBuffer();
-	
+
 	strDate += ' ';
 	strDate += strTime;
 
 	m_wndList.SetItemText( pItem.iItem, 1, strDate );
 }
 
-void CFileSourcesPage::OnItemChangedFileSources(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFileSourcesPage::OnItemChangedFileSources(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 	*pResult = 0;
 }
 
-void CFileSourcesPage::OnChangeFileSource() 
+void CFileSourcesPage::OnChangeFileSource()
 {
 	UpdateData();
 	m_wndNew.EnableWindow( m_sSource.Find( _T("http://") ) == 0 );
 }
 
-void CFileSourcesPage::OnSourceRemove() 
+void CFileSourcesPage::OnSourceRemove()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -161,13 +161,13 @@ void CFileSourcesPage::OnSourceRemove()
 		for ( int nItem ; ( nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) >= 0 ; )
 		{
 			CSharedSource* pSource = (CSharedSource*)m_wndList.GetItemData( nItem );
-			
+
 			if ( POSITION pos = pFile->m_pSources.Find( pSource ) )
 			{
 				delete pSource;
 				pFile->m_pSources.RemoveAt( pos );
 			}
-			
+
 			m_wndList.DeleteItem( nItem );
 		}
 		Library.Update();
@@ -176,7 +176,7 @@ void CFileSourcesPage::OnSourceRemove()
 	m_wndRemove.EnableWindow( FALSE );
 }
 
-void CFileSourcesPage::OnSourceNew() 
+void CFileSourcesPage::OnSourceNew()
 {
 	UpdateData();
 

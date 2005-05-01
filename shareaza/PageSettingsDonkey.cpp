@@ -1,7 +1,7 @@
 //
 // PageSettingsDonkey.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,41 +83,41 @@ void CDonkeySettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CDonkeySettingsPage message handlers
 
-BOOL CDonkeySettingsPage::OnInitDialog() 
+BOOL CDonkeySettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bEnableToday	= Settings.eDonkey.EnableToday;
 	m_bEnableAlways	= Settings.eDonkey.EnableAlways;
 	m_nLinks		= Settings.eDonkey.MaxLinks;
 	m_bServerWalk	= Settings.eDonkey.ServerWalk;
 	m_nResults		= Settings.eDonkey.MaxResults;
-	
+
 	UpdateData( FALSE );
-	
+
 	m_wndResults.EnableWindow( m_bServerWalk );
 	m_wndResultsSpin.SetRange( 0, 201 );
 	m_wndLinksSpin.SetRange( 0, 2048 );
-	
+
 	return TRUE;
 }
 
-BOOL CDonkeySettingsPage::OnSetActive() 
+BOOL CDonkeySettingsPage::OnSetActive()
 {
 	CNetworksSettingsPage* ppNetworks =
 		(CNetworksSettingsPage*)GetPage( RUNTIME_CLASS(CNetworksSettingsPage) );
-	
+
 	if ( ppNetworks->GetSafeHwnd() != NULL )
 	{
 		ppNetworks->UpdateData( TRUE );
 		m_bEnableToday = ppNetworks->m_bEDEnable;
 		UpdateData( FALSE );
 	}
-	
+
 	return CSettingsPage::OnSetActive();
 }
 
-void CDonkeySettingsPage::OnEnableToday() 
+void CDonkeySettingsPage::OnEnableToday()
 {
 	UpdateData( TRUE );
 
@@ -132,7 +132,7 @@ void CDonkeySettingsPage::OnEnableToday()
 
 	CNetworksSettingsPage* ppNetworks =
 		(CNetworksSettingsPage*)GetPage( RUNTIME_CLASS(CNetworksSettingsPage) );
-	
+
 	if ( ppNetworks->GetSafeHwnd() != NULL )
 	{
 		ppNetworks->UpdateData( TRUE );
@@ -141,55 +141,55 @@ void CDonkeySettingsPage::OnEnableToday()
 	}
 }
 
-void CDonkeySettingsPage::OnServerWalk() 
+void CDonkeySettingsPage::OnServerWalk()
 {
 	UpdateData();
 	m_wndResultsSpin.EnableWindow( m_bServerWalk );
 	m_wndResults.EnableWindow( m_bServerWalk );
 }
 
-void CDonkeySettingsPage::OnImportDownloads() 
+void CDonkeySettingsPage::OnImportDownloads()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
-	
+
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select your temp (download) folder:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
+
 	pPath = SHBrowseForFolder( &pBI );
-	
+
 	if ( pPath == NULL ) return;
-	
+
 	SHGetPathFromIDList( pPath, szPath );
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
-	
+
 	CDonkeyImportDlg dlg;
 	dlg.m_pImporter.AddFolder( szPath );
 	dlg.DoModal();
 }
 
-void CDonkeySettingsPage::OnDiscoveryGo() 
+void CDonkeySettingsPage::OnDiscoveryGo()
 {
 	CDonkeyServersDlg dlg;
 	dlg.DoModal();
 }
 
-void CDonkeySettingsPage::OnOK() 
+void CDonkeySettingsPage::OnOK()
 {
 	UpdateData();
-	
+
 	Settings.eDonkey.EnableAlways	= m_bEnableAlways && ( Settings.GetOutgoingBandwidth() >= 2 );
 	Settings.eDonkey.EnableToday	= ( m_bEnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.GetOutgoingBandwidth() >= 2 );
 	Settings.eDonkey.MaxLinks		= m_nLinks;
 	Settings.eDonkey.ServerWalk		= m_bServerWalk;
 	Settings.eDonkey.MaxResults		= m_nResults;
-	
+
 	CSettingsPage::OnOK();
 }

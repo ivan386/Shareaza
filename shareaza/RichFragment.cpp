@@ -1,7 +1,7 @@
 //
 // RichFragment.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,7 +66,7 @@ CRichFragment::~CRichFragment()
 void CRichFragment::Add(int nLength, CSize* pSize)
 {
 	ASSERT( m_pElement->m_nType >= retText );
-	
+
 	m_nLength	= nLength;
 	m_sz		= *pSize;
 }
@@ -79,7 +79,7 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 	BOOL bClean  =	pCtrl->m_pSelAbsEnd.nFragment < nFragment ||
 					pCtrl->m_pSelAbsStart.nFragment > nFragment;
 	BOOL bSelect =	FALSE;
-	
+
 	if ( ! bClean )
 	{
 		if ( pCtrl->m_pSelAbsStart.nFragment == pCtrl->m_pSelAbsEnd.nFragment &&
@@ -95,11 +95,11 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 			bSelect = TRUE;
 		}
 	}
-	
+
 	if ( m_pElement->m_nType >= retText )
 	{
 		LPCTSTR pszText = (LPCTSTR)m_pElement->m_sText + m_nOffset;
-		
+
 		if ( bClean )
 		{
 			pDC->ExtTextOut( m_pt.x, m_pt.y, ETO_OPAQUE, NULL, pszText, m_nLength, NULL );
@@ -115,24 +115,24 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 		{
 			int nCharStart = 0, nCharEnd = m_nLength;
 			int nX = m_pt.x;
-			
+
 			if ( pCtrl->m_pSelAbsStart.nFragment == nFragment )
 			{
 				nCharStart = pCtrl->m_pSelAbsStart.nOffset;
 			}
-			
+
 			if ( pCtrl->m_pSelAbsEnd.nFragment == nFragment )
 			{
 				nCharEnd = pCtrl->m_pSelAbsEnd.nOffset;
 			}
-			
+
 			if ( nCharStart > 0 )
 			{
 				pDC->ExtTextOut( nX, m_pt.y, ETO_OPAQUE, NULL, pszText, nCharStart, NULL );
 				nX += pDC->GetTextExtent( pszText, nCharStart ).cx;
 				pszText += nCharStart;
 			}
-			
+
 			if ( nCharStart < nCharEnd )
 			{
 				pDC->SetBkColor( pDC->SetTextColor( pDC->GetBkColor() ) );
@@ -141,7 +141,7 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 				nX += pDC->GetTextExtent( pszText, nCharEnd - nCharStart ).cx;
 				pszText += nCharEnd - nCharStart;
 			}
-			
+
 			if ( nCharEnd < m_nLength )
 			{
 				pDC->ExtTextOut( nX, m_pt.y, ETO_OPAQUE, NULL, pszText, m_nLength - nCharEnd, NULL );
@@ -151,67 +151,67 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 		{
 			pDC->ExtTextOut( m_pt.x, m_pt.y, ETO_OPAQUE, NULL, pszText, m_nLength, NULL );
 		}
-		
+
 		pDC->ExcludeClipRect( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 	}
 	else if ( m_pElement->m_nType == retBitmap && m_pElement->m_hImage )
 	{
 		CDC mdc;
 		mdc.CreateCompatibleDC( pDC );
-		
+
 		HBITMAP hOld = (HBITMAP)SelectObject( mdc.GetSafeHdc(),
 			(HBITMAP)m_pElement->m_hImage );
-		
+
 		pDC->BitBlt( m_pt.x, m_pt.y, m_sz.cx, m_sz.cy, &mdc, 0, 0, SRCCOPY );
-		
+
 		SelectObject( mdc.GetSafeHdc(), hOld );
 		mdc.DeleteDC();
-		
+
 		if ( bSelect )
 		{
 			CRect rc( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 			pDC->InvertRect( &rc );
 		}
-		
+
 		pDC->ExcludeClipRect( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 	}
 	else if ( m_pElement->m_nType == retIcon && m_pElement->m_hImage )
 	{
 		DrawIconEx( pDC->GetSafeHdc(), m_pt.x, m_pt.y, (HICON)m_pElement->m_hImage,
 			m_sz.cx, m_sz.cy, 0, (HBRUSH)pCtrl->m_pBrush.GetSafeHandle(), DI_NORMAL );
-		
+
 		if ( bSelect )
 		{
 			CRect rc( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 			pDC->InvertRect( &rc );
 		}
-		
+
 		pDC->ExcludeClipRect( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 	}
 	else if ( m_pElement->m_nType == retEmoticon )
 	{
 		Emoticons.Draw( pDC, (int)m_pElement->m_hImage, m_pt.x, m_pt.y,
 			pDC->GetBkColor() );
-		
+
 		if ( bSelect )
 		{
 			CRect rc( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 			pDC->InvertRect( &rc );
 		}
-		
+
 		pDC->ExcludeClipRect( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 	}
 	else if ( m_pElement->m_nType == retCmdIcon )
 	{
 		ImageList_DrawEx( CoolInterface.m_pImages, (int)m_pElement->m_hImage,
 			*pDC, m_pt.x, m_pt.y, 16, 16, pDC->GetBkColor(), CLR_NONE, ILD_NORMAL );
-		
+
 		if ( bSelect )
 		{
 			CRect rc( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 			pDC->InvertRect( &rc );
 		}
-		
+
 		pDC->ExcludeClipRect( m_pt.x, m_pt.y, m_pt.x + m_sz.cx, m_pt.y + m_sz.cy );
 	}
 }

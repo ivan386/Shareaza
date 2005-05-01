@@ -1,7 +1,7 @@
 //
 // DlgProfileManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,7 +83,7 @@ int CProfileManagerDlg::DoModal(LPCTSTR pszWindow)
 	CFavouritesProfilePage	pFavourites;
 	CFilesProfilePage		pFiles;
 	CCertificateProfilePage	pCertificate;
-	
+
 	AddGroup( &pIdentity );
 	AddPage( &pContact );
 	AddPage( &pProfile );
@@ -92,11 +92,11 @@ int CProfileManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddGroup( &pFavourites );
 	AddPage( &pFiles );
 	AddGroup( &pCertificate );
-	
+
 	if ( pszWindow ) SetActivePage( GetPage( pszWindow ) );
-	
+
 	int nReturn = CSettingsSheet::DoModal();
-	
+
 	return nReturn;
 }
 
@@ -124,32 +124,32 @@ void CProfileManagerDlg::AddGroup(CSettingsPage* pPage)
 /////////////////////////////////////////////////////////////////////////////
 // CProfileManagerDlg message handlers
 
-BOOL CProfileManagerDlg::OnInitDialog() 
+BOOL CProfileManagerDlg::OnInitDialog()
 {
 	CSettingsSheet::OnInitDialog();
-	
+
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
-	
+
 	SkinMe( NULL, IDR_MAINFRAME, TRUE );
-	
+
 	return TRUE;
 }
 
-void CProfileManagerDlg::DoPaint(CDC& dc) 
+void CProfileManagerDlg::DoPaint(CDC& dc)
 {
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	BITMAP pInfo;
 	m_bmHeader.GetBitmap( &pInfo );
-	
+
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
 	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
 	dc.BitBlt( 0, 0, pInfo.bmWidth, pInfo.bmHeight, &mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBitmap );
 	mdc.DeleteDC();
-	
+
 	CSettingsSheet::DoPaint( dc );
 }
 

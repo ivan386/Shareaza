@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,25 +55,25 @@ CPlugins::~CPlugins()
 void CPlugins::Enumerate()
 {
 	HKEY hKey;
-	
+
 	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE,
 		_T("Software\\Shareaza\\Shareaza\\Plugins\\General"),
 		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
-	
+
 	for ( DWORD nKey = 0 ; ; nKey++ )
 	{
 		TCHAR szName[128], szCLSID[64];
 		DWORD dwType, dwName = 128, dwCLSID = 64 * sizeof(TCHAR);
-		
+
 		if ( RegEnumValue( hKey, nKey, szName, &dwName, NULL, &dwType, (LPBYTE)szCLSID, &dwCLSID )
 			 != ERROR_SUCCESS ) break;
-		
+
 		if ( dwType != REG_SZ ) continue;
 		szCLSID[ 38 ] = 0;
-		
+
 		CLSID pCLSID;
 		if ( ! GUIDX::Decode( szCLSID, &pCLSID ) ) continue;
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			if ( GetNext( pos )->m_pCLSID == pCLSID )
@@ -82,15 +82,15 @@ void CPlugins::Enumerate()
 				break;
 			}
 		}
-		
+
 		if ( pCLSID == GUID_NULL ) continue;
-		
+
 		CPlugin* pPlugin = new CPlugin( pCLSID, szName );
 		m_pList.AddTail( pPlugin );
-		
+
 		pPlugin->StartIfEnabled();
 	}
-	
+
 	RegCloseKey( hKey );
 }
 
@@ -103,7 +103,7 @@ void CPlugins::Clear()
 	{
 		delete GetNext( pos );
 	}
-	
+
 	m_pList.RemoveAll();
 }
 
@@ -116,9 +116,9 @@ BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL
 	TCHAR szCLSID[64];
 	CString strKey;
 	HKEY hKey;
-	
+
 	strKey.Format( _T("Software\\Shareaza\\Shareaza\\Plugins\\%s"), pszGroup );
-	
+
 	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, strKey,
 		NULL, KEY_READ, &hKey ) == ERROR_SUCCESS )
 	{
@@ -127,16 +127,16 @@ BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL
 		if ( ERROR_SUCCESS != RegQueryValueEx( hKey, pszKey, NULL, &dwType,
 			(LPBYTE)szCLSID, &dwCLSID ) ) dwType = 0;
 		RegCloseKey( hKey );
-		
+
 		if ( dwType == REG_SZ )
 		{
 			szCLSID[ 38 ] = 0;
-			
+
 			return	GUIDX::Decode( szCLSID, &pCLSID ) &&
 					LookupEnable( pCLSID, bEnableDefault );
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -154,7 +154,7 @@ void CPlugins::OnSkinChanged()
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
-		
+
 		if ( pPlugin->m_pCommand ) pPlugin->m_pCommand->InsertCommands();
 		if ( pPlugin->m_pPlugin ) pPlugin->m_pPlugin->OnSkinChanged();
 	}
@@ -166,7 +166,7 @@ void CPlugins::OnSkinChanged()
 void CPlugins::RegisterCommands()
 {
 	m_nCommandID = ID_PLUGIN_FIRST;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
@@ -188,13 +188,13 @@ BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 	STRISTATE bVisible	= TSTRUE;
 	STRISTATE bEnabled	= TSTRUE;
 	STRISTATE bChecked	= TSUNKNOWN;
-	
+
 	CCoolBarItem* pCoolUI = CCoolBarItem::FromCmdUI( pCmdUI );
-	
+
 	if ( pActiveWnd != NULL && pActiveWnd->IsKindOf( RUNTIME_CLASS(CPluginWnd) ) )
 	{
 		CPluginWnd* pPluginWnd = (CPluginWnd*)pActiveWnd;
-		
+
 		if ( pPluginWnd->m_pOwner )
 		{
 			if ( pPluginWnd->m_pOwner->OnUpdate( nCommandID, &bVisible, &bEnabled, &bChecked ) == S_OK )
@@ -205,16 +205,16 @@ BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 					pCmdUI->Enable( bEnabled == TSTRUE );
 				if ( bChecked != TSUNKNOWN )
 					pCmdUI->SetCheck( bChecked == TSTRUE );
-				
+
 				return TRUE;
 			}
 		}
 	}
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
-		
+
 		if ( pPlugin->m_pCommand )
 		{
 			if ( pPlugin->m_pCommand->OnUpdate( nCommandID, &bVisible, &bEnabled, &bChecked ) == S_OK )
@@ -225,12 +225,12 @@ BOOL CPlugins::OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI)
 					pCmdUI->Enable( bEnabled == TSTRUE );
 				if ( bChecked != TSUNKNOWN )
 					pCmdUI->SetCheck( bChecked == TSTRUE );
-				
+
 				return TRUE;
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -239,13 +239,13 @@ BOOL CPlugins::OnCommand(CChildWnd* pActiveWnd, UINT nCommandID)
 	if ( pActiveWnd != NULL && pActiveWnd->IsKindOf( RUNTIME_CLASS(CPluginWnd) ) )
 	{
 		CPluginWnd* pPluginWnd = (CPluginWnd*)pActiveWnd;
-		
+
 		if ( pPluginWnd->m_pOwner )
 		{
 			if ( pPluginWnd->m_pOwner->OnCommand( nCommandID ) == S_OK ) return TRUE;
 		}
 	}
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
@@ -255,7 +255,7 @@ BOOL CPlugins::OnCommand(CChildWnd* pActiveWnd, UINT nCommandID)
 			if ( pPlugin->m_pCommand->OnCommand( nCommandID ) == S_OK ) return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -266,18 +266,18 @@ BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile)
 {
 	COleVariant vFile( pszFile );
 	vFile.ChangeType( VT_BSTR );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
-		
+
 		if ( pPlugin->m_pExecute )
 		{
 			if ( pPlugin->m_pExecute->OnExecute( vFile.bstrVal ) == S_OK )
 				return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -285,18 +285,18 @@ BOOL CPlugins::OnEnqueueFile(LPCTSTR pszFile)
 {
 	COleVariant vFile( pszFile );
 	vFile.ChangeType( VT_BSTR );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
-		
+
 		if ( pPlugin->m_pExecute )
 		{
 			if ( pPlugin->m_pExecute->OnEnqueue( vFile.bstrVal ) == S_OK )
 				return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -309,7 +309,7 @@ CPlugin::CPlugin(REFCLSID pCLSID, LPCTSTR pszName)
 	m_pCLSID	= pCLSID;
 	m_sName		= pszName;
 	m_hIcon		= LookupIcon();
-	
+
 	m_pPlugin	= NULL;
 	m_pCommand	= NULL;
 	m_pExecute	= NULL;
@@ -327,26 +327,26 @@ CPlugin::~CPlugin()
 BOOL CPlugin::Start()
 {
 	if ( m_pPlugin != NULL ) return FALSE;
-	
+
 	HRESULT hResult = CoCreateInstance( m_pCLSID, NULL, CLSCTX_INPROC_SERVER,
 		IID_IGeneralPlugin, (void**)&m_pPlugin );
-	
+
 	if ( FAILED( hResult ) || m_pPlugin == NULL )
 	{
 		m_pPlugin = NULL;
 		return FALSE;
 	}
-	
+
 	m_pPlugin->SetApplication(
 		(IApplication*)Application.GetInterface( IID_IApplication, FALSE ) );
-	
+
 	m_nCapabilities = 0;
 	m_pPlugin->QueryCapabilities( &m_nCapabilities );
-	
+
 	m_pPlugin->QueryInterface( IID_ICommandPlugin, (void**)&m_pCommand );
-	
+
 	m_pPlugin->QueryInterface( IID_IExecutePlugin, (void**)&m_pExecute );
-	
+
 	return TRUE;
 }
 
@@ -357,13 +357,13 @@ void CPlugin::Stop()
 		m_pExecute->Release();
 		m_pExecute = NULL;
 	}
-	
+
 	if ( m_pCommand != NULL )
 	{
 		m_pCommand->Release();
 		m_pCommand = NULL;
 	}
-	
+
 	if ( m_pPlugin != NULL )
 	{
 		m_pPlugin->Release();
@@ -394,19 +394,19 @@ HICON CPlugin::LookupIcon()
 {
 	CString strName;
 	HKEY hKey;
-	
+
 	strName.Format( _T("CLSID\\%s\\InprocServer32"), (LPCTSTR)GetStringCLSID() );
-	
+
 	if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, strName, 0, KEY_QUERY_VALUE, &hKey ) )
 		return NULL;
-	
+
 	DWORD dwType = REG_SZ, dwSize = 256 * sizeof(TCHAR);
 	LONG lResult = RegQueryValueEx( hKey, _T(""), NULL, &dwType, (LPBYTE)strName.GetBuffer( 256 ), &dwSize );
 	strName.ReleaseBuffer( dwSize / sizeof(TCHAR) );
 	RegCloseKey( hKey );
-	
+
 	if ( lResult != ERROR_SUCCESS ) return NULL;
-	
+
 	HICON hIcon = NULL;
 	ExtractIconEx( strName, 0, NULL, &hIcon, 1 );
 	return hIcon;

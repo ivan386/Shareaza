@@ -1,7 +1,7 @@
 //
 // DlgSkinDialog.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,17 +78,17 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	BOOL bSuccess = FALSE;
 	CString strSkin;
 	CRect rc;
-	
+
 	GetClientRect( &rc );
-	
+
 	if ( pszSkin == NULL )
 		strSkin = GetRuntimeClass()->m_lpszClassName;
 	else
 		strSkin = pszSkin;
-	
+
 	m_pSkin = ::Skin.GetWindowSkin( strSkin );
 	if ( NULL == m_pSkin ) m_pSkin = ::Skin.GetWindowSkin( this );
-	
+
 	if ( bLanguage )
 	{
 		bSuccess = ::Skin.Apply( strSkin, this, nIcon );
@@ -96,35 +96,35 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	else if ( nIcon )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( nIcon );
-		
+
 		if ( ! hIcon ) hIcon = (HICON)LoadImage( AfxGetInstanceHandle(),
 			MAKEINTRESOURCE( nIcon ), IMAGE_ICON, 16, 16, 0 );
-		
+
 		if ( hIcon ) SetIcon( hIcon, FALSE );
 	}
-	
+
 	if ( m_pSkin != NULL )
 	{
 		if ( GetStyle() & WS_CAPTION ) ModifyStyle( WS_CAPTION, 0 );
-		
+
 		m_pSkin->CalcWindowRect( &rc );
-		
+
 		SetWindowRgn( NULL, FALSE );
 		SetWindowPos( NULL, 0, 0, rc.Width(), rc.Height(),
 			SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE|SWP_FRAMECHANGED );
-		
+
 		m_pSkin->OnSize( this );
 	}
 	else
 	{
 		if ( ( GetStyle() & WS_CAPTION ) == 0 ) ModifyStyle( 0, WS_CAPTION );
-		
+
 		CalcWindowRect( &rc );
 		SetWindowRgn( NULL, FALSE );
 		SetWindowPos( NULL, 0, 0, rc.Width(), rc.Height(),
 			SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE|SWP_FRAMECHANGED );
 	}
-	
+
 	return bSuccess || m_pSkin != NULL;
 }
 
@@ -136,7 +136,7 @@ BOOL CSkinDialog::SelectCaption(CWnd* pWnd, int nIndex)
 /////////////////////////////////////////////////////////////////////////////
 // CSkinDialog message handlers
 
-void CSkinDialog::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CSkinDialog::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
@@ -144,7 +144,7 @@ void CSkinDialog::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpnc
 		CDialog::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-UINT CSkinDialog::OnNcHitTest(CPoint point) 
+UINT CSkinDialog::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ( GetStyle() & WS_THICKFRAME ) ? TRUE : FALSE );
@@ -152,7 +152,7 @@ UINT CSkinDialog::OnNcHitTest(CPoint point)
 		return CDialog::OnNcHitTest( point );
 }
 
-BOOL CSkinDialog::OnNcActivate(BOOL bActive) 
+BOOL CSkinDialog::OnNcActivate(BOOL bActive)
 {
 	if ( m_pSkin )
 	{
@@ -165,7 +165,7 @@ BOOL CSkinDialog::OnNcActivate(BOOL bActive)
 	}
 }
 
-void CSkinDialog::OnNcPaint() 
+void CSkinDialog::OnNcPaint()
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcPaint( this );
@@ -173,31 +173,31 @@ void CSkinDialog::OnNcPaint()
 		CDialog::OnNcPaint();
 }
 
-void CSkinDialog::OnNcLButtonDown(UINT nHitTest, CPoint point) 
+void CSkinDialog::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CDialog::OnNcLButtonDown(nHitTest, point);
 }
 
-void CSkinDialog::OnNcLButtonUp(UINT nHitTest, CPoint point) 
+void CSkinDialog::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
 	CDialog::OnNcLButtonUp( nHitTest, point );
 }
 
-void CSkinDialog::OnNcLButtonDblClk(UINT nHitTest, CPoint point) 
+void CSkinDialog::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
 	CDialog::OnNcLButtonDblClk( nHitTest, point );
 }
 
-void CSkinDialog::OnNcMouseMove(UINT nHitTest, CPoint point) 
+void CSkinDialog::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
 	CDialog::OnNcMouseMove( nHitTest, point );
 }
 
-void CSkinDialog::OnSize(UINT nType, int cx, int cy) 
+void CSkinDialog::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_pSkin ) m_pSkin->OnSize( this );
 
@@ -221,27 +221,27 @@ LONG CSkinDialog::OnSetText(WPARAM wParam, LPARAM lParam)
 	}
 }
 
-BOOL CSkinDialog::OnEraseBkgnd(CDC* pDC) 
+BOOL CSkinDialog::OnEraseBkgnd(CDC* pDC)
 {
 	if ( m_pSkin && m_pSkin->OnEraseBkgnd( this, pDC ) ) return TRUE;
-	
+
 	CRect rc;
 	GetClientRect( &rc );
 	pDC->FillSolidRect( &rc, Skin.m_crDialog );
-	
+
 	return TRUE;
 }
 
 HBRUSH CSkinDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
 	{
 		pDC->SetBkColor( Skin.m_crDialog );
 		hbr = Skin.m_brDialog;
 	}
-	
+
 	return hbr;
 }
 
@@ -250,7 +250,7 @@ HBRUSH CSkinDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
 	CDialog::OnWindowPosChanging( lpwndpos );
-	
+
 	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
 	{
 		MONITORINFO oMonitor;
@@ -271,7 +271,7 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 	{
 		CRect rcWork;
 		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
-		
+
 		if ( abs( lpwndpos->x ) <= ( rcWork.left + SNAP_SIZE ) )
 		{
 			lpwndpos->x = rcWork.left;
@@ -281,7 +281,7 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 		{
 			lpwndpos->x = rcWork.right - lpwndpos->cx;
 		}
-		
+
 		if ( abs( lpwndpos->y ) <= ( rcWork.top + SNAP_SIZE ) )
 		{
 			lpwndpos->y = rcWork.top;

@@ -1,7 +1,7 @@
 //
 // DlgMediaVis.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,39 +74,39 @@ void CMediaVisDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaVisDlg message handlers
 
-BOOL CMediaVisDlg::OnInitDialog() 
+BOOL CMediaVisDlg::OnInitDialog()
 {
 	CString strMessage;
 
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( NULL, ID_MEDIA_VIS );
-	
+
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
-	
+
 	m_wndList.SetImageList( &CoolInterface.m_pImages, LVSIL_SMALL );
 	m_wndList.InsertColumn( 0, _T("Description"), LVCFMT_LEFT, rc.right, -1 );
 	m_wndList.InsertColumn( 1, _T("CLSID"), LVCFMT_LEFT, 0, 0 );
 	m_wndList.InsertColumn( 2, _T("Subpath"), LVCFMT_LEFT, 0, 1 );
-	
+
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
-	
+
 	m_nIcon = CoolInterface.ImageForID( ID_MEDIA_VIS );
 	m_hIcon = CoolInterface.ExtractIcon( ID_MEDIA_VIS );
 	SetIcon( m_hIcon, FALSE );
-	
+
 	LoadString( strMessage, IDS_MEDIAVIS_NOVIS );
 	AddPlugin( strMessage, NULL, NULL );
 	Enumerate();
-	
+
 	m_nSize = Settings.MediaPlayer.VisSize + 1;
 	UpdateData( FALSE );
-	
+
 	m_wndSetup.EnableWindow( m_wndList.GetSelectedCount() == 1 );
-	
+
 	return TRUE;
 }
 
@@ -114,26 +114,26 @@ void CMediaVisDlg::Enumerate()
 {
 	CWaitCursor pCursor;
 	HKEY hKey;
-	
+
 	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE,
 		_T("Software\\Shareaza\\Shareaza\\Plugins\\AudioVis"),
 		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
-	
+
 	for ( DWORD nKey = 0 ; ; nKey++ )
 	{
 		DWORD dwType, dwName = sizeof(TCHAR) * 128, dwCLSID = 64 * sizeof(TCHAR);
 		TCHAR szName[128], szCLSID[64];
-		
+
 		if ( RegEnumValue( hKey, nKey, szName, &dwName, NULL, &dwType, (LPBYTE)szCLSID, &dwCLSID )
 			 != ERROR_SUCCESS ) break;
-		
+
 		if ( dwType != REG_SZ || dwCLSID / sizeof(TCHAR) != 39 || szCLSID[0] != '{' || szName[0] == '{' ) continue;
 		szCLSID[ 38 ] = 0;
-		
+
 		CLSID pCLSID;
 		if ( ! GUIDX::Decode( szCLSID, &pCLSID ) ) continue;
 		if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) continue;
-		
+
 		if ( _tcsistr( szName, _T("wrap") ) )
 		{
 			if ( ! EnumerateWrapped( szName, pCLSID, szCLSID ) )
@@ -146,7 +146,7 @@ void CMediaVisDlg::Enumerate()
 			AddPlugin( szName, szCLSID, NULL );
 		}
 	}
-	
+
 	RegCloseKey( hKey );
 }
 
@@ -171,26 +171,26 @@ void CMediaVisDlg::AddPlugin(LPCTSTR pszName, LPCTSTR pszCLSID, LPCTSTR pszPath)
 BOOL CMediaVisDlg::EnumerateWrapped(LPCTSTR pszName, REFCLSID pCLSID, LPCTSTR pszCLSID)
 {
 	IWrappedPluginControl* pPlugin = NULL;
-	
+
 	HINSTANCE hRes = AfxGetResourceHandle();
-	
+
 	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER,
 		IID_IWrappedPluginControl, (void**)&pPlugin );
-	
+
 	AfxSetResourceHandle( hRes );
-	
+
 	if ( FAILED(hr) || pPlugin == NULL ) return FALSE;
-	
+
 	LPSAFEARRAY pArray = NULL;
 	hr = pPlugin->Enumerate( &pArray );
-	
+
 	pPlugin->Release();
 
 	if ( FAILED(hr) || pArray == NULL ) return FALSE;
-	
+
 	LONG pIndex[2] = { 0, 0 };
 	SafeArrayGetUBound( pArray, 2, &pIndex[1] );
-	
+
 	if ( pIndex[1] < 0 )
 	{
 		SafeArrayDestroy( pArray );
@@ -204,62 +204,62 @@ BOOL CMediaVisDlg::EnumerateWrapped(LPCTSTR pszName, REFCLSID pCLSID, LPCTSTR ps
 
 		strName = pszName;
 		strName += _T(": ");
-		
+
 		pIndex[0] = 0;
 		SafeArrayGetElement( pArray, pIndex, &bsValue );
 		strName += bsValue;
 		SysFreeString( bsValue );
 		bsValue = NULL;
-		
+
 		pIndex[0] = 1;
 		SafeArrayGetElement( pArray, pIndex, &bsValue );
 		strPath = bsValue;
 		SysFreeString( bsValue );
 		bsValue = NULL;
-		
+
 		AddPlugin( strName, pszCLSID, strPath );
 	}
-	
+
 	SafeArrayDestroy( pArray );
-	
+
 	return TRUE;
 }
 
-void CMediaVisDlg::OnDblClkPlugins(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMediaVisDlg::OnDblClkPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	PostMessage( WM_COMMAND, IDOK );
 	*pResult = 0;
 }
 
-void CMediaVisDlg::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMediaVisDlg::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	m_wndSetup.EnableWindow( m_wndList.GetSelectedCount() == 1 );
 	*pResult = 0;
 }
 
-void CMediaVisDlg::OnSetup() 
+void CMediaVisDlg::OnSetup()
 {
 	int nItem = m_wndList.GetNextItem( -1, LVIS_SELECTED );
 	if ( nItem < 0 ) return;
-	
+
 	CString strCLSID	= m_wndList.GetItemText( nItem, 1 );
 	CString strPath		= m_wndList.GetItemText( nItem, 2 );
-	
+
 	CLSID pCLSID;
 	if ( ! GUIDX::Decode( strCLSID, &pCLSID ) ) return;
 	if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) return;
-	
+
 	IAudioVisPlugin* pPlugin = NULL;
-	
+
 	if ( Settings.MediaPlayer.VisCLSID == strCLSID &&
 		 Settings.MediaPlayer.VisPath == strPath )
 	{
 		IMediaPlayer* pPlayer = ( m_pFrame != NULL ) ? m_pFrame->GetPlayer() : NULL;
-		
+
 		if ( pPlayer != NULL )
 		{
 			pPlayer->GetPlugin( &pPlugin );
-			
+
 			if ( pPlugin != NULL )
 			{
 				pPlugin->Configure();
@@ -268,16 +268,16 @@ void CMediaVisDlg::OnSetup()
 			}
 		}
 	}
-	
+
 	HINSTANCE hRes = AfxGetResourceHandle();
-	
+
 	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|CLSCTX_LOCAL_SERVER,
 		IID_IAudioVisPlugin, (void**)&pPlugin );
-	
+
 	AfxSetResourceHandle( hRes );
-	
+
 	if ( FAILED(hr) || pPlugin == NULL ) return;
-	
+
 	if ( strPath.GetLength() )
 	{
 		IWrappedPluginControl* pWrap = NULL;
@@ -290,24 +290,24 @@ void CMediaVisDlg::OnSetup()
 			SysFreeString( bsPath );
 		}
 	}
-	
+
 	pPlugin->Configure();
 	pPlugin->Release();
 }
 
-void CMediaVisDlg::OnOK() 
+void CMediaVisDlg::OnOK()
 {
 	int nItem = m_wndList.GetNextItem( -1, LVIS_SELECTED );
 	CString strCLSID, strPath;
-	
+
 	UpdateData( TRUE );
-	
+
 	if ( nItem >= 0 )
 	{
 		strCLSID	= m_wndList.GetItemText( nItem, 1 );
 		strPath		= m_wndList.GetItemText( nItem, 2 );
 	}
-	
+
 	if ( Settings.MediaPlayer.VisCLSID != strCLSID ||
 		 Settings.MediaPlayer.VisPath != strPath ||
 		 Settings.MediaPlayer.VisSize != m_nSize - 1 )

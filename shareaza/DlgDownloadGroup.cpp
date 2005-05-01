@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,110 +79,110 @@ void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadGroupDlg message handlers
 
-BOOL CDownloadGroupDlg::OnInitDialog() 
+BOOL CDownloadGroupDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CDownloadGroupDlg") );
-	
+
 	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndBrowse.SetIcon( IDI_BROWSE );
-	
+
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
-	
+
 	if ( ! DownloadGroups.Check( m_pGroup ) )
 	{
 		EndDialog( IDCANCEL );
 		return TRUE;
 	}
-	
+
 	m_sName		= m_pGroup->m_sName;
 	m_sFolder	= m_pGroup->m_sFolder;
-	
+
 	for ( POSITION pos = m_pGroup->m_pFilters.GetHeadPosition() ; pos ; )
 	{
 		m_wndFilterList.AddString( m_pGroup->m_pFilters.GetNext( pos ) );
 	}
-	
+
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
-		
+
 		int nIndex = m_wndImages.InsertItem( LVIF_IMAGE|LVIF_PARAM|LVIF_TEXT,
 			m_wndImages.GetItemCount(), _T("Icon"), 0, 0, pSchema->m_nIcon16,
 			(LPARAM)pSchema );
-		
+
 		if ( pSchema->m_sURI == m_pGroup->m_sSchemaURI )
 		{
 			m_wndImages.SetItemState( nIndex, LVIS_SELECTED, LVIS_SELECTED );
 		}
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	BOOL bSuper = DownloadGroups.GetSuperGroup() == m_pGroup;
-	
+
 	m_wndFolder.EnableWindow( ! bSuper );
 	m_wndFilterList.EnableWindow( ! bSuper );
 	m_wndFilterAdd.EnableWindow( m_wndFilterList.GetWindowTextLength() > 0 );
 	m_wndFilterRemove.EnableWindow( m_wndFilterList.GetCurSel() >= 0 );
-	
+
 	return TRUE;
 }
 
-void CDownloadGroupDlg::OnEditChangeFilterList() 
+void CDownloadGroupDlg::OnEditChangeFilterList()
 {
 	m_wndFilterAdd.EnableWindow( m_wndFilterList.GetWindowTextLength() > 0 );
 }
 
-void CDownloadGroupDlg::OnSelChangeFilterList() 
+void CDownloadGroupDlg::OnSelChangeFilterList()
 {
 	m_wndFilterRemove.EnableWindow( m_wndFilterList.GetCurSel() >= 0 );
 }
 
-void CDownloadGroupDlg::OnFilterAdd() 
+void CDownloadGroupDlg::OnFilterAdd()
 {
 	CString strType;
 	m_wndFilterList.GetWindowText( strType );
-	
+
 	strType.TrimLeft(); strType.TrimRight();
 	if ( strType.IsEmpty() ) return;
-	
+
 	if ( m_wndFilterList.FindString( -1, strType ) >= 0 ) return;
-	
+
 	m_wndFilterList.AddString( strType );
 	m_wndFilterList.SetWindowText( _T("") );
 }
 
-void CDownloadGroupDlg::OnFilterRemove() 
+void CDownloadGroupDlg::OnFilterRemove()
 {
 	int nItem = m_wndFilterList.GetCurSel();
 	if ( nItem >= 0 ) m_wndFilterList.DeleteString( nItem );
 	m_wndFilterRemove.EnableWindow( FALSE );
 }
 
-void CDownloadGroupDlg::OnOK() 
+void CDownloadGroupDlg::OnOK()
 {
 	UpdateData();
-	
+
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
-	
+
 	if ( DownloadGroups.Check( m_pGroup ) )
 	{
 		m_pGroup->m_sName	= m_sName;
 		m_pGroup->m_sFolder	= m_sFolder;
-		
+
 		m_pGroup->m_pFilters.RemoveAll();
-		
+
 		for ( int nItem = 0 ; nItem < m_wndFilterList.GetCount() ; nItem++ )
 		{
 			CString str;
 			m_wndFilterList.GetLBText( nItem, str );
 			if ( str.GetLength() ) m_pGroup->m_pFilters.AddTail( str );
 		}
-		
+
 		int nIndex = m_wndImages.GetNextItem( -1, LVNI_SELECTED );
-		
+
 		if ( nIndex >= 0 )
 		{
 			CSchema* pSchema = (CSchema*)m_wndImages.GetItemData( nIndex );
@@ -193,22 +193,22 @@ void CDownloadGroupDlg::OnOK()
 			m_pGroup->SetSchema( _T("") );
 		}
 	}
-	
+
 	if ( m_sFolder.GetLength() && ! LibraryFolders.IsFolderShared( m_sFolder ) )
 	{
 		CString strFormat, strMessage;
-		
+
 		LoadString( strFormat, IDS_LIBRARY_DOWNLOADS_ADD );
 		strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
-		
+
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			if ( CLibraryFolder* pFolder = LibraryFolders.AddFolder( m_sFolder ) )
 			{
 				LoadString( strMessage, IDS_LIBRARY_DOWNLOADS_SHARE );
-				
+
 				BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
-				
+
 				CQuickLock oLock( Library.m_pSection );
 				if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
 					pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
@@ -216,32 +216,32 @@ void CDownloadGroupDlg::OnOK()
 			}
 		}
 	}
-	
+
 	CSkinDialog::OnOK();
 }
 
-void CDownloadGroupDlg::OnBrowse() 
+void CDownloadGroupDlg::OnBrowse()
 {
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
-		
+
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder for downloads:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
+
 	pPath = SHBrowseForFolder( &pBI );
-	
+
 	if ( pPath == NULL ) return;
-	
+
 	SHGetPathFromIDList( pPath, szPath );
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
-	
+
 	UpdateData( TRUE );
 	m_sFolder = szPath;
 	UpdateData( FALSE );

@@ -1,7 +1,7 @@
 //
 // DownloadGroups.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CDownload;
 class CDownloadGroup;
 
 
-class CDownloadGroups  
+class CDownloadGroups
 {
 // Construction
 public:
 	CDownloadGroups();
 	virtual ~CDownloadGroups();
-	
+
 // Attributes
 public:
 	CCriticalSection	m_pSection;
@@ -44,7 +44,7 @@ protected:
 	int					m_nBaseCookie;
 	int					m_nSaveCookie;
 	int					m_nGroupCookie;
-	
+
 // Operations
 public:
 	CDownloadGroup*		GetSuperGroup();
@@ -60,39 +60,39 @@ public:
 	BOOL				Save(BOOL bForce = TRUE);
 protected:
 	void				Serialize(CArchive& ar);
-	
+
 // Inlines
 public:
 	inline POSITION GetIterator() const
 	{
 		return m_pList.GetHeadPosition();
 	}
-	
+
 	inline CDownloadGroup* GetNext(POSITION& pos) const
 	{
 		return (CDownloadGroup*)m_pList.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pList.GetCount();
 	}
-	
+
 	inline BOOL Check(CDownloadGroup* pGroup) const
 	{
 		return m_pList.Find( pGroup ) != NULL;
 	}
-	
+
 	inline int GetGroupCookie() const
 	{
 		return m_nGroupCookie;
 	}
-	
+
 	inline void IncBaseCookie()
 	{
 		m_nBaseCookie ++;
 	}
-	
+
 	friend class CDownloadGroup;
 };
 

@@ -1,7 +1,7 @@
 //
 // WndPlugin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,7 +82,7 @@ protected:
 		STDMETHOD(AddToolbar)(BSTR sName, LONG nPosition, HWND FAR* phWnd, ISToolbar FAR* FAR* ppToolbar);
 		STDMETHOD(AdjustWindowRect)(RECT FAR* pRect, VARIANT_BOOL bClientToWindow);
 	END_INTERFACE_PART(PluginWindow)
-	
+
 	DECLARE_INTERFACE_MAP()
 
 };

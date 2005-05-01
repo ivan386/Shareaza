@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ CLibraryTreeCtrl::~CLibraryTreeCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeCtrl operations
 
-BOOL CLibraryTreeCtrl::Create(CWnd* pParentWnd) 
+BOOL CLibraryTreeCtrl::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	return CWnd::Create( NULL, _T("CLibraryTreeCtrl"),
@@ -191,14 +191,14 @@ BOOL CLibraryTreeCtrl::CollapseRecursive(CLibraryTreeItem* pItem)
 	{
 		bChanged |= Expand( pItem, TS_FALSE, FALSE );
 	}
-	
+
 	CLibraryTreeItem** pChild = pItem->m_pList;
-	
+
 	for ( int nCount = pItem->m_nCount ; nCount ; nCount--, pChild++ )
 	{
 		bChanged |= CollapseRecursive( *pChild );
 	}
-	
+
 	return bChanged;
 }
 
@@ -271,10 +271,10 @@ BOOL CLibraryTreeCtrl::SelectAll(CLibraryTreeItem* pParent, BOOL bInvalidate)
 {
 	if ( pParent == NULL ) pParent = m_pRoot;
 	else if ( pParent->m_bExpanded == FALSE ) return FALSE;
-	
+
 	CLibraryTreeItem** pChild = pParent->m_pList;
 	BOOL bChanged = FALSE;
-	
+
 	for ( int nCount = pParent->m_nCount ; nCount ; nCount--, pChild++ )
 	{
 		if ( (*pChild)->m_bSelected == FALSE )
@@ -282,25 +282,25 @@ BOOL CLibraryTreeCtrl::SelectAll(CLibraryTreeItem* pParent, BOOL bInvalidate)
 			Select( *pChild, TS_TRUE, FALSE );
 			bChanged = TRUE;
 		}
-		
+
 		if ( (*pChild)->m_bExpanded && (*pChild)->m_nCount )
 		{
 			bChanged |= SelectAll( *pChild, FALSE );
 		}
 	}
-	
+
 	if ( bInvalidate && bChanged && pParent == m_pRoot ) Invalidate();
-	
+
 	return bChanged;
 }
 
 BOOL CLibraryTreeCtrl::DeselectAll(CLibraryTreeItem* pExcept, CLibraryTreeItem* pParent, BOOL bInvalidate)
 {
 	if ( pParent == NULL ) pParent = m_pRoot;
-	
+
 	CLibraryTreeItem** pChild = pParent->m_pList;
 	BOOL bChanged = FALSE;
-	
+
 	for ( int nCount = pParent->m_nCount ; nCount ; nCount--, pChild++ )
 	{
 		if ( *pChild != pExcept && (*pChild)->m_bSelected )
@@ -308,12 +308,12 @@ BOOL CLibraryTreeCtrl::DeselectAll(CLibraryTreeItem* pExcept, CLibraryTreeItem* 
 			Select( *pChild, TS_FALSE, FALSE );
 			bChanged = TRUE;
 		}
-		
+
 		if ( (*pChild)->m_nCount ) bChanged |= DeselectAll( pExcept, *pChild, FALSE );
 	}
-	
+
 	if ( bInvalidate && bChanged && pParent == m_pRoot ) Invalidate();
-	
+
 	return bChanged;
 }
 
@@ -335,34 +335,34 @@ CLibraryTreeItem* CLibraryTreeCtrl::GetLastSelected() const
 BOOL CLibraryTreeCtrl::Highlight(CLibraryTreeItem* pItem)
 {
 	m_pFocus = pItem;
-	
+
 	for ( CLibraryTreeItem* pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
 	{
 		Expand( pParent, TS_TRUE, FALSE );
-		
+
 		pParent->m_bContract2 = pParent->m_bContract1;
 		pParent->m_bContract1 = FALSE;
 	}
-	
+
 	CollapseRecursive( m_pRoot );
-	
+
 	for ( CLibraryTreeItem* pParent = m_pFocus->m_pParent ; pParent ; pParent = pParent->m_pParent )
 	{
 		pParent->m_bContract1 = pParent->m_bContract2;
 	}
-	
+
 	CRect rcItem, rcClient;
-	
+
 	if ( GetRect( m_pFocus, &rcItem ) )
 	{
 		GetClientRect( &rcClient );
-		
+
 		if ( rcItem.top <= rcClient.top )
 			ScrollBy( rcItem.top - rcClient.top );
 		else if ( rcItem.bottom > rcClient.bottom )
 			ScrollBy( rcItem.bottom - rcClient.bottom );
 	}
-	
+
 	UpdateScroll();
 	Invalidate();
 
@@ -391,7 +391,7 @@ BOOL CLibraryTreeCtrl::CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL b
 				m_nTotal -= (*pChild)->GetChildCount() + 1;
 				bChanged = TRUE;
 			}
-			
+
 			delete *pChild;
 			MoveMemory( pChild, pChild + 1, 4 * ( pItem->m_nCount - nChild ) );
 			pItem->m_nCount--;
@@ -428,14 +428,14 @@ CLibraryTreeItem* CLibraryTreeCtrl::GetFolderItem(LPVOID pSearch, CLibraryTreeIt
 			if ( pFound ) return pFound;
 		}
 	}
-		
+
 	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeCtrl message handlers
 
-void CLibraryTreeCtrl::OnSize(UINT nType, int cx, int cy) 
+void CLibraryTreeCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
 
@@ -444,12 +444,12 @@ void CLibraryTreeCtrl::OnSize(UINT nType, int cx, int cy)
 	UpdateScroll();
 }
 
-void CLibraryTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CLibraryTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rc;
 	CLibraryTreeItem* pHit = HitTest( point, &rc );
 	BOOL bChanged = FALSE;
-	
+
 	SetFocus();
 
 	if ( m_pTip ) m_pTip->Hide();
@@ -472,9 +472,9 @@ void CLibraryTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 			bChanged = DeselectAll( pHit );
 		if ( pHit ) bChanged |= Select( pHit );
 	}
-	
+
 	m_pFocus = pHit;
-	
+
 	if ( pHit != NULL )
 	{
 		if ( m_pFocus->m_pVirtual && ( nFlags & MK_RBUTTON ) == 0 )
@@ -484,11 +484,11 @@ void CLibraryTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 			SetCapture();
 		}
 	}
-	
+
 	if ( bChanged ) NotifySelection();
 }
 
-void CLibraryTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CLibraryTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
 
@@ -498,13 +498,13 @@ void CLibraryTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+void CLibraryTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
 	CWnd::OnRButtonDown( nFlags, point );
 }
 
-void CLibraryTreeCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CLibraryTreeCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_bDrag & ( nFlags & MK_LBUTTON ) )
 	{
@@ -527,11 +527,11 @@ void CLibraryTreeCtrl::OnMouseMove(UINT nFlags, CPoint point)
 			m_pTip->Hide();
 		}
 	}
-	
+
 	CWnd::OnMouseMove( nFlags, point );
 }
 
-void CLibraryTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CLibraryTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	ReleaseCapture();
 	m_bDrag = FALSE;
@@ -539,12 +539,12 @@ void CLibraryTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 	CWnd::OnLButtonUp( nFlags, point );
 }
 
-void CLibraryTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLibraryTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	CLibraryTreeItem* pTo = NULL;
 	BOOL bChanged = FALSE;
 	CRect rc;
-	
+
 	if ( m_pTip ) m_pTip->Hide();
 
 	if ( nChar == VK_HOME || ( nChar == VK_UP && m_pFocus == NULL ) )
@@ -603,7 +603,7 @@ void CLibraryTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		CLibraryTreeItem* pStart	= m_pFocus;
 		CLibraryTreeItem* pBase		= pStart ? pStart->m_pParent : m_pRoot;
-				
+
 		for ( int nLoop = 0 ; nLoop < 2 ; nLoop++ )
 		{
 			CLibraryTreeItem** pChild = pBase->m_pList;
@@ -625,7 +625,7 @@ void CLibraryTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			}
 		}
 	}
-	
+
 	if ( pTo != NULL )
 	{
 		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 || m_pFocus == NULL )
@@ -657,11 +657,11 @@ void CLibraryTreeCtrl::UpdateScroll()
 	pInfo.nMax		= m_nTotal * ITEM_HEIGHT;
 	pInfo.nPage		= m_nVisible;
 	pInfo.nPos		= m_nScroll = max( 0, min( m_nScroll, pInfo.nMax - (int)pInfo.nPage + 1 ) );
-	
+
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 }
 
-void CLibraryTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CLibraryTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	switch ( nSBCode )
 	{
@@ -690,7 +690,7 @@ void CLibraryTreeCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar
 	}
 }
 
-BOOL CLibraryTreeCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CLibraryTreeCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	ScrollBy( zDelta * 3 * -ITEM_HEIGHT / WHEEL_DELTA );
 	return TRUE;
@@ -716,18 +716,18 @@ void CLibraryTreeCtrl::ScrollTo(int nPosition)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeCtrl painting
 
-BOOL CLibraryTreeCtrl::OnEraseBkgnd(CDC* pDC) 
+BOOL CLibraryTreeCtrl::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CLibraryTreeCtrl::OnPaint() 
+void CLibraryTreeCtrl::OnPaint()
 {
 	CPaintDC dc( this );
-	
+
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryTreeItem** pChild = m_pRoot->m_pList;
@@ -791,7 +791,7 @@ CLibraryTreeItem* CLibraryTreeCtrl::HitTest(const POINT& point, RECT* pRect) con
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryTreeItem** pChild = m_pRoot->m_pList;
@@ -853,7 +853,7 @@ BOOL CLibraryTreeCtrl::GetRect(CLibraryTreeItem* pItem, RECT* pRect)
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryTreeItem** pChild = m_pRoot->m_pList;
@@ -921,7 +921,7 @@ void CLibraryTreeCtrl::StartDragging(CPoint& ptMouse)
 
 	CLibraryFrame* pFrame	= (CLibraryFrame*)GetOwner();
 	CLibraryList* pList		= new CLibraryList( m_nSelected );
-	
+
 	for (	CLibraryTreeItem* pItem = m_pSelFirst ; pItem ;
 			pItem = pItem->m_pSelNext )
 	{
@@ -941,7 +941,7 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 			pItem = pItem->m_pSelNext )
 	{
 		GetRect( pItem, &rcOne );
-		
+
 		if ( rcOne.IntersectRect( &rcClient, &rcOne ) )
 		{
 			rcAll.left		= min( rcAll.left, rcOne.left );
@@ -964,7 +964,7 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 	CClientDC dcClient( this );
 	CDC dcMem, dcDrag;
 	CBitmap bmDrag;
-				
+
 	if ( ! dcMem.CreateCompatibleDC( &dcClient ) )
 		return NULL;
 	if ( ! dcDrag.CreateCompatibleDC( &dcClient ) )
@@ -975,7 +975,7 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
 	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), RGB( 250, 255, 250 ) );
-	
+
 	CRgn pRgn;
 
 	if ( bClipped )
@@ -992,7 +992,7 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 	{
 		GetRect( pItem, &rcOne );
 		CRect rcDummy;
-		
+
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
 			rcOne.OffsetRect( -rcAll.left, -rcAll.top );
@@ -1003,10 +1003,10 @@ CImageList* CLibraryTreeCtrl::CreateDragImage(const CPoint& ptMouse)
 	dcDrag.SelectObject( pOldFont );
 	dcDrag.SelectObject( pOldDrag );
 	dcDrag.DeleteDC();
-	
+
 	CImageList* pAll = new CImageList();
 	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 250, 255, 250 ) ); 
+	pAll->Add( &bmDrag, RGB( 250, 255, 250 ) );
 
 	bmDrag.DeleteObject();
 
@@ -1028,7 +1028,7 @@ CLibraryTreeItem::CLibraryTreeItem(CLibraryTreeItem* pParent)
 	m_pSelPrev		= NULL;
 	m_pSelNext		= NULL;
 	m_nCleanCookie	= 0;
-	
+
 	m_bExpanded		= FALSE;
 	m_bSelected		= FALSE;
 	m_bContract1	= FALSE;
@@ -1070,7 +1070,7 @@ CLibraryTreeItem* CLibraryTreeItem::Add(LPCTSTR pszName)
 	}
 
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = new CLibraryTreeItem( this );
-	
+
     int nFirst = 0;
 	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
@@ -1141,7 +1141,7 @@ void CLibraryTreeItem::Clear()
 		for ( int nChild = 0 ; nChild < m_nCount ; nChild++ ) delete m_pList[ nChild ];
 		delete [] m_pList;
 	}
-	
+
 	m_pList		= NULL;
 	m_nCount	= 0;
 	m_nBuffer	= 0;
@@ -1200,11 +1200,11 @@ void CLibraryTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) 
 
 	if ( ! m_bShared ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_LOCKED );
 	if ( m_bCollection ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COLLECTION );
-	
+
 	ImageList_DrawEx( ShellIcons.GetHandle( 16 ), nImage,
 		dc.GetSafeHdc(), rc.left + 16, rc.top, 16, 16,
 		crBack, CLR_DEFAULT, nIconStyle );
-	
+
 	crBack = ( m_bSelected || bTarget ) ? CoolInterface.m_crHighlight : crBack;
 	COLORREF crText = ( m_bSelected || bTarget ) ? CoolInterface.m_crHiText : CoolInterface.m_crText;
 
@@ -1231,6 +1231,6 @@ int CLibraryTreeItem::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 	{
 		return m_pVirtual->GetFileList( pList, bRecursive );
 	}
-	
+
 	return 0;
 }

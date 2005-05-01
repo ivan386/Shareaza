@@ -1,7 +1,7 @@
 //
 // WizardWelcomePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,10 +62,10 @@ void CWizardWelcomePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardWelcomePage message handlers
 
-BOOL CWizardWelcomePage::OnInitDialog() 
+BOOL CWizardWelcomePage::OnInitDialog()
 {
 	CWizardPage::OnInitDialog();
-	
+
 	Skin.Apply( _T("CWizardWelcomePage"), this );
 
 	SetWizardButtons( PSWIZB_NEXT );

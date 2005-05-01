@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,7 @@ class CQueryHit
 public:
 	CQueryHit(PROTOCOLID nProtocol, GGUID* pSearchID = NULL);
 	virtual ~CQueryHit();
-	
+
 // Attributes
 public:
 	CQueryHit*	m_pNext;
@@ -123,7 +123,7 @@ protected:
 	void		Resolve();
 	BOOL		AutoDetectSchema(LPCTSTR pszInfo);
 	BOOL		AutoDetectAudio(LPCTSTR pszInfo);
-	
+
 // Inlines
 public:
 	inline int GetSources() const

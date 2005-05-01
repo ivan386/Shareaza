@@ -1,7 +1,7 @@
 //
 // CtrlTipFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,26 +61,26 @@ BOOL CFolderTipCtrl::OnPrepare()
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
+
 	CLibraryFolder* pFolder = (CLibraryFolder*)m_pContext;
 	if ( ! LibraryFolders.CheckFolder( pFolder, TRUE ) ) return FALSE;
-	
+
 	m_sName		= pFolder->m_sName;
 	m_sPath		= pFolder->m_sPath;
-	
+
 	m_sFiles.Format( _T("%lu"), pFolder->m_nFiles );
 	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume, TRUE );
-	
+
 	QWORD nTotal;
 	CString strText;
 	LibraryMaps.GetStatistics( NULL, &nTotal );
-	
+
 	LoadString( strText, IDS_TIP_LIBRARY_PERCENT );
 	m_sPercentage.Format( _T("%.2f%% %s"),
 		100.0 * pFolder->m_nVolume / nTotal, strText );
-	
+
 	CalcSizeHelper();
-	
+
 	return m_sz.cx > 0;
 }
 
@@ -93,13 +93,13 @@ void CFolderTipCtrl::OnCalcSize(CDC* pDC)
 	m_sz.cy += TIP_TEXTHEIGHT;
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	AddSize( pDC, m_sPath );
-	
+
 	m_sz.cy += TIP_RULE;
-	
+
 	AddSize( pDC, m_sFiles, 120 );
 	AddSize( pDC, m_sVolume, 120 );
 	AddSize( pDC, m_sPercentage, 40 );
-	
+
 	m_sz.cy += TIP_TEXTHEIGHT * 4;
 }
 
@@ -115,11 +115,11 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( pDC, &pt, m_sPath );
 	pt.y += TIP_TEXTHEIGHT;
-	
+
 	DrawRule( pDC, &pt );
-	
+
 	ShellIcons.Draw( pDC, SHI_FOLDER_OPEN, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
-	
+
 	CString strText;
 	LoadString( strText, IDS_TIP_TOTAL_FILES );
 	DrawText( pDC, &pt, strText, 40 );

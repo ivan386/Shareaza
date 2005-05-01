@@ -1,7 +1,7 @@
 //
 // PageProfileFiles.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,7 +71,7 @@ void CFilesProfilePage::DoDataExchange(CDataExchange* pDX)
 BOOL CFilesProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
@@ -80,15 +80,15 @@ BOOL CFilesProfilePage::OnInitDialog()
 
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		CAlbumFolder* pFolder = LibraryFolders.GetAlbumTarget( CSchema::uriFavouritesFolder, _T("Title"), NULL );
-		
+
 		if ( pFolder != NULL )
 		{
 			for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 			{
 				CLibraryFile* pFile = pFolder->GetNextFile( pos );
-				
+
 				if ( pFile->IsShared() )
 				{
 					m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM, m_wndList.GetItemCount(),
@@ -97,9 +97,9 @@ BOOL CFilesProfilePage::OnInitDialog()
 			}
 		}
 	}
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 

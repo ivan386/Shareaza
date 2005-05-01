@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ protected:
 	// Buffers that hold 128 ASCII and 128 wide characters, used so MultiByteToWideChar can convert short text quickly
 	static CHAR  m_szSCHAR[PACKET_BUF_SCHAR + 1]; // Static means these are separate from all the CPacket objects this class will make
 	static WCHAR m_szWCHAR[PACKET_BUF_WCHAR + 1];
-	
+
 public:
 
 	// Reset this packet object to make it like it was when it came from the constructor
@@ -196,7 +196,7 @@ public:
 		// Read one byte, return it, but don't move our position in this packet beyond it
 		return m_pBuffer[ m_nPosition ];
 	}
-	
+
 	// Read the next 2 bytes in the packet, moving the position beyond them
 	// Returns the bytes in a word, and assumes little endian order which we don't need to change
 	inline WORD ReadShortLE()
@@ -241,7 +241,7 @@ public:
 		// Return the 4 bytes in a DWORD
 		return nValue;
 	}
-	
+
 	// Read the next 4 bytes in the packet, moving the position beyond them
 	// Returns the bytes in a DWORD, reversing their order if the packet thinks its contents are in big endian order
 	inline DWORD ReadLongBE()
@@ -256,7 +256,7 @@ public:
 		// If the packet is in big endian, reverse the order of the 4 bytes before returning them in a DWORD
 		return m_bBigEndian ? SWAP_LONG( nValue ) : nValue;
 	}
-	
+
 	// Read the next 8 bytes in the packet, moving the position beyond them
 	// Returns the bytes in a QWORD, reversing their order if the packet thinks its contents are in big endian order
 	inline QWORD ReadInt64()
@@ -354,7 +354,7 @@ public:
 		*(DWORD*)( m_pBuffer + m_nLength ) = nValue;
 		m_nLength += sizeof(nValue);
 	}
-	
+
 	// Takes 4 bytes in a DWORD
 	// Writes them into the end of the packet, reversing their order if the packet is in big endian order
 	inline void WriteLongBE(DWORD nValue)
@@ -478,7 +478,7 @@ public:
 		pPacket->Reset();  // Clear the values of the packet we just unlinked from the list
 		pPacket->AddRef(); // Record that an external object is referencing this packet
 
-		// Return a pointer to the packet we just 
+		// Return a pointer to the packet we just
 		return pPacket;
 	}
 

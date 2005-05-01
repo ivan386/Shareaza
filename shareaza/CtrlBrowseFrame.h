@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,9 @@ class CBrowseFrameCtrl : public CWnd
 public:
 	CBrowseFrameCtrl();
 	virtual ~CBrowseFrameCtrl();
-	
+
 	DECLARE_DYNAMIC(CBrowseFrameCtrl)
-	
+
 // Attributes
 protected:
 	CCoolBarCtrl		m_wndTreeTop;
@@ -53,7 +53,7 @@ protected:
 	int					m_nPanelSize;
 	CG2Packet*			m_pTree[2];
 	int					m_nTree;
-	
+
 // Operations
 public:
 	virtual BOOL	Create(CWnd* pParentWnd, CMatchCtrl* pMatch);
@@ -65,7 +65,7 @@ protected:
 	BOOL			DoSizeTree();
 	BOOL			DoSizePanel();
 	void			SelectTree(CBrowseTreeItem* pItem, CQueryHit* pHit);
-	
+
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -82,7 +82,7 @@ protected:
 	afx_msg void OnUpdateLibraryTreeVirtual(CCmdUI *pCmdUI);
 	afx_msg void OnLibraryTreeVirtual();
 	afx_msg void OnTreeSelection(NMHDR* pNotify, LRESULT* pResult);
-	
+
 };
 
 #define IDC_BROWSE_FRAME	110

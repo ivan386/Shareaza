@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,23 +94,23 @@ BOOL CBrowseFrameCtrl::Create(CWnd* pParentWnd, CMatchCtrl* pMatch)
 							rect, pParentWnd, IDC_BROWSE_FRAME, NULL );
 }
 
-int CBrowseFrameCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CBrowseFrameCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( ! m_wndTreeTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTop.SetBarStyle( m_wndTreeTop.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_BOTTOM );
 	m_wndTreeTop.SetOwner( GetOwner() );
-	
+
 	m_wndTree.Create( this );
 	m_wndDetails.Create( this );
 	m_wndList->SetParent( this );
 	m_wndList->SetOwner( GetParent() );
-	
+
 	return 0;
 }
 
-void CBrowseFrameCtrl::OnDestroy() 
+void CBrowseFrameCtrl::OnDestroy()
 {
 	CWnd::OnDestroy();
 }
@@ -121,22 +121,22 @@ void CBrowseFrameCtrl::OnSkinChange()
 	Skin.Translate( _T("CMatchCtrl"), &m_wndList->m_wndHeader );
 }
 
-void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy) 
+void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	if ( rc.Height() < 32 ) return;
-	
+
 	if ( rc.Width() < m_nTreeSize + SPLIT_SIZE )
 	{
 		m_nTreeSize = max( 0, rc.Width() - SPLIT_SIZE );
 	}
-	
+
 	HDWP hDWP = BeginDeferWindowPos( 4 );
-	
+
 	if ( m_bTreeVisible )
 	{
 		DeferWindowPos( hDWP, m_wndTreeTop, NULL, rc.left, rc.top, m_nTreeSize,
@@ -150,14 +150,14 @@ void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 		m_wndTreeTop.ShowWindow( SW_HIDE );
 		m_wndTree.ShowWindow( SW_HIDE );
 	}
-	
+
 	rc.top ++;
-	
+
 	if ( rc.Height() < m_nPanelSize + SPLIT_SIZE )
 	{
 		m_nPanelSize = max( 0, rc.Height() - SPLIT_SIZE );
 	}
-	
+
 	if ( m_bPanelEnable && m_bPanelVisible )
 	{
 		DeferWindowPos( hDWP, m_wndDetails, NULL, rc.left, rc.bottom - m_nPanelSize, rc.Width(),
@@ -168,25 +168,25 @@ void CBrowseFrameCtrl::OnSize(UINT nType, int cx, int cy)
 	{
 		m_wndDetails.ShowWindow( SW_HIDE );
 	}
-	
+
 	DeferWindowPos( hDWP, m_wndList->GetSafeHwnd(), NULL, rc.left, rc.top,
 		rc.Width(), rc.Height(), SWP_NOZORDER|SWP_SHOWWINDOW );
-	
+
 	EndDeferWindowPos( hDWP );
 }
 
-void CBrowseFrameCtrl::OnPaint() 
+void CBrowseFrameCtrl::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rcClient;
-	
+
 	GetClientRect( &rcClient );
-	
+
 	CRect rcBar(	rcClient.left + m_nTreeSize,
 					rcClient.top,
 					rcClient.left + m_nTreeSize + SPLIT_SIZE,
 					rcClient.bottom );
-	
+
 	if ( m_wndTree.IsWindowVisible() )
 	{
 		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), GetSysColor( COLOR_BTNFACE ) );
@@ -200,16 +200,16 @@ void CBrowseFrameCtrl::OnPaint()
 	{
 		dc.FillSolidRect( rcClient.left, rcClient.top, rcClient.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
 	}
-	
+
 	rcBar.SetRect(	rcClient.left,
 					rcClient.bottom - m_nPanelSize - SPLIT_SIZE,
 					rcClient.right,
 					rcClient.bottom - m_nPanelSize );
-	
+
 	if ( m_wndDetails.IsWindowVisible() )
 	{
 		if ( m_wndTree.IsWindowVisible() ) rcBar.left += m_nTreeSize + SPLIT_SIZE;
-		
+
 		dc.FillSolidRect( rcBar.left, rcBar.top, rcBar.Width(), 1, GetSysColor( COLOR_BTNFACE ) );
 		dc.FillSolidRect( rcBar.left, rcBar.top + 1, rcBar.Width(), 1, GetSysColor( COLOR_3DHIGHLIGHT ) );
 		dc.FillSolidRect( rcBar.left, rcBar.bottom - 1, rcBar.Width(), 1, GetSysColor( COLOR_3DSHADOW ) );
@@ -219,71 +219,71 @@ void CBrowseFrameCtrl::OnPaint()
 	}
 }
 
-BOOL CBrowseFrameCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CBrowseFrameCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CRect rcClient, rc;
 	CPoint point;
-	
+
 	GetCursorPos( &point );
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
-	
+
 	rc.SetRect(	rcClient.left + m_nTreeSize,
 				rcClient.top,
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
-	
+
 	if ( m_wndTree.IsWindowVisible() && rc.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadStandardCursor( IDC_SIZEWE ) );
 		return TRUE;
 	}
-	
+
 	rc.SetRect(	rcClient.left,
 				rcClient.bottom - m_nPanelSize - SPLIT_SIZE,
 				rcClient.right,
 				rcClient.bottom - m_nPanelSize );
-	
+
 	if ( m_wndTree.IsWindowVisible() ) rc.left += m_nTreeSize + SPLIT_SIZE;
-	
+
 	if ( m_wndDetails.IsWindowVisible() && rc.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadStandardCursor( IDC_SIZENS ) );
 		return TRUE;
 	}
-	
+
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CBrowseFrameCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CBrowseFrameCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rcClient, rc;
 	GetClientRect( &rcClient );
-	
+
 	rc.SetRect(	rcClient.left + m_nTreeSize,
 				rcClient.top,
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
-	
+
 	if ( m_wndTree.IsWindowVisible() && rc.PtInRect( point ) )
 	{
 		DoSizeTree();
 		return;
 	}
-	
+
 	rc.SetRect(	rcClient.left,
 				rcClient.bottom - m_nPanelSize - SPLIT_SIZE,
 				rcClient.right,
 				rcClient.bottom - m_nPanelSize );
-	
+
 	if ( m_wndTree.IsWindowVisible() ) rc.left += m_nTreeSize + SPLIT_SIZE;
-	
+
 	if ( m_wndDetails.IsWindowVisible() && rc.PtInRect( point ) )
 	{
 		DoSizePanel();
 		return;
 	}
-	
+
 	CWnd::OnLButtonDown( nFlags, point );
 }
 
@@ -292,42 +292,42 @@ BOOL CBrowseFrameCtrl::DoSizeTree()
 	MSG* pMsg = &AfxGetThreadState()->m_msgCur;
 	CRect rcClient;
 	CPoint point;
-	
+
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
 	SetCapture();
-	
+
 	GetClientRect( &rcClient );
-	
+
 	int nOffset = 0xFFFF;
-	
+
 	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
 	{
 		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );
-		
+
 		if ( ! AfxGetThread()->PumpMessage() )
 		{
 			AfxPostQuitMessage( 0 );
 			break;
 		}
-		
+
 		GetCursorPos( &point );
 		ScreenToClient( &point );
-		
+
 		int nSplit = point.x - rcClient.left;
-		
+
 		if ( nOffset == 0xFFFF ) nOffset = m_nTreeSize - nSplit;
 		nSplit += nOffset;
-		
+
 		nSplit = max( nSplit, 0 );
 		nSplit = min( nSplit, int(rcClient.right - SPLIT_SIZE) );
-		
+
 		if ( nSplit < 8 )
 			nSplit = 0;
 		if ( nSplit > rcClient.right - SPLIT_SIZE - 8 )
 			nSplit = rcClient.right - SPLIT_SIZE;
-		
+
 		if ( nSplit != m_nTreeSize )
 		{
 			m_nTreeSize = nSplit;
@@ -336,10 +336,10 @@ BOOL CBrowseFrameCtrl::DoSizeTree()
 			Invalidate();
 		}
 	}
-	
+
 	ReleaseCapture();
 	ClipCursor( NULL );
-	
+
 	return TRUE;
 }
 
@@ -348,40 +348,40 @@ BOOL CBrowseFrameCtrl::DoSizePanel()
 	MSG* pMsg = &AfxGetThreadState()->m_msgCur;
 	CRect rcClient;
 	CPoint point;
-	
+
 	GetClientRect( &rcClient );
 	if ( m_bTreeVisible ) rcClient.left += m_nTreeSize + SPLIT_SIZE;
 	ClientToScreen( &rcClient );
 	ClipCursor( &rcClient );
 	SetCapture();
-	
+
 	ScreenToClient( &rcClient );
-	
+
 	int nOffset = 0xFFFF;
-	
+
 	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
 	{
 		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );
-		
+
 		if ( ! AfxGetThread()->PumpMessage() )
 		{
 			AfxPostQuitMessage( 0 );
 			break;
 		}
-		
+
 		GetCursorPos( &point );
 		ScreenToClient( &point );
-		
+
 		int nSplit = rcClient.bottom - point.y;
-		
+
 		if ( nOffset == 0xFFFF ) nOffset = m_nPanelSize - nSplit;
 		nSplit += nOffset;
-		
+
 		if ( nSplit < 8 )
 			nSplit = 0;
 		if ( nSplit > rcClient.Height() - SPLIT_SIZE - 8 )
 			nSplit = rcClient.Height() - SPLIT_SIZE;
-		
+
 		if ( nSplit != m_nPanelSize )
 		{
 			m_nPanelSize = nSplit;
@@ -390,22 +390,22 @@ BOOL CBrowseFrameCtrl::DoSizePanel()
 			Invalidate();
 		}
 	}
-	
+
 	ReleaseCapture();
 	ClipCursor( NULL );
-	
+
 	return TRUE;
 }
 
 void CBrowseFrameCtrl::OnPhysicalTree(CG2Packet* pPacket)
 {
 	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
-	
+
 	if ( m_pTree[0] != NULL ) m_pTree[0]->Release();
 	m_pTree[0] = pPacket;
 	pPacket->AddRef();
 	if ( m_nTree == 0 ) m_wndTree.OnTreePacket( pPacket );
-	
+
 	if ( ! m_bTreeVisible )
 	{
 		m_bTreeVisible = TRUE;
@@ -416,12 +416,12 @@ void CBrowseFrameCtrl::OnPhysicalTree(CG2Packet* pPacket)
 void CBrowseFrameCtrl::OnVirtualTree(CG2Packet* pPacket)
 {
 	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
-	
+
 	if ( m_pTree[1] != NULL ) m_pTree[1]->Release();
 	m_pTree[1] = pPacket;
 	pPacket->AddRef();
 	if ( m_nTree == 1 ) m_wndTree.OnTreePacket( pPacket );
-	
+
 	if ( ! m_bTreeVisible )
 	{
 		m_bTreeVisible = TRUE;
@@ -432,19 +432,19 @@ void CBrowseFrameCtrl::OnVirtualTree(CG2Packet* pPacket)
 void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 {
 	CSingleLock lMatches( &m_wndList->m_pMatches->m_pSection, TRUE );
-	CSingleLock lTree( m_wndTree.SyncRoot(), TRUE );	
-	
+	CSingleLock lTree( m_wndTree.SyncRoot(), TRUE );
+
 	CMatchFile** ppFile = m_wndList->m_pMatches->m_pFiles;
 	BOOL bGlobal = m_wndTree.GetSelectedCount() == 0;
-	
+
 	for ( DWORD nFiles = m_wndList->m_pMatches->m_nFiles ; nFiles ; nFiles--, ppFile++ )
 	{
 		CMatchFile* pFile = (*ppFile);
-		
+
 		for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
 			if ( pHit->m_bMatched = bGlobal ) continue;
-			
+
 			for (	CBrowseTreeItem* pSel = m_wndTree.GetFirstSelected() ; pSel ;
 					pSel = pSel->m_pSelNext )
 			{
@@ -452,13 +452,13 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 			}
 		}
 	}
-	
+
 	CBrowseTreeItem* pTree = m_wndTree.GetFirstSelected();
-	
+
 	if ( pTree != NULL && pTree->m_pSelNext == NULL && pTree->m_pSchema != NULL )
 	{
 		CString strURI = pTree->m_pSchema->GetContainedURI( CSchema::stFile );
-		
+
 		if ( strURI.GetLength() &&
 			 ( m_wndList->m_pSchema == NULL || m_wndList->m_pSchema->m_sURI != strURI ) )
 		{
@@ -470,19 +470,19 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* pNotify, LRESULT* pResult)
 			}
 		}
 	}
-	
+
 	m_wndList->m_pMatches->Filter();
 	m_wndList->Update();
-	
+
 	GetOwner()->PostMessage( WM_COMMAND, MAKELONG( IDC_MATCHES, LBN_SELCHANGE ), 0 );
-	
+
 	*pResult = 0;
 }
 
 void CBrowseFrameCtrl::SelectTree(CBrowseTreeItem* pItem, CQueryHit* pHit)
 {
 	DWORD* pIndex = pItem->m_pFiles;
-	
+
 	for ( DWORD nIndex = pItem->m_nFiles ; nIndex ; nIndex--, pIndex++ )
 	{
 		if ( (*pIndex) == pHit->m_nIndex )
@@ -491,11 +491,11 @@ void CBrowseFrameCtrl::SelectTree(CBrowseTreeItem* pItem, CQueryHit* pHit)
 			return;
 		}
 	}
-	
+
 	if ( pItem->m_bExpanded == TRUE ) return;
-	
+
 	CBrowseTreeItem** ppChild = pItem->m_pList;
-	
+
 	for ( DWORD nIndex = pItem->m_nCount ; nIndex ; nIndex--, ppChild++ )
 	{
 		SelectTree( *ppChild, pHit );
@@ -507,7 +507,7 @@ void CBrowseFrameCtrl::OnSelChangeMatches()
 	CSingleLock pLock( &m_wndList->m_pMatches->m_pSection, TRUE );
 	m_wndDetails.Update( m_wndList->m_pMatches->GetSelectedFile( TRUE ) );
 	pLock.Unlock();
-	
+
 	if ( m_bPanelEnable == FALSE )
 	{
 		m_bPanelEnable = TRUE;
@@ -515,14 +515,14 @@ void CBrowseFrameCtrl::OnSelChangeMatches()
 	}
 }
 
-void CBrowseFrameCtrl::OnUpdateSearchDetails(CCmdUI* pCmdUI) 
+void CBrowseFrameCtrl::OnUpdateSearchDetails(CCmdUI* pCmdUI)
 {
 	BOOL bVisible = m_bPanelEnable && m_wndList->IsWindowVisible();
 	pCmdUI->Enable( bVisible );
 	pCmdUI->SetCheck( bVisible && m_bPanelVisible );
 }
 
-void CBrowseFrameCtrl::OnSearchDetails() 
+void CBrowseFrameCtrl::OnSearchDetails()
 {
 	m_bPanelVisible = Settings.Search.DetailPanelVisible = ! m_bPanelVisible;
 	OnSize( SIZE_INTERNAL, 0, 0 );
@@ -537,7 +537,7 @@ void CBrowseFrameCtrl::OnUpdateLibraryTreePhysical(CCmdUI *pCmdUI)
 void CBrowseFrameCtrl::OnLibraryTreePhysical()
 {
 	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
-	
+
 	if ( m_pTree[0] != NULL )
 	{
 		m_nTree = 0;
@@ -554,7 +554,7 @@ void CBrowseFrameCtrl::OnUpdateLibraryTreeVirtual(CCmdUI *pCmdUI)
 void CBrowseFrameCtrl::OnLibraryTreeVirtual()
 {
 	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
-	
+
 	if ( m_pTree[1] != NULL )
 	{
 		m_nTree = 1;

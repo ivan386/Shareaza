@@ -1,7 +1,7 @@
 //
 // MetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CMetaPanel : public CMetaList
 public:
 	CMetaPanel();
 	virtual ~CMetaPanel();
-	
+
 // Operations
 public:
 	int		Layout(CDC* pDC, int nWidth);
@@ -41,11 +41,11 @@ public:
 	BOOL	OnClick(const CPoint& point);
 protected:
 	void	WrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bPaint);
-	
+
 // Attributes
 public:
 	int		m_nHeight;
-	
+
 };
 
 #endif // !defined(AFX_METAPANEL_H__D5B8BC2C_86FB_4B82_B0B9_F82623F9CB3F__INCLUDED_)

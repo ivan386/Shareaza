@@ -1,7 +1,7 @@
 //
 // NeighboursBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,13 +27,13 @@
 class CNeighbour;
 
 
-class CNeighboursBase  
+class CNeighboursBase
 {
 // Construction
 public:
 	CNeighboursBase();
 	virtual ~CNeighboursBase();
-	
+
 // Attributes
 protected:
 	CMapPtrToPtr	m_pUniques;
@@ -60,7 +60,7 @@ public:
 protected:
 	virtual void	Add(CNeighbour* pNeighbour, BOOL bAssignUnique = TRUE);
 	virtual void	Remove(CNeighbour* pNeighbour);
-	
+
 	friend class CNeighbour;
 	friend class CShakeNeighbour;
 	friend class CEDNeighbour;

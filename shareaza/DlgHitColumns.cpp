@@ -1,7 +1,7 @@
 //
 // DlgHitColumns.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,10 +58,10 @@ void CSchemaColumnsDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg message handlers
 
-BOOL CSchemaColumnsDlg::OnInitDialog() 
+BOOL CSchemaColumnsDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CSchemaColumnsDlg"), IDR_SEARCHFRAME );
 
 	m_wndColumns.InsertColumn( 0, _T("Member"), LVCFMT_LEFT, 128, -1 );
@@ -82,18 +82,18 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CSchemaColumnsDlg::OnSelChangeSchemas() 
+void CSchemaColumnsDlg::OnSelChangeSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 
 	m_wndColumns.DeleteAllItems();
 	if ( ! pSchema ) return;
-	
+
 	CString strMembers = theApp.GetProfileString( _T("Interface"),
 		_T("SchemaColumns.") + pSchema->m_sSingular, _T("(EMPTY)") );
-	
+
 	if ( strMembers == _T("(EMPTY)") ) strMembers = pSchema->m_sDefaultColumns;
-	
+
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
@@ -119,7 +119,7 @@ void CSchemaColumnsDlg::OnSelChangeSchemas()
 	}
 }
 
-void CSchemaColumnsDlg::OnOK() 
+void CSchemaColumnsDlg::OnOK()
 {
 	m_pSchema = m_wndSchemas.GetSelected();
 
@@ -138,7 +138,7 @@ void CSchemaColumnsDlg::OnOK()
 
 		SaveColumns( m_pSchema, &m_pColumns );
 	}
-	
+
 	CSkinDialog::OnOK();
 }
 
@@ -149,12 +149,12 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CPtrList* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 	pColumns->RemoveAll();
-	
+
 	CString strMembers = theApp.GetProfileString( _T("Interface"),
 		_T("SchemaColumns.") + pSchema->m_sSingular, _T("(EMPTY)") );
-	
+
 	if ( strMembers == _T("(EMPTY)") ) strMembers = pSchema->m_sDefaultColumns;
-	
+
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
@@ -173,7 +173,7 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CPtrList* pColumns)
 	if ( ! pSchema || ! pColumns ) return FALSE;
 
 	CString strMembers;
-	
+
 	for ( POSITION pos = pColumns->GetHeadPosition() ; pos ; )
 	{
 		CSchemaMember* pMember = (CSchemaMember*)pColumns->GetNext( pos );
@@ -181,10 +181,10 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CPtrList* pColumns)
 		strMembers += pMember->m_sName;
 		strMembers += '|';
 	}
-	
+
 	theApp.WriteProfileString( _T("Interface"),
 		_T("SchemaColumns.") + pSchema->m_sSingular, strMembers );
-	
+
 	return TRUE;
 }
 
@@ -205,10 +205,10 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CPtrList* pColumns)
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
 		UINT nFlags = MF_STRING;
-		
+
 		if ( nID > 1000 && ( ( nID - 1000 ) % 16 ) == 0 ) nFlags |= MF_MENUBREAK;
 		if ( pColumns && pColumns->Find( pMember ) != NULL ) nFlags |= MF_CHECKED;
-		
+
 		pMenu->AppendMenu( nFlags, nID, pMember->m_sTitle );
 	}
 
@@ -241,7 +241,7 @@ BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, 
 			{
 				pTarget->AddTail( pMember );
 			}
-			
+
 			if ( bSave ) SaveColumns( pSchema, pTarget );
 
 			return TRUE;

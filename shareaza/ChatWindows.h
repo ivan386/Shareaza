@@ -1,7 +1,7 @@
 //
 // ChatWindows.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,13 +28,13 @@ class CChatFrame;
 class CPrivateChatFrame;
 
 
-class CChatWindows  
+class CChatWindows
 {
 // Construction
 public:
 	CChatWindows();
 	virtual ~CChatWindows();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pList;
@@ -55,7 +55,7 @@ public:
 protected:
 	void	Add(CChatFrame* pFrame);
 	void	Remove(CChatFrame* pFrame);
-	
+
 	friend class CChatFrame;
 };
 

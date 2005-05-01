@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,13 +90,13 @@ BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
 	HANDLE hFile = CreateFile( pszFile, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-	
+
 	BOOL bResult = m_pService->LoadFromFile( this, pszFile, hFile, GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
-	
+
 	CloseHandle( hFile );
-	
+
 	return bResult;
 }
 
@@ -104,14 +104,14 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 {
 	HMODULE hModule = (HMODULE)hInstance;
 	HRSRC hRes = FindResource( hModule, MAKEINTRESOURCE( nResourceID ), pszType );
-	
+
 	if ( hRes == NULL ) return FALSE;
-	
+
 	DWORD nSize			= SizeofResource( hModule, hRes );
 	HGLOBAL hMemory		= ::LoadResource( hModule, hRes );
 	LPCVOID pMemory		= (LPCVOID)LockResource( hMemory );
 	CString strType;
-	
+
 	if ( pszType == RT_BITMAP || _tcscmp( pszType, _T("BMP") ) == 0 )
 	{
 		pszType = _T(".bmp");
@@ -129,7 +129,7 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 		strType.Format( _T(".%s"), pszType );
 		pszType = strType;
 	}
-	
+
 	return m_pService->LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
 }
 
@@ -150,15 +150,15 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 {
 	HANDLE hFile = CreateFile( pszFile, GENERIC_WRITE, FILE_SHARE_READ|FILE_SHARE_WRITE,
 		NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-	
+
 	BOOL bResult = m_pService->SaveToFile( this, pszFile, nQuality, hFile );
-	
+
 	CloseHandle( hFile );
-	
+
 	if ( ! bResult ) DeleteFile( pszFile );
-	
+
 	return bResult;
 }
 
@@ -185,35 +185,35 @@ void CImageFile::Serialize(CArchive& ar)
 			ar << m_bLoaded;
 			return;
 		}
-		
+
 		ar << m_nWidth;
 		ar << m_nHeight;
 		ar << m_nComponents;
-		
+
 		/*int nPitch = m_nWidth * m_nComponents;
 		while ( nPitch & 3 ) nPitch++;
-		
+
 		ar.Write( m_pImage, nPitch * m_nHeight );*/
-		
+
 		ar.Write( m_pImage, ( ( ( m_nWidth * m_nComponents ) + 3) & (-4) ) * m_nHeight );
 	}
 	else
 	{
 		Clear();
-		
+
 		ar >> m_nWidth;
 		if ( m_nWidth == 0 ) return;
 		ar >> m_nHeight;
 		ar >> m_nComponents;
-		
+
 		/*int nPitch = m_nWidth * m_nComponents;
 		while ( nPitch & 3 ) nPitch++;
-		
+
 		m_pImage = new BYTE[ nPitch * m_nHeight ];
 		ar.Read( m_pImage, nPitch * m_nHeight );*/
 
 		int nPitch = ( ( ( m_nWidth * m_nComponents )+ 3 ) & (-4) ) * m_nHeight;
-		
+
 		m_pImage = new BYTE[ nPitch  ];
 		ar.Read( m_pImage, nPitch );
 
@@ -264,7 +264,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 				pSwap[2] = bSwap;
 			}*/
 
-			__asm 
+			__asm
 			{
 				mov edi, this
 				mov esi, pLine
@@ -279,7 +279,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 			}
 
 			SetDIBits( hDC, hBitmap, nY - 1, 1, pLine, &pInfo, DIB_RGB_COLORS );
-			
+
 			/*
 			pSwap = pLine;
 
@@ -290,7 +290,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 				pSwap[2] = bSwap;
 			}*/
 
-			__asm 
+			__asm
 			{
 				mov edi, this
 				mov esi, pLine
@@ -324,7 +324,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 
 	DWORD nInPitch	= m_nWidth * 3;
 	DWORD nOutPitch	= nNewWidth * 3;
-	
+
 	//while ( nOutPitch & 3 ) nOutPitch++;
 	//while ( nInPitch & 3 ) nInPitch++;
 	nOutPitch = ( nOutPitch + 3) & (-4);
@@ -380,7 +380,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 */
 			DWORD nPixels = *pColPtr * nCount;
 			int nYY = nCount;
-			__asm 
+			__asm
 			{
 				mov esi, pIn
 				xor eax, eax ;red
@@ -443,7 +443,7 @@ BOOL CImageFile::FastResample(int nNewWidth, int nNewHeight)
 
 	DWORD nInPitch	= m_nWidth * 3;
 	DWORD nOutPitch	= nNewWidth * 3;
-	
+
 	//while ( nOutPitch & 3 ) nOutPitch++;
 	//while ( nInPitch & 3 ) nInPitch++;
 	nOutPitch = ( nOutPitch + 3) & (-4);
@@ -526,14 +526,14 @@ BOOL CImageFile::MonoToRGB()
 	{
 		BYTE* pInCol	= pInRow;
 		BYTE* pOutCol	= pOutRow;
-		
+
 		for ( int nX = m_nWidth ; nX ; nX-- )
 		{
 			*pOutCol++ = *pInCol;
 			*pOutCol++ = *pInCol;
 			*pOutCol++ = *pInCol++;
 		}
-		
+
 		pInRow += nInPitch;
 		pOutRow += nOutPitch;
 	}
@@ -568,11 +568,11 @@ BOOL CImageFile::AlphaToRGB(COLORREF crBack)
 	{
 		BYTE* pInCol	= pInRow;
 		BYTE* pOutCol	= pOutRow;
-		
+
 		for ( int nX = m_nWidth ; nX ; nX-- )
 		{
 			DWORD nAlpha = (DWORD)pInCol[3];
-			
+
 			if ( nAlpha == 255 )
 			{
 				*pOutCol++ = *pInCol++;
@@ -595,7 +595,7 @@ BOOL CImageFile::AlphaToRGB(COLORREF crBack)
 				pInCol++;
 			}
 		}
-		
+
 		pInRow += nInPitch;
 		pOutRow += nOutPitch;
 	}
@@ -612,19 +612,19 @@ BOOL CImageFile::SwapRGB()
 {
 	if ( ! m_bLoaded ) return FALSE;
 	if ( m_nComponents != 3 ) return FALSE;
-	
+
 	//DWORD nPitch = m_nWidth * 3;
 	//while ( nPitch & 3 ) nPitch++;
 	DWORD nPitch = ( ( m_nWidth * 3 ) + 3) & (-4);
-	
+
 	BYTE* pImage = m_pImage;
 	BYTE nTemp;
-	
+
 	for ( int nY = m_nHeight ; nY ; nY-- )
 	{
 		BYTE* pRow = pImage;
 		pImage += nPitch;
-		
+
 		for ( int nX = m_nWidth ; nX ; nX-- )
 		{
 			nTemp = pRow[0];

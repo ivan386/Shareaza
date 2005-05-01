@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #if !defined(AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_)
 #define AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_
- 
+
 #pragma once
 
 class CDownload;
@@ -34,13 +34,13 @@ class CShareazaURL;
 class CEDClient;
 
 
-class CDownloads  
+class CDownloads
 {
 // Construction
 public:
 	CDownloads();
 	virtual ~CDownloads();
-	
+
 // Attributes
 public:
 	DWORD			m_nLimitGeneric;
@@ -122,22 +122,22 @@ public:
 	{
 		return m_pList.GetHeadPosition();
 	}
-	
+
 	inline POSITION CDownloads::GetReverseIterator() const
 	{
 		return m_pList.GetTailPosition();
 	}
-	
+
 	inline CDownload* CDownloads::GetNext(POSITION& pos) const
 	{
 		return (CDownload*)m_pList.GetNext( pos );
 	}
-	
+
 	inline CDownload* CDownloads::GetPrevious(POSITION& pos) const
 	{
 		return (CDownload*)m_pList.GetPrev( pos );
 	}
-	
+
 	inline BOOL CDownloads::Check(CDownload* pDownload) const
 	{
 		return m_pList.Find( pDownload ) != NULL;

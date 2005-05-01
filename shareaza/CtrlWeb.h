@@ -1,7 +1,7 @@
 //
 // CtrlWeb.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@ public:
 	CWebCtrl();
 	virtual ~CWebCtrl();
 	DECLARE_DYNAMIC(CWebCtrl)
-	
+
 // Operations
 public:
 	BOOL	Create(DWORD dwStyle, CWnd* pParentWnd, UINT nID = AFX_IDW_PANE_FIRST);
@@ -39,7 +39,7 @@ public:
 	void	EnableSandbox(BOOL bSandbox = TRUE);
 	void	SetExternal(IDispatch* pDispatch);
 	HRESULT	Navigate(LPCTSTR lpszURL, DWORD dwFlags = 0, LPCTSTR lpszTargetFrameName = NULL, LPCTSTR lpszHeaders = NULL, LPVOID lpvPostData = NULL, DWORD dwPostDataLen = 0);
-	
+
 // Data Members
 protected:
 	CWnd					m_wndBrowser;
@@ -47,7 +47,7 @@ protected:
 	CComPtr<IDispatch>		m_pExternal;
 	BOOL					m_bSandbox;
 	DWORD					m_tFrame;
-	
+
 // Message Map
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -56,7 +56,7 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
-	
+
 // Menu Driver
 protected:
 	void					EnterMenu(POINT* pPoint);
@@ -66,13 +66,13 @@ protected:
 	HWND					m_hWndThis;
 	WNDPROC					m_pWndProc;
 	static CWebCtrl*		m_pThis;
-	
+
 // Event Handlers
 protected:
 	DECLARE_EVENTSINK_MAP()
 	virtual void BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pvFlags, VARIANT* pvTargetFrameName, VARIANT* pvPostData, VARIANT* pvHeaders, VARIANT_BOOL* pvCancel);
 	virtual void OnNewWindow2(LPDISPATCH* ppDisp, VARIANT_BOOL* bCancel);
-	
+
 // Control Site
 protected:
 	class DocSite : public COleControlSite
@@ -118,7 +118,7 @@ protected:
 			STDMETHOD(SetZoneMapping)(DWORD dwZone, LPCWSTR lpszPattern, DWORD dwFlags);
 		END_INTERFACE_PART(InternetSecurityManager)
 	};
-	
+
 	virtual BOOL CreateControlSite(COleControlContainer* pContainer, COleControlSite** ppSite, UINT nID, REFCLSID clsid);
 };
 

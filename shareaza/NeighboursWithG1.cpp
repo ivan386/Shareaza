@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ void CNeighboursWithG1::Connect()
 void CNeighboursWithG1::Close()
 {
 	CNeighboursBase::Close();
-	
+
 	m_pPingRoute->Clear();
 	m_pPongCache->Clear();
 }
@@ -85,13 +85,13 @@ void CNeighboursWithG1::OnG1Ping()
 	{
 		DWORD dwNow = GetTickCount();
 		GGUID pGUID;
-		
+
 		Network.CreateID( pGUID );
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CG1Neighbour* pNeighbour = (CG1Neighbour*)GetNext( pos );
-			
+
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 && pNeighbour->m_bPongCaching )
 			{
 				pNeighbour->SendPing( dwNow, &pGUID );
@@ -106,13 +106,13 @@ void CNeighboursWithG1::OnG1Ping()
 void CNeighboursWithG1::OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume)
 {
 	CPongItem* pPongCache = m_pPongCache->Add( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
-	
+
 	if ( pPongCache == NULL ) return;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CG1Neighbour* pNeighbour = (CG1Neighbour*)GetNext( pos );
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 && pNeighbour != pFrom )
 		{
 			pNeighbour->OnNewPong( pPongCache );

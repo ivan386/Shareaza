@@ -1,7 +1,7 @@
 //
 // CollectionFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ public:
 	CCollectionFile();
 	virtual ~CCollectionFile();
 	DECLARE_DYNAMIC(CCollectionFile)
-	
+
 // Member File Class
 public:
 	class File
@@ -42,7 +42,7 @@ public:
 	public:
 		File(CCollectionFile* pParent);
 		~File();
-		
+
 	// Attributes
 	public:
 		CCollectionFile*	m_pParent;
@@ -59,7 +59,7 @@ public:
 		QWORD				m_nSize;
 		CXMLElement*		m_pMetadata;
 		CString				m_sSource;
-		
+
 	// Operations
 	public:
 		BOOL	Parse(CXMLElement* pXML);
@@ -67,9 +67,9 @@ public:
 		BOOL	IsDownloading() const;
 		BOOL	Download();
 		BOOL	ApplyMetadata(CLibraryFile* pShared);
-		
+
 	};
-	
+
 // Operations
 public:
 	BOOL		Open(LPCTSTR pszFile);
@@ -82,7 +82,7 @@ public:
 protected:
 	BOOL		LoadManifest(CZIPFile& pZIP);
 	static CXMLElement* CloneMetadata(CXMLElement* pMetadata);
-	
+
 // Attributes
 protected:
 	CPtrList		m_pFiles;
@@ -90,44 +90,44 @@ protected:
 	CString			m_sThisURI;
 	CString			m_sParentURI;
 	CXMLElement*	m_pMetadata;
-	
+
 // Inlines
 public:
 	inline BOOL IsOpen() const
 	{
 		return ( m_pFiles.GetCount() > 0 );
 	}
-	
+
 	inline POSITION GetFileIterator() const
 	{
 		return m_pFiles.GetHeadPosition();
 	}
-	
+
 	inline File* GetNextFile(POSITION& pos) const
 	{
 		return (File*)m_pFiles.GetNext( pos );
 	}
-	
+
 	inline int GetFileCount() const
 	{
 		return m_pFiles.GetCount();
 	}
-	
+
 	inline CString GetTitle() const
 	{
 		return m_sTitle;
 	}
-	
+
 	inline CString GetThisURI() const
 	{
 		return m_sThisURI;
 	}
-	
+
 	inline CString GetParentURI() const
 	{
 		return m_sParentURI;
 	}
-	
+
 	inline CXMLElement* GetMetadata() const
 	{
 		return m_pMetadata;

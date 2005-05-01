@@ -1,7 +1,7 @@
 //
 // GraphLine.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ CLineGraph::CLineGraph()
 	m_crBack		= 0;
 	m_crGrid		= RGB( 0, 0, 128 );
 	m_nMinGridVert	= 32;
-	
+
 	m_nSpeed		= 100;
 	m_nScale		= 2;
 	m_nMaximum		= 0;
@@ -194,7 +194,7 @@ void CLineGraph::ResetMaximum(BOOL bForce)
 		DWORD nValue = pItem->GetMaximum();
 		nMaximum = max( nMaximum, nValue );
 	}
-	
+
 	if ( nMaximum || bForce ) m_nMaximum = nMaximum;
 }
 
@@ -228,22 +228,22 @@ void CLineGraph::Paint(CDC* pDC, CRect* pRect)
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CGraphItem* pItem = (CGraphItem*)m_pItems.GetNext( pos );
-		
+
 		DWORD nPoints	= min( pItem->m_nLength, nWidth );
 		POINT* pPoints	= new POINT[ nPoints ];
-		
+
 		for ( DWORD nPos = 0 ; nPos < nPoints ; nPos++ )
 		{
 			DWORD nValue = pItem->GetValueAt( nPos );
-			
+
 			nValue = pRect->bottom - nValue * ( pRect->Height() - TOP_MARGIN ) / m_nMaximum;
 
 			pPoints[ nPos ].x = pRect->right - nPos * m_nScale - 1;
 			pPoints[ nPos ].y = nValue + 4;
 		}
-		
+
 		pItem->MakeGradient( m_crBack );
-		
+
 		CPen* pOldPen = (CPen*)pDC->SelectObject( &pItem->m_pPen[3] );
 
 		for ( int nLayer = 4 ; nLayer ; nLayer-- )

@@ -1,7 +1,7 @@
 //
 // LibraryList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,18 +47,18 @@ public:
 	{
 		return m_nCount;
 	}
-	
+
 	inline BOOL IsEmpty() const
 	{
 		return m_nCount == 0;
 	}
-	
+
 	inline DWORD GetHead() const
 	{
 		ASSERT( m_nCount > 0 );
 		return m_pList[ 0 ];
 	}
-	
+
 	inline DWORD GetTail() const
 	{
 		ASSERT( m_nCount > 0 );
@@ -74,12 +74,12 @@ public:
 	{
 		return m_nCount ? (POSITION)1 : NULL;
 	}
-	
+
 	inline POSITION GetTailPosition() const
 	{
 		return m_nCount ? (POSITION)m_nCount : NULL;
 	}
-	
+
 	inline DWORD GetPrev(POSITION& pos) const
 	{
 		ASSERT( (int)pos > 0 && (int)pos <= m_nCount );
@@ -87,7 +87,7 @@ public:
 		if ( (int)pos < 1 || (int)pos > m_nCount ) pos = NULL;
 		return nItem;
 	}
-	
+
 	inline DWORD GetNext(POSITION& pos) const
 	{
 		ASSERT( (int)pos > 0 && (int)pos <= m_nCount );
@@ -95,7 +95,7 @@ public:
 		if ( (int)pos < 1 || (int)pos > m_nCount ) pos = NULL;
 		return nItem;
 	}
-	
+
 	inline POSITION AddHead(DWORD nItem)
 	{
 		if ( m_nCount == m_nBuffer )
@@ -119,7 +119,7 @@ public:
 		m_pList[ m_nCount++ ] = nItem;
 		return (POSITION)m_nCount;
 	}
-	
+
 	inline POSITION CheckAndAdd(DWORD nItem)
 	{
 		return ( Find( nItem ) == NULL ) ? AddTail( nItem ) : NULL;
@@ -139,7 +139,7 @@ public:
 		ASSERT( m_nCount > 0 );
 		return m_pList[ --m_nCount ];
 	}
-	
+
 	inline void RemoveAt(POSITION pos)
 	{
 		int nPos = (int)pos;
@@ -147,7 +147,7 @@ public:
 		MoveMemory( m_pList + nPos - 1, m_pList + nPos, sizeof(DWORD) * ( m_nCount - nPos ) );
 		m_nCount--;
 	}
-	
+
 	inline void RemoveAll()
 	{
 		m_nCount = 0;
@@ -167,7 +167,7 @@ public:
 public:
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	int				Merge(CLibraryList* pList);
-	
+
 
 // Automation
 protected:
@@ -188,7 +188,7 @@ protected:
 		STDMETHOD(Clone)(THIS_ IEnumVARIANT FAR* FAR* ppenum);
 		POSITION m_pos;
 	END_INTERFACE_PART(EnumVARIANT)
-	
+
 	DECLARE_INTERFACE_MAP()
 
 };

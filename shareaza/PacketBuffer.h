@@ -1,7 +1,7 @@
 //
 // PacketBuffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CBuffer;
 class CG1PacketBufferType;
 
 // Holds 9 arrays of 64 Gnutella packets each, one array for each packet type, like ping or pong
-class CG1PacketBuffer  
+class CG1PacketBuffer
 {
 
 public:

@@ -1,7 +1,7 @@
 //
 // RouteCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ public:
 	void				Resize(DWORD nSize);
 	DWORD				GetNextSize(DWORD nDesired);
 	void				Clear();
-	
+
 	inline BOOL IsFull() const
 	{
 		return m_nUsed == m_nBuffer;
@@ -72,7 +72,7 @@ public:
 };
 
 
-class CRouteCache  
+class CRouteCache
 {
 // Construction
 public:

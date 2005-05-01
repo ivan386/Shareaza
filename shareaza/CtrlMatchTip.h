@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,7 +76,7 @@ protected:
 	static COLORREF	m_crText;
 	static COLORREF	m_crBorder;
 	static COLORREF	m_crWarnings; // Colour of warning messages
-	
+
 // Operations
 public:
 	void		Show(CMatchFile* pFile, CQueryHit* pHit);

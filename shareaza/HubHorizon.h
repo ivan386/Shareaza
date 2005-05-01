@@ -1,7 +1,7 @@
 //
 // HubHorizon.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,28 +43,28 @@ class CHubHorizonGroup
 public:
 	CHubHorizonGroup();
 	virtual ~CHubHorizonGroup();
-	
+
 // Attributes
 protected:
 	CHubHorizonHub**	m_pList;
 	DWORD				m_nCount;
 	DWORD				m_nBuffer;
-	
+
 // Operations
 public:
 	void		Add(IN_ADDR* pAddress, WORD nPort);
 	void		Clear();
-	
+
 };
 
 
-class CHubHorizonPool  
+class CHubHorizonPool
 {
 // Construction
 public:
 	CHubHorizonPool();
 	virtual ~CHubHorizonPool();
-	
+
 // Attributes
 protected:
 	CHubHorizonHub*		m_pBuffer;
@@ -72,7 +72,7 @@ protected:
 	CHubHorizonHub*		m_pFree;
 	CHubHorizonHub*		m_pActive;
 	DWORD				m_nActive;
-	
+
 // Operations
 public:
 	void				Setup();
@@ -81,7 +81,7 @@ public:
 	void				Remove(CHubHorizonHub* pHub);
 	CHubHorizonHub*		Find(IN_ADDR* pAddress);
 	int					AddHorizonHubs(CG2Packet* pPacket);
-	
+
 };
 
 extern CHubHorizonPool	HubHorizonPool;

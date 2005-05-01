@@ -1,7 +1,7 @@
 //
 // PageProfileFavourites.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,73 +78,73 @@ void CFavouritesProfilePage::DoDataExchange(CDataExchange* pDX)
 BOOL CFavouritesProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
 	m_gdiImageList.Add( AfxGetApp()->LoadIcon( IDI_WEB_URL ) );
-	
+
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
-	
+
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, rc.right / 2, -1 );
 	m_wndList.InsertColumn( 1, _T("URL"), LVCFMT_LEFT, rc.right / 2, 0 );
-	
+
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
-	
+
 	if ( CXMLElement* pBookmarks = MyProfile.GetXML( _T("bookmarks") ) )
 	{
 		for ( POSITION pos = pBookmarks->GetElementIterator() ; pos ; )
 		{
 			CXMLElement* pBookmark = pBookmarks->GetNextElement( pos );
-			
+
 			if ( pBookmark->IsNamed( _T("bookmark") ) )
 			{
 				CString strTitle	= pBookmark->GetAttributeValue( _T("title") );
 				CString strURL		= pBookmark->GetAttributeValue( _T("url") );
-				
+
 				int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 					m_wndList.GetItemCount(), strTitle, 0, 0, 0, 0 );
 				m_wndList.SetItemText( nItem, 1, strURL );
 			}
 		}
 	}
-	
+
 	Skin.Translate( _T("CFavouritesProfileList"), m_wndList.GetHeaderCtrl() );
 	UpdateData( FALSE );
 	m_wndAdd.EnableWindow( FALSE );
 	m_wndRemove.EnableWindow( FALSE );
-	
+
 	return TRUE;
 }
 
-void CFavouritesProfilePage::OnChangeWebName() 
+void CFavouritesProfilePage::OnChangeWebName()
 {
 	UpdateData();
 	m_wndAdd.EnableWindow( m_sTitle.GetLength() && m_sURL.Find( _T("http://") ) == 0 );
 }
 
-void CFavouritesProfilePage::OnChangeWebUrl() 
+void CFavouritesProfilePage::OnChangeWebUrl()
 {
 	UpdateData();
 	m_wndAdd.EnableWindow( m_sTitle.GetLength() && m_sURL.Find( _T("http://") ) == 0 );
 }
 
-void CFavouritesProfilePage::OnItemChangedWebList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CFavouritesProfilePage::OnItemChangedWebList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 }
 
-void CFavouritesProfilePage::OnWebAdd() 
+void CFavouritesProfilePage::OnWebAdd()
 {
 	UpdateData();
 
 	int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 		m_wndList.GetItemCount(), m_sTitle, 0, 0, 0, 0 );
 	m_wndList.SetItemText( nItem, 1, m_sURL );
-	
+
 	m_sTitle.Empty();
 	m_sURL.Empty();
 
@@ -152,7 +152,7 @@ void CFavouritesProfilePage::OnWebAdd()
 	m_wndAdd.EnableWindow( FALSE );
 }
 
-void CFavouritesProfilePage::OnWebRemove() 
+void CFavouritesProfilePage::OnWebRemove()
 {
 	for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 	{
@@ -161,14 +161,14 @@ void CFavouritesProfilePage::OnWebRemove()
 			m_wndList.DeleteItem( nItem );
 		}
 	}
-	
+
 	m_wndRemove.EnableWindow( FALSE );
 }
 
 void CFavouritesProfilePage::OnOK()
 {
 	UpdateData();
-	
+
 	if ( CXMLElement* pBookmarks = MyProfile.GetXML( _T("bookmarks"), TRUE ) )
 	{
 		pBookmarks->DeleteAllElements();
@@ -181,8 +181,8 @@ void CFavouritesProfilePage::OnOK()
 		}
 
 		if ( pBookmarks->GetElementCount() == 0 ) pBookmarks->Delete();
-	}	
-	
+	}
+
 	CSettingsPage::OnOK();
 }
 

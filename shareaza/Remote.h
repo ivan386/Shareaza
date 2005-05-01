@@ -1,7 +1,7 @@
 //
 // Remote.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CRemote : public CTransfer
 public:
 	CRemote(CConnection* pConnection);
 	~CRemote();
-	
+
 // Attributes
 protected:
 	CString				m_sHandshake;
@@ -56,7 +56,7 @@ protected:
 	void			Prepare(LPCTSTR pszPrefix = NULL);
 	void			Add(LPCTSTR pszKey, LPCTSTR pszValue);
 	void			Output(LPCTSTR pszName);
-	
+
 // Page Handlers
 protected:
 	void	PageSwitch(CString& strPath);

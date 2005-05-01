@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,7 @@ class CXMLElement;
 class CXMLAttribute;
 
 
-class CXMLNode  
+class CXMLNode
 {
 // Construction
 public:
@@ -72,7 +72,7 @@ public:
 	friend class CQuerySearch;
 
 	friend class CXMLCOM;
-	
+
 };
 
 
@@ -92,7 +92,7 @@ protected:
 	CAtlList<CXMLElement*> m_pElements;
 	CAtlMap<CString, CXMLAttribute*, CStringElementTraits<CString> > m_pAttributes;
 #endif
-	
+
 // Operations
 public:
 	CXMLElement*			Clone(CXMLElement* pParent = NULL);
@@ -150,7 +150,7 @@ public:
 	static LPCTSTR	xmlnsSchema;
 	static LPCTSTR	xmlnsInstance;
 	static LPCTSTR	schemaName;
-	
+
 // Operations
 public:
 	CXMLAttribute*	Clone(CXMLElement* pParent = NULL);

@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ class CBrowseProfileCtrl : public CWnd
 public:
 	CBrowseProfileCtrl();
 	virtual ~CBrowseProfileCtrl();
-	
+
 // Attributes
 protected:
 	CCriticalSection	m_pSection;
@@ -63,7 +63,7 @@ protected:
 	CRichElement*		m_pdBookmarks;
 protected:
 	CBitmap				m_bmHead;
-	
+
 // Operations
 public:
 	void	OnSkinChange();
@@ -73,13 +73,13 @@ protected:
 	void	UpdateDocument1(CGProfile* pProfile);
 	void	UpdateDocument2(CHostBrowser* pBrowser);
 	void	LoadDefaultHead();
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CBrowseProfileCtrl)
 	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CBrowseProfileCtrl)
@@ -90,9 +90,9 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

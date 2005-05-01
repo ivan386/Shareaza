@@ -1,7 +1,7 @@
 //
 // ChatSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,7 @@ class CChatSession : public CConnection
 public:
 	CChatSession(CChatFrame* pFrame = NULL);
 	virtual ~CChatSession();
-	
+
 // Attributes
 public:
 	BOOL			m_bGUID;
@@ -60,7 +60,7 @@ public:
 public:
 	CPrivateChatFrame*	m_pWndPrivate;
 	CWnd*				m_pWndPublic;
-	
+
 // Operations
 public:
 	void			Setup(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
@@ -104,7 +104,7 @@ protected:
 	BOOL	OnChatRequest(CG2Packet* pPacket);
 	BOOL	OnChatAnswer(CG2Packet* pPacket);
 	BOOL	OnChatMessage(CG2Packet* pPacket);
-	
+
 };
 
 enum

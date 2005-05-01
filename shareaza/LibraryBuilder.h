@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,13 +30,13 @@ class CLibraryBuilderInternals;
 class CLibraryBuilderPlugins;
 
 
-class CLibraryBuilder  
+class CLibraryBuilder
 {
 // Construction
 public:
 	CLibraryBuilder();
 	virtual ~CLibraryBuilder();
-	
+
 // Attributes
 protected:
 	CCriticalSection	m_pSection;
@@ -76,7 +76,7 @@ protected:
 	BOOL		DetectVirtualFile(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	BOOL		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	BOOL		DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	
+
 	friend class CLibraryBuilderInternals;
 	friend class CLibraryBuilderPlugins;
 

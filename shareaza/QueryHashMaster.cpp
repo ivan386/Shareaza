@@ -1,7 +1,7 @@
 //
 // QueryHashMaster.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ CQueryHashMaster::~CQueryHashMaster()
 void CQueryHashMaster::Create()
 {
 	CQueryHashTable::Create();
-	
+
 	m_nPerGroup			= 250;
 	m_bValid			= FALSE;
 	m_bLive				= FALSE;
@@ -74,11 +74,11 @@ void CQueryHashMaster::Add(CQueryHashTable* pTable)
 	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_nHash > 0 );
 	ASSERT( pTable->m_pGroup == NULL );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CQueryHashGroup* pGroup = GetNext( pos );
-		
+
 		if ( pGroup->m_nHash == pTable->m_nHash &&
 			 pGroup->GetCount() < m_nPerGroup )
 		{
@@ -87,7 +87,7 @@ void CQueryHashMaster::Add(CQueryHashTable* pTable)
 			return;
 		}
 	}
-	
+
 	CQueryHashGroup* pGroup = new CQueryHashGroup( pTable->m_nHash );
 	m_pGroups.AddTail( pGroup );
 	pGroup->Add( pTable );
@@ -101,10 +101,10 @@ void CQueryHashMaster::Remove(CQueryHashTable* pTable)
 {
 	ASSERT( pTable != NULL );
 	if( pTable->m_pGroup == NULL ) return;
-	
+
 	CQueryHashGroup* pGroup = pTable->m_pGroup;
 	pGroup->Remove( pTable );
-	
+
 	if ( pGroup->GetCount() == 0 )
 	{
 		POSITION pos = m_pGroups.Find( pGroup );
@@ -112,7 +112,7 @@ void CQueryHashMaster::Remove(CQueryHashTable* pTable)
 		m_pGroups.RemoveAt( pos );
 		delete pGroup;
 	}
-	
+
 	m_bValid = FALSE;
 }
 
@@ -122,7 +122,7 @@ void CQueryHashMaster::Remove(CQueryHashTable* pTable)
 void CQueryHashMaster::Build()
 {
 	DWORD tNow = GetTickCount();
-	
+
 	if ( m_bValid )
 	{
 		if ( tNow - m_nCookie < 600000 ) return;
@@ -131,49 +131,49 @@ void CQueryHashMaster::Build()
 	{
 		if ( tNow - m_nCookie < 20000 ) return;
 	}
-	
+
 	{
 		CSingleLock oLock( &Library.m_pSection );
 		if ( !oLock.Lock( 500 ) ) return;
 		CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
 		if ( pLocalTable == NULL ) return;
-		
+
 		Clear();
 		Merge( pLocalTable );
 	}
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CQueryHashGroup* pGroup = GetNext( pos );
 		Merge( pGroup );
 	}
-	
+
 	if ( Transfers.m_pSection.Lock( 100 ) )
 	{
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
-			
+
 			if ( pDownload->m_bSHA1 )
 			{
 				AddString( CSHA::HashToString( &pDownload->m_pSHA1, TRUE ) );
 			}
-			
+
 			if ( pDownload->m_bED2K )
 			{
 				AddString( CED2K::HashToString( &pDownload->m_pED2K, TRUE ) );
 			}
-			
+
 			if ( pDownload->m_bBTH )
 			{
 				AddString( _T("BTIH") );
 				AddString( _T("urn:btih:") + CSHA::HashToString( &pDownload->m_pBTH, FALSE ) );
 			}
 		}
-		
+
 		Transfers.m_pSection.Unlock();
 	}
-	
+
 	m_bValid	= TRUE;
 	m_bLive		= TRUE;
 	m_nCookie	= tNow;

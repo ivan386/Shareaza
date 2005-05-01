@@ -1,7 +1,7 @@
 //
 // PageSettingsRemote.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CRemoteSettingsPage : public CSettingsPage
 public:
 	CRemoteSettingsPage();
 	virtual ~CRemoteSettingsPage();
-	
+
 	DECLARE_DYNAMIC(CRemoteSettingsPage)
 	enum { IDD = IDD_SETTINGS_REMOTE };
 
@@ -46,7 +46,7 @@ protected:
 	BOOL		m_bOldEnable;
 	CString		m_sOldUsername;
 	CString		m_sOldPassword;
-	
+
 // Operations
 public:
 

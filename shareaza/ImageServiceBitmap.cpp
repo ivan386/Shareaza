@@ -1,7 +1,7 @@
 //
 // ImageServiceBitmap.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,44 +66,44 @@ IMPLEMENT_UNKNOWN(CBitmapImageService, Service)
 STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICEDATA FAR* pParams, SAFEARRAY FAR* FAR* ppImage)
 {
 	METHOD_PROLOGUE( CBitmapImageService, Service )
-	
+
 	LPBYTE pRowBuf, pData;
 	BITMAPFILEHEADER pBFH;
 	BITMAPINFOHEADER pBIH;
 	RGBQUAD pPalette[256];
 	LONG nWidth, nHeight;
 	DWORD nRead;
-	
+
 	DWORD nBaseAddress = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
-	
+
 	ReadFile( hFile, &pBFH, sizeof(pBFH), &nRead, NULL );
 	if ( nRead != sizeof(pBFH) ) return E_FAIL;
 	ReadFile( hFile, &pBIH, sizeof(pBIH), &nRead, NULL );
 	if ( nRead != sizeof(pBIH) ) return E_FAIL;
-	
+
 	if ( pBFH.bfType != 'MB' ) return E_FAIL;
 	if ( pBIH.biBitCount != 8 && pBIH.biBitCount != 24 ) return E_FAIL;
-	
+
 	nWidth	= (int)pBIH.biWidth;
 	nHeight	= (int)pBIH.biHeight;
-	
+
 	pParams->nWidth		= nWidth;
 	pParams->nHeight	= nHeight;
-	
+
 	if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
-	
+
 	if ( pBIH.biBitCount == 8 )
 	{
 		ReadFile( hFile, pPalette, sizeof(RGBQUAD) * 256, &nRead, NULL );
 		if ( nRead != sizeof(RGBQUAD) * 256 ) return E_FAIL;
 	}
-	
+
 	if ( pBFH.bfOffBits )
 	{
 		if ( SetFilePointer( hFile, nBaseAddress + pBFH.bfOffBits, NULL, FILE_BEGIN )
 			 != nBaseAddress + pBFH.bfOffBits ) return E_FAIL;
 	}
-	
+
     UINT nInPitch = nWidth * pBIH.biBitCount / 8;
 	for ( ; nInPitch & 3 ; ) nInPitch++;
     UINT nOutPitch = nWidth * 3;
@@ -158,7 +158,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 			jnz loop1
 			}
 		}
-		else 
+		else
 		{
 			__asm {
 			mov eax, nOutPitch
@@ -191,7 +191,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromFile(HANDLE hFile, DWORD nLe
 STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemory, IMAGESERVICEDATA FAR* pParams, SAFEARRAY FAR* FAR* ppImage)
 {
 	METHOD_PROLOGUE( CBitmapImageService, Service )
-	
+
 	LPBYTE pData;
 	BITMAPFILEHEADER pBFH;
 	BITMAPINFOHEADER pBIH;
@@ -204,32 +204,32 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 	SafeArrayGetUBound( pMemory, 1, &nMemory );
 	if ( ++nMemory <= sizeof(pBIH) + sizeof(pBFH) ) return E_FAIL;
 	SafeArrayAccessData( pMemory, (void**)&pSource );
-	
+
 	CopyMemory( &pBFH, pSource, sizeof(pBFH) );
 	pSource += sizeof(pBFH);
 	nMemory -= sizeof(pBFH);
 	CopyMemory( &pBIH, pSource, sizeof(pBIH) );
 	pSource += sizeof(pBIH);
 	nMemory -= sizeof(pBIH);
-	
+
 	if ( pBFH.bfType != 'MB' || ( pBIH.biBitCount != 8 && pBIH.biBitCount != 24 ) )
 	{
 		SafeArrayUnaccessData( pMemory );
 		return E_FAIL;
 	}
-	
+
 	nWidth	= (int)pBIH.biWidth;
 	nHeight	= (int)pBIH.biHeight;
-	
+
 	pParams->nWidth		= nWidth;
 	pParams->nHeight	= nHeight;
-	
+
 	if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
 	{
 		SafeArrayUnaccessData( pMemory );
 		return S_OK;
 	}
-	
+
 	if ( pBIH.biBitCount == 8 )
 	{
 		if ( nMemory < sizeof(RGBQUAD) * 256 )
@@ -241,7 +241,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 		pSource += sizeof(RGBQUAD) * 256;
 		nMemory -= sizeof(RGBQUAD) * 256;
 	}
-	
+
 	if ( pBFH.bfOffBits )
 	{
 		SafeArrayUnaccessData( pMemory );
@@ -251,17 +251,17 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 		pSource += pBFH.bfOffBits;
 		nMemory -= pBFH.bfOffBits;
 	}
-	
+
     UINT nInPitch = nWidth * pBIH.biBitCount / 8;
 	for ( ; nInPitch & 3 ; ) nInPitch++;
     UINT nOutPitch = nWidth * 3;
 	for ( ; nOutPitch & 3 ; ) nOutPitch++;
-	
+
 	UINT nArray = nOutPitch * (UINT)nHeight;
-	
+
 	*ppImage = SafeArrayCreateVector( VT_UI1, 0, nArray );
 	SafeArrayAccessData( *ppImage, (VOID**)&pData );
-	
+
 	for ( int nY = nHeight - 1 ; nY >= 0 ; nY-- )
 	{
 		if ( nMemory < (LONG)nInPitch )
@@ -302,7 +302,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 			dec ecx
 			jnz loop1
 		}
-		else 
+		else
 		{
 		__asm {
 			mov eax, nOutPitch
@@ -327,7 +327,7 @@ STDMETHODIMP CBitmapImageService::XService::LoadFromMemory(SAFEARRAY FAR* pMemor
 	}
 	SafeArrayUnaccessData( *ppImage );
 	SafeArrayUnaccessData( pMemory );
-	
+
 	return S_OK;
 }
 

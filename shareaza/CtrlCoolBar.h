@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,7 @@ protected:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
 
 	friend class CCoolBarItem;
@@ -143,7 +143,7 @@ protected:
 	CCoolBarCtrl*	m_pBar;
 	BOOL			m_bDirty;
 	int				m_nWidth;
-	
+
 // Operations
 public:
 	virtual void Show(BOOL bOn);
@@ -156,9 +156,9 @@ public:
 protected:
 	void	Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuGray, BOOL bTransparent);
 public:
-	
+
 	static CCoolBarItem* FromCmdUI(CCmdUI* pUI);
-	
+
 	friend class CCoolBarCtrl;
 };
 

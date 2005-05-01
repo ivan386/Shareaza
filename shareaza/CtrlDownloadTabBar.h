@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,7 @@ public:
 	public:
 		TabItem(CDownloadGroup* pGroup, int nCookie);
 		virtual ~TabItem();
-		
+
 	// Attributes
 	public:
 		CDownloadGroup*	m_pGroup;
@@ -48,14 +48,14 @@ public:
 		CString			m_sName;
 		int				m_nCount;
 		BOOL			m_bSelected;
-		
+
 	// Operations
 	public:
 		BOOL	Update(int nCookie);
 		BOOL	Select(BOOL bSelect);
 		void	Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRect, BOOL bHot, BOOL bTransparent);
 	};
-	
+
 // Attributes
 protected:
 	CPtrList		m_pItems;
@@ -68,7 +68,7 @@ protected:
 	UINT			m_nMessage;
 	CString			m_sMessage;
 	CBitmap			m_bmImage;
-	
+
 // Operations
 public:
 	void			SetWatermark(HBITMAP hBitmap);
@@ -85,7 +85,7 @@ protected:
 	CDownloadGroup*	GetSelectedGroup();
 	void			GetSelectedDownloads(CPtrList* pDownloads);
 	void			NotifySelection();
-	
+
 // Overrides
 public:
 	virtual BOOL	Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, UINT nID = AFX_IDW_STATUS_BAR);
@@ -116,6 +116,6 @@ protected:
 	afx_msg void OnDownloadGroupPause();
 	afx_msg void OnUpdateDownloadGroupClear(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadGroupClear();
-	
+
 	friend class TabItem;
 };

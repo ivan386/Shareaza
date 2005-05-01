@@ -1,7 +1,7 @@
 //
 // DlgPromote.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,10 +40,10 @@ public:
 	CStatic	m_wndWeb;
 	CStatic	m_wndTitle;
 	//}}AFX_DATA
-	
+
 	COLORREF	m_crWhite;
 	CBrush		m_brWhite;
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CPromoteDlg)

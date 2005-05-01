@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,9 +73,9 @@ void CHashProgressBar::Run()
 {
 	int nRemaining = LibraryBuilder.GetRemaining();
 	LibraryBuilder.SanityCheck();
-	
+
 	BOOL bShow = FALSE;
-	
+
 	if ( m_hWnd == NULL )
 	{
 		if ( nRemaining > DISPLAY_THRESHOLD )
@@ -91,9 +91,9 @@ void CHashProgressBar::Run()
 	{
 		DestroyWindow();
 	}
-	
+
 	if ( m_hWnd != NULL ) Update();
-		
+
 	if ( bShow && m_hWnd != NULL )
 	{
 		Show( WINDOW_WIDTH, TRUE );
@@ -104,19 +104,19 @@ void CHashProgressBar::Update()
 {
 	m_nRemaining = LibraryBuilder.GetRemaining();
 	CString strFile = LibraryBuilder.GetCurrentFile();
-	
+
 	int nPos = strFile.ReverseFind( '\\' );
 	if ( nPos > 0 ) strFile = strFile.Mid( nPos + 1 );
-	
+
 	if ( strFile != m_sCurrent )
 	{
 		m_sCurrent = strFile;
-		
+
 		CClientDC dc( this );
 		CFont* pOld = (CFont*)dc.SelectObject( &CoolInterface.m_fntCaption );
 		CSize sz = dc.GetTextExtent( m_sCurrent );
 		dc.SelectObject( pOld );
-		
+
 		int nWidth = sz.cx + 4 + 48 + 8 + 16;
 		nWidth = max( nWidth, WINDOW_WIDTH );
 		nWidth = min( nWidth, GetSystemMetrics( SM_CXSCREEN ) );
@@ -128,7 +128,7 @@ void CHashProgressBar::Update()
 		*/
 		Show( nWidth, FALSE );
 	}
-	
+
 	Invalidate();
 }
 
@@ -145,59 +145,59 @@ void CHashProgressBar::Show(int nWidth, BOOL bShow)
 /////////////////////////////////////////////////////////////////////////////
 // CHashProgressBar message handlers
 
-int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_SEARCH_FOLDER),
 		IMAGE_ICON, 48, 48, 0 );
-	
+
 	if ( m_hIcon == NULL )
 	{
 		m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 			MAKEINTRESOURCE(IDI_SEARCH_FOLDER), IMAGE_ICON, 32, 32, 0 );
 	}
-	
+
 	m_crFill	= GetSysColor( COLOR_ACTIVECAPTION );
 	m_crBorder	= CCoolInterface::CalculateColour( m_crFill, 0xFFFFFFFF, 128 );
 	m_crText	= CCoolInterface::CalculateColour( m_crFill, 0xFFFFFFFF, 220 );
-	
+
 	if ( m_brFill.m_hObject != NULL ) m_brFill.DeleteObject();
 	m_brFill.CreateSolidBrush( m_crFill );
-	
+
 	return 0;
 }
 
-BOOL CHashProgressBar::OnEraseBkgnd(CDC* pDC) 
+BOOL CHashProgressBar::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CHashProgressBar::OnPaint() 
+void CHashProgressBar::OnPaint()
 {
 	CRect rcClient, rcText;
 	CPaintDC dc( this );
-		
+
 	GetClientRect( &rcClient );
-	
+
 	dc.Draw3dRect( &rcClient, m_crBorder, m_crBorder );
 	rcClient.DeflateRect( 1, 1 );
 	dc.SetBkMode( OPAQUE );
 	dc.SetBkColor( m_crFill );
 	dc.SetTextColor( ( m_nFlash++ & 1 ) ? RGB( 255, 255, 0 ) : m_crText );
-	
+
 	DrawIconEx( dc, rcClient.left + 4, rcClient.top + 4,
 		m_hIcon, 48, 48, 0, m_brFill, DI_NORMAL );
 	dc.ExcludeClipRect( rcClient.left + 4, rcClient.top + 4,
 		rcClient.left + 4 + 48, rcClient.top + 4 + 48 );
-	
+
 	CFont* pOld = dc.GetCurrentFont();
 	CString strText, strFormat;
 	CSize sz;
-	
+
 	LoadString( strFormat, IDS_HASH_MESSAGE );
 	strText.Format( strFormat, m_nRemaining );
-	
+
 	dc.SelectObject( &CoolInterface.m_fntNormal );
 	sz = dc.GetTextExtent( strText );
 	rcText.SetRect( 4 + 48 + 8, 12, 4 + 48 + 8 + sz.cx, 12 + sz.cy );
@@ -205,16 +205,16 @@ void CHashProgressBar::OnPaint()
 	dc.ExtTextOut( rcText.left, rcText.top, ETO_OPAQUE|ETO_CLIPPED,
 		&rcText, strText, NULL );
 	dc.ExcludeClipRect( rcText.left, rcText.top, rcText.right, rcText.bottom );
-	
+
 	dc.SelectObject( &CoolInterface.m_fntCaption );
 	sz = dc.GetTextExtent( m_sCurrent );
 	dc.ExtTextOut( rcText.left, rcClient.top + 4 + 48 - sz.cy - 8,
 		ETO_OPAQUE|ETO_CLIPPED, &rcClient, m_sCurrent, NULL );
-	
+
 	dc.SelectObject( pOld );
 }
 
-void CHashProgressBar::OnLButtonDown(UINT nFlags, CPoint point) 
+void CHashProgressBar::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	ShowWindow( SW_HIDE );
 }

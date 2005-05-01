@@ -1,7 +1,7 @@
 //
 // BitziDownloader.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,7 @@ void CBitziDownloader::Stop()
 
 	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
-	
+
 	if ( m_hThread == NULL ) return;
 
     int nAttempt = 5;
@@ -203,7 +203,7 @@ void CBitziDownloader::OnRun()
 
 				if ( m_hRequest != NULL ) InternetCloseHandle( m_hRequest );
 				m_hRequest = NULL;
-								
+
 				m_pDlg->OnFailure( m_nFileIndex, _T("Failed") );
 
 				Sleep( 1000 );
@@ -264,7 +264,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	int nPos, nPort = INTERNET_DEFAULT_HTTP_PORT;
 	CString strHost, strPath;
-	
+
 	strHost = m_sURL;
 	nPos = strHost.Find( _T("http://") );
 	if ( nPos != 0 ) return FALSE;
@@ -274,7 +274,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 	strPath = strHost.Mid( nPos );
 	strHost = strHost.Left( nPos );
 	nPos = strHost.Find( ':' );
-	
+
 	if ( nPos > 0 )
 	{
 		_stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort );
@@ -310,7 +310,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	TCHAR szStatusCode[32];
 	DWORD nStatusCode = 0, nStatusLen = 32;
-	
+
 	if ( ! HttpQueryInfo( m_hRequest, HTTP_QUERY_STATUS_CODE, szStatusCode,
 		&nStatusLen, NULL ) ) return FALSE;
 
@@ -319,7 +319,7 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	LPBYTE pResponse = NULL;
 	DWORD nRemaining, nResponse = 0;
-	
+
 	while ( InternetQueryDataAvailable( m_hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
 	{
 		pResponse = (LPBYTE)realloc( pResponse, nResponse + nRemaining );
@@ -367,13 +367,13 @@ BOOL CBitziDownloader::DecodeResponse()
 		if ( pSchema->m_sBitziTest.GetLength() && LookupValue( pSchema->m_sBitziTest ).GetLength() )
 		{
 			CXMLElement* pMetadata = ImportData( pSchema );
-			
+
 			if ( pMetadata == NULL ) return FALSE;
-			
+
 			return SubmitMetaData( pMetadata );
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -385,7 +385,7 @@ CString CBitziDownloader::LookupValue(LPCTSTR pszPath)
 	CString strName, strPath( pszPath );
 	CXMLElement* pXML = m_pXML;
 	BOOL bFirst = TRUE;
-	
+
 	while ( strPath.GetLength() )
 	{
 		strName = strPath.SpanExcluding( _T("/") );
@@ -414,7 +414,7 @@ CString CBitziDownloader::LookupValue(LPCTSTR pszPath)
 
 		strPath = strPath.Mid( 1 );
 	}
-	
+
 	strName.Empty();
 	if ( pXML ) strName = pXML->GetValue();
 
@@ -429,11 +429,11 @@ CXMLElement* CBitziDownloader::ImportData(CSchema* pSchema)
 	CXMLElement* pRoot	= pSchema->Instantiate( TRUE );
 	CXMLElement* pXML	= pRoot->AddElement( pSchema->m_sSingular );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = pSchema->m_pBitziMap.GetHeadPosition() ; pos ; )
 	{
 		CSchemaBitzi* pMap = (CSchemaBitzi*)pSchema->m_pBitziMap.GetNext( pos );
-		
+
 		CString strValue = LookupValue( pMap->m_sFrom );
 		if ( strValue.IsEmpty() ) continue;
 
@@ -474,7 +474,7 @@ BOOL CBitziDownloader::SubmitMetaData(CXMLElement* pXML)
 	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile = Library.LookupFile( m_nFileIndex );
-	
+
 	if ( pFile == NULL )
 	{
 		delete pXML;
@@ -505,7 +505,7 @@ BOOL CBitziDownloader::MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput)
 	{
 		CXMLElement* pElement	= pInput->GetNextElement( pos );
 		CXMLElement* pTarget	= pOutput->GetElementByName( pElement->GetName() );
-		
+
 		if ( pTarget == NULL ) pOutput->AddElement( pElement->Clone() );
 	}
 
@@ -513,7 +513,7 @@ BOOL CBitziDownloader::MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput)
 	{
 		CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
 		CXMLAttribute* pTarget		= pOutput->GetAttribute( pAttribute->GetName() );
-		
+
 		if ( pTarget == NULL ) pOutput->AddAttribute( pAttribute->Clone() );
 	}
 

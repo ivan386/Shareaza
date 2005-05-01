@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -140,7 +140,7 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 	if ( pPage == NULL || pPage == m_pPage ) return FALSE;
 
 	ASSERT_KINDOF(CSettingsPage, pPage);
-	
+
 	if ( m_hWnd == NULL )
 	{
 		m_pFirst = pPage;
@@ -233,7 +233,7 @@ int CSettingsSheet::DoModal()
 	return nResult;
 }
 
-BOOL CSettingsSheet::OnInitDialog() 
+BOOL CSettingsSheet::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
@@ -292,14 +292,14 @@ void CSettingsSheet::Layout()
 	ReleaseDC( pDC );
 
 	m_nButtonHeight = ( txtMetric.tmHeight + txtMetric.tmExternalLeading ) + 10;
-	
+
 	m_szPages.cx = m_szPages.cy = 0;
 
 	for ( int nPage = 0 ; nPage < GetPageCount() ; nPage++ )
 	{
 		CSettingsPage* pPage = GetPage( nPage );
 		CDialogTemplate pTemplate;
-				
+
 		if ( pPage->GetTemplateName() == NULL )  continue;
 
 		if ( pTemplate.Load( pPage->GetTemplateName() ) )
@@ -328,7 +328,7 @@ void CSettingsSheet::Layout()
 	rc.SetRect( 8, rc.bottom + 8, 76, m_nButtonHeight );
 	rc.right += rc.left;
 	rc.bottom += rc.top;
-	
+
 	m_wndOK.MoveWindow( &rc );
 	rc.OffsetRect( rc.Width() + 8, 0 );
 	m_wndCancel.MoveWindow( &rc );
@@ -363,7 +363,7 @@ void CSettingsSheet::OnSelectPage(NM_TREEVIEW* pNotify, LRESULT *pResult)
 	SetActivePage( pPage );
 }
 
-void CSettingsSheet::OnPaint() 
+void CSettingsSheet::OnPaint()
 {
 	CPaintDC dc( this );
 	DoPaint( dc );
@@ -427,7 +427,7 @@ void CSettingsSheet::OnApply()
 	SetModified( FALSE );
 }
 
-BOOL CSettingsSheet::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CSettingsSheet::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if ( LOWORD( wParam ) == IDOK )
 	{

@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@
 #pragma once
 
 
-class CCoolMenu  
+class CCoolMenu
 {
 // Construction
 public:
@@ -54,7 +54,7 @@ protected:
 protected:
 	BOOL		m_bEnable;
 	BOOL		m_bUnhook;
-	
+
 // Border Hook
 public:
 	void			EnableHook();
@@ -71,7 +71,7 @@ protected:
 	static int		m_nEdgeLeft;
 	static int		m_nEdgeTop;
 	static int		m_nEdgeSize;
-	
+
 };
 
 extern CCoolMenu CoolMenu;

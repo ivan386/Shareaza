@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CEDNeighbour* pNeighbour = (CEDNeighbour*)GetNext( pos );
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
 			if ( pNeighbour->m_nState == nrsConnected &&
@@ -66,7 +66,7 @@ CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const
 			}
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -78,7 +78,7 @@ void CNeighboursWithED2K::CloseDonkeys()
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CEDNeighbour* pNeighbour = (CEDNeighbour*)GetNext( pos );
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) pNeighbour->Close();
 	}
 }
@@ -91,7 +91,7 @@ void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CEDNeighbour* pNeighbour = (CEDNeighbour*)GetNext( pos );
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
 			pNeighbour->SendSharedDownload( pDownload );
@@ -105,9 +105,9 @@ void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	if ( ! Network.IsListening() ) return FALSE;
-	
+
 	CEDNeighbour* pNeighbour = (CEDNeighbour*)Get( pServerAddress );
-	
+
 	if ( pNeighbour != NULL && pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 	{
 		CEDPacket* pPacket = CEDPacket::New( ED2K_C2S_CALLBACKREQUEST );
@@ -115,7 +115,7 @@ BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, W
 		pNeighbour->Send( pPacket );
 		return TRUE;
 	}
-	
+
 	/*
 	lugdunum requests no more of this
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_CALLBACKREQUEST );
@@ -125,7 +125,7 @@ BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, W
 	Datagrams.Send( pServerAddress, nServerPort + 4, pPacket );
 	return TRUE;
 	*/
-	
+
 	return FALSE;
 }
 
@@ -135,13 +135,13 @@ BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, W
 BOOL CNeighboursWithED2K::FindDonkeySources(MD4* pED2K, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	if ( ! Network.IsListening() ) return FALSE;
-	
+
 	int nHash = (int)pServerAddress->S_un.S_un_b.s_b4 & 255;
 	DWORD tNow = GetTickCount();
-	
+
 	if ( nHash < 0 ) nHash = 0;
 	else if ( nHash > 255 ) nHash = 255;
-	
+
 	if ( m_pEDSources[ nHash ] == *pED2K )
 	{
 		if ( tNow - m_tEDSources[ nHash ] < 3600000 ) return FALSE;
@@ -151,12 +151,12 @@ BOOL CNeighboursWithED2K::FindDonkeySources(MD4* pED2K, IN_ADDR* pServerAddress,
 		if ( tNow - m_tEDSources[ nHash ] < 15000 ) return FALSE;
 		m_pEDSources[ nHash ] = *pED2K;
 	}
-	
+
 	m_tEDSources[ nHash ] = tNow;
-	
+
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_GETSOURCES );
 	pPacket->Write( pED2K, sizeof(MD4) );
 	Datagrams.Send( pServerAddress, nServerPort + 4, pPacket );
-	
+
 	return TRUE;
 }

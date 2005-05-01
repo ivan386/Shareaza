@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ class CBaseMatchWnd : public CPanelWnd
 public:
 	CBaseMatchWnd();
 	virtual ~CBaseMatchWnd();
-	
+
 	DECLARE_DYNCREATE(CBaseMatchWnd)
 
 // Attributes
@@ -54,7 +54,7 @@ protected:
 	BOOL			m_bUpdate;
 	BOOL			m_bBMWActive;
 	DWORD			m_nCacheFiles;
-	
+
 // Operations
 protected:
 	int	CheckExisting(BOOL bSHA1, SHA1* pSHA1, BOOL bTiger, TIGEROOT* pTiger, BOOL bED2K, MD4* pED2K);
@@ -65,10 +65,10 @@ public:
 	public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	//}}AFX_VIRTUAL
-	
+
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CBaseMatchWnd)

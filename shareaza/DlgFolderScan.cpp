@@ -1,7 +1,7 @@
 //
 // DlgFolderScan.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,10 +85,10 @@ void CFolderScanDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFolderScanDlg operations
 
-BOOL CFolderScanDlg::OnInitDialog() 
+BOOL CFolderScanDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CFolderScanDlg"), IDR_LIBRARYFRAME );
 
 	SetTimer( 1, 500, NULL );
@@ -98,7 +98,7 @@ BOOL CFolderScanDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CFolderScanDlg::OnTimer(UINT nIDEvent) 
+void CFolderScanDlg::OnTimer(UINT nIDEvent)
 {
 	CSingleLock pLock( &Library.m_pSection );
 
@@ -109,7 +109,7 @@ void CFolderScanDlg::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CFolderScanDlg::OnCancel() 
+void CFolderScanDlg::OnCancel()
 {
 	m_bActive = FALSE;
 
@@ -139,7 +139,7 @@ void CFolderScanDlg::InstanceUpdate(LPCTSTR pszName, DWORD nVolume)
 
 	m_nFiles ++;
 	m_nVolume += nVolume;
-	
+
 	if ( m_bActive && dwNow - m_tLastUpdate > 250 )
 	{
 		m_tLastUpdate = dwNow;

@@ -1,7 +1,7 @@
 //
 // PongCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CPongCache
 public:
 	CPongCache();
 	virtual ~CPongCache();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pCache;
@@ -60,7 +60,7 @@ class CPongItem
 public:
 	CPongItem(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
 	virtual ~CPongItem();
-	
+
 // Attributes
 public:
 	CNeighbour*		m_pNeighbour;

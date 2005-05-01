@@ -1,7 +1,7 @@
 //
 // CrawlSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,18 +28,18 @@ class CG2Packet;
 class CCrawlNode;
 
 
-class CCrawlSession  
+class CCrawlSession
 {
 // Construction
 public:
 	CCrawlSession();
 	virtual ~CCrawlSession();
-	
+
 // Attributes
 public:
 	BOOL		m_bActive;
 	CPtrList	m_pNodes;
-	
+
 // Operations
 public:
 	void		Clear();
@@ -81,13 +81,13 @@ public:
 	DWORD			m_tResponse;
 
 	enum { ntUnknown, ntHub, ntLeaf };
-	
+
 // Operations
 public:
 	void	OnCrawl(CCrawlSession* pSession, CG2Packet* pPacket);
 protected:
 	void	OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD nPacket, int nType);
-	
+
 	enum { parseSelf, parseHub, parseLeaf };
 };
 

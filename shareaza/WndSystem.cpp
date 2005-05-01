@@ -1,7 +1,7 @@
 //
 // WndSystem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -127,38 +127,38 @@ void CSystemWnd::ShowStartupText()
 /////////////////////////////////////////////////////////////////////////////
 // CSystemWnd message handlers
 
-int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	CRect rc;
 	m_wndText.Create( WS_VISIBLE, rc, this, 100 );
-	
+
 	LoadState( _T("CSystemWnd"), FALSE );
 	theApp.Message( MSG_DEBUG, _T("IsG2HubCapable() = %i"), Neighbours.IsG2HubCapable() );
 	theApp.Message( MSG_DEBUG, _T("IsG1UltrapeerCapable() = %i"), Neighbours.IsG1UltrapeerCapable() );
-	
+
 	return 0;
 }
 
-void CSystemWnd::OnDestroy() 
+void CSystemWnd::OnDestroy()
 {
 	SaveState( _T("CSystemWnd") );
 	CPanelWnd::OnDestroy();
 }
 
-void CSystemWnd::OnSize(UINT nType, int cx, int cy) 
+void CSystemWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 	m_wndText.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CSystemWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CSystemWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	TrackPopupMenu( _T("CSystemWnd"), point );
 }
 
-BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg) 
+BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
@@ -173,41 +173,41 @@ BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)
 			return TRUE;
 		}
 	}
-	
+
 	return CPanelWnd::PreTranslateMessage(pMsg);
 }
 
-void CSystemWnd::OnUpdateSystemVerbose(CCmdUI* pCmdUI) 
+void CSystemWnd::OnUpdateSystemVerbose(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.General.VerboseMode );
 }
 
-void CSystemWnd::OnSystemVerbose() 
+void CSystemWnd::OnSystemVerbose()
 {
 	Settings.General.VerboseMode = ! Settings.General.VerboseMode;
 }
 
-void CSystemWnd::OnUpdateSystemTimestamp(CCmdUI* pCmdUI) 
+void CSystemWnd::OnUpdateSystemTimestamp(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.General.ShowTimestamp );
 }
 
-void CSystemWnd::OnSystemTimestamp() 
+void CSystemWnd::OnSystemTimestamp()
 {
 	Settings.General.ShowTimestamp = ! Settings.General.ShowTimestamp;
 }
 
-void CSystemWnd::OnSystemClear() 
+void CSystemWnd::OnSystemClear()
 {
 	Clear();
 }
 
 #include "CrawlSession.h"
 
-void CSystemWnd::OnSystemTest() 
+void CSystemWnd::OnSystemTest()
 {
 	CrawlSession.m_bActive = ! CrawlSession.m_bActive;
-	
+
 	if ( CrawlSession.m_bActive )
 	{
 		CrawlSession.Bootstrap();

@@ -1,7 +1,7 @@
 //
 // CtrlMainTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,9 +30,9 @@ class CMainTabBarCtrl : public CControlBar
 public:
 	CMainTabBarCtrl();
 	virtual ~CMainTabBarCtrl();
-	
+
 	DECLARE_DYNAMIC(CMainTabBarCtrl)
-	
+
 // Item Class
 public:
 	class TabItem : public CCmdUI
@@ -44,7 +44,7 @@ public:
 		CRect	m_rcSrc[5];
 		BOOL	m_bEnabled;
 		BOOL	m_bSelected;
-		
+
 	public:
 		TabItem(CMainTabBarCtrl* pCtrl, LPCTSTR pszName);
 		void	Skin(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache);
@@ -55,7 +55,7 @@ public:
 		virtual void	Enable(BOOL bEnable);
 		virtual void	SetCheck(BOOL bCheck);
 	};
-	
+
 // Attributes
 protected:
 	CPtrList		m_pItems;
@@ -66,7 +66,7 @@ protected:
 	CDC				m_dcSkin;
 	CBitmap			m_bmSkin;
 	HBITMAP			m_hOldSkin;
-	
+
 // Operations
 public:
 	BOOL			Create(CWnd* pParentWnd, DWORD dwStyle, UINT nID);
@@ -77,7 +77,7 @@ public:
 	TabItem*		HitTest(const CPoint& point) const;
 	virtual int		OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void	DoPaint(CDC* pDC);
-	
+
 // Implementation
 protected:
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -88,6 +88,6 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT nIDEvent);
-	
+
 	DECLARE_MESSAGE_MAP()
 };

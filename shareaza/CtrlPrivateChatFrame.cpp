@@ -1,7 +1,7 @@
 //
 // CtrlPrivateChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ CPrivateChatFrame::~CPrivateChatFrame()
 void CPrivateChatFrame::Initiate(GGUID* pGUID, SOCKADDR_IN* pHost, BOOL bMustPush)
 {
 	ASSERT( m_pSession == NULL );
-	
+
 	m_pSession = new CChatSession( this );
 	m_pSession->Setup( pGUID, pHost, bMustPush );
 }
@@ -87,21 +87,21 @@ BOOL CPrivateChatFrame::Accept(CChatSession* pSession)
 		if ( m_pSession->m_nState > cssConnecting ) return FALSE;
 		m_pSession->OnCloseWindow();
 	}
-	
+
 	m_pSession = pSession;
-	
+
 	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrivateChatFrame message handlers
 
-int CPrivateChatFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CPrivateChatFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CChatFrame::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	OnSkinChange();
-	
+
 	return 0;
 }
 
@@ -111,37 +111,37 @@ void CPrivateChatFrame::OnSkinChange()
 	Skin.CreateToolBar( _T("CPrivateChatFrame"), &m_wndToolBar );
 }
 
-void CPrivateChatFrame::OnSize(UINT nType, int cx, int cy) 
+void CPrivateChatFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CChatFrame::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	HDWP hDWP = BeginDeferWindowPos( 3 );
-	
+
 	DeferWindowPos( hDWP, m_wndView, NULL, rc.left, rc.top,
 		rc.Width(), rc.Height() - TOOLBAR_HEIGHT - EDIT_HEIGHT, SWP_NOZORDER );
-	
+
 	DeferWindowPos( hDWP, m_wndToolBar, NULL,
 		rc.left, rc.bottom - TOOLBAR_HEIGHT - EDIT_HEIGHT,
 		rc.Width(), TOOLBAR_HEIGHT, SWP_NOZORDER );
-	
+
 	DeferWindowPos( hDWP, m_wndEdit, NULL, rc.left, rc.bottom - EDIT_HEIGHT,
 		rc.Width(), EDIT_HEIGHT, SWP_NOZORDER );
-	
+
 	EndDeferWindowPos( hDWP );
 }
 
-void CPrivateChatFrame::OnPaint() 
+void CPrivateChatFrame::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	GetClientRect( &rc );
 }
 
-void CPrivateChatFrame::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CPrivateChatFrame::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	Skin.TrackPopupMenu( _T("CPrivateChatFrame"), point );
 }
@@ -152,16 +152,16 @@ void CPrivateChatFrame::OnContextMenu(CWnd* pWnd, CPoint point)
 void CPrivateChatFrame::OnProfileReceived()
 {
 	CString str;
-	
+
 	LoadString( str, IDS_CHAT_PROFILE_ACCEPTED );
 	m_pContent.Add( retText, str, NULL, retfColour )->m_cColour = RGB( 128, 128, 128 );
-	
+
 	m_sNick = m_pSession->m_sUserNick;
 	m_pContent.Add( retLink, m_sNick, _T("raza:command:ID_CHAT_BROWSE") );
-	
+
 	SetWindowText( _T("Chat : ") + m_sNick );
 	GetParent()->PostMessage( WM_TIMER, 2 );
-	
+
 	AddText( _T(".") );
 	SetAlert();
 }
@@ -172,8 +172,8 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 	if ( ! MessageFilter.IsFiltered( pszText ) )
 	{
 		// Adult filter (if enabled)
-		if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );	
-		
+		if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
+
 		AddText( FALSE, bAction, m_sNick, pszText );
 		SetAlert();
 		PostMessage( WM_TIMER, 4 );
@@ -183,7 +183,7 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 {
 	TRISTATE bConnected = m_pSession->GetConnectedState();
-	
+
 	if ( bConnected != TS_TRUE )
 	{
 		if ( ( m_pSession->m_nProtocol == PROTOCOL_ED2K ) || ( bConnected != TS_FALSE ) )
@@ -200,7 +200,7 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 
 	// Adult filter (if enabled)
 	if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
-	
+
 	AddText( TRUE, bAction, MyProfile.GetNick().Left( 255 ), pszText );
 	m_pSession->SendPrivateMessage( bAction, pszText );
 }
@@ -220,12 +220,12 @@ void CPrivateChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszArgs)
 /////////////////////////////////////////////////////////////////////////////
 // CPrivateChatFrame commands
 
-void CPrivateChatFrame::OnUpdateChatBrowse(CCmdUI* pCmdUI) 
+void CPrivateChatFrame::OnUpdateChatBrowse(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pSession != NULL );
 }
 
-void CPrivateChatFrame::OnChatBrowse() 
+void CPrivateChatFrame::OnChatBrowse()
 {
 	if ( m_pSession != NULL )
 	{
@@ -234,29 +234,29 @@ void CPrivateChatFrame::OnChatBrowse()
 	}
 }
 
-void CPrivateChatFrame::OnUpdateChatPriority(CCmdUI* pCmdUI) 
+void CPrivateChatFrame::OnUpdateChatPriority(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pSession != NULL && m_pSession->GetConnectedState() == TS_TRUE );
 }
 
-void CPrivateChatFrame::OnChatPriority() 
+void CPrivateChatFrame::OnChatPriority()
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return;
-	
+
 	DWORD nAddress = m_pSession->m_pHost.sin_addr.S_un.S_addr;
-	
+
 	for ( POSITION pos = Uploads.GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = Uploads.GetNext( pos );
-		
+
 		if (	pUpload->m_pHost.sin_addr.S_un.S_addr == nAddress &&
 				pUpload->m_nState == upsQueued )
 		{
 			pUpload->Promote();
 		}
 	}
-	
+
 	m_pSession->StatusMessage( 2, IDS_CHAT_PRIORITY_GRANTED,
 		(LPCTSTR)m_pSession->m_sAddress );
 }

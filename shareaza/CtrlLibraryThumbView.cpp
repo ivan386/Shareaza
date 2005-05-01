@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,13 +77,13 @@ CLibraryThumbView::~CLibraryThumbView()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView create and destroy
 
-BOOL CLibraryThumbView::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CLibraryThumbView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= WS_VSCROLL;
 	return CLibraryFileView::PreCreateWindow( cs );
 }
 
-int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryFileView::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
@@ -97,7 +97,7 @@ int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_szBlock.cy	= m_szThumb.cy + 44;
 	m_nColumns		= 0;
 	m_nRows			= 0;
-	
+
 	m_pList			= NULL;
 	m_nCount		= 0;
 	m_nBuffer		= 0;
@@ -112,7 +112,7 @@ int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CLibraryThumbView::OnDestroy() 
+void CLibraryThumbView::OnDestroy()
 {
 	KillTimer( 1 );
 	Clear();
@@ -125,26 +125,26 @@ void CLibraryThumbView::OnDestroy()
 void CLibraryThumbView::Update()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CSchema* pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bChanged		= FALSE;
-	
+
 	if ( Settings.Library.ShowVirtual ) pSchema = NULL;
-	
+
 	CLibraryThumbItem** pList = m_pList + m_nCount - 1;
-	
+
 	for ( int nItem = m_nCount ; nItem ; nItem--, pList-- )
 	{
 		CLibraryThumbItem* pThumb	= *pList;
 		CLibraryFile* pFile			= Library.LookupFile( pThumb->m_nIndex );
-		
+
 		if ( pFile != NULL && pFile->m_nSelectCookie == nCookie &&
 			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
 			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
 		{
 			bChanged |= pThumb->Update( pFile );
-			
+
 			pFile->m_nListCookie = nCookie;
 		}
 		else
@@ -152,15 +152,15 @@ void CLibraryThumbView::Update()
 			if ( pThumb->m_bSelected ) Select( pThumb, TS_FALSE );
 			if ( pThumb == m_pFocus ) m_pFocus = NULL;
 			if ( pThumb == m_pFirst ) m_pFirst = NULL;
-			
+
 			delete pThumb;
 			MoveMemory( pList, pList + 1, 4 * ( m_nCount - nItem ) );
 			m_nCount--;
-			
+
 			bChanged = TRUE;
 		}
 	}
-	
+
 	if ( bChanged )
 	{
 		CRect rcClient;
@@ -172,14 +172,14 @@ void CLibraryThumbView::Update()
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
-		
+
 		if ( pFile->m_nSelectCookie == nCookie &&
  			 pFile->m_nListCookie != nCookie &&
 			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
 			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
 		{
 			CLibraryThumbItem* pThumb = new CLibraryThumbItem( pFile );
-			
+
 			if ( m_nCount == m_nBuffer )
 			{
 				m_nBuffer += 64;
@@ -188,13 +188,13 @@ void CLibraryThumbView::Update()
 				if ( m_pList ) delete [] m_pList;
 				m_pList = pList;
 			}
-			
+
 			m_pList[ m_nCount++ ] = pThumb;
 			pFile->m_nListCookie = nCookie;
 			bChanged = TRUE;
 		}
 	}
-	
+
 	if ( bChanged )
 	{
 		qsort( m_pList, m_nCount, 4, SortList );
@@ -206,7 +206,7 @@ void CLibraryThumbView::Update()
 BOOL CLibraryThumbView::Select(DWORD nObject)
 {
 	CRect rcClient, rcItem;
-	
+
 	CLibraryThumbItem** pList = m_pList + m_nCount - 1;
 
     int nItem = m_nCount;
@@ -222,10 +222,10 @@ BOOL CLibraryThumbView::Select(DWORD nObject)
 	DeselectAll( m_pFocus );
 	Select( m_pFocus );
 	Invalidate();
-	
+
 	GetClientRect( &rcClient );
 	GetItemRect( m_pFocus, &rcItem );
-	
+
 	if ( rcItem.top < rcClient.top )
 	{
 		ScrollBy( rcItem.top - rcClient.top );
@@ -234,7 +234,7 @@ BOOL CLibraryThumbView::Select(DWORD nObject)
 	{
 		ScrollBy( rcItem.bottom - rcClient.bottom );
 	}
-	
+
 	return TRUE;
 }
 
@@ -350,7 +350,7 @@ BOOL CLibraryThumbView::SelectTo(CLibraryThumbItem* pThumb)
 
 		int nFirst	= GetThumbIndex( m_pFirst );
 		int nFocus	= GetThumbIndex( m_pFocus );
-		
+
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
 			bChanged = Select( m_pFocus, TS_UNKNOWN );
@@ -433,10 +433,10 @@ void CLibraryThumbView::SelectTo(int nDelta)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView message handlers
 
-void CLibraryThumbView::OnSize(UINT nType, int cx, int cy) 
+void CLibraryThumbView::OnSize(UINT nType, int cx, int cy)
 {
 	CLibraryFileView::OnSize( nType, cx, cy );
-	
+
 	m_nColumns	= cx / m_szBlock.cx;
 	m_nRows		= cy / m_szBlock.cy + 1;
 
@@ -458,13 +458,13 @@ void CLibraryThumbView::UpdateScroll()
 	pInfo.nMax		= ( ( m_nCount + m_nColumns - 1 ) / m_nColumns ) * m_szBlock.cy;
 	pInfo.nPage		= rc.Height();;
 	pInfo.nPos		= m_nScroll = max( 0, min( m_nScroll, pInfo.nMax - (int)pInfo.nPage + 1 ) );
-	
+
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 
 	Invalidate();
 }
 
-void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	CRect rc;
 	GetClientRect( &rc );
@@ -498,7 +498,7 @@ void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBa
 	}
 }
 
-BOOL CLibraryThumbView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CLibraryThumbView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );
 	return TRUE;
@@ -518,7 +518,7 @@ void CLibraryThumbView::ScrollTo(int nPosition)
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE );
 }
 
-void CLibraryThumbView::OnTimer(UINT nIDEvent) 
+void CLibraryThumbView::OnTimer(UINT nIDEvent)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -529,11 +529,11 @@ void CLibraryThumbView::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CLibraryThumbView::OnPaint() 
+void CLibraryThumbView::OnPaint()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CPaintDC dc( this );
-	
+
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, m_szBlock );
 	CRect rcBuffer( 0, 0, m_szBlock.cx, m_szBlock.cy );
 
@@ -585,7 +585,7 @@ CLibraryThumbItem* CLibraryThumbView::HitTest(const CPoint& point) const
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryThumbItem** pList = m_pList;
@@ -614,7 +614,7 @@ BOOL CLibraryThumbView::GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect)
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryThumbItem** pList = m_pList;
@@ -641,7 +641,7 @@ BOOL CLibraryThumbView::GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect)
 	return FALSE;
 }
 
-void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point) 
+void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CLibraryThumbItem* pHit = HitTest( point );
 
@@ -659,7 +659,7 @@ void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point)
 	CLibraryFileView::OnLButtonDown( nFlags, point );
 }
 
-void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point) 
+void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_bDrag & ( nFlags & MK_LBUTTON ) )
 	{
@@ -675,7 +675,7 @@ void CLibraryThumbView::OnMouseMove(UINT nFlags, CPoint point)
 	CLibraryFileView::OnMouseMove( nFlags, point );
 }
 
-void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint point) 
+void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	ReleaseCapture();
 	m_bDrag = FALSE;
@@ -686,18 +686,18 @@ void CLibraryThumbView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryThumbView::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CLibraryThumbView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	SendMessage( WM_COMMAND, ID_LIBRARY_LAUNCH );
 }
 
-void CLibraryThumbView::OnRButtonDown(UINT nFlags, CPoint point) 
+void CLibraryThumbView::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
 	CLibraryFileView::OnRButtonDown( nFlags, point );
 }
 
-void CLibraryThumbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLibraryThumbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch ( nChar )
 	{
@@ -739,7 +739,7 @@ void CLibraryThumbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CLibraryThumbView::StartDragging(CPoint& ptMouse)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CImageList* pImage = CreateDragImage( ptMouse );
 	if ( ! pImage ) return;
 
@@ -758,7 +758,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 	{
 		CLibraryThumbItem* pThumb = (CLibraryThumbItem*)m_pSelThumb.GetNext( pos );
 		GetItemRect( pThumb, &rcOne );
-		
+
 		if ( rcOne.IntersectRect( &rcClient, &rcOne ) )
 		{
 			rcAll.left		= min( rcAll.left, rcOne.left );
@@ -781,7 +781,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 	CClientDC dcClient( this );
 	CDC dcMem, dcDrag;
 	CBitmap bmDrag;
-				
+
 	if ( ! dcMem.CreateCompatibleDC( &dcClient ) )
 		return NULL;
 	if ( ! dcDrag.CreateCompatibleDC( &dcClient ) )
@@ -792,7 +792,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 	CBitmap *pOldDrag = dcDrag.SelectObject( &bmDrag );
 
 	dcDrag.FillSolidRect( 0, 0, rcAll.Width(), rcAll.Height(), RGB( 0, 255, 0 ) );
-	
+
 	CRgn pRgn;
 
 	if ( bClipped )
@@ -813,7 +813,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 		CLibraryThumbItem* pThumb = (CLibraryThumbItem*)m_pSelThumb.GetNext( pos );
 		GetItemRect( pThumb, &rcOne );
 		CRect rcDummy;
-		
+
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
 			pBuffer->FillSolidRect( &rcBuffer, RGB( 0, 255, 0 ) );
@@ -828,10 +828,10 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 	dcDrag.SelectObject( pOldDrag );
 
 	dcDrag.DeleteDC();
-	
+
 	CImageList* pAll = new CImageList();
 	pAll->Create( rcAll.Width(), rcAll.Height(), ILC_COLOR16|ILC_MASK, 1, 1 );
-	pAll->Add( &bmDrag, RGB( 0, 255, 0 ) ); 
+	pAll->Add( &bmDrag, RGB( 0, 255, 0 ) );
 
 	bmDrag.DeleteObject();
 
@@ -846,7 +846,7 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 void CLibraryThumbView::StartThread()
 {
 	if ( m_hThread != NULL && m_bThread ) return;
-	
+
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	CLibraryThumbItem** pList = m_pList;
@@ -858,7 +858,7 @@ void CLibraryThumbView::StartThread()
 	}
 
 	if ( nCount == 0 ) return;
-	
+
 	m_bThread	= TRUE;
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
 	m_hThread	= pThread->m_hThread;
@@ -867,9 +867,9 @@ void CLibraryThumbView::StartThread()
 void CLibraryThumbView::StopThread()
 {
 	if ( m_hThread == NULL ) return;
-	
+
 	m_bThread = FALSE;
-	
+
     int nAttempt = 100;
 	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
@@ -879,14 +879,14 @@ void CLibraryThumbView::StopThread()
 		if ( nCode != STILL_ACTIVE ) break;
 		Sleep( 100 );
 	}
-	
+
 	if ( nAttempt == 0 )
 	{
 		TerminateThread( m_hThread, 0 );
 		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CLibraryThumbView thread.") );
 		Sleep( 100 );
 	}
-	
+
 	m_hThread = NULL;
 }
 
@@ -902,16 +902,16 @@ void CLibraryThumbView::OnRun()
 	CSingleLock pLock( &m_pSection );
 	CImageServices pServices;
 	CThumbCache pCache;
-	
+
 	while ( m_bThread )
 	{
 		CLibraryThumbItem* pThumb = NULL;
 		DWORD nIndex = 0;
 		CString strPath;
 		BOOL bCache;
-		
+
 		pLock.Lock();
-		
+
 		CLibraryThumbItem** pList = m_pList;
 		for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
 		{
@@ -928,17 +928,17 @@ void CLibraryThumbView::OnRun()
 				}
 			}
 		}
-		
+
 		pLock.Unlock();
-		
+
 		if ( pThumb == NULL ) break;
 		pThumb = NULL;
-		
+
 		DWORD tNow = GetTickCount();
-		
+
 		CImageFile pFile( &pServices );
 		BOOL bSuccess = FALSE;
-		
+
 		if ( pCache.Load( strPath, &m_szThumb, nIndex, &pFile ) )
 		{
 			bSuccess = TRUE;
@@ -946,9 +946,9 @@ void CLibraryThumbView::OnRun()
 		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
 		{
 			int nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
-			
+
 			if ( ! m_bThread ) break;
-			
+
 			if ( nSize > m_szThumb.cx )
 			{
 				nSize = m_szThumb.cx * pFile.m_nHeight / pFile.m_nWidth;
@@ -958,16 +958,16 @@ void CLibraryThumbView::OnRun()
 			{
 				pFile.Resample( nSize, m_szThumb.cy );
 			}
-			
+
 			if ( ! m_bThread ) break;
-			
+
 			pCache.Store( strPath, &m_szThumb, nIndex, &pFile );
-			
+
 			bSuccess = TRUE;
 		}
-		
+
 		pLock.Lock();
-		
+
 		pList = m_pList;
 		for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
 		{
@@ -977,11 +977,11 @@ void CLibraryThumbView::OnRun()
 				break;
 			}
 		}
-		
+
 		if ( pThumb )
 		{
 			if ( pThumb->m_bmThumb.m_hObject ) pThumb->m_bmThumb.DeleteObject();
-			
+
 			if ( bSuccess )
 			{
 				pThumb->m_bmThumb.Attach( pFile.CreateBitmap() );
@@ -993,12 +993,12 @@ void CLibraryThumbView::OnRun()
 			{
 				pThumb->m_nThumb = CLibraryThumbItem::thumbError;
 			}
-			
+
 			m_nInvalidate++;
 		}
-		
+
 		pLock.Unlock();
-		
+
 		if ( bSuccess && ! bCache )
 		{
 			CQuickLock oLock( Library.m_pSection );
@@ -1007,13 +1007,13 @@ void CLibraryThumbView::OnRun()
 				pFile->m_bCachedPreview = TRUE;
 			}
 		}
-		
+
 		if ( ! m_bRush )
 		{
 			DWORD tDelay = GetTickCount() - tNow;
 			if ( tDelay > 400 ) tDelay = 400;
 			if ( tDelay < 20 ) tDelay = 20;
-			
+
 			while ( tDelay && m_bThread )
 			{
 				DWORD tNow = min( tDelay, DWORD(50) );
@@ -1022,7 +1022,7 @@ void CLibraryThumbView::OnRun()
 			}
 		}
 	}
-	
+
 	pServices.Cleanup();
 	m_bThread = FALSE;
 }
@@ -1058,7 +1058,7 @@ BOOL CLibraryThumbItem::Update(CLibraryFile* pFile)
 	m_nCookie	= pFile->m_nUpdateCookie;
 	m_sText		= pFile->m_sName;
 	m_bShared	= bShared;
-	
+
 	m_nThumb	= thumbWaiting;
 	if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
 
@@ -1092,7 +1092,7 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 		rcFrame.InflateRect( 1, 1 );
 		pDC->Draw3dRect( &rcFrame, CoolInterface.m_crMargin, CoolInterface.m_crMargin );
 	}
-	
+
 	if ( m_bmThumb.m_hObject != NULL )
 	{
 		pMemDC->SelectObject( &m_bmThumb );

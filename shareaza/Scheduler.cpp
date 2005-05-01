@@ -1,7 +1,7 @@
 //
 // Scheduler.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,12 +53,12 @@ BOOL CScheduler::Load()
 	CFile pFile;
 	CString strFile = Settings.General.Path + _T("\\Data\\Schedule.dat");
 
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) 
+	if ( ! pFile.Open( strFile, CFile::modeRead ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to open Schedule.dat") );
 		return FALSE;
 	}
-	
+
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );
@@ -87,7 +87,7 @@ void CScheduler::Save()
 		Serialize( ar );
 		ar.Close();
 	}
-	
+
 	m_nCurrentHour = 0xFF;	// Reset the current hour so the scheduler updates now.
 }
 
@@ -141,7 +141,7 @@ void CScheduler::Update()
 		nHour = tTime.GetHour();
 		if ( ( nDay >= 7 ) || ( nDay < 0 ) || ( nHour >= 24 ) || ( nHour < 0 ) )
 		{
-			// Really Really Strange Error That Should Never Happen. 
+			// Really Really Strange Error That Should Never Happen.
 			theApp.Message( MSG_ERROR, _T("Scheduler received invalid time") );
 			return;
 		}

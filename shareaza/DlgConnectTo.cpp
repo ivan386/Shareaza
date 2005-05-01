@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,27 +74,27 @@ void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CConnectToDlg message handlers
 
-BOOL CConnectToDlg::OnInitDialog() 
+BOOL CConnectToDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CConnectToDlg"), m_bBrowseHost ? ID_NETWORK_BROWSE_TO : ID_NETWORK_CONNECT_TO );
-	
+
 	SelectCaption( this, m_bBrowseHost );
 	SelectCaption( &m_wndPrompt, m_bBrowseHost );
-	
+
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
 	m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pImages.Add( &bmImages, RGB( 0, 255, 0 ) );
-	
+
 	m_wndAdvanced.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndProtocol.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.EnableWindow( FALSE );
-	
+
 	int nItem, nCount = theApp.GetProfileInt( _T("ConnectTo"), _T("Count"), 0 );
-	
+
 	for ( nItem = 0 ; nItem < nCount ; nItem++ )
 	{
 		CString strItem, strHost;
@@ -103,17 +103,17 @@ BOOL CConnectToDlg::OnInitDialog()
 		if ( strHost.GetLength() )
 			m_wndHost.SetItemData( m_wndHost.AddString( strHost ), nItem + 1 );
 	}
-	
+
 	m_nPort		= Settings.Connection.InPort;
 	m_nProtocol	= 1;
-	
+
 	UpdateData( FALSE );
-	
+
 	if ( nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Last.Index"), 0 ) )
 	{
 		LoadItem( nItem );
 	}
-	
+
 	return TRUE;
 }
 
@@ -129,57 +129,57 @@ void CConnectToDlg::LoadItem(int nItem)
 	UpdateData( FALSE );
 }
 
-void CConnectToDlg::OnSelChangeConnectHost() 
+void CConnectToDlg::OnSelChangeConnectHost()
 {
 	int nSel = m_wndHost.GetCurSel();
 	if ( nSel < 0 ) return;
 	LoadItem( m_wndHost.GetItemData( nSel ) );
 }
 
-void CConnectToDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CConnectToDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 256;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CConnectToDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CConnectToDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&
 		 ( lpDrawItemStruct->itemAction & ODA_DRAWENTIRE ) == 0 ) return;
-	
+
 	CRect rcItem( &lpDrawItemStruct->rcItem );
 	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 	CString str;
 	CDC dc;
-	
+
 	dc.Attach( lpDrawItemStruct->hDC );
-	
+
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
-	
+
 	dc.FillSolidRect( &rcItem,
 		GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
 	dc.SetBkMode( TRANSPARENT );
-	
+
 	m_pImages.Draw( &dc, lpDrawItemStruct->itemID + 1, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
-	
+
 	m_wndProtocol.GetLBText( lpDrawItemStruct->itemID, str );
-	
+
 	rcItem.left += 22; rcItem.right -= 2;
 	dc.DrawText( str, &rcItem, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_NOPREFIX );
-	
+
 	dc.SelectObject( pOldFont );
 	dc.Detach();
 }
 
-void CConnectToDlg::OnCloseUpConnectProtocol() 
+void CConnectToDlg::OnCloseUpConnectProtocol()
 {
 	int nPort;
-	
+
 	switch ( m_wndProtocol.GetCurSel() + 1 )
 	{
 	case PROTOCOL_G1:
@@ -197,31 +197,31 @@ void CConnectToDlg::OnCloseUpConnectProtocol()
 	default:
 		return;
 	}
-	
+
 	CString str;
 	str.Format( _T("%lu"), nPort );
 	m_wndPort.SetWindowText( str );
 	m_wndHost.SetFocus();
 }
 
-void CConnectToDlg::OnOK() 
+void CConnectToDlg::OnOK()
 {
 	UpdateData( TRUE );
-	
+
 	int nColon = m_sHost.Find( ':' );
-	
+
 	if ( nColon > 0 )
 	{
 		CString strPort = m_sHost.Mid( nColon + 1 );
 		_stscanf( strPort, _T("%lu"), &m_nPort );
 		m_sHost = m_sHost.Left( nColon );
-		
+
 		m_wndHost.SetWindowText( m_sHost );
 		m_wndPort.SetWindowText( strPort );
 	}
-	
+
 	int nItem = m_wndHost.FindString( -1, m_sHost );
-	
+
 	if ( nItem < 0 )
 	{
 		nItem = theApp.GetProfileInt( _T("ConnectTo"), _T("Count"), 0 ) + 1;
@@ -232,7 +232,7 @@ void CConnectToDlg::OnOK()
 	{
 		theApp.WriteProfileInt( _T("ConnectTo"), _T("Last.Index"), ++nItem );
 	}
-	
+
 	CString strItem;
 	strItem.Format( _T("%.3i.Host"), nItem );
 	theApp.WriteProfileString( _T("ConnectTo"), strItem, m_sHost );
@@ -240,6 +240,6 @@ void CConnectToDlg::OnOK()
 	theApp.WriteProfileInt( _T("ConnectTo"), strItem, m_nPort );
 	strItem.Format( _T("%.3i.Protocol"), nItem );
 	theApp.WriteProfileInt( _T("ConnectTo"), strItem, m_nProtocol );
-	
+
 	CSkinDialog::OnOK();
 }

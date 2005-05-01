@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,24 +74,24 @@ void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CURLCopyDlg message handlers
 
-BOOL CURLCopyDlg::OnInitDialog() 
+BOOL CURLCopyDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( NULL, IDI_WEB_URL );
 
 	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_bSHA1 && m_sHost.IsEmpty() )
 		? SW_SHOW : SW_HIDE );
-	
+
 	OnIncludeSelf();
-			
+
 	return TRUE;
 }
 
-void CURLCopyDlg::OnIncludeSelf() 
+void CURLCopyDlg::OnIncludeSelf()
 {
 	CString strURN;
-	
+
 	if ( m_bTiger && m_bSHA1 )
 	{
 		strURN	= _T("urn:bitprint:")
@@ -106,18 +106,18 @@ void CURLCopyDlg::OnIncludeSelf()
 	{
 		strURN = CED2K::HashToString( &m_pED2K, TRUE );
 	}
-	
+
 	m_sMagnet = _T("magnet:?");
-	
+
 	if ( strURN.GetLength() )
 	{
 		m_sMagnet += _T("xt=") + strURN;
 	}
-	
+
 	if ( m_sName.GetLength() )
 	{
 		CString strName = CTransfer::URLEncode( m_sName );
-		
+
 		if ( strURN.GetLength() )
 		{
 			m_sMagnet += _T("&dn=") + strName;
@@ -127,19 +127,19 @@ void CURLCopyDlg::OnIncludeSelf()
 			m_sMagnet += _T("kt=") + strName;
 		}
 	}
-		
+
 	if ( m_wndIncludeSelf.GetCheck() && strURN.GetLength() )
 	{
 		CString strURL;
-		
+
 		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
 			(LPCTSTR)strURN );
-		
+
 		m_sMagnet += _T("&xs=") + CTransfer::URLEncode( strURL );
 	}
-	
+
 	if ( m_bED2K && m_bSize && m_sName.GetLength() )
 	{
 		m_sED2K.Format( _T("ed2k://|file|%s|%I64i|%s|/"),
@@ -147,14 +147,14 @@ void CURLCopyDlg::OnIncludeSelf()
 			m_nSize,
 			(LPCTSTR)CED2K::HashToString( &m_pED2K ) );
 	}
-	
+
 	UpdateData( FALSE );
 }
 
-HBRUSH CURLCopyDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CURLCopyDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSkinDialog::OnCtlColor(pDC, pWnd, nCtlColor);
-	
+
 	if ( pWnd && pWnd != &m_wndMessage )
 	{
 		TCHAR szName[32];
@@ -166,11 +166,11 @@ HBRUSH CURLCopyDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 			pDC->SelectObject( &theApp.m_gdiFontLine );
 		}
 	}
-	
+
 	return hbr;
 }
 
-BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CPoint point;
 	GetCursorPos( &point );
@@ -199,11 +199,11 @@ BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 			}
 		}
 	}
-	
+
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CURLCopyDlg::OnLButtonDown(UINT nFlags, CPoint point) 
+void CURLCopyDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	ClientToScreen( &point );
 
@@ -220,10 +220,10 @@ void CURLCopyDlg::OnLButtonDown(UINT nFlags, CPoint point)
 			if ( rc.PtInRect( point ) )
 			{
 				CString strURL;
-				
+
 				pWnd->GetWindowText( strURL );
 				if ( strURL.IsEmpty() ) return;
-				
+
 				SetClipboardText( strURL );
 
 				CSkinDialog::OnOK();
@@ -231,17 +231,17 @@ void CURLCopyDlg::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 		}
 	}
-	
+
 	CSkinDialog::OnLButtonDown( nFlags, point );
 }
 
 BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 {
 	if ( ! AfxGetMainWnd()->OpenClipboard() ) return FALSE;
-	
+
 	USES_CONVERSION;
 	EmptyClipboard();
-	
+
 	if ( theApp.m_bNT )
 	{
 		LPCWSTR pszWide = T2CW( (LPCTSTR)strText );
@@ -260,9 +260,9 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 		GlobalUnlock( hMem );
 		SetClipboardData( CF_TEXT, hMem );
 	}
-	
+
 	CloseClipboard();
-	
+
 	return TRUE;
 }
 

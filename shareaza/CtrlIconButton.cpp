@@ -1,7 +1,7 @@
 //
 // CtrlIconButton.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,7 @@ BOOL CIconButtonCtrl::RemoveStyle()
 /////////////////////////////////////////////////////////////////////////////
 // CIconButtonCtrl mouse message handlers
 
-void CIconButtonCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CIconButtonCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( ! IsWindowEnabled() ) return;
 
@@ -193,19 +193,19 @@ void CIconButtonCtrl::OnRButtonUp(UINT nFlags, CPoint point)
 /////////////////////////////////////////////////////////////////////////////
 // CIconButtonCtrl paint message handlers
 
-BOOL CIconButtonCtrl::OnEraseBkgnd(CDC* pDC) 
+BOOL CIconButtonCtrl::OnEraseBkgnd(CDC* pDC)
 {
 	return TRUE;
 }
 
-void CIconButtonCtrl::OnPaint() 
+void CIconButtonCtrl::OnPaint()
 {
 	CPaintDC dc( this );
 	COLORREF crBack;
 	CString strText;
 	CPoint ptIcon;
 	CRect rc;
-	
+
 	GetClientRect( &rc );
 	GetWindowText( strText );
 
@@ -225,7 +225,7 @@ void CIconButtonCtrl::OnPaint()
 		crBack = CoolInterface.m_crBackCheckSel;
 		dc.Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 		rc.DeflateRect( 1, 1 );
-		
+
 		ImageList_DrawEx( m_pImageList.m_hImageList, 0, dc.GetSafeHdc(),
 			ptIcon.x, ptIcon.y, 0, 0, crBack, CLR_NONE, ILD_NORMAL );
 		dc.ExcludeClipRect( ptIcon.x, ptIcon.y, ptIcon.x + 16, ptIcon.y + 16 );
@@ -235,7 +235,7 @@ void CIconButtonCtrl::OnPaint()
 		crBack = CoolInterface.m_crBackSel;
 		dc.Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 		rc.DeflateRect( 1, 1 );
-		
+
 		ptIcon.Offset( -1, -1 );
 		dc.FillSolidRect( ptIcon.x, ptIcon.y, 18, 2, crBack );
 		dc.FillSolidRect( ptIcon.x, ptIcon.y + 2, 2, 16, crBack );
@@ -257,7 +257,7 @@ void CIconButtonCtrl::OnPaint()
 		crBack = CoolInterface.m_crBackNormal;
 		dc.Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
 		rc.DeflateRect( 1, 1 );
-		
+
 		ImageList_DrawEx( m_pImageList.m_hImageList, 0, dc.GetSafeHdc(),
 			ptIcon.x, ptIcon.y, 0, 0, crBack, CLR_NONE, ILD_NORMAL );
 		dc.ExcludeClipRect( ptIcon.x, ptIcon.y, ptIcon.x + 16, ptIcon.y + 16 );
@@ -267,7 +267,7 @@ void CIconButtonCtrl::OnPaint()
 		crBack = CoolInterface.m_crBackNormal;
 		dc.Draw3dRect( &rc, CoolInterface.m_crShadow, CoolInterface.m_crShadow );
 		rc.DeflateRect( 1, 1 );
-				
+
 		ImageList_DrawEx( m_pImageList.m_hImageList, 0, dc.GetSafeHdc(),
 			ptIcon.x, ptIcon.y, 0, 0, crBack, CoolInterface.m_crShadow, ILD_BLEND50 );
 		dc.ExcludeClipRect( ptIcon.x, ptIcon.y, ptIcon.x + 16, ptIcon.y + 16 );
@@ -277,7 +277,7 @@ void CIconButtonCtrl::OnPaint()
 		crBack = CoolInterface.m_crMidtone;
 		dc.Draw3dRect( &rc, CoolInterface.m_crShadow, CoolInterface.m_crShadow );
 		rc.DeflateRect( 1, 1 );
-				
+
 		dc.SetTextColor( CoolInterface.m_crDisabled );
 		dc.SetBkColor( crBack );
 
@@ -308,7 +308,7 @@ void CIconButtonCtrl::OnPaint()
 	dc.FillSolidRect( &rc, crBack );
 }
 
-void CIconButtonCtrl::OnEnable(BOOL bEnable) 
+void CIconButtonCtrl::OnEnable(BOOL bEnable)
 {
 	CWnd::OnEnable( bEnable );
 	Invalidate();

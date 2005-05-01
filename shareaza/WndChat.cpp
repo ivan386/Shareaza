@@ -1,7 +1,7 @@
 //
 // WndChat.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,35 +60,35 @@ CChatWnd::~CChatWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CChatWnd message handlers
 
-int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	ASSERT_VALID( m_pFrame );
-	
+
 	m_pFrame->SetParent( this );
-	
+
 	LoadState( _T("CChatWnd"), FALSE );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
 	m_pFrame->MoveWindow( &rc, TRUE );
-	
+
 	SetAlert();
-	
+
 	return 0;
 }
 
-void CChatWnd::OnDestroy() 
+void CChatWnd::OnDestroy()
 {
 	if ( ! IsIconic() ) SaveState( _T("CChatWnd") );
-	
+
 	if ( m_pFrame != NULL )
 	{
 		m_pFrame->DestroyWindow();
 		delete m_pFrame;
 	}
-	
+
 	CChildWnd::OnDestroy();
 }
 
@@ -98,17 +98,17 @@ void CChatWnd::OnSkinChange()
 	if ( m_pFrame != NULL ) m_pFrame->OnSkinChange();
 }
 
-BOOL CChatWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CChatWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_pFrame != NULL )
 	{
 		if ( m_pFrame->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CChildWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CChatWnd::OnSize(UINT nType, int cx, int cy) 
+void CChatWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CChildWnd::OnSize( nType, cx, cy );
 
@@ -118,7 +118,7 @@ void CChatWnd::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-void CChatWnd::OnTimer(UINT nIDEvent) 
+void CChatWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 1 && m_pFrame != NULL && IsActive( TRUE ) )
 	{
@@ -132,10 +132,10 @@ void CChatWnd::OnTimer(UINT nIDEvent)
 		{
 			CString strTranslation;
 			LoadString( strTranslation, IDR_CHATFRAME );
-			str = strTranslation + str.Mid( 4 );		
+			str = strTranslation + str.Mid( 4 );
 		}
 		SetWindowText( str );
 	}
-	
+
 	CChildWnd::OnTimer( nIDEvent );
 }

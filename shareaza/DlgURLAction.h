@@ -1,7 +1,7 @@
 //
 // DlgURLAction.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CURLActionDlg : public CSkinDialog
 public:
 	CURLActionDlg(CWnd* pParent = NULL, CShareazaURL* pURL = NULL, BOOL bMultiple = FALSE);
 	virtual ~CURLActionDlg();
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CURLActionDlg)
@@ -61,12 +61,12 @@ public:
 	void	AddURL(CShareazaURL* pURL);
 protected:
 	void	Update();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pURLs;
 	BOOL		m_bMultiple;
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CURLActionDlg)

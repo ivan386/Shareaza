@@ -1,7 +1,7 @@
 //
 // BTClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,7 +29,7 @@ class CDownloadTransferBT;
 class CUploadTransferBT;
 
 
-class CBTClient : public CTransfer  
+class CBTClient : public CTransfer
 {
 // Construction
 public:
@@ -49,7 +49,7 @@ protected:
 	BOOL					m_bShake;
 	BOOL					m_bOnline;
 	BOOL					m_bClosing;
-	
+
 // Operations
 public:
 	virtual BOOL	Connect(CDownloadTransferBT* pDownloadTransfer);

@@ -1,7 +1,7 @@
 //
 // WndHelp.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,23 +59,23 @@ CHelpWnd::~CHelpWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CHelpWnd message handlers
 
-int CHelpWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CHelpWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	CRect rect( 0, 0, 0, 0 );
-	
+
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndPanel.Create( WS_CHILD|WS_VISIBLE, rect, this, 100 );
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rect, this, 100 );
-	
+
 	LoadState();
-	
+
 	return 0;
 }
 
-void CHelpWnd::OnDestroy() 
+void CHelpWnd::OnDestroy()
 {
 	SaveState();
 	CPanelWnd::OnDestroy();
@@ -88,28 +88,28 @@ void CHelpWnd::OnSkinChange()
 	// m_wndPanel.OnSkinChange();
 }
 
-void CHelpWnd::OnSize(UINT nType, int cx, int cy) 
+void CHelpWnd::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CPanelWnd::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	HDWP hDWP = BeginDeferWindowPos( 3 );
-	
+
 	DeferWindowPos( hDWP, m_wndToolBar, HWND_TOP, PANEL_WIDTH, rc.bottom - TOOLBAR_HEIGHT, rc.right - PANEL_WIDTH, TOOLBAR_HEIGHT, 0 );
 	DeferWindowPos( hDWP, m_wndPanel, NULL, 0, 0, PANEL_WIDTH, rc.bottom, SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndView, NULL, PANEL_WIDTH, 0, rc.right - PANEL_WIDTH, rc.bottom - TOOLBAR_HEIGHT, SWP_NOZORDER );
-	
+
 	EndDeferWindowPos( hDWP );
 }
 
-BOOL CHelpWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CHelpWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndToolBar.m_hWnd != NULL )
 	{
 		if ( m_wndToolBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }

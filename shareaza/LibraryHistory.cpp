@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,14 +83,14 @@ void CLibraryHistory::Clear()
 BOOL CLibraryHistory::Check(CLibraryRecent* pRecent, int nScope) const
 {
 	if ( nScope == 0 ) return m_pList.Find( pRecent ) != NULL;
-	
+
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos && nScope > 0 ; )
 	{
 		CLibraryRecent* pExisting = (CLibraryRecent*)m_pList.GetNext( pos );
 		if ( pRecent == pExisting ) return TRUE;
 		if ( pExisting->m_pFile != NULL ) nScope--;
 	}
-	
+
 	return FALSE;
 }
 
@@ -104,7 +104,7 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 		CLibraryRecent* pRecent = GetNext( pos );
 		if ( pRecent->m_sPath.CompareNoCase( pszPath ) == 0 ) return pRecent;
 	}
-	
+
 	return NULL;
 }
 
@@ -115,15 +115,15 @@ CLibraryRecent* CLibraryHistory::Add(LPCTSTR pszPath, const SHA1* pSHA1, const M
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return NULL;
-	
+
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent != NULL ) return pRecent;
-	
+
 	pRecent = new CLibraryRecent( pszPath, pSHA1, pED2K, pszSources );
 	m_pList.AddHead( pRecent );
-	
+
 	Prune();
-	
+
 	return pRecent;
 }
 
@@ -134,11 +134,11 @@ BOOL CLibraryHistory::Submit(CLibraryFile* pFile)
 {
 	CLibraryRecent* pRecent = GetByPath( pFile->GetPath() );
 	if ( pRecent == NULL ) return FALSE;
-	
+
 	pRecent->RunVerify( pFile );
-	
+
 	Prune();
-	
+
 	return TRUE;
 }
 
@@ -161,17 +161,17 @@ int CLibraryHistory::Prune()
 	LONGLONG tNow, tRecent;
 	SYSTEMTIME pNow;
 	int nCount = 0;
-	
+
 	GetSystemTime( &pNow );
 	SystemTimeToFileTime( &pNow, (FILETIME*)&tNow );
-	
+
 	for ( POSITION pos = m_pList.GetTailPosition() ; pos ; )
 	{
 		POSITION posCur = pos;
 		CLibraryRecent* pRecent = (CLibraryRecent*)m_pList.GetPrev( pos );
-		
+
 		CopyMemory( &tRecent, &pRecent->m_tAdded, sizeof(LONGLONG) );
-		
+
 		if ( tNow - tRecent > (LONGLONG)Settings.Library.HistoryDays * 0xC92A69C000 )
 		{
 			delete pRecent;
@@ -179,13 +179,13 @@ int CLibraryHistory::Prune()
 			nCount++;
 		}
 	}
-	
+
 	while ( GetCount() > (int)Settings.Library.HistoryTotal )
 	{
 		delete (CLibraryRecent*)m_pList.RemoveTail();
 		nCount++;
 	}
-	
+
 	return nCount;
 }
 
@@ -198,7 +198,7 @@ void CLibraryHistory::OnFileDelete(CLibraryFile* pFile)
 	{
 		POSITION posCur = pos;
 		CLibraryRecent* pRecent = GetNext( pos );
-		
+
 		if ( pRecent->m_pFile == pFile )
 		{
 			delete pRecent;
@@ -214,19 +214,19 @@ void CLibraryHistory::OnFileDelete(CLibraryFile* pFile)
 void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 {
 	if ( nVersion < 7 ) return;
-	
+
 	int nCount = 0;
 	POSITION pos;
-	
+
 	if ( ar.IsStoring() )
 	{
 		for ( pos = GetIterator() ; pos ; )
 		{
 			if ( GetNext( pos )->m_pFile != NULL ) nCount ++;
 		}
-		
+
 		ar.WriteCount( nCount );
-		
+
 		for ( pos = GetIterator() ; pos ; )
 		{
 			CLibraryRecent* pRecent = GetNext( pos );
@@ -244,12 +244,12 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 	else
 	{
 		Clear();
-		
+
 		for ( nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryRecent* pRecent = new CLibraryRecent();
 			pRecent->Serialize( ar, nVersion );
-			
+
 			if ( pRecent->m_pFile != NULL )
 			{
 				m_pList.AddTail( pRecent );
@@ -292,13 +292,13 @@ CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const SHA1* pSHA1, const MD4* pE
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_tAdded );
-	
+
 	m_pFile		= NULL;
 	m_sPath		= pszPath;
 	m_sSources	= pszSources;
 	m_bSHA1		= pSHA1 != NULL;
 	m_bED2K		= pED2K != NULL;
-	
+
 	if ( m_bSHA1 ) m_pSHA1 = *pSHA1;
 	if ( m_bED2K ) m_pED2K = *pED2K;
 }
@@ -328,17 +328,17 @@ void CLibraryRecent::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ASSERT( m_pFile != NULL );
-		
+
 		ar.Write( &m_tAdded, sizeof(FILETIME) );
 		ar << m_pFile->m_nIndex;
 	}
 	else
 	{
 		DWORD nIndex;
-		
+
 		ar.Read( &m_tAdded, sizeof(FILETIME) );
 		ar >> nIndex;
-		
+
 		if ( m_pFile = Library.LookupFile( nIndex ) )
 		{
 			m_sPath = m_pFile->GetPath();

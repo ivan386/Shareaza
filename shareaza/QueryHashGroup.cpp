@@ -1,7 +1,7 @@
 //
 // QueryHashGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ CQueryHashGroup::~CQueryHashGroup()
 		ASSERT( *pTest++ == 0 );
 	}
 #endif
-	
+
 	delete [] m_pHash;
 }
 
@@ -66,10 +66,10 @@ void CQueryHashGroup::Add(CQueryHashTable* pTable)
 	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_pGroup == NULL );
 	ASSERT( m_pTables.Find( pTable ) == NULL );
-	
+
 	pTable->m_pGroup = this;
 	m_pTables.AddTail( pTable );
-	
+
 	Operate( pTable, TRUE );
 	QueryHashMaster.Invalidate();
 }
@@ -81,13 +81,13 @@ void CQueryHashGroup::Remove(CQueryHashTable* pTable)
 {
 	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_pGroup == this );
-	
+
 	POSITION pos = m_pTables.Find( pTable );
 	ASSERT( pos != NULL );
-	
+
 	m_pTables.RemoveAt( pos );
 	pTable->m_pGroup = NULL;
-	
+
 	Operate( pTable, FALSE );
 	QueryHashMaster.Invalidate();
 }
@@ -101,16 +101,16 @@ void CQueryHashGroup::Operate(CQueryHashTable* pTable, BOOL bAdd)
 	ASSERT( pTable->m_nHash == m_nHash );
 	//ToDo: Check this
 	//ASSERT( pTable->m_nInfinity == 1 ); //This causes problems with G1 leaves
-	
+
 	BYTE* pSource = pTable->m_pHash;
 	BYTE* pTarget = m_pHash;
-	
+
 	if ( bAdd )
 	{
 		for ( DWORD nHash = m_nHash >> 3 ; nHash ; nHash-- )
 		{
 			register BYTE nSource = *pSource++;
-			
+
 			if ( ( nSource & 0x01 ) == 0 ) (*pTarget++) ++; else pTarget++;
 			if ( ( nSource & 0x02 ) == 0 ) (*pTarget++) ++; else pTarget++;
 			if ( ( nSource & 0x04 ) == 0 ) (*pTarget++) ++; else pTarget++;
@@ -126,7 +126,7 @@ void CQueryHashGroup::Operate(CQueryHashTable* pTable, BOOL bAdd)
 		for ( DWORD nHash = m_nHash >> 3 ; nHash ; nHash-- )
 		{
 			register BYTE nSource = *pSource++;
-			
+
 			if ( ( nSource & 0x01 ) == 0 ) (*pTarget++) --; else pTarget++;
 			if ( ( nSource & 0x02 ) == 0 ) (*pTarget++) --; else pTarget++;
 			if ( ( nSource & 0x04 ) == 0 ) (*pTarget++) --; else pTarget++;

@@ -1,7 +1,7 @@
 //
 // RichFragment.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,14 +28,14 @@ class CRichElement;
 class CRichViewCtrl;
 
 
-class CRichFragment  
+class CRichFragment
 {
 // Construction
 public:
 	CRichFragment(CRichElement* pElement, int nOffset, int nLength, CPoint* pPoint, CSize* pSize);
 	CRichFragment(CRichElement* pElement, CPoint* pPoint);
 	virtual ~CRichFragment();
-	
+
 // Attributes
 public:
 	CRichElement*	m_pElement;

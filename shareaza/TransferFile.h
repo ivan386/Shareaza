@@ -1,7 +1,7 @@
 //
 // TransferFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,13 +32,13 @@ class CTransferFiles
 public:
 	CTransferFiles();
 	virtual ~CTransferFiles();
-	
+
 // Attributes
 public:
 	CCriticalSection	m_pSection;
 	CMapStringToPtr		m_pMap;
 	CPtrList			m_pDeferred;
-	
+
 // Operations
 public:
 	CTransferFile*	Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate);
@@ -47,7 +47,7 @@ public:
 protected:
 	void			QueueDeferred(CTransferFile* pFile);
 	void			Remove(CTransferFile* pFile);
-	
+
 	friend class CTransferFile;
 };
 
@@ -59,7 +59,7 @@ class CTransferFile
 public:
 	CTransferFile(LPCTSTR pszPath);
 	virtual ~CTransferFile();
-	
+
 // Deferred Write Structure
 protected:
 	class DefWrite
@@ -69,7 +69,7 @@ protected:
 		DWORD	m_nLength;
 		BYTE*	m_pBuffer;
 	};
-	
+
 // Attributes
 protected:
 	CString		m_sPath;
@@ -93,12 +93,12 @@ protected:
 	BOOL		EnsureWrite();
 	BOOL		CloseWrite();
 	void		DeferredWrite(BOOL bOffline = FALSE);
-	
+
 	friend class CTransferFiles;
-	
+
 };
 
-	
+
 extern CTransferFiles TransferFiles;
 
 #endif // !defined(AFX_TRANSFERFILE_H__FF7BC368_5878_4BCF_A2AD_055B0355AC3A__INCLUDED_)

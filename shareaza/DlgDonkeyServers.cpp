@@ -1,7 +1,7 @@
 //
 // DlgDonkeyServers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,61 +71,61 @@ void CDonkeyServersDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CDonkeyServersDlg message handlers
 
-BOOL CDonkeyServersDlg::OnInitDialog() 
+BOOL CDonkeyServersDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CDonkeyServersDlg") );
-	
+
 	m_sURL = Settings.eDonkey.ServerListURL;
 	UpdateData( FALSE );
-	
+
 	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
 	m_wndProgress.SetRange( 0, 100 );
 	m_wndProgress.SetPos( 0 );
-	
+
 	return TRUE;
 }
 
-void CDonkeyServersDlg::OnChangeURL() 
+void CDonkeyServersDlg::OnChangeURL()
 {
 	UpdateData();
 	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
 }
 
-void CDonkeyServersDlg::OnOK() 
+void CDonkeyServersDlg::OnOK()
 {
 	UpdateData();
-	
+
 	if ( m_sURL.Find( _T("http://") ) != 0 ) return;
-	
+
 	Settings.eDonkey.ServerListURL = m_sURL;
-	
+
 	CString strAgent = Settings.SmartAgent( Settings.General.UserAgent );
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( m_hInternet == NULL ) return;
-	
+
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
 	m_hThread = pThread->m_hThread;
-	
+
 	m_wndOK.EnableWindow( FALSE );
 	m_wndURL.EnableWindow( FALSE );
 }
 
-void CDonkeyServersDlg::OnCancel() 
+void CDonkeyServersDlg::OnCancel()
 {
 	OnTimer( 2 );
 	CSkinDialog::OnCancel();
 }
 
-void CDonkeyServersDlg::OnTimer(UINT nIDEvent) 
+void CDonkeyServersDlg::OnTimer(UINT nIDEvent)
 {
 	if ( m_hInternet != NULL )
 	{
 		InternetCloseHandle( m_hInternet );
 		m_hInternet = NULL;
 	}
-	
+
 	if ( m_hThread != NULL )
 	{
         int nAttempt = 5;
@@ -137,17 +137,17 @@ void CDonkeyServersDlg::OnTimer(UINT nIDEvent)
 			if ( nCode != STILL_ACTIVE ) break;
 			Sleep( 100 );
 		}
-		
+
 		if ( nAttempt == 0 )
 		{
 			TerminateThread( m_hThread, 0 );
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CDonkeyServersDlg thread.") );
 			Sleep( 100 );
 		}
-		
+
 		m_hThread = NULL;
 	}
-	
+
 	if ( nIDEvent == 1 ) EndDialog( IDOK );
 }
 
@@ -164,10 +164,10 @@ UINT CDonkeyServersDlg::ThreadStart(LPVOID pParam)
 void CDonkeyServersDlg::OnRun()
 {
 	if ( m_hInternet == NULL ) return;
-	
+
 	HINTERNET hRequest = InternetOpenUrl( m_hInternet, m_sURL, NULL, 0,
 		INTERNET_FLAG_RELOAD|INTERNET_FLAG_DONT_CACHE, 0 );
-	
+
 	if ( hRequest == NULL )
 	{
 		InternetCloseHandle( m_hInternet );
@@ -175,25 +175,25 @@ void CDonkeyServersDlg::OnRun()
 		PostMessage( WM_TIMER, FALSE );
 		return;
 	}
-	
+
 	DWORD nLength, nlLength = 4;
 	DWORD nRemaining = 0;
 	BYTE pBuffer[1024];
 	CMemFile pFile;
-	
+
 	if ( HttpQueryInfo( hRequest, HTTP_QUERY_CONTENT_LENGTH|HTTP_QUERY_FLAG_NUMBER,
 		&nLength, &nlLength, NULL ) )
 	{
 		m_wndProgress.PostMessage( PBM_SETRANGE32, 0, nLength );
 	}
-	
+
 	nLength = 0;
-	
+
 	while ( InternetQueryDataAvailable( hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
 	{
 		nLength += nRemaining;
 		m_wndProgress.PostMessage( PBM_SETPOS, nLength );
-		
+
 		while ( nRemaining > 0 )
 		{
 			DWORD nBuffer = min( nRemaining, DWORD(1024) );
@@ -202,12 +202,12 @@ void CDonkeyServersDlg::OnRun()
 			nRemaining -= nBuffer;
 		}
 	}
-	
+
 	pFile.Seek( 0, CFile::begin );
-	
+
 	BOOL bSuccess = HostCache.eDonkey.ImportMET( &pFile );
 	if ( bSuccess ) HostCache.Save();
-	
+
 	InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 

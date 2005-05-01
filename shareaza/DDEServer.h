@@ -1,7 +1,7 @@
 //
 // DDEServer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,13 +25,13 @@
 #pragma once
 
 
-class CDDEServer  
+class CDDEServer
 {
 // Construction
 public:
 	CDDEServer(LPCTSTR pszService);
 	virtual ~CDDEServer();
-	
+
 // Attributes
 protected:
 	static CDDEServer* m_pServer;

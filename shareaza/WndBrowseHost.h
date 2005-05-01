@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,9 @@ public:
 	CBrowseHostWnd(SOCKADDR_IN* pHost, GGUID* pClientID = NULL);
 	CBrowseHostWnd(IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, GGUID* pClientID = NULL);
 	virtual ~CBrowseHostWnd();
-	
+
 	DECLARE_DYNCREATE(CBrowseHostWnd)
-	
+
 // Attributes
 protected:
 	CHostBrowser*		m_pBrowser;
@@ -78,5 +78,5 @@ protected:
 	afx_msg void OnUpdateSearchChat(CCmdUI* pCmdUI);
 	afx_msg void OnSearchChat();
 	afx_msg void OnSelChangeMatches();
-	
+
 };

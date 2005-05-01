@@ -1,7 +1,7 @@
 //
 // DownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -100,11 +100,11 @@ void CDownloadGroup::CopyList(CPtrList* pList)
 BOOL CDownloadGroup::Link(CDownload* pDownload)
 {
 	if ( m_pFilters.IsEmpty() ) return FALSE;
-	
+
 	for ( POSITION pos = m_pFilters.GetHeadPosition() ; pos ; )
 	{
 		CString strFilter = m_pFilters.GetNext( pos );
-		
+
 		if ( ( pDownload->m_bBTH && strFilter.CompareNoCase( _T("torrent") ) == 0 ) ||
 				CQuerySearch::WordMatch( pDownload->m_sRemoteName, strFilter ) )
 		{
@@ -112,7 +112,7 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 			return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -122,14 +122,14 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 int CDownloadGroup::LinkAll()
 {
 	if ( m_pFilters.IsEmpty() ) return 0;
-	
+
 	int nCount = 0;
-	
+
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		nCount += Link( Downloads.GetNext( pos ) );
 	}
-	
+
 	return nCount;
 }
 
@@ -147,7 +147,7 @@ void CDownloadGroup::AddFilter(LPCTSTR pszFilter)
 void CDownloadGroup::SetSchema(LPCTSTR pszURI)
 {
 	if ( m_sSchemaURI != pszURI ) m_sSchemaURI = pszURI;
-	
+
 	if ( CSchema* pSchema = SchemaCache.Get( pszURI ) )
 	{
 		m_nImage = pSchema->m_nIcon16;
@@ -168,16 +168,16 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		ar << m_sName;
 		ar << m_sSchemaURI;
 		ar << m_sFolder;
-		
+
 		ar.WriteCount( m_pFilters.GetCount() );
-		
+
 		for ( POSITION pos = m_pFilters.GetHeadPosition() ; pos ; )
 		{
 			ar << m_pFilters.GetNext( pos );
 		}
-		
+
 		ar.WriteCount( GetCount() );
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			DWORD nDownload = GetNext( pos )->m_nSerID;
@@ -189,7 +189,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		ar >> m_sName;
 		ar >> m_sSchemaURI;
 		ar >> m_sFolder;
-		
+
 		if ( nVersion >= 3 )
 		{
 			for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
@@ -203,7 +203,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		{
 			CString strFilters;
 			ar >> strFilters;
-			
+
 			for ( strFilters += '|' ; strFilters.GetLength() ; )
 			{
 				CString strFilter = strFilters.SpanExcluding( _T(" |") );
@@ -212,7 +212,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 				if ( strFilter.GetLength() ) m_pFilters.AddTail( strFilter );
 			}
 		}
-		
+
 		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			DWORD nDownload;
@@ -220,7 +220,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 			if ( CDownload* pDownload = Downloads.FindBySID( nDownload ) )
 				Add( pDownload );
 		}
-		
+
 		SetSchema( m_sSchemaURI );
 	}
 }

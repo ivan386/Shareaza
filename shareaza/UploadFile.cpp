@@ -1,7 +1,7 @@
 //
 // UploadFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,13 +43,13 @@ CUploadFile::CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName,
 	m_sName		= pszName;
 	m_sPath		= pszPath;
 	m_nSize		= nSize;
-	
+
 	if ( m_bSHA1 = ( pSHA1 != NULL ) ) m_pSHA1 = *pSHA1;
-	
+
 	m_nRequests		= 0;
-	
+
 	m_bSelected		= FALSE;
-	
+
 	m_pTransfers.AddTail( pUpload );
 }
 
@@ -69,22 +69,22 @@ BOOL CUploadFile::Remove(CUploadTransfer* pUpload)
 {
 	POSITION pos = m_pTransfers.Find( pUpload );
 	if ( pos == NULL ) return FALSE;
-	
+
 	m_pTransfers.RemoveAt( pos );
-	
+
 	return IsEmpty();
 }
 
 CUploadTransfer* CUploadFile::GetActive() const
 {
 	if ( IsEmpty() ) return NULL;
-	
+
 	for ( POSITION pos = m_pTransfers.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransfer* pUpload = (CUploadTransfer*)m_pTransfers.GetNext( pos );
 		if ( pUpload->m_nState != upsNull ) return pUpload;
 	}
-	
+
 	return (CUploadTransfer*)m_pTransfers.GetTail();
 }
 
@@ -106,7 +106,7 @@ void CUploadFile::AddFragment(QWORD nOffset, QWORD nLength)
 	{
 		Statistics.Current.Uploads.Files++;
 	}
-	
+
     m_oFragments.insert( FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 

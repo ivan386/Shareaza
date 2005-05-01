@@ -1,7 +1,7 @@
 //
 // WndHome.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,7 @@ public:
 // Operations
 public:
 	virtual void	OnSkinChange();
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CHomeWnd)
@@ -66,7 +66,7 @@ protected:
 	afx_msg void OnClickView(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	afx_msg void OnPaint();
 	//}}AFX_MSG
-		
+
 	DECLARE_MESSAGE_MAP()
 
 };

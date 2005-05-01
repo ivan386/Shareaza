@@ -1,7 +1,7 @@
 //
 // CtrlMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,7 +61,7 @@ protected:
 	int				m_nPageCount;
 	int				m_nCurrentWidth;
 	DWORD			m_nCacheItems;
-	int				m_nTrailWidth;	
+	int				m_nTrailWidth;
 	UINT			m_nMessage;
 	CString			m_sMessage;
 	BOOL			m_bSearchLink;
@@ -98,7 +98,7 @@ protected:
 	void	NotifySelection();
 	void	DoDelete();
 	void	DoExpand(BOOL bExpand);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CMatchCtrl)

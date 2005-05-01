@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,7 +96,7 @@ CString CXMLNode::StringToValue(LPCTSTR& pszXML, int nLength)
 
 	LPTSTR pszValue = strValue.GetBuffer( nLength + 4 );
 	LPTSTR pszOut = pszValue;
-	
+
 	LPTSTR pszNull = (LPTSTR)pszXML + nLength;
 	TCHAR cNull = *pszNull;
 	*pszNull = 0;
@@ -170,10 +170,10 @@ CString CXMLNode::StringToValue(LPCTSTR& pszXML, int nLength)
 			*pszOut++ = *pszXML++;
 		}
 	}
-	
+
 	ASSERT( pszNull == pszXML );
 	*pszNull = cNull;
-	
+
 	ASSERT( pszOut - pszValue <= nLength );
 	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
 
@@ -197,7 +197,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 	int nLen = strXML.GetLength();
 	int nOut = (int)_tcslen( pszValue );
 	LPTSTR pszOut = strXML.GetBuffer( nLen + nOut ) + nLen;
-	
+
 	for ( ; *pszValue ; pszValue++ )
 	{
 #ifdef UNICODE
@@ -205,7 +205,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 #else
 		int nChar = (int)(unsigned char)*pszValue;
 #endif
-		
+
 		switch ( nChar )
 		{
 		case '&':
@@ -248,7 +248,7 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 			break;
 		}
 	}
-	
+
 	strXML.ReleaseBuffer( nLen );
 }
 
@@ -283,9 +283,9 @@ void CXMLNode::UniformString(CString& str)
 
 	str.TrimLeft();
 	str.TrimRight();
-	
+
 	BOOL bSpace = TRUE;
-	
+
 	for ( int nPos = 0 ; nPos < str.GetLength() ; nPos++ )
 	{
 #ifdef UNICODE
@@ -293,7 +293,7 @@ void CXMLNode::UniformString(CString& str)
 #else
 		int nChar = (int)(unsigned char)str.GetAt( nPos );
 #endif
-		
+
 		if ( nChar <= 32 )
 		{
 			if ( bSpace )
@@ -340,7 +340,7 @@ CXMLElement::~CXMLElement()
 CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
 {
 	CXMLElement* pClone = new CXMLElement( pParent, m_sName );
-	
+
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
@@ -403,7 +403,7 @@ CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline)
 void CXMLElement::ToString(CString& strXML, BOOL bNewline)
 {
 	strXML += '<' + m_sName;
-	
+
     POSITION pos = GetAttributeIterator();
 	for ( ; pos ; )
 	{
@@ -411,27 +411,27 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline)
 		CXMLAttribute* pAttribute = GetNextAttribute( pos );
 		pAttribute->ToString( strXML );
 	}
-	
+
 	pos = GetElementIterator();
-	
+
 	if ( pos == NULL && m_sValue.IsEmpty() )
 	{
 		strXML += _T("/>");
 		if ( bNewline ) strXML += _T("\r\n");
 		return;
 	}
-	
+
 	strXML += '>';
 	if ( bNewline && pos ) strXML += _T("\r\n");
-	
+
 	while ( pos )
 	{
 		CXMLElement* pElement = GetNextElement( pos );
 		pElement->ToString( strXML, bNewline );
 	}
-	
+
 	ValueToString( m_sValue, strXML );
-	
+
 	strXML += _T("</") + m_sName + '>';
 	if ( bNewline ) strXML += _T("\r\n");
 }
@@ -443,7 +443,7 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 {
 	CXMLElement* pElement	= NULL;
 	LPCTSTR pszElement		= NULL;
-	
+
 #ifdef _AFX
 	try
 	{
@@ -455,30 +455,30 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 			pszXML = pszElement + 2;
 		}
 		else if ( bHeader ) return NULL;
-		
+
 		while ( ParseMatch( pszXML, _T("<!--") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("-->") );
 			if ( ! pszElement || *pszElement != '-' ) return FALSE;
 			pszXML = pszElement + 3;
 		}
-		
+
 		if ( ParseMatch( pszXML, _T("<!DOCTYPE") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T(">") );
 			if ( ! pszElement ) return FALSE;
 			pszXML = pszElement + 1;
 		}
-		
+
 		while ( ParseMatch( pszXML, _T("<!--") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("-->") );
 			if ( ! pszElement || *pszElement != '-' ) return FALSE;
 			pszXML = pszElement + 3;
 		}
-		
+
 		pElement = new CXMLElement();
-		
+
 		if ( ! pElement->ParseString( pszXML ) )
 		{
 			delete pElement;
@@ -493,29 +493,29 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 		pElement = NULL;
 	}
 #endif
-	
+
 	return pElement;
 }
 
 BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 {
 	if ( ! ParseMatch( strXML, _T("<") ) ) return FALSE;
-	
+
 	if ( ! ParseIdentifier( strXML, m_sName ) ) return FALSE;
-	
+
 	LPCTSTR pszEnd = strXML + _tcslen( strXML );
-	
+
 	while ( ! ParseMatch( strXML, _T(">") ) )
 	{
 		if ( ParseMatch( strXML, _T("/") ) )
 		{
 			return ParseMatch( strXML, _T(">") );
 		}
-		
+
 		if ( ! *strXML || strXML >= pszEnd ) return FALSE;
-		
+
 		CXMLAttribute* pAttribute = new CXMLAttribute( this );
-		
+
 		if ( pAttribute->ParseString( strXML ) )
 		{
 			CString strName( pAttribute->m_sName );
@@ -531,17 +531,17 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 			return FALSE;
 		}
 	}
-	
+
 	CString strClose = _T("</");
 	strClose += m_sName + '>';
-	
+
 	while ( TRUE )
 	{
 		if ( ! *strXML || strXML >= pszEnd ) return FALSE;
 
 		LPCTSTR pszElement = _tcschr( strXML, '<' );
 		if ( ! pszElement || *pszElement != '<' ) return FALSE;
-		
+
 		if ( pszElement > strXML )
 		{
 			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' ) m_sValue += ' ';
@@ -585,15 +585,15 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 {
 	CString strXML;
-	
+
 	if ( nByte >= 2 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
 	{
 		nByte = nByte / 2 - 1;
-		
+
 		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
 		{
 			pByte += 2;
-			
+
 			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
 			{
 				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
@@ -603,9 +603,9 @@ CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 		}
 		else
 		{
-			pByte += 2; 
+			pByte += 2;
 		}
-		
+
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof(TCHAR) );
 		strXML.ReleaseBuffer( nByte );
 	}
@@ -615,13 +615,13 @@ CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 		{
 			pByte += 3; nByte -= 3;
 		}
-		
+
 		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
-		
+
 		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
 		strXML.ReleaseBuffer( nWide );
 	}
-	
+
 	return FromString( strXML, bHeader );
 }
 
@@ -632,13 +632,13 @@ CXMLElement* CXMLElement::FromFile(LPCTSTR pszPath, BOOL bHeader)
 {
 	HANDLE hFile = CreateFile(	pszPath, GENERIC_READ, FILE_SHARE_READ, NULL,
 								OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	
+
 	if ( hFile == INVALID_HANDLE_VALUE ) return NULL;
-	
+
 	CXMLElement* pXML = FromFile( hFile, bHeader );
-	
+
 	CloseHandle( hFile );
-	
+
 	return pXML;
 }
 
@@ -646,14 +646,14 @@ CXMLElement* CXMLElement::FromFile(HANDLE hFile, BOOL bHeader)
 {
 	DWORD nByte = GetFileSize( hFile, NULL );
 	if ( nByte > 4096*1024 ) return FALSE;
-	
+
 	BYTE* pByte = new BYTE[ nByte ];
 	ReadFile( hFile, pByte, nByte, &nByte, NULL );
-	
+
 	CXMLElement* pXML = FromBytes( pByte, nByte, bHeader );
-	
+
 	delete [] pByte;
-	
+
 	return pXML;
 }
 
@@ -664,13 +664,13 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 {
 	if ( this == NULL || pXML == NULL ) return FALSE;
 	if ( pXML == this ) return TRUE;
-	
+
 	if ( m_sName != pXML->m_sName ) return FALSE;
 	if ( m_sValue != pXML->m_sValue ) return FALSE;
-	
+
 	if ( GetAttributeCount() != pXML->GetAttributeCount() ) return FALSE;
 	if ( GetElementCount() != pXML->GetElementCount() ) return FALSE;
-	
+
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
 		CXMLAttribute* pAttribute1 = GetNextAttribute( pos );
@@ -678,10 +678,10 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 		if ( pAttribute2 == NULL ) return FALSE;
 		if ( ! pAttribute1->Equals( pAttribute2 ) ) return FALSE;
 	}
-	
+
 	POSITION pos1 = GetElementIterator();
 	POSITION pos2 = pXML->GetElementIterator();
-	
+
 	for ( ; pos1 && pos2 ; )
 	{
 		CXMLElement* pElement1 = GetNextElement( pos1 );
@@ -689,9 +689,9 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 		if ( pElement1 == NULL || pElement2 == NULL ) return FALSE;
 		if ( ! pElement1->Equals( pElement2 ) ) return FALSE;
 	}
-	
+
 	if ( pos1 != NULL || pos2 != NULL ) return FALSE;
-	
+
 	return TRUE;
 }
 
@@ -701,7 +701,7 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 CString CXMLElement::GetRecursiveWords()
 {
 	CString strWords;
-	
+
 	AddRecursiveWords( strWords );
 	strWords.TrimLeft();
 	strWords.TrimRight();
@@ -727,7 +727,7 @@ void CXMLElement::AddRecursiveWords(CString& strWords)
 	{
 		GetNextElement( pos )->AddRecursiveWords( strWords );
 	}
-	
+
 	if ( m_sValue.GetLength() )
 	{
 		if ( strWords.GetLength() ) strWords += ' ';
@@ -747,7 +747,7 @@ void CXMLElement::Serialize(CArchive& ar)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetAttributeCount() );
-		
+
 		for ( POSITION pos = GetAttributeIterator() ; pos ; )
 		{
 			GetNextAttribute( pos )->Serialize( ar );
@@ -828,23 +828,23 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 {
 	if ( ! ParseIdentifier( strXML, m_sName ) ) return FALSE;
 	if ( ! ParseMatch( strXML, _T("=") ) ) return FALSE;
-	
+
 	if ( ParseMatch( strXML, _T("\"") ) )
 	{
 		LPCTSTR pszQuote = _tcschr( strXML,  '\"' );
 		if ( ! pszQuote || *pszQuote != '\"' ) return FALSE;
-		
+
 		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
-		
+
 		return ParseMatch( strXML, _T("\"") );
 	}
 	else if ( ParseMatch( strXML, _T("'") ) )
 	{
 		LPCTSTR pszQuote = _tcschr( strXML,  '\'' );
 		if ( ! pszQuote || *pszQuote != '\'' ) return FALSE;
-		
+
 		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
-		
+
 		return ParseMatch( strXML, _T("\'") );
 	}
 	else
@@ -860,10 +860,10 @@ BOOL CXMLAttribute::Equals(CXMLAttribute* pXML) const
 {
 	if ( this == NULL || pXML == NULL ) return FALSE;
 	if ( pXML == this ) return TRUE;
-	
+
 	if ( m_sName != pXML->m_sName ) return FALSE;
 	if ( m_sValue != pXML->m_sValue ) return FALSE;
-	
+
 	return TRUE;
 }
 

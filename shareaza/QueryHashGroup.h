@@ -1,7 +1,7 @@
 //
 // QueryHashGroup.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CQueryHashGroup
 public:
 	CQueryHashGroup(DWORD nHash = 0);
 	virtual ~CQueryHashGroup();
-	
+
 // Attributes
 public:
 	BYTE*		m_pHash;
@@ -41,26 +41,26 @@ public:
 	DWORD		m_nCount;
 protected:
 	CPtrList	m_pTables;
-	
+
 // Operations
 public:
 	void	Add(CQueryHashTable* pTable);
 	void	Remove(CQueryHashTable* pTable);
 protected:
 	void	Operate(CQueryHashTable* pTable, BOOL nAdd);
-	
+
 // Inlines
 public:
 	inline POSITION GetIterator() const
 	{
 		return m_pTables.GetHeadPosition();
 	}
-	
+
 	inline CQueryHashTable* GetNext(POSITION& pos) const
 	{
 		return (CQueryHashTable*)m_pTables.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pTables.GetCount();

@@ -1,7 +1,7 @@
 //
 // WndLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,10 +78,10 @@ BOOL CLibraryWnd::Display(CAlbumFolder* pFolder)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryWnd message handlers
 
-int CLibraryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_tLast = 0;
 
 	m_wndFrame.Create( this );
@@ -91,29 +91,29 @@ int CLibraryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CLibraryWnd::OnDestroy() 
+void CLibraryWnd::OnDestroy()
 {
 	SaveState();
 	CPanelWnd::OnDestroy();
 }
 
-BOOL CLibraryWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CLibraryWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndFrame.m_hWnd )
 	{
 		if ( m_wndFrame.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CLibraryWnd::OnSize(UINT nType, int cx, int cy) 
+void CLibraryWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 	if ( m_wndFrame.m_hWnd ) m_wndFrame.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
 }
 
-void CLibraryWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 
+void CLibraryWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
 
@@ -124,7 +124,7 @@ void CLibraryWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 	}
 }
 
-void CLibraryWnd::OnTimer(UINT nIDEvent) 
+void CLibraryWnd::OnTimer(UINT nIDEvent)
 {
 	DWORD tNow = GetTickCount();
 
@@ -164,7 +164,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 	CString strFormat, strMessage;
 	CCollectionFile pCollection;
 	CLibraryFolder* pLibFolder;
-	
+
 	if ( pCollection.Open( pszPath ) )
 	{	//The specified collection is valid
 
@@ -186,11 +186,11 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 			oLock.Unlock();
 		}
 		else
-		{	//Collection is not already in the main library 
+		{	//Collection is not already in the main library
 			oLock.Unlock();
 			//Check the collection folder
 			CString strSource( pszPath ), strTarget;
-			
+
 			int nName = strSource.ReverseFind( '\\' );
 			if ( nName >= 0 )
 			{
@@ -219,7 +219,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 
 					LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
 					strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
-					AfxMessageBox( strMessage, MB_ICONINFORMATION );		
+					AfxMessageBox( strMessage, MB_ICONINFORMATION );
 					oLock.Lock();
 					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 					{
@@ -227,13 +227,13 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 					}
 					oLock.Unlock();
 				}
-				else	
+				else
 				{	//Was not able to copy collection to the collection folder
 					if( GetLastError() == ERROR_FILE_EXISTS )
 					{	//File of this name already exists
 
 						//We cannot copy the collection because it's already there.
-						//But it doesn't appear in the library. 
+						//But it doesn't appear in the library.
 
 						//The greatest probablility is that the file is there, but hasn't
 						//been added yet. The best bet is to pretend everything is okay
@@ -243,7 +243,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 						AfxMessageBox( strMessage , MB_ICONINFORMATION );
 
 						oLock.Lock();
-						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) ) 
+						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 						{	//Collection was already there.
 							//Re-mount the collection
 							LibraryFolders.MountCollection( &pFile->m_pSHA1, &pCollection );
@@ -251,7 +251,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 							oLock.Unlock();
 						}
 						else
-						{	//File of this name exists in the folder, but does not appear in the 
+						{	//File of this name exists in the folder, but does not appear in the
 							//library. Most likely cause- Corrupt file in collection folder.
 							oLock.Unlock();
 							LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
@@ -259,7 +259,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 							AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 						}
 					}
-					else		
+					else
 					{	//Unknown reason- Display an error message
 						LoadString( strFormat, IDS_LIBRARY_COLLECTION_CANT_INSTALL );
 						strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle(), (LPCTSTR)Settings.Downloads.CollectionPath );
@@ -275,7 +275,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 		strMessage.Format( strFormat, pszPath );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 	}
-	
+
 	if ( pFolder != NULL ) Display( pFolder ); //Display the collection
 	return ( pFolder != NULL );
 }
@@ -296,7 +296,7 @@ HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
 BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 {
 	CAlbumFolder* pFolder = NULL;
-	
+
 	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath, TRUE, FALSE, TRUE ) )
 	{
 		pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
@@ -306,24 +306,24 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 	{
 		CString strFormat, strMessage;
 		CCollectionFile pCollection;
-		
+
 		if ( pCollection.Open( pszPath ) )
 		{
 			CString strSource( pszPath ), strTarget;
-			
+
 			int nName = strSource.ReverseFind( '\\' );
 			if ( nName >= 0 )
 			{
 				strTarget = Settings.Downloads.CompletePath + strSource.Mid( nName );
 				LibraryBuilder.RequestPriority( strTarget );
 			}
-			
+
 			if ( strTarget.GetLength() > 0 && CopyFile( strSource, strTarget, TRUE ) )
 			{
 				LoadString( strFormat, IDS_LIBRARY_COLLECTION_INSTALLED );
 				strMessage.Format( strFormat, (LPCTSTR)pCollection.GetTitle() );
 				AfxMessageBox( strMessage, MB_ICONINFORMATION );
-				
+
 				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, TRUE, FALSE, TRUE ) )
 				{
 					pFolder = LibraryFolders.GetCollection( &pFile->m_pSHA1 );
@@ -344,7 +344,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		}
 	}
-	
+
 	if ( pFolder != NULL ) Display( pFolder );
 	return ( pFolder != NULL );
 }

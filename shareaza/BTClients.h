@@ -1,7 +1,7 @@
 //
 // BTClients.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,13 @@ class CBTClient;
 class CBTTrackerRequest;
 
 
-class CBTClients  
+class CBTClients
 {
 // Construction
 public:
 	CBTClients();
 	virtual ~CBTClients();
-	
+
 // Attributes
 protected:
 	CPtrList	m_pList;
@@ -45,7 +45,7 @@ protected:
 	CEvent				m_pShutdown;
 	BOOL				m_bShutdown;
 	CPtrList			m_pRequests;
-	
+
 // Operations
 public:
 	void		Clear();
@@ -57,24 +57,24 @@ protected:
 	void		Remove(CBTClient* pClient);
 	void		Add(CBTTrackerRequest* pRequest);
 	void		Remove(CBTTrackerRequest* pRequest);
-	
+
 // List Access
 public:
 	inline POSITION GetIterator() const
 	{
 		return m_pList.GetHeadPosition();
 	}
-	
+
 	inline CBTClient* GetNext(POSITION& pos) const
 	{
 		return (CBTClient*)m_pList.GetNext( pos );
 	}
-	
+
 	inline int GetCount() const
 	{
 		return m_pList.GetCount();
 	}
-	
+
 	friend class CBTClient;
 	friend class CBTTrackerRequest;
 

@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,7 @@ public:
 protected:
 	DWORD			m_tEDSources[256];
 	MD4				m_pEDSources[256];
-	
+
 };
 
 #endif // !defined(AFX_NEIGHBOURSWITHED2K_H__0165D8B7_0351_4EF7_B669_73D0072F5107__INCLUDED_)

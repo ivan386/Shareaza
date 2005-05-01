@@ -1,7 +1,7 @@
 //
 // LibraryMaps.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,7 @@ class CLibraryMaps : public CComObject
 public:
 	CLibraryMaps();
 	virtual ~CLibraryMaps();
-	
+
 	DECLARE_DYNAMIC(CLibraryMaps)
 
 // Attributes
@@ -72,7 +72,7 @@ protected:
 	CPtrList*		Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal);
 	void			Serialize1(CArchive& ar, int nVersion);
 	void			Serialize2(CArchive& ar, int nVersion);
-	
+
 // COM
 protected:
 	BEGIN_INTERFACE_PART(LibraryFiles, ILibraryFiles)
@@ -83,9 +83,9 @@ protected:
 		STDMETHOD(get_Item)(VARIANT vIndex, ILibraryFile FAR* FAR* ppFile);
 		STDMETHOD(get_Count)(LONG FAR* pnCount);
 	END_INTERFACE_PART(LibraryFiles)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 	friend class CLibrary;
 	friend class CLibraryBuilder;
 	friend class CLibraryFile;

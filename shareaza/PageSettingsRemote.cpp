@@ -1,7 +1,7 @@
 //
 // PageSettingsRemote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,23 +74,23 @@ void CRemoteSettingsPage::DoDataExchange(CDataExchange* pDX)
 BOOL CRemoteSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bEnable	= m_bOldEnable		= Settings.Remote.Enable;
 	m_sUsername	= m_sOldUsername	= Settings.Remote.Username;
 	m_sOldPassword					= Settings.Remote.Password;
-	
+
 	if ( ! m_sOldPassword.IsEmpty() ) m_sPassword = _T("      ");
-	
+
 	UpdateData( FALSE );
 	OnBnClickedRemoteEnable();
-	
+
 	return TRUE;
 }
 
 void CRemoteSettingsPage::OnNewPassword()
 {
 	UpdateData();
-	
+
 	if ( m_sPassword.GetLength() < 3 )		// Password too short
 	{
 		Settings.Remote.Password = m_sOldPassword;
@@ -106,22 +106,22 @@ void CRemoteSettingsPage::OnNewPassword()
 		pSHA1.Finish();
 		Settings.Remote.Password = pSHA1.GetHashString( FALSE );
 	}
-	
+
 	OnBnClickedRemoteEnable();
 }
 
 void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 {
 	UpdateData();
-	
+
 	Settings.Remote.Enable		= m_bEnable;
 	Settings.Remote.Username	= m_sUsername;
-	
+
 	m_wndUsername.EnableWindow( m_bEnable );
 	m_wndPassword.EnableWindow( m_bEnable );
-	
+
 	CString strURL;
-	
+
 	if ( m_bEnable && ! m_sUsername.IsEmpty() && ! Settings.Remote.Password.IsEmpty() )
 	{
 		if ( Network.IsListening() )
@@ -153,21 +153,21 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 		LoadString( strURL, IDS_REMOTE_DISABLED );
 		m_wndURL.EnableWindow( FALSE );
 	}
-	
+
 	m_wndURL.SetWindowText( strURL );
-	
+
 }
 
 HBRUSH CRemoteSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSettingsPage::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( pWnd == &m_wndURL && m_wndURL.IsWindowEnabled() )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 		pDC->SetTextColor( RGB( 0, 0, 255 ) );
 	}
-	
+
 	return hbr;
 }
 
@@ -177,7 +177,7 @@ BOOL CRemoteSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	GetCursorPos( &point );
 	CRect rect;
 	m_wndURL.GetWindowRect( &rect );
-	
+
 	if ( rect.PtInRect( point ) && m_wndURL.IsWindowEnabled() )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
@@ -194,14 +194,14 @@ void CRemoteSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	CRect rect;
 	m_wndURL.GetWindowRect( &rect );
 	ScreenToClient( &rect );
-	
+
 	if ( rect.PtInRect( point ) && m_wndURL.IsWindowEnabled() )
 	{
 		CString strURL;
 		m_wndURL.GetWindowText( strURL );
 		ShellExecute( GetSafeHwnd(), NULL, strURL, NULL, NULL, SW_SHOWNORMAL );
 	}
-	
+
 	CSettingsPage::OnLButtonUp( nFlags, point );
 }
 
@@ -210,6 +210,6 @@ void CRemoteSettingsPage::OnCancel()
 	Settings.Remote.Enable		= m_bOldEnable;
 	Settings.Remote.Username	= m_sOldUsername;
 	Settings.Remote.Password	= m_sOldPassword;
-	
+
 	CSettingsPage::OnCancel();
 }

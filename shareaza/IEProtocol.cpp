@@ -1,7 +1,7 @@
 //
 // IEProtocol.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,7 +62,7 @@ CIEProtocol::CIEProtocol()
 {
 	m_pShutdown = NULL;
 	m_nRequests = 0;
-	
+
 	m_pCollZIP	= NULL;
 }
 
@@ -77,53 +77,53 @@ CIEProtocol::~CIEProtocol()
 BOOL CIEProtocol::Create()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pSession ) return TRUE;
-	
+
 	CComPtr<IInternetSession> pSession;
-	
+
 	if ( FAILED( CoInternetGetSession( 0, &pSession, 0 ) ) ) return FALSE;
-	
+
 	for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 	{
 		if ( FAILED( pSession->RegisterNameSpace( &m_xClassFactory, clsidProtocol,
 			 pszProtocols[ nProtocol ], 0, NULL, 0 ) ) ) return FALSE;
 	}
-	
+
 	m_pSession = pSession;
-	
+
 	return TRUE;
 }
 
 void CIEProtocol::Close()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_nRequests > 0 )
 	{
 		m_pShutdown = new CEvent();
-		
+
 		pLock.Unlock();
 		WaitForSingleObject( *m_pShutdown, 5000 );
 		pLock.Lock();
-		
+
 		delete m_pShutdown;
 		m_pShutdown = NULL;
-		
+
 		ASSERT( m_nRequests == 0 );
 		m_nRequests = 0;
 	}
-	
+
 	if ( m_pSession )
 	{
 		for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 		{
 			m_pSession->UnregisterNameSpace( &m_xClassFactory, pszProtocols[ nProtocol ] );
 		}
-		
+
 		m_pSession = NULL;
 	}
-	
+
 	SetCollection( NULL, NULL );
 }
 
@@ -145,9 +145,9 @@ void CIEProtocol::OnRequestConstruct(CIEProtocolRequest* pRequest)
 void CIEProtocol::OnRequestDestruct(CIEProtocolRequest* pRequest)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	ASSERT( m_nRequests > 0 );
-	
+
 	if ( --m_nRequests == 0 )
 	{
 		if ( m_pShutdown != NULL ) m_pShutdown->SetEvent();
@@ -162,25 +162,25 @@ IMPLEMENT_UNKNOWN(CIEProtocol, ClassFactory)
 STDMETHODIMP CIEProtocol::XClassFactory::CreateInstance(IUnknown* pUnkOuter, REFIID riid, void** ppvObject)
 {
 	METHOD_PROLOGUE(CIEProtocol, ClassFactory)
-	
+
 	if ( pUnkOuter != NULL ) return CLASS_E_NOAGGREGATION;
-	
+
 	CIEProtocolRequest* pRequest = pThis->CreateRequest();
 	HRESULT hr = pRequest->ExternalQueryInterface( &riid, ppvObject );
 	pRequest->ExternalRelease();
-	
+
 	return hr;
 }
 
 STDMETHODIMP CIEProtocol::XClassFactory::LockServer(BOOL fLock)
 {
 	METHOD_PROLOGUE(CIEProtocol, ClassFactory)
-	
+
 	if ( fLock )
 		AfxOleLockApp();
 	else
 		AfxOleUnlockApp();
-	
+
 	return S_OK;
 }
 
@@ -191,19 +191,19 @@ STDMETHODIMP CIEProtocol::XClassFactory::LockServer(BOOL fLock)
 CIEProtocolRequest::CIEProtocolRequest(CIEProtocol* pProtocol)
 {
 	ASSERT( pProtocol != NULL );
-	
+
 	m_pProtocol	= pProtocol;
 	m_pBuffer	= new CBuffer();
-	
+
 	m_pProtocol->OnRequestConstruct( this );
 }
 
 CIEProtocolRequest::~CIEProtocolRequest()
 {
 	ASSERT( m_pSink == NULL );
-	
+
 	m_pProtocol->OnRequestDestruct( this );
-	
+
 	delete m_pBuffer;
 }
 
@@ -214,16 +214,16 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CString strMimeType;
-	
+
 	if ( m_pSink ) return E_UNEXPECTED;
-	
+
 	HRESULT hr = m_pProtocol->OnRequest( pszURL, m_pBuffer, &strMimeType,
 					( dwFlags & PI_PARSE_URL ) != 0 );
-	
+
 	if ( ( dwFlags & PI_PARSE_URL ) || ( hr == INET_E_INVALID_URL ) ) return hr;
-	
+
 	m_pSink = pSink;
-	
+
 	if ( SUCCEEDED(hr) )
 	{
 		if ( strMimeType.GetLength() > 0 )
@@ -232,7 +232,7 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 			m_pSink->ReportProgress( BINDSTATUS_MIMETYPEAVAILABLE, bsMimeType );
 			SysFreeString( bsMimeType );
 		}
-		
+
 		m_pSink->ReportData( BSCF_LASTDATANOTIFICATION, m_pBuffer->m_nLength, m_pBuffer->m_nLength );
 		m_pSink->ReportResult( S_OK, 200, L"OK" );
 	}
@@ -240,37 +240,37 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 	{
 		m_pSink->ReportResult( INET_E_OBJECT_NOT_FOUND, 404, L"OK" );
 	}
-	
+
 	return hr;
 }
 
 HRESULT CIEProtocolRequest::OnRead(void* pv, ULONG cb, ULONG* pcbRead)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pSink == NULL ) return E_UNEXPECTED;
-	
+
 	cb = min( cb, m_pBuffer->m_nLength );
 	if ( pcbRead != NULL ) *pcbRead = cb;
-	
+
 	if ( cb > 0 )
 	{
 		CopyMemory( pv, m_pBuffer->m_pBuffer, cb );
 		m_pBuffer->Remove( cb );
 	}
-	
+
 	return ( cb > 0 || m_pBuffer->m_nLength > 0 ) ? S_OK : S_FALSE;
 }
 
 HRESULT CIEProtocolRequest::OnTerminate()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pSink == NULL ) return E_UNEXPECTED;
-	
+
 	m_pSink = NULL;
 	m_pBuffer->Clear();
-	
+
 	return S_OK;
 }
 
@@ -396,7 +396,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR pwzUrl
 HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( _tcsnicmp( pszURL, _T("p2p-col://"), 10 ) == 0 )
 	{
 		return OnRequestRAZACOL( pszURL + 10, pBuffer, psMimeType, bParseOnly );
@@ -414,28 +414,28 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 {
 	if ( _tcslen( pszURL ) < 32 + 1 ) return INET_E_INVALID_URL;
 	if ( pszURL[32] != '/' ) return INET_E_INVALID_URL;
-	
+
 	SHA1 pSHA1;
 	if ( ! CSHA::HashFromString( pszURL, &pSHA1 ) ) return INET_E_INVALID_URL;
-	
+
 	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() ) return INET_E_OBJECT_NOT_FOUND;
 	if ( m_pCollSHA1 != pSHA1 ) return INET_E_OBJECT_NOT_FOUND;
-	
+
 	CString strPath( pszURL + 32 );
 	strPath = CConnection::URLDecode( strPath );
 	if ( strPath.Right( 1 ) == _T("/") ) strPath += _T("index.htm");
-	
+
 	CZIPFile::File* pFile = m_pCollZIP->GetFile( strPath.Mid( 1 ) );
 	if ( pFile == NULL ) return INET_E_OBJECT_NOT_FOUND;
-	
+
 	CBuffer* pSource = pFile->Decompress();
 	if ( pSource == NULL ) return INET_E_OBJECT_NOT_FOUND;
-	
+
 	pBuffer->AddBuffer( pSource );
 	delete pSource;
-	
+
 	ShellIcons.Lookup( strPath, NULL, NULL, NULL, psMimeType );
-	
+
 	return S_OK;
 }
 
@@ -445,25 +445,25 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString*
 BOOL CIEProtocol::SetCollection(SHA1* pSHA1, LPCTSTR pszPath, CString* psIndex)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( m_pCollZIP != NULL )
 	{
 		delete m_pCollZIP;
 		m_pCollZIP = NULL;
 	}
-	
+
 	if ( pSHA1 == NULL || pszPath == NULL ) return TRUE;
-	
+
 	m_pCollZIP	= new CZIPFile();
 	m_pCollSHA1	= *pSHA1;
-	
+
 	if ( m_pCollZIP->Open( pszPath ) )
 	{
 		if ( CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE ) )
 		{
 			if ( psIndex != NULL ) *psIndex = pFile->m_sName;
 		}
-		
+
 		return TRUE;
 	}
 	else

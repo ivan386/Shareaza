@@ -1,7 +1,7 @@
 //
 // DlgShareManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,12 +71,12 @@ void CShareManagerDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CShareManagerDlg message handlers
 
-BOOL CShareManagerDlg::OnInitDialog() 
+BOOL CShareManagerDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	SkinMe( NULL, IDR_LIBRARYFRAME );
-	
+
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	m_wndList.InsertColumn( 0, _T("Folder"), LVCFMT_LEFT, rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) );
@@ -88,7 +88,7 @@ BOOL CShareManagerDlg::OnInitDialog()
 
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 		{
 			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
@@ -97,32 +97,32 @@ BOOL CShareManagerDlg::OnInitDialog()
 				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 		}
 	}
-	
+
 	m_wndRemove.EnableWindow( FALSE );
-	
+
 	return TRUE;
 }
 
-void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult) 
+void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 }
 
-void CShareManagerDlg::OnShareAdd() 
+void CShareManagerDlg::OnShareAdd()
 {
 	//Let user select path to share
 	TCHAR szPath[MAX_PATH];
 	LPITEMIDLIST pPath;
 	LPMALLOC pMalloc;
 	BROWSEINFO pBI;
-		
+
 	ZeroMemory( &pBI, sizeof(pBI) );
 	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName	= szPath;
 	pBI.lpszTitle		= _T("Select folder to share:");
 	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-	
+
 	pPath = SHBrowseForFolder( &pBI );
 
 	if ( pPath == NULL ) return;
@@ -199,7 +199,7 @@ void CShareManagerDlg::OnShareAdd()
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
 		CharLower( strOldLC.GetBuffer() );
 		strOldLC.ReleaseBuffer();
-		
+
 		if ( strPathLC == strOldLC )
 		{
 			// Matches exactly
@@ -226,13 +226,13 @@ void CShareManagerDlg::OnShareAdd()
 		//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
 		return;
 	}
-	
+
 	//Add path to shared list
 	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
 		szPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 }
 
-void CShareManagerDlg::OnShareRemove() 
+void CShareManagerDlg::OnShareRemove()
 {
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
@@ -243,36 +243,36 @@ void CShareManagerDlg::OnShareRemove()
 	}
 }
 
-void CShareManagerDlg::OnOK() 
+void CShareManagerDlg::OnOK()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 		{
 			CLibraryFolder* pFolder = LibraryFolders.GetNextFolder( pos );
-			
+
 			int nItem = 0;
 			for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
 			{
 				CString strFolder = m_wndList.GetItemText( nItem, 0 );
 				if ( strFolder.CompareNoCase( pFolder->m_sPath ) == 0 ) break;
 			}
-			
+
 			if ( nItem >= m_wndList.GetItemCount() )
 			{
 				LibraryFolders.RemoveFolder( pFolder );
 			}
 		}
-		
+
 		for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 		{
 			LibraryFolders.AddFolder( m_wndList.GetItemText( nItem, 0 ) );
 		}
 	}
-	
+
 	CFolderScanDlg dlgScan;
 	dlgScan.DoModal();
-	
+
 	CDialog::OnOK();
 }

@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,9 +35,9 @@ class CDownloadTask : public CWinThread
 public:
 	CDownloadTask(CDownload* pDownload, int nTask);
 	virtual ~CDownloadTask();
-	
+
 	DECLARE_DYNAMIC(CDownloadTask)
-	
+
 // Attributes
 public:
 	int			m_nTask;
@@ -53,11 +53,11 @@ public:
 	CBTInfo		m_pTorrent;
 protected:
 	CEvent*		m_pEvent;
-	
+
 // Enumerations
 public:
 	enum { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent };
-	
+
 // Operations
 public:
 	void	Abort();
@@ -72,7 +72,7 @@ protected:
 // Utilities
 public:
 	static CString SafeFilename(LPCTSTR pszName);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CDownloadTask)

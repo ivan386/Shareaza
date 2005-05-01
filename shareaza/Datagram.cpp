@@ -1,7 +1,7 @@
 //
 // Datagram.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,7 @@ void CDatagramIn::Create(SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE n
 	{
 		if ( m_pLocked ) delete [] m_pLocked;
 		if ( m_pBuffer ) delete [] m_pBuffer;
-		
+
 		m_nBuffer	= m_nCount;
 		m_pBuffer	= new CBuffer*[ m_nBuffer ];
 		m_pLocked	= new BOOL[ m_nBuffer ];
@@ -92,7 +92,7 @@ BOOL CDatagramIn::Add(BYTE nPart, LPCVOID pData, DWORD nLength)
 
 		if ( --m_nLeft == 0 ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -108,9 +108,9 @@ CG2Packet* CDatagramIn::ToG2Packet()
 			m_pBuffer[0]->AddBuffer( m_pBuffer[ nPart ] );
 		}
 	}
-	
+
 	if ( m_bCompressed && ! m_pBuffer[0]->Inflate() ) return NULL;
-	
+
 	return CG2Packet::ReadBuffer( m_pBuffer[0] );
 }
 

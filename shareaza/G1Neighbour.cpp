@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -519,7 +519,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	CPtrList pIgnore;
 
 	// Zero the 32 bytes of the m_nPongNeeded buffer
-	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER ); 
+	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 
 	// Loop nHops from 1 through the packet's TTL
 	for ( BYTE nHops = 1 ; nHops <= pPacket->m_nTTL ; nHops++ )
@@ -866,7 +866,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 		// Hops Flow (do)
 		case 0x0004:
 
-			if ( nVersion <= 1 && pPacket->GetRemaining() >= 1 ) 
+			if ( nVersion <= 1 && pPacket->GetRemaining() >= 1 )
 			{
 				m_nHopsFlow = pPacket->ReadByte();
 			}
@@ -925,7 +925,7 @@ void CG1Neighbour::SendClusterAdvisor()
 	CG1Packet* pPacket = NULL; // A pointer to a Gnutella packet (do)
 	WORD nCount = 0;           // Loop up to 20 times
 
-	// Loop through the Gnutella host cache, 
+	// Loop through the Gnutella host cache,
 	for ( CHostCacheHost* pHost = HostCache.Gnutella1.GetNewest(); // Point pHost at the newest host in the cache
 		pHost && nCount < 20;                                      // Loop until pHost is null or nCount reaches 20
 		pHost = pHost->m_pPrevTime )                               // Change pHost to the previous time (do)

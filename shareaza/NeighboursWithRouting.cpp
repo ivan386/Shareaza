@@ -1,7 +1,7 @@
 //
 // NeighboursWithRouting.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,17 +56,17 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
-		
+
 		if ( pNeighbour != pExcept && pNeighbour->m_nState == nrsConnected )
 		{
 			if ( pNeighbour->Send( pPacket, FALSE, TRUE ) ) nCount++;
 		}
 	}
-	
+
 	return nCount;
 }
 
@@ -78,26 +78,26 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 	BOOL bHubLoop = FALSE;
 	int nCount = 0;
 	POSITION pos;
-	
+
 	CG1Packet* pG1		= ( pPacket->m_nProtocol == PROTOCOL_G1 ) ? (CG1Packet*)pPacket : NULL;
 	CG2Packet* pG2		= ( pPacket->m_nProtocol == PROTOCOL_G2 ) ? (CG2Packet*)pPacket : NULL;
 	CG2Packet* pG2Q1	= NULL;
 	CG2Packet* pG2Q2	= NULL;
-	
+
 	ASSERT( pG1 || pG2 );
-	
+
 	if ( pG2 )
 	{
 		if ( pG2->IsType( "Q2" ) ) pG2Q2 = pG2; else pG2Q1 = pG2;
 	}
-	
+
 	for ( pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = (CNeighbour*)GetNext( pos );
-		
+
 		if ( pNeighbour == pFrom ) continue;
 		if ( pNeighbour->m_nState < nrsConnected ) continue;
-		
+
 		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 		{
 			if ( bToHubs || pNeighbour->m_nNodeType == ntLeaf )
@@ -114,7 +114,7 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 						pG1 = pSearch->ToG1Packet();
 					}
 				}
-				
+
 				// Dont buffer G2 naturals
 				if ( pNeighbour->SendQuery( pSearch, pG1, pG2Q2 != NULL ) ) nCount++;
 				// if ( pNeighbour->SendQuery( pSearch, pG1, FALSE ) ) nCount++;
@@ -139,7 +139,7 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 					{
 						pG2 = pG2Q1 = CG2Packet::New( G2_PACKET_QUERY_WRAP, pG1, Settings.Gnutella1.TranslateTTL );
 					}
-					
+
 					if ( pNeighbour->SendQuery( pSearch, pG2, FALSE ) ) nCount++;
 				}
 				else
@@ -149,7 +149,7 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 			}
 		}
 	}
-	
+
 	if ( bHubLoop )
 	{
 		if ( pSearch->m_bUDP == FALSE && Datagrams.IsStable() )
@@ -157,7 +157,7 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 			pG2 = pG2->Clone();
 			if ( pG2Q2 != pPacket ) pG2Q2->Release();
 			pG2Q2 = pG2;
-			
+
 			BYTE* pPtr = pG2->WriteGetPointer( 5 + 6, 0 );
 			*pPtr++ = 0x50;
 			*pPtr++ = 6;
@@ -179,11 +179,11 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 				*pPtr++ = (BYTE)( Network.m_pHost.sin_port & 0xFF );
 			}
 		}
-		
+
 		for ( pos = GetIterator() ; pos ; )
 		{
 			CNeighbour* pNeighbour = (CNeighbour*)GetNext( pos );
-			
+
 			if (	pNeighbour != pFrom &&
 					pNeighbour->m_nState >= nrsConnected &&
 					pNeighbour->m_nProtocol == PROTOCOL_G2 &&
@@ -193,10 +193,10 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 			}
 		}
 	}
-	
+
 	if ( pG1 && pG1 != pPacket ) pG1->Release();
 	if ( pG2 && pG2 != pPacket ) pG2->Release();
-	
+
 	if ( nCount )
 	{
 		if ( pPacket->m_nProtocol == PROTOCOL_G1 )
@@ -204,6 +204,6 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 			Statistics.Current.Gnutella2.Routed++;
 	}
-	
+
 	return nCount;
 }

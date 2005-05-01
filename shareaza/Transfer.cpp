@@ -1,7 +1,7 @@
 //
 // Transfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ BOOL CTransfer::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		Transfers.Add( this );
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -85,6 +85,6 @@ BOOL CTransfer::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	m_pHeaderName.Add( strHeader );
 	m_pHeaderValue.Add( strValue );
-	
+
 	return CConnection::OnHeaderLine( strHeader, strValue );
 }

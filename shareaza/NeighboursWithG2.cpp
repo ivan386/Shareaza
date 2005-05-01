@@ -1,7 +1,7 @@
 //
 // NeighboursWithG2.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,19 +63,19 @@ void CNeighboursWithG2::Connect()
 CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
-	
+
 	DWORD tNow = time( NULL );
-	
+
 	pPacket->WritePacket( "TS", 4 );
 	pPacket->WriteLongBE( tNow );
-	
+
 	theApp.Message( MSG_DEBUG, _T("Creating a query acknowledgement:") );
-	
+
 	pPacket->WritePacket( "D", 8 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 	pPacket->WriteShortBE( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) );
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
@@ -89,37 +89,37 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
 			pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 			pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
-			
+
 			theApp.Message( MSG_DEBUG, _T("  Done neighbour %s"),
 				(LPCTSTR)pNeighbour->m_sAddress );
 		}
 	}
-	
+
 	int nCount = ( pExcept == NULL ) ? 3 : 25;
-	
+
 	for ( CHostCacheHost* pHost = HostCache.Gnutella2.GetNewest() ; pHost ; pHost = pHost->m_pPrevTime )
 	{
 		if ( pHost->CanQuote( tNow ) &&
-			 Get( &pHost->m_pAddress ) == NULL && 
+			 Get( &pHost->m_pAddress ) == NULL &&
 			 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )
 		{
 			pPacket->WritePacket( "S", 10 );
 			pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 			pPacket->WriteShortBE( pHost->m_nPort );
 			pPacket->WriteLongBE( pHost->m_tSeen );
-			
+
 			theApp.Message( MSG_DEBUG, _T("  Try cached hub %s"),
 				(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
-			
+
 			if ( ! --nCount ) break;
 		}
 	}
-	
+
 	HubHorizonPool.AddHorizonHubs( pPacket );
-	
+
 	pPacket->WriteByte( 0 );
 	pPacket->Write( pGUID, sizeof(GGUID) );
-	
+
 	return pPacket;
 }
 
@@ -129,11 +129,11 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(GGUID* pGUID, CNeighbour* pExcept)
 CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, GGUID* pGUID)
 {
 	CPtrArray pRandom;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
-		
+
 		if (	pNeighbour->m_nState == nrsConnected &&
 				pNeighbour->m_nProtocol == PROTOCOL_G2 &&
 				pNeighbour->m_nNodeType != ntLeaf &&
@@ -145,12 +145,12 @@ CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, GGUID* pGUI
 			}
 		}
 	}
-	
+
 	int nSize = pRandom.GetSize();
 	if ( ! nSize ) return NULL;
-	
+
 	nSize = rand() % nSize;
-	
+
 	return (CG2Neighbour*)pRandom.GetAt( nSize );
 }
 

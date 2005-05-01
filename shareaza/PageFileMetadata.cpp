@@ -1,7 +1,7 @@
 //
 // PageFileMetadata.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,39 +69,39 @@ void CFileMetadataPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFileMetadataPage message handlers
 
-BOOL CFileMetadataPage::OnInitDialog() 
+BOOL CFileMetadataPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
-	
+
 	CLibraryList* pFiles = GetList();
-	
+
 	CRect rcClient, rcCombo;
 	CString strText;
 	GetClientRect( &rcClient );
-	
+
 	m_wndSchemas.GetWindowRect( &rcCombo );
 	ScreenToClient( &rcCombo );
 	rcCombo.top = rcCombo.bottom + 8;
 	rcCombo.bottom = rcClient.bottom - 8;
-	
+
 	m_wndData.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rcCombo, this, IDC_METADATA );
 	LoadString ( strText, IDS_SEARCH_NO_METADATA );
 	m_wndSchemas.m_sNoSchemaText = strText;
-	
+
 	BOOL bCollection = FALSE;
 	CSchema* pSchema = NULL;
-	
+
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
 			{
 				CSchema* pThisSchema = pFile->m_pSchema;
-				
+
 				if ( pThisSchema != NULL && pThisSchema->m_nType == CSchema::stFolder ) bCollection = TRUE;
-				
+
 				if ( pSchema == NULL )
 				{
 					pSchema = pThisSchema;
@@ -114,18 +114,18 @@ BOOL CFileMetadataPage::OnInitDialog()
 			}
 		}
 	}
-	
+
 	m_wndSchemas.Load( pSchema != NULL ? pSchema->m_sURI : _T(""), bCollection ? -1 : 0 );
 	OnSelChangeSchemas();
-	
+
 	if ( pSchema != NULL )
 	{
 		CXMLElement* pContainer	= pSchema->Instantiate( TRUE );
 		CXMLElement* pXML		= pContainer->AddElement( pSchema->m_sSingular );
-		
+
 		{
 			CQuickLock oLock( Library.m_pSection );
-			
+
 			for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 			{
 				if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
@@ -137,7 +137,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 							CSchemaMember* pMember = pSchema->GetNextMember( pos2 );
 							CString strOld = pMember->GetValueFrom( pXML, _T("(~ns~)") );
 							CString strNew = pMember->GetValueFrom( pFile->m_pMetadata /* , _T("(~ns~)") */ );
-							
+
 							if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
 							{
 								if ( strOld == _T("(~ns~)") )
@@ -154,40 +154,40 @@ BOOL CFileMetadataPage::OnInitDialog()
 				}
 			}
 		}
-		
+
 		m_wndData.UpdateData( pXML, FALSE );
 		delete pContainer;
 	}
-	
+
 	return TRUE;
 }
 
-void CFileMetadataPage::OnSelChangeSchemas() 
+void CFileMetadataPage::OnSelChangeSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 	m_wndData.SetSchema( pSchema );
 }
 
-void CFileMetadataPage::OnCloseUpSchemas() 
+void CFileMetadataPage::OnCloseUpSchemas()
 {
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() ) PostMessage( WM_KEYDOWN, VK_TAB );
 }
 
-BOOL CFileMetadataPage::PreTranslateMessage(MSG* pMsg) 
+BOOL CFileMetadataPage::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		if ( m_wndData.OnTab() ) return TRUE;
 	}
-	
+
 	return CPropertyPage::PreTranslateMessage( pMsg );
 }
 
-void CFileMetadataPage::OnOK() 
+void CFileMetadataPage::OnOK()
 {
 	CLibraryList* pFiles = GetList();
 	if ( pFiles == NULL ) return;
-	
+
 	if ( pFiles->GetCount() >= 10 )
 	{
 		CString strFormat, strMessage;
@@ -195,11 +195,11 @@ void CFileMetadataPage::OnOK()
 		strMessage.Format( strFormat, pFiles->GetCount() );
 		if ( AfxMessageBox( strMessage, MB_YESNO|MB_ICONQUESTION ) != IDYES ) return;
 	}
-	
+
 	if ( CSchema* pSchema = m_wndSchemas.GetSelected() )
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
@@ -226,7 +226,7 @@ void CFileMetadataPage::OnOK()
 	else
 	{
 		CQuickLock oLock( Library.m_pSection );
-		
+
 		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
@@ -234,9 +234,9 @@ void CFileMetadataPage::OnOK()
 				pFile->SetMetadata( NULL );
 			}
 		}
-		
+
 		Library.Update();
 	}
-	
+
 	CFilePropertiesPage::OnOK();
 }

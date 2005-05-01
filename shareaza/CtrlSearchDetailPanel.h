@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,9 +39,9 @@ class CSearchDetailPanel : public CWnd
 public:
 	CSearchDetailPanel();
 	virtual ~CSearchDetailPanel();
-	
+
 	DECLARE_DYNAMIC(CSearchDetailPanel)
-	
+
 // Operations
 public:
 	void		Update(CMatchFile* pFile);
@@ -58,7 +58,7 @@ protected:
 	BOOL		ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer);
 	void		OnPreviewLoaded(SHA1* pSHA1, CImageFile* pImage);
 	BOOL		CachePreviewImage(SHA1* pSHA1, LPBYTE pBuffer, DWORD nBuffer);
-	
+
 // Item
 protected:
 	class Review
@@ -78,7 +78,7 @@ protected:
 		CRect			m_rc;
 	};
 	friend class Review;
-	
+
 // Attributes
 protected:
 	CMatchList*			m_pMatches;
@@ -111,14 +111,14 @@ protected:
 	CRect				m_rcThumb;
 	COLORREF			m_crLight;
 	int					m_nThumbSize;
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CSearchDetailPanel)
 	public:
 	virtual BOOL Create(CWnd* pParentWnd);
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CSearchDetailPanel)
@@ -132,9 +132,9 @@ protected:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnClickReview(RVN_ELEMENTEVENT* pNotify, LRESULT *pResult);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 #define IDC_DETAIL_PANEL	104

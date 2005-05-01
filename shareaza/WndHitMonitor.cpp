@@ -1,7 +1,7 @@
 //
 // WndHitMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,10 +71,10 @@ CHitMonitorWnd::~CHitMonitorWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CHitMonitorWnd message handlers
 
-int CHitMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CHitMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CBaseMatchWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_pMatches->m_sFilter = Settings.Search.MonitorFilter;
 	m_pMatches->Filter();
 
@@ -90,10 +90,10 @@ int CHitMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CHitMonitorWnd::OnDestroy() 
+void CHitMonitorWnd::OnDestroy()
 {
 	Settings.Search.MonitorFilter = m_pMatches->m_sFilter;
-	
+
 	if ( m_wndList.m_pSchema )
 	{
 		Settings.Search.MonitorSchemaURI = m_wndList.m_pSchema->m_sURI;
@@ -108,7 +108,7 @@ void CHitMonitorWnd::OnDestroy()
 	CBaseMatchWnd::OnDestroy();
 }
 
-void CHitMonitorWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CHitMonitorWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bContextMenu )
 	{
@@ -120,17 +120,17 @@ void CHitMonitorWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CHitMonitorWnd::OnUpdateHitMonitorPause(CCmdUI* pCmdUI) 
+void CHitMonitorWnd::OnUpdateHitMonitorPause(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_bPaused );
 }
 
-void CHitMonitorWnd::OnHitMonitorPause() 
+void CHitMonitorWnd::OnHitMonitorPause()
 {
 	m_bPaused = ! m_bPaused;
 }
 
-void CHitMonitorWnd::OnHitMonitorClear() 
+void CHitMonitorWnd::OnHitMonitorClear()
 {
 	m_wndList.DestructiveUpdate();
 	m_pMatches->Clear();
@@ -151,9 +151,9 @@ void CHitMonitorWnd::OnSkinChange()
 BOOL CHitMonitorWnd::OnQueryHits(CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return FALSE;
-	
+
 	CSingleLock pLock( &m_pMatches->m_pSection );
-	
+
 	if ( pLock.Lock( 100 ) && ! m_bPaused )
 	{
 		m_pMatches->AddHits( pHits );

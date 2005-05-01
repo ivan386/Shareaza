@@ -1,7 +1,7 @@
 //
 // WndMedia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,19 +90,19 @@ void CMediaWnd::OnFileDelete(LPCTSTR pszFile)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaWnd message handlers
 
-int CMediaWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CMediaWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	m_wndFrame.Create( this );
 	LoadState();
-	
+
 	DragAcceptFiles();
 
 	return 0;
 }
 
-void CMediaWnd::OnDestroy() 
+void CMediaWnd::OnDestroy()
 {
 	SaveState();
 	CPanelWnd::OnDestroy();
@@ -114,13 +114,13 @@ void CMediaWnd::OnSkinChange()
 	m_wndFrame.OnSkinChange();
 }
 
-BOOL CMediaWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CMediaWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndFrame.m_hWnd != NULL )
 	{
 		if ( m_wndFrame.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
@@ -136,28 +136,28 @@ LONG CMediaWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-BOOL CMediaWnd::PreTranslateMessage(MSG* pMsg) 
+BOOL CMediaWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN || pMsg->message == WM_SYSKEYDOWN )
 	{
 		if ( m_wndFrame.m_hWnd && m_wndFrame.PreTranslateMessage( pMsg ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::PreTranslateMessage(pMsg);
 }
 
-void CMediaWnd::OnSysCommand(UINT nID, LPARAM lParam) 
+void CMediaWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ( ( nID & 0xFFF0 ) == SC_CLOSE )
 	{
 		PostMessage( WM_CLOSE );
 		return;
 	}
-	
+
 	CPanelWnd::OnSysCommand( nID, lParam );
 }
 
-void CMediaWnd::OnSize(UINT nType, int cx, int cy) 
+void CMediaWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 
@@ -167,10 +167,10 @@ void CMediaWnd::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-void CMediaWnd::OnPaint() 
+void CMediaWnd::OnPaint()
 {
 	CPaintDC dc( this );
-	
+
 	if ( m_wndFrame.m_hWnd == NULL || m_wndFrame.GetParent() != this )
 	{
 		CRect rc;
@@ -194,26 +194,26 @@ LONG CMediaWnd::OnDisplayChange(WPARAM wParam, LPARAM lParam)
 	return m_wndFrame.SendMessage( WM_DISPLAYCHANGE, wParam, lParam );
 }
 
-BOOL CMediaWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop) 
+BOOL CMediaWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bDrop)
 {
 	if ( bDrop == FALSE ) return TRUE;
-	
+
 	CPoint pt( ptScreen );
-	
+
 	m_wndFrame.ScreenToClient( &pt );
 	CWnd* pDropped = m_wndFrame.ChildWindowFromPoint( pt );
-	
+
 	BOOL bEnqueue = ( pDropped->IsKindOf( RUNTIME_CLASS(CMediaListCtrl) ) );
-	
+
 	for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 	{
 		CString strFile = pFiles.GetNext( pos );
-		
+
 		if ( bEnqueue )
 			EnqueueFile( strFile );
 		else
 			PlayFile( strFile );
 	}
-	
+
 	return TRUE;
 }

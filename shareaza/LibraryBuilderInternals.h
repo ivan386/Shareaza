@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,13 +27,13 @@
 class CLibraryBuilder;
 
 
-class CLibraryBuilderInternals  
+class CLibraryBuilderInternals
 {
 // Construction
 public:
 	CLibraryBuilderInternals(CLibraryBuilder* pBuilder);
 	virtual ~CLibraryBuilderInternals();
-	
+
 // Attributes
 protected:
 	CLibraryBuilder* m_pBuilder;
@@ -51,7 +51,7 @@ protected:
 	DWORD		m_nSleep;
 public:
 	static LPCTSTR	pszID3Genre[];
-	
+
 // Operations
 public:
 	void		LoadSettings();

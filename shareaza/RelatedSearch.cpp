@@ -1,7 +1,7 @@
 //
 // RelatedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,16 +54,16 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 		m_bED2K		= pFile->m_bED2K;
 		m_pED2K		= pFile->m_pED2K;
 		m_sName		= pFile->m_pBest->m_sName;
-		
+
 		m_pSchema	= SchemaCache.Get( pFile->m_pBest->m_sSchemaURI );
 		m_pXML		= NULL;
 		m_bXML		= FALSE;
-		
+
 		if ( m_pSchema != NULL )
 		{
 			m_pXML = new CXMLElement( NULL, m_pSchema->m_sSingular );
 			m_bXML = TRUE;
-			
+
 			for ( CQueryHit* pHit = pFile->m_pHits ; pHit ; pHit = pHit->m_pNext )
 			{
 				if ( pHit->m_pXML != NULL )
@@ -222,7 +222,7 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 	CString str, strTemp(psz);
 
 	// remove diacritics; supported for NT systems only
-	if ( theApp.m_bNT ) 
+	if ( theApp.m_bNT )
 	{
 		int nSource = FoldString( MAP_COMPOSITE, psz, -1, NULL, 0 ); //_tcslen( psz );
 		FoldString( MAP_COMPOSITE, psz, -1, strTemp.GetBuffer( nSource ), nSource );
@@ -231,7 +231,7 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 	}
 
 	int nLastPoint = strTemp.ReverseFind( '.' );
-	if ( nLastPoint > 0 ) 
+	if ( nLastPoint > 0 )
 		nLastPoint = strTemp.GetLength() - nLastPoint - 1;
 
 	for ( ; *psz ; psz++ )
@@ -256,6 +256,6 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 			nChars = 0;
 		}
 	}
-	
+
 	return str;
 }

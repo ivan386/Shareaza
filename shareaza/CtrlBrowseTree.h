@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,9 +33,9 @@ class CBrowseTreeCtrl : public CWnd
 public:
 	CBrowseTreeCtrl();
 	virtual ~CBrowseTreeCtrl();
-	
+
 	DECLARE_DYNAMIC(CBrowseTreeCtrl)
-	
+
 // Attributes
 protected:
 	CCriticalSection	m_csRoot;
@@ -50,7 +50,7 @@ protected:
 	CBrowseTreeItem*	m_pFocus;
 protected:
 	DWORD				m_nCleanCookie;
-	
+
 // Operations
 public:
 	virtual BOOL		Create(CWnd* pParentWnd);
@@ -76,14 +76,14 @@ protected:
 	BOOL				CollapseRecursive(CBrowseTreeItem* pItem);
 	void				NotifySelection();
 	void				OnTreePacket(CG2Packet* pPacket, DWORD nFinish, CBrowseTreeItem* pItem);
-	
+
 // Inlines
 public:
 	inline CSyncObject* SyncRoot()
 	{
 		return &m_csRoot;
 	}
-	
+
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -98,7 +98,7 @@ protected:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	
+
 };
 
 
@@ -108,7 +108,7 @@ class CBrowseTreeItem
 public:
 	CBrowseTreeItem(CBrowseTreeItem* pParent = NULL);
 	virtual ~CBrowseTreeItem();
-	
+
 // Attributes
 public:
 	CBrowseTreeItem*	m_pParent;
@@ -132,7 +132,7 @@ public:
 	CSchema*			m_pSchema;
 	DWORD*				m_pFiles;
 	DWORD				m_nFiles;
-	
+
 // Operations
 public:
 	CBrowseTreeItem*	Add(LPCTSTR pszName);
@@ -145,7 +145,7 @@ public:
 	int					GetChildCount() const;
 	void				Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack = CLR_NONE) const;
 	void				AddXML(CXMLElement* pXML);
-	
+
 };
 
 #define IDC_BROWSE_TREE 125

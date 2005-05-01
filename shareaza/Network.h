@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,13 +34,13 @@ class CQuerySearch;
 class CQueryHit;
 
 
-class CNetwork  
+class CNetwork
 {
 // Construction
 public:
 	CNetwork();
 	virtual ~CNetwork();
-	
+
 // Attributes
 public:
 	CRouteCache*	NodeRoute;
@@ -88,7 +88,7 @@ public:
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-	
+
 	friend class CHandshakes;
 	friend class CNeighbours;
 };

@@ -1,7 +1,7 @@
 //
 // PageSettingsSkins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,10 +77,10 @@ void CSkinsSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSkinsSettingsPage message handlers
 
-BOOL CSkinsSettingsPage::OnInitDialog() 
+BOOL CSkinsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_SKIN ) );
 
@@ -129,7 +129,7 @@ void CSkinsSettingsPage::EnumerateSkins(LPCTSTR pszPath)
 			{
 				strPath.Format( _T("%s%s\\"),
 					pszPath ? pszPath : _T(""), pFind.cFileName );
-				
+
 				EnumerateSkins( strPath );
 			}
 			else if (	_tcsistr( pFind.cFileName, _T(".xml") ) != NULL &&
@@ -149,31 +149,31 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 {
 	CString strXML;
 	CFile pFile;
-	
+
 	strXML = Settings.General.Path + _T("\\Skins\\");
 	if ( pszPath ) strXML += pszPath;
 	strXML += pszName;
 
     if ( ! pFile.Open( strXML, CFile::modeRead ) ) return FALSE;
-	
+
 	DWORD nSource = (DWORD)pFile.GetLength();
 	if ( nSource > 4096*1024 ) return FALSE;
-	
+
 	CHAR* pSource = new CHAR[ nSource ];
 	pFile.Read( pSource, nSource );
 	pFile.Close();
-	
+
 	BYTE* pByte = (BYTE*)pSource;
 	DWORD nByte = nSource;
-	
+
 	if ( nByte >= 2 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
 	{
 		nByte = nByte / 2 - 1;
-		
+
 		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
 		{
 			pByte += 2;
-			
+
 			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
 			{
 				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
@@ -183,9 +183,9 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		}
 		else
 		{
-			pByte += 2; 
+			pByte += 2;
 		}
-		
+
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * 2 );
 		strXML.ReleaseBuffer( nByte );
 	}
@@ -195,47 +195,47 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		{
 			pByte += 3; nByte -= 3;
 		}
-		
+
 		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
-		
+
 		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
 		strXML.ReleaseBuffer( nWide );
 	}
-	
+
 	delete [] pSource;
-	
+
 	CXMLElement* pXML = NULL;
-	
+
 	int nManifest = strXML.Find( _T("<manifest") );
-	
+
 	if ( nManifest > 0 )
 	{
 		CString strManifest = strXML.Mid( nManifest ).SpanExcluding( _T(">") ) + '>';
-		
+
 		if ( CXMLElement* pManifest = CXMLElement::FromString( strManifest ) )
 		{
 			pXML = new CXMLElement( NULL, _T("skin") );
 			pXML->AddElement( pManifest );
 		}
 	}
-	
+
 	if ( pXML == NULL )
 	{
 		pXML = CXMLElement::FromString( strXML, TRUE );
 		if ( pXML == NULL ) return FALSE;
 	}
-	
+
 	strXML.Empty();
-	
+
 	CXMLElement* pManifest = pXML->GetElementByName( _T("manifest") );
-	
+
 	if ( ! pXML->IsNamed( _T("skin") ) || pManifest == NULL ||
 		 ! pManifest->GetAttributeValue( _T("type") ).CompareNoCase( _T("language") ) )
 	{
 		delete pXML;
 		return FALSE;
 	}
-	
+
 	CString	strType		= pManifest->GetAttributeValue( _T("type"), _T("Unknown") );
 	CString strIcon		= pManifest->GetAttributeValue( _T("icon") );
 	CString	strName		= pManifest->GetAttributeValue( _T("name"), pszName );
@@ -244,9 +244,9 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	CString strURL		= pManifest->GetAttributeValue( _T("link") );
 	CString strEmail	= pManifest->GetAttributeValue( _T("email") );
 	CString strDesc		= pManifest->GetAttributeValue( _T("description") );
-	
+
 	delete pXML;
-	
+
 	if ( strIcon.GetLength() )
 	{
 		if ( pszPath != NULL )
@@ -263,7 +263,7 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 
 		strIcon = strIcon.Left( strIcon.GetLength() - 3 ) + _T("ico");
 	}
-	
+
 	if ( strURL.Find( _T("http://") ) == 0 )
 	{
 	}
@@ -275,12 +275,12 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	{
 		strURL.Empty();
 	}
-	
+
 	if ( strEmail.Find( '@' ) < 0 ) strEmail.Empty();
-	
+
 	CLiveItem pItem( 7, 0 );
 	HICON hIcon;
-	
+
 	if ( ExtractIconEx( strIcon, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
 	{
 		pItem.m_nImage = m_gdiImageList.Add( hIcon );
@@ -290,19 +290,19 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	{
 		pItem.m_nImage = 0;
 	}
-	
+
 	pItem.Set( 0, strName );
 	pItem.Set( 1, strAuthor );
 	pItem.Set( 2, strVersion );
 	pItem.Set( 4, strURL );
 	pItem.Set( 5, strEmail );
 	pItem.Set( 6, strDesc );
-	
+
 	strName.Format( _T("%s%s"), pszPath ? pszPath : _T(""), pszName );
 	pItem.Set( 3, strName );
-	
+
 	int nItem = pItem.Add( &m_wndList, -1, 7 );
-	
+
 	if ( theApp.GetProfileInt( _T("Skins"), strName, FALSE ) )
 	{
 		m_wndList.SetItemState( nItem, 2 << 12, LVIS_STATEIMAGEMASK );
@@ -311,19 +311,19 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	{
 		m_wndList.SetItemState( nItem, 1 << 12, LVIS_STATEIMAGEMASK );
 	}
-	
+
 	return TRUE;
 }
 
-void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* pNMHDR, LRESULT* pResult) 
+void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
-	
+
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem == m_nSelected ) return;
 	m_nSelected = nItem;
-	
+
 	if ( nItem >= 0 )
 	{
 		m_wndName.SetWindowText( m_wndList.GetItemText( nItem, 0 ) );
@@ -340,10 +340,10 @@ void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-HBRUSH CSkinsSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CSkinsSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSettingsPage::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( m_nSelected >= 0 )
 	{
 		if ( pWnd == &m_wndName )
@@ -367,16 +367,16 @@ HBRUSH CSkinsSettingsPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-BOOL CSkinsSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CSkinsSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( m_nSelected >= 0 )
 	{
 		CPoint point;
 		CRect rc;
-		
+
 		GetCursorPos( &point );
 		m_wndName.GetWindowRect( &rc );
-		
+
 		if ( rc.PtInRect( point ) )
 		{
 			if ( m_wndList.GetItemText( m_nSelected, 4 ).GetLength() )
@@ -401,7 +401,7 @@ BOOL CSkinsSettingsPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSettingsPage::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point) 
+void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	CRect rc;
 
@@ -409,7 +409,7 @@ void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 
 	ClientToScreen( &point );
 	m_wndName.GetWindowRect( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		CString strURL = m_wndList.GetItemText( m_nSelected, 4 );
@@ -423,7 +423,7 @@ void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 
 	m_wndAuthor.GetWindowRect( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		CString strEmail = m_wndList.GetItemText( m_nSelected, 5 );
@@ -437,26 +437,26 @@ void CSkinsSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void CSkinsSettingsPage::OnSkinsBrowse() 
+void CSkinsSettingsPage::OnSkinsBrowse()
 {
 	CFileDialog dlg( TRUE, _T("sks"), _T("*.sks"), OFN_HIDEREADONLY,
 		_T("Skin Packages|*.sks|All Files|*.*||"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
-	
+
 	CString strFile = dlg.GetPathName();
 
 	ShellExecute( GetSafeHwnd(), _T("open"), strFile, NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CSkinsSettingsPage::OnSkinsWeb() 
+void CSkinsSettingsPage::OnSkinsWeb()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		_T("http://www.shareaza.com/skins/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CSkinsSettingsPage::OnOK() 
+void CSkinsSettingsPage::OnOK()
 {
 	BOOL bChanged = FALSE;
 
@@ -475,11 +475,11 @@ void CSkinsSettingsPage::OnOK()
 	}
 
 	if ( bChanged ) AfxGetMainWnd()->PostMessage( WM_SKINCHANGED );
-	
+
 	CSettingsPage::OnOK();
 }
 
-void CSkinsSettingsPage::OnSkinsDelete() 
+void CSkinsSettingsPage::OnSkinsDelete()
 {
 	if ( m_nSelected < 0 ) return;
 
@@ -533,7 +533,7 @@ void CSkinsSettingsPage::OnSkinsDelete()
 		strPath = strPath.Left( strPath.GetLength() - 1 );
 		RemoveDirectory( strPath );
 	}
-	
+
 	m_wndList.DeleteItem( m_nSelected );
 	m_wndName.SetWindowText( _T("") );
 	m_wndAuthor.SetWindowText( _T("") );

@@ -1,7 +1,7 @@
 //
 // PageSettingsCommunity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,27 +71,27 @@ void CCommunitySettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CCommunitySettingsPage message handlers
 
-BOOL CCommunitySettingsPage::OnInitDialog() 
+BOOL CCommunitySettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bChatEnable		= Settings.Community.ChatEnable;
 	m_bChatAllNetworks	= Settings.Community.ChatAllNetworks;
 	m_bChatFilter		= Settings.Community.ChatFilter;
 	m_bChatCensor		= Settings.Community.ChatCensor;
-	
+
 	UpdateData( FALSE );
 
 	return TRUE;
 }
 
-void CCommunitySettingsPage::OnEditProfile() 
+void CCommunitySettingsPage::OnEditProfile()
 {
 	CProfileManagerDlg dlg;
 	dlg.DoModal();
 }
 
-void CCommunitySettingsPage::OnOK() 
+void CCommunitySettingsPage::OnOK()
 {
 	UpdateData();
 
@@ -99,7 +99,7 @@ void CCommunitySettingsPage::OnOK()
 	Settings.Community.ChatAllNetworks	= m_bChatAllNetworks;
 	Settings.Community.ChatFilter		= m_bChatFilter;
 	Settings.Community.ChatCensor		= m_bChatCensor;
-	
+
 	CSettingsPage::OnOK();
 }
 

@@ -1,7 +1,7 @@
 //
 // ComObject.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,7 @@ protected:
     STDMETHOD(ComGetTypeInfo)(LPUNKNOWN, UINT, LCID, LPTYPEINFO FAR*);
     STDMETHOD(ComGetIDsOfNames)(LPUNKNOWN, REFIID, OLECHAR FAR* FAR*, UINT, LCID lcid, DISPID FAR*);
     STDMETHOD(ComInvoke)(LPUNKNOWN, DISPID, REFIID, LCID, WORD, DISPPARAMS FAR*, VARIANT FAR*, EXCEPINFO FAR*, UINT FAR*);
-	
+
 	DECLARE_OLETYPELIB(CComObject)
 
 };

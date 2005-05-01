@@ -1,7 +1,7 @@
 //
 // DlgHitColumns.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ public:
 	static BOOL		LoadColumns(CSchema* pSchema, CPtrList* pColumns);
 	static BOOL		SaveColumns(CSchema* pSchema, CPtrList* pColumns);
 	static CMenu*	BuildColumnMenu(CSchema* pSchema, CPtrList* pColumns = NULL);
-	static BOOL		ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, CPtrList* pTarget, UINT nToggleID, BOOL bSave = FALSE); 
+	static BOOL		ToggleColumnHelper(CSchema* pSchema, CPtrList* pSource, CPtrList* pTarget, UINT nToggleID, BOOL bSave = FALSE);
 
 // Overrides
 public:

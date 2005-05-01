@@ -1,7 +1,7 @@
 //
 // DlgGraphList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -84,10 +84,10 @@ void CGraphListDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CGraphListDlg message handlers
 
-BOOL CGraphListDlg::OnInitDialog() 
+BOOL CGraphListDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CGraphListDlg"), IDR_TRAFFICFRAME );
 
 	m_gdiImageList.Create( IDB_COLOURDOT, 16, 0, RGB(0,255,0) );
@@ -101,7 +101,7 @@ BOOL CGraphListDlg::OnInitDialog()
 	m_nSpeed		= m_pGraph->m_nSpeed;
 
 	UpdateData( FALSE );
-	
+
 	for ( POSITION pos = m_pGraph->GetItemIterator() ; pos ; )
 	{
 		CGraphItem* pItem = m_pGraph->GetNextItem( pos );
@@ -125,7 +125,7 @@ CLiveItem* CGraphListDlg::PrepareItem(CGraphItem* pItem)
 	return pLive;
 }
 
-void CGraphListDlg::OnCustomDrawItems(NMHDR* pNMHDR, LRESULT* pResult) 
+void CGraphListDlg::OnCustomDrawItems(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
 
@@ -137,19 +137,19 @@ void CGraphListDlg::OnCustomDrawItems(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		CGraphItem* pItem = (CGraphItem*)pDraw->nmcd.lItemlParam;
 		CDC* pDC = CDC::FromHandle( pDraw->nmcd.hdc );
-		
+
 		CRect rc;
 		m_wndList.GetItemRect( pDraw->nmcd.dwItemSpec, &rc, LVIR_ICON );
 
 		pDC->SetTextColor( pItem->m_nColour );
 		m_gdiImageList.Draw( pDC, 1, rc.TopLeft(), ILD_NORMAL );
 		m_gdiImageList.Draw( pDC, 0, rc.TopLeft(), ILD_MASK|ILD_TRANSPARENT );
-		
+
 		*pResult = CDRF_DODEFAULT;
 	}
 }
 
-void CGraphListDlg::OnItemChangedGraphItems(NMHDR* pNMHDR, LRESULT* pResult) 
+void CGraphListDlg::OnItemChangedGraphItems(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if ( pResult ) *pResult = 0;
@@ -158,16 +158,16 @@ void CGraphListDlg::OnItemChangedGraphItems(NMHDR* pNMHDR, LRESULT* pResult)
 	m_wndRemove.EnableWindow( nSelected > 0 );
 }
 
-void CGraphListDlg::OnDblClkGraphItems(NMHDR* pNMHDR, LRESULT* pResult) 
+void CGraphListDlg::OnDblClkGraphItems(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	OnGraphEdit();	
+	OnGraphEdit();
 	*pResult = 0;
 }
 
-void CGraphListDlg::OnGraphAdd() 
+void CGraphListDlg::OnGraphAdd()
 {
 	CGraphItemDlg dlg( this, new CGraphItem() );
-	
+
 	if ( dlg.DoModal() == IDOK )
 	{
 		m_pGraph->AddItem( dlg.m_pItem );
@@ -182,7 +182,7 @@ void CGraphListDlg::OnGraphAdd()
 	}
 }
 
-void CGraphListDlg::OnGraphEdit() 
+void CGraphListDlg::OnGraphEdit()
 {
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem < 0 ) return;
@@ -198,7 +198,7 @@ void CGraphListDlg::OnGraphEdit()
 	}
 }
 
-void CGraphListDlg::OnGraphRemove() 
+void CGraphListDlg::OnGraphRemove()
 {
 	for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem -- )
 	{
@@ -224,7 +224,7 @@ void CGraphListDlg::SetModified()
 	}
 }
 
-void CGraphListDlg::OnOK() 
+void CGraphListDlg::OnOK()
 {
 	UpdateData();
 
@@ -234,6 +234,6 @@ void CGraphListDlg::OnOK()
 	m_pGraph->m_nSpeed			= m_nSpeed;
 
 	m_pGraph->ResetMaximum();
-	
+
 	CSkinDialog::OnOK();
 }

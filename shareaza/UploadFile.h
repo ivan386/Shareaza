@@ -1,7 +1,7 @@
 //
 // UploadFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CUploadFile
 public:
 	CUploadFile(CUploadTransfer* pUpload, SHA1* pSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
 	virtual ~CUploadFile();
-	
+
 // Attributes
 public:
 	IN_ADDR			m_pAddress;
@@ -65,7 +65,7 @@ public:
 	{
 		return m_pTransfers.GetCount() == 0;
 	}
-	
+
 };
 
 #endif // !defined(AFX_UPLOADFILE_H__D2D194F0_8528_482F_A4DA_DE1D9C496335__INCLUDED_)

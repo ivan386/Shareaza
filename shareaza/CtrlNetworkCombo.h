@@ -1,7 +1,7 @@
 //
 // CtrlNetworkCombo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,9 +28,9 @@ class CNetworkCombo : public CComboBox
 public:
 	CNetworkCombo();
 	virtual ~CNetworkCombo();
-	
+
 	DECLARE_DYNAMIC(CNetworkCombo)
-	
+
 // Operations
 public:
 	virtual BOOL Create(DWORD dwStyle, CWnd* pParentWnd, UINT nID);
@@ -48,7 +48,7 @@ protected:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
-	
+
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

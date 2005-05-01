@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,12 +90,12 @@ CLibraryList* CFilePropertiesPage::GetList() const
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesPage message handlers
 
-BOOL CFilePropertiesPage::OnInitDialog() 
+BOOL CFilePropertiesPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	Skin.Apply( NULL, this );
-	
+
 	CSingleLock oLock( &Library.m_pSection, TRUE );
 	if ( CLibraryFile* pFile = GetFile() )
 	{
@@ -103,9 +103,9 @@ BOOL CFilePropertiesPage::OnInitDialog()
 		{
 			pNameWnd->SetWindowText( pFile->m_sName );
 		}
-		
+
 		m_nIcon = ShellIcons.Get( pFile->m_sName, 48 );
-		
+
 		oLock.Unlock();
 	}
 	else
@@ -120,42 +120,42 @@ BOOL CFilePropertiesPage::OnInitDialog()
 				strMessage.Format( strFormat, pList->GetCount() );
 				pNameWnd->SetWindowText( strMessage );
 			}
-			
+
 			m_nIcon = SHI_EXECUTABLE;
 		}
 	}
-	
+
 	return TRUE;
 }
 
-void CFilePropertiesPage::OnPaint() 
+void CFilePropertiesPage::OnPaint()
 {
 	CPaintDC dc( this );
-	
+
 	if ( m_nIcon >= 0 )
 	{
 		ShellIcons.Draw( &dc, m_nIcon, 48, 4, 4 );
 	}
-	
+
 	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
 		if ( pWnd->GetStyle() & WS_VISIBLE ) continue;
-		
+
 		TCHAR szClass[16];
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 16 );
 		if ( _tcsicmp( szClass, _T("STATIC") ) ) continue;
-		
+
 		CString str;
 		CRect rc;
-		
+
 		pWnd->GetWindowText( str );
 		pWnd->GetWindowRect( &rc );
 		ScreenToClient( &rc );
-		
+
 		if ( str.IsEmpty() || str.GetAt( 0 ) != '-' )
 			PaintStaticHeader( &dc, &rc, str );
 	}
-	
+
 	dc.SetBkColor( CCoolInterface::GetDialogBkColor() );
 }
 
@@ -163,33 +163,33 @@ void CFilePropertiesPage::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
 {
 	CFont* pOldFont = (CFont*)pDC->SelectObject( GetFont() );
 	CSize sz = pDC->GetTextExtent( psz );
-	
+
 	pDC->SetBkMode( OPAQUE );
 	pDC->SetBkColor( Skin.m_crBannerBack );
 	pDC->SetTextColor( Skin.m_crBannerText );
-	
+
 	CRect rc( prc );
 	rc.bottom	= rc.top + min( rc.Height(), 16 );
 	rc.right	= rc.left + sz.cx + 10;
-	
+
 	pDC->ExtTextOut( rc.left + 4, rc.top + 1, ETO_CLIPPED|ETO_OPAQUE,
 		&rc, psz, _tcslen( psz ), NULL );
-	
+
 	rc.SetRect( rc.right, rc.top, prc->right, rc.top + 1 );
 	pDC->ExtTextOut( rc.left, rc.top, ETO_OPAQUE, &rc, NULL, 0, NULL );
-	
+
 	pDC->SelectObject( pOldFont );
 }
 
 HBRUSH CFilePropertiesPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CPropertyPage::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	if ( nCtlColor == CTLCOLOR_DLG || nCtlColor == CTLCOLOR_STATIC )
 	{
 		pDC->SetBkColor( Skin.m_crDialog );
 		hbr = Skin.m_brDialog;
 	}
-	
+
 	return hbr;
 }

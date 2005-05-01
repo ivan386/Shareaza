@@ -1,7 +1,7 @@
 //
 // LibraryList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,20 +67,20 @@ CLibraryFile* CLibraryList::GetNextFile(POSITION& pos) const
 int CLibraryList::Merge(CLibraryList* pList)
 {
 	int nCount = 0;
-	
+
 	if ( pList == NULL ) return 0;
-	
+
 	for ( POSITION pos = pList->GetIterator() ; pos ; )
 	{
 		DWORD nItem = pList->GetNext( pos );
-		
+
 		if ( Find( nItem ) == NULL )
 		{
 			AddTail( nItem );
 			nCount++;
 		}
 	}
-	
+
 	return nCount;
 }
 
@@ -121,13 +121,13 @@ STDMETHODIMP CLibraryList::XGenericView::get__NewEnum(IUnknown FAR* FAR* ppEnum)
 STDMETHODIMP CLibraryList::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR* pvItem)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
-		
+
 	VARIANT va;
 	VariantInit( &va );
 	VariantClear( pvItem );
-	
+
 	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) ) return E_INVALIDARG;
-	
+
 	if ( va.lVal < 0 || va.lVal >= pThis->GetCount() ) return S_OK;
 
 	for ( POSITION pos = pThis->GetHeadPosition() ; pos ; )
@@ -163,9 +163,9 @@ STDMETHODIMP CLibraryList::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, UL
 
 	if ( pceltFetched ) *pceltFetched = 0;
 	else if ( celt > 1 ) return E_INVALIDARG;
-	
+
 	if ( m_pos == NULL ) return S_FALSE;
-	
+
 	VariantInit( &rgvar[0] );
 	rgvar[0].vt		= VT_I4;
 	rgvar[0].lVal	= pThis->GetNext( m_pos );
@@ -175,10 +175,10 @@ STDMETHODIMP CLibraryList::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, UL
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryList::XEnumVARIANT::Skip(ULONG celt) 
+STDMETHODIMP CLibraryList::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CLibraryList, EnumVARIANT )
-	
+
 	while ( celt-- && m_pos ) pThis->GetNext( m_pos );
 
     return ( celt == 0 ? S_OK : S_FALSE );
@@ -191,7 +191,7 @@ STDMETHODIMP CLibraryList::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum) 
+STDMETHODIMP CLibraryList::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
 {
     return E_NOTIMPL;
 }

@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,13 +31,13 @@ class CXMLElement;
 class CSkinWindow;
 
 
-class CSkin  
+class CSkin
 {
 // Construction
 public:
 	CSkin();
 	virtual ~CSkin();
-	
+
 // Operations
 public:
 	void	Apply();
@@ -72,7 +72,7 @@ protected:
 	BOOL	LoadMenu(CXMLElement* pXML);
 	BOOL	CreateMenu(CXMLElement* pXML, HMENU hMenu);
 	CMenu	m_mnuDefault;
-	
+
 // Toolbars
 public:
 	BOOL	CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar);
@@ -149,7 +149,7 @@ protected:
 // Mode Suffixes
 protected:
 	static LPCTSTR m_pszModeSuffix[3][4];
-	
+
 };
 
 

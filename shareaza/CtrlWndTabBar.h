@@ -1,7 +1,7 @@
 //
 // CtrlWndTabBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ public:
 	public:
 		TabItem(CChildWnd* pWnd, DWORD nCookie, LPCTSTR pszCaption);
 		virtual ~TabItem();
-	
+
 	// Attributes
 	public:
 		HWND			m_hWnd;
@@ -54,13 +54,13 @@ public:
 		BOOL			m_bVisible;
 		BOOL			m_bAlert;
 		DWORD			m_nCookie;
-	
+
 	// Operations
 	public:
 		void	Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL bSelected, BOOL bHot, BOOL bTransparent);
-	
+
 	};
-	
+
 // Attributes
 protected:
 	CPtrList		m_pItems;
@@ -80,7 +80,7 @@ protected:
 	CString			m_sMessage;
 	CRect			m_rcMessage;
 	CBitmap			m_bmImage;
-	
+
 // Operations
 public:
 	void			SetMaximumWidth(int nWidth);
@@ -116,9 +116,9 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 	friend class TabItem;
 };
 

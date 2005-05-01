@@ -1,7 +1,7 @@
 //
 // DlgDiscoveryService.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,10 +71,10 @@ void CDiscoveryServiceDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CDiscoveryServiceDlg message handlers
 
-BOOL CDiscoveryServiceDlg::OnInitDialog() 
+BOOL CDiscoveryServiceDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CDiscoveryServiceDlg"), IDR_DISCOVERYFRAME );
 
 	CSingleLock pLock( &Network.m_pSection, TRUE );
@@ -84,7 +84,7 @@ BOOL CDiscoveryServiceDlg::OnInitDialog()
 
 	m_sAddress	= m_pService->m_sAddress;
 	m_nType		= m_pService->m_nType - 1;
-	
+
 	if ( m_bNew ) m_nType = 1;
 
 	pLock.Unlock();
@@ -92,7 +92,7 @@ BOOL CDiscoveryServiceDlg::OnInitDialog()
 	UpdateData( FALSE );
 
 	OnChangeAddress();
-	
+
 	return TRUE;
 }
 
@@ -105,12 +105,12 @@ void CDiscoveryServiceDlg::OnChangeAddress()
 		_tcschr( m_sAddress, '.' ) != NULL );
 }
 
-void CDiscoveryServiceDlg::OnSelChangeServiceType() 
+void CDiscoveryServiceDlg::OnSelChangeServiceType()
 {
 	OnChangeAddress();
 }
 
-void CDiscoveryServiceDlg::OnOK() 
+void CDiscoveryServiceDlg::OnOK()
 {
 	UpdateData();
 
@@ -121,11 +121,11 @@ void CDiscoveryServiceDlg::OnOK()
 
 	m_pService->m_sAddress	= m_sAddress;
 	m_pService->m_nType		= m_nType + 1;
-	
+
 	DiscoveryServices.Add( m_pService );
 	m_pService = NULL;
 
 	pLock.Unlock();
-	
+
 	CSkinDialog::OnOK();
 }

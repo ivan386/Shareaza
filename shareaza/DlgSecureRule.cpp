@@ -1,7 +1,7 @@
 //
 // DlgSecureRule.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,10 +99,10 @@ void CSecureRuleDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSecureRuleDlg message handlers
 
-BOOL CSecureRuleDlg::OnInitDialog() 
+BOOL CSecureRuleDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CSecureRuleDlg"), IDR_SECURITYFRAME );
 
 	CSingleLock pLock( &Network.m_pSection, TRUE );
@@ -177,7 +177,7 @@ void CSecureRuleDlg::ShowGroup(CWnd* pWnd, BOOL bShow)
 	}
 }
 
-void CSecureRuleDlg::OnSelChangeRuleType() 
+void CSecureRuleDlg::OnSelChangeRuleType()
 {
 	UpdateData();
 
@@ -196,7 +196,7 @@ void CSecureRuleDlg::OnSelChangeRuleType()
 	}
 }
 
-void CSecureRuleDlg::OnSelChangeRuleExpire() 
+void CSecureRuleDlg::OnSelChangeRuleExpire()
 {
 	UpdateData();
 	m_wndExpireD.EnableWindow( m_nExpire == 2 );
@@ -204,7 +204,7 @@ void CSecureRuleDlg::OnSelChangeRuleExpire()
 	m_wndExpireM.EnableWindow( m_nExpire == 2 );
 }
 
-BOOL CSecureRuleDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CSecureRuleDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_CHAR )
 	{
@@ -251,11 +251,11 @@ BOOL CSecureRuleDlg::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage(pMsg);
 }
 
-void CSecureRuleDlg::OnOK() 
+void CSecureRuleDlg::OnOK()
 {
 	UpdateData( TRUE );
 
@@ -267,7 +267,7 @@ void CSecureRuleDlg::OnOK()
 	m_pRule->m_sComment	= m_sComment;
 	m_pRule->m_nAction	= m_nAction;
 	m_pRule->m_nExpire	= m_nExpire;
-	
+
 	if ( m_nExpire == 2 )
 	{
 		m_pRule->m_nExpire	= time( NULL ) + m_nExpireD * 86400

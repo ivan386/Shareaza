@@ -1,7 +1,7 @@
 //
 // Handshake.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ public:
 	// Member variables for push operations and the Gnutella index (do)
 	BOOL  m_bPushing; // True if we connected to the remote computer as part of a push
 	DWORD m_nIndex;   // (do)
-	
+
 public:
 
 	// Push open a connection to the remote computer with the given IP address

@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,7 @@ class CHostBrowser : public CTransfer
 public:
 	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, GGUID* pClientID = NULL);
 	virtual ~CHostBrowser();
-	
+
 // Attributes
 public:
 	int				m_nState;
@@ -67,9 +67,9 @@ public:
 	DWORD			m_nReceived;
 	CBuffer*		m_pBuffer;
 	LPVOID			m_pInflate;
-	
+
 	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
-	
+
 // Operations
 public:
 	BOOL		Browse();

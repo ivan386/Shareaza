@@ -1,7 +1,7 @@
 //
 // Library.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,7 @@ public:
 	virtual ~CLibrary();
 
 	DECLARE_DYNAMIC(CLibrary)
-	
+
 // Attributes
 public:
 	CMutex			m_pSection;
@@ -57,7 +57,7 @@ public:
 	HINSTANCE		m_hKernel;
 	BOOL			(WINAPI* m_pfnGFAEW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 	BOOL			(WINAPI* m_pfnGFAEA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
-	
+
 // Sync Operations
 public:
 	void			Update()
@@ -66,7 +66,7 @@ public:
 		m_nUpdateCookie = GetTickCount();
 	}
 	void			Inhibit(BOOL bInhibit);
-	
+
 // File and Folder Operations
 public:
 	CLibraryFile*	LookupFile(DWORD nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE);
@@ -75,7 +75,7 @@ protected:
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
-	
+
 // General Operations
 public:
 	CPtrList*		Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE);
@@ -90,11 +90,11 @@ private:
 	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	BOOL			ThreadScan();
-	
+
 	friend class CLibraryFolder;
 	friend class CLibraryFile;
 	friend class CLibraryBuilder;
-	
+
 // Automation
 protected:
 	BEGIN_INTERFACE_PART(Library, ILibrary)
@@ -109,7 +109,7 @@ protected:
 		STDMETHOD(FindByURN)(BSTR sURN, ILibraryFile FAR* FAR* ppFile);
 		STDMETHOD(FindByIndex)(LONG nIndex, ILibraryFile FAR* FAR* ppFile);
 	END_INTERFACE_PART(Library)
-	
+
 	DECLARE_INTERFACE_MAP()
 
 };

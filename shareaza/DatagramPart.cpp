@@ -1,7 +1,7 @@
 //
 // DatagramPart.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,15 +55,15 @@ CDatagramOut::~CDatagramOut()
 void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
 {
 	ASSERT( m_pBuffer == NULL );
-	
+
 	m_pHost		= *pHost;
 	m_nSequence	= nSequence;
 	m_pBuffer	= pBuffer;
-	
+
 	pPacket->ToBuffer( m_pBuffer );
-	
+
 	m_bCompressed = m_pBuffer->Deflate( TRUE );
-	
+
 	m_nPacket	= Settings.Gnutella2.UdpMTU;
 	m_nCount	= (BYTE)( ( m_pBuffer->m_nLength + m_nPacket - 1 ) / m_nPacket );
 	m_nAcked	= m_nCount;
@@ -89,7 +89,7 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 	if ( m_nLocked < m_nCount )
 	{
 		if ( m_pLocked ) delete [] m_pLocked;
-		
+
 		m_nLocked	= m_nCount;
 		m_pLocked	= new DWORD[ m_nLocked ];
 	}
@@ -105,7 +105,7 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend)
 {
 	ASSERT( m_pBuffer != NULL );
-	
+
     int nPart = 0;
 	for ( ; nPart < m_nCount ; nPart++ )
 	{
@@ -121,16 +121,16 @@ BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL 
 			}
 		}
 	}
-	
+
 	if ( nPart >= m_nCount ) return FALSE;
-	
+
 	m_pLocked[ nPart ] = bResend ? tNow : 0xFFFFFFFF;
-	
+
 	DWORD nPacket = m_nPacket + sizeof(SGP_HEADER);
-	
+
 	*ppPacket = m_pBuffer->m_pBuffer + ( nPart * nPacket );
 	*pnPacket = min( nPacket, m_pBuffer->m_nLength - ( nPart * nPacket ) );
-	
+
 	return TRUE;
 }
 
@@ -148,6 +148,6 @@ BOOL CDatagramOut::Acknowledge(BYTE nPart)
 			if ( --m_nAcked == 0 ) return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }

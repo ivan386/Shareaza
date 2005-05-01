@@ -1,7 +1,7 @@
 //
 // CtrlWeb.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,18 +110,18 @@ void CWebCtrl::SetExternal(IDispatch* pDispatch)
 HRESULT CWebCtrl::Navigate(LPCTSTR lpszURL, DWORD dwFlags, LPCTSTR lpszTargetFrameName, LPCTSTR lpszHeaders, LPVOID lpvPostData, DWORD dwPostDataLen)
 {
 	if ( m_pBrowser == NULL ) return E_UNEXPECTED;
-	
+
 	CString strURL( lpszURL );
 	CComBSTR bstrURL;
 	bstrURL.Attach( strURL.AllocSysString() );
-	
+
 	COleSafeArray vPostData;
 	if ( lpvPostData != NULL )
 	{
 		if ( dwPostDataLen == 0 ) dwPostDataLen = lstrlen( (LPCTSTR)lpvPostData );
 		vPostData.CreateOneDim( VT_UI1, dwPostDataLen, lpvPostData );
 	}
-	
+
 	return m_pBrowser->Navigate( bstrURL, COleVariant( (long) dwFlags, VT_I4 ),
         COleVariant( lpszTargetFrameName, VT_BSTR ), vPostData,
 		COleVariant( lpszHeaders, VT_BSTR ) );
@@ -133,17 +133,17 @@ HRESULT CWebCtrl::Navigate(LPCTSTR lpszURL, DWORD dwFlags, LPCTSTR lpszTargetFra
 int CWebCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	AfxEnableControlContainer();
-	
+
 	CRect rect;
 	GetClientRect( rect );
-	
+
 	if ( m_wndBrowser.CreateControl( CLSID_WebBrowser, NULL,
 		 WS_VISIBLE|WS_CHILD, rect, this, AFX_IDW_PANE_FIRST ) )
 	{
 		IUnknown* pUnknown = m_wndBrowser.GetControlUnknown();
-		
+
 		if ( pUnknown != NULL &&
 			 SUCCEEDED( pUnknown->QueryInterface( IID_IWebBrowser2, (void**)&m_pBrowser ) ) &&
 			 m_pBrowser )
@@ -156,17 +156,17 @@ int CWebCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			m_wndBrowser.DestroyWindow();
 		}
 	}
-	
+
 	return 0;
 }
 
 void CWebCtrl::OnDestroy()
 {
 	EnterMenu( NULL );
-	
+
 	m_pBrowser = NULL;
 	if ( m_wndBrowser.m_hWnd != NULL ) m_wndBrowser.DestroyWindow();
-	
+
 	CWnd::OnDestroy();
 }
 
@@ -178,14 +178,14 @@ BOOL CWebCtrl::PreTranslateMessage(MSG* pMsg)
 		if ( pInPlace )
 			return pInPlace->TranslateAccelerator( pMsg ) == S_OK;
 	}
-	
+
 	return CWnd::PreTranslateMessage( pMsg );
 }
 
 void CWebCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
-	
+
 	if ( ::IsWindow( m_wndBrowser.m_hWnd ) )
 	{
 		CRect rect;
@@ -199,7 +199,7 @@ void CWebCtrl::OnSize(UINT nType, int cx, int cy)
 void CWebCtrl::OnPaint()
 {
 	CPaintDC dc( this );
-	
+
 	if ( ! ::IsWindow( m_wndBrowser.m_hWnd ) )
 	{
 		CString str = _T("Internet Explorer is required for this feature.");
@@ -223,12 +223,12 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 		SetWindowLong( m_pThis->m_hWndThis, GWL_WNDPROC, (LONG)m_pThis->m_pWndProc );
 		m_pThis = NULL;
 	}
-	
+
 	if ( pPoint == NULL || m_pMenu == NULL ) return;
-	
+
 	CPoint ptScreen( *pPoint );
 	ptScreen.Offset( 2, 2 );
-	
+
     CWnd* pChild = this;
 	for ( ; ; )
 	{
@@ -238,11 +238,11 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 		if ( pNext == NULL || pNext == pChild ) break;
 		pChild = pNext;
 	}
-	
+
 	TCHAR szClass[128];
     GetClassName( *pChild, szClass, 128 );
 	if ( _tcsistr( szClass, _T("Internet Explorer") ) == NULL ) return;
-	
+
 	m_pThis = this;
 	m_hWndThis = pChild->GetSafeHwnd();
 	m_pWndProc = (WNDPROC)GetWindowLong( m_hWndThis, GWL_WNDPROC );
@@ -252,9 +252,9 @@ void CWebCtrl::EnterMenu(POINT* pPoint)
 LRESULT PASCAL CWebCtrl::WebWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	WNDPROC pWndProc = m_pThis->m_pWndProc;
-	
+
 	ASSERT( m_pThis->m_hWndThis == hWnd );
-	
+
     switch ( nMsg )
 	{
 	case WM_DESTROY:
@@ -272,24 +272,24 @@ LRESULT PASCAL CWebCtrl::WebWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM 
 		m_pThis->m_pMenu->OnDrawItem( (LPDRAWITEMSTRUCT)lParam );
 		return 0;
 	}
-	
+
 	return CallWindowProc( pWndProc, hWnd, nMsg, wParam, lParam );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl browser event handlers
 
-void CWebCtrl::BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pvFlags, VARIANT* pvTargetFrameName, VARIANT* pvPostData, VARIANT* pvHeaders, VARIANT_BOOL* pvCancel) 
+void CWebCtrl::BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pvFlags, VARIANT* pvTargetFrameName, VARIANT* pvPostData, VARIANT* pvHeaders, VARIANT_BOOL* pvCancel)
 {
 	ASSERT(V_VT(pvURL) == VT_BSTR);
 	ASSERT(V_VT(pvTargetFrameName) == VT_BSTR);
 	ASSERT(pvCancel != NULL);
 	*pvCancel = VARIANT_FALSE;
-	
+
 	if ( SysStringLen( V_BSTR(pvTargetFrameName) ) == 0 )
 	{
 		CString strURL( V_BSTR(pvURL) );
-		
+
 		if ( _tcsncmp( strURL, _T("http"), 4 ) == 0 )
 		{
 			*pvCancel = VARIANT_TRUE;
@@ -303,7 +303,7 @@ void CWebCtrl::BeforeNavigate2(LPDISPATCH pDispatch, VARIANT* pvURL, VARIANT* pv
 void CWebCtrl::OnNewWindow2(LPDISPATCH* ppDisp, VARIANT_BOOL* pbCancel)
 {
 	*pbCancel = VARIANT_FALSE;
-	
+
 	if ( m_bSandbox )
 	{
 		if ( GetTickCount() - m_tFrame > 1500 ) *pbCancel = VARIANT_TRUE;
@@ -334,10 +334,10 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetExternal(LPDISPATCH *lppDi
 {
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
 	CWebCtrl* pCtrl = pThis->GetCtrl();
-	
+
 	*lppDispatch = pCtrl->m_pExternal;
 	if ( *lppDispatch != NULL ) (*lppDispatch)->AddRef();
-	
+
 	return ( *lppDispatch != NULL ) ? S_OK : S_FALSE;
 }
 
@@ -346,7 +346,7 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ShowContextMenu(DWORD dwID, L
 	METHOD_PROLOGUE_EX_(CWebCtrl::DocSite, DocHostUIHandler)
 	CWebCtrl* pCtrl = pThis->GetCtrl();
 	WVNCONTEXTMENU pNotify;
-	
+
 	pNotify.hdr.hwndFrom	= pCtrl->GetSafeHwnd();
 	pNotify.hdr.idFrom		= pCtrl->GetDlgCtrlID();
 	pNotify.hdr.code		= WVN_CONTEXTMENU;
@@ -354,13 +354,13 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::ShowContextMenu(DWORD dwID, L
 	pNotify.ptMouse			= *ppt;
 	pNotify.pCmdTarget		= pcmdtReserved;
 	pNotify.pContext		= pdispReserved;
-	
+
 	LRESULT lResult = pCtrl->GetOwner()->SendMessage(
 		WM_NOTIFY, (WPARAM)pNotify.hdr.idFrom, (LPARAM)&pNotify );
-	
+
 	if ( lResult == 1 ) return S_OK;
 	pCtrl->EnterMenu( ppt );
-	
+
 	return S_FALSE;
 }
 
@@ -483,7 +483,7 @@ STDMETHODIMP CWebCtrl::DocSite::XServiceProvider::QueryService(REFGUID guidServi
 {
 	METHOD_PROLOGUE(CWebCtrl::DocSite, ServiceProvider)
 	CWebCtrl* pCtrl = pThis->GetCtrl();
-	
+
 	if ( guidService == SID_SInternetSecurityManager && pCtrl->m_bSandbox )
 	{
 		if ( riid == IID_IInternetSecurityManager )
@@ -531,7 +531,7 @@ STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::ProcessUrlAction(LPCWS
 {
 	if ( cbPolicy != 4 ) return INET_E_DEFAULT_ACTION;
 	PBOOL pBool = (PBOOL)pPolicy;
-	
+
 	if ( wcsncmp( pwszUrl, L"p2p-col://", 10 ) == 0 )
 	{
 		if (	( dwAction >= URLACTION_ACTIVEX_MIN && dwAction <= URLACTION_ACTIVEX_MAX )
@@ -554,7 +554,7 @@ STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::ProcessUrlAction(LPCWS
 		*pBool = URLPOLICY_DISALLOW;
 		return S_OK;
 	}
-	
+
 	return INET_E_DEFAULT_ACTION;
 }
 

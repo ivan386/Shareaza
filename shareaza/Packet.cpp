@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -135,7 +135,7 @@ CString CPacket::ReadString(DWORD nMaximum)
 {
 	// We'll convert the ASCII text in the packet into wide characters, and return them in this string
 	CString strString;
-	
+
 	// If maximum would have us read beyond the end of the packet, make it smaller to read to the end of the packet
 	nMaximum = min( nMaximum, m_nLength - m_nPosition );
 	if ( ! nMaximum ) return strString; // If that would have us read nothing, return the new blank string
@@ -154,7 +154,7 @@ CString CPacket::ReadString(DWORD nMaximum)
 		// If pszScan points to a 0 byte, exit the loop, otherwise move the pointer forward and keep going
 		if ( ! *pszScan++ ) break;
 	}
-	
+
 	// Find out how many wide characters the ASCII bytes will become when converted
 	int nWide = MultiByteToWideChar(
 		CP_ACP,   // Use the code page for ASCII

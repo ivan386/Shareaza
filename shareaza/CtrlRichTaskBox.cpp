@@ -1,7 +1,7 @@
 //
 // CtrlRichTaskBox.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,24 +57,24 @@ CRichTaskBox::~CRichTaskBox()
 /////////////////////////////////////////////////////////////////////////////
 // CRichTaskBox message handlers
 
-BOOL CRichTaskBox::Create(CTaskPanel* pPanel, LPCTSTR pszCaption, UINT nIDIcon) 
+BOOL CRichTaskBox::Create(CTaskPanel* pPanel, LPCTSTR pszCaption, UINT nIDIcon)
 {
 	return CTaskBox::Create( pPanel, 0, pszCaption, nIDIcon );
 }
 
-int CRichTaskBox::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CRichTaskBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	CRect rc;
 	GetClientRect( &rc );
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rc, this, 1 );
 	m_wndView.SetOwner( GetPanel()->GetOwner() );
-	
+
 	return 0;
 }
 
-void CRichTaskBox::OnSize(UINT nType, int cx, int cy) 
+void CRichTaskBox::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize( nType, cx, cy );
 

@@ -1,7 +1,7 @@
 //
 // DlgFilterSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,27 +88,27 @@ void CFilterSearchDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFilterSearchDlg message handlers
 
-BOOL CFilterSearchDlg::OnInitDialog() 
+BOOL CFilterSearchDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CFilterSearchDlg"), IDR_SEARCHFRAME );
-	
+
 	//Load saved filters
 	m_pResultFilters = new CResultFilters;
 	m_pResultFilters->Load();
 	UpdateList();
 
 	if ( m_pMatches != NULL ) UpdateFields();
-	
+
 	m_wndSources.SetRange( 0, 256 );
-	
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CFilterSearchDlg::OnOK() 
+void CFilterSearchDlg::OnOK()
 {
 	UpdateData( TRUE );
 
@@ -125,7 +125,7 @@ void CFilterSearchDlg::OnOK()
 		m_pMatches->m_nFilterMaxSize	= Settings.ParseVolume( m_sMaxSize, FALSE );
 		m_pMatches->m_nFilterSources	= m_nSources;
 	}
-	
+
 	CSkinDialog::OnOK();
 }
 
@@ -192,7 +192,7 @@ void CFilterSearchDlg::UpdateFields()
 
 	DWORD sel = m_Filters.GetCurSel();
 
-	if (sel != CB_ERR) 
+	if (sel != CB_ERR)
 		m_bDefault = (sel == m_pResultFilters->m_nDefault);
 
 	UpdateData(FALSE);
@@ -216,7 +216,7 @@ void CFilterSearchDlg::OnCbnSelchangeFilters()
 	UpdateData(TRUE);
 
 	DWORD sel = m_Filters.GetCurSel();
-	
+
 	if (sel != CB_ERR)
 	{
 //		CFilterOptions *pOptions = (CFilterOptions *) m_Filters.GetItemDataPtr(sel);
@@ -242,7 +242,7 @@ void CFilterSearchDlg::OnBnClickedDeleteFilter()
 	UpdateData(TRUE);
 
 	DWORD sel = m_Filters.GetCurSel();
-	
+
 	if (sel != CB_ERR)
 	{
 		if (AfxMessageBox(IDS_FILTER_DELETE_CONFIRM, MB_ICONQUESTION | MB_YESNO) == IDYES)

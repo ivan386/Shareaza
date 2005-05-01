@@ -1,7 +1,7 @@
 //
 // LibraryFolders.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,15 +34,15 @@ class CLibraryFolders : public CComObject
 public:
 	CLibraryFolders();
 	virtual ~CLibraryFolders();
-	
+
 	DECLARE_DYNAMIC(CLibraryFolders)
-	
+
 // Attributes
 protected:
 	CObList			m_pFolders;
 	CAlbumFolder*	m_pAlbumRoot;
 	BOOL			m_bRemoveMask;
-	
+
 // Physical Folder Operations
 public:
 	POSITION		GetFolderIterator() const;
@@ -55,7 +55,7 @@ public:
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
 	CLibraryFolder*	IsFolderShared(LPCTSTR pszPath);
-	
+
 // Virtual Album Operations
 public:
 	CAlbumFolder*	GetAlbumRoot();
@@ -83,9 +83,9 @@ protected:
 		STDMETHOD(get_Item)(VARIANT vIndex, ILibraryFolder FAR* FAR* ppFolder);
 		STDMETHOD(get_Count)(LONG FAR* pnCount);
 	END_INTERFACE_PART(LibraryFolders)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 	friend class CLibrary;
 };
 

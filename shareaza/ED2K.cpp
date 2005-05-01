@@ -1,7 +1,7 @@
 //
 // ED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,25 +60,25 @@ void CED2K::Clear()
 
 void CED2K::Serialize(CArchive& ar)
 {
-	if ( ar.IsStoring() ) 
+	if ( ar.IsStoring() )
 	{
 		ar << m_nList;
 		if ( m_nList == 0 ) return;
-		
+
 		ar.Write( &m_pRoot, sizeof(MD4) );
 		if ( m_nList > 1 ) ar.Write( m_pList, sizeof(MD4) * m_nList );
 	}
 	else
 	{
 		Clear();
-		
+
 		ar >> m_nList;
 		if ( m_nList == 0 ) return;
-		
+
 		ar.Read( &m_pRoot, sizeof(MD4) );
-		
+
 		m_pList = new MD4[ m_nList ];
-		
+
 		if ( m_nList > 1 )
 		{
 			ar.Read( m_pList, sizeof(MD4) * m_nList );
@@ -114,10 +114,10 @@ BOOL CED2K::GetRoot(MD4* pHash) const
 void CED2K::BeginFile(QWORD nLength)
 {
 	ASSERT( ! IsAvailable() );
-	
+
 	m_nList	= (DWORD)( ( nLength + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE );
 	m_pList	= new MD4[ m_nList ];
-	
+
 	m_pSegment.Reset();
 	m_nCurHash = 0;
 	m_nCurByte = 0;
@@ -129,24 +129,24 @@ void CED2K::BeginFile(QWORD nLength)
 void CED2K::AddToFile(LPCVOID pInput, DWORD nLength)
 {
 	if ( nLength == 0 ) return;
-	
+
 	ASSERT( IsAvailable() );
 	ASSERT( m_nCurHash < m_nList );
 	ASSERT( m_nCurByte < ED2K_PART_SIZE );
-	
+
 	const BYTE* pBytes = (const BYTE*)pInput;
-	
+
 	while ( nLength > 0 )
 	{
 		DWORD nInThisHash	= ( ED2K_PART_SIZE - m_nCurByte );
 		DWORD nToProcess	= min( nInThisHash, nLength );
-		
+
 		m_pSegment.Add( pBytes, nToProcess );
-		
+
 		m_nCurByte += nToProcess;
 		nLength -= nToProcess;
 		pBytes += nToProcess;
-		
+
 		if ( m_nCurByte >= ED2K_PART_SIZE )
 		{
 			ASSERT( m_nCurHash < m_nList );
@@ -167,16 +167,16 @@ BOOL CED2K::FinishFile()
 	ASSERT( IsAvailable() );
 	ASSERT( m_nCurHash <= m_nList );
 	ASSERT( m_nCurByte < ED2K_PART_SIZE );
-	
+
 	if ( m_nCurHash < m_nList )
 	{
 		m_pSegment.Finish();
 		m_pSegment.GetHash( &m_pList[ m_nCurHash++ ] );
 		m_pSegment.Reset();
 	}
-	
+
 	ASSERT( m_nCurHash == m_nList );
-	
+
 	if ( m_nList == 1 )
 	{
 		m_pRoot = *m_pList;
@@ -193,7 +193,7 @@ BOOL CED2K::FinishFile()
 		pOverall.Finish();
 		pOverall.GetHash( &m_pRoot );
 	}
-	
+
 	return TRUE;
 }
 
@@ -203,7 +203,7 @@ BOOL CED2K::FinishFile()
 void CED2K::BeginBlockTest()
 {
 	ASSERT( IsAvailable() );
-	
+
 	m_pSegment.Reset();
 	m_nCurByte = 0;
 }
@@ -214,10 +214,10 @@ void CED2K::BeginBlockTest()
 void CED2K::AddToTest(LPCVOID pInput, DWORD nLength)
 {
 	if ( nLength == 0 ) return;
-	
+
 	ASSERT( IsAvailable() );
 	ASSERT( m_nCurByte + nLength <= ED2K_PART_SIZE );
-	
+
 	m_pSegment.Add( pInput, nLength );
 	m_nCurByte += nLength;
 }
@@ -228,13 +228,13 @@ void CED2K::AddToTest(LPCVOID pInput, DWORD nLength)
 BOOL CED2K::FinishBlockTest(DWORD nBlock)
 {
 	ASSERT( IsAvailable() );
-	
+
 	if ( nBlock >= m_nList ) return FALSE;
-	
+
 	MD4 pMD4;
 	m_pSegment.Finish();
 	m_pSegment.GetHash( &pMD4 );
-	
+
 	return pMD4 == m_pList[ nBlock ];
 }
 
@@ -244,11 +244,11 @@ BOOL CED2K::FinishBlockTest(DWORD nBlock)
 BOOL CED2K::ToBytes(BYTE** ppOutput, DWORD* pnOutput)
 {
 	if ( m_nList == 0 ) return FALSE;
-	
+
 	*pnOutput = sizeof(MD4) * m_nList;
 	*ppOutput = new BYTE[ *pnOutput ];
 	CopyMemory( *ppOutput, m_pList, *pnOutput );
-	
+
 	return TRUE;
 }
 
@@ -263,20 +263,20 @@ LPCVOID CED2K::GetRawPtr() const
 BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
 {
 	Clear();
-	
+
 	if ( pOutput == NULL || nOutput == 0 || ( nOutput % sizeof(MD4) ) != 0 ) return FALSE;
-	
+
 	if ( nSize > 0 )
 	{
 		if ( nOutput / sizeof(MD4) != ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE )
 			return FALSE;
 	}
-	
+
 	m_nList	= nOutput / sizeof(MD4);
 	m_pList = new MD4[ m_nList ];
-	
+
 	CopyMemory( m_pList, pOutput, nOutput );
-	
+
 	if ( m_nList == 1 )
 	{
 		m_pRoot = *m_pList;
@@ -288,19 +288,19 @@ BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
 		pOverall.Finish();
 		pOverall.GetHash( &m_pRoot );
 	}
-	
+
 	return TRUE;
 }
 
 BOOL CED2K::FromRoot(MD4* pHash)
 {
 	Clear();
-	
+
 	m_nList = 1;
 	m_pList = new MD4[ m_nList ];
-	
+
 	m_pRoot = *m_pList = *pHash;
-	
+
 	return TRUE;
 }
 
@@ -310,7 +310,7 @@ BOOL CED2K::FromRoot(MD4* pHash)
 BOOL CED2K::CheckIntegrity()
 {
 	ASSERT( IsAvailable() );
-	
+
 	if ( m_nList == 1 )
 	{
 		return *m_pList == m_pRoot;
@@ -319,11 +319,11 @@ BOOL CED2K::CheckIntegrity()
 	{
 		CMD4 pOverall;
 		MD4 pRoot;
-		
+
 		pOverall.Add( m_pList, sizeof(MD4) * m_nList );
 		pOverall.Finish();
 		pOverall.GetHash( &pRoot );
-		
+
 		return pRoot == m_pRoot;
 	}
 }
@@ -399,7 +399,7 @@ BOOL CED2K::HashFromURN(LPCTSTR pszHash, MD4* pHash)
 	{
 		return HashFromString( pszHash + 9, pHash );
 	}
-	
+
 	return FALSE;
 }
 

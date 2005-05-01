@@ -1,7 +1,7 @@
 //
 // WndTraffic.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ CTrafficWnd::CTrafficWnd(DWORD nUnique)
 {
 	m_nUnique		= nUnique;
 	m_pGraph		= new CLineGraph();
-	
+
 	Create( IDR_TRAFFICFRAME );
 }
 
@@ -76,20 +76,20 @@ CTrafficWnd::~CTrafficWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CTrafficWnd message handlers
 
-int CTrafficWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CTrafficWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( m_nUnique == 0 ) FindFreeUnique();
-	
+
 	if ( ! Serialize( FALSE ) && m_nUnique == 1 ) m_pGraph->CreateDefaults();
-	
+
 	UpdateCaption();
-	
+
 	return 0;
 }
 
-void CTrafficWnd::OnDestroy() 
+void CTrafficWnd::OnDestroy()
 {
 	KillTimer( 2 );
 	Serialize( TRUE );
@@ -122,7 +122,7 @@ void CTrafficWnd::FindFreeUnique()
 void CTrafficWnd::SetUpdateRate()
 {
 	KillTimer( 2 );
-	
+
 	if ( TRUE )
 	{
 		CLineGraph* pGraph = (CLineGraph*)m_pGraph;
@@ -130,13 +130,13 @@ void CTrafficWnd::SetUpdateRate()
 	}
 }
 
-void CTrafficWnd::OnSize(UINT nType, int cx, int cy) 
+void CTrafficWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CChildWnd::OnSize( nType, cx, cy );
-	Invalidate();	
+	Invalidate();
 }
 
-void CTrafficWnd::OnPaint() 
+void CTrafficWnd::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
@@ -145,84 +145,84 @@ void CTrafficWnd::OnPaint()
 	m_pGraph->BufferedPaint( &dc, &rc );
 }
 
-void CTrafficWnd::OnTimer(UINT nIDEvent) 
+void CTrafficWnd::OnTimer(UINT nIDEvent)
 {
 	DWORD nNow = GetTickCount();
-	
+
 	if ( nIDEvent == 2 && m_pGraph->Update() ) Invalidate();
 }
 
-void CTrafficWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CTrafficWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	TrackPopupMenu( _T("CTrafficWnd"), point, ID_TRAFFIC_SETUP );
 }
 
-void CTrafficWnd::OnUpdateTrafficGrid(CCmdUI* pCmdUI) 
+void CTrafficWnd::OnUpdateTrafficGrid(CCmdUI* pCmdUI)
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pCmdUI->SetCheck( pLineGraph->m_bShowGrid );
 }
 
-void CTrafficWnd::OnTrafficGrid() 
+void CTrafficWnd::OnTrafficGrid()
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pLineGraph->m_bShowGrid = ! pLineGraph->m_bShowGrid;
 	Invalidate();
 }
 
-void CTrafficWnd::OnUpdateTrafficAxis(CCmdUI* pCmdUI) 
+void CTrafficWnd::OnUpdateTrafficAxis(CCmdUI* pCmdUI)
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pCmdUI->SetCheck( pLineGraph->m_bShowAxis );
 }
 
-void CTrafficWnd::OnTrafficAxis() 
+void CTrafficWnd::OnTrafficAxis()
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pLineGraph->m_bShowAxis = ! pLineGraph->m_bShowAxis;
 	Invalidate();
 }
 
-void CTrafficWnd::OnUpdateTrafficLegend(CCmdUI* pCmdUI) 
+void CTrafficWnd::OnUpdateTrafficLegend(CCmdUI* pCmdUI)
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pCmdUI->SetCheck( pLineGraph->m_bShowLegend );
 }
 
-void CTrafficWnd::OnTrafficLegend() 
+void CTrafficWnd::OnTrafficLegend()
 {
 	CLineGraph* pLineGraph = (CLineGraph*)m_pGraph;
 	pLineGraph->m_bShowLegend = ! pLineGraph->m_bShowLegend;
 	Invalidate();
 }
 
-void CTrafficWnd::OnTrafficSetup() 
+void CTrafficWnd::OnTrafficSetup()
 {
-	CGraphListDlg dlg( this, (CLineGraph*)m_pGraph );	
-	
+	CGraphListDlg dlg( this, (CLineGraph*)m_pGraph );
+
 	dlg.m_sName = m_sName;
-	
+
 	if ( dlg.DoModal() == IDOK )
 	{
 		m_sName = dlg.m_sName;
-		
+
 		SetUpdateRate();
 		UpdateCaption();
 		Invalidate();
 	}
 }
 
-void CTrafficWnd::OnTrafficClear() 
+void CTrafficWnd::OnTrafficClear()
 {
 	m_pGraph->Clear();
 }
 
-void CTrafficWnd::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CTrafficWnd::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	PostMessage( WM_COMMAND, ID_TRAFFIC_SETUP );
 }
 
-void CTrafficWnd::OnTrafficWindow() 
+void CTrafficWnd::OnTrafficWindow()
 {
 	new CTrafficWnd();
 }
@@ -235,59 +235,59 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 	WINDOWPLACEMENT pPos = { sizeof(WINDOWPLACEMENT) };
 	CString strFile;
 	CFile pFile;
-	
+
 	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"), (LPCTSTR)Settings.General.Path, m_nUnique );
-	
+
 	if ( ! pFile.Open( strFile, bSave ? ( CFile::modeWrite | CFile::modeCreate ) : CFile::modeRead ) )
 		return FALSE;
-	
+
 	CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );
 	int nVersion = 0;
-	
+
 	if ( ar.IsStoring() )
 	{
 		nVersion = 0xFFFFFFFF;
 		ar << nVersion;
 		nVersion = 1;
 		ar << nVersion;
-		
+
 		ar << m_nUnique;
 		ar << m_sName;
-		
+
 		GetWindowPlacement( &pPos );
 		ar.Write( &pPos, sizeof(pPos) );
 	}
 	else
 	{
 		ar >> m_nUnique;
-		
+
 		if ( m_nUnique == 0xFFFFFFFF )
 		{
 			ar >> nVersion;
 			ar >> m_nUnique;
 		}
-		
+
 		if ( nVersion >= 1 ) ar >> m_sName;
-		
+
 		ar.Read( &pPos, sizeof(pPos) );
 		if ( pPos.showCmd == SW_SHOWNORMAL )
 			SetWindowPlacement( &pPos );
 	}
-	
+
 	m_pGraph->Serialize( ar );
-	
+
 	ar.Close();
 	pFile.Close();
-	
+
 	if ( ! bSave ) SetUpdateRate();
-	
+
 	return TRUE;
 }
 
 void CTrafficWnd::UpdateCaption()
 {
 	CString strCaption, strName;
-	
+
 	if ( m_sName.GetLength() )
 	{
 		strName = _T(" : ") + m_sName;
@@ -299,7 +299,7 @@ void CTrafficWnd::UpdateCaption()
 		else
 			strName.Format( _T(" (%lu)"), m_nUnique );
 	}
-	
+
 	LoadString( strCaption, IDR_TRAFFICFRAME );
 	strCaption += strName;
 	SetWindowText( strCaption );

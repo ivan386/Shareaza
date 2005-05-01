@@ -1,7 +1,7 @@
 //
 // SHA.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,19 +24,19 @@
 
 #pragma once
 
-class CSHA  
+class CSHA
 {
 // Construction
 public:
 	CSHA();
 	~CSHA();
-	
+
 // Attributes
  public:
 	DWORD	m_nCount[2];
 	DWORD	m_nHash[5];
 	DWORD	m_nBuffer[16];						// if you change this modify the offsets sha_asm.asm accordingly
-	
+
 // Operations
 public:
 	void			Reset();

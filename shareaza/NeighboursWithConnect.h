@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,7 +62,7 @@ protected:
 // Data
 protected:
 	DWORD	m_tPresent[8];
-	
+
 };
 
 #endif // !defined(AFX_NEIGHBOURSWITHCONNECT_H__7BAE2435_FF99_4E23_8EBE_B7C3E5FFCCB0__INCLUDED_)

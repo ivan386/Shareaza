@@ -1,7 +1,7 @@
 //
 // CtrlUploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CUploadsCtrl : public CWnd
 public:
 	CUploadsCtrl();
 	virtual ~CUploadsCtrl();
-	
+
 	DECLARE_DYNAMIC(CUploadsCtrl)
 
 // Operations
@@ -50,9 +50,9 @@ protected:
 	BOOL		GetAt(int nSelect, CUploadQueue** ppQueue, CUploadFile** ppFile);
 	void		PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, BOOL bFocus);
 	void		PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue, CUploadFile* pFile, int nPosition, BOOL bFocus);
-	
+
 	friend class CUploadsWnd;
-	
+
 // Attributes
 protected:
 	CHeaderCtrl			m_wndHeader;
@@ -67,7 +67,7 @@ public:
 	static CUploadQueue*	GetNextQueue(POSITION& pos);
 	static POSITION			GetFileIterator(CUploadQueue* pQueue);
 	static CUploadFile*		GetNextFile(CUploadQueue* pQueue, POSITION& pos, int* pnPosition = NULL);
-	
+
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()

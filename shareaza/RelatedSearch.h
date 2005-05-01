@@ -1,7 +1,7 @@
 //
 // RelatedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,14 +30,14 @@ class CMatchFile;
 class CLibraryFile;
 
 
-class CRelatedSearch  
+class CRelatedSearch
 {
 // Construction
 public:
 	CRelatedSearch(CMatchFile* pFile);
 	CRelatedSearch(CLibraryFile* pFile);
 	virtual ~CRelatedSearch();
-	
+
 // Attributes
 public:
 	BOOL		m_bSHA1;

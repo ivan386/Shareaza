@@ -1,7 +1,7 @@
 //
 // PageProfileProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,20 +87,20 @@ void CProfileProfilePage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CProfileProfilePage message handlers
 
-BOOL CProfileProfilePage::OnInitDialog() 
+BOOL CProfileProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_pWorld = new CWorldGPS();
 	m_pWorld->Load();
-	
+
 	CWorldCountry* pCountry = m_pWorld->m_pCountry;
-	
+
 	for ( int nCountry = m_pWorld->m_nCountry ; nCountry ; nCountry--, pCountry++ )
 	{
 		m_wndCountry.SetItemData( m_wndCountry.AddString( pCountry->m_sName ), (LPARAM)pCountry );
 	}
-	
+
 	if ( CXMLElement* pLocation = MyProfile.GetXML( _T("location") ) )
 	{
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") ) )
@@ -109,20 +109,20 @@ BOOL CProfileProfilePage::OnInitDialog()
 			m_sLocCity		= pPolitical->GetAttributeValue( _T("city") ) + _T(", ")
 							+ pPolitical->GetAttributeValue( _T("state") );
 		}
-		
+
 		if ( CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates") ) )
 		{
 			CString str = pCoordinates->GetAttributeValue( _T("latitude") );
 			float nValue;
-			
+
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
 				m_sLocLatitude.Format( nValue >= 0 ?
 					_T("%.2f° N") : _T("%.2f° S"), double( fabs( nValue ) ) );
 			}
-			
+
 			str = pCoordinates->GetAttributeValue( _T("longitude") );
-			
+
 			if ( _stscanf( str, _T("%f"), &nValue ) == 1 )
 			{
 				m_sLocLongitude.Format( nValue >= 0 ? _T("%.1f° E") : _T("%.1f° W"),
@@ -130,31 +130,31 @@ BOOL CProfileProfilePage::OnInitDialog()
 			}
 		}
 	}
-	
+
 	if ( CXMLElement* pInterests = MyProfile.GetXML( _T("interests") ) )
 	{
 		for ( POSITION pos = pInterests->GetElementIterator() ; pos ; )
 		{
 			CXMLElement* pInterest = pInterests->GetNextElement( pos );
-			
+
 			if ( pInterest->IsNamed( _T("interest") ) )
 			{
 				m_wndInterestList.AddString( pInterest->GetValue() );
 			}
 		}
 	}
-	
+
 	UpdateData( FALSE );
 
 	m_wndInterestAdd.EnableWindow( FALSE );
 	m_wndInterestRemove.EnableWindow( FALSE );
 
 	OnCloseUpCountry();
-	
+
 	return TRUE;
 }
 
-void CProfileProfilePage::OnCloseUpCountry() 
+void CProfileProfilePage::OnCloseUpCountry()
 {
 	CWaitCursor pCursor;
 
@@ -189,7 +189,7 @@ void CProfileProfilePage::OnCloseUpCountry()
 	}
 }
 
-void CProfileProfilePage::OnCloseUpCity() 
+void CProfileProfilePage::OnCloseUpCity()
 {
 	int nSel = m_wndCity.GetCurSel();
 	if ( nSel < 0 ) return;
@@ -206,39 +206,39 @@ void CProfileProfilePage::OnCloseUpCity()
 	GetDlgItem( IDC_LOC_LONG )->SetWindowText( m_sLocLongitude );
 }
 
-void CProfileProfilePage::OnSelChangeInterestList() 
+void CProfileProfilePage::OnSelChangeInterestList()
 {
 	m_wndInterestRemove.EnableWindow( m_wndInterestList.GetCurSel() >= 0 );
 }
 
-void CProfileProfilePage::OnSelChangeInterestAll() 
+void CProfileProfilePage::OnSelChangeInterestAll()
 {
 	m_wndInterestAdd.EnableWindow( m_wndInterestAll.GetCurSel() >= 0 || m_wndInterestAll.GetWindowTextLength() > 0 );
 }
 
-void CProfileProfilePage::OnEditChangeInterestAll() 
+void CProfileProfilePage::OnEditChangeInterestAll()
 {
 	m_wndInterestAdd.EnableWindow( m_wndInterestAll.GetCurSel() >= 0 || m_wndInterestAll.GetWindowTextLength() > 0 );
 }
 
-void CProfileProfilePage::OnInterestAdd() 
+void CProfileProfilePage::OnInterestAdd()
 {
 	CString str;
 	m_wndInterestAll.GetWindowText( str );
 	m_wndInterestList.AddString( str );
 }
 
-void CProfileProfilePage::OnInterestRemove() 
+void CProfileProfilePage::OnInterestRemove()
 {
 	int nItem = m_wndInterestList.GetCurSel();
 	if ( nItem >= 0 ) m_wndInterestList.DeleteString( nItem );
 	m_wndInterestRemove.EnableWindow( FALSE );
 }
 
-void CProfileProfilePage::OnOK() 
+void CProfileProfilePage::OnOK()
 {
 	UpdateData();
-	
+
 	if ( CXMLElement* pLocation = MyProfile.GetXML( _T("location"), TRUE ) )
 	{
 		if ( CXMLElement* pPolitical = pLocation->GetElementByName( _T("political"), TRUE ) )
@@ -252,9 +252,9 @@ void CProfileProfilePage::OnOK()
 				if ( CXMLAttribute* pAttr = pPolitical->GetAttribute( _T("country") ) )
 					pAttr->Delete();
 			}
-			
+
 			int nPos = m_sLocCity.Find( _T(", ") );
-			
+
 			if ( nPos >= 0 )
 			{
 				pPolitical->AddAttribute( _T("city"), m_sLocCity.Left( nPos ) );
@@ -277,19 +277,19 @@ void CProfileProfilePage::OnOK()
 			if ( pPolitical->GetElementCount() == 0 && pPolitical->GetAttributeCount() == 0 )
 				pPolitical->Delete();
 		}
-		
+
 		if ( CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates"), TRUE ) )
 		{
 			CString strValue;
 			float nValue = 0;
-			
+
 			if ( _stscanf( m_sLocLatitude, _T("%f"), &nValue ) == 1 )
 			{
 				if ( m_sLocLatitude.Find( 'S' ) >= 0 ) nValue *= -1;
 				strValue.Format( _T("%f"), double( nValue ) );
 				pCoordinates->AddAttribute( _T("latitude"), strValue );
 			}
-			
+
 			if ( _stscanf( m_sLocLongitude, _T("%f"), &nValue ) == 1 )
 			{
 				if ( m_sLocLongitude.Find( 'W' ) >= 0 ) nValue *= -1;
@@ -306,7 +306,7 @@ void CProfileProfilePage::OnOK()
 	if ( CXMLElement* pInterests = MyProfile.GetXML( _T("interests"), TRUE ) )
 	{
 		pInterests->DeleteAllElements();
-		
+
 		for ( int nItem = 0 ; nItem < m_wndInterestList.GetCount() ; nItem++ )
 		{
 			CString str;

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHomeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,10 +73,10 @@ BOOL CLibraryHomeView::CheckAvailable(CLibraryTreeItem* pSel)
 	return m_bAvailable;
 }
 
-int CLibraryHomeView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryHomeView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryView::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	m_wndTile.Create( this );
 	m_wndTile.SetOwner( GetOwner() );
 	m_wndTile.ShowWindow( SW_SHOW );
@@ -84,15 +84,15 @@ int CLibraryHomeView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CLibraryHomeView::OnDestroy() 
+void CLibraryHomeView::OnDestroy()
 {
 	CLibraryView::OnDestroy();
 }
 
-void CLibraryHomeView::OnSize(UINT nType, int cx, int cy) 
+void CLibraryHomeView::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CLibraryView::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetClientRect( &rc );
 	m_wndTile.MoveWindow( &rc );
@@ -118,21 +118,21 @@ void CLibraryHomeView::Update()
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
-	
+
 	m_wndTile.Update();
 }
 
-BOOL CLibraryHomeView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CLibraryHomeView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndTile.m_hWnd != NULL )
 	{
 		if ( m_wndTile.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CLibraryView::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CLibraryHomeView::OnSetFocus(CWnd* pOldWnd) 
+void CLibraryHomeView::OnSetFocus(CWnd* pOldWnd)
 {
 	CLibraryView::OnSetFocus( pOldWnd );
 	if ( m_wndTile.m_hWnd ) m_wndTile.SetFocus();

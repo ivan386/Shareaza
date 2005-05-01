@@ -1,7 +1,7 @@
 //
 // XMLCOM.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,22 +30,22 @@ class CXMLAttribute;
 class CXMLCOMCol;
 
 
-class CXMLCOM : public CComObject  
+class CXMLCOM : public CComObject
 {
 // Construction
 public:
 	CXMLCOM(CXMLNode* pNode);
 	virtual ~CXMLCOM();
-	
+
 // Attributes
 public:
 	CXMLNode*	m_pNode;
-	
+
 // Operations
 public:
 	static IUnknown*	Wrap(CXMLNode* pNode, REFIID pIID);
 	static CXMLElement*	Unwrap(ISXMLElement* pInterface);
-	
+
 // Automation
 public:
 	BEGIN_INTERFACE_PART(XMLNode, ISXMLNode)
@@ -109,13 +109,13 @@ public:
 
 };
 
-class CXMLCOMCol : public CComObject  
+class CXMLCOMCol : public CComObject
 {
 // Construction
 public:
 	CXMLCOMCol(CXMLElement* pElement);
 	virtual ~CXMLCOMCol();
-	
+
 // Attributes
 public:
 	CXMLElement*	m_pElement;

@@ -1,7 +1,7 @@
 //
 // MatchListView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,16 +47,16 @@ END_INTERFACE_MAP()
 CMatchListView::CMatchListView(LPCTSTR pszName, CMatchList* pList)
 {
 	EnableDispatch( IID_IGenericView );
-	
+
 	m_sName = pszName;
 	m_pList = pList;
 	m_pList->m_pSection.Lock();
-	
+
 	for ( POSITION pos = m_pList->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
 		m_pSelection.AddTail( m_pList->m_pSelectedFiles.GetNext( pos ) );
 	}
-	
+
 	for ( POSITION pos = m_pList->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		m_pSelection.AddTail( m_pList->m_pSelectedHits.GetNext( pos ) );
@@ -90,7 +90,7 @@ int CMatchListView::GetCount() const
 void CMatchListView::GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const
 {
 	LPVOID pItem = (LPVOID)( pos != NULL ? m_pSelection.GetNext( pos ) : NULL );
-	
+
 	if ( ppFile != NULL )
 	{
 		if ( m_pList->m_pSelectedFiles.Find( pItem ) != NULL )
@@ -102,7 +102,7 @@ void CMatchListView::GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppH
 	{
 		*ppFile = NULL;
 	}
-	
+
 	if ( ppHit != NULL )
 	{
 		if ( m_pList->m_pSelectedHits.Find( pItem ) != NULL )
@@ -120,14 +120,14 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 {
 	CMatchFile* pFile;
 	CQueryHit* pHit;
-	
+
 	GetNext( pos, &pFile, &pHit );
 	if ( pVar == NULL ) return;
-	
+
 	TIGEROOT* pTiger = NULL;
 	SHA1* pSHA1 = NULL;
 	MD4* pED2K = NULL;
-	
+
 	if ( pFile != NULL )
 	{
 		pTiger = pFile->m_bTiger ? &pFile->m_pTiger : NULL;
@@ -140,10 +140,10 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 		pSHA1 = pHit->m_bSHA1 ? &pHit->m_pSHA1 : NULL;
 		pED2K = pHit->m_bED2K ? &pHit->m_pED2K : NULL;
 	}
-	
+
 	CString strURN;
 	VariantClear( pVar );
-	
+
 	if ( pSHA1 != NULL && pTiger != NULL )
 	{
 		strURN	= _T("urn:bitprint:")
@@ -166,7 +166,7 @@ void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 	{
 		return;
 	}
-	
+
 	pVar->vt		= VT_BSTR;
 	pVar->bstrVal	= strURN.AllocSysString();
 }
@@ -207,23 +207,23 @@ STDMETHODIMP CMatchListView::XGenericView::get__NewEnum(IUnknown FAR* FAR* ppEnu
 STDMETHODIMP CMatchListView::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR* pvItem)
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
-	
+
 	VARIANT va;
 	VariantInit( &va );
 	VariantClear( pvItem );
-	
+
 	if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) ) return E_INVALIDARG;
-	
+
 	if ( va.lVal < 0 || va.lVal >= pThis->GetCount() ) return S_OK;
-	
+
 	for ( POSITION pos = pThis->GetIterator() ; pos ; )
 	{
 		BOOL bThis = ( va.lVal-- == 0 );
-		
+
 		pThis->GetNext( pos, bThis ? pvItem : NULL );
 		if ( bThis ) break;
 	}
-	
+
 	return S_OK;
 }
 
@@ -242,26 +242,26 @@ IMPLEMENT_UNKNOWN(CMatchListView, EnumVARIANT)
 STDMETHODIMP CMatchListView::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULONG FAR* pceltFetched)
 {
 	METHOD_PROLOGUE( CMatchListView, EnumVARIANT )
-	
+
 	if ( pceltFetched ) *pceltFetched = 0;
 	else if ( celt > 1 ) return E_INVALIDARG;
-	
+
 	if ( m_pos == NULL ) return S_FALSE;
-	
+
 	VariantInit( &rgvar[0] );
 	pThis->GetNext( m_pos, rgvar );
-	
+
 	if ( pceltFetched ) (*pceltFetched)++;
-	
+
 	return S_OK;
 }
 
-STDMETHODIMP CMatchListView::XEnumVARIANT::Skip(ULONG celt) 
+STDMETHODIMP CMatchListView::XEnumVARIANT::Skip(ULONG celt)
 {
     METHOD_PROLOGUE( CMatchListView, EnumVARIANT )
-	
+
 	while ( celt-- && m_pos ) pThis->GetNext( m_pos, NULL, NULL );
-	
+
     return ( celt == 0 ? S_OK : S_FALSE );
 }
 
@@ -272,7 +272,7 @@ STDMETHODIMP CMatchListView::XEnumVARIANT::Reset()
     return S_OK;
 }
 
-STDMETHODIMP CMatchListView::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum) 
+STDMETHODIMP CMatchListView::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* ppenum)
 {
     return E_NOTIMPL;
 }

@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,9 +31,9 @@ class CMediaFrame : public CWnd
 public:
 	CMediaFrame();
 	virtual ~CMediaFrame();
-	
+
 	DECLARE_DYNAMIC(CMediaFrame)
-	
+
 // Operations
 public:
 	void	OnSkinChange();
@@ -63,7 +63,7 @@ protected:
 public:
 	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
 	inline MediaState GetState() { return m_pPlayer != NULL ? m_nState : smsNull; }
-	
+
 // Attributes
 protected:
 	IMediaPlayer*	m_pPlayer;

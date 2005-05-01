@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ BOOL CNeighbourTipCtrl::OnPrepare()
 
 	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
 	if ( pNeighbour == NULL ) return FALSE;
-	
+
 	CalcSizeHelper();
 
 	return TRUE;
@@ -128,7 +128,7 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 	else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 	{
 		str = ((CEDNeighbour*)pNeighbour)->m_sServerName;
-		
+
 		if ( str.GetLength() )
 		{
 			pDC->SelectObject( &CoolInterface.m_fntNormal );
@@ -137,12 +137,12 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 			m_sz.cy += TIP_RULE;
 		}
 	}
-	
+
 	pDC->SelectObject( &CoolInterface.m_fntBold );
 	AddSize( pDC, pNeighbour->m_sAddress );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	m_sz.cy += TIP_TEXTHEIGHT;
-	
+
 	if ( pNeighbour->m_sUserAgent.GetLength() )
 	{
 		AddSize( pDC, pNeighbour->m_sUserAgent );
@@ -151,9 +151,9 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_TEXTHEIGHT;
 	m_sz.cy += TIP_RULE;
-	
+
 	m_sz.cy += TIP_TEXTHEIGHT * 6;
-	
+
 	m_sz.cx = max( m_sz.cx, LONG(128 + 160) );
 	m_sz.cy += 40;
 }
@@ -193,7 +193,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 	{
 		str = ((CEDNeighbour*)pNeighbour)->m_sServerName;
-		
+
 		if ( str.GetLength() )
 		{
 			pDC->SelectObject( &CoolInterface.m_fntBold );
@@ -207,7 +207,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	DrawText( pDC, &pt, pNeighbour->m_sAddress );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pt.y += TIP_TEXTHEIGHT;
-	
+
 	if ( pNeighbour->m_nState < nrsConnected )
 	{
 		LoadString( str, IDS_NEIGHBOUR_HANDSHAKE );
@@ -264,7 +264,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 			break;
 		}
 	}
-	
+
 	if ( pNeighbour->m_sUserAgent.GetLength() )
 	{
 		DrawText( pDC, &pt, pNeighbour->m_sUserAgent );
@@ -285,7 +285,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	DrawText( pDC, &pt, str, 128 + 80 );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	pDC->SetTextColor( 0 );
-	
+
 	pt.y += TIP_TEXTHEIGHT;
 
 	LoadString( str, IDS_NEIGHBOUR_CURRENT );
@@ -340,18 +340,18 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 /////////////////////////////////////////////////////////////////////////////
 // CNeighbourTipCtrl message handlers
 
-void CNeighbourTipCtrl::OnTimer(UINT nIDEvent) 
+void CNeighbourTipCtrl::OnTimer(UINT nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
-	
+
 	if ( m_pGraph == NULL ) return;
-	
+
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
 	CNeighbour* pNeighbour = Neighbours.Get( (DWORD)m_pContext );
 	if ( pNeighbour == NULL ) return;
-	
+
 	pNeighbour->Measure();
 
 	DWORD nIn	= pNeighbour->m_mInput.nMeasure * 8;

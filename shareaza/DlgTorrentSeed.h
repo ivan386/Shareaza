@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,10 +31,10 @@ class CTorrentSeedDlg : public CSkinDialog
 public:
 	CTorrentSeedDlg(LPCTSTR pszTorrent, CWnd* pParent = NULL);
 	virtual ~CTorrentSeedDlg();
-	
+
 	DECLARE_DYNAMIC(CTorrentSeedDlg)
 	enum { IDD = IDD_TORRENT_SEED };
-	
+
 // Dialog Data
 protected:
 	CProgressCtrl	m_wndProgress;
@@ -54,7 +54,7 @@ protected:
 	QWORD			m_nTotal;
 	int				m_nScaled;
 	int				m_nOldScaled;
-	
+
 // Implementation
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
@@ -68,7 +68,7 @@ protected:
 	BOOL		CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LPCTSTR pszPath);
 	BOOL		VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath);
 	BOOL		CreateDownload();
-	
+
 // Message Map
 protected:
 	DECLARE_MESSAGE_MAP()

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,22 +74,22 @@ BOOL CLibraryTipCtrl::OnPrepare()
 		CQuickLock oLock( Library.m_pSection );
 		CLibraryFile* pFile = Library.LookupFile( (DWORD)m_pContext );
 		if ( pFile == NULL ) return FALSE;
-		
+
 		CSingleLock pLock( &m_pSection, TRUE );
 
 		// Basic data
-		
+
 		m_sName = pFile->m_sName;
 		m_sPath = pFile->GetPath();
 		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
 		m_nIcon = 0;
-		
+
 		if ( pFile->m_pFolder != NULL ) m_sFolder = pFile->m_pFolder->m_sPath;
 		m_sType.Empty();
 		m_sSHA1.Empty();
 		m_sTTH.Empty();
 		m_sED2K.Empty();
-		
+
 		// Type information and icons
 
 		m_sType = ShellIcons.GetTypeString( m_sName );
@@ -97,11 +97,11 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 		// URN
 
-		if ( pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC) 
+		if ( pFile->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC)
 		{
 			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pFile->m_pSHA1 );
 		}
-		if ( pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC) 
+		if ( pFile->m_bTiger && Settings.General.GUIMode != GUI_BASIC)
 		{
 			m_sTTH = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
 		}
@@ -111,7 +111,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 		}
 
 		// Metadata
-		
+
 		CSchema* pSchema = pFile->m_pSchema;
 		CString str, sData, sFormat;
 
@@ -123,7 +123,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 		m_pMetadata.Add( str, m_sType );
 		LoadString( str, IDS_TIP_SIZE );
 		m_pMetadata.Add( str, m_sSize );
-		
+
 		LoadString( sFormat, IDS_TIP_TODAYTOTAL );
 
 		sData.Format( sFormat, pFile->m_nHitsToday, pFile->m_nHitsTotal );
@@ -301,7 +301,7 @@ void CLibraryTipCtrl::OnHide()
 	m_tHidden = GetTickCount();
 }
 
-void CLibraryTipCtrl::OnTimer(UINT nIDEvent) 
+void CLibraryTipCtrl::OnTimer(UINT nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
 
@@ -311,7 +311,7 @@ void CLibraryTipCtrl::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CLibraryTipCtrl::OnDestroy() 
+void CLibraryTipCtrl::OnDestroy()
 {
 	if ( m_hThread != NULL ) StopThread();
 
@@ -362,7 +362,7 @@ void CLibraryTipCtrl::OnRun()
 	{
 		WaitForSingleObject( m_pWakeup, INFINITE );
 		if ( ! m_bThread ) break;
-		
+
 		m_pSection.Lock();
 		CString strPath = m_sPath;
 		m_pSection.Unlock();

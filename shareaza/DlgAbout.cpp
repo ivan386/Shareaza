@@ -1,7 +1,7 @@
 //
 // DlgAbout.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,10 +62,10 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg message handlers
 
-BOOL CAboutDlg::OnInitDialog() 
+BOOL CAboutDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CAboutDlg"), IDR_MAINFRAME, FALSE );
 
 	CString strCaption;
@@ -81,29 +81,29 @@ BOOL CAboutDlg::OnInitDialog()
 
 	m_crWhite = CCoolInterface::GetDialogBkColor();
 	m_brWhite.CreateSolidBrush( m_crWhite );
-	
+
 	return TRUE;
 }
 
-void CAboutDlg::OnPaint() 
+void CAboutDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
-	
+
 	GetClientRect( &rc );
 	rc.top += 51;
-	
+
 	dc.Draw3dRect( 0, 50, rc.right + 1, 0,
 		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
 	dc.FillSolidRect( &rc, m_crWhite );
 }
 
-HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-	
+
 	pDC->SetBkColor( m_crWhite );
-	
+
 	if ( pWnd == &m_wndTitle )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontBold );
@@ -113,11 +113,11 @@ HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pDC->SetTextColor( RGB( 0, 0, 255 ) );
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
-	
+
 	return m_brWhite;
 }
 
-BOOL CAboutDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CAboutDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CPoint point;
 	CRect rc;
@@ -130,18 +130,18 @@ BOOL CAboutDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CAboutDlg::OnLButtonDown(UINT nFlags, CPoint point) 
+void CAboutDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CSkinDialog::OnLButtonUp( nFlags, point );
-	
+
 	CRect rc;
 	m_wndWeb.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		ShellExecute( GetSafeHwnd(), _T("open"),
@@ -150,13 +150,13 @@ void CAboutDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 }
 
-void CAboutDlg::OnRButtonDown(UINT nFlags, CPoint point) 
+void CAboutDlg::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rc;
 
 	m_wndWeb.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc.PtInRect( point ) && ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
 	{
 		DWORD* pNullPtr = (DWORD*)NULL;

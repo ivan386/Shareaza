@@ -1,7 +1,7 @@
 //
 // RichElement.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,7 +110,7 @@ void CRichElement::SetText(LPCTSTR pszText)
 void CRichElement::SetFlags(DWORD nFlags, DWORD nMask)
 {
 	DWORD nNew = ( m_nFlags & ~nMask ) | ( nFlags & nMask );
-	
+
 	if ( nNew != m_nFlags )
 	{
 		m_nFlags = nNew;
@@ -133,9 +133,9 @@ void CRichElement::Delete()
 void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 {
 	if ( m_pDocument->m_fntNormal.m_hObject == NULL ) m_pDocument->CreateFonts();
-	
+
 	CFont* pFont = &m_pDocument->m_fntNormal;
-	
+
 	switch ( m_nType )
 	{
 	case retText:
@@ -174,7 +174,7 @@ void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 		pFont = NULL;
 		break;
 	}
-	
+
 	if ( m_nFlags & retfBold )
 	{
 		if ( m_nFlags & retfUnderline ) pFont = &m_pDocument->m_fntBoldUnder;
@@ -193,20 +193,20 @@ void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 		pFont = &m_pDocument->m_fntHeading;
 		pDC->SetTextColor( m_pDocument->m_crHeading );
 	}
-	
+
 	if ( pFont ) pDC->SelectObject( pFont );
 }
 
 void CRichElement::PrePaintBitmap(CDC* pDC)
 {
 	if ( m_hImage != NULL ) return;
-	
+
 	if ( _tcsnicmp( m_sText, _T("res:"), 4 ) == 0 )
 	{
 		LPCTSTR pszDot = _tcschr( m_sText, '.' );
 		CBitmap pBitmap;
 		UINT nID;
-		
+
 		if ( pszDot == NULL || _stscanf( (LPCTSTR)m_sText + 4, _T("%lu"), &nID ) != 1 ) return;
 
 		if ( CImageServices::LoadBitmap( &pBitmap, nID, pszDot + 1 ) )
@@ -225,12 +225,12 @@ void CRichElement::PrePaintBitmap(CDC* pDC)
 void CRichElement::PrePaintIcon(CDC* pDC)
 {
 	if ( m_hImage != NULL || m_sText.IsEmpty() ) return;
-	
+
 	UINT nID, nWidth = 16, nHeight = 16;
 	_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &nWidth, &nHeight );
-	
+
 	m_hImage = (DWORD)CoolInterface.ExtractIcon( nID );
-	
+
 	if ( m_hImage == NULL )
 	{
 		m_hImage = (DWORD)LoadImage( AfxGetResourceHandle(),
@@ -244,7 +244,7 @@ void CRichElement::PrePaintIcon(CDC* pDC)
 CSize CRichElement::GetSize()
 {
 	CSize sz( 0, 0 );
-	
+
 	if ( m_nType == retGap )
 	{
 		_stscanf( m_sText, _T("%lu"), &sz.cx );
@@ -272,6 +272,6 @@ CSize CRichElement::GetSize()
 		sz.cx = sz.cy = 16;
 		_stscanf( m_sText, _T("%i.%i"), &sz.cx, &sz.cy );
 	}
-	
+
 	return sz;
 }

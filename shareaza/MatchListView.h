@@ -1,7 +1,7 @@
 //
 // MatchListView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,13 +35,13 @@ class CMatchListView : public CComObject
 public:
 	CMatchListView(LPCTSTR pszName, CMatchList* pList);
 	virtual ~CMatchListView();
-	
+
 // Attributes
 protected:
 	CString			m_sName;
 	CMatchList*		m_pList;
 	CPtrList		m_pSelection;
-	
+
 // Operations
 public:
 	POSITION	GetIterator() const;
@@ -50,7 +50,7 @@ public:
 	void		GetNext(POSITION& pos, VARIANT* pVar) const;
 public:
 	static IGenericView* Attach(LPCTSTR pszName, CMatchList* pList);
-	
+
 // Automation
 protected:
 	BEGIN_INTERFACE_PART(GenericView, IGenericView)
@@ -62,7 +62,7 @@ protected:
 		STDMETHOD(get_Item)(VARIANT vIndex, VARIANT FAR* pvItem);
 		STDMETHOD(get__NewEnum)(IUnknown FAR* FAR* ppEnum);
 	END_INTERFACE_PART(GenericView)
-	
+
 	BEGIN_INTERFACE_PART(EnumVARIANT, IEnumVARIANT)
 		STDMETHOD(Next)(THIS_ DWORD celt, VARIANT FAR* rgvar, DWORD FAR* pceltFetched);
 		STDMETHOD(Skip)(THIS_ DWORD celt);
@@ -70,9 +70,9 @@ protected:
 		STDMETHOD(Clone)(THIS_ IEnumVARIANT FAR* FAR* ppenum);
 		POSITION m_pos;
 	END_INTERFACE_PART(EnumVARIANT)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 };
 
 #endif // !defined(AFX_MATCHLISTVIEW_H__B1729FB8_4EE1_4CA3_A9E2_28C148D3BACB__INCLUDED_)

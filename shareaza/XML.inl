@@ -1,7 +1,7 @@
 //
 // XML.inl
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,13 +54,13 @@ CXMLElement* CXMLNode::GetParent() const
 void CXMLNode::Delete()
 {
 	if ( this == NULL ) return;
-	
+
 	if ( m_pParent != NULL )
 	{
 		if ( m_nNode == xmlElement ) m_pParent->RemoveElement( (CXMLElement*)this );
 		else if ( m_nNode == xmlAttribute ) m_pParent->RemoveAttribute( (CXMLAttribute*)this );
 	}
-	
+
 	delete this;
 }
 

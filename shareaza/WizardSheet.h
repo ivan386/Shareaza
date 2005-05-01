@@ -1,7 +1,7 @@
 //
 // WizardSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	
+
 };
 
 #endif // !defined(AFX_WIZARDSHEET_H__E2500C10_98B2_48B0_9165_975E5444679A__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // DlgNewSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,7 @@ void CNewSearchDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CNewSearchDlg message handlers
 
-BOOL CNewSearchDlg::OnInitDialog() 
+BOOL CNewSearchDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
@@ -91,11 +91,11 @@ BOOL CNewSearchDlg::OnInitDialog()
 	CRect rc;
 	CString strText;
 	m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP, rc, this, IDC_METADATA );
-	
+
 	LoadString( strText, IDS_SEARCH_PLAIN_TEXT );
 	m_wndSchemas.m_sNoSchemaText = strText;
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
-	
+
 	if ( m_pSearch != NULL )
 	{
 		m_wndSchemas.Select( m_pSearch->m_pSchema );
@@ -104,18 +104,18 @@ BOOL CNewSearchDlg::OnInitDialog()
 	{
 		m_pSearch = new CQuerySearch();
 	}
-	
+
 	OnSelChangeSchemas();
-	
+
 	if ( m_pSearch->m_pXML )
 	{
 		m_wndSchema.UpdateData( m_pSearch->m_pXML->GetFirstElement(), FALSE );
 	}
-	
+
 	Settings.LoadWindow( _T("NewSearch"), this );
-	
+
 	OnCloseUpSchemas();
-	
+
 	if ( m_pSearch->m_bSHA1 )
 	{
 		m_wndSearch.SetWindowText( CSHA::HashToString( &m_pSearch->m_pSHA1, TRUE ) );
@@ -125,29 +125,29 @@ BOOL CNewSearchDlg::OnInitDialog()
 	{
 		m_wndSearch.SetWindowText( m_pSearch->m_sSearch );
 	}
-	
+
 	if ( m_wndSchemas.GetCurSel() > 0 ) m_wndSchemas.SetFocus();
-	
+
 	return FALSE;
 }
 
-void CNewSearchDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
+void CNewSearchDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	CSkinDialog::OnGetMinMaxInfo( lpMMI );
 	lpMMI->ptMinTrackSize.x = 256;
 	lpMMI->ptMinTrackSize.y = 128;
 }
 
-void CNewSearchDlg::OnSize(UINT nType, int cx, int cy) 
+void CNewSearchDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CSkinDialog::OnSize( nType, cx, cy );
-	
+
 	if ( ! IsWindow( m_wndSchema.m_hWnd ) ) return;
 
 	int nSpacing	= 8;
 	int nHeight		= 20;
 	int nButtonSize	= 72;
-	
+
 	m_wndSearch.SetWindowPos( NULL, nSpacing, nSpacing, cx - nSpacing * 2, nHeight, SWP_NOZORDER );
 	m_wndSchemas.SetWindowPos( NULL, nSpacing, nSpacing * 2 + nHeight, cx - nSpacing * 2, nHeight, SWP_NOZORDER );
 
@@ -169,13 +169,13 @@ void CNewSearchDlg::OnSize(UINT nType, int cx, int cy)
 	m_wndCancel.SetWindowPos( NULL, nSpacing * 2 + nButtonSize - 1, cy - nSpacing - nHeight, nButtonSize, nHeight, SWP_NOZORDER );
 }
 
-void CNewSearchDlg::OnSelChangeSchemas() 
+void CNewSearchDlg::OnSelChangeSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 	m_wndSchema.SetSchema( pSchema, TRUE );
 }
 
-void CNewSearchDlg::OnCloseUpSchemas() 
+void CNewSearchDlg::OnCloseUpSchemas()
 {
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 
@@ -196,70 +196,70 @@ void CNewSearchDlg::OnCloseUpSchemas()
 	}
 }
 
-void CNewSearchDlg::OnChangeSearch() 
+void CNewSearchDlg::OnChangeSearch()
 {
 	CString strSearch;
 	m_wndSearch.GetWindowText( strSearch );
-	
+
 	BOOL bHash = FALSE;
 	TIGEROOT pTiger;
 	SHA1 pSHA1;
 	MD4 pED2K;
-	
+
 	bHash |= CSHA::HashFromURN( strSearch, &pSHA1 );
 	bHash |= CTigerNode::HashFromURN( strSearch, &pTiger );
 	bHash |= CED2K::HashFromURN( strSearch, &pED2K );
-	
+
 	if ( m_wndSchema.IsWindowVisible() == bHash )
 	{
 		m_wndSchema.ShowWindow( bHash ? SW_HIDE : SW_SHOW );
 	}
 }
 
-BOOL CNewSearchDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CNewSearchDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		CWnd* pFocus = GetFocus();
 		if ( m_wndSchema.OnTab() ) return TRUE;
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-void CNewSearchDlg::OnOK() 
+void CNewSearchDlg::OnOK()
 {
 	Settings.SaveWindow( _T("NewSearch"), this );
-	
+
 	m_wndSearch.GetWindowText( m_pSearch->m_sSearch );
-	
+
 	CSchema* pSchema = m_wndSchemas.GetSelected();
-	
+
 	if ( m_pSearch->m_pXML != NULL ) delete m_pSearch->m_pXML;
-	
+
 	m_pSearch->m_pSchema	= NULL;
 	m_pSearch->m_pXML		= NULL;
-	
+
 	if ( pSchema != NULL )
 	{
 		m_pSearch->m_pSchema	= pSchema;
 		m_pSearch->m_pXML		= pSchema->Instantiate();
-		
+
 		m_wndSchema.UpdateData( m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
-		
+
 		Settings.Search.LastSchemaURI = pSchema->m_sURI;
 	}
 	else
 	{
 		Settings.Search.LastSchemaURI.Empty();
 	}
-	
+
 	if ( ! m_pSearch->CheckValid() )
 	{
 		m_wndSearch.SetFocus();
 		return;
 	}
-	
+
 	CSkinDialog::OnOK();
 }
 

@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ class CUploadTransferBT : public CUploadTransfer
 public:
 	CUploadTransferBT(CBTClient* pClient, CDownload* pDownload);
 	virtual ~CUploadTransferBT();
-	
+
 // Attributes
 public:
 	CBTClient*		m_pClient;
@@ -50,7 +50,7 @@ public:
 private:
     FF::SimpleFragmentQueue m_oRequested;
     FF::SimpleFragmentQueue m_oServed;
-	
+
 // Operations
 public:
 	void			SetChoke(BOOL bChoke);
@@ -66,7 +66,7 @@ public:
 protected:
 	BOOL	OpenFile();
 	BOOL	ServeRequests();
-	
+
 };
 
 #endif // !defined(AFX_UPLOADTRANSFERBT_H__3F81C2F1_E76C_4CCB_8AA2_AD6B9D877CBA__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,9 +36,9 @@ class CLibraryAlbumView : public CLibraryFileView
 public:
 	CLibraryAlbumView();
 	virtual ~CLibraryAlbumView();
-	
+
 	DECLARE_DYNCREATE(CLibraryAlbumView)
-	
+
 // Attributes
 protected:
 	CSize					m_szTrack;
@@ -61,7 +61,7 @@ protected:
 	CPoint					m_ptDrag;
 public:
 	static COLORREF			m_crRows[2];
-	
+
 // Operations
 public:
 	virtual void		Update();
@@ -84,14 +84,14 @@ protected:
 	CImageList*			CreateDragImage(const CPoint& ptMouse);
 
 	static int			SortList(LPCVOID pA, LPCVOID pB);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CLibraryAlbumView)
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CLibraryAlbumView)
@@ -108,9 +108,9 @@ protected:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 	friend class CLibraryAlbumTrack;
 };
 
@@ -120,7 +120,7 @@ class CLibraryAlbumTrack
 public:
 	CLibraryAlbumTrack(CLibraryFile* pFile);
 	virtual ~CLibraryAlbumTrack();
-	
+
 // Attributes
 public:
 	DWORD	m_nIndex;
@@ -141,7 +141,7 @@ public:
 	int		m_nRating;
 	BOOL	m_bComments;
 	int		m_nSetRating;
-	
+
 // Operations
 public:
 	BOOL	Update(CLibraryFile* pFile);

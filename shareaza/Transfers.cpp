@@ -1,7 +1,7 @@
 //
 // Transfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,12 +68,12 @@ BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return FALSE;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		if ( GetNext( pos )->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -84,23 +84,23 @@ BOOL CTransfers::StartThread()
 {
 	if ( m_hThread != NULL && m_bThread ) return TRUE;
 	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) return FALSE;
-	
+
 	m_hThread	= NULL;
 	m_bThread	= TRUE;
-	
+
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL );
 	m_hThread = pThread->m_hThread;
-	
+
 	return TRUE;
 }
 
 void CTransfers::StopThread()
 {
 	if ( m_hThread == NULL ) return;
-	
+
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
-	
+
     int nAttempt = 40;
 	for ( ; nAttempt > 0 ; nAttempt-- )
 	{
@@ -109,16 +109,16 @@ void CTransfers::StopThread()
 		if ( nCode != STILL_ACTIVE ) break;
 		Sleep( 100 );
 	}
-	
+
 	if ( nAttempt == 0 )
 	{
 		TerminateThread( m_hThread, 0 );
 		theApp.Message( MSG_DEBUG, _T("WARNING: Terminating CTransfers thread.") );
 		Sleep( 100 );
 	}
-	
+
 	m_hThread = NULL;
-	
+
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;
 	Uploads.m_nCount		= 0;
@@ -132,23 +132,23 @@ void CTransfers::Add(CTransfer* pTransfer)
 {
 	ASSERT( pTransfer->m_hSocket != INVALID_SOCKET );
 	WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
-	
+
 	POSITION pos = m_pList.Find( pTransfer );
 	ASSERT( pos == NULL );
 	if ( pos == NULL ) m_pList.AddHead( pTransfer );
-	
+
 	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CTransfers::Add(): %x"), pTransfer );
-	
+
 	StartThread();
 }
 
 void CTransfers::Remove(CTransfer* pTransfer)
 {
 	if ( Settings.General.Debug && Settings.General.DebugLog ) theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
-	
+
 	if ( pTransfer->m_hSocket != INVALID_SOCKET )
 		WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, 0 );
-	
+
 	CTransfers::Lock oLock;
 	if ( POSITION pos = m_pList.Find( pTransfer ) )
 		m_pList.RemoveAt( pos );
@@ -170,20 +170,20 @@ void CTransfers::OnRun()
 	{
 		Sleep( Settings.General.MinTransfersRest );
 		WaitForSingleObject( m_pWakeup, 50 );
-		
+
 		CTransfers::Lock(), EDClients.OnRun();
 		if ( ! m_bThread ) break;
-		
+
 		OnRunTransfers();
 		if ( ! m_bThread ) break;
 		Downloads.OnRun();
 		if ( ! m_bThread ) break;
-		
+
 		CTransfers::Lock(), Uploads.OnRun(), OnCheckExit();
-		
+
 		TransferFiles.CommitDeferred();
 	}
-	
+
 	Downloads.m_nTransfers = Downloads.m_nBandwidth = 0;
 	Uploads.m_nCount = Uploads.m_nBandwidth = 0;
 }
@@ -192,7 +192,7 @@ void CTransfers::OnRunTransfers()
 {
 	CTransfers::Lock oLock;
 	++m_nRunCookie;
-	
+
 	while ( !m_pList.IsEmpty()
 		&& static_cast< CTransfer* >( m_pList.GetHead() )->m_nRunCookie != m_nRunCookie )
 	{
@@ -206,11 +206,11 @@ void CTransfers::OnRunTransfers()
 void CTransfers::OnCheckExit()
 {
 	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) m_bThread = FALSE;
-	
+
 	if ( Settings.Live.AutoClose && GetActiveCount() == 0 )
 	{
 		CSingleLock pLock( &theApp.m_pSection );
-		
+
 		if ( pLock.Lock( 250 ) )
 		{
 			if ( CWnd* pWnd = (CWnd*)theApp.SafeMainWnd() )

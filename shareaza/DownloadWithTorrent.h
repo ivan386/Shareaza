@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,13 +33,13 @@ class CBTClient;
 class CBTPacket;
 
 
-class CDownloadWithTorrent : public CDownloadWithFile  
+class CDownloadWithTorrent : public CDownloadWithFile
 {
 // Construction
 public:
 	CDownloadWithTorrent();
 	virtual ~CDownloadWithTorrent();
-	
+
 // Attributes
 public:
 	CBTInfo		m_pTorrent;
@@ -64,7 +64,7 @@ private:
 	CPtrList	m_pTorrentUploads;
 	DWORD		m_tTorrentChoke;
 	DWORD		m_tTorrentSources;
-	
+
 // Operations
 public:
 	virtual void	Serialize(CArchive& ar, int nVersion);
@@ -97,7 +97,7 @@ protected:
 		default: return( '0' + ( rand() % 10 ) );
 		}
 	}
-	
+
 	friend class CDownloadTransferBT;
 };
 

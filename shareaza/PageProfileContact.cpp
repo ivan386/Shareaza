@@ -1,7 +1,7 @@
 //
 // PageProfileContact.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,7 +71,7 @@ void CContactProfilePage::DoDataExchange(CDataExchange* pDX)
 BOOL CContactProfilePage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	if ( CXMLElement* pContacts = MyProfile.GetXML( _T("contacts") ) )
 	{
 		for ( POSITION pos1 = pContacts->GetElementIterator() ; pos1 ; )
@@ -81,7 +81,7 @@ BOOL CContactProfilePage::OnInitDialog()
 			if ( pGroup->IsNamed( _T("group") ) )
 			{
 				CString strGroup = pGroup->GetAttributeValue( _T("class") );
-				
+
 				if ( CXMLElement* pAddress = pGroup->GetElementByName( _T("address") ) )
 				{
 					CString strAddress = pAddress->GetAttributeValue( _T("content") );
@@ -114,7 +114,7 @@ BOOL CContactProfilePage::OnInitDialog()
 			}
 		}
 	}
-	
+
 	if ( m_sEmail.Find( '@' ) < 0 || m_sEmail.Find( '.' ) < 0 ) m_sEmail.Empty();
 
 	UpdateData( FALSE );
@@ -125,7 +125,7 @@ BOOL CContactProfilePage::OnInitDialog()
 void CContactProfilePage::OnOK()
 {
 	UpdateData();
-	
+
 	if ( m_sEmail.Find( '@' ) < 0 || m_sEmail.Find( '.' ) < 0 ) m_sEmail.Empty();
 
 	AddAddress( _T("Email"), _T("Primary"), m_sEmail );
@@ -166,7 +166,7 @@ void CContactProfilePage::AddAddress(LPCTSTR pszClass, LPCTSTR pszName, LPCTSTR 
 						}
 					}
 				}
-				
+
 				if ( pszAddress && *pszAddress )
 				{
 					CXMLElement* pAddress = pGroup->AddElement( _T("address") );

@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,7 +59,7 @@ protected:
 protected:
 	IDownloadPreviewPlugin*	m_pPlugin;
 	static CPtrList			m_pWindows;
-	
+
 // Operations
 public:
 	BOOL		Create();
@@ -76,7 +76,7 @@ protected:
 	void		UpdateProgress(BOOL bRange, QWORD nRange, BOOL bPosition, QWORD nPosition);
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CFilePreviewDlg)
@@ -103,7 +103,7 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnDestroy();
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
 
 // IDownloadPreviewSite
@@ -117,7 +117,7 @@ protected:
 		STDMETHOD(QueueDeleteFile)(BSTR sTempFile);
 		STDMETHOD(ExecuteFile)(BSTR sFile);
 	END_INTERFACE_PART(DownloadPreviewSite)
-	
+
 	DECLARE_INTERFACE_MAP()
 
 public:

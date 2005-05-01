@@ -1,7 +1,7 @@
 //
 // QueryKeys.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,13 +25,13 @@
 #pragma once
 
 
-class CQueryKeys  
+class CQueryKeys
 {
 // Construction
 public:
 	CQueryKeys();
 	virtual ~CQueryKeys();
-	
+
 // Attributes
 protected:
 	DWORD	m_nBits;

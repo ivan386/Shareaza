@@ -1,7 +1,7 @@
 //
 // DlgDownloadEdit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,10 +33,10 @@ class CDownloadEditDlg : public CSkinDialog
 public:
 	CDownloadEditDlg(CDownload* pDownload, CWnd* pParent = NULL);
 	virtual ~CDownloadEditDlg();
-	
+
 	DECLARE_DYNAMIC(CDownloadEditDlg)
 	enum { IDD = IDD_DOWNLOAD_EDIT };
-	
+
 // Attributes
 public:
 	CDownload*	m_pDownload;

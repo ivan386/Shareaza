@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CDownloadsCtrl : public CWnd
 public:
 	CDownloadsCtrl();
 	virtual ~CDownloadsCtrl();
-	
+
 	DECLARE_DYNAMIC(CDownloadsCtrl)
 
 // Operations
@@ -65,9 +65,9 @@ protected:
 public:
 	static BOOL	IsFiltered(CDownload* pDownload);
 	static BOOL	IsExpandable(CDownload* pDownload);
-	
+
 	friend class CDownloadsWnd;
-	
+
 // Attributes
 protected:
 	CHeaderCtrl			m_wndHeader;

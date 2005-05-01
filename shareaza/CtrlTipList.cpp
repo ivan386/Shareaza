@@ -1,7 +1,7 @@
 //
 // CtrlTipList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ void CTipListCtrl::SetTip(CCoolTipCtrl* pTip)
 /////////////////////////////////////////////////////////////////////////////
 // CTipListCtrl message handlers
 
-void CTipListCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CTipListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CListCtrl::OnMouseMove( nFlags, point );
 
@@ -83,19 +83,19 @@ void CTipListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	}
 }
 
-void CTipListCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CTipListCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if ( m_pTip ) m_pTip->Hide();
 	CListCtrl::OnLButtonDown(nFlags, point);
 }
 
-void CTipListCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+void CTipListCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	if ( m_pTip ) m_pTip->Hide();
 	CListCtrl::OnRButtonDown(nFlags, point);
 }
 
-void CTipListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CTipListCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if ( m_pTip ) m_pTip->Hide();
 	CListCtrl::OnKeyDown( nChar, nRepCnt, nFlags );

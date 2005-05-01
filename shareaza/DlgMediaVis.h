@@ -1,7 +1,7 @@
 //
 // DlgMediaVis.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CMediaVisDlg : public CSkinDialog
 public:
 	CMediaVisDlg(CMediaFrame* pFrame);
 	virtual ~CMediaVisDlg();
-	
+
 	DECLARE_DYNAMIC(CMediaVisDlg)
 
 // Dialog Data
@@ -52,13 +52,13 @@ protected:
 	CMediaFrame*	m_pFrame;
 	DWORD			m_nIcon;
 	HICON			m_hIcon;
-	
+
 // Operations
 protected:
 	void	Enumerate();
 	void	AddPlugin(LPCTSTR pszName, LPCTSTR pszCLSID, LPCTSTR pszPath);
 	BOOL	EnumerateWrapped(LPCTSTR pszName, REFCLSID pCLSID, LPCTSTR pszCLSID);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CMediaVisDlg)

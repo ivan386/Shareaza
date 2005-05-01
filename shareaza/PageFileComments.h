@@ -1,7 +1,7 @@
 //
 // PageFileComments.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,9 +33,9 @@ class CFileCommentsPage : public CFilePropertiesPage
 public:
 	CFileCommentsPage();
 	virtual ~CFileCommentsPage();
-	
+
 	DECLARE_DYNCREATE(CFileCommentsPage)
-	
+
 // Dialog Data
 public:
 	//{{AFX_DATA(CFileCommentsPage)
@@ -45,7 +45,7 @@ public:
 	CString	m_sComments;
 	int		m_nRating;
 	//}}AFX_DATA
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CFileCommentsPage)
@@ -54,7 +54,7 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
-	
+
 // Implementation
 protected:
 	//{{AFX_MSG(CFileCommentsPage)
@@ -62,9 +62,9 @@ protected:
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	//}}AFX_MSG
-	
+
 	DECLARE_MESSAGE_MAP()
-	
+
 };
 
 //{{AFX_INSERT_LOCATION}}

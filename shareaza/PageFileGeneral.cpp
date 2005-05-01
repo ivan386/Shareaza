@@ -1,7 +1,7 @@
 //
 // PageFileGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,10 +89,10 @@ void CFileGeneralPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CFileGeneralPage message handlers
 
-BOOL CFileGeneralPage::OnInitDialog() 
+BOOL CFileGeneralPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
-	
+
 	{
 		CQuickLock oLock( Library.m_pSection );
 		CLibraryFile* pFile = GetFile();
@@ -100,7 +100,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 
 		if ( pFile->m_pFolder != NULL ) m_sPath = pFile->m_pFolder->m_sPath;
 		m_sSize = Settings.SmartVolume( pFile->GetSize(), FALSE );
-		m_sType = ShellIcons.GetTypeString( pFile->m_sName );	
+		m_sType = ShellIcons.GetTypeString( pFile->m_sName );
 		m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
 		if ( pFile->m_bSHA1 )
@@ -111,7 +111,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 		{
 			LoadString(m_sSHA1, IDS_GENERAL_NOURNAVAILABLE );
 		}
-		
+
 		if ( pFile->m_bTiger )
 		{
 			m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pFile->m_pTiger );
@@ -120,7 +120,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 		{
 			m_sTiger.Empty();
 		}
-		
+
 		if ( pFile->m_bMD5 )
 		{
 			m_sMD5 = _T("md5:") + CMD5::HashToString( &pFile->m_pMD5 );
@@ -129,7 +129,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 		{
 			m_sMD5.Empty();
 		}
-		
+
 		if ( pFile->m_bED2K )
 		{
 			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pFile->m_pED2K );
@@ -138,31 +138,31 @@ BOOL CFileGeneralPage::OnInitDialog()
 		{
 			m_sED2K.Empty();
 		}
-		
+
 		CString strDate, strTime;
 		SYSTEMTIME pTime;
-		
+
 		FileTimeToSystemTime( &pFile->m_pTime, &pTime );
 		SystemTimeToTzSpecificLocalTime( NULL, &pTime, &pTime );
-		
+
 		GetDateFormat( LOCALE_USER_DEFAULT, DATE_LONGDATE, &pTime, NULL, strDate.GetBuffer( 64 ), 64 );
 		GetTimeFormat( LOCALE_USER_DEFAULT, TIME_FORCE24HOURFORMAT, &pTime, NULL, strTime.GetBuffer( 64 ), 64 );
 		strDate.ReleaseBuffer(); strTime.ReleaseBuffer();
-		
+
 		m_sModified = strDate + _T(", ") + strTime;
 	}
 
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
-void CFileGeneralPage::OnOK() 
+void CFileGeneralPage::OnOK()
 {
 	UpdateData();
-	
+
 	// Nothing to update now
-	
+
 	CFilePropertiesPage::OnOK();
 }
 

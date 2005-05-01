@@ -1,7 +1,7 @@
 //
 // DlgBitziDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,10 +64,10 @@ void CBitziDownloadDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CBitziDownloadDlg message handlers
 
-BOOL CBitziDownloadDlg::OnInitDialog() 
+BOOL CBitziDownloadDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	
+
 	SkinMe( _T("CBitziDownloadDlg"), IDR_MAINFRAME );
 
 	m_wndProgress.SetRange( 0, m_pDownloader.GetFileCount() * 2 );
@@ -126,7 +126,7 @@ void CBitziDownloadDlg::OnFinishedFile(DWORD nIndex)
 	m_wndProgress.OffsetPos( 1 );
 }
 
-void CBitziDownloadDlg::OnTimer(UINT nIDEvent) 
+void CBitziDownloadDlg::OnTimer(UINT nIDEvent)
 {
 	CString strMessage;
 
@@ -145,17 +145,17 @@ void CBitziDownloadDlg::OnTimer(UINT nIDEvent)
 	}
 }
 
-void CBitziDownloadDlg::OnCancel() 
+void CBitziDownloadDlg::OnCancel()
 {
 	m_pDownloader.Stop();
 
 	CSkinDialog::OnCancel();
 }
 
-HBRUSH CBitziDownloadDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CBitziDownloadDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CSkinDialog::OnCtlColor(pDC, pWnd, nCtlColor);
-	
+
 	if ( pWnd == &m_wndWeb )
 	{
 		pDC->SelectObject( &theApp.m_gdiFontLine );
@@ -165,7 +165,7 @@ HBRUSH CBitziDownloadDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-BOOL CBitziDownloadDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CBitziDownloadDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CPoint point;
 	CRect rc;
@@ -178,17 +178,17 @@ BOOL CBitziDownloadDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		SetCursor( theApp.LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CBitziDownloadDlg::OnLButtonDown(UINT nFlags, CPoint point) 
+void CBitziDownloadDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rc;
 
 	m_wndWeb.GetWindowRect( &rc );
 	ScreenToClient( &rc );
-	
+
 	if ( rc.PtInRect( point ) )
 	{
 		ShellExecute( GetSafeHwnd(), _T("open"),

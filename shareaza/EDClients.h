@@ -1,7 +1,7 @@
 //
 // EDClients.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,13 @@ class CEDClient;
 class CEDPacket;
 
 
-class CEDClients  
+class CEDClients
 {
 // Construction
 public:
 	CEDClients();
 	virtual ~CEDClients();
-	
+
 // Attributes
 protected:
 	CEDClient*		m_pFirst;
@@ -47,7 +47,7 @@ protected:
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
 	BOOL			m_bAllServersDone;
-	
+
 // Operations
 protected:
 	void			Add(CEDClient* pClient);
@@ -72,12 +72,12 @@ private:
 	void			RunGlobalStatsRequests(DWORD tNow);
 
 public:
-	
+
 	inline CEDClient* GetFirst() const
 	{
 		return m_pFirst;
 	}
-	
+
 	friend class CEDClient;
 };
 

@@ -1,7 +1,7 @@
 //
 // DlgSettingsManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -104,7 +104,7 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 {
 	BOOL bAdvanced			= Settings.General.GUIMode != GUI_BASIC;
-	
+
 	CRichSettingsPage		gGeneral( _T("CGeneralSettingsGroup") );
 	CGeneralSettingsPage	pGeneral;
 	CLibrarySettingsPage	pLibrary;
@@ -125,7 +125,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	CPluginsSettingsPage	pPlugins;
 	CAdvancedSettingsPage	pAdvanced;
 	CProtocolsSettingsPage	pProtocols;
-	
+
 	AddGroup( &gGeneral );
 	AddPage( &pGeneral );
 	AddPage( &pLibrary );
@@ -137,7 +137,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddPage( &pDownloads );
 	AddPage( &pUploads );
 	AddPage( &pRemote );
-	if ( bAdvanced ) 
+	if ( bAdvanced )
 	{
 		AddPage( &pScheduler );
 		AddGroup( &gNetworks );
@@ -149,7 +149,7 @@ int CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	AddGroup( &pSkins );
 	AddGroup( &pPlugins );
 	if ( bAdvanced ) AddGroup( &pAdvanced );
-	
+
 	if ( pszWindow != NULL )
 	{
 		SetActivePage( GetPage( pszWindow ) );
@@ -194,38 +194,38 @@ void CSettingsManagerDlg::AddGroup(CSettingsPage* pPage)
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsManagerDlg message handlers
 
-BOOL CSettingsManagerDlg::OnInitDialog() 
+BOOL CSettingsManagerDlg::OnInitDialog()
 {
 	CSettingsSheet::OnInitDialog();
-	
+
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
-	
+
 	SkinMe( _T("CSettingSheet"), IDR_MAINFRAME, TRUE );
 
 	return TRUE;
 }
 
-void CSettingsManagerDlg::DoPaint(CDC& dc) 
+void CSettingsManagerDlg::DoPaint(CDC& dc)
 {
 	CRect rc;
 	GetClientRect( &rc );
-	
+
 	BITMAP pInfo;
 	m_bmHeader.GetBitmap( &pInfo );
-	
+
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
 	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
 	dc.BitBlt( 0, 0, pInfo.bmWidth, pInfo.bmHeight, &mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBitmap );
 	mdc.DeleteDC();
-	
+
 	/*
 	dc.FillSolidRect( 438, 0, rc.right - 438, 48, RGB( 0xBE, 0, 0 ) );
 
 	dc.Draw3dRect( 438, 48, rc.right - 437, 2,
 		RGB( 169, 0, 0 ), RGB( 110, 59, 59 ) );
-	
+
 	dc.Draw3dRect( 0, 50, rc.Width() + 1, 1,
 		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
 	*/

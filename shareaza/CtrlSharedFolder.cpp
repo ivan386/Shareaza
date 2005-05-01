@@ -1,7 +1,7 @@
 //
 // CtrlSharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ CLibraryFolderCtrl::~CLibraryFolderCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFolderCtrl operations
 
-BOOL CLibraryFolderCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
+BOOL CLibraryFolderCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
 	dwStyle |= WS_CHILD|/*TVS_PRIVATEIMAGELISTS|*/TVS_HASLINES|TVS_LINESATROOT;
 	dwStyle |= TVS_HASBUTTONS|TVS_SHOWSELALWAYS;
@@ -176,7 +176,7 @@ void CLibraryFolderCtrl::Update(CLibraryFolder* pFolder, HTREEITEM hFolder, HTRE
 	for ( HTREEITEM hItem = GetChildItem( hFolder ) ; hItem ; )
 	{
 		HTREEITEM hNext = GetNextSiblingItem( hItem );
-		
+
 		CLibraryFolder* pChild = (CLibraryFolder*)GetItemData( hItem );
 
 		if ( pFolder->CheckFolder( pChild ) )
@@ -246,9 +246,9 @@ CLibraryFolder* CLibraryFolderCtrl::GetNextSelectedFolder(POSITION& pos) const
 
 		HTREEITEM hItem = (HTREEITEM)pos;
 		pos = (POSITION)GetNextSelectedItem( hItem );
-		
+
 		if ( hItem == m_hRoot ) continue;
-		
+
 		CPtrList pTree;
 
 		while ( hItem != m_hRoot )
@@ -285,7 +285,7 @@ CLibraryFolder* CLibraryFolderCtrl::GetNextSelectedFolder(POSITION& pos) const
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFolderCtrl message handlers
 
-int CLibraryFolderCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryFolderCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CTreeCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
@@ -297,7 +297,7 @@ int CLibraryFolderCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	UINT nItemFlags = 0;
 	HTREEITEM hItem = HitTest( point, &nItemFlags );
@@ -307,19 +307,19 @@ void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 		CTreeCtrl::OnLButtonDown( nFlags, point );
 		return;
 	}
-	
-	if ( ( nFlags & MK_CONTROL ) && m_bMultiSelect ) 
+
+	if ( ( nFlags & MK_CONTROL ) && m_bMultiSelect )
 	{
 		if ( hItem )
 		{
-			UINT nNewState = GetItemState( hItem, TVIS_SELECTED ) & TVIS_SELECTED ? 
+			UINT nNewState = GetItemState( hItem, TVIS_SELECTED ) & TVIS_SELECTED ?
 				0 : TVIS_SELECTED;
 
 			SetItemState( hItem, nNewState,  TVIS_SELECTED );
 			m_hFirstSelected = NULL;
 			NotifySelectionChanged();
 		}
-	} 
+	}
 	else if ( ( nFlags & MK_SHIFT ) && m_bMultiSelect )
 	{
 		HTREEITEM hItem = HitTest( point );
@@ -366,7 +366,7 @@ void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	SetFocus();
 }
 
-void CLibraryFolderCtrl::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CLibraryFolderCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	UINT nItemFlags = 0;
 	HTREEITEM hItem = HitTest( point, &nItemFlags );
@@ -382,18 +382,18 @@ void CLibraryFolderCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-void CLibraryFolderCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CLibraryFolderCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
 }
 
-void CLibraryFolderCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+void CLibraryFolderCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
 	OnLButtonUp( nFlags, point );
 	CTreeCtrl::OnRButtonDown( nFlags, point );
 }
 
-void CLibraryFolderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLibraryFolderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if ( ( nChar == VK_UP || nChar == VK_DOWN ) && ( GetKeyState( VK_SHIFT ) & 0x8000 ) && m_bMultiSelect )
 	{
@@ -445,7 +445,7 @@ void CLibraryFolderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if ( bChanged ) NotifySelectionChanged();
 		return;
 	}
-	
+
 	CTreeCtrl::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
@@ -551,7 +551,7 @@ HTREEITEM CLibraryFolderCtrl::GetNextSelectedItem(HTREEITEM hItem) const
 	return NULL;
 }
 
-void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult) 
+void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 
@@ -573,7 +573,7 @@ void CLibraryFolderCtrl::OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CLibraryFolderCtrl::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CLibraryFolderCtrl::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 	NotifySelectionChanged();
@@ -602,7 +602,7 @@ void CLibraryFolderCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CLibraryFolderCtrl::OnNcPaint() 
+void CLibraryFolderCtrl::OnNcPaint()
 {
 	CWnd::OnNcPaint();
 

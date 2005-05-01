@@ -1,7 +1,7 @@
 //
 // CtrlLibraryCollectionView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,16 +34,16 @@ class CLibraryCollectionView : public CLibraryFileView
 public:
 	CLibraryCollectionView();
 	virtual ~CLibraryCollectionView();
-	
+
 	DECLARE_DYNCREATE(CLibraryCollectionView)
-	
+
 // Attributes
 protected:
 	CWebCtrl*			m_pWebCtrl;
 	DWORD				m_nWebIndex;
 	CCollectionFile*	m_pCollection;
 	SHA1				m_pSHA1;
-	
+
 // Operations
 public:
 	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
@@ -51,7 +51,7 @@ public:
 protected:
 	virtual DWORD	HitTestIndex(const CPoint& point) const { return 0; };
 	BOOL			ShowCollection(CLibraryFile* pFile);
-	
+
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -61,7 +61,7 @@ protected:
 	afx_msg void OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult);
 	afx_msg void OnUpdateLibraryFolderDownload(CCmdUI *pCmdUI);
 	afx_msg void OnLibraryFolderDownload();
-	
+
 // Object Model
 protected:
     class External : public CComObject
@@ -75,7 +75,7 @@ protected:
 		CLibraryCollectionView* m_pView;
 		BOOL m_bLockdown;
 		void CheckLockdown();
-		
+
 	// Implementation
 	protected:
 		BEGIN_INTERFACE_PART(View, ICollectionHtmlView)

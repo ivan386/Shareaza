@@ -1,7 +1,7 @@
 //
 // HubHorizon.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ void CHubHorizonPool::Setup()
 	m_pActive	= NULL;
 	m_nActive	= 0;
 	m_pFree		= m_pBuffer;
-	
+
 	for ( DWORD nItem = 0 ; nItem < m_nBuffer ; nItem++ )
 	{
 		m_pBuffer[ nItem ].m_pNext	= ( nItem < m_nBuffer - 1 )
@@ -79,7 +79,7 @@ void CHubHorizonPool::Clear()
 	m_pActive	= NULL;
 	m_nActive	= 0;
 	m_pFree		= m_pBuffer;
-	
+
 	for ( DWORD nItem = 0 ; nItem < m_nBuffer ; nItem++ )
 	{
 		m_pBuffer[ nItem ].m_pNext	= ( nItem < m_nBuffer - 1 )
@@ -102,20 +102,20 @@ CHubHorizonHub* CHubHorizonPool::Add(IN_ADDR* pAddress, WORD nPort)
 			return pHub;
 		}
 	}
-	
+
 	if ( m_nActive == m_nBuffer || m_pFree == NULL ) return FALSE;
-	
+
 	pHub = m_pFree;
 	m_pFree = m_pFree->m_pNext;
-	
+
 	pHub->m_pNext = m_pActive;
 	m_pActive = pHub;
 	m_nActive ++;
-	
+
 	pHub->m_pAddress	= *pAddress;
 	pHub->m_nPort		= nPort;
 	pHub->m_nReference	= 1;
-	
+
 	return pHub;
 }
 
@@ -125,7 +125,7 @@ CHubHorizonHub* CHubHorizonPool::Add(IN_ADDR* pAddress, WORD nPort)
 void CHubHorizonPool::Remove(CHubHorizonHub* pHub)
 {
 	CHubHorizonHub** ppPrev = &m_pActive;
-	
+
 	for ( CHubHorizonHub* pSeek = *ppPrev ; pSeek ; pSeek = pSeek->m_pNext )
 	{
 		if ( pHub == pSeek )
@@ -153,7 +153,7 @@ CHubHorizonHub* CHubHorizonPool::Find(IN_ADDR* pAddress)
 			return pHub;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -163,19 +163,19 @@ CHubHorizonHub* CHubHorizonPool::Find(IN_ADDR* pAddress)
 int CHubHorizonPool::AddHorizonHubs(CG2Packet* pPacket)
 {
 	int nCount = 0;
-	
+
 	for ( CHubHorizonHub* pHub = m_pActive ; pHub ; pHub = pHub->m_pNext )
 	{
 		pPacket->WritePacket( "S", 6 );
 		pPacket->WriteLongLE( pHub->m_pAddress.S_un.S_addr );
 		pPacket->WriteShortBE( pHub->m_nPort );
-		
+
 		theApp.Message( MSG_DEBUG, _T("  Try horizon %s"),
 			(LPCTSTR)CString( inet_ntoa( pHub->m_pAddress ) ) );
-		
+
 		nCount++;
 	}
-	
+
 	return nCount;
 }
 
@@ -201,7 +201,7 @@ CHubHorizonGroup::~CHubHorizonGroup()
 void CHubHorizonGroup::Add(IN_ADDR* pAddress, WORD nPort)
 {
 	CHubHorizonHub** ppHub = m_pList;
-	
+
 	for ( DWORD nCount = m_nCount ; nCount ; nCount--, ppHub++ )
 	{
 		if ( (*ppHub)->m_pAddress.S_un.S_addr == pAddress->S_un.S_addr )
@@ -210,10 +210,10 @@ void CHubHorizonGroup::Add(IN_ADDR* pAddress, WORD nPort)
 			return;
 		}
 	}
-	
+
 	CHubHorizonHub* pHub = HubHorizonPool.Add( pAddress, nPort );
 	if ( pHub == NULL ) return;
-	
+
 	if ( m_nCount == m_nBuffer )
 	{
 		m_nBuffer += 8;
@@ -222,7 +222,7 @@ void CHubHorizonGroup::Add(IN_ADDR* pAddress, WORD nPort)
 		if ( m_pList ) delete [] m_pList;
 		m_pList = pList;
 	}
-	
+
 	m_pList[ m_nCount++ ] = pHub;
 }
 
@@ -232,7 +232,7 @@ void CHubHorizonGroup::Add(IN_ADDR* pAddress, WORD nPort)
 void CHubHorizonGroup::Clear()
 {
 	CHubHorizonHub** ppHub = m_pList;
-	
+
 	for ( DWORD nCount = m_nCount ; nCount ; nCount--, ppHub++ )
 	{
 		if ( -- ( (*ppHub)->m_nReference ) == 0 )

@@ -1,7 +1,7 @@
 //
 // EDPartImporter.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,7 +51,7 @@ protected:
 	BOOL	ImportFile(LPCTSTR pszPath, LPCTSTR pszFile);
 	BOOL	CopyFile(LPCTSTR pszSource, LPCTSTR pszTarget);
 	void	Message(UINT nMessageID, ...);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CEDPartImporter)

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ CLibraryView::~CLibraryView()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryView operations
 
-BOOL CLibraryView::Create(CWnd* pParentWnd) 
+BOOL CLibraryView::Create(CWnd* pParentWnd)
 {
 	CRect rect;
 	SelClear( FALSE );
@@ -80,10 +80,10 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 {
 	CString strFormat;
 	int nCount = 0;
-	
+
 	for ( CLibraryTreeItem* pItem = GetFolderSelection() ; pItem ;
 		  pItem = pItem->m_pSelNext ) nCount++;
-	
+
 	if ( nCount == 1 )
 	{
         CLibraryTreeItem* pItem = GetFolderSelection();
@@ -102,7 +102,7 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 
 		if ( pItem->m_pVirtual && pItem->m_pVirtual->m_pSchema )
 			nImage = pItem->m_pVirtual->m_pSchema->m_nIcon16;
-		
+
 	}
 	else if ( nCount > 1 )
 	{
@@ -167,7 +167,7 @@ void CLibraryView::DragObjects(CImageList* pImage, const CPoint& ptMouse)
 {
 	CLibraryFrame* pFrame	= (CLibraryFrame*)GetOwner();
 	CLibraryList* pList		= new CLibraryList( GetSelectedCount() );
-	
+
 	for ( POSITION pos = m_pSelection.GetHeadPosition() ; pos ; )
 		pList->AddTail( m_pSelection.GetNext( pos ) );
 

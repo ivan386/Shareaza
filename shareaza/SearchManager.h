@@ -1,7 +1,7 @@
 //
 // SearchManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,13 @@ class CG2Packet;
 class CQueryHit;
 
 
-class CSearchManager  
+class CSearchManager
 {
 // Construction
 public:
 	CSearchManager();
 	virtual ~CSearchManager();
-	
+
 // Attributes
 public:
 	CMutex			m_pSection;
@@ -45,7 +45,7 @@ protected:
 	DWORD			m_tLastTick;
 	int				m_nPriorityClass;
 	int				m_nPriorityCount;
-	
+
 // Operations
 public:
 	POSITION		GetIterator() const;
@@ -59,7 +59,7 @@ public:
 protected:
 	void			Add(CManagedSearch* pSearch);
 	void			Remove(CManagedSearch* pSearch);
-	
+
 	friend class CManagedSearch;
 
 };

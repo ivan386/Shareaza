@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ protected:
 	CBitmap		m_bmWatermark;
 	CBitmap		m_bmFooter;
 	BOOL		m_bLayout;
-	
+
 // Operations
 public:
 	CTaskBox*	AddBox(CTaskBox* pBox, POSITION posBefore = NULL);
@@ -62,7 +62,7 @@ public:
 	void		OnChanged();
 protected:
 	void		Layout(CRect& rcClient);
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CTaskPanel)
@@ -107,7 +107,7 @@ protected:
 	CBitmap		m_bmWatermark;
 	CBitmap		m_bmCaptionmark;
 	BOOL		m_bCaptionCurve;
-	
+
 // Operations
 public:
 	CTaskPanel*	GetPanel() const;

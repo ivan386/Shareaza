@@ -1,7 +1,7 @@
 //
 // MD4.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,13 +26,13 @@
 #pragma once
 
 
-class CMD4  
+class CMD4
 {
 // Construction
 public:
 	CMD4();
 	virtual ~CMD4();
-	
+
 // Attributes
 protected:
 	DWORD	m_nState[4];

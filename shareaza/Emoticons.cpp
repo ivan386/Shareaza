@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,25 +59,25 @@ LPCTSTR CEmoticons::FindNext(LPCTSTR pszText, int* pnIndex)
 {
 	LPCTSTR pszBest = NULL;
 	int nIndex = 0, nBest;
-	
+
 	if ( m_pTokens == NULL ) return NULL;
-	
+
 	for ( LPCTSTR pszToken = m_pTokens ; *pszToken ; nIndex++ )
 	{
 		LPCTSTR pszFind = _tcsstr( pszText, pszToken );
-		
+
 		if ( pszFind != NULL && ( pszBest == NULL || pszFind < pszBest ||
 		   ( pszFind == pszBest && _tcslen( GetText( nBest ) ) < _tcslen( pszToken ) ) ) )
 		{
 			pszBest = pszFind;
 			nBest = nIndex;
 		}
-		
+
 		pszToken += _tcslen( pszToken ) + 1;
 	}
-	
+
 	if ( pszBest && pnIndex ) *pnIndex = nBest;
-	
+
 	return pszBest;
 }
 
@@ -88,15 +88,15 @@ int CEmoticons::Lookup(LPCTSTR pszText, int nLen) const
 {
 	TCHAR cSave = 0;
 	int nIndex = 0;
-	
+
 	if ( m_pTokens == NULL ) return -1;
-	
+
 	if ( nLen >= 0 )
 	{
 		cSave = pszText[ nLen ];
 		((LPTSTR)pszText)[ nLen ] = 0;
 	}
-	
+
     LPCTSTR pszToken = m_pTokens;
 	for ( ; *pszToken ; nIndex++ )
 	{
@@ -104,12 +104,12 @@ int CEmoticons::Lookup(LPCTSTR pszText, int nLen) const
 		{
 			break;
 		}
-		
+
 		pszToken += _tcslen( pszToken ) + 1;
 	}
-	
+
 	if ( nLen >= 0 ) ((LPTSTR)pszText)[ nLen ] = cSave;
-	
+
 	return ( *pszToken != 0 ) ? nIndex : -1;
 }
 
@@ -119,14 +119,14 @@ int CEmoticons::Lookup(LPCTSTR pszText, int nLen) const
 LPCTSTR	CEmoticons::GetText(int nIndex) const
 {
 	if ( m_pTokens == NULL ) return NULL;
-	
+
 	for ( LPCTSTR pszToken = m_pTokens ; *pszToken ; )
 	{
 		if ( nIndex-- <= 0 ) return pszToken;
-		
+
 		pszToken += _tcslen( pszToken ) + 1;
 	}
-	
+
 	return NULL;
 }
 
@@ -148,13 +148,13 @@ CMenu* CEmoticons::CreateMenu()
 {
 	CMenu* pMenu = new CMenu();
 	pMenu->CreatePopupMenu();
-	
+
 	int nCount = 0;
-	
+
 	for ( int nPos = 0 ; nPos < m_pButtons.GetSize() ; nPos++ )
 	{
 		int nIndex = m_pButtons.GetAt( nPos );
-		
+
 		if ( nCount > 0 && ( nCount % 12 ) == 0 )
 		{
 			pMenu->AppendMenu( MF_OWNERDRAW|MF_MENUBREAK, nIndex + 1, (LPCTSTR)NULL );
@@ -163,10 +163,10 @@ CMenu* CEmoticons::CreateMenu()
 		{
 			pMenu->AppendMenu( MF_OWNERDRAW, nIndex + 1, (LPCTSTR)NULL );
 		}
-		
+
 		nCount++;
 	}
-	
+
 	return pMenu;
 }
 
@@ -177,14 +177,14 @@ BOOL CEmoticons::Load()
 {
 	Clear();
 	m_pImage.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 8 );
-	
+
 	CString strFile = Settings.General.Path + _T("\\Data\\Emoticons.xml");
-	
+
 	BOOL bSuccess = LoadTrillian( strFile );
 	if ( ! bSuccess ) return FALSE;
-	
+
 	BuildTokens();
-	
+
 	return TRUE;
 }
 
@@ -194,10 +194,10 @@ BOOL CEmoticons::Load()
 void CEmoticons::Clear()
 {
 	if ( m_pImage.m_hImageList != NULL ) m_pImage.DeleteImageList();
-	
+
 	if ( m_pTokens != NULL ) delete [] m_pTokens;
 	m_pTokens = NULL;
-	
+
 	m_pIndex.RemoveAll();
 	m_pButtons.RemoveAll();
 }
@@ -208,23 +208,23 @@ void CEmoticons::Clear()
 int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, COLORREF crBack, BOOL bButton)
 {
 	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
-	
+
 	if ( pRect->left < 0 || pRect->left + 16 > pImage->m_nWidth ) return -1;
 	if ( pRect->top < 0 || pRect->top > pImage->m_nHeight + 16 ) return -1;
 	if ( pRect->right != pRect->left + 16 ) return -1;
 	if ( pRect->bottom != pRect->top + 16 ) return -1;
-	
+
 	DWORD nPitch = pImage->m_nWidth * pImage->m_nComponents;
 	while ( nPitch & 3 ) nPitch++;
-	
+
 	BYTE* pSource = pImage->m_pImage;
 	pSource += pRect->top * nPitch + pRect->left * pImage->m_nComponents;
-	
+
 	HDC hDC = GetDC( 0 );
 	CBitmap bmImage;
 
 	bmImage.CreateCompatibleBitmap( CDC::FromHandle( hDC ), 16, 16 );
-	
+
 	BITMAPINFOHEADER pInfo;
 	pInfo.biSize		= sizeof(BITMAPINFOHEADER);
 	pInfo.biWidth		= 16;
@@ -233,20 +233,20 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 	pInfo.biBitCount	= 24;
 	pInfo.biCompression	= BI_RGB;
 	pInfo.biSizeImage	= 16 * 16 * 3;
-	
+
 	for ( int nY = 15 ; nY >= 0 ; nY-- )
 	{
 		SetDIBits( hDC, bmImage, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
 		pSource += nPitch;
 	}
-	
+
 	ReleaseDC( 0, hDC );
 	int nIndex = m_pImage.Add( &bmImage, crBack );
 	bmImage.DeleteObject();
-	
+
 	m_pIndex.Add( pszText );
 	if ( bButton ) m_pButtons.Add( nIndex );
-	
+
 	return nIndex;
 }
 
@@ -256,21 +256,21 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 void CEmoticons::BuildTokens()
 {
 	int nLength = 2;
-	
+
 	for ( int nIndex = 0 ; nIndex < m_pIndex.GetSize() ; nIndex++ )
 	{
 		nLength += m_pIndex.GetAt( nIndex ).GetLength() + 1;
 	}
-	
+
 	ASSERT( m_pTokens == NULL );
 	LPTSTR pszOut = m_pTokens = new TCHAR[ nLength ];
-	
+
 	for ( int nIndex = 0 ; nIndex < m_pIndex.GetSize() ; nIndex++ )
 	{
 		_tcscpy( pszOut, m_pIndex.GetAt( nIndex ) );
 		pszOut += m_pIndex.GetAt( nIndex ).GetLength() + 1;
 	}
-	
+
 	*pszOut++ = 0;
 }
 
@@ -280,31 +280,31 @@ void CEmoticons::BuildTokens()
 BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 {
 	CString strPath, strValue;
-	
+
 	CXMLElement* pXML = CXMLElement::FromFile( pszFile, TRUE );
 	if ( pXML == NULL ) return FALSE;
-	
+
 	strPath = pszFile;
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
-	
+
 	CXMLElement* pBitmap = pXML->GetElementByName( _T("bitmap") );
-	
+
 	if ( pBitmap == NULL )
 	{
 		delete pXML;
 		return FALSE;
 	}
-	
+
 	strValue = pBitmap->GetAttributeValue( _T("file") );
-	
+
 	nSlash = strValue.ReverseFind( '/' );
 	if ( nSlash >= 0 ) strValue = strValue.Mid( nSlash + 1 );
 	strValue = strPath + strValue;
-	
+
 	CImageServices pServices;
 	CImageFile pImage( &pServices );
-	
+
 	if (	! pImage.LoadFromFile( strValue ) ||
 			! pImage.EnsureRGB( GetSysColor( COLOR_WINDOW ) ) ||
 			! pImage.SwapRGB() )
@@ -312,18 +312,18 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 		delete pXML;
 		return FALSE;
 	}
-	
+
 	COLORREF crBack = RGB( pImage.m_pImage[2], pImage.m_pImage[1], pImage.m_pImage[0] );
-	
+
 	for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pEmoticon = pXML->GetNextElement( pos );
 		if ( ! pEmoticon->IsNamed( _T("emoticon") ) ) continue;
-		
+
 		CXMLElement* pSource = pEmoticon->GetElementByName( _T("source") );
 		CString strText = pEmoticon->GetAttributeValue( _T("text") );
 		CRect rc( 0, 0, 0, 0 );
-		
+
 		strValue = pSource->GetAttributeValue( _T("left"), _T("0") );
 		_stscanf( strValue, _T("%i"), &rc.left );
 		strValue = pSource->GetAttributeValue( _T("top"), _T("0") );
@@ -332,14 +332,14 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 		_stscanf( strValue, _T("%i"), &rc.right );
 		strValue = pSource->GetAttributeValue( _T("bottom"), _T("0") );
 		_stscanf( strValue, _T("%i"), &rc.bottom );
-		
+
 		BOOL bButton = pEmoticon->GetAttributeValue( _T("button") ).CompareNoCase( _T("yes") ) == 0;
-		
+
 		AddEmoticon( strText, &pImage, &rc, crBack, bButton );
 	}
-	
+
 	delete pXML;
-	
+
 	return TRUE;
 }
 
@@ -352,25 +352,25 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 	BOOL bBold = FALSE, bItalic = FALSE, bUnderline = FALSE;
 	COLORREF cr = 0;
 	CString str;
-	
+
 	while ( *pszBody )
 	{
 		LPCTSTR pszToken = _tcschr( pszBody, '[' );
-		
+
 		for ( int nURL = 0 ; pszURLs[ nURL ] != NULL ; nURL++ )
 		{
 			LPCTSTR pszFind = _tcsistr( pszBody, pszURLs[ nURL ] );
 			if ( pszFind != NULL && ( pszToken == NULL || pszFind < pszToken ) ) pszToken = pszFind;
 		}
-		
+
 		int nEmoticon = -1;
 		LPCTSTR pszEmoticon = FindNext( pszBody, &nEmoticon );
-		
+
 		if ( pszEmoticon != NULL && ( pszToken == NULL || pszEmoticon < pszToken ) )
 		{
 			pszToken = pszEmoticon;
 		}
-		
+
 		if ( pszToken != pszBody )
 		{
 			if ( pszToken != NULL )
@@ -384,19 +384,19 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 			{
 				str = pszBody;
 			}
-			
+
 			pDocument->Add( retText, str, NULL,
 				( bBold ? retfBold : 0 ) |
 				( bItalic ? retfItalic : 0 ) |
 				( bUnderline ? retfUnderline : 0 ) |
 				( cr ? retfColour : 0 ) )->m_cColour = cr;
 		}
-		
+
 		if ( pszToken == NULL ) break;
-		
+
 		pszBody = pszToken;
 		if ( *pszBody == 0 ) break;
-		
+
 		if ( pszEmoticon == pszBody )
 		{
 			str.Format( _T("%lu"), nEmoticon );
@@ -410,7 +410,7 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 			{
 				pDocument->Add( retNewline, _T("4") );
 			}
-			
+
 			pszBody += 2;
 			continue;
 		}
@@ -424,19 +424,19 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 					break;
 				}
 			}
-			
+
 			TCHAR cSave = *pszToken;
 			*(LPTSTR)pszToken = 0;
 			str = pszBody;
 			*(LPTSTR)pszToken = cSave;
-			
+
 			if ( _tcsnicmp( str, _T("www."), 4 ) == 0 ) str = _T("http://") + str;
-			
+
 			pDocument->Add( retLink, str, str,
 				( bBold ? retfBold : 0 ) |
 				( bItalic ? retfItalic : 0 ) |
 				( bUnderline ? retfUnderline : 0 ) );
-			
+
 			pszBody = pszToken;
 		}
 		else if ( _tcsnicmp( pszBody, _T("[b]"), 3 ) == 0 )
@@ -477,7 +477,7 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 			_stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue );
 			cr = RGB( nRed, nGreen, nBlue );
 		}
-		
+
 		if ( *pszBody == '[' )
 		{
 			pszToken = _tcschr( pszBody, ']' );

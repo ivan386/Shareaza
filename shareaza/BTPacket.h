@@ -1,7 +1,7 @@
 //
 // BTPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,7 @@ protected:
 // Attributes
 public:
 	BYTE	m_nType;
-	
+
 // Operations
 public:
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
@@ -58,7 +58,7 @@ protected:
 		virtual void NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch);
 		virtual void FreePoolImpl(CPacket* pPool);
 	};
-	
+
 	static CBTPacketPool POOL;
 
 // Allocation
@@ -74,7 +74,7 @@ public:
 	{
 		POOL.Delete( this );
 	}
-	
+
 	friend class CBTPacket::CBTPacketPool;
 };
 

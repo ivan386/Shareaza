@@ -1,7 +1,7 @@
 //
 // CtrlTipAlbum.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,23 +63,23 @@ BOOL CAlbumTipCtrl::OnPrepare()
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
+
 	CAlbumFolder* pFolder = (CAlbumFolder*)m_pContext;
 	if ( ! LibraryFolders.CheckAlbum( pFolder ) ) return FALSE;
-	
+
 	// Basic data
-	
+
 	m_sName	= pFolder->m_sName;
 	m_sType	= _T("Virtual Folder");
-	
+
 	m_nIcon32 = SHI_FOLDER_OPEN;
 	m_nIcon48 = SHI_FOLDER_OPEN;
 	m_bCollection = pFolder->m_bCollSHA1;
-	
+
 	// Metadata
-	
+
 	m_pMetadata.Clear();
-	
+
 	if ( pFolder->m_pSchema != NULL )
 	{
 		CString strText;
@@ -87,10 +87,10 @@ BOOL CAlbumTipCtrl::OnPrepare()
 		m_sType = pszColon ? pszColon + 1 : pFolder->m_pSchema->m_sTitle;
 		LoadString( strText, IDS_TIP_FOLDER );
 		m_sType += " " + strText;
-		
+
 		m_nIcon48	= pFolder->m_pSchema->m_nIcon48;
 		m_nIcon32	= pFolder->m_pSchema->m_nIcon32;
-		
+
 		if ( pFolder->m_pXML != NULL )
 		{
 			m_pMetadata.Setup( pFolder->m_pSchema, FALSE );
@@ -98,9 +98,9 @@ BOOL CAlbumTipCtrl::OnPrepare()
 			m_pMetadata.Clean();
 		}
 	}
-	
+
 	CalcSizeHelper();
-	
+
 	return m_sz.cx > 0;
 }
 
@@ -171,12 +171,12 @@ void CAlbumTipCtrl::DrawThumb(CDC* pDC, CRect& rcThumb)
 {
 	pDC->Draw3dRect( &rcThumb, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 	rcThumb.DeflateRect( 1, 1 );
-	
+
 	CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
 				( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-	
+
 	UINT nStyle = ( m_bCollection ? INDEXTOOVERLAYMASK(SHI_O_COLLECTION) : 0 );
-	
+
 	if ( m_nIcon48 >= 0 )
 	{
 		ImageList_DrawEx( ShellIcons.GetHandle( 48 ), m_nIcon48, *pDC,
@@ -190,7 +190,7 @@ void CAlbumTipCtrl::DrawThumb(CDC* pDC, CRect& rcThumb)
 			pt.x, pt.y, 32, 32, m_crLight, CLR_DEFAULT, nStyle );
 		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 	}
-	
+
 	pDC->FillSolidRect( &rcThumb, m_crLight );
 }
 

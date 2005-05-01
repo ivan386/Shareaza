@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CDownloadWithSearch : public CDownloadWithTiger
 public:
 	CDownloadWithSearch();
 	virtual ~CDownloadWithSearch();
-	
+
 // Attributes
 protected:
 	CManagedSearch*	m_pSearch;
@@ -44,7 +44,7 @@ protected:
 public:
 	DWORD			m_tLastED2KGlobal;	// Time the last ed2k UDP GetSources was done on this download
 	DWORD			m_tLastED2KLocal;	// Time the last ed2k TCP GetSources was done on this download
-	
+
 // Operations
 public:
 	BOOL	FindSourcesAllowed(DWORD tNow) const;

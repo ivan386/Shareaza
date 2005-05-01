@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,10 +77,10 @@ protected:
 	DWORD		m_nListCookie;
 	int			m_nSortColumn;
 	BOOL		m_bSortFlip;
-	
+
 	static int ListCompare(LPCVOID pA, LPCVOID pB);
 	static CLibraryDetailView* m_pThis;
-	
+
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CLibraryDetailView)
@@ -101,7 +101,7 @@ protected:
 	afx_msg void OnLibraryColumns();
 	afx_msg void OnUpdateLibraryColumns(CCmdUI* pCmdUI);
 	//}}AFX_MSG
-	
+
 	afx_msg void OnCacheHint(NMLVCACHEHINT* pNotify, LRESULT* pResult);
 	afx_msg void OnGetDispInfoW(NMLVDISPINFO* pNotify, LRESULT* pResult);
 	afx_msg void OnGetDispInfoA(NMLVDISPINFO* pNotify, LRESULT* pResult);
