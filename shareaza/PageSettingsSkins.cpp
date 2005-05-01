@@ -85,9 +85,9 @@ BOOL CSkinsSettingsPage::OnInitDialog()
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_SKIN ) );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
-	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 230, 0 );
-	m_wndList.InsertColumn( 1, _T("Author"), LVCFMT_LEFT, 120, 1 );
-	m_wndList.InsertColumn( 2, _T("Version"), LVCFMT_LEFT, 32, 2 );
+	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 210, 0 );
+	m_wndList.InsertColumn( 1, _T("Author"), LVCFMT_LEFT, 130, 1 );
+	m_wndList.InsertColumn( 2, _T("Version"), LVCFMT_LEFT, 42, 2 );
 	m_wndList.InsertColumn( 3, _T("Path"), LVCFMT_LEFT, 0, 3 );
 	m_wndList.InsertColumn( 4, _T("URL"), LVCFMT_LEFT, 0, 4 );
 	m_wndList.InsertColumn( 5, _T("Email"), LVCFMT_LEFT, 0, 5 );
