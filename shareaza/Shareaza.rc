@@ -1350,7 +1350,7 @@ BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,
                     SS_CENTERIMAGE
-    LTEXT           "Copyright © Shareaza Development Team, 2002-2004.",
+    LTEXT           "Copyright © Shareaza Development Team, 2002-2005.",
                     IDC_STATIC,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",
                     IDC_STATIC,20,75,262,24
