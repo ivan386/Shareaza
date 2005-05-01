@@ -261,9 +261,9 @@ it.icons_uninstall=Disinstalla
 it.icons_downloads=Downloads
 it.dialog_shutdown=%1 è attualmente in esecuzione. Vuoi che %1 sia chiuso così l'installazione può continuare?
 it.dialog_firewall=Impossibile aggiungere Shareaza a Windows Firewall.%nAggiungi Shareaza alla lista delle eccezioni manualmente.
-it.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-it.page_viruswarning_title=Virus Warning
-it.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+it.page_viruswarning_text=Quando usi internet, dovresti sempre assicurarti di aver un antivirus aggiornato per proteggerti dai trojan, worm e dagli altri programmi malevoli. Puoi trovare una lista di buoni antivirus e altri suggerimenti di sicurezza per proteggere il tuo computer seguendo questo link:
+it.page_viruswarning_title=Attenzione ai virus
+it.page_viruswarning_subtitle=Hai installato un programma antivirus?
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -324,9 +324,9 @@ br.icons_uninstall=Desinstalar
 br.icons_downloads=Downloads
 br.dialog_shutdown=Você deseja fechar o %1?
 br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza à lista.
-br.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-br.page_viruswarning_title=Virus Warning
-br.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+br.page_viruswarning_text=Ao usar a Internet você deve sempre manter seu Anti-Vírus atualizado, para proteger contra vírus, worms, cavalos-de-tróia e outros programas perigosos. Você encontra uma lista de bons anti-vírus e dicas de segurança entrando no seguinte endereço:
+br.page_viruswarning_title=Aviso sobre Vírus
+br.page_viruswarning_subtitle=Você tem um programa anti-vírus instalado?
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
