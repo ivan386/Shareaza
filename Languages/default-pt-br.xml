@@ -3311,7 +3311,7 @@
 		<control caption="_Opções:"/>
 		<control caption="_Acionar Agendador"/>
 		<control/><control/>
-		<control caption="_Restringir redes quando limitado"/>
+		<control caption="_Conectar à G2, quando limitado"/>
 		<control caption="Informação:"/>
 		<control caption="Dom"/>
 		<control caption="Seg"/>
