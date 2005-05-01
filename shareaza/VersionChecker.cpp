@@ -69,7 +69,9 @@ BOOL CVersionChecker::NeedToCheck()
 	
 	m_sUpgradePrompt	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradePrompt"), _T("") );
 	m_sUpgradeFile		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeFile"), _T("") );
-	m_sUpgradeHash		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeHash"), _T("") );
+	m_sUpgradeSHA1		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), _T("") );
+	m_sUpgradeTiger		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeTiger"), _T("") );
+	m_sUpgradeSize		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSize"), _T("") );
 	m_sUpgradeSources	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSources"), _T("") );
 	m_bUpgrade			= ( m_sUpgradePrompt.GetLength() > 0 );
 	
@@ -174,6 +176,12 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 		CString strKey = strItem.SpanExcluding( _T("=") );
 		if ( strKey.GetLength() == strItem.GetLength() ) continue;
 		strItem = CTransfer::URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
+
+		strItem.TrimLeft();
+		strItem.TrimRight();
+
+		theApp.Message( MSG_SYSTEM, strKey );
+		theApp.Message( MSG_SYSTEM, strItem );
 		
 		m_pResponse.SetAt( strKey, strItem );
 	}
@@ -215,12 +223,20 @@ void CVersionChecker::ProcessResponse()
 		m_sUpgradePrompt = strValue;
 		
 		m_pResponse.Lookup( _T("UpgradeFile"), m_sUpgradeFile );
-		m_pResponse.Lookup( _T("UpgradeHash"), m_sUpgradeHash );
+		m_pResponse.Lookup( _T("UpgradeSHA1"), m_sUpgradeSHA1 );
+		m_pResponse.Lookup( _T("UpgradeTiger"), m_sUpgradeTiger );
+		m_pResponse.Lookup( _T("UpgradeSize"), m_sUpgradeSize );
 		m_pResponse.Lookup( _T("UpgradeSources"), m_sUpgradeSources );
+
+		// Old name
+		if ( ! m_sUpgradeSHA1.GetLength() )
+			m_pResponse.Lookup( _T("UpgradeHash"), m_sUpgradeSHA1 );
 		
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradePrompt"), m_sUpgradePrompt );
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeFile"), m_sUpgradeFile );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeHash"), m_sUpgradeHash );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), m_sUpgradeSHA1 );
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeTiger"), m_sUpgradeTiger);
+		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSize"), m_sUpgradeSize );
 		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSources"), m_sUpgradeSources );
 		
 		m_bUpgrade = TRUE;
@@ -265,7 +281,7 @@ BOOL CVersionChecker::CheckUpgradeHash(const SHA1* pHash, LPCTSTR pszPath)
 {
 	if ( ! m_bUpgrade ) return FALSE;
 
-	if ( CSHA::HashToString( pHash ) != m_sUpgradeHash ) return FALSE;
+	if ( CSHA::HashToString( pHash ) != m_sUpgradeSHA1 ) return FALSE;
 
 	if ( _tcsstr( pszPath, _T(".exe") ) == NULL ) return FALSE;
 

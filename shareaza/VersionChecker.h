@@ -1,7 +1,7 @@
 //
 // VersionChecker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2004.
+// Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,9 @@ public:
 	BOOL		m_bUpgrade;
 	CString		m_sUpgradePrompt;
 	CString		m_sUpgradeFile;
-	CString		m_sUpgradeHash;
+	CString		m_sUpgradeSHA1;
+	CString		m_sUpgradeTiger;
+	CString		m_sUpgradeSize;
 	CString		m_sUpgradeSources;
 	CString		m_sUpgradePath;
 protected:
