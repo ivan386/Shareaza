@@ -424,7 +424,7 @@ right quote	&#147;
 				<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
 			<item id="ID_NETWORK_EXIT" text="Iš_eiti"/>
 		</menu>
 		<menu text="_Rodyti">
@@ -489,7 +489,7 @@ right quote	&#147;
 			<item id="ID_NETWORK_CONNECT_TO" text="Jung_tis prie..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="_Naršyti adresatą..."/>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
 			<item id="ID_NETWORK_EXIT" text="Iš_eiti"/>
 		</menu>
 		<menu text="_Rodyti">
@@ -577,7 +577,7 @@ right quote	&#147;
 				<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
 			<item id="ID_NETWORK_EXIT" text="Iš_eiti"/>
 		</menu>
 		<menu text="_Rodyti">
@@ -706,7 +706,7 @@ right quote	&#147;
 		<item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis"/>
 		<item id="ID_MEDIA_NEXT" text="Toles_nis takelis"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
 		<item id="ID_NETWORK_EXIT" text="Išeiti"/>
 	</menu>
 	<!--  REMOTE MENU -->
@@ -723,7 +723,7 @@ right quote	&#147;
 		<item id="ID_MEDIA_PREVIOUS" text="An_kstesnis takelis"/>
 		<item id="ID_MEDIA_NEXT" text="Toles_nis takelis"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="_Baigti atsisiuntus"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
 		<item id="ID_NETWORK_EXIT" text="Išeiti"/>
 	</menu>
 	<!-- HOME MENU -->
