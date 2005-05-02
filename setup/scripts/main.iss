@@ -429,6 +429,7 @@ var
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
+      FirewallFailed := ExpandConstant('{cm:dialog_firewall}')
       try
         FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
         InstallFolder := ExpandConstant('{app}\Shareaza.exe');
@@ -441,7 +442,6 @@ Begin
         FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
         FirewallProfile.AuthorizedApplications.Add(FirewallObject);
       except
-        FirewallFailed := ExpandConstant('{cm:dialog_firewall}');
         MsgBox('FirewallFailed', mbInformation, MB_OK);
       End;
     End;
