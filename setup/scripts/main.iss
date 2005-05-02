@@ -325,6 +325,7 @@ const
   NET_FW_IP_VERSION_ANY = 2;
 var
   Installed: Boolean;
+  FirewallFailed: string;
 
 Function InnoSetupUsed(): boolean;
 Begin
@@ -425,7 +426,6 @@ var
   FirewallObject: Variant;
   FirewallManager: Variant;
   FirewallProfile: Variant;
-  FirewallFailed: string;
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
