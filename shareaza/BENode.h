@@ -89,19 +89,14 @@ public:
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 
 		int nLength = MultiByteToWideChar( CP_UTF8, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
-		if ( GetLastError() != ERROR_NO_UNICODE_TRANSLATION )
+		if ( nLength > 0 )
 			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
 		else
 		{
-			nLength = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)m_pValue, nSource, NULL, 0 );
-			MultiByteToWideChar( CP_ACP, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
-			if ( GetLastError() == ERROR_NO_UNICODE_TRANSLATION ) 
-			{
-				// Bad encoding
-				str.ReleaseBuffer( nLength );
-				str = _T("#ERROR#");
-				return str;
-			}
+			// Bad encoding
+			str.ReleaseBuffer( nLength );
+			str = _T("#ERROR#");
+			return str;
 		}
 		str.ReleaseBuffer( nLength );
 
@@ -116,23 +111,40 @@ public:
 		str = (LPCSTR)m_pValue;
 		int nSource = str.GetLength();
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
+		int nLength = 0;
+SetLastError( 0 );
+		// Use the torrent code page (if present)
+		if ( nCodePage != 0 ) 
+			nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
 
-		// Use the torrent (or user-specified) code page
-		int nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
-		if ( GetLastError() != ERROR_NO_UNICODE_TRANSLATION )
+		if ( nLength > 0 )
 			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
 		else
 		{		
-			// Try the system code page
-			nCodePage = GetOEMCP();
-			nLength = MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, NULL, 0 );
-			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
-			if ( GetLastError() == ERROR_NO_UNICODE_TRANSLATION ) 
+			// Try the user-specified code page if it's set, else use the system code page
+			if ( Settings.BitTorrent.TorrentCodePage != 0 )
+				nCodePage = Settings.BitTorrent.TorrentCodePage;
+			else
+				nCodePage = GetOEMCP();
+
+			nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
+
+			if ( nLength > 0 )
+				MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+			else
 			{
-				// Nothing else we can do
-				str.ReleaseBuffer( nLength );
-				str = _T("#ERROR#");
-				return str;
+				// Try ACP. (Should convert anything, but badly)
+				nCodePage = CP_ACP;
+				nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
+				if ( nLength > 0 )
+					MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+				else
+				{
+					// Nothing more we can do
+					str.ReleaseBuffer( nLength );
+					str = _T("#ERROR#");
+					return str;
+				}
 			}
 		}
 		str.ReleaseBuffer( nLength );

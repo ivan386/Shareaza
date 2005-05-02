@@ -330,7 +330,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	if ( ! pRoot->IsType( CBENode::beDict ) ) return FALSE;
 
 	// Get the encoding (from torrents that have it)
-	m_nEncoding = Settings.BitTorrent.TorrentCodePage;
+	m_nEncoding = 0;
 	CBENode* pEncoding = pRoot->GetNode( "codepage" );
 	if ( ( pEncoding ) &&  ( pEncoding->IsType( CBENode::beInt )  ) )
 	{
@@ -403,28 +403,52 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	// Get the creator (if present)
 	m_sCreatedBy = pRoot->GetStringFromSubNode( "created by", m_nEncoding, &m_bEncodingError );
 
-	// Multi-Tracker: We don't support this yet. (Add it properly later)
-	// *********************************
-	// Get announce-list (if present)
+	// Get announce-list (if present)	
+	// ******************************************************************
+	// Todo: Read Multi-Tracker information 
+	// Note: This isn't supported yet! This section does nothing.
 	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
 	if ( ( pAnnounceList ) && ( pAnnounceList->IsType( CBENode::beList ) ) )
 	{
-		CBENode* pSubList = pAnnounceList->GetNode( 0 );
-		if ( ( pSubList ) && ( pSubList->IsType( CBENode::beList ) ) )
+		// Loop through all the tiers
+		for ( int nTier = 0 ; nTier < pAnnounceList->GetCount() ; nTier++ )
 		{
-			CBENode* pTracker = pSubList->GetNode( 0 );
-			if ( ( pTracker ) &&  ( pTracker->IsType( CBENode::beString )  ) )
-				m_sTracker = pTracker->GetString();
+			CBENode* pSubList = pAnnounceList->GetNode( nTier );
+			if ( ( pSubList ) && ( pSubList->IsType( CBENode::beList ) ) )
+			{
+				// Read in the trackers
+				for ( int nTracker = 0 ; nTracker < pSubList->GetCount() ; nTracker++ )
+				{
+					CBENode* pTracker = pSubList->GetNode( 0 );
+					if ( ( pTracker ) &&  ( pTracker->IsType( CBENode::beString )  ) )
+					{
+						CString strTracker = pTracker->GetString();
+						// Check tracker is valid
+						if ( strTracker.Find( _T("http") ) == 0 ) 
+						{
+							// ToDo: Store in list. 
+							m_sTracker = strTracker;
+							break;
+						}
+					}
+				}
+				// Randomise the tracker order in this tier
+				// ToDo: Randomise list
+			}
 		}
 	}
-	//*********************************
+	//******************************************************************
 
 	// Get announce
 	CBENode* pAnnounce = pRoot->GetNode( "announce" );
 	if ( pAnnounce->IsType( CBENode::beString ) )
 	{
-		m_sTracker = pAnnounce->GetString();
-		if ( m_sTracker.Find( _T("http") ) != 0 ) m_sTracker.Empty();
+		// Get the tracker
+		CString strTracker = pAnnounce->GetString();
+
+		// Store it if it's valid. (Some torrents have invalid trackers)
+		if ( strTracker.Find( _T("http") ) == 0 ) m_sTracker = strTracker;
+		else m_bEncodingError = TRUE;
 	}
 
 	// Get the info node

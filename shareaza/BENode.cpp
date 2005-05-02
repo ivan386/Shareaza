@@ -193,7 +193,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		strValue = pSubNode->GetString();
 	}
 
-	if ( ! IsValid( strValue ) )
+	if ( ( ! IsValid( strValue ) ) && Settings.BitTorrent.TorrentExtraKeys )
 	{
 		// If we still don't have a valid name, check for undocumented nodes
 		char*	pszUTF8Key;
