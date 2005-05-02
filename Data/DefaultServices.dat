@@ -1,22 +1,16 @@
 2 http://gwcrab2.sarcastro.com:8002/
 1 http://gwcrab.sarcastro.com:8001/
 2 http://bazooka.stealthspy.net/g2/bazooka.php
-2 http://bicou.hd.free.fr/g2/bazooka.php
-2 http://g2.djdan.pointclark.net/g2/bazooka.php
 2 http://g2.instantnetworks.net/g2/bazooka.php
 M http://g2cache.theg2.net/gwcache/lynnx.asp
 1 http://gcache.cloppy.net/
-2 http://groovy.syxy.com/g2/bazooka.php
 2 http://gwc.wodi.org/g2/bazooka.php
-2 http://gwc2.awyeah.net/g2/bazooka.php
 1 http://gwebcache.bearshare.net/gcache.php
 1 http://kisama.ath.cx:8080/
 1 http://krill.shacknet.nu:20095/gwc
-M http://node01.hewson.cns.ufl.edu:8080/cpwc.cgi
-M http://pokerface.bishopston.net:3559/
+2 http://pokerface.bishopston.net:3559/
 2 http://www.ciscllc.com/g2/bazooka.php
 2 http://www.lo7.wroc.pl/~stash/g2/bazooka.php
-M http://ygwc.y-0.net/ygwc.php
 2 http://zafir.gratishost.com/gwc/bazooka.php
 1 http://gwebcache.koshoid.de/gwebcache
 D http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met
@@ -36,4 +30,4 @@ D http://www.emule-server.de/server.met/min/server.met
 #
 # If you make changes to this file that cause problems for you
 # Then just delete the file and Shareaza will use internal defaults
-# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/shareaza/Data/DefaultServices?view=markup
+# Or get the latest at http://cvs.sourceforge.net/viewcvs.py/shareaza/Data/DefaultServices.dat?view=markup
