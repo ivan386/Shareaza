@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -3255,7 +3255,7 @@ Other:
 		<control caption="_Options:"/>
 		<control caption="_Activer le programmateur"/>
 		<control/><control/>
-		<control caption="_Restreindre les réseaux lorsque limitée"/>
+		<control caption="_Connexion seulement au G2 lorsque limitée"/>
 		<control caption="Clé:"/>
 		<control caption="Dim"/>
 		<control caption="Lun"/>
@@ -3265,9 +3265,9 @@ Other:
 		<control caption="Ven"/>
 		<control caption="Sam"/>
 		<control caption="Ne pas se connecter"/>
-		<control caption="Connection limitée"/>
+		<control caption="Connexion limitée"/>
 		<control caption="Se connecter à pleine vitesse"/>
-		<control caption="% de _bande passante lorsque limitée"/>
+		<control caption="% de la _bande passante lorsque limitée"/>
 		<control/>
         <control caption="Aide"/>
         <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. &#13;&#10;&#13;&#10;Note: Si vous avez Shareaza ouvert lorsque le programmateur est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
