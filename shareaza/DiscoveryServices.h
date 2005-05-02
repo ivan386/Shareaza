@@ -58,13 +58,13 @@ public:
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
 	int					GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
-	BOOL				EnoughServices() const;
 	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
-	void				Remove(CDiscoveryService* pService);
+	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
 	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
 	void				Clear();
+	BOOL				CheckMinimumServices();
 public:
 	BOOL				Load();
 	BOOL				Save();
@@ -76,6 +76,7 @@ public:
 	void				OnGnutellaFailed(IN_ADDR* pAddress);
 protected:
 	void				Serialize(CArchive& ar);
+	BOOL				EnoughServices() const;
 	void				AddDefaults();
 	int					ExecuteBootstraps(int nCount);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
@@ -126,7 +127,7 @@ public:
 	
 // Operations
 public:
-	void		Remove();
+	void		Remove(BOOL bCheck = TRUE);
 	BOOL		Execute(int nMode = 0);
 	void		OnAccess();
 	void		OnHostAdd(int nCount = 1);

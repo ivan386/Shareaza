@@ -252,12 +252,12 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 	return pService;
 }
 
-void CDiscoveryServices::Remove(CDiscoveryService* pService)
+void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
 {
 	if ( POSITION pos = m_pList.Find( pService ) ) m_pList.RemoveAt( pos );
 	delete pService;
 	
-	if ( ! EnoughServices() )
+	if ( bCheck && ! EnoughServices() )
 	{
 		AddDefaults();
 	}
@@ -284,7 +284,6 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 	// And check we have a '/' as well
 	pszAddress = _tcschr( pszAddress, '/' );
 	if ( pszAddress == NULL ) return FALSE;
-
 
 	// Probably okay
 	return TRUE;
@@ -328,6 +327,17 @@ void CDiscoveryServices::Clear()
 void CDiscoveryServices::Stop()
 {
 	StopWebRequest();
+}
+
+BOOL CDiscoveryServices::CheckMinimumServices()
+{
+	if ( ! EnoughServices() )
+	{
+		AddDefaults();
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1132,8 +1142,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		{
 			// URL ADDRESS AT: strLine.Mid( 2 )
 			// CORRECT (REQUESTED) NETWORK
-			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache );
-
+			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache, m_nLastQueryProtocol );
+			
 			m_bFirstTime = FALSE;
 			bSuccess = TRUE;
 		}
@@ -1457,9 +1467,9 @@ CDiscoveryService::~CDiscoveryService()
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryService remove
 
-void CDiscoveryService::Remove()
+void CDiscoveryService::Remove(BOOL bCheck)
 {
-	DiscoveryServices.Remove( this );
+	DiscoveryServices.Remove( this, bCheck );
 }
 
 //////////////////////////////////////////////////////////////////////

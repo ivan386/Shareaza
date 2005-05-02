@@ -346,8 +346,10 @@ void CDiscoveryWnd::OnDiscoveryRemove()
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
 		CDiscoveryService* pService = GetItem( nItem );
-		if ( pService ) pService->Remove();
+		if ( pService ) pService->Remove( FALSE );
 	}
+
+	DiscoveryServices.CheckMinimumServices();
 
 	Update();
 }
