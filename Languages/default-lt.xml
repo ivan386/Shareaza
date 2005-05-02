@@ -1601,7 +1601,7 @@ right quote	&#147;
 		</styles>
 		<group id="1">
 			<para align="center">
-				<text format="b">Nesate prisijungęs</text>
+				<text format="b">Nesate prisijungę</text>
 				<newline gap="4"/>
 				<link target="raza:command:ID_NETWORK_CONNECT">Prisijungti</link>
 			</para>
