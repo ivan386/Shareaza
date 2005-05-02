@@ -295,7 +295,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
 	Add( _T("BitTorrent.DefaultTracker"), &BitTorrent.DefaultTracker, _T("") );
 	Add( _T("BitTorrent.DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000 );
-	Add( _T("BitTorrent.TorrentCodePage"), &BitTorrent.TorrentCodePage, 65001 );
+	Add( _T("BitTorrent.TorrentCodePage"), &BitTorrent.TorrentCodePage, 950 );
 	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
 	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 45000 );
 	Add( _T("BitTorrent.RequestPipe"), &BitTorrent.RequestPipe, 4 );
