@@ -1,8 +1,8 @@
-CC=gcc
-CFLAGS=-O -I../zlib-1.1.4
+CC=cc
+CFLAGS=-O -I../..
 
-UNZ_OBJS = miniunz.o unzip.o ioapi.o iowin32.o ../zlib-1.1.4/libz.a
-ZIP_OBJS = minizip.o zip.o   ioapi.o iowin32.o ../zlib-1.1.4/libz.a
+UNZ_OBJS = miniunz.o unzip.o ioapi.o ../../libz.a
+ZIP_OBJS = minizip.o zip.o   ioapi.o ../../libz.a
 
 .c.o:
 	$(CC) -c $(CFLAGS) $*.c

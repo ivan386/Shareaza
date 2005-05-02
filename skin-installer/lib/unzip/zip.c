@@ -1,7 +1,7 @@
 /* zip.c -- IO on .zip files using zlib
-   Version 1.00, September 10th, 2003
+   Version 1.01, May 8th, 2004
 
-   Copyright (C) 1998-2003 Gilles Vollant
+   Copyright (C) 1998-2004 Gilles Vollant
 
    Read zip.h for more info
 */
@@ -77,7 +77,7 @@
 #endif
 #endif
 const char zip_copyright[] =
-   " zip 1.00 Copyright 1998-2003 Gilles Vollant - http://www.winimage.com/zLibDll";
+   " zip 1.01 Copyright 1998-2004 Gilles Vollant - http://www.winimage.com/zLibDll";
 
 
 #define SIZEDATA_INDATABLOCK (4096-(4*4))
@@ -265,10 +265,19 @@ local int ziplocal_putValue (pzlib_filefunc_def, filestream, x, nbByte)
 {
     unsigned char buf[4];
     int n;
-    for (n = 0; n < nbByte; n++) {
+    for (n = 0; n < nbByte; n++)
+    {
         buf[n] = (unsigned char)(x & 0xff);
         x >>= 8;
     }
+    if (x != 0)
+      {     /* data overflow - hack for ZIP64 (X Roche) */
+      for (n = 0; n < nbByte; n++)
+        {
+          buf[n] = 0xff;
+        }
+      }
+
     if (ZWRITE(*pzlib_filefunc_def,filestream,buf,nbByte)!=(uLong)nbByte)
         return ZIP_ERRNO;
     else
@@ -287,7 +296,16 @@ local void ziplocal_putValue_inmemory (dest, x, nbByte)
         buf[n] = (unsigned char)(x & 0xff);
         x >>= 8;
     }
+
+    if (x != 0)
+    {     /* data overflow - hack for ZIP64 */
+       for (n = 0; n < nbByte; n++)
+       {
+          buf[n] = 0xff;
+       }
+    }
 }
+
 /****************************************************************************/
 
 
@@ -699,9 +717,9 @@ extern int ZEXPORT zipOpenNewFileInZip3 (file, filename, zipfi,
     if (comment==NULL)
         size_comment = 0;
     else
-        size_comment = strlen(comment);
+        size_comment = (uInt)strlen(comment);
 
-    size_filename = strlen(filename);
+    size_filename = (uInt)strlen(filename);
 
     if (zipfi == NULL)
         zi->ci.dosDate = 0;
@@ -1108,7 +1126,7 @@ extern int ZEXPORT zipClose (file, global_comment)
     if (global_comment==NULL)
         size_global_comment = 0;
     else
-        size_global_comment = strlen(global_comment);
+        size_global_comment = (uInt)strlen(global_comment);
 
 
     centraldir_pos_inzip = ZTELL(zi->z_filefunc,zi->filestream);
