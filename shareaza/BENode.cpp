@@ -187,7 +187,11 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 	// Open the supplied sub-node
 	pSubNode = GetNode( pszKey );
 	// If it exists and is a string, try reading it
-	strValue = GetStringFromNode( pSubNode, nEncoding, pEncodingError );
+	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+	{
+		// Read the string using the correct encoding. (UTF-8)
+		strValue = pSubNode->GetString();
+	}
 
 	if ( ! IsValid( strValue ) )
 	{
@@ -211,6 +215,20 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		}
 		delete [] pszUTF8Key;
 	}
+
+	if ( ! IsValid( strValue ) )
+	{
+		// If we still don't have a valid name, try a decode by forcing the code page.
+		// Open the supplied sub-node
+		pSubNode = GetNode( pszKey );
+		// Force a decode
+		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+		{
+			*pEncodingError = TRUE;
+			strValue = pSubNode->DecodeString( nEncoding );
+		}
+	}
+
 	return strValue;
 }
 
@@ -226,27 +244,19 @@ CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncoding
 	// Open the supplied list/dictionary item
 	pSubNode = GetNode( nItem );
 	// If it exists and is a string, try reading it
-	strValue = GetStringFromNode( pSubNode, nEncoding, pEncodingError );
-
-	return strValue;
-}
-
-// CBENode Reads a string, checking the encoding.
-
-CString CBENode::GetStringFromNode(CBENode* pNode, UINT nEncoding, BOOL* pEncodingError)
-{
-	CString		strValue;
-
-	// If it exists and is a string, try reading it
-	if ( ( pNode ) && ( pNode->m_nType == CBENode::beString ) )
+	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 	{
 		// Read the string using the correct encoding. (UTF-8)
-		strValue = pNode->GetString();
-		if ( ! IsValid( strValue ) )
+		strValue = pSubNode->GetString();
+	}
+	// If it wasn't valid, try a decode by forcing the code page.
+	if ( ! IsValid( strValue ) )
+	{
+		// If we still don't have a valid name, try a decode by forcing the code page.
+		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
-			// If the name isn't valid, try forcing the code page.
 			*pEncodingError = TRUE;
-			strValue = pNode->DecodeString( nEncoding );
+			strValue = pSubNode->DecodeString( nEncoding );
 		}
 	}
 

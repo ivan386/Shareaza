@@ -51,7 +51,6 @@ public:
 	void		GetSHA1(SHA1* pSHA1) const;
 	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError);
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError);
-	CString		GetStringFromNode(CBENode* pNode, UINT nEncoding, BOOL* pEncodingError);
 	void		Encode(CBuffer* pBuffer) const;
 public:
 	static CBENode*	Decode(CBuffer* pBuffer);
