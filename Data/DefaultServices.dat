@@ -1,25 +1,30 @@
-2 http://gwcrab2.sarcastro.com:8002/
-1 http://gwcrab.sarcastro.com:8001/
 2 http://bazooka.stealthspy.net/g2/bazooka.php
+2 http://bazooka1.servehttp.com/g2/bazooka.php
 2 http://g2.instantnetworks.net/g2/bazooka.php
-M http://g2cache.theg2.net/gwcache/lynnx.asp
-1 http://gcache.cloppy.net/
-2 http://gwc.wodi.org/g2/bazooka.php
-1 http://gwebcache.bearshare.net/gcache.php
-1 http://kisama.ath.cx:8080/
-1 http://krill.shacknet.nu:20095/gwc
-2 http://pokerface.bishopston.net:3559/
-2 http://www.ciscllc.com/g2/bazooka.php
 2 http://www.lo7.wroc.pl/~stash/g2/bazooka.php
 2 http://zafir.gratishost.com/gwc/bazooka.php
+2 http://g2.sbicomputing.com/g2/bazooka.php
+2 http://www.ciscllc.com/g2/bazooka.php
+2 http://gwc.wodi.org/g2/bazooka.php
+2 http://pokerface.bishopston.net:3559/
+2 http://gwcrab2.sarcastro.com:8002/
+1 http://gwcrab.sarcastro.com:8001/
+1 http://toadface.bishopston.net:3558/
+1 http://gwebcache.bearshare.net/gcache.php
+1 http://kisama.ath.cx:8080/
+1 http://gcache.cloppy.net/
 1 http://gwebcache.koshoid.de/gwebcache
+1 http://krill.shacknet.nu:20095/gwc
+1 http://www.xolox.nl/gwebcache/
+1 http://starscream.dynalias.com/
+M http://g2cache.theg2.net/gwcache/lynnx.asp
 D http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met
 D http://www.de-site.de/ed2k/koeln.met
 D http://www.edonkey2000.com/server.met
 D http://www.emule-server.de/server.met/min/server.met
 #
 # Keep these comments at the end
-# Last updated April 25, 2005
+# Last updated 3rd - May, 2005
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
