@@ -191,9 +191,6 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 
 		strItem.TrimLeft();
 		strItem.TrimRight();
-
-		theApp.Message( MSG_SYSTEM, strKey );
-		theApp.Message( MSG_SYSTEM, strItem );
 		
 		m_pResponse.SetAt( strKey, strItem );
 	}
