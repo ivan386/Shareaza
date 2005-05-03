@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Greek Skin File -->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
@@ -510,7 +510,7 @@
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Κ_ανονική Μορφή"/>
 			<item id="ID_VIEW_TABBED" text="Π_αραθυρική Μορφή"/>
-			<item id="ID_VIEW_WINDOWED" text="Μορφ ή_Windowed"/>
+			<item id="ID_VIEW_WINDOWED" text="Μορφή _Windowed"/>
 		</menu>
 		<menu text="_Εργαλεία">
 			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσε..."/>
@@ -2908,7 +2908,7 @@
 	<string id="16994" value="Δεν είναι δυνατό να φωρτωθεί το αρχείο &quot;%s&quot;"/>
 	<string id="16995" value="Το αρχείο μπορεί να είναι κατεστραμένο, ή να μην έχετε τους απαραίτητους codecs για να το παίξετε."/>
 	<string id="16996" value="Μέρος του αρχείου δεν μπορούσε να παιχτεί, ίσως να χρειάζετε να κατεβάσετε επιπλέον codecs."/>
-	<string id="16997" value="Δεν υπάρχει αρχείο.  Διπλό κλικ σε ένα  media file στην Βιβλιοθήκη σας για να το αναπαράγετε."/>
+	<string id="16997" value="Δεν υπάρχει αρχείο.  Διπλό κλικ σε ένα αρχείο  media στην Βιβλιοθήκη σας για να το αναπαράγετε."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="P L A Y L I S T"/>
 	<string id="17024" value="Initiating a connection to %s..."/>
@@ -3108,7 +3108,7 @@
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Γενικά">
 		<control caption="_Γενικά:"/>
-		<control caption="Αυτόματη σύνδεση όταν συνδέετε το Shareaza"/>
+		<control caption="Αυτ. σύνδεση όταν συνδέετε το Shareaza"/>
 		<control caption="Άρχισε όταν ξεκινούν τα Windows"/>
 		<control caption="Δείξε μια προτροπή πριν ανοίξεις τα URIs"/>
 		<control caption="Show rates in:"/>
@@ -3146,7 +3146,7 @@
 		<control caption="Για πάνω απο:"/>
 		<control/><control/>
 		<control caption="Μέρες"/>
-		<control caption="Καθάρισε το ιστορικό τώρα"/>
+		<control caption="Καθ. το ιστορικό τώρα"/>
 		<control caption="_Είναι ασφαλές για να το ανοίξεις:"/>
 		<control/>
 		<control caption="_Πρόσθεσε"/>
@@ -3155,14 +3155,14 @@
 		<control/>
 		<control caption="_Πρόσθεσε"/>
 		<control caption="_Απομάκρυνε"/>
-		<control caption="Φύλλαξε _τις συλλογές Εδώ:"/>
+		<control caption="Φύλαξε _τις συλλογές Εδώ:"/>
 		<control/><control/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
-		<control caption="_Options:"/>
-		<control caption="Χρησιμοποίησε τον Media Player για να ΠΑΙΞΕΙΣ τα αρχεία που σημειόώννται απο κάτω"/>
-		<control caption="Χρησιμοποίησε τον Media Player για να ΕΞΕΤΑΣΕΙΣ τα αρχεία τα οποία είναι σημειωμέμα απο κάτω"/>
+		<control caption="_Επιλογές:"/>
+		<control caption="Έχε τον Media Player για να ΠΑΙΞΕΙΣ αρχεία που σημειώνονται απο κάτω"/>
+		<control caption="Έχε τον Media Player για να ΕΞΕΤΑΣΕΙΣ αρχεία που σημειώνονται απο κάτω"/>
 		<control caption="_Τύποι αρχείων:"/>
 		<control/>
 		<control caption="_Πρόσθεσε"/>
@@ -3175,8 +3175,8 @@
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Κοινότητα">
 		<control caption="Το _Προφίλ μου:"/>
-		<control caption="Μπορείς να χρησιμοποιήσεις το προφίλ που έχεις στο Gnutella για να μοιραστείς πληροφορίες για τον εαυτό σου, τα ενδιαφέροντά σου και τα προτεινόμενα αρχεία και websites με τους άλλους."/>
-		<control caption="Επεξεργασία του προφίλ μου"/>
+		<control caption="Χρησιμοποιήσε το προφίλ που έχεις στο Gnutella για να μοιραστείς πληροφορίες για τον εαυτό σου, τα ενδιαφέροντά σου και τα προτεινόμενα αρχεία και websites με άλλους."/>
+		<control caption="Επεξ. του προφίλ μου"/>
 		<control caption="_Chat:"/>
 		<control caption="Ενεργοποίησε το peer to peer chat με συμβατούς πελάτες"/>
 		<control caption="Ενεργοποίησε το chat σε όλα τα δίκτυα"/>
@@ -3355,7 +3355,7 @@
 
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_Το δίκτυο του eDonkey2000:"/>
-		<control caption="Σύνδεση με το eDonkey2000 σήμερα"/>
+		<control caption="Σύνδ. με το eDonkey2000 σήμερα"/>
 		<control caption="Αυτόμ. σύνδεση κάθε περίοδο"/>
 		<control caption="_Παγκόσμια έρευνα:"/>
 		<control caption="Έρευνα γνωστών απομακρυσμένων servers στην μνήμη των server:"/>
@@ -3381,16 +3381,16 @@
 		<control caption="Κατέβασμα Torrents με τη μια"/>
 		<control/><control/>
 		<control caption="Client connections"/>
-		<control caption=" Καθαρισμός των κατεβασμένων torrents"/>
+		<control caption=" Καθαρ. των κατεβασμένων torrents"/>
 		<control caption="When the share ratio reaches "/>
 		<control/><control/>
 		<control caption="_EndGame:"/>
-		<control caption="Enable EndGame mode when completing torrents"/>
+		<control caption="Ενεργοποίησε την μορφή EndGame όταν τελειώνουν τα torrents"/>
 		<control caption="_Αποθήκευσε τα Torrents εδώ:"/>
 		<control/><control/>
 		<control caption="_Δημιουργεία Torrent"/>
 		<control/><control/>
-		<control caption="Default Tracker: "/>
+		<control caption="Προκαθορ. Tracker: "/>
 		<control/><control/>
 	</dialog>
 
@@ -3426,7 +3426,7 @@
 
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένο">
 		<control/>
-		<control caption="Setting Properties:"/>
+		<control caption="Ρυθμίσεις Επιλογών:"/>
 		<control caption="Τιμή:"/>
 		<control/><control/>
 		<control caption="Περιγραφή:"/>
@@ -3492,9 +3492,9 @@
 		<control caption="Η Δυναμική μορφή προσφέρει στους εξιδικευμένους χρήστες πολλές επιπλεόν εντολές, παράθυρα, κτλ."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Καλώς ήλθατε στο Shareaza [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Καλώς ήρθατε στο Shareaza [3 of 7]">
 		<control caption="Για βέλτιστη απόδοση, το Shareaza πρέπει να ξέρει λίγα πράγματα για την σύνδεσή σας στο Internet.."/>
-		<control caption="&#160;( please select )| Χρησιμοποιώ το Internet στο σπίτι| Χρησιμοποιώ το Internet μέσω πανεπιστημιακού LAN| Χρησιμοποιώ το Internet μέσω ένος LAN γραφείου| Χρησιμοποιώ το Internet στο ξενοδοχείο ή στο αεροδρόμιο"/>
+		<control caption="&#160;( Παρακαλώ επιλέξτε )| Χρησιμοποιώ το Internet στο σπίτι| Χρησιμοποιώ το Internet μέσω πανεπιστημιακού LAN| Χρησιμοποιώ το Internet μέσω ένος LAN γραφείου| Χρησιμοποιώ το Internet στο ξενοδοχείο ή στο αεροδρόμιο"/>
 		<control caption="Το δίκτυο σας προστατεύετε απο firewall ή NAT ενός  router?"/>
 		<control caption="&#160;Όχι, ΜΠΟΡΩ να δεχτώ όλες τις εισερχόμενες συνδέσεις| Ναι, και ΔΕΝ ΜΠΟΡΩ να δεχτώ τις εισερχόμενες συνδέσεις απο το Internet| Δεν ξέρω, παρακαλώ ΕΛΕΝΞΤΕ ΑΥΤΟΜΑΤΑ την κατάσταση του firewall"/>
 		<control caption="Έχετε στην σύνδεση στο σπίτι σας firewall ή NAT μέσω router?"/>
@@ -3505,14 +3505,14 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καλώς ήλθατε στο Shareaza [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καλώς ήρθατε στο Shareaza [4 of 7]">
 		<control caption="Τα δίκτυα P2P είναι καλά μόνο για τους ανθρώπους που τα χρησιμοποιούν.  Όλα τα αρχεία που είναι διαθέσιμα για κατέβασμα μοιράζονται απο άλλους χρήστες."/>
 		<control caption="Δεν χρειάζετε να μοιράζετε κάτι για να χρησιμοποιήσετε το Shareaza, αλλά μερικά λογισμικά θα συμπεριφέρονται αλλιώς σε χρήστες οι οποίοι δεν μοιράζουν τίποτα."/>
 		<control caption="Παρακαλώ επιλέξτε ποιούς φακέλους θέλετε να μοιράζεστε, εάν θέλετε.  Απλά πατήστε το κουμπί Πρόσθεση για να προσθέσετε ένα νέο φάκελο."/>
 		<control/>
 		<control caption="_Πρόσθεση..."/>
 		<control caption="_Απομάκρυνση"/>
-		<control caption="ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το να μοιράζετε υλικό που είναι κάτω απο δικαιώματα είναι απαγορευμένο σε πολλές χώρες."/>
+		<control caption="ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το μοίρασμα αρχείων κάτω απο δικαιώματα είναι απαγορευμένο σε πολλές χώρες."/>
 	</dialog>
 
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Έλεγχος του φακέλου....">
