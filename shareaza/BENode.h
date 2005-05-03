@@ -112,7 +112,7 @@ public:
 		int nSource = str.GetLength();
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 		int nLength = 0;
-SetLastError( 0 );
+
 		// Use the torrent code page (if present)
 		if ( nCodePage != 0 ) 
 			nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );

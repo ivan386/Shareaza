@@ -542,8 +542,15 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 			// Verify the path is valid
 			strPath.Empty();
-			strPath = pPath->GetStringFromSubNode( 0,  m_nEncoding, &m_bEncodingError);
-			if ( ! IsValid( strPath ) )
+			// Get first path
+			if ( pPath )
+			{
+				CBENode* pPart = pPath->GetNode( 0 );
+				if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
+			}
+
+			// If we don't have a valid path, try path.utf8
+			if ( ( ! IsValid( strPath ) ) && Settings.BitTorrent.TorrentExtraKeys )
 			{
 				// There was an error reading the path
 				m_bEncodingError = TRUE;
@@ -553,6 +560,22 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				{
 					CBENode* pPart = pPath->GetNode( 0 );
 					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
+				}
+
+				strPath = pPath->GetStringFromSubNode( 0,  m_nEncoding, &m_bEncodingError);
+			}
+
+			// If that didn't work, try decoding the path
+			if ( ( ! IsValid( strPath ) )  )
+			{
+				// There was an error reading the path
+				m_bEncodingError = TRUE;
+				// Open path node
+				pPath = pFile->GetNode( "path" );
+				if ( pPath )
+				{
+					CBENode* pPart = pPath->GetNode( 0 );
+					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString(m_nEncoding);
 				}
 			}
 		
