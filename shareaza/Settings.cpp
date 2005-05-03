@@ -90,7 +90,7 @@ void CSettings::Setup()
 	Add( _T("Library.SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library.FilterURI"), &Library.FilterURI, NULL );
 	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|ace|ape|asf|avi|bmp|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|mp2|mp3|mpa|mpe|mpg|mpeg|ogg|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
-	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|dat|part|partial|getright|pif|lnk|sd|") );
+	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|dat|part|partial|getright|pif|lnk|sd|url|") );
 	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
 	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
 	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(SHA1)?detail&ref=shareaza") );
