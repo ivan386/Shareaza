@@ -110,6 +110,7 @@ public:
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
 		int nSource = str.GetLength();
+		if ( nSource == 0 ) return str;
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 		int nLength = 0;
 

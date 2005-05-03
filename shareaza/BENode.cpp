@@ -209,9 +209,11 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		// If it exists and is a string, try reading it
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
-			*pEncodingError = TRUE;
 			// Assumed to be UTF-8
 			strValue = pSubNode->GetString();
+
+			// This value should have been in the regular key
+			if ( IsValid( strValue ) ) *pEncodingError = TRUE;
 		}
 		delete [] pszUTF8Key;
 	}
@@ -224,10 +226,13 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		// Force a decode
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
-			*pEncodingError = TRUE;
 			strValue = pSubNode->DecodeString( nEncoding );
+
+			if ( IsValid( strValue ) ) *pEncodingError = TRUE;
 		}
 	}
+
+	if ( _tcsicmp( strValue , _T("#ERROR#") ) == 0 ) strValue.Empty();
 
 	return strValue;
 }
