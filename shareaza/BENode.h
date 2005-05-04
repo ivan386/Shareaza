@@ -85,20 +85,20 @@ public:
 		CString str;
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
-		int nSource = str.GetLength();
+
 		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 
-		int nLength = MultiByteToWideChar( CP_UTF8, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
+		int nLength = MultiByteToWideChar( CP_UTF8, nFlags, (LPCSTR)m_pValue, -1, NULL, 0 );
 		if ( nLength > 0 )
-			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
 		else
 		{
 			// Bad encoding
-			str.ReleaseBuffer( nLength );
+			str.ReleaseBuffer();
 			str = _T("#ERROR#");
 			return str;
 		}
-		str.ReleaseBuffer( nLength );
+		str.ReleaseBuffer();
 
 		return str;
 	}
@@ -116,10 +116,10 @@ public:
 
 		// Use the torrent code page (if present)
 		if ( nCodePage != 0 ) 
-			nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, nSource, NULL, 0 );
+			nLength = MultiByteToWideChar( nCodePage, nFlags, (LPCSTR)m_pValue, -1 , NULL, 0 );
 
 		if ( nLength > 0 )
-			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
+			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, -1 , str.GetBuffer( nLength ), nLength );
 		else
 		{		
 			// Try the user-specified code page if it's set, else use the system code page
@@ -142,13 +142,12 @@ public:
 				else
 				{
 					// Nothing more we can do
-					str.ReleaseBuffer( nLength );
 					str = _T("#ERROR#");
 					return str;
 				}
 			}
 		}
-		str.ReleaseBuffer( nLength );
+		str.ReleaseBuffer();
 
 		return str;
 	}

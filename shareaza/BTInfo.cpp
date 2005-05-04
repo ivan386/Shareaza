@@ -566,34 +566,46 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			CBENode* pLength = pFile->GetNode( "length" );
 			if ( ! pLength->IsType( CBENode::beInt ) ) return FALSE;
 			m_pFiles[ nFile ].m_nSize = pLength->GetInt();
-			
-			CBENode* pPath = pFile->GetNode( "path" );
-			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
-			if ( pPath->GetCount() > 32 ) return FALSE;
+	
 
-			// Verify the path is valid
 			strPath.Empty();
-			// Get first path
-			if ( pPath )
+			CBENode* pPath;
+			// Try path.utf8 if it's set
+			if ( Settings.BitTorrent.TorrentExtraKeys )
 			{
-				CBENode* pPart = pPath->GetNode( 0 );
-				if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
-			}
-
-			// If we don't have a valid path, try path.utf8
-			if ( ( ! IsValid( strPath ) ) && Settings.BitTorrent.TorrentExtraKeys )
-			{
-				// There was an error reading the path
-				m_bEncodingError = TRUE;
-				// Check for other possible path nodes
 				pPath = pFile->GetNode( "path.utf-8" );
 				if ( pPath )
 				{
+					if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+					if ( pPath->GetCount() > 32 ) return FALSE;
 					CBENode* pPart = pPath->GetNode( 0 );
 					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
 				}
+			}
 
-				strPath = pPath->GetStringFromSubNode( 0,  m_nEncoding, &m_bEncodingError);
+
+			// Get the regular path
+			pPath = pFile->GetNode( "path" );
+
+			if ( ! pPath ) return FALSE;
+			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
+
+			CBENode* pPart = pPath->GetNode( 0 );
+			if ( pPart->IsType( CBENode::beString ) ) 
+			{
+				if ( ! IsValid( strPath ) )
+				{
+					// Get the path
+					strPath = pPart->GetString();
+				}
+				else
+				{
+					// Check the path matches the .utf path
+					CString strCheck =  pPart->GetString();
+					if ( strPath != strCheck ) m_bEncodingError = TRUE;
+					// Switch back to the UTF-8 path
+					pPath = pFile->GetNode( "path.utf-8" );
+				}
 			}
 
 			// If that didn't work, try decoding the path
@@ -629,6 +641,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					m_pFiles[ nFile ].m_sPath += '\\';
 
 				// Get the path
+				strPath = pPart->GetString();
 				strPath = CDownloadTask::SafeFilename( pPart->GetString() );
 				// Check for encoding error
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )

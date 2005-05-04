@@ -184,18 +184,9 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 	CBENode*	pSubNode;
 	CString		strValue;
 
-	// Open the supplied sub-node
-	pSubNode = GetNode( pszKey );
-	// If it exists and is a string, try reading it
-	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+	if ( Settings.BitTorrent.TorrentExtraKeys )
 	{
-		// Read the string using the correct encoding. (UTF-8)
-		strValue = pSubNode->GetString();
-	}
-
-	if ( ( ! IsValid( strValue ) ) && Settings.BitTorrent.TorrentExtraKeys )
-	{
-		// If we still don't have a valid name, check for undocumented nodes
+		// check for undocumented nodes
 		char*	pszUTF8Key;
 		UINT	nUTF8Len = strlen( pszKey ) + 8;
 
@@ -211,19 +202,34 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		{
 			// Assumed to be UTF-8
 			strValue = pSubNode->GetString();
-
-			// This value should have been in the regular key
-			if ( IsValid( strValue ) ) *pEncodingError = TRUE;
 		}
 		delete [] pszUTF8Key;
+	}
+
+	// Open the supplied sub-node
+	pSubNode = GetNode( pszKey );
+	// If it exists and is a string, try reading it
+	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+	{
+		if ( ! IsValid( strValue ) )
+		{
+			// Read the string using the correct encoding. (UTF-8)
+			strValue = pSubNode->GetString();
+		}
+		else
+		{
+			// We already have a value - check it's valid
+			CString strCheck = pSubNode->GetString();
+			if ( strCheck != strValue ) *pEncodingError = TRUE;
+			// Switch back to the UTF-8 path
+
+		}
 	}
 
 	if ( ! IsValid( strValue ) )
 	{
 		// If we still don't have a valid name, try a decode by forcing the code page.
-		// Open the supplied sub-node
 		pSubNode = GetNode( pszKey );
-		// Force a decode
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
 			strValue = pSubNode->DecodeString( nEncoding );
