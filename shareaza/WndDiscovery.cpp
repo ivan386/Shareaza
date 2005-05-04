@@ -282,7 +282,7 @@ void CDiscoveryWnd::OnUpdateDiscoveryQuery(CCmdUI* pCmdUI)
 		CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
 		if ( pService && pService->m_nType != CDiscoveryService::dsBlocked )
 		{
-			pCmdUI->Enable( FALSE );
+			pCmdUI->Enable( TRUE );
 			return;
 		}
 	}
