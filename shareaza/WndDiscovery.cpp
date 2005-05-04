@@ -56,12 +56,15 @@ BEGIN_MESSAGE_MAP(CDiscoveryWnd, CPanelWnd)
 	ON_COMMAND(ID_DISCOVERY_GNUTELLA, OnDiscoveryGnutella)
 	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_WEBCACHE, OnUpdateDiscoveryWebcache)
 	ON_COMMAND(ID_DISCOVERY_WEBCACHE, OnDiscoveryWebcache)
+	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_SERVERMET, OnUpdateDiscoveryServerMet)
+	ON_COMMAND(ID_DISCOVERY_SERVERMET, OnDiscoveryServerMet)
+	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_BLOCKED, OnUpdateDiscoveryBlocked)
+	ON_COMMAND(ID_DISCOVERY_BLOCKED, OnDiscoveryBlocked)
 	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_ADVERTISE, OnUpdateDiscoveryAdvertise)
 	ON_COMMAND(ID_DISCOVERY_ADVERTISE, OnDiscoveryAdvertise)
 	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_BROWSE, OnUpdateDiscoveryBrowse)
 	ON_COMMAND(ID_DISCOVERY_BROWSE, OnDiscoveryBrowse)
-	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_SERVERMET, OnUpdateDiscoveryServerMet)
-	ON_COMMAND(ID_DISCOVERY_SERVERMET, OnDiscoveryServerMet)
+
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -99,6 +102,7 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_gdiImageList.Add( theApp.LoadIcon( IDR_DISCOVERYFRAME ) );
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_WEB_URL ) );
 	m_gdiImageList.Add( theApp.LoadIcon( IDI_DISCOVERY_BLUE ) );
+	m_gdiImageList.Add( theApp.LoadIcon( IDI_FIREWALLED ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 260, -1 );
@@ -116,6 +120,7 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_bShowGnutella		= TRUE;
 	m_bShowWebCache		= TRUE;
 	m_bShowServerMet	= TRUE;
+	m_bShowBlocked		= TRUE;
 
 	CWaitCursor pCursor;
 	Update();
@@ -181,6 +186,13 @@ void CDiscoveryWnd::Update()
 			pItem->Set( 1, _T("Server.met") );
 			pItem->m_nImage = 3;
 		}
+		else if ( pService->m_nType == CDiscoveryService::dsBlocked )
+		{
+			if ( ! m_bShowBlocked ) continue;
+			pItem = pLiveList.Add( pService );
+			pItem->Set( 1, _T("Blocked") );
+			pItem->m_nImage = 5;
+		}
 		else
 		{
 			continue;
@@ -195,7 +207,8 @@ void CDiscoveryWnd::Update()
 		}
 		else
 		{
-			pItem->Set( 2, _T("0 - Never") );
+			if ( pService->m_nType != CDiscoveryService::dsBlocked )
+				pItem->Set( 2, _T("0 - Never") );
 		}
 		
 		if ( pService->m_nType == CDiscoveryService::dsWebCache ||
@@ -264,7 +277,17 @@ void CDiscoveryWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CDiscoveryWnd::OnUpdateDiscoveryQuery(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
+	if (  m_wndList.GetSelectedCount() == 1 )
+	{
+		CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+		if ( pService && pService->m_nType != CDiscoveryService::dsBlocked )
+		{
+			pCmdUI->Enable( FALSE );
+			return;
+		}
+	}
+
+	pCmdUI->Enable( FALSE );
 }
 
 void CDiscoveryWnd::OnDiscoveryQuery() 
@@ -403,6 +426,17 @@ void CDiscoveryWnd::OnUpdateDiscoveryServerMet(CCmdUI* pCmdUI)
 void CDiscoveryWnd::OnDiscoveryServerMet() 
 {
 	m_bShowServerMet = ! m_bShowServerMet;
+	Update();
+}
+
+void CDiscoveryWnd::OnUpdateDiscoveryBlocked(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck( m_bShowBlocked );
+}
+
+void CDiscoveryWnd::OnDiscoveryBlocked() 
+{
+	m_bShowBlocked = ! m_bShowBlocked;
 	Update();
 }
 

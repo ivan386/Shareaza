@@ -1453,6 +1453,7 @@
 #define ID_DISCOVERY_QUERY              32928
 #define ID_DISCOVERY_REMOVE             32929
 #define ID_DISCOVERY_ADD                32930
+#define ID_DISCOVERY_BLOCKED			32931
 #define ID_DISCOVERY_GNUTELLA           32932
 #define ID_DISCOVERY_WEBCACHE           32933
 #define ID_DOWNLOADS_AUTO_CLEAR         32934

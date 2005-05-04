@@ -46,6 +46,7 @@ public:
 	BOOL			m_bShowGnutella;
 	BOOL			m_bShowWebCache;
 	BOOL			m_bShowServerMet;
+	BOOL			m_bShowBlocked;
 
 // Operations
 public:
@@ -79,12 +80,15 @@ protected:
 	afx_msg void OnDiscoveryGnutella();
 	afx_msg void OnUpdateDiscoveryWebcache(CCmdUI* pCmdUI);
 	afx_msg void OnDiscoveryWebcache();
+	afx_msg void OnUpdateDiscoveryServerMet(CCmdUI* pCmdUI);
+	afx_msg void OnDiscoveryServerMet();
+	afx_msg void OnUpdateDiscoveryBlocked(CCmdUI* pCmdUI);
+	afx_msg void OnDiscoveryBlocked();
 	afx_msg void OnUpdateDiscoveryAdvertise(CCmdUI* pCmdUI);
 	afx_msg void OnDiscoveryAdvertise();
 	afx_msg void OnUpdateDiscoveryBrowse(CCmdUI* pCmdUI);
 	afx_msg void OnDiscoveryBrowse();
-	afx_msg void OnUpdateDiscoveryServerMet(CCmdUI* pCmdUI);
-	afx_msg void OnDiscoveryServerMet();
+
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

@@ -140,6 +140,10 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 {
 	CString strAddress( pszAddress );
 
+	// Trim any excess whitespace.
+	strAddress.TrimLeft();
+	strAddress.TrimRight();
+
 	// Trim garbage on the end- sometimes you get "//", "./", "./." etc. (Bad caches)
 	while ( strAddress.GetLength() >= 8 )
 	{
@@ -153,9 +157,6 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	}
 
-	strAddress.TrimLeft();
-	strAddress.TrimRight();
-
 	/*
 	// Although this is part of the spec, it was removed at the request of the GDF.
 	// Trim trailing '/'
@@ -163,35 +164,39 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 		strAddress = strAddress.Left( strAddress.GetLength() - 1 );
 	*/
 
+	// Reject impossibly short services
 	if ( strAddress.GetLength() < 8 ) return NULL;
 
 	CSingleLock pNetworkLock( &Network.m_pSection );
 	if ( ! pNetworkLock.Lock( 250 ) ) return NULL;
 	
-	CDiscoveryService* pService = GetByAddress( strAddress );
-	
-	if ( pService == NULL )
+	if ( GetByAddress( strAddress ) != NULL ) return NULL;
+
+	CDiscoveryService* pService = NULL;
+
+	switch ( nType )
 	{
-		if ( nType == CDiscoveryService::dsWebCache )
-		{
-			if ( CheckWebCacheValid( pszAddress ) )
-				pService = new CDiscoveryService( CDiscoveryService::dsWebCache, strAddress );
-		}
-		else if ( nType == CDiscoveryService::dsServerMet )
-		{
-			if ( CheckWebCacheValid( pszAddress ) )
-				pService = new CDiscoveryService( CDiscoveryService::dsServerMet, strAddress );
-		}
-		else if ( nType == CDiscoveryService::dsGnutella )
-		{
-			if ( _tcschr( pszAddress, '.' ) != NULL )
-			{
-				pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
-			}
-		}
-		
-		if ( pService == NULL ) return NULL;
+	case CDiscoveryService::dsWebCache:
+		if ( CheckWebCacheValid( pszAddress ) )
+			pService = new CDiscoveryService( CDiscoveryService::dsWebCache, strAddress );
+		break;
+
+	case CDiscoveryService::dsServerMet:
+		if ( CheckWebCacheValid( pszAddress ) )
+			pService = new CDiscoveryService( CDiscoveryService::dsServerMet, strAddress );
+		break;
+
+	case CDiscoveryService::dsGnutella:
+		if ( _tcschr( pszAddress, '.' ) != NULL )
+			pService = new CDiscoveryService( CDiscoveryService::dsGnutella, strAddress );
+		break;
+
+	case CDiscoveryService::dsBlocked:
+		pService = new CDiscoveryService( CDiscoveryService::dsBlocked, strAddress );
+		break;
 	}
+		
+	if ( pService == NULL ) return NULL;
 	
 	// Set the appropriate protocol flags
 	switch( nProtocol )
@@ -269,6 +274,18 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 	// Check it's long enough
 	if ( _tcsclen( pszAddress ) < 12 ) return FALSE;
 
+	// Check it's not blocked
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDiscoveryService* pService = GetNext( pos );
+		
+		if ( pService->m_nType == CDiscoveryService::dsBlocked )
+		{
+			if ( _tcsistr( pszAddress, pService->m_sAddress ) != NULL )
+				return FALSE;
+		}
+	}
+
 	// Check it has a valid protocol
 	if ( _tcsnicmp( pszAddress, _T("http://"),  7 ) == 0 ) 
 		pszAddress += 7;
@@ -294,8 +311,8 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDiscoveryService* pService = GetNext( pos );
+		
 		int nLen = pService->m_sAddress.GetLength();
-
 		if ( nLen > 20 )
 		{
 			// If it's a long webcache address, ignore the last few characters when checking
@@ -425,7 +442,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 		Clear();
 		
 		ar >> nVersion;
-		if ( nVersion != 6 ) return;
+		if ( nVersion < 6 ) return;
 		
 		for ( int nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
@@ -476,6 +493,8 @@ void CDiscoveryServices::AddDefaults()
 				case 'M': Add( strService, CDiscoveryService::dsWebCache );					// Multinetwork service
 					break;
 				case 'D': Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );	// eDonkey service
+					break;
+				case 'X': Add( strService, CDiscoveryService::dsBlocked );					// Blocked service
 					break;
 				case '#':																	// Comment line
 					break;

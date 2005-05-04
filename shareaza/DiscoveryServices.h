@@ -122,7 +122,7 @@ public:
 
 	enum
 	{
-		dsNull, dsGnutella, dsWebCache, dsServerMet
+		dsNull, dsGnutella, dsWebCache, dsServerMet, dsBlocked
 	};
 	
 // Operations
