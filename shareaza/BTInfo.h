@@ -58,6 +58,25 @@ public:
 		BOOL		m_bTiger;
 		TIGEROOT	m_pTiger;
 	};
+
+// Subclass
+public:
+	class CBTTracker
+	{
+	public:
+		CBTTracker();
+		~CBTTracker();
+		void		Copy(CBTTracker* pSource);
+		void		Serialize(CArchive& ar, int nVersion);
+	public:
+		CString		m_sAddress;
+		DWORD		m_tLastAccess;
+		DWORD		m_tLastSuccess;
+		DWORD		m_tLastFail;
+		DWORD		m_nFailures;
+		int			m_nTier;
+		int			m_nType;
+	};
 	
 // Attributes
 public:
@@ -76,10 +95,15 @@ public:
 	DWORD		m_nBlockCount;
 	SHA1*		m_pBlockSHA1;
 public:
-	CString		m_sName;
-	CString		m_sTracker;
-	int			m_nFiles;
-	CBTFile*	m_pFiles;
+	CString		m_sName;						// Name of the torrent
+	int			m_nFiles;						// Number of files
+	CBTFile*	m_pFiles;						// List of files
+public:
+	CString		m_sTracker;						// Address of tracker we are using
+
+	CBTTracker*	m_pAnnounceTracker;				// Tracker in the announce key
+	CPtrArray	m_pTrackerList;					// Multi-tracker list
+	int			m_nTrackerIndex;				// The tracker we are currently using
 public:
 	UINT		m_nEncoding;
 	CString		m_sComment;
