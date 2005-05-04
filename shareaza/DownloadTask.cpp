@@ -217,11 +217,12 @@ void CDownloadTask::RunAllocate()
 void CDownloadTask::RunCopySimple()
 {
 	CString strTarget;
+	CString strSafeName = SafeFilename( m_sName );
 	
-	int nExt = m_sName.ReverseFind( '.' );
+	int nExt = strSafeName.ReverseFind( '.' );
 	
-	CString strName( nExt > 0 ? m_sName.Left( nExt ) : m_sName );
-	CString strExt(  nExt > 0 ? m_sName.Mid(  nExt ) : _T( "" ) );
+	CString strName( nExt > 0 ? strSafeName.Left( nExt ) : strSafeName );
+	CString strExt(  nExt > 0 ? strSafeName.Mid(  nExt ) : _T( "" ) );
 
 	// Only try to move if the drive letters match else we copy always
 	if ( m_sFilename[ 0 ] == m_sPath[ 0 ] && m_sFilename[ 0 ] != '\\' )
