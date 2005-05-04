@@ -333,7 +333,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 			if ( strEncoding.GetLength() < 3 )
 				theApp.Message( MSG_ERROR, _T("Torrent 'encoding' node too short") );
-			else if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ) 
+			else if ( _tcsistr( strEncoding.GetString() , _T("UTF-8") ) != NULL ||
+				      _tcsistr( strEncoding.GetString() , _T("UTF8") ) != NULL ) 
 				m_nEncoding = CP_UTF8;
 			else if ( _tcsistr( strEncoding.GetString() , _T("ANSI") ) != NULL ) 
 				m_nEncoding = CP_ACP;
