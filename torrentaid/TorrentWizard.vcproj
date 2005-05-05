@@ -17,7 +17,8 @@
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE">
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -81,7 +82,8 @@
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
 			UseOfMFC="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE">
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
@@ -440,7 +442,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(inputname).obj"/>
 				</FileConfiguration>
 			</File>
@@ -488,7 +491,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
 						Outputs="$(inputname).obj"/>
 				</FileConfiguration>
 			</File>

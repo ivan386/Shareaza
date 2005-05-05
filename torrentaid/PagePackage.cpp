@@ -144,7 +144,7 @@ void CPackagePage::OnAddFile()
 		OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT|OFN_ENABLESIZING,
 		_T("All Files|*.*||"), this );
 	
-	TCHAR szFiles[81920];
+	TCHAR szFiles[81920] = { 0 };
 	dlg.m_ofn.lpstrFile	= szFiles;
 	dlg.m_ofn.nMaxFile	= 81920;
 	

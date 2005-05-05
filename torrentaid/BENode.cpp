@@ -205,21 +205,22 @@ CHashSHA1 CBENode::GetSHA1() const
 
 void CBENode::Encode(CBuffer* pBuffer) const
 {
+	CHAR szBuffer[128];
+	
 	ASSERT( this != NULL );
 	ASSERT( pBuffer != NULL );
 	CString str;
 	
 	if ( m_nType == beString )
 	{
-		str.Format( "%lu:", (DWORD)m_nValue );
-		pBuffer->Print( str );
+		sprintf( szBuffer, "%u:", (DWORD)m_nValue );
+		pBuffer->Print( szBuffer );
 		pBuffer->Add( m_pValue, (DWORD)m_nValue );
 	}
 	else if ( m_nType == beInt )
 	{
-		static CHAR szInt[128];
-		sprintf( szInt, "i%I64ie", m_nValue );
-		pBuffer->Print( szInt );
+		sprintf( szBuffer, "i%I64ie", m_nValue );
+		pBuffer->Print( szBuffer );
 	}
 	else if ( m_nType == beList )
 	{
@@ -227,7 +228,7 @@ void CBENode::Encode(CBuffer* pBuffer) const
 		
 		pBuffer->Print( "l" );
 		
-		for ( DWORD nItem = 0 ; nItem < m_nValue ; nItem++, pNode++ )
+		for ( DWORD nItem = 0 ; nItem < (DWORD)m_nValue ; nItem++, pNode++ )
 		{
 			(*pNode)->Encode( pBuffer );
 		}
@@ -243,8 +244,9 @@ void CBENode::Encode(CBuffer* pBuffer) const
 		for ( DWORD nItem = 0 ; nItem < m_nValue ; nItem++, pNode += 2 )
 		{
 			LPCSTR pszKey = (LPCSTR)pNode[1];
-			str.Format( "%lu:%s", strlen( pszKey ), pszKey );
-			pBuffer->Print( str );
+			sprintf( szBuffer, "%i:", strlen( pszKey ) );
+			pBuffer->Print( szBuffer );
+			pBuffer->Print( pszKey );
 			(*pNode)->Encode( pBuffer );
 		}
 		

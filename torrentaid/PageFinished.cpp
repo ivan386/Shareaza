@@ -287,7 +287,7 @@ void CFinishedPage::OnTorrentCopy()
 		
 		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strText.GetLength() + 1 );
 		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, (LPCSTR)strText, strText.GetLength() + 1 );
+		CopyMemory( pMem, (LPCSTR)strText.GetBuffer(), strText.GetLength() + 1 );
 		GlobalUnlock( hMem );
 		
 		EmptyClipboard();

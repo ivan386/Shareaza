@@ -86,16 +86,16 @@ public:
 	{
 		CString str;
 		if ( m_nType != beString ) return str;
-		CopyMemory( str.GetBuffer( (DWORD)m_nValue ), m_pValue, (DWORD)m_nValue );
-		str.ReleaseBuffer( (DWORD)m_nValue );
+		str = (LPCSTR)m_pValue;
+
 		return str;
 	}
 	
-	inline void SetString(LPCSTR psz)
+	inline void SetString(LPCTSTR psz)
 	{
 		Clear();
 		m_nType		= beString;
-		m_nValue	= strlen( psz );
+		m_nValue	= _tcslen( psz );
 		m_pValue	= MakeStr( psz, FALSE );
 	}
 	
@@ -127,11 +127,11 @@ public:
 		return *( (CBENode**)m_pValue + nItem );
 	}
 	
-	static inline LPVOID MakeStr(LPCSTR psz, BOOL bNull)
+	static inline LPVOID MakeStr(LPCTSTR psz, BOOL bNull)
 	{
-		int nLen	= strlen( psz ) + ( bNull ? 1 : 0 );
-		LPVOID pStr	= new BYTE[ nLen ];
-		CopyMemory( pStr, psz, nLen );
+		int nLen = WideCharToMultiByte( CP_UTF8,  0, psz, -1, NULL, 0, NULL, NULL ) + ( bNull ? 1 : 0 );
+		LPSTR pStr	= new CHAR[ nLen ];
+		WideCharToMultiByte( CP_UTF8, 0, psz, -1, pStr, nLen, NULL, NULL );
 		return pStr;
 	}
 };

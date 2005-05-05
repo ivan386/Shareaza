@@ -54,9 +54,9 @@ BOOL CTorrentWizardApp::InitInstance()
 	CCommandLineInfoEx cmdInfo; 
 	ParseCommandLine(cmdInfo); 
 
-	cmdInfo.GetOption( "sourcefile", m_sCommandLineSourceFile );
-	cmdInfo.GetOption( "destination", m_sCommandLineDestination );
-	cmdInfo.GetOption( "tracker", m_sCommandLineTracker );
+	cmdInfo.GetOption( _T("sourcefile"), m_sCommandLineSourceFile );
+	cmdInfo.GetOption( _T("destination"), m_sCommandLineDestination );
+	cmdInfo.GetOption( _T("tracker"), m_sCommandLineTracker );
 
 	if( ( m_sCommandLineSourceFile.GetLength() > 0 ) && 
 		( m_sCommandLineDestination.GetLength() > 0 ) && 

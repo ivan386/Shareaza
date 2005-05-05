@@ -113,7 +113,7 @@ void CCommandlinePage::Start()
 		
 	m_pBuilder->AddTrackerURL( theApp.m_sCommandLineTracker );
 		
-	m_pBuilder->SetComment( "" );
+	m_pBuilder->SetComment( _T("") );
 		
 	m_pBuilder->AddFile( theApp.m_sCommandLineSourceFile );
 	

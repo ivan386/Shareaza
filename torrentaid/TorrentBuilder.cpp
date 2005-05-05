@@ -533,8 +533,9 @@ BOOL CTorrentBuilder::WriteOutput()
 		}
 	}
 	
-	CBENode* pAgent = pRoot.Add( "user-agent" );
-	pAgent->SetString( _T("TorrentAid ") + theApp.m_sVersion );
+	CBENode* pAgent = pRoot.Add( "created by" );
+	CString strAgent = _T("TorrentAid ") + theApp.m_sVersion;
+	pAgent->SetString( strAgent );
 	
 	if ( m_sComment.GetLength() > 0 )
 	{
