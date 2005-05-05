@@ -221,8 +221,6 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 			// We already have a value - check it's valid
 			CString strCheck = pSubNode->GetString();
 			if ( strCheck != strValue ) *pEncodingError = TRUE;
-			// Switch back to the UTF-8 path
-
 		}
 	}
 
