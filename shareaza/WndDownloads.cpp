@@ -271,18 +271,19 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 {
 	if ( nIDEvent == 5 ) m_tSel = 0;
 	
-	// If this is a clear event, and some kind of auto-clear is active
+	// If this is a clear event (regular timer)
 	if ( nIDEvent == 4 )
 	{
 		DWORD tNow = GetTickCount();
 
-		if ( ( tNow - m_tMoreSourcesTimer ) > 5*60*1000 )
+		if ( ( tNow - m_tMoreSourcesTimer ) > 8*60*1000 )
 		{
-			if ( m_nMoreSourcesLimiter < 12 ) m_nMoreSourcesLimiter ++;
+			if ( m_nMoreSourcesLimiter < 15 ) m_nMoreSourcesLimiter ++;
 
 			m_tMoreSourcesTimer = tNow;
 		}
 
+		// If some kind of auto-clear is active
 		if ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear )
 		{
 			// Lock transfers section
@@ -945,21 +946,24 @@ void CDownloadsWnd::OnDownloadsSources()
 		{
 			if ( ! pDownload->IsMoving() )
 			{
-				if ( m_nMoreSourcesLimiter )
+				nCount++;						// Simultaneous FMS operations count
+				m_nMoreSourcesLimiter--;		// Overall (Network use) check. 
+				if ( m_nMoreSourcesLimiter >= 0 )
 				{
 					pDownload->FindMoreSources();
-					nCount++;
-					m_nMoreSourcesLimiter--;
 				}
 				else
 				{
+					// Warn user
+					theApp.Message( MSG_SYSTEM, _T("Find more sources unable to start due to excessive network traffic") );
+					// Prevent ed2k bans, client drops, etc.
 					m_tMoreSourcesTimer = GetTickCount();
-					theApp.Message( MSG_SYSTEM, _T("Find more sources unable to start due to exessive network traffic") );
+					if ( m_nMoreSourcesLimiter < -30 ) m_nMoreSourcesLimiter = -30;
 				}
 			}
 		}
 
-		// Only allow 3 FMS operations at once to avoid being blacklisted
+		// Also only allow 3 FMS operations at once to avoid being blacklisted
 		if ( nCount >=3 ) break;
 	}
 	

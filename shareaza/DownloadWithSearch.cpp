@@ -57,7 +57,7 @@ CDownloadWithSearch::~CDownloadWithSearch()
 
 BOOL CDownloadWithSearch::FindSourcesAllowed(DWORD tNow) const
 {
-	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 20*1000 )
+	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 30*1000 )
 		return TRUE;
 	else
 		return FALSE;
