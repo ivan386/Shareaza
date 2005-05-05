@@ -166,6 +166,15 @@ BOOL CDownloadTransferHTTP::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP fragment allocation
 
+bool VerifySelection(CDownloadTransferHTTP* pTransfer)
+{
+	FF::SimpleFragment oFragment( pTransfer->m_nOffset, pTransfer->m_nOffset + pTransfer->m_nLength );
+	FF::SimpleFragmentList::IteratorPair p = pTransfer->m_pSource->m_oAvailable.overlappingRange( oFragment );
+	return pTransfer->m_pSource->m_oAvailable.empty()
+		|| p.first != p.second && p.first->begin() <= pTransfer->m_nOffset
+			&& p.first->end() >= pTransfer->m_nOffset + pTransfer->m_nLength;
+}
+
 BOOL CDownloadTransferHTTP::StartNextFragment()
 {
 	ASSERT( this != NULL );
@@ -221,7 +230,9 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	}
 	else if ( m_pDownload->GetFragment( this ) )
 	{
+		ASSERT( VerifySelection( this ) );
 		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
+		ASSERT( VerifySelection( this ) );
 		
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 			m_nOffset, m_nOffset + m_nLength - 1,
@@ -1077,7 +1088,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		m_nPosition += nLength;
 		m_nDownloaded += nLength;
 		
-		if ( ! bSubmit && m_pDownload->GetProgress() < 0.95f )
+		if ( ! bSubmit /* && m_pDownload->GetProgress() < 0.95f */ )
 		{
 			BOOL bUseful = FALSE;
 			
@@ -1092,10 +1103,13 @@ BOOL CDownloadTransferHTTP::ReadContent()
 			
 			if ( /* m_bInitiated || */ ! bUseful )
 			{
+				return StartNextFragment();
+			}
+/*			{
 				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
 				Close( TS_TRUE );
 				return FALSE;
-			}
+			}*/
 		}
 	}
 	
