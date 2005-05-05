@@ -2026,8 +2026,10 @@
 		still download properly, although some file names could be incorrect.</text>
 		<newline gap="8"/>
 		<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums 
-		if you require additional help.</text>
+		will ensure it works properly in all BitTorrent applications.</text>
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/torrentencoding/">Click here for additional help</link>
+		<text>, or to download software to repair the torrent.</text>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2037,7 +2039,7 @@
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window.</text>
+		services window.</text> 
 	</document>
 
 	<!-- Search help documents -->
