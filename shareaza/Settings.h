@@ -338,6 +338,7 @@ public:
 		DWORD		DefaultTrackerPeriod;		// Delay between tracker contact attempts if one is not specified by tracker
 		int			TorrentCodePage;			// The code page to assume for a .torrent file if it isn't UTF-8
 		int			TorrentExtraKeys;			// Check for '.utf8' keys if there is an encoding error
+		BOOL		TorrentIgnoreErrors;		// Ignore encoding errors in torrents
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
 		DWORD		RequestPipe;

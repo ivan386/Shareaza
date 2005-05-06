@@ -168,10 +168,15 @@ void CTorrentSeedDlg::OnSeed()
 	{
 		if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
 		{
-			m_bCancel = TRUE;
 			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
+			if ( ! Settings.BitTorrent.TorrentIgnoreErrors ) 
+			{
+				m_bCancel = TRUE;
+				return;
+			}
 		}
-		else if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
+
+		if ( Downloads.FindByBTH( &m_pInfo.m_pInfoSHA1 ) == NULL )
 		{
 			// Connect if (we aren't)
 			if ( ! Network.IsConnected() ) Network.Connect();
