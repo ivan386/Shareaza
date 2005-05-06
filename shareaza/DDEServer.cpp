@@ -274,6 +274,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 
 		if ( pTorrent->LoadTorrentFile( pszMessage ) )
 		{
+			if ( pTorrent->HasEncodingError() ) theApp.Message( MSG_SYSTEM, _T("Possible encoding error detected while parsing torrent") );
 			CShareazaURL* pURL = new CShareazaURL( pTorrent );
 			if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
 			return TRUE;

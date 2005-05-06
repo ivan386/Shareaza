@@ -2519,6 +2519,7 @@ STDMETHODIMP CMainWnd::XDropTarget::Drop(IDataObject FAR* pDataObj, DWORD grfKey
 			
 			if ( pTorrent->LoadTorrentFile( m_pFiles.GetHead() ) )
 			{
+				if ( pTorrent->HasEncodingError() ) theApp.Message( MSG_SYSTEM, _T("Possible encoding error detected while parsing torrent") );
 				CShareazaURL* pURL = new CShareazaURL( pTorrent );
 				if ( pThis->PostMessage( WM_URL, (WPARAM)pURL ) ) return S_OK;
 				delete pURL;
