@@ -429,20 +429,36 @@ var
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
-      FirewallFailed := ExpandConstant('{cm:dialog_firewall}')
-      try
-        FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
-        InstallFolder := ExpandConstant('{app}\Shareaza.exe');
-        FirewallObject.ProcessImageFileName := InstallFolder;
-        FirewallObject.Name := 'Shareaza';
-        FirewallObject.Scope := NET_FW_SCOPE_ALL;
-        FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
-        FirewallObject.Enabled := True;
-        FirewallManager := CreateOleObject('HNetCfg.FwMgr');
-        FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
-        FirewallProfile.AuthorizedApplications.Add(FirewallObject);
-      except
-        MsgBox('FirewallFailed', mbInformation, MB_OK);
+      if WizardSilent = True then begin
+        try
+          FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
+          InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+          FirewallObject.ProcessImageFileName := InstallFolder;
+          FirewallObject.Name := 'Shareaza';
+          FirewallObject.Scope := NET_FW_SCOPE_ALL;
+          FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
+          FirewallObject.Enabled := True;
+          FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+          FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+          FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+        except
+        End;
+      End else begin
+        FirewallFailed := ExpandConstant('{cm:dialog_firewall}')
+        try
+          FirewallObject := CreateOleObject('HNetCfg.FwAuthorizedApplication');
+          InstallFolder := ExpandConstant('{app}\Shareaza.exe');
+          FirewallObject.ProcessImageFileName := InstallFolder;
+          FirewallObject.Name := 'Shareaza';
+          FirewallObject.Scope := NET_FW_SCOPE_ALL;
+          FirewallObject.IpVersion := NET_FW_IP_VERSION_ANY;
+          FirewallObject.Enabled := True;
+          FirewallManager := CreateOleObject('HNetCfg.FwMgr');
+          FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
+          FirewallProfile.AuthorizedApplications.Add(FirewallObject);
+        except
+          MsgBox('FirewallFailed', mbInformation, MB_OK);
+        End;
       End;
     End;
   End;
