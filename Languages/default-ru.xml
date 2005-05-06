@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.147"
+		version="2.1.0.149"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2048,8 +2048,10 @@
 		некотрые имена файлов могут быть неправильными.</text>
 		<newline gap="8"/>
 		<text>Большинство программ для создания торрентов должно исправить этот файл торрента. Исправление гарантировало бы,
-		что он бутет работать со всеми программами BitTorrent. Посетите форумы Shareaza, если Вам нужна дополнительная помощь.
-		</text>
+		что он бутет работать со всеми программами BitTorrent.</text>
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/torrentencoding/">Щелкните здесь, если Вам нужна помощь</link>
+		<text> или если хотите загрузить ПО для правки файлов torrent.</text>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
