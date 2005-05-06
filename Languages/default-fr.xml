@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.0.147"
+		version="2.1.0.149"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2031,7 +2031,10 @@ Other:
   	    <newline gap="8"/>
   	    <text>Windows a rapporté un défaut de traduction en décodant le texte dans ce torrent. Il est possible que le torrent soit corrompu, ou juste incorrectement codé. Le torrent peut peut-être télécharger correctement, bien que quelques noms de fichiers pourraient être incorrects.</text>
   	    <newline gap="8"/>
-  	    <text>La plupart des programmes de création de torrent devraient vous permettre de réparer ce torrent, ce qui lui permettra de fonctionner correctement dans toutes les applications BitTorrent. Se rapporter aux forums de Shareaza si vous avez besoin d'une aide additionnelle.</text>
+  	    <text>La plupart des programmes de création de torrent devraient vous permettre de réparer ce torrent, ce qui lui permettra de fonctionner correctement dans toutes les applications BitTorrent.</text>
+		<newline gap="8"/> 
+        <link target="http://www.shareaza.com/torrentencoding/">Cliquez ici pour une aide additionnelle</link> 
+        <text>, ou pour télécharger le logiciel pour réparer le torrent.</text> 
   	</document>
 		
 	<document name="GeneralHelp.DonkeyServerList">
