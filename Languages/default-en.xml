@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.147"
+		version="2.1.0.149"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2057,9 +2057,11 @@
 		still download properly, although some file names could be incorrect.</text>
 		<newline gap="8"/>
 		<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums 
-		if you require additional help.</text>
-	</document>
+		will ensure it works properly in all BitTorrent applications.</text>
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/torrentencoding/">Click here for additional help</link>
+		<text>, or to download software to repair the torrent.</text>
+</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Your eDonkey server list is empty</text>
