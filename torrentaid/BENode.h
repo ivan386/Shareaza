@@ -94,9 +94,9 @@ public:
 	inline void SetString(LPCTSTR psz)
 	{
 		Clear();
-		m_nType		= beString;
-		m_nValue	= _tcslen( psz );
+		m_nType		= beString;	
 		m_pValue	= MakeStr( psz, FALSE );
+		m_nValue	= strlen( (LPCSTR)m_pValue );
 	}
 	
 	inline void SetString(LPCVOID pString, DWORD nLength)
