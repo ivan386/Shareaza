@@ -23,7 +23,6 @@
 #include "TorrentWizard.h"
 #include "TorrentBuilder.h"
 #include "PageCommandline.h"
-#include ".\pagecommandline.h"
 //#include "PagePackage.h"
 
 

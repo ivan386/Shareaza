@@ -146,7 +146,8 @@ void CTorrentBuilder::Stop()
 	if ( m_hThread == NULL ) return;
 	m_bAbort = TRUE;
 	
-	for ( int nAttempt = 5 ; nAttempt > 0 ; nAttempt-- )
+	int nAttempt = 5;
+	for ( nAttempt ; nAttempt > 0 ; nAttempt-- )
 	{
 		DWORD nCode = 0;
 		if ( ! GetExitCodeThread( m_hThread, &nCode ) || nCode != STILL_ACTIVE ) break;
@@ -477,7 +478,8 @@ BOOL CTorrentBuilder::WriteOutput()
 		int nCommonPath = 32000;
 		int nFile = 0;
 		
-		for ( POSITION pos = m_pFiles.GetHeadPosition() ; pos ; nFile++ )
+		POSITION pos = m_pFiles.GetHeadPosition();
+		for ( ; pos ; nFile++ )
 		{
 			CString strThis = m_pFiles.GetNext( pos );
 			
@@ -503,7 +505,8 @@ BOOL CTorrentBuilder::WriteOutput()
 		
 		nCommonPath ++;
 		
-		for ( pos = m_pFiles.GetHeadPosition(), nFile = 0 ; pos ; nFile++ )
+		pos = m_pFiles.GetHeadPosition();
+		for ( nFile = 0 ; pos ; nFile++ )
 		{
 			CString strFile = m_pFiles.GetNext( pos );
 			CBENode* pFile = pFiles->Add( NULL, NULL );

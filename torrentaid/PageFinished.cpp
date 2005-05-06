@@ -284,15 +284,37 @@ void CFinishedPage::OnTorrentCopy()
 	{
 		CString strText;
 		m_wndTorrentName.GetWindowText( strText );
-		
-		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strText.GetLength() + 1 );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, (LPCSTR)strText.GetBuffer(), strText.GetLength() + 1 );
-		GlobalUnlock( hMem );
-		
-		EmptyClipboard();
-		SetClipboardData( CF_TEXT, hMem );
-		CloseClipboard();
+		OSVERSIONINFO pVersion;
+		pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx( &pVersion );
+
+		if ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT )
+		{
+			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strText.GetLength() * 2 + 1 );
+			LPVOID pMem = GlobalLock( hMem );
+			CopyMemory( pMem, (LPCTSTR)strText.GetBuffer(), strText.GetLength() * 2 + 1 );
+			GlobalUnlock( hMem );
+			
+			EmptyClipboard();
+			SetClipboardData( CF_UNICODETEXT, hMem );
+			CloseClipboard();
+		}
+		else
+		{
+			int nLen = WideCharToMultiByte( CP_ACP,  0, (LPCTSTR)strText.GetBuffer(), -1, NULL, 0, NULL, NULL );
+			LPSTR pStr	= new CHAR[ nLen + 1 ];
+			WideCharToMultiByte( CP_ACP, 0, (LPCTSTR)strText.GetBuffer(), -1, pStr, nLen, NULL, NULL );
+			pStr[ nLen ] = 0;
+			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nLen + 1 );
+			LPVOID pMem = GlobalLock( hMem );
+			CopyMemory( pMem, pStr, nLen + 1 );
+			GlobalUnlock( hMem );
+			
+			EmptyClipboard();
+			SetClipboardData( CF_TEXT, hMem );
+			CloseClipboard();
+			delete pStr;
+		}
 	}
 }
 
