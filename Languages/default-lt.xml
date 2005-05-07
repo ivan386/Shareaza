@@ -2072,7 +2072,7 @@ right quote	&#147;
 		kad ji deramai dirbs visose BitTorrent programose.</text>
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/torrentencoding/">Spauskite čia, jei reikalinga pagalba</link>
-		<text> arba jei norite parsisiųsti torrent bylų taisymo programų.</text>
+		<text>&#160;arba jei norite parsisiųsti torrent bylų taisymo programų.</text>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">

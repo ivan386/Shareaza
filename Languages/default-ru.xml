@@ -2051,7 +2051,7 @@
 		что он бутет работать со всеми программами BitTorrent.</text>
 		<newline gap="8"/>
 		<link target="http://www.shareaza.com/torrentencoding/">Щелкните здесь, если Вам нужна помощь</link>
-		<text> или если хотите загрузить ПО для правки файлов torrent.</text>
+		<text>&#160;или если хотите загрузить ПО для правки файлов torrent.</text>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
