@@ -4096,9 +4096,9 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control/>
 		<control caption="Onvolledig:"/>
 		<control/>
-		<control caption="Indien nodig|Wanneer verhouding over 100% is|Alleen op verzoek|Nooit"/>
-		<control caption="Start nieuwe download verplaatsingen:"/>
 		<control caption="Verplaatsing:"/>
+		<control caption="Start nieuwe download verplaatsingen:"/>
+		<control caption="Indien nodig|Wanneer verhouding over 100% is|Alleen op verzoek|Nooit"/>
 		<control caption="_Bestanden:"/>
 		<control/>
 		<control caption="_Verversen"/>
