@@ -5720,7 +5720,7 @@ BEGIN
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
     ID_TOOLS_MERCORA        "Start P2P Radio"
-    ID_HELP_FIREWALLS       "Get help configuring your router or firewall."
+    ID_HELP_ROUTER          "Get help configuring your router or firewall."
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
     ID_HELP_SECURITY        "Help protecting your system from hostile programs"
 END

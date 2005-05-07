@@ -166,7 +166,16 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_WEB_1, OnHelpWeb1)
 	ON_COMMAND(ID_HELP_WEB_2, OnHelpWeb2)
 	ON_COMMAND(ID_HELP_WEB_3, OnHelpWeb3)
+	ON_COMMAND(ID_HELP_WEB_4, OnHelpWeb4)
+	ON_COMMAND(ID_HELP_WEB_5, OnHelpWeb5)
+	ON_COMMAND(ID_HELP_WEB_6, OnHelpWeb6)
 	ON_COMMAND(ID_HELP_FAQ, OnHelpFaq)
+	ON_COMMAND(ID_HELP_GUIDE, OnHelpGuide)
+	ON_COMMAND(ID_HELP_FORUMS, OnHelpForums)
+	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
+	ON_COMMAND(ID_HELP_ROUTER, OnHelpRouter)
+	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
+	ON_COMMAND(ID_HELP_CODEC, OnHelpCodec)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAFFIC, OnUpdateViewTraffic)
 	ON_COMMAND(ID_VIEW_TRAFFIC, OnViewTraffic)
 	ON_COMMAND(ID_WINDOW_CASCADE, OnWindowCascade)
@@ -174,9 +183,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_TRAY_OPEN, OnTrayOpen)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_AUTO_CLOSE, OnUpdateNetworkAutoClose)
 	ON_COMMAND(ID_NETWORK_AUTO_CLOSE, OnNetworkAutoClose)
-	ON_COMMAND(ID_HELP_WEB_4, OnHelpWeb4)
-	ON_COMMAND(ID_HELP_WEB_5, OnHelpWeb5)
-	ON_COMMAND(ID_HELP_WEB_6, OnHelpWeb6)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_DOWNLOAD, OnUpdateToolsDownload)
 	ON_COMMAND(ID_TOOLS_DOWNLOAD, OnToolsDownload)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SECURITY, OnUpdateViewSecurity)
@@ -231,8 +237,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_LIBRARY_FOLDERS, OnLibraryFolders)
 	ON_COMMAND(ID_HELP_WARNINGS, OnHelpWarnings)
 	ON_COMMAND(ID_HELP_PROMOTE, OnHelpPromote)
-	ON_COMMAND(ID_HELP_FIREWALLS, OnHelpFirewalls)
-	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_G2, OnUpdateNetworkG2)
 	ON_COMMAND(ID_NETWORK_G2, OnNetworkG2)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_G1, OnUpdateNetworkG1)
@@ -241,7 +245,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_ED2K, OnNetworkED2K)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_BASIC, OnUpdateViewBasic)
 	ON_COMMAND(ID_VIEW_BASIC, OnViewBasic)
-	ON_COMMAND(ID_HELP_FORUMS, OnHelpForums)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_HASH_PRIORITY, OnUpdateLibraryHashPriority)
 	ON_COMMAND(ID_LIBRARY_HASH_PRIORITY, OnLibraryHashPriority)
 	ON_UPDATE_COMMAND_UI(ID_WINDOW_NAVBAR, OnUpdateWindowNavBar)
@@ -2260,6 +2263,14 @@ void CMainWnd::OnMediaCommand()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd help menu
 
+void CMainWnd::OnHelpAbout() 
+{
+	CAboutDlg dlg;
+	dlg.DoModal();
+	Neighbours.IsG1UltrapeerCapable( TRUE );
+	Neighbours.IsG2HubCapable( TRUE );
+}
+
 void CMainWnd::OnHelpHomepage() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
@@ -2267,10 +2278,53 @@ void CMainWnd::OnHelpHomepage()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
+void CMainWnd::OnHelpWeb1() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link1/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpWeb2() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link2/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpWeb3() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link3/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpWeb4() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link4/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpWeb5() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link5/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpWeb6() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
 void CMainWnd::OnHelpFaq() 
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://www.shareaza.com/faq/"),
+		_T("http://www.shareaza.com/help/?faq"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpGuide() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"),
+		_T("http://www.shareaza.com/help/?guide"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2278,6 +2332,31 @@ void CMainWnd::OnHelpForums()
 {
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		_T("http://forums.shareaza.com/"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpUpdate() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"),
+		_T("http://www.shareaza.com/help/update/?Version=") + theApp.m_sVersion,
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpRouter()
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?router"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpSecurity()
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?security"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpCodec()
+{
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?codec/"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2299,58 +2378,6 @@ void CMainWnd::OnHelpPromote()
 		CPromoteDlg dlg;
 		dlg.DoModal();
 	}
-}
-
-void CMainWnd::OnHelpFirewalls()
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/routers/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpSecurity()
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/securityhelp/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpWeb1() 
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.zeropaid.com/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpWeb2() 
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.p2pforums.com/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpWeb3() 
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.slyck.com/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpWeb4() 
-{
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.napjunk.net/"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpWeb5() 
-{
-}
-
-void CMainWnd::OnHelpWeb6() 
-{
-}
-
-void CMainWnd::OnHelpAbout() 
-{
-	CAboutDlg dlg;
-	dlg.DoModal();
-	Neighbours.IsG1UltrapeerCapable( TRUE );
-	Neighbours.IsG2HubCapable( TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////

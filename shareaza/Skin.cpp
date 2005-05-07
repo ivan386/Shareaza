@@ -1461,6 +1461,8 @@ void CSkin::CreateDefault()
 	LoadFromResource( NULL, IDR_XML_DEFAULT );
 	
 	// Copying
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_GUIDE );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_UPDATE );
 	
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_1 );
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_2 );

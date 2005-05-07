@@ -152,7 +152,16 @@ protected:
 	afx_msg void OnHelpWeb1();
 	afx_msg void OnHelpWeb2();
 	afx_msg void OnHelpWeb3();
+	afx_msg void OnHelpWeb4();
+	afx_msg void OnHelpWeb5();
+	afx_msg void OnHelpWeb6();
 	afx_msg void OnHelpFaq();
+	afx_msg void OnHelpGuide();
+	afx_msg void OnHelpForums();
+	afx_msg void OnHelpUpdate();
+	afx_msg void OnHelpRouter();
+	afx_msg void OnHelpSecurity();
+	afx_msg void OnHelpCodec();
 	afx_msg void OnUpdateViewTraffic(CCmdUI* pCmdUI);
 	afx_msg void OnViewTraffic();
 	afx_msg void OnWindowCascade();
@@ -160,9 +169,6 @@ protected:
 	afx_msg void OnTrayOpen();
 	afx_msg void OnUpdateNetworkAutoClose(CCmdUI* pCmdUI);
 	afx_msg void OnNetworkAutoClose();
-	afx_msg void OnHelpWeb4();
-	afx_msg void OnHelpWeb5();
-	afx_msg void OnHelpWeb6();
 	afx_msg void OnUpdateToolsDownload(CCmdUI* pCmdUI);
 	afx_msg void OnToolsDownload();
 	afx_msg void OnUpdateViewSecurity(CCmdUI* pCmdUI);
@@ -221,8 +227,6 @@ protected:
 	afx_msg void OnLibraryFolders();
 	afx_msg void OnHelpWarnings();
 	afx_msg void OnHelpPromote();
-	afx_msg void OnHelpFirewalls();
-	afx_msg void OnHelpSecurity();
 	afx_msg void OnUpdateNetworkG2(CCmdUI* pCmdUI);
 	afx_msg void OnNetworkG2();
 	afx_msg void OnUpdateNetworkG1(CCmdUI* pCmdUI);
@@ -231,7 +235,6 @@ protected:
 	afx_msg void OnNetworkED2K();
 	afx_msg void OnUpdateViewBasic(CCmdUI* pCmdUI);
 	afx_msg void OnViewBasic();
-	afx_msg void OnHelpForums();
 	afx_msg void OnUpdateLibraryHashPriority(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryHashPriority();
 	afx_msg void OnUpdateWindowNavBar(CCmdUI *pCmdUI);
