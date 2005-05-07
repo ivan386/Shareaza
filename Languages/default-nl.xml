@@ -8,7 +8,7 @@
 	o with umlaut:  &#246;
 	u with umlaut:  &#252;-->
 <!-- Team Dutch translators Shareaza current members are:
-Maybeme, Ray-Man, Jonne, Joren=- -->
+Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 <!-- Manifest -->
@@ -16,7 +16,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		author="Team Dutch translators Shareaza"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
-		version="2.1.0.141"
+		version="2.1.0.147"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -78,7 +78,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_SEARCH_PANEL" text="Zoek Paneel"/>
 		<button id="ID_SEARCH_DETAILS" text="Details Tonen"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Geef hier een aantal woorden om de resultaten te filteren"/>
+		<label text="Filter:" tip="Geef hier een aantal woorden op om de resultaten te filteren"/>
 		<control id="107" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -86,10 +86,10 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_SEARCH_DOWNLOAD" text="Downloaden"/>
 		<button id="ID_BROWSE_LAUNCH" text="Gebruiker Bekijken"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Zoek Paneel"/>
+		<button id="ID_SEARCH_PANEL" text="Zoekpaneel"/>
 		<button id="ID_SEARCH_DETAILS" text="Details Tonen"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Geef hier een aantal woorden om de resultaten te filteren"/>
+		<label text="Filter:" tip="Geef hier een aantal woorden op om de resultaten te filteren"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -103,7 +103,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_SEARCH_PANEL" text="Zoek Paneel"/>
 		<button id="ID_SEARCH_DETAILS" text="Details Tonen"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Geef hier een aantal woorden om de resultaten te filteren"/>
+		<label text="Filter:" tip="Geef hier een aantal woorden op om de resultaten te filteren"/>
 		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -122,7 +122,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Details Tonen"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Geef hier een aantal woorden om de resultaten te filteren"/>
+		<label text="Filter:" tip="Geef hier een aantal woorden op om de resultaten te filteren"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -135,7 +135,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Details Tonen"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Geef hier een aantal woorden om de resultaten te filteren"/>
+		<label text="Filter:" tip="Geef hier een aantal woorden op om de resultaten te filteren"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -216,7 +216,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Bestanden Delen..."/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -224,7 +224,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album Maken..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album Verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -232,7 +232,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Album Maken..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Album Verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -240,7 +240,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of Afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan Afspeellijst"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -254,7 +254,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_LIBRARY_COPY" text="Kopiëren"/>
 		<button id="ID_LIBRARY_DELETE" text="Verwijderen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -263,7 +263,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan Afspeellijst"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album Afspelen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -274,7 +274,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -283,7 +283,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Alle Bestanden Downloaden"/>
 		<rightAlign/>
-		<label text="Zoeken:" tip="Geef een paar woorden om je bibliotheek te doorzoeken"/>
+		<label text="Zoeken:" tip="Geef een paar woorden op om je bibliotheek te doorzoeken"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
 	</toolbar>
@@ -368,7 +368,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<button id="ID_HITMONITOR_PAUSE" text="Pauzeren"/>
 		<button id="ID_SEARCH_CLEAR" text="Wissen"/>
 		<rightAlign/>
-		<label text="Filteren:" tip="Geef een paar woorden om het resultaat mee te filteren"/>
+		<label text="Filteren:" tip="Geef een paar woorden op om het resultaat mee te filteren"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Meer..."/>
 	</toolbar>
@@ -1657,10 +1657,10 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 			<text id="TorrentsOne" format="b">1 uitgezaaide torrent</text>
 			<text id="TorrentsMany" format="b">%i uitgezaaide torrents</text>
 			<newline gap="4"/>
-			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Herzaai %s</link>
 			<newline gap="4"/>
 			<group id="1">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Zaai een andere torrent uit</link>
 			</group>
 			<group id="2">
 				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Een torrent uitzaaien</link>
@@ -1694,7 +1694,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Algemeen:</link>
 		<gap size="4"/>
-		<text>Instellingen voor de gebruikersinterface zoals tooltips, minimaliseren, getalsformaten, meldingen, enz.</text>
+		<text>Instellingen voor de gebruikersomgeving zoals tooltips, minimaliseren, getalformaten, meldingen, enz.</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CLibrarySettingsPage" format="b">Bibliotheek:</link>
@@ -1709,7 +1709,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 
 		<link target="raza:page:CCommunitySettingsPage" format="b">Gemeenschap:</link>
 		<gap size="4"/>
-		<text>Je profiel en instelllingen voor het chatten en instant messaging.</text>
+		<text>Beheer je profiel en je instelllingen voor het chatten en instant messaging.</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CWebSettingsPage" format="b">Internet:</link>
@@ -1961,9 +1961,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<text>Er zijn geen bronnen bekend voor deze download, dus Shareaza zoekt alle verbonden P2P netwerken
 		af naar nieuwe bronnen.  Op het moment dat er bronnen worden gevonden, zal de download automatisch
 		worden gestart.  Shareaza zoekt automatisch naar bronnen, maar je kunt dit process ook versnellen door
-		middel van het commando </text>
-		<text format="b">Zoek Meer Bronnen</text>
-		<text>.</text>
+		middel van het commando </text>	<text format="b">Zoek Meer Bronnen</text><text>.</text>
 		<newline gap="8"/>
 		<text>Helaas komt het in veel gevallen voor dat er geen gebruikers online zijn die het bestand hebben
 		waar jij naar op zoek bent.  Het enige wat je nu kunt doen is om ofwel te wachten totdat er iemand
@@ -1981,7 +1979,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent tracker buiten werking</text>
 		<newline gap="8"/>
-		<text>De BitTorrent tracker voor deze download is buiten werking of functioneert slecht.
+		<text>De BitTorrent Tracker voor deze download is buiten werking of functioneert slecht.
 		Shareaza kan er geen contact mee maken om een lijst met downloadbronnen te ontvangen .</text>
 	</document>
 
@@ -2086,41 +2084,41 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Formuleer de zoekopdracht anders</text>
 		<newline gap="8"/>
-		<text>This search does not contain enough terms to function properly. All searches need
-		a minimum number of valid, alphabetic characters to be able to start.</text>
+		<text>Deze zoekopdracht bezit niet genoeg termen om hem uit te voeren. Alle zoekopdrachten hebben
+		een minimum aantal geldige alfabetische letters nodig om te starten met zoeken.</text>
 		<newline gap="8"/>
-		<text>While common file extentions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used
-		in searches, just the text you enter.</text>
+		<text>Terwijl er bekende bestandsextenties (en nummers) gezocht kunnen worden, moet je toch ook nog
+		andere termen opgeven wanneer je een zoekopdracht start. De punctuatie en vervangingen worden niet gebruikt in
+		zoekopdrachten, enkel de tekst die je invoert.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch3">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Formuleer de zoekopdracht anders</text>
 		<newline gap="8"/>
-		<text>This search seems to contain only common file extentions, or no searchable
-		words.</text>
+		<text>Deze zoekopdracht bezit blijkbaar enkel bekende bestandsextenties of geen opzoekbare
+		woorden.</text>
 		<newline gap="8"/>
-		<text>If you are having trouble creating searches, keep in mind that it's quite similar
-		to a web search. Specific terms or phrases are best- Unique names, titles and
-		keywords.</text>
+		<text>Als je moeilijkheden ondervindt bij het maken van zoekopdrachten, bedenk dat het gelijkaardig is
+		aan een internetzoekopdracht. Specifieke termen of zinnen zijn het best- Unieke namen titels en
+		sleutelwoorden.</text>
 		<newline gap="8"/>
-		<text>General terms cannot be searched for efficiently and may result in poor
-		search performance, as well as high bandwidth use during searches.</text>
+		<text>Standaardtermen kunnen ook niet effeciënt gebruikt worden in zoekopdrachtend en kan leiden tot slechte
+		zoekresultaten en hoog bandbreedteverbruik tijdens de zoekopdracht.</text>
 		<newline gap="8"/>
-		<text>Further help is available on the Shareaza web site.</text>
+		<text>Meer help is beschikbaar op de Shareaza website.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
-		<text format="b">This search cannot be started</text>
+		<text format="b">Deze zoekopdracht kan niet gestart worden</text>
 		<newline gap="8"/>
-		<text>The specified search would probably return a large number of results with adult
-		content, and this has been turned off in the settings. You should either re-phrase the
-		search, or disable the filter.</text>
+		<text>De opgegeven zoekopdracht zou waarschijnlijk een groot aantal resultaten weergeven met
+		volwasseneninhoud, en dit is uitgeschakeld in de instellingen. Je zal de zoekopdracht opnieuw moeten formuleren,
+		of de filter moeten uitschakelen.</text>
 		<newline gap="8"/>
-		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
-		adult content filter.</text>
+		<text>Om de filter uit te schakelen, ga naar Hulpmiddelen &gt; Instellingen &gt; Algemeen en vink de
+		 volwasseneninhoud filter uit.</text>
 	</document>
 
 	<!-- Share help documents -->
@@ -2281,7 +2279,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<tip id="ID_LIBRARY_SCAN" message="Doorzoek de geselecteerde mappen of bestanden naar veranderingen."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Doorzoek je bestanden bibliotheek..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Doorzoek je bestanden bibliotheek..."/>
-	<tip id="ID_LIBRARY_SEED_TORRENT" message="De geselecteerde torrent uitzaaien via BitTorrent."/>
+	<tip id="ID_LIBRARY_SEED_TORRENT" message="De geselecteerde Torrent uitzaaien via BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Selecteer en bekijk alle mappen van je bibliotheek."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="De geselecteerde bestanden al dan niet delen."/>
 	<tip id="ID_LIBRARY_SHARED_FOLDER" message="De geselecteer(de) mappen al dan niet delen."/>
@@ -2393,7 +2391,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Je gebruikersprofiel aanpassen..."/>
 	<tip id="ID_TOOLS_RESKIN" message="De actuele skin opnieuw laden en toepassen."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="De geselecteerde torrent uitzaaien via BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="De geselecteerde Torrent uitzaaien via BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Shareaza instellingen configureren..."/>
 	<tip id="ID_TOOLS_SKIN" message="Selecteer een andere skin voor Shareaza..."/>
 	<tip id="ID_TOOLS_WIZARD" message="Open de Shareaza SnelStart Assistent..."/>
@@ -2547,7 +2545,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<string id="8166" value="Op dit netwerk zoeken:"/>
 	<string id="8167" value="Alle Netwerken"/>
 	<string id="8176" value="Doorzoek het Shareaza netwerk"/>
-	<string id="8177" value="Geef wat trefwoorden om naar te zoeken:"/>
+	<string id="8177" value="Geef wat trefwoorden op om naar te zoeken:"/>
 	<string id="8178" value="Wat voor soort bestand is het?"/>
 	<string id="8179" value="(Zoekgeschiedenis Wissen)"/>
 	<string id="8180" value="Bestand grootte moet zijn"/>
@@ -2799,7 +2797,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<string id="16373" value="Gedeeltelijke bestanden"/>
 	<string id="16374" value="Nieuwe wachtrij"/>
 	<string id="16375" value="Gedeeltelijke"/>
-	<string id="16376" value="Complete Bestanden"/>
+	<string id="16376" value="Alle Bestanden"/>
 	<string id="16377" value="HTTP Bescherming"/>
 	<string id="16384" value="Weet je zeker dat je het bestand &quot;%s&quot; wilt openen?\n\nSommige bestanden kunnen kunnen je computer beschadigen.  Ga eerst na wat voor soort bestand het is, voordat je het opent."/>
 	<string id="16385" value="Je staat op het punt om de metadata van %i bestanden te wijzigen, weet je zeker dat je door wilt gaan?"/>
@@ -3017,7 +3015,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<string id="17481" value="BitTorrent beschrijvend bestand (Descriptor) ontvangen: &quot;%s&quot;"/>
 	<string id="17482" value="Niet mogelijk om het prefetched BitTorrent bestand &quot;%s&quot; te ontleden."/>
 	<string id="17483" value="Fout van BitTorrent tracker voor &quot;%s&quot; : &quot;%s&quot;."/>
-	<string id="17484" value="Fout bij het ontleden van antwoord BitTorrent tracker."/>
+	<string id="17484" value="Fout bij het ontleden van het antwoord van de BitTorrent tracker."/>
 	<string id="17485" value="Antwoord BitTorrent tracker ontvangen voor &quot;%s&quot;, %i nieuwe bronnen."/>
 	<string id="17486" value="BitTorrent cliënt koppeling met %s wordt aangemaakt..."/>
 	<string id="17487" value="BitTorrent koppeling met %s vastgelegd, bezig met handen schudden..."/>
@@ -3039,7 +3037,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<string id="18500" value="Je hebt een SHA1 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de SHA1 hash nu wilt veranderen?"/>
 	<string id="18501" value="Je hebt een root tiger-tree hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de tiger-tree root hash nu wilt veranderen?"/>
 	<string id="18502" value="Je hebt een eDonkey2000 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de eDonkey2000 hash nu wilt veranderen?"/>
-	<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten?  Alle gedownloade data zullen worden beschouwd als onbetrouwbaar, en opgeslagen hashtrees and hashsets zullen worden verwijderd."/>
+	<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten?  Alle gedownloade data zal als onbetrouwbaar worden beschouwd, en opgeslagen hashtrees and hashsets zullen worden verwijderd."/>
 	<string id="18504" value="Weet je zeker dat je alle bronnen wilt vergeten voor de geselecteerde download?"/>
 	<string id="18505" value="Geef alsjebleift een geldig bereik voor het wissen.  Het &quot;van&quot; veld is de eerste byte die moet worden gewist, het &quot;tot&quot; veld is de laatste byte die moet worden gewist."/>
 	<string id="18506" value="Het is niet mogelijk om het geselecteerde bereik van de download te wissen omdat geen deel van het bereik aanwezig is."/>
@@ -3085,7 +3083,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<string id="20130" value="bronnen"/><!-- from 11 to 19 -->
 	<string id="20131" value="bronnen"/><!-- from 2 to 4 -->
 	<string id="20132" value="bronnen"/><!-- from 5 to 9 -->
-	<string id="20133" value="Ongeintresseerd"/>
+	<string id="20133" value="Ongeïnteresseerd"/>
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="Volgende"/>
 	<string id="20136" value="Q"/>
@@ -3212,6 +3210,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	</dialog>
 
 	<dialog name="CInternetSettingsGroup" caption="Verkeer"/>
+
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Verbinding">
 		<control caption="_Ingaande Adres:"/>
 		<control caption="Adres:"/>
@@ -3240,29 +3239,29 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 		<control caption="Sla _Voltooide bestanden hier op:"/>
 		<control/><control/>
-		<control caption="Sla _Incomplete bestanden hier op:"/>
+		<control caption="Sla Tijdelijke/_Incomplete bestanden hier op:"/>
 		<control/><control/>
 		<control caption="_Aantal Downloads:"/>
 		<control caption="Max. Bestanden:"/>
 		<control/><control/>
 		<control caption="Max. overdrachten:"/>
 		<control/><control/>
-		<control caption="Aantal per Bestand:"/>
+		<control caption="Overdrachten per Bestand:"/>
 		<control/><control/>
 		<control caption="_Limieten:"/>
 		<control caption="Totale Snelheid:"/>
 		<control/>
-		<control caption="Maximale wachtrijlengte:"/>
+		<control caption="Max. Wachtrij lengte:"/>
 		<control/><control/>
 		<control caption="Alleen up- en downloaden met verbonden netwerken."/>
 	</dialog>
 
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Opties:"/>
-		<control caption="Deel onvolledige downloads"/>
-		<control caption="Beperk delen in Hub-modus"/>
-		<control caption="Deel voorvertonings bestanden"/>
-		<control caption="Limiet per unieke gasthr:"/>
+		<control caption="Deel niewe gedeeltelijke downloads"/>
+		<control caption="Limiteer Delen in hub modus"/>
+		<control caption="Deel nieuwe voorvertoningen"/>
+		<control caption="Limiet per gastheer:"/>
 		<control/><control/>
 		<control caption="_Gebruikers-Agent Filter:"/>
 		<control/>
@@ -3278,7 +3277,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="_Nieuw..."/>
 		<control caption="_Bewerken..."/>
 		<control caption="_Verwijderen"/>
-		<control caption="(Veranderingen werken meteen)"/>
+		<control caption="(veranderingen werken meteen)"/>
 	</dialog>
 
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Web Interface">
@@ -3298,7 +3297,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="_Opties:"/>
 		<control caption="_Activeer Planner"/>
 		<control/><control/>
-		<control caption="_Verminder netwerken indien beperkt"/>
+		<control caption="_Verbind alleen met G2 indien gelimiteerd."/>
 		<control caption="Legenda:"/>
 		<control caption="Zon"/>
 		<control caption="Maa"/>
@@ -3323,11 +3322,11 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="Verbinden met Gnutella2 (G2)"/>
 		<control caption="Gnutella2 Instellingen"/>
 		<control caption="eDonkey2000 Netwerk:"/>
-		<control caption="eDonkey2000 is een populair, op servers gebaseerd netwerk.  Het heeft minder opties dan Gnutella2, maar een indrukwekkende bestandscollectie."/>
+		<control caption="eDonkey2000 is een populair, op servers gebaseerd netwerk.  Het heeft minder opties dan Gnutella2, maar een indrukwekkende bestandencollectie."/>
 		<control caption="Verbinden met eDonkey2000"/>
 		<control caption="eDonkey2000 Instellingen"/>
 		<control caption="Originele Gnutella Netwerk:"/>
-		<control caption="Minder rijk aan eigenschappen dan Gnutella2 en minder bestanden dan eDonkey2000, maar toch blijft dit een waardevolle bron."/>
+		<control caption="Is minder rijk aan eigenschappen dan Gnutella2 en heeft minder bestanden dan eDonkey2000, maar toch blijft dit een waardevolle bron."/>
 		<control caption="Verbinden met het Originele Gnutella"/>
 		<control caption="Gnutella1 Instellingen"/>
 	</dialog>
@@ -3336,7 +3335,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="Gnutella2 Netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella2"/>
 		<control caption="Vandaag verbinden met Gnutella2"/>
-		<control caption="Mode:"/>
+		<control caption="Modus:"/>
 		<control caption="Optimaal|Leaf|Hub"/>
 		<control caption="G_2 Verbindingen:"/>
 		<control caption="Leaf naar Hub:"/>
@@ -3348,7 +3347,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="Gnutella1 Network:"/>
 		<control caption="Altijd verbinden met Gnutella1"/>
 		<control caption="Vandaag verbinden met Gnutella1"/>
-		<control caption="Mode:"/>
+		<control caption="Modus:"/>
 		<control caption="Optimaal|Leaf|Ultrapeer"/>
 		<control caption="G_1 Verbindingen:"/>
 		<control caption="Leaf naar Ultrapeer:"/>
@@ -3371,9 +3370,9 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control caption="Zoek bekende verre servers in de server cache:"/>
 		<control caption="Stop met zoeken na:"/>
 		<control/><control/>
-		<control caption="zoek resultaten."/>
+		<control caption="Zoekresultaten."/>
 		<control caption="_Cliënt Link Verbindingen:"/>
-		<control caption="Verbinden met niet meer dan:"/>
+		<control caption="Verbindt met niet meer dan:"/>
 		<control/><control/>
 		<control caption="andere eDonkey cliënten."/>
 		<control caption="eDonkey2000 _Hulpmiddelen:"/>
@@ -3384,15 +3383,15 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	</dialog>
 
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
-		<control caption="_Interface:"/>
+		<control caption="_Omgeving:"/>
 		<control caption="Laat extra BitTorrent besturingselementen zien"/>
 		<control caption="_Download Verbindingen:"/>
 		<control/><control/>
 		<control caption="Torrents tegelijkertijd"/>
 		<control/><control/>
 		<control caption="Cliënt verbindingen"/>
-		<control caption="Verwijder gedownloade torrents"/>
-		<control caption="Wanneer de deel verhouding de waarde bereikt"/>
+		<control caption="Wis gedownloade Torrents als de"/>
+		<control caption="deelverhouding de waarde bereikt"/>
 		<control/><control/>
 		<control caption="_EndGame:"/>
 		<control caption="Activeer EndGame modus bij het afmaken van torrents"/>
@@ -3448,9 +3447,9 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control/>
 		<control caption="_Ingangs Criteria:"/>
 		<control caption="Alleen gedeeltelijke bestanden"/>
-		<control caption="Minimum bestandsgrootte:"/>
+		<control caption="Minimale bestandsgrootte:"/>
 		<control/>
-		<control caption="Maximum bestandsgrootte:"/>
+		<control caption="Maximale bestandsgrootte:"/>
 		<control/>
 		<control caption="Gemarkeerd als:"/>
 		<control/>
@@ -3481,7 +3480,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
 		<control caption="Welkom bij Shareaza!"/>
 		<control caption="Als je nog nooit Shareaza of een andere P2P cliënt hebt gebruikt, kan deze SnelStart Assistent je in een paar eenvoudige stappen helpen met het installeren."/>
-		<control caption="Meer ervaren gebruikers kunnen alle opties van Shareaza ook direct bereiken via het Hulpmiddelen menu.  Druk op &quot;sluiten&quot; om de assistent te verlaten wanneer je maar wilt."/>
+		<control caption="Meer ervaren gebruikers kunnen alle opties van Shareaza ook direct bereiken via het Hulpmiddelen menu.  Druk op &quot;Sluiten&quot; om de assistent te verlaten wanneer je maar wilt."/>
 		<control caption="Deze assistent zal je helpen met:"/>
 		<control/>
 		<control caption="Shareaza te vertellen over je Internet verbinding"/>
@@ -4080,7 +4079,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBu" caption="BitTorrent Tracker Venster">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Tracker Venster">
 		<control caption="Torrent _Informatie:"/>
 		<control caption="Naam:"/>
 		<control/>
@@ -4097,10 +4096,10 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 		<control/>
 		<control caption="Onvolledig:"/>
 		<control/>
-		<control caption="_Bestanden:"/>
-		<control caption="Verplaatsing:"/>
 		<control caption="Indien nodig|Wanneer verhouding over 100% is|Alleen op verzoek|Nooit"/>
 		<control caption="Start nieuwe download verplaatsingen:"/>
+		<control caption="Verplaatsing:"/>
+		<control caption="_Bestanden:"/>
 		<control/>
 		<control caption="_Verversen"/>
 		<control/>
@@ -4157,7 +4156,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Bestand"/>
-		<column from="Extension" to=""/>
+		<column from="Extension" to="Extensie"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Folder" to="Map"/>
 		<column from="Hits" to=""/>
@@ -4239,7 +4238,7 @@ Maybeme, Ray-Man, Jonne, Joren=- -->
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Bestand"/>
-		<column from="Extension" to="Soort"/>
+		<column from="Extension" to="Extensie"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Rating" to="Waardering"/>
 		<column from="Status" to=""/>
