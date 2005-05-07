@@ -4090,7 +4090,7 @@
 		<control caption="Неполных:"/>
 		<control/>
 		<control caption="Пересылки:"/>
-		<control caption="Начать новые пересылки:"/>
+		<control caption="Начать новые загрузки:"/>
 		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
 		<control caption="_Файлы:"/>
 		<control/>

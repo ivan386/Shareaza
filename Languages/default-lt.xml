@@ -4109,7 +4109,7 @@ right quote	&#147;
 		<control caption="Gavėjų:"/>
 		<control/>
 		<control caption="Siuntimai:"/>
-		<control caption="Pradėti naujus siuntimus:"/>
+		<control caption="Pradėti naujus atsisiuntimus:"/>
 		<control caption="Kada reikia|Kai santykis virš 100%|Tik kai prašoma|Niekada"/>
 		<control caption="_Bylos:"/>
 		<control/>
