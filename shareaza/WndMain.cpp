@@ -2280,37 +2280,37 @@ void CMainWnd::OnHelpHomepage()
 
 void CMainWnd::OnHelpWeb1() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link1/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link1"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb2() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link2/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link2"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb3() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link3/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link3"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb4() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link4/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link4"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb5() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link5/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link5"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb6() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/external/?link6"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2356,7 +2356,7 @@ void CMainWnd::OnHelpSecurity()
 
 void CMainWnd::OnHelpCodec()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?codec/"),
+	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://www.shareaza.com/help/?codec"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
