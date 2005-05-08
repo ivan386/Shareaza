@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,149
- PRODUCTVERSION 2,1,0,149
+ FILEVERSION 2,1,0,150
+ PRODUCTVERSION 2,1,0,150
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 0, 149"
+            VALUE "FileVersion", "2, 1, 0, 150"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 0, 149"
+            VALUE "ProductVersion", "2, 1, 0, 150"
         END
     END
     BLOCK "VarFileInfo"
@@ -240,7 +240,7 @@ BEGIN
     BEGIN
         MENUITEM "Shareaza Users &Guide",       ID_HELP_FAQ
         MENUITEM "Shareaza &Forums",            ID_HELP_FORUMS
-        MENUITEM "Router Help",                 33117
+        MENUITEM "Router Help",                 ID_TOOLS_SEEDTORRENT
         MENUITEM "Security Help",               ID_HELP_SECURITY
         MENUITEM SEPARATOR
         POPUP "&Websites"
@@ -1305,21 +1305,23 @@ BEGIN
     LTEXT           "Show rates in:",IDC_STATIC,15,70,56,12,SS_CENTERIMAGE
     COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,55,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,32
+    GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,38
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,108,148,10
-    GROUPBOX        "&Search:",IDC_STATIC,7,130,160,83
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,104,148,10
+    CONTROL         "Display simple progress bar",IDC_DOWNLOADS_SIMPLEBAR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,117,148,10
+    GROUPBOX        "&Search:",IDC_STATIC,7,134,160,75
     CONTROL         "Expand multi-source files by default",
                     IDC_EXPAND_MATCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    16,145,148,10
+                    16,150,148,10
     CONTROL         "Switch to Transfers view on download",
                     IDC_SWITCH_TO_TRANSFERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,160,148,10
+                    WS_TABSTOP,15,165,148,10
     CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,175,148,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,179,148,10
     CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,190,148,10
-    GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,120,WS_GROUP
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,193,148,10
+    GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,126,WS_GROUP
     CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
                     LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
                     WS_BORDER | WS_GROUP | WS_TABSTOP,180,20,85,65
@@ -1331,7 +1333,7 @@ BEGIN
     LTEXT           "Opacity:",IDC_STATIC,180,105,30,12,SS_CENTERIMAGE
     CONTROL         "Slider1",IDC_TIP_ALPHA,"msctls_trackbar32",TBS_TOP | 
                     TBS_NOTICKS | WS_TABSTOP,210,105,60,15
-    GROUPBOX        "&Tray:",IDC_STATIC,170,130,105,83,WS_GROUP
+    GROUPBOX        "&Tray:",IDC_STATIC,170,134,105,75,WS_GROUP
     LTEXT           "When I click close:",IDC_STATIC,178,145,94,10,
                     SS_CENTERIMAGE
     COMBOBOX        IDC_CLOSE_MODE,180,160,85,55,CBS_DROPDOWNLIST | 
@@ -5079,6 +5081,7 @@ BEGIN
     ID_HELP_WEB_1           "Visit Zeropaid.com"
     ID_HELP_WEB_2           "Visit P2PForums.com"
     ID_HELP_WEB_3           "Visit Slyck.com"
+    ID_HELP_WEB_4           "Visit NapJunk.net"
     ID_HELP_FAQ             "Visit the Shareaza Users Guide."
     ID_SEARCH_CHAT          "Open a chat session with the selected user."
     ID_TRAFFIC_GRID         "Display grid lines."
@@ -5143,7 +5146,6 @@ BEGIN
     ID_LIBRARY_SEARCH       "Search your file library..."
     ID_TRAFFIC_WINDOW       "Open a new graph window..."
     ID_NEIGHBOURS_CHAT      "Open a chat session with the selected user."
-    ID_HELP_WEB_4           "Visit NapJunk.net"
     ID_SEARCH_STOP          "Stop receiving results in this window."
     ID_TOOLS_DOWNLOAD       "Start downloading a new file or BitTorrent torrent..."
     ID_DOWNLOADS_URL        "Add a source URL to the selected download..."
@@ -5720,14 +5722,14 @@ BEGIN
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
     ID_TOOLS_MERCORA        "Start P2P Radio"
-    ID_HELP_ROUTER          "Get help configuring your router or firewall."
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
-    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
 END
 
 STRINGTABLE 
 BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
+    ID_HELP_ROUTER          "Get help configuring your router or firewall."
+    ID_HELP_SECURITY        "Help protecting your system from hostile programs"
 END
 
 STRINGTABLE 

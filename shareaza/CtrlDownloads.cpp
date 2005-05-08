@@ -1,8 +1,8 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/04/13 18:38:31 $"
-//	Revision:		"$Revision: 1.31 $"
+//	Date:			"$Date: 2005/05/08 11:46:46 $"
+//	Revision:		"$Revision: 1.32 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -975,7 +975,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 0, 1 );
 				dc.Draw3dRect( &rcCell, RGB( 50, 50, 50 ), RGB( 50, 50, 50 ) );
 				rcCell.DeflateRect( 1, 1 );
-				CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
+				if ( Settings.Downloads.SimpleBar )
+					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
+				else
+					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 			{

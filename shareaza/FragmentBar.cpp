@@ -141,49 +141,49 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 
 void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural)
 {
-	if ( Settings.Downloads.SimpleBar )
-	{
-		pDC->FillSolidRect( prcBar, crNatural );		
+	QWORD nvOffset, nvLength;
+	BOOL bvSuccess;
 		
-		if ( pDownload->IsStarted() )
-		{
-			DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
-				GetSysColor( COLOR_ACTIVECAPTION ), FALSE );
-		}
+	if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
+	{
+		DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
+			RGB( 0, 255, 0 ), TRUE );
 	}
-	else
+		
+	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
 	{
-		QWORD nvOffset, nvLength;
-		BOOL bvSuccess;
+		DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
+			bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
+		nvOffset += nvLength;
+	}
 		
-		if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
-		{
-			DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
-				RGB( 0, 255, 0 ), TRUE );
-		}
+	for ( FF::SimpleFragmentList::ConstIterator pFragment = pDownload->GetEmptyFragmentList().begin();
+		pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
+	{
+		DrawFragment( pDC, prcBar, pDownload->m_nSize,
+			pFragment->begin(), pFragment->length(), crNatural, FALSE );
+	}
 		
-		for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
-		{
-			DrawStateBar( pDC, prcBar, pDownload->m_nSize, nvOffset, nvLength,
-				bvSuccess ? RGB( 0, 220, 0 ) : RGB( 220, 0, 0 ) );
-			nvOffset += nvLength;
-		}
-		
-		for ( FF::SimpleFragmentList::ConstIterator pFragment = pDownload->GetEmptyFragmentList().begin();
-			pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
-		{
-			DrawFragment( pDC, prcBar, pDownload->m_nSize,
-				pFragment->begin(), pFragment->length(), crNatural, FALSE );
-		}
-		
-		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
-		{
-			DrawSourceImpl( pDC, prcBar, pSource );
-		}
+	for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	{
+		DrawSourceImpl( pDC, prcBar, pSource );
+	}
 
-		pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? GetSysColor( COLOR_ACTIVECAPTION ) : crNatural );
+	pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? GetSysColor( COLOR_ACTIVECAPTION ) : crNatural );
+}
+
+
+void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural)
+{
+	pDC->FillSolidRect( prcBar, crNatural );		
+		
+	if ( pDownload->IsStarted() )
+	{
+		DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
+			GetSysColor( COLOR_ACTIVECAPTION ), FALSE );
 	}
 }
+
 
 //////////////////////////////////////////////////////////////////////
 // CFragmentBar download source

@@ -56,6 +56,7 @@ CGeneralSettingsPage::CGeneralSettingsPage() : CSettingsPage(CGeneralSettingsPag
 	m_bTrayMinimise = -1;
 	m_bSwitchToTransfers = FALSE;
 	m_bExpandDownloads = FALSE;
+	m_bSimpleBar = FALSE;
 	m_bStartup = FALSE;
 	m_bPromptURLs = FALSE;
 	m_bHideSearch = FALSE;
@@ -79,6 +80,7 @@ void CGeneralSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBIndex(pDX, IDC_TRAY_MINIMISE, m_bTrayMinimise);
 	DDX_Check(pDX, IDC_SWITCH_TO_TRANSFERS, m_bSwitchToTransfers);
 	DDX_Check(pDX, IDC_EXPAND_DOWNLOAD, m_bExpandDownloads);
+	DDX_Check(pDX, IDC_DOWNLOADS_SIMPLEBAR, m_bSimpleBar);
 	DDX_Check(pDX, IDC_AUTO_START, m_bStartup);
 	DDX_Check(pDX, IDC_PROMPT_URLS, m_bPromptURLs);
 	DDX_Check(pDX, IDC_HIDE_SEARCH, m_bHideSearch);
@@ -106,6 +108,7 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	m_bExpandMatches		= Settings.Search.ExpandMatches;
 	m_bSwitchToTransfers	= Settings.Search.SwitchToTransfers;
 	m_bExpandDownloads		= Settings.Downloads.AutoExpand;
+	m_bSimpleBar			= Settings.Downloads.SimpleBar;
 	m_bPromptURLs			= ! Settings.General.AlwaysOpenURLs;
 	m_bHideSearch			= Settings.Search.HideSearchPanel;
 	m_bAdultFilter			= Settings.Search.AdultFilter;
@@ -182,6 +185,7 @@ void CGeneralSettingsPage::OnOK()
 	Settings.Search.ExpandMatches		= m_bExpandMatches;
 	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers;
 	Settings.Downloads.AutoExpand		= m_bExpandDownloads;
+	Settings.Downloads.SimpleBar		= m_bSimpleBar;
 	Settings.General.AlwaysOpenURLs		= ! m_bPromptURLs;
 	Settings.Search.HideSearchPanel		= m_bHideSearch;
 	Settings.Search.AdultFilter			= m_bAdultFilter;

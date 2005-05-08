@@ -302,7 +302,7 @@
 #define IDC_FILTER_REJECT               1096
 #define IDC_PROMPT_URLS                 1096
 #define IDC_FILTER_LOCAL                1097
-#define IDC_PROMPT_URLS2                1097
+#define IDC_DOWNLOADS_SIMPLEBAR         1097
 #define IDC_FILTER_BOGUS                1098
 #define IDC_MIN_SIZE                    1099
 #define IDC_MAX_SIZE                    1100
@@ -1454,7 +1454,7 @@
 #define ID_DISCOVERY_QUERY              32928
 #define ID_DISCOVERY_REMOVE             32929
 #define ID_DISCOVERY_ADD                32930
-#define ID_DISCOVERY_BLOCKED			32931
+#define ID_DISCOVERY_BLOCKED            32931
 #define ID_DISCOVERY_GNUTELLA           32932
 #define ID_DISCOVERY_WEBCACHE           32933
 #define ID_DOWNLOADS_AUTO_CLEAR         32934
@@ -1634,9 +1634,9 @@
 #define ID_TOOLS_RESEEDTORRENT          33118
 #define ID_HELP_FORUMS                  33120
 #define ID_HELP_UPDATE                  33121
-#define ID_HELP_ROUTER					33124
+#define ID_HELP_ROUTER                  33124
 #define ID_HELP_SECURITY                33125
-#define ID_HELP_CODEC					33126
+#define ID_HELP_CODEC                   33126
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132

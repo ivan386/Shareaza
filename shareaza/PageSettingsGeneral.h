@@ -47,6 +47,7 @@ public:
 	int		m_bTrayMinimise;
 	BOOL	m_bSwitchToTransfers;
 	BOOL	m_bExpandDownloads;
+	BOOL	m_bSimpleBar;
 	BOOL	m_bStartup;
 	BOOL	m_bPromptURLs;
 	BOOL	m_bHideSearch;
