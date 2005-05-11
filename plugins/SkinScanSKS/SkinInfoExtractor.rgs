@@ -1,0 +1,44 @@
+HKCR
+{
+	Shareaza.SkinInfoExtractor.1 = s 'Shareaza Skin Metadata Extractor'
+	{
+		CLSID = s '{0EEDB912-C5FA-486F-8334-57288578C627}'
+	}
+	Shareaza.SkinInfoExtractor = s 'Shareaza Skin Metadata Extractor'
+	{
+		CurVer = s 'Shareaza.SkinInfoExtractor.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A4F1E383-B493-4580-8DB6-5CC89CBAAC53} = s 'Shareaza Skin Metadata Extractor'
+		{
+			ProgID = s 'Shareaza.SkinInfoExtractor.1'
+			VersionIndependentProgID = s 'Shareaza.SkinInfoExtractor'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+		}
+	}
+}
+
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove LibraryBuilder
+					{
+						val '.sks' = s '{A4F1E383-B493-4580-8DB6-5CC89CBAAC53}'
+					}
+				}
+			}
+		}
+	}
+}
