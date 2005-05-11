@@ -355,7 +355,8 @@ DWORD CUploadQueue::GetBandwidthLimit(int nTransfers) const
 	DWORD nLimit = Neighbours.m_nLeafCount ? Settings.Bandwidth.HubUploads : Settings.Bandwidth.Uploads;
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
-	if ( Uploads.m_nTorrentSpeed > 0 ) nLimit = nLimit / 5;
+	// Limit if torrents are active
+	if ( Uploads.m_nTorrentSpeed > 0 ) nLimit = ( nLimit * ( 100 - Settings.BitTorrent.BandwidthPercentage ) ) / 100;
 	
 	return nLimit * ( nLocalPoints + Settings.Uploads.ThrottleMode ) / max( 1, nTotalPoints );
 }
