@@ -33,8 +33,7 @@
 		<attribute name="archive">
 			<simpleType base="string">
 				<enumeration value="ZIP"/>
-				<enumeration value="RAR (pre v3)"/>
-				<enumeration value="RAR (v3+)"/>
+				<enumeration value="RAR"/>
 				<enumeration value="ACE"/>
 			</simpleType>
 		</attribute>
