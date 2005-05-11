@@ -4884,6 +4884,8 @@ BEGIN
     IDS_WIZARD_EXIT         "E&xit"
     IDS_WIZARD_YEARS_OLD    "year old"
     IDS_SETTINGS_AUTOMATIC_IP "Automatic"
+    IDS_SETTINGS_WARN_QUEUELIMIT 
+                            "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
 END
 
 STRINGTABLE 
@@ -5078,11 +5080,14 @@ BEGIN
     ID_TRANSFERS_DISCONNECT "Disconnect the selected download transfer(s)."
     ID_TRANSFERS_FORGET     "Disconnect and forget the selected download source(s)."
     ID_HELP_HOMEPAGE        "Visit the Shareaza.com web site."
-    ID_HELP_WEB_1           "Visit Zeropaid.com"
-    ID_HELP_WEB_2           "Visit P2PForums.com"
-    ID_HELP_WEB_3           "Visit Slyck.com"
-    ID_HELP_WEB_4           "Visit NapJunk.net"
-    ID_HELP_FAQ             "Visit the Shareaza Users Guide."
+    ID_HELP_WEB_1           "Visit this website"
+    ID_HELP_WEB_2           "Visit this website"
+    ID_HELP_WEB_3           "Visit this website"
+    ID_HELP_WEB_4           "Visit this website"
+    ID_HELP_WEB_5           "Visit this website"
+    ID_HELP_WEB_6           "Visit this website"
+    ID_HELP_FAQ             "View the Shareaza FAQ."
+    ID_HELP_GUIDE           "Visit the Shareaza Users Guide."
     ID_SEARCH_CHAT          "Open a chat session with the selected user."
     ID_TRAFFIC_GRID         "Display grid lines."
     ID_TRAFFIC_AXIS         "Display Vertical Axis"
@@ -5728,8 +5733,10 @@ END
 STRINGTABLE 
 BEGIN
     ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
+    ID_HELP_UPDATE          "Check for news and updates"
     ID_HELP_ROUTER          "Get help configuring your router or firewall."
     ID_HELP_SECURITY        "Help protecting your system from hostile programs"
+    ID_HELP_CODEC           "All about codecs and video problems"
 END
 
 STRINGTABLE 
@@ -5755,11 +5762,6 @@ BEGIN
     IDS_RATING_6            "Excellent"
 END
 
-STRINGTABLE 
-BEGIN
-    IDS_SETTINGS_WARN_QUEUELIMIT 
-                            "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
-END
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
