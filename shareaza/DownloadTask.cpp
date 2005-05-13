@@ -425,17 +425,12 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 		DWORD nSuccess	= 0;
 		DWORD tStart	= GetTickCount();
 		
-		ReadFile( hSource, pBuffer, nBuffer, &nBuffer, NULL );
-		WriteFile( hTarget, pBuffer, nBuffer, &nSuccess, NULL );
+		if ( !ReadFile( hSource, pBuffer, nBuffer, &nBuffer, NULL )
+			|| !nBuffer
+			|| !WriteFile( hTarget, pBuffer, nBuffer, &nSuccess, NULL )
+			|| nSuccess != nBuffer ) break;
 		
-		if ( nSuccess == nBuffer )
-		{
-			nLength -= nBuffer;
-		}
-		else
-		{
-			break;
-		}
+		nLength -= nBuffer;
 		
 		if ( m_pEvent != NULL ) break;
 		tStart = ( GetTickCount() - tStart ) / 2;
