@@ -3119,7 +3119,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
 		<control caption="_General:"/>
 		<control caption="Auto-connect on Shareaza startup"/>
 		<control caption="Start Shareaza at Windows startup"/>
@@ -3128,6 +3128,7 @@
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Downloads:"/>
 		<control caption="Expand new downloads by default"/>
+		<control caption="Display simple progress bar"/>
 		<control caption="_Search:"/>
 		<control caption="Expand multi-source files by default"/>
 		<control caption="Switch to Transfers view on download"/>
