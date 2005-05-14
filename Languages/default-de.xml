@@ -16,10 +16,10 @@ Other:
 	<manifest 
 		name="Deutsch" 
 		author="Jann Röder" 
-		description="Shareaza 2.1 German Skin File" 
+		description="Shareaza 2.2 German Skin File" 
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de" 
-		version="2.1.2.4" 
+		version="2.2.2.5" 
 		type="Language" 
 		language="de" 
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -2054,17 +2054,27 @@ Other:
 			<text>Die Internetnutzung von Kindern (inklusive P2P file sharing) sollte immer von ihren Eltern überwacht werden.</text>
 		</document>
 
-	<document name="GeneralHelp.BadTorrentEncoding">
-		<text format="b">This torrent appears to have an encoding error</text>
-		<newline gap="8"/>
-		<text>Windows has reported a translation fault while decoding text in this torrent. It is
-		possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
-		still download properly, although some file names could be incorrect.</text>
-		<newline gap="8"/>
-		<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications. Check the Shareaza forums 
-		if you require additional help.</text>
-	</document>
+		<document name="GeneralHelp.BadTorrentEncoding">
+			<text format="b">Diese Torrentdatei scheint einen Codierungsfehler zu haben</text>
+			<newline gap="8"/>
+			<text>Windows hat einen Fehler gemeldet, als es versucht hat den Text in diesem Torrent zu lesen. Es ist
+			möglich, dass das Torrent korrupt oder nur falsch codiert ist. Sie können das Torrent vermutlich
+			trotzdem herunterladen, es kann aber sein, dass die Dateinamen nicht korrekt sind.</text>
+			<newline gap="8"/>
+			<text>Die meisten Torrenterstellungsprogramme erlauben es Torrents zu reparieren, so dass sie in
+			allen Bittorent Programmen richtig funktionieren. Besuchen Sie das Shareaza Forum, wenn Sie weitere 
+			Hilfe benötigen.</text>
+		</document>
+		
+		<document name="GeneralHelp.DonkeyServerList">
+			<text format="b">Ihre eDonkey Serverliste ist leer</text>
+			<newline gap="8"/>
+			<text>Sie haben keine Server in ihrer eDnonkey2000 Serverliste. Sie müssen eine
+			aktuelle Serverliste (.met Datei) herunterladen, um sich mit dem eDonkey Netzwerk zu verbinden.</text>
+			<newline gap="8"/>
+			<text>Sie können eine Serverliste in den eDonkey Einstellungen oder im Service Provider Fenster
+			herunterladen.</text>
+		</document>
 
 		<!-- Search help documents -->
 
@@ -2840,10 +2850,10 @@ Other:
 		<string id="16515" value="Gnutella Verbindungen (Aktiv)"/>
 		<string id="16516" value="Gnutella Empfangsgeschwindigkeit"/>
 		<string id="16517" value="Gnutella Sendegeschwindigkeit"/>
-		<string id="16518" value="Download File Count"/>
-		<string id="16519" value="Download Transfer Count"/>
-		<string id="16520" value="Download Geschwindigkeit"/>
-		<string id="16521" value="Upload Transfer Count"/>
+		<string id="16518" value="Anzahl Downloads"/>
+		<string id="16519" value="Anzahl Downloadtransfer"/>
+		<string id="16520" value="Downloadgeschwindigkeit"/>
+		<string id="16521" value="Anzahl Uploadtransfer"/>
 		<string id="16522" value="Upload Geschwindigkeit"/>
 		<string id="16523" value="Empfangene Gnutella Pakete"/>
 		<string id="16524" value="Gesendete Gnutella Pakete"/>
@@ -2885,6 +2895,7 @@ Other:
 		<string id="16809" value="&amp;Schließen"/>
 		<string id="16810" value="Jahre alt"/>
 		<string id="16811" value="Automatisch"/>
+		<string id="16816" value="Das eDonkey Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition, die akzeptiert wird, limitieren wollen?"/>
 		<string id="16864" value="Service Provider abfragen..."/>
 		<string id="16865" value="Service Provider &quot;%s&quot; abfragen..."/>
 		<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)."/>
@@ -3111,15 +3122,16 @@ Other:
 
 		<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein"/>
 
-		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
+		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
 			<control caption="_Allgemein:"/>
 			<control caption="Bei Programmstart verbinden"/>
 			<control caption="Shareaza mit Windows starten"/>
-			<control caption="Dialog vor dem Öffnen von URLs"/>
+			<control caption="Dialog vor dem Öffnen von URIs"/>
 			<control caption="Datenraten in:"/>
 			<control caption="bits/Sekunde|bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 			<control caption="_Downloads"/>
 			<control caption="Neue Downloads automatisch erweitern"/>
+			<control caption="Einfache Fortschrittsanzeige verwenden"/>
 			<control caption="_Suche"/>
 			<control caption="Multi-Source Dateien erweitern"/>
 			<control caption="Bei D/L zur Transfer Ansicht wechseln"/>
@@ -3232,7 +3244,7 @@ Other:
 			<control caption="Eingehende Verbindungen möglich"/>
 		</dialog>
 
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Downloads">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 			<control caption="_Downloadverzeichnis:"/>
 			<control /><control />
 			<control caption="_Unvollständige Dateien:"/>
@@ -3242,18 +3254,17 @@ Other:
 			<control /><control />
 			<control caption="Transfer maximal:"/>
 			<control /><control />
-			<control caption="Transfers pro Datei:"/>
+			<control caption="Transfer pro Datei:"/>
 			<control /><control />
-			<control caption="_Bandbreite:"/>
-			<control caption="Limit:"/>
+			<control caption="_Limits:"/>
+			<control caption="Downloadgeschwindigkeit:"/>
 			<control />
 			<control caption="Maximale Warteschlangenlänge:"/>
 			<control /><control />
-			<control caption="_Optionen:"/>
 			<control caption="Nur von verbundenen Netzwerken hoch- und herunterladen."/>
 		</dialog>
 
-		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Uploads">
+		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 			<control caption="_Optionen:"/>
 			<control caption="Unvollst. Dateien freigeben"/>
 			<control caption="Freig. im HUB-Modus einschr."/>
@@ -3294,7 +3305,7 @@ Other:
 			<control caption="_Optionen:"/>
 			<control caption="Zeitsteuerung _aktivieren"/>
 			<control/><control/>
-			<control caption="_Netzwerke einschränken"/>
+			<control caption="_Nur zu G2 verbinden wenn beschränkt"/>
 			<control caption="Legende:"/>
 			<control caption="So"/>
 			<control caption="Mo"/>
@@ -4076,9 +4087,15 @@ Other:
 			<control />
 		</dialog>
 
-		<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent Tracker Viewer">
+		<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Tracker Viewer">
 			<control caption="Torrent _Informationen:"/>
 			<control caption="Name:"/>
+			<control/>
+			<control caption="Erstellt:"/>
+			<control/>
+			<control caption="Von:"/>
+			<control/>
+			<control caption="Kommentare:"/>
 			<control />
 			<control caption="Tracker:"/>
 			<control />
@@ -4087,14 +4104,14 @@ Other:
 			<control />
 			<control caption="Unvollständig:"/>
 			<control />
+			<control caption="Transfer:"/>
+			<control caption="Neue Downloadtransfer starten:"/>
+			<control caption="Wenn benötigt|Wenn U/D Verhältnis über 100%|Nur auf Anforderung|Nie"/>
 			<control caption="_Dateien:"/>
 			<control />
 			<control caption="_Aktualisieren"/>
 			<control />
-			<control caption="Schließen"/>
-			<control caption="Wenn benötigt|Wenn U/D Verhältnis über 100%|Nur auf Anforderung|Nie"/>
-			<control caption="Neue Downloadtransfer starten:"/>
-			<control caption="Transfer:"/>
+			<control caption="Schließen"/>			
 		</dialog>
 
 		<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Gruppe Eigenschaften">
