@@ -2827,7 +2827,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "BitTorrent Advanced Information"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",IDC_STATIC,7,3,278,80
+    GROUPBOX        "Torrent &Information:",IDC_STATIC,5,3,280,80
     LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
                     ES_READONLY
@@ -4884,6 +4884,10 @@ BEGIN
     IDS_WIZARD_EXIT         "E&xit"
     IDS_WIZARD_YEARS_OLD    "year old"
     IDS_SETTINGS_AUTOMATIC_IP "Automatic"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_SETTINGS_WARN_QUEUELIMIT 
                             "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
 END
@@ -5761,7 +5765,6 @@ BEGIN
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
 END
-
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
