@@ -3156,7 +3156,7 @@ right quote	&#147;
 		<control caption="bitai/sek.|baitai/sek.|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Atsisiuntimai:"/>
 		<control caption="Visada išskleisti naujų bylų šaltinių medį"/>
-		<control caption="Rodyti supaprastintą progreso juostą"/>
+		<control caption="Rodyti supaprastintą eigos juostą"/>
 		<control caption="_Paieška:"/>
 		<control caption="Visada išskleisti šaltinių medį"/>
 		<control caption="Eiti prie siuntimų pridėjus naują bylą"/>
