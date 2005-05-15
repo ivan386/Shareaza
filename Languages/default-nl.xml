@@ -16,7 +16,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		author="Team Dutch translators Shareaza"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
-		version="2.1.0.147"
+		version="2.1.0.150"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -452,16 +452,22 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="Shareaza _Instellingen..."/>
 		</menu>
-		<menu text="_Help">
-			<item id="ID_HELP_FAQ" text="Shareaza Gebruikers _Handleiding"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
-			<item id="ID_HELP_SECURITY" text="Be_veiliging Help"/>
+		<menu text="_Hulp">
+			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
-			<menu text="_Internetsites">
+			<menu text="_Handleidingen">
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiding"/>
+				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
+				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
+				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
+			</menu>
+			<separator/>
+			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
+
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
@@ -538,18 +544,23 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<item id="ID_WINDOW_MONITOR" text="_Monitor Tonen"/>
 			<item id="ID_WINDOW_REMOTE" text="_Afstandsbediening Tonen"/>
 		</menu>
-		<menu text="_Help">
-			<item id="ID_HELP_FAQ" text="Shareaza Gebruikers _Handleiding"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
-			<item id="ID_HELP_SECURITY" text="Be_veiliging Help"/>
+		<menu text="_Hulp">
+			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
-			<menu text="_Internetsites">
+			<menu text="_Handleidingen">
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiding"/>
+				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
+				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
+				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
+			</menu>
+			<separator/>
+			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_UPDATE" text="Laatste Nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -618,18 +629,23 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<item id="ID_WINDOW_MONITOR" text="_Monitor Tonen"/>
 			<item id="ID_WINDOW_REMOTE" text="_Afstandsbediening Tonen"/>
 		</menu>
-		<menu text="_Help">
-			<item id="ID_HELP_FAQ" text="Shareaza Gebruikers _Handleiding"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
-			<item id="ID_HELP_SECURITY" text="Be_veiliging Help"/>
+		<menu text="_Hulp">
+			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
-			<menu text="_Internetsites">
+			<menu text="_Handleidingen">
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiging"/>
+				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
+				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
+				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
+			</menu>
+			<separator/>
+			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_UPDATE" text="Laatste Nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -782,7 +798,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Music van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -804,7 +820,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -828,7 +844,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internet Bestandsinformatie">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -848,7 +864,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -873,7 +889,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -1081,7 +1097,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
@@ -1113,11 +1129,11 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Verkrijgen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Ophalen"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text=".torrent Bestand Maken"/>
 		</menu>
@@ -1147,11 +1163,11 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Verkrijgen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Ophalen"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
@@ -1181,11 +1197,11 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Muziek van dezelfde Artiest"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Muziek van hetzelfde Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodes uit dezelfde Serie"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Afleveringen uit dezelfde Serie"/>
 		</menu>
 		<menu text="_Internetdiensten">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket Bekijken"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Verkrijgen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata Ophalen"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text=".torrent Bestand Maken"/>
 		</menu>
@@ -1452,7 +1468,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<icon res="130" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">V E R B I N D I N G &#160; M A K E N</heading>
 			<newline gap="8" indent="42"/>
-			<text>Welkom bij Shareaza! &#160;Je bent momenteel niet verbonden met én van de P2P netwerken. &#160;</text>
+			<text>Welkom bij Shareaza! &#160;Je bent momenteel niet verbonden met één van de P2P netwerken. &#160;</text>
 			<newline/>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klik hier om te starten!</link>
 			<newline gap="18" indent="0"/>
@@ -2328,7 +2344,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<tip id="ID_MEDIA_ZOOM" message="De zoom en de breedte-hoogte verhouding van de video aanpassen."/>
 	<tip id="ID_MONITOR_CLOSE" message="Sluit het monitor venster."/>
 	<tip id="ID_NEIGHBOURS_CHAT" message="Open een chat sessie met de geselecteerde gebruiker."/>
-	<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te verkrijgen tot de geselecteerde gastheer."/>
+	<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te Ophalen tot de geselecteerde gastheer."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="De verbinding met de geselecteerde bron(nen) verbreken."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="De netwerkinstellingen aanpassen..."/>
 	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Een nieuw Pakket Dump venster openen om deze bron te controleren."/>
@@ -4083,11 +4099,11 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control caption="Torrent _Informatie:"/>
 		<control caption="Naam:"/>
 		<control/>
-		<control caption="Created:"/>
+		<control caption="Gemaakt:"/>
 		<control/>
-		<control caption="By:"/>
+		<control caption="Door:"/>
 		<control/>
-		<control caption="Comments:"/>
+		<control caption="Commentaar:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
@@ -4096,7 +4112,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control/>
 		<control caption="Onvolledig:"/>
 		<control/>
-		<control caption="Verplaatsing:"/>
+		<control caption="Overdrachten:"/>
 		<control caption="Start nieuwe download verplaatsingen:"/>
 		<control caption="Indien nodig|Wanneer verhouding over 100% is|Alleen op verzoek|Nooit"/>
 		<control caption="_Bestanden:"/>
@@ -4164,7 +4180,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<column from="Modified" to="Gewijzigd"/>
 	</list>
 	<list name="CDownloadCtrl">
-		<column from="Downloaded File" to="Downloadnaam"/>
+		<column from="Downloaded File" to="Bestandsnaam"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Progress" to="Voortgang"/>
 		<column from="Speed" to="Snelheid"/>
@@ -4175,7 +4191,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Gebruiker"/>
-		<column from="Uploaded File" to="Verzonden bestand"/>
+		<column from="Uploaded File" to="Bestandsnaam"/>
 		<column from="Size" to="Grootte"/>
 		<column from="Progress" to="Voortgang"/>
 		<column from="Speed" to="Snelheid"/>
