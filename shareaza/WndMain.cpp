@@ -1836,7 +1836,7 @@ void CMainWnd::OnUpdateTabConnect(CCmdUI* pCmdUI)
 	{
 		if ( pItem ) pItem->SetCheck( FALSE );
 		if ( pItem ) pItem->SetTextColour( CoolInterface.m_crCmdText == 0 ? RGB( 0, 127, 0 ) : CoolInterface.m_crCmdText );
-		m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
+		if ( m_wndToolBar.IsVisible() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
 		nTextID	= IDS_NETWORK_CONNECT;
 		nTipID	= ID_NETWORK_CONNECT;
 	}
@@ -2194,6 +2194,12 @@ void CMainWnd::OnWindowNavBar()
 {
 	ShowControlBar( &m_wndToolBar, FALSE, TRUE );
 	ShowControlBar( &m_wndNavBar, ! m_wndNavBar.IsVisible(), TRUE );
+	if ( ! m_wndNavBar.IsVisible() )
+	{
+		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
+	}
+	else
+		m_wndTabBar.SetMessage( _T("") );
 }
 
 void CMainWnd::OnUpdateWindowToolBar(CCmdUI* pCmdUI) 
@@ -2205,6 +2211,12 @@ void CMainWnd::OnWindowToolBar()
 {
 	ShowControlBar( &m_wndNavBar, FALSE, TRUE );
 	ShowControlBar( &m_wndToolBar, ! m_wndToolBar.IsVisible(), TRUE );
+	if ( m_wndToolBar.IsVisible() ) 
+	{
+		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
+	}
+	else
+		m_wndTabBar.SetMessage( _T("") );
 }
 
 void CMainWnd::OnUpdateWindowTabBar(CCmdUI* pCmdUI) 
