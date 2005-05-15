@@ -3138,7 +3138,7 @@
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Κατέβασμα:"/>
 		<control caption="Expand new downloads by default"/>
-		<control caption="Display simple progress bar"/>
+		<control caption="Εμφάνισε μια μπάρα προόδου"/>
 		<control caption="Έ_ρευνα:"/>
 		<control caption="Expand multi-source files by default"/>
 		<control caption="Switch to Transfers view on download"/>
