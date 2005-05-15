@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.0.149"
+		version="2.1.0.150"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -450,17 +450,22 @@
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
 		</menu>
 		<menu text="_Помощь">
-			<item id="ID_HELP_FAQ" text="_Руководство пользователя"/>
-			<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-			<item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
-			<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+			<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
+			<separator/>
+			<menu text="_Руководства">
+				<item id="ID_HELP_GUIDE" text="_Руководство пользователя"/>
+				<item id="ID_HELP_ROUTER" text="О _маршрутизаторах, брандмауэрах"/>
+				<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+				<item id="ID_HELP_CODEC" text="О _кодеках"/>
+			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
+				<item id="ID_HELP_UPDATE" text="Последние новости"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -536,17 +541,22 @@
 			<item id="ID_WINDOW_REMOTE" text="Показывать панель _управления"/>
 		</menu>
 		<menu text="_Помощь">
-			<item id="ID_HELP_FAQ" text="_Руководсво пользователя"/>
-			<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-			<item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
-			<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+			<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
+			<separator/>
+			<menu text="_Руководства">
+				<item id="ID_HELP_GUIDE" text="_Руководство пользователя"/>
+				<item id="ID_HELP_ROUTER" text="О _маршрутизаторах, брандмауэрах"/>
+				<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+				<item id="ID_HELP_CODEC" text="О _кодеках"/>
+			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="Портал обмена файлами"/>
+				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
+				<item id="ID_HELP_UPDATE" text="Последние новости"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -616,17 +626,22 @@
 			<item id="ID_WINDOW_REMOTE" text="Показать панель _управления"/>
 		</menu>
 		<menu text="_Помощь">
-			<item id="ID_HELP_FAQ" text="_Руководство пользователя"/>
-			<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
-			<item id="ID_HELP_FIREWALLS" text="О _маршрутизаторах, брандмауэрах"/>
-			<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+			<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
+			<separator/>
+			<menu text="_Руководства">
+				<item id="ID_HELP_GUIDE" text="_Руководство пользователя"/>
+				<item id="ID_HELP_ROUTER" text="О _маршрутизаторах, брандмауэрах"/>
+				<item id="ID_HELP_SECURITY" text="О _безопасности"/>
+				<item id="ID_HELP_CODEC" text="О _кодеках"/>
+			</menu>
 			<separator/>
 			<menu text="_Вэб сайты">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="Портал обмена файлами"/>
+				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
+				<item id="ID_HELP_UPDATE" text="Последние новости"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
@@ -1463,7 +1478,7 @@
 			и неспособны принимать соединения из Интернета. &#160;</text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
+			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000"> (коментарий от переводчика - на самом деле,
 			это также возможно пока не установлено соединение с каким нибудь сервером, или например
@@ -2215,15 +2230,20 @@
 	<tip id="ID_DOWNLOADS_URL" message="Добавить ссылку источника к помеченной загрузке..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Просмотр оценок о помеченной загрузке."/>
 	<tip id="ID_HELP_ABOUT" message="Показать диалог «О Shareaza...»"/>
-	<tip id="ID_HELP_FAQ" message="Посетить Руководство пользователя Shareaza."/>
-	<tip id="ID_HELP_FIREWALLS" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
+	<tip id="ID_HELP_CODEC" message="Все о кодеках и видео проблемах."/>
+	<tip id="ID_HELP_FAQ" message="Посетить ЧаВо Shareaza."/>
+	<tip id="ID_HELP_ROUTER" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
 	<tip id="ID_HELP_FORUMS" message="Посетить форумы дискуссий Shareaza."/>
+	<tip id="ID_HELP_GUIDE" message="Посетить Руководство пользователя Shareaza."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Посетить сайт Shareaza.com."/>
-	<tip id="ID_HELP_SECURITY" text="Узнайте как защититься от вредителей в сетях."/>
-	<tip id="ID_HELP_WEB_1" message="Посетить Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="Посетить P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="Посетить Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="Посетить NapJunk.net"/>
+	<tip id="ID_HELP_SECURITY" message="Узнайте как защититься от вредителей в сетях."/>
+	<tip id="ID_HELP_UPDATE" message="Узнайте новости и об обновлениях."/>
+	<tip id="ID_HELP_WEB_1" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_WEB_2" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_WEB_3" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_WEB_4" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_WEB_5" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_WEB_6" message="Посетить этот сайт"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Очистить буфер монитора хитов."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Приостановить вывод в монитор хитов."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Искать в сети указанную фразу."/>
@@ -2881,7 +2901,7 @@
 	<string id="16809" value="Вы&amp;ход"/>
 	<string id="16810" value="лет"/>
 	<string id="16811" value="Автоматический"/>
-
+	<string id="16816" value="В сети eDonkey используются длинные очереди, и в них приходится ждать долго. Если уменьшите величину, Вы начнете принимать соединения очень ограниченно и у Вас могут возникнуть проблемы с загрузкой.\nУверены, что хотите уменьшить число очередей?"/>
 	<string id="16864" value="Запрашивается список ресурсов соединений..."/>
 	<string id="16865" value="Запрашивается список ресурсов соединений «%s»..."/>
 	<string id="16866" value="GWebCache транзакция успешна («%s»)."/>
@@ -3108,7 +3128,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Основное">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Основное">
 		<control caption="_Основное:"/>
 		<control caption="Соединяться с сетями при старте"/>
 		<control caption="Запуск Shareaza вместе с Windows"/>
@@ -3117,6 +3137,7 @@
 		<control caption="бит/сек.|байт/сек.|б/с|Б/с|Кб/с|КБ/с|Мб/с|МБ/с"/>
 		<control caption="_Загрузки:"/>
 		<control caption="Раскрывать дерево новых эагрузок"/>
+		<control caption="Упрощенная полоса прогресса"/>
 		<control caption="_Поиск:"/>
 		<control caption="Раскрывать дерево источн. поиска"/>
 		<control caption="При загрузке перейти к пересылкам"/>
