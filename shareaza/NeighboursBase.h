@@ -53,6 +53,7 @@ public:
 	CNeighbour*		Get(DWORD nUnique) const;
 	CNeighbour*		Get(IN_ADDR* pAddress) const;
 	int				GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const;
+	BOOL			NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const;
 public:
 	virtual void	Connect();
 	virtual void	Close();

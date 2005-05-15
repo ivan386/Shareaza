@@ -95,9 +95,43 @@ CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const
 //////////////////////////////////////////////////////////////////////
 // CNeighboursBase counting
 
+// Count the number of neighbours that match criteria
 int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
 	int nCount = 0;
+
+	if ( ( Network.m_pSection.Lock( 200 ) ) )
+	{
+		for ( POSITION pos = m_pUniques.GetStartPosition() ; pos ; )
+		{
+			CNeighbour* pNeighbour;
+			LPVOID nUnique;
+
+			m_pUniques.GetNextAssoc( pos, nUnique, (void*&)pNeighbour );
+
+			if ( nProtocol < 0 || nProtocol == pNeighbour->m_nProtocol )
+			{
+				if ( nState < 0 || nState == pNeighbour->m_nState )
+				{
+					if ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType )
+					{
+						nCount++;
+					}
+				}
+			}
+		}
+		Network.m_pSection.Unlock();
+	}
+
+	return nCount;
+}
+
+// Return true if any neighbour matches criteria (faster than above function if you just want yes/no)
+BOOL CNeighboursBase::NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const
+{
+	CSingleLock pLock( &Network.m_pSection );
+
+	if ( pLock.Lock( 200 ) ) return FALSE;
 
 	for ( POSITION pos = m_pUniques.GetStartPosition() ; pos ; )
 	{
@@ -108,20 +142,17 @@ int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) c
 
 		if ( nProtocol < 0 || nProtocol == pNeighbour->m_nProtocol )
 		{
-			// Hack to count only Gnutella (No longer needed)
-			//if ( nProtocol == -2 && pNeighbour->m_nProtocol > PROTOCOL_G2 ) continue;
-
 			if ( nState < 0 || nState == pNeighbour->m_nState )
 			{
 				if ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType )
 				{
-					nCount++;
+					return TRUE;
 				}
 			}
 		}
 	}
 
-	return nCount;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
