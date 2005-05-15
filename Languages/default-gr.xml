@@ -8,7 +8,7 @@
 	description="Shareaza Default Greek Skin File"
 	link="http://www.shareaza.com/"
 	email="contact@shareaza.com"
-		version="2.1.0.147"
+		version="2.1.0.150"
 	type="Language"
 	language="gr"
 	prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
@@ -446,17 +446,22 @@
 			<item id="ID_TOOLS_SETTINGS" text="_Οι επιλογές του Shareaza..."/>
 		</menu>
 		<menu text="_Βοήθεια">
-			<item id="ID_HELP_FAQ" text="Ο οδηγός του Shareaza"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-			<item id="ID_HELP_FIREWALLS" text="Βοήθεια για το _Router"/>
-			<item id="ID_HELP_SECURITY" text="Βοήθεια για την _Ασφάλεια"/>
+			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
+			<separator/>
+			<menu text="_Guides">
+				<item id="ID_HELP_GUIDE" text="Ο οδηγός του Shareaza"/>
+				<item id="ID_HELP_ROUTER" text="Βοήθεια για το _Router"/>
+				<item id="ID_HELP_SECURITY" text="Βοήθεια για την _Ασφάλεια"/>
+				<item id="ID_HELP_CODEC" text="_Codec Help"/>
+			</menu>
 			<separator/>
 			<menu text="_Ιστοσελίδες">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
@@ -531,15 +536,15 @@
 			<item id="ID_WINDOW_MONITOR" text="Δείξε την _Οθόνη"/>
 			<item id="ID_WINDOW_REMOTE" text="Δείξε την _Remote bar"/>
 		</menu>
-		<menu text="_Guides">
+		<menu text="_Βοήθεια">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/> 
-                        <separator/> 
-                        <menu text="_Guides"> 
-                        <item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/> 
-                        <item id="ID_HELP_ROUTER" text="_Router Help"/> 
-                        <item id="ID_HELP_SECURITY" text="_Security Help"/> 
-                        <item id="ID_HELP_CODEC" text="_Codec Help"/> 
-                        </menu>
+			<separator/> 
+			<menu text="_Guides"> 
+				<item id="ID_HELP_GUIDE" text="Ο οδηγός του Shareaza"/> 
+				<item id="ID_HELP_ROUTER" text="Βοήθεια για το _Router"/> 
+				<item id="ID_HELP_SECURITY" text="Βοήθεια για την _Ασφάλεια"/> 
+				<item id="ID_HELP_CODEC" text="_Codec Help"/> 
+			</menu>
 			<separator/>
 			<menu text="_Ιστοσελίδες">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
@@ -547,8 +552,7 @@
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/> 
-
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> 
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
@@ -619,22 +623,22 @@
 		</menu>
 		<menu text="_Βοήθεια">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/> 
-                        <separator/> 
-                        <menu text="_Guides"> 
-                        <item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/> 
-                        <item id="ID_HELP_ROUTER" text="_Router Help"/> 
-                        <item id="ID_HELP_SECURITY" text="_Security Help"/> 
-                        <item id="ID_HELP_CODEC" text="_Codec Help"/> 
-                        </menu>
+			<separator/> 
+			<menu text="_Guides"> 
+				<item id="ID_HELP_GUIDE" text="Ο οδηγός του Shareaza"/> 
+				<item id="ID_HELP_ROUTER" text="Βοήθεια για το _Router"/> 
+				<item id="ID_HELP_SECURITY" text="Βοήθεια για την _Ασφάλεια"/> 
+				<item id="ID_HELP_CODEC" text="_Codec Help"/> 
+			</menu>
 			<separator/>
 			<menu text="_Ιστοσελίδες">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/> 
-                                <item id="ID_HELP_UPDATE" text="Latest news"/> 
-                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/> 
-                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>                                  
-                                </menu>
+				<item id="ID_HELP_UPDATE" text="Latest news"/> 
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/> 
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>                                  
+			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
 		</menu>
@@ -1487,7 +1491,7 @@
 			και δεν είστε σε θέση να λάβετε συνδέσεις απο το Internet. &#160;</text>
 			<text colour="FF0000" format="b">Αυτό ίσως προκαλέσει χαμηλή απόδοση στο κατέβασμα αρχείων.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Πατήστε εδώ για να μάθετε πως θα ρυθμίσετε το router ή το firewall σας</link>
+			<link target="raza:command:ID_HELP_ROUTER">Πατήστε εδώ για να μάθετε πως θα ρυθμίσετε το router ή το firewall σας</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
@@ -2228,15 +2232,20 @@
 	<tip id="ID_DOWNLOADS_URL" message="Βάλε μια πηγή URL στο συγκεκριμένο αρχείο..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Δες τις κριτικές για το συγκεκριμένο αρχείο"/>
 	<tip id="ID_HELP_ABOUT" message="Εμφάνισε το παράθυρο διαλόγου του Shareaza..."/>
-	<tip id="ID_HELP_FAQ" message="Επισκέψου το Shareaza Users Guide."/>
-	<tip id="ID_HELP_FIREWALLS" message="Πάρε μια βοήθεια για το πως να ρυθμίσεις το router ή το firewall."/>
+	<tip id="ID_HELP_CODEC" message="All about codecs and video problems."/>
+	<tip id="ID_HELP_FAQ" message="View the Shareaza FAQ."/>
+	<tip id="ID_HELP_ROUTER" message="Πάρε μια βοήθεια για το πως να ρυθμίσεις το router ή το firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Επισκέψου τα Forums του Shareaza."/>
+	<tip id="ID_HELP_GUIDE" message="Επισκέψου το Shareaza Users Guide."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Επισκέψου το web site του Shareaza.com ."/>
 	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs"/>
-	<tip id="ID_HELP_WEB_1" message="Επισκέψου το Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="Επισκέψου το P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="Επισκέψου το Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="Επισκέψου το NapJunk.net"/>
+	<tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
+	<tip id="ID_HELP_WEB_1" message="Επισκέψου το web site"/>
+	<tip id="ID_HELP_WEB_2" message="Επισκέψου το web site"/>
+	<tip id="ID_HELP_WEB_3" message="Επισκέψου το web site"/>
+	<tip id="ID_HELP_WEB_4" message="Επισκέψου το web site"/>
+	<tip id="ID_HELP_WEB_5" message="Επισκέψου το web site"/>
+	<tip id="ID_HELP_WEB_6" message="Επισκέψου το web site"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Καθάρισε το hit monitor buffer."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Διέκοψε το hit monitoring."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Ψάξε στο δίκτυο για τον συγκεκριμένο όρο."/>
@@ -3120,7 +3129,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Γενικά"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Γενικά">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Γενικά">
 		<control caption="_Γενικά:"/>
 		<control caption="Αυτ. σύνδεση όταν συνδέετε το Shareaza"/>
 		<control caption="Άρχισε όταν ξεκινούν τα Windows"/>
@@ -3129,6 +3138,7 @@
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Κατέβασμα:"/>
 		<control caption="Expand new downloads by default"/>
+		<control caption="Display simple progress bar"/>
 		<control caption="Έ_ρευνα:"/>
 		<control caption="Expand multi-source files by default"/>
 		<control caption="Switch to Transfers view on download"/>
