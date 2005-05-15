@@ -724,11 +724,13 @@ void CHomeLibraryBox::Update()
 	{
 		str.Format( _T("%lu "), nFiles );
 		m_pdLibraryFiles->SetText( str );
+		bChanged = TRUE;
 	}
 	
 	if ( m_pdLibraryVolume )
 	{
 		m_pdLibraryVolume->SetText( Settings.SmartVolume( nVolume, TRUE ) + ' ' );
+		bChanged = TRUE;
 	}
 	
 	int nHashing = LibraryBuilder.GetRemaining();
@@ -736,7 +738,14 @@ void CHomeLibraryBox::Update()
 	if ( nHashing > 0 )
 	{
 		str.Format( _T("%lu "), nHashing );
-		if ( m_pdLibraryHashRemaining ) m_pdLibraryHashRemaining->SetText( str );
+		if ( m_pdLibraryHashRemaining ) 
+		{
+			if ( m_pdLibraryHashRemaining->m_sText.Compare( str ) != 0 )
+			{
+				m_pdLibraryHashRemaining->SetText( str );
+				bChanged = TRUE;
+			}
+		}
 		m_pDocument->ShowGroup( 1, TRUE );
 		
 		BOOL bPriority = LibraryBuilder.GetBoostPriority();
@@ -781,7 +790,7 @@ void CHomeLibraryBox::Update()
 	{
 		m_pHover = NULL;
 		KillTimer( 2 );
-		Invalidate();
+		m_wndView.Invalidate();
 	}
 }
 
