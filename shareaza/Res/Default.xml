@@ -1468,7 +1468,7 @@
 			and are unable to receive connections from the Internet. &#160;</text>
 			<text colour="FF0000" format="b">This may cause poor download performance.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Click here to learn how to configure your router or firewall</link>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		
