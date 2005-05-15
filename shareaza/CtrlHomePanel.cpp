@@ -723,14 +723,21 @@ void CHomeLibraryBox::Update()
 	if ( m_pdLibraryFiles )
 	{
 		str.Format( _T("%lu "), nFiles );
-		m_pdLibraryFiles->SetText( str );
-		bChanged = TRUE;
+		if ( m_pdLibraryFiles->m_sText.Compare( str ) != 0 )
+		{
+			m_pdLibraryFiles->SetText( str );
+			bChanged = TRUE;
+		}
 	}
 	
 	if ( m_pdLibraryVolume )
 	{
-		m_pdLibraryVolume->SetText( Settings.SmartVolume( nVolume, TRUE ) + ' ' );
-		bChanged = TRUE;
+		str = Settings.SmartVolume( nVolume, TRUE ) + ' ';
+		if ( m_pdLibraryVolume->m_sText.Compare( str ) != 0 )
+		{
+			m_pdLibraryVolume->SetText( str );
+			bChanged = TRUE;
+		}
 	}
 	
 	int nHashing = LibraryBuilder.GetRemaining();
