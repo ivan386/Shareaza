@@ -786,7 +786,6 @@ BOOL CQuerySearch::CheckValid()
 	// Check if it's an "extended search" (Using a character set with many symbols)
 	if ( ( m_pWordLen ) && ( m_pWordLen[0] >= 2 ) )
 	{
-		// theApp.Message( MSG_ERROR, _T(" %i %i "), (DWORD)m_pWordPtr[0][0], (DWORD)m_pWordPtr[0][1] );
 		if ( ( (DWORD)m_pWordPtr[0][0] > 20000 ) && ( (DWORD)m_pWordPtr[0][1] > 20000 ) )
 		{
 			bExtendedSearch = TRUE;
@@ -834,26 +833,22 @@ BOOL CQuerySearch::CheckValid()
 		else
 		{
 			// Valid search term.
-			if ( nCount > 0 )
+
+			// Check if user has duplicated terms
+			if ( nCount == 0 )
 			{
-				// check if user has duplicated terms
-				if ( _tcsnicmp( m_pWordPtr[nCount], strLastWord.GetString(),  m_pWordLen[nCount] ) != 0 )
-				{
-					// Valid search term - add to list of valid words.
-					nValidWords++;
-					nValidCharacters += m_pWordLen[nCount];
-					// Update 'last word'
-					strLastWord = m_pWordPtr[nCount];
-				}
-			}
-			else
-			{
-				// First word- never a duplicate
+				// This is the first word- never a duplicate
 				nValidWords++;
 				nValidCharacters += m_pWordLen[nCount];
-				// Update previous word variable
-				strLastWord = m_pWordPtr[0];
 			}
+			else if ( _tcsnicmp( m_pWordPtr[nCount], strLastWord.GetString(),  m_pWordLen[nCount] ) != 0 )
+			{
+				// Valid search term, not duplicated. Add to the count of valid words/characters.
+				nValidWords++;
+				nValidCharacters += m_pWordLen[nCount];
+			}
+			// Update "last word" variable
+			strLastWord = m_pWordPtr[nCount];
 		}
 	}
 
