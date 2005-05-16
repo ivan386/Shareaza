@@ -1527,7 +1527,7 @@ Other:
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Peau</link>
+		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Peaux</link>
 		<text align="middle">&#160;- Changez l'apparence de Shareaza.</text>
 		<newline gap="8"/>
 
@@ -3390,9 +3390,9 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Habillage (s_kin)">
+	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="_Peau">
 		<control/>
-		<control caption="Information sur l'habillage (s_kin):"/>
+		<control caption="Information sur la peau:"/>
 		<control caption="Nom:"/>
 		<control caption="..."/>
 		<control caption="Auteur:"/>
@@ -3401,7 +3401,7 @@ Other:
 		<control/>
 		<control caption="Supprimer"/>
 		<control caption="Installer..."/>
-		<control caption="Plus d'habillages (s_kin)"/>
+		<control caption="Plus de peaux"/>
 	</dialog>
 
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Plugins">
