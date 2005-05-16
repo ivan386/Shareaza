@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.57 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.61 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.147"
+		version="2.1.0.150"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -454,17 +454,22 @@
 			<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
 		</menu>
 		<menu text="_Hjelp">
-			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
-			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
+			<item id="ID_HELP_FAQ" text="Shareaza FAQ"/>
 			<separator/>
+			<menu text="_Guider">
+				<item id="ID_HELP_GUIDE" text="Shareaza brukerguide"/>
+				<item id="ID_HELP_ROUTER" text="Hjelp med _router"/>
+				<item id="ID_HELP_SECURITY" text="Hjelp med _sikkerhet"/>
+				<item id="ID_HELP_CODEC" text="Hjelp med _codec'er"/>
+			</menu>
+				<separator/>
 			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -540,17 +545,22 @@
 			<item id="ID_WINDOW_REMOTE" text="Vis fjernkontroll"/>
 		</menu>
 		<menu text="_Hjelp">
-			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
-			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
+			<item id="ID_HELP_FAQ" text="Shareaza FAQ"/>
 			<separator/>
+			<menu text="_Guider">
+				<item id="ID_HELP_GUIDE" text="Shareaza brukerguide"/>
+				<item id="ID_HELP_ROUTER" text="Hjelp med _router"/>
+				<item id="ID_HELP_SECURITY" text="Hjelp med _sikkerhet"/>
+				<item id="ID_HELP_CODEC" text="Hjelp med _codec'er"/>
+			</menu>
+				<separator/>
 			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -620,17 +630,22 @@
 			<item id="ID_WINDOW_REMOTE" text="Vis fjernkontroll"/>
 		</menu>
 		<menu text="_Hjelp">
-			<item id="ID_HELP_FAQ" text="Shareaza brukerguide"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-			<item id="ID_HELP_FIREWALLS" text="Hjelp med router"/>
-			<item id="ID_HELP_SECURITY" text="Hjelp med sikkerhet"/>
+			<item id="ID_HELP_FAQ" text="Shareaza FAQ"/>
 			<separator/>
+			<menu text="_Guider">
+				<item id="ID_HELP_GUIDE" text="Shareaza brukerguide"/>
+				<item id="ID_HELP_ROUTER" text="Hjelp med _router"/>
+				<item id="ID_HELP_SECURITY" text="Hjelp med _sikkerhet"/>
+				<item id="ID_HELP_CODEC" text="Hjelp med _codec'er"/>
+			</menu>
+				<separator/>
 			<menu text="Nettsider">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
@@ -1484,7 +1499,7 @@
 			og klarer ikke å motta tilkoblinger fra internett. &#160;</text>
 			<text colour="FF0000" format="b">Dette kan gi lav nedlastingshastighet.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Klikk her for å lære hvordan du skal sette opp routeren eller brannmuren din</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klikk her for å lære hvordan du skal sette opp routeren eller brannmuren din</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
@@ -2056,9 +2071,11 @@
 		mulig at torrenten er korrupt, eller bare uriktig kodet. Torrenten kan muligens likevel lastes ned,
 		men noen filnavn kan være uriktige.</text>
 		<newline gap="8"/>
-		<text>De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, som vil
-		sørge for at den fungerer korrekt i alle BitTorrent-programmer. Sjekk Shareazas forumer
-		hvis du trenger mer hjelp.</text>
+		<text>De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, noe som vil
+		sørge for at den fungerer korrekt i alle BitTorrent-programmer.</text>
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/help/?torrentencoding">Klikk her for mer hjelp</link>
+		<text>, eller for å laste ned programvare for å reparere torrenten.</text>
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2224,15 +2241,20 @@
 	<tip id="ID_DOWNLOADS_URL" message="Legg til en kilde URL til valgte nedlasting..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Se omtalene for den valgte nedlastingen"/>
 	<tip id="ID_HELP_ABOUT" message="Viser Shareazas om-dialog..."/>
-	<tip id="ID_HELP_FAQ" message="Besøk Shareazas brukerguide."/>
-	<tip id="ID_HELP_FIREWALLS" message="Få hjelp til å sette opp din router eller brannmur."/>
+	<tip id="ID_HELP_CODEC" message="Alt om codec'er og videoproblemer."/>
+	<tip id="ID_HELP_FAQ" message="Besøk Shareazas FAQ."/>
+	<tip id="ID_HELP_ROUTER" message="Få hjelp til å sette opp din router eller brannmur."/>
 	<tip id="ID_HELP_FORUMS" message="Besøk Shareazas forum."/>
+	<tip id="ID_HELP_GUIDE" message="Besøk Shareazas brukerguide"/>
 	<tip id="ID_HELP_HOMEPAGE" message="Besøk Shareazas nettsted."/>
 	<tip id="ID_HELP_SECURITY" message="Få hjelp til å beskytte systemet ditt mot fiendtlige programmer"/>
-	<tip id="ID_HELP_WEB_1" message="Besøk Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="Besøk P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="Besøk Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="Besøk NapJunk.net"/>
+	<tip id="ID_HELP_UPDATE" message="Se nyheter og oppdateringer."/>
+	<tip id="ID_HELP_WEB_1" message="Besøk denne nettsiden"/>
+	<tip id="ID_HELP_WEB_2" message="Besøk denne nettsiden"/>
+	<tip id="ID_HELP_WEB_3" message="Besøk denne nettsiden"/>
+	<tip id="ID_HELP_WEB_4" message="Besøk denne nettsiden"/>
+	<tip id="ID_HELP_WEB_5" message="Besøk denne nettsiden"/>
+	<tip id="ID_HELP_WEB_6" message="Besøk denne nettsiden"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Oppdater treffmonitor-bufferen."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Sett treffmonitoren på pause."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Søk på nettverket etter valgte uttrykk."/>
@@ -3117,7 +3139,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generelt"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Generelt">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Generelt">
 		<control caption="_Generelt:"/>
 		<control caption="Koble til automatisk når Shareaza startes"/>
 		<control caption="Start Shareaza når Windows starter"/>
@@ -3126,6 +3148,7 @@
 		<control caption="bits/sekund|bytes/sekund|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="Nedlastinger:"/>
 		<control caption="Utvid nye nedlastinger som standard"/>
+		<control caption="Vis enkel fremgangsindikator"/>
 		<control caption="_Søk:"/>
 		<control caption="Utvid filer med flere kilder som standard"/>
 		<control caption="Gå til overføringsvindu ved nedlasting"/>
