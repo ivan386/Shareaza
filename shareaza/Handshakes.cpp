@@ -420,7 +420,7 @@ BOOL CHandshakes::AcceptConnection()
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
 
-	// If the remote computer's IP address is on the list of government and corporate ranges to be silent with
+	// If the remote computer's IP address is blocked or banned
 	if ( Security.IsDenied( &pHost.sin_addr ) )
 	{
 		// Close the socket we just accepted the connection with
@@ -430,7 +430,7 @@ BOOL CHandshakes::AcceptConnection()
 		CString strHost = inet_ntoa( pHost.sin_addr );
 		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)strHost );
 	}
-	else // The IP address is not on that watch list
+	else // The IP address is not blocked
 	{
 		// Make a new handshake object with the received socket and IP address, and add it to the list
 		CreateHandshake( hSocket, &pHost );
