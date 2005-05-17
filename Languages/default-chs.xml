@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.141"
+		version="2.1.0.150"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -460,17 +460,22 @@
 			<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..."/>
 		</menu>
 		<menu text="帮助(_H)">
-			<item id="ID_HELP_FAQ" text="指南(_G)"/>
-			<item id="ID_HELP_FORUMS" text="论坛(_F)"/>
-			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_FAQ" text="Shareaza 常见问题(_F)"/>
+			<separator/>
+			<menu text="指南(_G)">
+				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
+			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
 			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
+			</menu>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
+				<item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -546,17 +551,22 @@
 			<item id="ID_WINDOW_REMOTE" text="显示遥控器(_R)"/>
 		</menu>
 		<menu text="帮助(_H)">
-			<item id="ID_HELP_FAQ" text="Shareaza 用户指南(_G)"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
-			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_FAQ" text="Shareaza 常见问题(_F)"/>
+			<separator/>
+			<menu text="指南(_G)">
+				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
+			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
 			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
+			</menu>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
+				<item id="ID_HELP_UPDATE" text="最新消息"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -626,17 +636,22 @@
 			<item id="ID_WINDOW_REMOTE" text="显示遥控器(_R)"/>
 		</menu>
 		<menu text="帮助(_H)">
-			<item id="ID_HELP_FAQ" text="Shareaza 用户指南(_G)"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
-			<item id="ID_HELP_FIREWALLS" text="路由器帮助(_R)"/>
+			<item id="ID_HELP_FAQ" text="Shareaza 常见问题(_F)"/>
+			<separator/>
+			<menu text="指南(_G)">
+				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
+			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
 			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
+			</menu>
 			<separator/>
 			<menu text="网站(_W)">
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza.com(_S)"/>
 				<separator/>
-				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza 论坛(_F)"/>
+				<item id="ID_HELP_UPDATE" text="最新消息"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="关于 Shareaza(_A)..."/>
@@ -1490,7 +1505,7 @@
 			并且不能从 Internet 接受连接。 &#160;</text>
 			<text colour="FF0000" format="b">这可能导致较差的下载效果。</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">单击此处了解如何配置您的路由器或防火墙</link>
+			<link target="raza:command:ID_HELP_ROUTER">单击此处了解如何配置您的路由器或防火墙</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
@@ -2050,7 +2065,10 @@
 		无法正确显示，但文件仍可以正常下载。</text> 
 		<newline gap="8"/> 
 		<text>大多数 Torrent 制作程序允许您修复此 Torrent，以便保证其在所有的
-		BitTorrent 客户端中正常工作。如果您希望获得额外的帮助，请访问 Shareaza 论坛。</text> 
+		BitTorrent 客户端中正常工作。</text> 
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/help/?torrentencoding">单击这里以获得额外的帮助</link>
+		<text>&#160;或下载软件修复此 Torrent 文件。</text>
 	</document>
 	
 	<document name="GeneralHelp.DonkeyServerList">
@@ -2209,16 +2227,21 @@
 	<tip id="ID_DOWNLOADS_URL" message="添加一个资源链接到选定的下载..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="查看选定下载的评价"/>
 	<tip id="ID_HELP_ABOUT" message="显示 Shareaza 关于对话框..."/>
+	<tip id="ID_HELP_CODEC" message="全部有关解码器和视频的问题。"/>
 	<tip id="ID_HELP_FAQ" message="访问 Shareaza 用户指南。"/>
-	<tip id="ID_HELP_FIREWALLS" message="获取配置您的路由器或防火墙的帮助。"/>
+	<tip id="ID_HELP_ROUTER" message="获取配置您的路由器或防火墙的帮助。"/>
 	<tip id="ID_HELP_FORUMS" message="访问 Shareaza 论坛。"/>
+	<tip id="ID_HELP_GUIDE" message="访问 Shareaza 用户指南。"/>
 	<tip id="ID_HELP_HOMEPAGE" message="访问 Shareaza 网站。"/>
 	<tip id="ID_HELP_SECURITY" message="帮助保护您的系统避免受到敌意程序的破坏"/>
-	<tip id="ID_HELP_WEB_1" message="访问 Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="访问 P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="访问 Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="访问 NapJunk.net"/>
-	<tip id="ID_HITMONITOR_CLEAR" message="清除监视器缓存。"/>
+	<tip id="ID_HELP_UPDATE" message="检查新闻和更新。"/>
+	<tip id="ID_HELP_WEB_1" message="访问此网站"/>
+	<tip id="ID_HELP_WEB_2" message="访问此网站"/>
+	<tip id="ID_HELP_WEB_3" message="访问此网站"/>
+	<tip id="ID_HELP_WEB_4" message="访问此网站"/>
+	<tip id="ID_HELP_WEB_5" message="访问此网站"/>
+	<tip id="ID_HELP_WEB_6" message="访问此网站"/>
+	<tip id="ID_HITMONITOR_CLEAR" message="清除命中监视器缓存。"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="暂停命中监视器。"/>
 	<tip id="ID_HITMONITOR_SEARCH" message="在网络上搜索选定的条件。"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="连接到选定的主机。"/>
@@ -2624,7 +2647,7 @@
 	<string id="16133" value="正建立到邻居中 %s 主机的连接，握手中..."/>
 	<string id="16134" value="已关闭的到邻居中 %s 主机的连接。"/>
 	<string id="16135" value="不能初始化到邻居中 %s 主机的连接(被拒绝)。"/>
-	<string id="16136" value="邻居中 %s 主机已经意外的断开。"/>
+	<string id="16136" value="邻居中 %s 主机已经意外断开。"/>
 	<string id="16137" value="拒绝双重连接 %s 主机。"/>
 	<string id="16138" value="已经连接到 %s 主机，因此不会再建立第二个连接。"/>
 	<string id="16139" value="邻居 %s 主机关闭了连接。(%i : %s)"/>
@@ -3102,7 +3125,7 @@
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="常规">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="常规">
 		<control caption="用户界面(_U):"/>
 		<control caption="Shareaza 启动后自动连接"/>
 		<control caption="系统启动后运行 Shareaza"/>
@@ -3111,6 +3134,7 @@
 		<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="下载(_D):"/>
 		<control caption="默认展开新的下载"/>
+		<control caption="显示简易程序栏"/>
 		<control caption="搜索(_S):"/>
 		<control caption="默认展开多个资源文件"/>
 		<control caption="下载时切换到传输视图"/>
@@ -3284,7 +3308,7 @@
 		<control caption="选项(_O):"/>
 		<control caption="启用计划(_E)"/>
 		<control/><control/>
-		<control caption="在受限制时节制网络(_R)"/>
+		<control caption="仅在受到限制时连接到 G2(_C)"/>
 		<control caption="关键词:"/>
 		<control caption="周日"/>
 		<control caption="周一"/>
@@ -3847,7 +3871,7 @@
 		<control caption="显示(_D):"/>
 		<control caption="选择颜色..."/>
 		<control/>
-		<control caption="移除"/>
+		<control caption="移除(_R)"/>
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="从架构中选择列">
@@ -3973,7 +3997,7 @@
 		<control caption="确定"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="下载的文件已存在">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="文件已存在">
 		<control/><control/><control/><control/>
 		<control caption="您的收藏中已经存在此文件。您希望怎样做？"/>
 		<control caption="显示收藏中的这个文件"/>
