@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.141"
+version="2.1.0.150"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -455,17 +455,22 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_TOOLS_SETTINGS" text="Beállítások..."/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Használati utasítás"/>
-                       <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
-                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <separator/>
+                       <menu text="Ismertetők">
+                               <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
+                               <item id="ID_HELP_ROUTER" text="Router beállítása"/>
+                               <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                               <item id="ID_HELP_CODEC" text="Kodek súgó"/>
+                       </menu>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
+                               <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
+                               <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-                               <item id="ID_HELP_WEB_3" text="Slyck.com"/>
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -541,17 +546,23 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_WINDOW_REMOTE" text="Távirányító mutatása"/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Használati utasítás"/>
-                       <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
-                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <separator/>
+                       <menu text="Ismertetők">
+                               <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
+                               <item id="ID_HELP_ROUTER" text="Router beállítása"/>
+                               <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                               <item id="ID_HELP_CODEC" text="Kodek súgó"/>
+                       </menu>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
+                               <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
+                               <item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+                               <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-                               <item id="ID_HELP_WEB_3" text="Slyck.com"/>
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -621,17 +632,22 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_WINDOW_REMOTE" text="Távirányító mutatása"/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Használati utasítás"/>
-                       <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                       <item id="ID_HELP_FIREWALLS" text="Router súgó"/>
-                       <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <separator/>
+                       <menu text="Ismertetők">
+                               <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
+                               <item id="ID_HELP_ROUTER" text="Router beállítása"/>
+                               <item id="ID_HELP_SECURITY" text="Biztonság súgó"/>
+                               <item id="ID_HELP_CODEC" text="Kodek súgó"/>
+                       </menu>
                        <separator/>
                        <menu text="Weboldalak">
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
+                               <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
+                               <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-                               <item id="ID_HELP_WEB_3" text="Slyck.com"/>
                        </menu>
                        <separator/>
                        <item id="ID_HELP_ABOUT" text="Névjegy..."/>
@@ -1481,7 +1497,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        és ezért nem tudsz bejövő kapcsolatokat fogadni az Internetről (passzív kapcsolat). &#160;</text>
                        <text colour="FF0000" format="b">Ez csökkenti a számodra használható források számát.</text>
                        <newline gap="6"/>
-                       <link target="raza:command:ID_HELP_FIREWALLS">Kattints ide a router vagy tűzfal helyes beállításához</link>
+                       <link target="raza:command:ID_HELP_ROUTER">Kattints ide a router vagy tűzfal helyes beállításához</link>
                        <newline gap="18" indent="0"/>
                </group>
 
@@ -1652,8 +1668,8 @@ prompt="Kattints ide a magyar nyelvhez."
                </styles>
                <para align="center">
                        <text id="TorrentsNone" format="b">Jelenleg nem terjesztesz torrentfájlt</text>
-                       <text id="TorrentsOne" format="b">1 torrentfájl terjesztése</text>
-                       <text id="TorrentsMany" format="b">%i torrentfájl terjesztése</text>
+                       <text id="TorrentsOne" format="b">1 torrentfájl terjeszés alatt</text>
+                       <text id="TorrentsMany" format="b">%i torrentfájl terjesztés alatt</text>
                        <newline gap="4"/>
                        <link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újraterjeszt: %s</link>
                        <newline gap="4"/>
@@ -2056,9 +2072,12 @@ prompt="Kattints ide a magyar nyelvhez."
                    Lehet, hogy a torrent hibás vagy csak rosszul lett kódolva. Valószínűleg működni fog bár lehet, hogy
                    néhány fájl neve helytelenül fog megjelenni.</text>
                    <newline gap="8"/>
-                   <text>A legtöbb torrentkészítő program ki tuja javítani ezt a hibát, így
+                   <text>A legtöbb torrentkészítő program ki tudja javítani ezt a hibát, így
                    bármelyik BitTorrent programmal működni fog. Ha segítség kell, látogasd meg a
                    Shareaza fórumait.</text>
+               <newline gap="8"/>
+               <link target="http://www.shareaza.com/help/?torrentencoding">Kattints ide, ha további segítségre van szükséged</link>
+               <text>vagy töltsd le innen a szoftvert.</text>
            </document>
 
            <document name="GeneralHelp.DonkeyServerList">
@@ -2221,15 +2240,20 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_DOWNLOADS_URL" message="URL hozzáadása a letöltéshez..."/>
        <tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Vélemények megtekintése a kiválasztott letöltésről"/>
        <tip id="ID_HELP_ABOUT" message="Megjeleníti a Névjegy... ablakot."/>
-       <tip id="ID_HELP_FAQ" message="A Shareaza használati utasításához vezet el."/>
-       <tip id="ID_HELP_FIREWALLS" message="Router és tűzfal beállítási segítség."/>
+       <tip id="ID_HELP_CODEC" message="Minden ami kodek és videó."/>
+       <tip id="ID_HELP_FAQ" message="A Shareaza gyakran ismételt kérdésekhez vezet el."/>
+       <tip id="ID_HELP_ROUTER" message="Router és tűzfal beállítási segítség."/>
        <tip id="ID_HELP_FORUMS" message="Látogasd meg a Shareaza hivatalos fórumait."/>
-       <tip id="ID_HELP_HOMEPAGE" message="Ellátogat a Shareaza.com-ra."/>
+       <tip id="ID_HELP_GUIDE" message="A Shareaza használíti utasításához vezet el."/>
+       <tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
        <tip id="ID_HELP_SECURITY" message="Veszélyes programok elleni védekezés."/>
+       <tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
        <tip id="ID_HELP_WEB_1" message="Ellátogat a Zeropaid.com-ra."/>
        <tip id="ID_HELP_WEB_2" message="Ellátogat a P2PForums.com-ra."/>
        <tip id="ID_HELP_WEB_3" message="Ellátogat a Slyck.com-ra."/>
-       <tip id="ID_HELP_WEB_4" message="Látogasd meg: NapJunk.net"/>
+       <tip id="ID_HELP_WEB_4" message="Ellátogat a NapJunk.net-re"/>
+       <tip id="ID_HELP_WEB_5" message="Látogasd meg"/>
+       <tip id="ID_HELP_WEB_6" message="Látogasd meg"/>
        <tip id="ID_HITMONITOR_CLEAR" message="Törli az összes találati bejegyzést."/>
        <tip id="ID_HITMONITOR_PAUSE" message="Szünetelteti a megfigyelést."/>
        <tip id="ID_HITMONITOR_SEARCH" message="Keresés a hálózaton a megadottak alapján."/>
@@ -3114,7 +3138,7 @@ prompt="Kattints ide a magyar nyelvhez."
 
        <dialog name="CGeneralSettingsGroup" cookie="" caption="Általános"/>
 
-       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Általános">
+       <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Általános">
                <control caption="Felhasználói felület:"/>
                <control caption="Automatikus kapcsolódás indításkor"/>
                <control caption="Együtt töltődik be a Windows-al"/>
@@ -3125,6 +3149,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Új letöltések kibontása"/>
                <control caption="Keresés:"/>
                <control caption="Többforrásos fájlok kibontása"/>
+               <control caption="Egyszerű folyamatábra mutatása"/>
                <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
                <control caption="Keresőpanel elrejtése kereséskor"/>
                <control caption="Felnőtt tartalmú fájlok kiszűrése"/>
@@ -3888,7 +3913,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Feladat:"/>
                <control caption="Semmi|Elfogad|Blokkol"/>
                <control caption="Lejárat:"/>
-               <control caption="Soha|A periódus végéig|Eddig érvényes:"/>
+               <control caption="Soha (nincs meghatározva)|A periódus végéig|Eddig érvényes:"/>
                <control/>
                <control caption="N"/>
                <control/>
@@ -4103,7 +4128,6 @@ prompt="Kattints ide a magyar nyelvhez."
            <control caption="Frissítés"/>
            <control/>
            <control caption="Bezár"/>
-
        </dialog>
 
        <dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Letöltési csoportok tulajdonságai">
