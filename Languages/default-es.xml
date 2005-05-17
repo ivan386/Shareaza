@@ -1496,7 +1496,7 @@
 			y no puedes recibir conexiones entrantes de Internet. &#160;</text>
 			<text colour="FF0000" format="b">Esto va a causar un bajo desempeño en las descargas.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_FIREWALLS">Haz click aquí para aprender como configurar tu Firewall y/o Router</link>
+			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu Firewall y/o Router</link>
 			<newline gap="18" indent="0"/>
 		</group>
 
