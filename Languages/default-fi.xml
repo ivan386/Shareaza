@@ -3166,7 +3166,7 @@
 		<control caption="Normaali|Pienennä ilmoitusalueelle"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kirjasto">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Kirjasto">
 		<control caption="Valinnat:"/>
 		<control caption="Muista kansioiden näkymät"/>
 		<control caption="Näytä kirjaston kansiot"/>
@@ -3260,7 +3260,7 @@
 		<control caption="Hyväksyn saapuvat yhteydet"/>
 	</dialog>
 
-	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuBu" caption="Lataukset">
+	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Lataukset">
 		<control caption="Tallenna valmiit tiedostot kansioon:"/>
 		<control/><control/>
 		<control caption="Säilö väliaikaiset ja keskeneräiset tiedostot kansioon:"/>
@@ -3280,7 +3280,7 @@
 		<control caption="Lataa ja siirrä tiedostoja vain verkossa johon yhdistettynä."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuBuStEdmsBuCoBuBuBuStEdStCoBuSyBuBuBuSt" caption="Siirrot">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Siirrot">
 		<control caption="_Valinnat:"/>
 		<control caption="Jaa uudet osittaiset lataukset"/>
 		<control caption="Rajoita jakoja hub tilassa"/>
