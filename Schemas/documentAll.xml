@@ -67,6 +67,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <headerContent version="1.0">
                <title language="en">All Documents</title>
                <title language="af">Alle Dokumente</title>
+               <title language="ar">All Documents</title>
                <title language="chs">所有文档</title>
                <title language="de">Alle Dokumente</title>
                <title language="es">Todos Los Documentos</title>
@@ -81,6 +82,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="sv">Alla dokument</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle dokumente in jou biblioteek.</subtitle>
+               <subtitle language="ar">This folder contains every document in your library.</subtitle>
                <subtitle language="chs">此文件夹包含了您收藏夹中的每个文档。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
@@ -89,7 +91,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="it">Questa cartella contiene tutti i documenti della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
-               <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt.</subtitle>
                <subtitle language="br">Esta pasta contém todos os documentos da sua biblioteca.</subtitle>
                <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
                <subtitle language="sv">Denna mapp innehåller alla dokument i biblioteket.</subtitle>
