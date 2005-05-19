@@ -3023,8 +3023,8 @@ Other:
 	<string id="18506" value="Incapable d'effacer la gamme sélectionnée du téléchargement car aucune partie de cette gamme n'est présente."/>
 	<string id="18507" value="%I64i bytes effacés du téléchargement."/>
 	<string id="18508" value="Relâche la source %s du téléchargement &quot;%s&quot; car la position %i en file d'attente est trop élevée."/>
-	<string id="18509" value="Vous ne pouvez pas assumer que ce téléchargement est terminé et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent.  Sans information de vérification le téléchargement ne peut pas être vérifié."/>
-	<string id="18510" value="Êtes-vous certain de vouloir assumer ce téléchargement comme terminé et de le revérifier?  Le fichier terminé sera pris en compte, et Shareaza acceptera les parties qui passe la vérification et téléchargera à nouveau les parties qui échouent à cette vérification."/>
+	<string id="18509" value="Vous ne pouvez pas considérer que ce téléchargement est terminé et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent.  Sans information de vérification le téléchargement ne peut pas être vérifié."/>
+	<string id="18510" value="Êtes-vous certain de vouloir considérer ce téléchargement comme terminé et de le revérifier?  Le fichier terminé sera pris en compte, et Shareaza acceptera les parties qui passe la vérification et téléchargera à nouveau les parties qui échouent à cette vérification."/>
 	<string id="19000" value="L'Accès à distance est désactivé."/>
 	<string id="19001" value="Vous devez choisir un nom d'utilisateur et un mot de passe."/>
 	<string id="19002" value="Incapable d'accepter des connexions, URL indisponible."/>
@@ -4039,7 +4039,7 @@ Other:
 		<control/>
 		<control caption="_Actions:"/>
 		<control caption="Oublier le statut de vérification actuel et revérifier"/>
-		<control caption="Assumer que le fichier est 100% complet et revérifier"/>
+		<control caption="Considérer que le fichier est 100% complet et revérifier"/>
 		<control caption="Oublier toutes les sources connues"/>
 		<control caption="_Effaceur de donnée:"/>
 		<control caption="Efface du byte:"/>
