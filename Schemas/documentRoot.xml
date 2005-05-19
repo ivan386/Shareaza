@@ -65,6 +65,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <headerContent version="1.0">
                <title language="en">Welcome to My Documents!</title>
                <title language="af">Welkom by My Dokumente!</title>
+               <title language="ar">Welcome to My Documents!</title>
                <title language="chs">欢迎来到我的文档！</title>
                <title language="de">Willkommen zu Meine Dokumente!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
@@ -79,6 +80,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="sv">Välkommen till Mina dokument!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou dokumente.</subtitle>
+               <subtitle language="ar">These folders contain all of your documents.</subtitle>
                <subtitle language="chs">这些文件夹包含了您所有的文档。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
@@ -87,7 +89,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
                <subtitle language="nl">In deze mappen bevinden zich al je documenten.</subtitle>
-               <subtitle language="no">Disse mappene inneholder alle dine dokumenter</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine dokumenter.</subtitle>
                <subtitle language="br">Estas pastas contêm todos os seu documentos.</subtitle>
                <subtitle language="ru">&#160;Эти папки отображают все&#160;Ваши документы.</subtitle>
                <subtitle language="sv">Denna mapp innehåller alla dina dokument.</subtitle>
