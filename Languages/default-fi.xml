@@ -42,7 +42,7 @@
 		<button id="ID_TAB_MEDIA" text="Media"/>
 		<button id="ID_TAB_SEARCH" text="Haku"/>
 		<button id="ID_TAB_TRANSFERS" text="Siirrot"/>
-		<button id="ID_TAB_NETWORK" text="Verkkko"/>
+		<button id="ID_TAB_NETWORK" text="Verkko"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Yhdistä"/>
