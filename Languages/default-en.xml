@@ -3337,7 +3337,7 @@
 		<control caption="% of _bandwidth under limit"/>
 		<control/>
 		<control caption="Help"/>
-		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. &#13;&#10;&#13;&#10;&#13;&#10;Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
+		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
