@@ -403,9 +403,9 @@ Other:
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
-		<button id="ID_CHAT_BOLD" text="B"/>
+		<button id="ID_CHAT_BOLD" text="G"/>
 		<button id="ID_CHAT_ITALIC" text="I"/>
-		<button id="ID_CHAT_UNDERLINE" text="U"/>
+		<button id="ID_CHAT_UNDERLINE" text="S"/>
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
@@ -2691,7 +2691,7 @@ Other:
 	<string id="16287" value="Ne peut rechercher plus de sources pour le téléchargement de &quot;%s&quot; car il n'y a pas de connexion au réseau."/>
 	<string id="16288" value="Requiert plus de sources pour le téléchargement &quot;%s&quot; sur %i connexion(s)..."/>
 	<string id="16289" value="Envoie une requête poussée pour le téléchargement &quot;%s&quot;..."/>
-	<string id="16290" value="L'hôte de téléchargement %s a répondu avec une gamme différente mais utile (%lu-%lu) de &quot;%s&quot;."/>
+	<string id="16290" value="L'hôte de téléchargement %s a répondu avec un segment différent mais utile (%lu-%lu) de &quot;%s&quot;."/>
 	<string id="16291" value="Déplace &quot;%s&quot; vers &quot;%s&quot;, téléchargement terminé."/>
 	<string id="16292" value="Ne peut déplacer le téléchargement vers &quot;%s&quot;.  Vérifiez que ce fichier n'est pas utilisé et que votre dossier de téléchargement existe et est inscriptible."/>
 	<string id="16293" value="Résout &quot;%s&quot; pour le téléchargement de &quot;%s&quot;..."/>
@@ -2731,7 +2731,7 @@ Other:
 	<string id="16327" value="Refuse l'envoi de &quot;%s&quot; à %s, occupé et le client ne supporte pas la mise en file d'attente."/>
 	<string id="16328" value="La connexion poussée à %s est établie, en attente de poignée de main..."/>
 	<string id="16329" value="Impossible d'ouvrir &quot;%s&quot; pour l'envoi à l'hôte %s, erreur disque/fichier."/>
-	<string id="16330" value="Envoi du contenu de la gamme %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
+	<string id="16330" value="Envoi du contenu du segment %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
 	<string id="16331" value="Envoi de &quot;%s&quot; terminé pour %s."/>
 	<string id="16332" value="La connexion entrante en provenance de %s est une demande d'envoi HTTP."/>
 	<string id="16333" value="Trop occupé pour envoyer &quot;%s&quot; à %s, mis en file d'attente à la position #%i de %i (&quot;%s&quot;)."/>
@@ -2739,7 +2739,7 @@ Other:
 	<string id="16335" value="Supprime l'envoi de &quot;%s&quot; à %s."/>
 	<string id="16336" value="Refuse une demande, l'hôte d'envoi %s est dans la liste noire des agents utilisateur."/>
 	<string id="16337" value="Transmission des en-têtes d'envoi de &quot;%s&quot; pour l'hôte %s (%s)."/>
-	<string id="16338" value="L'hôte d'envoi %s a demandé une gamme insatisfiable du fichier &quot;%s&quot;."/>
+	<string id="16338" value="L'hôte d'envoi %s a demandé un segment insatisfiable du fichier &quot;%s&quot;."/>
 	<string id="16339" value="Envoi de la réponse HTML par défaut à l'hôte d'envoi %s (%s)."/>
 	<string id="16340" value="Refuse la demande de navigation de %s."/>
 	<string id="16341" value="L'hôte d'envoi %s (%s) a envoyé une requête de navigation utilisateur, répond..."/>
@@ -2747,7 +2747,7 @@ Other:
 	<string id="16343" value="Fermeture d'un envoi plus ancien à %s car il a établi une connexion plus récente."/>
 	<string id="16344" value="Refuse un nouvel envoi à %s car une connexion précédente est déjà en suspens."/>
 	<string id="16345" value="Arrête l'envoi &quot;%s&quot; pour %s car le fichier a été supprimé."/>
-	<string id="16346" value="Envoi de la gamme %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
+	<string id="16346" value="Envoi du segment %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
 	<string id="16347" value="L'envoi en file d'attente %s redemande trop rapidement, ferme la connexion."/>
 	<string id="16348" value="Refuse une demande poussée pour %s, il y a trop de connexions d'envoi."/>
 	<string id="16349" value="Envoi du tiger-tree de &quot;%s&quot; pour &quot;%s&quot;."/>
@@ -3019,8 +3019,8 @@ Other:
 	<string id="18502" value="Vous avez fourni une valeur de hachage eDonkey2000 qui est différente de celle actuellement associée avec ce téléchargement.  Êtes-vous certain de vouloir changer le hachage eDonkey2000 maintenant?"/>
 	<string id="18503" value="Êtes-vous certain de vouloir oublier le statut de vérification actuel?  Toutes les données téléchargées seront considérées comme non-vérifiées, et les &quot;hashtrees&quot; et &quot;hashsets&quot; en cache seront nettoyés."/>
 	<string id="18504" value="Êtes-vous certain de vouloir oublier toutes les sources du téléchargement sélectionnées?"/>
-	<string id="18505" value="Merci de saisir une gamme valide à effacer.  Le champ &quot;De&quot; est le premier byte à effacer, le champ &quot;Dernier&quot; est le dernier byte à effacer."/>
-	<string id="18506" value="Incapable d'effacer la gamme sélectionnée du téléchargement car aucune partie de cette gamme n'est présente."/>
+	<string id="18505" value="Merci de saisir un segment valide à effacer.  Le champ &quot;De&quot; est le premier byte à effacer, le champ &quot;Dernier&quot; est le dernier byte à effacer."/>
+	<string id="18506" value="Incapable d'effacer le segment sélectionné du téléchargement car aucune partie de ce segment n'est présent."/>
 	<string id="18507" value="%I64i bytes effacés du téléchargement."/>
 	<string id="18508" value="Relâche la source %s du téléchargement &quot;%s&quot; car la position %i en file d'attente est trop élevée."/>
 	<string id="18509" value="Vous ne pouvez pas considérer que ce téléchargement est terminé et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent.  Sans information de vérification le téléchargement ne peut pas être vérifié."/>
