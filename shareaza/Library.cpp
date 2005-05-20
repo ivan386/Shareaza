@@ -147,6 +147,8 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 
 void CLibrary::OnFileDelete(CLibraryFile* pFile)
 {
+	ASSERT( pFile != NULL );
+	
 	LibraryFolders.OnFileDelete( pFile );
 	LibraryHistory.OnFileDelete( pFile );
 	LibraryHashDB.DeleteAll( pFile->m_nIndex );
