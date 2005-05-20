@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Dutch Skin File -->
 <!-- Special characters used in Dutch:
 	e with accent:  &#233;
@@ -2344,7 +2344,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<tip id="ID_MEDIA_ZOOM" message="De zoom en de breedte-hoogte verhouding van de video aanpassen."/>
 	<tip id="ID_MONITOR_CLOSE" message="Sluit het monitor venster."/>
 	<tip id="ID_NEIGHBOURS_CHAT" message="Open een chat sessie met de geselecteerde gebruiker."/>
-	<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te Ophalen tot de geselecteerde gastheer."/>
+	<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te verkrijgen tot de geselecteerde gastheer."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="De verbinding met de geselecteerde bron(nen) verbreken."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="De netwerkinstellingen aanpassen..."/>
 	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Een nieuw Pakket Dump venster openen om deze bron te controleren."/>
@@ -2689,7 +2689,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="16203" value="Bron %s heeft een push pakket met een ongeldige lengte doorgestuurd, het wordt genegeerd."/>
 	<string id="16208" value="Een onverwachte update van de query routing tabel is ontvangen van bron %s."/>
 	<string id="16209" value="Bron %s heeft een ongeldige update gestuurd van de query routing tabel, verbinding verbroken."/>
-	<string id="16210" value="Bron %s heeft zijn query routing tabel geüpdate (%i bit = %lu[%i], %i%% vol)."/>
+	<string id="16210" value="Bron %s heeft zijn query routing tabel geüpdatet (%i bit = %lu[%i], %i%% vol)."/>
 	<string id="16211" value="Bron %s heeft een pushaanvraag doorgestuurd naar een adres met een firewall, het wordt genegeerd."/>
 	<string id="16212" value="Bron %s heeft een uitgebreid pakket doorgestuurd dat niet GGEP gecodeerd is."/>
 	<string id="16213" value="Query routing tabel wordt gestuurd naar bron %s (%i bit = %lu[%i], %i%% vol)"/>
@@ -2828,7 +2828,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="16394" value="Wil je de eigenschap &quot;mogelijk onveilig&quot; van dit bestand verwijderen?"/>
 	<string id="16395" value="De map &quot;%s&quot; met je gedownloade bestanden zit nog niet in je bibliotheek.\n\nAls deze map is toegevoegd aan je bibliotheek, wordt het gemakkelijker om nieuwe downloads te bekijken en te beheren.  Ook kun je dan gebruik maken van extra Shareaza eigenschappen zoals download controle en automatische upgrades.  Het plaatsen van gedownloade bestanden in je bibliotheek wil niet meteen zeggen dat ze moeten worden gedeeld: je kunt voor elk bestand bepalen of je het al dan niet wilt delen.\n\nWil je de map met gedownloade bestanden nu aan je bibbliotheek toevoegen?"/>
 	<string id="16396" value="Je map met downloads is toegevoegd aan je bibliotheek.  Wil je het ook delen?"/>
-	<string id="16397" value="Weet je zeker dat je de %i geselecteerde album map(pen) wilt verwijderen?\n\nMet deze actie worden niet de bestanden uit deze albums verwijderd, maar alleen de mappen zelf."/>
+	<string id="16397" value="Weet je zeker dat je de %i geselecteerde album-map(pen) wilt verwijderen?\n\nMet deze actie worden niet de bestanden uit deze albums verwijderd, maar alleen de mappen zelf."/>
 	<string id="16398" value="Shareaza kon\n\n%s\nniet hernoemen naar\n%s."/>
 	<string id="16399" value="Shareaza kon het bestand\n\n%s niet verwijderen."/>
 	<string id="16400" value="Doelbestand bestaat al:\n\n%s\n\nWil je het overschrijven?"/>
@@ -3269,7 +3269,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control/>
 		<control caption="Max. Wachtrij lengte:"/>
 		<control/><control/>
-		<control caption="Alleen up- en downloaden met verbonden netwerken."/>
+		<control caption="Alleen down- en uploaden met verbonden netwerken."/>
 	</dialog>
 
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
@@ -3328,7 +3328,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control caption="% van _bandbreedte indien beperkt"/>
 		<control/>
 		<control caption="Help"/>
-		<control caption="De planner is ontworpen om in te kunnen stellen wanneer Shareaza verbindt en bestanden downloadt.{n}{n}{n}Opmerking: Als Shareaza geopend is terwijl de planner ingesteld is, kan je instellingen zien wijzigen- Dit is normaal!-"/>
+		<control caption="De planner is ontworpen om in te kunnen stellen wanneer Shareaza verbindt en bestanden downloadt.{n}{n}{n}Opmerking: Als Shareaza geopend is terwijl de planner ingesteld is, kan je instellingen zien veranderen- Dit is normaal!-"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netwerken">
@@ -3841,7 +3841,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control caption="Map Type:"/>
 		<control/>
 		<control caption="Alles"/>
-		<control caption="Kopiër deze algemene eigenschappen naar elk bestand in de map"/>
+		<control caption="Kopiëer deze algemene eigenschappen naar elk bestand in de map"/>
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 	</dialog>
