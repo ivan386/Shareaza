@@ -437,7 +437,7 @@ void CMediaFrame::OnPaint()
 	{
 		LOGFONT pFont = { 80, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-			DEFAULT_PITCH|FF_DONTCARE, _T("Verdana") };
+			DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") };
 		
 		m_pFontDefault.CreatePointFontIndirect( &pFont );
 		
