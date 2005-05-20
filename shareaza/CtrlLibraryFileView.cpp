@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/04/30 11:27:19 $"
-//	Revision:		"$Revision: 1.18 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/05/20 22:10:36 $"
+//	Revision:		"$Revision: 1.19 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -451,11 +451,15 @@ void CLibraryFileView::OnLibraryDelete()
 		pList.AddTail( pFile->m_nIndex );
 	}
 	
-	while ( pList.GetCount() > 0 )
+	while ( !pList.IsEmpty() )
 	{
 		CLibraryFile* pFile = Library.LookupFile( pList.GetHead(), FALSE, TRUE );
-		if ( pFile == NULL ) continue;
-		
+		if ( pFile == NULL ) 
+		{
+			pList.RemoveHead(); // Remove item from list to avoid endless loop
+			continue;
+		}
+
 		CDeleteFileDlg dlg( this );
 		dlg.m_sName	= pFile->m_sName;
 		dlg.m_bAll	= pList.GetCount() > 1;
