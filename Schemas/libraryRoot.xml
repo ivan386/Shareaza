@@ -29,7 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Allgemein:Shareaza Bibliothek</title>
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
-               <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
+               <title language="heb">&#160;כללי:ספריית&#160;שרזה&#160;שלי</title>
                <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="it">Generale:Libreria di Shareaza</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
@@ -123,7 +123,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
-               <subtitle language="heb">בספרייה&#160;שלך&#160;&#8206;{totalVolume}&#160;קבצים&#160;שגודלם&#160;הכולל&#160;הוא&#160;{totalFiles}&#160;יש&#160;לך</subtitle>
+               <subtitle language="heb">בספרייה&#160;שלך&#160;&#8206;{totalVolume}&#160;יש&#160;לך&#160;{totalFiles}&#160;קבצים&#160;שגודלם&#160;הוא</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="it">Tu hai {totalFiles} file che ammontano a {totalVolume} nella tua libreria.</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>

@@ -29,7 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Musik:Eigene Musik</title>
                <title language="es">Musica: Mi Música</title>
                <title language="fr">Musique:Ma musique</title>
-               <title language="heb">&#160;שירים:המוזיקה שלי</title>
+               <title language="heb">&#160;שירים:המוזיקה&#160;שלי</title>
                <title language="hu">Zene: saját zenék</title>
                <title language="it">Musica:Musica</title>
                <title language="lt">Muzika:Mano muzika</title>
@@ -92,7 +92,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Diese Ordner enthalten alle Musik in ihrer Bibliothek, geordnet nach Album, Künstler und Genre. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
                <subtitle language="es">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque, organisées par album, par artiste et par genre.  Ouvrez un sous-dossier pour continuer.</subtitle>
-               <subtitle language="heb">פסריות&#160;הללו&#160;מכילות&#160;כל&#160;המוזיקה&#160;בספרייה&#160;שלך,&#160;מאורגנים&#160;לפי&#160;אלבום,&#160;אמן&#160;וז'אנר&#160;פתח&#160;ספרייה&#160;מתחת&#160;כדי&#160;להמשיך</subtitle>
+               <subtitle language="heb">הספריות&#160;הללו&#160;מכילות&#160;כל&#160;המוזיקה&#160;בספרייה&#160;שלך,&#160;מאורגנים&#160;לפי&#160;אלבום,&#160;אמן&#160;וז'אנר&#160;פתח&#160;ספרייה&#160;מתחת&#160;כדי&#160;להמשיך</subtitle>
                <subtitle language="hu">Ez a mappa az összes zenét tartalmazza, albumokra, előadókra és műfajokra bontva.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutta la musica della tua libreria, organizzata per album, per artista e per genere.  Apri una cartella qui sotto per continuare.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visa Jūsų kolekcijos muzika, surūšiuota pagal albumus, atlikėjus ir žanrus/stilius. Tęskite atverdami žemiau esantį katalogą.</subtitle>

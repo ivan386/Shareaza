@@ -29,7 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Video:Eigene Videos</title>
                <title language="es">Video:Mis Videos</title>
                <title language="fr">Vidéo:Mes vidéos</title>
-               <title language="heb">&#160;וידאו:הסרטים שלי</title>
+               <title language="heb">&#160;וידאו:הסרטים&#160;שלי</title>
                <title language="hu">Videó: saját videó</title>
                <title language="it">Video:Video</title>
                <title language="lt">Video:Mano vaizdo įrašai</title>
@@ -92,7 +92,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Diese Ordner enthalten alle Videodateien in ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner um fortzufahren.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéos.  Ouvrez un sous-dossier pour continuer.</subtitle>
-               <subtitle language="heb">פסריות&#160;הללו&#160;מכילות&#160;כל&#160;הוידאו&#160;בספרייה&#160;שלך,&#160;מאורגנים&#160;לפי&#160;סרט,&#160;טלוויזיה&#160;וקליפים&#160;פתח&#160;ספרייה&#160;מתחת&#160;כדי&#160;להמשיך</subtitle>
+               <subtitle language="heb">הספריות&#160;הללו&#160;מכילות&#160;כל&#160;הוידאו&#160;בספרייה&#160;שלך,&#160;מאורגנים&#160;לפי&#160;סרט,&#160;טלוויזיה&#160;וקליפים&#160;פתח&#160;ספרייה&#160;מתחת&#160;כדי&#160;להמשיך</subtitle>
                <subtitle language="hu">Ez a mappa az összes videót tartalmazza, filmekre, TV műsorokra és klipekre bontva.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i video della tua libreria, divisi in film, show TV e video musicali.  Apri una cartella qui sotto per continuare.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų kolekcijos vaizdo bylos, suskirstytos į filmus, TV pasirodymus ir muzikinius klipus. Tęskite atverdami žemiau esantį katalogą.</subtitle>

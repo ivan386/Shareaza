@@ -29,7 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Anwendung:Eigene Anwendungen</title>
                <title language="es">Aplicación: Todas mis aplicaciones</title>
                <title language="fr">Application:Mes applications</title>
-               <title language="heb">&#160;תוכנה:התוכניות שלי</title>
+               <title language="heb">&#160;תוכנה:התוכניות&#160;שלי</title>
                <title language="hu">Program: saját programok</title>
                <title language="it">Applicazione:Applicazioni</title>
                <title language="lt">Programa:Mano programos</title>
@@ -90,7 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Diese Ordner enthalten alle ihre Anwendungen.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>
-               <subtitle language="heb">הספריות&#160;הללו&#160;מכילים&#160;את&#160;כל&#160;קבצי&#160;התוכניות&#160;שלך</subtitle>
+               <subtitle language="heb">הספריות&#160;הללו&#160;מכילות&#160;את&#160;כל&#160;קבצי&#160;התוכניות&#160;שלך</subtitle>
                <subtitle language="hu">Ez a mappa a programokat tartalmazza.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutte le tue applicazioni.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visos Jūsų programų bylos.</subtitle>
