@@ -718,9 +718,9 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	
 	Statistics.Update();
 	
-	// Hashing progress
+	// Hashing progress window
 	
-	// m_wndHashProgressBar.Run();
+	m_wndHashProgressBar.Run();
 	
 	// Switch tray icon
 	

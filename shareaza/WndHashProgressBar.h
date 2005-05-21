@@ -40,9 +40,10 @@ protected:
 	COLORREF	m_crText;
 	CBrush		m_brFill;
 	HICON		m_hIcon;
-	int			m_nRemaining;
+	int			m_nRemaining;			// Files left to hash
+	int			m_nTotal;				// Total files to hash
 	int			m_nFlash;
-	CString		m_sCurrent;
+	CString		m_sCurrent;				// Name of file currently hashing
 
 // Operations
 public:

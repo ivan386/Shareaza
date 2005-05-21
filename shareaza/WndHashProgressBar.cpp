@@ -25,6 +25,7 @@
 #include "LibraryBuilder.h"
 #include "CoolInterface.h"
 #include "WndHashProgressBar.h"
+#include "Settings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,7 +43,7 @@ BEGIN_MESSAGE_MAP(CHashProgressBar, CWnd)
 END_MESSAGE_MAP()
 
 #define WINDOW_WIDTH		320
-#define WINDOW_HEIGHT		58
+#define WINDOW_HEIGHT		60
 #define DISPLAY_THRESHOLD	5
 
 
@@ -74,7 +75,7 @@ void CHashProgressBar::Run()
 	int nRemaining = LibraryBuilder.GetRemaining();
 	LibraryBuilder.SanityCheck();
 
-	BOOL bShow = FALSE;
+	BOOL bShow = Settings.Library.HashWindow;
 
 	if ( m_hWnd == NULL )
 	{
@@ -104,6 +105,7 @@ void CHashProgressBar::Update()
 {
 	m_nRemaining = LibraryBuilder.GetRemaining();
 	CString strFile = LibraryBuilder.GetCurrentFile();
+	m_nTotal = LibraryMaps.GetFileCount();
 
 	int nPos = strFile.ReverseFind( '\\' );
 	if ( nPos > 0 ) strFile = strFile.Mid( nPos + 1 );
@@ -182,15 +184,18 @@ void CHashProgressBar::OnPaint()
 
 	dc.Draw3dRect( &rcClient, m_crBorder, m_crBorder );
 	rcClient.DeflateRect( 1, 1 );
+
 	dc.SetBkMode( OPAQUE );
 	dc.SetBkColor( m_crFill );
 	dc.SetTextColor( ( m_nFlash++ & 1 ) ? RGB( 255, 255, 0 ) : m_crText );
 
+	// Icon
 	DrawIconEx( dc, rcClient.left + 4, rcClient.top + 4,
 		m_hIcon, 48, 48, 0, m_brFill, DI_NORMAL );
 	dc.ExcludeClipRect( rcClient.left + 4, rcClient.top + 4,
 		rcClient.left + 4 + 48, rcClient.top + 4 + 48 );
 
+	// Text
 	CFont* pOld = dc.GetCurrentFont();
 	CString strText, strFormat;
 	CSize sz;
@@ -212,9 +217,20 @@ void CHashProgressBar::OnPaint()
 		ETO_OPAQUE|ETO_CLIPPED, &rcClient, m_sCurrent, NULL );
 
 	dc.SelectObject( pOld );
+
+	// Progress bar
+	CRect rcProgress = rcClient;
+	rcProgress.DeflateRect( 1, 1 );
+	rcProgress.top = rcProgress.bottom - 3;
+	float nPercentage = (float)( m_nTotal - m_nRemaining );
+	nPercentage /= m_nTotal;
+	if ( ( nPercentage < 0 ) || ( nPercentage > 1 ) ) nPercentage = 1;
+	rcProgress.right = rcProgress.left + (LONG)( rcProgress.Width() * nPercentage );
+	dc.Draw3dRect( &rcProgress, m_crText, m_crText );
 }
 
 void CHashProgressBar::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	Settings.Library.HashWindow = FALSE;
 	ShowWindow( SW_HIDE );
 }
