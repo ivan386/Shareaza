@@ -166,6 +166,7 @@ page_viruswarning_title=Virus Warning
 page_viruswarning_subtitle=Do you have an AntiVirus program installed?
 page_viruswarning_link=http://www.shareaza.com/securityhelp
 page_viruswarning_destination=http://www.shareaza.com/securityhelp/
+; Don't copy these last 2 messages, they are just links.
 ; Dutch:
 nl.components_plugins=Plugins
 nl.components_skins=Skins
