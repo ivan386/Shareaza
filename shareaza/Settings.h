@@ -99,6 +99,7 @@ public:
 		CString		BitziXML;
 		BOOL		BitziOkay;
 		BOOL		HighPriorityHash;			// Use high priority hashing
+		BOOL		HashWindow;					// Display annoying hashing window
 
 		//Not used at the moment
 		DWORD		BufferSize;					// I/O buffer for hash operation in MB, ignored if Parallel = 1; 0 use 1/4 of phys ram
