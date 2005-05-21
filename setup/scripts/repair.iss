@@ -106,6 +106,8 @@ chs.WelcomeLabel1=»¶Ó­Ê¹ÓÃ [name] ĞŞ¸´Ïòµ¼
 chs.WelcomeLabel2=´Ë²Ù×÷½«ĞŞ¸´ÄúµçÄÔÉÏµÄ [name]¡£%n%n½¨ÒéÄúÔÚ¼ÌĞø´Ë²Ù×÷Ç°¹Ø±ÕËùÓĞÆäËû³ÌĞò¡£
 sv.WelcomeLabel1=Welcome to the [name] Repair Wizard
 sv.WelcomeLabel2=This will repair [name] on your computer.%n%nIt is recommended that you close all other applications before continuing.
+fi.WelcomeLabel1=Tervetuloa [name] korjaustoimintoon
+fi.WelcomeLabel2=Tämä korjaa [name] asennuksen tietokoneellasi.%n%nOn suositeltavaa että suljet ylimääräiset ohjelmat ennen kuin jatkat asennusta.
 
 [Languages]
 ; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license files
@@ -127,6 +129,7 @@ Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"
 Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"
 Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"
+Name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"
 
 [Code]
 const

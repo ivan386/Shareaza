@@ -21,6 +21,7 @@ Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFil
 Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
 Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
+name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
 
 [Files]
 #ifndef debug
@@ -59,6 +60,8 @@ Source: "Remote\hu\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\chs\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
 ; Swedish
 Source: "Remote\sv\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
+; Finnish
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -95,6 +98,8 @@ Source: "setup\license\hungarian.rtf"; DestDir: "{app}\Uninstall"; DestName: "li
 Source: "setup\license\chinese.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
 ; Swedish
 Source: "setup\license\swedish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
+; Finnish
+Source: "setup\license\finnish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -131,6 +136,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\chinese-simpl.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: chs; Components: language
 ; Swedish
 Source: "setup\filter\swedish.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
+; Finnish
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 #endif
 
 [CustomMessages]
@@ -473,3 +480,25 @@ sv.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease
 sv.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
 sv.page_viruswarning_title=Virus Warning
 sv.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+; Finnish
+fi.components_plugins=Laajennukset
+fi.components_skins=Ulkoasut
+fi.components_languages=Kielet
+fi.tasks_allusers=Kaikille k‰ytt‰jille
+fi.tasks_selectusers=Asenna %1 k‰ytt‰jille:
+fi.tasks_currentuser=%1 vain
+fi.tasks_multisetup=Asenna kaikille koneen k‰ytt‰jille
+fi.tasks_firewall=Lis‰‰ poikkeus Windowsin palomuuriin
+;fi.tasks_deleteoldsetup=Poista vanhat asennukset
+fi.run_skinexe=K‰ynniss‰ ulkoasujen asennus...
+fi.reg_incomingchat=Tuleva keskusteluviesti
+fi.reg_apptitle=Shareaza jako-ohjelma
+fi.icons_license=Lisenssi
+fi.icons_uninstall=Poista
+fi.icons_downloads=Lataukset
+fi.dialog_shutdown=%1 on t‰ll‰ hetkell‰ k‰ynniss‰. Haluatko ett‰ %1 suljetaan jotta asennus voisi jatkua?
+fi.dialog_firewall=Asentaja ep‰onnistui lis‰tess‰‰n Shareazaa Windowsiin
+Firewall.%nOle hyv‰ ja lis‰‰ Shareaza poikkeuslistaan manuaalisesti.
+fi.page_viruswarning_text=Kun k‰yt‰t interneti‰, sinun tulee aina varmistaa ett‰ sinulla on viimeisimm‰t p‰ivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Lˆyd‰t hyv‰n listan hyvist‰ virusohjelmista ja turvallisuusvinkkej‰ seuraavista linkeist‰:
+fi.page_viruswarning_title=Virus Varoitus
+fi.page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
