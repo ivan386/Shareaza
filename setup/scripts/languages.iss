@@ -497,8 +497,7 @@ fi.icons_license=Lisenssi
 fi.icons_uninstall=Poista
 fi.icons_downloads=Lataukset
 fi.dialog_shutdown=%1 on tällä hetkellä käynnissä. Haluatko että %1 suljetaan jotta asennus voisi jatkua?
-fi.dialog_firewall=Asentaja epäonnistui lisätessään Shareazaa Windowsiin
-Firewall.%nOle hyvä ja lisää Shareaza poikkeuslistaan manuaalisesti.
+fi.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
 fi.page_viruswarning_text=Kun käytät internetiä, sinun tulee aina varmistaa että sinulla on viimeisimmät päivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Löydät hyvän listan hyvistä virusohjelmista ja turvallisuusvinkkejä seuraavista linkeistä:
 fi.page_viruswarning_title=Virus Varoitus
 fi.page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
