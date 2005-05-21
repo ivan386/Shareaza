@@ -5,14 +5,15 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -28,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
               <title language="de">Kollektionen:Eigene Kollektionen</title>
               <title language="es">Colecciones: Mis Colecciones</title>
               <title language="fr">Collections:Mes collections</title>
+              <title language="heb">&#160;אוספים:האוספים שלי</title>
               <title language="hu">Gyűjtemény: saját gyűjtemény</title>
               <title language="it">Collezioni:Collezioni</title>
               <title language="lt">Rinkiniai:Mano rinkiniai</title>
@@ -50,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -68,6 +71,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Eigene Kollektionen</title>
                <title language="es">Mis Colecciones</title>
                <title language="fr">Mes collections</title>
+               <title language="heb">האוספים שלי</title>
                <title language="hu">Saját gyűjtemény</title>
                <title language="it">Collezioni</title>
                <title language="lt">Mano rinkiniai</title>
@@ -83,7 +87,8 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
-               <subtitle language="hu">Ez a mappa gyűjteményfájlokati tartalmaz a könyvtárban.</subtitle>
+               <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;האוספים&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hu">Ez a mappa gyűjteményfájlokat tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le collezioni di file della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
                <subtitle language="nl">Deze map bevat alle Rich File Collections uit je bibliotheek.</subtitle>

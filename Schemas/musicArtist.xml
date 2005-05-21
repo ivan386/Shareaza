@@ -5,14 +5,15 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -28,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Musiker</title>
                <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
+               <title language="heb">אמן מוזיקה</title>
                <title language="hu">Előadó</title>
                <title language="it">Artista musicale</title>
                <title language="lt">Muzikantas</title>
@@ -50,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Name</title>
                        <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
+                       <title language="heb">שם</title>
                        <title language="hu">Név</title>
                        <title language="it">Nome</title>
                        <title language="lt">Pavadinimas</title>
@@ -67,6 +70,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
+                       <title language="heb">תיאור</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
@@ -84,6 +88,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
+                       <title language="heb">שם יוצר האוסף</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="it">Raccoglitore</title>
                        <title language="lt">Kolekcionierius</title>
@@ -101,6 +106,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
+                       <title language="heb">הערות</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>
@@ -133,6 +139,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">{name}</title>
                <title language="es">{name}</title>
                <title language="fr">{name} - Discographie</title>
+               <title language="heb">{name} - דיסקוגרפיה</title>
                <title language="hu">{name} - Diszkográfia</title>
                <title language="it">Discografia di {name}</title>
                <title language="lt">{name} diskografija</title>
@@ -148,6 +155,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
+               <subtitle language="heb">{name}&#160;ספרייה&#160;זו&#160;מכילה&#160;רשימה&#160;של&#160;המוזיקה&#160;שלך&#160;לפי</subtitle>
                <subtitle language="hu">Ez a mappa az összes zenédet tartalmazza {name} szerint rendezve.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica di {name}.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa „{name}“ muzika.</subtitle>

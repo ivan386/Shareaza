@@ -5,14 +5,15 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -28,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Allgemein:Alle Dateien</title>
                <title language="es">General: Todos los archivos</title>
                <title language="fr">Général:Tous les fichiers</title>
+               <title language="heb">&#160;כללי:כל הקבצים</title>
                <title language="hu">Általános: minden fájl</title>
                <title language="it">Generale:Tutti i file</title>
                <title language="lt">Bendra:Visos bylos</title>
@@ -50,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -68,6 +71,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Alle Dateien</title>
                <title language="es">Todos los archivos</title>
                <title language="fr">Tous les fichiers</title>
+               <title language="heb">כל הקבצים</title>
                <title language="hu">Minden fájl</title>
                <title language="it">Tutti i file</title>
                <title language="lt">Visos bylos</title>
@@ -83,7 +87,8 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>
-               <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz a könyvtárban.</subtitle>
+               <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;הקבצים&#160;&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i file della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos bylos.</subtitle>
                <subtitle language="nl">Deze map bevat elk bestand uit je bibliotheek.</subtitle>

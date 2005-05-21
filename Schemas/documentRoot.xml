@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven); Gauche
+Shareaza Arabian Schemas File translated by lazorde
+Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by Rolandas Rudomanskis
+Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
 
@@ -27,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Dokumente:Meine Dokumente</title>
                <title language="es">Documento:Mis Documentos</title>
                <title language="fr">Document:Mes Documents</title>
+               <title language="heb">&#160;מסמך:המסמכים שלי</title>
                <title language="hu">Dokumentum: saját okumentumok</title>
                <title language="it">Documento:Documenti</title>
                <title language="lt">Dokumentas:Mano dokumentai</title>
@@ -49,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -70,7 +74,8 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Willkommen zu Meine Dokumente!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="fr">Bienvenue dans Mes Documents!</title>
-               <title language="hu">Üdvözöllek a Saját okumentumokban!</title>
+               <title language="heb">!ברוך&#160;הבא&#160;למסמכים&#160;שלי</title>
+               <title language="hu">Üdvözöllek a Saját dokumentumokban!</title>
                <title language="it">Benvenuto nei Documenti!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
                <title language="nl">Welkom in Mijn Documenten!</title>
@@ -85,6 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
+               <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;המסמכים&#160;שלך</subtitle>
                <subtitle language="hu">Ez a mappa tartalmazza a dokumentumaidat.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>

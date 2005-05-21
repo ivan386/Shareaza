@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -28,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Allgemein:Shareaza Bibliothek</title>
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
+               <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
                <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="it">Generale:Libreria di Shareaza</title>
                <title language="lt">Bendra:Mano „Shareaza“ kolekcija</title>
@@ -47,6 +49,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -64,6 +67,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Besitzer</title>
                        <title language="es">Dueño</title>
                        <title language="fr">Propriétaire</title>
+                       <title language="heb">בעל הזכויות</title>
                        <title language="hu">Tulajdonos</title>
                        <title language="it">Proprietario</title>
                        <title language="lt">Savininkas</title>
@@ -81,6 +85,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
+                       <title language="heb">הערות</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>
@@ -102,6 +107,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Willkommen in ihrere Bibliothek!</title>
                <title language="es">¡Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
+               <title language="heb">!ברוך&#160;הבא&#160;לספרייה&#160;שלי</title>
                <title language="hu">Üdvözöllek a Saját könyvtárban!</title>
                <title language="it">Benvenuto nella tua libreria!</title>
                <title language="lt">Sveiki apsilankę savo kolekcijoje!</title>
@@ -117,6 +123,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
+               <subtitle language="heb">בספרייה&#160;שלך&#160;&#8206;{totalVolume}&#160;קבצים&#160;שגודלם&#160;הכולל&#160;הוא&#160;{totalFiles}&#160;יש&#160;לך</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="it">Tu hai {totalFiles} file che ammontano a {totalVolume} nella tua libreria.</subtitle>
                <subtitle language="lt">Jūs turite {totalFiles} bylų, užimančių Jūsų kolekcijoje {totalVolume}.</subtitle>

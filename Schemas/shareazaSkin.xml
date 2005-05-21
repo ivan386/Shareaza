@@ -5,14 +5,15 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -27,6 +28,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Skin</title>
                <title language="es">Skin</title>
                <title language="fr">Skin</title>
+               <title language="heb">מעטפת</title>
                <title language="hu">Kinézet</title>
                <title language="it">Skin</title>
                <title language="lt">Apvalkalas</title>
@@ -46,6 +48,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Name</title>
                        <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
+                       <title language="heb">שם</title>
                        <title language="hu">Név</title>
                        <title language="it">Nome</title>
                        <title language="lt">Pavadinimas</title>
@@ -63,6 +66,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Autor</title>
                        <title language="es">Autor</title>
                        <title language="fr">Auteur</title>
+                       <title language="heb">מחבר</title>
                        <title language="hu">Szerző</title>
                        <title language="it">Autore</title>
                        <title language="lt">Autorius</title>
@@ -80,6 +84,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Link</title>
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
+                       <title language="heb">קישור</title>
                        <title language="hu">Link</title>
                        <title language="it">Link</title>
                        <title language="lt">Nuoroda</title>
@@ -97,6 +102,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">E-Mail</title>
                        <title language="es">E-Mail</title>
                        <title language="fr">Email</title>
+                       <title language="heb">דואר אלקרוני</title>
                        <title language="hu">Email</title>
                        <title language="it">E-mail</title>
                        <title language="lt">El. paštas</title>
@@ -114,6 +120,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Version</title>
                        <title language="es">Versión</title>
                        <title language="fr">Version</title>
+                       <title language="heb">גרסא</title>
                        <title language="hu">Verzió</title>
                        <title language="it">Versione</title>
                        <title language="lt">Versija</title>
@@ -132,6 +139,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
+                       <title language="heb">סוג</title>
                        <title language="hu">Típus</title>
                        <title language="it">Tipo</title>
                        <title language="lt">Tipas</title>
@@ -149,6 +157,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Sprache</title>
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
+                       <title language="heb">שפה</title>
                        <title language="hu">Nyelv</title>
                        <title language="it">Lingua</title>
                        <title language="lt">Kalba</title>
@@ -166,6 +175,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Beschreibung</title>
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
+                       <title language="heb">תיאור</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
@@ -183,6 +193,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
+                       <title language="heb">הערות</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>

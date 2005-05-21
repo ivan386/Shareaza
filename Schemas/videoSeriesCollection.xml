@@ -5,14 +5,15 @@ Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
-Shareaza German Schemas File translated by Spooky
+Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog)
-Shareaza Norwegian Schemas File translated by Tom Seland
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans
 -->
@@ -28,6 +29,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Video:Fernsehserien</title>
                <title language="es">Video: Shows de TV</title>
                <title language="fr">Vidéo:Séries</title>
+               <title language="heb">&#160;וידאו:תוכניות טלוויזיה</title>
                <title language="hu">Videó: TV műsorok</title>
                <title language="it">Video:Show TV</title>
                <title language="lt">Video:TV programos</title>
@@ -50,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
+                       <title language="heb">כותרת</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -71,6 +74,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Fernsehserien</title>
                <title language="es">Shows de TV</title>
                <title language="fr">Séries</title>
+               <title language="heb">סדרות טלוויזיה</title>
                <title language="hu">TV műsorok</title>
                <title language="it">Show TV</title>
                <title language="lt">TV programos</title>
@@ -86,6 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält eine Liste der Fernsehserien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="fr">Ce dossier contient la liste des séries de votre bibliothèque.</subtitle>
+               <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;רשימה&#160;של&#160;התוכניות&#160;טלוויזיה&#160;שבספרייה&#160;שלך</subtitle>
                <subtitle language="hu">Ez a mappa a TV sorozatokat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista delle serie TV che hai nella libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos TV serialų sąrašas.</subtitle>
