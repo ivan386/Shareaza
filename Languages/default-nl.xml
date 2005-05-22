@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Dutch Skin File -->
 <!-- Special characters used in Dutch:
 	e with accent:  &#233;
@@ -1656,7 +1656,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i actieve uploads</link>
 
 			<newline gap="4"/>
-			<text id="UploadedNone">Je hebt vandaag geen bestanden geüpload.</text>
+			<text id="UploadedNone">Je hebt nog geen bestanden geüpload.</text>
 			<text id="UploadedOne">Je hebt 1 bestand geüpload (%s).</text>
 			<text id="UploadedMany">Je hebt %i bestanden geüpload (%s).</text>
 		</para>
@@ -2076,13 +2076,13 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
-		<text format="b">Your eDonkey server list is empty</text>
+		<text format="b">Je eDonkey serverlijst is leeg.</text>
 		<newline gap="8"/>
-		<text>There are no servers in your eDonkey2000 server list. You need to download an
-		up to date server list (met file) to connect to ED2K.</text>
+		<text>Er zijn geen servers in je eDonkey2000 serverlijst. Je moet een recente 
+		serverlijst hebben om te kunnen verbinden met ED2K.</text>
 		<newline gap="8"/>
-		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window.</text>
+		<text>Je kan een serverlijst downloaden van de eDonkey2000 instellingspagina,
+		of op de Discovery Services pagina.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -2443,7 +2443,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<tip id="ID_VIEW_HOSTS" message="Toon of verberg het HOST CACHE venster."/>
 	<tip id="ID_VIEW_LIBRARY" message="Toon of verberg het BIBLIOTHEEK venster."/>
 	<tip id="ID_VIEW_MEDIA" message="Toon of verberg het MEDIASPELER venster."/>
-	<tip id="ID_VIEW_NEIGHBOURS" message="Toon of verberg the NETWERK venster."/>
+	<tip id="ID_VIEW_NEIGHBOURS" message="Toon of verberg het NETWERK venster."/>
 	<tip id="ID_VIEW_PACKETS" message="Toon of verberg het PAKKET DUMP venster."/>
 	<tip id="ID_VIEW_RESULTS_MONITOR" message="Het HIT CONTROLE venster tonen of verbergen."/>
 	<tip id="ID_VIEW_SEARCH_MONITOR" message="Het ZOEK CONTROLE venster tonen of verbergen."/>
@@ -2606,7 +2606,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="8315" value="Op de zwarte lijst: "/>
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
-	<string id="8318" value="%lu vandaag, %lu totaal"/>
+	<string id="8318" value="%lu nu, %lu totaal"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Snelheid:"/>
 	<string id="8322" value="URL:"/>
@@ -2741,7 +2741,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="16301" value="Aanvragen van tiger-tree volume voor &quot;%s&quot; aan %s..."/>
 	<string id="16302" value="Downloadgastheer %s kon niet voldoen aan het tiger-tree verzoek."/>
 	<string id="16303" value="Tiger-tree volume ontvangen van %s (%s)..."/>
-	<string id="16304" value="De tiger-tree data van deze downloadgastheer is corrupt or inwendig inconsequent, het wordt genegeerd."/>
+	<string id="16304" value="De tiger-tree data van deze downloadgastheer is corrupt of inwendig inconsequent, het wordt genegeerd."/>
 	<string id="16305" value="De tiger-tree data van deze downloadgastheer komt niet overeen met de verwachte oorspronkelijke waarde."/>
 	<string id="16306" value="Tiger-tree volume wordt ontvangen voor &quot;%s&quot;, %i niveau's, minimum controleerbare chunk %s."/>
 	<string id="16307" value="Downloadverbinding met %s wordt verbroken, niet maar nodig."/>
@@ -2904,7 +2904,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="16809" value="&amp;Sluiten"/>
 	<string id="16810" value="jaar oud"/>
 	<string id="16811" value="Automatisch"/>
-	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
+	<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal u zo strikt goedkeuren, dat u problemen kunt ondervinden bij downloads om te beginnen.\nBent u zeker dat u de maxim rijpositie die u wilt goedkeuren, beperken?"/>
 	<string id="16864" value="Bezig met het opvragen van gastheer discovery services..."/>
 	<string id="16865" value="Bezig met het opvragen van discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transactie successvol (&quot;%s&quot;)."/>
@@ -3053,7 +3053,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<string id="18500" value="Je hebt een SHA1 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de SHA1 hash nu wilt veranderen?"/>
 	<string id="18501" value="Je hebt een root tiger-tree hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de tiger-tree root hash nu wilt veranderen?"/>
 	<string id="18502" value="Je hebt een eDonkey2000 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd.  Weet je zeker dat je de eDonkey2000 hash nu wilt veranderen?"/>
-	<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten?  Alle gedownloade data zal als onbetrouwbaar worden beschouwd, en opgeslagen hashtrees and hashsets zullen worden verwijderd."/>
+	<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten?  Alle gedownloade data zal als onbetrouwbaar worden beschouwd, en opgeslagen hashtrees en hashsets zullen worden verwijderd."/>
 	<string id="18504" value="Weet je zeker dat je alle bronnen wilt vergeten voor de geselecteerde download?"/>
 	<string id="18505" value="Geef alsjebleift een geldig bereik voor het wissen.  Het &quot;van&quot; veld is de eerste byte die moet worden gewist, het &quot;tot&quot; veld is de laatste byte die moet worden gewist."/>
 	<string id="18506" value="Het is niet mogelijk om het geselecteerde bereik van de download te wissen omdat geen deel van het bereik aanwezig is."/>
@@ -3350,7 +3350,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 Netwerk:"/>
 		<control caption="Altijd verbinden met Gnutella2"/>
-		<control caption="Vandaag verbinden met Gnutella2"/>
+		<control caption="Nu verbinden met Gnutella2"/>
 		<control caption="Modus:"/>
 		<control caption="Optimaal|Leaf|Hub"/>
 		<control caption="G_2 Verbindingen:"/>
@@ -3362,7 +3362,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 		<control/><control/>
 		<control caption="Gnutella1 Network:"/>
 		<control caption="Altijd verbinden met Gnutella1"/>
-		<control caption="Vandaag verbinden met Gnutella1"/>
+		<control caption="Nu verbinden met Gnutella1"/>
 		<control caption="Modus:"/>
 		<control caption="Optimaal|Leaf|Ultrapeer"/>
 		<control caption="G_1 Verbindingen:"/>
@@ -3380,7 +3380,7 @@ Ceceboyken, Jonne, Joren, Maybeme, Ray-Man -->
 
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Netwerk:"/>
-		<control caption="Vandaag verbinden met eDonkey"/>
+		<control caption="Nu verbinden met eDonkey"/>
 		<control caption="Altijd verbinden"/>
 		<control caption="_Globaal Zoeken:"/>
 		<control caption="Zoek bekende verre servers in de server cache:"/>
