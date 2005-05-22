@@ -2668,7 +2668,7 @@ Other:
 	<string id="16264" value="Initialisation d'une connexion à %s port %i pour télécharger &quot;%s&quot;..."/>
 	<string id="16265" value="Impossible de se connecter à l'hôte %s pour télécharger."/>
 	<string id="16266" value="La connexion de téléchargement à %s est établie."/>
-	<string id="16267" value="Requiert le fragment de téléchargement (%lu-%lu) de %s."/>
+	<string id="16267" value="Requiert le fragment de téléchargement (%I64i-%I64i) de %s."/>
 	<string id="16268" value="Plus de fragments du téléchargement, fermeture de la connexion avec %s."/>
 	<string id="16269" value="Le fragment a raccourci, fermeture de la connexion avec %s."/>
 	<string id="16270" value="Temps mort pour la requête de téléchargement à %s, fermeture de la connexion."/>
@@ -2691,7 +2691,7 @@ Other:
 	<string id="16287" value="Ne peut rechercher plus de sources pour le téléchargement de &quot;%s&quot; car il n'y a pas de connexion au réseau."/>
 	<string id="16288" value="Requiert plus de sources pour le téléchargement &quot;%s&quot; sur %i connexion(s)..."/>
 	<string id="16289" value="Envoie une requête poussée pour le téléchargement &quot;%s&quot;..."/>
-	<string id="16290" value="L'hôte de téléchargement %s a répondu avec un segment différent mais utile (%lu-%lu) de &quot;%s&quot;."/>
+	<string id="16290" value="L'hôte de téléchargement %s a répondu avec un segment différent mais utile (%I64i-%I64i) de &quot;%s&quot;."/>
 	<string id="16291" value="Déplace &quot;%s&quot; vers &quot;%s&quot;, téléchargement terminé."/>
 	<string id="16292" value="Ne peut déplacer le téléchargement vers &quot;%s&quot;.  Vérifiez que ce fichier n'est pas utilisé et que votre dossier de téléchargement existe et est inscriptible."/>
 	<string id="16293" value="Résout &quot;%s&quot; pour le téléchargement de &quot;%s&quot;..."/>
@@ -2747,7 +2747,7 @@ Other:
 	<string id="16343" value="Fermeture d'un envoi plus ancien à %s car il a établi une connexion plus récente."/>
 	<string id="16344" value="Refuse un nouvel envoi à %s car une connexion précédente est déjà en suspens."/>
 	<string id="16345" value="Arrête l'envoi &quot;%s&quot; pour %s car le fichier a été supprimé."/>
-	<string id="16346" value="Envoi du segment %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
+	<string id="16346" value="Envoi du segment %I64i-%I64i de &quot;%s&quot; à l'hôte %s (%s)."/>
 	<string id="16347" value="L'envoi en file d'attente %s redemande trop rapidement, ferme la connexion."/>
 	<string id="16348" value="Refuse une demande poussée pour %s, il y a trop de connexions d'envoi."/>
 	<string id="16349" value="Envoi du tiger-tree de &quot;%s&quot; pour &quot;%s&quot;."/>

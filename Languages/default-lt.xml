@@ -2720,7 +2720,7 @@ right quote	&#147;
 	<string id="16264" value="Užmezgamas ryšys su %s iš %i prievado bylos „%s“ parsisiuntimui..."/>
 	<string id="16265" value="Neįmanoma užmegzti ryšio su adresatu %s parsisiuntimui vykdyti."/>
 	<string id="16266" value="Ryšys su %s parsisiuntimui vykdyti užmegztas."/>
-	<string id="16267" value="Siunčiama užklausa parsisiųsti fragmentą (%lu-%lu), priklausantį bylai „%s“, iš adresato %s."/>
+	<string id="16267" value="Siunčiama užklausa parsisiųsti fragmentą (%I64i-%I64i), priklausantį bylai „%s“, iš adresato %s."/>
 	<string id="16268" value="Nėra daugiau parsisiuntimo fragmentų, nutraukiamas ryšys su %s."/>
 	<string id="16269" value="Fragmentas sutrumpintas, nutraukiamas ryšys su %s."/>
 	<string id="16270" value="Parsisiuntimo iš %s užklausai baigėsi laiko limitas, nutraukiamas ryšys."/>
@@ -2743,7 +2743,7 @@ right quote	&#147;
 	<string id="16287" value="Neįmanoma gauti daugiau šaltinių bylos „%s“ parsisiuntimui, nes nėra ryšio su tinklu."/>
 	<string id="16288" value="Siunčiama užklausa bylos „%s“ parsisiuntimo šaltinių papildymui %i ryšiais(-iu)..."/>
 	<string id="16289" value="Siunčiama įstūmiančiojo parsisiuntimo užklausa bylai „%s“ parsisiųsti..."/>
-	<string id="16290" value="Adresatas %s atsiuntė kitą, bet naudingą atkarpą (%lu-%lu), priklausiančią bylai „%s“."/>
+	<string id="16290" value="Adresatas %s atsiuntė kitą, bet naudingą atkarpą (%I64i-%I64i), priklausiančią bylai „%s“."/>
 	<string id="16291" value="Byla „%s“ perkelta į „%s“, parsisiuntimas baigtas."/>
 	<string id="16292" value="Neįmanoma perkelti bylos „%s“ į „%s“. Patikrinkite, ar nebaigtos bylos kas nors nenaudoja arba ar aplankas egzistuoja ir į jį galima rašyti."/>
 	<string id="16293" value="Nustatomas „%s“ adresas bylai „%s“ parsisiųsti..."/>
@@ -2772,7 +2772,7 @@ right quote	&#147;
 	<string id="16316" value="Baigėsi laiko limitas atnaujinant eilę eDonkey2000 adresate %s (byla „%s“)."/>
 	<string id="16317" value="Stovima eilėje bylai „%s“ gauti."/>
 	<string id="16318" value="Nepakanka vietos diske bylai „%s“ parsisiųsti (%s)."/>
-	<string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas bylos „%s“ dalis (%lu-%lu)."/>
+	<string id="16319" value="Šaltinis %s (%s) atmetamas, nes siunčia sugadintas bylos „%s“ dalis (%I64i-%I64i)."/>
 	<string id="16320" value="Adresatas %s, kuriam išsiunčiama byla, atsiuntė neteisingą HTTP užklausą."/>
 	<string id="16321" value="Užmezgamas įstūmiantysis ryšys su %s. %s"/>
 	<string id="16322" value="Neįmanoma susisiekti su adresatu %s įstūmiančiajam ryšiui užmegzti."/>
@@ -2799,7 +2799,7 @@ right quote	&#147;
 	<string id="16343" value="Nutraukiamas senesnis išsiuntimas adresatui %s, nes jis užmezgė naują ryšį."/>
 	<string id="16344" value="Adresatui %s atsakyta sukurti naują išsiuntimo ryšį, nes ankstesnis susijungimas vis dar yra laukiančiųjų sąraše."/>
 	<string id="16345" value="Bylos „%s“ išsiuntimas adresatui %s sustabdytas, nes byla buvo ištrinta."/>
-	<string id="16346" value="Išsiunčiamas atkarpos %lu-%lu turinys, priklausantis dalinei bylai „%s“ adresatui %s (%s)."/>
+	<string id="16346" value="Išsiunčiamas atkarpos %I64i-%I64i turinys, priklausantis dalinei bylai „%s“ adresatui %s (%s)."/>
 	<string id="16347" value="Išsiuntimų eilėje laukiantis adresatas %s siunčia pakartotinas užklausas per dažnai, ryšys nutraukiamas."/>
 	<string id="16348" value="Adresatui %s atsakyta sukurti įstūmiančiojo išsiuntimo ryšį, nes jo susijungimų skaičius per didelis."/>
 	<string id="16349" value="Išsiunčiami bylos „%s“ dryžinės (tiger-tree) maišos duomenys adresatui %s."/>

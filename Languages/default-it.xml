@@ -2609,7 +2609,7 @@
 	<string id="16264" value="Avvio di una connessione con %s porta %i per il download &quot;%s&quot;..."/>
 	<string id="16265" value="Impossibile connettersi per il download con l'host %s."/>
 	<string id="16266" value="Connessione per il download con %s effettuata."/>
-	<string id="16267" value="Richiesta della frazione di download (%lu-%lu) da %s."/>
+	<string id="16267" value="Richiesta della frazione di download (%I64i-%I64i) da %s."/>
 	<string id="16268" value="Non ci sono più frazioni di download, chiusura della connessione con %s."/>
 	<string id="16269" value="Frammento accorciato, chiusura della connessione con %s."/>
 	<string id="16270" value="Il tempo di richiesta per il download con %s è scaduto, chiusura della connessione."/>
@@ -2632,7 +2632,7 @@
 	<string id="16287" value="Ulteriori fonti per il download &quot;%s&quot; non trovate perchè non c'è connessione con la rete."/>
 	<string id="16288" value="Richiesta di ulteriori fonti per il download &quot;%s&quot; su %i connessione(i) effettuata..."/>
 	<string id="16289" value="Invio della richiesta di push per il download &quot;%s&quot; in corso..."/>
-	<string id="16290" value="L'host di download %s ha risposto con un differente, ma utile range (%lu-%lu) di &quot;%s&quot;."/>
+	<string id="16290" value="L'host di download %s ha risposto con un differente, ma utile range (%I64i-%I64i) di &quot;%s&quot;."/>
 	<string id="16291" value="Spostato su &quot;%s&quot;."/>
 	<string id="16292" value="Non posso spostare il download su &quot;%s&quot;. Verifica se il file incompleto non è in uso e che la tua cartella dei download esista e che vi si possa scrivere."/>
 	<string id="16293" value="Risoluzione &quot;%s&quot; per scaricare &quot;%s&quot; in corso..."/>
@@ -2688,7 +2688,7 @@
 	<string id="16343" value="Chiusura dell'upload più vecchio %s perchè c'è una connessione più recente."/>
 	<string id="16344" value="Nuovo upload con %s rifiutato perchè una connessione più recente è ancora in attesa."/>
 	<string id="16345" value="Upload &quot;%s&quot; con %s sospeso perchè il file è stato cancellato."/>
-	<string id="16346" value="Invio del contenuto del range di upload %lu-%lu dal file parziale &quot;%s&quot; all'host %s (%s)."/>
+	<string id="16346" value="Invio del contenuto del range di upload %I64i-%I64i dal file parziale &quot;%s&quot; all'host %s (%s)."/>
 	<string id="16347" value="Un upload accodato %s sta richiedendo troppo velocemente, chiusura della connessione."/>
 	<string id="16348" value="Richiesta push con %s rifiutata perchè ci sono troppe connessioni in upload."/>
 	<string id="16349" value="L'upload dei dati tiger-tree per &quot;%s&quot; con &quot;%s&quot;."/>
