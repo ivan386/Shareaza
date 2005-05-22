@@ -448,7 +448,7 @@
 		</menu>
 		<menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-	
+
 			<separator/>
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
@@ -538,11 +538,11 @@
 			<item id="ID_WINDOW_MONITOR" text="Mostrar _Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostrar _Control Remoto"/>
 		</menu>
-		
+
 
         <menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-	
+
 			<separator/>
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
@@ -627,7 +627,7 @@
 			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
 		</menu><menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-	
+
 			<separator/>
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
@@ -1994,7 +1994,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-	
+
 	<document name="UploadHelp">
 		<text format="b">Area de subidas</text>
 		<newline gap="8"/>
@@ -2021,7 +2021,7 @@
 		<newline gap="8"/>
 		<text>Un disco o directorio que Shareaza necesita no pueden ser escritos.</text>
 		<newline gap="8"/>
-		<text>Un disco de red puede estar desconectado, o tu no tienes permiso de escribir 
+		<text>Un disco de red puede estar desconectado, o tu no tienes permiso de escribir
 		a un directorio seleccionado. Por favor revisa los directorios y los permisos, o cambiar la
 		locación de archivos temporales.</text>
 	</document>
@@ -2066,7 +2066,7 @@
 		todavía bajarse correctamente, a pesar de que algunos archivos pueden tener nombres incorrectos.</text>
 		<newline gap="8"/>
 		<text>Casi todos los programas de creación de torrent deben dejarte reparar este torrent, el cual
-		te va asegurar que funcione en más aplicaciones torrent. Checa los foros de Shareaza 
+		te va asegurar que funcione en más aplicaciones torrent. Checa los foros de Shareaza
 		si necesitas ayuda adiccional.</text>
 	</document>
 
@@ -2076,7 +2076,7 @@
 		<text>No hay servidores eDonkey2000 en tu lista. Tu necesitas descargar
 		una lista actualizada (archivo met) para conectarte a ED2K.</text>
 		<newline gap="8"/>
-		<text>Puedes bajar una lista de servidores desde la configuración de ed2k, o de la lista 
+		<text>Puedes bajar una lista de servidores desde la configuración de ed2k, o de la lista
         de descubrimientos.</text>
 	</document>
 
@@ -2093,7 +2093,7 @@
 		<text> Casi todos los clientes de la red van a ignorar la busuqeda
 		todos los archivos MP3, por ejemplo, porque no es muy especifico
 		y puede hacer demásiados resultados.</text>
-	  
+
 </document>
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Por favor reformule la búsqueda</text>
@@ -2105,7 +2105,7 @@
 		otros términos cuando estas haciendo la búsqueda. Puntuación y wildcards no son usados
 		en la búsqueda, solo el texto que tu pongas.</text>
 	</document>
-  	 
+
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Por favor reformule la búsqueda</text>
 		<newline gap="8"/>
@@ -2113,7 +2113,7 @@
 		que no pueden ser utilizadas.</text>
 		<newline gap="8"/>
 		<text>Si estas teniendo problemas creando búsquedas, recuerda que es muy similar a una búsqueda
-		de Internet. Terminos especificos y frases son los mejores - Nombres únicos, titulos 
+		de Internet. Terminos especificos y frases son los mejores - Nombres únicos, titulos
         y palabras clave.</text>
 		<newline gap="8"/>
 		<text>Terminos generales no pueden ser buscados con eficiencía y puede resultar
@@ -2814,7 +2814,7 @@
 	<string id="16373" value="Archivos Parciales"/>
 	<string id="16374" value="Nueva Cola"/>
 	<string id="16375" value="Parciales"/>
-	<string id="16376" value="Todos Los Archivos" />	
+	<string id="16376" value="Todos Los Archivos" />
 	<string id="16377" value="HTTP Guard"/>
     <string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo %s?{n}nAlgunos archivos pueden ser peligrosos para la computadora, y es recomendado tener el antivirus funcionando y actualizado."/>
 	<string id="16385" value="Estas a punto de modificar la metadata de %i archivos. ¿Estás seguro(a) en continuar?"/>
@@ -3103,7 +3103,7 @@
 	<string id="20133" value="Desinteresado"/>
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="Siguiente"/>
-	<string id="20136" value="C"/>	
+	<string id="20136" value="C"/>
     <string id="20200" value="Domingo"/>
 	<string id="20201" value="Lunes"/>
 	<string id="20202" value="Martes"/>
