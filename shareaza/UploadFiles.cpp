@@ -109,13 +109,14 @@ void CUploadFiles::MoveToHead(CUploadTransfer* pTransfer)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		POSITION posRemove = pos;
+		POSITION posThis = pos;
 		CUploadFile* pFile = GetNext( pos );
 
 		if ( pFile->GetActive() == pTransfer )
 		{
-			m_pList.RemoveAt( posRemove );
+			m_pList.RemoveAt( posThis );
 			m_pList.AddHead( pFile );
+			return;
 		}
 	}
 }
@@ -124,13 +125,14 @@ void CUploadFiles::MoveToTail(CUploadTransfer* pTransfer)
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		POSITION posRemove = pos;
+		POSITION posThis = pos;
 		CUploadFile* pFile = GetNext( pos );
 
 		if ( pFile->GetActive() == pTransfer )
 		{
-			m_pList.RemoveAt( posRemove );
+			m_pList.RemoveAt( posThis );
 			m_pList.AddTail( pFile );
+			return;
 		}
 	}
 }
