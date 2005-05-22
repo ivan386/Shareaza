@@ -2731,7 +2731,7 @@ Other:
 	<string id="16327" value="Refuse l'envoi de &quot;%s&quot; à %s, occupé et le client ne supporte pas la mise en file d'attente."/>
 	<string id="16328" value="La connexion poussée à %s est établie, en attente de poignée de main..."/>
 	<string id="16329" value="Impossible d'ouvrir &quot;%s&quot; pour l'envoi à l'hôte %s, erreur disque/fichier."/>
-	<string id="16330" value="Envoi du contenu du segment %lu-%lu de &quot;%s&quot; à l'hôte %s (%s)."/>
+	<string id="16330" value="Envoi du contenu du segment %I64i-%I64i de &quot;%s&quot; à l'hôte %s (%s)."/>
 	<string id="16331" value="Envoi de &quot;%s&quot; terminé pour %s."/>
 	<string id="16332" value="La connexion entrante en provenance de %s est une demande d'envoi HTTP."/>
 	<string id="16333" value="Trop occupé pour envoyer &quot;%s&quot; à %s, mis en file d'attente à la position #%i de %i (&quot;%s&quot;)."/>

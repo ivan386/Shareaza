@@ -2783,7 +2783,7 @@ right quote	&#147;
 	<string id="16327" value="Atsakyta išsiųsti „%s“ adresatui %s (%s), užimtas, o klientas nepalaiko eilių."/>
 	<string id="16328" value="Įstūmiantysis ryšys su %s užmegztas, laukiama patvirtinimo..."/>
 	<string id="16329" value="Neįmanoma atverti „%s“ išsiuntimui adresu %s, disko/bylos klaida."/>
-	<string id="16330" value="Išsiunčiama atkarpa %lu-%lu, priklausanti bylai „%s“, adresatui %s (%s)."/>
+	<string id="16330" value="Išsiunčiama atkarpa %I64i-%I64i, priklausanti bylai „%s“, adresatui %s (%s)."/>
 	<string id="16331" value="Baigta siųsti bylos „%s“ dalis adresatui %s."/>
 	<string id="16332" value="Įeinantis ryšys su %s yra HTTP išsiuntimo užklausa."/>
 	<string id="16333" value="Per daug užimtas išsiųsti bylą „%s“ adresatui %s, pastatyta į eilę Nr. %i iš %i vietų („%s“)."/>

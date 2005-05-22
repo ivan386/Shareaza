@@ -2672,7 +2672,7 @@
 	<string id="16327" value="Upload di &quot;%s&quot; con %s (%s) rifiutato, troppi upload."/>
 	<string id="16328" value="Push GIV all'host upload %s inviato, in attesa della richiesta..."/>
 	<string id="16329" value="Impossibile aprire &quot;%s&quot; per l'upload con l'host %s."/>
-	<string id="16330" value="Invio del contenuto dell'upload range %lu-%lu da &quot;%s&quot; all'host %s (%s)."/>
+	<string id="16330" value="Invio del contenuto dell'upload range %I64i-%I64i da &quot;%s&quot; all'host %s (%s)."/>
 	<string id="16331" value="Upload &quot;%s&quot; con l'host %s finito."/>
 	<string id="16332" value="Connessione da %s è una richiesta di upload avviata."/>
 	<string id="16333" value="Troppo occupato per l'upload &quot;%s&quot; con %s, accodato a  #%i."/>
