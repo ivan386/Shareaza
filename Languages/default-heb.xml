@@ -1460,8 +1460,8 @@
 			<heading align="middle">&#160; ה ת ח ב ר</heading>
 			<gap size="16"/><icon res="130" width="32" height="32"/>
 			<newline gap="8" indent="42"/>
-			<text>!ברוך הבא לשרזה &#160;.אתה כרגע לא מחובר לאף רשת שיתוף קבצים &#160;</text>
-			<link target="raza:command:ID_NETWORK_CONNECT">&#160;!לחץ כאן כדי להתחיל</link>
+			<link target="raza:command:ID_NETWORK_CONNECT">!לחץ כאן כדי להתחיל</link>
+			<text>&#160;!ברוך הבא לשרזה. &#160;אתה כרגע לא מחובר לאף רשת שיתוף קבצים &#160;</text>
 			<newline gap="18" indent="16"/>
 		</group>
 
@@ -1498,10 +1498,9 @@
 
 		
 		<link target="http://www.hebrew.co.nr/" format="b" align="middle" colour="800000">ה כ נ ס &#160; ל א י נ ד ק ס &#160; ל מ י ד ע  &#160; מ ו מ ל ץ </link>
-		<text>&#160;&#160;</text>
-		<gap size="8"/><icon res="175" width="32" height="32"/>
+		<gap size="8"/><icon res="243" width="32" height="32"/>
 		<newline gap="20" indent="16"/>
-
+		
 		<heading align="middle" colour="6060FF">ה ק ש ב &#160; ל מ ו ז י ק ה &#160; ח ד ש ה  &#160; מ ה ע ו ל ם&#160;&#160;&#160;</heading>
 		<gap size="8"/><icon res="254" width="32" height="32"/>
 		<newline gap="8" indent="42"/>
@@ -1697,9 +1696,9 @@
 			אשף ההגדרות של שרזה מאפשר למשתמשים מתקדמים להתאים באופן
 			נועד להגדרת העדפות המשתמש
 		</text>
-		<text format="b">כללי </text>
+		<text format="b">- כללי |</text>
 		<text>
-			 מלא את האופן שבו שרזה פועלת
+			מלא איך שרזה תפעל
 		</text>
 		<newline gap="16" margin="16"/>
 
@@ -1726,7 +1725,7 @@
 
 		<link target="raza:page:CWebSettingsPage" format="b">האינטרנט:</link>
 		<gap size="4"/>
-		<text>מזג את שרזה עם הדפדפן לקבלת לינקים ותוכן להורדה בתקשורת ישירה בין מחשבים</text>
+		<text>מזג את שרזה עם הדפדפן לקבלת לינקים ותוכן להורדה בתקשורת ישירה בין משתמשים</text>
 		<newline gap="10"/>
 
 	</document>
@@ -1743,11 +1742,11 @@
 		<newline gap="16"/>
 		<text>
 			אשף ההגדרות של שרזה מאפשר למשתמשים מתקדמים להתאים באופן
-			 מלא את האופן שבו שרזה פועלת
+			חלק זה שולט בצורה שבה
 		</text>
-		<text format="b">אינטרנט </text>
+		<text format="b"> - אינטרנט |</text>
 		<text>
-			חלק זה שולט בצורה שבה שרזה מתקשר עם נקודות אחרות ברשתות תקשורת ישירה
+			מלא את האופן שבו שרזה פועלת	 שרזה מתקשר עם נקודות אחרות ברשתות תקשורת ישירה
 		</text>
 		<newline gap="16" margin="16"/>
 
@@ -1918,19 +1917,20 @@
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">הדיסק מלא</text>
 		<newline gap="8"/>
-		<text>Shareaza has paused this download automatically because the hard disk
-		appears to be full, or the download file cannot be written to.  If you wish
-		to continue downloading, please free some space on your hard disk and/or check
-		to make sure the incomplete file folder is accessible, and then resume the
-		download.</text>
+		<text>שרזה השהה את ההורדה אוטמטית כי הכונן נראה מלא
+		או שלא ניתן לכתוב לתוך קובץ ההורדה. אם אתה מעוניין להמשיך
+		להוריד, אנא פנה קצת מקום בכון קשיח ו/או בדוק שספריית
+		הקבצים החלקיים לא מגבילה גישה, ואז המשך את ההורדה
+		</text>
 	</document>
 
 	<document name="DownloadHelp.Verifying">
-		<text format="b">This Download is Verifying</text>
+		<text format="b">ההורדה מאומתת</text>
 		<newline gap="8"/>
-		<text>This download has finished, and Shareaza is now checking it to ensure
-		that it is exactly the same as the original file.  If any damaged parts are
-		found, Shareaza will repair them automatically.</text>
+		<text>ההורדה הסתיימה, שרזה כרגע בודק אותה בכדי להבטיח
+		שהיא בדיוק כמו הקובץ המקורי. אם חלק כלשהו נמצא פגום
+		שרזה יתקנו באופן אוטמטי
+		</text>
 	</document>
 
 	<document name="DownloadHelp.Downloading">
@@ -2567,8 +2567,8 @@
 	<string id="8178" value="?איזה סוג קובץ זה"/>
 	<string id="8179" value="(נקה את היסטוריית החיפוש)"/>
 	<string id="8180" value="גודל הקובץ חייב להיות"/>
-	<string id="8181" value="&#160;עד"/><!-- size from xx TO xx-->
-	<string id="8208" value="שר‏זה‎ ‏יוצ‎ר hases ‏עבו‎ר %i ‏קבצים‎:"/>
+	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
+	<string id="8208" value="Shareaza is creating hashes for %i file(s):" /> 
 	<string id="8224" value="שרזה מוריד:"/>
 	<string id="8225" value="הורדה זו מושהת:"/>
 	<string id="8226" value="שרזה סיים להוריד:"/>
@@ -2645,7 +2645,7 @@
 	<string id="16081" value="Sending query for &quot;%s&quot; to %s."/>
 	<string id="16083" value="Forcing your PC into hub mode may have adverse effects on performance and the P2P network  It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
 	<string id="16084" value="Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"/>
-	<string id="16085" value="גנוטלה 2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"/>
+	<string id="16085" value="G2 is Shareaza's premiere network.  Disabling support for it may severely limit both the number and quality of your search results.  Are you SURE you want to do this?"/>
 	<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
 	<string id="16128" value="Accepted an incoming connection from %s port %i."/>
 	<string id="16129" value="Initiating a neighbour connection to %s port %i..."/>
@@ -2675,7 +2675,7 @@
 	<string id="16155" value="Acting as a hub for leaf neighbour %s."/>
 	<string id="16156" value="Neighbour %s wants to be a hub, closing connection."/>
 	<string id="16157" value="Neighbour %s is not a hub, closing connection."/>
-	<string id="16158" value="גנוטלה 2 connection with neighbour %s established successfully (%s)."/>
+	<string id="16158" value="G2 connection with neighbour %s established successfully (%s)."/>
 	<string id="16159" value="Closing connection to non-Gnutella2 neighbour %s."/>
 	<string id="16192" value="Neighbour %s forwarded a packet of excessive size, dropping connection."/>
 	<string id="16193" value="Neighbour %s forwarded a packet with zero TTL, ignoring."/>
@@ -2694,12 +2694,12 @@
 	<string id="16210" value="Neighbour %s updated its query routing table (%i bit = %lu[%i], %i%% full)."/>
 	<string id="16211" value="Neighbour %s forwarded a push request to a firewalled address, ignoring."/>
 	<string id="16212" value="Neighbour %s forwarded an extended packet that is not GGEP encoded."/>
-	<string id="16213" value="Sending query routing table to neighbour %s (%i bit = %lu[%i], %i%% full)"/>
+	<string id="16213" value="&#8234;%s  ‏משכן‎ ‏ניווט‎ ‏בקשת‎ (‏ &#8234;%i bit = %lu[%i], %i%% full)"/>
 	<string id="16256" value="Added &quot;%s&quot; to download queue with %i source(s)."/>
 	<string id="16257" value="Completed download of &quot;%s&quot;."/>
 	<string id="16258" value="Pausing download of &quot;%s&quot;."/>
 	<string id="16259" value="Resuming download of &quot;%s&quot;."/>
-	<string id="16260" value="נקהed download &quot;%s&quot;."/>
+	<string id="16260" value="&quot;%s&quot; :הורדה הוסרה"/>
 	<string id="16261" value="Creating file &quot;%s&quot; for download."/>
 	<string id="16262" value="Unable to create local file &quot;%s&quot; for download, aborting."/>
 	<string id="16263" value="Unable to open local file &quot;%s&quot; for download, aborting."/>
@@ -3067,7 +3067,7 @@
 	<string id="19001" value=".אתה חייב לבחור שם משתמש וסיסמא"/>
 	<string id="19002" value="לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>
 	<string id="20000" value="זמין URN אין"/>
-	<string id="20002" value="מתוך"/><!-- e.g. 1 of 10 -->
+	<string id="20002" value="&#8234; ‏ומתוכם‎ "/><!-- e.g. 1 of 10 -->
 	<string id="20100" value="מתחבר"/>
 	<string id="20101" value="מבקש"/>
 	<string id="20102" value="תגובה"/>
@@ -3076,7 +3076,7 @@
 	<string id="20105" value="Hashset"/>
 	<string id="20106" value="Metadata"/>
 	<string id="20107" value="עסוק"/>
-	<string id="20108" value="שמור ערך"/>
+	<string id="20108" value="נכנס לתור"/>
 	<string id="20109" value="מחכה בתור"/>
 	<string id="20110" value="לא ידוע"/>
 	<string id="20111" value="הסתיים"/>
@@ -3104,7 +3104,7 @@
 	<string id="20133" value="לא מעוניין"/>
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="הבא"/>
-	<string id="20136" value="ש"/>
+	<string id="20136" value="בתור במקום"/>
 	<string id="20200" value="ראשון"/>
 	<string id="20201" value="שני"/>
 	<string id="20202" value="שלישי"/>
@@ -3171,7 +3171,7 @@
 		<control caption="זכור:"/>
 		<control/><control/>
 		<control caption="קבצים"/>
-		<control caption="עד:"/>
+		<control caption="to"/>
 		<control/><control/>
 		<control caption="ימים"/>
 		<control caption="נקה היסטוריה עכשיו"/>
@@ -4064,15 +4064,15 @@
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="ערוך הורדה - מתקדם">
-		<control caption="אזהרה: תיבת דו-שיח זו מעניקה אפשרויות מתקדמות לעריכה למשתמשים מתקדמים,אשר אם יעשה בהן שימוש באופן שגוי עלולה לגרום לנזק"/>
+		<control caption="אזהרה: תיבת דו-שיח זו מעניקה אפשרויות מתקדמות לעריכה למשתמשים מתקדמים, אם יעשה בה שימוש באופן שגוי עלולה לגרום לנזק"/>
 		<control caption="שם קובץ:"/>
 		<control/>
-		<control caption="_URNs כתובת:"/>
-		<control caption="SHA1: כתובת"/>
+		<control caption="_URNs:"/>
+		<control caption="SHA1:"/>
 		<control/>
-		<control caption="Tiger-Root כתובת:"/>
+		<control caption="Tiger-Root:"/>
 		<control/>
-		<control caption="ED2K כתובת:"/>
+		<control caption="ED2K:"/>
 		<control/>
 		<control caption="פעולות:"/>
 		<control caption="שכח את מצב האימות הנוכחי ואמת מחדש"/>
@@ -4081,7 +4081,7 @@
 		<control caption="מחק מידע:"/>
 		<control caption="מחק בתים:"/>
 		<control/>
-		<control caption="אל"/>
+		<control caption="to"/>
 		<control/>
 		<control caption="מחק"/>
 		<control caption="...מידע טורנט"/>
