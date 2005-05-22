@@ -28,6 +28,7 @@
 #include "UploadTransfer.h"
 #include "UploadTransferHTTP.h"
 #include "UploadTransferED2K.h"
+#include "UploadTransferBT.h"
 
 #include "Buffer.h"
 #include "Transfers.h"
@@ -284,35 +285,38 @@ void CUploads::OnRun()
 	{
 		CUploadTransfer* pTransfer = GetNext( pos );
 		DWORD nMeasured = pTransfer->GetMeasuredSpeed();
-		
-		if ( pTransfer->m_nState == upsUploading )			// If this upload is transferring
-		{
-			m_nCount ++;
-			m_nBandwidth += nMeasured;
 
-			if ( pTransfer->m_nProtocol == PROTOCOL_BT )	// If it's a torrent transfer
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) && ( pTransfer->m_nState != upsNull ) )	
+		{
+			// This is a torrent transfer
+			CUploadTransferBT* pBT = (CUploadTransferBT*)pTransfer;
+			if ( ( ! pBT->m_bInterested ) || ( pBT->m_bChoked ) )
 			{
+				// Choked- Increment appropriate torrent counter
+				UploadQueues.m_pTorrentQueue->m_nMaxTransfers ++;
+			}
+			else
+			{
+				// Active torrent. (Uploading or requesting)
+				// Increment normal counters
+				m_nCount ++;
+				m_nBandwidth += nMeasured;
+				// Increment torrent counters
 				nCountTorrent ++;
 				UploadQueues.m_pTorrentQueue->m_nMinTransfers ++;
 				UploadQueues.m_pTorrentQueue->m_nMeasured += nMeasured;
+
+				theApp.Message( MSG_SYSTEM, pTransfer->m_sAddress );
 			}
-			else if ( pTransfer->m_pQueue != NULL && UploadQueues.Check( pTransfer->m_pQueue ) )
-				pTransfer->m_pQueue->m_nMeasured += nMeasured;
 		}
-		else if ( ( pTransfer->m_nState == upsRequest )	&& ( pTransfer->m_nProtocol == PROTOCOL_BT ) )
+		else if ( pTransfer->m_nState == upsUploading )
 		{
-			// Requesting torrents can be uploads
+			// Regular transfer that's uploading
 			m_nCount ++;
 			m_nBandwidth += nMeasured;
-			nCountTorrent ++;
-			UploadQueues.m_pTorrentQueue->m_nMinTransfers ++;
-			UploadQueues.m_pTorrentQueue->m_nMeasured += nMeasured;
-		}
-		else if ( pTransfer->m_nState != upsNull )			// If this upload is not inactive (complete)
-		{
-			if ( pTransfer->m_nProtocol == PROTOCOL_BT )	// Count torrent transfers (Choked, etc) for queue display
-				UploadQueues.m_pTorrentQueue->m_nMaxTransfers ++;
 
+			if ( pTransfer->m_pQueue != NULL && UploadQueues.Check( pTransfer->m_pQueue ) )
+				pTransfer->m_pQueue->m_nMeasured += nMeasured;
 		}
 	}
 	
