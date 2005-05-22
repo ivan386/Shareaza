@@ -67,6 +67,7 @@ public:
 	void		BoostPriority(BOOL bPriority);
 	BOOL		GetBoostPriority();
 	BOOL		SanityCheck();
+	void		UpdateStatus(CString* pStr, int* pRemaining );
 protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();

@@ -56,6 +56,11 @@ CHashProgressBar::CHashProgressBar()
 	m_hIcon			= NULL;
 	m_nRemaining	= 0;
 	m_nFlash		= 0;
+
+	m_nRemaining	= 0;
+	m_nTotal		= 0;
+	m_sCurrent.Empty();
+	m_sPrevious.Empty();
 }
 
 CHashProgressBar::~CHashProgressBar()
@@ -72,47 +77,50 @@ void CHashProgressBar::Create(CWnd* pParent)
 
 void CHashProgressBar::Run()
 {
-	int nRemaining = LibraryBuilder.GetRemaining();
-	LibraryBuilder.SanityCheck();
-
-	BOOL bShow = Settings.Library.HashWindow;
-
-	if ( m_hWnd == NULL )
+	if ( Settings.Library.HashWindow )
 	{
-		if ( nRemaining > DISPLAY_THRESHOLD )
+		// Update current hashing status
+		m_nTotal = LibraryMaps.GetFileCount();
+		LibraryBuilder.UpdateStatus( &m_sCurrent, &m_nRemaining );
+
+		int nPos = m_sCurrent.ReverseFind( '\\' );
+		if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );
+
+		BOOL bShow = Settings.Library.HashWindow;
+
+		if ( m_hWnd == NULL )
 		{
-			LPCTSTR hClass = AfxRegisterWndClass( 0 );
-			CreateEx( WS_EX_TOPMOST|WS_EX_TOOLWINDOW, hClass, _T("Shareaza Hashing..."),
-				WS_POPUP /*|WS_DISABLED*/, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-				NULL, 0 );
-			bShow = TRUE;
+			if ( m_nRemaining > DISPLAY_THRESHOLD )
+			{
+				LPCTSTR hClass = AfxRegisterWndClass( 0 );
+				CreateEx( WS_EX_TOPMOST|WS_EX_TOOLWINDOW, hClass, _T("Shareaza Hashing..."),
+					WS_POPUP /*|WS_DISABLED*/, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+					NULL, 0 );
+				bShow = TRUE;
+			}
+		}
+		else if ( m_nRemaining <= 0 )
+		{
+			DestroyWindow();
+		}
+
+		if ( m_hWnd != NULL ) 
+		{
+			Update();
+			Show( WINDOW_WIDTH, TRUE );
 		}
 	}
-	else if ( nRemaining == 0 )
+	else
 	{
-		DestroyWindow();
-	}
-
-	if ( m_hWnd != NULL ) Update();
-
-	if ( bShow && m_hWnd != NULL )
-	{
-		Show( WINDOW_WIDTH, TRUE );
+		if ( m_hWnd != NULL ) DestroyWindow();
 	}
 }
 
 void CHashProgressBar::Update()
 {
-	m_nRemaining = LibraryBuilder.GetRemaining();
-	CString strFile = LibraryBuilder.GetCurrentFile();
-	m_nTotal = LibraryMaps.GetFileCount();
-
-	int nPos = strFile.ReverseFind( '\\' );
-	if ( nPos > 0 ) strFile = strFile.Mid( nPos + 1 );
-
-	if ( strFile != m_sCurrent )
+	if ( m_sCurrent != m_sPrevious )
 	{
-		m_sCurrent = strFile;
+		m_sPrevious = m_sCurrent;
 
 		CClientDC dc( this );
 		CFont* pOld = (CFont*)dc.SelectObject( &CoolInterface.m_fntCaption );

@@ -124,6 +124,19 @@ CString CLibraryBuilder::GetCurrentFile()
 	return str;
 }
 
+void CLibraryBuilder::UpdateStatus(CString* pStr, int* pRemaining )
+{
+	m_pSection.Lock();
+		
+	*pRemaining = m_pFiles.GetCount();
+	if ( m_bThread ) *pRemaining ++;
+
+	*pStr = m_sPath;
+	if ( ! m_bThread ) pStr->Empty();
+	m_pSection.Unlock();
+
+}
+
 void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
