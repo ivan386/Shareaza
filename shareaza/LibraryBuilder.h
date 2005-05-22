@@ -66,7 +66,7 @@ public:
 	void		StopThread();
 	void		BoostPriority(BOOL bPriority);
 	BOOL		GetBoostPriority();
-	BOOL		SanityCheck();
+	//BOOL		SanityCheck();
 	void		UpdateStatus(CString* pStr, int* pRemaining );
 protected:
 	static UINT	ThreadStart(LPVOID pParam);

@@ -230,7 +230,7 @@ BOOL CLibraryBuilder::GetBoostPriority()
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder sanity check
-
+/*
 BOOL CLibraryBuilder::SanityCheck()
 {
 	if ( ! m_bThread || ! m_tActive ) return TRUE;
@@ -247,7 +247,7 @@ BOOL CLibraryBuilder::SanityCheck()
 
 	return FALSE;
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder thread run (threaded)
 
