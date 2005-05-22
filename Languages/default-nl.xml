@@ -3131,25 +3131,26 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Algemeen"/>
 
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
-		<control caption="_Gebruikers Interface:"/>
-		<control caption="Automatisch verbinden bij opstarten"/>
-		<control caption="Start Shareaza bij opstarten Windows"/>
-		<control caption="Waarschuw mij vóór openen van URIs"/>
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
+		<control caption="_Algemeen:"/>
+		<control caption="Auto-verbindt als Shareaza start"/>
+		<control caption="Start Shareaza als Windows opstart "/>
+		<control caption="Waarschuw mij als ik een URI open"/>
 		<control caption="Snelheden in:"/>
 		<control caption="bits/seconde|bytes/seconde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Downloads:"/>
 		<control caption="Vouw nieuwe downloads standaard uit"/>
+		<control caption="Toon een simpele voortgangsbalk"/>
 		<control caption="_Zoeken:"/>
 		<control caption="Multi-bron bestanden altijd uitbreiden"/>
-		<control caption="Ga bij d/l naar het venster Verkeer"/>
+		<control caption="Ga bij nieuwe d/l naar het venster Verkeer"/>
 		<control caption="Verberg de zijbalk na het starten van de zoekopdracht"/>
-		<control caption="Filter volwassenen inhoud uit zoekresultaten"/>
+		<control caption="Filter volwassen inhoud uit zoekresultaten"/>
 		<control caption="_Tooltips:"/>
 		<control/>
 		<control caption="Vertragen(ms):"/>
 		<control/><control/>
-		<control caption="Doorzichtig:"/>
+		<control caption="Opaciteit:"/>
 		<control/>
 		<control caption="_Systeembalk:"/>
 		<control caption="Als ik op Afsluiten klik:"/>
@@ -3255,14 +3256,14 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 		<control caption="Sla _Voltooide bestanden hier op:"/>
 		<control/><control/>
-		<control caption="Sla Tijdelijke/_Incomplete bestanden hier op:"/>
+		<control caption="Sla Tijdelijke\_Incomplete bestanden hier op:"/>
 		<control/><control/>
 		<control caption="_Aantal Downloads:"/>
 		<control caption="Max. Bestanden:"/>
 		<control/><control/>
 		<control caption="Max. overdrachten:"/>
 		<control/><control/>
-		<control caption="Overdrachten per Bestand:"/>
+		<control caption="Overdrachten per d/l:"/>
 		<control/><control/>
 		<control caption="_Limieten:"/>
 		<control caption="Totale Snelheid:"/>
