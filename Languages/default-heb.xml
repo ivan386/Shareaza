@@ -1496,11 +1496,11 @@
 			<newline gap="18" indent="16"/>
 		</group>
 
-
+		
 		<link target="http://www.hebrew.co.nr/" format="b" align="middle" colour="800000">ה כ נ ס &#160; ל א י נ ד ק ס &#160; ל מ י ד ע  &#160; מ ו מ ל ץ </link>
 		<gap size="8"/><icon res="243" width="32" height="32"/>
 		<newline gap="20" indent="16"/>
-
+		
 		<heading align="middle" colour="6060FF">ה ק ש ב &#160; ל מ ו ז י ק ה &#160; ח ד ש ה  &#160; מ ה ע ו ל ם&#160;&#160;&#160;</heading>
 		<gap size="8"/><icon res="254" width="32" height="32"/>
 		<newline gap="8" indent="42"/>
@@ -1910,7 +1910,7 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">הורדה זו מושהת</text>
 		<newline gap="8"/>
-		<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה
+		<text>השהת את ההורדה. אם אתה מעוניין שזה ימשיך הוריד אתה 
 		פקודת</text><text format="b"> המשך הורדה</text><text>יכול ללחוץ על</text>
 	</document>
 
@@ -1949,7 +1949,7 @@
 		<text>This download is waiting for someone to start uploading.
 		Shareaza is ready to start downloading this file, but no-one is sending it at
 		the moment. You are probably waiting in other user's queues, and the download
-		may start transfering at any time. You can examine the individual sources to
+		may start transfering at any time. You can examine the individual sources to 
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
@@ -1995,7 +1995,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-
+	
 	<document name="UploadHelp">
 		<text format="b">Uploads Area</text>
 		<newline gap="8"/>
@@ -2021,7 +2021,7 @@
 		<newline gap="8"/>
 		<text>A disk or directory Shareaza needs cannot be written to.</text>
 		<newline gap="8"/>
-		<text>A network drive may have been disconnected, or you may not have write permission
+		<text>A network drive may have been disconnected, or you may not have write permission 
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
@@ -2036,7 +2036,7 @@
 		<newline gap="8"/>
 		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 	</document>
-
+	
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">Windows XP Service Pack 2 detected</text>
 		<newline gap="8"/>
@@ -2052,7 +2052,7 @@
 		<text format="b">Adult content filter enabled</text>
 		<newline gap="8"/>
 		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than
+		screening content. It is designed simply to filter out excess unwanted results, rather than 
 		as a 100% safe block.</text>
 		<newline gap="8"/>
 		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
@@ -2092,7 +2092,7 @@
 		(file type). Furthermore, searches must not be limited to numbers or negative
 		terms only, and you should avoid overly general queries.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for example,
+		<text>Most clients on the network will ignore a search for all MP3 files, for example, 
 		because it is not specific enough, and would generate too many results.</text>
 	</document>
 
@@ -2106,7 +2106,7 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used
 		in searches, just the text you enter.</text>
 	</document>
-
+  	 
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
@@ -2568,7 +2568,7 @@
 	<string id="8179" value="(נקה את היסטוריית החיפוש)"/>
 	<string id="8180" value="גודל הקובץ חייב להיות"/>
 	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza is creating hashes for %i file(s):" />
+	<string id="8208" value="Shareaza is creating hashes for %i file(s):" /> 
 	<string id="8224" value="שרזה מוריד:"/>
 	<string id="8225" value="הורדה זו מושהת:"/>
 	<string id="8226" value="שרזה סיים להוריד:"/>
@@ -2812,7 +2812,7 @@
 	<string id="16370" value="קבצים קטנים"/>
 	<string id="16371" value="קבצים בינוניים"/>
 	<string id="16372" value="קבצים גדולים"/>
-	<string id="16373" value="קבציים חלקיים"/>
+	<string id="16373" value="קבצים חלקיים"/>
 	<string id="16374" value="תור חדש"/>
 	<string id="16375" value="חלקי"/>
 	<string id="16376" value="כל הקבצים"/>
@@ -3067,7 +3067,7 @@
 	<string id="19001" value=".אתה חייב לבחור שם משתמש וסיסמא"/>
 	<string id="19002" value="לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>
 	<string id="20000" value="זמין URN אין"/>
-	<string id="20002" value="&#8234; ‏ומתוכם‎ "/><!-- e.g. 1 of 10 -->
+	<string id="20002" value="&#8234; of "/><!-- e.g. 1 of 10 -->
 	<string id="20100" value="מתחבר"/>
 	<string id="20101" value="מבקש"/>
 	<string id="20102" value="תגובה"/>
@@ -3077,7 +3077,7 @@
 	<string id="20106" value="Metadata"/>
 	<string id="20107" value="עסוק"/>
 	<string id="20108" value="נכנס לתור"/>
-	<string id="20109" value="מחכה בתור"/>
+	<string id="20109" value="&#8234;‏בתור‎"/>
 	<string id="20110" value="לא ידוע"/>
 	<string id="20111" value="הסתיים"/>
 	<string id="20112" value="מפיץ"/>
@@ -3104,7 +3104,7 @@
 	<string id="20133" value="לא מעוניין"/>
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="הבא"/>
-	<string id="20136" value="בתור במקום"/>
+	<string id="20136" value="&#8234;‏בתור‎"/>
 	<string id="20200" value="ראשון"/>
 	<string id="20201" value="שני"/>
 	<string id="20202" value="שלישי"/>
