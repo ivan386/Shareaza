@@ -76,6 +76,10 @@ CG2Neighbour::CG2Neighbour(CNeighbour* pBase) : CNeighbour( PROTOCOL_G2, pBase )
 	m_tLastKHL		= m_tLastPacket - Settings.Gnutella2.KHLPeriod + 1000;
 	m_tLastHAW		= m_tLastPacket;
 
+	m_nQueryLimiter	= 40;
+	m_tQueryTimer	= 0;
+	m_bBlacklisted	= FALSE;
+
 	SendStartups();
 }
 
@@ -159,6 +163,24 @@ BOOL CG2Neighbour::OnRun()
 	else if ( tNow - m_tLastHAW > Settings.Gnutella2.HAWPeriod )
 	{
 		SendHAW();
+	}
+
+	// Update allowed queries based on the node type
+	if ( m_nNodeType == ntLeaf )
+	{
+		if ( ( tNow - m_tQueryTimer ) > ( 5*60*1000 ) )
+		{
+			if ( m_nQueryLimiter < 60 ) m_nQueryLimiter ++;
+			m_tQueryTimer = tNow;
+		}
+	}
+	else
+	{
+		if ( ( tNow - m_tQueryTimer ) > ( 1000 ) )
+		{
+			if ( m_nQueryLimiter < 240 ) m_nQueryLimiter += 10;
+			m_tQueryTimer = tNow;
+		}
 	}
 
 	return TRUE;
@@ -904,12 +926,44 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
 	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket );
 
+	// Check for invalid / blocked searches
 	if ( pSearch == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
+	}
+
+	// Check for excessive source searching
+	if ( ( pSearch->m_bSHA1 ) || ( pSearch->m_bBTH ) || ( pSearch->m_bED2K ) )
+	{
+
+		// Update allowed query operations, check for bad client
+		if ( m_nQueryLimiter > -60 ) 
+		{
+			m_nQueryLimiter--;
+		}
+		else if ( ! m_bBlacklisted && ( m_nNodeType == ntLeaf ) )
+		{
+			// Abusive client
+			m_bBlacklisted = TRUE;
+			theApp.Message( MSG_SYSTEM, _T("Blacklisting %s due to excess traffic"), (LPCTSTR)m_sAddress );
+			//Security.TempBlock( m_pHost.sin_addr );
+
+		}
+
+		if ( ( m_bBlacklisted ) || ( m_nQueryLimiter < 0 ) )
+		{
+			// Too many FMS operations
+			if ( ! m_bBlacklisted )
+				theApp.Message( MSG_DEBUG, _T("Dropping excess query traffic from %s"), (LPCTSTR)m_sAddress );
+
+			delete pSearch;
+			Statistics.Current.Gnutella2.Dropped++;
+			m_nDropCount++;
+			return TRUE;
+		}
 	}
 
 	if ( m_nNodeType == ntLeaf && pSearch->m_bUDP &&

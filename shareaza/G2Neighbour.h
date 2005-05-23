@@ -54,6 +54,11 @@ protected:
 protected:
 	CPtrList			m_pOutbound;
 
+protected:
+	int					m_nQueryLimiter;				// Counter for query limiting
+	DWORD				m_tQueryTimer;					// Timer for query limiting
+	BOOL				m_bBlacklisted;					// Has this client been over-querying.
+
 // Operations
 public:
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
