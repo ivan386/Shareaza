@@ -3020,7 +3020,7 @@ Other:
 	<string id="18503" value="Êtes-vous certain de vouloir oublier le statut de vérification actuel?  Toutes les données téléchargées seront considérées comme non-vérifiées, et les &quot;hashtrees&quot; et &quot;hashsets&quot; en cache seront nettoyés."/>
 	<string id="18504" value="Êtes-vous certain de vouloir oublier toutes les sources du téléchargement sélectionnées?"/>
 	<string id="18505" value="Merci de saisir un segment valide à effacer.  Le champ &quot;De&quot; est le premier byte à effacer, le champ &quot;Dernier&quot; est le dernier byte à effacer."/>
-	<string id="18506" value="Incapable d'effacer le segment sélectionné du téléchargement car aucune partie de ce segment n'est présent."/>
+	<string id="18506" value="Incapable d'effacer le segment sélectionné du téléchargement car aucune partie de ce segment n'est présente."/>
 	<string id="18507" value="%I64i bytes effacés du téléchargement."/>
 	<string id="18508" value="Relâche la source %s du téléchargement &quot;%s&quot; car la position %i en file d'attente est trop élevée."/>
 	<string id="18509" value="Vous ne pouvez pas considérer que ce téléchargement est terminé et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent.  Sans information de vérification le téléchargement ne peut pas être vérifié."/>
@@ -3294,7 +3294,7 @@ Other:
 		<control caption="% de la _bande passante lorsque limitée"/>
 		<control/>
         <control caption="Aide"/>
-        <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. &#13;&#10;&#13;&#10;Note: Si vous avez Shareaza ouvert lorsque le programmateur est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
+        <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. {n}{n}{n}Note: Si vous avez Shareaza ouvert lorsque le programmateur est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
