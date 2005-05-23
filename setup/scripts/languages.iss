@@ -21,7 +21,8 @@ Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFil
 Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
 Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
-name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
+Name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
+Name: "heb"; MessagesFile: "compiler:Default.isl,setup\isl\hebrew.isl"; LicenseFile: "setup/license/default.rtf"
 
 [Files]
 #ifndef debug
@@ -62,6 +63,8 @@ Source: "Remote\chs\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwriter
 Source: "Remote\sv\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
 ; Finnish
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
+; Hebrew
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -100,6 +103,8 @@ Source: "setup\license\chinese.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\swedish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
 ; Finnish
 Source: "setup\license\finnish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
+; Finnish
+Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -138,6 +143,8 @@ Source: "setup\filter\chinese-simpl.dat"; DestDir: "{app}\Data"; DestName: "Adul
 Source: "setup\filter\swedish.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
 ; Finnish
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
+; Hebrew
+Source: "setup\filter\hebrew.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
 #endif
 
 [CustomMessages]
@@ -502,3 +509,24 @@ fi.dialog_firewall=Asentaja epהonnistui lisהtessההn Shareazaa Windowsiin Firewal
 fi.page_viruswarning_text=Kun kהytהt internetiה, sinun tulee aina varmistaa ettה sinulla on viimeisimmהt pהivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Lצydהt hyvהn listan hyvistה virusohjelmista ja turvallisuusvinkkejה seuraavista linkeistה:
 fi.page_viruswarning_title=Virus Varoitus
 fi.page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
+; Hebrew
+heb.components_plugins=תוספים
+heb.components_skins=מעטפות
+heb.components_languages=שפות
+heb.tasks_allusers=כל המשתמשים
+heb.tasks_selectusers=התקן את %1 עבור
+heb.tasks_currentuser=%1 רק
+heb.tasks_multisetup=אפשר תמיכה למשתמשים מרובים
+heb.tasks_firewall=הוסף כלל לחומת האש לאיפשור שרזה
+;heb.tasks_deleteoldsetup=מחק התקנות ישנות
+heb.run_skinexe=מריץ התקנת מעטפות...
+heb.reg_incomingchat=הודעת צ'אט נכנסת
+heb.reg_apptitle=שיתוף הקבצים האולטימטיבי של שרזה
+heb.icons_license=רשיון
+heb.icons_uninstall=הסר התקנה
+heb.icons_downloads=הורדות
+heb.dialog_shutdown=?כרגע %1 פועל האם את רוצה לסגור את %1 כך שההתקנה תוכל להמשך
+heb.dialog_firewall=ההתקנה נכשלה להוסיף את שרזה אל חומת האש%nאנא הוסף את שרזה לרשימת החריגים בחומת האש באופן ידני
+heb.page_viruswarning_text=כשאת/ה משתמש באינטרנט עלייך תמיד לוודא שמותקן אצלך אנטי-וירוס מעודכן להגנה מפני וירוסים/תולעים/רוגלות, לרשימה של אנטי-וירוסים וטיפים בנושא אבטחה פנה לקישור הבא:
+heb.page_viruswarning_title=התראת וירוס
+heb.page_viruswarning_subtitle=?האם יש לך תוכנת אנטי-וירוס מותקנת
