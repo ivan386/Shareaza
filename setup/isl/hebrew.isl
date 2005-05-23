@@ -39,19 +39,19 @@ ConfirmTitle=אישור
 ErrorTitle=שגיאה
 
 ; *** SetupLdr messages
-SetupLdrStartupMessage=?הקובץ יתקין את %1 האם הינך מעוניין להמשיך
+SetupLdrStartupMessage=?‏להמשיך‎ ‏מעוניין‎ ‏הינך‎ ‏האם‎ %1 ‏את‎ ‏יתקין‎ ‏הקובץ
 LdrCannotCreateTemp=נכשל ליצור תיקייה זמנית, ההתקנה הופסקה
 LdrCannotExecTemp=נכשל להריץ קובץ בתיקייה הזמנית, ההתקנה הופסקה
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%n %2: %3 :שגיאה
-SetupFileMissing=הקובץ %1 לא נמצא בספריית ההתקנה, אנא הכנס את הקובץ לתיקייה או השג עותק תקין של התוכנית
+SetupFileMissing=‏התוכנית‎ ‏של‎ ‏תקין‎ ‏עותק‎ ‏השג‎ ‏או‎ ‏לתיקייה‎ ‏הקובץ‎ ‏את‎ ‏הכנס‎ ‏אנא‎ ‏ההתקנה‎, ‏בספריית‎ ‏נמצא‎ ‏לא‎ %1 ‏הקובץ
 SetupFileCorrupt=קבצי ההתקנה פגומים, אנא השג עותק תקין של התוכנית
 SetupFileCorruptOrWrongVer=קבצי ההתקנה פגומים או לא מתאימים לגרסה של התוכנית, אנא תקן את הבעיה או השג עותק תקין של התוכנה
 NotOnThisPlatform=%1 התוכנית לא תוכל לפעול על
 OnlyOnThisPlatform=%1 התוכנית חייבת להיות מופעלת על
-WinVersionTooLowError=%1 לתוכנית דרוש גרסה  %2 או חדשה יותר של
-WinVersionTooHighError=%1 התוכנית איננה יכולה להיות מותקנת על גרסא %2  ואילך של
+WinVersionTooLowError=%1 ‏של‎ ‏ואילך‎ %2 ‏גרסא‎ ‏דרוש‎ ‏לתוכנית
+WinVersionTooHighError=%1 ‏של‎ ‏ואילך‎ %2 ‏גרסא‎ ‏על‎ ‏מותקנת‎ ‏להיות‎ ‏יכולה‎ ‏אינה‎ ‏התוכנית
 AdminPrivilegesRequired=עלייך להיות רשום כמנהל בכדי להתקין את התוכנה
 PowerUserPrivilegesRequired=עלייך להיות רשום כמנהל או כמשתמש מתקדם בכדי להתקין את התוכנה
 SetupAppRunningError=תוכנית ההתקנה זיהתה שהתהליך %1 כרגע מופעל %n%nאנא סגור את התהליך ולחץ על 'הבא' להמשך, או לחץ 'ביטול' ליציאה.
@@ -134,7 +134,7 @@ WizardSelectDir=בחר מיקום ידע
 SelectDirDesc=?[name] היכן תרצה להתקין את
 SelectDirLabel3=לספריה להלן [name] התוכנית תתקין את
 SelectDirBrowseLabel='להמשך לחץ על 'הבא' אם תרצה לבחור ספרייה אחרת לחץ על 'סייר
-DiskSpaceMBLabel=&#8234;‏בדיסק‎ ‏פנוי‎ ‏מקום‎ ‏של‎ [mb] MB ‏לפחות‎ ‏דרוש
+DiskSpaceMBLabel=‏בדיסק‎ ‏פנוי‎ ‏מקום‎ ‏של‎ [mb] MB ‏לפחות‎ ‏דרוש
 ToUNCPathname=Setup cannot install to a UNC pathname. If you are trying to install to a network, you will need to map a network drive.
 InvalidPath=You must enter a full path with drive letter; for example:%n%nC:\APP%n%nor a UNC path in the form:%n%n\\server\share
 InvalidDrive=The drive or UNC share you selected does not exist or is not accessible. Please select another.
