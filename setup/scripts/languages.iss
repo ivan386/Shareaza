@@ -22,7 +22,7 @@ Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; Licens
 Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
 Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
 Name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
-Name: "heb"; MessagesFile: "compiler:Default.isl,setup\isl\hebrew.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "heb"; MessagesFile: "compiler:Default.isl,setup\isl\hebrew.isl"; LicenseFile: "setup/license/hebrew.rtf"
 
 [Files]
 #ifndef debug
@@ -103,8 +103,8 @@ Source: "setup\license\chinese.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\swedish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sv; Components: language
 ; Finnish
 Source: "setup\license\finnish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
-; Finnish
-Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
+; Hebrew
+Source: "setup\license\hebrew.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
