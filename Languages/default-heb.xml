@@ -1497,7 +1497,7 @@
 		</group>
 
 		
-		<link target="http://www.hebrew.co.nr/" format="b" align="middle" colour="800000">ה כ נ ס &#160; ל א י נ ד ק ס &#160; ל מ י ד ע  &#160; מ ו מ ל ץ </link>
+		<link target="http://www.hebrew.co.nr/" format="b" align="middle" colour="800000">ה כ נ ס &#160; ל א י נ ד ק ס &#160; ה ע ב ר י  &#160; ל מ י ד ע &#160; מ ו מ ל ץ </link>
 		<gap size="8"/><icon res="243" width="32" height="32"/>
 		<newline gap="20" indent="16"/>
 		
@@ -2381,7 +2381,7 @@
 	<tip id="ID_SEARCH_SEARCH" message="Search the network again..."/>
 	<tip id="ID_SEARCH_STOP" message="Stop receiving results in this window."/>
 	<tip id="ID_SEARCHMONITOR_CLEAR" message="Clear the search monitor buffer."/>
-	<tip id="ID_SEARCHMONITOR_PAUSE" message="השהה search monitoring."/>
+	<tip id="ID_SEARCHMONITOR_PAUSE" message="...השהה ניטור חיפוש"/>
 	<tip id="ID_SECURITY_ADD" message="Add a new rule to the security chain..."/>
 	<tip id="ID_SECURITY_BAN" message="Ban the selected host for the duration of this session."/>
 	<tip id="ID_SECURITY_EDIT" message="Edit the selected security rule..."/>
@@ -3010,14 +3010,14 @@
 	<string id="17234" value="Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."/>
 	<string id="17248" value="Starting eDonkey2000 partial download import process..."/>
 	<string id="17249" value="Process complete, %i partial downloads imported successfully."/>
-	<string id="17250" value="Scanning folder: &quot;%s&quot;..."/>
-	<string id="17251" value="Unable to import file."/>
+	<string id="17250" value="...&quot;%s&quot; :סורק ספרייה"/>
+	<string id="17251" value=".נכשל לייבא קובץ."/>
 	<string id="17252" value="Found partial file &quot;%s&quot;, importing..."/>
 	<string id="17253" value="Unable to open part file &quot;%s&quot;."/>
 	<string id="17254" value="Found download &quot;%s&quot;, size %s."/>
 	<string id="17255" value="Download data file is newer than .part file, aborting."/>
-	<string id="17256" value="העתקing &quot;%s&quot; to &quot;%s&quot;..."/>
-	<string id="17257" value="Finished copying file."/>
+	<string id="17256" value="Copying &quot;%s&quot; to &quot;%s&quot;..."/>
+	<string id="17257" value=".סיים להעתיק קובץ"/>
 	<string id="17258" value="Created Shareaza partial download, %s remaining."/>
 	<string id="17259" value="This file is already in the Shareaza download list."/>
 	<string id="17260" value="Insufficient disk space to copy download file."/>
@@ -3144,9 +3144,9 @@
 		<control caption="הרחב הורדות חודשות כברירת מחדל"/>
 		<control caption="הצג מד התקדמות פשוט"/>
 		<control caption="חיפוש:"/>
-		<control caption="הרחב קבצים בעלי כמה מקורות באופן אוטמטי"/>
+		<control caption="הרחב קבצים עם כמה מקורות אוטמטית"/>
 		<control caption="עבור לחלון ההעברות בתחילת הורדה"/>
-		<control caption="הסתר את הסרגל הצדדי בתחילת חיפוש"/>
+		<control caption="הסתר סרגל צדדי בתחילת חיפוש"/>
 		<control caption="סינון תוכן למבוגרים מהחיפוש"/>
 		<control caption="טיפים:"/>
 		<control/>
@@ -3156,7 +3156,7 @@
 		<control/>
 		<control caption="שורת משימות:"/>
 		<control caption="כשאני לוחץ על סגור:"/>
-		<control caption="סגור לאחר סיום פעולה|מזער לשורת משימות|סגור מיד|שאל אותי"/>
+		<control caption="סגור בסיום פעולה|מזער לשורת משימות|סגור מיד|שאל אותי"/>
 		<control caption="כשאני לוחץ מזער:"/>
 		<control caption="רגיל|מזער לשורת משימות"/>
 	</dialog>
@@ -3166,7 +3166,7 @@
 		<control caption="זכור את תצוגות התיקייה"/>
 		<control caption="צפה בתיקיות הספרייה"/>
 		<control caption="מהיר hashing (CPU יותר עומס)"/>
-		<control caption="אפשר לאחרים לסייר בקבצים המשותפים"/>
+		<control caption="אפשר לסייר בקבצי המשותפים"/>
 		<control caption="קבצים אחרונים:"/>
 		<control caption="זכור:"/>
 		<control/><control/>
@@ -3316,7 +3316,7 @@
 		<control caption=":אפשרויות"/>
 		<control caption="אפשר לוח תזמונים"/>
 		<control/><control/>
-		<control caption="התחבר לגונטלה2 רק כשאתה בהגבלות"/>
+		<control caption="התחבר לגונטלה2 רק כאשר בהגבלות"/>
 		<control caption="מפתח:"/>
 		<control caption="ראש"/>
 		<control caption="שני"/>
@@ -3555,7 +3555,7 @@
 
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="[5/7] ברוכים הבאים לשרזה">
 		<control caption="שרזה היא מקום הרבה יותר ידידותי כאשר כל אחד רושם קצת פרטים על עצמו:"/>
-		<control caption="אני נוהג להשתמש בשם:"/>
+		<control caption="שמי:"/>
 		<control/>
 		<control caption="ואני:"/>
 		<control caption="&#160;(בחר)"/>
