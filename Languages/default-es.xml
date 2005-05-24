@@ -5,7 +5,7 @@
 
 <!-- Manifest -->
 <manifest name="Español"
-		author="help"
+		author="help y dague12 (retirado)"
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="luis.help@gmail.com"
@@ -453,8 +453,8 @@
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
 			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-			<item id="ID_HELP_SECURITY" text="_Ayuda De Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda de Codec"/>
+			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
@@ -474,7 +474,7 @@
 			<item id="ID_NETWORK_CONNECT" text="_Conectar" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Desconectar"/>
 			<separator/>
-			<menu text="Choose _Networks">
+			<menu text="Escoger Redes">
 				<item id="ID_NETWORK_G2" text="Conectar a _Gnutella2"/>
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella 1"/>
@@ -547,8 +547,8 @@
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
 			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-			<item id="ID_HELP_SECURITY" text="_Ayuda De Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda de Codec"/>
+			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
 			</menu>
 			<separator/>
 	            <menu text="_Sitios">
@@ -632,8 +632,8 @@
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
 			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-			<item id="ID_HELP_SECURITY" text="_Ayuda De Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda de Codec"/>
+			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
 			</menu>
 			<separator/>
 	            <menu text="_Sitios">
@@ -3141,7 +3141,7 @@
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="Cuadros informativos(tooltips):"/>
         <control caption="Expandir nuevas transferencias por defecto"/>
-		<control caption="Display simple progress bar"/>
+		<control caption="Mostrar barra simple de proceso"/>
 		<control caption="_Buscar:"/>
 		<control caption="Expandir multiples fuentes por defecto"/>
 		<control caption="Cambiar a vista de transferencias en descarga"/>
