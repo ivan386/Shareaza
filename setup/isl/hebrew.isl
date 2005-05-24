@@ -229,7 +229,7 @@ EntryAbortRetryIgnore=לחץ על 'נסה שנית' בכדי לנסות שוב, לחץ על 'התעלם' בכדי להמש
 
 ; *** Installation status messages
 StatusCreateDirs=...יוצר ספריות
-StatusExtractFiles=...מלחץ קבצים
+StatusExtractFiles=...מחלץ קבצים
 StatusCreateIcons=...יוצר קיצורי דרך
 StatusCreateIniEntries=...INI יוצר ערכי רישום בקבצי
 StatusCreateRegistryEntries=...יוצר ערכי רישום ברגיסטרי
