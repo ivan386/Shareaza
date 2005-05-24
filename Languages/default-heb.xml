@@ -1968,7 +1968,7 @@
 		<text format="b">This Download is Searching</text>
 		<newline gap="8"/>
 		<text>There are no known sources for this download, so Shareaza is searching
-		all connected P2P networks for new מקורות  Once sources are found, the
+		all connected P2P networks for new sources. Once sources are found, the
 		download will start automatically.  Shareaza searches for sources automatically,
 		however you can speed up the process using the</text>
 		<text format="b"> Find More Sources</text><text> command.</text>
@@ -2722,7 +2722,7 @@
 	<string id="16280" value="Download host %s is busy, retrying in %i seconds."/>
 	<string id="16281" value="Are you sure you want to clear &quot;%s&quot;?\n\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."/>
 	<string id="16282" value="Aborting download of &quot;%s&quot; from %s (%s), network disabled."/>
-	<string id="16283" value="The file &quot;%s&quot; is already being downloaded, adding מקורות"/>
+	<string id="16283" value="כבר בהורדה, מוסיף מקורות &quot;%s&quot; הקובץ"/>
 	<string id="16284" value="Received a faulty push connection from %s, closing connection."/>
 	<string id="16285" value="Received an unnecessary push connection from %s."/>
 	<string id="16286" value="Host %s is pushing download &quot;%s&quot;, accepting."/>
@@ -3034,7 +3034,7 @@
 	<string id="17482" value="Unable to parse prefetched BitTorrent file &quot;%s&quot;."/>
 	<string id="17483" value="Error from BitTorrent tracker for &quot;%s&quot; : &quot;%s&quot;."/>
 	<string id="17484" value="Error parsing BitTorrent tracker response."/>
-	<string id="17485" value="Received BitTorrent tracker response for &quot;%s&quot;, %i new מקורות"/>
+	<string id="17485" value="&#8234;&quot;%s&quot; ‏עבור‎ ‏ביט‎-‏טורנט‎ ‏עוקב‎ ‏של‎ ‏תגובה‎ ‏התקבלה‎ ‏חדשים‎, ‏מקורות‎ %i"/>
 	<string id="17486" value="Initiating BitTorrent client coupling with %s..."/>
 	<string id="17487" value="Established BitTorrent coupling with %s, handshaking..."/>
 	<string id="17488" value="You have changed the tracker URL for this torrent.  Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."/>
@@ -3141,7 +3141,7 @@
 		<control caption="הצג מהירות לפי:"/>
 		<control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="הורדות:"/>
-		<control caption="הרחב הורדות חודשות כברירת מחדל"/>
+		<control caption="הרחב הורדות חדשות כברירת מחדל"/>
 		<control caption="הצג מד התקדמות פשוט"/>
 		<control caption="חיפוש:"/>
 		<control caption="הרחב קבצים עם כמה מקורות אוטמטית"/>
@@ -3156,7 +3156,7 @@
 		<control/>
 		<control caption="שורת משימות:"/>
 		<control caption="כשאני לוחץ על סגור:"/>
-		<control caption="סגור בסיום פעולה|מזער לשורת משימות|סגור מיד|שאל אותי"/>
+		<control caption="שאל אותי|סגור מיד|מזער לשורת משימות|סגור בסיום פעולה"/>
 		<control caption="כשאני לוחץ מזער:"/>
 		<control caption="רגיל|מזער לשורת משימות"/>
 	</dialog>
@@ -3410,7 +3410,7 @@
 	<control/><control/>
 	<control caption="חיבורי התוכנית"/>
 	<control caption="נקה הורדות של טורנטים"/>
-	<control caption="כאשר יחס השיתוף מגיע לרמה של"/>
+	<control caption="כשיחס השיתוף מגיע לרמה:"/>
 	<control/><control/>
 	<control caption="_EndGame: (האצה)"/>
 	<control caption="כשמסיימים הורדת טורנטים EndGame אפשר אופציית"/>
@@ -3418,7 +3418,7 @@
 	<control/><control/>
 	<control caption="יוצר הטורנט"/>
 	<control/><control/>
-	<control caption="עוקב הטורנטים - ברירת מחדל:"/>
+	<control caption="עוקב הטורנטים:"/>
 	<control/><control/>
 </dialog>
 
