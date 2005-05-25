@@ -909,7 +909,7 @@ Other:
 	<!-- DOWNLOADS WINDOW -->
 		<menu name="CDownloadsWnd.Download.Basic">
 			<item id="ID_DOWNLOADS_LAUNCH" text="_Vorschau"/>
-			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
+			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Reze_nsionen anzeigen"/>
 			<separator />
 			<item id="ID_DOWNLOADS_RESUME" text="_Wiederaufnehmen"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="_Anhalten"/>
@@ -926,7 +926,7 @@ Other:
 			<item id="ID_DOWNLOADS_LAUNCH" text="V_orschau"/>
 			<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vorschau (Kopie)"/> -->
 			<item id="ID_DOWNLOADS_ENQUEUE" text="_In Wiedergabeliste aufnehmen"/>
-			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
+			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Reze_nsionen anzeigen"/>
 			<separator />
 			<item id="ID_DOWNLOADS_RESUME" text="_Wiederaufnehmen"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="_Anhalten"/>
@@ -1609,7 +1609,7 @@ Other:
 				<para align="center">
 					<text format="b">Nicht verbunden</text>
 					<newline gap="4"/>
-					<link target="raza:command:ID_NETWORK_CONNECT">Click here to connect</link>
+						<link target="raza:command:ID_NETWORK_CONNECT">Verbinden</link>
 				</para>
 			</group>
 
@@ -1684,7 +1684,7 @@ Other:
 				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein weiteres Torrent seeden</link>
 				</group>
 				<group id="2">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein Torrent seedn</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Ein Torrent seeden</link>
 				</group>
 			</para>
 
@@ -2180,7 +2180,7 @@ Other:
 		<tip id="ID_BROWSE_STOP" message="Durchsuchen dieses Hosts beenden." tip="Durchsuchen beenden"/>
 		<tip id="ID_CHAT_BOLD" message="Fett (Ctrl+B)"/>
 		<tip id="ID_CHAT_BROWSE" message="Das Profil und die freigegebenen Dateien anzeigen."/>
-		<tip id="ID_CHAT_CLEAR" message="Clear the message text in this window."/>
+		<tip id="ID_CHAT_CLEAR" message="Nachrichten in diesem Fenster löschen."/>
 		<tip id="ID_CHAT_COLOUR" message="Eine Textfarbe wählen (Ctrl+K)"/>
 		<tip id="ID_CHAT_CONNECT" message="Zum Chat verbinden.."/>
 		<tip id="ID_CHAT_DISCONNECT" message="Chatverbindung beenden."/>
@@ -2243,9 +2243,9 @@ Other:
 		<tip id="ID_DOWNLOADS_SOURCES" message="Zusätzliche Quellen für den/die markierten Download(s) suchen." tip="Mehr Quellen"/>
 		<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Informationen über den markierten BitTorrent Download anzeigen..."/>
 		<tip id="ID_DOWNLOADS_URL" message="Quellen aus einer URL zum markierten Download hinzufügen..." tip="Quell-URL hinzufügen"/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download"/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Rezensionen für den markierten Download anzeigen"/>
 		<tip id="ID_HELP_ABOUT" message="Informationen über Shareaza anzeigen..." tip="Über Shareaza"/>
-		<tip id="ID_HELP_CODEC" message="Alles über Codec und Videoprobleme."/>
+		<tip id="ID_HELP_CODEC" message="Alles über Codec- und Videoprobleme."/>
 		<tip id="ID_HELP_FAQ" message="Shareaza häufig gestellte Fragen (FAQ) anzeigen."/>
 		<tip id="ID_HELP_ROUTER" message="Finden Sie Hilfe ihren Router/Firewall zu konfigurieren."/>
 		<tip id="ID_HELP_FORUMS" message="Das Shareaza Forum besuchen."/>
@@ -2887,7 +2887,7 @@ Other:
 		<string id="16768" value="URL &quot;%s&quot; empfangen"/>
 		<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
 		<string id="16770" value="Der URL Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
-		<string id="16771" value="Sie haben die Datei &quot;%s&quot; bereits in ihrer Bibliothek. Wollen Sie sie trotzdem herunterladen?"/>
+		<string id="16771" value="Die Datei &quot;%s&quot; befindet sich bereits in ihrer Bibliothek. Möchten Sie sie dennoch herunterladen?"/>
 		<string id="16772" value="Host:"/>
 		<string id="16773" value="Port:"/>
 		<string id="16774" value="&amp;Verbinden"/>
@@ -2939,7 +2939,7 @@ Other:
 		<string id="16943" value="%s durchsuchen"/>
 		<string id="16944" value="%i freigegebene Dateien in %s's Bibliothek gefunden."/>
 		<string id="16992" value="Shareaza konnte das MediaServices Plugin nicht laden.  Bitte installieren Sie Shareaza erneut und stellen Sie sicher, das Sie die nötigen Codecs und Ausgabetreiber instlliert haben."/>
-		<string id="16993" value="Alle Multimedia Dateien|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Dateien|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;|Video Dateien|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.ogm;*.wmv|CD Audio Tracks|*.cda|MIDI Dateien|*.mid;*.rmi;*.midi|Alle Dateien|*.*||"/>
+		<string id="16993" value="Alle Multimedia Dateien|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Wiedergabelisten|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Dateien|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;|Video Dateien|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.ogm;*.wmv|CD Audio Tracks|*.cda|MIDI Dateien|*.mid;*.rmi;*.midi|Alle Dateien|*.*||"/>
 		<string id="16994" value="Fehler beim Laden von &quot;%s&quot;"/>
 		<string id="16995" value="Die Datei ist möglicherweise beschädigt, oder die Datei benutzt einen Codec, den Sie nicht installiert haben."/>
 		<string id="16996" value="Ein Teil dieser Datei kann nicht abgespielt werden. Möglicherweise m&#251;ssen Sie zusätzliche Codecs herunterladen."/>
@@ -3071,7 +3071,7 @@ Other:
 		<string id="18508" value="Downloadquelle %s für &quot;%s&quot; entfernt, weil die Warteschlangenposition %i zu hoch ist."/>
 		<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree Volumen, ed2k hashset oder BitTorrent hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
 		<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehemen und reverifizieren wollen ?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die die sie nicht bestehen neu herunterladen."/>
-		<string id="19000" value="Remote access ist deaktiviert."/>
+		<string id="19000" value="Remote Access ist deaktiviert."/>
 		<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
 		<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
 		<string id="20000" value="Keine URN verfügbar."/>
@@ -3120,7 +3120,7 @@ Other:
 		<string id="20204" value="Donnerstag"/>
 		<string id="20205" value="Freitag"/>
 		<string id="20206" value="Samstag"/>
-		<string id="20210" value="(No Rating)"/>
+		<string id="20210" value="(Keine Bewertung)"/>
 		<string id="20211" value="Fake / Corrupt"/>
 		<string id="20212" value="Poor"/>
 		<string id="20213" value="Average"/>
@@ -3339,7 +3339,7 @@ Other:
 			<control caption="% der _Bandbreite wenn beschränkt"/>
 			<control/>
 			<control caption="Hilfe"/>
-			<control caption="Die Zeitsteuerung erlaubt ihnen zu bestimmen, wann Shareaza sich verbindet und Dateien herutnerlädt. &#13;&#10;&#13;&#10;Bemerkung: Wenn Sie Shareaza geöffnet haben, wenn die Zeitsteuerung aktiviert ist, sieht man wie sich die Einstellungen ändern - Das ist normal!"/>
+			<control caption="Die Zeitsteuerung erlaubt ihnen zu bestimmen, wann Shareaza sich verbindet und Dateien herunterlädt. &#13;&#10;&#13;&#10;Bemerkung: Wenn Sie Shareaza geöffnet haben, wenn die Zeitsteuerung aktiviert ist, sieht man wie sich die Einstellungen ändern - Das ist normal!"/>
 		</dialog>
 
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netzwerke">
@@ -4165,17 +4165,17 @@ Other:
 			<control caption="Nicht updaten"/>
 		</dialog>
 
-	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Rezensionen herunterladen">
 		<control/>
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadaten-Lokalisierung">
 		<control caption="OK"/>
-		<control caption="Cancel"/>
-		<control caption="Please select the method of re-encoding"/>
-		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+		<control caption="Abbrechen"/>
+		<control caption="Bitte wählen Sie die neue Codierung"/>
+		<control caption="Arabisch|Baltisch|Zentraleuropäisch|Chinesisch (vereinfacht)|Chinesisch (traditionell)|Kyrillisch|Griechisch|Hebräisch|Japanisch|Koreanisch|Thai|Turkisch|Vietnamesisch"/>
 	</dialog>
 	</dialogs>
 
@@ -4185,7 +4185,7 @@ Other:
 			<column from="File" to="Dateiname"/>
 			<column from="Extension" to="Typ"/>
 			<column from="Size" to="Größe"/>
-			<column from="Folder" to=""/>
+			<column from="Folder" to="Ordner"/>
 			<column from="Hits" to="Treffer"/>
 			<column from="Uploads" to="Uploads"/>
 			<column from="Modified" to=""/>
@@ -4197,8 +4197,8 @@ Other:
 			<column from="Speed" to="Geschwindigkeit"/>
 			<column from="Status" to="Status"/>
 			<column from="Client" to="Client"/>
-			<column from="Downloaded" to=""/>
-			<column from="Complete" to=""/>
+			<column from="Downloaded" to="Heruntergeladen"/>
+			<column from="Complete" to="Fertig"/>
 		</list>
 		<list name="CUploadCtrl">
 			<column from="Remote User" to="Adresse"/>
@@ -4226,7 +4226,7 @@ Other:
 			<column from="Address / Content" to="Adresse / Inhalt"/>
 			<column from="Action" to="Aktion"/>
 			<column from="Expires" to="Läuft ab"/>
-		<column from="Precedence" to=""/>
+			<column from="Precedence" to=""/>
 			<column from="Hits" to="Treffer"/>
 			<column from="Comment" to="Kommentar"/>
 		</list>
@@ -4249,15 +4249,15 @@ Other:
 			<column from="Failures" to="Fehler"/>
 		</list>
 		<list name="CSearchMonitorWnd">
-			<column from="Search" to=""/>
-			<column from="URN" to=""/>
-			<column from="Schema" to=""/>
+			<column from="Search" to="Suche"/>
+			<column from="URN" to="URN"/>
+			<column from="Schema" to="Schema"/>
 		</list>
 		<list name="CMatchCtrl">
 			<column from="File" to="Dateiname"/>
 			<column from="Extension" to="Typ"/>
 			<column from="Size" to="Größe"/>
-			<column from="Rating" to="Wertung"/>
+			<column from="Rating" to="Bewertung"/>
 			<column from="Host/Count" to="Adresse/Quellen"/>
 			<column from="Speed" to="Geschwindigkeit"/>
 			<column from="Client" to="Client"/>
@@ -4285,9 +4285,9 @@ Other:
 			<column from="Size" to="Größe"/>
 		</list>
 		<list name="CReviewList">
-			<column from="User" to=""/>
-			<column from="Rating" to=""/>
-			<column from="Comments" to=""/>
+			<column from="User" to="Benutzer"/>
+			<column from="Rating" to="Bewertung"/>
+			<column from="Comments" to="Kommentare"/>
 			<column from="Order" to=""/>
 		</list>
 	</listColumns>
