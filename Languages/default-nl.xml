@@ -3133,7 +3133,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
 		<control caption="_Algemeen:"/>
-		<control caption="Auto-verbindt als Shareaza start"/>
+		<control caption="Verbind bij opstarten van Shareaza"/>
 		<control caption="Start Shareaza als Windows opstart "/>
 		<control caption="Waarschuw mij als ik een URI open"/>
 		<control caption="Snelheden in:"/>
@@ -3166,7 +3166,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<control caption="Snel hashen (Gebruikt meer CPU)"/>
 		<control caption="Toon anderen mijn bestanden"/>
 		<control caption="_Recente Bestanden:"/>
-		<control caption="Onthoudt:"/>
+		<control caption="Onthoud:"/>
 		<control/><control/>
 		<control caption="items"/>
 		<control caption="Voor max.:"/>
@@ -3193,9 +3193,9 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<control/>
 		<control caption="Voeg _Toe"/>
 		<control caption="_Verwijder"/>
-		<control caption="_Audio Visualisatie Plug-in:"/>
+		<control caption="_Audiovisualisatie Plug-in:"/>
 		<control caption="_Selecteer Plug-in..."/>
-		<control caption="Media Diensten _Plug-in:"/>
+		<control caption="Mediadiensten _Plug-in:"/>
 		<control/>
 	</dialog>
 
