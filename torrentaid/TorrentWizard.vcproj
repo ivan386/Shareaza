@@ -207,6 +207,25 @@
 				RelativePath=".\MD4.cpp">
 			</File>
 			<File
+				RelativePath=".\MD4_asm.asm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\PageCommandline.cpp">
 			</File>
 			<File
@@ -346,6 +365,25 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SHA_asm.asm">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
+"
+						Outputs="$(inputname).obj"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="StdAfx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -438,25 +476,6 @@
 				RelativePath=".\MD4.h">
 			</File>
 			<File
-				RelativePath=".\MD4_asm.asm">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
-"
-						Outputs="$(inputname).obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
-"
-						Outputs="$(inputname).obj"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\PageCommandline.h">
 			</File>
 			<File
@@ -485,25 +504,6 @@
 			</File>
 			<File
 				RelativePath="SHA1.h">
-			</File>
-			<File
-				RelativePath=".\SHA_asm.asm">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
-"
-						Outputs="$(inputname).obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;
-"
-						Outputs="$(inputname).obj"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="StdAfx.h">
