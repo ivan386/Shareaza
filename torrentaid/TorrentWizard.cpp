@@ -65,7 +65,6 @@ BOOL CTorrentWizardApp::InitInstance()
 	else
 		m_bCommandLine = FALSE;
 
-	Enable3dControls();
 	SetRegistryKey( _T("TorrentAid") );
 	
 	InitEnvironment();
