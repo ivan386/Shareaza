@@ -1697,7 +1697,7 @@
 			Die Shareaza Verstellingsbeheerder laat gevorderde gebruikers toe om die werking van Shareaza
 			heeltemal te verander. Die verstellings in die 
 		</text>
-		<text format="b">Algemeen</text>
+		<text format="b">Algemeen </text>
 		<text>
 			afdeling hou verband met die gebruikerskoppelvlak.
 		</text>
@@ -3389,8 +3389,8 @@
 
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Netwerk:"/>
-		<control caption="Konnekteer vandag aan eDonkey2000"/>
-		<control caption="Konnekteer outomaties elke sessie"/>
+		<control caption="Konnekteer aan eDonkey2000"/>
+		<control caption="Konnekteer elke sessie"/>
 		<control caption="_Globale Soek:"/>
 		<control caption="Soek bekende afgeleë bedieners in die bedienerskasgeheue:"/>
 		<control caption="Staak soektog na:"/>
