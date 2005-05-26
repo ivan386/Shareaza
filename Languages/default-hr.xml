@@ -1798,8 +1798,8 @@
 			<newline gap="8" indent="0"/>
 			<text format="b">Spol</text>
 			<newline gap="2" indent="8"/>
-			<text id="GenderMale">Muški</text>
-			<text id="GenderFemale">Ženski</text>
+			<text id="GenderMale">Muško</text>
+			<text id="GenderFemale">Žensko</text>
 			<text>, </text>
 			<text id="Age"/>
 		</group>
