@@ -457,7 +457,7 @@ Other:
 			<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Choisir une peau..."/>
+			<item id="ID_TOOLS_SKIN" text="Choisir un thème..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Éditer mon _profil..."/>
@@ -541,7 +541,7 @@ Other:
 			<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Choisir une peau..."/>
+			<item id="ID_TOOLS_SKIN" text="Choisir un thème..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Éditer mon _profil..."/>
@@ -622,7 +622,7 @@ Other:
 			<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Choisir une peau..."/>
+			<item id="ID_TOOLS_SKIN" text="Choisir un thème..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Choisir la _langue..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="Éditer mon _profil..."/>
@@ -1527,7 +1527,7 @@ Other:
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Peaux</link>
+		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Thèmes</link>
 		<text align="middle">&#160;- Changez l'apparence de Shareaza.</text>
 		<newline gap="8"/>
 
@@ -1721,7 +1721,7 @@ Other:
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Général:</link>
 		<gap size="4"/>
-		<text>Réglages communs de l'interface utilisateur comme l'aide contextuelle, le comportement du mode réduit, l'affichage des unités de tranferts, les messages d'invites, etc.</text>
+		<text>Réglages communs de l'interface utilisateur comme l'aide contextuelle, le comportement du mode réduit, l'affichage des unités de tranferts, les notifications, etc.</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CLibrarySettingsPage" format="b">Bibliothèque:</link>
@@ -2370,10 +2370,10 @@ Other:
 	<tip id="ID_TOOLS_LANGUAGE" message="Sélectionner la langue dans laquelle vous désirez utiliser Shareaza..."/>
 	<tip id="ID_TOOLS_MERCORA" message="Démarrez la Radio P2P"/>
 	<tip id="ID_TOOLS_PROFILE" message="Modifier votre profil utilisateur..."/>
-	<tip id="ID_TOOLS_RESKIN" message="Recharger et appliquer votre sélection de peau actuelle."/>
+	<tip id="ID_TOOLS_RESKIN" message="Recharger et appliquer votre sélection de thème actuelle."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Semer le Torrent sélectionné sur BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Configurer les réglages de Shareaza..."/>
-	<tip id="ID_TOOLS_SKIN" message="Choisir une peau différente pour Shareaza..."/>
+	<tip id="ID_TOOLS_SKIN" message="Choisir un thème différent pour Shareaza..."/>
 	<tip id="ID_TOOLS_WIZARD" message="Ouvre l'assistant de démarrage rapide de Shareaza..."/>
 	<tip id="ID_TRAFFIC_AXIS" message="Afficher l'axe vertical."/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Nettoyer le graphique du trafic."/>
@@ -2462,7 +2462,7 @@ Other:
 	<string id="8006" value="Vous n'êtes pas connecté.  Cliquez le boutton &quot;Se connecter&quot; pour commencer."/>
 	<string id="8007" value="Il n'y a pas de recherche active.  Cliquez ici pour rechercher des fichiers."/>
 	<string id="8008" value="Shareaza a fini de télécharger la nouvelle version (%s) de Shareaza.  Voulez-vous mettre à jour maintenant?\n\nSi vous choisissez &quot;Oui&quot;, Shareaza va se fermer temporairement durant l'installation de la mise à jour."/>
-	<string id="8009" value="Êtes-vous certain de vouloir supprimer la peau &quot;%s&quot;?  Ceci est irréversible."/>
+	<string id="8009" value="Êtes-vous certain de vouloir supprimer le thème &quot;%s&quot;?  Ceci est irréversible."/>
 	<string id="8010" value="Ceci est une pré-distribution de Shareaza, et la période de test est terminée.  Merci de télécharger la version complète et officielle à partir de www.shareaza.com."/>
 	<string id="8011" value="Changer de vue fermera toutes les fenêtres ouvertes actuellement.  Voulez-vous changer la vue maintenant?"/>
 	<string id="8060" value="En mode Hub/Ultrapeer avec %lu voisin(s). %s dans votre bibliothèque locale."/>
@@ -3127,8 +3127,8 @@ Other:
 		<control caption="_Options:"/>
 		<control caption="Mémoriser l'affich. des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
-		<control caption="Hachage rapide (utilise plus le CPU)"/>
-		<control caption="Filtrer les objets par extension"/>
+		<control caption="Hachage rapide (utilise + le CPU)"/>
+		<control caption="Autoriser l'affich. de mes partages"/>		
 		<control caption="Fichiers _récents:"/>
 		<control caption="Mémoriser:"/>
 		<control/><control/>
@@ -3151,8 +3151,8 @@ Other:
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Lecteur multimédia">
 		<control caption="_Options:"/>
-		<control caption="Lire les types de fichier ci-dessous avec Shareaza"/>
-		<control caption="Mettre en attente les types de fichier ci-dessous avec Shareaza"/>
+		<control caption="Lire dans Shareaza les types de fichier ci-dessous"/>
+		<control caption="Mettre en file d'attente dans Shareaza les types de fichier ci-dessous"/>
 		<control caption="_Types de Fichier:"/>
 		<control/>
 		<control caption="_Ajouter"/>
@@ -3264,7 +3264,7 @@ Other:
 
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Accès à distance">
 		<control caption="_Guide:"/>
-		<control caption="L'accès à distance vous permet de laisser Shareaza en exécution sur votre PC, et de contrôler Shareaza à distance depuis n'importe quel autre ordinateur en utilisant un navigateur Internet.  Vous devez pouvoir accepter les connexions entrantes (routeur NAT, pare-feu, etc, correctement configurés)."/>
+		<control caption="L'accès à distance vous permet de laisser Shareaza en exécution sur votre PC, et de contrôler Shareaza à distance depuis n'importe quel autre ordinateur en utilisant un navigateur Internet.  Vous devez pouvoir accepter les connexions entrantes (routeur, pare-feu, etc, correctement configurés)."/>
 		<control caption="Activ_er:"/>
 		<control caption="Activer l'accès à distance Shareaza:"/>
 		<control/>
@@ -3294,7 +3294,7 @@ Other:
 		<control caption="% de la _bande passante lorsque limitée"/>
 		<control/>
         <control caption="Aide"/>
-        <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. {n}{n}{n}Note: Si vous avez Shareaza ouvert lorsque le programmateur est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
+        <control caption="Le programmateur est conçu pour vous permettre de mettre en place des périodes où Shareaza se connectera et téléchargera les fichiers. {n}{n}{n}Note: Si Shareaza est ouvert lorsque le prog. est actif, vous pourrez le voir changer des réglages - Ceci est normal!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
@@ -3369,11 +3369,11 @@ Other:
         <control caption="Afficher les éléments d'interface BitTorrent additionnels"/>
         <control caption="Connexions de _Téléchargement:"/>
         <control/><control/>
-        <control caption="Torrents à la fois"/>
+        <control caption="Nombre de torrents à la fois"/>
         <control/><control/>
-        <control caption="Connexions de client"/>
-		<control caption=" Nettoyer les torrents téléchargés"/>
-  	    <control caption="Lorsque le ratio de partage dépasse "/>
+        <control caption="Connexions à des clients"/>
+		<control caption=" Nettoyer les torrents téléch."/>
+  	    <control caption="qd le ratio de partage dépasse "/>
   	    <control/><control/>
         <control caption="_EndGame:"/>
         <control caption="Activer le mode Endgame lors de la complétion des torrents"/>
@@ -3390,9 +3390,9 @@ Other:
 		<control/>
 	</dialog>
 
-	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="_Peau">
+	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Thème">
 		<control/>
-		<control caption="Information sur la peau:"/>
+		<control caption="Information sur le thème:"/>
 		<control caption="Nom:"/>
 		<control caption="..."/>
 		<control caption="Auteur:"/>
@@ -3401,7 +3401,7 @@ Other:
 		<control/>
 		<control caption="Supprimer"/>
 		<control caption="Installer..."/>
-		<control caption="Plus de peaux"/>
+		<control caption="Plus de thèmes"/>
 	</dialog>
 
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Plugins">
@@ -3621,7 +3621,7 @@ Other:
 		<control caption="_Prévisualiser:"/>
 		<control/>
 		<control caption="_Sélectionner:"/>
-		<control caption="Les autres utilisateurs de Gnutella qui parcourent votre profil et vos fichiers partagés verrons votre avatar. Les avatars personnalisés doivent avoir une taille de 128x128 pixels et peuvent être de n'importe quel format supporté par votre PC."/>
+		<control caption="Les autres utilisateurs de Gnutella qui parcourent votre profil et vos fichiers partagés verront votre avatar. Les avatars personnalisés doivent avoir une taille de 128x128 pixels et peuvent être de n'importe quel format supporté par votre PC."/>
 		<control caption="Parcourir..."/>
 		<control caption="Enleve_r"/>
 	</dialog>
