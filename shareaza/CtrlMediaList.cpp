@@ -291,7 +291,19 @@ void CMediaListCtrl::SetCurrent(int nCurrent)
 	}
 
 	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), MLN_NEWCURRENT };
-	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
+	CString strPath = GetPath( nCurrent );
+	for ( int nAttempts = 0 ; nAttempts < 10 ; nAttempts++ )
+	{
+		CFile pFile;
+		// check to see if the file isn't locked; media plug-in crashes otherwise
+		// needs to be fixed in the plug-in code...
+		if ( pFile.Open( strPath, CFile::modeRead|CFile::shareExclusive ) )
+		{
+			pFile.Close();
+			GetSafeOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
+			break;
+		}
+	}
 }
 
 int CMediaListCtrl::GetNext(BOOL bSet)
