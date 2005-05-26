@@ -2029,26 +2029,26 @@ Other:
                oder nicht mehr benötigte Anwendungen deinstallieren.</text>
 		</document>
 
-	<document name="GeneralHelp.DiskWriteFail">
-		<text format="b">A Required Directory is Non-writable</text>
-		<newline gap="8"/>
-		<text>A disk or directory Shareaza needs cannot be written to.</text>
-		<newline gap="8"/>
-		<text>A network drive may have been disconnected, or you may not have write permission 
-		to a selected directory. Please check directories and permissions, or change the
-		temporary files location.</text>
-	</document>
+		<document name="GeneralHelp.DiskWriteFail">
+			<text format="b">In ein benötigtes Verzeichnis kann nicht geschrieben werden</text>
+			<newline gap="8"/>
+			<text>In ein von Shareaza benötigtes Laufwerk oder Verzeichnis kann nicht geschrieben werden.</text>
+			<newline gap="8"/>
+			<text>Mögliche Gründe dafür sind, dass ein Netzlaufwerk nicht mehr verbunden ist, oder sie keine Schreibrechte 
+			in einem gewählten Verzeichnis haben. Bitte überprüfen Sie Verzeichnisse und Berechtigungen,
+			oder ändern Sie das Verzeichnis für unvollständige Dateien.</text>
+		</document>
 
-	<document name="GeneralHelp.ConnectionFail">
-		<text format="b">Internet Connection Has Been Lost</text>
-		<newline gap="8"/>
-		<text>Windows reports that there is no internet connection is available.</text>
-		<newline gap="8"/>
-		<text>It is likely that a modem or router has dropped, meaning the internet cannot
-		be accessed. You may need to manually re-connect or reset your connection.</text>
-		<newline gap="8"/>
-		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
-	</document>
+		<document name="GeneralHelp.ConnectionFail">
+			<text format="b">Internetverbindung ist abgebrochen</text>
+			<newline gap="8"/>
+			<text>Windows meldet, dass keine Internetverbindung verfügbar ist.</text>
+			<newline gap="8"/>
+			<text>Es ist wahrscheinlich, dass ein Modem oder Router abgestürzt ist, was bedeutet, dass das auf das Internet nicht zugegriffen werden kann.
+			Möglicherweise müssen Sie sich manuell wieder verbinden bzw. ihre Verbindung zurücksetzen.</text>
+			<newline gap="8"/>
+			<text>Shareaza hat alle Verbindungsversuche abgebrochen um den Verlust aller gecachten Hosts zu verhindern.</text>
+		</document>
 
 		<document name="GeneralHelp.XPsp2">
 			<text format="b">Windows XP Service Pack 2</text>
@@ -2098,38 +2098,37 @@ Other:
 			<text format="b">Bitte formulieren Sie die Suche neu!</text>
 			<newline gap="8"/>
 			<text>Die Suche ist schlecht formuliert und könnte nicht richtig funktionieren.
-               Suchen sollten, falls möglich, mehrere Wörter und ein Schema beinhalten. Sie sollten sie nicht nur aus
-               Zahlen bestehen oder zu allgemein sein. Die meisten Clients im Netzwerk
-               ignorieren zum Beispiel Suchen nach allen MP3 Dateien.
-               </text>
-	</document>
+            Suchen sollten, falls möglich, mehrere Wörter und ein Schema beinhalten. Sie sollten sie nicht nur aus
+            Zahlen bestehen oder zu allgemein sein. Die meisten Clients im Netzwerk
+            ignorieren zum Beispiel Suchen nach allen MP3 Dateien.</text>
+		</document>
 
-	<document name="SearchHelp.BadSearch2">
-		<text format="b">Please re-phrase the search</text>
-		<newline gap="8"/>
-		<text>This search does not contain enough terms to function properly. All searches need
-		a minimum number of valid, alphabetic characters to be able to start.</text>
-		<newline gap="8"/>
-		<text>While common file extentions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used
-		in searches, just the text you enter.</text>
-	</document>
-  	 
-	<document name="SearchHelp.BadSearch3">
-		<text format="b">Please re-phrase the search</text>
-		<newline gap="8"/>
-		<text>This search seems to contain only common file extentions, or no searchable
-		words.</text>
-		<newline gap="8"/>
-		<text>If you are having trouble creating searches, keep in mind that it's quite similar
-		to a web search. Specific terms or phrases are best- Unique names, titles and
-		keywords.</text>
-		<newline gap="8"/>
-		<text>General terms cannot be searched for efficiently and may result in poor
-		search performance, as well as high bandwidth use during searches.</text>
-		<newline gap="8"/>
-		<text>Further help is available on the Shareaza web site.</text>
-	</document>
+		<document name="SearchHelp.BadSearch2">
+			<text format="b">Bitte formulieren Sie die Suche neu!</text>
+			<newline gap="8"/>
+			<text>Diese Suche enthält nicht genügend Begriffe um ordnungsgemäß zu funktionieren. 
+			Alle Suchen benötigen eine Mindestanzahl an gültigen Buchstaben um gestartet werden zu können</text>
+			<newline gap="8"/>
+			<text>Nach bekannten Dateiendungen (und Zahlen) kann zwar gesucht werden, 
+			Sie müssen aber trotzdem weitere Begriffe eingeben, wenn Sie die Suche formulieren. 
+			Punktuation und Joker werden bei der Suche nicht beachtet, sondern nur der Text.</text>
+		</document>
+	  	 
+		<document name="SearchHelp.BadSearch3">
+			<text format="b">Bitte formulieren Sie die Suche neu!</text>
+			<newline gap="8"/>
+			<text>Diese Suche scheint nur Dateierweiterungen bzw. Wörter nach denen
+			nicht gesucht werden kann zu enthalten.</text>
+			<newline gap="8"/>
+			<text>Wenn Sie Probleme haben Suchen zu formulieren, denken Sie daran, dass dies einer
+			Websuche sehr ähnlich ist. Präzise Ausdrücke oder Sätze sind am Besten - eindeutige Namen, Titel und
+			Schlüsselwörter.</text>
+			<newline gap="8"/>
+			<text>Nach allgemeinen Ausdrücken kann nicht effizient gesucht werden und kann zu schlechter Suchleistung und
+			hohem Bandbreitenbedarf während des Suchens führen.</text>
+			<newline gap="8"/>
+			<text>Weitere Informationen finden Sie auf der Shareaza Webseite.</text>
+		</document>
 
 		<document name="SearchHelp.AdultSearch">
 			<text format="b">Diese Suche kann nicht gestartet werden</text>
@@ -2138,7 +2137,7 @@ Other:
 			Dies wurde in dern Einstellungen deaktiviert. Sie sollten die Suche entweder neu formulieren,
 			oder den Filter deaktivieren.</text>
 			<newline gap="8"/>
-			<text>Um den Filter zu deaktivieren, wählen Sie Extras &gt; Einstellungen &gt; Allgemein und deaktiviern Sie den Erotikfilter.</text>
+			<text>Um den Filter zu deaktivieren, wählen Sie Extras &gt; Einstellungen &gt; Allgemein und deaktivieren Sie den Erotikfilter.</text>
 		</document>
 
 		<!-- Share help documents -->
@@ -2667,7 +2666,7 @@ Other:
 		<string id="16137" value="Doppelte Verbindung von %s verweigert."/>
 		<string id="16138" value="Bereits mit %s verbunden, es wird keine zusätzliche Verbindung hergestellt."/>
 		<string id="16139" value="Host %s hat die Verbindung beendet (%i : %s)."/>
-		<string id="16140" value="Neighbour %s is crawling connections."/>
+		<string id="16140" value="Host %s ist ein Crawler."/>
 		<string id="16141" value="Verbindung zu Host %s beendet, weil er kein Hub ist."/>
 		<string id="16144" value="Der Handshake mit %s hat die Wartezeit überschritten."/>
 		<string id="16145" value="Gnutella Verbindung mit Host %s erfolgreich hergestellt (G%i.%i : %s)."/>
