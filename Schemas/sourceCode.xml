@@ -10,6 +10,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Codigo Fuente</title>
                <title language="fr">Code source</title>
                <title language="heb">קוד מקור</title>
+               <title language="hr">Izvorni Kod</title>
                <title language="hu">Forráskód</title>
                <title language="it">Codice sorgente</title>
                <title language="lt">Pirminis kodas</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -72,6 +75,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Autor</title>
                        <title language="fr">Auteur</title>
                        <title language="heb">מחבר</title>
+                       <title language="hr">Autor</title>
                        <title language="hu">Szerző</title>
                        <title language="it">Autore</title>
                        <title language="lt">Autorius</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Compañia</title>
                        <title language="fr">Compagnie</title>
                        <title language="heb">חברה</title>
+                       <title language="hr">Proizvođač</title>
                        <title language="hu">Cég</title>
                        <title language="it">Società</title>
                        <title language="lt">Kompanija</title>
@@ -110,6 +115,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Sujeto</title>
                        <title language="fr">Sujet</title>
                        <title language="heb">נושא</title>
+                       <title language="hr">Tema</title>
                        <title language="hu">Tárgy</title>
                        <title language="it">Oggetto</title>
                        <title language="lt">Tema</title>
@@ -128,6 +134,8 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
                        <title language="heb">מילים לזיהוי</title>
+                       <title language="hr">Ključne Riječi
+                       Ključne Rijeći</title>
                        <title language="hu">Kulcsszavak</title>
                        <title language="it">Parole chiave</title>
                        <title language="lt">Raktažodžiai</title>
@@ -146,6 +154,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Abstracto</title>
                        <title language="fr">Abstrait</title>
                        <title language="heb">תקציר</title>
+                       <title language="hr">Abstrakt</title>
                        <title language="hu">Összesítés</title>
                        <title language="it">Riassunto</title>
                        <title language="lt">Santrauka</title>
@@ -164,6 +173,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Copyright</title>
                        <title language="fr">Copyright</title>
                        <title language="heb">זכויות יוצרים</title>
+                       <title language="hr">Prava</title>
                        <title language="hu">Copyright</title>
                        <title language="it">Diritti d'autore</title>
                        <title language="lt">Autorių teisės</title>
@@ -182,6 +192,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Versión</title>
                        <title language="fr">Version</title>
                        <title language="heb">גרסא</title>
+                       <title language="hr">Verzija</title>
                        <title language="hu">Verzió</title>
                        <title language="it">Versione</title>
                        <title language="lt">Versija</title>
@@ -200,6 +211,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Revision</title>
                        <title language="fr">Révision</title>
                        <title language="heb">Revision</title>
+                       <title language="hr">Revizija</title>
                        <title language="hu">Javított kiadás</title>
                        <title language="it">Revisione</title>
                        <title language="lt">Revizija</title>
@@ -219,6 +231,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
                        <title language="heb">שפה</title>
+                       <title language="hr">Jezik</title>
                        <title language="hu">Nyelv</title>
                        <title language="it">Lingua</title>
                        <title language="lt">Kalba</title>
@@ -238,6 +251,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Versión del Lenguaje</title>
                        <title language="fr">Version de Langue</title>
                        <title language="heb">גרסאת שפה</title>
+                       <title language="hr">Narječje</title>
                        <title language="hu">Nyelv verziója</title>
                        <title language="it">Versione lingua</title>
                        <title language="lt">Kalbos versija</title>
@@ -256,6 +270,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Licensia</title>
                        <title language="fr">Licence</title>
                        <title language="heb">רשיון</title>
+                       <title language="hr">Dozvola</title>
                        <title language="hu">Licenc</title>
                        <title language="it">Licenza</title>
                        <title language="lt">Licencija</title>
@@ -274,6 +289,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">OS</title>
                        <title language="fr">OS</title>
                        <title language="heb">מערכת הפעלה</title>
+                       <title language="hr">OS</title>
                        <title language="hu">OS</title>
                        <title language="it">SO</title>
                        <title language="lt">OS</title>
@@ -292,6 +308,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="heb">קישור</title>
+                       <title language="hr">Link</title>
                        <title language="hu">Link</title>
                        <title language="it">Link</title>
                        <title language="lt">Nuoroda</title>
@@ -310,6 +327,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>

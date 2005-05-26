@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Género de Música</title>
                <title language="fr">Genre musical</title>
                <title language="heb">&#160;מוזיקה&#160;ז'אנר</title>
+               <title language="hr">Muzika Žanr</title>
                <title language="hu">Zene műfaj</title>
                <title language="it">Genere musicale</title>
                <title language="lt">Muzikos stilius</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -71,6 +74,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
@@ -89,6 +93,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="heb">שם יוצר האוסף</title>
+                       <title language="hr">Sakupio</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="it">Raccoglitore</title>
                        <title language="lt">Kolekcionierius</title>
@@ -107,6 +112,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>
@@ -134,6 +140,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">{name} Música</title>
                <title language="fr">Musique {name}</title>
                <title language="heb">{name} - שירים</title>
+               <title language="hr">{name} - Muzika</title>
                <title language="hu">{name} Zene</title>
                <title language="it">Musica {name}</title>
                <title language="lt">{name} muzika</title>
@@ -150,6 +157,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
                <subtitle language="heb">{name}&#160;ספרייה&#160;זו&#160;מכילה&#160;רשימה&#160;של&#160;המוזיקה&#160;שלך&#160;שמתאימה&#160;לז'אנר</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve vaše pjesme koje spadaju u {name} žanr.</subtitle>
                <subtitle language="hu">Ez a mappa a(z) {name} műfaj zenéit tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica che cade nel genere {name}.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti „{name}“ žanrui/stiliui.</subtitle>

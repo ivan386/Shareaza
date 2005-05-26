@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Documento:Mis Documentos</title>
                <title language="fr">Document:Mes Documents</title>
                <title language="heb">&#160;מסמך:המסמכים&#160;שלי</title>
+               <title language="hr">Dokument:Moji Dokumenti</title>
                <title language="hu">Dokumentum: saját okumentumok</title>
                <title language="it">Documento:Documenti</title>
                <title language="lt">Dokumentas:Mano dokumentai</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="fr">Bienvenue dans Mes Documents!</title>
                <title language="heb">!ברוך&#160;הבא&#160;למסמכים&#160;שלי</title>
+               <title language="hr">Dobrodošli Među Vaše Dokumente!</title>
                <title language="hu">Üdvözöllek a Saját dokumentumokban!</title>
                <title language="it">Benvenuto nei Documenti!</title>
                <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;המסמכים&#160;שלך</subtitle>
+               <subtitle language="hr">Ove mape sadrže sve vaše dokumente.</subtitle>
                <subtitle language="hu">Ez a mappa tartalmazza a dokumentumaidat.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>

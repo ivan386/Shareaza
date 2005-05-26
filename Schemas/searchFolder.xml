@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Buscar: Resultados de busqueda</title>
                <title language="fr">Recherche:Résultats de recherche</title>
                <title language="heb">&#160;חפש&#160;בתוצאות:חפש</title>
+               <title language="hr">Traži:Rezultati Potrage</title>
                <title language="hu">Keresési eredmények</title>
                <title language="it">Ricerca:Risultati della ricerca</title>
                <title language="lt">Paieška:Radiniai</title>
@@ -49,6 +51,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -67,6 +70,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Tiempo</title>
                        <title language="fr">Temps</title>
                        <title language="heb">זמן</title>
+                       <title language="hr">Vrijeme</title>
                        <title language="hu">Idő</title>
                        <title language="it">Ora</title>
                        <title language="lt">Laikas</title>
@@ -85,6 +89,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Fecha</title>
                        <title language="fr">Date</title>
                        <title language="heb">תאריך</title>
+                       <title language="hr">Datum</title>
                        <title language="hu">Dátom</title>
                        <title language="it">Data</title>
                        <title language="lt">Data</title>
@@ -103,6 +108,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Contenido</title>
                        <title language="fr">Contenu</title>
                        <title language="heb">תוכן</title>
+                       <title language="hr">Sadržaj</title>
                        <title language="hu">Tartalom</title>
                        <title language="it">Contenuto</title>
                        <title language="lt">Turinys</title>
@@ -125,6 +131,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Busca por "{contenido}</title>
                <title language="fr">Recherche de "{content}"</title>
                <title language="heb">"{content}" חפש תוכן</title>
+               <title language="hr">Traži "{content}"</title>
                <title language="hu">Keresés "{content}"</title>
                <title language="it">Ricerca di "{content}"</title>
                <title language="lt">„{content}“ radiniai</title>
@@ -141,6 +148,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>
                <subtitle language="heb">"{content}"&#160;ספרייה&#160;זו&#160;מכילה&#160;קבצים&#160;שהתאימו&#160;לחיפוש&#160;עבור</subtitle>
+               <subtitle language="hr">Ova mapa sadrži nađene datoteke po izrazu "{content}"</subtitle>
                <subtitle language="hu">Ezek a mappák egyeznek a keresési feltétellel, ami {content} volt.</subtitle>
                <subtitle language="it">Questa cartella contiene i file che corrispondono alla tua ricerca di "{content}"</subtitle>
                <subtitle language="lt">Šiame kataloge yra bylos, surastos pagal ieškinį „{content}“.</subtitle>

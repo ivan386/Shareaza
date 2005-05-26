@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Aplicación: Todas los programas</title>
                <title language="fr">Application:Toutes les applications</title>
                <title language="heb">&#160;תוכנה:כל&#160;התוכניות</title>
+               <title language="hr">Program:Svi Programi</title>
                <title language="hu">Program: minden program</title>
                <title language="it">Applicazione:Tutte le applicazioni</title>
                <title language="lt">Programa:Visos programos</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Todas las aplicaciones</title>
                <title language="fr">Toutes les applications</title>
                <title language="heb">כל התוכניות</title>
+               <title language="hr">Svi Programi</title>
                <title language="hu">Minden program</title>
                <title language="it">Tutte le applicazioni</title>
                <title language="lt">Visos programos</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta tiene todas las aplicaciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;התוכניות&#160;&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve programe u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden programfájlodat tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le applicazioni della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos programos.</subtitle>

@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Música: Por Artista</title>
                <title language="fr">Musique:Par artiste</title>
                <title language="heb">&#160;שירים:לפי&#160;אמן</title>
+               <title language="hr">Muzika:Po Izvođaču</title>
                <title language="hu">Zene: előadó szerint</title>
                <title language="it">Musica:Per artista</title>
                <title language="lt">Muzika:Pagal atlikėjus</title>
@@ -50,6 +52,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Música por Artista</title>
                <title language="fr">Musique par artiste</title>
                <title language="heb">מוזיקה לפי אמן</title>
+               <title language="hr">Muzika Po Izvođaču</title>
                <title language="hu">Zene előadó szerint</title>
                <title language="it">Musica per artista</title>
                <title language="lt">Muzika pagal atlikėjus</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;רשימה&#160;של&#160;האמנים&#160;שבספריית&#160;מוזיקה&#160;שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa a művészeket tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene la lista degli artisti nella tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas.</subtitle>

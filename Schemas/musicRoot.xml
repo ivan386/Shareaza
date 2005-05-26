@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Musica: Mi Música</title>
                <title language="fr">Musique:Ma musique</title>
                <title language="heb">&#160;שירים:המוזיקה&#160;שלי</title>
+               <title language="hr">Muzika:Moje Pjesme</title>
                <title language="hu">Zene: saját zenék</title>
                <title language="it">Musica:Musica</title>
                <title language="lt">Muzika:Mano muzika</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -77,6 +80,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">¡Bienvenido a Mi Música</title>
                <title language="fr">Bienvenue dans Ma musique!</title>
                <title language="heb">!ברוך&#160;הבא&#160;למוזיקה&#160;שלי</title>
+               <title language="hr">Dobrodošli Među Vaše Pjesme</title>
                <title language="hu">Üdvözöllek a Saját zenékben!</title>
                <title language="it">Benvenuto nella Musica!</title>
                <title language="lt">Sveiki apsilankę „Mano muzikoje“!</title>
@@ -93,6 +97,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque, organisées par album, par artiste et par genre.  Ouvrez un sous-dossier pour continuer.</subtitle>
                <subtitle language="heb">הספריות&#160;הללו&#160;מכילות&#160;כל&#160;המוזיקה&#160;בספרייה&#160;שלך,&#160;מאורגנים&#160;לפי&#160;אלבום,&#160;אמן&#160;וז'אנר&#160;פתח&#160;ספרייה&#160;מתחת&#160;כדי&#160;להמשיך</subtitle>
+               <subtitle language="hr">Ove mape sadrže svu muziku iz vaše kolekcije posloženu po albumima, izvođaču i žanru.</subtitle>
                <subtitle language="hu">Ez a mappa az összes zenét tartalmazza, albumokra, előadókra és műfajokra bontva.</subtitle>
                <subtitle language="it">Queste cartelle contengono tutta la musica della tua libreria, organizzata per album, per artista e per genere.  Apri una cartella qui sotto per continuare.</subtitle>
                <subtitle language="lt">Šiuose kataloguose yra visa Jūsų kolekcijos muzika, surūšiuota pagal albumus, atlikėjus ir žanrus/stilius. Tęskite atverdami žemiau esantį katalogą.</subtitle>

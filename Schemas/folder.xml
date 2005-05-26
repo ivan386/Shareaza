@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Carpeta</title>
                <title language="fr">Dossier</title>
                <title language="heb">&#160;ספריה</title>
+               <title language="hr">Mapa</title>
                <title language="hu">Mappa</title>
                <title language="it">Cartella</title>
                <title language="lt">Katalogas</title>
@@ -52,6 +54,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -70,6 +73,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
@@ -88,6 +92,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
                        <title language="heb">שם יוצר האוסף</title>
+                       <title language="hr">Sakupio</title>
                        <title language="hu">Gyűjtő</title>
                        <title language="it">Raccoglitore</title>
                        <title language="lt">Kolekcionierius</title>
@@ -106,6 +111,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>

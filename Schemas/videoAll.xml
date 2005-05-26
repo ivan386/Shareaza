@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Video:Todos los videos</title>
                <title language="fr">Vidéo:Toutes les vidéos</title>
                <title language="heb">&#160;וידאו:כל&#160;הסרטים</title>
+               <title language="hr">Film:Svi Filmovi</title>
                <title language="hu">Videó: minden videó</title>
                <title language="it">Video:Tutti i video</title>
                <title language="lt">Video:Visi vaizdo įrašai</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Todos los videos</title>
                <title language="fr">Toutes les vidéos</title>
                <title language="heb">כל הוידאו</title>
+               <title language="hr">Svi Filmovi</title>
                <title language="hu">Minden videó</title>
                <title language="it">Tutti i video</title>
                <title language="lt">Visi vaizdo įrašai</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les vidéo de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;הקבצי&#160;וידאו&#160;&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve video snimke u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden videófájlt tartalma.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i video della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos vaizdo bylos.</subtitle>

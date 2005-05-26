@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Música: Toda la Música</title>
                <title language="fr">Musique:Toutes les musiques</title>
                <title language="heb">&#160;שירים:כל&#160;השירים</title>
+               <title language="hr">Muzika:Sva Muzika</title>
                <title language="hu">Zene: minden zene</title>
                <title language="it">Musica:Tutta la musica</title>
                <title language="lt">Muzika:Visa muzika</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Toda la música</title>
                <title language="fr">Toutes les musiques</title>
                <title language="heb">כל השירים</title>
+               <title language="hr">Sva Muzika</title>
                <title language="hu">Minden zene</title>
                <title language="it">Tutta la musica</title>
                <title language="lt">Visa muzika</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene toda la música de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;הקבצי&#160;מוזיקה&#160;&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve pjesme u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden zenei fájlt tartalma.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos muzikinės bylos.</subtitle>

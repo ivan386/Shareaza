@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -30,6 +31,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Imagen: Todas las Imágenes</title>
                <title language="fr">Image:Toutes les images</title>
                <title language="heb">&#160;תמונה:כל&#160;התמונות</title>
+               <title language="hr">Slike:Sve Slike</title>
                <title language="hu">Kép: minden kép</title>
                <title language="it">Immagine:Tutte le immagini</title>
                <title language="lt">Paveikslėlis:Visi paveikslėliai</title>
@@ -53,6 +55,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Título</title>
                        <title language="fr">Titre</title>
                        <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
                        <title language="hu">Cím</title>
                        <title language="it">Titolo</title>
                        <title language="lt">Pavadinimas</title>
@@ -75,6 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Todas las imágenes</title>
                <title language="fr">Toutes les images</title>
                <title language="heb">כל התמונות</title>
+               <title language="hr">Sve Slike</title>
                <title language="hu">Minden kép</title>
                <title language="it">Tutte le immagini</title>
                <title language="lt">Visi paveikslėliai</title>
@@ -91,6 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>
                <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;הקבצי&#160;תמונה&#160;&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve slike u vašoj kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa minden képfájlt tartalmaz.</subtitle>
                <subtitle language="it">Questa cartella contiene tutte le immagini della tua libreria.</subtitle>
                <subtitle language="lt">Šiame kataloge yra visos Jūsų kolekcijos paveikslėlių bylos.</subtitle>

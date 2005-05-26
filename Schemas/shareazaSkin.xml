@@ -9,6 +9,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Spanish Schemas File translated by Help
 Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
@@ -29,6 +30,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="es">Skin</title>
                <title language="fr">Skin</title>
                <title language="heb">מעטפת</title>
+               <title language="hr">Skin</title>
                <title language="hu">Kinézet</title>
                <title language="it">Skin</title>
                <title language="lt">Apvalkalas</title>
@@ -49,6 +51,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Nombre</title>
                        <title language="fr">Nom</title>
                        <title language="heb">שם</title>
+                       <title language="hr">Ime</title>
                        <title language="hu">Név</title>
                        <title language="it">Nome</title>
                        <title language="lt">Pavadinimas</title>
@@ -67,6 +70,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Autor</title>
                        <title language="fr">Auteur</title>
                        <title language="heb">מחבר</title>
+                       <title language="hr">Autor</title>
                        <title language="hu">Szerző</title>
                        <title language="it">Autore</title>
                        <title language="lt">Autorius</title>
@@ -85,6 +89,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Link</title>
                        <title language="fr">Lien</title>
                        <title language="heb">קישור</title>
+                       <title language="hr">Link</title>
                        <title language="hu">Link</title>
                        <title language="it">Link</title>
                        <title language="lt">Nuoroda</title>
@@ -103,6 +108,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">E-Mail</title>
                        <title language="fr">Email</title>
                        <title language="heb">דואר אלקרוני</title>
+                       <title language="hr">Email</title>
                        <title language="hu">Email</title>
                        <title language="it">E-mail</title>
                        <title language="lt">El. paštas</title>
@@ -121,6 +127,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Versión</title>
                        <title language="fr">Version</title>
                        <title language="heb">גרסא</title>
+                       <title language="hr">Verzija</title>
                        <title language="hu">Verzió</title>
                        <title language="it">Versione</title>
                        <title language="lt">Versija</title>
@@ -140,6 +147,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Arte</title>
                        <title language="fr">Type</title>
                        <title language="heb">סוג</title>
+                       <title language="hr">Vrsta</title>
                        <title language="hu">Típus</title>
                        <title language="it">Tipo</title>
                        <title language="lt">Tipas</title>
@@ -158,6 +166,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Lenguaje</title>
                        <title language="fr">Langue</title>
                        <title language="heb">שפה</title>
+                       <title language="hr">Jezik</title>
                        <title language="hu">Nyelv</title>
                        <title language="it">Lingua</title>
                        <title language="lt">Kalba</title>
@@ -176,6 +185,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Descripción</title>
                        <title language="fr">Description</title>
                        <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
                        <title language="hu">Leírás</title>
                        <title language="it">Descrizione</title>
                        <title language="lt">Aprašas</title>
@@ -194,6 +204,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Comentarios</title>
                        <title language="fr">Commentaires</title>
                        <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
                        <title language="hu">Megjegyzés</title>
                        <title language="it">Commenti</title>
                        <title language="lt">Komentarai</title>
