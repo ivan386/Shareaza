@@ -4877,7 +4877,7 @@ BEGIN
                             "The folder you are sharing is already shared as part of another shared folder:\n\n%s"
     IDS_PROFILE_NO_NICK     "You haven't entered a screen name in your user profile."
     IDS_PROFILE_NO_LOCATION "You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"
-    IDS_WIZARD_PORT_FORWARD "You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."
+    IDS_WIZARD_PORT_FORWARD "You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
     IDS_SETTINGS_NEED_BANDWIDTH 
                             "Please type the bandwidth limit you wish to set in the form ""123 kb/s"" for kilobits per second, or ""123 KB/s"" for kilobytes per second."
     IDS_PROFILE_NO_VITALS   "You have not selected your age and gender.  Are you sure you want to continue without doing this?"
