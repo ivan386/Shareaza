@@ -22,7 +22,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.0.150"
+		version="2.1.1.0"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -2480,7 +2480,7 @@
 	<string id="WINDOW_SEARCHPAD" value="搜索"/>
 	<string id="WINDOW_HELP" value="Shareaza 帮助"/>
 	<string id="7000" value="您确定要删除这一过滤吗？"/>
-	<string id="7001" value="&amp;构架s"/>
+	<string id="7001" value="构架(&amp;S)"/>
 	<string id="7002" value="多重数值"/>
 	<string id="7003" value="多重"/>
 	<string id="8000" value="Shareaza 设置"/>
@@ -2892,7 +2892,7 @@
 	<string id="16803" value="您共享的文件夹是后面已共享文件夹的一部分:\n\n%s"/>
 	<string id="16804" value="您尚未在您的配置文件中输入屏幕名称。\n\n输入一个自定的屏幕名称是非常有益的，它可以使其他用户看见它们与谁连接。\n\n您确定要继续而不带有屏幕名称吗？"/>
 	<string id="16805" value="您尚未在您的配置文件中输入您的地址。\n\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。\n\n您确定要继续而不输入您的地址吗？"/>
-	<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口转发。\n\n请配置您的网络到转发 TCP 端口 %i 到您的本地计算机。"/>   
+	<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口映射。\n\n请配置您的网络将 TCP 和 UDP 端口 %i 映射到您的本地计算机。"/>   
 	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千比特每秒，或 &quot;123 KB/s&quot; 千字节每秒。"/>
 	<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
 	<string id="16809" value="退出(_X)"/>
@@ -3323,7 +3323,7 @@
 		<control caption="% 带宽受到限制(_B)"/>
 		<control/>
 		<control caption="帮助"/>
-		<control caption="计划功能可以用来让您制定 Shareaza 连接和下载文件的时间。 &#13;&#10;&#13;&#10;&#13;&#10;注意: 如果您在计划功能激活的状态下打开 Shareaza，您会发现它正在改变设置 - 这是正常的！"/>
+		<control caption="计划功能可以用来让您制定 Shareaza 连接和下载文件的时间。{n}{n}{n}注意: 如果您在计划功能激活的状态下打开 Shareaza，您会发现它正在改变设置 - 这是正常的！"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="网络">
@@ -3878,7 +3878,7 @@
 		<control/><control/>
 		<control caption="确定"/>
 		<control caption="取消"/>
-		<control caption="从列表中选择计划，然后选择要显示的项目。"/>
+		<control caption="从列表中选择种类，然后选择要显示的项目。"/>
 	</dialog>
 
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="安全策略">
