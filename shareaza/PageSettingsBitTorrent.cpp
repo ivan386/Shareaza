@@ -56,6 +56,7 @@ CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSe
 	m_nDownloads		= 0;
 	m_bAutoClear		= FALSE;
 	m_nClearPercentage	= 0;
+	m_bPrefBTSources	= TRUE;
 	m_sTracker			= _T("");
 	m_sTorrentPath		= _T("");
 	m_sMakerPath		= _T("");
@@ -80,6 +81,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TORRENT_CLEAR_PERCENTAGE, m_wndClearPercentage);
 	DDX_Control(pDX, IDC_TORRENT_CLEAR_SPIN, m_wndClearPercentageSpin);
 	DDX_Text(pDX, IDC_TORRENT_CLEAR_PERCENTAGE, m_nClearPercentage);
+	DDX_Check(pDX, IDC_TORRENT_PREFERENCE, m_bPrefBTSources);
 	DDX_Text(pDX, IDC_TORRENT_DEFAULTTRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENTS_BROWSE, m_wndTorrentPath);
 	DDX_Text(pDX, IDC_TORRENTS_FOLDER, m_sTorrentPath);
@@ -103,6 +105,7 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_sMakerPath		= Settings.BitTorrent.TorrentCreatorPath;
 	m_bAutoClear		= Settings.BitTorrent.AutoClear;
 	m_nClearPercentage	= Settings.BitTorrent.ClearRatio;
+	m_bPrefBTSources	= Settings.BitTorrent.PreferenceBTSources;
 
 	m_wndTorrentPath.SetIcon( IDI_BROWSE );
 	m_wndMakerPath.SetIcon( IDI_BROWSE );
@@ -206,6 +209,7 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;
 	Settings.BitTorrent.AutoClear			= m_bAutoClear;
 	Settings.BitTorrent.ClearRatio			= m_nClearPercentage;
+	Settings.BitTorrent.PreferenceBTSources	= m_bPrefBTSources;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;

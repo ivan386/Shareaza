@@ -661,6 +661,7 @@
 #define IDC_TORRENT_CLEAR_SPIN          1396
 #define IDC_G1_CLIENTMODE               1396
 #define IDC_G2_CLIENTMODE               1397
+#define IDC_TORRENT_PREFERENCE          1397
 #define IDC_REVIEWS                     1397
 #define IDC_REVIEW_FILENAME             1398
 #define IDC_CODEPAGES                   1399

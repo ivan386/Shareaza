@@ -263,6 +263,28 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	BOOL bConnected = Network.IsConnected();
 	CDownloadSource* pConnectHead = NULL;
 	CDownloadSource* pPushHead = NULL;
+
+	// If BT preferencing is on, check them first
+	if ( ( m_bBTH ) && ( Settings.BitTorrent.PreferenceBTSources ) )
+	{
+		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
+		{
+			CDownloadSource* pNext = pSource->m_pNext;
+			
+			if ( ( pSource->m_pTransfer == NULL ) &&		// does not have a transfer
+				 ( pSource->m_bPushOnly == FALSE ) &&		// Not push
+				 ( pSource->m_nProtocol == PROTOCOL_BT ) &&	// Is a BT source
+				 ( pSource->m_tAttempt == 0 ) )				// Is a "fresh" source from the tracker
+			{
+				if ( pSource->CanInitiate( bConnected, FALSE ) )
+				{
+					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
+					return pTransfer != NULL && pTransfer->Initiate();
+				}
+			}	
+			pSource = pNext;
+		}
+	}
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 	{

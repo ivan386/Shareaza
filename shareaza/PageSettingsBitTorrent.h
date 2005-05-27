@@ -51,6 +51,7 @@ public:
 	CEdit	m_wndClearPercentage;
 	CSpinButtonCtrl	m_wndClearPercentageSpin;
 	int		m_nClearPercentage;
+	BOOL	m_bPrefBTSources;
 	CIconButtonCtrl	m_wndTorrentPath;
 	CString	m_sTorrentPath;
 	CString	m_sTracker;

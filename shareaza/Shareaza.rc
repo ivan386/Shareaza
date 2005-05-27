@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,1,0
- PRODUCTVERSION 2,1,1,0
+ FILEVERSION 2,1,1,1
+ PRODUCTVERSION 2,1,1,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 1, 0"
+            VALUE "FileVersion", "2, 1, 1, 1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 1, 0"
+            VALUE "ProductVersion", "2, 1, 1, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -2997,42 +2997,47 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "BitTorrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "&Interface:",IDC_STATIC,6,5,270,27
+    GROUPBOX        "&Interface:",IDC_STATIC,5,5,270,25
     CONTROL         "Display additional BitTorrent interface elements",
                     IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,16,14,250,15
-    GROUPBOX        "&Download Connections:",IDC_STATIC,5,37,270,60
-    EDITTEXT        IDC_TORRENT_DOWNLOADS,15,48,35,12,ES_AUTOHSCROLL | 
+                    WS_GROUP | WS_TABSTOP,16,13,250,15
+    GROUPBOX        "&Download Connections:",IDC_STATIC,5,30,270,70
+    EDITTEXT        IDC_TORRENT_DOWNLOADS,15,41,35,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_TORRENT_DOWNLOADS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,48,11,12
-    LTEXT           "Torrents at once",IDC_STATIC,57,48,207,12,
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,42,11,12
+    LTEXT           "Torrents at once",IDC_STATIC,57,41,207,12,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CLIENTLINKS,15,64,35,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_CLIENTLINKS,15,57,35,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_TORRENT_LINKS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,64,11,12
-    LTEXT           "Client connections",IDC_STATIC,57,64,211,12,
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,58,11,12
+    LTEXT           "Client connections",IDC_STATIC,57,57,211,12,
                     SS_CENTERIMAGE
     CONTROL         " Clear downloaded torrents",IDC_TORRENT_AUTOCLEAR,
-                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,80,
+                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,73,
                     105,11,WS_EX_TRANSPARENT
-    LTEXT           "When the share ratio reaches ",IDC_STATIC,126,80,101,11,
+    LTEXT           "When the share ratio reaches ",IDC_STATIC,126,73,101,11,
                     SS_CENTERIMAGE,WS_EX_TRANSPARENT | WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,230,80,35,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,230,73,35,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,80,11,12
-    GROUPBOX        "&EndGame:",IDC_STATIC,6,99,270,27
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,74,11,12
+    LTEXT           "%",IDC_STATIC,266,74,8,11,SS_CENTERIMAGE,
+                    WS_EX_TRANSPARENT
+    CONTROL         " Preference torrent sources",IDC_TORRENT_PREFERENCE,
+                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,86,
+                    205,11,WS_EX_TRANSPARENT
+    GROUPBOX        "&EndGame:",IDC_STATIC,5,102,270,27
     CONTROL         "Enable EndGame mode when completing torrents",
                     IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,16,108,250,15
-    GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,128,270,32,WS_GROUP
-    EDITTEXT        IDC_TORRENTS_FOLDER,15,140,225,12,ES_AUTOHSCROLL | 
+                    WS_TABSTOP,16,112,250,15
+    GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,131,270,32,WS_GROUP
+    EDITTEXT        IDC_TORRENTS_FOLDER,15,143,225,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
-    PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,136,23,20
+    PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,139,23,20
     GROUPBOX        "&Torrent Creator:",IDC_STATIC,5,164,270,50,WS_GROUP
     EDITTEXT        IDC_TORRENTS_TORRENTMAKER,15,176,225,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
@@ -3040,8 +3045,6 @@ BEGIN
     RTEXT           "Default Tracker: ",IDC_STATIC,14,197,69,11,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,83,197,184,12,ES_AUTOHSCROLL
-    LTEXT           "%",IDC_STATIC,266,81,8,11,SS_CENTERIMAGE,
-                    WS_EX_TRANSPARENT
 END
 
 IDD_SETTINGS_SCHEDULER DIALOGEX 0, 0, 282, 220
