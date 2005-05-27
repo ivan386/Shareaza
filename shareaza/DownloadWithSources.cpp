@@ -95,10 +95,9 @@ int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
-		if ( ( ! pSource->m_bPushOnly || ! bNoPush ) &&									// Push sources might not be counted
-			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// This source is probably dead
-			 ( pSource->m_nProtocol == PROTOCOL_BT ) )									// Only counting BT sources
-			
+		if ( ( pSource->m_nProtocol == PROTOCOL_BT ) &&									// Only counting BT sources
+			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// Don't count dead sources
+			 ( ! pSource->m_bPushOnly || ! bNoPush ) )									// Push sources might not be counted
 		{
 			nCount++;
 		}
@@ -489,7 +488,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources query for URLs
 
-CString CDownloadWithSources::GetSourceURLs(CStringList* pState, int nMaximum, BOOL bHTTP, CDownloadSource* pExcept)
+CString CDownloadWithSources::GetSourceURLs(CStringList* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
 {
 	CString strSources, strURL;
 	
@@ -502,7 +501,12 @@ CString CDownloadWithSources::GetSourceURLs(CStringList* pState, int nMaximum, B
 		{
 			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
 			
-			if ( bHTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) continue;
+			
+			// Only return appropriate sources
+			if ( ( nProtocol == PROTOCOL_HTTP ) && ( pSource->m_nProtocol != PROTOCOL_HTTP ) ) continue;
+			if ( ( nProtocol == PROTOCOL_G1 ) && ( pSource->m_nGnutella != 1 ) ) continue;
+
+			//if ( bHTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) continue;
 			
 			strURL = pSource->m_sURL;
 			Replace( strURL, _T(","), _T("%2C") );

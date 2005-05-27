@@ -380,7 +380,10 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		m_pOutput->Print( "X-Content-URN: " );
 		m_pOutput->Print( strURN + _T("\r\n") );
 		
-		strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, TRUE, m_pSource );
+		if ( m_pSource->m_nGnutella == 1 )
+			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, m_pSource );
+		else
+			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, m_pSource );
 		
 		if ( strLine.GetLength() )
 		{

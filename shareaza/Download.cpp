@@ -474,7 +474,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	if ( m_bSHA1 || m_bED2K )
 	{
 		LibraryHistory.Add( m_sLocalName, m_bSHA1 ? &m_pSHA1 : NULL,
-			m_bED2K ? &m_pED2K : NULL, GetSourceURLs( NULL, 0, FALSE, NULL ) );
+			m_bED2K ? &m_pED2K : NULL, GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
 	}
 	else
 	{

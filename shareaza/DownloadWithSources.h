@@ -49,7 +49,7 @@ public:
 
 // Operations
 public:
-	CString				GetSourceURLs(CStringList* pState, int nMaximum, BOOL bHTTP, CDownloadSource* pExcept);
+	CString				GetSourceURLs(CStringList* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
 	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
 	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	int					GetED2KCompleteSourceCount() const;
