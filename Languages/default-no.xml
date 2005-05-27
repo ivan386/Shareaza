@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.61 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.63 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.150"
+		version="2.1.1.0"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -1752,7 +1752,7 @@
 		</text>
 		<text format="b">Internett</text>
 		<text>
-			-viduet bestemmer hvordan Shareaza arbeider med andre noder på
+			-viduet bestemmer hvordan Shareaza arbeider med andre noder på 
 			nettverket
 		</text>
 		<newline gap="16" margin="16"/>
@@ -1963,9 +1963,9 @@
 	<document name="DownloadHelp.Queued">
 		<text format="b">Denne nedlastingen er i kø</text>
 		<newline gap="8"/>
-		<text>Denne filen venter på at en av dine andre filer skal bli ferdig.
-		Dine innstillinger begrenser antall aktive nedlastinger,
-		for å gi dine aktive filer mest mulig nytte av båndredden.
+		<text>Denne filen venter på at en av dine andre filer skal bli ferdig. 
+		Dine innstillinger begrenser antall aktive nedlastinger, 
+		for å gi dine aktive filer mest mulig nytte av båndredden. 
 		Du kan endre innstillingene via Verktøy, Innstillinger.
 		Alternativt kan du starte denne nedlastingen manuelt med fortsett-kommandoen.</text>
 	</document>
@@ -2001,7 +2001,7 @@
 	</document>
 
 	<!-- Upload help documents -->
-
+	
 	<document name="UploadHelp">
 		<text format="b">Opplastingsområde</text>
 		<newline gap="8"/>
@@ -2027,7 +2027,7 @@
 		<newline gap="8"/>
 		<text>En stasjon eller et område Shareaza trenger, kan ikke skrives til.</text>
 		<newline gap="8"/>
-		<text>En nettverksstasjon kan være frakoblet, eller du har kanskje ikke skrivetillatelse
+		<text>En nettverksstasjon kan være frakoblet, eller du har kanskje ikke skrivetillatelse 
 		i det angitte området. Vennligst sjekk mapper og tillatelser, eller forandres
 		sted for midlertidige filer.</text>
 	</document>
@@ -2098,7 +2098,7 @@
 		Søk bør ikke begrenses til kun tall eller negative uttrykk,
 		man bør også unngå generelle søk.</text>
 		<newline gap="8"/>
-		<text> De fleste programmene på nettverket vil ignorere søk etter alle MP3 filer, for eksempel,
+		<text> De fleste programmene på nettverket vil ignorere søk etter alle MP3 filer, for eksempel, 
 		fordi det ikke er spesifisert godt nok og man ville fått alt for mange resultat.</text>
 	</document>
 
@@ -2112,18 +2112,18 @@
 		andre kriterier også, når du foretar et søk. Tegnsetting og jokertegn blir ikke brukt
 		i søk, kun teksten du skriver inn.</text>
 	</document>
-
+  	 
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Vennligst omformuler søket</text>
 		<newline gap="8"/>
 		<text>Dette søket ser ut til å kun inneholde vanlige filetternavn, eller ikke-søkbare
 		ord.</text>
 		<newline gap="8"/>
-		<text>Hvis du har problemer med å foreta søk, husk at det er nokså likt som
+		<text>Hvis du har problemer med å foreta søk, husk at det er nokså likt som 
 		et nettsøk. Spesifikke uttrykk og kriterier er best- Unike navn, titler og
 		nøkkelord.</text>
 		<newline gap="8"/>
-		<text>Generelle uttrykk kan ikke bli søkt etter på en effektiv måte, og kan resultere
+		<text>Generelle uttrykk kan ikke bli søkt etter på en effektiv måte, og kan resultere 
 		i dårlig søkeytelse og høyt bruk av båndbredde under søk.</text>
 		<newline gap="8"/>
 		<text>Mer hjelp er tilgjengelig på Shareaza sin nettside.</text>
@@ -2136,7 +2136,7 @@
 		ment kun for voksne. Dette forhindres av et filter for voksent innhold, som finnes under Innstilinger.
 		Forandre søketeksten eller skru av filteret for voksent innhold.</text>
 		<newline gap="8"/>
-		<text>For å skru av filteret, gå til Verktøy &gt; Innstillinger &gt; Generelt og fjern
+		<text>For å skru av filteret, gå til Verktøy &gt; Innstillinger &gt; Generelt og fjern 
 		haken for filteret.</text>
 	</document>
 
@@ -2906,7 +2906,7 @@
 	<string id="16803" value="Mappen du deler er allerede delt gjennom en annen delt mappe:\n\n%s"/>
 	<string id="16804" value="Du har ikke angitt et navn i brukerprofilen din.\n\nDet er en god ide å angi et spesielt navn slik at brukerne kan se hvem de er koblet til.\n\nEr du sikker på at du vil fortsette?"/>
 	<string id="16805" value="Du har ikke angitt hvor du er fra i brukerprofilen din.\n\nDet er en god ide å angi hvor du er fra slik at andre kan se hvor de er koblet til.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
-	<string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\n\nVennligst sett opp nettverket til å forwarde TCP port %i til din lokale PC."/>
+	<string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\n\nVennligst sett opp nettverket til å videresende TCP og UDP port %i til din lokale PC."/>
 	<string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per sekund, eller &quot;123 KB/s&quot; for kilobytes per sekund."/>
 	<string id="16808" value="Du har ikke valgt alder og kjønn.  Er du sikker på at du vil fortsette?"/>
 	<string id="16809" value="Avslutt"/>
@@ -3337,7 +3337,7 @@
 		<control caption="% av _båndbredde ved begrensing"/>
 		<control/>
 		<control caption="Hjelp"/>
-		<control caption="{n}Planlegger lar deg velge når Shareaza skal koble til og laste ned filer.{n}{n}{n}Obs: Hvis du har Shareaza åpent når planleggeren er aktiv, kan det hende du ser at innstillingene forandres - dette er normalt!"/>
+		<control caption="Planlegger lar deg velge når Shareaza skal koble til og laste ned filer.{n}{n}{n}Obs: Hvis du har Shareaza åpent når planleggeren er aktiv, kan det hende du ser at innstillingene forandres - dette er normalt!"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Nettverk">
