@@ -303,7 +303,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	
 	m_pHost.sin_addr = pAddress;
 
-	//Security.SessionBan( &pAddress, 0 );		// Ban self
+	//Security.Ban( &pAddress, banSession, 0 );		// Ban self
 }
 
 //////////////////////////////////////////////////////////////////////

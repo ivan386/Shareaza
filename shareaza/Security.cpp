@@ -142,7 +142,84 @@ void CSecurity::Clear()
 
 	m_pRules.RemoveAll();
 }
+//////////////////////////////////////////////////////////////////////
+// CSecurity ban
 
+void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
+{
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return;
+
+	DWORD tNow = time( NULL );
+	CString strAddress = inet_ntoa( *pAddress );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->Match( pAddress ) )
+		{
+			if ( pRule->m_nAction == CSecureRule::srDeny )
+			{
+				if ( ( nBanLength == banWeek ) && ( pRule->m_nExpire < tNow + 604000 ) )
+				{
+					pRule->m_nExpire = time( NULL ) + 604800;
+				}
+				else if ( ( nBanLength == banForever ) && ( pRule->m_nExpire != CSecureRule::srIndefinite ) )
+				{
+					pRule->m_nExpire = CSecureRule::srIndefinite;
+				}
+				else if ( bMessage )
+				{
+					theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
+						(LPCTSTR)strAddress );
+				}
+
+				return;
+			}
+		}
+	}
+
+	CSecureRule* pRule	= new CSecureRule();
+	pRule->m_nAction	= CSecureRule::srDeny;
+
+	switch ( nBanLength )
+	{
+	case banSession:
+		pRule->m_nExpire	= CSecureRule::srSession;
+		pRule->m_sComment	= _T("Quick Ban");
+		break;
+	case ban5Mins:
+		pRule->m_nExpire	= time( NULL ) + 300;
+		pRule->m_sComment	= _T("Temp Block");
+		break;
+	case ban30Mins:
+		pRule->m_nExpire	= time( NULL ) + 1800;
+		pRule->m_sComment	= _T("Temp Block");
+		break;
+	case banWeek:
+		pRule->m_nExpire	= time( NULL ) + 604800;
+		pRule->m_sComment	= _T("Temp Block");
+		break;		
+	case banForever:
+		pRule->m_nExpire	= CSecureRule::srIndefinite;
+		pRule->m_sComment	= _T("Perm Ban");
+		break;
+	default:
+		pRule->m_nExpire	= CSecureRule::srSession;
+		pRule->m_sComment	= _T("Quick Ban");
+	}
+
+	CopyMemory( pRule->m_nIP, pAddress, 4 );
+	Add( pRule );
+
+	if ( bMessage )
+	{
+		theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_BLOCKED,
+			(LPCTSTR)strAddress );
+	}
+}
+/*
 //////////////////////////////////////////////////////////////////////
 // CSecurity session ban
 
@@ -216,7 +293,7 @@ void CSecurity::TempBlock(IN_ADDR* pAddress)
 	CopyMemory( pRule->m_nIP, pAddress, 4 );
 	Add( pRule );
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 // CSecurity access check
 

@@ -55,8 +55,7 @@ public:
 	void			Remove(CSecureRule* pRule);
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
-	void			SessionBan(IN_ADDR* pAddress, BOOL bMessage = TRUE);
-	void			TempBlock(IN_ADDR* pAddress);
+	void			Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
 public:
 	void			Clear();
 	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
@@ -73,6 +72,10 @@ protected:
 
 };
 
+enum
+{
+	banSession, ban5Mins, ban30Mins, banWeek, banForever 
+};
 
 class CSecureRule
 {

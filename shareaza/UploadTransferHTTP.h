@@ -52,6 +52,7 @@ protected:
 	BOOL		m_bBackwards;
 	BOOL		m_bRange;
 	BOOL		m_bQueueMe;
+	BOOL		m_bNotShareaza;
 	int			m_nGnutella;
 	int			m_nReaskMultiplier; //Last re-ask time multiplier used
 protected:

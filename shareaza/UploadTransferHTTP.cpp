@@ -68,9 +68,10 @@ static char THIS_FILE[]=__FILE__;
 
 CUploadTransferHTTP::CUploadTransferHTTP() : CUploadTransfer( PROTOCOL_HTTP )
 {
-	m_bKeepAlive	= TRUE;
-	m_nGnutella		= 0;
-	m_nReaskMultiplier=1;
+	m_bKeepAlive		= TRUE;
+	m_nGnutella			= 0;
+	m_nReaskMultiplier	= 1;
+	m_bNotShareaza		= FALSE;
 }
 
 CUploadTransferHTTP::~CUploadTransferHTTP()
@@ -206,6 +207,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	theApp.Message( MSG_DEBUG, _T("%s: UPLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, strValue );
+	m_bNotShareaza = FALSE;
 	
 	if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
@@ -262,8 +264,8 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if ( strHeader.CompareNoCase( _T("X-Queue") ) == 0 )
 	{
 		m_bQueueMe = TRUE;
-		if ( strValue == _T("1.0") ) m_bQueueMe = (BOOL)2;
 		m_nGnutella |= 1;
+		if ( strValue == _T("1.0") ) m_bNotShareaza = TRUE;
 	}
 	else if (	strHeader.CompareNoCase( _T("X-Nick") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Name") ) == 0 ||
@@ -293,8 +295,12 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		// Assume certain capabilitites for various Shareaza versions
 		m_nGnutella |= 3;
-		if ( m_bQueueMe == (BOOL)2 ) m_nGnutella = 1;	// GTK
 		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
+
+		if ( m_bNotShareaza)	// Client spoofing Shareaza header
+		{
+			m_nGnutella = 1;
+		}
 	}
 	else if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) != NULL ||
 			  _tcsistr( m_sUserAgent, _T("gnucdna") ) != NULL ||
@@ -345,7 +351,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		if ( m_sFileName.IsEmpty() ) m_sFileName = _T("file");
 		SendResponse( IDR_HTML_BROWSER );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
-		Security.TempBlock( &m_pHost.sin_addr ); //Anti-hammer protection if client doesn't understand 403 (Don't bother re-sending HTML every 5 seconds)
+		Security.Ban( &m_pHost.sin_addr, ban5Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403 (Don't bother re-sending HTML every 5 seconds)
 		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
 		Remove( FALSE );
 		return FALSE;
@@ -354,7 +360,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		SendResponse( IDR_HTML_DISABLED );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.TempBlock( &m_pHost.sin_addr ); //Anti-hammer protection if client doesn't understand 403
+		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
 		Remove( FALSE );
 		return FALSE;
 	}
@@ -619,7 +625,14 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	m_bMetadata		= ( pDownload->m_pXML != NULL );
 	
 	if ( m_sLocations.GetLength() ) pDownload->AddSourceURLs( m_sLocations, TRUE );
-	if ( Settings.Library.SourceMesh ) m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, TRUE, NULL );
+	// if ( Settings.Library.SourceMesh ) m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, NULL );
+	if ( Settings.Library.SourceMesh ) 
+	{
+		if ( m_nGnutella == 1 )
+			m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, NULL );
+		else
+			m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, NULL );
+	}
 	
 	m_sRanges = pDownload->GetAvailableRanges();
 	

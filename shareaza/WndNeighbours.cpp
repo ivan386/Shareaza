@@ -483,7 +483,7 @@ void CNeighboursWnd::OnSecurityBan()
 			IN_ADDR pAddress = pNeighbour->m_pHost.sin_addr;
 			pNeighbour->Close();
 			pLock.Unlock();
-			Security.SessionBan( &pAddress );
+			Security.Ban( &pAddress, banSession );
 			pLock.Lock();
 		}
 	}

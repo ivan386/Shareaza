@@ -520,7 +520,7 @@ void CUploadsWnd::OnSecurityBan()
 			IN_ADDR pAddress = pUpload->m_pHost.sin_addr;
 			pUpload->Remove( FALSE );
 			pLock.Unlock();
-			Security.SessionBan( &pAddress );
+			Security.Ban( &pAddress, banSession );
 			pLock.Lock();
 		}
 	}
