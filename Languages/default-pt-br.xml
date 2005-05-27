@@ -2918,7 +2918,7 @@
 	<string id="16803" value="A pasta que você está compartilhando já é compartilhada como parte de outra pasta compartilhada:\n\n%s"/>
 	<string id="16804" value="Você não colocou o seu nome de usuário no Perfil.\n\nÉ uma boa idéia colocar um nome para os outros usuário saberem com quem estão falando.\n\nTem certeza que deseja continuar sem o nome?"/>
 	<string id="16805" value="Você não colocou a sua localidade no Perfil.\n\nÉ uma boa idéia colocar uma localidade para os outros usuário saberem de onde você está falando.\n\nTem certeza que deseja continuar sem colocar a sua localidade?"/>
-	<string id="16806" value="Você indicou que deseja fazer o redirecionamento de portas do seu roteador NAT ou firewall.\n\Por favor configure a sua rede para fazer o redirecionamento das portas TCP e UDP %i  para o seu computador."/>
+	<string id="16806" value="Você indicou que deseja fazer o redirecionamento de portas do seu roteador NAT ou firewall.\n\nPor favor configure a sua rede para fazer o redirecionamento das portas TCP e UDP %i  para o seu computador."/>
 	<string id="16807" value="Por favor selecione o tipo de limite de banda &quot;123 kb/s&quot; para kilobits por segundo, ou &quot;123 KB/s&quot; para kilobytes por segundo."/>
 	<string id="16808" value="Você não escolheu sua idade e sexo. Tem certeza que deseja continuar sem fazer isso?"/>
 	<string id="16809" value="S&amp;air"/>
