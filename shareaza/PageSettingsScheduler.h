@@ -49,17 +49,17 @@ public:
 
 // Painting Data
 protected:
-	BYTE			m_pSchedule[7][24];
+	BYTE			m_pSchedule[7][24];		// 2D Array representing the schedule
 
-	CImageList		m_pTimeSlices;
-	CBitmap			m_bmHeader;
+	CImageList		m_pTimeSlices;			// Images for the three states a time slice can be in
+	CBitmap			m_bmHeader;				// Header graphic (times)
 
 	BYTE			m_nHoverDay;
 	BYTE			m_nHoverHour;
 	BYTE			m_nDownDay;
 	BYTE			m_nDownHour;
 
-	CString			m_sDayName[7];
+	CString			m_sDayName[7];			// List of day names
 
 // Overrides
 public:

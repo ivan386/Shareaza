@@ -253,14 +253,16 @@ void CSchedulerSettingsPage::OnPaint()
 	dc.Draw3dRect( 33, 9, 385, 145, RGB( 0, 0, 0 ), RGB( 0, 0, 0 ) );
 
 	//Draw the schedule time slices for the 'key'
+	LONG nYpos = ( rc.bottom / 2 ) + 5; 
+
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_OFF, dc.GetSafeHdc(),
-					30 , 184 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , nYpos , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_LIMITED_SPEED, dc.GetSafeHdc(),
-					30 , 204 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , nYpos + 20 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_FULL_SPEED  , dc.GetSafeHdc(),
-					30 , 224 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
+					30 , nYpos + 40 , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
 
 	//CSettingsPage::OnPaint();
 }
