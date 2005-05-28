@@ -121,10 +121,11 @@ void CDownload::Resume()
 		}
 	}
 	
-	m_bPaused	= FALSE;
-	m_bDiskFull	= FALSE;
-	m_tReceived	= GetTickCount();
-	m_bTorrentTrackerError = FALSE;
+	m_bPaused				= FALSE;
+	m_bDiskFull				= FALSE;
+	m_tReceived				= GetTickCount();
+	m_bTorrentTrackerError	= FALSE;
+	m_nTorrentTrackerErrors = 0;
 
 	if( m_bBTH )
 	{

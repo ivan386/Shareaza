@@ -51,6 +51,7 @@ public:
 	BOOL		m_bTorrentEndgame;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
+	int			m_nTorrentTrackerErrors;
 	SHA1		m_pPeerID;
 	CString		m_sKey;
 	int			m_nStartTorrentDownloads;

@@ -60,6 +60,7 @@ CDownloadWithTorrent::CDownloadWithTorrent()
 	m_nTorrentDownloaded	= 0;
 	m_bTorrentEndgame		= FALSE;
 	m_bTorrentTrackerError	= FALSE;
+	m_nTorrentTrackerErrors = 0;
 	
 	m_pTorrentBlock			= NULL;
 	m_nTorrentBlock			= 0;
@@ -184,6 +185,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	{
 		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
 		{
+			theApp.Message( MSG_DEBUG, _T("Sending initial announce for %s"), m_pTorrent.m_sName );
+
 			GenerateTorrentDownloadID();
 
 			m_bTorrentRequested	= TRUE;
@@ -195,6 +198,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	}
 	else if ( ! bLive && m_bTorrentRequested )
 	{
+		theApp.Message( MSG_DEBUG, _T("Sending final announce for %s"), m_pTorrent.m_sName );
+
 		CBTTrackerRequest::SendStopped( this );
 		
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
@@ -205,6 +210,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
+		theApp.Message( MSG_DEBUG, _T("Sending tracker update for %s"), m_pTorrent.m_sName );
+
 		int nSources = GetBTSourceCount();
 		int nSourcesWanted = (int)( Settings.BitTorrent.DownloadConnections * 1.5 );
 		nSourcesWanted = max( nSourcesWanted, Settings.Downloads.SourcesWanted / 10 );
@@ -292,16 +299,44 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 
 void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 {
-	m_bTorrentTrackerError = ! bSuccess;
-	m_sTorrentTrackerError.Empty();
-	
-	if ( pszReason != NULL )
+	if ( bSuccess )
 	{
-		m_sTorrentTrackerError = pszReason;
+		// Success! Reset and error conditions and continue
+		m_bTorrentTrackerError = FALSE;
+		m_sTorrentTrackerError.Empty();
+		m_nTorrentTrackerErrors = 0;
 	}
-	else if ( m_bTorrentTrackerError )
+	else
 	{
-		m_sTorrentTrackerError = _T("Unable to communicate with tracker");
+		// There was a problem with the tracker
+
+		m_bTorrentTrackerError = TRUE;
+		m_sTorrentTrackerError.Empty();
+		m_nTorrentTrackerErrors ++;
+		
+		if ( pszReason != NULL )
+		{
+			// If the tracker responded with an error, accept it and continue
+			m_sTorrentTrackerError = pszReason;
+		}
+		else if ( m_bTorrentTrackerError )
+		{
+			// If we couldn't contact the tracker, check if we should re-try
+			if ( m_nTorrentTrackerErrors == 1 )
+			{
+				// First error- Tracker or connection may have just glitched. Re-try in 10 seconds.
+				m_tTorrentTracker = GetTickCount() + 1000 * 10;
+
+				LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_RETRY );
+			}
+			else
+			{
+				// This tracker is probably down. Don't hammer it.
+				LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
+
+				// ToDo: Multitracker: switch trackers here
+			}
+		}
 	}
 }
 
