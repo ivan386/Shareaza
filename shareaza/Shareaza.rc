@@ -3016,11 +3016,9 @@ BEGIN
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,58,11,12
     LTEXT           "Client connections",IDC_STATIC,57,57,211,12,
                     SS_CENTERIMAGE
-    CONTROL         " Clear downloaded torrents",IDC_TORRENT_AUTOCLEAR,
-                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,73,
-                    105,11,WS_EX_TRANSPARENT
-    LTEXT           "When the share ratio reaches ",IDC_STATIC,126,73,101,11,
-                    SS_CENTERIMAGE,WS_EX_TRANSPARENT | WS_EX_RIGHT
+    CONTROL         " Clear downloaded torrents        When the share ratio reaches",
+                    IDC_TORRENT_AUTOCLEAR,"Button",BS_AUTOCHECKBOX | 
+                    BS_VCENTER | WS_TABSTOP,15,73,212,11,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,230,73,35,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
