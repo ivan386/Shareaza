@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.1.0"
+		version="2.1.1.3"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3415,7 +3415,7 @@ right quote	&#147;
 		<control caption="Parsisiųsti..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Sąsaja:"/>
 		<control caption="Rodyti papildomus BitTorrent sąsajos elementus"/>
 		<control caption="_Atsisiuntimų susijungimai:"/>
@@ -3423,9 +3423,10 @@ right quote	&#147;
 		<control caption="Torrent bylų per kartą"/>
 		<control/><control/>
 		<control caption="Klientų susijungimų"/>
-		<control caption=" Valyti parsisiųstus torrent"/>
+		<control caption="&#160;Valyti parsisiųstus torrent"/>
 		<control caption="Kai bendrinimo santykis pasiekia"/>
-		<control/><control/>
+		<control/><control/><control/>
+		<control caption="&#160;Teikti pirmenybę torrent šaltiniams"/>
 		<control caption="_EndGame (paspartinimas):"/>
 		<control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis bylas"/>
 		<control caption="_Laikyti torrent bylas čia:"/>
@@ -3433,7 +3434,7 @@ right quote	&#147;
 		<control caption="_Torrent bylų kūrimo programa"/>
 		<control/><control/>
 		<control caption="Numatytasis seklys: "/>
-		<control/><control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolai">

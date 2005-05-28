@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.0"
+		version="2.1.1.3"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3407,26 +3407,27 @@
 		<control caption="Download..."/>
 	</dialog>
 
-<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
-	<control caption="_Interface:"/>
-	<control caption="Display additional BitTorrent interface elements"/>
-	<control caption="_Download Connections:"/>
-	<control/><control/>
-	<control caption="Torrents at once"/>
-	<control/><control/>
-	<control caption="Client connections"/>
-	<control caption=" Clear downloaded torrents"/>
-	<control caption="When the share ratio reaches "/>
-	<control/><control/>
-	<control caption="_EndGame:"/>
-	<control caption="Enable EndGame mode when completing torrents"/>
-	<control caption="_Store Torrents Here:"/>
-	<control/><control/>
-	<control caption="_Torrent Creator"/>
-	<control/><control/>
-	<control caption="Default Tracker: "/>
-	<control/><control/>
-</dialog>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
+		<control caption="_Interface:"/>
+		<control caption="Display additional BitTorrent interface elements"/>
+		<control caption="_Download Connections:"/>
+		<control/><control/>
+		<control caption="Torrents at once"/>
+		<control/><control/>
+		<control caption="Client connections"/>
+		<control caption="&#160;Clear downloaded torrents"/>
+		<control caption="When the share ratio reaches "/>
+		<control/><control/><control/>
+		<control caption="&#160;Preference torrent sources"/>
+		<control caption="_EndGame:"/>
+		<control caption="Enable EndGame mode when completing torrents"/>
+		<control caption="_Store Torrents Here:"/>
+		<control/><control/>
+		<control caption="_Torrent Creator"/>
+		<control/><control/>
+		<control caption="Default Tracker: "/>
+		<control/>
+	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
