@@ -3407,7 +3407,7 @@
 		<control caption="Download..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Interface:"/>
 		<control caption="Display additional BitTorrent interface elements"/>
 		<control caption="_Download Connections:"/>
@@ -3415,8 +3415,7 @@
 		<control caption="Torrents at once"/>
 		<control/><control/>
 		<control caption="Client connections"/>
-		<control caption="&#160;Clear downloaded torrents"/>
-		<control caption="When the share ratio reaches "/>
+		<control caption="&#160;Clear downloaded torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;When the share ratio reaches"/>
 		<control/><control/><control/>
 		<control caption="&#160;Preference torrent sources"/>
 		<control caption="_EndGame:"/>
