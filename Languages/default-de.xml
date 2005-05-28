@@ -3726,7 +3726,7 @@ Other:
 			<control caption="Abbrechen"/>
 		</dialog>
 
-		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filter Matches">
+		<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Ergebnisse filtern">
 			<control caption="Nur Ergebnisse die folgende _Wörter enthalten:"/>
 			<control />
 			<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
@@ -3754,7 +3754,7 @@ Other:
 			<control caption="Filter:"/>
 		</dialog>
 
-		<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filtern speichern als">
+		<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter speichern als">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Abbrechen"/>
