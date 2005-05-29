@@ -3095,7 +3095,7 @@ BEGIN
     EDITTEXT        IDC_NAME,7,19,128,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
-    LTEXT           "Save the current filter as",IDC_STATIC,7,7,81,8
+    LTEXT           "Save the current filter as",IDC_STATIC,7,7,129,8
 END
 
 IDD_DOWNLOAD_REVIEWS DIALOGEX 0, 0, 362, 202
@@ -5767,6 +5767,8 @@ BEGIN
     IDS_RATING_4            "Good"
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
+    IDS_REPLACE_FILTER      "There already is a filter called ""%s"", do you want to replace it?"
+    IDS_NO_FILTER_NAME      "Please give your filter a name."
 END
 
 #endif    // English (Australia) resources

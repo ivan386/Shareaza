@@ -41,6 +41,7 @@
 
 #include "CtrlMatch.h"
 #include "LiveList.h"
+#include "ResultFilters.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -57,15 +58,35 @@ static char THIS_FILE[]=__FILE__;
 
 CMatchList::CMatchList()
 {
-	m_bFilterBusy		= ( Settings.Search.FilterMask & ( 1 << 0 ) ) > 0;
-	m_bFilterPush		= ( Settings.Search.FilterMask & ( 1 << 1 ) ) > 0;
-	m_bFilterUnstable	= ( Settings.Search.FilterMask & ( 1 << 2 ) ) > 0;
-	m_bFilterReject		= ( Settings.Search.FilterMask & ( 1 << 3 ) ) > 0;
-	m_bFilterLocal		= ( Settings.Search.FilterMask & ( 1 << 4 ) ) > 0;
-	m_bFilterBogus		= ( Settings.Search.FilterMask & ( 1 << 5 ) ) > 0;
-	m_nFilterMinSize	= 1;
-	m_nFilterMaxSize	= 0;
-	m_nFilterSources	= 1;
+	m_pResultFilters = new CResultFilters;
+	m_pResultFilters->Load();
+	
+	int nDefaultFilter = m_pResultFilters->m_nDefault;
+
+	if ( nDefaultFilter == NONE )
+	{
+		m_bFilterBusy		= ( Settings.Search.FilterMask & ( 1 << 0 ) ) > 0;
+		m_bFilterPush		= ( Settings.Search.FilterMask & ( 1 << 1 ) ) > 0;
+		m_bFilterUnstable	= ( Settings.Search.FilterMask & ( 1 << 2 ) ) > 0;
+		m_bFilterReject		= ( Settings.Search.FilterMask & ( 1 << 3 ) ) > 0;
+		m_bFilterLocal		= ( Settings.Search.FilterMask & ( 1 << 4 ) ) > 0;
+		m_bFilterBogus		= ( Settings.Search.FilterMask & ( 1 << 5 ) ) > 0;
+		m_nFilterMinSize	= 1;
+		m_nFilterMaxSize	= 0;
+		m_nFilterSources	= 1;
+	}
+	else
+	{
+		m_bFilterBusy		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBusy;
+		m_bFilterPush		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPush;
+		m_bFilterUnstable	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterUnstable;
+		m_bFilterReject		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterReject;
+		m_bFilterLocal		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterLocal;
+		m_bFilterBogus		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBogus;
+		m_nFilterMinSize	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterMinSize;
+		m_nFilterMaxSize	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterMaxSize;
+		m_nFilterSources	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterSources;
+	}
 	m_nSortColumn		= -1;
 	m_bSortDir			= 1;
 	m_pSchema			= NULL;
@@ -112,6 +133,9 @@ CMatchList::~CMatchList()
 	delete [] m_pSizeMap;
 	
 	if ( m_pFiles ) delete [] m_pFiles;
+
+	m_pResultFilters->Save();
+	delete m_pResultFilters;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -73,14 +73,13 @@ protected:
 
 public:
 	afx_msg void OnBnClickedSaveFilter();
-	afx_msg void OnDestroy();
 
 private:
 	void UpdateFields();
 	void UpdateList();
-public:
 	CComboBox m_Filters;
-	afx_msg void OnCbnSelchangeFilters();
+public:
+	afx_msg void OnCbnSelChangeFilters();
 	afx_msg void OnBnClickedDeleteFilter();
 	afx_msg void OnBnClickedSetDefaultFilter();
 };

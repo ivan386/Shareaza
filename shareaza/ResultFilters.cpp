@@ -99,6 +99,18 @@ void CResultFilters::Add(CFilterOptions *pOptions)
 
 	m_pFilters = pFilters;
 }
+// Search for (first) filter with name strName, return index if found, -1 (NONE) otherwise
+int CResultFilters::Search(const CString& strName)
+{
+	for ( DWORD index = 0; index < m_nFilters; index++ )
+	{
+		if ( strName.Compare( m_pFilters[index]->m_sName ) == 0 )
+		{
+			return index;
+		}
+	}
+	return NONE;
+ }
 
 void CResultFilters::Remove(DWORD index)
 {
@@ -107,6 +119,8 @@ void CResultFilters::Remove(DWORD index)
 		delete m_pFilters[index];
 		CopyMemory(&m_pFilters[index], &m_pFilters[index + 1], sizeof(CFilterOptions *) * (m_nFilters - index));
 		m_nFilters--;
+
+		if ( index == m_nDefault ) m_nDefault = NONE;
 	}
 }
 
@@ -115,7 +129,7 @@ void CResultFilters::Load()
 	CString strFile;
 	CFile f;
 
-	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.Path );
+	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.UserPath );
 
 	if (f.Open(strFile, CFile::modeRead))
 	{
@@ -131,7 +145,7 @@ void CResultFilters::Save()
 	CString strFile;
 	CFile f;
 
-	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.Path );
+	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.UserPath );
 
 	if (f.Open(strFile, CFile::modeCreate | CFile::modeWrite))
 	{
@@ -159,7 +173,7 @@ CFilterOptions::CFilterOptions()
 
 void CFilterOptions::Serialize(CArchive & ar)
 {
-	if ( ar.IsStoring() ) //saving
+	if ( ar.IsStoring() ) // saving
 	{
 		ar << m_sName;
 		ar << m_sFilter;

@@ -24,12 +24,14 @@
 #include "stdafx.h"
 #include "Shareaza.h"
 #include "DlgSaveFilterAs.h"
+#include "DlgFilterSearch.h"
+#include "ResultFilters.h"
 
 // CSaveFilterAsDlg dialog
 
-CSaveFilterAsDlg::CSaveFilterAsDlg(CWnd* pParent /*=NULL*/)
-	: CSkinDialog(CSaveFilterAsDlg::IDD, pParent)
-	, m_sName(_T(""))
+CSaveFilterAsDlg::CSaveFilterAsDlg( CWnd* pParent /*=NULL*/ )
+	: CSkinDialog( CSaveFilterAsDlg::IDD, pParent )
+	, m_sName( _T( "" ) )
 {
 }
 
@@ -40,9 +42,8 @@ CSaveFilterAsDlg::~CSaveFilterAsDlg()
 void CSaveFilterAsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_NAME, m_sName);
+	DDX_Text( pDX, IDC_NAME, m_sName );
 }
-
 
 BEGIN_MESSAGE_MAP(CSaveFilterAsDlg, CSkinDialog)
 	ON_EN_CHANGE(IDC_NAME, OnEnChangeName)
@@ -51,11 +52,34 @@ END_MESSAGE_MAP()
 
 // CSaveFilterAsDlg message handlers
 
+void CSaveFilterAsDlg::OnOK()
+{
+	if ( m_sName.IsEmpty() )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NO_FILTER_NAME );
+		AfxMessageBox( strMessage, MB_OK );
+		return;
+	}
+	if ( ( (CFilterSearchDlg*)m_pParentWnd)->m_pResultFilters->Search( m_sName ) >= 0 )
+	{
+		CString strFormat, strMessage;
+		LoadString( strFormat, IDS_REPLACE_FILTER );
+		strMessage.Format( strFormat, (LPCTSTR)m_sName );
+		if ( AfxMessageBox( strMessage, MB_ICONQUESTION | MB_YESNO ) == IDNO )
+		{
+			return;
+		}
+	}
+	CSkinDialog::OnOK();
+}
+
+
 BOOL CSaveFilterAsDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
-	SkinMe( _T("CSaveFilterAsDlg"), IDR_SEARCHFRAME );
+	SkinMe( _T( "CSaveFilterAsDlg" ), IDR_SEARCHFRAME );
 
 	return TRUE;
 }
@@ -64,5 +88,5 @@ void CSaveFilterAsDlg::OnEnChangeName()
 {
 	UpdateData(TRUE);
 
-	GetDlgItem(IDOK)->EnableWindow(!m_sName.IsEmpty());
+	GetDlgItem( IDOK )->EnableWindow( !m_sName.IsEmpty() );
 }

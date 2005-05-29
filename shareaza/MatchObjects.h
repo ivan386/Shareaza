@@ -29,7 +29,7 @@ class CSchemaMember;
 class CQuerySearch;
 class CQueryHit;
 class CMatchFile;
-
+class CResultFilters;
 
 class CMatchList
 {
@@ -42,20 +42,21 @@ public:
 public:
 	CMutex		m_pSection;
 public:
-	CString		m_sFilter;
-	BOOL		m_bFilterBusy;
-	BOOL		m_bFilterPush;
-	BOOL		m_bFilterUnstable;
-	BOOL		m_bFilterReject;
-	BOOL		m_bFilterLocal;
-	BOOL		m_bFilterBogus;
-	QWORD		m_nFilterMinSize;
-	QWORD		m_nFilterMaxSize;
-	DWORD		m_nFilterSources;
-	int			m_nSortColumn;
-	BOOL		m_bSortDir;
-	CSchema*	m_pSchema;
-	BOOL		m_bNew;
+	CString			m_sFilter;
+	BOOL			m_bFilterBusy;
+	BOOL			m_bFilterPush;
+	BOOL			m_bFilterUnstable;
+	BOOL			m_bFilterReject;
+	BOOL			m_bFilterLocal;
+	BOOL			m_bFilterBogus;
+	QWORD			m_nFilterMinSize;
+	QWORD			m_nFilterMaxSize;
+	DWORD			m_nFilterSources;
+	int				m_nSortColumn;
+	BOOL			m_bSortDir;
+	CSchema*		m_pSchema;
+	BOOL			m_bNew;
+	CResultFilters*	m_pResultFilters;
 public:
 	CMatchFile**	m_pFiles;
 	DWORD			m_nFiles;

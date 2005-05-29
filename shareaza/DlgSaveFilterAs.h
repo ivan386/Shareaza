@@ -45,6 +45,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnEnChangeName();
+	void OnOK();
 	// The current filter name
 	CString m_sName;
 };

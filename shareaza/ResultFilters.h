@@ -31,7 +31,7 @@ public:
 	CFilterOptions();
 	void Serialize(CArchive& ar);
 public:
-	CString m_sName; //the options set name
+	CString m_sName; // the options set name
 	CString	m_sFilter;
 	BOOL	m_bFilterBusy;
 	BOOL	m_bFilterPush;
@@ -56,8 +56,9 @@ public:
 	void Remove(DWORD index);
 	void Load();
 	void Save();
+	int Search(const CString& strName);
 public:
-	DWORD				m_nFilters; //count of filter options
-	CFilterOptions **	m_pFilters; //the array of filter options
-	DWORD				m_nDefault; //the index of the default filter options
+	DWORD				m_nFilters; // count of filter options
+	CFilterOptions **	m_pFilters; // the array of filter options
+	DWORD				m_nDefault; // the index of the default filter options
 };
