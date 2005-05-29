@@ -176,6 +176,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.Endgame, 1, 0, 1 );
 	
 	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );
+	AddSetting( &Settings.BitTorrent.MaxTrackerRetry, 1, 1, 8 );
 	AddSetting( &Settings.BitTorrent.TorrentCodePage, 1, 0, 9999999 );
 	AddSetting( &Settings.BitTorrent.TorrentExtraKeys, 1, 0, 1 );
 	AddSetting( &Settings.BitTorrent.TorrentIgnoreErrors, 1, 0, 1 );

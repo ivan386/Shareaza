@@ -322,12 +322,15 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		else if ( m_bTorrentTrackerError )
 		{
 			// If we couldn't contact the tracker, check if we should re-try
-			if ( m_nTorrentTrackerErrors == 1 )
+			if ( m_nTorrentTrackerErrors <= Settings.BitTorrent.MaxTrackerRetry )
 			{
-				// First error- Tracker or connection may have just glitched. Re-try in 10 seconds.
-				m_tTorrentTracker = GetTickCount() + 1000 * 10;
+				// Tracker or connection may have just glitched. Re-try in 10-30 seconds.
+				m_tTorrentTracker = GetTickCount() + 1000 * 10 * m_nTorrentTrackerErrors;
 
-				LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_RETRY );
+				// Load the error message string
+				CString strErrorMessage;
+				LoadString( strErrorMessage, IDS_BT_TRACKER_RETRY );
+				m_sTorrentTrackerError.Format( strErrorMessage, m_nTorrentTrackerErrors, Settings.BitTorrent.MaxTrackerRetry );
 			}
 			else
 			{

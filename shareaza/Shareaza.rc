@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,1,4
- PRODUCTVERSION 2,1,1,4
+ FILEVERSION 2,1,1,5
+ PRODUCTVERSION 2,1,1,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 1, 4"
+            VALUE "FileVersion", "2, 1, 1, 5"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 1, 4"
+            VALUE "ProductVersion", "2, 1, 1, 5"
         END
     END
     BLOCK "VarFileInfo"
@@ -5596,7 +5596,7 @@ BEGIN
     IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
     IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
     IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
-    IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying"
+    IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
     IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
 END
 
