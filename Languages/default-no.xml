@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.63 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.65 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -3407,7 +3407,7 @@
 		<control caption="Last ned..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="Grensesnitt:"/>
 		<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
 		<control caption="Nedlastingskoblinger:"/>
@@ -3415,9 +3415,9 @@
 		<control caption="_Samtidige torrenter"/>
 		<control/><control/>
 		<control caption="Klienttilkoblinger"/>
-		<control caption=" Fjern nedlastede torrenter"/>
-		<control caption="Når delingsraten når "/>
-		<control/><control/>
+		<control caption="&#160;Fjern nedlastede torrenter&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Når delingsraten når"/>
+		<control/><control/><control/>
+		<control caption="&#160;Foretrekk torrent-kilder"/>
 		<control caption="_EndGame:"/>
 		<control caption="Skru på EndGame-modus når torrenter blir ferdige"/>
 		<control caption="Lagre Torrenter her:"/>
