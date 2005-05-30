@@ -97,6 +97,7 @@ BOOL CFilterSearchDlg::OnInitDialog()
 	if ( m_pMatches != NULL ) 
 	{
 		m_pResultFilters = m_pMatches->m_pResultFilters;
+		m_pResultFilters->Load();
 		UpdateList();
 		UpdateFields();
 	}
@@ -167,6 +168,7 @@ void CFilterSearchDlg::OnBnClickedSaveFilter()
 		{
 			m_pResultFilters->Add( pOptions );
 		}
+		m_pResultFilters->Save();
 
 		UpdateList();
 
@@ -264,6 +266,7 @@ void CFilterSearchDlg::OnBnClickedDeleteFilter()
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION | MB_YESNO ) == IDYES )
 		{
 			m_pResultFilters->Remove( sel );
+			m_pResultFilters->Save();
 			UpdateList();
 			m_Filters.SetCurSel( min( sel, m_pResultFilters->m_nFilters - 1 ) );
 			m_bDefault = FALSE;
@@ -284,4 +287,9 @@ void CFilterSearchDlg::OnBnClickedSetDefaultFilter()
 		if ( sel != CB_ERR )
 			m_pResultFilters->m_nDefault = sel;
 	}
+	else
+	{
+		m_pResultFilters->m_nDefault = NONE;
+	}
+	m_pResultFilters->Save();
 }
