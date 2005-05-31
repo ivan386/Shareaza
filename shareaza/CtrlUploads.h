@@ -60,6 +60,7 @@ protected:
 	CImageList			m_pProtocols;
 	int					m_nFocus;
 	CUploadFile*		m_pDeselect;
+	int					m_nScrollWheelLines;
 
 // Queue/File Abstractation Layer
 public:

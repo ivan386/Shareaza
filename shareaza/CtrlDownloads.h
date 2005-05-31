@@ -82,6 +82,7 @@ protected:
 	CDownload*			m_pDeselect1;
 	CDownloadSource*	m_pDeselect2;
 	BOOL*				m_pbSortAscending;
+	int					m_nScrollWheelLines;
 
 // Implementation
 protected:

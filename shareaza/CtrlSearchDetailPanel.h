@@ -95,6 +95,7 @@ protected:
 	CSchema*			m_pSchema;
 	CMetaPanel			m_pMetadata;
 	CPtrList			m_pReviews;
+	int					m_nScrollWheelLines;
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pWakeup;
@@ -126,6 +127,8 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

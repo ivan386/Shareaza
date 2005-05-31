@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/05/08 11:46:46 $"
-//	Revision:		"$Revision: 1.32 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/05/31 17:50:11 $"
+//	Revision:		"$Revision: 1.33 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -82,6 +82,11 @@ END_MESSAGE_MAP()
 
 CDownloadsCtrl::CDownloadsCtrl()
 {
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CDownloadsCtrl::~CDownloadsCtrl()
@@ -1357,7 +1362,7 @@ void CDownloadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 BOOL CDownloadsCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * 3 ), NULL );
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines ), NULL );
 	return TRUE;
 }
 

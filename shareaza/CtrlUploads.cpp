@@ -78,6 +78,11 @@ END_MESSAGE_MAP()
 
 CUploadsCtrl::CUploadsCtrl()
 {
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CUploadsCtrl::~CUploadsCtrl()
@@ -1145,7 +1150,7 @@ void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 BOOL CUploadsCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA ), NULL * 3 );
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines ), NULL );
 	return TRUE;
 }
 

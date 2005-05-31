@@ -68,6 +68,7 @@ protected:
 	CBitmap			m_bmSortAsc;
 	CBitmap			m_bmSortDesc;
 	BOOL			m_bTips;
+	int				m_nScrollWheelLines;
 
 // Operations
 public:
