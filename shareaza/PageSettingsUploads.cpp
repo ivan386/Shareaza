@@ -333,8 +333,7 @@ BOOL CUploadsSettingsPage::OnKillActive()
 {
 	UpdateData();
 	
-	if ( m_sBandwidthLimit.GetLength() > 0 && m_sBandwidthLimit.Find( _T("MAX") ) < 0 &&
-		 Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
+	if ( ( ! IsNotLimited( m_sBandwidthLimit ) ) && Settings.ParseVolume( m_sBandwidthLimit, TRUE ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_NEED_BANDWIDTH );
@@ -417,4 +416,14 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 
 		UpdateData( FALSE );
 	}
+}
+
+BOOL CUploadsSettingsPage::IsNotLimited(LPCTSTR pText)
+{
+	if ( ( _tcslen( pText ) == 0 ) ||
+		 ( _tcsistr( pText, _T("MAX") ) != NULL ) || 
+		 ( _tcsistr( pText, _T("NONE") ) != NULL ) )
+		return TRUE;
+	else
+		return FALSE;
 }
