@@ -621,7 +621,7 @@
 			<item id="ID_WINDOW_TOOLBAR" text="_Traka s Alatima"/>
 			<item id="ID_WINDOW_TABBAR" text="Traka s Tabovima"/>
 			<item id="ID_WINDOW_MONITOR" text="Pokaži Praćenje Pro_meta"/>
-			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
+			<item id="ID_WINDOW_REMOTE" text="Pokaži _Remote"/>
 		</menu>
 		<menu text="Pomoć">
 			<item id="ID_HELP_FAQ" text="Shareazin _FAQ"/>
@@ -766,18 +766,18 @@
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="_Sad se Spoji"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="_Iskljući"/>
-		<item id="ID_HOSTCACHE_PRIORITY" text="_Priority Server"/>
+		<item id="ID_HOSTCACHE_PRIORITY" text="Server s _Prioritetom"/>
 		<separator/>
-		<item id="ID_HOSTCACHE_REMOVE" text="_Remove Host(s)"/>
+		<item id="ID_HOSTCACHE_REMOVE" text="Makni Hosta(ove)"/>
 		<separator/>
 		<menu text="_Filter">
 			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 Cl_uster"/>
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Cache"/>
-			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
+			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Serveri"/>
 		</menu>
 		<separator/>
-		<item id="ID_HOSTCACHE_IMPORT" text="_Import MET File..."/>
+		<item id="ID_HOSTCACHE_IMPORT" text="Uvezi MET Datoteku..."/>
 		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="Skini MET..."/>
 	</menu>
 	<!-- SEARCH WINDOW -->
@@ -822,14 +822,14 @@
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="Makni Filte_r"/>
-		<item id="ID_SEARCH_CLEAR" text="C_lear Results"/>
+		<item id="ID_SEARCH_CLEAR" text="Očisti Rezu_ltate"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Pr_omjeni Stupac..."/>
 	</menu>
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="Skini"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Skini Odmah"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Ski_ni Odmah"/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Popričaj sa Osobom"/>
 		<separator/>
@@ -861,13 +861,13 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 		</menu>
 		<menu text="_Web Usluge">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="Makni Filt_er"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Pr_omjeni Stupac..."/>
 	</menu>
 	<!-- HIT MONITOR WINDOW -->
 	<menu name="CHitMonitorWnd">
@@ -886,7 +886,7 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 		</menu>
 		<menu text="_Web Usluge">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
 		</menu>
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filtriraj Rezultate..."/>
@@ -895,7 +895,7 @@
 		<item id="ID_HITMONITOR_PAUSE" text="_Pauziraj Sliku"/>
 		<item id="ID_HITMONITOR_CLEAR" text="Očisti S_liku"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Pr_omjeni Stupac..."/>
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
@@ -911,7 +911,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Makni Završene"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Automatski Očisti Gotove"/> -->
 		<separator/>
-		<item id="ID_DOWNLOADS_HELP" text="_Pomoć..."/>
+		<item id="ID_DOWNLOADS_HELP" text="Pomoć..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Pregledaj"/>
@@ -939,26 +939,26 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Spusti"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Zanemari Limit Brzine Skidanja"/>
 		</menu>
-		<item id="ID_DOWNLOADS_HELP" text="_Pomoć..."/>
+		<item id="ID_DOWNLOADS_HELP" text="Pomoć..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="Pristup"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Pogledaj Što Ima"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Popričaj sa Osobom"/>
+		<item id="ID_BROWSE_LAUNCH" text="Pogledaj Što Ima"/>
+		<item id="ID_TRANSFERS_CHAT" text="Popričaj sa Osobom"/>
 		<separator/>
-		<item id="ID_TRANSFERS_DISCONNECT" text="_Isključi"/>
+		<item id="ID_TRANSFERS_DISCONNECT" text="Isključi"/>
 		<item id="ID_TRANSFERS_FORGET" text="Zaboravi"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Pokreni"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="P_okreni"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Dod_aj Na Playlistu"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Makni Gotove"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Obriši"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Pokreni"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="P_okreni"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Dod_aj Na Playlistu"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Makni Gotove"/>
 		<separator/>
@@ -1010,7 +1010,7 @@
 		<item id="ID_UPLOADS_START" text="Odmah Kreni"/>
 		<item id="ID_UPLOADS_CLEAR" text="Očisti"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Pogledaj Što Ima"/>
+		<item id="ID_BROWSE_LAUNCH" text="Pogledaj Što Ima"/>
 		<item id="ID_UPLOADS_CHAT" text="_Popričaj sa Osobom"/>
 		<item id="ID_SECURITY_BAN" text="Zabrani Mu"/>
 	</menu>
@@ -1094,14 +1094,14 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 		</menu>
 		<menu text="_Web Usluge">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Skini Meta_datu"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="Posloži">
-			<item id="ID_LIBRARY_RENAME" text="_Preimenuj Datoteku"/>
-			<item id="ID_LIBRARY_MOVE" text="_Premjesti..."/>
+			<item id="ID_LIBRARY_RENAME" text="P_reimenuj Datoteku"/>
+			<item id="ID_LIBRARY_MOVE" text="Pre_mjesti..."/>
 			<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj Metadatu"/>
@@ -1126,14 +1126,14 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 		</menu>
 		<menu text="_Web Usluge">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
 		</menu>
 		<menu text="Posloži">
-			<item id="ID_LIBRARY_RENAME" text="_Preimenuj Datoteku"/>
-			<item id="ID_LIBRARY_MOVE" text="_Premjesti..."/>
+			<item id="ID_LIBRARY_RENAME" text="P_reimenuj Datoteku"/>
+			<item id="ID_LIBRARY_MOVE" text="Pre_mjesti..."/>
 			<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj Metadate"/>
@@ -1160,7 +1160,7 @@
 			<item id="ID_SEARCH_FOR_SERIES" text="Epizode Iste Serije"/>
 		</menu>
 		<menu text="_Web Usluge">
-			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="N_abavi Metadatu"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
@@ -1208,7 +1208,7 @@
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj Metadate"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Odaberi Stupac..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Odaberi Stupa_c..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Postavke"/>
 	</menu>
@@ -1320,7 +1320,7 @@
 		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Clear _Buffer"/>
+		<item id="ID_SYSTEM_CLEAR" text="Očisti _Buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
@@ -1359,7 +1359,7 @@
 		<item id="ID_HITMONITOR_SEARCH" text="Ovo _Traži"/>
 		<separator/>
 		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pauziraj Sliku"/>
-		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
+		<item id="ID_SEARCHMONITOR_CLEAR" text="Očisti Buffer"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
 	<menu name="CTrafficWnd">
@@ -1386,7 +1386,7 @@
 		<item id="ID_SECURITY_IMPORT" text="Ubac_i..."/>
 		<item id="ID_SECURITY_EXPORT" text="E_xport..."/>
 		<separator/>
-		<menu text="Default P_olicy">
+		<menu text="Osnovna P_olica">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="Prihvač_am"/>
 			<item id="ID_SECURITY_POLICY_DENY" text="O_dbijam"/>
 		</menu>
@@ -1508,7 +1508,7 @@
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
+		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skinovi</link>
 		<text align="middle">&#160;- Promjeni Shareazin Izgled i doživljaj</text>
 		<newline gap="8"/>
 
@@ -1602,7 +1602,7 @@
 		</group>
 
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
-		<text group="20" align="middle" format="b">Gnutella2: </text>
+		<text group="20" align="middle" format="b">Gnutella2:</text>
 		<text group="21" align="middle">Isključeno</text>
 		<text group="22" align="middle">Spajam...</text>
 		<text group="23" align="middle">Spojeno</text>
@@ -1611,10 +1611,10 @@
 		<newline group="20" gap="2"/>
 
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="30" align="middle" format="b">eDonkey:</text>
 		<text group="31" align="middle">Isključeno</text>
 		<text group="32" align="middle">Spajam...</text>
-		<text group="33" align="middle">Spoeno</text>
+		<text group="33" align="middle">Spojeno</text>
 		<newline group="30" gap="2"/>
 
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
@@ -1883,27 +1883,27 @@
 	<!-- Download help documents -->
 
 	<document name="DownloadHelp.Select">
-		<text format="b">Downloads Area</text>
+		<text format="b">Praćenje Skidanja</text>
 		<newline gap="8"/>
-		<text>This is where files currently being downloaded are displayed. You can view
-		individual sources by expanding each file with the small + on the left.</text>
+		<text>Ovdje se nalaze datoteke koje skidate. Ako datoteka ima više izvora
+		pritiskom na + ispred nje otvara pogled na sve dostupne izvore.</text>
 		<newline gap="8"/>
-		<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this command again.</text>
+		<text>Ovom naredbom možete dobiti pomoć i za stanje određene datoteke.
+		Jednostavno odaberite datoteku i ponovno stisnite pomoć.</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
-		<text format="b">This Download has Completed</text>
+		<text format="b">Ovo Skidanje je Završeno</text>
 		<newline gap="8"/>
-		<text>Shareaza has finished downloading this file, and has verified that it
-		is 100% correct.It has also moved the file to your downloads folder.</text>
+		<text>Shareaza je završila skidanje ove datoteke, također je provjerila
+		da je 100% ispravna.Još je i premjestila datoteku u mapu za skinute datoteke.</text>
 	</document>
 
 	<document name="DownloadHelp.Moving">
-		<text format="b">This Download is Moving</text>
+		<text format="b">Premještam Skinuto</text>
 		<newline gap="8"/>
-		<text>Shareaza has finished downloading this file, and has verified that
-		it is correct.It is currently being moved and/or unpacked to your downloads folder.</text>
+		<text>Shareaza je završila skidanje, provjerom je utvrđeno da je skinuto
+		u redu. Trenutno se datoteka premješta u mapu za skinute datoteke.</text>
 	</document>
 
 	<document name="DownloadHelp.Paused">
@@ -1925,19 +1925,19 @@
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Provjeravam Skinuto</text>
 		<newline gap="8"/>
-		<text>This download has finished, and Shareaza is now checking it to ensure
-		that it is exactly the same as the original file.If any damaged parts are
-		found, Shareaza will repair them automatically.</text>
+		<text>Ova datoteka je skinuta, Shareaza provjerava da li je ispravna.
+		ako se nađe koja greška ili oštečenje Shareaza će to automatski ispraviti.</text>
+		
 	</document>
 
 	<document name="DownloadHelp.Downloading">
-		<text format="b">This Download is Active!</text>
+		<text format="b">Ovo Skidanje je u Tijeku!</text>
 		<newline gap="8"/>
-		<text>This download is currently in progress.If it is downloading too slowly,
-		you could try searching the network for more sources with the </text>
-		<text format="b"> Find More Sources</text><text> command.  If the speed does not
-		improve it may be due to limited upload speeds of the users you are downloading
-		from.Download speed usually increases over time.</text>
+		<text>Ovu datoteku upravo skidam.Ako je skidanje sporo,	probajte
+		potražiti više izvora naredbom</text>
+		<text format="b"> Nađi više izvora</text><text> .  Ako ni to ne pomogne
+		može biti da korisnici koji djele imaju malu brzinu davanja.
+		Brzina skidanja se obično poveća s vremenom.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
@@ -1977,10 +1977,10 @@
 	</document>
 
 	<document name="DownloadHelp.Creating">
-		<text format="b">This Download is Creating</text>
+		<text format="b">Ovo Skidanje je u Fazi Nastanka</text>
 		<newline gap="8"/>
-		<text>Shareaza is pre-allocating a file in which to store this download, to
-		save time later.</text>
+		<text>Shareaza stvara datoteku u koju će spremati skinuti sadržaj.
+		Time se kasnije štedi vrijeme.</text>
 	</document>
 
 	<document name="DownloadHelp.Tracker">
@@ -1994,23 +1994,22 @@
 	<!-- Upload help documents -->
 	
 	<document name="UploadHelp">
-		<text format="b">Uploads Area</text>
+		<text format="b">Praćenje Davanja</text>
 		<newline gap="8"/>
-		<text>This is where queues and uploads are displayed. You can expand each queue
-		with the small + on the left, and filter what is displayed with the button on the
-		right on the window toolbar.</text>
+		<text>Ovdje se nalaze datoteke koje trenutno dajete. Pritiskom na maleni +	na lijevoj
+		 strani otvara se red čekanja, a dole desno imate koristan filter.</text>		
 	</document>
 
 	<!-- General help documents -->
 
 	<document name="GeneralHelp.DiskSpace">
-		<text format="b">Disk Space is Low</text>
+		<text format="b">Imate Malo Mjesta na Disku</text>
 		<newline gap="8"/>
-		<text>The amount of free space on one or more drives used by Shareaza is low.</text>
+		<text>Količina slobodnog mjesta na disku je mala.</text>
 		<newline gap="8"/>
-		<text>You should always attempt to keep a reasonable amount of disk space free. Programs
-		can become unstable if the drives become full, and temporary files may be lost. You should
-		run a disk clean-up, delete unwanted files, or un-install software you no longer need.</text>
+		<text>Trebali bi ste uvijek imati dovoljnu količinu slobodnog mjesta na disku.
+		Programi mogu postati nestabilni, i temporary datoteke se mogu izbrisati. Trebali biste
+		pokrenuti disk clean-up, Obrisati nepotrebne datoteke, ili un-install programe koji vam nisu potrebni.</text>
 	</document>
 
 	<document name="GeneralHelp.DiskWriteFail">
@@ -2024,35 +2023,35 @@
 	</document>
 
 	<document name="GeneralHelp.ConnectionFail">
-		<text format="b">Internet Connection Has Been Lost</text>
+		<text format="b">Internet veza je prekinuta</text>
 		<newline gap="8"/>
-		<text>Windows reports that there is no internet connection is available.</text>
+		<text>Windows javljaju da nema dostupne internet veze.</text>
 		<newline gap="8"/>
-		<text>It is likely that a modem or router has dropped, meaning the internet cannot
-		be accessed. You may need to manually re-connect or reset your connection.</text>
+		<text>Vjerovatno je greška u modemu ili routeru, internet je
+		nedostupan. Morati čete se ručno spojiti ili resetirati vezu.</text>
 		<newline gap="8"/>
-		<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
+		<text>Shareaza se više ne pokušava spojiti da izbjegne mogući gubitak svih hostova u cachu.</text>
 	</document>
 	
 	<document name="GeneralHelp.XPsp2">
-		<text format="b">Windows XP Service Pack 2 detected</text>
+		<text format="b">Otkriven je Windows XP Service Pack 2</text>
 		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of
-		connections that applications can attempt at once.</text>
+		<text>Shareaza je pronašla Windows XP Service Pack 2. To ograničuje broj 
+		istovremenih veza.</text>
 		<newline gap="8"/>
-		<text>Shareaza has limited network connections and set appropriate default values to
-	ensure proper operation, however performance may be reduced. Please visit the Shareaza
-		forums for further information, and up to date news.</text>
+		<text>Shareaza je ograničila broj veza i podesila svoje postavke da osigura 
+	siguran rad, međutim može doći do pada brzine. Ukoliko imate problema sa Shareazom
+		posjetite naš forum za više informacija, i saznate novosti.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
-		<text format="b">Adult content filter enabled</text>
+		<text format="b">Filter za sadržaje za odrasle je uključen</text>
 		<newline gap="8"/>
-		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than
-		as a 100% safe block.</text>
+		<text>Molimo da zapamtite da (kao i svi automatski filteri) ovaj filter nije 100% učinkovit
+		u blokiranju sadržaja. Postavljen je da jednostavno izbaci neželjeni višak,a ne da
+		blokira 100% sadržaja.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing)should always be under parental supervision.</text>
+		<text>Kada djeca koriste internet (uključujući P2P djeljenje) moraju uvjek biti pod roditeljskim nadzorom.</text>
 	</document>
 
 	<document name="GeneralHelp.BadTorrentEncoding">
@@ -2082,19 +2081,19 @@
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Molim da promjenite frazu za traženje</text>
 		<newline gap="8"/>
-		<text>This search is poorly formatted, and may not function correctly.
-		Searches should include several terms where possible, and should specify a schema
-		(file type). Furthermore, searches must not be limited to numbers or negative
-		terms only, and you should avoid overly general queries.</text>
+		<text>Loše ste formulirali traženje, i možda neće dati željene rezultate.
+		Kad je moguće, potraga bi trebala sadržavati više riječi, poželjno je da se odabere 
+		i vrsta datoteke. Nadalje, potraga nebi smjela sadržavati samo brojeve ili previše
+		opčenite izraze.</text>
 		<newline gap="8"/>
-		<text>Most clients on the network will ignore a search for all MP3 files, for example,
-		because it is not specific enough, and would generate too many results.</text>
+		<text>Večina klijenata na mreži ignorira potragu za npr. svim mp3-cama, 
+		iz jednostavnog razloga što nije dovoljno određena, a i ima previše rezultata.</text>
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Molim da promjenite frazu za traženje</text>
 		<newline gap="8"/>
 		<text>This search does not contain enough terms to function properly. All searches need
 		a minimum number of valid, alphabetic characters to be able to start.</text>
@@ -2105,7 +2104,7 @@
 	</document>
   	 
 	<document name="SearchHelp.BadSearch3">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Molim da promjenite frazu za traženje</text>
 		<newline gap="8"/>
 		<text>This search seems to contain only common file extentions, or no searchable
 		words.</text>
@@ -2121,7 +2120,7 @@
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
-		<text format="b">This search cannot be started</text>
+		<text format="b">Ovu potragu ne mogu početi</text>
 		<newline gap="8"/>
 		<text>The specified search would probably return a large number of results with adult
 		content, and this has been turned off in the settings. You should either re-phrase the
@@ -2134,23 +2133,23 @@
 	<!-- Share help documents -->
 
 	<document name="ShareHelp.AlreadyShared">
-		<text format="b">Already Shared</text>
+		<text format="b">Već Djelite</text>
 		<newline gap="8"/>
-		<text>The folder you have selected is already being shared as part of an existing share.</text>
+		<text>Mapu koju ste odabrali već djelite kao dio postoječeg djeljenja.</text>
 		<newline gap="8"/>
-		<text> %s </text>
+		<text>%s</text>
 	</document>
 
 	<document name="ShareHelp.BadShare">
-		<text format="b">This folder should not be shared</text>
+		<text format="b">Ovu mapu ne biste smjeli djeliti</text>
 		<newline gap="8"/>
-		<text>This folder is (or contains) a system folder. Sharing this folder is not
-		recommended, since most of the files in it are of no use to other people.</text>
+		<text>Ova mapa je (ili sadrži) sistemska mapa. Djeljenje ove mape
+		se ne preporuča, iz razloga što je večina vaših sistemskih datoteka nekorisna drugima.</text>
 		<newline gap="8"/>
-		<text>Folders such as the Windows directory, Program Files, and similar folders
-		do not usually contain files suitable for sharing. Any files of interest would be in
-		sub-folders located</text><text format="i"> inside</text>
-		<text> these folders. Please share those instead.</text>
+		<text>Mape kao Windows, Program Files, i slično obično ne sadrže
+		datoteke pogodne za djeljenje. Zanimljive datoteke mogu biti
+		pod-mape smještene</text><text format="i"> unutar</text>
+		<text> ovih mapa. Molimo da djelite te mape.</text>
 		<newline gap="8"/>
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
@@ -2161,27 +2160,27 @@
 <!-- Localised Command Tip Text.The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Pogledaj koje datoteke djeli"/>
-	<tip id="ID_BROWSE_LAUNCH" message="Browse the selected user's profile and shared files."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Pogledaj profil i datoteke koje djeli odabrani korisnik."/>
 	<tip id="ID_BROWSE_PROFILE" message="Pogledaj profil."/>
-	<tip id="ID_BROWSE_REFRESH" message="Osvježi the list of files available on this host."/>
-	<tip id="ID_BROWSE_STOP" message="Stani browsing files on this host."/>
-	<tip id="ID_CHAT_BOLD" message="Apply bold formatting (Ctrl+B)"/>
-	<tip id="ID_CHAT_BROWSE" message="Browse the user's profile and shared files."/>
-	<tip id="ID_CHAT_CLEAR" message="Clear the message text in this window."/>
-	<tip id="ID_CHAT_COLOUR" message="Select a text colour (Ctrl+K)"/>
-	<tip id="ID_CHAT_CONNECT" message="Spoji to the chat session."/>
+	<tip id="ID_BROWSE_REFRESH" message="Osvježi popis dostupnih datoteka na ovom hostu."/>
+	<tip id="ID_BROWSE_STOP" message="Prestani pregledavati što ima ovaj host."/>
+	<tip id="ID_CHAT_BOLD" message="Podebljaj slova (Ctrl+B)"/>
+	<tip id="ID_CHAT_BROWSE" message="Pogledaj korisnikov profil i datoteke koje djeli."/>
+	<tip id="ID_CHAT_CLEAR" message="Očisti tekst poruke u ovom prozoru."/>
+	<tip id="ID_CHAT_COLOUR" message="Odaberite boju teksta (Ctrl+K)"/>
+	<tip id="ID_CHAT_CONNECT" message="Spoji se na chat seansu."/>
 	<tip id="ID_CHAT_DISCONNECT" message="Prekini Razgovor."/>
 	<tip id="ID_CHAT_EMOTICONS" message="Ubaci izljev osjećaja."/>
-	<tip id="ID_CHAT_ITALIC" message="italic (Ctrl+I)"/>
+	<tip id="ID_CHAT_ITALIC" message="Nakosi slova (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Daj mu prioritet skidanja."/>
 	<tip id="ID_CHAT_SEND_FILE" message="Pošalji mu datoteku..."/>
 	<tip id="ID_CHAT_TIMESTAMP" message="Pokazuje vrijeme primanja poruke."/>
 	<tip id="ID_CHAT_UNDERLINE" message="Podcrta (Ctrl+U)"/>
 	<tip id="ID_CHILD_CLOSE" message="Zatvara trenutni prozor."/>
-	<tip id="ID_CHILD_MAXIMISE" message="Enlarge the active window to fill the window."/>
-	<tip id="ID_CHILD_MINIMISE" message="Minimise the selected window to the tab bar."/>
-	<tip id="ID_CHILD_RESTORE" message="Open the selected window."/>
-	<tip id="ID_DISCOVERY_ADD" message="Add a new discovery service..."/>
+	<tip id="ID_CHILD_MAXIMISE" message="Uvečavj trenutni prozor tako da popuni prozor."/>
+	<tip id="ID_CHILD_MINIMISE" message="Spusti odabrani u tab bar."/>
+	<tip id="ID_CHILD_RESTORE" message="Otvori odabrani prozor."/>
+	<tip id="ID_DISCOVERY_ADD" message="Dodaj novu discovery uslugu..."/>
 	<tip id="ID_DISCOVERY_ADVERTISE" message="Advertise the selected GWebCache service to a random existing GWebCache."/>
 	<tip id="ID_DISCOVERY_BROWSE" message="Browse statistics for the selected GWebCache service on the Web."/>
 	<tip id="ID_DISCOVERY_EDIT" message="View the properties for the selected discovery service."/>
@@ -2240,28 +2239,28 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
 	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs."/>
 	<tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
-	<tip id="ID_HELP_WEB_1" message="Visit this website"/>
-	<tip id="ID_HELP_WEB_2" message="Visit this website"/>
-	<tip id="ID_HELP_WEB_3" message="Visit this website"/>
-	<tip id="ID_HELP_WEB_4" message="Visit this website"/>
-	<tip id="ID_HELP_WEB_5" message="Visit this website"/>
-	<tip id="ID_HELP_WEB_6" message="Visit this website"/>
-	<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
-	<tip id="ID_HITMONITOR_PAUSE" message="Pause hit monitoring."/>
+	<tip id="ID_HELP_WEB_1" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HELP_WEB_2" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HELP_WEB_3" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HELP_WEB_4" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HELP_WEB_5" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HELP_WEB_6" message="Posjeti ovu web stranicu"/>
+	<tip id="ID_HITMONITOR_CLEAR" message="Očisti buffer pračenja pogodaka."/>
+	<tip id="ID_HITMONITOR_PAUSE" message="Pauziraj pračenje pogodaka."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Traži na mreži označeni pojam."/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Spoji se na označeni komp."/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Isključi se od susjeda."/>
 	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Pokazuje eDonkey2000 servere."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download an eDonkey2000 &quot;server.met&quot; file..."/>
-	<tip id="ID_HOSTCACHE_G1_CACHE" message="Show Gnutella1 cached hosts."/>
-	<tip id="ID_HOSTCACHE_G2_CACHE" message="Show Gnutella2 cached hosts."/>
-	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Show Gnutella2 horizon hubs."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Skini eDonkey2000 &quot;server.met&quot; datoteku..."/>
+	<tip id="ID_HOSTCACHE_G1_CACHE" message="Pokaži Gnutella1 cached hosts."/>
+	<tip id="ID_HOSTCACHE_G2_CACHE" message="Pokaži Gnutella2 cached hosts."/>
+	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Pokaži Gnutella2 horizon hubs."/>
 	<tip id="ID_HOSTCACHE_IMPORT" message="Import a list of known hosts, such as a &quot;server.met&quot; file..."/>
 	<tip id="ID_HOSTCACHE_PRIORITY" message="Pokušaj se spojiti prvo na ovaj server."/>
 	<tip id="ID_HOSTCACHE_REMOVE" message="Remove the selected hosts from the host cache."/>
 	<tip id="ID_LIBRARY_ADD" message="Dodaj novu mapu u kolekciju..."/>
-	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Delete the selected album folder."/>
-	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Open the selected album folder."/>
+	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Obriši odabranu mapu albuma."/>
+	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Otvori odabranu mapu albuma."/>
 	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="View and edit the properties of the selected album folder..."/>
 	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
 	<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
@@ -2270,9 +2269,9 @@
 	<tip id="ID_LIBRARY_CREATETORRENT" message="Create a .torrent for this file to upload to a website."/>
 	<tip id="ID_LIBRARY_DELETE" message="Delete the selected files permenantly."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Add the selected file(s) to your media playlist."/>
-	<tip id="ID_LIBRARY_EXPLORE" message="Open the selected folder(s)."/>
-	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to a collection file..."/>
-	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
+	<tip id="ID_LIBRARY_EXPLORE" message="Otvori odabranu(e) mapu(e)."/>
+	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Spremi označenu mapu albuma kao kolekciju..."/>
+	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Skini sve datoteke u odabranoj kolekciji."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
 	<tip id="ID_LIBRARY_FOLDER_EXPORT_COLLECTION" message="Export the selected album folder as a collection file..."/>
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="View and edit the properties of all files in the selected folder(s)..."/>
@@ -2302,16 +2301,16 @@
 	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organise your library."/>
 	<tip id="ID_LIBRARY_UNLINK" message="Remove the select files from the current album folder."/>
 	<tip id="ID_LIBRARY_URL" message="Copy the URI of the selected file."/>
-	<tip id="ID_LIBRARY_VIEW" message="Select a library view..."/>
-	<tip id="ID_LIBRARY_VIEW_ALBUM" message="Show an album view" tip="Album View"/>
-	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Collection View"/>
-	<tip id="ID_LIBRARY_VIEW_DETAIL" message="Show file name, details and metadata" tip="Detail View"/>
-	<tip id="ID_LIBRARY_VIEW_HOME" message="Library home page view" tip="Home View"/>
-	<tip id="ID_LIBRARY_VIEW_ICON" message="Show files as icons" tip="Icon View"/>
-	<tip id="ID_LIBRARY_VIEW_LIST" message="Show files in a horizontal list" tip="List View"/>
-	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Show thumbnails for files" tip="Thumbnail View"/>
-	<tip id="ID_LIBRARY_VIEW_TILE" message="Show a list of album folders." tip="Tile View"/>
-	<tip id="ID_MEDIA_ADD" message="Add a media file to the playlist..."/>
+	<tip id="ID_LIBRARY_VIEW" message="Odaberite pogled..."/>
+	<tip id="ID_LIBRARY_VIEW_ALBUM" message="Show an album view" tip="Po Albumima"/>
+	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Kolekcije"/>
+	<tip id="ID_LIBRARY_VIEW_DETAIL" message="Pokazuje ime datoteke, detalje i metadate" tip="Sa Detaljima"/>
+	<tip id="ID_LIBRARY_VIEW_HOME" message="Početna strana kod pregledavanja vaše kolekcije" tip="Početak"/>
+	<tip id="ID_LIBRARY_VIEW_ICON" message="Pokazuje datoteteke kao ikone" tip="U Ikonama"/>
+	<tip id="ID_LIBRARY_VIEW_LIST" message="Pokazuje datoteke kao horizontalni popis" tip="Kao Popis"/>
+	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Pokazuje datoteke kao sličice(thumbnails)" tip="Sličice"/>
+	<tip id="ID_LIBRARY_VIEW_TILE" message="Pokazuje listu mapa albuma." tip="Tile View"/>
+	<tip id="ID_MEDIA_ADD" message="Dodaj datoteku u playlistu..."/>
 	<tip id="ID_MEDIA_ADD_FOLDER" message="Add a folder of media files to the playlist..."/>
 	<tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
 	<tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
@@ -2320,12 +2319,12 @@
 	<tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="Toggle full-screen video mode."/>
 	<tip id="ID_MEDIA_MUTE" message="Mute audio playback"/>
-	<tip id="ID_MEDIA_NEXT" message="Skip ahead to the next file in the current playlist." tip="Next File"/>
-	<tip id="ID_MEDIA_OPEN" message="Open and play a media file or playlist..."/>
-	<tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="Pause"/>
+	<tip id="ID_MEDIA_NEXT" message="Ide na slijedeću datoteku u playlisti." tip="Slijedeća datoteka"/>
+	<tip id="ID_MEDIA_OPEN" message="Otvara ili pokreće media datoteku ili playlistu..."/>
+	<tip id="ID_MEDIA_PAUSE" message="Pause playback of the media file." tip="Pauziraj"/>
 	<tip id="ID_MEDIA_PLAY" message="Start playing the current media file." tip="Pokreni"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Show or hide the playlist editor."/>
-	<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="Previous File"/>
+	<tip id="ID_MEDIA_PREVIOUS" message="Skip back to the previous file in the current playlist." tip="Prethodna datoteka"/>
 	<tip id="ID_MEDIA_RANDOM" message="Toggle random (shuffle) mode in the current playlist."/>
 	<tip id="ID_MEDIA_REMOVE" message="Remove the selected media file from the playlist."/>
 	<tip id="ID_MEDIA_REPEAT" message="Repeat the current media file."/>
@@ -2345,22 +2344,22 @@
 	<tip id="ID_NEIGHBOURS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="Isključi označene susjede."/>
-	<tip id="ID_NEIGHBOURS_SETTINGS" message="Configure network settings..."/>
+	<tip id="ID_NEIGHBOURS_SETTINGS" message="Podesi mrežne postavke..."/>
 	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Open a new Packet Dump window monitoring this neighbour."/>
 	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Open a new Packet Dump window monitoring incoming traffic from this neighbour."/>
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
-	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatically close Shareaza when transfers have completed."/>
+	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatski zatvori Shareazu kada se završi razmjena."/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
 	<tip id="ID_NETWORK_CONNECT" message="Spoji se na mrežu."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Isključi se sa mreže."/>
 	<tip id="ID_NETWORK_ED2K" message="Spoji to the eDonkey2000 network."/>
-	<tip id="ID_NETWORK_EXIT" message="Exit Shareaza"/>
-	<tip id="ID_NETWORK_G1" message="Spoji to the original Gnutella network."/>
-	<tip id="ID_NETWORK_G2" message="Spoji to the Gnutella2 network (highly recommended)."/>
+	<tip id="ID_NETWORK_EXIT" message="Ugasi Shareazu"/>
+	<tip id="ID_NETWORK_G1" message="Spoji se na originalnu Gnutella mrežu."/>
+	<tip id="ID_NETWORK_G2" message="Spoji se na Gnutella2 mrežu (preporučeno)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Start a new search of the network..."/>
 	<tip id="ID_SEARCH_CHAT" message="Open a chat session with the selected user."/>
-	<tip id="ID_SEARCH_CLEAR" message="Clear the search results."/>
+	<tip id="ID_SEARCH_CLEAR" message="Očisti rezultate potrage."/>
 	<tip id="ID_SEARCH_COLUMNS" message="Select metadata columns to be displayed..."/>
 	<tip id="ID_SEARCH_COPY" message="Copy the URI of the selected file."/>
 	<tip id="ID_SEARCH_DETAILS" message="Display detailed information on the selected file."/>
@@ -2476,7 +2475,7 @@
 	<string id="WINDOW_LIBRARY" value="Kolekcija"/>
 	<string id="WINDOW_UPLOADS" value="Dajem"/>
 	<string id="WINDOW_TRAFFIC" value="Graf"/>
-	<string id="WINDOW_CHAT" value="Chat"/>
+	<string id="WINDOW_CHAT" value="Razgovor"/>
 	<string id="WINDOW_SECURITY" value="Sigurnost"/>
 	<string id="WINDOW_DISCOVERY" value="Discovery Services"/>
 	<string id="WINDOW_BROWSEHOST" value="Pogledaj što djeli"/>
@@ -2485,13 +2484,13 @@
 	<string id="WINDOW_SEARCHPAD" value="Traži"/>
 	<string id="WINDOW_HELP" value="Shareaza Pomoć"/>
 	<string id="7000" value="Jeste li sigurni da želite izbrisati ovaj filter ?"/>
-	<string id="7001" value="&amp;Schemas"/>
+	<string id="7001" value="&amp;Šeme"/>
 	<string id="7002" value="Multiple Values"/>
 	<string id="7003" value="Multiple"/>
 	<string id="8000" value="Shareazine Postavke"/>
 	<string id="8001" value="Dobrodošli u Shareaza"/>
 	<string id="8002" value="Postavke Datoteke"/>
-	<string id="8003" value="Edit My Profile"/>
+	<string id="8003" value="Promjeni Moj Profil"/>
 	<string id="8004" value="!Dobrodošli u Shareazu (verzija) !\n.\nShareaza je potpuno besplatan program.\nMolimo da ga koristite odgovorno i poštujte zakone o autorskim pravima.\n."/>
 	<string id="8005" value="(zatvaram kad završim)"/>
 	<string id="8006" value="Shareaza nije spojena.Stisni Spoji botun."/>
@@ -2500,9 +2499,9 @@
 	<string id="8009" value="Jeste li sigurni da želite izbrisati &quot;%s&quot; skin?Ne može se povratiti."/>
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended.Please download the full, official release from www.shareaza.com."/>
 	<string id="8011" value="Mjenjanje pogleda zatvara sve otvorene prozore. Želite li nastaviti s promjenom pogleda?"/>
-	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).%s in local library."/>
-	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).%s in local library."/>
-	<string id="8062" value="Hub mode with %lu neighbour(s).%s in local library."/>
+	<string id="8060" value="Hub/Ultrapeer način sa %lu susjeda.%s u vašoj kolekciji."/>
+	<string id="8061" value="Ultrapeer način sa %lu susjeda.%s u vašoj kolekciji."/>
+	<string id="8062" value="Hub način sa %lu susjeda.%s u vašoj kolekciji."/>
 	<string id="8063" value="Spojeno. %s u vašoj kolekciji."/>
 	<string id="8064" value="Spojeno na %lu susjeda.%s u vašoj kolekciji."/>
 	<string id="8065" value="Spajam se na mrežu..."/>
@@ -2530,7 +2529,7 @@
 	<string id="8132" value="Nešto je pronađeno, ali nije prošlo filter."/>
 	<string id="8133" value="Shareaza naporno i temeljito traži..."/>
 	<string id="8134" value="Započinjem novu potragu. Želite li da izbrišem stare rezultate?"/>
-	<string id="8135" value="No Metadata"/>
+	<string id="8135" value="Nema Metadate"/>
 	<string id="8136" value="Traži obični tekst"/>
 	<string id="8141" value="Pokaži izbornik za traženje"/>
 	<string id="8142" value="Sakri izbornik za traženje"/>
@@ -2624,56 +2623,56 @@
 	<string id="8335" value="Svi izvori ove datoteke su iza vatrozida"/>
 	<string id="8336" value="Svi izvori ove datoteke su nestabilni"/>
 	<string id="16064" value="Pokrečem mrežnu jezgru..."/>
-	<string id="16065" value="Can't bind to %s port %i for incoming connections.Incoming connections will not be supported."/>
+	<string id="16065" value="Ne mogu se spojiti na %s port %i. Primanje poziva nije moguće"/>
 	<string id="16066" value="Gasim mrežnu jezgru..."/>
 	<string id="16067" value="Iskopčan sa mreže."/>
 	<string id="16068" value="Prihvaćam dolazeće TCP veze na %s portu %i."/>
-	<string id="16069" value="Outgoing connections will be from %s port %i."/>
-	<string id="16070" value="Can't resolve %s for outgoing connections.Outgoing connections will use the default interface."/>
-	<string id="16071" value="Firewalled, not listening for incoming connections."/>
-	<string id="16072" value="Listening for UDP datagrams on %s port %i."/>
+	<string id="16069" value="Odlazeće veze će biti sa %s porta %i."/>
+	<string id="16070" value="Greška na %s za odlazeće veze.  Odlazeće veze će koristiti osnovno sučelje."/>
+	<string id="16071" value="Iza vatrozida, ne slušam dolazeće pozive."/>
+	<string id="16072" value="Slušam UDP datagrams na %s portu %i."/>
 	<string id="16073" value="Resolving host &quot;%s&quot;..."/>
-	<string id="16074" value="Unable to resolve host &quot;%s&quot;."/>
-	<string id="16075" value="Security manager denied connection from %s."/>
+	<string id="16074" value="Greška na hostu &quot;%s&quot;."/>
+	<string id="16075" value="Veza od %s je odbijena iz sigurnosnih razloga."/>
 	<string id="16076" value="Security manager barred a connection to %s."/>
-	<string id="16077" value="The address %s is already blocked by your security rules."/>
-	<string id="16078" value="Added a security rule to block %s."/>
+	<string id="16077" value="Adresa %s je već blokirana prema vašim sigurnosnim pravilima."/>
+	<string id="16078" value="Blokada %s je dodana u sigurnosna pravila."/>
 	<string id="16079" value="Jeste li sigurni da se želite isključiti?"/>
-	<string id="16081" value="Sending query for &quot;%s&quot; to %s."/>
+	<string id="16081" value="Šaljem upit za &quot;%s&quot; to %s."/>
 	<string id="16083" value="Forcing your PC into hub mode may have adverse effects on performance and the P2P networkIt is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
-	<string id="16084" value="Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.Are you sure you want to do this?"/>
-	<string id="16085" value="Gnutella2 is Shareaza's premiere network.Disabling support for it may severely limit both the number and quality of your search results.Are you SURE you want to do this?"/>
-	<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
-	<string id="16128" value="Accepted an incoming connection from %s port %i."/>
-	<string id="16129" value="Initiating a neighbour connection to %s port %i..."/>
-	<string id="16130" value="Unable to initiate a neighbour connection with %s."/>
-	<string id="16131" value="Timed out connecting to %s."/>
-	<string id="16132" value="Closing connection to neighbour %s due to lack of traffic."/>
+	<string id="16084" value="Obustava podrške za Gnutella-1 protokol može ograničit rezultate potrage, i ako ste vi hub može imati utjecaja na rezultate ostalih korisnika.Jeste li sigurni da to želite?"/>
+	<string id="16085" value="Gnutella2 je Shareazina glavna mreža.Obustavljanje podrške može ozbiljno smanjiti broj i kvalitetu rezultata potrage.Jeste li sigurni da to želite?"/>
+	<string id="16087" value="Brzina slanja podataka je premala da bi se omogučila ova mreža"/>
+	<string id="16128" value="Veza sa %s port %i je prihvačena."/>
+	<string id="16129" value="Započinjem spajanje na susjeda %s port %i..."/>
+	<string id="16130" value="Ne mogu početi spajanje na susjeda %s."/>
+	<string id="16131" value="Isteklo vrijeme za spajanje na %s."/>
+	<string id="16132" value="Zbog nedostatka prometa, prekidam vezu sa sudjedom %s."/>
 	<string id="16133" value="Veza uspostavljena sa %s, razmjenjujem pozdrave..."/>
-	<string id="16134" value="Veza sa susjedom %s je zatvorena."/>
-	<string id="16135" value="Unable to initiate a neighbour connection with %s (refused)."/>
-	<string id="16136" value="Neighbour %s dropped the connection unexpectedly."/>
-	<string id="16137" value="Refusing duplicate connection from %s."/>
-	<string id="16138" value="Already connected to %s, will not establish a second connection."/>
-	<string id="16139" value="Neighbour %s closed connection (%i : %s)."/>
+	<string id="16134" value="Veza sa susjedom %s je prekinuta."/>
+	<string id="16135" value="Ne mogu se spojiti na susjeda %s (odbijeno)."/>
+	<string id="16136" value="Susjed %s je neočekivano prekinuo."/>
+	<string id="16137" value="Odbijam duplu vezu sa %s."/>
+	<string id="16138" value="Već ste spojeni sa %s, druga veza neće biti uspostavljena."/>
+	<string id="16139" value="Susjed %s je prekinuo vezu (%i : %s)."/>
 	<string id="16140" value="Neighbour %s is crawling connections."/>
-	<string id="16141" value="Closed connection with neighbour %s because it is not a hub."/>
-	<string id="16144" value="Timed out handshaking with %s."/>
-	<string id="16145" value="Gnutella connection with neighbour %s established successfully (G%i.%i : %s)."/>
-	<string id="16146" value="Handshake with %s failed due to invalid data on the wire."/>
-	<string id="16147" value="Closing surplus connection from %s with host hint (%s port %i)."/>
+	<string id="16141" value="Veza sa susjedom %s je prekinuta zato jer nije hub."/>
+	<string id="16144" value="Isteklo vrijeme pozdrava sa %s."/>
+	<string id="16145" value="Gnutella veza sa susjedom %s je uspješno uspostavljena (G%i.%i : %s)."/>
+	<string id="16146" value="Pozdravljanje sa %s nije uspjelo zbog greške u prijenosu."/>
+	<string id="16147" value="Prekidam višak veza sa %s with host hint (%s port %i)."/>
 	<string id="16148" value="Veza prema %s je odbijena (%s)."/>
-	<string id="16149" value="Gnutella 0.6 handshake with %s failed, retrying with 0.4."/>
-	<string id="16150" value="Closing surplus connection from %s."/>
-	<string id="16151" value="Refusing connection from %s because this is a shielded leaf node."/>
-	<string id="16152" value="Hub neighbour %s won't accept us as a hub, closing connection."/>
-	<string id="16153" value="Spajam neighbour %s falling back to shielded leaf mode."/>
+	<string id="16149" value="Gnutella 0.6 pozdravi sa %s nisu uspjeli, pokušavam sa 0.4."/>
+	<string id="16150" value="Prekidam višak veza sa %s."/>
+	<string id="16151" value="Odbijam vezu sa %s jer je u zaštičenom leaf čvoru."/>
+	<string id="16152" value="Hub susjed %s vas ne prihvača kao hub, prekidam vezu."/>
+	<string id="16153" value="Spojeni susjed %s prelazi u zaštičeni leaf način."/>
 	<string id="16154" value="Hub connection established, closing peer connections."/>
 	<string id="16155" value="Acting as a hub for leaf neighbour %s."/>
-	<string id="16156" value="Neighbour %s wants to be a hub, closing connection."/>
-	<string id="16157" value="Neighbour %s is not a hub, closing connection."/>
-	<string id="16158" value="Gnutella2 connection with neighbour %s established successfully (%s)."/>
-	<string id="16159" value="Closing connection to non-Gnutella2 neighbour %s."/>
+	<string id="16156" value="Susjed %s želi postati hub, prekidam vezu."/>
+	<string id="16157" value="Susjed %s nije hub, prekidam vezu."/>
+	<string id="16158" value="Gnutella2 veza sa susjedom %s je uspješno uspostavljena (%s)."/>
+	<string id="16159" value="Prekidam vezu sa non-Gnutella2 susjedom %s."/>
 	<string id="16192" value="Neighbour %s forwarded a packet of excessive size, dropping connection."/>
 	<string id="16193" value="Neighbour %s forwarded a packet with zero TTL, ignoring."/>
 	<string id="16194" value="Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."/>
@@ -2692,19 +2691,19 @@
 	<string id="16211" value="Neighbour %s forwarded a push request to a firewalled address, ignoring."/>
 	<string id="16212" value="Neighbour %s forwarded an extended packet that is not GGEP encoded."/>
 	<string id="16213" value="Sending query routing table to neighbour %s (%i bit = %lu[%i], %i%% full)"/>
-	<string id="16256" value="Added &quot;%s&quot; to download queue with %i source(s)."/>
-	<string id="16257" value="Completed download of &quot;%s&quot;."/>
-	<string id="16258" value="Pausing download of &quot;%s&quot;."/>
-	<string id="16259" value="Resuming download of &quot;%s&quot;."/>
-	<string id="16260" value="Cleared download &quot;%s&quot;."/>
-	<string id="16261" value="Creating file &quot;%s&quot; for download."/>
-	<string id="16262" value="Unable to create local file &quot;%s&quot; for download, aborting."/>
-	<string id="16263" value="Unable to open local file &quot;%s&quot; for download, aborting."/>
-	<string id="16264" value="Initiating a connection to %s port %i to download &quot;%s&quot;..."/>
-	<string id="16265" value="Unable to connect to download host %s."/>
-	<string id="16266" value="Download connection to %s established."/>
-	<string id="16267" value="Requesting download fragment (%I64i-%I64i) of &quot;%s&quot; from %s."/>
-	<string id="16268" value="No more download fragments, closing connection to %s."/>
+	<string id="16256" value="Dodano &quot;%s&quot; u skidanje sa %i izvorom(a)."/>
+	<string id="16257" value="Skidanje &quot;%s&quot; je završeno."/>
+	<string id="16258" value="Skidanje &quot;%s&quot; je pauzirano."/>
+	<string id="16259" value="Nastavljam skidanje &quot;%s&quot;."/>
+	<string id="16260" value="Skidanje &quot;%s&quot; očišćeno."/>
+	<string id="16261" value="Stvaram &quot;%s&quot; datoteku skidanja."/>
+	<string id="16262" value="Ne mogu stvoriti lokalnu datoteku &quot;%s&quot; , odustajem."/>
+	<string id="16263" value="Ne mogu otvoriti lokalnu datoteku &quot;%s&quot; , odustajem."/>
+	<string id="16264" value="Uspostavljam vezu sa %s na portu %i za skidanje &quot;%s&quot;..."/>
+	<string id="16265" value="Ne mogu se spojiti na hosta za skidanje %s ."/>
+	<string id="16266" value="Veza za skidanje na %s uspostavljena."/>
+	<string id="16267" value="Zahtjevam djelić (%I64i-%I64i) koji trebam skinuti za &quot;%s&quot; od %s."/>
+	<string id="16268" value="Nema više djelova, prekidam vezu sa %s."/>
 	<string id="16269" value="Fragment shortened, closing connection to %s."/>
 	<string id="16270" value="Download request to %s timed out, closing connection."/>
 	<string id="16271" value="Closing download connection %s due to lack of traffic."/>
@@ -2733,10 +2732,10 @@
 	<string id="16294" value="Unable to resolve &quot;%s&quot;."/>
 	<string id="16295" value="Boosting download &quot;%s&quot; by removing bandwidth caps."/>
 	<string id="16296" value="Successfully verified download &quot;%s&quot;."/>
-	<string id="16297" value="WARNING: Download &quot;%s&quot; failed verification, it may not be the file you intended to download!"/>
-	<string id="16298" value="Download host %s is busy, waiting in queue at position #%i of %i (&quot;%s&quot;)."/>
-	<string id="16299" value="Are you sure you want to clear all paused downloads?Once a download has been cleared from the Downloads window, it cannot be resumed."/>
-	<string id="16300" value="Are you sure you want to delete the download &quot;%s&quot;?"/>
+	<string id="16297" value="UPOZORENJE: Datoteka &quot;%s&quot; nije prošla na provjeri, može biti da to nije datoteka koju želite skinuti!"/>
+	<string id="16298" value="Davaoc %s je zauzet, čekam u redu na poziciji #%i od %i (&quot;%s&quot;)."/>
+	<string id="16299" value="Jeste li sigurni da želite izbrisati sva pauzirana skidanja?Jednom kad se skidanje izbriše, ne može se više nastaviti."/>
+	<string id="16300" value="Jeste li sigurni da želite obrisati skidanje &quot;%s&quot;?"/>
 	<string id="16301" value="Requesting tiger-tree volume for &quot;%s&quot; from %s..."/>
 	<string id="16302" value="Download host %s could not satisfy the tiger-tree request."/>
 	<string id="16303" value="Receiving tiger-tree volume from %s (%s)..."/>
@@ -2800,7 +2799,7 @@
 	<string id="16361" value="Refusing upload to %s (%s), network disabled."/>
 	<string id="16362" value="eDonkey2000 uploads should not be cancelled.Are you sure you want to cancel this upload?"/>
 	<string id="16363" value="Torrent Uploads"/>
-	<string id="16364" value="Completed Uploads"/>
+	<string id="16364" value="Završenih Davanja"/>
 	<string id="16365" value="Are you sure you want to cancel/abort every download in this group?"/>
 	<string id="16366" value="Queue"/>
 	<string id="16367" value="eDonkey Core"/>
@@ -2814,15 +2813,15 @@
 	<string id="16375" value="Partial"/>
 	<string id="16376" value="Sve Datoteke"/>
 	<string id="16377" value="HTTP Guard"/>
-	<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.Ensure you know what the file is before launching it."/>
+	<string id="16384" value="Jeste li sigurni da želite pokrenuti &quot;%s&quot; ?\n\nNeke datoteke mogu biti štetne za vaš kompjuter.Budite sigurni da znate što ova datoteka radi prije nego je pokrenete."/>
 	<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 	<string id="16386" value="Editing metadata of %i files."/>
 	<string id="16387" value="The file &quot;%s&quot; has not yet been hashed.Please wait for the file to be hashed, and then try again."/>
 	<string id="16388" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 	<string id="16389" value="Are you sure you want to permenantly delete the %i selected file(s) ?\n\nThe files will be moved to your &quot;recycle bin&quot; if it is enabled."/>
 	<string id="16390" value="You have not yet selected a media player to enqueue files with, such as Nullsoft WinAmp.Would you like to select one now?\n\nShareaza will pass the name of the file to your selected program with the &quot;/ADD&quot; argument."/>
-	<string id="16391" value="You're not connected to the network."/>
-	<string id="16392" value="Klikni na Spoji butun za početak."/>
+	<string id="16391" value="Niste spojeni na mrežu."/>
+	<string id="16392" value="Kliknite na Spoji za početak."/>
 	<string id="16393" value="The file &quot;%s&quot; failed a hash verification test, and might not be the file you intended to download.Are you sure you want to open it?"/>
 	<string id="16394" value="Would you like to remove the &quot;potentially unsafe&quot; attribute from this file?"/>
 	<string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading.Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
@@ -2890,7 +2889,7 @@
 	<string id="16782" value="Uspjeh!!"/>
 	<string id="16783" value="Gotovo, klikni na zatvori"/>
 	<string id="16784" value="&amp;Zatvori"/>
-	<string id="16785" value="(No Visualisation)"/>
+	<string id="16785" value="(Nema Vizualizacije)"/>
 	<string id="16800" value="Još mi niste zadali brzinu spajanja.Molim Vas da odaberete tip veze prema internetu, ili ručno upišete brzinu."/>
 	<string id="16801" value="Molim Vas da odaberete vašu vrstu veze na internet."/>
 	<string id="16802" value="Niste odabrali mape za djeljenje. Jeste li sigurni da želite nastaviti?"/>
@@ -2902,7 +2901,7 @@
 	<string id="16808" value="Niste upisali Vaše godine i spol. Jeste li sigurni da želite nastaviti?"/>
 	<string id="16809" value="I&amp;zlaz"/>
 	<string id="16810" value="godina"/>
-	<string id="16811" value="Automatic"/>
+	<string id="16811" value="Automatski"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
@@ -2926,7 +2925,7 @@
 	<string id="16941" value="Closing browse user connection %s due to lack of traffic."/>
 	<string id="16942" value="Closing browse user connection to %s."/>
 	<string id="16943" value="Browsing %s"/>
-	<string id="16944" value="Found %i shared files in %s's library."/>
+	<string id="16944" value="Nađeno %i djeljenih datoteka u %svoj kolekciji."/>
 	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 	<string id="16994" value="Unable to load media file &quot;%s&quot;"/>
@@ -2945,7 +2944,7 @@
 	<string id="17031" value="Razmjenjujem informacije o profilu..."/>
 	<string id="17032" value="Korisnik potvrđen "/>
 	<string id="17033" value="Tražim Privatni Razgovor..."/>
-	<string id="17034" value="Privatni razgovor dopušten, razgovarate s %s."/>
+	<string id="17034" value="Privatni razgovor dopušten, razgovarate s %som."/>
 	<string id="17035" value="Žao mi je, %s ne želi razgovarati s Vama."/>
 	<string id="17036" value="%s nije na kompu: %s"/>
 	<string id="17037" value="Veza prekinuta."/>
@@ -3005,18 +3004,18 @@
 	<string id="17232" value="Timed out connecting to eDonkey2000 client %s."/>
 	<string id="17233" value="Timed out handshaking with eDonkey2000 client %s."/>
 	<string id="17234" value="Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."/>
-	<string id="17248" value="Starting eDonkey2000 partial download import process..."/>
-	<string id="17249" value="Process complete, %i partial downloads imported successfully."/>
+	<string id="17248" value="Počinjem ubacivanje djelomično skinute eDonkey2000 datoteke..."/>
+	<string id="17249" value="Gotovo, %i djelomično skidanje uspješno ubačeno."/>
 	<string id="17250" value="Skeniram mapu: &quot;%s&quot;..."/>
-	<string id="17251" value="Unable to import file."/>
-	<string id="17252" value=" Found partial file &quot;%s&quot;, importing..."/>
-	<string id="17253" value="Unable to open part file &quot;%s&quot;."/>
-	<string id="17254" value="Found download &quot;%s&quot;, size %s."/>
+	<string id="17251" value="Ne mogu ubaciti datoteku."/>
+	<string id="17252" value="Pronađena djelomična datoteka &quot;%s&quot;, ubacujem..."/>
+	<string id="17253" value="Ne mogu otvoriti djelomičnu datoteku &quot;%s&quot;."/>
+	<string id="17254" value="Pronađena datoteka &quot;%s&quot;, veličine %s."/>
 	<string id="17255" value="Download data file is newer than .part file, aborting."/>
-	<string id="17256" value="Copying &quot;%s&quot; to &quot;%s&quot;..."/>
-	<string id="17257" value="Finished copying file."/>
-	<string id="17258" value="Created Shareaza partial download, %s remaining."/>
-	<string id="17259" value="This file is already in the Shareaza download list."/>
+	<string id="17256" value="Kopiram &quot;%s&quot; u &quot;%s&quot;..."/>
+	<string id="17257" value="Završeno kopiranje datoteke."/>
+	<string id="17258" value="Stvoren Shareazino djelomično skidanje, %s do završetka."/>
+	<string id="17259" value="Ova datoteka je već na Shareazinoj listi za skidanje."/>
 	<string id="17260" value="Insufficient disk space to copy download file."/>
 	<string id="17472" value="Incoming connection from %s is a BitTorrent coupling, negotiating..."/>
 	<string id="17473" value="Timed out connecting to BitTorrent client %s."/>
@@ -3044,7 +3043,7 @@
 	<string id="17495" value="This torrent includes the file &quot;%s&quot; which should be %s, however your version of the file is %s."/>
 	<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
-	<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
+	<string id="17498" value="Otkrivena je greška u datoteci &quot;%s&quot;."/>
 	<string id="18496" value="You have made changes to the name field.Are you sure you want to rename this download?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid.Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid.Please check it and try again."/>
@@ -3053,17 +3052,17 @@
 	<string id="18501" value="You have provided a root tiger-tree hash value which is different to the one currently associated with this download.Are you sure you want to change the tiger-tree root hash now?"/>
 	<string id="18502" value="You have provided an eDonkey2000 hash value which is different to the one currently associated with this download.Are you sure you want to change the eDonkey2000 hash now?"/>
 	<string id="18503" value="Are you sure you want to forget the current verification status?All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
-	<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
+	<string id="18504" value="Jeste li sigurni da želite da zaboravim sve izvore odabrane datoteke?"/>
 	<string id="18505" value="Please enter a valid range to erase.The &quot;from&quot; field is the first byte to erase, the &quot;last&quot; field is the last byte to erase."/>
 	<string id="18506" value="Unable to erase the selected range from the download because no part of the range is present."/>
-	<string id="18507" value="Erased %I64i bytes from the download."/>
+	<string id="18507" value="Izbrisano %I64i bajta is skidanja."/>
 	<string id="18508" value="Dropping download source %s for &quot;%s&quot; because queue position %i is too high."/>
 	<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.Without verification information the download cannot be reverified."/>
 	<string id="18510" value="Are you sure you want to assume this download is complete and reverify it?The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
-	<string id="19000" value="Remote access is disabled."/>
+	<string id="19000" value="Pristup na daljinu je onemogučen."/>
 	<string id="19001" value="Morate odabrati ime i lozinku"/>
-	<string id="19002" value="Unable to accept connections, URL unavailable."/>
-	<string id="20000" value="No URN available"/>
+	<string id="19002" value="U nemogučnosti sam primati veze, URL je nedostupan."/>
+	<string id="20000" value="Nema dostupnog URN-a"/>
 	<string id="20002" value="od"/><!-- e.g. 1 of 10 -->
 	<string id="20100" value="Spajam"/>
 	<string id="20101" value="Tražim"/>
@@ -3093,7 +3092,7 @@
 	<string id="20125" value="Potvrđeno"/>
 	<string id="20126" value="Nepotvrđeno"/>
 	<string id="20127" value="izvor"/>
-	<string id="20128" value="izvora"/><!-- numbers 21, 31, ... -->
+	<string id="20128" value="izvor"/><!-- numbers 21, 31, ... -->
 	<string id="20129" value="izvora"/><!-- tens -->
 	<string id="20130" value="izvora"/><!-- from 11 to 19 -->
 	<string id="20131" value="izvora"/><!-- from 2 to 4 -->
@@ -3147,13 +3146,13 @@
 		<control caption="Filtriraj nedoličan sadržaj u potrazi"/>
 		<control caption="BrzaP_omoć:"/>
 		<control/>
-		<control caption="Kašnjenje (ms):"/>
+		<control caption="Kašnjenje(ms):"/>
 		<control/><control/>
 		<control caption="Prozirnost:"/>
 		<control/>
 		<control caption="_Tray:"/>
 		<control caption="Kada pritisnem zatvori:"/>
-		<control caption="Pitaj|Odmah Zatvori|Spusti u Tray|Zatvori Kad Prebaciš"/>
+		<control caption="Pitaj|Odmah Zatvori|Spusti u Tray|Zatvori tek kada završiš"/>
 		<control caption="Kada pritisnem spusti:"/>
 		<control caption="Normalno|Spusti u Tray"/>
 	</dialog>
@@ -3222,7 +3221,7 @@
 		<control/>
 		<control caption="Dod_aj"/>
 		<control caption="Makni"/>
-		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet browser.Shareaza mora biti pokrenuta da bu Upravitelj Skidanja radio."/>
+		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
@@ -3309,26 +3308,26 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
-		<control caption="_Options:"/>
-		<control caption="_Enable Scheduler"/>
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Plan Skidanja">
+		<control caption="_Opcije:"/>
+		<control caption="Uključi Plan"/>
 		<control/><control/>
-		<control caption="_Connect to G2 only when limited"/>
-		<control caption="Key:"/>
-		<control caption="Sun"/>
-		<control caption="Mon"/>
-		<control caption="Tue"/>
-		<control caption="Wed"/>
-		<control caption="Thu"/>
-		<control caption="Fri"/>
-		<control caption="Sat"/>
-		<control caption="Do not connect"/>
-		<control caption="Limited connection"/>
-		<control caption="Connect at full speed"/>
-		<control caption="% of _bandwidth under limit"/>
+		<control caption="Spoji se na G2 samo pod ograničenjem"/>
+		<control caption="Legenda:"/>
+		<control caption="Ned"/>
+		<control caption="Pon"/>
+		<control caption="Uto"/>
+		<control caption="Sri"/>
+		<control caption="Čet"/>
+		<control caption="Pet"/>
+		<control caption="Sub"/>
+		<control caption="Nemoj se spajati"/>
+		<control caption="Ograničenom brzinom"/>
+		<control caption="Spoji se punom brzinom"/>
+		<control caption="% _brzine je ograničenje"/>
 		<control/>
-		<control caption="Help"/>
-		<control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-"/>
+		<control caption="Pomoć"/>
+		<control caption="Planer skidanja je osmišljen da omoguči Shareazi spajanje i skidanje u određeno doba dana. {n}{n}{n}Napomena: Ako je Shareaza pokrenuta i plan uključen, možete vidjeti promjene postavka- to je normalno!-"/>
 	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Mreže">
@@ -3489,7 +3488,7 @@
 		<control caption="Rotate after N seconds:"/>
 		<control/><control/>
 		<control caption="OK"/>
-		<control caption="Cancel"/>
+		<control caption="Odustani"/>
 		<control caption="Reward uploaders"/>
 	</dialog>
 
@@ -3788,7 +3787,7 @@
 		<control/>
 		<control caption="Mjenjano:"/>
 		<control/>
-		<control caption="Velićina:"/>
+		<control caption="Veličina:"/>
 		<control/><control/><control/>
 	</dialog>
 
@@ -3855,7 +3854,7 @@
 		<control caption="Vertical Axis"/>
 		<control caption="Legenda"/>
 		<control caption="Sampling _Frequency:"/>
-		<control caption="Period between samples:"/>
+		<control caption="Period između sampleova:"/>
 		<control/><control/>
 		<control caption="ms"/>
 		<control caption="Ime:"/>
@@ -3878,7 +3877,7 @@
 		<control caption="Makni"/>
 	</dialog>
 
-	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Select Columns from Schema">
+	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Odaberite Stupac iz Šeme">
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
@@ -3889,20 +3888,20 @@
 		<control caption="P_ravilo:"/>
 		<control caption="Tip:"/>
 		<control caption="Network (IP) Address|Content Filter"/>
-		<control caption="Comment:"/>
+		<control caption="Komentar:"/>
 		<control/>
 		<control caption="Mrež_na Adresa:"/>
 		<control caption="IP Adresa:"/>
 		<control/><control/><control/><control/>
 		<control caption="Netmask:"/>
 		<control/><control/><control/><control/>
-		<control caption="_Content Filter:"/>
+		<control caption="Filter Sadržaja:"/>
 		<control/>
-		<control caption="Match Any"/>
-		<control caption="Match All"/>
+		<control caption="Nešto Isto"/>
+		<control caption="Sve Isto"/>
 		<control caption="_Opcije:"/>
-		<control caption="Action:"/>
-		<control caption="None|Accept|Deny"/>
+		<control caption="Akcija:"/>
+		<control caption="Ništa|Prihvačam|Odbijam"/>
 		<control caption="Ističe:"/>
 		<control caption="Nikada (Beskonačno)|Na Kraju Rada|Poslije:"/>
 		<control/>
@@ -3953,18 +3952,18 @@
 		<control caption="You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"/>
 		<control caption="You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"/>
 		<control/><control/><control/><control/>
-		<control caption="Please select the action you would like Shareaza to take:"/>
-		<control caption="_Download Now"/>
+		<control caption="Odaberite što želite da Shareaza uradi:"/>
+		<control caption="Skini Sa_d"/>
 		<control caption="Traži Datoteku"/>
 		<control caption="Odustani"/>
-		<control caption="_Remember my selection next time"/>
-		<control caption="Open a download _monitor window"/>
+		<control caption="Zapamti moj odabi_r za drugi put"/>
+		<control caption="Otvori prozor skidanja"/>
 		<control caption="You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."/>
 	</dialog>
 
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Skidam Metadate...">
 		<control/>
-		<control caption="Shareaza is attempting to download metadata from Bitzi(TM)..."/>
+		<control caption="Shareaza pokušava skinuti metadata od Bitzi(TM)..."/>
 		<control/>
 		<control caption="Odustani"/>
 		<control/>
@@ -3975,49 +3974,49 @@
 		<control/>
 		<control caption="Shareaza stvara pregled skinutog dijela:"/>
 		<control/><control/>
-		<control caption="(copying downloaded chunks to a new preview file)"/>
+		<control caption="(kopiram skinute djelove u novi datoteku za pregled)"/>
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Respects its Users">
+	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Poštuje Svoje Korisnike">
 		<control/>
-		<control caption="Did you know Shareaza is a 100% free product?"/>
-		<control caption="Shareaza does NOT contain ANY &quot;spyware&quot;, &quot;adware&quot; or other bundled software. It does NOT display any advertisements or &quot;popups&quot;, ever.{n}{n}If you ever see advertising or &quot;popups&quot; while using Shareaza, be assured that they are NOT coming from this program."/>
-		<control caption="Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."/>
-		<control caption="You should not have had to pay any money to obtain Shareaza.Shareaza can be freely downloaded by anyone from www.shareaza.com.If you paid someone money for Shareaza, you should demand a full refund immediately."/>
-		<control caption="Shareaza respects its users!"/>
+		<control caption="Jeste li znali da je Shareaza 100% besplatni proizvod?"/>
+		<control caption="Shareaza NE SADRŽI &quot;spyware&quot;, &quot;adware&quot; ili ostali loši software. NE prikazuje nikakve reklame ili &quot;popupove&quot;, nikada.{n}{n}Ako ikada vidite reklamu ili &quot;popup&quot; dok koristite Shareazu, možete biti uvjereni da ju NE PRIKAZUJE ovaj program."/>
+		<control caption="Na žalost dosta ostalog softwarea uistinu dolazi sa neželjenim adware ili spyware djelovima, ako vidite nešto sumljivo obavezno provjerite vaš PC sa advertising ili spyware removal programom."/>
+		<control caption="Nitko vam nebi smio naplatiti za Shareazu.Shareazu možete besplatno skinuti sa www.shareaza.com.Ako ste nekome platili Shareazu, trebali bi ste odmah tražiti potpuni povrat novca."/>
+		<control caption="Shareaza Poštuje Svoje Korisnike!"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="Zatvori"/>
 	</dialog>
 
-	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Spread the Word">
+	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Razglasi">
 		<control/>
-		<control caption="Help Us Spread the Word"/>
-		<control caption="We hope you have enjoyed using Shareaza so far.We believe it is the best file sharing application around."/>
-		<control caption="Unfortunately, a lot of file sharers don't know what they're missing!"/>
-		<control caption="If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"/>
-		<control caption="Chances are they'll be grateful you rescued them!"/>
+		<control caption="Pomogni Nam Raširiti Riječ"/>
+		<control caption="Nadamo se da uživate koristeći Shareazu.Vjerujemo da je najbolji program za raznjenu datoteka koji postoji."/>
+		<control caption="Nažalost, puno ljudi nezna što propušta koristeći zastarijele programe!"/>
+		<control caption="Ako znate nekoga za koga mislite da bi mu Shareaza dobro došla, bilo da je novi u djeljenju, ili već koristi neki od lošijih proizvoda, zašto ga nebi upoznali sa Shareazom i pokazali da ima boljih alternativa?"/>
+		<control caption="Vjerovatno če vam biti zahvalni što ste im pokazali pravi put!"/>
 		<control caption="www.shareaza.com"/>
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Existing File">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Postojeća Datoteka">
 		<control/><control/><control/><control/>
-		<control caption="You already have this file in your file library.What would you like to do?"/>
+		<control caption="Ovu datoteku već imate u vašoj kolekciji.Što želite učiniti?"/>
 		<control caption="Pokaži mi datoteku u mojoj kolekciji"/>
-		<control caption="Download the file again"/>
-		<control caption="Don't download this file"/>
+		<control caption="Ponovno skini"/>
+		<control caption="Nemoj skinuti, to već imam"/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
-		<control caption="You have downloaded and deleted this file before.What would you like to do?"/>
+		<control caption="Ovu datoteku ste već skinuli, pa obrisali.  Što želite učiniti?"/>
 	</dialog>
 
-	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
+	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Zatvaranje">
 		<control/>
-		<control caption="This is the first time you have clicked Shareaza's close button.Please choose what action you would like Shareaza to take when clicking the close button from now on:"/>
-		<control caption="Minimise to the tray area"/>
-		<control caption="Shut down Shareaza immediately"/>
-		<control caption="Shut down Shareaza after any downloads and uploads finish"/>
+		<control caption="Ovo je prvi puta da zatvarate Shareazu.Molim da odaberete što će Shareaza učiniti kada ubuduće kliknete na zatvori:"/>
+		<control caption="Spusti u tray"/>
+		<control caption="Odmah zatvori Shareazu"/>
+		<control caption="Zatvori Shareazu tek nakon što završi skidanje/davanje u tjeku"/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
@@ -4059,8 +4058,8 @@
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Napredno)">
-		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
-		<control caption="File_name:"/>
+		<control caption="UPOZORENJE: Ove opcije omogučuju napredno podešavanje skidanja, ako se pogrešno koriste vjerovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
+		<control caption="Ime datoteke:"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="SHA1:"/>
@@ -4069,40 +4068,40 @@
 		<control/>
 		<control caption="ED2K:"/>
 		<control/>
-		<control caption="_Actions:"/>
-		<control caption="Forget current verification status (and reverify)"/>
-		<control caption="Assume file is 100% complete and reverify"/>
-		<control caption="Forget all known sources"/>
-		<control caption="Data _Eraser:"/>
-		<control caption="Erase bytes:"/>
+		<control caption="_Akcije:"/>
+		<control caption="Zaboravi trenutno stanje provjere (i ponovno provjeri)"/>
+		<control caption="Pretpostavi da je datoteka 100% skinuta i ponovno provjeri"/>
+		<control caption="Zaboravi sve poznate izvore"/>
+		<control caption="Brisač Podataka:"/>
+		<control caption="Obriši bajtove:"/>
 		<control/>
-		<control caption="to"/>
+		<control caption="do"/>
 		<control/>
-		<control caption="Erase"/>
+		<control caption="Obriši"/>
 		<control caption="_Torrent Info..."/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Open Torrent File">
+	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otvori Torrent Datoteku">
 		<control/>
-		<control caption="You have opened a BitTorrent torrent file.Would you like to download its contents, or re-seed it?"/>
-		<control caption="Download"/>
+		<control caption="Otvorili ste BitTorrent torrent datoteku.Želite je skinuti, ili re-seed?"/>
+		<control caption="Skini"/>
 		<control caption="Seed"/>
 		<control caption="Prekini"/>
 		<control caption="To share complete files using BitTorrent they must first be seeded.Once this process is complete the Torrent will appear as a new item in your download list."/>
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Advanced Information">
-		<control caption="Torrent _Information:"/>
-		<control caption="Name:"/>
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Napredne Informacije o BitTorrentu">
+		<control caption="Torrent _Informacije:"/>
+		<control caption="Ime:"/>
 		<control/>
-		<control caption="Created:"/>
+		<control caption="Napravljeno:"/>
 		<control/>
-		<control caption="By:"/>
+		<control caption="Napravio:"/>
 		<control/>
-		<control caption="Comments:"/>
+		<control caption="Komentari:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
@@ -4112,16 +4111,16 @@
 		<control caption="Incomplete:"/>
 		<control/>
 		<control caption="Transfers:"/>
-		<control caption="Start new download transfers:"/>
-		<control caption="As needed|When ratio over 100%|Only when requested|Never"/>
-		<control caption="_Files:"/>
+		<control caption="Počni novo skidanje:"/>
+		<control caption="Po potrebi|Kad omjer prijeđe 100%|Samo po zahtjevu|Nikada"/>
+		<control caption="Datoteke:"/>
 		<control/>
 		<control caption="Osvježi"/>
 		<control/>
 		<control caption="Zatvori"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
+	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Postavke">
 		<control caption="Ime:"/>
 		<control/><control/>
 		<control caption="_Filteri:"/>
@@ -4130,7 +4129,7 @@
 		<control caption="Makni"/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
-		<control caption="Completed File _Folder:"/>
+		<control caption="Mapa sa Skinutim Datotekama:"/>
 		<control/>
 	</dialog>
 
@@ -4153,15 +4152,15 @@
 		<control caption="Nemoj Unaprijedit"/>
 	</dialog>
 
-	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Skini Kritike">
 		<control/>
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalizacija Metadate">
 		<control caption="OK"/>
-		<control caption="Cancel"/>
+		<control caption="Odustani"/>
 		<control caption="Please select the method of re-encoding"/>
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
 	</dialog>
@@ -4183,63 +4182,63 @@
 		<column from="Size" to="Veličina"/>
 		<column from="Progress" to="Stanje"/>
 		<column from="Speed" to="Brzina"/>
-		<column from="Status" to=""/>
-		<column from="Client" to="Klijent"/>
-		<column from="Downloaded" to=""/>
-		<column from="Complete" to=""/>
+		<column from="Status" to="Status"/>
+		<column from="Client" to="Davaoc"/>
+		<column from="Downloaded" to="Skinuto"/>
+		<column from="Complete" to="Gotovo"/>
 	</list>
 	<list name="CUploadCtrl">
-		<column from="Remote User" to=""/>
-		<column from="Uploaded File" to=""/>
+		<column from="Remote User" to="Korisnik"/>
+		<column from="Uploaded File" to="Davana Datoteka"/>
 		<column from="Size" to="Veličina"/>
 		<column from="Progress" to="Stanje"/>
 		<column from="Speed" to="Brzina"/>
-		<column from="Client" to="Klijent"/>
-		<column from="Rating" to=""/>
+		<column from="Client" to="Primalac"/>
+		<column from="Rating" to="Ocjena"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresa"/>
-		<column from="Port" to=""/>
-		<column from="Time" to=""/>
-		<column from="Packets" to=""/>
-		<column from="Bandwidth" to=""/>
-		<column from="Total" to=""/>
-		<column from="Flow" to=""/>
-		<column from="Leaves" to=""/>
-		<column from="Mode" to=""/>
+		<column from="Port" to="Port"/>
+		<column from="Time" to="Vrijeme"/>
+		<column from="Packets" to="Paketi"/>
+		<column from="Bandwidth" to="Brzina Prijenosa"/>
+		<column from="Total" to="Ukupno"/>
+		<column from="Flow" to="Protok"/>
+		<column from="Leaves" to="Leaves"/>
+		<column from="Mode" to="Način"/>
 		<column from="Client" to="Klijent"/>
 		<column from="Name" to="Ime"/>
 	</list>
 	<list name="CSecurityWnd">
-		<column from="Address / Content" to=""/>
-		<column from="Action" to=""/>
-		<column from="Expires" to=""/>
+		<column from="Address / Content" to="Adresa / Sadržaj"/>
+		<column from="Action" to="Akcija"/>
+		<column from="Expires" to="Ističe"/>
 		<column from="Precedence" to=""/>
 		<column from="Hits" to="Viđeno"/>
-		<column from="Comment" to=""/>
+		<column from="Comment" to="Komentar"/>
 	</list>
 	<list name="CHostCacheWnd">
 		<column from="Address" to="Adresa"/>
-		<column from="Port" to=""/>
+		<column from="Port" to="Port"/>
 		<column from="Client" to="Klijent"/>
 		<column from="Last Seen" to="Zadnji Put Viđeno"/>
 		<column from="Name" to="Ime"/>
 		<column from="Description" to="Opis"/>
-		<column from="CurUsers" to=""/>
-		<column from="MaxUsers" to=""/>
+		<column from="CurUsers" to="UprKorisnika"/>
+		<column from="MaxUsers" to="MaxKorisnika"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresa"/>
 		<column from="Type" to="Vrsta"/>
 		<column from="Last Access" to="Zadnji pristup"/>
-		<column from="Hosts" to=""/>
-		<column from="Accesses" to=""/>
+		<column from="Hosts" to="Hostovi"/>
+		<column from="Accesses" to="Pristupljeno"/>
 		<column from="Updates" to=""/>
-		<column from="Failures" to=""/>
+		<column from="Failures" to="Neuspjesi"/>
 	</list>
 	<list name="CPacketWnd">
 		<column from="Address" to="Adresa"/>
-		<column from="Protocol" to=""/>
+		<column from="Protocol" to="Protokol"/>
 		<column from="Type" to="Vrsta"/>
 		<column from="T/H" to=""/>
 		<column from="Hex" to=""/>
@@ -4248,7 +4247,7 @@
 	</list>
 	<list name="CSearchMonitorWnd">
 		<column from="Search" to="Traži"/>
-		<column from="URN" to=""/>
+		<column from="URN" to="URN"/>
 		<column from="Schema" to="Šema"/>
 	</list>
 	<list name="CMatchCtrl">
@@ -4264,9 +4263,9 @@
 	<list name="CUploadQueueList">
 		<column from="Name" to="Ime"/>
 		<column from="Criteria" to="Kriterij"/>
-		<column from="Bandwidth" to=""/>
-		<column from="Transfers" to=""/>
-		<column from="Order" to=""/>
+		<column from="Bandwidth" to="Brzina"/>
+		<column from="Transfers" to="Razmjene"/>
+		<column from="Order" to="Naredba"/>
 	</list>
 	<list name="CAdvancedSettingsList">
 		<column from="Setting" to="Postavka"/>
@@ -4274,10 +4273,10 @@
 	</list>
 	<list name="CFavouritesProfileList">
 		<column from="Name" to="Ime"/>
-		<column from="URL" to=""/>
+		<column from="URL" to="URL"/>
 	</list>
 	<list name="CFileSourcesPageList">
-		<column from="URL" to=""/>
+		<column from="URL" to="URL"/>
 		<column from="Expires" to="Ističe"/>
 	</list>
 	<list name="CTorrentTrackerList">
@@ -4285,10 +4284,10 @@
 		<column from="Size" to="Veličina"/>
 	</list>
 	<list name="CReviewList">
-		<column from="User" to=""/>
-		<column from="Rating" to=""/>
-		<column from="Comments" to=""/>
-		<column from="Order" to=""/>
+		<column from="User" to="Korisnik"/>
+		<column from="Rating" to="Ocjena"/>
+		<column from="Comments" to="Komentari"/>
+		<column from="Order" to="Naredba"/>
 	</list>
 </listColumns>
 </skin>
