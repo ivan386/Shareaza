@@ -168,7 +168,7 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 		if ( m_bRewardUploaders && ( pUpload->m_nUserRating > urSharing  ) )
 		{	
 			//If reward is on, a non-sharer might not queue.
-			if ( ( ( GetQueueCapacity() * ( 100 - Settings.Uploads.RewardQueuePercentage ) ) - ( GetQueuedCount() * 100 ) ) <= 0 )
+			if ( ( ( GetQueueCapacity() * ( 100 - Settings.Uploads.RewardQueuePercentage ) ) / 100 ) - ( GetQueuedCount() ) <= 0 )
 			{
 				return FALSE;
 			}
