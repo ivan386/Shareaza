@@ -3376,7 +3376,7 @@ Other:
   	    <control/><control/><control/>
 		<control caption="&#160;Sources torrent de préférence"/>
         <control caption="_EndGame:"/>
-        <control caption="Activer le mode Endgame à de la finition des torrents"/>
+        <control caption="Activer le mode Endgame à la finition des torrents"/>
         <control caption="_Stocker les Torrents ici:"/>
         <control/><control/>
         <control caption="Créateur de _torrent"/>
