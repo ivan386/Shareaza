@@ -630,6 +630,18 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 	
 	if ( pWnd->IsZoomed() )
 	{
+ 		CRect rcWnd;
+ 		SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
+		
+		HMONITOR hMonitor = MonitorFromWindow( pWnd->m_hWnd, MONITOR_DEFAULTTONEAREST );
+		MONITORINFO mi;
+		memset( &mi, 0, sizeof(MONITORINFO) );
+		mi.cbSize = sizeof(MONITORINFO);
+		VERIFY( GetMonitorInfo( hMonitor, &mi ) );
+
+		if ( mi.dwFlags & MONITORINFOF_PRIMARY )
+			SetWindowPos( pWnd->m_hWnd, HWND_TOP, rcWnd.left, rcWnd.top, rcWnd.Width(), 
+				rcWnd.Height(), 0 );
 		pWnd->SetWindowRgn( NULL, TRUE );
 	}
 	else if ( m_pRegionXML )
