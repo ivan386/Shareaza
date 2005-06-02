@@ -3376,7 +3376,7 @@ Other:
   	    <control/><control/><control/>
 		<control caption="&#160;Sources torrent de préférence"/>
         <control caption="_EndGame:"/>
-        <control caption="Activer le mode Endgame lors de la complétion des torrents"/>
+        <control caption="Activer le mode Endgame à de la finition des torrents"/>
         <control caption="_Stocker les Torrents ici:"/>
         <control/><control/>
         <control caption="Créateur de _torrent"/>
@@ -3653,7 +3653,7 @@ Other:
 		<control caption="Générer un nouv."/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Select Language"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Choisir la langue"/>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Se connecter à|Parcourir l'hôte">
 		<control caption="Débute une nouvelle connexion à l'hôte ou au serveur:|Parcourir cet hôte:"/>
@@ -4156,7 +4156,7 @@ Other:
 		<column from="Status" to="Statut"/>
 		<column from="Client" to=""/>
 		<column from="Downloaded" to="Téléchargé"/>
-		<column from="Complete" to="Complétion"/>
+		<column from="Complete" to="Terminé"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Utilisateur distant"/>
