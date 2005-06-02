@@ -52,6 +52,8 @@ protected:
 	DWORD				m_tExecute;					// Time the Execute() function was last run
 	BOOL				m_bFirstTime;
 
+	DWORD				m_tMetQueried;				// Time a MET was last queried
+
 // Operations
 public:
 	POSITION			GetIterator() const;

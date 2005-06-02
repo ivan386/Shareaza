@@ -54,6 +54,7 @@ CDiscoveryServices::CDiscoveryServices()
 	m_nLastUpdateProtocol = PROTOCOL_NULL;
 	m_tExecute		= 0;
 	m_bFirstTime	= TRUE;
+	m_tMetQueried	= 0;
 }
 
 CDiscoveryServices::~CDiscoveryServices()
@@ -627,10 +628,10 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 
 		/*
 		// Note: Do not enable until we have a MET file set up!
-		if ( ( Settings.eDonkey.EnableToday ) && ( ! Settings.eDonkey.MetQueryTime == 0 ) &&
-			 ( HostCache.eDonkey.CountHosts() < 3 ) )
+		if ( ( Settings.eDonkey.EnableToday ) && ( Settings.eDonkey.MetAutoQuery ) &&
+			 ( HostCache.eDonkey.CountHosts() < 3 ) && ( m_tMetQueried == 0 ) )
 		{	// Execute this once only! It's not a webcache...
-			Settings.eDonkey.MetQueryTime = tNow;
+			m_tMetQueried = tNow;
 			if ( RequestRandomService( PROTOCOL_ED2K ) ) return TRUE;
 		}
 		*/
