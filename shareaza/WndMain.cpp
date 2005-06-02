@@ -1386,7 +1386,7 @@ void CMainWnd::LocalSystemChecks()
 		// Check we have donkey servers
 		if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
 		{
-			if ( ( Settings.eDonkey.MetQueryTime ) && ( HostCache.eDonkey.CountHosts() < 1 ) )
+			if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts() < 1 ) )
 			{
 				Settings.Live.DonkeyServerWarning = TRUE;
 				PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );

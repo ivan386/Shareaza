@@ -277,7 +277,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
 	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
-	Add( _T("eDonkey.MetQueryTime"), &eDonkey.MetQueryTime, 0 );
+	Add( _T("eDonkey.MetAutoQuery"), &eDonkey.MetAutoQuery, FALSE );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
 	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );

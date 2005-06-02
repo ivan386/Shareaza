@@ -315,7 +315,7 @@ public:
 		DWORD		GetSourcesThrottle;			// Max rate a general GetSources can done
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
-		DWORD		MetQueryTime;				// Time we queried for a new server list
+		DWORD		MetAutoQuery;				// Auto query for a new server list
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
 		DWORD		RequestPipe;
