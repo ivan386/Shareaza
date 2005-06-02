@@ -163,15 +163,15 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 	ASSERT( pUpload != NULL );
 	ASSERT( pUpload->m_pQueue == NULL );
 	
-	
-
 	if ( ! bForce && ! bStart )	//If this upload isn't forced, check to see if it's valid to queue
 	{	
-		if ( m_bRewardUploaders && pUpload->m_nUserRating > 2  ) 
+		if ( m_bRewardUploaders && ( pUpload->m_nUserRating > urSharing  ) )
 		{	
 			//If reward is on, a non-sharer might not queue.
-			if( ( GetQueueCapacity() * Settings.Uploads.RewardQueuePercentage / 100 ) >= GetQueueRemaining() )
+			if ( ( ( GetQueueCapacity() * ( 100 - Settings.Uploads.RewardQueuePercentage ) ) - ( GetQueuedCount() * 100 ) ) <= 0 )
+			{
 				return FALSE;
+			}
 		}
 		else
 		{	

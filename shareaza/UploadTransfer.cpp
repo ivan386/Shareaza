@@ -63,7 +63,7 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	m_bLive			= TRUE;
 	m_nRequests		= 0;
 	m_nUploaded		= 0;
-	m_nUserRating	= 0;
+	m_nUserRating	= urNew;
 	m_bClientExtended= FALSE;
 
 	m_bStopTransfer	= FALSE;
@@ -300,7 +300,7 @@ void CUploadTransfer::RotatingQueue(DWORD tNow)
 		DWORD tRotationLength = m_pQueue->m_nRotateTime * 1000;
 
 		// High ranked users can get a longer rotate time
-		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == 1 ) )
+		if ( ( m_pQueue->m_bRewardUploaders ) && ( m_nUserRating == urCredit ) )
 			tRotationLength <<= 1;
 
 		pLock.Unlock();
@@ -332,16 +332,16 @@ void CUploadTransfer::CalculateRating(DWORD tNow)
 		if ( nDownloaded > 128 * 1024)	//They have uploaded to us. (Transfers < 128k are ignored)
 		{
 			if ( nDownloaded > m_nUploaded ) //If they have sent more to us than we have to them
-				m_nUserRating = 1;				//They get the highest rating
+				m_nUserRating = urCredit;			//They get the highest rating
 			else
-				m_nUserRating = 2;				//Otherwise, #2. (still known sharer)
+				m_nUserRating = urSharing;			//Otherwise, #2. (still known sharer)
 		}
 		else							//They have not uploaded to us.
 		{
 			if ( m_nUploaded < 4*1024*1024 ) //If they have not gotten at least 4MB
-				m_nUserRating = 3;				//They are a new user- give uncertain rating
+				m_nUserRating = urNew;			//They are a new user- give uncertain rating
 			else
-				m_nUserRating = 4;				//Else, probably not uploading to us.
+				m_nUserRating = urNotSharing;	//Else, probably not uploading to us.
 		}
 	}
 

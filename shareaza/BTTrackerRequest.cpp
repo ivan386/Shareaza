@@ -106,11 +106,15 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	//m_pRequest.AddHeader( _T("Accept"), _T("application/x-bittorrent") ); // This causes problems with some trackers
 	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("gzip") );
 	
-	CString strUserAgent = Settings.SmartAgent( Settings.General.UserAgent );
-	Replace( strUserAgent, _T("Shareaza"), _T("RAZA") );
-	m_pRequest.SetUserAgent( strUserAgent );
+	if ( Settings.BitTorrent.StandardPeerID )
+	{
+		CString strUserAgent = Settings.SmartAgent( Settings.General.UserAgent );
+		m_pRequest.SetUserAgent( strUserAgent );
+	}
 
 	//m_pRequest.AddHeader( _T("Cache-Control"), _T("no-cache") ); // Shouldn't be needed
+
+	//theApp.Message( MSG_DEBUG, _T("Sending announce") );
 
 	BTClients.Add( this );
 	CreateThread();

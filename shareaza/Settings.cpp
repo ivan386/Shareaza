@@ -315,6 +315,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.ClearRatio"), &BitTorrent.ClearRatio, 120 );
 	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
 	Add( _T("BitTorrent.TrackerKey"), &BitTorrent.TrackerKey, TRUE );
+	Add( _T("BitTorrent.StandardPeerID"), &BitTorrent.StandardPeerID, TRUE );
 	Add( _T("BitTorrent.PreferenceBTSources"), &BitTorrent.PreferenceBTSources, TRUE );
 	
 	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.UserPath + _T("\\Incomplete") );

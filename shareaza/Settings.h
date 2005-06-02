@@ -356,6 +356,7 @@ public:
 		DWORD		ClearRatio;					// Share ratio a torrent must reach to be cleared. (Minimum 100%)
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		BOOL		TrackerKey;					// Send a key (random value) to trackers
+		BOOL		StandardPeerID;				// Use the newer (non-official) standard for making Peer-IDs
 		BOOL		PreferenceBTSources;		// Preference downloading from BT sources where appropriate
 	} BitTorrent;
 

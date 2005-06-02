@@ -263,32 +263,38 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 		}
 	}
 
-	//Client ID
-	m_pPeerID.n[ 0 ] = '-';
-	m_pPeerID.n[ 1 ] = 'S';
-	m_pPeerID.n[ 2 ] = 'Z';
-	m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + '0';
-	m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + '0';
-	m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + '0';
-	m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + '0';
-	//m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + ( ( theApp.m_nVersion[0] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	//m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + ( ( theApp.m_nVersion[1] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	//m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + ( ( theApp.m_nVersion[2] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	//m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + ( ( theApp.m_nVersion[3] < 9 ) ? '0' :  ( 'A' - 10 ) );
-	m_pPeerID.n[ 7 ] = '-';
-
-	//Random characters for ID
-	srand( GetTickCount() );
-	for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
+	// Client ID
+	if ( Settings.BitTorrent.StandardPeerID )
 	{
-		m_pPeerID.n[ nByte ] += rand();
+		// Use the new (but not official) peer ID style.
+		m_pPeerID.n[ 0 ] = '-';
+		m_pPeerID.n[ 1 ] = 'S';
+		m_pPeerID.n[ 2 ] = 'Z';
+		m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + '0';
+		m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + '0';
+		m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + '0';
+		m_pPeerID.n[ 6 ] = (BYTE)theApp.m_nVersion[3] + '0';
+		m_pPeerID.n[ 7 ] = '-';
+
+		// Random characters for ID
+		srand( GetTickCount() );
+		for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
+		{
+			m_pPeerID.n[ nByte ] += rand();
+		}
+		for ( nByte = 16 ; nByte < 20 ; nByte++ )
+		{
+			m_pPeerID.n[ nByte ]	= m_pPeerID.n[ nByte % 16 ]
+									^ m_pPeerID.n[ 15 - ( nByte % 16 ) ];
+		}
 	}
-
-	//Old style ID (retain for at least one version)
-	for ( nByte = 16 ; nByte < 20 ; nByte++ )
+	else
 	{
-		m_pPeerID.n[ nByte ]	= m_pPeerID.n[ nByte % 16 ]
-								^ m_pPeerID.n[ 15 - ( nByte % 16 ) ];
+		// Old style ID 
+		for ( nByte = 0 ; nByte < 20 ; nByte++ )
+		{
+			m_pPeerID.n[ nByte ] += rand();
+		}
 	}
 
 	return TRUE;
