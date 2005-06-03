@@ -1903,7 +1903,7 @@ Other:
 	<document name="DownloadHelp.Select">
 		<text format="b">Zone de téléchargement</text>
 		<newline gap="8"/>
-		<text>Ici sont affichés les fichiers actuellement téléchargés. Pour voir les sources individuelles vous pouvez expandre chaque fichier avec un petit + sur la gauche.</text>
+		<text>Ici sont affichés les fichiers actuellement téléchargés. Pour voir les sources individuelles vous pouvez développer chaque téléchargement avec un petit + à sa gauche.</text>
   	    <newline gap="8"/>
   	    <text>Vous pouvez également utiliser cette commande pour obtenir une information d'aide sur un téléchargement spécifique. Sélectionnez simplement un téléchargement et choisissez cette commande à nouveau.</text>
 	</document>
@@ -1951,18 +1951,18 @@ Other:
 	</document>
 
 <document name="DownloadHelp.Pending">
-    <text format="b">This Download is Pending</text>
+    <text format="b">Ce téléchargement est en suspens</text>
     <newline gap="8"/>
-    <text>Ce téléchargement attend que quelqu'un commence l'envoi du fichier.
-	Shareaza est prêt à commencer à télécharger ce fichier, mais personne ne l'envoi en ce moment.
-	Vous êtes probablement en attente dans les files d'autres utilisateurs, et le téléchargement peut débuter à tout moment.
+    <text>Ce téléchargement attend que quelqu'un commence l'envoi du fichier. Shareaza est prêt à commencer à télécharger ce fichier, mais personne ne l'envoi en ce moment.</text>
+	<newline gap="8"/>
+	<text>Vous êtes probablement en attente dans les files d'autres utilisateurs, et le téléchargement peut débuter à tout moment.
 	Vous pouvez examiner les sources individuelles afin de voir chacune des files dans lesquelles vous êtes en attente.
 	Si vous partagez vous même des fichiers, cela peut améliorer vos chances de commencer un transfert de téléchargement rapidement.
     </text>
 </document>
 
 	<document name="DownloadHelp.Queued">
-		<text format="b">Ce téléchargement est en attente dans une file.</text>
+		<text format="b">Ce téléchargement est en attente dans une file</text>
 		<newline gap="8"/>
 		<text>Ce téléchargement attend que certains de vos autres téléchargements se terminent. Vos réglages de téléchargement limitent le nombre de téléchargements qui peuvent être actifs à un instant donné, et cela afin d'assurer que chacun des téléchargements dispose d'une part appréciable de la bande passante disponible.  Vous pouvez changer ces réglages via Outils, Réglages de Shareaza. Alternativement, vous pouvez commencer ce téléchargement avec la commande &quot;Reprendre&quot;</text>
 	</document>
