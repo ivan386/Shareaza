@@ -3516,7 +3516,7 @@
 		<control caption="Power sučelje naprednim korisnicima nudi više naredbi, prozora i sl."/>
 	</dialog>
 
-	<dialog name="CWizardConnetionPage" cookie="StCoStCoStCoStCoStCo" caption="Dobrodošli u Shareazu [3 od 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Dobrodošli u Shareazu [3 od 7]">
 		<control caption="Da bi ispravno radila, Shareaza treba znati nešto i o Vašoj vezi prema internetu."/>
 		<control caption="&#160;( odaberite )| Internet koristim za kućne potrebe| Internet koristim preko LAN-a na faxu| Internet koristim preko LAN-a u uredu| Internet koristim u hotelu ili aerodromu"/>
 		<control caption="Da li je Vaša mreža zaštićena firewallom ili NAT routerom?"/>
