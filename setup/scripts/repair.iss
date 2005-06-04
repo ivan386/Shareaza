@@ -1,3 +1,10 @@
+#if VER < 0x05010000
+  #error Inno Setup version 5.1.4 or higher is needed for this script
+#endif
+#if PREPROCVER < 0x05010000
+  #error PreProcessor version 5.1.2 or higher is needed for this script
+#endif
+
 #define version GetFileVersion("..\builds\Shareaza.exe")
 
 [Setup]
