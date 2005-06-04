@@ -41,6 +41,7 @@ public:
 		DWORD		MaxDebugLogSize;			// Max size of the log file
 		BOOL		UpdateCheck;				// Does Shareaza check for new versions?
 		DWORD		DiskSpaceWarning;			// Value at which to warn the user about low disk space
+		DWORD		DiskSpaceStop;				// Value at which to pause all downloads due to low disk space
 		DWORD		MinTransfersRest;			// For how long at least to suspend Transfers each round
 		INT			GUIMode;
 		BOOL		CloseMode;
@@ -460,6 +461,7 @@ public:
 		BOOL		AdultWarning;				// Has the user been warned about the adult filter?
 		BOOL		QueueLimitWarning;			// Has the user been warned about limiting the max Q position accepted?
 		BOOL		DonkeyServerWarning;		// Has the user been warned about having an empty server list?
+		BOOL		DiskSpaceStop;				// Has Shareaza paused all downloads due to critical disk space?
 		DWORD		BandwidthScale;				// Monitor slider settings
 		BOOL		LoadWindowState;
 		BOOL		AutoClose;

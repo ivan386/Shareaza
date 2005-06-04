@@ -48,6 +48,7 @@ void CSettings::Setup()
 	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
 	Add( _T(".HashIntegrity"), &General.HashIntegrity, TRUE );
 	Add( _T(".DiskSpaceWarning"), &General.DiskSpaceWarning, 500 );
+	Add( _T(".DiskSpaceStop"), &General.DiskSpaceStop, 25 );
 	Add( _T(".MinTransfersRest"), &General.MinTransfersRest, 15 );
 	Add( _T("Settings.GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings.CloseMode"), &General.CloseMode, 0 );
@@ -417,15 +418,17 @@ CSettings::CSettings()
 	General.UserPath = General.Path;
 	
 	// Reset 'live' values.
-	Live.BandwidthScale		= 100;
-	Live.LoadWindowState	= FALSE;
-	Live.AutoClose			= FALSE;
-	Live.FirstRun			= FALSE;
+
 	Live.DiskSpaceWarning	= FALSE;
 	Live.DiskWriteWarning	= FALSE;
 	Live.AdultWarning		= FALSE;
 	Live.QueueLimitWarning	= FALSE;
 	Live.DonkeyServerWarning= FALSE;
+	Live.DiskSpaceStop		= FALSE;
+	Live.BandwidthScale		= 100;
+	Live.LoadWindowState	= FALSE;
+	Live.AutoClose			= FALSE;
+	Live.FirstRun			= FALSE;
 
 	// Add all settings
 	Setup();

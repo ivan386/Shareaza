@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,1,6
- PRODUCTVERSION 2,1,1,6
+ FILEVERSION 2,1,1,7
+ PRODUCTVERSION 2,1,1,7
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 1, 6"
+            VALUE "FileVersion", "2, 1, 1, 7"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 1, 6"
+            VALUE "ProductVersion", "2, 1, 1, 7"
         END
     END
     BLOCK "VarFileInfo"
@@ -5540,6 +5540,24 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
+    IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
+    IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
+    IDS_ED2K_EPI_FILE_FAILED "  Unable to import file."
+    IDS_ED2K_EPI_FILE_START " Found partial file ""%s"", importing..."
+    IDS_ED2K_EPI_CANT_OPEN_PART "  Unable to open part file ""%s""."
+    IDS_ED2K_EPI_DETECTED   "  Found download ""%s"", size %s."
+    IDS_ED2K_EPI_FILE_OLD   "  Download data file is newer than .part file, aborting."
+    IDS_ED2K_EPI_COPY_START "  Copying ""%s"" to ""%s""..."
+    IDS_ED2K_EPI_COPY_FINISHED "  Finished copying file."
+    IDS_ED2K_EPI_FILE_CREATED 
+                            "  Created Shareaza partial download, %s remaining."
+    IDS_ED2K_EPI_ALREADY    "  This file is already in the Shareaza download list."
+    IDS_ED2K_EPI_DISK_SPACE "  Insufficient disk space to copy download file."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotiating..."
     IDS_BT_CLIENT_CONNECT_TIMEOUT 
                             "Timed out connecting to BitTorrent client %s."
@@ -5567,24 +5585,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
-    IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
-    IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
-    IDS_ED2K_EPI_FILE_FAILED "  Unable to import file."
-    IDS_ED2K_EPI_FILE_START " Found partial file ""%s"", importing..."
-    IDS_ED2K_EPI_CANT_OPEN_PART "  Unable to open part file ""%s""."
-    IDS_ED2K_EPI_DETECTED   "  Found download ""%s"", size %s."
-    IDS_ED2K_EPI_FILE_OLD   "  Download data file is newer than .part file, aborting."
-    IDS_ED2K_EPI_COPY_START "  Copying ""%s"" to ""%s""..."
-    IDS_ED2K_EPI_COPY_FINISHED "  Finished copying file."
-    IDS_ED2K_EPI_FILE_CREATED 
-                            "  Created Shareaza partial download, %s remaining."
-    IDS_ED2K_EPI_ALREADY    "  This file is already in the Shareaza download list."
-    IDS_ED2K_EPI_DISK_SPACE "  Insufficient disk space to copy download file."
-END
-
-STRINGTABLE 
-BEGIN
     IDS_BT_TRACK_CHANGE     "You have changed the tracker URL for this torrent.  Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."
     IDS_BT_CLIENT_EXTENDED  "BitTorrent coupling with %s is extended protocol, identified ""%s""."
     IDS_BT_CLIENT_EXCHANGE  "Received %i new BitTorrent sources from %s."
@@ -5598,6 +5598,13 @@ BEGIN
     IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
     IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
     IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BT_CLIENT_DROP_CONNECTING "BitTorrent connection to %s was dropped."
+    IDS_BT_CLIENT_DROP_HANDSHAKE "BitTorrent handshake with %s was dropped."
+    IDS_BT_CLIENT_DROP_CONNECTED "BitTorrent coupling with %s was dropped."
 END
 
 STRINGTABLE 
