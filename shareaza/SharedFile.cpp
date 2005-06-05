@@ -568,7 +568,7 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL bForce)
 	return pSource;
 }
 
-CString CLibraryFile::GetAlternateSources(CStringList* pState, int nMaximum, BOOL bHTTP)
+CString CLibraryFile::GetAlternateSources(CStringList* pState, int nMaximum, PROTOCOLID nProtocol)
 {
 	CString strSources;
 	SYSTEMTIME stNow;
@@ -586,7 +586,8 @@ CString CLibraryFile::GetAlternateSources(CStringList* pState, int nMaximum, BOO
 		{
 			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
 			
-			if ( bHTTP && _tcsncmp( pSource->m_sURL, _T("http://"), 7 ) != 0 ) continue;
+			if ( ( nProtocol == PROTOCOL_HTTP ) && ( _tcsncmp( pSource->m_sURL, _T("http://"), 7 ) != 0 ) )
+				continue;
 			
 			CString strURL = pSource->m_sURL;
 			Replace( strURL, _T(","), _T("%2C") );

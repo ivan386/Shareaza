@@ -595,7 +595,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	}
 	
 	CString strLocations;
-	if ( Settings.Library.SourceMesh ) strLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, TRUE );
+	if ( Settings.Library.SourceMesh ) strLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, PROTOCOL_HTTP );
 	if ( m_sLocations.GetLength() ) pFile->AddAlternateSources( m_sLocations );
 	m_sLocations = strLocations;
 	

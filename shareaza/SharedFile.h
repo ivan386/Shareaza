@@ -114,7 +114,7 @@ public:
 public:
 	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, BOOL bForce = TRUE);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
-	CString			GetAlternateSources(CStringList* pState, int nMaximum, BOOL bHTTP);
+	CString			GetAlternateSources(CStringList* pState, int nMaximum, PROTOCOLID nProtocol);
 protected:
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime, LPCTSTR pszMetaData);
@@ -185,8 +185,8 @@ public:
 
 // Attributes
 public:
-	CString		m_sURL;
-	FILETIME	m_pTime;
+	CString		m_sURL;									// The URL
+	FILETIME	m_pTime;								// Time last seen
 
 // Operations
 public:
