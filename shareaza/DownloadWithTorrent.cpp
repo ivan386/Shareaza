@@ -702,3 +702,34 @@ BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 
 	return FALSE;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithTorrent check if upload exists
+
+BOOL CDownloadWithTorrent::UploadExists(in_addr* pIP) const
+{
+	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+	{
+		CUploadTransferBT* pTransfer = (CUploadTransferBT*)m_pTorrentUploads.GetNext( pos );
+
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
+			 ( pTransfer->m_nState != upsNull ) &&
+			 ( pTransfer->m_pHost.sin_addr.S_un.S_addr == pIP->S_un.S_addr ) )
+			return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL CDownloadWithTorrent::UploadExists(SHA1* pGUID) const
+{
+	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
+	{
+		CUploadTransferBT* pTransfer = (CUploadTransferBT*)m_pTorrentUploads.GetNext( pos );
+
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) &&
+			 ( pTransfer->m_nState != upsNull ) &&
+			 ( memcmp( pGUID, &pTransfer->m_pClient->m_pGUID, 16 ) == 0 ) )
+			return TRUE;
+	}
+	return FALSE;
+}

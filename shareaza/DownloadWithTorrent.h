@@ -80,6 +80,8 @@ public:
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
 	float			GetRatio() const;
 	BOOL 			CheckTorrentRatio() const;
+	BOOL			UploadExists(in_addr* pIP) const;
+	BOOL			UploadExists(SHA1* pGUID) const;
 public:
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*				CreateBitfieldPacket();
