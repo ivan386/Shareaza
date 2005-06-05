@@ -90,6 +90,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.General.MaxDebugLogSize, 1024*1024, 0, 100, _T(" MB") );
 	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
 	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
+	AddSetting( &Settings.General.DiskSpaceStop, 1, 0, 1000 , _T(" M") );
 	AddSetting( &Settings.General.HashIntegrity, 1, 0, 1 );
 	AddSetting( &Settings.General.MinTransfersRest, 1, 1, 100, _T(" ms") );
 

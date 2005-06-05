@@ -1301,6 +1301,19 @@ void CMainWnd::LocalSystemChecks()
 		tLastCheck = tTicks;
 
 		// Check disk space
+		if ( Settings.Live.DiskSpaceStop == FALSE )
+		{
+			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceStop * 1024 * 1024 ) )
+			{
+				CSingleLock pLock( &Transfers.m_pSection );
+				if ( pLock.Lock( 250 ) )
+				{
+					Settings.Live.DiskSpaceStop = TRUE;
+					Downloads.PauseAll();
+				}
+
+			}
+		}
 		if ( Settings.Live.DiskSpaceWarning == FALSE )
 		{
 			if ( ! Downloads.IsSpaceAvailable( (QWORD)Settings.General.DiskSpaceWarning * 1024 * 1024 ) )
