@@ -222,11 +222,12 @@ BOOL CBTClient::OnConnected()
 void CBTClient::OnDropped(BOOL bError)
 {
 	if ( ! m_bConnected )
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_CONNECT_TIMEOUT, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTING, (LPCTSTR)m_sAddress );
 	else if ( ! m_bOnline )
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_HANDSHAKE_TIMEOUT, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_HANDSHAKE, (LPCTSTR)m_sAddress );
 	else
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROPPED, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTED, (LPCTSTR)m_sAddress );
+	   
 	Close();
 }
 
@@ -328,6 +329,7 @@ BOOL CBTClient::OnHandshake1()
 	if ( memcmp( pIn, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) != 0 )
 	{
 		ASSERT( FALSE );
+		theApp.Message( MSG_ERROR, _T("BitTorrent coupling from %s had invalid header"), (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;
 	}
@@ -353,7 +355,7 @@ BOOL CBTClient::OnHandshake1()
 		}
 		else if ( ! m_pDownload->IsTrying() )
 		{	//Display and error and exit
-			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested an inactive Torrent") );
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -366,16 +368,23 @@ BOOL CBTClient::OnHandshake1()
 		// Find the requested file
 		m_pDownload = Downloads.FindByBTH( &pFileHash, TRUE );
 		
-		if ( m_pDownload == NULL )				// If we can't find the file
-		{	//Display and error and exit
+		if ( m_pDownload == NULL )									// If we can't find the file
+		{	// Display and error and exit
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
-		else if ( ! m_pDownload->IsTrying() )	// If the file isn't active
-		{	//Display and error and exit
+		else if ( ! m_pDownload->IsTrying() )						// If the file isn't active
+		{	// Display and error and exit
 			m_pDownload = NULL;
-			theApp.Message( MSG_ERROR, _T("BitTorrent coupling requested inactive Torrent") );
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+		else if ( m_pDownload->UploadExists( &m_pHost.sin_addr ) )	// If there is already an upload of this file to this client
+		{	// Display and error and exit
+			m_pDownload = NULL;
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -384,7 +393,7 @@ BOOL CBTClient::OnHandshake1()
 		// (Prevent routers overloading for very popular torrents)
 		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.5 ) ) 
 		{
-			theApp.Message( MSG_ERROR, _T("Could not accept BitTorrent coupling from %s, maximum connections reached"), (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_MAX_CONNECTIONS, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -441,23 +450,33 @@ BOOL CBTClient::OnHandshake2()
 		}
 		*/
 	}
-	else if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
+	else 
 	{
-		ASSERT( m_pDownloadTransfer == NULL );
-		
-		if ( m_pDownload->m_nStartTorrentDownloads != dtNever ) 
+		if ( m_pDownload->UploadExists( &m_pGUID ) )
 		{
-			// Download from uploaders, unless the user has turned off downloading for this torrent
-		
-			m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
-			// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
-			// May just be clients sending duplicate connection requests, though...
-			if ( m_pDownloadTransfer == NULL )
+			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
+			Close();
+			return FALSE;
+		}
+
+		if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
+		{
+			ASSERT( m_pDownloadTransfer == NULL );
+			
+			if ( m_pDownload->m_nStartTorrentDownloads != dtNever ) 
 			{
-				m_pDownload = NULL;
-				theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
-				Close();
-				return FALSE;
+				// Download from uploaders, unless the user has turned off downloading for this torrent
+			
+				m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
+				// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
+				// May just be clients sending duplicate connection requests, though...
+				if ( m_pDownloadTransfer == NULL )
+				{
+					m_pDownload = NULL;
+					theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+					Close();
+					return FALSE;
+				}
 			}
 		}
 	}
@@ -472,7 +491,7 @@ BOOL CBTClient::OnHandshake2()
 	
 	return OnOnline();
 }
-
+/*
 BOOL CBTClient::OnNoHandshake2()
 {	// If the other client didn't send a peer ID
 	ZeroMemory( m_pGUID.b, 20 );
@@ -483,22 +502,10 @@ BOOL CBTClient::OnNoHandshake2()
 	{
 		ASSERT( m_pDownloadTransfer != NULL );
 		CopyMemory( &m_pDownloadTransfer->m_pSource->m_pGUID, &m_pGUID, 16 );
-		
-		/*
-
-		//ToDo: This seems to trip when it shouldn't. Should be investigated...
-		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
-		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
-			Close();
-			return FALSE;
-		}
-		*/
 	}
 	else if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
 	{
 		ASSERT( m_pDownloadTransfer == NULL );
-		
 		
 		m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
 		//This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
@@ -520,7 +527,7 @@ BOOL CBTClient::OnNoHandshake2()
 	
 	return OnOnline();
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 // CBTClient online handler
 
@@ -529,7 +536,7 @@ void CBTClient::DetermineUserAgent()
 	CString strVer;
 
 	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )	
-	{	//Azerus style
+	{	// Azerus style
 		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'R' )
 		{
 			m_sUserAgent = _T("Arctic");
@@ -592,7 +599,7 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("ZipTorrent");
 		}
-		else //Unknown client using this naming.
+		else // Unknown client using this naming.
 		{
 			m_sUserAgent.Format( _T("%c%c"), m_pGUID.b[1], m_pGUID.b[2] );
 		}
@@ -614,7 +621,7 @@ void CBTClient::DetermineUserAgent()
 
 	}
 	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
-	{	//Shadow style
+	{	// Shadow style
 		switch ( m_pGUID.b[0] )
 		{
 		case 'A':
@@ -629,7 +636,7 @@ void CBTClient::DetermineUserAgent()
 		case 'U':
 			m_sUserAgent = _T("UPnP NAT BT");
 			break;
-		default: //Unknown client using this naming.
+		default: // Unknown client using this naming.
 			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
 		}
 		
@@ -639,19 +646,19 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent += strVer;
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[2] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[6] == '-' )
-	{	//BitTorrent (Standard client, newer version)
+	{	// BitTorrent (Standard client, newer version)
 		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
-	{	//BitComet
+	{	// BitComet
 		m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
-	{	//Burst
+	{	// Burst
 		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_pGUID.b[5] - '0', m_pGUID.b[7] - '0', m_pGUID.b[9] - '0' );
 	}
 	else
-	{	//Unknown peer ID string
+	{	// Unknown peer ID string
 		m_sUserAgent = _T("BitTorrent");
 	}
 	
@@ -749,7 +756,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 // CBTClient advanced handshake
 
 void CBTClient::SendBeHandshake()
-{	// Send extended handshake for (G2 capable clients)
+{	// Send extended handshake (for G2 capable clients)
 	CBENode pRoot;
 	
 	CString strNick = MyProfile.GetNick().Left( 255 ); // Truncate to 255 characters
