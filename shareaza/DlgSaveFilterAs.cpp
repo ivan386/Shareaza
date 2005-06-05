@@ -57,14 +57,14 @@ void CSaveFilterAsDlg::OnOK()
 	if ( m_sName.IsEmpty() )
 	{
 		CString strMessage;
-		LoadString( strMessage, IDS_NO_FILTER_NAME );
+		LoadString( strMessage, IDS_FILTER_NO_NAME );
 		AfxMessageBox( strMessage, MB_OK );
 		return;
 	}
 	if ( ( (CFilterSearchDlg*)m_pParentWnd)->m_pResultFilters->Search( m_sName ) >= 0 )
 	{
 		CString strFormat, strMessage;
-		LoadString( strFormat, IDS_REPLACE_FILTER );
+		LoadString( strFormat, IDS_FILTER_REPLACE );
 		strMessage.Format( strFormat, (LPCTSTR)m_sName );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION | MB_YESNO ) == IDNO )
 		{

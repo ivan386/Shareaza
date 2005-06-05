@@ -5027,6 +5027,8 @@ BEGIN
     IDS_UPLOAD_QUEUE_PARTIAL "Partial"
     IDS_UPLOAD_QUEUE_COMPLETE "All Files"
     IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
+    IDS_DOWNLOAD_416_WITHOUT_RANGE 
+                            "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
 END
 
 STRINGTABLE 
@@ -5411,6 +5413,8 @@ BEGIN
     IDS_SCHEMAS             "&Schemas"
     IDS_MULTIPLE_VALUES     "Multiple Values"
     IDS_MULTIPLE            "Multiple"
+    IDS_FILTER_REPLACE      "There already is a filter called ""%s"", do you want to replace it?"
+    IDS_FILTER_NO_NAME      "Please give your filter a name."
 END
 
 STRINGTABLE 
@@ -5778,8 +5782,6 @@ BEGIN
     IDS_RATING_4            "Good"
     IDS_RATING_5            "Very Good"
     IDS_RATING_6            "Excellent"
-    IDS_REPLACE_FILTER      "There already is a filter called ""%s"", do you want to replace it?"
-    IDS_NO_FILTER_NAME      "Please give your filter a name."
 END
 
 #endif    // English (Australia) resources

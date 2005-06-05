@@ -1253,6 +1253,23 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 				(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen,
 				(LPCTSTR)m_sQueueName );
 		}
+		else if ( m_bRangeFault && !m_bGotRanges )
+        {
+			/* we got a "requested range unavailable" error but the source doesn't
+			advertise available ranges; don't start to guess, try again later */
+			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_416_WITHOUT_RANGE, (LPCTSTR)m_sAddress );
+			Close( TS_TRUE );
+			m_tRequest = GetTickCount();
+        }
+		else if ( m_bRangeFault && m_bGotRange && m_nRequests >= 2 )
+		{
+			/* we made two requests already and the source does advertise available
+            ranges, but we still managed to request a wrong one */
+			// TODO: find the reason why this is happening
+			theApp.Message( MSG_ERROR, _T("BUG: Shareaza requested a fragment from Host %s, although it knew that the host doesn't have that fragment") , (LPCTSTR)m_sAddress );
+			Close( TS_TRUE );
+            m_tRequest = GetTickCount();
+		}
 		else
 		{
 			return StartNextFragment();
