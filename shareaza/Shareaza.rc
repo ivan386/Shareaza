@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,1,7
- PRODUCTVERSION 2,1,1,7
+ FILEVERSION 2,1,1,8
+ PRODUCTVERSION 2,1,1,8
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 1, 7"
+            VALUE "FileVersion", "2, 1, 1, 8"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 1, 7"
+            VALUE "ProductVersion", "2, 1, 1, 8"
         END
     END
     BLOCK "VarFileInfo"
@@ -5571,7 +5571,8 @@ BEGIN
     IDS_BT_CLIENT_UNKNOWN_FILE 
                             "BitTorrent coupling with %s requested an unknown file."
     IDS_BT_CLIENT_ONLINE    "BitTorrent coupling with %s established for ""%s""."
-    IDS_BT_CLIENT_DROPPED   "BitTorrent coupling with %s was lost."
+    IDS_BT_CLIENT_INACTIVE_FILE 
+                            "BitTorrent coupling with %s requested an inactive file."
     IDS_BT_PREFETCH_FILE    "Received BitTorrent descriptor file: ""%s"""
     IDS_BT_PREFETCH_ERROR   "Unable to parse prefetched BitTorrent file ""%s""."
     IDS_BT_TRACK_ERROR      "Error from BitTorrent tracker for ""%s"" : ""%s""."
@@ -5605,6 +5606,9 @@ BEGIN
     IDS_BT_CLIENT_DROP_CONNECTING "BitTorrent connection to %s was dropped."
     IDS_BT_CLIENT_DROP_HANDSHAKE "BitTorrent handshake with %s was dropped."
     IDS_BT_CLIENT_DROP_CONNECTED "BitTorrent coupling with %s was dropped."
+    IDS_BT_CLIENT_DUPLICATE "BitTorrent coupling with %s not accepted, a connection to this client already exists."
+    IDS_BT_CLIENT_MAX_CONNECTIONS 
+                            "BitTorrent coupling with %s not accepted, maximum connections reached."
 END
 
 STRINGTABLE 
