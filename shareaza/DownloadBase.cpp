@@ -92,6 +92,8 @@ void CDownloadBase::GenerateLocalName()
 		CreateDirectory( Settings.Downloads.IncompletePath, NULL );
 		m_sLocalName = Settings.Downloads.IncompletePath + _T("\\") + m_sLocalName;
 	}
+
+	ASSERT( m_sLocalName.GetLength() < 254 );
 }
 
 //////////////////////////////////////////////////////////////////////

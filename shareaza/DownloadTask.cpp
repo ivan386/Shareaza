@@ -477,8 +477,11 @@ CString CDownloadTask::SafeFilename(LPCTSTR pszName)
 			strName += _T("x");
 	}
 	
-	if ( strName.GetLength() > 210 )
-		strName = strName.Left( 200 ) + strName.Right( 4 );
+	// Maximum filepath length is
+	// <Windows limit = 254> - <length of path to download directory> - <length of hash = 39(tiger)> - <length of ".sd.sav" = 7>
+	int nMaxFilenameLength = 254 - Settings.Downloads.IncompletePath.GetLength() - 46;	
+	if ( strName.GetLength() > nMaxFilenameLength )
+		strName = strName.Left( nMaxFilenameLength ) + strName.Right( 4 );
 	
 	return strName;
 }
