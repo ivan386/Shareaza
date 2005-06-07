@@ -1,6 +1,10 @@
 //
 // MatchObjects.cpp
 //
+//	Date:			"$Date: 2005/06/07 22:59:30 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -63,7 +67,7 @@ CMatchList::CMatchList()
 	
 	int nDefaultFilter = m_pResultFilters->m_nDefault;
 
-	if ( ( nDefaultFilter != NONE ) && ( (int)m_pResultFilters->m_nFilters >= nDefaultFilter ) )
+	if ( ( nDefaultFilter != NONE ) && ( (int)m_pResultFilters->m_nFilters >= nDefaultFilter + 1 ) )
 	{
 		m_bFilterBusy		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBusy;
 		m_bFilterPush		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPush;
