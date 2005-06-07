@@ -1,8 +1,8 @@
 //
 // DownloadTask.cpp
 //
-//	Date:			"$Date: 2005/06/07 17:34:48 $"
-//	Revision:		"$Revision: 1.17 $"
+//	Date:			"$Date: 2005/06/07 20:20:41 $"
+//	Revision:		"$Revision: 1.18 $"
 //  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -487,7 +487,9 @@ CString CDownloadTask::SafeFilename(LPCTSTR pszName)
 	int nMaxFilenameLength = MAX_PATH - 1 - Settings.Downloads.IncompletePath.GetLength() - 46;	
 	if ( strName.GetLength() > nMaxFilenameLength )
 	{
-		int nExtLen = _tcslen( pszExt );
+		int nExtLen;
+		if ( pszExt ) nExtLen = _tcslen( pszExt );
+		else nExtLen = 0;
 		strName = strName.Left( nMaxFilenameLength - nExtLen ) + strName.Right( nExtLen );
 	}
 	
