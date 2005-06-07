@@ -1259,16 +1259,16 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 			advertise available ranges; don't start to guess, try again later */
 			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_416_WITHOUT_RANGE, (LPCTSTR)m_sAddress );
 			Close( TS_TRUE );
-			m_tRequest = GetTickCount();
+			return FALSE;
         }
-		else if ( m_bRangeFault && m_bGotRange && m_nRequests >= 2 )
+		else if ( m_bRangeFault && m_bGotRanges && m_nRequests >= 2 )
 		{
 			/* we made two requests already and the source does advertise available
             ranges, but we still managed to request a wrong one */
 			// TODO: find the reason why this is happening
-			theApp.Message( MSG_ERROR, _T("BUG: Shareaza requested a fragment from Host %s, although it knew that the host doesn't have that fragment") , (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, _T("BUG: Shareaza requested a fragment from host %s, although it knew that the host doesn't have that fragment") , (LPCTSTR)m_sAddress );
 			Close( TS_TRUE );
-            m_tRequest = GetTickCount();
+			return FALSE;
 		}
 		else
 		{
