@@ -1,6 +1,10 @@
 //
 // PageSettingsDownloads.cpp
 //
+//	Date:			"$Date: 2005/06/07 17:34:48 $"
+//	Revision:		"$Revision: 1.13 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -143,6 +147,15 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
+
+	// Warn user about too long filepath
+	if ( _tcslen( szPath ) > MAX_PATH - 33 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
 	
 	UpdateData( TRUE );
 	m_sDownloadsPath = szPath;
@@ -171,6 +184,15 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
+
+	// Warn user about too long filepath
+	if ( _tcslen( szPath ) > MAX_PATH - 60 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
 
 	UpdateData( TRUE );
 	m_sIncompletePath = szPath;

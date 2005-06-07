@@ -1,6 +1,10 @@
 //
 // DownloadBase.cpp
 //
+//	Date:			"$Date: 2005/06/07 17:34:47 $"
+//	Revision:		"$Revision: 1.9 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -93,7 +97,7 @@ void CDownloadBase::GenerateLocalName()
 		m_sLocalName = Settings.Downloads.IncompletePath + _T("\\") + m_sLocalName;
 	}
 
-	ASSERT( m_sLocalName.GetLength() < 254 );
+	ASSERT( m_sLocalName.GetLength() < MAX_PATH - 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
