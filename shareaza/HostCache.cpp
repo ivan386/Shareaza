@@ -1,6 +1,10 @@
 //
 // HostCache.cpp
 //
+//	Date:			"$Date: 2005/06/07 22:23:05 $"
+//	Revision:		"$Revision: 1.13 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -75,7 +79,7 @@ BOOL CHostCache::Load()
 		pCache->Clear();
 	}
 	
-	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.Path );
+	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.UserPath );
 	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
 	
 	try
@@ -100,7 +104,7 @@ BOOL CHostCache::Save()
 	CString strFile;
 	CFile pFile;
 	
-	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.Path );
+	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.UserPath );
 	
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
 	

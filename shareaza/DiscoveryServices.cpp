@@ -1,6 +1,10 @@
 //
 // DiscoveryServices.cpp
 //
+//	Date:			"$Date: 2005/06/07 22:23:05 $"
+//	Revision:		"$Revision: 1.33 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -366,7 +370,7 @@ BOOL CDiscoveryServices::Load()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	CFile pFile;
 	
-	CString strFile = Settings.General.Path + _T("\\Data\\Discovery.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
 	
 	// Load the services from disk
 	if ( ! pFile.Open( strFile, CFile::modeRead ) )
@@ -409,7 +413,7 @@ BOOL CDiscoveryServices::Save()
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 	CFile pFile;
 
-	CString strFile = Settings.General.Path + _T("\\Data\\Discovery.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
 	if ( !pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 		return FALSE;
 
