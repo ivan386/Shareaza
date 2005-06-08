@@ -594,7 +594,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
 		<separator/>
 		<button id="ID_MEDIA_PLAY"/>
-		<button id="ID_MEDIA_PAUSE"visible="false"/>
+		<button id="ID_MEDIA_PAUSE" visible="false"/>
 		<button id="ID_MEDIA_STOP"/>
 		<button id="ID_MEDIA_PREVIOUS"/>
 		<button id="ID_MEDIA_NEXT"/>
