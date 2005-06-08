@@ -633,7 +633,7 @@ void CSkinWindow::OnSize(CWnd* pWnd)
  		CRect rcWnd;
  		SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
 		
-		HMONITOR hMonitor = MonitorFromWindow( pWnd->m_hWnd, MONITOR_DEFAULTTONEAREST );
+		HMONITOR hMonitor = theApp.m_pfnMonitorFromWindow( pWnd->GetSafeHwnd(), MONITOR_DEFAULTTONEAREST );
 		MONITORINFO mi;
 		memset( &mi, 0, sizeof(MONITORINFO) );
 		mi.cbSize = sizeof(MONITORINFO);
