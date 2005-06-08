@@ -68,6 +68,7 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Plugins"
 Type: files; Name: "{app}\unicows.dll"
 Type: files; Name: "{app}\zlib.dll"
+Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\Shareaza.exe"
 Type: files; Name: "{app}\skin.exe"
 
