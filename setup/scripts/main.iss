@@ -105,11 +105,11 @@ Source: "setup\plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwr
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Skins
-Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs;
-Source: "Skins\LiquidMetal\*"; DestDir: "{app}\Skins\LiquidMetal"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs;
-Source: "Skins\NucleoX\*"; DestDir: "{app}\Skins\NucleoX"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs;
-Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs;
-Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs;
+Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
+Source: "Skins\LiquidMetal\*"; DestDir: "{app}\Skins\LiquidMetal"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
+Source: "Skins\NucleoX\*"; DestDir: "{app}\Skins\NucleoX"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
+Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
+Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 
 ; Languages: English gets installed by default
 Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
