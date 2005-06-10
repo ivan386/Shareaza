@@ -32,6 +32,7 @@
 #include "CoolInterface.h"
 #include "ShellIcons.h"
 #include "Skin.h"
+#include "ThumbCache.h"
 #include "ImageServices.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryMetaPanel.h"
@@ -58,6 +59,7 @@ BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+#define THUMB_STORE_SIZE	128
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel construction
@@ -606,9 +608,34 @@ void CLibraryMetaPanel::OnRun()
 		m_pSection.Unlock();
 
 		CImageFile pFile( &pServices );
+		CThumbCache pCache;
+		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
+		BOOL bSuccess = FALSE;
 
-		if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
+		if ( !pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
 		{
+			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
+			if ( bSuccess ) 
+			{
+				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
+				
+				if ( nSize > THUMB_STORE_SIZE )
+				{
+					nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
+					pFile.Resample( THUMB_STORE_SIZE, nSize );
+				}
+				else
+				{
+					pFile.Resample( nSize, THUMB_STORE_SIZE );
+				}
+				pCache.Store( strPath, &Size, m_nIndex, &pFile );
+			}
+		}
+		else bSuccess = TRUE;
+
+		if ( bSuccess )
+		{
+
 			int nSize = m_nThumbSize * pFile.m_nWidth / pFile.m_nHeight;
 			
 			if ( nSize > m_nThumbSize )

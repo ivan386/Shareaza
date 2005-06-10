@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 END_MESSAGE_MAP()
 
 #define THUMB_ICON	48
+#define THUMB_STORE_SIZE	128
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -938,16 +939,11 @@ void CLibraryThumbView::OnRun()
 
 		CImageFile pFile( &pServices );
 		BOOL bSuccess = FALSE;
+		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 
-		if ( pCache.Load( strPath, &m_szThumb, nIndex, &pFile ) )
-		{
-			bSuccess = TRUE;
-		}
-		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
+		if ( pCache.Load( strPath, &Size, nIndex, &pFile ) )
 		{
 			int nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( ! m_bThread ) break;
 
 			if ( nSize > m_szThumb.cx )
 			{
@@ -959,9 +955,40 @@ void CLibraryThumbView::OnRun()
 				pFile.Resample( nSize, m_szThumb.cy );
 			}
 
+			bSuccess = TRUE;
+		}
+		else if ( pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB() )
+		{
+			int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
+
 			if ( ! m_bThread ) break;
 
-			pCache.Store( strPath, &m_szThumb, nIndex, &pFile );
+			if ( nSize > THUMB_STORE_SIZE )
+			{
+				nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
+				pFile.Resample( THUMB_STORE_SIZE, nSize );
+			}
+			else
+			{
+				pFile.Resample( nSize, THUMB_STORE_SIZE );
+			}
+
+			if ( ! m_bThread ) break;
+
+			pCache.Store( strPath, &Size, nIndex, &pFile );
+
+			// Resample now to display dimensions
+			nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
+
+			if ( nSize > m_szThumb.cx )
+			{
+				nSize = m_szThumb.cx * pFile.m_nHeight / pFile.m_nWidth;
+				pFile.Resample( m_szThumb.cx, nSize );
+			}
+			else
+			{
+				pFile.Resample( nSize, m_szThumb.cy );
+			}
 
 			bSuccess = TRUE;
 		}
