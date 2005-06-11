@@ -3064,7 +3064,7 @@ Other:
 	<string id="20131" value="sources"/> <!-- from 2 to 4 -->
 	<string id="20132" value="sources"/> <!-- from 5 to 9 -->
     <string id="20133" value="Non intéressé"/>
-    <string id="20134" value="Obstrué"/>
+    <string id="20134" value="Occupé"/>
     <string id="20135" value="Suivant"/>
     <string id="20136" value="Q"/>
 	<string id="20200" value="Dimanche"/>
@@ -4081,7 +4081,7 @@ Other:
 		<control caption="Incomplets:"/>
 		<control/>
 		<control caption="Transferts:"/> 
-        <control caption="Commencer les transferts du nouveau téléchargement:"/> 
+        <control caption="Commencer les transferts:"/> 
         <control caption="Selon le besoin|Si le ratio dépasse 100%|Seulement si requis|Jamais"/> 
 		<control caption="_Fichiers:"/>
 		<control/>
