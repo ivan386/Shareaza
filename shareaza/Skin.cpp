@@ -1530,16 +1530,12 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bExclud
 	
 	for ( ; ; pszScan++ )
 	{
-
-#ifdef UNICODE
-		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
-#else
-		if ( *pszScan != NULL && (unsigned char)*pszScan > 32 ) continue;
-#endif
+		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 &&
+			(unsigned short)*pszScan != 160 ) continue;
 		
-		if ( pszWord < pszScan )
+		if ( pszWord <= pszScan )
 		{
-			int nLen = pszScan - pszWord + ( *pszScan ? 1 : 0 );
+			int nLen = pszScan - pszWord;
 			CSize sz = pDC->GetTextExtent( pszWord, nLen );
 
 			if ( pt.x > pBox->left && pt.x + sz.cx > pBox->right )
@@ -1557,7 +1553,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bExclud
 			pBox->top = pt.y + sz.cy;
 		}
 
-		pszWord = pszScan + 1;
+		pszWord = pszScan;
 		if ( ! *pszScan ) break;
 	}
 }
