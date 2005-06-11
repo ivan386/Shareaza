@@ -218,7 +218,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
                        <title language="ar">كلمات البحث</title>
-                       <title language="chs">关键字</title>
+                       <title language="chs">关键词</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es">Palabras Clave</title>
                        <title language="fr">Mots clés</title>
@@ -372,7 +372,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">Quality Notes</title>
                        <title language="af">Kwaliteit Notas</title>
                        <title language="ar">ملاحظة الجودة</title>
-                       <title language="chs">质量说明项</title>
+                       <title language="chs">质量备注</title>
                        <title language="de">Qualitätshinweise</title>
                        <title language="es">Notas de Calidad</title>
                        <title language="fr">Notes sur la qualité</title>
@@ -391,7 +391,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">P2P Release Date</title>
                        <title language="af">P2P Vrystelling</title>
                        <title language="ar">P2P تاريخ اصدار</title>
-                       <title language="chs">P2P 发行时间</title>
+                       <title language="chs">P2P 发布时间</title>
                        <title language="de">P2P Releasedatum</title>
                        <title language="es">Fecha de Lanzamiento en P2P</title>
                        <title language="fr">Date de release P2P</title>
@@ -429,7 +429,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ar">رابط الموزع</title>
-                       <title language="chs">发行商连结</title>
+                       <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
                        <title language="es">Link del Distribuidor</title>
                        <title language="fr">Lien du distributeur</title>

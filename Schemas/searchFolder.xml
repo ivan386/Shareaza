@@ -126,7 +126,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">Search for "{content}"</title>
                <title language="af">Soek vir " {content} "</title>
                <title language="ar">بحث لــ "{content}"</title>
-               <title language="chs">按 "{content}" 搜索</title>
+               <title language="chs">搜索 "{content}"</title>
                <title language="de">Suche nach "{content}"</title>
                <title language="es">Busca por "{contenido}</title>
                <title language="fr">Recherche de "{content}"</title>
@@ -143,7 +143,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
                <subtitle language="ar">يحتوي هذا المجلد الملفات التي جرى البحث عنها "{content}"</subtitle>
-               <subtitle language="chs">这个文件夹包括匹配您搜索的 {content}</subtitle>
+               <subtitle language="chs">此文件夹包含了匹配搜索 "{content}" 的文件</subtitle>
                <subtitle language="de">Dieser Ordner enthält die Dateien, die ihrer Suche nach "{content}" entsprachen.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos que concidieron con la busqueda "{content}"</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers correspondants à votre recherche de "{content}"</subtitle>

@@ -26,7 +26,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">General:All Files</title>
                <title language="af">Algemeen:Alle Lêers</title>
                <title language="ar">&#160;عام: جميع الملفات</title>
-               <title language="chs">&#160;总体:所有档案</title>
+               <title language="chs">&#160;常规:所有文件</title>
                <title language="de">Allgemein:Alle Dateien</title>
                <title language="es">General: Todos los archivos</title>
                <title language="fr">Général:Tous les fichiers</title>
@@ -70,7 +70,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">All Files</title>
                <title language="af">Alle Lêers</title>
                <title language="ar">جميع الملفات</title>
-               <title language="chs">所有档案</title>
+               <title language="chs">所有文件</title>
                <title language="de">Alle Dateien</title>
                <title language="es">Todos los archivos</title>
                <title language="fr">Tous les fichiers</title>
@@ -87,7 +87,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="ar">هذا المجلد يحتوي على جميع الملفات في مكتبتك.</subtitle>
-               <subtitle language="chs">这个文件夹包含收藏中所有文件。</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中的所有文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>

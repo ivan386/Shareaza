@@ -26,7 +26,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">Application:My Applications</title>
                <title language="af">Program:My Programme</title>
                <title language="ar">&#160;البرامج: برامجي الخاصة</title>
-               <title language="chs">&#160;应用程序:我的应用程序</title>
+               <title language="chs">&#160;程序:我的程序</title>
                <title language="de">Anwendung:Eigene Anwendungen</title>
                <title language="es">Aplicación: Todas mis aplicaciones</title>
                <title language="fr">Application:Mes applications</title>
@@ -73,7 +73,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">Welcome to My Applications!</title>
                <title language="af">Welkom by My Programme!</title>
                <title language="ar">مرحبا بك في البرامج!</title>
-               <title language="chs">欢迎来到我的应用程序!</title>
+               <title language="chs">欢迎来到我的程序！</title>
                <title language="de">Willkommen bei Eigene Anwendungen!</title>
                <title language="es">¡Bienvenido a Mis Aplicaciones!</title>
                <title language="fr">Bienvenue dans Mes applications!</title>
@@ -90,7 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
                <subtitle language="ar">هذا المجلد يحتوي على جميع ملفات البرامج.</subtitle>
-               <subtitle language="chs">这些文件夹包含所有您的应用程序。</subtitle>
+               <subtitle language="chs">这些文件夹包含您所有的程序。</subtitle>
                <subtitle language="de">Diese Ordner enthalten alle ihre Anwendungen.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>

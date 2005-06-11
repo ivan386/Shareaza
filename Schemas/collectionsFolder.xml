@@ -26,7 +26,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
               <title language="en">Collections:My Collections</title>
               <title language="af">Versamelings:My Versamelings</title>
               <title language="ar">&#160;المجموعات: مجموعاتي</title>
-              <title language="chs">&#160;收藏:我的收藏</title>
+              <title language="chs">&#160;收集:我的收集</title>
               <title language="de">Kollektionen:Eigene Kollektionen</title>
               <title language="es">Colecciones: Mis Colecciones</title>
               <title language="fr">Collections:Mes collections</title>
@@ -70,7 +70,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">My Collections</title>
                <title language="af">My Versamelings</title>
                <title language="ar">مجموعاتي</title>
-               <title language="chs">我的收藏</title>
+               <title language="chs">我的收集</title>
                <title language="de">Eigene Kollektionen</title>
                <title language="es">Mis Colecciones</title>
                <title language="fr">Mes collections</title>
@@ -87,7 +87,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
                <subtitle language="ar">هذا المجلد يحتوي على مجموعتي في المكتبة.</subtitle>
-               <subtitle language="chs">这个文件夹包含您库中的所有丰富收藏。</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中的任何文件收集。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Kollektionen in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>

@@ -88,7 +88,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ar">الالوان</title>
-                       <title language="chs">美术品收藏者</title>
+                       <title language="chs">收集人</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -152,7 +152,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="ar">يحتوي هذا المجلد على حميع الاغاني ذات {name} نوع .</subtitle>
-               <subtitle language="chs">这个文件夹中所有音乐按照 {name} 流派排序。</subtitle>
+               <subtitle language="chs">此文件夹中包含了流派为 {name} 的音乐。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Musik aus dem {name} Genre.</subtitle>
                <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>

@@ -26,7 +26,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">Video:Films</title>
                <title language="af">Video:Films</title>
                <title language="ar">&#160;فيديو: افلام</title>
-               <title language="chs">&#160;视频:电影</title>
+               <title language="chs">&#160;视频:电影作品</title>
                <title language="de">Video:Filme</title>
                <title language="es">Vvideo: Filmes</title>
                <title language="fr">Vidéo:Films</title>
@@ -90,7 +90,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
                <subtitle language="ar">يحتوي هذا المجلد على قائمة الافلام الموجوده في المكتبة.</subtitle>
-               <subtitle language="chs">这个文件夹中的清单包含您库中的电影。</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中电影的清单。</subtitle>
                <subtitle language="de">Dieser Ordner enthält eine Liste aller Filme in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tous les films de votre bibliothèque.</subtitle>

@@ -26,7 +26,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="en">Music Artist</title>
                <title language="af">Musiek Kunstenaar</title>
                <title language="ar">الالبوم الفنان</title>
-               <title language="chs">音乐-艺术家</title>
+               <title language="chs">音乐艺人</title>
                <title language="de">Musiker</title>
                <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
@@ -88,7 +88,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="en">Collector</title>
                        <title language="af">Versamelaar</title>
                        <title language="ar">الالوان</title>
-                       <title language="chs">美术品收藏者</title>
+                       <title language="chs">收集人</title>
                        <title language="de">Sammler</title>
                        <title language="es">Colector</title>
                        <title language="fr">Collecteur</title>
@@ -158,7 +158,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
                <subtitle language="ar">تحتوي هذه الحافظة كلّ موسيقاك من قبل {name}.</subtitle>
-               <subtitle language="chs">这个文件夹中包括您所有的音乐，按 {name}。</subtitle>
+               <subtitle language="chs">此文件夹包含了艺人为 {name} 的音乐。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
