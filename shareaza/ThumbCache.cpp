@@ -280,6 +280,7 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFi
 	{
 		CArchive ar( &m_pFile, CArchive::store );
 		pImage->Serialize( ar );
+		ar.Flush();
 	}
 	catch ( CException* pException )
 	{
