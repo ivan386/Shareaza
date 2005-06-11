@@ -2091,7 +2091,7 @@ void CMainWnd::OnToolsMercora()
 		if ( nResult > 32 ) return;
 	}
 	
-	ShellExecute( GetSafeHwnd(), NULL, _T("http://www.mercora.com/"), NULL, NULL, SW_SHOWNORMAL );
+	ShellExecute( GetSafeHwnd(), NULL, _T("http://www.shareaza.com/help/external/?mercora"), NULL, NULL, SW_SHOWNORMAL );
 }
 
 
