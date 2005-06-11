@@ -88,7 +88,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="chs">出版商</title>
                        <title language="de">Verlag</title>
                        <title language="es">Editor</title>
-                       <title language="fr">Editeur</title>
+                       <title language="fr">Éditeur</title>
                        <title language="heb">מפיץ</title>
                        <title language="hr">Izdavač</title>
                        <title language="hu">Kiadó</title>
@@ -394,7 +394,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="chs">P2P 发布时间</title>
                        <title language="de">P2P Releasedatum</title>
                        <title language="es">Fecha de Lanzamiento en P2P</title>
-                       <title language="fr">Date de release P2P</title>
+                       <title language="fr">Date de diffusion P2P</title>
                        <title language="heb">תאריך יציאה ברשתות שיתוף</title>
                        <title language="hr">Datum Objave na P2P</title>
                        <title language="hu">P2P kiadási dátum</title>
@@ -451,7 +451,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
                        <title language="es">Release Group</title>
-                       <title language="fr">Groupe de release</title>
+                       <title language="fr">Groupe de diffusion</title>
                        <title language="heb">קבוצת שחרור</title>
                        <title language="hr">Grupa Objavljivača</title>
                        <title language="hu">Kiadó csapat</title>
@@ -470,7 +470,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
                        <title language="es">Release Group Link</title>
-                       <title language="fr">Lien du groupe de release</title>
+                       <title language="fr">Lien du gr. de diffusion</title>
                        <title language="heb">קישור לקבוצת שחרור</title>
                        <title language="hr">Link na Grupu Objavljivača</title>
                        <title language="hu">Kiadó csapat linkje</title>
