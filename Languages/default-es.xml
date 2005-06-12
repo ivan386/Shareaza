@@ -9,7 +9,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="luis.help@gmail.com"
-		version="2.1.0.150"
+		version="2.1.1.3"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -625,7 +625,8 @@
 			<item id="ID_WINDOW_TABBAR" text="Mostrar _Barra de Lengüetas "/>
 			<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
-		</menu><menu text="_Ayuda">
+		</menu>
+      <menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
 
 			<separator/>
@@ -656,7 +657,7 @@
 		<item id="ID_TAB_SEARCH" text="_Busqueda"/>
 		<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
 		<separator/>
-		<menu text="_Advanced">
+		<menu text="_Avanzado">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Red"/>
 			<item id="ID_VIEW_UPLOADS" text="_Subidas"/>
 			<item id="ID_VIEW_SECURITY" text="_Seguridad"/>
@@ -741,7 +742,7 @@
 		<item id="ID_TAB_SEARCH" text="B_uscar"/>
 		<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
 		<separator/>
-		<menu text="_Advanced">
+		<menu text="_Avanzado">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Red"/>
 			<item id="ID_VIEW_UPLOADS" text="_Subidas"/>
 			<item id="ID_VIEW_SECURITY" text="_Seguridad"/>
@@ -819,7 +820,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 		</menu>
-		<menu text="_Web">
+		<menu text="_Servicios Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver Informe de _Bitzi"/>
 		</menu>
 		<separator/>
@@ -863,7 +864,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 		</menu>
-		<menu text="_Web">
+		<menu text="_Servicios Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
 		</menu>
 		<separator/>
@@ -888,7 +889,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
 		</menu>
-		<menu text="_Web">
+		<menu text="_Sevicios Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver Informe de _Bitzi"/>
 		</menu>
 		<separator/>
@@ -1188,7 +1189,7 @@
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Eliminar"/>
 		<separator/>
-		<menu text="S_earch For">
+		<menu text="B_uscar">
 			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
 			<separator/>
@@ -1244,7 +1245,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
 		</menu>
-		<menu text="Settings">
+		<menu text="Configuración">
 			<item id="ID_MEDIA_VIS" text="Escoger _Visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
@@ -1282,7 +1283,7 @@
 			<separator/>
 			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
 		</menu>
-		<menu text="Settings">
+		<menu text="Configuración">
 			<item id="ID_MEDIA_VIS" text="Escoger _Visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
@@ -3200,7 +3201,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
+	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Comunidad">
 		<control caption="My _Profile:"/>
 		<control caption="El perfil de Shareaza sirve para compartir información acerca de ti, tus intereses, y hasta mencionar tus archivos y paginas web favoritas."/>
 		<control caption="Editar Mi perfil"/>
@@ -3274,7 +3275,7 @@
 		<control caption="Solo subir y descargar usando las redes conectadas."/>
 	</dialog>
 
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Subidas">
 		<control caption="Opciones:"/>
 		<control caption="Compartir descargas parciales por defecto"/>
 		<control caption="Limitar compartimiento en hub"/>
@@ -3311,7 +3312,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Calendario">
 		<control caption="_Opciones:"/>
 		<control caption="_Habilitar Calendario"/>
 		<control/><control/>
@@ -3333,7 +3334,7 @@
 		<control caption="El Calendario esta diseñado para que puedas asignar tiempos de cuando Shareaza se va a conectar y descargar archivos. {n}Nota: Si tienes Shareaza abierto cuando el calendario esta activo, puede que veas que este cambiando configuraciones- ¡Esto es normal!-"/>
 </dialog>
 
-	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
+	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Redes">
 		<control caption="Shareaza tiene la habilidad de acceder varias redes de compartimiento de archivos. En esta página se pueden seleccionar las redes que serán usadas, y ajustar las configuraciones de las mismás."/>
 		<control caption="Red Gnutella2:"/>
 		<control caption="Gnutella2 es la red principal de Shareaza, esta ofrece el mejor rendimiento y funciones. Altamente recomendada."/>
@@ -3460,7 +3461,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propiedades de Cola de Subida">
 		<control caption="_Nombre:"/>
 		<control/>
 		<control caption="_Criteria de Entrada:"/>
@@ -3532,7 +3533,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Bienvenido a Shareaza [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Bienvenido a Shareaza [4 de 7]">
 		<control caption="Las redes P2P son buenas si son como la gente que los usa.  Todo el contenido disponible para descargar esta siendo compartido por otro usuario."/>
 		<control caption="Tu no tienes que compartir contenido para usar Shareaza, de todas maneras algunos software va a comportarse diferente si no compartes nada."/>
 		<control caption="Por favor indica que carpetas, si alguna, tu deseas compartir.  Solamente has click al bot n agregar para agregar una carpeta."/>
@@ -3552,7 +3553,7 @@
 		<control caption="Cerrar"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido(a) a Shareaza [5 of 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido(a) a Shareaza [5 de 7]">
 		<control caption="Shareaza es mucho más amigable, cuando todo el mundo incluye alguna información sobre ellos."/>
 		<control caption="Mi Nick:"/>
 		<control/>
@@ -3563,7 +3564,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido(a) a Shareaza [6 of 7]">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido(a) a Shareaza [6 de 7]">
 		<control caption="Shareaza es una aplicacion para compartir archivos de proposito en general y puede acceder a varias redes P2P al mismo tiempo.  Aqu  puedes seleccionar a que redes te quieres conectar.  Pero recuerda que luego puedes seleccionar otras redes."/>
 		<control caption="Conectar a Gnutella2 (Altamente Recomendado)"/>
 		<control caption="La Red Gnutella2 es la red premiere de Shareaza, ofreciendo más características y rendimiento que otra red P2P."/>
@@ -3582,7 +3583,7 @@
 		<control caption="Cerrar"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido(a) a Shareaza [7 of 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido(a) a Shareaza [7 de 7]">
 		<control caption="¡Eso era todo! Shareaza ha sido configurado para funcionar en tu sistema."/>
 		<control caption="Si en algún momento necesitas cambiar alguna configuración, este Asistente se puede correr desde el menú de Herramientas."/>
 		<control caption="Después de hacer click en Finalizar, puedes usar la red y buscar contenido."/>
@@ -3592,7 +3593,7 @@
 		<control caption="Shareaza usa la tecnología más avanzada de intercambio de archivos. ¡Disfrútelo!."/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Edit My Profile">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Editar Mi Perfil">
 		<control/>
 		<control caption="Aceptar"/>
 		<control caption="Cancelar"/>
@@ -3600,7 +3601,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identity">
+	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identidad">
 		<control caption="_Nombre:"/>
 		<control caption="Nick:"/>
 		<control/>
@@ -3614,7 +3615,7 @@
 		<control caption="Permitir que otros exploren mi perfil"/>
 	</dialog>
 
-	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Contact">
+	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Contacto">
 		<control caption="Correo elecrónico:"/>
 		<control caption="Primario:"/>
 		<control/>
@@ -3691,7 +3692,7 @@
 
 	<dialog name="CLanguageDlg" cookie="" caption="Select Language"/>
 
-	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse Host">
+	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Conectar A|Explorar Usuarios">
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/><control/>
 		<control caption="Protocolo de red."/>
@@ -3701,7 +3702,7 @@
 		<control caption="Cancelar"/>
 	</dialog>
 
-	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Download File or Torrent">
+	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Descargar Archivo O Torrent">
 		<control/><control/>
 		<control caption="Descargar archivos con Shareaza es fácil. Simplemente escriba o pegue el URI del archivo en le recuadro, y haz click en Descargar."/>
 		<control/>
@@ -3907,7 +3908,7 @@
 		<control caption="Acción:"/>
 		<control caption="Ninguno|Aceptar|Denegar"/>
 		<control caption="Vence:"/>
-		<control caption="Nunca (Indefinido)|Al terminar la sesin|Despu s:"/>
+		<control caption="Nunca (Indefinido)|Al terminar la sesión|Después:"/>
 		<control/>
 		<control caption="d"/>
 		<control/>
@@ -4097,7 +4098,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="BitTorrent Advanced Information">
+	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdBuStEdStEdBuSyBuCoBuCoStBu" caption="Información Avanzada de Bittorrent">
 		<control caption="Información _Torrent:"/>
 		<control caption="Nombre:"/>
 		<control/>
@@ -4157,13 +4158,13 @@
 		<control caption="No deseo actualizar"/>
 	</dialog>
 
-	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Download Reviews">
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Descargar Reviews">
 		<control/>
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localizar Metadata">
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control caption="Por favor selecciona un metodo de codificación"/>
