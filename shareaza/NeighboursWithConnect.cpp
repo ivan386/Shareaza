@@ -802,6 +802,10 @@ void CNeighboursWithConnect::Maintain()
 	ZeroMemory( nLimit, sizeof(int) * 4 * 3 );
 	
 	// Determine our node status
+	m_bG2Leaf		= FALSE;
+	m_bG2Hub		= FALSE;
+	m_bG1Leaf		= FALSE;
+	m_bG1Ultrapeer	= FALSE;
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = GetNext( pos );
