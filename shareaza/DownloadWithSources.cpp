@@ -271,7 +271,11 @@ BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWOR
 
 BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPort)
 {
-	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
+	// Unreachable (Push) BT sources should never be added.
+	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
+		return FALSE;
+	else
+		return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
 }
 
 //////////////////////////////////////////////////////////////////////
