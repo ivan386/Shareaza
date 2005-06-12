@@ -48,6 +48,7 @@
 		<button id="ID_NETWORK_CONNECT" text="Connect"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
