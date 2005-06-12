@@ -193,7 +193,10 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			m_bTorrentStarted	= FALSE;
 			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
 			
-			CBTTrackerRequest::SendStarted( this );
+			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections )
+				CBTTrackerRequest::SendStarted( this, Settings.BitTorrent.DownloadConnections + 10 );
+			else
+				CBTTrackerRequest::SendStarted( this );
 		}
 	}
 	else if ( ! bLive && m_bTorrentRequested )
@@ -672,7 +675,7 @@ void CDownloadWithTorrent::CloseTorrent()
 	m_bTorrentRequested		= FALSE;
 	m_bTorrentStarted		= FALSE;
 	CloseTorrentUploads();
-	ZeroMemory(m_pPeerID.n, 20);
+	//ZeroMemory(m_pPeerID.n, 20);
 }
 
 
