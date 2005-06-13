@@ -297,9 +297,16 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		m_nGnutella |= 3;
 		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
 
-		if ( m_bNotShareaza)	// Client spoofing Shareaza header
+		if ( m_bNotShareaza )	// Client spoofing a Shareaza header
 		{
 			m_nGnutella = 1;
+
+			SendResponse( IDR_HTML_FILENOTFOUND );
+			theApp.Message( MSG_ERROR, _T("Client %s has a spoofed user agent, banning"), (LPCTSTR)m_sAddress );
+					
+			Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
+			Remove( FALSE );
+			return FALSE;
 		}
 	}
 	else if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) != NULL ||
