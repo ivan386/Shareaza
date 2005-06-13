@@ -222,21 +222,24 @@ void CDownloadTransfer::SetState(int nState)
 			else
 			{	//All other sources should be properly sorted
 
-				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
+				if( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    // Torrent states
 				{       //Choked torrents after queued, requesting = requesting, uninterested near end
 					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
 					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11;
 					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7;
 					else m_pSource->m_nSortOrder = 10;
 				}
-				m_pSource->m_nSortOrder <<=  8;									//Sort by state
+				m_pSource->m_nSortOrder <<=  8;									// Sort by state
 
 				if ( m_nProtocol != PROTOCOL_HTTP )
 					m_pSource->m_nSortOrder += ( m_nProtocol & 0xFF );
-				m_pSource->m_nSortOrder <<=  16;								//Then protocol
+				m_pSource->m_nSortOrder <<=  16;								// Then protocol
 
-				if ( nState == dtsQueued )										//Then queue postion
+				if ( nState == dtsQueued )										// Then queue postion
 					m_pSource->m_nSortOrder += ( min( m_nQueuePos, 10000 ) & 0xFFFF );
+				else															// or IP
+					m_pSource->m_nSortOrder += ( ( m_pSource->m_pAddress.S_un.S_un_b.s_b1 << 8 ) |
+												 ( m_pSource->m_pAddress.S_un.S_un_b.s_b2      ) );
 
 				//Do the sort
 				m_pDownload->SortSource( m_pSource );
