@@ -77,7 +77,13 @@ CUploadTransferBT::~CUploadTransferBT()
 
 void CUploadTransferBT::SetChoke(BOOL bChoke)
 {
+	// Sort transfers- keep active ones near the head
+	if ( ! bChoke ) UploadFiles.MoveToHead( this );
+
+	// If we have not changed state, just return
 	if ( m_bChoked == bChoke ) return;
+
+	// Update state
 	m_bChoked = bChoke;
 	
 	m_oRequested.clear();
@@ -87,12 +93,7 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	{
 		m_nState = upsReady;
 		UploadFiles.MoveToTail( this );
-	}
-	else
-	{
-		UploadFiles.MoveToHead( this );
-	}
-		
+	}	
 	
 	m_pClient->Send( CBTPacket::New( bChoke ? BT_PACKET_CHOKE : BT_PACKET_UNCHOKE ) );
 	
