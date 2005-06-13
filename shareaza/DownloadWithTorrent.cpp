@@ -193,7 +193,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			m_bTorrentStarted	= FALSE;
 			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
 			
-			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections )
+			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections + 10 )
 				CBTTrackerRequest::SendStarted( this, Settings.BitTorrent.DownloadConnections + 10 );
 			else
 				CBTTrackerRequest::SendStarted( this );
