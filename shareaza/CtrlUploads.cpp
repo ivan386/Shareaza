@@ -589,7 +589,8 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 			CUploadTransfer* pTransfer = pFile->GetActive();
 			if ( pTransfer != NULL )
 			{
-				if ( pTransfer->m_nProtocol == PROTOCOL_BT && pTransfer->m_nState != upsNull ) continue;
+				//if ( pTransfer->m_nProtocol == PROTOCOL_BT && pTransfer->m_nState != upsNull ) continue;
+				if ( pTransfer->m_nState != upsNull ) continue;
 				if ( pTransfer->m_pQueue != NULL ) continue;
 			}
 			pos = posThis;
