@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/06/07 17:34:48 $"
-//	Revision:		"$Revision: 1.13 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/06/14 22:33:24 $"
+//	Revision:		"$Revision: 1.14 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -107,9 +107,21 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
-	m_wndMaxDownFiles.SetRange( 1, 100 );
-	m_wndMaxDownTransfers.SetRange( 1, 200 );
-	m_wndMaxFileTransfers.SetRange( 1, 100 );
+
+	// Apply limits to spin control range
+	if ( ! theApp.m_bNT )
+	{
+		m_wndMaxDownFiles.SetRange( 1, 80 );
+		m_wndMaxDownTransfers.SetRange( 1, 80 );
+		m_wndMaxFileTransfers.SetRange( 1, 80 );
+	}
+	else
+	{
+		m_wndMaxDownFiles.SetRange( 1, 100 );
+		if ( Settings.GetOutgoingBandwidth() >= 16 ) m_wndMaxDownTransfers.SetRange( 1, 250 );
+		else m_wndMaxDownTransfers.SetRange( 1, 200 );
+		m_wndMaxFileTransfers.SetRange( 1, 100 );
+	}
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -267,16 +279,29 @@ void CDownloadsSettingsPage::OnOK()
 		m_sQueueLimit = _T("MAX");
 
 	// Apply limits to display
-	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-	if ( Settings.GetOutgoingBandwidth() < 16 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
-	else if ( Settings.GetOutgoingBandwidth() < 32 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
-	else if ( Settings.GetOutgoingBandwidth() < 64 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 500 );
+	if ( ! theApp.m_bNT )
+	{
+		// Win9x is unable to handle high numbers of connections
+		m_nMaxDownFiles = min ( m_nMaxDownFiles, 80 );
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 80 );
+		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 80 );
+	}
 	else
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
-	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
+	{
+		// For other systems we can guestimate a good value based on available bandwidth
+		m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
+		if ( Settings.GetOutgoingBandwidth() < 16 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+		else if ( Settings.GetOutgoingBandwidth() <= 32 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
+		else if ( Settings.GetOutgoingBandwidth() <= 64 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
+		else if ( Settings.GetOutgoingBandwidth() <= 128 )
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
+		else
+			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
+		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
+	}
 
 	// Display any data changes
 	UpdateData( FALSE );

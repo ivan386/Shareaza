@@ -190,14 +190,23 @@ void CBitTorrentSettingsPage::OnOK()
 	m_nClearPercentage = min (m_nClearPercentage, 999);
 	m_nClearPercentage = max (m_nClearPercentage, 100);
 
-	if ( Settings.GetOutgoingBandwidth() < 16 )
-		m_nLinks = min ( m_nLinks, 200 );
-	else if ( Settings.GetOutgoingBandwidth() < 32 )
-		m_nLinks = min ( m_nLinks, 300 );
-	else if ( Settings.GetOutgoingBandwidth() < 64 )
-		m_nLinks = min ( m_nLinks, 500 );
+	if ( ! theApp.m_bNT )
+	{
+		// Win9x is unable to handle high numbers of connections
+		m_nLinks = min ( m_nLinks, 80 );
+	}
 	else
-		m_nLinks = min ( m_nLinks, 800 );
+	{
+		// For other systems we can guestimate a good value based on available bandwidth
+		if ( Settings.GetOutgoingBandwidth() < 16 )
+			m_nLinks = min ( m_nLinks, 200 );
+		else if ( Settings.GetOutgoingBandwidth() < 32 )
+			m_nLinks = min ( m_nLinks, 300 );
+		else if ( Settings.GetOutgoingBandwidth() < 64 )
+			m_nLinks = min ( m_nLinks, 500 );
+		else
+			m_nLinks = min ( m_nLinks, 800 );
+	}
 
 	m_nDownloads = min( m_nDownloads, (int)( ( Settings.GetOutgoingBandwidth() / 2 ) + 2 ) );
 
