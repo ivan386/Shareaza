@@ -2579,13 +2579,14 @@ BEGIN
     CONTROL         "Search known remote servers in the server cache:",
                     IDC_SERVER_WALK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,
                     64,250,12
-    RTEXT           "Stop searching after:",IDC_STATIC,30,82,80,12,
+    RTEXT           "Stop searching after:",IDC_STATIC,15,82,95,12,
                     SS_CENTERIMAGE
     EDITTEXT        IDC_RESULTS,120,82,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RESULTS_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,82,8,12
-    LTEXT           "search results.",IDC_STATIC,165,82,85,12,SS_CENTERIMAGE
+    LTEXT           "search results.",IDC_STATIC,165,82,100,12,
+                    SS_CENTERIMAGE
     GROUPBOX        "&Client Link Connections:",IDC_STATIC,5,110,270,37
     RTEXT           "Connect to no more than:",IDC_STATIC,15,125,95,12,
                     SS_CENTERIMAGE
