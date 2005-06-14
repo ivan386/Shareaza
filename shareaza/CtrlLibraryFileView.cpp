@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/05/20 22:10:36 $"
-//	Revision:		"$Revision: 1.19 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/06/14 16:59:42 $"
+//	Revision:		"$Revision: 1.20 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -285,7 +285,7 @@ void CLibraryFileView::OnLibraryLaunch()
 		LPCTSTR pszType = _tcsrchr( strPath, '.' );
 		if ( pszType != NULL && _tcsicmp( pszType, _T(".torrent") ) == 0 )
 		{
-			CTorrentSeedDlg dlg( strPath );
+			CTorrentSeedDlg dlg( strPath, FALSE );
 			dlg.DoModal();
 		}
 		else

@@ -52,10 +52,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentSeedDlg construction
 
-CTorrentSeedDlg::CTorrentSeedDlg(LPCTSTR pszTorrent, CWnd* pParent) : CSkinDialog( CTorrentSeedDlg::IDD, pParent )
+CTorrentSeedDlg::CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed, CWnd* pParent) : CSkinDialog( CTorrentSeedDlg::IDD, pParent )
 {
-	m_hThread	= NULL;
-	m_sTorrent	= pszTorrent;
+	m_hThread		= NULL;
+	m_sTorrent		= pszTorrent;
+	m_bForceSeed	= bForceSeed;
 }
 
 CTorrentSeedDlg::~CTorrentSeedDlg()
@@ -82,7 +83,15 @@ BOOL CTorrentSeedDlg::OnInitDialog()
 	
 	m_wndProgress.SetRange( 0, 1000 );
 	m_wndProgress.SetPos( 0 );
-	
+
+	if ( m_bForceSeed )
+	{
+		m_wndDownload.EnableWindow( FALSE );
+		if ( Settings.BitTorrent.AutoSeed ) PostMessage( WM_TIMER, 4 );
+
+	}
+	// if ( m_bForceSeed ) m_wndDownload.ShowWindow( SW_HIDE );
+
 	return TRUE;
 }
 
@@ -182,10 +191,15 @@ void CTorrentSeedDlg::OnSeed()
 			if ( ! Network.IsConnected() ) Network.Connect();
 
 			// Update the last seeded torrent
-			LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
-			LibraryHistory.LastSeededTorrent.m_tLastSeeded = time( NULL );
-			LibraryHistory.LastSeededTorrent.m_sName = m_pInfo.m_sName.Left( 40 );
-			LibraryHistory.LastSeededTorrent.m_pBTH = m_pInfo.m_pInfoSHA1;
+			CSingleLock pLock( &Library.m_pSection );
+			if ( pLock.Lock( 250 ) )
+			{
+				LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
+				LibraryHistory.LastSeededTorrent.m_tLastSeeded = time( NULL );
+				LibraryHistory.LastSeededTorrent.m_sName = m_pInfo.m_sName.Left( 40 );
+				LibraryHistory.LastSeededTorrent.m_pBTH = m_pInfo.m_pInfoSHA1;
+			}
+
 
 			// Start the torrent seed process
 			m_hThread = AfxBeginThread( ThreadStart, this,
@@ -255,6 +269,10 @@ void CTorrentSeedDlg::OnTimer(UINT nIDEvent)
 			m_nOldScaled = m_nScaled;
 			m_wndProgress.SetPos( m_nScaled );
 		}
+	}
+	else if ( nIDEvent == 4 )
+	{
+		OnSeed();
 	}
 }
 

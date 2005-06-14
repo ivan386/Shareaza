@@ -29,7 +29,7 @@ class CTorrentSeedDlg : public CSkinDialog
 {
 // Construction
 public:
-	CTorrentSeedDlg(LPCTSTR pszTorrent, CWnd* pParent = NULL);
+	CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed = FALSE, CWnd* pParent = NULL);
 	virtual ~CTorrentSeedDlg();
 
 	DECLARE_DYNAMIC(CTorrentSeedDlg)
@@ -44,6 +44,7 @@ protected:
 	HANDLE			m_hThread;
 	BOOL			m_bCancel;
 	CString			m_sTorrent;
+	BOOL			m_bForceSeed;
 	CString			m_sTarget;
 	CBTInfo			m_pInfo;
 	DWORD			m_nBlockNumber;
