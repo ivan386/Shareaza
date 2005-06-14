@@ -266,9 +266,9 @@ void CSettings::Setup()
 	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
 	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, TRUE );
 	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
-	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 128 );
+	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 200 );
 	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
-	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
+	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 2500 );
 	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
 	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60 );
 	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );

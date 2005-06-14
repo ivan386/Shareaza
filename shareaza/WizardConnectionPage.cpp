@@ -265,19 +265,21 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed > 2500 && theApp.m_bNT && !theApp.m_bLimitedConnections )
+	if ( nSpeed > 2500 && theApp.m_bNT && ! theApp.m_bLimitedConnections )
 	{	// Very high capacity connection
 		Settings.Downloads.MaxFiles				= 32;
-		Settings.Downloads.MaxTransfers			= 128;
-		Settings.Downloads.MaxFileTransfers		= 16;
+		Settings.Downloads.MaxTransfers			= 200;
+		Settings.Downloads.MaxFileTransfers		= 32;
 		Settings.Downloads.MaxConnectingSources	= 32;
 		Settings.Downloads.MaxFileSearches		= 3;
-		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
+
+		Settings.Gnutella2.NumLeafs				= 400;	// Can probably support more leaves
+		Settings.BitTorrent.DownloadTorrents	= 4;	// Should be able to handle several torrents
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
 	{	// Fast broadband
 		Settings.Downloads.MaxFiles				= 26;
-		Settings.Downloads.MaxTransfers			= 96;
+		Settings.Downloads.MaxTransfers			= 100;
 		Settings.Downloads.MaxFileTransfers		= 10;
 		Settings.Downloads.MaxConnectingSources	= 28;
 		Settings.Downloads.MaxFileSearches		= 2;
@@ -298,7 +300,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 6;
 		Settings.Downloads.MaxConnectingSources	= 20;
 		Settings.Downloads.MaxFileSearches		= 0;
-		Settings.Search.GeneralThrottle			= 250;
+		Settings.Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
 	}
 	else
 	{	// Modem users / Win9x
@@ -307,8 +309,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 0;
-		Settings.Downloads.SourcesWanted		= 200; // Don't bother requesting so many sources
-		Settings.Search.GeneralThrottle			= 300;
+		Settings.Downloads.SourcesWanted		= 200;	// Don't bother requesting so many sources
+		Settings.Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
+
+		Settings.BitTorrent.DownloadTorrents	= 1;	// Best not to try too many torrents
 	}
 	
 	UploadQueues.CreateDefault();
