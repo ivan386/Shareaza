@@ -1,9 +1,9 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/06/07 22:23:05 $"
-//	Revision:		"$Revision: 1.33 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/06/14 16:49:01 $"
+//	Revision:		"$Revision: 1.34 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -273,7 +273,6 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
 	}
 }
 
-
 BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 {
 	// Check it's long enough
@@ -308,6 +307,17 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 	if ( pszAddress == NULL ) return FALSE;
 
 	// Probably okay
+	return TRUE;
+}
+
+BOOL CDiscoveryServices::CheckMinimumServices()
+{
+	if ( ! EnoughServices() )
+	{
+		AddDefaults();
+		return FALSE;
+	}
+
 	return TRUE;
 }
 
@@ -351,16 +361,6 @@ void CDiscoveryServices::Stop()
 	StopWebRequest();
 }
 
-BOOL CDiscoveryServices::CheckMinimumServices()
-{
-	if ( ! EnoughServices() )
-	{
-		AddDefaults();
-		return FALSE;
-	}
-
-	return TRUE;
-}
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices load and save
@@ -674,25 +674,22 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDiscoveryServices execute eDonkey2000
+// CDiscoveryServices execute a service to get hosts
 
-// Warning: This function will query all known MET files until a working one is found.
-// Be very careful where this is called! This is a public function, and should be called 
+// WARNING: Way to agressive for general use!
+// Be very careful where this is called. This is a public function, and should be called 
 // once when setting up/installing the program. (In the Quickstart Wizard *only*)
-BOOL CDiscoveryServices::ExecuteDonkey()
+BOOL CDiscoveryServices::QueryForHosts( PROTOCOLID nProtocol )
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
-	for ( POSITION pos = GetIterator() ; pos ; )
+
+	for ( int nLoop = 0 ; nLoop < 3 ; nLoop ++ )
 	{
-		CDiscoveryService* pService = GetNext( pos );
-		
-		if ( pService->m_nType == CDiscoveryService::dsServerMet )
-		{
-			if ( RequestWebCache( pService, wcmServerMet, PROTOCOL_ED2K ) ) return TRUE;
-		}
+		if ( RequestRandomService( nProtocol ) )
+			return TRUE;
 	}
+	
 	return FALSE;
 }
 

@@ -28,6 +28,8 @@
 #include "UploadQueues.h"
 #include "Skin.h"
 #include "DlgHelp.h"
+#include "HostCache.h"
+#include "DiscoveryServices.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -327,6 +329,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 	}
+
+	// Update the G2 host cache (if necessary)
+	if ( HostCache.Gnutella2.CountHosts() < 25 ) DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
+
 	
 	return 0;
 }
