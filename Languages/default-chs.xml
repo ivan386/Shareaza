@@ -54,6 +54,7 @@
 		<button id="ID_NETWORK_CONNECT" text="连接"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -1735,7 +1736,7 @@
 
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
-		<text>集成 Shareaza 到浏览器以便允许点对点连接和下载。</text>
+		<text>集成 Shareaza 到浏览器以便允许对等连接和下载。</text>
 		<newline gap="10"/>
 
 	</document>
@@ -1900,8 +1901,8 @@
 		<text>这里显示当前下载的文件。您可以通过
 		左侧的 + 号来展开文件以查看单个资源。</text>
 		<newline gap="8"/>
-		<text>您同样可以使用这一命令获得某一特定下载的帮助信息。
-		只需简单地选择一个下载并重新选择这一命令。</text>
+		<text>您同样可以使用此命令获得某一特定下载的帮助信息。
+		只需简单地选择一个下载并重新选择此命令。</text>
 	</document>
 
 	<document name="DownloadHelp.Completed">
@@ -1921,14 +1922,14 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">此下载已暂停</text>
 		<newline gap="8"/>
-		<text>您已经暂停了这一下载。如果您想进行续传，
+		<text>您已经暂停了此下载。如果您想进行续传，
 		您可以单击</text><text format="b">续传下载</text><text>命令。</text>
 	</document>
 
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">磁盘已满</text>
 		<newline gap="8"/>
-		<text>Shareaza 已经自动暂停了此下载因为硬盘可能已满，或者这一
+		<text>Shareaza 已经自动暂停了此下载因为硬盘可能已满，或者此
 		下载文件不能写入。如果您希望继续下载，
 		请释放一些硬盘空间或单击确定未完成文件的文件夹可以访问，
 		然后进行续传。</text>
@@ -1944,7 +1945,7 @@
 	<document name="DownloadHelp.Downloading">
 		<text format="b">此下载活动中！</text>
 		<newline gap="8"/>
-		<text>这一下载当前正在进行中。如果它下载太慢，您可以试着搜索网络以获取
+		<text>此下载当前正在进行中。如果它下载太慢，您可以试着搜索网络以获取
 		更多资源，请使用</text><text format="b">查找更多资源</text><text>命令。如果速度未得到提升，
 		其可能是因为您下载的用户限制了上传速度。下载速度通常会随着时间而增快。</text>
 	</document>
@@ -1953,8 +1954,8 @@
 		<text format="b">此下载挂起中</text>
 		<newline gap="8"/>
 		<text>此下载正在等待别人开始上传。
-		Shareaza 正准备开始下载这一文件，但此刻没有人向您发送
-		您需要的部分。您可能正处于他人的队列中，并且这一下载
+		Shareaza 正准备开始下载此文件，但此刻没有人向您发送
+		您需要的部分。您可能正处于他人的队列中，并且此下载
 		可能在任何时间启动。您可以检查个别的资源以便查看您所
 		等待的队列。如果您自己正在与他人共享某些文件，则有可能
 		增加快速启动下载传输的机会。</text>
@@ -1963,7 +1964,7 @@
 	<document name="DownloadHelp.Queued">
 		<text format="b">此下载处于队列中</text>
 		<newline gap="8"/>
-		<text>这一下载正在等待您完成其他的下载。
+		<text>此下载正在等待您完成其他的下载。
 		您的下载设置限制了在某一时间内可以激活的下载
 		的数量，请确定每个下载都获得了一部分可用带宽。
 		您可以通过 Shareaza 设置中的工具来改变这些设置。</text>
@@ -1975,17 +1976,17 @@
 		<text>这里没有关于此下载的的已知资源，所以 Shareaza 正在搜索所有已连接的
 		P2P 网络以获得新的资源。一旦发现资源，下载将自动开始。
 		Shareaza 将会自动搜索资源，然而您也可以使用</text>
-		<text format="b">查找更多资源</text><text>命令加快这一进程。</text>
+		<text format="b">查找更多资源</text><text>命令加快此进程。</text>
 		<newline gap="8"/>
 		<text>不幸的是在许多情况下在线的用户中没有人拥有您所搜寻的文件。
 		而唯一的办法就是等待一些用户上线，
-		或者取消这一下载并找一个可得的类似文件。</text>
+		或者取消此下载并找一个可得的类似文件。</text>
 	</document>
 
 	<document name="DownloadHelp.Creating">
 		<text format="b">此下载正被创建</text>
 		<newline gap="8"/>
-		<text>Shareaza 正在预先分配一个文件以储存这一下载，以便以后保存。</text>
+		<text>Shareaza 正在预先分配一个文件以储存此下载，以便以后保存。</text>
 	</document>
 
 	<document name="DownloadHelp.Tracker">
@@ -2119,9 +2120,9 @@
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
-		<text format="b">这一搜索不能启动</text>
+		<text format="b">此搜索不能启动</text>
 		<newline gap="8"/>
-		<text>这一指定的搜索可能返回大量的成人内容，而此类搜索
+		<text>此指定的搜索可能返回大量的成人内容，而此类搜索
 		已经在设置中禁用。您可以重新定义搜索内容，或者禁用此类过滤。</text>
 		<newline gap="8"/>
 		<text>要禁用此类过滤，请到工具 &gt; 设置 &gt; 常规选项，并取消勾选成人内容过滤器。</text>
@@ -2479,7 +2480,7 @@
 	<string id="WINDOW_MEDIA" value="媒体播放器"/>
 	<string id="WINDOW_SEARCHPAD" value="搜索"/>
 	<string id="WINDOW_HELP" value="Shareaza 帮助"/>
-	<string id="7000" value="您确定要删除这一过滤吗？"/>
+	<string id="7000" value="您确定要删除此过滤吗？"/>
 	<string id="7001" value="构架(&amp;S)"/>
 	<string id="7002" value="多重数值"/>
 	<string id="7003" value="多重"/>
@@ -2596,7 +2597,7 @@
 	<string id="8311" value="您的收藏中已经存在此文件。"/>
 	<string id="8312" value="您的下载列表中已经存在此文件。"/>
 	<string id="8313" value="此文件可能是广告。"/>
-	<string id="8314" value="您以前已经下载过并删除了这一文件。"/>
+	<string id="8314" value="您以前已经下载过并删除了此文件。"/>
 	<string id="8315" value="黑名单:"/>
 	<string id="8316" value="命中"/>
 	<string id="8317" value="上传"/>
@@ -2604,7 +2605,7 @@
 	<string id="8320" value="状态:"/>
 	<string id="8321" value="速度:"/>
 	<string id="8322" value="链接:"/>
-	<string id="8323" value="客户端:"/>
+	<string id="8323" value="代理:"/>
 	<string id="8324" value="停止"/>
 	<string id="8325" value="活动"/>
 	<string id="8326" value="下一个"/>
@@ -2638,7 +2639,7 @@
 	<string id="16083" value="强制您的电脑进入集端模式可能会对机器性能以及 P2P 网络产生负面效用。总体来说更好的方法是让 Shareaza 决定是否使用结端模式。\n\nHub 模式并不会对您产生更好的搜索效果，或是任何其他的优越性。\n\n尽管存在这些缺点，您还是想这样做吗？"/>
 	<string id="16084" value="禁用 Gnutella1 协议可能会限制您的搜索结果，并且如果您作为集端它可能还会影响到其他用户的结果。您确定要这样做吗？"/>
 	<string id="16085" value="Gnutella2 是 Shareaza 的首要网络。停止支持它可能会严重影响您搜索结果的数量和质量。您确定要这样做吗？"/>
-	<string id="16087" value="您的传出带宽太低而无法启用这一网络"/>
+	<string id="16087" value="您的传出带宽太低而无法启用此网络"/>
 	<string id="16128" value="接受来自 %s 主机 %i 端口的进入连接。"/>
 	<string id="16129" value="初始化一个邻居连接到 %s 主机 %i 端口..."/>
 	<string id="16130" value="不能初始化到 %s 主机的邻居连接。"/>
@@ -2663,7 +2664,7 @@
 	<string id="16151" value="拒绝来自 %s 主机的连接，因为这是一个屏蔽的子端节点。"/>
 	<string id="16152" value="集端网络的 %s 主机不认可我们为集端，正在关闭连接。"/>
 	<string id="16153" value="到邻居 %s 主机的连接失败使得退回到屏蔽子端模式。"/>
-	<string id="16154" value="集端连接建立完毕，关闭点对点连接。"/>
+	<string id="16154" value="集端连接建立完毕，关闭对等连接。"/>
 	<string id="16155" value="作为集端为子端 %s 主机提供服务。"/>
 	<string id="16156" value="邻居 %s 主机将成为集端，正在关闭连接。"/>
 	<string id="16157" value="邻居 %s 主机不是集端，正在关闭连接。"/>
@@ -2698,9 +2699,9 @@
 	<string id="16264" value="初始化一个连接到 %s 主机的 %i端口，下载 &quot;%s&quot;..."/>
 	<string id="16265" value="不能连接到 %s 的主机下载。"/>
 	<string id="16266" value="到 %s 主机的下载连接已经建立。"/>
-	<string id="16267" value="请求下载碎片 (%I64i-%I64i)，属于 &quot;%s&quot;，来自于 %s 。"/>
-	<string id="16268" value="没有更多的碎片可供下载，正在关闭到 %s 主机的连接。"/>
-	<string id="16269" value="碎片被变短，正在关闭到 %s 主机的连接。"/>
+	<string id="16267" value="请求下载区块 (%I64i-%I64i)，属于 &quot;%s&quot;，来自于 %s 。"/>
+	<string id="16268" value="没有更多的区块可供下载，正在关闭到 %s 主机的连接。"/>
+	<string id="16269" value="区块被变短，正在关闭到 %s 主机的连接。"/>
 	<string id="16270" value="发送到 %s 主机的下载请求超时，正在关闭连接。"/>
 	<string id="16271" value="正在关闭到 %s 主机的下载连接，因为缺少通讯。"/>
 	<string id="16272" value="目标下载主机 %s 没有要下载的 &quot;%s&quot; 文件。"/>
@@ -2767,7 +2768,7 @@
 	<string id="16333" value="过于繁忙不能上传 &quot;%s&quot; 到 %s ，队列中的位置 #%i 总 %i (&quot;%s&quot;)。"/>
 	<string id="16334" value="继承来自 %s 主机查询未知文件的外送连接，无条件连接..."/>
 	<string id="16335" value="移除对 %s 主机的上传 &quot;%s&quot;。"/>
-	<string id="16336" value="上传主机 %s 在用户的屏蔽名单中，禁止连接。"/>
+	<string id="16336" value="上传主机 %s 在用户代理的屏蔽列表中，禁止连接。"/>
 	<string id="16337" value="发送上传标头从 &quot;%s&quot; 到主机 %s (%s)。"/>
 	<string id="16338" value="上传主机 %s 请求了 &quot;%s&quot; 文件不被满足的范围。"/>
 	<string id="16339" value="发送默认 HTML 回应到上传主机 %s (%s)。"/>
@@ -2809,7 +2810,7 @@
 	<string id="16375" value="部分"/>
 	<string id="16376" value="所有文件"/>
 	<string id="16377" value="HTTP 保护"/>
-	<string id="16384" value="确定要载入 &quot;%s&quot; 这一文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
+	<string id="16384" value="确定要载入 &quot;%s&quot; 此文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 	<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
 	<string id="16386" value="正在修改 %i 的元数据。"/>
 	<string id="16387" value="文件 &quot;%s&quot; 未被 Hash。请等待文件被 Hash，稍后再试。"/>
@@ -2869,7 +2870,7 @@
 	<string id="16534" value="全部 UDP 接收带宽"/>
 	<string id="16535" value="全部 UDP 传送带宽"/>
 	<string id="16768" value="已接收链接 &quot;%s&quot;"/>
-	<string id="16769" value="未能粘贴链接: Shareaza 不能识别这一链接。"/>
+	<string id="16769" value="未能粘贴链接: Shareaza 不能识别此链接。"/>
 	<string id="16770" value="未能显示链接操作对话框因为 Shareaza 正忙。"/>
 	<string id="16771" value="您的收藏中已经存在文件 &quot;%s&quot;。您还希望下载吗？"/>
 	<string id="16772" value="主机:"/>
@@ -2950,7 +2951,7 @@
 	<string id="17041" value="不能发送消息，尚未建立连接。"/>
 	<string id="17042" value="您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\n\n您要立即填写个人资料吗？"/>
 	<string id="17043" value="确定 %s 主机的上传优先级。"/>
-	<string id="17100" value="Gnutella:点对点连接"/>
+	<string id="17100" value="Gnutella:对等连接"/>
 	<string id="17101" value="Gnutella:子端到超对等连接"/>
 	<string id="17102" value="Gnutella:超对等到子端连接"/>
 	<string id="17103" value="Gnutella 2:集端对集端连接"/>
@@ -3029,7 +3030,7 @@
 	<string id="17485" value="为 &quot;%s&quot; 接收 BitTorrent Tracker 回应，%i 个新资源。"/>
 	<string id="17486" value="与 %s 开始 BitTorrent 客户端联结..."/>
 	<string id="17487" value="与 %s 建立 BitTorrent 联结，握手中..."/>
-	<string id="17488" value="您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存这一更改吗？\n\n一个无效的 Tracker 链接可能会妨碍进一步下载。"/>
+	<string id="17488" value="您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存此更改吗？\n\n一个无效的 Tracker 链接可能会妨碍进一步下载。"/>
 	<string id="17489" value="BitTorrent 与 %s 的联结是扩展的协议，识别为 &quot;%s&quot;。"/>
 	<string id="17490" value="接收到 %i 个新的 BitTorrent 资源从 %s。"/>
 	<string id="17491" value="此 torrent &quot;%s&quot; 已经存在于您的下载列表中，并且不能被做成种子。"/>
@@ -3274,7 +3275,7 @@
 		<control caption="共享预览文件"/>
 		<control caption="对唯一的主机进行限制:"/>
 		<control/><control/>
-		<control caption="客户端过滤(_U):"/>
+		<control caption="用户代理过滤(_U):"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
@@ -3293,7 +3294,7 @@
 
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="远程访问">
 		<control caption="指南(_G):"/>
-		<control caption="Shareaza 远程访问允许您让 Shareaza 在您的计算机上运行，并使用网页浏览器对它进行远程控制。您将需要能够接受传入连接以使用这一功能(也就是正确地配置路由器，等等)。"/>
+		<control caption="Shareaza 远程访问允许您让 Shareaza 在您的计算机上运行，并使用网页浏览器对它进行远程控制。您将需要能够接受传入连接以使用此功能(也就是正确地配置路由器，等等)。"/>
 		<control caption="启用(_E):"/>
 		<control caption="启用 Shareaza 远程访问:"/>
 		<control/>
@@ -3365,7 +3366,7 @@
 		<control/><control/>
 		<control caption="超对等到子端:"/>
 		<control/><control/>
-		<control caption="点到点:"/>
+		<control caption="对等到对等:"/>
 		<control/><control/>
 		<control caption="链接压缩(_L):"/>
 		<control caption="集端到子端"/>
@@ -4086,7 +4087,7 @@
 		<control caption="下载"/>
 		<control caption="做种"/>
 		<control caption="取消"/>
-		<control caption="要使用 BitTorrent 共享完整的文件必须先做种子。这一过程完成后 Torrent 将在您的下载列表中显示为一个新的项目。"/>
+		<control caption="要使用 BitTorrent 共享完整的文件必须先做种子。此过程完成后 Torrent 将在您的下载列表中显示为一个新的项目。"/>
 		<control/>
 	</dialog>
 
@@ -4143,7 +4144,7 @@
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="升级通告">
 		<control/>
 		<control caption="现在已存在一个新的 Shareaza 版本。您要升级吗？"/>
-		<control caption="如果您选择立即升级，Shareaza 将把这一更新添加到您的下载队列中并自动下载。"/>
+		<control caption="如果您选择立即升级，Shareaza 将把此更新添加到您的下载队列中并自动下载。"/>
 		<control caption="立即升级(_U)"/>
 		<control caption="不要检测新版本"/>
 		<control caption="不要升级"/>
