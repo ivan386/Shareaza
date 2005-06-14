@@ -355,6 +355,7 @@ public:
 		BOOL		Endgame;					// Allow endgame mode when completing torrents. (Download same chunk from multiple sources)
 		BOOL		AutoClear;					// Clear completed torrents when they meet the required share ratio
 		DWORD		ClearRatio;					// Share ratio a torrent must reach to be cleared. (Minimum 100%)
+		BOOL		AutoSeed;					// Automatically re-seed most recently completed torrent on start-up
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		BOOL		TrackerKey;					// Send a key (random value) to trackers
 		BOOL		StandardPeerID;				// Use the newer (non-official) standard for making Peer-IDs

@@ -314,6 +314,7 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
 	Add( _T("BitTorrent.AutoClear"), &BitTorrent.AutoClear, FALSE );
 	Add( _T("BitTorrent.ClearRatio"), &BitTorrent.ClearRatio, 120 );
+	Add( _T("BitTorrent.AutoSeed"), &BitTorrent.AutoSeed, FALSE );
 	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
 	Add( _T("BitTorrent.TrackerKey"), &BitTorrent.TrackerKey, TRUE );
 	Add( _T("BitTorrent.StandardPeerID"), &BitTorrent.StandardPeerID, TRUE );
