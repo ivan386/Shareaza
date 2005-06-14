@@ -2102,13 +2102,13 @@ void CMainWnd::OnToolsSeedTorrent()
 	
 	if ( dlgFile.DoModal() != IDOK ) return;
 	
-	CTorrentSeedDlg dlgSeed( dlgFile.GetPathName() );
+	CTorrentSeedDlg dlgSeed( dlgFile.GetPathName(), TRUE );
 	dlgSeed.DoModal();
 }
 
 void CMainWnd::OnToolsReseedTorrent()
 {
-	CTorrentSeedDlg dlgSeed( LibraryHistory.LastSeededTorrent.m_sPath );
+	CTorrentSeedDlg dlgSeed( LibraryHistory.LastSeededTorrent.m_sPath, TRUE );
 	dlgSeed.DoModal();
 }
 
