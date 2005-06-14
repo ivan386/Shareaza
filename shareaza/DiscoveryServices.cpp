@@ -1,8 +1,8 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/06/14 16:49:01 $"
-//	Revision:		"$Revision: 1.34 $"
+//	Date:			"$Date: 2005/06/14 17:09:16 $"
+//	Revision:		"$Revision: 1.35 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -106,36 +106,6 @@ int CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 		}
 	}
 	return nCount;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices Check we have the minimum number of services
-
-BOOL CDiscoveryServices::EnoughServices() const
-{
-	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
-	int nG1Count = 0, nG2Count = 0;					// Protocols
-	
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CDiscoveryService* pService = GetNext( pos );
-		if ( pService->m_nType == CDiscoveryService::dsWebCache )
-		{
-			nWebCacheCount++;
-
-			if ( pService->m_bGnutella1 ) nG1Count++;
-			if ( pService->m_bGnutella2 ) nG2Count++;
-		}
-		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
-		{
-			nServerMetCount ++;
-		}
-	}
-
-	return ( ( nWebCacheCount   > 4 ) &&	// At least 5 webcaches
-		     ( nG2Count			> 2 ) &&	// At least 3 G2 services
-			 ( nG1Count			> 0 ) &&	// At least 1 G1 service
-			 ( nServerMetCount  > 0 ) );	// At least 1 server.met
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -312,6 +282,7 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 
 BOOL CDiscoveryServices::CheckMinimumServices()
 {
+	// Add the default services if we don't have enough
 	if ( ! EnoughServices() )
 	{
 		AddDefaults();
@@ -319,6 +290,27 @@ BOOL CDiscoveryServices::CheckMinimumServices()
 	}
 
 	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDiscoveryServices execute a service to get hosts
+
+// WARNING: Way too agressive for general use- Be very careful where this is called!
+// This is a public function, and should be called once when setting up/installing the program. 
+// IE: In the Quickstart Wizard *only*
+// Using this for general querying would overload services and get you blacklisted.
+BOOL CDiscoveryServices::QueryForHosts( PROTOCOLID nProtocol )
+{
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
+	for ( int nLoop = 0 ; nLoop < 3 ; nLoop ++ )
+	{
+		if ( RequestRandomService( nProtocol ) )
+			return TRUE;
+	}
+	
+	return FALSE;
 }
 
 CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
@@ -456,6 +448,36 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 			m_pList.AddTail( pService );
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDiscoveryServices Check we have the minimum number of services
+
+BOOL CDiscoveryServices::EnoughServices() const
+{
+	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
+	int nG1Count = 0, nG2Count = 0;					// Protocols
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDiscoveryService* pService = GetNext( pos );
+		if ( pService->m_nType == CDiscoveryService::dsWebCache )
+		{
+			nWebCacheCount++;
+
+			if ( pService->m_bGnutella1 ) nG1Count++;
+			if ( pService->m_bGnutella2 ) nG2Count++;
+		}
+		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
+		{
+			nServerMetCount ++;
+		}
+	}
+
+	return ( ( nWebCacheCount   > 4 ) &&	// At least 5 webcaches
+		     ( nG2Count			> 2 ) &&	// At least 3 G2 services
+			 ( nG1Count			> 0 ) &&	// At least 1 G1 service
+			 ( nServerMetCount  > 0 ) );	// At least 1 server.met
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -670,26 +692,6 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 		return RequestRandomService( PROTOCOL_G1 );	
 	}
 
-	return FALSE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices execute a service to get hosts
-
-// WARNING: Way to agressive for general use!
-// Be very careful where this is called. This is a public function, and should be called 
-// once when setting up/installing the program. (In the Quickstart Wizard *only*)
-BOOL CDiscoveryServices::QueryForHosts( PROTOCOLID nProtocol )
-{
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-
-	for ( int nLoop = 0 ; nLoop < 3 ; nLoop ++ )
-	{
-		if ( RequestRandomService( nProtocol ) )
-			return TRUE;
-	}
-	
 	return FALSE;
 }
 

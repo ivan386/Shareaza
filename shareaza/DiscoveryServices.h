@@ -65,14 +65,15 @@ public:
 	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
 	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
 	BOOL				CheckMinimumServices();
+	BOOL				QueryForHosts(PROTOCOLID nProtocol);
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
 	void				Clear();
+
 public:
 	BOOL				Load();
 	BOOL				Save();
 	BOOL				Update();
 	BOOL				Execute(BOOL bSecondary = FALSE);
-	BOOL				QueryForHosts(PROTOCOLID nProtocol);
 	void				Stop();
 	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
 	void				OnGnutellaFailed(IN_ADDR* pAddress);
