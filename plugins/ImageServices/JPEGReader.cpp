@@ -350,7 +350,7 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::SaveToFile(HANDLE hFile, IMAGESERVICEDATA
 HRESULT STDMETHODCALLTYPE CJPEGReader::SaveToMemory(SAFEARRAY __RPC_FAR *__RPC_FAR *ppMemory, IMAGESERVICEDATA __RPC_FAR *pParams, SAFEARRAY __RPC_FAR *pImage)
 {
 	struct jpeg_compress_struct cinfo;
-	struct jpeg_error_mgr jerr;
+	struct core_error_mgr jerr;
 	core_dest_mgr jdst;
 	
 	if ( ppMemory == NULL || pParams == NULL || pImage == NULL ) return E_POINTER;
@@ -364,6 +364,13 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::SaveToMemory(SAFEARRAY __RPC_FAR *__RPC_F
 	
 	DWORD nPitch = pParams->nWidth * pParams->nComponents;
 	while ( nPitch & 3 ) nPitch++;
+
+	if ( setjmp( jerr.jump ) )
+	{
+		jpeg_destroy_compress( &cinfo );
+		delete [] jdst.pBuffer;		
+		return E_FAIL;
+	}
 	
 	if ( (DWORD)nSource != nPitch * pParams->nHeight )
 	{
@@ -381,7 +388,10 @@ HRESULT STDMETHODCALLTYPE CJPEGReader::SaveToMemory(SAFEARRAY __RPC_FAR *__RPC_F
 	jdst.base.empty_output_buffer	= OnMemEmpty;
 	jdst.base.term_destination		= OnNull;
 	
-	cinfo.err = jpeg_std_error( &jerr );
+	cinfo.err = jpeg_std_error( &jerr.base );
+	jerr.base.error_exit	= OnErrorExit;
+	jerr.base.emit_message	= OnEmitMessage;
+	jerr.bPartial			= FALSE;
 	jpeg_create_compress( &cinfo );
 	cinfo.dest = &jdst.base;
 
