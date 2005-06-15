@@ -228,8 +228,10 @@ BOOL CBrowseFrameCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	GetClientRect( &rcClient );
 	ClientToScreen( &rcClient );
 
-	rc.SetRect(	rcClient.left + m_nTreeSize,
+	rc.SetRect(	theApp.m_bRTL ? rcClient.right - m_nTreeSize - SPLIT_SIZE :
+				rcClient.left + m_nTreeSize,
 				rcClient.top,
+				theApp.m_bRTL ? rcClient.right - m_nTreeSize :
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
 
@@ -244,7 +246,13 @@ BOOL CBrowseFrameCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 				rcClient.right,
 				rcClient.bottom - m_nPanelSize );
 
-	if ( m_wndTree.IsWindowVisible() ) rc.left += m_nTreeSize + SPLIT_SIZE;
+	if ( m_wndTree.IsWindowVisible() ) 
+	{
+		if ( theApp.m_bRTL )
+			rc.right -= m_nTreeSize + SPLIT_SIZE;
+		else
+			rc.left += m_nTreeSize + SPLIT_SIZE;
+	}
 
 	if ( m_wndDetails.IsWindowVisible() && rc.PtInRect( point ) )
 	{

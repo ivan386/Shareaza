@@ -202,6 +202,7 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_nPosition	= 0;
 	m_nScaled	= m_nOldScaled = 0;
 	
+	if ( theApp.m_bRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndStatus.GetWindowText( m_sStatus );	
 	m_wndProgress.SetRange( 0, 1000 );
 	m_wndProgress.SetPos( 0 );

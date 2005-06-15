@@ -70,6 +70,7 @@ BOOL CBitziDownloadDlg::OnInitDialog()
 
 	SkinMe( _T("CBitziDownloadDlg"), IDR_MAINFRAME );
 
+	if ( theApp.m_bRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndProgress.SetRange( 0, m_pDownloader.GetFileCount() * 2 );
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, 190, -1 );

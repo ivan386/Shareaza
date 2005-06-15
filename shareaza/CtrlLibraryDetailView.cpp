@@ -118,7 +118,9 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
 	DWORD nStyle = m_nStyle;
-	return CWnd::Create( WC_LISTVIEW, _T("CLibraryDetailView"),
+	DWORD dwStyle = theApp.m_bRTL ? WS_EX_RTLREADING : 0;
+
+	return CWnd::CreateEx( dwStyle, WC_LISTVIEW, _T("CLibraryDetailView"),
 		WS_CHILD|LVS_ICON|LVS_AUTOARRANGE|LVS_SHOWSELALWAYS|nStyle|
 		LVS_SHAREIMAGELISTS|LVS_EDITLABELS|LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }

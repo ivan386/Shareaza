@@ -5,8 +5,8 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 6.00.0366 */
-/* at Tue May 24 21:02:27 2005
+ /* File created by MIDL compiler version 6.00.0361 */
+/* at Mon Jun 13 18:55:52 2005
  */
 /* Compiler settings for .\Shareaza.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -17,6 +17,9 @@
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
 //@@MIDL_FILE_HEADING(  )
+
+#if !defined(_M_IA64) && !defined(_M_AMD64)
+
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -163,4 +166,6 @@ MIDL_DEFINE_GUID(IID, IID_ICollectionHtmlView,0xCF66956E,0x901F,0x44D0,0xB5,0xC6
 #endif
 
 
+
+#endif /* !defined(_M_IA64) && !defined(_M_AMD64)*/
 

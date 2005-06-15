@@ -349,7 +349,13 @@ BOOL CSearchWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 					rcClient.right,
 					rcClient.bottom - TOOLBAR_HEIGHT - m_nDetails );
 		
-		if ( m_bPanel ) rc.left += PANEL_WIDTH;
+		if ( m_bPanel ) 
+		{
+			if ( theApp.m_bRTL )
+				rc.right -= PANEL_WIDTH;
+			else
+				rc.left += PANEL_WIDTH;
+		}
 		
 		if ( rc.PtInRect( point ) )
 		{
@@ -743,10 +749,12 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 	
 	CString strCaption;
 	Skin.LoadString( strCaption, IDR_SEARCHFRAME );
-	
+	if ( theApp.m_bRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
+
 	if ( pSearch != NULL )
 	{
 		strCaption += _T(" : ");
+		if ( theApp.m_bRTL ) strCaption += _T("\x202B");
 
 		if ( pSearch->m_sSearch.GetLength() )
 		{
@@ -770,6 +778,7 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		{
 			CString strStats;
 			strStats.Format( _T(" [%lu/%lu]"), m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
+			if ( theApp.m_bRTL ) strStats = _T("\x200F") + strStats;
 			strCaption += strStats;
 			pManaged->m_nHits = m_pMatches->m_nFilteredHits;
 		}

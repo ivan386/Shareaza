@@ -49,6 +49,7 @@ BEGIN_MESSAGE_MAP(CSkinDialog, CDialog)
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
 	ON_WM_CTLCOLOR()
 	ON_WM_WINDOWPOSCHANGING()
+	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -93,12 +94,18 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	{
 		bSuccess = ::Skin.Apply( strSkin, this, nIcon );
 	}
-	else if ( nIcon )
+	if ( nIcon || theApp.m_bRTL && nIcon )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( nIcon );
-
+		
 		if ( ! hIcon ) hIcon = (HICON)LoadImage( AfxGetInstanceHandle(),
 			MAKEINTRESOURCE( nIcon ), IMAGE_ICON, 16, 16, 0 );
+		if ( theApp.m_bRTL )
+		{
+			// no idea why some dialogs get mirrored icons
+			if ( nIcon != ID_HELP_ABOUT )
+				hIcon = CreateMirroredIcon( hIcon );
+		}
 
 		if ( hIcon ) SetIcon( hIcon, FALSE );
 	}
@@ -292,4 +299,34 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 			lpwndpos->y = rcWork.bottom-lpwndpos->cy;
 		}
 	}
+}
+
+int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialog::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	if ( theApp.m_bRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+	return 0;
+}
+
+BOOL CSkinDialog::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	if ( theApp.m_bRTL )
+	{
+		CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
+		if ( pBanner )
+		{
+			if ( pBanner->GetBitmap() == NULL ) return TRUE;
+			CRect rcClient, rc;
+			pBanner->GetWindowRect( &rc );
+
+			GetWindowRect( &rcClient );
+			ScreenToClient( &rcClient );
+			pBanner->SetWindowPos( NULL, rcClient.left + rcClient.Width() - rc.Width(), 
+				0, 0, 0, SWP_NOSIZE|SWP_NOZORDER );
+		}
+	}
+	return TRUE; 
 }

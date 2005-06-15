@@ -324,8 +324,9 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 	
 	if ( nIDIcon )
 	{
-		m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
+		HICON hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 			MAKEINTRESOURCE( nIDIcon ), IMAGE_ICON, 16, 16, 0 );
+		m_hIcon = theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon;
 		CWnd::SetIcon( m_hIcon, FALSE );
 	}
 	

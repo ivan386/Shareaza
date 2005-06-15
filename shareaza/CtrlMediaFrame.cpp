@@ -32,6 +32,7 @@
 #include "CtrlMediaFrame.h"
 #include "DlgSettingsManager.h"
 #include "DlgMediaVis.h"
+#include "CoolInterface.h"
 
 IMPLEMENT_DYNAMIC(CMediaFrame, CWnd)
 
@@ -174,7 +175,14 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndVolume.SetRange( 0, 100 );
 	m_wndVolume.SetTic( 0 );
 	m_wndVolume.SetTic( 100 );
-	
+
+	if ( theApp.m_bRTL )
+	{
+		m_wndPosition.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+		m_wndSpeed.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+		m_wndVolume.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+	}
+
 	CBitmap bmIcons;
 	bmIcons.LoadBitmap( IDB_MEDIA_STATES );
 	m_pIcons.Create( 16, 16, ILC_COLOR16|ILC_MASK, 3, 0 );
@@ -313,8 +321,7 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		{
 			SetWindowPos( &wndTopMost, 0, 0, GetSystemMetrics( SM_CXSCREEN ), GetSystemMetrics( SM_CYSCREEN ), SWP_FRAMECHANGED|SWP_SHOWWINDOW ); 
 		}
-			
-		SetTimer( 2, 50, NULL );
+		SetTimer( 2, 30, NULL );
 	}
 	else
 	{
@@ -410,9 +417,9 @@ void CMediaFrame::OnSize(UINT nType, int cx, int cy)
 			rc.bottom -= STATUS_HEIGHT;
 		}
 	}
-	
+
 	m_rcVideo = rc;
-	
+
 	if ( m_pPlayer != NULL && nType != SIZE_BARSLIDE )
 	{
 		m_pPlayer->Reposition( &rc );
@@ -424,7 +431,7 @@ void CMediaFrame::OnSize(UINT nType, int cx, int cy)
 void CMediaFrame::OnPaint() 
 {
 	CPaintDC dc( this );
-	
+
 	if ( m_bmLogo.m_hObject == NULL)
 	{
 		if ( CImageServices::LoadBitmap( &m_bmLogo, IDR_LARGE_LOGO, RT_JPEG ) )
@@ -543,7 +550,8 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	COLORREF crText = RGB( 0xF0, 0xF0, 0xFF );
 	
 	dc.SelectObject( &m_pFontValue );
-	
+	DWORD dwOptions = theApp.m_bRTL ? ETO_RTLREADING : 0;
+
 	int nY = ( rcBar.top + rcBar.bottom ) / 2 - dc.GetTextExtent( _T("Cy") ).cy / 2;
 	CRect rcPart( &rcBar );
 	CString str;
@@ -565,17 +573,18 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
 		dc.SelectObject( &m_pFontKey );
-		sz				= dc.GetTextExtent( pItem->m_sKey + ':' );
+		CString str = theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		sz				= dc.GetTextExtent( str );
 		rcPart.left		= rcBar.left + 20;
 		rcPart.right	= rcPart.left + sz.cx + 8;
-		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE, &rcPart, pItem->m_sKey + ':', NULL );
+		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE|dwOptions, &rcPart, str, NULL );
 		dc.ExcludeClipRect( &rcPart );
 		
 		dc.SelectObject( &m_pFontValue );
 		sz				= dc.GetTextExtent( pItem->m_sValue );
 		rcPart.left		= rcPart.right;
 		rcPart.right	= rcPart.left + sz.cx + 8;
-		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE, &rcPart, pItem->m_sValue, NULL );
+		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE|dwOptions, &rcPart, pItem->m_sValue, NULL );
 		dc.ExcludeClipRect( &rcPart );
 	}
 	else
@@ -593,13 +602,18 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 		sz				= dc.GetTextExtent( str );
 		rcPart.left		= rcBar.left + 20;
 		rcPart.right	= rcPart.left + sz.cx + 8;
-		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE, &rcPart, str, NULL );
+		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE|dwOptions, &rcPart, str, NULL );
 		dc.ExcludeClipRect( &rcPart );
 	}
 
 	if ( m_nState >= smsOpen )
 	{
-		str.Format( _T("%.2i:%.2i of %.2i:%.2i"),
+		CString strFormat;
+		LoadString( strFormat, IDS_GENERAL_OF );
+		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
+		if ( theApp.m_bRTL ) strFormat = _T("\x200F") + strFormat;
+
+		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
@@ -609,7 +623,7 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 		rcPart.right	= rcBar.right;
 		rcPart.left		= rcPart.right - sz.cx - 8;
 		
-		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE, &rcPart, str, NULL );
+		dc.ExtTextOut( rcPart.left + 4, nY, ETO_CLIPPED|ETO_OPAQUE|dwOptions, &rcPart, str, NULL );
 		dc.ExcludeClipRect( &rcPart );
 	}
 	
@@ -625,32 +639,40 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	CRect rcPart( &rcBar );
 	CString str;
 	CSize sz;
-	
+	CDC* pMemDC = CoolInterface.GetBuffer( dc, rcBar.Size() );
+
+	DWORD dwOptions = theApp.m_bRTL ? DT_RTLREADING : 0;
 	if ( m_nState >= smsOpen )
 	{
-		str.Format( _T("%.2i:%.2i of %.2i:%.2i"),
+		CString strFormat;
+		LoadString( strFormat, IDS_GENERAL_OF );
+		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
+		if ( theApp.m_bRTL ) strFormat = _T("\x200F") + strFormat;
+
+		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) % 60 ) );
 		
-		sz				= dc.GetTextExtent( str );
+		sz				= pMemDC->GetTextExtent( str );
 		rcPart.right	= rcStatus.right;
 		rcPart.left		= rcPart.right - sz.cx - 2;
 		rcStatus.right	= rcPart.left;
 		
-		dc.DrawText( str, &rcPart, DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX|DT_RIGHT );
+		pMemDC->DrawText( str, &rcPart, DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX|DT_RIGHT );
 	}
 	
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
-		sz				= dc.GetTextExtent( pItem->m_sKey + ':' );
+		CString str = theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		sz				= pMemDC->GetTextExtent( str );
 		rcPart.left		= rcStatus.left;
 		rcPart.right	= rcPart.left + sz.cx + 2;
 		rcStatus.left	= rcPart.right;
 
-		dc.DrawText( pItem->m_sKey + ':', &rcPart, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX );
-		dc.DrawText( pItem->m_sValue, &rcStatus, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|DT_END_ELLIPSIS );
+		pMemDC->DrawText( str, &rcPart, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|dwOptions );
+		pMemDC->DrawText( pItem->m_sValue, &rcStatus, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|DT_END_ELLIPSIS|dwOptions );
 	}
 	else
 	{
@@ -660,8 +682,15 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 			str = nSlash >= 0 ? m_sFile.Mid( nSlash + 1 ) : m_sFile;
 		}
 		
-		dc.DrawText( str, &rcStatus, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|DT_END_ELLIPSIS );
+		pMemDC->DrawText( str, &rcStatus, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|DT_END_ELLIPSIS|dwOptions );
 	}
+
+	if ( theApp.m_bRTL ) 
+		dc.StretchBlt( rcBar.Width() + rcBar.left, rcBar.top, -rcBar.Width(), rcBar.Height(),
+			pMemDC, rcBar.left, rcBar.top, rcBar.Width(), rcBar.Height(), SRCCOPY );
+	else
+		dc.BitBlt( rcBar.left, rcBar.top, rcBar.Width(), rcBar.Height(),
+			pMemDC, rcBar.left, rcBar.top, SRCCOPY );
 
 	return TRUE;
 }
@@ -724,8 +753,10 @@ BOOL CMediaFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		GetClientRect( &rcClient );
 		ClientToScreen( &rcClient );
 		
-		rc.SetRect(	rcClient.right - m_nListSize - SPLIT_SIZE,
+		rc.SetRect(	theApp.m_bRTL ? rcClient.left + m_nListSize : 
+					rcClient.right - m_nListSize - SPLIT_SIZE,
 					rcClient.top,
+					theApp.m_bRTL ? rcClient.left + m_nListSize + SPLIT_SIZE :
 					rcClient.right - m_nListSize,
 					rcClient.bottom );
 		
@@ -760,7 +791,7 @@ void CMediaFrame::OnLButtonDown(UINT nFlags, CPoint point)
 						rcClient.top,
 						rcClient.right - m_nListSize,
 						rcClient.bottom );
-		
+
 		if ( rcBar.PtInRect( point ) )
 		{
 			DoSizeList();
@@ -1402,6 +1433,7 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 	HINSTANCE hRes = AfxGetResourceHandle();
 	
 	BSTR bsFile = CString( pszFile ).AllocSysString();
+
 	HRESULT hr = m_pPlayer->Open( bsFile );
 	SysFreeString( bsFile );
 

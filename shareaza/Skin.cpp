@@ -327,7 +327,10 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 			if ( strType == _T("language") )
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
+				theApp.m_bRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
+				theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), theApp.m_bRTL );
 			}
+			
 		}
 		
 		bSuccess = TRUE;
@@ -729,6 +732,8 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 	TCHAR szColumn[128];
 	HD_ITEM pColumn;
 	
+	if ( theApp.m_bRTL ) 
+		pCtrl->ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
 	pColumn.mask		= HDI_TEXT;
 	pColumn.pszText		= szColumn;
 	pColumn.cchTextMax	= 126;
@@ -935,7 +940,14 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos && pWnd ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-	
+
+		TCHAR szClass[3] = { 0, 0, 0 };
+		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
+
+		// Needed for some controls like Schema combo box
+		if ( theApp.m_bRTL && (CString)szClass != "Ed" ) 
+			pWnd->ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+
 		if ( pXML->IsNamed( _T("control") ) )
 		{
 			strCaption = pXML->GetAttributeValue( _T("caption") );
@@ -943,9 +955,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID)
 			
 			if ( strCaption.GetLength() )
 			{	
-				TCHAR szClass[3] = { 0, 0, 0 };
-				GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
-
 				if ( (CString) szClass != "Co" )
 				{
 					int nPos = strCaption.Find( '_' );
@@ -1333,6 +1342,7 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 			{
 				if ( ExtractIconEx( strFile, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
 				{
+					if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
 					CoolInterface.AddIcon( nID, hIcon );
 				}
 			}
@@ -1345,7 +1355,8 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 				if ( _stscanf( strFile.Mid( nPos + 1 ), _T("%lu"), &nIconID ) != 1 ) return TRUE;
 				
 				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID), IMAGE_ICON, 16, 16, 0 );
-				if ( hIcon != NULL ) CoolInterface.AddIcon( nID, hIcon );
+				if ( hIcon != NULL ) 
+					CoolInterface.AddIcon( nID, theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 			}
 		}
 		else if ( pXML->IsNamed( _T("bitmap") ) )
@@ -1367,7 +1378,8 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL ) return TRUE;
-	
+	if ( theApp.m_bRTL ) hBitmap = CreateMirroredBitmap( hBitmap );
+
 	strFile = pBase->GetAttributeValue( _T("mask") );
 	COLORREF crMask = RGB( 0, 255, 0 );
 	
@@ -1390,6 +1402,8 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	}
 	
 	int nIndex = 0;
+	// Total number of images
+	int nIndexRev = CoolInterface.m_pImages.GetImageCount() - 1;
 	
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
@@ -1399,14 +1413,15 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 		strFile = pXML->GetAttributeValue( _T("index") );
 		if ( strFile.GetLength() ) _stscanf( strFile, _T("%i"), &nIndex );
 		nIndex += nBase;
-		
+
 		for ( int nName = 0 ; pszNames[ nName ] ; nName++ )
 		{
 			UINT nID = LookupCommandID( pXML, pszNames[ nName ] );
-			if ( nID ) CoolInterface.m_pImageMap.SetAt( (LPVOID)nID, (LPVOID)nIndex );
+			if ( nID ) CoolInterface.m_pImageMap.SetAt( (LPVOID)nID, 
+				theApp.m_bRTL ? (LPVOID)nIndexRev : (LPVOID)nIndex );
 			if ( nName && ! nID ) break;
 		}
-		
+		nIndexRev--;	
 		nIndex -= nBase;
 		nIndex ++;
 	}
@@ -1446,7 +1461,8 @@ void CSkin::CreateDefault()
 	
 	// Command Icons
 	
-	CoolInterface.AddIcon( ID_CHECKMARK, theApp.LoadIcon( IDI_CHECKMARK ) );
+	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );
+	CoolInterface.AddIcon( ID_CHECKMARK, theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 	
 	// Default Menu
 	
@@ -1519,43 +1535,208 @@ UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID
 //////////////////////////////////////////////////////////////////////
 // CSkin draw wrapped text
 
-void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bExclude)
+// GetTextFlowChange determines the direction of text and its change 
+// at word boundaries.
+// Returns the direction of the first "words iceland" and the position
+// where the next "iceland" starts at the word boundary.
+// If there is no change in direction it returns 0.
+
+int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 {
-	CPoint pt = pBox->TopLeft();
-	
+	TRISTATE bTextIsRTL = TS_UNKNOWN;
+	BOOL bChangeFound   = FALSE;
+	unsigned short nLength = _tcslen( pszText );
 	LPCTSTR pszWord = pszText;
 	LPCTSTR pszScan = pszText;
 
-	UINT nFlags = ETO_CLIPPED | ( bExclude ? ETO_OPAQUE : 0 );
-	
-	for ( ; ; pszScan++ )
+	int nPos;
+	for ( nPos = 0; ; pszScan++, nPos++ )
 	{
-		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 &&
-			(unsigned short)*pszScan != 160 ) continue;
-		
-		if ( pszWord <= pszScan )
+		// get the first word with punctuation marks and whitespaces
+		if ( (unsigned short)*pszScan > 32 && (unsigned short)*pszScan != 160 ) continue;
+
+		if ( pszWord < pszScan )
 		{
 			int nLen = pszScan - pszWord;
-			CSize sz = pDC->GetTextExtent( pszWord, nLen );
+			WORD* nCharType = new WORD[ nLen + 1 ];
 
-			if ( pt.x > pBox->left && pt.x + sz.cx > pBox->right )
+			TCHAR* pszTestWord = new TCHAR[ nLen + 1 ];
+			_tcsncpy( pszTestWord, pszWord, nLen );
+			pszTestWord[ nLen ] = 0;
+
+			GetStringTypeEx( LOCALE_NEUTRAL, CT_CTYPE2, pszTestWord, nLen + 1, (LPWORD)nCharType );
+			delete [] pszTestWord;
+
+			for ( int i = 0 ; i < nLen ; i++ )
 			{
-				pt.x = pBox->left;
-				pt.y += sz.cy;
+				if ( nCharType[ i ] == C2_LEFTTORIGHT )
+				{
+					if ( bTextIsRTL == TS_UNKNOWN )
+					{
+						bTextIsRTL = TS_FALSE;
+						*bIsRTL = FALSE;
+					}
+					else if ( bTextIsRTL == TS_TRUE )
+					{
+						bChangeFound = TRUE;
+						break;
+					}
+				}
+				else if ( nCharType[ i ] == C2_RIGHTTOLEFT )
+				{
+					if ( bTextIsRTL == TS_UNKNOWN )
+					{
+						bTextIsRTL = TS_TRUE;
+						*bIsRTL = TRUE;
+					}
+					else if ( bTextIsRTL == TS_FALSE )
+					{
+						bChangeFound = TRUE;
+						break;
+					}
+				}
 			}
+			BOOL bLeadingWhiteSpace = ( nCharType[ 0 ] == C2_WHITESPACE );
+			delete [] nCharType;
 
-			CRect rc( pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy );
-
-			pDC->ExtTextOut( pt.x, pt.y, nFlags, &rc, pszWord, nLen, NULL );
-			if ( bExclude ) pDC->ExcludeClipRect( &rc );
-			
-			pt.x += sz.cx;
-			pBox->top = pt.y + sz.cy;
+			if ( bChangeFound ) return nPos - nLen + ( bLeadingWhiteSpace ? 1 : 0 );
+			pszWord = pszScan;
 		}
-
-		pszWord = pszScan;
 		if ( ! *pszScan ) break;
 	}
+	return 0;
+}
+
+void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude)
+{
+	// TODO: Wrap mixed text in RTL and LTR layouts correctly
+
+	if ( pszText == NULL ) return;
+	if ( ptStart.x == 0 && ptStart.y == 0 ) ptStart = pBox->TopLeft();
+
+	UINT nAlignOptionsOld = pDC->GetTextAlign(); // backup settings
+	UINT nFlags = ETO_CLIPPED | ( bExclude ? ETO_OPAQUE : 0 );
+
+	unsigned short nLenFull = _tcslen( pszText );
+
+	// Collect stats about the text from the start and from the end
+	BOOL bIsRTLStart, bNormalFlow;
+	int nTestStart	= GetTextFlowChange( pszText, &bIsRTLStart );
+
+	// Guess text direction ( not always works )
+	bNormalFlow = theApp.m_bRTL ? bIsRTLStart : !bIsRTLStart;
+
+	TCHAR* pszSource = NULL;
+	LPCTSTR pszWord	 = NULL;
+	LPCTSTR pszScan  = NULL;
+
+	if ( nTestStart )
+	{
+		// Get the source string to draw and truncate initial string to pass it recursively
+		pszSource = new TCHAR[ nTestStart + 1 ];
+		_tcsncpy( pszSource, pszText, nTestStart );
+		pszSource[ nTestStart ] = 0;
+		if ( !bNormalFlow )
+		{
+			// swap whitespaces
+			CString str = pszSource;
+			if ( pszSource[ 0 ] == ' ' || (unsigned short)pszSource[ 0 ] == 160 )
+			{
+				str = str + _T(" ");
+				str = str.Right( nTestStart );
+			}
+			else if ( pszSource[ nTestStart - 1 ] == ' ' || 
+					  (unsigned short)pszSource[ nTestStart - 1 ] == 160 )
+			{
+				str = _T(" ") + str;
+				str = str.Left( nTestStart );
+			}
+			_tcsncpy( pszSource, str.GetBuffer( nTestStart ), nTestStart );
+		}
+		nLenFull = nTestStart;
+		pszText += nTestStart;
+	}
+	else 
+		pszSource = (TCHAR*)pszText;
+
+	pszWord = pszSource;
+	pszScan = pszSource;
+
+	if ( !bNormalFlow ) 
+	{
+		if ( bIsRTLStart != theApp.m_bRTL ) pDC->SetTextAlign( TA_RTLREADING );
+		pszScan += nLenFull - 1;
+		pszWord += nLenFull;
+		for ( int nEnd = nLenFull - 1; nEnd >= 0 ; nEnd-- )
+		{
+			if ( nEnd ) pszScan--;
+			if ( nEnd && (unsigned short)*pszScan > 32 && (unsigned short)*pszScan != 160 ) continue;
+
+			if ( pszWord >= pszScan )
+			{
+				int nLen = pszWord - pszScan;
+				CSize sz;
+				GetTextExtentPoint32( pDC->m_hAttribDC, pszScan, nLen, &sz );
+
+				if ( ptStart.x > pBox->left && ptStart.x + sz.cx > pBox->right )
+				{
+					ptStart.x = pBox->left;
+					ptStart.y += sz.cy;
+				}
+
+				// Add extra point in x-axis; it cuts off the 1st word character otherwise
+				const short nExtraPoint = ( theApp.m_bRTL ) ? 1 : 0;
+				CRect rc( ptStart.x, ptStart.y, ptStart.x + sz.cx + nExtraPoint, ptStart.y + sz.cy );
+				
+				pDC->ExtTextOut( ptStart.x, ptStart.y, nFlags, &rc,
+					pszScan, nLen, NULL );
+				if ( bExclude ) pDC->ExcludeClipRect( &rc );
+				
+				ptStart.x += sz.cx + nExtraPoint;
+				pBox->top = ptStart.y + sz.cy;
+			}
+			pszWord = pszScan;
+		}
+	}
+	else
+	{
+		for ( ; ; pszScan++ )
+		{
+			if ( *pszScan != NULL && (unsigned short)*pszScan > 32 &&
+				 (unsigned short)*pszScan != 160 ) continue;
+			
+			if ( pszWord <= pszScan )
+			{
+				int nLen = pszScan - pszWord;
+				CSize sz = pDC->GetTextExtent( pszWord, nLen );
+
+				if ( ptStart.x > pBox->left && ptStart.x + sz.cx > pBox->right )
+				{
+					ptStart.x = pBox->left;
+					ptStart.y += sz.cy;
+				}
+
+				// Add extra point in x-axis; it cuts off the 1st word character otherwise
+				const short nExtraPoint = ( theApp.m_bRTL ) ? 1 : 0;
+
+				CRect rc( ptStart.x, ptStart.y, ptStart.x + sz.cx + nExtraPoint, ptStart.y + sz.cy );
+
+				pDC->ExtTextOut( ptStart.x, ptStart.y, nFlags, &rc,
+					pszWord, nLen, NULL );
+				if ( bExclude ) pDC->ExcludeClipRect( &rc );
+				
+				ptStart.x += sz.cx + nExtraPoint;
+				pBox->top = ptStart.y + sz.cy;
+			}
+
+			pszWord = pszScan;
+			if ( ! *pszScan ) break;
+		}
+	}
+	if ( nTestStart ) delete [] pszSource;
+	// reset align options back
+	pDC->SetTextAlign( nAlignOptionsOld );
+	if ( nTestStart ) DrawWrappedText( pDC, pBox, pszText, ptStart, bExclude );
 }
 
 //////////////////////////////////////////////////////////////////////

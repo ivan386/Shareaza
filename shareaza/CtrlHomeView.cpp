@@ -149,14 +149,14 @@ void CHomeViewCtrl::Update()
 			strURL.Format( _T("http://%s:%i/remote/"),
 				(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 				(int)ntohs( Network.m_pHost.sin_port ) );
-			m_peRemote1->SetText( strURL );
+			m_peRemote1->SetText( theApp.m_bRTL ? _T("\x202A") + strURL : strURL );
 			m_peRemote1->m_sLink = strURL;
 		}
 		if ( m_peRemote2 )
 		{
 			strURL.Format( _T("http://localhost:%i/remote/"),
 				(int)ntohs( Network.m_pHost.sin_port ) );
-			m_peRemote2->SetText( strURL );
+			m_peRemote2->SetText( theApp.m_bRTL ? _T("\x202A") + strURL : strURL );
 			m_peRemote2->m_sLink = strURL;
 		}
 

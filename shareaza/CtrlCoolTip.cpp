@@ -84,7 +84,8 @@ BOOL CCoolTipCtrl::Create(CWnd* pParentWnd, BOOL* pbEnable)
 {
 	CRect rc( 0, 0, 0, 0 );
 
-	if ( ! CWnd::CreateEx( WS_EX_TOPMOST, m_hClass, NULL, WS_POPUP|WS_DISABLED,
+	DWORD dwStyleEx = WS_EX_TOPMOST | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 );
+	if ( ! CWnd::CreateEx( dwStyleEx, m_hClass, NULL, WS_POPUP|WS_DISABLED,
 		rc, pParentWnd, 0, NULL ) ) return FALSE;
 
 	SetOwner( pParentWnd );
@@ -277,13 +278,14 @@ void CCoolTipCtrl::GetPaintRect(RECT* pRect)
 
 void CCoolTipCtrl::DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase)
 {
+	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
 	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
 
 	if ( nBase ) pPoint->x += nBase;
 	CRect rc( pPoint->x - 2, pPoint->y - 2, pPoint->x + sz.cx + 2, pPoint->y + sz.cy + 2 );
 
 	pDC->SetBkColor( CoolInterface.m_crTipBack );
-	pDC->ExtTextOut( pPoint->x, pPoint->y, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( pPoint->x, pPoint->y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, _tcslen( pszText ), NULL );
 	pDC->ExcludeClipRect( &rc );
 
 	if ( nBase ) pPoint->x -= nBase;

@@ -66,14 +66,18 @@ public:
 	//{{AFX_DATA(CDownloadMonitorDlg)
 	enum { IDD = IDD_DOWNLOAD_MONITOR };
 	CStatic	m_wndVolume;
+	CStatic m_wndVolumeLabel;
 	CButton	m_wndCancel;
 	CButton	m_wndClose;
 	CButton	m_wndStop;
 	CStatic	m_wndProgress;
 	CStatic	m_wndTime;
+	CStatic	m_wndTimeLabel;
 	CStatic	m_wndStatus;
 	CStatic	m_wndSpeed;
+	CStatic	m_wndSpeedLabel;
 	CStatic	m_wndSources;
+	CStatic	m_wndSourcesLabel;
 	CButton	m_wndLibrary;
 	CButton	m_wndLaunch;
 	CStatic	m_wndIcon;
@@ -105,12 +109,12 @@ protected:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
-	//}}AFX_MSG
 	afx_msg LONG OnTray(UINT wParam, LONG lParam);
 	afx_msg BOOL OnNeedText(UINT nID, NMHDR* pTTT, LRESULT* pResult);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

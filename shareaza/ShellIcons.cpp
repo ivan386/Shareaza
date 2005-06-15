@@ -31,7 +31,6 @@ static char THIS_FILE[]=__FILE__;
 
 CShellIcons ShellIcons;
 
-
 //////////////////////////////////////////////////////////////////////
 // CShellIcons construction
 
@@ -71,7 +70,10 @@ void CShellIcons::Clear()
 	CBitmap bmBase;
 	HICON hTemp;
 	
-	bmBase.LoadBitmap( IDB_SHELL_BASE );
+	if ( theApp.m_bRTL ) 
+		bmBase.LoadBitmap( IDB_SHELL_BASE_RTL );
+	else
+		bmBase.LoadBitmap( IDB_SHELL_BASE );
 	m_i16.Add( &bmBase, RGB( 0, 255, 0 ) );
 	m_i16.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
 	m_i16.SetOverlayImage( SHI_PARTIAL, SHI_O_PARTIAL );
@@ -79,23 +81,31 @@ void CShellIcons::Clear()
 	m_i16.SetOverlayImage( SHI_COMMERCIAL, SHI_O_COMMERCIAL );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 32, 32, 0 );
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i32.Add( hTemp );
 	DestroyIcon( hTemp );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 48, 48, 0 );
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i48.Add( hTemp );
 	DestroyIcon( hTemp );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 32, 32, 0 );
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i32.Add( hTemp );
 	DestroyIcon( hTemp );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 48, 48, 0 );
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i48.Add( hTemp );
 	DestroyIcon( hTemp );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 32, 32, 0 );
+	// not needed?
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i32.SetOverlayImage( m_i32.Add( hTemp ), SHI_O_COLLECTION );
 	DestroyIcon( hTemp );
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 48, 48, 0 );
+	// not needed?
+	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );
 	m_i48.SetOverlayImage( m_i48.Add( hTemp ), SHI_O_COLLECTION );
 	DestroyIcon( hTemp );
 	
@@ -177,14 +187,21 @@ int CShellIcons::Add(HICON hIcon, int nSize)
 
 HICON CShellIcons::ExtractIcon(int nIndex, int nSize)
 {
+	HICON hIcon;
 	switch ( nSize )
 	{
 	case 16:
-		return m_i16.ExtractIcon( nIndex );
+		hIcon = m_i16.ExtractIcon( nIndex );
+		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		return hIcon;
 	case 32:
-		return m_i32.ExtractIcon( nIndex );
+		hIcon = m_i32.ExtractIcon( nIndex );
+		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		return hIcon;
 	case 48:
-		return m_i48.ExtractIcon( nIndex );
+		hIcon = m_i48.ExtractIcon( nIndex );
+		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		return hIcon;
 	default:
 		return NULL;
 	}
@@ -304,6 +321,13 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		if ( ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 ) )
 		{
 			bSuccess |= ( phLargeIcon && *phLargeIcon ) || ( phSmallIcon && *phSmallIcon );
+			if ( theApp.m_bRTL ) 
+			{
+				if ( phLargeIcon && *phLargeIcon ) 
+					*phLargeIcon = CreateMirroredIcon( *phLargeIcon );
+				if ( phSmallIcon && *phSmallIcon ) 
+					*phSmallIcon = CreateMirroredIcon( *phSmallIcon );
+			}
 		}
 	}
 
@@ -314,6 +338,8 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		if ( (*m_pfnPrivate)( strIcon, nIcon, 48, 48, phHugeIcon, &nLoadedID, 1, 0 ) )
 		{
 			bSuccess = TRUE;
+			if ( phHugeIcon && *phHugeIcon && theApp.m_bRTL )
+				*phHugeIcon = CreateMirroredIcon( *phHugeIcon );
 		}
 	}
 

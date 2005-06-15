@@ -84,6 +84,7 @@ BOOL CURLExportDlg::OnInitDialog()
 
 	SkinMe( _T("CURLExportDlg"), IDI_WEB_URL );
 
+	if ( theApp.m_bRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	CString strFormat, strMessage;
 	m_wndMessage.GetWindowText( strFormat );
 	strMessage.Format( strFormat, m_pFiles.GetCount() );

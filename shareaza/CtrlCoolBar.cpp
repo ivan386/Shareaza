@@ -285,14 +285,15 @@ UINT CCoolBarCtrl::ThrowMenu(UINT nID, CMenu* pMenu, CWnd* pParent, BOOL bComman
 	if ( bCommand ) nFlags |= TPM_RETURNCMD;
 
 #if 1
-	CoolMenu.RegisterEdge( rcButton.left, rcButton.bottom, rcButton.Width() );
+	CoolMenu.RegisterEdge( theApp.m_bRTL ? rcButton.right : rcButton.left, 
+		rcButton.bottom, rcButton.Width() );
 	bRight = FALSE;
 #endif
 
 	nFlags |= ( bRight ? TPM_RIGHTALIGN : TPM_LEFTALIGN );
 
 	UINT nCmd = TrackPopupMenuEx( pMenu->GetSafeHmenu(), nFlags,
-		bRight ? rcButton.right : rcButton.left, rcButton.bottom,
+		bRight || theApp.m_bRTL ? rcButton.right : rcButton.left, rcButton.bottom,
 		pParent->GetSafeHwnd(), &tpm );
 
 	m_bMenuGray = FALSE;
@@ -510,7 +511,14 @@ int CCoolBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 			}
 			else
 			{
-				strTip = strTip.SpanExcluding( _T(".") );
+				BOOL bRTL = FALSE;
+				if ( theApp.m_bRTL )
+				{
+					Skin.GetTextFlowChange( strTip, &bRTL );
+					if ( bRTL ) strTip.MakeReverse();
+				}
+				strTip = strTip.SpanExcluding( _T(".\x2026") );
+				if ( bRTL ) strTip.MakeReverse();
 				pTI->lpszText = _tcsdup( strTip );
 			}
 		}

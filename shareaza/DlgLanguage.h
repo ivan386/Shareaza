@@ -42,6 +42,8 @@ protected:
 	CStringArray	m_pPaths;
 	CStringArray	m_pTitles;
 	CStringArray	m_pPrompts;
+	CStringArray	m_pGUIDirs;
+	CStringArray	m_pLangCodes;
 	CImageList		m_pImages;
 	int				m_nHover;
 	int				m_nDown;
@@ -86,6 +88,7 @@ protected:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

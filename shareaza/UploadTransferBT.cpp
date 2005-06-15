@@ -93,7 +93,7 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	{
 		m_nState = upsReady;
 		UploadFiles.MoveToTail( this );
-	}	
+	}
 	
 	m_pClient->Send( CBTPacket::New( bChoke ? BT_PACKET_CHOKE : BT_PACKET_UNCHOKE ) );
 	

@@ -165,15 +165,15 @@
 #define IDR_SPLASH                      259
 #define IDI_SMALL                       260
 #define IDI_ICON                        261
-#define IDB_BITMAP1                     262
 #define IDB_PANEL_MARK                  262
-#define IDI_ICON1                       263
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
-#define IDB_BITMAP3                     265
 #define IDD_CODEPAGES                   266
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
+#define IDB_SHELL_BASE_RTL              272
+#define IDB_NAVBAR_IMAGE_RTL            273
+#define IDB_NAVBAR_ALPHA_RTL            274
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002
@@ -1025,7 +1025,6 @@
 #define IDS_UPLOAD_QUEUE_PARTIAL        16375
 #define IDS_UPLOAD_QUEUE_COMPLETE       16376
 #define IDS_UPLOAD_QUEUE_HTTP_GUARD     16377
-#define IDS_DOWNLOAD_416_NO_RANGE       16378
 #define IDS_DOWNLOAD_416_WITHOUT_RANGE  16378
 #define IDS_LIBRARY_CONFIRM_EXECUTE     16384
 #define IDS_LIBRARY_METADATA_MANY       16385
@@ -1288,6 +1287,8 @@
 #define IDS_GENERAL_NOURNAVAILABLE      20000
 #define IDS_GENERAL_CLOSE               20001
 #define IDS_GENERAL_OF                  20002
+#define IDS_GENERAL_RTL_WARNING         20003
+#define IDS_GENERAL_RTL_NOTSUPPORTED    20004
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102
@@ -1660,9 +1661,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        270
+#define _APS_NEXT_RESOURCE_VALUE        275
 #define _APS_NEXT_COMMAND_VALUE         33135
-#define _APS_NEXT_CONTROL_VALUE         1412
+#define _APS_NEXT_CONTROL_VALUE         1418
 #define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

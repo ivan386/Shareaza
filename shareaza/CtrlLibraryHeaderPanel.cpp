@@ -266,7 +266,7 @@ void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
 
 			pDC->SelectObject( &CoolInterface.m_fntNormal );
-			DrawText( pDC, rcMeta.left, nY, pItem->m_sKey + ':' );
+			DrawText( pDC, rcMeta.left, nY, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
 
 			if ( pItem->m_bLink ) pDC->SelectObject( &CoolInterface.m_fntUnder );
 			DrawText( pDC, rcMeta.left + m_nKeyWidth, nY, pItem->m_sValue );
@@ -278,9 +278,9 @@ void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 	rcWork.DeflateRect( 0, 4 );
 
 	pDC->SelectObject( &CoolInterface.m_fntCaption );
-	Skin.DrawWrappedText( pDC, &rcWork, m_sTitle, FALSE );
+	Skin.DrawWrappedText( pDC, &rcWork, m_sTitle, NULL, FALSE );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
-	Skin.DrawWrappedText( pDC, &rcWork, m_sSubtitle, FALSE );
+	Skin.DrawWrappedText( pDC, &rcWork, m_sSubtitle, NULL, FALSE );
 
 	pDC->SelectObject( pOldFont );
 }
@@ -291,8 +291,8 @@ void CLibraryHeaderPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 
-	pDC->ExtTextOut( nX, nY, ETO_CLIPPED /*|ETO_OPAQUE*/, &rc, pszText, _tcslen( pszText ), NULL );
-	// pDC->ExcludeClipRect( &rc );
+	UINT nOptions = ETO_CLIPPED | ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	pDC->ExtTextOut( nX, nY, nOptions, &rc, pszText, _tcslen( pszText ), NULL );
 }
 
 BOOL CLibraryHeaderPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)

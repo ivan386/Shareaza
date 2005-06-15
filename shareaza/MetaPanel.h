@@ -39,8 +39,6 @@ public:
 	int		Layout(CDC* pDC, int nWidth);
 	void	Paint(CDC* pDC, const CRect* prcArea);
 	BOOL	OnClick(const CPoint& point);
-protected:
-	void	WrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bPaint);
 
 // Attributes
 public:

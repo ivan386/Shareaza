@@ -582,6 +582,7 @@ void CLibraryAlbumView::OnPaint()
 	
 	CRect rcBuffer( 0, 0, m_szTrack.cx, m_szTrack.cy );
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, m_szTrack );
+	if ( theApp.m_bRTL ) pBuffer->SetTextAlign( TA_RTLREADING );
 	
 	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
 	pBuffer->SetBkMode( OPAQUE );

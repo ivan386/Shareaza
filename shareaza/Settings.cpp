@@ -929,13 +929,13 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL b
 			{
 			case 1:
 				strVolume.Format( _T("%I64i %s"), nVolume, pszUnit );
-				return strVolume;
+				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 			case 2:
 				strVolume.Format( _T("%.2lf K%s"), (double)nVolume / 1024, pszUnit );
-				return strVolume;
+				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 			case 3:
 				strVolume.Format( _T("%.2lf M%s"), (double)nVolume / (1024*1024), pszUnit );
-				return strVolume;
+				return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 			}
 			
 			if ( bKB ) nVolume /= 1024;
@@ -947,7 +947,7 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL b
 		if ( nVolume < 1024 )
 		{
 			strVolume.Format( _T("%I64i %s"), nVolume, pszUnit );
-			return strVolume;
+			return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 		}
 		
 		nVolume /= 1024;
@@ -994,38 +994,42 @@ CString CSettings::SmartVolume(QWORD nVolume, BOOL bKB, BOOL bRateInBits, BOOL b
 			strVolume.Format( _T("%.3lf E%s"), (double)nVolume / (1125899906842624.0f), pszUnit );
 	}
 	
-	return strVolume;
+	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
 QWORD CSettings::ParseVolume(LPCTSTR psz, BOOL bSpeedInBits)
 {
 	double val = 0;
-	
-	if ( _stscanf( psz, _T("%lf"), &val ) != 1 ) return 0;
-	
-	if ( _tcsstr( psz, _T(" K") ) ) val *= 1024;						// Kilo
-	if ( _tcsstr( psz, _T(" k") ) ) val *= 1024;
-	
-	if ( _tcsstr( psz, _T(" M") ) ) val *= 1024*1024;					// Mega
-	if ( _tcsstr( psz, _T(" m") ) ) val *= 1024*1024;
-	
-	if ( _tcsstr( psz, _T(" G") ) ) val *= 1024*1024*1024;				// Giga
-	if ( _tcsstr( psz, _T(" g") ) ) val *= 1024*1024*1024;
-	
-	if ( _tcsstr( psz, _T(" T") ) ) val *= 1099511627776.0f;			// Tera
-	if ( _tcsstr( psz, _T(" t") ) ) val *= 1099511627776.0f;
 
-	if ( _tcsstr( psz, _T(" P") ) ) val *= 1125899906842624.0f;			// Peta
-	if ( _tcsstr( psz, _T(" p") ) ) val *= 1125899906842624.0f;
+	CString strTmp(psz);
+	if ( strTmp.Left( 1 ) == _T("\x200E") ) strTmp = strTmp.Mid( 1 );
+    const TCHAR* psz1 = strTmp;
+
+	if ( _stscanf( psz1 , _T("%lf"), &val ) != 1 ) return 0;
+
+	if ( _tcsstr( psz1, _T(" K") ) ) val *= 1024;						// Kilo
+	if ( _tcsstr( psz1, _T(" k") ) ) val *= 1024;
 	
-	if ( _tcsstr( psz, _T(" E") ) ) val *= 1152921504606846976.0f;		// Exa
-	if ( _tcsstr( psz, _T(" e") ) ) val *= 1152921504606846976.0f;
+	if ( _tcsstr( psz1, _T(" M") ) ) val *= 1024*1024;					// Mega
+	if ( _tcsstr( psz1, _T(" m") ) ) val *= 1024*1024;
 	
+	if ( _tcsstr( psz1, _T(" G") ) ) val *= 1024*1024*1024;				// Giga
+	if ( _tcsstr( psz1, _T(" g") ) ) val *= 1024*1024*1024;
+	
+	if ( _tcsstr( psz1, _T(" T") ) ) val *= 1099511627776.0f;			// Tera
+	if ( _tcsstr( psz1, _T(" t") ) ) val *= 1099511627776.0f;
+
+	if ( _tcsstr( psz1, _T(" P") ) ) val *= 1125899906842624.0f;			// Peta
+	if ( _tcsstr( psz1, _T(" p") ) ) val *= 1125899906842624.0f;
+	
+	if ( _tcsstr( psz1, _T(" E") ) ) val *= 1152921504606846976.0f;		// Exa
+	if ( _tcsstr( psz1, _T(" e") ) ) val *= 1152921504606846976.0f;
+
 	if ( bSpeedInBits )
 	{
-		if ( _tcschr( psz, 'b' ) )
+		if ( _tcschr( psz1, 'b' ) )
 			return (QWORD)val;
-		else if ( _tcschr( psz, 'B' ) )
+		else if ( _tcschr( psz1, 'B' ) )
 			return (QWORD)( val * 8 );
 		else
 			return 0;

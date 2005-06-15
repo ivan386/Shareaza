@@ -82,7 +82,9 @@ BOOL CSkinsSettingsPage::OnInitDialog()
 	CSettingsPage::OnInitDialog();
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	m_gdiImageList.Add( theApp.LoadIcon( IDI_SKIN ) );
+	HICON hIcon = theApp.LoadIcon( IDI_SKIN );
+	if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+	m_gdiImageList.Add( hIcon );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 210, 0 );
@@ -95,6 +97,10 @@ BOOL CSkinsSettingsPage::OnInitDialog()
 
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES, LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES );
+
+	if ( theApp.m_bRTL ) 
+		m_wndDesc.ModifyStyleEx( WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR, 
+			WS_EX_LTRREADING|WS_EX_LEFT|WS_EX_RIGHTSCROLLBAR, 0 );
 
 	m_nSelected = -1;
 	m_wndName.SetWindowText( _T("") );
@@ -244,6 +250,12 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	CString strURL		= pManifest->GetAttributeValue( _T("link") );
 	CString strEmail	= pManifest->GetAttributeValue( _T("email") );
 	CString strDesc		= pManifest->GetAttributeValue( _T("description") );
+
+	if ( theApp.m_bRTL ) 
+	{
+		strName = _T("\x202A") + strName;
+		strAuthor = _T("\x202A") + strAuthor;
+	}
 
 	delete pXML;
 

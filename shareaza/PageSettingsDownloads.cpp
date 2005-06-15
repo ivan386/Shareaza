@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/06/14 22:33:24 $"
-//	Revision:		"$Revision: 1.14 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/06/15 22:00:08 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -117,10 +117,10 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	}
 	else
 	{
-		m_wndMaxDownFiles.SetRange( 1, 100 );
+	m_wndMaxDownFiles.SetRange( 1, 100 );
 		if ( Settings.GetOutgoingBandwidth() >= 16 ) m_wndMaxDownTransfers.SetRange( 1, 250 );
 		else m_wndMaxDownTransfers.SetRange( 1, 200 );
-		m_wndMaxFileTransfers.SetRange( 1, 100 );
+	m_wndMaxFileTransfers.SetRange( 1, 100 );
 	}
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
@@ -159,7 +159,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
-
+	
 	// Warn user about too long filepath
 	if ( _tcslen( szPath ) > MAX_PATH - 33 )
 	{
@@ -289,18 +289,18 @@ void CDownloadsSettingsPage::OnOK()
 	else
 	{
 		// For other systems we can guestimate a good value based on available bandwidth
-		m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-		if ( Settings.GetOutgoingBandwidth() < 16 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
+	if ( Settings.GetOutgoingBandwidth() < 16 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
 		else if ( Settings.GetOutgoingBandwidth() <= 32 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
 		else if ( Settings.GetOutgoingBandwidth() <= 64 )
 			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
 		else if ( Settings.GetOutgoingBandwidth() <= 128 )
 			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
-		else
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
-		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
+	else
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
+	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
 	}
 
 	// Display any data changes

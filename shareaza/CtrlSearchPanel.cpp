@@ -256,7 +256,10 @@ void CSearchPanel::OnSchemaChange()
 	
 	if ( pSchema != NULL )
 	{
-		m_boxSchema.SetIcon( ShellIcons.ExtractIcon( pSchema->m_nIcon16, 16 ), TRUE );
+		HICON hIcon = ShellIcons.ExtractIcon( pSchema->m_nIcon16, 16 );
+		// inefficient but we need to mirror it again
+		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		m_boxSchema.SetIcon( hIcon, TRUE );
 		CString strTitle = pSchema->m_sTitle;
 		int nPos = strTitle.Find( ':' );
 		if ( nPos > 0 ) strTitle = strTitle.Mid( nPos + 1 );

@@ -191,7 +191,13 @@ void CSplashDlg::DoPaint(CDC* pDC)
 	rc.DeflateRect( 1, 1 );
 	m_dcBuffer2.FillSolidRect( &rc, RGB( 0x25, 0x25, 0x25 ) );
 
-	CFragmentBar::DrawFragment( &m_dcBuffer2, &rc, m_nMax, 0, min( m_nPos, m_nMax ),
+	int nOffset;
+	if ( theApp.m_bRTL )
+		nOffset = m_nMax - min( m_nPos, m_nMax );
+	else
+		nOffset = 0;
+
+	CFragmentBar::DrawFragment( &m_dcBuffer2, &rc, m_nMax, nOffset, min( m_nPos, m_nMax ),
 		RGB( 0x20, 0xB0, 0x20 ), TRUE );
 	m_dcBuffer2.SelectClipRgn( NULL );
 

@@ -48,7 +48,7 @@ public:
 	BOOL	LoadFromXML(CXMLElement* pXML, const CString& strPath);
 	BOOL	SelectCaption(CWnd* pWnd, int nIndex);
 	BOOL	SelectCaption(CString& strCaption, int nIndex);
-	void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bExclude = TRUE);
+	void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude = TRUE);
 protected:
 	void	ApplyRecursive(LPCTSTR pszPath);
 	void	CreateDefault();
@@ -58,6 +58,7 @@ protected:
 // Strings
 public:
 	BOOL	LoadString(CString& str, UINT nStringID);
+	int		GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
 protected:
 	BOOL	LoadStrings(CXMLElement* pBase);
 	CMap<UINT, UINT, CString, CString&>	m_pStrings;

@@ -111,6 +111,11 @@ BOOL CFileCopyDlg::OnInitDialog()
 		}
 	}
 
+	if ( theApp.m_bRTL ) 
+	{
+		m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+		m_wndFileProg.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+	}
 	m_wndFileProg.SetRange( 0, 400 );
 
 	m_hThread = NULL;

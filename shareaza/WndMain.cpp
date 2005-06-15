@@ -266,6 +266,7 @@ END_MESSAGE_MAP()
 
 CMainWnd::CMainWnd()
 {
+	if ( theApp.m_bRTL ) SetProcessDefaultLayout( LAYOUT_RTL );
 	theApp.m_pMainWnd = this;
 
 	m_hInstance		= AfxGetResourceHandle();

@@ -115,7 +115,8 @@ BOOL CMatchTipCtrl::Create(CWnd* pParentWnd)
 {
 	CRect rc( 0, 0, 0, 0 );
 	m_pOwner = pParentWnd;
-	return CWnd::CreateEx( WS_EX_TOPMOST, m_hClass, NULL, WS_POPUP|WS_DISABLED, rc, pParentWnd, 0, NULL );
+	DWORD dwStylesEx = WS_EX_TOPMOST | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 );
+	return CWnd::CreateEx( dwStylesEx, m_hClass, NULL, WS_POPUP|WS_DISABLED, rc, pParentWnd, 0, NULL );
 }
 
 void CMatchTipCtrl::Show(CMatchFile* pFile, CQueryHit* pHit)
@@ -1013,7 +1014,7 @@ void CMatchTipCtrl::OnPaint()
 		{
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
 
-			DrawText( dc, pt, pItem->m_sKey + ':' );
+			DrawText( dc, pt, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
 			pt.x += m_nKeyWidth;
 			DrawText( dc, pt, pItem->m_sValue );
 			pt.x -= m_nKeyWidth;
@@ -1027,11 +1028,13 @@ void CMatchTipCtrl::OnPaint()
 
 void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, LPCTSTR pszText)
 {
+	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	short nExtraPoint = ( theApp.m_bRTL ? 1 : 0 );
 	CSize sz = dc.GetTextExtent( pszText, _tcslen( pszText ) );
-	CRect rc( pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy );
+	CRect rc( pt.x, pt.y, pt.x + sz.cx + nExtraPoint, pt.y + sz.cy );
 
 	dc.SetBkColor( m_crBack );
-	dc.ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, _tcslen( pszText ), NULL );
+	dc.ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, _tcslen( pszText ), NULL );
 	dc.ExcludeClipRect( &rc );
 }
 

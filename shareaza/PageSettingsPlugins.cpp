@@ -76,8 +76,10 @@ BOOL CPluginsSettingsPage::OnInitDialog()
 	CSettingsPage::OnInitDialog();
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 2, 1 );
-	m_gdiImageList.Add( theApp.LoadIcon( IDI_FILE ) );
-	m_gdiImageList.Add( theApp.LoadIcon( IDI_EXECUTABLE ) );
+	m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon( theApp.LoadIcon( IDI_FILE ) ) : 
+		theApp.LoadIcon( IDI_FILE ) );
+	m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon( theApp.LoadIcon( IDI_EXECUTABLE ) ) :
+		theApp.LoadIcon( IDI_EXECUTABLE ) );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 	m_wndList.InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 382, 0 );
@@ -244,7 +246,9 @@ void CPluginsSettingsPage::EnumerateGenericPlugins()
 		CPlugin* pPlugin = Plugins.GetNext( pos );
 		int nImage = 0;
 
-		if ( pPlugin->m_hIcon != NULL ) nImage = m_gdiImageList.Add( pPlugin->m_hIcon );
+		if ( pPlugin->m_hIcon != NULL ) 
+			nImage = m_gdiImageList.Add( theApp.m_bRTL ? CreateMirroredIcon ( pPlugin->m_hIcon ) : 
+				pPlugin->m_hIcon );
 
 		InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName, nImage,
 			pPlugin->m_pPlugin != NULL ? TS_TRUE : TS_FALSE, pPlugin );

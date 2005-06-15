@@ -99,6 +99,8 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmBase;
 	bmBase.LoadBitmap( IDB_SECURITY );
+	if ( theApp.m_bRTL ) 
+		bmBase.m_hObject = CreateMirroredBitmap( (HBITMAP) bmBase.m_hObject );
 
 	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
 	m_gdiImageList.Add( &bmBase, RGB( 0, 255, 0 ) );
@@ -144,7 +146,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 	pDefault->Set( 0, _T("Default Policy") );
 	pDefault->Set( 1, Security.m_bDenyPolicy ? _T("Deny") : _T("Accept") );
 	pDefault->Set( 3, _T("X") );
-	pDefault->m_nImage = Security.m_bDenyPolicy ? 2 : 1;
+	pDefault->m_nImage = Security.m_bDenyPolicy ? theApp.m_bRTL ? 0 : 2 : 1;
 
 	Security.Expire();
 
@@ -157,7 +159,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 
 		CLiveItem* pItem = pLiveList.Add( pRule );
 
-		pItem->m_nImage = pRule->m_nAction;
+		pItem->m_nImage = theApp.m_bRTL ? 2 - pRule->m_nAction : pRule->m_nAction;
 
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{
@@ -279,7 +281,7 @@ void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		pItem.iSubItem	= 0;
 		m_wndList.GetItem( &pItem );
 
-		switch ( pItem.iImage )
+		switch ( theApp.m_bRTL ? 2 - pItem.iImage : pItem.iImage )
 		{
 		case CSecureRule::srAccept:
 			pDraw->clrText = RGB( 0, 127, 0 );

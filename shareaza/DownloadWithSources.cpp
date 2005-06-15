@@ -103,6 +103,10 @@ int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 		}
 	}
 	
+	/*
+	CString strT;
+	strT.Format(_T("BT sources: %i"), nCount);
+	theApp.Message( MSG_ERROR, strT );*/
 	return nCount;
 }
 
@@ -271,7 +275,7 @@ BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPor
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
 		return FALSE;
 	else
-		return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
+	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
 }
 
 //////////////////////////////////////////////////////////////////////

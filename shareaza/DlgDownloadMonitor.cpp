@@ -169,7 +169,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 	
-	SkinMe( _T("CDownloadMonitorDlg"), ID_DOWNLOADS_MONITOR );
+	SkinMe( _T("CDownloadMonitorDlg"), IDI_DOWNLOAD_MONITOR );
 	
 	CMenu* pMenu = GetSystemMenu( FALSE );
 	pMenu->InsertMenu( 0, MF_BYPOSITION|MF_SEPARATOR, ID_SEPARATOR );
@@ -190,7 +190,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 			HICON hIcon;
 
 			if ( ShellIcons.Lookup( strType, NULL, &hIcon, NULL, NULL ) )
-				m_wndIcon.SetIcon( hIcon );
+				m_wndIcon.SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon );
 		}
 
 		m_wndFile.SetWindowText( m_sName );
@@ -277,8 +277,16 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 	
 	if ( m_pDownload->IsStarted() )
 	{
+		if ( theApp.m_bRTL )
+		{
+			strText.Format( _T("%s %s %.1f%% : Shareaza"),
+				(LPCTSTR)m_pDownload->m_sRemoteName, strOf, m_pDownload->GetProgress() * 100.0 );
+		}
+		else
+		{
 		strText.Format( _T("%.1f%% %s %s : Shareaza"),
 			m_pDownload->GetProgress() * 100.0, strOf, (LPCTSTR)m_pDownload->m_sRemoteName );
+	}
 	}
 	else
 	{
@@ -391,6 +399,7 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 		Update( &m_wndSpeed, strText );
 
 		strText.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
+		if ( theApp.m_bRTL ) strText = _T("\x202B") + strText;
 		Update( &m_wndSources, strText );
 	}
 	else if ( nSourceCount )
@@ -414,10 +423,20 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 
 	if ( m_pDownload->IsStarted() )
 	{
+		if ( theApp.m_bRTL )
+		{
+			strText.Format( _T("(%.2f%%) %s %s %s"),
+				m_pDownload->GetProgress() * 100.0,
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ), strOf,
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ) );
+		}
+		else
+		{
 		strText.Format( _T("%s %s %s (%.2f%%)"),
 			(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete(), FALSE ),
 			strOf, (LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize, FALSE ),
 			m_pDownload->GetProgress() * 100.0 );
+		}
 		Update( &m_wndVolume, strText );
 	}
 	else

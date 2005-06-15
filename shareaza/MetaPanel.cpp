@@ -103,7 +103,7 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 			if ( sz.cx > nLarge )
 			{
 				CRect rcText( 0, 0, nLarge, 0xFFFF );
-				WrappedText( pDC, &rcText, pItem->m_sValue, FALSE );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->m_sValue, NULL, FALSE );
 				pItem->m_bFullWidth	= TRUE+TRUE;
 				pItem->m_nHeight	= rcText.top + 4;
 				m_nHeight += pItem->m_nHeight + 2;
@@ -129,6 +129,7 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 {
 	POSITION pos = GetIterator();
 	CRect rcWork( prcArea );
+	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
 	
 	for ( int nRow = 0 ; pos ; nRow++ )
 	{
@@ -180,13 +181,13 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 			{
 				CRect rcText( &rcValue );
 				rcText.DeflateRect( 3, 2 );
-				WrappedText( pDC, &rcText, pItem->m_sValue, TRUE );
-				pDC->ExtTextOut( rcValue.left, rcValue.top, ETO_OPAQUE, &rcValue, NULL, 0, NULL );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->m_sValue, NULL, TRUE );
+				pDC->ExtTextOut( rcValue.left, rcValue.top, ETO_OPAQUE|dwFlags, &rcValue, NULL, 0, NULL );
 				pItem->m_rect.CopyRect( &rcValue );
 			}
 			else
 			{
-				pDC->ExtTextOut( rcValue.left + 3, rcValue.top + 2, ETO_CLIPPED|ETO_OPAQUE,
+				pDC->ExtTextOut( rcValue.left + 3, rcValue.top + 2, ETO_CLIPPED|ETO_OPAQUE|dwFlags,
 					&rcValue, pItem->m_sValue, NULL );
 				
 				pItem->m_rect.CopyRect( &rcValue );
@@ -203,49 +204,6 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 		}
 		
 		rcWork.top += nHeight + 2;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMetaPanel wrapped text
-
-void CMetaPanel::WrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, BOOL bPaint)
-{
-	CPoint pt = pBox->TopLeft();
-	
-	LPCTSTR pszWord = pszText;
-	LPCTSTR pszScan = pszText;
-	
-	for ( ; ; pszScan++ )
-	{
-		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
-		
-		if ( pszWord < pszScan )
-		{
-			int nLen = pszScan - pszWord + ( *pszScan ? 1 : 0 );
-			CSize sz = pDC->GetTextExtent( pszWord, nLen );
-			
-			if ( pt.x > pBox->left && pt.x + sz.cx > pBox->right )
-			{
-				pt.x = pBox->left;
-				pt.y += sz.cy;
-			}
-			
-			if ( bPaint )
-			{
-				CRect rc( pt.x, pt.y, pt.x + sz.cx, pt.y + sz.cy );
-				
-				pDC->ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE, &rc,
-					pszWord, nLen, NULL );
-				pDC->ExcludeClipRect( &rc );
-			}
-			
-			pt.x += sz.cx;
-			pBox->top = pt.y + sz.cy;
-		}
-		
-		pszWord = pszScan + 1;
-		if ( ! *pszScan ) break;
 	}
 }
 

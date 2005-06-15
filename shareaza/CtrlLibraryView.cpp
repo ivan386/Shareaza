@@ -95,7 +95,10 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 		}
 
 		LoadString( strFormat, IDS_LIBHEAD_EXPLORE_FOLDER );
-		str = strFormat + str;
+		if ( theApp.m_bRTL ) 
+			str =  _T("\x202A") + str + _T(" \x200E") + strFormat;
+		else
+			str = strFormat + str;
 
 		nImage	= SHI_FOLDER_OPEN;
 		pItem	= GetFolderSelection();

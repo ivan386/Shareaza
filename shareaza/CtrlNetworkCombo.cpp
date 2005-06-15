@@ -78,6 +78,8 @@ int CNetworkCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CBitmap bmProtocols;
 	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
+	if ( theApp.m_bRTL )
+		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
 	if ( ! m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) )
 		m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
@@ -125,6 +127,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
+	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
 		&theApp.m_gdiFontBold : &theApp.m_gdiFont );
@@ -150,6 +153,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	int nImage = (int)lpDrawItemStruct->itemData;
 	if ( nImage ) nImage ++;
 
+	if ( theApp.m_bRTL && nImage ) nImage = m_gdiImageList.GetImageCount() - nImage;
 	m_gdiImageList.Draw( &dc, nImage, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 

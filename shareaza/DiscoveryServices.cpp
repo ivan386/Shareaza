@@ -1,9 +1,9 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/06/14 17:09:16 $"
-//	Revision:		"$Revision: 1.35 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/06/15 22:00:05 $"
+//	Revision:		"$Revision: 1.36 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -242,6 +242,7 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
 		AddDefaults();
 	}
 }
+
 
 BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 {

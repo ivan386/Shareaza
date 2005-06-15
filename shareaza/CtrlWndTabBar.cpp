@@ -598,13 +598,16 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 		if ( rcItem.bottom > GetSystemMetrics( SM_CYSCREEN ) / 2 )
 		{
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
-				TPM_LEFTALIGN|TPM_BOTTOMALIGN, rcItem.left, rcItem.top + 1, this, NULL );
+				TPM_LEFTALIGN|TPM_BOTTOMALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
+				rcItem.top + 1, this, NULL );
 		}
 		else
 		{
-			CoolMenu.RegisterEdge( rcItem.left, rcItem.bottom - 1, rcItem.Width() );
+			CoolMenu.RegisterEdge( theApp.m_bRTL ? rcItem.right : rcItem.left, 
+				rcItem.bottom - 1, rcItem.Width() );
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
-				TPM_LEFTALIGN|TPM_TOPALIGN, rcItem.left, rcItem.bottom - 1, this, NULL );
+				TPM_LEFTALIGN|TPM_TOPALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
+				rcItem.bottom - 1, this, NULL );
 		}
 
 		m_bMenuGray = FALSE;

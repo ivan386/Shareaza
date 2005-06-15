@@ -964,6 +964,9 @@ IDB_REMOTE_SKIN         BITMAP                  "Res\\RemoteWnd.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
 IDB_SCHEDULER_HEADER    BITMAP                  "Res\\Scheduler.bmp"
 IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
+IDB_SHELL_BASE_RTL      BITMAP                  "res\\ShellBaseRTL.bmp"
+IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
+IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1532,7 +1535,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION |
 CAPTION "Download File or Torrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     ICON            IDI_FILE,IDC_STATIC,6,36,20,20
     LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",
                     IDC_STATIC,36,38,246,18
@@ -1642,13 +1645,13 @@ BEGIN
                     IDC_MESSAGE_MOVE,5,5,205,10,NOT WS_VISIBLE
 END
 
-IDD_URL_ACTION DIALOG  0, 0, 292, 154
+IDD_URL_ACTION DIALOGEX 0, 0, 292, 154
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
     WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza URI Manager"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP | WS_GROUP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,293,172
     LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",
                     IDC_MESSAGE_1,20,40,250,20,NOT WS_VISIBLE
     LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",
@@ -1698,7 +1701,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Copy URI"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:",
                     IDC_MESSAGE,10,40,270,30
     CONTROL         "...",IDC_URL_MAGNET,"Static",SS_LEFTNOWORDWRAP | 
@@ -1832,12 +1835,12 @@ BEGIN
                     ES_READONLY
 END
 
-IDD_URL_EXPORT DIALOG  0, 0, 292, 129
+IDD_URL_EXPORT DIALOGEX 0, 0, 292, 129
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Export URIs"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",
                     IDC_MESSAGE,10,40,270,20
     EDITTEXT        IDC_URL_FORMAT,10,65,270,12,ES_AUTOHSCROLL
@@ -1854,13 +1857,13 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,235,105,45,14
 END
 
-IDD_UPGRADE DIALOG  0, 0, 292, 154
+IDD_UPGRADE DIALOGEX 0, 0, 292, 154
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
     WS_CAPTION | WS_SYSMENU
 CAPTION "Upgrade Alert"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",
                     IDC_MESSAGE,20,40,250,60
     LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",
@@ -2350,7 +2353,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP |
 CAPTION "Shared Folder Manager"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",
                     IDC_STATIC,5,35,280,30
     CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | 
@@ -2383,7 +2386,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP |
 CAPTION "Select Visualisation"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     GROUPBOX        "Select an audio visualisation from the list:",
                     IDC_STATIC,5,35,280,140,WS_GROUP
     CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | 
@@ -2485,7 +2488,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Respects its Users"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "Did you know Shareaza is a 100% free product?",
                     IDC_TITLE,15,34,265,19,SS_CENTERIMAGE
     LTEXT           "Shareaza does NOT contain ANY ""spyware"", ""adware"" or other bundled software. It does NOT display any advertisements or ""popups"", ever.\n\nIf you ever see advertising or ""popups"" while using Shareaza, be assured that they are NOT coming from this program.",
@@ -2499,12 +2502,12 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,245,190,39,14
 END
 
-IDD_PROMOTE DIALOG  0, 0, 292, 185
+IDD_PROMOTE DIALOGEX 0, 0, 292, 185
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Spread the Word"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,293,172
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
     LTEXT           "Help Us Spread the Word",IDC_TITLE,15,45,265,10,
                     SS_CENTERIMAGE
     LTEXT           "We hope you have enjoyed using Shareaza so far.  We believe it is the best file sharing application around.",
@@ -2524,7 +2527,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Existing File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
     CONTROL         "filename goes here",IDC_FILE_NAME,"Static",
                     SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,40,260,
                     10
@@ -2552,7 +2555,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Close Button"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
     LTEXT           "This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:",
                     IDC_STATIC,15,40,260,30
     CONTROL         "Minimise to the tray area",IDC_CLOSE_0,"Button",
@@ -2565,10 +2568,10 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,235,126,50,14
 END
 
-IDD_SETTINGS_DONKEY DIALOG  0, 0, 282, 220
+IDD_SETTINGS_DONKEY DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "eDonkey2000"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&eDonkey2000 Network:",IDC_STATIC,5,5,270,36,WS_GROUP
     CONTROL         "Connect to eDonkey2000 today",IDC_ENABLE_TODAY,"Button",
@@ -2724,7 +2727,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Server.met File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     LTEXT           "You can download an eDonkey2000 server.met file from the web to refresh your local list of servers.",
                     IDC_STATIC,10,40,270,20
     EDITTEXT        IDC_URL,10,65,270,12,ES_AUTOHSCROLL
@@ -2784,12 +2787,12 @@ BEGIN
                     NOT WS_BORDER
 END
 
-IDD_DONKEY_IMPORT DIALOG  0, 0, 292, 169
+IDD_DONKEY_IMPORT DIALOGEX 0, 0, 292, 169
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Import eDonkey2000 Downloads"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     LTEXT           "Shareaza has detected that you have another eDonkey2000 program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",
                     IDC_STATIC,15,40,260,30
     DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,75,50,14
@@ -2924,7 +2927,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION |
 CAPTION "Open Torrent File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",
                     IDC_STATIC,7,36,276,18
     DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,66,61,50,14,WS_GROUP
@@ -3051,19 +3054,19 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Scheduler"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,3,155,154,56
+    GROUPBOX        "&Options:",IDC_STATIC,3,156,154,58
     CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,164,144,15,
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,165,144,15,
                     WS_EX_TRANSPARENT
-    EDITTEXT        IDC_SCHEDULER_LIMITED,10,181,29,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_SCHEDULER_LIMITED,10,182,29,12,ES_AUTOHSCROLL | 
                     ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",
                     UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
     CONTROL         "&Connect to G2 only when limited",
                     IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,10,195,142,15,WS_EX_TRANSPARENT
-    GROUPBOX        "Key:",IDC_STATIC,3,104,154,49
+                    WS_GROUP | WS_TABSTOP,10,196,142,15,WS_EX_TRANSPARENT
+    GROUPBOX        "Key:",IDC_STATIC,3,105,154,49
     RTEXT           "Sun",IDC_STATIC,0,26,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Mon",IDC_STATIC,0,36,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Tue",IDC_STATIC,0,46,21,8,0,WS_EX_TRANSPARENT
@@ -3071,20 +3074,20 @@ BEGIN
     RTEXT           "Thu",IDC_STATIC,0,66,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Fri",IDC_STATIC,0,76,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Sat",IDC_STATIC,0,86,21,8,0,WS_EX_TRANSPARENT
-    LTEXT           "Do not connect",IDC_STATIC,36,114,116,8,0,
+    LTEXT           "Do not connect",IDC_STATIC,36,115,116,8,0,
                     WS_EX_TRANSPARENT
-    LTEXT           "Limited connection",IDC_STATIC,36,126,116,8,0,
+    LTEXT           "Limited connection",IDC_STATIC,36,128,116,8,0,
                     WS_EX_TRANSPARENT
-    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,139,116,8,0,
+    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,140,116,8,0,
                     WS_EX_TRANSPARENT
-    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,181,114,12,
+    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,182,114,12,
                     SS_CENTERIMAGE,WS_EX_TRANSPARENT
     EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
                     ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
                     WS_TABSTOP,WS_EX_TRANSPARENT
-    GROUPBOX        "Help",IDC_STATIC,159,104,118,107,0,WS_EX_RIGHT
+    GROUPBOX        "Help",IDC_STATIC,159,105,118,108,0,WS_EX_RIGHT
     LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",
-                    IDC_STATIC,167,112,101,94
+                    IDC_STATIC,167,113,101,93
 END
 
 IDD_FILTER_SAVE_AS DIALOGEX 0, 0, 205, 46
@@ -3105,7 +3108,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION |
 CAPTION "Download Reviews"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,367,31
     DEFPUSHBUTTON   "OK",IDOK,305,181,50,14
     CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | 
                     LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,39,348,
@@ -5662,6 +5665,9 @@ BEGIN
     IDS_GENERAL_NOURNAVAILABLE "No URN available"
     IDS_GENERAL_CLOSE       "Close"
     IDS_GENERAL_OF          "of"
+    IDS_GENERAL_RTL_WARNING "Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"
+    IDS_GENERAL_RTL_NOTSUPPORTED 
+                            "Right-to-left languages are not supported in your OS."
 END
 
 STRINGTABLE 

@@ -73,7 +73,8 @@ CSchemaCtrl::~CSchemaCtrl()
 BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
 	dwStyle |= WS_CHILD|WS_VSCROLL|WS_CLIPCHILDREN;
-	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
+	DWORD dwExStyle = theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0;
+	return CWnd::CreateEx( dwExStyle, NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
 }
 
 int CSchemaCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -247,8 +248,16 @@ void CSchemaCtrl::Layout()
 
 		if ( m_nCaptionWidth )
 		{
-			rcNew.left		= m_nCaptionWidth;
-			rcNew.right		= rcClient.right - 10;
+			if ( theApp.m_bRTL )
+			{
+				rcNew.left		= m_nCaptionWidth;
+				rcNew.right		= rcClient.right - 10;
+			}
+			else
+			{
+				rcNew.left		= m_nCaptionWidth;
+				rcNew.right		= rcClient.right - 10;
+			}
 			rcNew.top		= nTop + m_nItemHeight / 2 - 9;
 			rcNew.bottom	= nTop + m_nItemHeight / 2 + 9;
 		}
@@ -407,7 +416,7 @@ void CSchemaCtrl::OnPaint()
 {
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
-		
+
 	GetClientRect( &rcClient );
 	rcItem.CopyRect( &rcClient );
 

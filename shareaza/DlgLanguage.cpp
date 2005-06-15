@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
 	ON_WM_SETCURSOR()
 	ON_WM_DESTROY()
 	ON_WM_CLOSE()
+	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -275,12 +276,7 @@ void CLanguageDlg::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText)
 
 	for ( ; ; pszScan++ )
 	{
-
-#ifdef UNICODE
 		if ( *pszScan != NULL && (unsigned short)*pszScan > 32 ) continue;
-#else
-		if ( *pszScan != NULL && (unsigned char)*pszScan > 32 ) continue;
-#endif
 		
 		if ( pszWord < pszScan )
 		{
@@ -626,6 +622,8 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	CString	strName		= pManifest->GetAttributeValue( _T("name"), pszName );
 	CString	strPrompt	= pManifest->GetAttributeValue( _T("prompt") );
 	CString strIcon		= pManifest->GetAttributeValue( _T("icon") );
+	CString strGUIDir	= pManifest->GetAttributeValue( _T("dir"), _T("ltr") );
+	CString strLangCode = pManifest->GetAttributeValue( _T("language") );
 	
 	delete pXML;
 	
@@ -635,6 +633,8 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	m_pPaths.Add( strXML );
 	m_pTitles.Add( strName );
 	m_pPrompts.Add( strPrompt );
+	m_pGUIDirs.Add( strGUIDir );
+	m_pLangCodes.Add ( strLangCode );
 	
 	if ( strIcon.GetLength() )
 	{
@@ -670,16 +670,57 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 
 void CLanguageDlg::Execute(int nSelected)
 {
+	BOOL bRTL = ( nSelected > 1 ) ? ( m_pGUIDirs.GetAt( nSelected - 2 ) == "rtl" ) : FALSE;
+
+	if ( bRTL && theApp.m_dwWindowsVersion < 5 )
+	{
+		CString str;
+		LoadString( str, IDS_GENERAL_RTL_NOTSUPPORTED );
+		AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_OK );
+		return;
+	}
+
 	for ( int nItem = 0 ; nItem < m_pPaths.GetSize() ; nItem++ )
 	{
 		theApp.WriteProfileInt( _T("Skins"), m_pPaths.GetAt( nItem ),
 			( nSelected - 1 ) == nItem );
 	}
 
-	EndDialog( IDOK );
+	CString strLangCode = _T("en");
+	if ( nSelected > 1 ) strLangCode = m_pLangCodes.GetAt( nSelected - 2 );
+
+	// required to have schemas reloaded after restart
+	Settings.General.Language = strLangCode;
+
+	if ( theApp.m_bRTL == bRTL ) 
+	{
+		theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), bRTL );
+		EndDialog( IDOK );
+	}
+	else
+	{
+		CString str;
+		LoadString( str, IDS_GENERAL_RTL_WARNING );
+
+		theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), bRTL );
+
+		if ( AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_YESNO ) == IDYES )
+		{
+			GetParent()->PostMessage( WM_CLOSE, NULL, NULL );
+		}
+		EndDialog( IDCANCEL );
+	}
 }
 
 void CLanguageDlg::OnClose() 
 {
 	EndDialog( IDCANCEL );
+}
+
+int CLanguageDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialog::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	return 0;
 }

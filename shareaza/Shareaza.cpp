@@ -388,6 +388,8 @@ void CShareazaApp::InitResources()
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
+	theApp.m_bRTL = theApp.GetProfileInt( _T("Settings"), _T("LanguageRTL"), 0 );
+
 	srand( GetTickCount() );
 }
 
@@ -982,4 +984,111 @@ void RecalcDropWidth(CComboBox* pWnd)
 
     dc.RestoreDC( nSave );
     pWnd->SetDroppedWidth( nWidth );
+}
+
+HICON CreateMirroredIcon(HICON hIconOrig)
+{
+	HDC hdcScreen, hdcBitmap, hdcMask = NULL;
+	HBITMAP hbm, hbmMask, hbmOld,hbmOldMask;
+	BITMAP bm;
+	ICONINFO ii;
+	HICON hIcon = NULL;
+	hdcBitmap = CreateCompatibleDC( NULL );
+	if ( hdcBitmap )
+	{
+		hdcMask = CreateCompatibleDC( NULL );
+		if( hdcMask )
+		{
+			SetLayout( hdcBitmap, LAYOUT_RTL );
+			SetLayout( hdcMask, LAYOUT_RTL );
+		}
+		else
+		{
+			DeleteDC( hdcBitmap );
+			hdcBitmap = NULL;
+		}
+	}
+	hdcScreen = GetDC( NULL );
+	if ( hdcScreen )
+	{
+		if ( hdcBitmap && hdcMask )
+		{
+			if ( hIconOrig )
+			{
+				if ( GetIconInfo( hIconOrig, &ii ) && GetObject( ii.hbmColor, sizeof(BITMAP), &bm ) )
+				{
+					// Do the cleanup for the bitmaps.
+					DeleteObject( ii.hbmMask );
+					DeleteObject( ii.hbmColor );
+					ii.hbmMask = ii.hbmColor = NULL;
+					hbm = CreateCompatibleBitmap( hdcScreen, bm.bmWidth, bm.bmHeight );
+					hbmMask = CreateBitmap( bm.bmWidth, bm.bmHeight, 1, 1, NULL );
+					hbmOld = (HBITMAP)SelectObject( hdcBitmap, hbm );
+					hbmOldMask = (HBITMAP)SelectObject( hdcMask,hbmMask );
+					DrawIconEx( hdcBitmap, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_IMAGE );
+					DrawIconEx( hdcMask, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_MASK );
+					SelectObject( hdcBitmap, hbmOld );
+					SelectObject( hdcMask, hbmOldMask );
+					// Create the new mirrored icon and delete bitmaps
+
+					ii.hbmMask = hbmMask;
+					ii.hbmColor = hbm;
+					hIcon = CreateIconIndirect( &ii );
+					DeleteObject( hbm );
+					DeleteObject( hbmMask );
+				}
+			}
+		}
+	}
+	ReleaseDC( NULL, hdcScreen );
+
+	if ( hdcBitmap ) DeleteDC( hdcBitmap );
+	if ( hdcMask ) DeleteDC( hdcMask );
+	return hIcon;
+}
+
+HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
+{
+	HDC hdc, hdcMem1, hdcMem2;
+	HBITMAP hbm = NULL, hOld_bm1, hOld_bm2;
+	BITMAP bm;
+	if ( !hbmOrig ) return NULL;
+	if ( !GetObject( hbmOrig, sizeof(BITMAP), &bm ) ) return NULL;
+
+	hdc = GetDC( NULL );
+	if ( hdc )
+	{
+		hdcMem1 = CreateCompatibleDC( hdc );
+		if ( !hdcMem1 )
+		{
+			ReleaseDC( NULL, hdc );
+			return NULL;
+		}
+		hdcMem2 = CreateCompatibleDC( hdc );
+		if ( !hdcMem2 )
+		{
+			DeleteDC( hdcMem1 );
+			ReleaseDC( NULL, hdc );
+			return NULL;
+		}
+		hbm = CreateCompatibleBitmap( hdc, bm.bmWidth, bm.bmHeight );
+		if (!hbm)
+		{
+			ReleaseDC( NULL, hdc );
+			DeleteDC( hdcMem1 );
+			DeleteDC( hdcMem2 );
+			return NULL;
+		}
+		// Flip the bitmap.
+		hOld_bm1 = (HBITMAP)SelectObject( hdcMem1, hbmOrig );
+		hOld_bm2 = (HBITMAP)SelectObject( hdcMem2, hbm );
+		SetLayout( hdcMem2, LAYOUT_RTL );
+		BitBlt( hdcMem2, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem1, 0, 0, SRCCOPY );
+		SelectObject( hdcMem1, hOld_bm1 );
+		SelectObject( hdcMem1, hOld_bm2 );
+		DeleteDC( hdcMem1 );
+		DeleteDC( hdcMem2 );
+		ReleaseDC( NULL, hdc );
+	}
+	return hbm;
 }

@@ -73,7 +73,7 @@ void CShareManagerDlg::DoDataExchange(CDataExchange* pDX)
 
 BOOL CShareManagerDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CSkinDialog::OnInitDialog();
 
 	SkinMe( NULL, IDR_LIBRARYFRAME );
 

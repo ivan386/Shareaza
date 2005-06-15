@@ -72,6 +72,12 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	m_dwStyle |= CBRS_BORDER_3D;
 
+	if ( lpCreateStruct->dwExStyle & WS_EX_LAYOUTRTL )
+	{
+		lpCreateStruct->dwExStyle ^= WS_EX_LAYOUTRTL;
+		SetWindowLong( this->m_hWnd, GWL_EXSTYLE, lpCreateStruct->dwExStyle );
+	}
+
 	m_hTab = (HICON)LoadImage( AfxGetResourceHandle(),
 		MAKEINTRESOURCE(IDI_POINTER_ARROW), IMAGE_ICON, 16, 16, 0 );
 
@@ -152,6 +158,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 
 	CDC* pMemDC = CoolInterface.GetBuffer( *pDC, rcClient.Size() );
+	if ( theApp.m_bRTL ) pMemDC->SetLayout( 0 );
 
 	if ( ! CoolInterface.DrawWatermark( pMemDC, &rcClient, &m_bmWatermark ) )
 		pMemDC->FillSolidRect( &rcClient, CoolInterface.m_crMidtone );
@@ -180,6 +187,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
 		pMemDC, 0, 0, SRCCOPY );
+	if ( theApp.m_bRTL ) pMemDC->SetLayout( LAYOUT_RTL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

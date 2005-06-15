@@ -78,10 +78,10 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL ) + 1;
-	
+
 	m_wndList.InsertColumn( 0, _T("Setting"), LVCFMT_LEFT, rc.right - 80, 0 );
 	m_wndList.InsertColumn( 1, _T("Value"), LVCFMT_LEFT, 80, 1 );
-	
+
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
 	
@@ -314,7 +314,10 @@ void CAdvancedSettingsPage::UpdateItem(int nItem)
 	else
 	{
 		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_nScale );
-		strValue += pItem->m_sSuffix;
+		if ( theApp.m_bRTL )
+			strValue = _T("\x200E") + strValue + pItem->m_sSuffix;
+		else
+			strValue += pItem->m_sSuffix;
 	}
 	
 	m_wndList.SetItemText( nItem, 1, strValue );

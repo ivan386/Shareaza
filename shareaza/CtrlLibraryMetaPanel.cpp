@@ -189,6 +189,7 @@ void CLibraryMetaPanel::Update()
 	m_pMetadata.Clean( 4096 );
 	
 	CClientDC dc( this );
+	dc.SetLayout( LAYOUT_BITMAPORIENTATIONPRESERVED );
 	SCROLLINFO pInfo;
 	CRect rc;
 	
@@ -280,7 +281,8 @@ void CLibraryMetaPanel::OnPaint()
 	CPaintDC dc( this );
 	CRect rcClient;
 	CString str;
-	
+	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+
 	GetClientRect( &rcClient );
 	
 	CFont* pOldFont = dc.GetCurrentFont();
@@ -295,7 +297,7 @@ void CLibraryMetaPanel::OnPaint()
 		CSize sz = dc.GetTextExtent( str );
 		CPoint pt = rcClient.CenterPoint();
 		pt.x -= sz.cx / 2; pt.y -= sz.cy / 2;
-		dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE, &rcClient, str, NULL );
+		dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE|dwFlags, &rcClient, str, NULL );
 		dc.SelectObject( pOldFont );
 		return;
 	}
@@ -348,7 +350,10 @@ void CLibraryMetaPanel::OnPaint()
 	
 	dc.SelectObject( &CoolInterface.m_fntBold );
 	LoadString( str, IDS_TIP_LOCATION );
-	DrawText( &dc, rcWork.left, rcWork.top, str + ':' );
+	if ( theApp.m_bRTL )
+		DrawText( &dc, rcWork.left, rcWork.top, ':' + str );
+	else
+		DrawText( &dc, rcWork.left, rcWork.top, str + ':' );
 	LoadString( str, IDS_TIP_SIZE );
 	DrawText( &dc, rcWork.right - 125, rcWork.top, str + ':' );
 	dc.SelectObject( &CoolInterface.m_fntNormal );
@@ -388,10 +393,11 @@ void CLibraryMetaPanel::OnPaint()
 
 void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect)
 {
+	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
 	CSize sz = pDC->GetTextExtent( pszText, _tcslen( pszText ) );
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 	
-	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, _tcslen( pszText ), NULL );
+	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, _tcslen( pszText ), NULL );
 	pDC->ExcludeClipRect( &rc );
 	
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );

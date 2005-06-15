@@ -59,7 +59,7 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define THUMB_ICON	48
+#define THUMB_ICON			48
 #define THUMB_STORE_SIZE	128
 
 
@@ -1037,16 +1037,16 @@ void CLibraryThumbView::OnRun()
 
 		if ( ! m_bRush )
 		{
-			DWORD tDelay = GetTickCount() - tNow;
-			if ( tDelay > 400 ) tDelay = 400;
-			if ( tDelay < 20 ) tDelay = 20;
+			//DWORD tDelay = GetTickCount() - tNow;
+			//if ( tDelay > 400 ) tDelay = 400;
+			//if ( tDelay < 20 ) tDelay = 20;
 
-			while ( tDelay && m_bThread )
-			{
-				DWORD tNow = min( tDelay, DWORD(50) );
-				tDelay -= tNow;
-				Sleep( tNow );
-			}
+			//while ( tDelay && m_bThread )
+			//{
+			//	DWORD tNow = min( tDelay, DWORD(50) );
+			//	tDelay -= tNow;
+			//	Sleep( tNow );
+			//}
 		}
 	}
 

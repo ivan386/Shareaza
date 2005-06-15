@@ -291,7 +291,8 @@ void CMediaListCtrl::SetCurrent(int nCurrent)
 	}
 
 	NMHDR pNM = { GetSafeHwnd(), GetDlgCtrlID(), MLN_NEWCURRENT };
-	GetOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
+	CString strPath = GetPath( nCurrent );
+	GetSafeOwner()->SendMessage( WM_NOTIFY, pNM.idFrom, (LPARAM)&pNM );
 }
 
 int CMediaListCtrl::GetNext(BOOL bSet)

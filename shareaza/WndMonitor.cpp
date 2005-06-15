@@ -63,7 +63,8 @@ LPCTSTR CRemoteWnd::m_hClass = NULL;
 
 CRemoteWnd::CRemoteWnd()
 {
-	if ( m_hClass == NULL ) m_hClass = AfxRegisterWndClass( 0 );
+	if ( m_hClass == NULL ) 
+		m_hClass = AfxRegisterWndClass( 0 );
 
 	m_pMonitor		= NULL;
 	m_pSkin			= NULL;
@@ -105,6 +106,11 @@ BOOL CRemoteWnd::IsVisible()
 int CRemoteWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( lpCreateStruct->dwExStyle & WS_EX_LAYOUTRTL )
+	{
+		lpCreateStruct->dwExStyle ^= WS_EX_LAYOUTRTL;
+		SetWindowLong( this->m_hWnd, GWL_EXSTYLE, lpCreateStruct->dwExStyle );
+	}
 
 	OnSkinChange();
 	EnableToolTips();
@@ -631,7 +637,21 @@ void CRemoteWnd::PaintStatus(CDC* pDC)
 {
 	if ( m_bsStatusText && ! m_bStatus )
 	{
-		pDC->DrawText( m_sStatus, &m_rcsStatusText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+		pDC->DrawText( m_sStatus, &m_rcsStatusText, 
+			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
+
+		if ( theApp.m_bRTL ) 
+		{
+			CRect rcSrc;
+			rcSrc.top = 0; rcSrc.left = 0;
+			rcSrc.right = m_rcsStatusText.Width();
+			rcSrc.bottom = m_rcsStatusText.Height();
+
+			pDC->StretchBlt( rcSrc.Width() + m_rcsStatusText.left, 
+				m_rcsStatusText.top, -rcSrc.Width(), rcSrc.Height(),
+				pDC, m_rcsStatusText.left, m_rcsStatusText.top, 
+				rcSrc.Width(), rcSrc.Height(), SRCCOPY );	
+		}
 	}
 }
 

@@ -69,6 +69,8 @@ protected:
 	CXMLElement*	m_pRegionXML;
 	int				m_nHoverAnchor;
 	int				m_nDownAnchor;
+	int             m_nMirror;
+	CRect           m_rcMirror;
 
 // Operations
 public:

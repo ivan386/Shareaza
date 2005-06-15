@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/05/31 17:50:11 $"
-//	Revision:		"$Revision: 1.33 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/06/15 21:59:47 $"
+//	Revision:		"$Revision: 1.34 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -146,6 +146,8 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
+	if ( theApp.m_bRTL ) 
+		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
 	
@@ -818,6 +820,7 @@ void CDownloadsCtrl::OnPaint()
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
+	if ( theApp.m_bRTL ) dc.SetTextAlign( TA_RTLREADING );
 	
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;

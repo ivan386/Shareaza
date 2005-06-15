@@ -116,6 +116,8 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
+	if ( theApp.m_bRTL ) 
+		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
@@ -159,6 +161,7 @@ void CNeighboursWnd::Update()
 	CLiveList pLiveList( 11 );
 	
 	DWORD nTimeNow = GetTickCount();
+	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
@@ -239,7 +242,7 @@ void CNeighboursWnd::Update()
 				}
 				
 				pItem->Set( 8, str );
-				pItem->m_nImage = PROTOCOL_G1;
+				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
@@ -275,13 +278,13 @@ void CNeighboursWnd::Update()
 					pItem->Set( 7, _T("?") );
 				}
 				
-				pItem->m_nImage = PROTOCOL_G2;
+				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
 				CEDNeighbour* pED2K = reinterpret_cast<CEDNeighbour*>(pNeighbour);
 				
-				pItem->m_nImage = PROTOCOL_ED2K;
+				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
 				pItem->Set( 10, pED2K->m_sServerName );
 				
@@ -307,12 +310,12 @@ void CNeighboursWnd::Update()
 			}
 			else
 			{
-				pItem->m_nImage = PROTOCOL_NULL;
+				pItem->m_nImage = theApp.m_bRTL ? nProtocolRev : PROTOCOL_NULL;
 			}
 		}
 		else
 		{
-			pItem->m_nImage = PROTOCOL_NULL;
+			pItem->m_nImage = theApp.m_bRTL ? nProtocolRev : PROTOCOL_NULL;
 		}
 		
 		if ( pNeighbour->m_pProfile != NULL )

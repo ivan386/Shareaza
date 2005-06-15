@@ -331,6 +331,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		strSpeed = Settings.SmartVolume( pDownload->GetAverageSpeed() * 8, FALSE, TRUE );
 
 		strSources.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
+		if ( theApp.m_bRTL ) strSources = _T("\x202B") + strSources;
 	}
 	else if ( nSourceCount )
 	{
@@ -347,10 +348,20 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( pDownload->IsStarted() )
 	{
-		strVolume.Format( _T("%s %s %s (%.2f%%)"),
-			(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
-			strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
-			pDownload->GetProgress() * 100.0 );
+		if ( theApp.m_bRTL )
+		{
+			strVolume.Format( _T("(%.2f%%) %s %s %s"),
+				pDownload->GetProgress() * 100.0,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ), strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ) );
+		}
+		else
+		{
+			strVolume.Format( _T("%s %s %s (%.2f%%)"),
+				(LPCTSTR)Settings.SmartVolume( pDownload->GetVolumeComplete(), FALSE ),
+				strOf, (LPCTSTR)Settings.SmartVolume( pDownload->m_nSize, FALSE ),
+				pDownload->GetProgress() * 100.0 );
+		}
 	}
 	else
 	{
@@ -359,16 +370,35 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( pDownload->m_nTorrentUploaded )
 	{
-		strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
-			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
-			strOf,
-			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
-			pDownload->GetRatio() * 100.0 );
+		if ( theApp.m_bRTL )
+		{
+			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"),
+				pDownload->GetRatio() * 100.0,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
+				strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ) );
+		}
+		else
+		{
+			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"),
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentUploaded, FALSE ),
+				strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ),
+				pDownload->GetRatio() * 100.0 );
+		}
 	}
 	else
 	{
-		strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"), _T("0"), strOf,
-			(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0 );
+		if ( theApp.m_bRTL )
+		{
+			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"), 0.0, 
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), strOf, _T("0") );
+		}
+		else
+		{
+			strTorrentUpload.Format( _T("%s %s %s (%.2f%%)"), _T("0"), strOf,
+				(LPCTSTR)Settings.SmartVolume( pDownload->m_nTorrentDownloaded, FALSE ), 0.0 );
+		}
 	}
 
 	//Draw the pop-up box

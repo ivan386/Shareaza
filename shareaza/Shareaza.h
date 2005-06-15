@@ -50,6 +50,7 @@ public:
 	DWORD				m_dwWindowsVersion;			// Windows version
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
+	BOOL				m_bRTL;						// Right-to-Left GUI (2000, XP only)
 
 	int					m_nDefaultFontSize;			// The basic font size. (11)
 	CString				m_sDefaultFont;				// Main font. (Tahoma)
@@ -113,7 +114,9 @@ CString	TimeToString(DWORD tVal);
 BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
-void RecalcDropWidth(CComboBox* pWnd);
+void	RecalcDropWidth(CComboBox* pWnd);
+HICON	CreateMirroredIcon(HICON hIconOrig);
+HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
 #ifdef _DEBUG
 #define MLOG(x) theApp.Message( MSG_DEBUG, x )

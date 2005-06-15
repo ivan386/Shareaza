@@ -80,7 +80,9 @@ BOOL CFavouritesProfilePage::OnInitDialog()
 	CSettingsPage::OnInitDialog();
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
-	m_gdiImageList.Add( AfxGetApp()->LoadIcon( IDI_WEB_URL ) );
+	HICON hIcon = AfxGetApp()->LoadIcon( IDI_WEB_URL );
+	if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+	m_gdiImageList.Add( hIcon );
 
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
@@ -103,6 +105,7 @@ BOOL CFavouritesProfilePage::OnInitDialog()
 			{
 				CString strTitle	= pBookmark->GetAttributeValue( _T("title") );
 				CString strURL		= pBookmark->GetAttributeValue( _T("url") );
+				if ( theApp.m_bRTL ) strURL = _T("\x202A") + strURL;
 
 				int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 					m_wndList.GetItemCount(), strTitle, 0, 0, 0, 0 );
@@ -143,7 +146,7 @@ void CFavouritesProfilePage::OnWebAdd()
 
 	int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 		m_wndList.GetItemCount(), m_sTitle, 0, 0, 0, 0 );
-	m_wndList.SetItemText( nItem, 1, m_sURL );
+	m_wndList.SetItemText( nItem, 1, theApp.m_bRTL ? _T("\x202A") + m_sURL : m_sURL );
 
 	m_sTitle.Empty();
 	m_sURL.Empty();

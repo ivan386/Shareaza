@@ -28,7 +28,6 @@
 #include "Skin.h"
 #include "DlgFilePropertiesSheet.h"
 #include "DlgFilePropertiesPage.h"
-#include ".\dlgfilepropertiespage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -101,9 +100,17 @@ BOOL CFilePropertiesPage::OnInitDialog()
 	{
 		if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
 		{
+			if ( theApp.m_bRTL )
+			{
+				CRect rc, rcPage;
+				pNameWnd->GetWindowRect( &rc );
+				GetWindowRect( &rcPage );
+				pNameWnd->MoveWindow( rcPage.right - rc.right, 
+					rc.top - rcPage.top, rc.Width(), rc.Height(), FALSE );
+				pNameWnd->ModifyStyleEx( WS_EX_RTLREADING, WS_EX_LTRREADING, 0 );
+			}
 			pNameWnd->SetWindowText( pFile->m_sName );
 		}
-
 		m_nIcon = ShellIcons.Get( pFile->m_sName, 48 );
 
 		oLock.Unlock();
@@ -115,12 +122,21 @@ BOOL CFilePropertiesPage::OnInitDialog()
 		{
 			if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
 			{
+				if ( theApp.m_bRTL )
+				{
+					CRect rc, rcPage;
+					pNameWnd->GetWindowRect( &rc );
+					GetWindowRect( &rcPage );
+					pNameWnd->MoveWindow( rcPage.right - rc.right, 
+						rc.top - rcPage.top, rc.Width(), rc.Height(), FALSE );
+					pNameWnd->ModifyStyleEx( 0, WS_EX_RTLREADING, 0 );
+				}
 				CString strFormat, strMessage;
 				LoadString( strFormat, IDS_LIBRARY_METADATA_EDIT );
 				strMessage.Format( strFormat, pList->GetCount() );
 				pNameWnd->SetWindowText( strMessage );
-			}
 
+			}
 			m_nIcon = SHI_EXECUTABLE;
 		}
 	}
@@ -131,6 +147,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 void CFilePropertiesPage::OnPaint()
 {
 	CPaintDC dc( this );
+	if ( theApp.m_bRTL ) dc.SetLayout( LAYOUT_RTL );
 
 	if ( m_nIcon >= 0 )
 	{

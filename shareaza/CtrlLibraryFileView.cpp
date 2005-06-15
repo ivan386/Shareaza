@@ -1,9 +1,9 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/06/14 16:59:42 $"
-//	Revision:		"$Revision: 1.20 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/06/15 21:59:59 $"
+//	Revision:		"$Revision: 1.21 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)

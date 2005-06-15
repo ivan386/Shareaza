@@ -86,7 +86,11 @@ BOOL CAlbumTipCtrl::OnPrepare()
 		LPCTSTR pszColon = _tcschr( pFolder->m_pSchema->m_sTitle, ':' );
 		m_sType = pszColon ? pszColon + 1 : pFolder->m_pSchema->m_sTitle;
 		LoadString( strText, IDS_TIP_FOLDER );
-		m_sType += " " + strText;
+
+		if ( theApp.m_bRTL )
+			m_sType = _T("\x202A") + m_sType + _T(" \x200E") + strText;
+		else
+			m_sType += " " + strText;
 
 		m_nIcon48	= pFolder->m_pSchema->m_nIcon48;
 		m_nIcon32	= pFolder->m_pSchema->m_nIcon32;

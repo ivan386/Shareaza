@@ -195,6 +195,7 @@ CMainTabBarCtrl::TabItem* CMainTabBarCtrl::HitTest(const CPoint& point) const
 
 	GetClientRect( &rcClient );
 	CalcInsideRect( rcClient, FALSE );
+	//if ( theApp.m_bRTL ) ptLocal.x = 2 * rcClient.left + rcClient.Width() - ptLocal.x;
 	rcClient.left -= m_cyTopBorder;
 	rcClient.top -= m_cxLeftBorder;
 	rcClient.right += m_cyBottomBorder;
@@ -286,6 +287,7 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
 	}
 
 	GetClientRect( &rc );
+	//if ( theApp.m_bRTL ) SetLayout( pDC->m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	pDC->BitBlt( 0, 0, rc.Width(), rc.Height(), pBuffer, 0, 0, SRCCOPY );
 }
 

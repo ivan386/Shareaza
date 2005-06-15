@@ -486,8 +486,8 @@ void CChildWnd::OnSkinChange()
 			hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 				MAKEINTRESOURCE( m_nResID ), IMAGE_ICON, 16, 16, 0 );
 		}
-
-		SetIcon( hIcon, FALSE );
+		
+		SetIcon( theApp.m_bRTL ? CreateMirroredIcon( hIcon ) : hIcon, FALSE );
 
 		CString strCaption;
 		LoadString( strCaption, m_nResID );

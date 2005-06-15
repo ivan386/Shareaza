@@ -265,7 +265,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed > 2500 && theApp.m_bNT && ! theApp.m_bLimitedConnections )
+	if ( nSpeed > 2500 && theApp.m_bNT && !theApp.m_bLimitedConnections )
 	{	// Very high capacity connection
 		Settings.Downloads.MaxFiles				= 32;
 		Settings.Downloads.MaxTransfers			= 200;
@@ -273,7 +273,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxConnectingSources	= 32;
 		Settings.Downloads.MaxFileSearches		= 3;
 
-		Settings.Gnutella2.NumLeafs				= 400;	// Can probably support more leaves
+		Settings.Gnutella2.NumLeafs				= 400; //Can probably support more leaves
 		Settings.BitTorrent.DownloadTorrents	= 4;	// Should be able to handle several torrents
 	}
 	else if ( nSpeed > 768 && theApp.m_bNT )
@@ -309,7 +309,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 0;
-		Settings.Downloads.SourcesWanted		= 200;	// Don't bother requesting so many sources
+		Settings.Downloads.SourcesWanted		= 200; // Don't bother requesting so many sources
 		Settings.Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
 
 		Settings.BitTorrent.DownloadTorrents	= 1;	// Best not to try too many torrents

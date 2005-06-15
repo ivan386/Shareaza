@@ -13104,6 +13104,12 @@
 				RelativePath=".\Res\NavbarAlpha.bmp">
 			</File>
 			<File
+				RelativePath=".\Res\NavbarAlphaRTL.bmp">
+			</File>
+			<File
+				RelativePath=".\Res\NavbarRTL.bmp">
+			</File>
+			<File
 				RelativePath="Res\Neighbours.ico">
 			</File>
 			<File
@@ -13159,6 +13165,9 @@
 			</File>
 			<File
 				RelativePath="Res\ShellBase.bmp">
+			</File>
+			<File
+				RelativePath=".\Res\ShellBaseRTL.bmp">
 			</File>
 			<File
 				RelativePath="Res\Skin.ico">

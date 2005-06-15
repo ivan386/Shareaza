@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/06/15 16:45:43 $"
-//	Revision:		"$Revision: 1.24 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/06/15 21:59:45 $"
+//	Revision:		"$Revision: 1.25 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)

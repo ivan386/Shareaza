@@ -43,11 +43,13 @@ public:
 public:
 	//{{AFX_DATA(CFolderPropertiesDlg)
 	enum { IDD = IDD_FOLDER_PROPERTIES };
-	CStatic	m_wndApply;
-	CButton	m_wndCancel;
-	CButton	m_wndOK;
-	CEdit	m_wndTitle;
+	CStatic			m_wndApply;
+	CButton			m_wndCancel;
+	CButton			m_wndOK;
+	CEdit			m_wndTitle;
 	CSchemaCombo	m_wndSchemas;
+	CStatic			m_wndTitleLabel;
+	CStatic			m_wndTypeLabel;
 	//}}AFX_DATA
 
 // Attributes

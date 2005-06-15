@@ -196,7 +196,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections + 10 )
 				CBTTrackerRequest::SendStarted( this, Settings.BitTorrent.DownloadConnections + 10 );
 			else
-				CBTTrackerRequest::SendStarted( this );
+			CBTTrackerRequest::SendStarted( this );
 		}
 	}
 	else if ( ! bLive && m_bTorrentRequested )
