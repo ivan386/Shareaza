@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_MESSAGE(0x0319, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
+	ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 
@@ -216,4 +217,26 @@ BOOL CMediaWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bD
 	}
 
 	return TRUE;
+}
+
+void CMediaWnd::OnDropFiles(HDROP hDropInfo)
+{
+	if ( hDropInfo != NULL )
+	{
+		CStringList oFileList;
+		TCHAR szFileName[MAX_PATH + 1];
+		UINT nFiles = DragQueryFile( hDropInfo, (UINT)-1, NULL, 0 );
+		for( UINT nNames = 0; nNames < nFiles; nNames++ )
+		{
+			ZeroMemory(szFileName, MAX_PATH + 1);
+			DragQueryFile( hDropInfo, nNames, (LPTSTR)szFileName, MAX_PATH + 1 );
+	        oFileList.AddTail( szFileName ); 
+		}
+		CPoint oPoint;
+		POINT ppt;
+		DragQueryPoint( hDropInfo, &ppt );
+		oPoint.SetPoint( ppt.x, ppt.y );
+
+		OnDropFiles( oFileList, oPoint, TRUE);
+	}
 }

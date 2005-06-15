@@ -73,6 +73,7 @@ protected:
 	afx_msg LONG OnMediaKey(WPARAM wParam, LPARAM lParam);
 	afx_msg LONG OnDevModeChange(WPARAM wParam, LPARAM lParam);
 	afx_msg LONG OnDisplayChange(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnDropFiles(HDROP hDropInfo);
 
 	DECLARE_MESSAGE_MAP()
 
