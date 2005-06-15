@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/04/06 18:28:09 $"
-//	Revision:		"$Revision: 1.23 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/06/15 16:45:43 $"
+//	Revision:		"$Revision: 1.24 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -310,7 +310,7 @@ BOOL CConnection::DoRun()
 		if ( pEvents.iErrorCode[ FD_CONNECT_BIT ] != 0 )
 		{
 			// This connection was dropped
-			OnDropped( TRUE ); // Calls CShakeNeighbour::OnDropped
+			OnDropped( TRUE );
 			return FALSE;
 		}
 
@@ -338,6 +338,12 @@ BOOL CConnection::DoRun()
 	// If the close event happened
 	if ( bClosed )
 	{
+		if ( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 )
+		{
+			CString strError;
+			strError.Format( _T("Close Error: %i "),  pEvents.iErrorCode[ FD_CLOSE_BIT ] );
+			theApp.Message(MSG_ERROR, strError );
+		}
 		// Call OnDropped, telling it true if there is a close error
 		OnDropped( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 ); // True if there is an nonzero error code for the close bit
 		return FALSE;
