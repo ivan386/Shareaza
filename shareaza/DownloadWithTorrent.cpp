@@ -185,7 +185,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	{
 		if ( ! m_bTorrentRequested || tNow > m_tTorrentTracker )
 		{
-			theApp.Message( MSG_DEBUG, _T("Sending initial announce for %s"), m_pTorrent.m_sName );
+			theApp.Message( MSG_DEFAULT, _T("Sending initial announce for %s"), m_pTorrent.m_sName );
 
 			GenerateTorrentDownloadID();
 
@@ -201,7 +201,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	}
 	else if ( ! bLive && m_bTorrentRequested )
 	{
-		theApp.Message( MSG_DEBUG, _T("Sending final announce for %s"), m_pTorrent.m_sName );
+		theApp.Message( MSG_DEFAULT, _T("Sending final announce for %s"), m_pTorrent.m_sName );
 
 		CBTTrackerRequest::SendStopped( this );
 		
@@ -213,7 +213,7 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_bTorrentStarted && tNow > m_tTorrentTracker )
 	{
 		// Regular tracker update
-		theApp.Message( MSG_DEBUG, _T("Sending tracker update for %s"), m_pTorrent.m_sName );
+		theApp.Message( MSG_DEFAULT, _T("Performing tracker update for %s"), m_pTorrent.m_sName );
 
 		int nSources = GetBTSourceCount();
 		int nSourcesWanted = (int)( Settings.BitTorrent.DownloadConnections * 1.5 );
@@ -483,7 +483,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	if ( ( IsCompleted() ) && ( Settings.Connection.Firewalled ) )
 	{
 		// We might need to 'push' a connection if we don't have enough upload connections
-		if ( Uploads.GetTorrentTransferCount() < max( Settings.BitTorrent.UploadCount * 2, 8 ) )
+		if ( m_pTorrentUploads.GetCount() < max( Settings.BitTorrent.UploadCount * 2, 5 ) )
 		{
 			if ( CanStartTransfers( tNow ) )
 			{

@@ -103,10 +103,6 @@ int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 		}
 	}
 	
-	/*
-	CString strT;
-	strT.Format(_T("BT sources: %i"), nCount);
-	theApp.Message( MSG_ERROR, strT );*/
 	return nCount;
 }
 
