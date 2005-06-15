@@ -468,7 +468,7 @@ Begin
           FirewallProfile := FirewallManager.LocalPolicy.CurrentProfile;
           FirewallProfile.AuthorizedApplications.Add(FirewallObject);
         except
-          MsgBox('FirewallFailed', mbInformation, MB_OK);
+          MsgBox(FirewallFailed, mbInformation, MB_OK);
         End;
       End;
     End;
