@@ -27,6 +27,7 @@
 #include "WizardNetworksPage.h"
 #include "DlgDonkeyImport.h"
 #include "Skin.h"
+#include "DlgHelp.h"
 #include <shlobj.h>
 
 #ifdef _DEBUG
@@ -104,6 +105,8 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 	Settings.eDonkey.EnableToday	= m_bEDEnable;
 	
 	DoDonkeyImport();
+
+	if ( m_bEDEnable ) CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
 	
 	return 0;
 }

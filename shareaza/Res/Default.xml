@@ -2031,7 +2031,7 @@
 		screening content. It is designed simply to filter out excess unwanted results, rather than 
 		as a 100% safe block.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing) should always be under parental 			supervision.</text>
+		<text>Children's Internet use (including P2P file sharing) should always be under parental 				supervision.</text>
 	</document>
 
 	<document name="GeneralHelp.BadTorrentEncoding">
@@ -2044,7 +2044,8 @@
 		<text>Most torrent creation programs should allow you to repair this torrent, which
 		will ensure it works properly in all BitTorrent applications.</text>
 		<newline gap="8"/>
-		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional help</link>
+		<link target="http://www.shareaza.com/help/?torrentencoding">Click here for additional
+		help</link>
 		<text>, or to download software to repair the torrent.</text>
 	</document>
 
@@ -2056,6 +2057,21 @@
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
 		services window.</text> 
+	</document>
+
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Limiting uploads may slow downloads</text>
+		<newline gap="8"/>
+		<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+		clients that do not share, or simply preference uploading to known sharers.</text>
+		<newline/>
+		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+		separate allocations for upload and download. If your client is properly configured, 
+		you should be able to upload at a good rate while retaining full download capacity.</text>
+		<newline gap="8"/>
+		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+		while downloads are unlimited. That configuration should give you the fastest possible 
+		downloads that are available.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -2115,7 +2131,7 @@
 	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Already Shared</text>
 		<newline gap="8"/>
-		<text>The folder you have selected is already being shared as part of an 					existing share.</text>
+		<text>The folder you have selected is already being shared as part of an 						existing share.</text>
 		<newline gap="8"/>
 		<text> %s </text>
 	</document>
