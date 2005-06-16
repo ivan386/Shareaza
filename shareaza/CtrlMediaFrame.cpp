@@ -1346,8 +1346,9 @@ BOOL CMediaFrame::Prepare()
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return FALSE;
 	}
-	
+	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_pPlayer->Create( GetSafeHwnd() );
+	if ( theApp.m_bRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
 	m_pPlayer->SetZoom( Settings.MediaPlayer.Zoom );
 	m_pPlayer->SetAspect( Settings.MediaPlayer.Aspect );
 	m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
