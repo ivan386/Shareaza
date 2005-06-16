@@ -1,9 +1,9 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/06/15 21:59:45 $"
-//	Revision:		"$Revision: 1.25 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/06/16 21:36:12 $"
+//	Revision:		"$Revision: 1.26 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -338,12 +338,14 @@ BOOL CConnection::DoRun()
 	// If the close event happened
 	if ( bClosed )
 	{
+		/*
 		if ( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 )
 		{
 			CString strError;
 			strError.Format( _T("Close Error: %i "),  pEvents.iErrorCode[ FD_CLOSE_BIT ] );
 			theApp.Message(MSG_ERROR, strError );
 		}
+		*/
 		// Call OnDropped, telling it true if there is a close error
 		OnDropped( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 ); // True if there is an nonzero error code for the close bit
 		return FALSE;
@@ -860,7 +862,6 @@ BOOL CConnection::SendMyAddress()
 		// Compose header text
 		CString strHeader;
 
-		// Format works just like sprintf
 		strHeader.Format(
 			_T("Listen-IP: %s:%hu\r\n"),								// Make it like "Listen-IP: 67.176.34.172:6346\r\n"
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),	// Insert the IP address like "67.176.34.172"
