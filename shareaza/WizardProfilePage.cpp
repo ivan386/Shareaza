@@ -312,5 +312,13 @@ LRESULT CWizardProfilePage::OnWizardNext()
 
 	MyProfile.Save();
 
-	return ( (Settings.Connection.InSpeed > 128) && (theApp.m_bNT) && (!Settings.Connection.Firewalled) && (!theApp.m_bLimitedConnections) ) ? 0 : IDD_WIZARD_FINISHED;
+	// If this system is capable of handling multiple networks, go to the network settings wizard.
+	if ( ( theApp.m_bNT ) &&						// 9x based systems can't handle enough connections
+		 ( ! theApp.m_bLimitedConnections )		&&	// The connection rate limiting (XPsp2) makes multi-network performance awful
+		 ( ! Settings.Connection.Firewalled )	&&	// Firewalled users place a heavy load on other networks. (ED2K, in particular)
+		 ( Settings.Connection.InSpeed > 256 )	&&	// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
+		 ( Settings.GetOutgoingBandwidth() > 16 ))	// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
+		return 0;
+	else
+		return IDD_WIZARD_FINISHED;
 }
