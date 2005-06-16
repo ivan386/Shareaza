@@ -204,7 +204,11 @@ BOOL CMediaWnd::OnDropFiles(CStringList& pFiles, const CPoint& ptScreen, BOOL bD
 	m_wndFrame.ScreenToClient( &pt );
 	CWnd* pDropped = m_wndFrame.ChildWindowFromPoint( pt );
 
-	BOOL bEnqueue = ( pDropped->IsKindOf( RUNTIME_CLASS(CMediaListCtrl) ) );
+	BOOL bEnqueue;
+	if ( pDropped != NULL )
+		bEnqueue = ( pDropped->IsKindOf( RUNTIME_CLASS(CMediaListCtrl) ) );
+	else
+		bEnqueue = FALSE;
 
 	for ( POSITION pos = pFiles.GetHeadPosition() ; pos ; )
 	{
@@ -228,15 +232,15 @@ void CMediaWnd::OnDropFiles(HDROP hDropInfo)
 		UINT nFiles = DragQueryFile( hDropInfo, (UINT)-1, NULL, 0 );
 		for( UINT nNames = 0; nNames < nFiles; nNames++ )
 		{
-			ZeroMemory(szFileName, MAX_PATH + 1);
+			ZeroMemory( szFileName, MAX_PATH + 1 );
 			DragQueryFile( hDropInfo, nNames, (LPTSTR)szFileName, MAX_PATH + 1 );
 	        oFileList.AddTail( szFileName ); 
 		}
 		CPoint oPoint;
-		POINT ppt;
-		DragQueryPoint( hDropInfo, &ppt );
-		oPoint.SetPoint( ppt.x, ppt.y );
+		POINT pt;
+		DragQueryPoint( hDropInfo, &pt );
+		oPoint.SetPoint( pt.x, pt.y );
 
-		OnDropFiles( oFileList, oPoint, TRUE);
+		OnDropFiles( oFileList, oPoint, TRUE );
 	}
 }
