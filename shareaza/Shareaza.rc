@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,1,10
- PRODUCTVERSION 2,1,1,10
+ FILEVERSION 2,1,1,11
+ PRODUCTVERSION 2,1,1,11
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 1, 10"
+            VALUE "FileVersion", "2, 1, 1, 11"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 1, 10"
+            VALUE "ProductVersion", "2, 1, 1, 11"
         END
     END
     BLOCK "VarFileInfo"
@@ -1452,7 +1452,7 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",
                     IDC_STATIC,10,10,265,20
-    COMBOBOX        IDC_CONNECTION_GROUP,25,35,190,102,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_CONNECTION_GROUP,26,35,190,102,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Is your network or campus protected by a firewall or NAT router?",
                     IDC_CONNECTION_LAN_LABEL,10,60,265,15,NOT WS_VISIBLE
@@ -1464,10 +1464,10 @@ BEGIN
                     NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
     LTEXT           "If you know how fast your Internet connection is able to operate, select the best option below:",
                     IDC_STATIC,10,100,265,20
-    COMBOBOX        IDC_CONNECTION_TYPE,25,125,95,102,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_CONNECTION_TYPE,26,125,95,150,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     CTEXT           "OR, choose:",IDC_STATIC,125,125,60,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_CONNECTION_SPEED,190,125,75,135,CBS_DROPDOWN | 
+    COMBOBOX        IDC_CONNECTION_SPEED,190,125,75,178,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
 END
 
@@ -3941,6 +3941,14 @@ BEGIN
 0x4120, 0x5344, 0x204c, 0x3728, 0x3836, 0x294b, "\000" 
     IDC_CONNECTION_TYPE, 0x403, 13, 0
 0x4120, 0x5344, 0x204c, 0x3128, 0x352e, 0x294d, "\000" 
+    IDC_CONNECTION_TYPE, 0x403, 13, 0
+0x4120, 0x5344, 0x204c, 0x3428, 0x302e, 0x294d, "\000" 
+    IDC_CONNECTION_TYPE, 0x403, 14, 0
+0x4120, 0x5344, 0x324c, 0x2820, 0x2e38, 0x4d30, 0x0029, 
+    IDC_CONNECTION_TYPE, 0x403, 15, 0
+0x4120, 0x5344, 0x324c, 0x2820, 0x3231, 0x302e, 0x294d, "\000" 
+    IDC_CONNECTION_TYPE, 0x403, 16, 0
+0x4120, 0x5344, 0x324c, 0x202b, 0x3228, 0x2e34, 0x4d30, 0x0029, 
     IDC_CONNECTION_TYPE, 0x403, 18, 0
 0x4320, 0x6261, 0x656c, 0x4d20, 0x646f, 0x6d65, 0x532f, 0x5344, 0x004c, 
 
@@ -3982,6 +3990,10 @@ BEGIN
 0x3420, 0x3930, 0x2036, 0x626b, 0x7370, "\000" 
     IDC_CONNECTION_SPEED, 0x403, 11, 0
 0x3520, 0x3231, 0x2030, 0x626b, 0x7370, "\000" 
+    IDC_CONNECTION_SPEED, 0x403, 11, 0
+0x3820, 0x3931, 0x2032, 0x626b, 0x7370, "\000" 
+    IDC_CONNECTION_SPEED, 0x403, 12, 0
+0x3120, 0x3232, 0x3838, 0x6b20, 0x7062, 0x0073, 
     0
 END
 

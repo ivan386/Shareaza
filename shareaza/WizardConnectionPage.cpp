@@ -88,24 +88,28 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	m_wndGroup.SetCurSel( 0 );
 	
 	m_wndType.SetItemData( 0, 0 );
-	m_wndType.SetItemData( 1, 56 );
-	m_wndType.SetItemData( 2, 128 );
-	m_wndType.SetItemData( 3, 256);
-	m_wndType.SetItemData( 4, 512);
-	m_wndType.SetItemData( 5, 768);
-	m_wndType.SetItemData( 6, 1536 );
-	m_wndType.SetItemData( 7, 1544 );
-	m_wndType.SetItemData( 8, 1544 );
-	m_wndType.SetItemData( 9, 45000 );
-	m_wndType.SetItemData(10, 100000 );
-	m_wndType.SetItemData(11, 155000 );
-	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); Cable Modem/SDSL; T1; T3; LAN; OC3;
+	m_wndType.SetItemData( 1, 56 );		// Dial up Modem;
+	m_wndType.SetItemData( 2, 128 );	// ISDN
+	m_wndType.SetItemData( 3, 256);		// ADSL (256K)
+	m_wndType.SetItemData( 4, 512);		// ADSL (512K)
+	m_wndType.SetItemData( 5, 768);		// ADSL (768K)
+	m_wndType.SetItemData( 6, 1536 );	// ADSL (1.5M)
+	m_wndType.SetItemData( 7, 4096 );	// ADSL (4.0M)
+	m_wndType.SetItemData( 8, 8192 );	// ADSL2 (8.0M)
+	m_wndType.SetItemData( 9, 12288 );	// ADSL2 (12.0M)
+	m_wndType.SetItemData(10, 24576 );	// ADSL2+ (24.0M)
+	m_wndType.SetItemData(11, 1550 );	// Cable Modem/SDSL
+	m_wndType.SetItemData(12, 1544 );	// T1
+	m_wndType.SetItemData(13, 45000 );	// T3
+	m_wndType.SetItemData(14, 100000 );	// LAN
+	m_wndType.SetItemData(15, 155000 );	// OC3
+	//; Dial up Modem; ISDN; ADSL (256K); ADSL (512K); ADSL (768K); ADSL (1.5M); ADSL (4.0M); ADSL2 (8.0M); ADSL2 (12.0M); ADSL2+ (24.0M); Cable Modem/SDSL; T1; T3; LAN; OC3;
 	
 	CString strSpeed;
 	strSpeed.Format( _T(" %lu.0 kbps"), Settings.Connection.InSpeed );
 	m_wndSpeed.SetWindowText( strSpeed );
 
-	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps;
+	//; 28.8 kbps; 33.6 kbps; 56.6 kbps; 64.0 kbps; 128 kbps; 256 kbps; 384 kbps; 512 kbps; 1024 kbps; 1536 kbps; 2048 kbps; 3072 kbps; 4096 kbps; 5120 kbps; 8192 kbps; 12288 kbps;
 	
 	return TRUE;
 }
@@ -238,22 +242,30 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.Connection.InSpeed		= nSpeed;
 
-	if( nSpeed <= 56 )
-		Settings.Connection.OutSpeed = 32;			// Dial up modem
-	else if( nSpeed <= 128 )
-		Settings.Connection.OutSpeed = nSpeed;		// ISDN
-	else if( nSpeed == 384 )
-		Settings.Connection.OutSpeed = 128;			// 384/128 DSL (Europe)
-	else if( nSpeed <= 700 )
-		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL (4:1)
-	else if( nSpeed <= 1536 )
-		Settings.Connection.OutSpeed = nSpeed / 6;	// ADSL (6:1)
-	else if( nSpeed <= 4096 )
-		Settings.Connection.OutSpeed = nSpeed / 4;	// ADSL2 (4:1)
-	else
-		Settings.Connection.OutSpeed = nSpeed;		// Cable, SDSL, and the big boys.
+	if( nSpeed <= 56 )								// Dial up modem
+		Settings.Connection.OutSpeed = 32;
+	else if( nSpeed <= 128 )						// ISDN
+		Settings.Connection.OutSpeed = nSpeed;
+	else if( nSpeed == 384 )						// 384/128 DSL (Europe)
+		Settings.Connection.OutSpeed = 128;
+	else if( nSpeed <= 700 )						// ADSL (4:1)
+		Settings.Connection.OutSpeed = nSpeed / 4;
+	else if( nSpeed <  1544 )						// ADSL (6:1)
+		Settings.Connection.OutSpeed = nSpeed / 6;
+	else if( nSpeed == 1544 )						// T1 (1:1)
+		Settings.Connection.OutSpeed = nSpeed;
+	else if( nSpeed <= 4000 )						// Cable (2:1)
+		Settings.Connection.OutSpeed = nSpeed / 2;
+	else if( nSpeed <= 8192 )						// ADSL2 (8:1)
+		Settings.Connection.OutSpeed = nSpeed / 8;
+	else if( nSpeed <= 12288 )						// ADSL2 (10:1)
+		Settings.Connection.OutSpeed = nSpeed / 10;
+	else if( nSpeed <= 24576 )						// ADSL2+ (12:1)
+		Settings.Connection.OutSpeed = nSpeed / 12;
+	else											// High capacity lines. (LAN, etc)
+		Settings.Connection.OutSpeed = nSpeed;
 
-	//Set upload limit to 90% of capacity, trimmed to the nearest KB.
+	// Set upload limit to 90% of capacity, trimmed down to the nearest KB. (Usually works out at ~85% total)
 	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * 0.9 );
 	Settings.Bandwidth.Uploads >>= 3;
 	Settings.Bandwidth.Uploads *= 1024;
