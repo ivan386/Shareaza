@@ -83,6 +83,7 @@
         </parts>
         <anchors> 
           <anchor name="Close"        rect="-32,5,25,25"/>
+          <anchor name="MirrorFull"   rect="8,110,14,32"/>
           <anchor name="Minimise"     rect="-98,5,25,25"/>
           <anchor name="Maximise"     rect="-65,5,25,25"/>
         </anchors>
