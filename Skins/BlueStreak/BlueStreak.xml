@@ -75,7 +75,8 @@
             <part name="CloseDown"     rect="259,41,19,19"/>
           </parts>
           <anchors> 
-            <anchor name="System"   rect="10,10,18,16"/> 
+            <anchor name="System"   rect="10,10,16,16"/> 
+            <anchor name="Mirror"   rect="20,98,0,22"/>
             <anchor name="Minimise" rect="-70,10,17,17"/> 
             <anchor name="Maximise" rect="-49,10,17,17"/> 
             <anchor name="Close"    rect="-29,9,19,19"/> </anchors>

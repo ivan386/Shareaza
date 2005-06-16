@@ -142,7 +142,8 @@
 
       <anchors>
 
-         <anchor name="System"		rect="7,10,15,15"/>
+         <anchor name="System"		rect="7,10,22,15"/>
+         <anchor name="Mirror"		rect="11,74,0,28"/>
          <anchor name="Close"		rect="-36,2,30,30"/>
          <anchor name="Maximise"	rect="-72,2,30,30"/>
          <anchor name="Minimise"	rect="-108,2,30,30"/>
