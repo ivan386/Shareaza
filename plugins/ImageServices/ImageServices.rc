@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""winres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -59,15 +59,14 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 #pragma code_page(1252)
 #endif //_WIN32
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,0,0
- PRODUCTVERSION 1,8,1,0
+ FILEVERSION 1,3,0,1
+ PRODUCTVERSION 2,2,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -80,26 +79,24 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "0c0904b0"
+        BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza ImageServices Plugin\0"
-            VALUE "CompanyName", "Shareaza Development Team\0"
-            VALUE "FileDescription", "Shareaza ImageServices\0"
-            VALUE "FileVersion", "1, 3, 0, 0\0"
-            VALUE "InternalName", "ImageServices\0"
-            VALUE "LegalCopyright", "Copyright Michael Stokes, 2002.\0"
-            VALUE "OriginalFilename", "ImageServices.dll\0"
-            VALUE "ProductName", "Shareaza P2P\0"
-            VALUE "ProductVersion", "1, 8, 1, 0\0"
+            VALUE "Comments", "Shareaza ImageServices Plugin"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "Shareaza ImageServices"
+            VALUE "FileVersion", "1, 3, 0, 1"
+            VALUE "InternalName", "ImageServices"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
+            VALUE "OriginalFilename", "ImageServices.dll"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2, 2, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0xc09, 1200
+        VALUE "Translation", 0x0, 1200
     END
 END
-
-#endif    // !_MAC
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -107,10 +104,10 @@ END
 // REGISTRY
 //
 
-IDR_JPEGREADER          REGISTRY DISCARDABLE    "JPEGReader.rgs"
-IDR_PNGREADER           REGISTRY DISCARDABLE    "PNGReader.rgs"
-IDR_GIFREADER           REGISTRY DISCARDABLE    "GIFReader.rgs"
-IDR_AVITHUMB            REGISTRY DISCARDABLE    "AVIThumb.rgs"
+IDR_JPEGREADER          REGISTRY                "JPEGReader.rgs"
+IDR_PNGREADER           REGISTRY                "PNGReader.rgs"
+IDR_GIFREADER           REGISTRY                "GIFReader.rgs"
+IDR_AVITHUMB            REGISTRY                "AVIThumb.rgs"
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
 

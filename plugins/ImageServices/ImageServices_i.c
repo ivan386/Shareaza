@@ -5,8 +5,8 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 6.00.0361 */
-/* at Sun Oct 10 17:18:09 2004
+ /* File created by MIDL compiler version 6.00.0366 */
+/* at Wed Jun 15 18:22:25 2005
  */
 /* Compiler settings for .\ImageServices.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -17,9 +17,6 @@
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
 //@@MIDL_FILE_HEADING(  )
-
-#if !defined(_M_IA64) && !defined(_M_AMD64)
-
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -91,6 +88,4 @@ MIDL_DEFINE_GUID(CLSID, CLSID_AVIThumb,0x4956C5F5,0xD9A8,0x4CBB,0x89,0x94,0xF5,0
 #endif
 
 
-
-#endif /* !defined(_M_IA64) && !defined(_M_AMD64)*/
 
