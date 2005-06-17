@@ -3556,7 +3556,7 @@
 		<control caption="Do you have a firewall or NAT router on your home Internet connection?"/>
 		<control caption="&#160;No, I have FULL ACCESS to the Internet| Yes, but I will set up port-forwarding for Shareaza| Yes, so I CANNOT accept incoming connections from the Internet| I don't know, please AUTO-DETECT the firewalled state"/>
 		<control caption="If you know how fast your Internet connection is able to operate, select the best option below:"/>
-		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="OR, choose:"/>
 		<control/>
 	</dialog>
