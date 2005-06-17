@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.1.0"
+		version="2.1.1.11"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -53,6 +53,7 @@ right quote	&#147;
 		<button id="ID_NETWORK_CONNECT" text="Jungtis"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -2100,6 +2101,20 @@ right quote	&#147;
 		paslaugų radimo tarnybų lango.</text>
 	</document>
 
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Išsiuntimų ribojimas gali sulėtinti atsisiuntimus</text>
+		<newline gap="8"/>
+		<text>Kai kuriuose tinkluose, prie kurių jungiasi „Shareaza“, yra naudojami iš-/atsisiuntimų santykiai,
+		ribojamas išsiuntimas tiems, kurie nieko nebendrina arba, tiesiog, teikiama išsiuntimo pirmenybė tiems, kurie dalinasi bylomis.</text>
+		<newline/>
+		<text>Laimei, plačiajuostis DSL ryšys yra kaip dviejų juostų greitkelis: išsiuntimai ir 
+		atsisiuntimai turi atskirus kanalus. Jei Jūsų klientas yra deramai sukonfigūruotas, 
+		Jūs išlaikysite pilną atsisiuntimo spartą, nenukenčiant išsiuntimo spartai.</text>
+		<newline gap="8"/>
+		<text>Pagal nutylėjimą išsiuntimo limitas yra nustatomas 85-iems % esamos išeinančios greitaveikos,
+		to tarpu atsisiuntimai nėra ribojami. Tokios nuostatos turėtų Jums garantuoti sparčiausią įmanomą atsisiuntimą.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2505,6 +2520,8 @@ right quote	&#147;
 	<string id="7001" value="&amp;Schemos"/>
 	<string id="7002" value="Skirtingos reikšmės"/>
 	<string id="7003" value="Skirtingi"/>
+	<string id="7004" value="Filtras vardu „%s“ jau egzistuoja. Ar norite jį pakeisti?"/>
+	<string id="7005" value="Suteikite filtrui vardą."/>
 	<string id="8000" value="„Shareaza“ nuostatos"/>
 	<string id="8001" value="Sveiki! Čia „Shareaza“"/>
 	<string id="8002" value="Bylos ypatybės"/>
@@ -2921,6 +2938,7 @@ right quote	&#147;
 	<string id="16810" value="m. amžiaus"/>
 	<string id="16811" value="Automatinis"/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
+	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
@@ -3043,7 +3061,6 @@ right quote	&#147;
 	<string id="17477" value="BitTorrent adresato %s atsakyme nurodyta ne ta byla."/>
 	<string id="17478" value="BitTorrent adresatas %s užklausė nežinomos bylos."/>
 	<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas bylai „%s“ siųstis."/>
-	<string id="17480" value="BitTorrent ryšys su adresatu %s nutrūko."/>
 	<string id="17481" value="Gauta BitTorrent aprašančioji byla: „%s“"/>
 	<string id="17482" value="Neįmanoma išnagrinėti įkeltos BitTorrent bylos „%s“."/>
 	<string id="17483" value="Iš BitTorrent seklio gauta klaida, susijusi su „%s“ : „%s“."/>
@@ -3062,6 +3079,8 @@ right quote	&#147;
 	<string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą bylą."/>
 	<string id="17497" value="Įvyko nežinoma klaida mėginant skleisti bylą „%s“."/>
 	<string id="17498" value="Byloje „%s“ aptikta klaida."/>
+	<string id="17500" value="Seklys neatsakė — anonsavimas kartojamas (%i iš %i)."/>
+	<string id="17501" value="Neįmanoma susisiekti su sekliu."/>
 	<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šią parsisiunčiamą bylą?"/>
 	<string id="18497" value="Jūs įrašėte SHA1 reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 	<string id="18498" value="Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
@@ -3082,6 +3101,8 @@ right quote	&#147;
 	<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
 	<string id="20000" value="Nėra universalių šaltinių vardų."/>
 	<string id="20002" value="iš"/>
+	<string id="20003" value="Sąsajos krypties pakeitimui reikalinga startuoti iš naujo. \nJums reikės paleisti „Shareaza“ programą rankiniu būdu. Ar baigti darbą dabar?"/>
+	<string id="20004" value="Jūsų operacinė sistema nepalaiko kalbų su rašmenimis iš dešinės į kairę."/>
 	<string id="20100" value="Jungiamasi"/>
 	<string id="20101" value="Užklausiama"/>
 	<string id="20102" value="Atsakas"/>
@@ -3542,7 +3563,7 @@ right quote	&#147;
 		<control caption="Ar Jūsų namų interneto ryšys yra už užkardos ar NAT maršrutizatioriaus?"/>
 		<control caption="&#160;Ne, aš turiu PILNĄ PRIĖJIMĄ prie Interneto| Taip, bet aš peradresuosiu prievadą programai| Taip, ir aš NEGALIU primti įeinančio ryšio iš Interneto| Aš nežinau, prašau APTIKTI užkardą automatiškai"/>
 		<control caption="Jei Jūs žinote, kokios spartos interneto ryšį turite, žemiau pasirinkite artimiausią spartos variantą:"/>
-		<control caption="| Telefono ryšys| ISDN| ADSL (256 K)| ADSL (512 K)| ADSL (768 K)| ADSL (1,5 M)| Kabelinis modemas/SDSL| T1| T3| Vietinis tinklas| OC3"/>
+		<control caption="| Telefono ryšys| ISDN| ADSL (256 K)| ADSL (512 K)| ADSL (768 K)| ADSL (1,5 M)| ADSL (4,0 M)| ADSL2 (8,0 M)| ADSL2 (12,0 M)| ADSL2+ (24,0 M)| Kabelinis modemas/SDSL| T1| T3| Vietinis tinklas| OC3"/>
 		<control caption="ARBA, pasirinkite:"/>
 		<control/>
 	</dialog>
