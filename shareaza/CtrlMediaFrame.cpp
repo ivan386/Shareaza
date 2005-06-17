@@ -93,7 +93,7 @@ END_MESSAGE_MAP()
 #define SIZE_INTERNAL	1982
 #define SIZE_BARSLIDE	1983
 #define TOOLBAR_HEIGHT	28
-#define TOOLBAR_STICK	4000
+#define TOOLBAR_STICK	3000
 #define TOOLBAR_ANIMATE	1000
 #define HEADER_HEIGHT	16
 #define STATUS_HEIGHT	18
@@ -121,6 +121,7 @@ CMediaFrame::CMediaFrame()
 	m_tMetadata		= 0;
 	
 	m_bFullScreen		= FALSE;
+	m_bListWasVisible   = Settings.MediaPlayer.ListVisible;
 	m_bListVisible		= Settings.MediaPlayer.ListVisible;
 	m_nListSize			= Settings.MediaPlayer.ListSize;
 	m_bStatusVisible	= Settings.MediaPlayer.StatusVisible;
@@ -189,7 +190,13 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pIcons.Add( &bmIcons, RGB( 0, 255, 0 ) );
 	
 	UpdateState();
-	
+
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Playlist.m3u");
+
+	m_wndList.m_sListFile = strFile ;
+	m_wndList.OnMediaOpen() ;
+	m_wndList.m_sListFile = "" ;
+
 	SetTimer( 1, 200, NULL );
 	
 	return 0;
@@ -203,7 +210,10 @@ void CMediaFrame::OnDestroy()
 	
 	KillTimer( 2 );
 	KillTimer( 1 );
-	
+
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Playlist.m3u");
+	m_wndList.m_sListFile = strFile ;
+	m_wndList.OnMediaSave();
 	Cleanup();
 	
 	CWnd::OnDestroy();
@@ -321,6 +331,11 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		{
 			SetWindowPos( &wndTopMost, 0, 0, GetSystemMetrics( SM_CXSCREEN ), GetSystemMetrics( SM_CYSCREEN ), SWP_FRAMECHANGED|SWP_SHOWWINDOW ); 
 		}
+		
+		m_bListWasVisible 	= m_bListVisible;
+		m_bListVisible 		= FALSE;
+		OnSize( SIZE_INTERNAL, 0, 0 );
+		
 		SetTimer( 2, 30, NULL );
 	}
 	else
@@ -334,6 +349,8 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		pOwner->GetClientRect( &rc );
 		SetWindowPos( NULL, 0, 0, rc.right, rc.bottom,
 			SWP_FRAMECHANGED|SWP_SHOWWINDOW );
+		m_bListVisible = m_bListWasVisible;
+		OnSize( SIZE_INTERNAL, 0, 0 );
 		KillTimer( 2 );
 	}
 }
@@ -784,7 +801,11 @@ void CMediaFrame::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	
+	if ( theApp.m_bMenuWasVisible ) 
+	{
+		theApp.m_bMenuWasVisible = FALSE ;
+		return;
+	}
 	if ( m_bListVisible )
 	{
 		CRect rcBar(	rcClient.right - m_nListSize - SPLIT_SIZE,
@@ -805,7 +826,15 @@ void CMediaFrame::OnLButtonDown(UINT nFlags, CPoint point)
 		OnMediaStatus();
 		return;
 	}
-	
+
+	CRect rcSenseLess(	rcClient.right - m_nListSize - SPLIT_SIZE - 30,
+						rcClient.top,
+						rcClient.right - m_nListSize - SPLIT_SIZE,
+						rcClient.bottom );
+
+	if ( rcSenseLess.PtInRect( point ) ) 
+		return;
+
 	if ( m_nState == smsPlaying )
 		OnMediaPause();
 	else if ( m_nState == smsPaused )
@@ -1044,7 +1073,10 @@ void CMediaFrame::OnMediaPlay()
 {
 	if ( m_nState < smsOpen )
 	{
-		PostMessage( WM_COMMAND, ID_MEDIA_OPEN );
+		if ( m_wndList.GetCount() == 0 ) 
+			PostMessage( WM_COMMAND, ID_MEDIA_OPEN );
+		else
+			m_wndList.GetNext();
 	}
 	else
 	{

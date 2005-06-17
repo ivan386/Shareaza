@@ -325,6 +325,7 @@ void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 void CCoolMenu::DrawMenuText(CDC* pDC, CRect* pRect, const CString& strText)
 {
+	theApp.m_bMenuWasVisible = TRUE;
 	int nPos = strText.Find( '\t' );
 
 	if ( nPos >= 0 )

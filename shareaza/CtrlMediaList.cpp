@@ -104,14 +104,14 @@ BOOL CMediaListCtrl::Create(CWnd* pParentWnd, UINT nID)
 
 BOOL CMediaListCtrl::Open(LPCTSTR pszFile)
 {
-	Clear();
+	// Clear();
 	
 	Enqueue( pszFile, FALSE );
 	
 	if ( GetItemCount() == 0 ) return FALSE;
 	
-	GetNext();
-	
+	GetNext( m_sListFile == "" );
+
 	return TRUE;
 }
 
@@ -230,18 +230,22 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 	}
 	
 	LV_ITEM pItem;
+	CString strTemp = (LPTSTR)pszFile;
+	int nDotPos = strTemp.ReverseFind( '.' );
+	if ( nDotPos != -1 ) strTemp = strTemp.Left( nDotPos );
+	LPTSTR pszFileTmp = strTemp.GetBuffer( strTemp.GetLength() );
 	ZeroMemory( &pItem, sizeof(pItem) );
 	pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 	pItem.iItem		= nItem >= 0 ? nItem : GetItemCount();
 	pItem.iImage	= ShellIcons.Get( pszFile, 16 );
 	pItem.lParam	= nFile;
-	pItem.pszText	= (LPTSTR)pszFile;
+	pItem.pszText	= pszFileTmp;
 	pItem.iItem		= InsertItem( &pItem );
 	pItem.mask		= LVIF_TEXT;
 	pItem.iSubItem	= 1;
 	pItem.pszText	= (LPTSTR)pszPath;
 	SetItem( &pItem );
-	
+	strTemp.ReleaseBuffer();
 	return pItem.iItem;
 }
 
@@ -673,9 +677,13 @@ void CMediaListCtrl::OnMediaOpen()
 	Skin.LoadString( strFilter, IDS_MEDIA_FILTER );
 	CFileDialog dlg( TRUE, NULL, NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING, strFilter, this );
 
-	if ( dlg.DoModal() != IDOK ) return;
-
-	Open( dlg.GetPathName() );
+	if ( m_sListFile == "" )
+	{
+        if ( dlg.DoModal() != IDOK ) return;
+		Open( dlg.GetPathName() );
+	}
+	else
+		Open( m_sListFile );
 }
 
 void CMediaListCtrl::OnUpdateMediaSave(CCmdUI* pCmdUI) 
@@ -685,15 +693,18 @@ void CMediaListCtrl::OnUpdateMediaSave(CCmdUI* pCmdUI)
 
 void CMediaListCtrl::OnMediaSave() 
 {
+	CString strFile, strPath;
+	CFile pFile;
 	CFileDialog dlg( FALSE, _T("m3u"), NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING,
 		_T("Media Playlists|*.m3u|All Files|*.*||"), this );
 
-	if ( dlg.DoModal() != IDOK ) return;
+	if ( m_sListFile == "" )
+	{
+		if ( dlg.DoModal() != IDOK ) return;
+		strPath = dlg.GetPathName();
+	}
 
-	CString strFile, strPath;
-	CFile pFile;
-
-	strPath = dlg.GetPathName();
+	if ( m_sListFile != "" ) strPath =  m_sListFile;
 	strPath = strPath.Left( strPath.ReverseFind( '\\' ) + 1 );
 
 	for ( int nItem = 0 ; nItem < GetItemCount() ; nItem++ )
@@ -706,7 +717,14 @@ void CMediaListCtrl::OnMediaSave()
 		strFile += strItem + _T("\r\n");
 	}
 
-	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) ) return;
+	if ( m_sListFile == "" )
+	{
+		if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) ) return;
+	}
+	else
+	{
+		if ( ! pFile.Open( m_sListFile , CFile::modeWrite|CFile::modeCreate ) ) return;
+	}
 
 	USES_CONVERSION;
 	LPCSTR pszFile = T2CA( (LPCTSTR)strFile );

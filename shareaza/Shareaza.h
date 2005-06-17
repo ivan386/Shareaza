@@ -51,6 +51,7 @@ public:
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	BOOL				m_bRTL;						// Right-to-Left GUI (2000, XP only)
+	BOOL                m_bMenuWasVisible;          // For the menus in media player window
 
 	int					m_nDefaultFontSize;			// The basic font size. (11)
 	CString				m_sDefaultFont;				// Main font. (Tahoma)

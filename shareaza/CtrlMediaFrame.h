@@ -90,6 +90,7 @@ protected:
 	DWORD			m_tBarTime;
 	CPoint			m_ptCursor;
 	BOOL			m_bListVisible;
+	BOOL			m_bListWasVisible;
 	int				m_nListSize;
 	BOOL			m_bStatusVisible;
 protected:
