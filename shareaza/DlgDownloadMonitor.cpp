@@ -376,6 +376,11 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 
 		if ( nTime != 0xFFFFFFFF )
 		{
+			if ( nTime > 86400 )
+			{
+				LoadString( strFormat, IDS_DLM_TIME_DAH );
+				strText.Format( strFormat, nTime / 86400, ( nTime / 3600 ) % 24 );
+			}
 			if ( nTime > 3600 )
 			{
 				LoadString( strFormat, IDS_DLM_TIME_HAM );

@@ -4456,6 +4456,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_HASH_MESSAGE        "Shareaza is creating hashes for %i file(s):"
+    IDS_DLM_TIME_DAH        "%i days and %i hours"
 END
 
 STRINGTABLE 

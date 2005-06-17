@@ -311,6 +311,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 		if ( nTime != 0xFFFFFFFF )
 		{
+			if ( nTime > 86400 )
+			{
+				LoadString( strFormat, IDS_DLM_TIME_DAH );
+				strETA.Format( strFormat, nTime / 86400, ( nTime / 3600 ) % 24 );
+			}
 			if ( nTime > 3600 )
 			{
 				LoadString( strFormat, IDS_DLM_TIME_HAM );

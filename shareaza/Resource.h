@@ -760,6 +760,7 @@
 #define IDS_SEARCH_PANEL_INPUT_4        8180
 #define IDS_SEARCH_PANEL_INPUT_5        8181
 #define IDS_HASH_MESSAGE                8208
+#define IDS_DLM_TIME_DAH                8223
 #define IDS_DLM_DOWNLOADING             8224
 #define IDS_DLM_PAUSED                  8225
 #define IDS_DLM_COMPLETED               8226
