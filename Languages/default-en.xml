@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.3"
+		version="2.1.1.11"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2089,6 +2089,21 @@
 		services window.</text>
 	</document>
 
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Limiting uploads may slow downloads</text>
+		<newline gap="8"/>
+		<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+		clients that do not share, or simply preference uploading to known sharers.</text>
+		<newline/>
+		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+		separate allocations for upload and download. If your client is properly configured, 
+		you should be able to upload at a good rate while retaining full download capacity.</text>
+		<newline gap="8"/>
+		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+		while downloads are unlimited. That configuration should give you the fastest possible 
+		downloads that are available.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2498,6 +2513,8 @@
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Multiple Values"/>
 	<string id="7003" value="Multiple"/>
+	<string id="7004" value="There already is a filter called &quot;%s&quot;, do you want to replace it?"/>
+	<string id="7005" value="Please give your filter a name."/>
 	<string id="8000" value="Shareaza Settings"/>
 	<string id="8001" value="Welcome to Shareaza"/>
 	<string id="8002" value="File Properties"/>
@@ -2914,6 +2931,7 @@
 	<string id="16810" value="year old"/>
 	<string id="16811" value="Automatic"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
+	<string id="16817" value="Windows doesn't support filepaths longer than 256 chracters.\nPlease select a folder with a shorter path."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -3036,7 +3054,6 @@
 	<string id="17477" value="BitTorrent coupling with %s responded with the wrong file."/>
 	<string id="17478" value="BitTorrent coupling with %s requested an unknown file."/>
 	<string id="17479" value="BitTorrent coupling with %s established for &quot;%s&quot;."/>
-	<string id="17480" value="BitTorrent coupling with %s was lost."/>
 	<string id="17481" value="Received BitTorrent descriptor file: &quot;%s&quot;"/>
 	<string id="17482" value="Unable to parse prefetched BitTorrent file &quot;%s&quot;."/>
 	<string id="17483" value="Error from BitTorrent tracker for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3055,6 +3072,8 @@
 	<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 	<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
+	<string id="17500" value="Tracker did not respond- Retrying announce (%i of %i)"/>
+	<string id="17501" value="Unable to communicate with tracker"/>
 	<string id="18496" value="You have made changes to the name field.  Are you sure you want to rename this download?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid.  Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."/>
@@ -3075,6 +3094,8 @@
 	<string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
 	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
+	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
+	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
 	<string id="20100" value="Connecting"/>
 	<string id="20101" value="Requesting"/>
 	<string id="20102" value="Response"/>
