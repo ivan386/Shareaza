@@ -190,13 +190,7 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pIcons.Add( &bmIcons, RGB( 0, 255, 0 ) );
 	
 	UpdateState();
-
-	CString strFile = Settings.General.UserPath + _T("\\Data\\Playlist.m3u");
-
-	m_wndList.m_sListFile = strFile ;
-	m_wndList.OnMediaOpen() ;
-	m_wndList.m_sListFile = "" ;
-
+	
 	SetTimer( 1, 200, NULL );
 	
 	return 0;
@@ -210,10 +204,7 @@ void CMediaFrame::OnDestroy()
 	
 	KillTimer( 2 );
 	KillTimer( 1 );
-
-	CString strFile = Settings.General.UserPath + _T("\\Data\\Playlist.m3u");
-	m_wndList.m_sListFile = strFile ;
-	m_wndList.OnMediaSave();
+	
 	Cleanup();
 	
 	CWnd::OnDestroy();

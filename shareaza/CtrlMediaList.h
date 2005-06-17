@@ -43,8 +43,7 @@ protected:
 	BOOL		m_bCreateDragImage;
 protected:
 	CLibraryTipCtrl	m_wndTip;
-public:
-	CString m_sListFile;
+
 // Operations
 protected:
 	int		Add(LPCTSTR pszPath, int nItem = -1);
@@ -67,8 +66,6 @@ public:
 public:
 	//{{AFX_VIRTUAL(CMediaListCtrl)
 	public:
-	afx_msg void OnMediaSave();
-	afx_msg void OnMediaOpen();
 	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
 	//}}AFX_VIRTUAL
 
@@ -86,6 +83,8 @@ protected:
 	afx_msg void OnUpdateMediaSelect(CCmdUI* pCmdUI);
 	afx_msg void OnMediaSelect();
 	afx_msg void OnUpdateMediaSave(CCmdUI* pCmdUI);
+	afx_msg void OnMediaSave();
+	afx_msg void OnMediaOpen();
 	afx_msg void OnUpdateMediaPrevious(CCmdUI* pCmdUI);
 	afx_msg void OnMediaPrevious();
 	afx_msg void OnUpdateMediaNext(CCmdUI* pCmdUI);
