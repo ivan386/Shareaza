@@ -147,8 +147,6 @@ void CTrafficWnd::OnPaint()
 
 void CTrafficWnd::OnTimer(UINT nIDEvent)
 {
-	DWORD nNow = GetTickCount();
-
 	if ( nIDEvent == 2 && m_pGraph->Update() ) Invalidate();
 }
 
