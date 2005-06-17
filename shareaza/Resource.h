@@ -1340,8 +1340,6 @@
 #define IDS_RATING_4                    20214
 #define IDS_RATING_5                    20215
 #define IDS_RATING_6                    20216
-#define IDS_REPLACE_FILTER              20217
-#define IDS_NO_FILTER_NAME              20218
 #define ID_HELP_ABOUT                   32772
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
