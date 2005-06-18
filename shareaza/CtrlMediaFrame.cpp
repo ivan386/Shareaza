@@ -1101,6 +1101,7 @@ void CMediaFrame::OnMediaStop()
 	// if ( m_pPlayer ) m_pPlayer->Stop();
 	m_bAutoPlay = FALSE;
 	m_wndList.Reset();
+	Cleanup();
 	m_bAutoPlay = TRUE;
 }
 
