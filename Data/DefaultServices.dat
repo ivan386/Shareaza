@@ -1,4 +1,3 @@
-2 http://bazooka.stealthspy.net/g2/bazooka.php
 2 http://www.exagon.org/~crazypops/g2/bazooka.php
 2 http://glad04.no-ip.com/g2/bazooka.php
 2 http://trancefusionnetwork.org.uk/g2/bazooka.php
@@ -13,7 +12,7 @@ M http://ygwc.y-0.net/ygwc.php
 1 http://gwebcache.bearshare.net/gcache.php
 2 http://gwc.wodi.org/g2/bazooka.php
 X http://gwc.wodi.org/g2/bazooka
-X http://www.ciscllc.com/g2/bazooka.php
+2 http://www.ciscllc.com/g2/bazooka.php
 2 http://pokerface.bishopston.net:3559/
 2 http://rssfed23.angeltowns.com/g2/bazooka.php
 2 http://g2cache.webcindario.com/g2/bazooka.php
@@ -27,7 +26,7 @@ D http://www.edonkey2000.com/server.met
 D http://www.emule-server.de/server.met/min/server.met
 #
 # Keep these comments at the end
-# Last updated 3rd - May, 2005
+# Last updated 18th - June, 2005
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
@@ -35,6 +34,7 @@ D http://www.emule-server.de/server.met/min/server.met
 # A letter and space must precede each link to indicate the type of service
 # D = eDonkey server.met file, M = multinetwork gwebcache,
 # 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache
+# X = banned
 #
 # If you make changes to this file that cause problems for you
 # Then just delete the file and Shareaza will use internal defaults
