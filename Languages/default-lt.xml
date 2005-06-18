@@ -2600,6 +2600,7 @@ right quote	&#147;
 	<string id="8180" value="Bylos dydis turi būti"/>
 	<string id="8181" value="&#160;iki"/><!-- size from xx TO xx-->
 	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) bylai (liko %i):"/>
+	<string id="8223" value="%i d. ir %i val."/>
 	<string id="8224" value="„Shareaza“ siunčiasi:"/>
 	<string id="8225" value="Šios bylos parsisiuntimas pristabdytas:"/>
 	<string id="8226" value="„Shareaza“ baigė parsisiųsti:"/>

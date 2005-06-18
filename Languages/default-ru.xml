@@ -2582,6 +2582,7 @@
 	<string id="8180" value="Размер файла должен быть"/>
 	<string id="8181" value="&#160;до"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza создает хешы для %i файла(ов):"/>
+	<string id="8223" value="%i д. и %i час."/>
 	<string id="8224" value="Shareaza загружает:"/>
 	<string id="8225" value="Загрузка приостановлена:"/>
 	<string id="8226" value="Shareaza завершила загрузку:"/>
