@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
@@ -25,7 +24,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <titles>
                <title language="en">General:All Files</title>
                <title language="af">Algemeen:Alle Lêers</title>
-               <title language="ar">&#160;عام: جميع الملفات</title>
                <title language="chs">&#160;常规:所有文件</title>
                <title language="de">Allgemein:Alle Dateien</title>
                <title language="es">General: Todos los archivos</title>
@@ -49,7 +47,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="ar">المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -69,7 +66,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <headerContent version="1.0">
                <title language="en">All Files</title>
                <title language="af">Alle Lêers</title>
-               <title language="ar">جميع الملفات</title>
                <title language="chs">所有文件</title>
                <title language="de">Alle Dateien</title>
                <title language="es">Todos los archivos</title>
@@ -86,7 +82,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="sv">Alla filer</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
-               <subtitle language="ar">هذا المجلد يحتوي على جميع الملفات في مكتبتك.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有文件。</subtitle>
                <subtitle language="de">Dieser Ordner enthält alle Dateien in ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>

@@ -2,7 +2,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
@@ -24,7 +23,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <titles>
                <title language="en">Audio</title>
                <title language="af">Musiek</title>
-               <title language="ar">موسيقى</title>
                <title language="chs">音频</title>
                <title language="de">Audio</title>
                <title language="es">Audio</title>
@@ -45,7 +43,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display prompt="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="ar">المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -66,7 +63,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <link location="http://www.shareaza.com/schemas/musicArtist.xsd" remote="name"/>
                        <title language="en">Artist</title>
                        <title language="af">Kunstenaar</title>
-                       <title language="ar">الفنان</title>
                        <title language="chs">艺人</title>
                        <title language="de">Künstler</title>
                        <title language="es">Artista</title>
@@ -87,7 +83,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <link location="http://www.shareaza.com/schemas/musicAlbum.xsd" remote="title"/>
                        <title language="en">Album</title>
                        <title language="af">Album</title>
-                       <title language="ar">الالبوم</title>
                        <title language="chs">专辑</title>
                        <title language="de">Album</title>
                        <title language="es">Album</title>
@@ -108,7 +103,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <link location="http://www.shareaza.com/schemas/musicGenre.xsd" remote="name"/>
                        <title language="en">Genre</title>
                        <title language="af">Genre</title>
-                       <title language="ar">النوع</title>
                        <title language="chs">流派</title>
                        <title language="de">Genre</title>
                        <title language="es">Género</title>
@@ -127,7 +121,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="track" search="none">
                        <title language="en">Track</title>
                        <title language="af">Snit</title>
-                       <title language="ar">المسار</title>
                        <title language="chs">轨道</title>
                        <title language="de">Track</title>
                        <title language="es">Track</title>
@@ -146,7 +139,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="disc" search="none">
                        <title language="en">Disc</title>
                        <title language="af">Skyf</title>
-                       <title language="ar">قرص</title>
                        <title language="chs">唱片</title>
                        <title language="de">Disk</title>
                        <title language="es">Disco</title>
@@ -165,7 +157,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="year" search="none">
                        <title language="en">Year</title>
                        <title language="af">Jaar</title>
-                       <title language="ar">سنة</title>
                        <title language="chs">年份</title>
                        <title language="de">Jahr</title>
                        <title language="es">Año</title>
@@ -185,7 +176,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display format="timeMMSS" defaultColumn="true" columnAlign="center"/>
                        <title language="en">Duration</title>
                        <title language="af">Tydsduur</title>
-                       <title language="ar">المدّة</title>
                        <title language="chs">长度</title>
                        <title language="de">Dauer</title>
                        <title language="es">Duración</title>
@@ -206,7 +196,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display format="bitrate" prompt="true" defaultColumn="true" columnAlign="center"/>
                        <title language="en">Bitrate</title>
                        <title language="af">Bistempo</title>
-                       <title language="ar">معدل البت</title>
                        <title language="chs">比特率</title>
                        <title language="de">Bitrate</title>
                        <title language="es">Bitrate</title>
@@ -226,7 +215,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display format="frequency" prompt="true" columnAlign="center"/>
                        <title language="en">Sample Rate</title>
                        <title language="af">Klanktempo</title>
-                       <title language="ar">نسبة عيّنة</title>
                        <title language="chs">采样率</title>
                        <title language="de">Abtastrate</title>
                        <title language="es">Sample Rate</title>
@@ -245,7 +233,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="type" search="indexed">
                        <title language="en">Type</title>
                        <title language="af">Tipe</title>
-                       <title language="ar">النوع</title>
                        <title language="chs">类型</title>
                        <title language="de">Art</title>
                        <title language="es">Arte</title>
@@ -264,7 +251,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="language" search="none">
                        <title language="en">Language</title>
                        <title language="af">Taal</title>
-                       <title language="ar">اللغة</title>
                        <title language="chs">语言</title>
                        <title language="de">Sprache</title>
                        <title language="es">Lenguaje</title>
@@ -283,7 +269,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="source">
                        <title language="en">Source</title>
                        <title language="af">Bron</title>
-                       <title language="ar">المصدر</title>
                        <title language="chs">来源</title>
                        <title language="de">Source</title>
                        <title language="es">Fuente</title>
@@ -302,7 +287,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="description">
                       <title language="en">Description</title>
                       <title language="af">Beskrywing</title>
-                      <title language="ar">نبذه تعريفية</title>
                       <title language="chs">描述</title>
                       <title language="de">Beschreibung</title>
                       <title language="es">Descripción</title>
@@ -321,7 +305,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="standard">
                        <title language="en">Standard</title>
                        <title language="af">Standaard</title>
-                       <title language="ar">الاساسي</title>
                        <title language="chs">标准</title>
                        <title language="de">Standard</title>
                        <title language="es">Standard</title>
@@ -340,7 +323,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="qualitynotes" search="none">
                        <title language="en">Quality Notes</title>
                        <title language="af">Kwaliteit Notas</title>
-                       <title language="ar">ملاحظة الجودة</title>
                        <title language="chs">质量备注</title>
                        <title language="de">Qualitätshinweise</title>
                        <title language="es">Notas de Calidad</title>
@@ -359,7 +341,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="keywords" search="generic">
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
-                       <title language="ar">كلمات البحث</title>
                        <title language="chs">关键词</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es">Palabras Clave</title>
@@ -379,7 +360,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="releasedate" search="none">
                        <title language="en">P2P Release Date</title>
                        <title language="af">P2P Vrystelling</title>
-                       <title language="ar">P2P تاريخ اصدار</title>
                        <title language="chs">P2P 发布时间</title>
                        <title language="de">P2P Releasedatum</title>
                        <title language="es">Fecha de Lanzamiento en P2P</title>
@@ -398,7 +378,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="distributer" search="indexed">
                        <title language="en">Distributer</title>
                        <title language="af">Verspreider</title>
-                       <title language="ar">الموزّع</title>
                        <title language="chs">发行商</title>
                        <title language="de">Herausgeber</title>
                        <title language="es">Distribuidor</title>
@@ -417,7 +396,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="distributerLink">
                        <title language="en">Distributer Link</title>
                        <title language="af">Verspreider Skakel</title>
-                       <title language="ar">رابط الموزع</title>
                        <title language="chs">发行商链接</title>
                        <title language="de">Link zum Herausgeber</title>
                        <title language="es">Link del Distribuidor</title>
@@ -436,7 +414,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="releasegroup" search="indexed">
                        <title language="en">Release Group</title>
                        <title language="af">Uitgewers Groep</title>
-                       <title language="ar">اصدار المجموعات</title>
                        <title language="chs">发行组织</title>
                        <title language="de">Release Group</title>
                        <title language="es">Release Group</title>
@@ -455,7 +432,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="releasegroupLink" search="none">
                        <title language="en">Release Group Link</title>
                        <title language="af">Uitgewers Skakel</title>
-                       <title language="ar">رابط اصدار المجموعات</title>
                        <title language="chs">发行组织链接</title>
                        <title language="de">Release Group Link</title>
                        <title language="es">Release Group Link</title>
@@ -474,7 +450,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="link" search="none">
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
-                       <title language="ar">الرابط</title>
                        <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>

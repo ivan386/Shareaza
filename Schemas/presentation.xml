@@ -3,7 +3,6 @@
 
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
-Shareaza Arabian Schemas File translated by lazorde
 Shareaza Portuguese Schemas File translated by Lukas Taves (LightHeaven)
 Shareaza Chinese Simplified Schemas File translated by Shareaza Team China
 Shareaza German Schemas File translated by Spooky; jlh
@@ -25,7 +24,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        <titles>
                <title language="en">Presentation</title>
                <title language="af">Aanbieding</title>
-               <title language="ar">&#160;التقديم</title>
                <title language="chs">&#160;介绍</title>
                <title language="de">Präsentation</title>
                <title language="es">Presentación</title>
@@ -46,7 +44,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Title</title>
                        <title language="af">Titel</title>
-                       <title language="ar">المجموع</title>
                        <title language="chs">标题</title>
                        <title language="de">Titel</title>
                        <title language="es">Título</title>
@@ -66,7 +63,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Author</title>
                        <title language="af">Outeur</title>
-                       <title language="ar">الكاتب</title>
                        <title language="chs">作者</title>
                        <title language="de">Autor</title>
                        <title language="es">Autor</title>
@@ -85,7 +81,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="subject">
                        <title language="en">Subject</title>
                        <title language="af">Onderwerp</title>
-                       <title language="ar">الموضوع</title>
                        <title language="chs">主题</title>
                        <title language="de">Thema</title>
                        <title language="es">Sujeto</title>
@@ -105,7 +100,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Keywords</title>
                        <title language="af">Sleutelwoorde</title>
-                       <title language="ar">كلمات البحث</title>
                        <title language="chs">关键词</title>
                        <title language="de">Schlüsselwörter</title>
                        <title language="es">Palabras Clave</title>
@@ -126,7 +120,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Abstract</title>
                        <title language="af">Abstrak</title>
-                       <title language="ar">الملخّص</title>
                        <title language="chs">抽象</title>
                        <title language="de">Zusammenfassung</title>
                        <title language="es">Abstracto</title>
@@ -145,7 +138,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="initials">
                        <title language="en">Initials</title>
                        <title language="af">Voorletters</title>
-                       <title language="ar">حروف الاسم الأولى</title>
                        <title language="chs">首字</title>
                        <title language="de">Initialen</title>
                        <title language="es">Iniciales</title>
@@ -164,7 +156,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="copyright">
                        <title language="en">Copyright</title>
                        <title language="af">Kopiereg</title>
-                       <title language="ar">حقوق النسخ</title>
                        <title language="chs">版权</title>
                        <title language="de">Copyright</title>
                        <title language="es">Copyright</title>
@@ -184,7 +175,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Version</title>
                        <title language="af">Weergawe</title>
-                       <title language="ar">الاصدار</title>
                        <title language="chs">版本</title>
                        <title language="de">Version</title>
                        <title language="es">Versión</title>
@@ -203,7 +193,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="revision">
                        <title language="en">Revision</title>
                        <title language="af">Hersiening</title>
-                       <title language="ar">التنقيح</title>
                        <title language="chs">修订版</title>
                        <title language="de">Revision</title>
                        <title language="es">Revision</title>
@@ -223,7 +212,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Format</title>
                        <title language="af">Formaat</title>
-                       <title language="ar">الصيغة</title>
                        <title language="chs">格式</title>
                        <title language="de">Format</title>
                        <title language="es">Formato</title>
@@ -242,7 +230,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="formatversion">
                        <title language="en">Format Version</title>
                        <title language="af">Formaat Weerg.</title>
-                       <title language="ar">اصدار الصيغة</title>
                        <title language="chs">格式版本</title>
                        <title language="de">Formatversion</title>
                        <title language="es">Versión del Formato</title>
@@ -261,7 +248,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="slides">
                        <title language="en">Slides</title>
                        <title language="af">Skyfies</title>
-                       <title language="ar">الشرائح</title>
                        <title language="chs">幻灯片</title>
                        <title language="de">Folien</title>
                        <title language="es">Slides</title>
@@ -281,7 +267,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Link</title>
                        <title language="af">Skakel</title>
-                       <title language="ar">الرابط</title>
                        <title language="chs">链接</title>
                        <title language="de">Link</title>
                        <title language="es">Link</title>
@@ -301,7 +286,6 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <display defaultColumn="true"/>
                        <title language="en">Comments</title>
                        <title language="af">Kommentaar</title>
-                       <title language="ar">التعليقات</title>
                        <title language="chs">注释</title>
                        <title language="de">Kommentar</title>
                        <title language="es">Comentarios</title>
