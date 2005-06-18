@@ -2594,6 +2594,7 @@
 	<string id="8180" value="‪:גודל הקובץ"/>
 	<string id="8181" value="‪עד"/><!-- size from xx TO xx-->
 	<string id="8208" value="‪Shareaza is creating hashes for %i file(s):" /> 
+	<string id="8223" value="&#8235;%i ימים %i שעות"/>
 	<string id="8224" value="‪:שרזה מוריד"/>
 	<string id="8225" value="‪:הורדה זו מושהת"/>
 	<string id="8226" value="‪:שרזה סיים להוריד"/>
@@ -2950,12 +2951,12 @@
 	<string id="16935" value="‪Browse host %s responded with an unrecognised response, and may not support user/host browsing."/>
 	<string id="16936" value="‪Receiving content from browse host %s (%s)"/>
 	<string id="16938" value="‪Error decoding Gnutella packets from browse host %s."/>
-	<string id="16939" value="‪Finished browsing user %s, %i files found."/>
-	<string id="16940" value="‪Browse user connection to %s was dropped."/>
+	<string id="16939" value="‪.%s קבצים לאחר סיום הסיור אצל המשתמש %i נמצאו"/>
+	<string id="16940" value="‪נפל %s החיבור לסיור אצל המשתמש"/>
 	<string id="16941" value="‪Closing browse user connection %s due to lack of traffic."/>
-	<string id="16942" value="‪Closing browse user connection to %s."/>
+	<string id="16942" value="‪.%s סוגר את החיבור לסיור אצל המשתמש"/>
 	<string id="16943" value="‪מסייר אצל %s"/>
-	<string id="16944" value="‪Found %i shared files in %s's library."/>
+	<string id="16944" value=".קבצים משותפים %i נמצאו %s בספרייה של"/>
 	<string id="16992" value="‪Shareaza could not instantiate its MediaServices plugin.  Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="‪All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 	<string id="16994" value="‪Unable to load media file &quot;%s&quot;"/>
@@ -3094,7 +3095,7 @@
 	<string id="19001" value="‪.אתה חייב לבחור שם משתמש וסיסמא"/>
 	<string id="19002" value="‪לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>
 	<string id="20000" value="‪זמין URN אין"/>
-	<string id="20002" value="‪מתוך"/><!-- e.g. 1 of 10 -->
+	<string id="20002" value="מתוך"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
 	<string id="20100" value="‪מתחבר"/>
@@ -3106,7 +3107,7 @@
 	<string id="20106" value="‪Metadata"/>
 	<string id="20107" value="‪עסוק"/>
 	<string id="20108" value="‪נכנס לתור"/>
-	<string id="20109" value="‪&#8234;‏בתור‎"/>
+	<string id="20109" value="בתור"/>
 	<string id="20110" value="‪לא ידוע"/>
 	<string id="20111" value="‪הסתיים"/>
 	<string id="20112" value="‪מפיץ"/>
@@ -3124,16 +3125,16 @@
 	<string id="20124" value="‪(ללא מקורות)"/>
 	<string id="20125" value="‪מאומת"/>
 	<string id="20126" value="‪לא מאומת"/>
-	<string id="20127" value="‪מקור"/>
-	<string id="20128" value="‪מקורות"/><!-- numbers 21, 31, ... -->
-	<string id="20129" value="‪מקורות"/><!-- tens -->
-	<string id="20130" value="‪מקורות"/><!-- from 11 to 19 -->
-	<string id="20131" value="‪מקורות"/><!-- from 2 to 4 -->
-	<string id="20132" value="‪מקורות"/><!-- from 5 to 9 -->
+	<string id="20127" value=":מקורות"/>
+	<string id="20128" value=":מקורות"/><!-- numbers 21, 31, ... -->
+	<string id="20129" value="‪:מקורות"/><!-- tens -->
+	<string id="20130" value="‪:מקורות"/><!-- from 11 to 19 -->
+	<string id="20131" value="‪:מקורות"/><!-- from 2 to 4 -->
+	<string id="20132" value="‪:מקורות"/><!-- from 5 to 9 -->
 	<string id="20133" value="‪לא מעוניין"/>
 	<string id="20134" value="‪Choked"/>
 	<string id="20135" value="‪הבא"/>
-	<string id="20136" value="‪&#8234;‏בתור‎"/>
+	<string id="20136" value="בתור"/>
 	<string id="20200" value="‪ראשון"/>
 	<string id="20201" value="‪שני"/>
 	<string id="20202" value="‪שלישי"/>
@@ -4241,7 +4242,7 @@
 		<column from="Flow" to="זרימה"/>
 		<column from="Leaves" to="קווי ענף"/>
 		<column from="Mode" to="מצב"/>
-		<column from="Client" to="מקורות"/>
+		<column from="Client" to="לקוח"/>
 		<column from="Name" to="שם"/>
 	</list>
 	<list name="CSecurityWnd">
@@ -4255,7 +4256,7 @@
 	<list name="CHostCacheWnd">
 		<column from="Address" to="כתובת"/>
 		<column from="Port" to="יציאה"/>
-		<column from="Client" to="מקורות"/>
+		<column from="Client" to="לקוח"/>
 		<column from="Last Seen" to="נראה לאחרונה"/>
 		<column from="Name" to="שם"/>
 		<column from="Description" to="תיאור"/>
