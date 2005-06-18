@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""winres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "1 TYPELIB ""ImageViewer.tlb""\r\n"
     "\0"
@@ -59,15 +59,14 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 #pragma code_page(1252)
 #endif //_WIN32
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,1,1
- PRODUCTVERSION 1,9,0,0
+ FILEVERSION 1,2,1,2
+ PRODUCTVERSION 2,2,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -82,15 +81,15 @@ BEGIN
     BEGIN
         BLOCK "0c0904b0"
         BEGIN
-            VALUE "Comments", "Shareaza Image Viewer Plugin\0"
-            VALUE "CompanyName", "Shareaza Pty. Ltd.\0"
-            VALUE "FileDescription", "Shareaza Image Viewer Plugin\0"
-            VALUE "FileVersion", "1, 2, 1, 1\0"
-            VALUE "InternalName", "ImageViewer\0"
-            VALUE "LegalCopyright", "Copyright © Michael Stokes and Shareaza Pty. Ltd., 2002-2003.\0"
-            VALUE "OriginalFilename", "ImageViewer.dll\0"
-            VALUE "ProductName", "Shareaza\0"
-            VALUE "ProductVersion", "1, 9, 0, 0\0"
+            VALUE "Comments", "Shareaza Image Viewer Plugin"
+            VALUE "CompanyName", "Shareaza Development Team"
+            VALUE "FileDescription", "Shareaza Image Viewer Plugin"
+            VALUE "FileVersion", "1, 2, 1, 2"
+            VALUE "InternalName", "ImageViewer"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
+            VALUE "OriginalFilename", "ImageViewer.dll"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2, 2, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -99,15 +98,13 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // REGISTRY
 //
 
-IDR_IMAGEVIEWER         REGISTRY DISCARDABLE    "ImageViewer.rgs"
+IDR_IMAGEVIEWER         REGISTRY                "ImageViewer.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -116,37 +113,35 @@ IDR_IMAGEVIEWER         REGISTRY DISCARDABLE    "ImageViewer.rgs"
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_IMAGE               ICON    FIXED IMPURE    "image.ico"
-
+IDI_IMAGE               ICON                    "image.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Cursor
 //
 
-IDC_GRABMOVE            CURSOR  FIXED IMPURE    "grabmove.cur"
-
+IDC_GRABMOVE            CURSOR                  "grabmove.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// 23
+// HTML
 //
 
-IDR_SKIN                23      DISCARDABLE     "Skin.xml"
+IDR_SKIN                HTML                    "Skin.xml"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDB_COMMANDS            BITMAP  DISCARDABLE     "Commands.bmp"
+IDB_COMMANDS            BITMAP                  "Commands.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     IDS_PROJNAME            "ImageViewer"
     IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Michael Stokes and Shareaza Pty. Ltd., 2002."
