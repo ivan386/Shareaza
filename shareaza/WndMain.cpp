@@ -1938,6 +1938,7 @@ void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI)
 void CMainWnd::OnTabMedia() 
 {
 	m_pWindows.Open( RUNTIME_CLASS(CMediaWnd) );
+	theApp.m_bMenuWasVisible = FALSE;
 	OpenFromTray();
 }
 
