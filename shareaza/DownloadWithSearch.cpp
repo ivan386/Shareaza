@@ -57,7 +57,7 @@ CDownloadWithSearch::~CDownloadWithSearch()
 
 BOOL CDownloadWithSearch::FindSourcesAllowed(DWORD tNow) const
 {
-	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 30*1000 )
+	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 15*1000 )
 		return TRUE;
 	else
 		return FALSE;
@@ -72,9 +72,13 @@ BOOL CDownloadWithSearch::FindMoreSources()
 	
 	if ( CanSearch() )
 	{
-		m_tSearchTime = GetTickCount();
-		if ( m_pSearch != NULL ) m_pSearch->Stop();
-		bSuccess = TRUE;
+		DWORD tNow = GetTickCount();
+		if ( tNow - m_tSearchTime > ( Settings.Downloads.SearchPeriod / 4 ) )
+		{
+			m_tSearchTime = tNow;
+			if ( m_pSearch != NULL ) m_pSearch->Stop();
+			bSuccess = TRUE;
+		}
 	}
 	
 	return bSuccess;
@@ -146,8 +150,7 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	return m_pFile != NULL &&
-		( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH );
+	return ( ( m_pFile != NULL ) && ( m_bSHA1 || m_bTiger || m_bED2K || m_bBTH ) );
 }
 
 //////////////////////////////////////////////////////////////////////

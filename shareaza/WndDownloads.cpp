@@ -955,7 +955,7 @@ void CDownloadsWnd::OnDownloadsSources()
 				else
 				{
 					// Warn user
-					theApp.Message( MSG_SYSTEM, _T("Find more sources unable to start due to excessive network traffic") );
+					theApp.Message( MSG_DEBUG, _T("Find more sources unable to start due to excessive network traffic") );
 					// Prevent ed2k bans, client drops, etc.
 					m_tMoreSourcesTimer = GetTickCount();
 					if ( m_nMoreSourcesLimiter < -30 ) m_nMoreSourcesLimiter = -30;
