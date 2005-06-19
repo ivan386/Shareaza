@@ -1,9 +1,9 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2005/06/15 22:00:07 $"
-//	Revision:		"$Revision: 1.16 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/06/19 10:00:18 $"
+//	Revision:		"$Revision: 1.17 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -69,6 +69,7 @@ CMatchList::CMatchList()
 
 	if ( ( nDefaultFilter != NONE ) && ( (int)m_pResultFilters->m_nFilters >= nDefaultFilter + 1 ) )
 	{
+		m_sFilter			= m_pResultFilters->m_pFilters[nDefaultFilter]->m_sFilter;
 		m_bFilterBusy		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterBusy;
 		m_bFilterPush		= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterPush;
 		m_bFilterUnstable	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bFilterUnstable;
@@ -91,6 +92,7 @@ CMatchList::CMatchList()
 		m_nFilterMaxSize	= 0;
 		m_nFilterSources	= 1;
 	}
+
 	m_nSortColumn		= -1;
 	m_bSortDir			= 1;
 	m_pSchema			= NULL;

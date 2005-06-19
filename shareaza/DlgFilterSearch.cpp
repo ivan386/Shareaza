@@ -1,6 +1,10 @@
 //
 // DlgFilterSearch.cpp
 //
+//	Date:			"$Date: 2005/06/19 10:00:18 $"
+//	Revision:		"$Revision: 1.6 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -213,7 +217,11 @@ void CFilterSearchDlg::UpdateList()
 
 	for ( DWORD i = 0; i < m_pResultFilters->m_nFilters; i++ )
 	{
-		m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName );
+		if ( i == m_pResultFilters->m_nDefault )
+			m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName + " *" );
+		else
+			m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName );
+
 //		m_Filters.SetItemDataPtr( i, m_pResultFilters->m_pFilters[i] ); //save a pointer to the item
 	}
 
@@ -238,15 +246,16 @@ void CFilterSearchDlg::OnCbnSelChangeFilters()
 		m_bHideBogus		= pOptions->m_bFilterBogus;
 		m_nSources			= pOptions->m_nFilterSources;
 
-		if ( m_pMatches->m_nFilterMinSize > 0 )
-			m_sMinSize	= Settings.SmartVolume( m_pMatches->m_nFilterMinSize, FALSE );
+		if ( pOptions->m_nFilterMinSize > 0 )
+			m_sMinSize	= Settings.SmartVolume( pOptions->m_nFilterMinSize, FALSE );
 		else
 			m_sMinSize.Empty();
 
-		if ( m_pMatches->m_nFilterMaxSize > 0 )
-			m_sMaxSize	= Settings.SmartVolume( m_pMatches->m_nFilterMaxSize, FALSE );
+		if ( pOptions->m_nFilterMaxSize > 0 )
+			m_sMaxSize	= Settings.SmartVolume( pOptions->m_nFilterMaxSize, FALSE );
 		else
 			m_sMaxSize.Empty();
+
 		m_bDefault = ( sel == m_pResultFilters->m_nDefault );
 
 		UpdateData(FALSE);
@@ -280,10 +289,9 @@ void CFilterSearchDlg::OnBnClickedSetDefaultFilter()
 {
 	UpdateData( TRUE );
 
+	DWORD sel = m_Filters.GetCurSel();
 	if ( m_bDefault )
 	{
-		DWORD sel = m_Filters.GetCurSel();
-
 		if ( sel != CB_ERR )
 			m_pResultFilters->m_nDefault = sel;
 	}
@@ -291,5 +299,7 @@ void CFilterSearchDlg::OnBnClickedSetDefaultFilter()
 	{
 		m_pResultFilters->m_nDefault = NONE;
 	}
+	UpdateList();
+	m_Filters.SetCurSel( sel );
 	m_pResultFilters->Save();
 }
