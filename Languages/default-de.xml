@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Shareaza German Skin File -->
 <!-- Special characters used in German:
 
@@ -2780,8 +2780,8 @@ Other:
 		<string id="16312" value="Ungültiger eDonkey Hash von %s empfangen, Quelle entfernt."/>
 		<string id="16313" value="eDonkey Hash für &quot;%s&quot; empfangen, kleinstes verifizierbarer Teil ist %s."/>
 		<string id="16314" value="eDonkey Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
-		<string id="16315" value="Kann kompression (inflate) für Download &quot;%s&quot; nicht aktivieren."/>
-		<string id="16316" value="Zeitüberschreitung für Warteschalngenaktualisierung von eDonkey Host %s für Datei &quot;%s&quot;."/>
+		<string id="16315" value="Kann Kompression (inflate) für Download &quot;%s&quot; nicht aktivieren."/>
+		<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey Host %s für Datei &quot;%s&quot;."/>
 		<string id="16317" value="Warten in Warteschlange für &quot;%s&quot;."/>
 		<string id="16318" value="Nicht genügend Speicherplatz um &quot;%s&quot; herunterzuladen (%s)."/>
 		<string id="16319" value="Quelle %s (%s) entfernt, weil sie korrupte Teile der Datei &quot;%s&quot; übertragen hat (%I64i-%I64i)."/>
@@ -2939,8 +2939,8 @@ Other:
 		<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)."/>
 		<string id="16867" value="Service Provider &quot;%s&quot; hat nicht geantwortet (%i-tes Mal)"/>
 		<string id="16868" value="Service Provider &quot;%s&quot; hat %i mal nicht geantwortet, entfernt."/>
-		<string id="16870" value="GWebCache update an service &quot;%s&quot; senden..."/>
-		<string id="16871" value="GWebCache &quot;%s&quot; an einen zufälligem GWebCache übertragen..."/>
+		<string id="16870" value="GWebCache update an Service &quot;%s&quot; senden..."/>
+		<string id="16871" value="GWebCache &quot;%s&quot; an einen zufälligen GWebCache übertragen..."/>
 		<string id="16928" value="Herstellen einer Verbindung zu %s zum Durchsuchen..."/>
 		<string id="16929" value="Kann keine Verbindung zu %s zum Durchsuchen herstellen."/>
 		<string id="16930" value="Push request an %s zum Durchsuchen gesendet..."/>
@@ -2948,9 +2948,9 @@ Other:
 		<string id="16932" value="Dateilistenanforderung an %s gesendet..."/>
 		<string id="16933" value="&quot;Durchsuchen&quot; Host %s hat mit einer ungültigen HTTP Antwort geantwortet."/>
 		<string id="16934" value="&quot;Durchsuchen&quot; Host %s hat mit Code %s geantwortet (%s)."/>
-		<string id="16935" value="&quot;Durchsuchen&quot; Host %s hat eine unbekannte Nachricht übertragen, &quot;Durchsuchen&quot; wir möglicherweise nicht unterstützt."/>
+		<string id="16935" value="&quot;Durchsuchen&quot; Host %s hat eine unbekannte Nachricht übertragen, &quot;Durchsuchen&quot; wird möglicherweise nicht unterstützt."/>
 		<string id="16936" value="Herunterladen von &quot;Durchsuchen&quot; Host %s (%s)."/>
-		<string id="16938" value="Error decoding Gnutella packets from browse host %s."/>
+		<string id="16938" value="Ein Fehler bei der Dekodierung der Gnutella-Pakte von &quot;Durchsuchen&quot; ist aufgetreten bei Host %s."/>
 		<string id="16939" value="Dateiliste heruntergeladen %s, %i Dateien gefunden."/>
 		<string id="16940" value="&quot;Durchsuchen&quot; Verbindung zu %s wurde unterbrochen."/>
 		<string id="16941" value="&quot;Durchsuchen&quot; Verbindung zu %s mangels Aktivität beendet."/>
@@ -3057,8 +3057,8 @@ Other:
 		<string id="17478" value="BitTorrent Kopplung mit %s hat eine unbekannte Datei angefordert."/>
 		<string id="17479" value="BitTorrent Kopplung %s hergestellt für &quot;%s&quot;."/>
 		<string id="17481" value="BitTorrent Datei (Descriptor): &quot;%s&quot; empfangen"/>
-		<string id="17482" value="Auswertund der vorgeladenen BitTorrent Datei &quot;%s&quot; nicht möglich."/>
-		<string id="17483" value="Fehler von BitTorrent tracker für &quot;%s&quot; : &quot;%s&quot;."/>
+		<string id="17482" value="Auswertung der vorgeladenen BitTorrent Datei &quot;%s&quot; nicht möglich."/>
+		<string id="17483" value="Fehler von BitTorrent Tracker für &quot;%s&quot; : &quot;%s&quot;."/>
 		<string id="17484" value="Fehler beim auswerten der BitTorrent tracker Antwort."/>
 		<string id="17485" value="BitTorrent Tracker Antwort für &quot;%s&quot; erhalten, %i neue Quellen."/>
 		<string id="17486" value="BitTorrent Client Kopplung mit %s herstellen..."/>
@@ -3069,8 +3069,8 @@ Other:
 		<string id="17491" value="Der Torrent &quot;%s&quot; ist breits auf ihrer Downloadliste und kann nicht &quot;geseedet&quot; werden."/>
 		<string id="17492" value="Fehler beim laden der Torrent Datei &quot;%s&quot;.  Das ist möglicherweise kein gültiges Torrent."/>
 		<string id="17493" value="Kann BitTorrent Freigabedatei für &quot;%s&quot; nicht erstellen."/>
-		<string id="17494" value="Dieses Torrent enthält die Datei &quot;%s&quot;. Shareaza kann die Datei in ihrer Bibliothek aber nicht finden.  Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."/>
-		<string id="17495" value="Dieses Torrent enthält die Datei &quot;%s&quot; die %s groß sein sollte, die Größe ihrere Datei ist %s."/>
+		<string id="17494" value="Dieser Torrent enthält die Datei &quot;%s&quot;. Shareaza kann die Datei in ihrer Bibliothek aber nicht finden.  Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."/>
+		<string id="17495" value="Dieser Torrent enthält die Datei &quot;%s&quot; die %s groß sein sollte, die Größe ihrer Datei ist %s."/>
 		<string id="17496" value="Beim Kopieren von &quot;%s&quot; in eine BitTorrent Freigabedatei ist ein Fehler aufgetreten."/>
 		<string id="17497" value="Beim Senden von &quot;%s&quot; trat ein unbekannter Fehler auf."/>
 		<string id="17498" value="In der Datei &quot;%s&quot; wurde ein Fehler gefunden."/>
@@ -3141,12 +3141,12 @@ Other:
 		<string id="20205" value="Freitag"/>
 		<string id="20206" value="Samstag"/>
 		<string id="20210" value="(Keine Bewertung)"/>
-		<string id="20211" value="Fake / Corrupt"/>
-		<string id="20212" value="Poor"/>
-		<string id="20213" value="Average"/>
-		<string id="20214" value="Good"/>
-		<string id="20215" value="Very Good"/>
-		<string id="20216" value="Excellent"/>
+		<string id="20211" value="Fake/Korrupt/Irreführend"/>
+		<string id="20212" value="Schlecht"/>
+		<string id="20213" value="Durchschnittlich"/>
+		<string id="20214" value="Gut"/>
+		<string id="20215" value="Sehr Gut"/>
+		<string id="20216" value="Exzellent"/>
 	</strings>
 
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3599,7 +3599,7 @@ Other:
 			<control caption="Zu eDonkey verbinden"/>
 			<control caption="Das eDonkey Netzwerk ist ein beliebtes Server-basiertes Netzwerk.  Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
 			<control caption="Zu Gnutella1 verbinden"/>
-			<control caption="Obwohl das original Gnutella Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."/>
+			<control caption="Obwohl das original Gnutella Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Ressource."/>
 		</dialog>
 
 		<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey Downloads importieren">
@@ -4015,7 +4015,7 @@ Other:
 			<control />
 			<control caption="Wussten Sie, dass Shareaza 100% kostenlose Software ist"/>
 			<control caption="Shareaza enthält KEINE &quot;spyware&quot;, &quot;adware&quot; oder andere zusätzliche Software. Es zeigt keine Werbung oder &quot;popups&quot; an.{n}{n}Wenn Sie Werbung oder &quot;popups&quot; sehen während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
-			<control caption="Leider installieren viele andere Progarmme unerwünschte Adware oder Spyware. Falls Sie etwas verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spayware Programm überprüfen."/>
+			<control caption="Leider installieren viele andere Progarmme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware Programm überprüfen."/>
 			<control caption="Shareaza kostet nichts und kann von jedem kostenlos von www.shareaza.com heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
 			<control caption="Shareaza respektiert seine Benutzer!"/>
 			<control caption="www.shareaza.com"/>
@@ -4195,7 +4195,7 @@ Other:
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control caption="Bitte wählen Sie die neue Codierung"/>
-		<control caption="Arabisch|Baltisch|Zentraleuropäisch|Chinesisch (vereinfacht)|Chinesisch (traditionell)|Kyrillisch|Griechisch|Hebräisch|Japanisch|Koreanisch|Thai|Turkisch|Vietnamesisch"/>
+		<control caption="Arabisch|Baltisch|Zentraleuropäisch|Chinesisch (vereinfacht)|Chinesisch (traditionell)|Kyrillisch|Griechisch|Hebräisch|Japanisch|Koreanisch|Thailändisch|Türkisch|Vietnamesisch"/>
 	</dialog>
 	</dialogs>
 
@@ -4208,7 +4208,7 @@ Other:
 			<column from="Folder" to="Ordner"/>
 			<column from="Hits" to="Treffer"/>
 			<column from="Uploads" to="Uploads"/>
-			<column from="Modified" to=""/>
+			<column from="Modified" to="Modifiziert"/>
 		</list>
 		<list name="CDownloadCtrl">
 			<column from="Downloaded File" to="Dateiname"/>
