@@ -4909,7 +4909,7 @@ BEGIN
     IDS_SETTINGS_WARN_QUEUELIMIT 
                             "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
     IDS_SETTINGS_FILEPATH_TOO_LONG 
-                            "Windows doesn't support filepaths longer than 256 chracters.\nPlease select a folder with a shorter path."
+                            "Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."
 END
 
 STRINGTABLE 

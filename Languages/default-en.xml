@@ -2932,7 +2932,7 @@
 	<string id="16810" value="year old"/>
 	<string id="16811" value="Automatic"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
-	<string id="16817" value="Windows doesn't support filepaths longer than 256 chracters.\nPlease select a folder with a shorter path."/>
+	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
