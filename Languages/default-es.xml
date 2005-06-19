@@ -9,7 +9,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="luis.help@gmail.com"
-		version="2.1.1.3"
+		version="2.1.1.11"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -41,6 +41,7 @@
 		<button id="ID_NETWORK_CONNECT" text="Conectar"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -2081,6 +2082,21 @@
         de descubrimientos.</text>
 	</document>
 
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Limitando subidas puede causar descargas lentas</text>
+		<newline gap="8"/>
+		<text>Varias redes a las que Shareaza se conecta apoya igualdades, limitando
+		subidas a clientes que no comparten, o simplemente preferencia a subir a clientes que comparten.</text>
+		<newline/>
+		<text>Afortunadamente, las conexiones DSL son como una carretera de 2 vas: tu tienes
+		que separar alocaciones para subida y descarga. Si tu cliente esta propiamente configurado, 
+		tu debes de poder subir a una buena velocidad y al mismo tiempo estar descargando al mximo.</text>
+		<newline gap="8"/>
+		<text>Por defecto, tu lmite esta puesto a como  el 85% de tu subida disponible,
+		cuando tus descarga esta sin lmite. Esa configuracin te debe dar la velocidad ms rpida de las descargas. 
+		</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2239,7 +2255,7 @@
     <tip id="ID_HELP_FAQ" message="Visitar los Forums de Shareaza, donde puedes solicitar ayuda. Si deseas pregunta en Español!"/>
 	<tip id="ID_HELP_ROUTER" message="Consigue ayuda para configurar tu Router Y/O Firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visitar las foros de Shareaza, para soporte técnico y discusiones."/>
-	<tip id="ID_HELP_GUIDE" message="Visit the Shareaza Users Guide."/>
+	<tip id="ID_HELP_GUIDE" message="Visita la Gua de Usuarios Shareaza."/>
     <tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Ayuda protegiendo tu sistema de programas hostiles"/>
 	<tip id="ID_HELP_UPDATE" message="Checar noticias y actualizaciones."/>
@@ -2491,11 +2507,13 @@
     <string id="7001" value="&amp;Schemas"/>
     <string id="7002" value="Valores Multiple"/>
 	<string id="7003" value="Múltiple"/>
+    <string id="7004" value="Ya hay un filtro llamado &quot;%s&quot;, deseas remplazarlo?"/>
+	<string id="7005" value="Por favor ponle al filtro un nombre."/>
     <string id="8000" value="Configuración de Shareaza"/>
-	<string id="8001" value="Bievenido a Shareaza"/>
+	<string id="8001" value="Bienvenido a Shareaza"/>
 	<string id="8002" value="Propiedades del Archivo"/>
 	<string id="8003" value="Editar Mi Perfil"/>
-	<string id="8004" value="¡Bievenido a Shareaza! (version) !\n.\nShareaza es un software completamente libre!.\nPor favor utilizalo con responsabilidad y respetando las leyes intelectuales.\n."/>
+	<string id="8004" value="¡Bienvenido a Shareaza! (version) !\n.\nShareaza es un software completamente libre!.\nPor favor utilizalo con responsabilidad y respetando las leyes intelectuales.\n."/>
 	<string id="8005" value=" (cerrando después de transferencias)"/>
 	<string id="8006" value="No estas conectado.  Haz click a conectar para empezar."/>
 	<string id="8007" value="No hay búsquedas activas.  Haz click aquí para empezar."/>
@@ -2569,7 +2587,8 @@
 	<string id="8180" value="El tamaño debe ser"/>
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
     <string id="8208" value="Shareaza esta creando hashes para %i archivo(s):"/>
-	<string id="8224" value="Shareaza esta descargando:"/>
+	<string id="8223" value="%i dias y %i horas"/>
+    <string id="8224" value="Shareaza esta descargando:"/>
 	<string id="8225" value="Esta descarga esta en pausa:"/>
 	<string id="8226" value="Shareaza ha terminado de bajar:"/>
 	<string id="8227" value="%i horas y %i minutos"/>
@@ -2907,6 +2926,7 @@
 	<string id="16810" value="años"/>
 	<string id="16811" value="Automatico"/>
     <string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando tu máxima cola de posición puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
+    <string id="16817" value="Windows no soporta nomres ms grandes que 256 caracteres.\nPlor favor selecciona un nombre con un tamao ms pequeo."/>
     <string id="16864" value="Accesando servicios de descubrimiento..."/>
 	<string id="16865" value="Accesando el servicio de descubrimiento en &quot;%s&quot;..."/>
 	<string id="16866" value="Transacción con el GWebCache (&quot;%s&quot;) fué completada."/>
@@ -3029,7 +3049,6 @@
 	<string id="17477" value="El acoplador BitTorrent %s respondio con el archivo incorrecto."/>
 	<string id="17478" value="El acoplador BitTorrent %s pidio un archivo desconocido."/>
 	<string id="17479" value="El acoplador BitTorrent %s estableció para &quot;%s&quot;."/>
-	<string id="17480" value="El acoplador BitTorrent %s fue perdido."/>
 	<string id="17481" value="El archivo de descripción de BitTorrent &quot;%s&quot; fué recibido"/>
 	<string id="17482" value="Fué imposible entender el archivo &quot;%s&quot; de BitTorrent."/>
 	<string id="17483" value="Hubo un error consultando el servicio de BitTorrent &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3048,13 +3067,15 @@
 	<string id="17496" value="Hubo un error copiando de &quot;%s&quot; al archivo de compartir torrents."/>
 	<string id="17497" value="Hubo un error inesperado compartiendo el archivo &quot;%s&quot;."/>
 	<string id="17498" value="Hubo un error con el archivo &quot;%s&quot;."/>
-	<string id="18496" value="Usted ha cambiado el nombre del archivo.  ¿Está seguro de cambiarlo?"/>
+	<string id="17500" value="El tracker no respondio, tratando otra vez"/>
+	<string id="17501" value="No se pudo comunicar al tracker"/>
+    <string id="18496" value="Usted ha cambiado el nombre del archivo.  ¿Está seguro de cambiarlo?"/>
 	<string id="18497" value="El valor de SHA1 que le asignó a la descarga no es válido.  Pro favor revíselo."/>
 	<string id="18498" value="El valor de root tiger-tree asignado no es válido."/>
 	<string id="18499" value="El valor del hash de eDonkey2000 asignado no es válido."/>
 	<string id="18500" value="¿Estás seguro de cambiar el SHA1?"/>
 	<string id="18501" value="¿Estás seguro de cambiar el root tiger-tree hash?"/>
-	<string id="18502" value="¿Estás seguro de cambiar el hash de eDonkey?"/>
+    <string id="18502" value="¿Estás seguro de cambiar el hash de eDonkey?"/>
 	<string id="18503" value="¿Estás seguro de olvidar el estado actual de verificación? Toda la información de la descarga va a ser tratada como inseguro, para reverificarla."/>
 	<string id="18504" value="¿Estás seguro de olvidar todas las fuentes de esta descarga?"/>
 	<string id="18505" value="Por favor entre un rango válido."/>
@@ -3068,9 +3089,11 @@
 	<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
 	<string id="20000" value="No hay URN disponible"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
-	<string id="20100" value="Conectando"/>
+	<string id="20003" value="Cambiando la direccin de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
+	<string id="20004" value="Lenguajes de Derecha-Izquierda no se soportan en tu SO."/>
+    <string id="20100" value="Conectando"/>
 	<string id="20101" value="Pidiendo"/>
-	<string id="20102" value="Respuesta"/>
+    <string id="20102" value="Respuesta"/>
 	<string id="20103" value="Descargando"/>
 	<string id="20104" value="TigerTree"/>
 	<string id="20105" value="Hashset"/>
@@ -3410,8 +3433,8 @@
 		<control/><control/>
 		<control caption="Conexiones de cliente"/>
 		<control caption=" Limpiar torrents descargados"/>
-		<control caption="Cuando compartas más de lo que bajaste "/>
 		<control/><control/>
+		<control caption="&#160;Fuentes torrent de preferencia"/>
 		<control caption="_EndGame:"/>
 		<control caption="Habilitar modo EndGame al completar torrents"/>
 		<control caption="_Empieza torrents aquí "/>
