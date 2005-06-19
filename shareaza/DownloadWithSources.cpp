@@ -274,7 +274,11 @@ BOOL CDownloadWithSources::AddSourceBT(SHA1* pGUID, IN_ADDR* pAddress, WORD nPor
 	// Unreachable (Push) BT sources should never be added.
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
 		return FALSE;
-	else
+	
+	// Check for own IP, in case IgnoreLocalIP is not set
+	if ( ( Settings.Connection.IgnoreOwnIP ) && ( pAddress->S_un.S_addr == Network.m_pHost.sin_addr.S_un.S_addr ) ) 
+		return FALSE;
+
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pGUID, pAddress, nPort ) );
 }
 
