@@ -58,6 +58,7 @@ BEGIN_MESSAGE_MAP(CNeighboursWnd, CPanelWnd)
 	ON_WM_CONTEXTMENU()
 	ON_WM_DESTROY()
 	ON_WM_ACTIVATE()
+	ON_WM_QUERYNEWPALETTE()
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_NEIGHBOURS, OnSortList)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_NEIGHBOURS, OnCustomDrawList)
 	ON_UPDATE_COMMAND_UI(ID_NEIGHBOURS_DISCONNECT, OnUpdateNeighboursDisconnect)
@@ -137,6 +138,8 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CNeighboursWnd"), FALSE );
+
+	m_tLastUpdate = 0;
 	
 	PostMessage( WM_TIMER, 1 );
 	
@@ -160,7 +163,7 @@ void CNeighboursWnd::Update()
 	
 	CLiveList pLiveList( 11 );
 	
-	DWORD nTimeNow = GetTickCount();
+	m_tLastUpdate = GetTickCount();
 	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
 	
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
@@ -172,7 +175,7 @@ void CNeighboursWnd::Update()
 		pItem->Set( 0, pNeighbour->m_sAddress );
 		pItem->Format( 1, _T("%hu"), htons( pNeighbour->m_pHost.sin_port ) );
 		
-		DWORD nTime = ( nTimeNow - pNeighbour->m_tConnected ) / 1000;
+		DWORD nTime = ( m_tLastUpdate - pNeighbour->m_tConnected ) / 1000;
 		
 		switch ( pNeighbour->m_nState )
 		{
@@ -370,7 +373,11 @@ void CNeighboursWnd::OnSize(UINT nType, int cx, int cy)
 
 void CNeighboursWnd::OnTimer(UINT nIDEvent) 
 {
-	Update();
+	if ( nIDEvent == 1 ) 
+	{
+		if ( ( IsPartiallyVisible() ) || ( GetTickCount() - m_tLastUpdate > 30000 ) ) 
+			 Update();
+	}
 }
 
 void CNeighboursWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)

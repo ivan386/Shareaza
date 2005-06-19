@@ -255,16 +255,19 @@ void CHostCacheWnd::OnSize(UINT nType, int cx, int cy)
 
 void CHostCacheWnd::OnTimer(UINT nIDEvent) 
 {
-	PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
+	if ( nIDEvent == 1 && IsPartiallyVisible() )
+	{
+		PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
 
-	if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
-		nEffective = PROTOCOL_G2;
+		if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
+			nEffective = PROTOCOL_G2;
 
-	CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
-	DWORD tTicks = GetTickCount();
+		CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
+		DWORD tTicks = GetTickCount();
 
-	// Wait 5 seconds before refreshing; do not force updates
-	if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 5000 ) ) Update();
+		// Wait 5 seconds before refreshing; do not force updates
+		if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 5000 ) ) Update();
+	}
 }
 
 void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)

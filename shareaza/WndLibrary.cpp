@@ -130,9 +130,12 @@ void CLibraryWnd::OnTimer(UINT nIDEvent)
 
 	if ( nIDEvent == 1 )
 	{
-		CWaitCursor pCursor;
-		m_wndFrame.Update( FALSE );
-		m_tLast = tNow;
+		if ( IsPartiallyVisible() )
+		{
+			CWaitCursor pCursor;
+			m_wndFrame.Update( FALSE );
+			m_tLast = tNow;
+		}
 	}
 	else if ( tNow - m_tLast > 30000 )
 	{

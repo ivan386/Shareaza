@@ -709,7 +709,7 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	for ( POSITION pos = m_pWindows.GetIterator() ; pos ; )
 	{
 		CChildWnd* pChild = m_pWindows.GetNext( pos );
-		if ( pChild->IsPartiallyVisible() )	pChild->PostMessage( WM_TIMER, 1, 0 );
+		pChild->PostMessage( WM_TIMER, 1, 0 );
 	}
 	
 	m_bTimer = FALSE;

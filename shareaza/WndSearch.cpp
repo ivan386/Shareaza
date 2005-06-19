@@ -915,7 +915,7 @@ void CSearchWnd::OnTimer(UINT nIDEvent)
 	}
 
 
-	if ( nIDEvent == 1 )
+	if ( ( IsPartiallyVisible() ) && ( nIDEvent == 1 ) )
 	{
 		if ( m_bSetFocus )
 		{

@@ -260,7 +260,7 @@ void CDiscoveryWnd::OnSize(UINT nType, int cx, int cy)
 
 void CDiscoveryWnd::OnTimer(UINT nIDEvent) 
 {
-	if ( nIDEvent == 1 ) Update();
+	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) ) Update();
 }
 
 void CDiscoveryWnd::OnDblClkList(NMHDR* pNMHDR, LRESULT* pResult)

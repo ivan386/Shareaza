@@ -249,18 +249,15 @@ void CSecurityWnd::OnSize(UINT nType, int cx, int cy)
 
 void CSecurityWnd::OnTimer(UINT nIDEvent) 
 {
-	DWORD tTicks = GetTickCount();
-	DWORD tDelay = 2 * Security.GetCount();		// Delay based on size of list
-
-	if ( ( tTicks - tLastUpdate ) > tDelay )
+	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) )
 	{
-		if ( tDelay < 2000 )
+		DWORD tTicks = GetTickCount();
+		DWORD tDelay = max( ( 2 * Security.GetCount() ), 1000 );// Delay based on size of list
+
+		if ( ( tTicks - tLastUpdate ) > tDelay )
 		{
-			Update();							// Sort if list is under 1000
-		}
-		else
-		{
-			Update( -1, FALSE );				// Otherwise just refresh values
+			if ( tDelay < 2000 ) Update();			// Sort if list is under 1000
+			else Update( -1, FALSE );				// Otherwise just refresh values
 		}
 	}
 }
