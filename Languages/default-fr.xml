@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.1.3"
+		version="2.1.1.11"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2060,6 +2060,16 @@ Other:
         <newline gap="8"/>
         <text>Vous pouvez télécharger une liste de serveurs depuis la page des réglages eDonkey, ou depuis la fenêtre du service découverte.</text>
     </document>
+
+    <document name="GeneralHelp.UploadWarning"> 
+        <text format="b">Limiter les envois peut ralentir les téléchargements</text> 
+        <newline gap="8"/> 
+        <text>Shareaza se connecte à plusieurs réseaux qui imposent des ratios, limitent les envois aux clients qui ne partagent pas, ou simplement donnent la préférence de l'envoi aux partageurs connus.</text> 
+        <newline/> 
+        <text>Heureusement, les connexions DSL à large bande sont comme des autoroutes à deux voies: vous avez des attributions séparées pour l'envoi et le téléchargement. Si votre client est correctement configuré, vous devriez pouvoir envoyer à un bon taux tout en gardant une pleine capacité de téléchargement.</text> 
+        <newline gap="8"/> 
+        <text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponible les plus rapide possible.</text> 
+    </document>
 	
 	<!-- Search help documents -->
 
@@ -2454,6 +2464,8 @@ Other:
 	<string id="7001" value="&amp;Schemas"/>
   	<string id="7002" value="Valeurs multiples"/>
   	<string id="7003" value="Multiple"/>
+    <string id="7004" value="Il y a déjà un filtre nommé &quot;%s&quot;, voulez-vous le remplacer?"/> 
+    <string id="7005" value="Merci de donner un nom au filtre."/> 
 	<string id="8000" value="Réglages Shareaza"/>
 	<string id="8001" value="Shareaza vous souhaite la bienvenue!"/>
 	<string id="8002" value="Propriétés du fichier"/>
@@ -2532,6 +2544,7 @@ Other:
 	<string id="8180" value="La taille du fichier doit être"/>
   	<string id="8181" value="&#160;à"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza crée les hachages pour %i fichier(s):"/>
+	<string id="8223" value="%i jours et %i heures"/>
 	<string id="8224" value="Shareaza télécharge:"/>
 	<string id="8225" value="Ce téléchargement est en pause:"/>
 	<string id="8226" value="Shareaza a terminé le téléchargement:"/>
@@ -2556,7 +2569,7 @@ Other:
 	<string id="8291" value="Dossiers multiples"/>
 	<string id="8292" value="%i fichiers sélectionnés"/>
 	<string id="8293" value="Aucun fichier sélectionné"/>
-	<string id="8294" value="Ajouts Récents"/>
+	<string id="8294" value="Ajouts récents"/>
 	<string id="8295" value="Évaluer ce fichier"/>
 	<string id="8304" value="N/A"/>
 	<string id="8306" value="Emplacement"/>
@@ -2870,6 +2883,7 @@ Other:
 	<string id="16810" value="ans"/>
     <string id="16811" value="Automatique"/>
 	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nEtes-vous certain de vouloir limiter le nombre de positions en file d'attente que vous acceptez?"/>
+	<string id="16817" value="Windows ne supporte pas les chemins d'accès au fichier de plus de 256 caractères.\nMerci de sélectionner un dossier avec un chemin plus court."/>
 	<string id="16864" value="Requiert le service Découverte de l'hôte..."/>
 	<string id="16865" value="Requiert le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
@@ -2992,7 +3006,6 @@ Other:
 	<string id="17477" value="L'accouplement BitTorrent avec %s a répondu avec un mauvais fichier."/>
 	<string id="17478" value="L'accouplement BitTorrent avec %s a demandé un fichier inconnu."/>
 	<string id="17479" value="L'accouplement BitTorrent avec %s établi pour &quot;%s&quot;."/>
-	<string id="17480" value="L'accouplement BitTorrent avec %s a été perdu."/>
 	<string id="17481" value="Réception du fichier de description BitTorrent : &quot;%s&quot;"/>
 	<string id="17482" value="Impossible d'analyser le fichier précherché BitTorrent &quot;%s&quot;."/>
 	<string id="17483" value="Erreur du traqueur BitTorrent pour &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3011,6 +3024,8 @@ Other:
 	<string id="17496" value="Erreur durant la copie de &quot;%s&quot; dans un fichier de partage BitTorrent."/>
 	<string id="17497" value="Erreur inconnue en essayant de seed &quot;%s&quot;."/>
 	<string id="17498" value="Erreur détectée dans le fichier &quot;%s&quot;."/>
+	<string id="17500" value="Le traqueur n'a pas répondu - Réessai l'annonce (%i de %i)"/> 
+    <string id="17501" value="Incapable de communiquer avec le traqueur"/> 
 	<string id="18496" value="Vous avez fait des changements dans le champ &quot;nom&quot;.  Êtes-vous certain de vouloir renommer ce téléchargement?"/>
 	<string id="18497" value="Vous avez tapez une valeur SHA1, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
 	<string id="18498" value="Vous avez tapez une valeur tiger-tree, cependant elle est invalide.  Merci de vérifier et de recommencer."/>
@@ -3031,6 +3046,8 @@ Other:
 	<string id="19002" value="Incapable d'accepter des connexions, URL indisponible."/>
 	<string id="20000" value="Pas d'URN disponible"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
+	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Sortir maintenant?"/> 
+    <string id="20004" value="Les langues écrites de droite vers la gauche ne sont pas supportées dans votre OS."/> 
 	<string id="20100" value="Se connecte"/>
 	<string id="20101" value="Requiert"/>
 	<string id="20102" value="Réponse"/>
@@ -3492,7 +3509,7 @@ Other:
 		<control caption="Votre connexion personnelle est-elle protégée par un pare-feu ou un routeur NAT?"/>
 		<control caption="&#160;Non, j'ai un ACCES COMPLET à Internet| Oui, mais je vais configurer le port de Shareaza| Oui, donc je ne PEUX PAS accepter de connexions entrantes| Je ne sais pas, merci d'AUTO-DETECTER l'état de mon pare-feu"/>
 		<control caption="Si vous connaissez la vitesse de votre connexion Internet, sélectionnez la meilleure option ci-dessous:"/>
-		<control caption="| Modem Dial up| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Modem Cable/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="| Modem Dial up| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Modem Cable/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="OU, choisissez:"/>
 		<control/>
 	</dialog>
