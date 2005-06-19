@@ -610,7 +610,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 		{
 			m_tTorrentTracker = GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 			m_tTorrentSources = GetTickCount();
-			CBTTrackerRequest::SendUpdate( this, 100 );
+			CBTTrackerRequest::SendUpdate( this, min ( ( Settings.BitTorrent.DownloadConnections * 2 ), 100 ) );
 			return TRUE;
 		}
 	}
