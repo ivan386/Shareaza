@@ -3397,9 +3397,9 @@ Other:
 			<control caption="Modus:"/>
 			<control caption="Optimal|Leaf|Ultrapeer"/>
 			<control caption="G_1 Verbindungen:"/>
-			<control caption="Leaf zu Ulrapeer:"/>
+			<control caption="Leaf zu Ultrapeer:"/>
 			<control /><control />
-			<control caption="Ulrapeer zu Leaf:"/>
+			<control caption="Ultrapeer zu Leaf:"/>
 			<control /><control />
 			<control caption="Peer zu Peer:"/>
 			<control /><control />
