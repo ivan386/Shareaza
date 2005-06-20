@@ -17,7 +17,7 @@ author="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.0.150"
+version="2.1.1.11"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -49,6 +49,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <button id="ID_NETWORK_CONNECT" text="Kapcsolódás"/>
                <button id="ID_NETWORK_DISCONNECT"/>
                <separator/>
+               <button id="ID_TAB_HOME"/>
                <button id="ID_VIEW_SYSTEM"/>
                <button id="ID_VIEW_NEIGHBOURS"/>
                <button id="ID_VIEW_DOWNLOADS"/>
@@ -455,7 +456,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_TOOLS_SETTINGS" text="Beállítások..."/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYIK"/>
                        <separator/>
                        <menu text="Ismertetők">
                                <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
@@ -546,7 +547,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_WINDOW_REMOTE" text="Távirányító mutatása"/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYIK"/>
                        <separator/>
                        <menu text="Ismertetők">
                                <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
@@ -559,7 +560,6 @@ prompt="Kattints ide a magyar nyelvhez."
                                <item id="ID_HELP_HOMEPAGE" text="Shareaza.com"/>
                                <separator/>
                                <item id="ID_HELP_FORUMS" text="Shareaza hivatalos fórum"/>
-                               <item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
                                <item id="ID_HELP_UPDATE" text="Latest news"/>
                                <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
                                <item id="ID_HELP_WEB_2" text="P2PForums.com"/>
@@ -632,7 +632,7 @@ prompt="Kattints ide a magyar nyelvhez."
                        <item id="ID_WINDOW_REMOTE" text="Távirányító mutatása"/>
                </menu>
                <menu text="Súgó">
-                       <item id="ID_HELP_FAQ" text="Shareaza GYÍK"/>
+                       <item id="ID_HELP_FAQ" text="Shareaza GYIK"/>
                        <separator/>
                        <menu text="Ismertetők">
                                <item id="ID_HELP_GUIDE" text="Shareaza használati utasítása"/>
@@ -1578,9 +1578,9 @@ prompt="Kattints ide a magyar nyelvhez."
                        <link format="bu" target="raza:command:ID_VIEW_LIBRARY">Menj a könyvtárba</link>
                        <group id="1">
                                <newline gap="8"/>
-                               <text>Beolvasás és feldolgozás </text>
+                               <text>Hashelés: </text>
                                <text id="LibraryHashRemaining" format="b">%lu </text>
-                               <text>fájl.</text>
+                               <text>fájl van hátra.</text>
                                <newline gap="8"/>
                        </group>
                        <group id="3">
@@ -1770,14 +1770,14 @@ prompt="Kattints ide a magyar nyelvhez."
                <text>Feltöltési sebesség, korlátozások, letiltások.</text>
                <newline gap="10"/>
 
-               <link target="raza:page:CNetworksSettingsPage" format="b">Távoli elérés:</link>
+               <link target="raza:page:CRemoteSettingsPage" format="b">Távoli elérés:</link>
                <gap size="4"/>
                <text>A távoli használat beállításai.</text>
                <newline gap="10"/>
 
                <link target="raza:page:CSchedulerSettingsPage" format="b">Ütemező:</link>
                <gap size="4"/>
-               <text>Letöltések előreprogramozása, sávszélesség beállítása.</text>
+               <text>Letöltések előreprogramozása, sávszélesség beállítása. Csak az Összetett módban elérhető!</text>
                <newline gap="10"/>
 
        </document>
@@ -1948,7 +1948,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <text>A letöltés folyamatban van.  Ha a letöltés túl lassú, akkor a </text>
                <text format="b">Több forrás keresése </text><text>gombbal kereshetsz gyorsabb forrásokat.
                Ha még mindig nem növekedne a sebesség,
-               akkor vlószínűleg korlátozva van. Az
+               akkor valószínűleg korlátozva van. Az
                idő múlásával felgyorsulhat a letöltés sebessége.</text>
        </document>
 
@@ -2084,10 +2084,25 @@ prompt="Kattints ide a magyar nyelvhez."
                    <text format="b">Az eDonkey szerverlista üres</text>
                    <newline gap="8"/>
                    <text>Egy szerver sincs az eDonkey2000 szerverlistában. Le kell töltened egy
-                   friss listát (met fájlt) , hogy tudj kapcsolódni az eD2k hálózathoz.</text>
+                   friss listát (.met fájlt) , hogy tudj kapcsolódni az eD2k hálózathoz.</text>
                    <newline gap="8"/>
                    <text>Ezt megteheted az ed2k beállításoknál vagy a szerverkereső
                    ablakban.</text>
+          </document>
+
+       <document name="GeneralHelp.UploadWarning">
+               <text format="b">A feltöltés korlátozása csökkenti a letöltési sebességet</text>
+               <newline gap="8"/>
+               <text>Egyes hálózatok korlátozzák vagy megtagadják a letöltést,
+               ha nem megfelelő a feltöltési sebességed.</text>
+               <newline/>
+               <text>Szerencsére a DSL kapcsolat olyan, mint egy autópálya: a feltöltésnek és
+               a letöltésnek is külön sávja van. Ha megfelelően van a kliensed beállítva,
+               akkor egy jó feltöltési sebesség mellett maximális letöltést tudsz elérni.</text>
+               <newline gap="8"/>
+               <text>Alapbeállításként a program a feltöltési sebességed 85%-át fogja csak kihasználni,
+               míg a letöltés korlátlan marad. Ezzel a beállítással érheted el a legjobb arányt a
+               fel- és letöltés között.</text>
            </document>
 
        <!-- Search help documents -->
@@ -2111,7 +2126,7 @@ prompt="Kattints ide a magyar nyelvhez."
                    <text>Ez a keresés gyengén lett kivitelezve és nem működik megfelelően. Minden kereséshez
                    egy minimális betűszámból álló kifejezést kell használni a keresés elindításához.</text>
                    <newline gap="8"/>
-                   <text>Számok és kiterjesztések után is lehet keresni, de ezekhez még egyébb kifejezéseket is
+                   <text>Számok és kiterjesztések után is lehet keresni, de ezekhez még egyéb kifejezéseket is
                    hozzá kell venni a keresés előtt. Az írásjeleket nem veszi figyelembe a kereső.</text>
        </document>
 
@@ -2496,6 +2511,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="7001" value="&amp;Sémák"/>
        <string id="7002" value="Több érték"/>
        <string id="7003" value="Több"/>
+       <string id="7004" value="Már van ilyen nevű szűrő: &quot;%s&quot; Ki akarod ezzel cserélni?"/>
+       <string id="7005" value="Adj a szűrőnek egy nevet."/>
        <string id="8000" value="Beállítások"/>
        <string id="8001" value="Üdvözöllek a Shareazában"/>
        <string id="8002" value="Fájl tulajdonságai"/>
@@ -2574,6 +2591,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8180" value="Fájlméret"/>
        <string id="8181" value="&#160;-"/><!-- size from xx TO xx-->
        <string id="8208" value="%i fájl hashelése:"/>
+       <string id="8223" value="%i napja és %i órája"/>
        <string id="8224" value="Letöltés folyamatban:"/>
        <string id="8225" value="Letöltés szüneteltetve:"/>
        <string id="8226" value="Letöltés befejezve:"/>
@@ -2905,13 +2923,14 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16803" value="A mappa, amit meg akarsz osztani egy másik mappában már meg van osztva:\n\n%s"/>
        <string id="16804" value="Nem írtál be becenevet.\n\nJó ötlet beírni egy nevet, mert mások tudni fogják, hogy kihez kapcsolódtak.\n\nBiztos név nélkül akarsz maradni?"/>
        <string id="16805" value="Nem írtál be lakhelyet.\n\nMás felhasználók így tudni fogják, hogy hol laksz.\n\nLakhely nélkül akarsz maradni?"/>
-       <string id="16806" value="Port-forwardingot akarsz csinálni a NAT router vagy a tűzfal felé.\n\nÁllítsd be a hálózatodat, hogy a TCP port %i-ot forwardolja."/>
+       <string id="16806" value="Port-forwardingot akarsz csinálni a NAT router vagy a tűzfal felé.\n\nÁllítsd be a hálózatodat, hogy a TCP és UDP port %i-ot forwardolja."/>
        <string id="16807" value="Írd be a sávszél-korlátozást: &quot;123 kb/s&quot; kilobit per másodperc vagy &quot;123 KB/s&quot; kilobájt per másodperc formában."/>
        <string id="16808" value="Nem adtad meg a korodat és a nemedet. Tovább akarsz így menni?"/>
        <string id="16809" value="Kilépés"/>
        <string id="16810" value="éves"/>
        <string id="16811" value="Automatikus"/>
        <string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkented a sorok maximális számát, valószínűleg nem fognak elidulni a letöltéseid. \nBiztos csökkenteni akarod a számodra kirendelt sorszámot?"/>
+       <string id="16817" value="A Windows csak 256 karakter hosszú elérési utakat kezel.\nVálassz egy rövidebb elérési utat."/>
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
@@ -3034,7 +3053,6 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="17477" value="BitTorrent kapcsolódáskor rossz fájllal válaszolt: %s ."/>
        <string id="17478" value="BitTorrent kapcsolódáskor ismeretlen fájllal válaszolt: %s ."/>
        <string id="17479" value="BitTorrent kapcsolódás létrehozva: %s, a fájl: &quot;%s&quot;."/>
-       <string id="17480" value="BitTorrent kapcsolat elveszítve: %s."/>
        <string id="17481" value="BitTorrent leírófájlt kaptam: &quot;%s&quot;"/>
        <string id="17482" value="Nem tudom a BitTorrent fájlt  kielemezni: &quot;%s&quot;."/>
        <string id="17483" value="Hiba a BitTorrent tracker válaszánál erre a fájlra: &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3053,6 +3071,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="17496" value="A &quot;%s&quot; fájl BitTorrent fájlba való másolása közben hiba keletkezett."/>
        <string id="17497" value="Ismeretlen hiba a fájl terjesztésekor &quot;%s&quot;."/>
        <string id="17498" value="Hibát találtam a kövtkező fájlban: &quot;%s&quot;."/>
+       <string id="17500" value="A tracker nem válaszolt, újrapróbálkozás (%i / %i)"/>
+       <string id="17501" value="A tracker nem elérhető"/>
        <string id="18496" value="Megváltoztattad a letöltés nevét. Biztos át akarod nevezni?"/>
        <string id="18497" value="A beírt SHA1 érték érvénytelen. Ellenőrizd és próbáld újra."/>
        <string id="18498" value="A beírt TTH érték érvénytelen. Ellenőrizd és próbáld újra."/>
@@ -3073,6 +3093,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>
        <string id="20000" value="Nincs elérhető URN"/>
        <string id="20002" value="/"/><!-- e.g. 1 of 10 -->
+       <string id="20003" value="A szövegirány megváltoztatásához újra kell indítani a programot. \nKézzel kell újra elindítanod a Shareazát. Kilépés most?"/>
+       <string id="20004" value="A jobbról balra írást nem támogatja az operációs rendszered."/>
        <string id="20100" value="Kapcsolódás"/>
        <string id="20101" value="Kérés"/>
        <string id="20102" value="Válasz"/>
@@ -3147,9 +3169,9 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="bit/másodperc|bájt/másodperc|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
                <control caption="Letöltések:"/>
                <control caption="Új letöltések kibontása"/>
+               <control caption="Egyszerű folyamatábra mutatása"/>
                <control caption="Keresés:"/>
                <control caption="Többforrásos fájlok kibontása"/>
-               <control caption="Egyszerű folyamatábra mutatása"/>
                <control caption="Letöltésnél átkapcsol Forgalom ablakba"/>
                <control caption="Keresőpanel elrejtése kereséskor"/>
                <control caption="Felnőtt tartalmú fájlok kiszűrése"/>
@@ -3406,17 +3428,17 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Letöltés..."/>
        </dialog>
 
-<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
        <control caption="Felhasználói felület:"/>
-       <control caption="Továbi BitTorrent elemek megjelenítése"/>
+       <control caption="További BitTorrent elemek megjelenítése"/>
        <control caption="Letöltési kapcsolatok:"/>
        <control/><control/>
        <control caption="torrent letöltése egyszerre"/>
        <control/><control/>
        <control caption="kliens kapcsolódhat hozzám egyszerre"/>
-       <control caption="Letöltött torrentek törlése"/>
-       <control caption="Megosztási arány: "/>
-       <control/><control/>
+       <control caption="&#160;Letöltött torrentek törlése,&#160;&#160;&#160;&#160;&#160;&#160;ha a megosztási arány ezt eléri:"/>
+       <control/><control/><control/>
+       <control caption="&#160;Előbb a torrentforrásokat használja"/>
        <control caption="EndGame:"/>
        <control caption="A letöltés végének gyorsítása (EndGame mód)"/>
        <control caption="Torrentfájlok mappája:"/>
@@ -3533,7 +3555,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Aktív vagy passzív?"/>
                <control caption="&#160;Aktív kapcsolat| Passzív, de beállítom a tűzfalat/routert| Passzív kapcsolat| Nem tudom, automata felismerést kérek"/>
                <control caption="Add meg az internetelérésed típusát vagy a sebességét:"/>
-               <control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kábel/SDSL| T1| T3| LAN| OC3"/>
+               <control caption="| Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kábelmodem/SDSL| T1| T3| LAN| OC3"/>
                <control caption="VAGY"/>
                <control/>
        </dialog>
@@ -3913,7 +3935,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Feladat:"/>
                <control caption="Semmi|Elfogad|Blokkol"/>
                <control caption="Lejárat:"/>
-               <control caption="Soha (nincs meghatározva)|A periódus végéig|Eddig érvényes:"/>
+               <control caption="Soha (nincs meghatározva)|A periódus végéig|Eddig érvényes (Nap/Óra/Perc):"/>
                <control/>
                <control caption="N"/>
                <control/>
