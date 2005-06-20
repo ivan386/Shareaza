@@ -3,8 +3,8 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 6.00.0361 */
-/* at Mon Jun 13 18:55:52 2005
+ /* File created by MIDL compiler version 6.00.0366 */
+/* at Mon Jun 20 15:29:02 2005
  */
 /* Compiler settings for .\Shareaza.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
