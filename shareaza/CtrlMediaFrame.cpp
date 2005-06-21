@@ -1,6 +1,10 @@
 //
 // CtrlMediaFrame.cpp
 //
+//	Date:			"$Date: 2005/06/21 22:01:52 $"
+//	Revision:		"$Revision: 1.20 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -125,6 +129,7 @@ CMediaFrame::CMediaFrame()
 	m_bListVisible		= Settings.MediaPlayer.ListVisible;
 	m_nListSize			= Settings.MediaPlayer.ListSize;
 	m_bStatusVisible	= Settings.MediaPlayer.StatusVisible;
+	m_bScreenSaverEnabled = TRUE;
 }
 
 CMediaFrame::~CMediaFrame()
@@ -207,6 +212,8 @@ void CMediaFrame::OnDestroy()
 	
 	Cleanup();
 	
+	EnableScreenSaver();
+
 	CWnd::OnDestroy();
 }
 
@@ -226,19 +233,6 @@ BOOL CMediaFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO
 	}
 	
 	return CWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
-}
-
-void CMediaFrame::OnSysCommand(UINT nID, LPARAM lParam) 
-{
-	switch ( nID & 0xFFF0 )
-	{
-	case SC_SCREENSAVE:
-	case SC_MONITORPOWER:
-		if ( m_nState == smsPlaying ) return;
-		break;
-	}
-	
-	CWnd::OnSysCommand( nID, lParam );
 }
 
 BOOL CMediaFrame::PreTranslateMessage(MSG* pMsg) 
@@ -1074,6 +1068,7 @@ void CMediaFrame::OnMediaPlay()
 		if ( m_pPlayer != NULL ) m_pPlayer->Play();
 		UpdateState();
 	}
+	DisableScreenSaver();
 }
 
 void CMediaFrame::OnUpdateMediaPause(CCmdUI* pCmdUI) 
@@ -1102,6 +1097,7 @@ void CMediaFrame::OnMediaStop()
 	m_bAutoPlay = FALSE;
 	m_wndList.Reset();
 	m_bAutoPlay = TRUE;
+	EnableScreenSaver();
 }
 
 void CMediaFrame::OnUpdateMediaFullScreen(CCmdUI* pCmdUI) 
@@ -1644,4 +1640,53 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 	}
 
 	*pResult = 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Screensaver Enable / Disable functions from
+// http://www.codeproject.com/system/disablescreensave.asp
+
+static UINT dss_GetList[] = {SPI_GETLOWPOWERTIMEOUT, 
+    SPI_GETPOWEROFFTIMEOUT, SPI_GETSCREENSAVETIMEOUT};
+static UINT dss_SetList[] = {SPI_SETLOWPOWERTIMEOUT, 
+    SPI_SETPOWEROFFTIMEOUT, SPI_SETSCREENSAVETIMEOUT};
+
+static const int dss_ListCount = sizeof( dss_GetList ) / sizeof( dss_GetList[0] );
+
+void CMediaFrame::DisableScreenSaver()
+{
+	if ( m_bScreenSaverEnabled )
+	{
+		m_pScreenSaveValue = new int[dss_ListCount];
+
+		for ( int x=0; x < dss_ListCount; x++ )
+		{
+			// Get the current value
+			VERIFY( SystemParametersInfo( dss_GetList[x], 0, 
+				&m_pScreenSaveValue[x], 0 ) );
+
+			TRACE(_T("%d = %d\n"), dss_GetList[x], m_pScreenSaveValue[x]);
+
+			// Turn off the parameter
+			VERIFY( SystemParametersInfo( dss_SetList[x], 0, 
+				NULL, 0 ) );
+		}
+		m_bScreenSaverEnabled = FALSE;
+	}
+}
+
+void CMediaFrame::EnableScreenSaver()
+{
+    if ( ! m_bScreenSaverEnabled )
+	{
+		for ( int x=0; x < dss_ListCount; x++ )
+		{
+			// Set the old value
+			VERIFY( SystemParametersInfo( dss_SetList[x], 
+				m_pScreenSaveValue[x], NULL, 0 ) );
+		}
+
+		delete[] m_pScreenSaveValue;
+		m_bScreenSaverEnabled = TRUE;
+	}
 }

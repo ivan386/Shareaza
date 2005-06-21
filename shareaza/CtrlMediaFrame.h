@@ -1,6 +1,10 @@
 //
 // CtrlMediaFrame.h
 //
+//	Date:			"$Date: 2005/06/21 22:01:55 $"
+//	Revision:		"$Revision: 1.4 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -47,6 +51,8 @@ public:
 	BOOL	SeekTo(float nPosition);
 	BOOL	SetVolume(float nVolume);
 	BOOL	PaintStatusMicro(CDC& dc, CRect& rcBar);
+	void	DisableScreenSaver();
+	void	EnableScreenSaver();
 protected:
 	void	SetFullScreen(BOOL bFullScreen);
 	void	PaintSplash(CDC& dc, CRect& rcBar);
@@ -101,6 +107,9 @@ protected:
 	CFont			m_pFontDefault;
 	CFont			m_pFontKey;
 	CFont			m_pFontValue;
+protected:
+	int*			m_pScreenSaveValue;
+	BOOL			m_bScreenSaverEnabled;
 public:
 	static CMediaFrame* g_pMediaFrame;
 
@@ -117,7 +126,6 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
