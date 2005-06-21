@@ -83,10 +83,9 @@ BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
 		CHAR szID[8];
 		m_pFile.Read( szID, 8 );
 
-		if ( memcmp( szID, THUMB_SIGNATURE, 8 ) )
+		if ( memcmp( szID, THUMB_SIGNATURE, 8 ) != 0 )
 		{
 			m_pFile.Close();
-			if ( memcmp( szID, THUMB_SIGNATURE, 7 ) ) return FALSE;
 			return DeleteFile( strPath ) && Prepare( pszPath, pszThumb, bCreate );
 		}
 

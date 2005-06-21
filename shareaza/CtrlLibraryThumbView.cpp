@@ -846,9 +846,9 @@ CImageList* CLibraryThumbView::CreateDragImage(const CPoint& ptMouse)
 
 void CLibraryThumbView::StartThread()
 {
-	if ( m_hThread != NULL && m_bThread ) return;
-
 	CSingleLock pLock( &m_pSection, TRUE );
+
+	if ( m_hThread != NULL && m_bThread ) return;
 
 	CLibraryThumbItem** pList = m_pList;
 	int nCount = 0;
@@ -858,7 +858,20 @@ void CLibraryThumbView::StartThread()
 		if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting ) nCount++;
 	}
 
-	if ( nCount == 0 ) return;
+	if ( nCount == 0 ) // all thumbnails extracted
+		return;
+	else if ( m_hThread != NULL && m_bThread )
+	{
+		// Thread is extracting but folder changed
+		// won't be executed?
+		StopThread();
+	}
+	else if ( m_hThread != NULL ) // finished extraction
+	{
+		DWORD nCode;
+		if ( GetExitCodeThread( m_hThread, &nCode ) ) Sleep( 100 );
+		ASSERT( m_bThread == FALSE );
+	}
 
 	m_bThread	= TRUE;
 	CWinThread* pThread = AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_IDLE );
@@ -867,7 +880,10 @@ void CLibraryThumbView::StartThread()
 
 void CLibraryThumbView::StopThread()
 {
-	if ( m_hThread == NULL ) return;
+	// If m_bThread == FALSE it means it has finished its work and will die by itself
+	// No need to stop it.
+	CSingleLock pLock( &m_pSection, TRUE );
+	if ( m_hThread == NULL || ! m_bThread ) return;
 
 	m_bThread = FALSE;
 
@@ -1049,8 +1065,6 @@ void CLibraryThumbView::OnRun()
 			//}
 		}
 	}
-
-	pServices.Cleanup();
 	m_bThread = FALSE;
 }
 

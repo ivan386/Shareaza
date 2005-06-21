@@ -354,9 +354,14 @@ IImageServicePlugin* CImageServices::LoadService(LPCTSTR pszType, CLSID* ppCLSID
 {
 	IImageServicePlugin* pService = NULL;
 	
+	DWORD dwContext = 0;
 	if ( _tcscmp( pszType, _T(".bmp") ) == 0 )
 	{
 		return CBitmapImageService::Create();
+	}
+	else if ( _tcscmp( pszType, _T(".avi") ) == 0 )
+	{
+		dwContext = CLSCTX_NO_CUSTOM_MARSHAL;
 	}
 	
 	CLSID pCLSID;
@@ -372,13 +377,13 @@ IImageServicePlugin* CImageServices::LoadService(LPCTSTR pszType, CLSID* ppCLSID
 	}
 	
 	HINSTANCE hRes = AfxGetResourceHandle();
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
+	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER|dwContext,
 		IID_IImageServicePlugin, (void**)&pService );
 	AfxSetResourceHandle( hRes );
 	
 	if ( FAILED( hResult ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("CImageServices::CoCreateInstance() -> %lu"), hResult );
+		//theApp.Message( MSG_DEBUG, _T("CImageServices::CoCreateInstance() -> %lu"), hResult );
 		return NULL;
 	}
 	
