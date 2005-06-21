@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.65 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.70 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.0"
+		version="2.1.1.11"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -48,6 +48,7 @@
 		<button id="ID_NETWORK_CONNECT" text="Koble til"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -2088,6 +2089,21 @@
 		opppdagelsestjenester.</text>
 	</document>
 
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Begrensning av opplastinger kan sinke nedlastinger</text>
+		<newline gap="8"/>
+		<text>Flere nettverk Shareaza kobler til benytter ratesystemer, som begrenser opplastinger til
+		klienter som ikke deler, eller prioriterer opplasting til kjente delere.</text>
+		<newline/>
+		<text>Heldigvis er bredbåndskoblinger som en to felts vei: du har
+		separate kanaler for opp og nedlasting. Hvis din klient er riktig konfigurert, 
+		skal du kunne laste opp med en god hastighet samtidig som du har full nedlastingskapasitet.</text>
+		<newline gap="8"/>
+		<text>Som standard er din opplastingshastighet begrenset til omtrent 85% av tilgjengelig opplastingsbåndbredde,
+		mens nedlastinger er ubegrenset. Den konfigurasjonen burde gi deg så høy nedlastingshastighet 
+		som mulig.</text>
+	</document>
+
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
@@ -2497,6 +2513,8 @@
 	<string id="7001" value="&amp;Skjemaer"/>
 	<string id="7002" value="Sammensatte verdier"/>
 	<string id="7003" value="Sammensatt"/>
+	<string id="7004" value="Det er allerede et filter som heter &quot;%s&quot;, ønsker du å overskrive det?"/>
+	<string id="7005" value="Vennligst gi filteret et navn."/>
 	<string id="8000" value="Innstillinger"/>
 	<string id="8001" value="Velkommen til Shareaza"/>
 	<string id="8002" value="Egenskaper"/>
@@ -2575,6 +2593,7 @@
 	<string id="8180" value="Filstørrelsen må være"/>
 	<string id="8181" value="&#160;til"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza lager hash for %i fil(er):"/>
+	<string id="8223" value="%i dager og %i timer"/>
 	<string id="8224" value="Shareaza laster ned:"/>
 	<string id="8225" value="Denne nedlastingen er pauset:"/>
 	<string id="8226" value="Shareaza er ferdig med å laste ned:"/>
@@ -2913,6 +2932,7 @@
 	<string id="16810" value="år gammel"/>
 	<string id="16811" value="Automatisk"/>
 	<string id="16816" value="eDonkey-nettverket har lange køer med lange ventetider. Ved å begrense den maksimale akseptable køposisjonen så strengt, kan du få problemer med å få nedlastinger til å begynne.\nEr du sikker på at du vil begrense hvilken køposisjon du vil akseptere?"/>
+	<string id="16817" value="Windows støtter ikke filbaner langre enn 256 tegn.\nVennligst angi en mappe med kortere filbane."/>
 	<string id="16864" value="Oppdaterer vert-oppdagelsestjeneste..."/>
 	<string id="16865" value="Oppdaterer oppdagelsestjeneste &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache overføring fullført (&quot;%s&quot;)."/>
@@ -3035,7 +3055,6 @@
 	<string id="17477" value="BitTorrent koblingen med %s svarte med feil fil."/>
 	<string id="17478" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
 	<string id="17479" value="BitTorrent kobling med %s startet for &quot;%s&quot;."/>
-	<string id="17480" value="BitTorrent kobling med %s mistet."/>
 	<string id="17481" value="Mottok BitTorrent beskrivelsesfil: &quot;%s&quot;"/>
 	<string id="17482" value="Klarer ikke å dele prefetched BitTorrent fil &quot;%s&quot;."/>
 	<string id="17483" value="Feil fra BitTorrent trackeren for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3054,6 +3073,8 @@
 	<string id="17496" value="Det skjedde en feil ved kopieringen fra &quot;%s&quot; til en BitTorrent delings-fil."/>
 	<string id="17497" value="Det skjedde en feil ved forsøk på å spre &quot;%s&quot;."/>
 	<string id="17498" value="Det ble funnet en feil i filen &quot;%s&quot;."/>
+	<string id="17500" value="Trackeren svarte ikke- Prøver announce om igjen (%i av %i)"/>
+	<string id="17501" value="Klarer ikke å kommunisere med tracker"/>
 	<string id="18496" value="Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastingen?"/>
 	<string id="18497" value="Du har skrevet inn en ugyldig SHA1 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
 	<string id="18498" value="Du har skrevet inn en ugyldig root tiger-tree hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
@@ -3074,6 +3095,8 @@
 	<string id="19002" value="Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."/>
 	<string id="20000" value="URN ikke tilgjengelig"/>
 	<string id="20002" value="av"/><!-- e.g. 1 of 10 -->
+	<string id="20003" value="Forandring av grensesnittets retning krever omstart. \nDu må starte Shareaza på nytt manuelt. Avslutte nå?"/>
+	<string id="20004" value="Høyre-mot-venstre-språk støttes ikke av ditt OS."/>
 	<string id="20100" value="Kobler til"/>
 	<string id="20101" value="Anmoder"/>
 	<string id="20102" value="Respons"/>
@@ -3534,8 +3557,8 @@
 		<control caption="Har du brannmur eller NAT-router på tilkoblingen din"/>
 		<control caption="&#160;Nei, jeg har FULL TILGANG til internett| Ja, men jeg vil sette opp videresending av port for Shareaza| Ja, så jeg KAN IKKE akseptere innkommende koblinger fra internett| Jeg vet ikke, vennligst AUTO-OPPDAG en evt brannmurs status"/>
 		<control caption="Hvis du kjenner hastigheten på tilkoblingen din, velg den som passer best nedenfor."/>
-		<control caption="| Oppringt modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="Eller, velg."/>
+		<control caption="| Oppringt modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kabelmodem/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="Eller, velg:"/>
 		<control/>
 	</dialog>
 
