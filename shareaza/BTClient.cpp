@@ -549,6 +549,10 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("BitBuddy");
 		}
+		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'C' )
+		{
+			m_sUserAgent = _T("BitComet");
+		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'O' )
 		{
 			m_sUserAgent = _T("BO");
