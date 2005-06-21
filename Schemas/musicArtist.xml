@@ -28,7 +28,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Musiker</title>
                <title language="es">Artista de Música</title>
                <title language="fr">Artiste Musical</title>
-               <title language="heb">&#160;אמן&#160;מוזיקה</title>
+               <title language="heb">&#160;אמן מוזיקה</title>
                <title language="hr">Muzika Izvođač</title>
                <title language="hu">Előadó</title>
                <title language="it">Artista musicale</title>
@@ -36,7 +36,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="nl">Muziek Artiest</title>
                <title language="no">Artist</title>
                <title language="br">Artista</title>
-               <title language="ru">Музыкальный артист</title>
+               <title language="ru">&#160;Музыкальный артист</title>
                <title language="sv">Musikartist</title>
        </titles>
        <images>
@@ -138,7 +138,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">{name}</title>
                <title language="es">{name}</title>
                <title language="fr">{name} - Discographie</title>
-               <title language="heb">{name} - דיסקוגרפיה</title>
+               <title language="heb">דיסקוגרפיה של {name}</title>
                <title language="hr">{name} - Diskografija</title>
                <title language="hu">{name} - Diszkográfia</title>
                <title language="it">Discografia di {name}</title>
@@ -154,7 +154,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält alle ihre Musik von {name}.</subtitle>
                <subtitle language="es">Esta carpeta contiene tu música por {name}</subtitle>
                <subtitle language="fr">Ce dossier contient toutes vos musiques de {name}.</subtitle>
-               <subtitle language="heb">{name}&#160;ספרייה&#160;זו&#160;מכילה&#160;רשימה&#160;של&#160;המוזיקה&#160;שלך&#160;לפי</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה רשימה של המוזיקה שלך לפי {name}</subtitle>
                <subtitle language="hr">Ova mapa sadrži popis vaših pjesama od {name}.</subtitle>
                <subtitle language="hu">Ez a mappa az összes zenédet tartalmazza {name} szerint rendezve.</subtitle>
                <subtitle language="it">Questa cartella contiene tutta la musica di {name}.</subtitle>

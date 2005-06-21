@@ -28,7 +28,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Dokumente:Alle Dokumente</title>
                <title language="es">Documento:Todos Los Documentos</title>
                <title language="fr">Document:Tous les Documents</title>
-               <title language="heb">&#160;מסמך:כל&#160;המסמכים</title>
+               <title language="heb">&#160;מסמך:כל המסמכים</title>
                <title language="hr">Dokument:Svi Dokumenti</title>
                <title language="hu">Dokumentum: Minden dokumentum</title>
                <title language="it">Documento:Tutti i documenti</title>
@@ -83,7 +83,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="nl">Alle documenten</title>
                <title language="no">Alle dokumenter</title>
                <title language="br">Todos os Documentos</title>
-               <title language="ru">&#160;Все документы</title>
+               <title language="ru">Все документы</title>
                <title language="sv">Alla dokument</title>
                <subtitle language="en">This folder contains every document in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle dokumente in jou biblioteek.</subtitle>
@@ -91,7 +91,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält alle Dokumente ihrer Bibliothek.</subtitle>
                <subtitle language="es">Esta carpeta contine todos los documentos en tu librería.</subtitle>
                <subtitle language="fr">Ce dossier contient tout document dans votre bibliothèque.</subtitle>
-               <subtitle language="heb">ספרייה&#160;זו&#160;מכילה&#160;את&#160;כל&#160;המסמכים&#160;שבספרייה&#160;שלך</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל המסמכים שבספרייה שלך</subtitle>
                <subtitle language="hr">Ova mapa sadrži sve vaše dokumente u kolekciji.</subtitle>
                <subtitle language="hu">Ez a mappa az összes dokumentumodat tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene tutti i documenti della tua libreria.</subtitle>
@@ -99,7 +99,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="nl">In deze map bevindt zich elk document uit je bibliotheek.</subtitle>
                <subtitle language="no">Denne mappen inneholder alle dokumentene i biblioteket ditt.</subtitle>
                <subtitle language="br">Esta pasta contém todos os documentos da sua biblioteca.</subtitle>
-               <subtitle language="ru">&#160;Эта папка отображает каждый документ в&#160;Вашем хранилище.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждый документ в Вашем хранилище.</subtitle>
                <subtitle language="sv">Denna mapp innehåller alla dokument i biblioteket.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>

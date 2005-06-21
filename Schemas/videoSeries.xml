@@ -28,7 +28,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Fernsehserien</title>
                <title language="es">Video Series</title>
                <title language="fr">Séries</title>
-               <title language="heb">&#160;סדרת&#160;וידאו</title>
+               <title language="heb">&#160;סדרת וידאו</title>
                <title language="hr">Serijski Film</title>
                <title language="hu">Videósorozat</title>
                <title language="it">Serie</title>
@@ -36,7 +36,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="nl">Video Series</title>
                <title language="no">Serie</title>
                <title language="br">Série</title>
-               <title language="ru">Видео серии</title>
+               <title language="ru">&#160;Видео серии</title>
                <title language="sv">Videoserier</title>
        </titles>
        <images>
@@ -419,7 +419,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Dieser Ordner enthält {name} Folgen.</subtitle>
                <subtitle language="es">Esta carpeta contiene episodios de {name}.</subtitle>
                <subtitle language="fr">Ce dossier contient les épisodes de {name}.</subtitle>
-               <subtitle language="heb">{name}&#160;ספרייה&#160;זו&#160;מכילה&#160;פרקים&#160;של</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה פרקים של {name} </subtitle>
                <subtitle language="hr">Ova mapa sadrži epizode {name}.</subtitle>
                <subtitle language="hu">Ez a mappa a(z) {name} epizódjait tartalmazza.</subtitle>
                <subtitle language="it">Questa cartella contiene gli episodi di {name}.</subtitle>

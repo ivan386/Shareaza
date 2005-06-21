@@ -28,7 +28,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Allgemein:Shareaza Bibliothek</title>
                <title language="es">General: Mi Librería Shareaza de Archivos</title>
                <title language="fr">Général:Ma bibliothèque Shareaza</title>
-               <title language="heb">&#160;כללי:ספריית&#160;שרזה&#160;שלי</title>
+               <title language="heb">&#160;כללי:ספריית שרזה שלי</title>
                <title language="hr">Općenito:Moja Kolekcija</title>
                <title language="hu">Általános: saját Shareaza könyvtár</title>
                <title language="it">Generale:Libreria di Shareaza</title>
@@ -106,7 +106,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="de">Willkommen in ihrere Bibliothek!</title>
                <title language="es">¡Bienvenido a Mi Librería!</title>
                <title language="fr">Bienvenue dans votre bibliothèque!</title>
-               <title language="heb">!ברוך&#160;הבא&#160;לספרייה&#160;שלי</title>
+               <title language="heb">ברוך הבא לספרייה שלי!</title>
                <title language="hr">Dobrodošli U Vašu Kolekciju!</title>
                <title language="hu">Üdvözöllek a Saját könyvtárban!</title>
                <title language="it">Benvenuto nella tua libreria!</title>
@@ -122,7 +122,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="fr">Vous avez {totalFiles} fichiers totalisant {totalVolume} dans votre bibliothèque.</subtitle>
-               <subtitle language="heb">בספרייה&#160;שלך&#160;&#8206;{totalVolume}&#160;יש&#160;לך&#160;{totalFiles}&#160;קבצים&#160;שגודלם&#160;הוא</subtitle>
+               <subtitle language="heb">יש לך בספרייה ‎{totalVolume} בתוך {totalFiles} קבצים</subtitle>
                <subtitle language="hr">Imate {totalFiles} datoteka Tj {totalVolume} koje djelite sa svijetom.</subtitle>
                <subtitle language="hu">Jelenleg {totoalFiles} fájl van a könyvtárban. Méret: {totalVolume}.</subtitle>
                <subtitle language="it">Tu hai {totalFiles} file che ammontano a {totalVolume} nella tua libreria.</subtitle>
