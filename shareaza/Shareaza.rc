@@ -3029,9 +3029,9 @@ BEGIN
                     UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,74,11,12
     LTEXT           "%",IDC_STATIC,266,74,8,11,SS_CENTERIMAGE,
                     WS_EX_TRANSPARENT
-    CONTROL         " Preference torrent sources",IDC_TORRENT_PREFERENCE,
-                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,86,
-                    205,11,WS_EX_TRANSPARENT
+    CONTROL         "Prefer torrent sources",IDC_TORRENT_PREFERENCE,"Button",
+                    BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,86,205,11,
+                    WS_EX_TRANSPARENT
     GROUPBOX        "&EndGame:",IDC_STATIC,5,102,270,27
     CONTROL         "Enable EndGame mode when completing torrents",
                     IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
