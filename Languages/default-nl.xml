@@ -1,26 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <!-- Shareaza Dutch Skin File -->
-<!-- Special characters used in Dutch:
-	e with accent:  &#233;
-	e with umlaut:  &#235;
-	i with umlaut:  &#239;
-	o with accent:  &#243;
-	o with umlaut:  &#246;
-	u with umlaut:  &#252;-->
-<!-- Team Dutch translators Shareaza current members are:
-Ceceboyken, Jonne, Joren, Maybeme -->
+
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
+<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
+<!-- which you changed!  Including sections you did not edit will reduce performance and limit  -->
+<!-- compatibility with future versions and other skins.  -->
+
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
 <!-- Manifest -->
 <manifest	name="Nederlands"
-		author="Team Dutch translators Shareaza"
+		author="-=R@y-M@n=-"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
-		version="2.1.0.150"
+		email="contact@shareaza.com"
+		version="2.1.1.11"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
 />
+
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
@@ -47,6 +48,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<button id="ID_NETWORK_CONNECT" text="Verbinden"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -467,9 +469,8 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
-
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -1469,7 +1470,6 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 			<heading align="middle">V E R B I N D I N G &#160; M A K E N</heading>
 			<newline gap="8" indent="42"/>
 			<text>Welkom bij Shareaza! &#160;Je bent momenteel niet verbonden met één van de P2P netwerken. &#160;</text>
-			<newline/>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klik hier om te starten!</link>
 			<newline gap="18" indent="0"/>
 		</group>
@@ -1656,6 +1656,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i actieve uploads</link>
 
 			<newline gap="4"/>
+			
 			<text id="UploadedNone">Je hebt nog geen bestanden geüpload.</text>
 			<text id="UploadedOne">Je hebt 1 bestand geüpload (%s).</text>
 			<text id="UploadedMany">Je hebt %i bestanden geüpload (%s).</text>
@@ -1945,9 +1946,8 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<text>Deze download is momenteel bezig.  Als het downloaden te langzaam gaat, kun je proberen om
 		op het netwerk naar meer bronnen te zoeken met de knop </text>
 		<text format="b">Zoek Meer Bronnen </text>
-		<text>.  Als dit de snelheid niet verbetert, kan het zijn dat
-		de gebruikers waar je het bestand van downloadt slechts een geringe upload snelheid hebben.  Normaal
-		gesproken wordt de download snelheid beter naarmate de tijd vordert.</text>
+		<text>.  Als dit de snelheid niet verbetert, kan het zijn dat de gebruikers waar je het bestand van downloadt slechts een 
+		geringe upload snelheid hebben.  Normaal gesproken wordt de download snelheid beter naarmate de tijd vordert.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
@@ -1995,8 +1995,9 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent tracker buiten werking</text>
 		<newline gap="8"/>
-		<text>De BitTorrent Tracker voor deze download is buiten werking of functioneert slecht.
-		Shareaza kan er geen contact mee maken om een lijst met downloadbronnen te ontvangen .</text>
+		<text>De BitTorrent Tracker voor deze download is buiten werking 
+		of functioneert slecht. Shareaza kan er geen contact mee maken om
+		een lijst met downloadbronnen te ontvangen .</text>
 	</document>
 
 	<!-- Upload help documents -->
@@ -2071,18 +2072,35 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		bestand kan mogelijk toch normaal downloaden, hoewel sommige bestandsnamen verkeerd kunnen zijn.</text>
 		<newline gap="8"/>
 		<text>De meeste programma's die torrents maken kunnen dit bestand herstellen, zodat je
-		zeker bent dat het werkt in alle BitTorrent programma's. Bezoek de Shareaza forum
-		indien u meer hulp wenst</text>
-	</document>
+		zeker bent dat het werkt in alle BitTorrent programma's.</text>
+		<newline gap="8"/>
+		<link target="http://www.shareaza.com/help/?torrentencoding">Click hier voor extra hulp</link>
+		<text>, of om software te downloaden om de torrent te herstellen.</text>
+</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Je eDonkey serverlijst is leeg.</text>
 		<newline gap="8"/>
 		<text>Er zijn geen servers in je eDonkey2000 serverlijst. Je moet een recente 
-		serverlijst hebben om te kunnen verbinden met ED2K.</text>
+		serverlijst hebben om te kunnen verbinden met ED2K.</text>	
 		<newline gap="8"/>
 		<text>Je kan een serverlijst downloaden van de eDonkey2000 instellingspagina,
 		of op de Discovery Services pagina.</text>
+	</document>
+
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Het beperken van uploads kan downloads vertragen</text>
+		<newline gap="8"/>
+		<text>Een aantal netwerken waarmee Shareaza verbindt, gebruiken upload/download verhoudingen,
+		beperken clients die niet delen of delen alleen maar met bekende delers</text>
+		<newline/>
+		<text>Gelukkig zijn breedband DSL verbindingen net zoals een snelweg: je hebt twee gescheiden
+		"weghelften" voor zowel uploaden als downloaden. Als je je client goed instelt, zou je in
+		staat moeten zijn om met een goede uploadsnelheid toch volledig te kunnen downloaden.</text>
+		<newline gap="8"/>
+		<text>Standaard wordt je upload limiet op 85% van je upload bandbreedte gezet, terwijl je download
+		geen limiet heeft. Over het algemeen geeft dit de best mogelijke download snelheid.</text>
+	
 	</document>
 
 	<!-- Search help documents -->
@@ -2238,15 +2256,20 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<tip id="ID_DOWNLOADS_URL" message="Voeg een bron URL toe aan de geselecteerde download..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Bekijkt commentaar voor de geselecteerde download..."/>
 	<tip id="ID_HELP_ABOUT" message="Open het venster Over Shareaza..."/>
+	<tip id="ID_HELP_CODEC" message="Alles over codec en video problemen."/>
 	<tip id="ID_HELP_FAQ" message="Bezoek de Shareaza Gebruikers Handleiding en FAQ."/>
-	<tip id="ID_HELP_FIREWALLS" message="Klik hier als je hulp nodig hebt bij het instellen van je firewall of router."/>
+	<tip id="ID_HELP_ROUTER" message="Klik hier als je hulp nodig hebt bij het instellen van je firewall of router."/>
 	<tip id="ID_HELP_FORUMS" message="Bezoek de Shareaza Discussie Forums."/>
+	<tip id="ID_HELP_GUIDE" message="Bezoek de Shareaza handleiding."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Bezoek de Shareaza.com website."/>
 	<tip id="ID_HELP_SECURITY" message="Helpt je systeem te beschermen tegen kwaadaardige programma's"/>
-	<tip id="ID_HELP_WEB_1" message="Bezoek Zeropaid.com"/>
-	<tip id="ID_HELP_WEB_2" message="Bezoek P2PForums.com"/>
-	<tip id="ID_HELP_WEB_3" message="Bezoek Slyck.com"/>
-	<tip id="ID_HELP_WEB_4" message="Bezoek NapJunk.net"/>
+	<tip id="ID_HELP_UPDATE" message="Controleer op nieuws of updates."/>
+	<tip id="ID_HELP_WEB_1" message="Bezoek deze website"/>
+	<tip id="ID_HELP_WEB_2" message="Bezoek deze website"/>
+	<tip id="ID_HELP_WEB_3" message="Bezoek deze website"/>
+	<tip id="ID_HELP_WEB_4" message="Bezoek deze website"/>
+	<tip id="ID_HELP_WEB_5" message="Bezoek deze website"/>
+	<tip id="ID_HELP_WEB_6" message="Bezoek deze website"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="De buffer van de hit monitor wissen."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pauzeer het meekijken naar hits."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Op het netwerk zoeken naar de geselecteerde term."/>
@@ -2489,6 +2512,8 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Meerdere Waardes"/>
 	<string id="7003" value="Meerdere"/>
+	<string id="7004" value="Er is al een filter met de bestandsnaam &quot;%s&quot;, Wil je deze vervangen?"/>
+	<string id="7005" value="Geef je filter een naam."/>
 	<string id="8000" value="Shareaza Instellingen"/>
 	<string id="8001" value="Welkom bij Shareaza"/>
 	<string id="8002" value="Bestandseigenschappen"/>
@@ -2567,6 +2592,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="8180" value="Bestand grootte moet zijn"/>
 	<string id="8181" value="&#160;tot"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza creëert hashes voor %i bestand(en):"/>
+	<string id="8223" value="%i dagen and %i uren"/>
 	<string id="8224" value="Shareaza is aan het downloaden:"/>
 	<string id="8225" value="Deze download is gepauzeerd:"/>
 	<string id="8226" value="Shareaza heeft het downloaden voltooid van:"/>
@@ -2905,6 +2931,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="16810" value="jaar oud"/>
 	<string id="16811" value="Automatisch"/>
 	<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal u zo strikt goedkeuren, dat u problemen kunt ondervinden bij downloads om te beginnen.\nBent u zeker dat u de maxim rijpositie die u wilt goedkeuren, beperken?"/>
+	<string id="16817" value="Windows ondersteund geen lokaties met meer dan 256 karakters.\nslecteer een map met een kortere lokatie."/>
 	<string id="16864" value="Bezig met het opvragen van gastheer discovery services..."/>
 	<string id="16865" value="Bezig met het opvragen van discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transactie successvol (&quot;%s&quot;)."/>
@@ -3027,7 +3054,6 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="17477" value="BitTorrent koppeling met %s antwoordde met het verkeerde bestand."/>
 	<string id="17478" value="BitTorrent koppeling met %s vroeg een onbekend bestand aan."/>
 	<string id="17479" value="BitTorrent koppeling met %s tot stand gekomen voor &quot;%s&quot;."/>
-	<string id="17480" value="BitTorrent koppeling met %s is verloren gegaan."/>
 	<string id="17481" value="BitTorrent beschrijvend bestand (Descriptor) ontvangen: &quot;%s&quot;"/>
 	<string id="17482" value="Niet mogelijk om het prefetched BitTorrent bestand &quot;%s&quot; te ontleden."/>
 	<string id="17483" value="Fout van BitTorrent tracker voor &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3046,6 +3072,8 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="17496" value="Er is een fout opgetreden tijdens het kopiëren van &quot;%s&quot; naar een BitTorrent deelbestand."/>
 	<string id="17497" value="Er is een onbekende fout opgetreden tijdens het uitzaaien van &quot;%s&quot;."/>
 	<string id="17498" value="Er is een fout ontdekt in het bestand &quot;%s&quot;."/>
+	<string id="17500" value="Tracker reageerde niet- Aankondiging opnieuw proberen (%i van %i)"/>
+	<string id="17501" value="Communicatie met Tracker is onmogelijk"/>
 	<string id="18496" value="Je hebt de bestandsnaam aangepast.  Weet je zeker dat je deze download wilt hernoemen?"/>
 	<string id="18497" value="Je hebt een SHA1 waarde ingevoerd, maar het is ongeldig.  Controleer het en probeer het nog een keer."/>
 	<string id="18498" value="Je hebt een root tiger-tree waarde ingevoerd, maar het is ongeldig.  Controleer het en probeer het nog een keer."/>
@@ -3066,6 +3094,8 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
 	<string id="20000" value="Geen URN beschikbaar"/>
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
+	<string id="20003" value="Veranderen van leesrichting vereist een herstart van Shareaza.\nje zal Shareaza zelf opnieuw moeten starten. Nu afsluiten?"/>
+	<string id="20004" value="Rechts-naar links talenworden niet ondersteund door jouw OS."/>
 	<string id="20100" value="Verbindt..."/>
 	<string id="20101" value="Vraagt Aan..."/>
 	<string id="20102" value="Antwoordt..."/>
@@ -3407,9 +3437,9 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<control caption="Torrents tegelijkertijd"/>
 		<control/><control/>
 		<control caption="Cliënt verbindingen"/>
-		<control caption="Wis gedownloade Torrents als de"/>
-		<control caption="deelverhouding de waarde bereikt"/>
-		<control/><control/>
+		<control caption="&#160;Wis gedownloade Torrents als de&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;deelverhouding de waarde bereikt"/>
+		<control/><control/><control/>
+		<control caption="&#160;Voorkeurs torrent bronnen"/>
 		<control caption="_EndGame:"/>
 		<control caption="Activeer EndGame modus bij het afmaken van torrents"/>
 		<control caption="_Bewaar Torrents Hier:"/>
@@ -3417,7 +3447,7 @@ Ceceboyken, Jonne, Joren, Maybeme -->
 		<control caption="_Torrent Maker"/>
 		<control/><control/>
 		<control caption="Standaard Tracker: "/>
-		<control/><control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocollen">
