@@ -189,14 +189,16 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 
 			GenerateTorrentDownloadID();
 
-			m_bTorrentRequested	= TRUE;
-			m_bTorrentStarted	= FALSE;
-			m_tTorrentTracker	= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
+			m_bTorrentRequested		= TRUE;
+			m_bTorrentStarted		= FALSE;
+			m_tTorrentTracker		= tNow + Settings.BitTorrent.DefaultTrackerPeriod;
+			m_nTorrentUploaded		= 0;
+			m_nTorrentDownloaded	= 0;
 			
 			if ( GetSourceCount(TRUE, TRUE) < Settings.BitTorrent.DownloadConnections + 10 )
 				CBTTrackerRequest::SendStarted( this, Settings.BitTorrent.DownloadConnections + 10 );
 			else
-			CBTTrackerRequest::SendStarted( this );
+				CBTTrackerRequest::SendStarted( this );
 		}
 	}
 	else if ( ! bLive && m_bTorrentRequested )
@@ -654,9 +656,11 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sLocalName = pszTarget;
 	SetModified();
 	
-	m_tTorrentTracker	= GetTickCount() + ( 30 * 1000 ); // Give tracker 30 seconds to respond before re-trying
-	m_bTorrentRequested	= TRUE;
-	m_bTorrentStarted	= FALSE;
+	m_tTorrentTracker		= GetTickCount() + ( 60 * 1000 );
+	m_bTorrentRequested		= TRUE;
+	m_bTorrentStarted		= FALSE;
+	m_nTorrentUploaded		= 0;
+	m_nTorrentDownloaded	= 0;
 
 	if ( ( Settings.Connection.Firewalled ) && ( GetSourceCount() < 40 ) )
 		CBTTrackerRequest::SendStarted( this );
