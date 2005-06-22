@@ -196,6 +196,7 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_nMoreSourcesLimiter	= 8;
 	m_tMoreSourcesTimer		= 0;
+	m_tLastUpdate			= 0;
 	
 	return 0;
 }
@@ -219,10 +220,13 @@ void CDownloadsWnd::OnSkinChange()
 void CDownloadsWnd::Update()
 {
 	int nCookie = 0;
+	DWORD tNow = GetTickCount();
+
+	m_tLastUpdate = tNow;
 	
 	if ( Settings.General.GUIMode != GUI_BASIC && Settings.Downloads.ShowGroups )
 	{
-		nCookie = (int)GetTickCount();
+		nCookie = (int)tNow;
 		m_wndTabBar.Update( nCookie );
 	}
 	
@@ -269,9 +273,10 @@ void CDownloadsWnd::OnSize(UINT nType, int cx, int cy)
 
 void CDownloadsWnd::OnTimer(UINT nIDEvent) 
 {
+	// Reset Selection Timer event (posted by ctrldownloads)
 	if ( nIDEvent == 5 ) m_tSel = 0;
 	
-	// If this is a clear event (regular timer)
+	// Clear Completed event (10 second timer)
 	if ( nIDEvent == 4 )
 	{
 		DWORD tNow = GetTickCount();
@@ -327,7 +332,16 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
 		}
 	}
 	
-    if ( nIDEvent != 1 && m_pDragList == NULL ) Update();
+	// Window Update event (2 second timer)
+    if ( ( nIDEvent == 2 ) && ( m_pDragList == NULL ) )
+	{
+		// If the window is visible or hasn't been updated in 10 seconds
+		if ( ( IsPartiallyVisible() ) || ( ( GetTickCount() - m_tLastUpdate ) > 10*1000 ) )
+		{
+			// Update the window
+			Update();
+		}
+	}
 }
 
 void CDownloadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 

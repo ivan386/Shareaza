@@ -129,7 +129,8 @@ int CUploadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetTimer( 4, 5000, NULL );
 	PostMessage( WM_TIMER, 4 );
 
-	m_tSel = 0;
+	m_tSel			= 0;
+	m_tLastUpdate	= 0;
 
 	return 0;
 }
@@ -166,14 +167,16 @@ void CUploadsWnd::OnSkinChange()
 
 void CUploadsWnd::OnTimer(UINT nIDEvent)
 {
-	if ( nIDEvent == 5 ) m_tSel = 0;
+	// Reset Selection Timer event (posted by ctrluploads)
+	if ( nIDEvent == 5 ) m_tSel	= 0;
 
+	// Clear event (5 second timer)
 	if ( nIDEvent == 4 )
 	{
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
 
-		DWORD nNow = GetTickCount();
+		DWORD tNow = GetTickCount();
 		BOOL bCull = Uploads.GetCount( NULL ) > 75;
 
 		for ( POSITION pos = Uploads.GetIterator() ; pos ; )
@@ -181,7 +184,7 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 			CUploadTransfer* pUpload = Uploads.GetNext( pos );
 
 			if ( pUpload->m_nState == upsNull &&
-				 nNow - pUpload->m_tConnected > Settings.Uploads.ClearDelay )
+				 tNow - pUpload->m_tConnected > Settings.Uploads.ClearDelay )
 			{
 				if ( Settings.Uploads.AutoClear || pUpload->m_nUploaded == 0 || bCull )
 				{
@@ -191,7 +194,18 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 		}
 	}
 
-	if ( nIDEvent != 1 ) m_wndUploads.Update();
+	// Update event (2 second timer)
+	if ( nIDEvent == 2 )
+	{
+		DWORD tNow = GetTickCount();
+
+		// If the window is visible or hasn't been updated in 10 seconds
+		if ( ( IsPartiallyVisible() ) || ( ( tNow - m_tLastUpdate ) > 10*1000 ) )
+		{
+			m_wndUploads.Update();
+			m_tLastUpdate = tNow;
+		}
+	}
 }
 
 void CUploadsWnd::OnContextMenu(CWnd* pWnd, CPoint point)

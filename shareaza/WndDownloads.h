@@ -59,6 +59,7 @@ protected:
 protected:
 	int				m_nMoreSourcesLimiter;
 	DWORD			m_tMoreSourcesTimer;
+	DWORD			m_tLastUpdate;
 protected:
 	DWORD			m_tSel;
 	BOOL			m_bSelAny;
