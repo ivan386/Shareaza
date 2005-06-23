@@ -355,7 +355,16 @@ void CUploadsSettingsPage::OnOK()
 	Settings.Uploads.HubUnshare			= m_bHubUnshare;
 	Settings.Bandwidth.Uploads			= (DWORD)Settings.ParseVolume( m_sBandwidthLimit, TRUE ) / 8;
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
+
+	/*
+	// Upload limit cannot exceed upload capacity
+	if ( Settings.Bandwidth.Uploads )
+	{
+		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
+	}
+	*/
 	
+	// Blocked clients/strings
 	Settings.Uploads.BlockAgents.Empty();
 	
 	for ( int nItem = 0 ; nItem < m_wndAgentList.GetCount() ; nItem++ )
@@ -372,6 +381,7 @@ void CUploadsSettingsPage::OnOK()
 		}
 	}
 	
+	// Create/Validate queues
 	if ( UploadQueues.GetCount() == 0 )
 		UploadQueues.CreateDefault();
 	else
@@ -383,6 +393,8 @@ void CUploadsSettingsPage::OnOK()
 		LibraryDictionary.RebuildHashTable(); 
 		// ED2k file list will automatically update on next server connection
 	}
+
+	UpdateQueues();
 }
 
 
@@ -399,7 +411,7 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		else
 		{
 			m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
-			int nSpace		= m_sBandwidthLimit.Find( ' ' );
+			int nSpace			= m_sBandwidthLimit.Find( ' ' );
 			m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
 		}
 
@@ -415,6 +427,9 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		m_wndBandwidthLimit.AddString( _T("MAX") );
 
 		UpdateData( FALSE );
+
+		// Update queue window to show currentt limit
+		UpdateQueues();
 	}
 }
 

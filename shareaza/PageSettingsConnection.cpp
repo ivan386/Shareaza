@@ -226,6 +226,15 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.TimeoutConnect		= m_nTimeoutConnection * 1000;
 	Settings.Connection.TimeoutHandshake	= m_nTimeoutHandshake  * 1000;
 
+	/*
+	// Correct the upload limit (if required)
+	if ( Settings.Bandwidth.Uploads )
+	{
+		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
+	}
+	*/
+
+
 	UpdateData();
 	CSettingsPage::OnOK();
 }
