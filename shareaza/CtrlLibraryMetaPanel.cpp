@@ -370,6 +370,7 @@ void CLibraryMetaPanel::OnPaint()
 		{
 			while ( nTextLength > nLimit )
 			{
+				if ( str.IsEmpty() ) break;
 				str = str.Left( str.GetLength() - 1 );
 				nTextLength = dc.GetTextExtent( str + _T('\x2026') ).cx;
 			}
