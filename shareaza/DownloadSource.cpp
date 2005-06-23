@@ -665,9 +665,11 @@ void CDownloadSource::SetAvailableRanges(LPCTSTR pszRanges)
         // ??????????????? nLast == nFirst has special meaning ?
 		if ( _stscanf( strRange, _T("%I64i-%I64i"), &nFirst, &nLast ) == 2 && nLast > nFirst )
 		{
-            if( nLast < m_oAvailable.limit() ) // Sanity check
+            if( nFirst < m_oAvailable.limit() ) // Sanity check
             {
-                m_oAvailable.insert( FF::SimpleFragment( nFirst, nLast + 1 ) );
+				// perhaps the file size we expect is incorrect or the source is erronous
+				// in either case we make sure the range fits - so we chop off the end if necessary
+                m_oAvailable.insert( FF::SimpleFragment( nFirst, min( nLast + 1, m_oAvailable.limit() ) ) );
             }
 		}
 	}

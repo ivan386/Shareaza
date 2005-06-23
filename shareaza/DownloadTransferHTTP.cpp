@@ -813,6 +813,12 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bGotRanges = TRUE;
 		m_pSource->SetAvailableRanges( strValue );
 		m_pSource->SetGnutella( 1 );
+		if ( m_pSource->m_oAvailable.empty() )
+		{
+			theApp.Message( MSG_DEBUG, _T( "header did not include valid ranges, dropping source..." ) );
+			Close( TS_FALSE );
+			return FALSE;
+		}
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Queue") ) == 0 )
 	{
