@@ -207,7 +207,7 @@ BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int n
 		return FALSE;
 	
 	dcMark.CreateCompatibleDC( pDC );
-	if ( theApp.m_bRTL ) SetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
 	pMark->GetBitmap( &pWatermark );
 	

@@ -189,7 +189,7 @@ void CLibraryMetaPanel::Update()
 	m_pMetadata.Clean( 4096 );
 	
 	CClientDC dc( this );
-	dc.SetLayout( LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	SCROLLINFO pInfo;
 	CRect rc;
 	

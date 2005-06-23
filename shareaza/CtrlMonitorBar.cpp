@@ -158,7 +158,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 
 	CDC* pMemDC = CoolInterface.GetBuffer( *pDC, rcClient.Size() );
-	if ( theApp.m_bRTL ) pMemDC->SetLayout( 0 );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, 0 );
 
 	if ( ! CoolInterface.DrawWatermark( pMemDC, &rcClient, &m_bmWatermark ) )
 		pMemDC->FillSolidRect( &rcClient, CoolInterface.m_crMidtone );
@@ -187,7 +187,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
 		pMemDC, 0, 0, SRCCOPY );
-	if ( theApp.m_bRTL ) pMemDC->SetLayout( LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, LAYOUT_RTL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

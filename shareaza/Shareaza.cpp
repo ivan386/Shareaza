@@ -369,6 +369,11 @@ void CShareazaApp::InitResources()
 		m_pfnMonitorFromWindow = NULL;
 	}
 
+	if ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) )
+		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
+	else
+		m_pfnSetLayout = NULL;
+
 	// Get the fonts from the registry
 	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), _T("Tahoma") );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
@@ -999,8 +1004,8 @@ HICON CreateMirroredIcon(HICON hIconOrig)
 		hdcMask = CreateCompatibleDC( NULL );
 		if( hdcMask )
 		{
-			SetLayout( hdcBitmap, LAYOUT_RTL );
-			SetLayout( hdcMask, LAYOUT_RTL );
+			theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
+			theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
 		}
 		else
 		{
@@ -1082,7 +1087,7 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 		// Flip the bitmap.
 		hOld_bm1 = (HBITMAP)SelectObject( hdcMem1, hbmOrig );
 		hOld_bm2 = (HBITMAP)SelectObject( hdcMem2, hbm );
-		SetLayout( hdcMem2, LAYOUT_RTL );
+		theApp.m_pfnSetLayout( hdcMem2, LAYOUT_RTL );
 		BitBlt( hdcMem2, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem1, 0, 0, SRCCOPY );
 		SelectObject( hdcMem1, hOld_bm1 );
 		SelectObject( hdcMem1, hOld_bm2 );

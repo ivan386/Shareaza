@@ -266,7 +266,6 @@ END_MESSAGE_MAP()
 
 CMainWnd::CMainWnd()
 {
-	if ( theApp.m_bRTL ) SetProcessDefaultLayout( LAYOUT_RTL );
 	theApp.m_pMainWnd = this;
 
 	m_hInstance		= AfxGetResourceHandle();
@@ -310,6 +309,12 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	if ( theApp.m_bRTL )
+	{
+		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
+		SetWindowLong( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
+	}
+
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
 	// Icon

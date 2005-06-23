@@ -126,7 +126,7 @@ void CFileCommentsPage::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( theApp.m_bRTL ) dc.SetLayout ( LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	int nRating = lpDrawItemStruct->itemID;
 

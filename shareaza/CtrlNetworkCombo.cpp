@@ -127,7 +127,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
 		&theApp.m_gdiFontBold : &theApp.m_gdiFont );

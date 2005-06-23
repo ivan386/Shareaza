@@ -147,7 +147,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 void CFilePropertiesPage::OnPaint()
 {
 	CPaintDC dc( this );
-	if ( theApp.m_bRTL ) dc.SetLayout( LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	if ( m_nIcon >= 0 )
 	{

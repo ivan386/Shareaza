@@ -629,14 +629,14 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 void CSkinWindow::OnNcPaint(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, FALSE );
 }
 
 BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE, bActive ? TS_TRUE : TS_FALSE );
 	return FALSE;
 }
@@ -644,7 +644,7 @@ BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 void CSkinWindow::OnSetText(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE );
 }
 
@@ -729,7 +729,7 @@ void CSkinWindow::OnNcMouseMove(CWnd* pWnd, UINT nHitTest, CPoint point)
 	{
 		m_nHoverAnchor = nAnchor;
 		CWindowDC dc( pWnd );
-		if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL ); 
+		if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 		Paint( pWnd, dc, TRUE );
 	}	
 }
@@ -754,7 +754,7 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 		CMenu* pPopup = pWnd->GetSystemMenu( FALSE );
 
 		CWindowDC dc( pWnd );
-		if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
+		if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 		Paint( pWnd, dc, TRUE );
 
 		DWORD nTime = GetTickCount();
@@ -780,7 +780,7 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 	}
 
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 
 	return TRUE;
@@ -810,7 +810,7 @@ BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT nHitTest, CPoint point)
 	m_nDownAnchor = 0;
 	
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 
 	return FALSE;
@@ -836,7 +836,7 @@ void CSkinWindow::Prepare(CDC* pDC)
 		m_dcSkin.CreateCompatibleDC( pDC );
 	if ( m_hoSkin == NULL )
 		m_hoSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
-	if ( theApp.m_bRTL ) SetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED ); 
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED ); 
 }
 
 void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
@@ -1426,7 +1426,7 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	pAlphaInfo.bmiHeader.biSize	= sizeof(BITMAPINFOHEADER);
 	
 	HDC hDC = ::GetDC( 0 );
-	if ( theApp.m_bRTL ) SetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	
 	if ( 0 == GetDIBits( hDC, m_bmSkin, 0, 0, NULL, &pImageInfo, DIB_RGB_COLORS ) ||
 		 0 == GetDIBits( hDC, *pbmTarget, 0, 0, NULL, &pTargeInfo, DIB_RGB_COLORS ) )

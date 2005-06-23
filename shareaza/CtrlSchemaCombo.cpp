@@ -220,7 +220,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 	
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( theApp.m_bRTL ) SetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );

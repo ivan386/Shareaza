@@ -63,6 +63,8 @@ public:
 	BOOL (WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
 	HMONITOR (WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	HMONITOR (WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
+	HINSTANCE m_hGDI32;
+	DWORD (WINAPI *m_pfnSetLayout)(HDC, DWORD);
 
 protected:
 	CCriticalSection	m_csMessage;
