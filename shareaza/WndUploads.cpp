@@ -598,10 +598,7 @@ void CUploadsWnd::OnUploadsAutoClear()
 void CUploadsWnd::OnUpdateEditQueue(CCmdUI* pCmdUI)
 {
 	Prepare();
-	//pCmdUI->Enable( ! m_bSelFile );
-
-	//Sometimes locks up... disable for now
-	pCmdUI->Enable( FALSE );
+	pCmdUI->Enable( ! m_bSelFile );
 }
 
 void CUploadsWnd::OnEditQueue()
@@ -614,24 +611,7 @@ void CUploadsWnd::OnEditQueue()
 
 		if ( pQueue->m_bSelected )
 		{
-			pLock.Unlock();
-
-			CQueuePropertiesDlg dlg( pQueue, FALSE, this );
-
-			//dlg.DoModal();  //Note: the CSkinDialog::OnOK() at the end will sometimes lock
-			// up Raza? Needs to be fixed
-
-			UploadQueues.Save();
-
-			if ( UploadQueues.GetCount() == 0 )
-				UploadQueues.CreateDefault();
-			else
-				UploadQueues.Validate();
-
-			// Changing queues might change what files are in the hash table
-			LibraryDictionary.RebuildHashTable();
-			// ED2k file list will automatically update on next server connection
-
+			CSettingsManagerDlg::Run( _T("CUploadsSettingsPage") );
 			return;
 		}
 	}
