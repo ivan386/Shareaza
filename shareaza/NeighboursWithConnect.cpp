@@ -915,7 +915,7 @@ void CNeighboursWithConnect::Maintain()
 
 			// If connections are limited (XP sp2), then don't try to connect to G1 until G2 is ok.
 			if ( ( nProtocol == PROTOCOL_G1 ) && ( Settings.Gnutella2.EnableToday == TRUE )
-											  && ( Settings.Downloads.MaxConnectingSources < 10 ) )
+											  && ( Settings.Connection.SlowConnect ) )
 			{
 				if ( (nCount[ PROTOCOL_G2 ][ ntHub ] == 0) || ( Network.GetStableTime() < 15 ) )
 					return;

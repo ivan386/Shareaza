@@ -166,6 +166,7 @@ void CSettings::Setup()
 	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
 	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
 	Add( _T("Connection.DetectConnectionReset"), &Connection.DetectConnectionReset, FALSE );
+	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
 	
 	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
 	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );

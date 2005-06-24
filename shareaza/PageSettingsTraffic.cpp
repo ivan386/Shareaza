@@ -104,6 +104,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Connection.ConnectThrottle, 1, 0, 500, _T(" ms") );
 	AddSetting( &Settings.Connection.DetectConnectionLoss, 1, 0, 1 );
 	AddSetting( &Settings.Connection.DetectConnectionReset, 1, 0, 1 );
+	AddSetting( &Settings.Connection.SlowConnect, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
 	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 1000 );

@@ -321,7 +321,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Downloads.MaxFileTransfers		= 4;
 		Settings.Downloads.MaxConnectingSources	= 16;
 		Settings.Downloads.MaxFileSearches		= 0;
-		Settings.Downloads.SourcesWanted		= 200; // Don't bother requesting so many sources
+		Settings.Downloads.SourcesWanted		= 200;	// Don't bother requesting so many sources
 		Settings.Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
 
 		Settings.BitTorrent.DownloadTorrents	= 1;	// Best not to try too many torrents
@@ -339,9 +339,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		Settings.Gnutella1.EnableAlways			= FALSE;
 		Settings.Gnutella1.EnableToday			= FALSE;
 		Settings.Downloads.MaxConnectingSources	= 8;
+		Settings.Connection.RequireForTransfers	= TRUE;
+		Settings.Connection.SlowConnect			= TRUE;
 		//Settings.Connection.TimeoutConnect	= 30000;
 		//Settings.Connection.TimeoutHandshake	= 60000;
-		Settings.Connection.RequireForTransfers	= TRUE;
 
 		CHelpDlg::Show( _T("GeneralHelp.XPsp2") );
 	}

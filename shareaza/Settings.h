@@ -181,6 +181,7 @@ public:
 		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
 		BOOL		DetectConnectionLoss;		// Detect loss of internet connection
 		BOOL		DetectConnectionReset;		// Detect regaining of internet connection
+		BOOL		SlowConnect;				// Connect to one network at a time. Don't download while connecting. (XPsp2)
 	} Connection;
 
 	struct sBandwidth
