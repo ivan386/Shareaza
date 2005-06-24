@@ -10,7 +10,7 @@
 		description="Shareaza Default Croatian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.0.150"
+		version="2.1.1.11"
 		type="Language"
 		language="hr"
 		prompt="Ovdje odaberi Shareazu na hrvatskom jeziku..."
@@ -42,6 +42,7 @@
 		<button id="ID_NETWORK_CONNECT" text="Spoji"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -160,7 +161,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Prekini Skidanje"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Obriši Skinuto"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometar"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometa"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Info o Torrentu"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Dodaj za Skinuti/Torrent..."/>
@@ -694,7 +695,7 @@
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet Dump"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Pr_aćenje Traženja"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Praćenje Pogadaka"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Praćenje Pogodaka"/>
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
@@ -1521,7 +1522,7 @@
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hitna Pomoć</link>
-		<text align="middle">&#160;- Na brzinu nauči osnove rada saShareazom</text>
+		<text align="middle">&#160;- Na brzinu nauči osnove rada sa Shareazom</text>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -2078,7 +2079,21 @@
 		services window.</text>
 	</document>
 
-	<!-- Search help documents -->
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Ograničenje brzine davanja može usporiti skidanje</text>
+		<newline gap="8"/>
+		<text>Several networks Shareaza connects to enforce ratios, limit uploads to
+		clients that do not share, or simply preference uploading to known sharers.</text>
+		<newline/>
+		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
+		separate allocations for upload and download. If your client is properly configured, 
+		you should be able to upload at a good rate while retaining full download capacity.</text>
+		<newline gap="8"/>
+		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+		while downloads are unlimited. That configuration should give you the fastest possible 
+		downloads that are available.</text>
+	</document>
+    <!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Molim da promjenite frazu za traženje</text>
@@ -2424,7 +2439,7 @@
 	<tip id="ID_UPLOADS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Clear the selected upload(s) from the list."/>
 	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Clear uploads which have been completed."/>
-	<tip id="ID_UPLOADS_DISCONNECT" message="Iskljuci the selected upload transfer(s)."/>
+	<tip id="ID_UPLOADS_DISCONNECT" message="Disconnect the selected upload transfer(s)."/>
 	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Show all uploads which are actively sending."/>
 	<tip id="ID_UPLOADS_FILTER_ALL" message="Show all uploads."/>
 	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Show uploads which are no longer connected."/>
@@ -2487,6 +2502,8 @@
 	<string id="7001" value="&amp;Šeme"/>
 	<string id="7002" value="Multiple Values"/>
 	<string id="7003" value="Multiple"/>
+	<string id="7004" value="Filter po imenu &quot;%s&quot;već postoji, da li ga želite zamjeniti?"/>
+	<string id="7005" value="Molim da date ime vašem filteru."/>
 	<string id="8000" value="Shareazine Postavke"/>
 	<string id="8001" value="Dobrodošli u Shareaza"/>
 	<string id="8002" value="Postavke Datoteke"/>
@@ -2565,7 +2582,8 @@
 	<string id="8180" value="Veličina datoteke mora biti"/>
 	<string id="8181" value="&#160;do"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
-	<string id="8224" value="Shareaza skida:"/>
+	<string id="8223" value="%i dana i %i sati"/>
+    <string id="8224" value="Shareaza skida:"/>
 	<string id="8225" value="Ovo skidanje je pauzirano"/>
 	<string id="8226" value="Shareaza je završila skidanje:"/>
 	<string id="8227" value="%i sati i %i minuta"/>
@@ -2623,7 +2641,7 @@
 	<string id="8335" value="Svi izvori ove datoteke su iza vatrozida"/>
 	<string id="8336" value="Svi izvori ove datoteke su nestabilni"/>
 	<string id="16064" value="Pokrečem mrežnu jezgru..."/>
-	<string id="16065" value="Ne mogu se spojiti na %s port %i. Primanje poziva nije moguće"/>
+	<string id="16065" value="ne mogu se spojiti na %s port %i. Primanje poziva nije moguće"/>
 	<string id="16066" value="Gasim mrežnu jezgru..."/>
 	<string id="16067" value="Iskopčan sa mreže."/>
 	<string id="16068" value="Prihvaćam dolazeće TCP veze na %s portu %i."/>
@@ -2903,6 +2921,7 @@
 	<string id="16810" value="godina"/>
 	<string id="16811" value="Automatski"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
+	<string id="16817" value="Windowsi ne podržavaju putanju dužu od 256 znakova.\nMolim da odeberete mapu sa kraćim putem."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2928,7 +2947,7 @@
 	<string id="16944" value="Nađeno %i djeljenih datoteka u %svoj kolekciji."/>
 	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
-	<string id="16994" value="Unable to load media file &quot;%s&quot;"/>
+	<string id="16994" value="Ne mogu učitati datoteku &quot;%s&quot;"/>
 	<string id="16995" value="The file may be damaged, or you may not have the necessary codecs to play it."/>
 	<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 	<string id="16997" value="There is no file playing.Double-click a media file in your library to play it."/>
@@ -2945,7 +2964,7 @@
 	<string id="17032" value="Korisnik potvrđen "/>
 	<string id="17033" value="Tražim Privatni Razgovor..."/>
 	<string id="17034" value="Privatni razgovor dopušten, razgovarate s %som."/>
-	<string id="17035" value="Žao mi je, %s ne želi razgovarati s Vama."/>
+	<string id="17035" value="Žao mi je, %s ne prihvača razgovor s Vama."/>
 	<string id="17036" value="%s nije na kompu: %s"/>
 	<string id="17037" value="Veza prekinuta."/>
 	<string id="17038" value="Veza je prekinuta."/>
@@ -3025,7 +3044,6 @@
 	<string id="17477" value="BitTorrent coupling with %s responded with the wrong file."/>
 	<string id="17478" value="BitTorrent coupling with %s requested an unknown file."/>
 	<string id="17479" value="BitTorrent coupling with %s established for &quot;%s&quot;."/>
-	<string id="17480" value="BitTorrent coupling with %s was lost."/>
 	<string id="17481" value="Received BitTorrent descriptor file: &quot;%s&quot;"/>
 	<string id="17482" value="Unable to parse prefetched BitTorrent file &quot;%s&quot;."/>
 	<string id="17483" value="Error from BitTorrent tracker for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3044,7 +3062,9 @@
 	<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 	<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 	<string id="17498" value="Otkrivena je greška u datoteci &quot;%s&quot;."/>
-	<string id="18496" value="You have made changes to the name field.Are you sure you want to rename this download?"/>
+	<string id="17500" value="Tracker did not respond- Retrying announce (%i of %i)"/>
+	<string id="17501" value="Unable to communicate with tracker"/>
+	<string id="18496" value="Napravili ste promjenu u polju imena.Jeste li sigurni da želite preimenovati ovo skidanje?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid.Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid.Please check it and try again."/>
 	<string id="18499" value="You have typed an eDonkey2000 hash value, however it is invalid.Please check it and try again."/>
@@ -3063,8 +3083,10 @@
 	<string id="19001" value="Morate odabrati ime i lozinku"/>
 	<string id="19002" value="U nemogučnosti sam primati veze, URL je nedostupan."/>
 	<string id="20000" value="Nema dostupnog URN-a"/>
-	<string id="20002" value="od"/><!-- e.g. 1 of 10 -->
-	<string id="20100" value="Spajam"/>
+	<string id="20002" value="od"/><!-- e.g. 1 of 10 --> 
+    <string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
+	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
+    <string id="20100" value="Spajam"/>
 	<string id="20101" value="Tražim"/>
 	<string id="20102" value="Odgovor"/>
 	<string id="20103" value="Skidam"/>
@@ -3397,7 +3419,7 @@
 		<control caption="Skini..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="Sučelje:"/>
 		<control caption="Prikaži dodatne BitTorrent elemente"/>
 		<control caption="Postavke ski_danja:"/>
@@ -3405,9 +3427,9 @@
 		<control caption="Istovremenih Torrenta"/>
 		<control/><control/>
 		<control caption="Klijent veze"/>
-		<control caption=" Makni skinunte torrente"/>
-		<control caption="Kada omjer djeljenja dođe do "/>
-		<control/><control/>
+		<control caption="&#160;Makni skinunte torrente&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kada omjer djeljenja dođe do"/>
+        <control/><control/><control/>
+		<control caption="&#160;Preference torrent sources"/>
 		<control caption="_EndGame:"/>
 		<control caption="Omoguči EndGame način prilikom dovršenja torrentsa"/>
 		<control caption="Ovdje _Spremi Torrente::"/>
@@ -3415,7 +3437,7 @@
 		<control caption="_Torrent Creator"/>
 		<control/><control/>
 		<control caption="Default Tracker:"/>
-		<control/><control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoli">
@@ -3524,7 +3546,7 @@
 		<control caption="Da li imate vatrozid ili NAT router na vašoj kućnoj Internet vezi?"/>
 		<control caption="&#160;Ne, MOGU primiti sve dolazne pozive| Da, ali ću podesiti port-forwarding za Shareazu| Da, ja NE MOGU primati dolazne pozive sa Interneta| Neznam, molim da Shareza OTKRIJE"/>
 		<control caption="Ako znate brzinu vaše veze na Internet molim da odaberete najbolju opciju:"/>
-		<control caption="| Običan Modem (56K)| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Kablovski Modem/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="| Običan Modem (56K)| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kablovski Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="ILI, odaberite:"/>
 		<control/>
 	</dialog>
