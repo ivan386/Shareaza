@@ -102,7 +102,8 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 
 		if ( bClean )
 		{
-			pDC->ExtTextOut( m_pt.x, m_pt.y, ETO_OPAQUE, NULL, pszText, m_nLength, NULL );
+			pDC->ExtTextOut( m_pt.x - ( theApp.m_bRTL ? 1 : 0 ), m_pt.y, ETO_OPAQUE, 
+				NULL, pszText, m_nLength, NULL );
 		}
 		else if ( bSelect )
 		{
