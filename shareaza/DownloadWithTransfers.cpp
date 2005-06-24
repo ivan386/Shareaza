@@ -158,6 +158,9 @@ BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 	
 	if ( tNow - m_tTransferStart < 100 ) return FALSE;
 	m_tTransferStart = tNow;
+
+	// Make sure the network is ready
+	if ( ! Network.ReadyToTransfer( tNow ) ) return FALSE;
 	
 	// Limit the connection rate
 	if ( Settings.Downloads.ConnectThrottle != 0 )
@@ -171,6 +174,7 @@ BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 	{
 		return FALSE;
 	}
+
 	return TRUE;
 }
 

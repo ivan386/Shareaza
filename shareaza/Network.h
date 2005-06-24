@@ -50,9 +50,10 @@ public:
 	CMutex			m_pSection;
 	CEvent			m_pWakeup;
 	SOCKADDR_IN		m_pHost;
-	BOOL			m_bEnabled;
+	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
-	DWORD			m_tLastConnect;
+	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect
+	DWORD			m_tLastConnect;			// The last time a neighbout connection attempt was made
 protected:
 	HANDLE			m_hThread;
 	DWORD			m_nSequence;
@@ -67,6 +68,7 @@ public:
 	BOOL		IsStable() const;
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(IN_ADDR* pAddress);
+	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
 public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();

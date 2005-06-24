@@ -66,15 +66,16 @@ CNetwork Network;
 
 CNetwork::CNetwork()
 {
-	NodeRoute		= new CRouteCache();
-	QueryRoute		= new CRouteCache();
-	QueryKeys		= new CQueryKeys();
+	NodeRoute				= new CRouteCache();
+	QueryRoute				= new CRouteCache();
+	QueryKeys				= new CQueryKeys();
 	
-	m_bEnabled		= FALSE;
-	m_bAutoConnect	= FALSE;
-	m_nSequence		= 0;
-	m_hThread		= NULL;
-	m_tLastConnect  = 0;
+	m_bEnabled				= FALSE;
+	m_bAutoConnect			= FALSE;
+	m_nSequence				= 0;
+	m_hThread				= NULL;
+	m_tLastConnect			= 0;
+	m_tStartedConnecting	= 0;
 }
 
 CNetwork::~CNetwork()
@@ -137,6 +138,23 @@ BOOL CNetwork::IsConnectedTo(IN_ADDR* pAddress)
 	return FALSE;
 }
 
+BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
+{
+	// If a connection isn't needed for transfers, we can start any time
+	if ( ! Settings.Connection.RequireForTransfers )
+		return TRUE;
+
+	// If we have not started connecting, we're not ready to transfer.
+	if ( m_tStartedConnecting == 0 )
+		return FALSE;
+
+	// We should wait a short time after starting the connection sequence before starting downloads
+	if ( Settings.Connection.SlowConnect )
+		return ( ( tNow - m_tStartedConnecting ) > 6000 );		// 6 seconds for XPsp2 users
+	else
+		return ( ( tNow - m_tStartedConnecting ) > 3000 );		// 3 seconds for others
+}
+
 //////////////////////////////////////////////////////////////////////
 // CNetwork connection
 
@@ -181,10 +199,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
 	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
 	
-	m_bEnabled	= TRUE;
-	m_hThread	= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
-
-
+	m_bEnabled				= TRUE;
+	m_tStartedConnecting	= GetTickCount();
+	m_hThread				= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
 	
 	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 	
@@ -203,8 +220,9 @@ void CNetwork::Disconnect()
 	theApp.Message( MSG_DEFAULT, _T("") );
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_DISCONNECTING );
 	
-	m_bEnabled		= FALSE;
-	m_bAutoConnect	= FALSE;
+	m_bEnabled				= FALSE;
+	m_bAutoConnect			= FALSE;
+	m_tStartedConnecting	= 0;
 	
 	Neighbours.Close();
 	

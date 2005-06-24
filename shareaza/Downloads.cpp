@@ -58,13 +58,13 @@ CDownloads Downloads;
 
 CDownloads::CDownloads()
 {
-	m_nLimitGeneric	= Settings.Bandwidth.Downloads;
-	m_nLimitDonkey	= Settings.Bandwidth.Downloads;
-	m_nTransfers	= 0;
-	m_nBandwidth	= 0;
-	m_nRunCookie	= 0;
-	m_bClosing		= FALSE;
-	m_tLastConnect	= 0;
+	m_nLimitGeneric			= Settings.Bandwidth.Downloads;
+	m_nLimitDonkey			= Settings.Bandwidth.Downloads;
+	m_nTransfers			= 0;
+	m_nBandwidth			= 0;
+	m_nRunCookie			= 0;
+	m_bClosing				= FALSE;
+	m_tLastConnect			= 0;
 }
 
 CDownloads::~CDownloads()
