@@ -150,9 +150,9 @@ BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 
 	// We should wait a short time after starting the connection sequence before starting downloads
 	if ( Settings.Connection.SlowConnect )
-		return ( ( tNow - m_tStartedConnecting ) > 6000 );		// 6 seconds for XPsp2 users
+		return ( ( tNow - m_tStartedConnecting ) > 8000 );		// 8 seconds for XPsp2 users
 	else
-		return ( ( tNow - m_tStartedConnecting ) > 3000 );		// 3 seconds for others
+		return ( ( tNow - m_tStartedConnecting ) > 4000 );		// 4 seconds for others
 }
 
 //////////////////////////////////////////////////////////////////////

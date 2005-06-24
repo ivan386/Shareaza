@@ -913,12 +913,15 @@ void CNeighboursWithConnect::Maintain()
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
 		{	// We don't have enough hubs
 
-			// If connections are limited (XP sp2), then don't try to connect to G1 until G2 is ok.
-			if ( ( nProtocol == PROTOCOL_G1 ) && ( Settings.Gnutella2.EnableToday == TRUE )
-											  && ( Settings.Connection.SlowConnect ) )
+			// Don't try to connect to G1 right away- wait a few seconds to reduce the number of connections
+			if ( ( nProtocol == PROTOCOL_G1 ) && ( Settings.Gnutella2.EnableToday == TRUE ) )
 			{
-				if ( (nCount[ PROTOCOL_G2 ][ ntHub ] == 0) || ( Network.GetStableTime() < 15 ) )
-					return;
+				// Wait 4 seconds before trying G1
+				if ( ! Network.ReadyToTransfer( tTimer ) ) return;
+
+				// If connections are limited (XP sp2), then wait until we're stable
+				// if ( ( Settings.Connection.SlowConnect ) && ( Network.GetStableTime() < 15 ) ) return;
+		
 			}
 
 			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
