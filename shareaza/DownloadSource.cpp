@@ -376,25 +376,16 @@ CDownloadTransfer* CDownloadSource::CreateTransfer()
 {
 	ASSERT( m_pTransfer == NULL );
 	
-	if ( m_nProtocol == PROTOCOL_HTTP )
+	switch ( m_nProtocol )
 	{
-		return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
-	}
-	if ( m_nProtocol == PROTOCOL_FTP )
-	{
-		return ( m_pTransfer = new CDownloadTransferFTP( this ) );
-	}
-	else if ( m_nProtocol == PROTOCOL_ED2K )
-	{
-		return ( m_pTransfer = new CDownloadTransferED2K( this ) );
-	}
-	else if ( m_nProtocol == PROTOCOL_BT )
-	{
-		return ( m_pTransfer = new CDownloadTransferBT( this, NULL ) );
-	}
-	else
-	{
-		return NULL;
+	case PROTOCOL_G1:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_G2:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_ED2K:	return ( m_pTransfer = new CDownloadTransferED2K( this ) );
+	case PROTOCOL_HTTP:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_FTP:	return ( m_pTransfer = new CDownloadTransferFTP( this ) );
+	case PROTOCOL_BT:	return ( m_pTransfer = new CDownloadTransferBT( this, NULL ) );
+	default:			theApp.Message( MSG_ERROR, _T("Invalid protocol in CDownloadSource::CreateTransfer()") );
+						return ( NULL );
 	}
 }
 
