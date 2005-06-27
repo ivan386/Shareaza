@@ -1,6 +1,10 @@
 //
 // DownloadTransferFTP.cpp
 //
+//	Date:			"$Date: 2005/06/27 18:15:53 $"
+//	Revision:		"$Revision: 1.8 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Nikolay Raspopov, 2004-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -232,7 +236,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	else if ( m_pDownload->GetFragment( this ) )
 	{
 		// Downloading
-		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
+		// ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
