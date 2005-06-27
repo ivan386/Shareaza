@@ -7,10 +7,10 @@
 <!-- MANIFEST -->
 <manifest	name="Skin+"
 			author="ogg123"
-			description="2.45+"
+			description="After applying this skin Shareaza's interface seems simpler and less cluttered.  However, nothing is sacrificed for this clean and consistent feel: you keep all of the function!"
 			link="http://www.shareaza.com/"
 			email="contact@shareaza.com"
-			version="2.4"
+			version="2.53"
 			type="Skin"
 			language="en"
 			/>
@@ -50,42 +50,25 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Full">
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
-		<button id="ID_BROWSE_LAUNCH" text="Browse"/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
 		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Show Search"/>
+		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
+		<rightAlign/>
 		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="130"/>
+		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
-		<separator/>
-		<button id="ID_SEARCH_SEARCH" text="Search Again..."/>
-		<button id="ID_SEARCH_STOP" text="Stop"/>
-		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Search Bar"/>
-		<button id="ID_SEARCH_DETAILS" text="Details"/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
-		<button id="ID_BROWSE_LAUNCH" text="Browse"/>
+		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
 		<separator/>
-		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="130"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
-		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Search Bar"/>
-		<button id="ID_SEARCH_DETAILS" text="Details"/>
-	</toolbar>
-	<!-- BROWSE HOST WINDOW -->
-	<toolbar name="CBrowseHostWnd">
-		<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
-		<button id="ID_SEARCH_CHAT" text="Chat to User"/>	
-		<separator/>
-		<label text="Filter:" tip="Type some words to filter the results with"/>
-		<control id="107" width="130"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
-		<separator/>
-		<button id="ID_BROWSE_STOP" text="Stop"/>
-		<button id="ID_BROWSE_REFRESH" text="Refresh"/>
-		<separator/>
+		<button id="ID_SEARCH_PANEL" text="Show Search"/>
 		<button id="ID_SEARCH_DETAILS" text="Show Details"/>
+		<rightAlign/>
+		<label text="Filter:" tip="Type some words to filter the results with"/>
+		<control id="107" width="150"/>
+		<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd">
@@ -117,12 +100,12 @@
 	<!-- LIBRARY FRAME -->
 	<toolbar name="CLibraryHeaderBar.Physical">
 		<button id="ID_LIBRARY_VIEW" text="View"/>
-		<button id="ID_LIBRARY_PANEL" text="Details"/>
+		<button id="ID_LIBRARY_PANEL" text="Show Details"/>
 		<button id="ID_LIBRARY_PARENT" text="Up"/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Virtual">
 		<button id="ID_LIBRARY_VIEW" text="View"/>
-		<button id="ID_LIBRARY_PANEL" text="Details"/>
+		<button id="ID_LIBRARY_PANEL" text="Show Details"/>
 		<button id="ID_LIBRARY_PARENT" text="Up"/>
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
@@ -136,7 +119,6 @@
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Share Files..."/>
-		<button id="ID_LIBRARY_ADD" text="Add Folder..."/>
 		<RightAlign/>
 		<label text="Find:" tip="Type some words to search your library"/>
 		<control id="108" width="120"/>
@@ -203,7 +185,7 @@
 		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<button id="ID_SECURITY_BAN" text="Ban User"/>
-		<separator/>
+		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
@@ -272,17 +254,21 @@
 			<item id="ID_WINDOW_REMOTE" text="Show _Remote"/>
 		</menu>
 		<menu text="_Help">
-			<item id="ID_HELP_FAQ" text="Shareaza Users _Guide"/>
-			<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-			<item id="ID_HELP_FIREWALLS" text="_Router Help"/>
-			<item id="ID_HELP_SECURITY" text="Se_curity Help"/>
+			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
+			<menu text="_Guides">
+				<item id="ID_HELP_GUIDE" text="Shareaza _Users Guide"/>
+				<item id="ID_HELP_ROUTER" text="_Router Help"/>
+				<item id="ID_HELP_SECURITY" text="_Security Help"/>
+				<item id="ID_HELP_CODEC" text="_Codec Help"/>
+			</menu>
 			<menu text="_Websites">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				<item id="ID_HELP_WEB_3" text="Slyck.com"/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
@@ -337,6 +323,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
 		<separator/>
 		<menu text="_User Services">
@@ -361,6 +348,7 @@
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview File"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR" text="_Cancel"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="_Pause"/>
@@ -388,8 +376,10 @@
 		<item id="ID_TRANSFERS_FORGET" text="_Forget"/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Disconnect"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Chat to User"/>
+		<menu text="_User Services">
+			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+			<item id="ID_TRANSFERS_CHAT" text="_Chat to User"/>
+		</menu>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open File"/>
@@ -557,18 +547,18 @@
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Disconnect"/>
 		<item id="ID_NEIGHBOURS_COPY" text="Copy _URI"/>
 		<separator/>
+		<menu text="Choose _Networks">
+			<item id="ID_NETWORK_CONNECT" text="_Connect"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
+			<separator/>
+			<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
+			<item id="ID_NETWORK_ED2K" text="Connect to _Edonkey2000"/>
+			<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+		</menu>
 		<menu text="_User Services">
 			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 			<item id="ID_NEIGHBOURS_CHAT" text="_Chat to User"/>
 			<item id="ID_SECURITY_BAN" text="B_an User"/>
-		</menu>
-		<menu text="_Networks">
-			<item id="ID_NETWORK_CONNECT" text="_Connect"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
-			<separator/>
-			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_Edonkey2000"/>
-			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
