@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
 	ON_WM_DESTROY()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -69,6 +71,12 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 	m_nThumbSize	= 96;
 	m_crLight		=	CCoolInterface::CalculateColour(
 						CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
+
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
@@ -507,7 +515,7 @@ void CLibraryMetaPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBa
 		break;
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
-		pScroll.nPos = pScroll.nTrackPos;
+		pScroll.nPos = nPos;
 		break;
 	}
 	
@@ -589,6 +597,17 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	
 	CLibraryPanel::OnLButtonUp( nFlags, point );
+}
+
+void CLibraryMetaPanel::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	SetFocus();
+}
+
+BOOL CLibraryMetaPanel::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

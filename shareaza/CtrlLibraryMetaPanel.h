@@ -56,6 +56,7 @@ protected:
 	CMetaPanel		m_pMetadata;
 	CRect			m_rcFolder;
 	CRect			m_rcRating;
+	int				m_nScrollWheelLines;
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pWakeup;
@@ -94,6 +95,8 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
