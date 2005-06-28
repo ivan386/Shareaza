@@ -580,6 +580,11 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	if ( ! UploadQueues.CanUpload( PROTOCOL_HTTP, pFile ) )
 	{
 		// File is not uploadable. (No queue, is a ghost, etc)
+		if ( m_sFileName.IsEmpty() )
+		{
+			if ( m_bSHA1 ) m_sFileName = CSHA::HashToString( &m_pSHA1, TRUE );
+		}
+
 		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
