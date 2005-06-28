@@ -391,6 +391,23 @@ BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
         FF::SimpleFragment( nOffset, nOffset + nLength ) );
 }
 
+// like IsRangeUseful( ) but take the amount of useful ranges relative to the amount of garbage
+// and source speed into account
+BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength)
+{
+	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	// range is useful if at least byte within the next amount of data transferable within the next 5 seconds
+	// is useful
+	DWORD nLength2 = 5 * pTransfer->GetAverageSpeed();
+	if ( nLength2 < nLength )
+	{
+		if ( !pTransfer->m_bRecvBackwards ) nOffset += nLength - nLength2;
+		nLength = nLength2;
+	}
+    return overlaps( m_pFile->GetEmptyFragmentList(),
+		FF::SimpleFragment( nOffset, nOffset + nLength ) );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get a string of available ranges
 

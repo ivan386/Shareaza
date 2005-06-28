@@ -1097,28 +1097,18 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		m_nPosition += nLength;
 		m_nDownloaded += nLength;
 		
-		if ( ! bSubmit /* && m_pDownload->GetProgress() < 0.95f */ )
+		if ( ! bSubmit )
 		{
-			BOOL bUseful = FALSE;
-			
-			if ( m_bRecvBackwards )
-			{
-				bUseful = m_pDownload->IsRangeUseful( m_nOffset, m_nLength - m_nPosition );
-			}
-			else
-			{
-				bUseful = m_pDownload->IsRangeUseful( m_nOffset + m_nPosition, m_nLength - m_nPosition );
-			}
+			BOOL bUseful = m_pDownload->IsRangeUsefulEnough( this,
+				m_bRecvBackwards ? m_nOffset : m_nOffset + m_nPosition,
+				m_nLength - m_nPosition );
 			
 			if ( /* m_bInitiated || */ ! bUseful )
 			{
-				return StartNextFragment();
-			}
-/*			{
 				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
 				Close( TS_TRUE );
 				return FALSE;
-			}*/
+			}
 		}
 	}
 	

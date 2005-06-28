@@ -56,6 +56,7 @@ public:
 	BOOL			IsPositionEmpty(QWORD nOffset);
     BOOL            AreRangesUseful(const FF::SimpleFragmentList& oAvailable);
 	BOOL			IsRangeUseful(QWORD nOffset, QWORD nLength);
+	BOOL			IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength);
 	virtual CString	GetAvailableRanges() const;
 	BOOL			ClipUploadRange(QWORD nOffset, QWORD& nLength) const;
 	BOOL			GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
