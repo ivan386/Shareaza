@@ -515,7 +515,7 @@ void CLibraryMetaPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBa
 		break;
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
-		pScroll.nPos = nPos;
+		pScroll.nPos = pScroll.nTrackPos;
 		break;
 	}
 	
