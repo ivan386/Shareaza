@@ -313,6 +313,10 @@ void CShareazaApp::InitResources()
 	m_dwWindowsVersionMinor = pVersion.dwMinorVersion; 
 
 	m_bLimitedConnections = FALSE;
+	VER_PLATFORM_WIN32s;
+	VER_PLATFORM_WIN32_WINDOWS;
+	VER_PLATFORM_WIN32_NT;
+
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
 		if( _tcsstr( pVersion.szCSDVersion, _T("Service Pack 2") ) )
@@ -320,6 +324,11 @@ void CShareazaApp::InitResources()
 			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
 			m_bLimitedConnections = TRUE;
 		}
+	}
+	else if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 2
+		&& pVersion.dwBuildNumber == 3790 ) // Windows XP x64
+	{
+		m_bLimitedConnections = TRUE;
 	}
 
 	//Get the amount of installed memory.
