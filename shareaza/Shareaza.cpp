@@ -319,15 +319,17 @@ void CShareazaApp::InitResources()
 
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
-		if( _tcsstr( pVersion.szCSDVersion, _T("Service Pack 2") ) )
+		TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack ") );
+		if( sp && sp[ 13 ] >= '2' )
 		{	//XP SP2 - Limit the networking.
 			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
 			m_bLimitedConnections = TRUE;
 		}
 	}
 	else if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 2
-		&& pVersion.dwBuildNumber == 3790 ) // Windows XP x64
+		&& _tcsstr( pVersion.szCSDVersion, _T("Service Pack") ) )
 	{
+		// Windows 2003 or Win XP x64
 		m_bLimitedConnections = TRUE;
 	}
 
