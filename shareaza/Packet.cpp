@@ -491,6 +491,29 @@ CString CPacket::ToASCII() const
 // Takes text that describes what happened
 void CPacket::Debug(LPCTSTR pszReason) const
 {
+// Only include these lines in the program if it is being compiled in debug mode
+#ifdef _DEBUG
+
+	theApp.Message( MSG_DEBUG, pszReason );
+	CString strOutput;
+
+	// Loop the index i down each byte in the packet buffer
+	for ( DWORD i = 0 ; i < m_nLength ; i++ )
+	{
+		// Read the byte there as an int called nChar
+		int nChar = m_pBuffer[i];
+
+		// Encode it as two base 16 characters followed by an ASCII character, like "00(.) " or "41(A) "
+		// avoid % in order to avoid trouble with format functions
+		CString strTmp;
+		strTmp.Format( _T("%.2X(%c) "), nChar, ( nChar >= 32 && nChar != '%' ? nChar : '.' ) );
+		strOutput += strTmp;
+	}
+
+	theApp.Message( MSG_DEBUG, LPCTSTR( strOutput ) );
+
+// Go back to including all the lines in the program
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////

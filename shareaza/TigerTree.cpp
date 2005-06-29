@@ -20,7 +20,7 @@
 //
 
 #include "StdAfx.h"
-// #include "Shareaza.h"
+#include "Shareaza.h"
 #include "TigerTree.h"
 
 #ifdef _DEBUG
@@ -566,24 +566,8 @@ void CTigerTree::Dump()
 		}
 	}
 
-	CFile pFile;
+	theApp.LogMessage( strOutput );
 
-	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
-	{
-		pFile.Seek( 0, CFile::end );
-	}
-	else
-	{
-		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) )
-			return;
-	}
-
-	strOutput += _T("\r\n");
-
-	USES_CONVERSION;
-	LPCSTR pszOutput = T2A(strOutput);
-	pFile.Write( pszOutput, strlen(pszOutput) );
-	pFile.Close();
 #endif
 }
 

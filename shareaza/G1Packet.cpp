@@ -251,54 +251,10 @@ void CG1Packet::Debug(LPCTSTR pszReason) const
 // Only include these lines in the program if it is being compiled in debug mode
 #ifdef _DEBUG
 
-	// If settings have turned off debugging, do nothing and leave now
-	if ( ! Settings.General.Debug ) return;
-
 	// Local objects
 	CString strOutput; // We'll compose text that describes what happened here
-	CFile   pFile;     // Then, we'll write that text into the bottom of this file
-
-	// Open a file named Shareaza.log with the ability to read and write from it
-	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
-	{
-		pFile.Seek( 0, CFile::end );
-
-	} // Opening the file didn't work, probably because it doesn't exist yet
-	else
-	{
-		// Create it and request read only access
-		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite | CFile::modeCreate ) ) return; // If that still didn't work, leave now
-	}
-
-	// Compose the given reason into more complete and descriptive text
-	strOutput.Format( _T("%s: %s [%i/%i] %s\r\n\r\n"), pszReason, GetType(), m_nTTL, m_nHops, (LPCTSTR)ToASCII() );
-
-	// Set up the ATL string conversion macros, like T2CA
-	USES_CONVERSION; // This is a macro that alerts the compiler to add a lot of code here for the macros used beneath it
-
-	// Convert the string of TCHARs into ASCII, and get a pointer to the constant text
-	LPCSTR pszOutput = T2CA( (LPCTSTR)strOutput ); // T2CA means text to constant ASCII
-
-	// Write that text into the file
-	pFile.Write( pszOutput, strlen(pszOutput) );
-
-	// Loop the index i down each byte in the packet buffer
-	for ( DWORD i = 0 ; i < m_nLength ; i++ )
-	{
-		// Read the byte there as an int called nChar
-		int nChar = m_pBuffer[i];
-
-		// Encode it as two base 16 characters followed by an ASCII character, like "00(.) " or "41(A) "
-		strOutput.Format( _T("%.2X(%c) "), nChar, ( nChar >= 32 ? nChar : '.' ) );
-
-		// Convert that little string into ASCII, and write it into the log file
-		pszOutput = T2CA( (LPCTSTR)strOutput );
-		pFile.Write( pszOutput, strlen(pszOutput) );
-	}
-
-	// End the line with two newlines, and close the file
-	pFile.Write( "\r\n\r\n", 4 ); // Each newline is the 2 bytes "\r\n"
-	pFile.Close();
+	strOutput.Format( L"[G1]: '%s' %s [%i/%i] %s", pszReason, GetType(), m_nTTL, m_nHops, (LPCTSTR)ToASCII() );
+	CPacket::Debug( strOutput );
 
 // Go back to including all the lines in the program
 #endif

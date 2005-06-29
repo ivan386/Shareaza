@@ -257,42 +257,14 @@ LPCTSTR CEDPacket::GetType() const
 void CEDPacket::Debug(LPCTSTR pszReason) const
 {
 #ifdef _DEBUG
-	if ( ! Settings.General.Debug ) return;
-
 	if ( m_nType == ED2K_C2C_SENDINGPART ) return;
 	if ( m_nType == ED2K_C2C_HASHSETANSWER ) return;
 	if ( m_nType == ED2K_C2C_COMPRESSEDPART ) return;
 
 	CString strOutput;
-	CFile pFile;
+	strOutput.Format( L"[ED2K]: '%s' %s %s", pszReason, GetType(), (LPCTSTR)ToASCII() );
+	CPacket::Debug( strOutput );
 
-	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
-	{
-		pFile.Seek( 0, CFile::end );
-	}
-	else
-	{
-		if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
-	}
-
-	strOutput.Format( _T("[ED2K]: '%s' %s %s\r\n\r\n"),
-		pszReason, GetType(), (LPCTSTR)ToASCII() );
-
-	USES_CONVERSION;
-	LPCSTR pszOutput = T2CA( (LPCTSTR)strOutput );
-	pFile.Write( pszOutput, strlen(pszOutput) );
-
-	for ( DWORD i = 0 ; i < m_nLength ; i++ )
-	{
-		int nChar = m_pBuffer[i];
-		strOutput.Format( _T("%.2X(%c) "), nChar, ( nChar >= 32 ? nChar : '.' ) );
-		pszOutput = T2CA( (LPCTSTR)strOutput );
-		pFile.Write( pszOutput, strlen(pszOutput) );
-	}
-
-	pFile.Write( "\r\n\r\n", 4 );
-
-	pFile.Close();
 #endif
 }
 
