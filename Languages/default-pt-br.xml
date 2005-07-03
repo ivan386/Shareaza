@@ -16,7 +16,7 @@
 			description="Tradução para o português do Brasil do  Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
-			version="2.1.0.150"
+			version="2.1.1.11"
 			type="Language"
 			language="br"
 			prompt="Clique aqui para selecionar a tradução do Shareaza em português do Brasil."
@@ -48,6 +48,7 @@
 		<button id="ID_NETWORK_CONNECT" text="Conectar"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
+		<button id="ID_TAB_HOME"/>
 		<button id="ID_VIEW_SYSTEM"/>
 		<button id="ID_VIEW_NEIGHBOURS"/>
 		<button id="ID_VIEW_DOWNLOADS"/>
@@ -95,11 +96,11 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_SEARCH" text="Pesquisar Novamente..."/>
-		<button id="ID_SEARCH_STOP" text="Parar"/>
+	        <button id="ID_SEARCH_SEARCH" text="Pesquisar Novamente..."/>
+                <button id="ID_SEARCH_STOP" text="Parar"/>
 		<separator/>
-		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
+                <button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
+                <button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Painel de Pesquisa"/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
@@ -767,7 +768,7 @@
 		<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Monitor de Pesqu_isa"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de _Acertos"/>
-    </menu>
+            </menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="_Conectar Agora"/>
@@ -921,7 +922,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévia"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Ver Prévia da _Cópia"/> -->
+	         <!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Ver Prévia da _Cópia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Ver no Tocador de Mídia"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Comentários"/>
 		<separator/>
@@ -945,7 +946,7 @@
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Mover para _baixo"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignorar limite de download"/>
 		</menu>
-		<item id="ID_DOWNLOADS_HELP" text="A_juda..."/>
+                <item id="ID_DOWNLOADS_HELP" text="A_juda..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Acessar Fonte"/>
@@ -1771,7 +1772,8 @@
 		</text>
 		<text format="b">Internet </text>
 		<text>
-			controlam como o Shareaza interage com outros clientes nas redes peer-to-peer.
+		        controlam como o Shareaza interage com outros clientes nas 
+                        redes peer-to-peer.
 		</text>
 		<newline gap="16" margin="16"/>
 		
@@ -2094,7 +2096,23 @@
 		uma lista atualizada (met file) para conectar ao EDK2K.</text>
 		<newline gap="8"/>
 		<text>Você pode baixar uma lista na página de condigurações do ED2K, ou na janela
-		de Descobrimento de Serviços</text>
+		de Descobrimento de Serviços</text>		
+        </document>
+
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Limitar uploads pode limitar os downloads</text>
+                <newline gap="8"/>
+		<text>Várias redes nas quais o Shareaza conecta tem como parâmetro a sua velocidade de upload., limitando
+		o download para quem não compartilha ou dando preferência à bons compartilhadores .</text>
+		<newline/>
+		<text>Conexões de banda larga são como duas pistas de uma estrada: você
+		lugares separados para upload e download. Se o seu programa está configurado corretamente, 
+		você será capaz de fazer uploads a uma boa velocidade e ao mesmo tempo fazer downloads
+                com toda a sua capacidade.</text>
+		<newline gap="8"/>
+		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
+		while downloads are unlimited. That configuration should give you the fastest possible 
+		downloads that are available.</text>
 	</document>
 
         <!-- Search help documents -->
@@ -2261,12 +2279,12 @@
 <tip id="ID_HELP_HOMEPAGE" message="Visitar o site Shareaza.com."/>
 <tip id="ID_HELP_SECURITY" message="Ajuda para proter o seu sistema de programas hostis"/>
 <tip id="ID_HELP_UPDATE" message="Confira novidades e atualizações."/>
-<tip id="ID_HELP_WEB_1" message="Visite este site"/>
-<tip id="ID_HELP_WEB_2" message="Visite este site"/>
-<tip id="ID_HELP_WEB_3" message="Visite este site"/>
-<tip id="ID_HELP_WEB_4" message="Visite este site"/>
-<tip id="ID_HELP_WEB_5" message="Visite este site"/>
-<tip id="ID_HELP_WEB_6" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_1" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_2" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_3" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_4" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_5" message="Visite este site"/>
+	<tip id="ID_HELP_WEB_6" message="Visite este site"/>
 <tip id="ID_HITMONITOR_CLEAR" message="Limpar o Monitor de Acerto."/>
 <tip id="ID_HITMONITOR_PAUSE" message="Pausar a monitoração de acerto."/>
 <tip id="ID_HITMONITOR_SEARCH" message="Pesquisar na rede o termo selecionado."/>
@@ -2508,7 +2526,9 @@
 	<string id="7000" value="Tem certeza que deseja apagar este filtro ?"/>
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Valores Múltiplos"/>
-	<string id="7003" value="Múltipls"/>
+	<string id="7003" value="Múltiplos"/>
+	<string id="7004" value="Já existe um filtro chamado &quot;%s&quot;, você deseja substitui-lo?"/>
+	<string id="7005" value="Por favor dê um nome ao seu filtro."/>
 	<string id="8000" value="Configurações do Shareaza"/>
 	<string id="8001" value="Bem-vindo ao Shareaza"/>
 	<string id="8002" value="Propriedades do Arquivo"/>
@@ -2587,6 +2607,7 @@
 	<string id="8180" value="O tamanho do arquivo deve ser"/>
 	<string id="8181" value="&#160;para"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza está criando Hash(s) para %i arquivo(s):"/>
+        <string id="8223" value="%i dias e %i horas"/>
 	<string id="8224" value="Shareaza está baixando:"/>
 	<string id="8225" value="Este download está pausado:"/>
 	<string id="8226" value="Shareaza terminou de baixar:"/>
@@ -2918,13 +2939,14 @@
 	<string id="16803" value="A pasta que você está compartilhando já é compartilhada como parte de outra pasta compartilhada:\n\n%s"/>
 	<string id="16804" value="Você não colocou o seu nome de usuário no Perfil.\n\nÉ uma boa idéia colocar um nome para os outros usuário saberem com quem estão falando.\n\nTem certeza que deseja continuar sem o nome?"/>
 	<string id="16805" value="Você não colocou a sua localidade no Perfil.\n\nÉ uma boa idéia colocar uma localidade para os outros usuário saberem de onde você está falando.\n\nTem certeza que deseja continuar sem colocar a sua localidade?"/>
-	<string id="16806" value="Você indicou que deseja fazer o redirecionamento de portas do seu roteador NAT ou firewall.\n\nPor favor configure a sua rede para fazer o redirecionamento das portas TCP e UDP %i  para o seu computador."/>
+	<string id="16806" value="Você indicou que usa um NAT-router ou um firewall.\n\nPor favor configure sua rede para repassar a porta TCP %i para o seu PC local."/>
 	<string id="16807" value="Por favor selecione o tipo de limite de banda &quot;123 kb/s&quot; para kilobits por segundo, ou &quot;123 KB/s&quot; para kilobytes por segundo."/>
 	<string id="16808" value="Você não escolheu sua idade e sexo. Tem certeza que deseja continuar sem fazer isso?"/>
 	<string id="16809" value="S&amp;air"/>
 	<string id="16810" value="um ano"/>
 	<string id="16811" value="Automático"/>
 	<string id="16816" value="A rede eDonkey faz uso de longas filas e um longo tempo de espera. Limitando tão estritamente a posição máxima na fila você poderá ter problemas para iniciar seu downloas.\nTem certeza que deseja limitar a posição máxima que você aceitará para a fila?"/>
+	<string id="16817" value="O Windows não aceita nomes de caminhos maiores do que 256 caracteres.\nPor favor selecione uma pasta com uma caminho menor."/>
 	<string id="16864" value="Pesquisando host de Descobrimento de Serviço..."/>
 	<string id="16865" value="Pesquisando Serviço de Descobrimento &quot;%s&quot;..."/>
 	<string id="16866" value="Transação GWebCache obteve sucesso(&quot;%s&quot;)."/>
@@ -3047,7 +3069,6 @@
 	<string id="17477" value="Conexão BitTorrent com %s respondeu com o arquivo diferente."/>
 	<string id="17478" value="Conexão BitTorrent com %s respondeu com um arquivo diferente."/>
 	<string id="17479" value="Conexão BitTorrent com %s estabelecida para &quot;%s&quot;."/>
-	<string id="17480" value="Conexão BitTorrent com %s foi perdida."/>
 	<string id="17481" value="Recebido arquivo descritor de: &quot;%s&quot;"/>
 	<string id="17482" value="Incapaz de analisar o arquivo BitTorrent &quot;%s&quot;."/>
 	<string id="17483" value="Erro do Tracker do BitTorrent de &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3066,6 +3087,8 @@
 	<string id="17496" value="Um erro ocorreu ao copiar de &quot;%s&quot; para um arquivo de compartilhamento BitTorrent."/>
 	<string id="17497" value="Um erro desconhecido ocorreu ao tentar o seed &quot;%s&quot;."/>
 	<string id="17498" value="Um erro foi  detectado no arquivo &quot;%s&quot;."/>
+	<string id="17500" value="O Tracker não respondeu - Tentando novamente (%i de %i)"/>
+	<string id="17501" value="Incapaz de se comunicar com o Tracker"/>
 	<string id="18496" value="Você mudou o nome do download. Tem certeza que deseja renomeá-lo?"/>
 	<string id="18497" value="Você digitou um valor de hash SHA1, entretanto ele é inválido.  Por favor cheque-o e tente novamente."/>
 	<string id="18498" value="Você digitou um valor de hash do tipo Tiger-Tree, entretanto ele é inválido.  Por favor cheque-o e tente novamente."/>
@@ -3086,6 +3109,8 @@
 	<string id="19002" value="Incapaz de acietar conexões, URL não disponível."/>
 	<string id="20000" value="URN Indisponível"/>
 	<string id="20002" value="de"/><!-- e.g. 1 of 10 -->
+        <string id="20003" value="Para mudar a interface é necessário reiniciar. \nVocê precisára iniciar o Shareaza manualmente. Sair agora?"/>
+        <string id="20004" value="Linguas de leitura da ´Direita-para-esquerda´ não são suportadas pelo seu Sistema Operacional."/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pedindo"/>
 	<string id="20102" value="Resposta"/>
@@ -3160,7 +3185,7 @@
 		<control caption="bits/segundo|bytes/segundo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="_Downloads:"/>
 		<control caption="Expandir novos download"/>
-		<control caption="Exibir barra de progresso simplificada"/>
+                <control caption="Exibir barra de progresso simplificada"/>
 		<control caption="_Pesquisa:"/>
 		<control caption="Expandir arquivos multi-fontes"/>
 		<control caption="Ir para Tranferências ao abixar"/>
@@ -3419,25 +3444,25 @@
 		<control caption="Baixar..."/>
 	</dialog>
 
-<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
-	<control caption="_Interface:"/>
-	<control caption="Exibir interface adicional do BitTorrent"/>
-	<control caption="_Conexões de Download:"/>
-	<control/><control/>
-	<control caption="Torrents ao mesmo tempo"/>
-	<control/><control/>
-	<control caption="Conexões de  clientes"/>
-	<control caption="Limpar torrentas baixados"/>
-	<control caption="Quando a taxa de compartilhamente chegar em"/>
-	<control/><control/>
-	<control caption="Modo _EndGame:"/>
-	<control caption="Acionar modo EndGame mode quando completando torrents"/>
-	<control caption="_Guardar Torrents aqui:"/>
-	<control/><control/>
-	<control caption="_Criador de Torrents"/>
-	<control/><control/>
-	<control caption="Tracker Padrão: "/>
-	<control/><control/>
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
+		<control caption="_Interface:"/>
+		<control caption="Exibir interface adicional do BitTorrent"/>
+		<control caption="_Conexões de Download:"/>
+		<control/><control/>
+		<control caption="Torrents ao mesmo tempo"/>
+		<control/><control/>
+		<control caption="Conexões de  clientes"/>
+		<control caption="Limpar torrents completados"/>
+		<control/><control/><control/>
+		<control caption="&#160;Dar preferência à fontes BitTorrent"/>
+		<control caption="Modo _EndGame:"/>
+		<control caption="Acionar modo EndGame mode quando completando torrents"/>
+		<control caption="_Guardar Torrents aqui:"/>
+		<control/><control/>
+		<control caption="_Criador de Torrents"/>
+		<control/><control/>
+		<control caption="Tracker Padrão: "/>
+		<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocolos">
@@ -3546,7 +3571,7 @@
 		<control caption="Você usa um firewall ou roteador NAT na sua conexão de casa?"/>
 	        <control caption="&#160;Não, eu tenho ACESSO TOTAL a Internet| SIm, mas eu irei configurar a porta para o Shareaza| Sim, eu NÃO POSSO aceitar conexões da Internet| Eu não sei, por favor detecte automaticamente"/>
 		<control caption="Se você conhece a velocidade da sua conexão, selecione a melhor opção abaixo:"/>
-		<control caption="|Conexão Discada| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Internet a Cabo/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="|Conexão Discada| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Internet a Cabo/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="Ou então, escolha:"/>
 		<control/>
 	</dialog>
