@@ -86,7 +86,11 @@ BOOL CDownloadWithExtras::CanPreview()
 	if ( m_pPreviewWnd != NULL ) return FALSE;
 	
 	LPCTSTR pszType = _tcsrchr( m_sLocalName, '.' );
+	if ( pszType == NULL )
+	{
+		pszType = _tcsrchr( m_sRemoteName, '.' );
 	if ( pszType == NULL ) return FALSE;
+	}
 	
 	CString strType( pszType );
 	CharLower( strType.GetBuffer() );

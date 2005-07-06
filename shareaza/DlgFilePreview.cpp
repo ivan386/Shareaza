@@ -123,6 +123,12 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 		}
 	}
 
+	// if user changes extension or extension is lost
+	LPCTSTR pszExt1 = _tcsrchr( m_sSourceName, '.' );
+	LPCTSTR pszExt2 = _tcsrchr( m_sRemoteName, '.' );
+	if ( ! pszExt1 && pszExt2 || pszExt1 && pszExt2 && _tcsicmp( pszExt1, pszExt2 ) != 0 ) 
+		m_sTargetName += pszExt2;
+
     if ( !m_pDownload->GetEmptyFragmentList().empty() )
     {
         FF::SimpleFragmentList oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
@@ -349,8 +355,8 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 {
 	CString strType;
 	
-	int nExtPos = m_sSourceName.ReverseFind( '.' );
-	if ( nExtPos > 0 ) strType = m_sSourceName.Mid( nExtPos );
+	int nExtPos = m_sTargetName.ReverseFind( '.' );
+	if ( nExtPos > 0 ) strType = m_sTargetName.Mid( nExtPos );
 	CharLower( strType.GetBuffer() );
 	strType.ReleaseBuffer();
 	
@@ -360,7 +366,7 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	
 	if ( SUCCEEDED( m_pPlugin->SetSite( &m_xDownloadPreviewSite ) ) )
 	{
-		BSTR bsFile = m_sSourceName.AllocSysString();
+		BSTR bsFile = m_sTargetName.AllocSysString();
 		hr = m_pPlugin->Preview( hFile, bsFile );
 		SysFreeString( bsFile );
 	}
