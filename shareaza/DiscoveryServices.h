@@ -66,6 +66,7 @@ public:
 	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
 	BOOL				CheckMinimumServices();
 	BOOL				QueryForHosts(PROTOCOLID nProtocol);
+	DWORD				MetQueried() const;
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
 	void				Clear();
 

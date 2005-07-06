@@ -1,9 +1,9 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/06/15 22:00:05 $"
-//	Revision:		"$Revision: 1.36 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/07/06 17:46:31 $"
+//	Revision:		"$Revision: 1.37 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -314,6 +314,11 @@ BOOL CDiscoveryServices::QueryForHosts( PROTOCOLID nProtocol )
 	return FALSE;
 }
 
+DWORD CDiscoveryServices::MetQueried() const
+{
+	return m_tMetQueried;
+}
+
 CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -453,6 +458,7 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices Check we have the minimum number of services
+// Returns TRUE if there are enough services, or FALSE if there are not.
 
 BOOL CDiscoveryServices::EnoughServices() const
 {
@@ -596,8 +602,8 @@ BOOL CDiscoveryServices::Update()
 	else											// No protocols active- no updates
 		return FALSE;
 
-//*** ToDo: If you don't have leafs, you aren't an UP. If you aren't an UP, you don't advertise 
-// for leafs! This means Neighbours.IsG1Ultrapeer() will never be true...
+	//*** ToDo: Ultrapeer mode hasn't been updated or tested in a long time
+
 	ASSERT ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) );
 
 	// Must have at least 4 peers
@@ -653,15 +659,13 @@ BOOL CDiscoveryServices::Execute(BOOL bSecondary)
 		if ( ( bG1Required ) && ( nG1Hosts < 15 ) && RequestRandomService( PROTOCOL_G1 ) )
 			return TRUE;
 
-		/*
-		// Note: Do not enable until we have a MET file set up!
+		// Note: Do not enable MetAutoQuery until we have a MET file set up!
 		if ( ( Settings.eDonkey.EnableToday ) && ( Settings.eDonkey.MetAutoQuery ) &&
 			 ( HostCache.eDonkey.CountHosts() < 3 ) && ( m_tMetQueried == 0 ) )
-		{	// Execute this once only! It's not a webcache...
-			m_tMetQueried = tNow;
+		{	
+			m_tMetQueried = tNow;					// Execute this once only. (Very important)
 			if ( RequestRandomService( PROTOCOL_ED2K ) ) return TRUE;
 		}
-		*/
 		
 		if ( ( bG1Required ) && ( m_nLastQueryProtocol == PROTOCOL_G2 ) )
 			return RequestRandomService( PROTOCOL_G1 );
