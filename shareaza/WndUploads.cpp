@@ -200,7 +200,7 @@ void CUploadsWnd::OnTimer(UINT nIDEvent)
 		DWORD tNow = GetTickCount();
 
 		// If the window is visible or hasn't been updated in 10 seconds
-		if ( ( IsPartiallyVisible() ) || ( ( tNow - m_tLastUpdate ) > 10*1000 ) )
+		if ( ( IsWindowVisible() && IsActive( FALSE ) ) || ( ( tNow - m_tLastUpdate ) > 10*1000 ) )
 		{
 			m_wndUploads.Update();
 			m_tLastUpdate = tNow;

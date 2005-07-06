@@ -336,7 +336,7 @@ void CDownloadsWnd::OnTimer(UINT nIDEvent)
     if ( ( nIDEvent == 2 ) && ( m_pDragList == NULL ) )
 	{
 		// If the window is visible or hasn't been updated in 10 seconds
-		if ( ( IsPartiallyVisible() ) || ( ( GetTickCount() - m_tLastUpdate ) > 10*1000 ) )
+		if ( ( IsWindowVisible() && IsActive( FALSE ) ) || ( ( GetTickCount() - m_tLastUpdate ) > 10*1000 ) )
 		{
 			// Update the window
 			Update();
