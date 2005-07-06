@@ -209,7 +209,6 @@ void CSettings::Setup()
 	Add( _T("Gnutella.HitsPerPacket"), &Gnutella.HitsPerPacket, 64 );
 	Add( _T("Gnutella.RouteCache"), &Gnutella.RouteCache, 600 );
 	Add( _T("Gnutella.HostCacheCount"), &Gnutella.HostCacheSize, 1024 );
-	Add( _T("Gnutella.HostCacheExpire"), &Gnutella.HostCacheExpire, 10 * 60 );
 	Add( _T("Gnutella.HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella.ConnectThrottle"), &Gnutella.ConnectThrottle, 120 );
 	Add( _T("Gnutella.BlockBlankClients"), &Gnutella.BlockBlankClients, TRUE );
@@ -232,6 +231,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.VendorMsg"), &Gnutella1.VendorMsg, TRUE );
 	Add( _T("Gnutella1.QueryThrottle"), &Gnutella1.QueryThrottle, 20*60 );
 	Add( _T("Gnutella1.RequeryDelay"), &Gnutella1.RequeryDelay, 45*60 );
+	Add( _T("Gnutella1.HostExpire"), &Gnutella1.HostExpire, 2 * 24 * 60 * 60 );
 	Add( _T("Gnutella1.PingFlood"), &Gnutella1.PingFlood, 3000 );
 	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 15000 );
 	Add( _T("Gnutella1.PongCache"), &Gnutella1.PongCache, 10000 );
@@ -257,6 +257,8 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.KHLPeriod"), &Gnutella2.KHLPeriod, 60000 );
 	Add( _T("Gnutella2.KHLHubCount"), &Gnutella2.KHLHubCount, 50 );
 	Add( _T("Gnutella2.HAWPeriod"), &Gnutella2.HAWPeriod, 300000 );
+	Add( _T("Gnutella2.HostExpire"), &Gnutella2.HostExpire, 0 );
+	Add( _T("Gnutella2.HostCurrent"), &Gnutella2.HostCurrent, 10 * 60 );
 	Add( _T("Gnutella2.QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125 );
 	Add( _T("Gnutella2.QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120 );
 	Add( _T("Gnutella2.QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60 );

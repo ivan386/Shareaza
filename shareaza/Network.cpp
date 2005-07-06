@@ -203,6 +203,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	m_tStartedConnecting	= GetTickCount();
 	m_hThread				= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
 	
+	if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 	
 	return TRUE;

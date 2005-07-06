@@ -235,7 +235,6 @@ public:
 		DWORD		HitsPerPacket;
 		DWORD		RouteCache;
 		DWORD		HostCacheSize;
-		DWORD		HostCacheExpire;
 		DWORD		HostCacheView;
 		DWORD		ConnectThrottle;
 		BOOL		BlockBlankClients;			// Block Ultrapeers with no user agent
@@ -262,6 +261,7 @@ public:
 		BOOL		VendorMsg;
 		DWORD		QueryThrottle;
 		DWORD		RequeryDelay;
+		DWORD		HostExpire;
 		DWORD		PingFlood;
 		DWORD		PingRate;
 		DWORD		PongCache;
@@ -291,6 +291,8 @@ public:
 		DWORD		KHLPeriod;
 		DWORD		KHLHubCount;
 		DWORD		HAWPeriod;
+		DWORD		HostCurrent;
+		DWORD		HostExpire;
 		DWORD		QueryGlobalThrottle;		// Max G2 query rate (Cannot exceed 8/sec)
 		DWORD		QueryHostThrottle;
 		DWORD		QueryHostDeadline;

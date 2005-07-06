@@ -112,7 +112,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
 	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
 	AddSetting( &Settings.Gnutella.HostCacheSize, 1, 32, 16384 );
-	AddSetting( &Settings.Gnutella.HostCacheExpire, 60, 1, 24*60, _T(" m") );
 	AddSetting( &Settings.Gnutella.BlockBlankClients, 1, 0, 1 );
 	
 	AddSetting( &Settings.Gnutella1.PacketBufferSize, 1, 1, 1024 );
@@ -128,6 +127,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella1.VendorMsg, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.QueryThrottle, 60, 5, 2048, _T(" m") );
 	AddSetting( &Settings.Gnutella1.RequeryDelay, 60, 45, 2048, _T(" m") );
+	AddSetting( &Settings.Gnutella1.HostExpire, 24 * 60 * 60, 0, 100, _T(" d") );
 	AddSetting( &Settings.Gnutella1.PingFlood, 1000, 0, 30, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PingRate, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PongCache, 1000, 1, 180, _T(" s") );
@@ -148,6 +148,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.KHLPeriod, 1000, 1, 60 * 60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.KHLHubCount, 1, 1, 256 );
 	AddSetting( &Settings.Gnutella2.HAWPeriod, 1000, 1, 60 * 60, _T(" s") );
+	AddSetting( &Settings.Gnutella2.HostCurrent, 60, 1, 24*60, _T(" m") );
+	AddSetting( &Settings.Gnutella2.HostExpire, 24 * 60 * 60, 0, 100, _T(" d") );
 	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle, 1, 1, 60*1000, _T(" ms") );
 	AddSetting( &Settings.Gnutella2.QueryHostThrottle, 1, 1, 10*60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );

@@ -1,9 +1,9 @@
 //
 // HostCache.cpp
 //
-//	Date:			"$Date: 2005/06/15 22:00:07 $"
-//	Revision:		"$Revision: 1.14 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/07/06 17:50:07 $"
+//	Revision:		"$Revision: 1.15 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -546,7 +546,7 @@ DWORD CHostCacheList::CountHosts() const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList query acknowledgement prune
+// CHostCacheList query acknowledgement prune (G2)
 
 void CHostCacheList::PruneByQueryAck()
 {
@@ -568,6 +568,37 @@ void CHostCacheList::PruneByQueryAck()
 		pHost = pNext;
 	}
 }
+
+
+//////////////////////////////////////////////////////////////////////
+// CHostCacheList prune old hosts (To remove old hosts when trying to connect to G1)
+
+void CHostCacheList::PruneOldHosts()
+{
+	DWORD tNow = time( NULL );
+	
+	for ( CHostCacheHost* pHost = m_pNewest ; pHost ; )
+	{
+		CHostCacheHost* pNext = pHost->m_pPrevTime;
+
+		DWORD nExpire;
+
+		if ( pHost->m_nProtocol == PROTOCOL_G1 )
+			nExpire = Settings.Gnutella1.HostExpire;
+		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
+			nExpire = Settings.Gnutella2.HostExpire;
+		else // ed2k
+			nExpire = 0;
+
+		if ( ( nExpire ) && ( tNow - pHost->m_tSeen > nExpire ) )
+		{
+			Remove( pHost );
+		}
+		
+		pHost = pNext;
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList serialize
@@ -922,12 +953,13 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 BOOL CHostCacheHost::CanQuote(DWORD tNow) const
 {
 	if ( ! tNow ) tNow = time( NULL );
-	return tNow - m_tSeen < Settings.Gnutella.HostCacheExpire;
+	return tNow - m_tSeen < Settings.Gnutella2.HostCurrent;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost query test
 
+// Can we UDP query this host? (G2/ed2k)
 BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 {
 	// eDonkey2000 server
@@ -947,7 +979,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
+		return ( tNow - m_tQuery ) >= max( Settings.eDonkey.QueryServerThrottle, DWORD(60) );
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 )
 	{
@@ -960,8 +992,8 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		// Get the time if not supplied
 		if ( 0 == tNow ) tNow = time( NULL );
 		
-		// Must not have expired from host cache
-		if ( ( tNow - m_tSeen ) > Settings.Gnutella.HostCacheExpire ) return FALSE;
+		// Must be a recently seen (current) host
+		if ( ( tNow - m_tSeen ) > Settings.Gnutella2.HostCurrent ) return FALSE;
 		
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
