@@ -162,15 +162,22 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( bAutoConnect ) m_bAutoConnect = TRUE;
 	Settings.Live.AutoClose = FALSE;
+	if ( bAutoConnect ) 
+	{
+		m_bAutoConnect = TRUE;
+		// Remove really old G1 hosts before trying to connect to G1
+		if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
+	}
 	
+	// If we are already connected, see if we need to query discovery services and exit.
 	if ( m_bEnabled )
 	{
 		if ( bAutoConnect ) DiscoveryServices.Execute();
 		return TRUE;
 	}
 	
+	// Begin network startup
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_STARTUP );
 	
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
@@ -203,7 +210,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	m_tStartedConnecting	= GetTickCount();
 	m_hThread				= AfxBeginThread( ThreadStart, this, THREAD_PRIORITY_NORMAL )->m_hThread;
 	
-	if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	// if ( m_bAutoConnect && bAutoConnect ) DiscoveryServices.Execute();
 	
 	return TRUE;
