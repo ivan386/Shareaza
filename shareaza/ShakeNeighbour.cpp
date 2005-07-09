@@ -1395,16 +1395,18 @@ BOOL CShakeNeighbour::IsClientObsolete()
 {
 	if ( m_sUserAgent.IsEmpty() ) return FALSE;
 
-	if ( ( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||
+	if ( ( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old Shareazas
 		 ( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) ||
+
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||	// Fake Shareaza
 		 ( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7.0." ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("K-Lite 2.1"	  ) ) ) ||
+		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) ||
+
+		 ( _tcsistr( m_sUserAgent, _T("K-Lite 2.1"	  ) ) ) ||	// Based on old Shareaza code
 		 ( _tcsistr( m_sUserAgent, _T("SlingerX 2."   ) ) ) ||
 		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.0."    ) ) ) ||
 		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.1."    ) ) ) ||
 		 ( _tcsistr( m_sUserAgent, _T("360Share"      ) ) ) )
-
 
 		 return TRUE;
 
