@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/06/15 22:00:08 $"
-//	Revision:		"$Revision: 1.15 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/07/09 16:28:02 $"
+//	Revision:		"$Revision: 1.16 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -108,7 +108,7 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 	
 
-	// Apply limits to spin control range
+	// Apply range limits to spin control
 	if ( ! theApp.m_bNT )
 	{
 		m_wndMaxDownFiles.SetRange( 1, 80 );
@@ -117,10 +117,12 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	}
 	else
 	{
-	m_wndMaxDownFiles.SetRange( 1, 100 );
-		if ( Settings.GetOutgoingBandwidth() >= 16 ) m_wndMaxDownTransfers.SetRange( 1, 250 );
-		else m_wndMaxDownTransfers.SetRange( 1, 200 );
-	m_wndMaxFileTransfers.SetRange( 1, 100 );
+		m_wndMaxDownFiles.SetRange( 1, 100 );
+		if ( Settings.GetOutgoingBandwidth() >= 16 ) 
+			m_wndMaxDownTransfers.SetRange( 1, 250 );
+		else 
+			m_wndMaxDownTransfers.SetRange( 1, 200 );
+		m_wndMaxFileTransfers.SetRange( 1, 100 );
 	}
 	
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
@@ -160,7 +162,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	pMalloc->Free( pPath );
 	pMalloc->Release();
 	
-	// Warn user about too long filepath
+	// Warn user about a path that's too long
 	if ( _tcslen( szPath ) > MAX_PATH - 33 )
 	{
 		CString strMessage;
@@ -197,7 +199,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	pMalloc->Free( pPath );
 	pMalloc->Release();
 
-	// Warn user about too long filepath
+	// Warn user about a path that's too long
 	if ( _tcslen( szPath ) > MAX_PATH - 60 )
 	{
 		CString strMessage;
@@ -240,6 +242,7 @@ void CDownloadsSettingsPage::OnOK()
 	}
 	else
 	{
+		// Max queue is limited, calculate number
 		int nPosition = 1, nCount = m_sQueueLimit.GetLength();
 		while ( nCount-- )
 		{
