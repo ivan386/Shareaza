@@ -1168,6 +1168,17 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	
 	pPacket->Read( &m_pUpMD4, sizeof(MD4) );
 	pReply->Write( &m_pUpMD4, sizeof(MD4) );
+
+
+	// Extra security check (Shouldn't be needed, but there have been reports of glitches)
+	if ( Security.IsDenied( &m_pHost.sin_addr ) )
+	{
+		pReply->m_nType = ED2K_C2C_FILENOTFOUND;
+		Send( pReply );
+		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
+		return TRUE;
+	}
+
 	m_bUpMD4 = TRUE;
 	
 	CSingleLock oLock( &Library.m_pSection,TRUE );
