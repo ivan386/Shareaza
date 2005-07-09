@@ -1977,7 +1977,7 @@
 		<newline gap="8"/>
 		<text>This is where queues and uploads are displayed. You can expand each queue
 		with the small + on the left, and filter what is displayed with the button on the
-		right on the window toolbar.</text>
+		right of the window's toolbar.</text>
 	</document>
 
 	<!-- General help documents -->
