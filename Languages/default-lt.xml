@@ -1628,8 +1628,8 @@ right quote	&#147;
 		<text group="21" align="middle">Atsijungta</text>
 		<text group="22" align="middle">Jungiamasi...</text>
 		<text group="23" align="middle">Prisijungta</text>
-		<text group="24" align="middle" id="G2Hubs">%i mazgų</text>
-		<text group="25" align="middle" id="G2Leaves">%i šakų</text>
+		<text group="24" align="middle" id="G2Hubs">%i mazgai</text>
+		<text group="25" align="middle" id="G2Leaves">%i šakos</text>
 		<newline group="20" gap="2"/>
 
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
