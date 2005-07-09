@@ -106,7 +106,11 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 	
 	DoDonkeyImport();
 
-	if ( m_bEDEnable ) CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
+	if ( m_bEDEnable ) 
+	{
+		CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
+		Settings.Live.UploadLimitWarning = TRUE;
+	}
 	
 	return 0;
 }

@@ -428,6 +428,7 @@ CSettings::CSettings()
 	Live.AdultWarning		= FALSE;
 	Live.QueueLimitWarning	= FALSE;
 	Live.DonkeyServerWarning= FALSE;
+	Live.UploadLimitWarning	= FALSE;
 	Live.DiskSpaceStop		= FALSE;
 	Live.BandwidthScale		= 100;
 	Live.LoadWindowState	= FALSE;
