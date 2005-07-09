@@ -265,7 +265,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		m_bQueueMe = TRUE;
 		m_nGnutella |= 1;
-		if ( strValue == _T("1.0") ) m_bNotShareaza = TRUE;
+		if ( strValue == _T("1.0") ) m_bNotShareaza = TRUE;			// Shareaza doesn't send this value
 	}
 	else if (	strHeader.CompareNoCase( _T("X-Nick") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Name") ) == 0 ||
@@ -299,8 +299,6 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 		if ( m_bNotShareaza )	// Client spoofing a Shareaza header
 		{
-			m_nGnutella = 1;
-
 			SendResponse( IDR_HTML_FILENOTFOUND );
 			theApp.Message( MSG_ERROR, _T("Client %s has a spoofed user agent, banning"), (LPCTSTR)m_sAddress );
 					
@@ -955,6 +953,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
 	
+	// If there's an error reading the file from disk
 	if ( m_pDiskFile == NULL )
 	{
 		SendResponse( IDR_HTML_FILENOTFOUND );

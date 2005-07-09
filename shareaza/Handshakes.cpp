@@ -472,7 +472,7 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCall
 	// Copy out the IP address and port number of the remote computer
 	SOCKADDR_IN* pHost = (SOCKADDR_IN*)lpCallerId->buf;
 	
-	// If the remote computer's IP address is on the list of government and corporate ranges to be silent with
+	// If the remote computer's IP address is on the list of blocked IPs
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{
 		// Record we are rejecting this connection because it is on the watch list, and tell WSAAccept to not connect

@@ -77,7 +77,7 @@ CUploadTransferBT::~CUploadTransferBT()
 
 void CUploadTransferBT::SetChoke(BOOL bChoke)
 {
-	// Sort transfers- keep active ones near the head
+	// Sort transfers- keep active ones near the head (Top of the list in the uploads window)
 	if ( ! bChoke ) UploadFiles.MoveToHead( this );
 
 	// If we have not changed state, just return

@@ -105,7 +105,11 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 	if ( nProtocol == PROTOCOL_ED2K )
 	{
 		CEDNeighbour* pNeighbour = new CEDNeighbour();
-		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic ) ) return pNeighbour;
+		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic ) ) 
+		{
+			// Started connecting to an ed2k neighbour
+			return pNeighbour;
+		}
 		delete pNeighbour;
 	}
 	else
@@ -113,16 +117,18 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 		CShakeNeighbour* pNeighbour = new CShakeNeighbour();
 		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic, bNoUltraPeer ) ) 
 		{
-		/*
+			// Started connecting to a G1/G2 neighbour
+			/*
 			// If we only want G1 connections now, specify that to begin with.
 			if ( ( nProtocol == PROTOCOL_G1 ) && ( ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) )
 				pNeighbour->m_nProtocol = PROTOCOL_G1;
-		*/
+			*/
 			return pNeighbour;
 		}
 		delete pNeighbour;
 	}
 	
+	// Wasn't able to connect
 	return NULL;
 }
 
