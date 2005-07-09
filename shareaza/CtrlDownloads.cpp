@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/06/15 21:59:47 $"
-//	Revision:		"$Revision: 1.34 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/07/09 03:48:57 $"
+//	Revision:		"$Revision: 1.35 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -938,6 +938,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		CRect rcCell;
 		CString strSource;
 		BOOL bDisplayText	= TRUE;
+		UINT nIconStyle;
 		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
@@ -957,8 +958,10 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			else
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crNatural );
 			rcCell.left += 16;
+			nIconStyle = pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL;
+			if ( pDownload->GetReviewCount() > 0 ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COLLECTION );
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sRemoteName, 16 ), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
 			rcCell.left += 1;
