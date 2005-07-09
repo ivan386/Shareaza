@@ -127,8 +127,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,2,5
- PRODUCTVERSION 2,1,2,5
+ FILEVERSION 2,1,2,6
+ PRODUCTVERSION 2,1,2,6
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -146,12 +146,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 1, 2, 5"
+            VALUE "FileVersion", "2, 1, 2, 6"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 1, 2, 5"
+            VALUE "ProductVersion", "2, 1, 2, 6"
         END
     END
     BLOCK "VarFileInfo"
@@ -4962,6 +4962,10 @@ BEGIN
     IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
     IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
     IDS_BROWSE_TITLE_FORMAT "Browsing %s"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
 END
 
@@ -5019,6 +5023,10 @@ BEGIN
                             "Are you sure you want to cancel/abort every download in this group?"
     IDS_UPLOAD_QUEUE_QUEUE  "Queue"
     IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
     IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
     IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
@@ -5797,7 +5805,6 @@ BEGIN
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
-
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////

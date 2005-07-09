@@ -79,6 +79,9 @@ void CShellIcons::Clear()
 	m_i16.SetOverlayImage( SHI_PARTIAL, SHI_O_PARTIAL );
 	m_i16.SetOverlayImage( SHI_COLLECTION, SHI_O_COLLECTION );
 	m_i16.SetOverlayImage( SHI_COMMERCIAL, SHI_O_COMMERCIAL );
+	m_i16.SetOverlayImage( SHI_RATING_FAKE, SHI_O_RATING_FAKE );
+	m_i16.SetOverlayImage( SHI_RATING_AVERAGE, SHI_O_RATING_AVERAGE );
+	m_i16.SetOverlayImage( SHI_RATING_GOOD, SHI_O_RATING_GOOD );
 	
 	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 32, 32, 0 );
 	if ( theApp.m_bRTL ) hTemp = CreateMirroredIcon( hTemp );

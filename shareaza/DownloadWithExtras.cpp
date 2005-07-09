@@ -203,7 +203,7 @@ BOOL CDownloadWithExtras::AddReview(CDownloadReview* pReview)
 	return TRUE;
 }
 
-// Delete all reviews
+// Delete a reviews
 void CDownloadWithExtras::DeleteReview(CDownloadReview *pReview)
 {
 	if ( pReview == NULL ) return;
@@ -314,6 +314,29 @@ CDownloadReview* CDownloadWithExtras::FindReview(int nRating, LPCTSTR pszName, L
 	}
 
 	return NULL;
+}
+
+// Get the average rating of all reviews
+int CDownloadWithExtras::GetReviewAverage() const
+{
+	int nAverageRating = 0, nCount = 0;
+
+	CDownloadReview *pNext = NULL, *pReview = m_pReviewFirst;
+
+	while ( pReview )
+	{
+		pNext = pReview->m_pNext;
+		if ( pReview->m_nFileRating > 0 )
+		{
+			nAverageRating += pReview->m_nFileRating;
+			nCount ++;
+		}
+		pReview = pNext;
+	}
+
+	if ( nCount ) nAverageRating /= nCount;
+
+	return nAverageRating;
 }
 
 

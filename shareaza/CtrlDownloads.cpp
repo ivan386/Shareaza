@@ -1,8 +1,8 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/09 03:48:57 $"
-//	Revision:		"$Revision: 1.35 $"
+//	Date:			"$Date: 2005/07/09 12:57:37 $"
+//	Revision:		"$Revision: 1.36 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -931,6 +931,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	
 	int nTransfers		= pDownload->GetTransferCount();
 	int nSources		= pDownload->GetSourceCount();
+	int nRating			= pDownload->GetReviewAverage();
+
+	if ( ( nRating == 0 ) && ( pDownload->GetReviewCount() > 0 ) )
+	{
+		// There are reviews but no ratings- give it an "average" rating
+		nRating = 3;
+	}
 	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
@@ -959,7 +966,25 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crNatural );
 			rcCell.left += 16;
 			nIconStyle = pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL;
-			if ( pDownload->GetReviewCount() > 0 ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COLLECTION );
+
+			// Add rating overlay
+			switch ( nRating )
+			{
+			case 0:		// No reviews or no reviews with ratings
+				break;
+			case 1:		// Ratings suggest fake file
+				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_FAKE );
+				break;
+			case 2:	
+			case 3:	
+			case 4:	// Ratings suggest average file
+				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_AVERAGE );
+				break;
+			default:	// Ratings suggest good file
+				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_GOOD );
+				break;
+			}
+
 			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sRemoteName, 16 ), dc.GetSafeHdc(),
 					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
