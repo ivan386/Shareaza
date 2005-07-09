@@ -4347,6 +4347,16 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
+    IDS_SCHEMAS             "&Schemas"
+    IDS_MULTIPLE_VALUES     "Multiple Values"
+    IDS_MULTIPLE            "Multiple"
+    IDS_FILTER_REPLACE      "There already is a filter called ""%s"", do you want to replace it?"
+    IDS_FILTER_NO_NAME      "Please give your filter a name."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_SETTINGS            "Shareaza Settings"
     IDS_WIZARD              "Welcome to Shareaza"
     IDS_FILE_PROPERTIES     "File Properties"
@@ -4549,6 +4559,15 @@ BEGIN
     IDS_STATUS_BAR_CONNECTED_HUB 
                             "Hub mode with %lu neighbour(s).  %s in local library."
     IDS_STATUS_BAR_CONNECTED_SIMPLE "Connected. %s in local library."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PROPERTY_PAGE_GENERAL "General"
+    IDS_PROPERTY_PAGE_METADATA "Metadata"
+    IDS_PROPERTY_PAGE_COMMENTS "My Review"
+    IDS_PROPERTY_PAGE_SHARING "Sharing"
+    IDS_PROPERTY_PAGE_SOURCES "Sources"
 END
 
 STRINGTABLE 
@@ -4779,7 +4798,7 @@ BEGIN
                             "Upload host %s requested ""%s"" with different SHA1."
     IDS_UPLOAD_BUSY_OLD     "Refusing upload of ""%s"" to %s (%s), busy and client does not support queues."
     IDS_UPLOAD_GIV          "Push connection to %s established, waiting for handshake..."
-    IDS_UPLOAD_CANTOPEN     "Can't open ""%s"" to upload to host %s, disk/file error."
+    IDS_UPLOAD_CANTOPEN     "Can't open ""%s"" to upload to host %s due to disk or file error."
     IDS_UPLOAD_CONTENT      "Sending upload content range %I64i-%I64i from ""%s"" to host %s (%s)."
     IDS_UPLOAD_FINISHED     "Finished uploading part of ""%s"" to %s."
     IDS_UPLOAD_ACCEPTED     "Incoming connection from %s is a HTTP upload request."
@@ -4943,6 +4962,96 @@ BEGIN
     IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
     IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
     IDS_BROWSE_TITLE_FORMAT "Browsing %s"
+    IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOAD_TIGER_CORRUPT 
+                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
+    IDS_DOWNLOAD_TIGER_MISMATCH 
+                            "Download host's tiger-tree does not match expected root value."
+    IDS_DOWNLOAD_TIGER_READY 
+                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
+    IDS_DOWNLOAD_CLOSING_EXTRA 
+                            "Closing download connection to %s, no longer required."
+    IDS_DOWNLOAD_CLOSING_OVERFLOW 
+                            "Download host %s sent unsolicited data, closing connection."
+    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
+    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
+    IDS_DOWNLOAD_HASHSET_REQUEST 
+                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
+    IDS_DOWNLOAD_HASHSET_ERROR 
+                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
+    IDS_DOWNLOAD_HASHSET_READY 
+                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
+    IDS_DOWNLOAD_HASHSET_CORRUPT 
+                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
+    IDS_DOWNLOAD_INFLATE_ERROR 
+                            "Unable to initialize inflate for download ""%s""."
+    IDS_DOWNLOAD_QUEUE_TIMEOUT 
+                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
+    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
+    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
+    IDS_DOWNLOAD_VERIFY_DROP 
+                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UPLOAD_PREVIEW_SEND "Uploading a preview of ""%s"" to %s."
+    IDS_UPLOAD_PREVIEW_BUSY "Refusing to upload a preview of ""%s"" to %s, too many preview connections."
+    IDS_UPLOAD_PREVIEW_EMPTY 
+                            "Upload host %s requested a preview of ""%s"", but no preview is available."
+    IDS_UPLOAD_PREVIEW_DYNAMIC 
+                            "Scheduling a dynamic preview of ""%s"" for upload to %s."
+    IDS_UPLOAD_BROWSE_BUSY  "Refusing browse user request from %s, too many browse connections."
+    IDS_UPLOAD_FILE         "Uploading file ""%s"" to host %s..."
+    IDS_UPLOAD_QUEUE_DROP   "Upload connection to %s was lost, preserving queue position."
+    IDS_UPLOAD_QUEUE_TIMEOUT 
+                            "Offline queued upload host %s expired, removing."
+    IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
+    IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
+    IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
+    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
+    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
+    IDS_DOWNLOAD_CLEAR_GROUP 
+                            "Are you sure you want to cancel/abort every download in this group?"
+    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
+    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
+    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
+    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
+    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
+    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
+    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
+    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
+    IDS_UPLOAD_QUEUE_NEW    "New Queue"
+    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
+    IDS_UPLOAD_QUEUE_COMPLETE "All Files"
+    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
+    IDS_DOWNLOAD_416_WITHOUT_RANGE 
+                            "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBRARY_TARGET_EXISTS 
+                            "Target file exists:\n\n%s\n\nWould you like to overwrite it?"
+    IDS_LIBRARY_TYPE_FILTER_ALL "Show All File Types"
+    IDS_LIBRARY_COLLECTION_INVALID 
+                            "Shareaza received a collection file:\r\n\r\n""%s""\r\n\r\nThis file does not appear to be a valid collection file."
+    IDS_LIBRARY_COLLECTION_INSTALLED 
+                            "Shareaza has added the collection file ""%s"" to your library."
+    IDS_LIBRARY_COLLECTION_CANT_INSTALL 
+                            "Shareaza was unable to install the collection file ""%s"" by copying it to the folder ""%s""."
+    IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 
+                            "Would you like to download this file?\r\n\r\n""%s""\r\n\r\nChoose Cancel to stop any further prompts."
+    IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 
+                            "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
+    IDS_LIBRARY_COLLECTION_LOCKDOWN 
+                            "Would you like to prevent this collection from prompting you to download anything else?"
+    IDS_LIBRARY_COPYURI     "Copy &URI"
+    IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
 END
 
 STRINGTABLE 
@@ -5004,55 +5113,265 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DOWNLOAD_TIGER_CORRUPT 
-                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
-    IDS_DOWNLOAD_TIGER_MISMATCH 
-                            "Download host's tiger-tree does not match expected root value."
-    IDS_DOWNLOAD_TIGER_READY 
-                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
-    IDS_DOWNLOAD_CLOSING_EXTRA 
-                            "Closing download connection to %s, no longer required."
-    IDS_DOWNLOAD_CLOSING_OVERFLOW 
-                            "Download host %s sent unsolicited data, closing connection."
-    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
-    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
-    IDS_DOWNLOAD_HASHSET_REQUEST 
-                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
-    IDS_DOWNLOAD_HASHSET_ERROR 
-                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
-    IDS_DOWNLOAD_HASHSET_READY 
-                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
-    IDS_DOWNLOAD_HASHSET_CORRUPT 
-                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
-    IDS_DOWNLOAD_INFLATE_ERROR 
-                            "Unable to initialize inflate for download ""%s""."
-    IDS_DOWNLOAD_QUEUE_TIMEOUT 
-                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
-    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
-    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
-    IDS_DOWNLOAD_VERIFY_DROP 
-                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
+    IDS_CHAT_CONNECTING_TO  "Initiating a connection to %s..."
+    IDS_CHAT_CANT_CONNECT   "Unable to create a connection to %s."
+    IDS_CHAT_PUSH_SENT      "Requesting a firewalled push connection from %s..."
+    IDS_CHAT_PUSH_DONE      "Accepted push connection from %s, handshaking..."
+    IDS_CHAT_CONNECTED      "Connection established, handshaking..."
+    IDS_CHAT_HANDSHAKE_FAIL "Handshake failed, host may not support chatting."
+    IDS_CHAT_HANDSHAKE_G1   "Handshake complete, chat protocol version %s."
+    IDS_CHAT_HANDSHAKE_G2   "Exchanging profile information..."
+    IDS_CHAT_PROFILE_ACCEPTED "Authenticated user "
+    IDS_CHAT_PRIVATE_START  "Requesting private conversation with user..."
+    IDS_CHAT_PRIVATE_ONLINE "Private conversation granted, you are now chatting with %s."
+    IDS_CHAT_PRIVATE_REFUSED 
+                            "%s is not accepting private conversations, sorry."
+    IDS_CHAT_PRIVATE_AWAY   "%s is away: %s"
+    IDS_CHAT_DROPPED        "The chat connection was lost."
+    IDS_CHAT_CLOSED         "Connection closed."
+    IDS_CHAT_CANT_PUSH      "Unable to request a push connection from %s, no route available."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
-    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
-    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
-    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
-    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
-    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
-    IDS_UPLOAD_QUEUE_NEW    "New Queue"
-    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
-    IDS_UPLOAD_QUEUE_COMPLETE "All Files"
-    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
-    IDS_DOWNLOAD_416_WITHOUT_RANGE 
-                            "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
+    IDS_CHAT_NOT_CONNECTED_1 
+                            "Cannot send message, you are not connected.  Shareaza is trying to connect..."
+    IDS_CHAT_NOT_CONNECTED_2 
+                            "Cannot send message, a connection has not been established yet."
+    IDS_CHAT_NEED_PROFILE   "You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"
+    IDS_CHAT_PRIORITY_GRANTED "Granted upload priority to host %s."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
+    IDS_ED2K_SERVER_CONNECTING 
+                            "Initiating connection to eDonkey2000 server at %s..."
+    IDS_ED2K_SERVER_CONNECTED 
+                            "Connected to eDonkey2000 server %s, handshaking..."
+    IDS_ED2K_SERVER_MESSAGE "ED2K[%s] %s"
+    IDS_ED2K_SERVER_REFUSED "eDonkey2000 server %s refused connection."
+    IDS_ED2K_SERVER_ONLINE  "eDonkey2000 server %s online, client ID is %lu."
+    IDS_ED2K_SERVER_IDCHANGE 
+                            "eDonkey2000 server %s changed our client ID from %lu to %lu."
+    IDS_ED2K_SERVER_IDENT   "eDonkey2000 server %s identified itself as ""%s""."
+    IDS_ED2K_SERVER_REJECTED "eDonkey2000 server %s rejected the connection."
+    IDS_ED2K_CLIENT_HANDSHAKE_FAIL 
+                            "Error exchanging handshake with eDonkey2000 client %s."
+    IDS_ED2K_CLIENT_DROPPED "eDonkey2000 client connection to %s was closed."
+    IDS_ED2K_CLIENT_BAD_PACKET 
+                            "Received a malformatted eDonkey2000 packet from %s (id=%x)."
+    IDS_ED2K_CLIENT_ACCEPTED 
+                            "Incoming connection from %s is an eDonkey2000 client link."
+    IDS_ED2K_CLIENT_SENT_HASHSET 
+                            "Sending eDonkey2000 hashset for ""%s"" to %s..."
+    IDS_ED2K_CLIENT_CLOSED  "eDonkey2000 client connection to %s was idle, closed."
+    IDS_ED2K_CLIENT_CONNECTING 
+                            "Initiating eDonkey2000 client connection to %s..."
+    IDS_ED2K_CLIENT_WRONG_GUID 
+                            "eDonkey2000 client %s has the wrong GUID, aborting handshake."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ED2K_CLIENT_CONNECT_TIMEOUT 
+                            "Timed out connecting to eDonkey2000 client %s."
+    IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT 
+                            "Timed out handshaking with eDonkey2000 client %s."
+    IDS_ED2K_CLIENT_DISABLED 
+                            "Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
+    IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
+    IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
+    IDS_ED2K_EPI_FILE_FAILED "  Unable to import file."
+    IDS_ED2K_EPI_FILE_START " Found partial file ""%s"", importing..."
+    IDS_ED2K_EPI_CANT_OPEN_PART "  Unable to open part file ""%s""."
+    IDS_ED2K_EPI_DETECTED   "  Found download ""%s"", size %s."
+    IDS_ED2K_EPI_FILE_OLD   "  Download data file is newer than .part file, aborting."
+    IDS_ED2K_EPI_COPY_START "  Copying ""%s"" to ""%s""..."
+    IDS_ED2K_EPI_COPY_FINISHED "  Finished copying file."
+    IDS_ED2K_EPI_FILE_CREATED 
+                            "  Created Shareaza partial download, %s remaining."
+    IDS_ED2K_EPI_ALREADY    "  This file is already in the Shareaza download list."
+    IDS_ED2K_EPI_DISK_SPACE "  Insufficient disk space to copy download file."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotiating..."
+    IDS_BT_CLIENT_CONNECT_TIMEOUT 
+                            "Timed out connecting to BitTorrent client %s."
+    IDS_BT_CLIENT_HANDSHAKE_TIMEOUT 
+                            "Timed out handshaking with BitTorrent client %s."
+    IDS_BT_CLIENT_LOST      "Closing BitTorrent coupling with %s due to lack of traffic."
+    IDS_BT_CLIENT_WRONG_GUID 
+                            "BitTorrent coupling with %s failed because the remote client has a different Peer ID."
+    IDS_BT_CLIENT_WRONG_FILE 
+                            "BitTorrent coupling with %s responded with the wrong file."
+    IDS_BT_CLIENT_UNKNOWN_FILE 
+                            "BitTorrent coupling with %s requested an unknown file."
+    IDS_BT_CLIENT_ONLINE    "BitTorrent coupling with %s established for ""%s""."
+    IDS_BT_CLIENT_INACTIVE_FILE 
+                            "BitTorrent coupling with %s requested an inactive file."
+    IDS_BT_PREFETCH_FILE    "Received BitTorrent descriptor file: ""%s"""
+    IDS_BT_PREFETCH_ERROR   "Unable to parse prefetched BitTorrent file ""%s""."
+    IDS_BT_TRACK_ERROR      "Error from BitTorrent tracker for ""%s"" : ""%s""."
+    IDS_BT_TRACK_PARSE_ERROR "Error parsing BitTorrent tracker response."
+    IDS_BT_TRACK_SUCCESS    "Received BitTorrent tracker response for ""%s"", %i new sources."
+    IDS_BT_CLIENT_CONNECTING 
+                            "Initiating BitTorrent client coupling with %s..."
+    IDS_BT_CLIENT_HANDSHAKING 
+                            "Established BitTorrent coupling with %s, handshaking..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BT_TRACK_CHANGE     "You have changed the tracker URL for this torrent.  Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."
+    IDS_BT_CLIENT_EXTENDED  "BitTorrent coupling with %s is extended protocol, identified ""%s""."
+    IDS_BT_CLIENT_EXCHANGE  "Received %i new BitTorrent sources from %s."
+    IDS_BT_SEED_ALREADY     "The torrent ""%s"" is already on your download list, and cannot be seeded."
+    IDS_BT_SEED_PARSE_ERROR "Error loading the torrent file ""%s"".  This may not be a valid torrent."
+    IDS_BT_SEED_CREATE_FAIL "Unable to create BitTorrent share file ""%s""."
+    IDS_BT_SEED_SOURCE_LOST "This torrent includes the file ""%s"", but Shareaza cannot find this file in your library.  If possible, move the file to a shared folder and try again."
+    IDS_BT_SEED_SOURCE_SIZE "This torrent includes the file ""%s"" which should be %s, however your version of the file is %s."
+    IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
+    IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
+    IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
+    IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
+    IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_BT_CLIENT_DROP_CONNECTING "BitTorrent connection to %s was dropped."
+    IDS_BT_CLIENT_DROP_HANDSHAKE "BitTorrent handshake with %s was dropped."
+    IDS_BT_CLIENT_DROP_CONNECTED "BitTorrent coupling with %s was dropped."
+    IDS_BT_CLIENT_DUPLICATE "BitTorrent coupling with %s not accepted, a connection to this client already exists."
+    IDS_BT_CLIENT_MAX_CONNECTIONS 
+                            "BitTorrent coupling with %s not accepted, maximum connections reached."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOAD_EDIT_RENAME 
+                            "You have made changes to the name field.  Are you sure you want to rename this download?"
+    IDS_DOWNLOAD_EDIT_BAD_SHA1 
+                            "You have typed a SHA1 value, however it is invalid.  Please check it and try again."
+    IDS_DOWNLOAD_EDIT_BAD_TIGER 
+                            "You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."
+    IDS_DOWNLOAD_EDIT_BAD_ED2K 
+                            "You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."
+    IDS_DOWNLOAD_EDIT_CHANGE_SHA1 
+                            "You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"
+    IDS_DOWNLOAD_EDIT_CHANGE_TIGER 
+                            "You have provided a root tiger-tree hash value which is different to the one currently associated with this download.  Are you sure you want to change the tiger-tree root hash now?"
+    IDS_DOWNLOAD_EDIT_CHANGE_ED2K 
+                            "You have provided an eDonkey2000 hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey2000 hash now?"
+    IDS_DOWNLOAD_EDIT_FORGET_VERIFY 
+                            "Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
+    IDS_DOWNLOAD_EDIT_FORGET_SOURCES 
+                            "Are you sure you want to forget all sources for the selected download?"
+    IDS_DOWNLOAD_EDIT_BAD_RANGE 
+                            "Please enter a valid range to erase.  The ""from"" field is the first byte to erase, the ""last"" field is the last byte to erase."
+    IDS_DOWNLOAD_EDIT_CANT_ERASE 
+                            "Unable to erase the selected range from the download because no part of the range is present."
+    IDS_DOWNLOAD_EDIT_ERASED "Erased %I64i bytes from the download."
+    IDS_DOWNLOAD_QUEUE_HUGE "Dropping download source %s for ""%s"" because queue position %i is too high."
+    IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH 
+                            "You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."
+    IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 
+                            "Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REMOTE_DISABLED     "Remote access is disabled."
+    IDS_REMOTE_ENABLED      "You must chose a username and password."
+    IDS_REMOTE_UNAVAILABLE  "Unable to accept connections, URL unavailable."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GENERAL_NOURNAVAILABLE "No URN available"
+    IDS_GENERAL_CLOSE       "Close"
+    IDS_GENERAL_OF          "of"
+    IDS_GENERAL_RTL_WARNING "Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"
+    IDS_GENERAL_RTL_NOTSUPPORTED 
+                            "Right-to-left languages are not supported in your OS."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DAY_SUNDAY          "Sunday"
+    IDS_DAY_MONDAY          "Monday"
+    IDS_DAY_TUESDAY         "Tuesday"
+    IDS_DAY_WEDNESDAY       "Wednesday"
+    IDS_DAY_THURSDAY        "Thursday"
+    IDS_DAY_FRIDAY          "Friday"
+    IDS_DAY_SATURDAY        "Saturday"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_CONNECTING   "Connecting"
+    IDS_STATUS_REQUESTING   "Requesting"
+    IDS_STATUS_RESPONSE     "Response"
+    IDS_STATUS_DOWNLOADING  "Downloading"
+    IDS_STATUS_TIGERTREE    "TigerTree"
+    IDS_STATUS_HASHSET      "Hashset"
+    IDS_STATUS_METADATA     "Metadata"
+    IDS_STATUS_BUSY         "Busy"
+    IDS_STATUS_ENQUEUE      "Enqueue"
+    IDS_STATUS_QUEUED       "Queued"
+    IDS_STATUS_UNKNOWN      "Unknown"
+    IDS_STATUS_COMPLETED    "Completed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_SEEDING      "Seeding"
+    IDS_STATUS_MOVING       "Moving"
+    IDS_STATUS_PAUSED       "Paused"
+    IDS_STATUS_FILEERROR    "File Error"
+    IDS_STATUS_CANTMOVE     "Can't Move"
+    IDS_STATUS_VERIFYING    "Verifying"
+    IDS_STATUS_ACTIVE       "Active"
+    IDS_STATUS_PENDING      "Pending"
+    IDS_STATUS_SEARCHING    "Searching"
+    IDS_STATUS_CREATING     "Creating"
+    IDS_STATUS_TORRENT      "Torrent"
+    IDS_STATUS_TRACKERDOWN  "Tracker Down"
+    IDS_STATUS_NOSOURCES    "(No Sources)"
+    IDS_STATUS_VERIFIED     "Verified"
+    IDS_STATUS_UNVERIFIED   "Unverified"
+    IDS_STATUS_SOURCE       "source"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_SOURCES      "sources"
+    IDS_STATUS_SOURCESTENS  "sources"
+    IDS_STATUS_SOURCES11TO19 "sources"
+    IDS_STATUS_SOURCES2TO4  "sources"
+    IDS_STATUS_SOURCES5TO9  "sources"
+    IDS_STATUS_UNINTERESTED "Uninterested"
+    IDS_STATUS_CHOKED       "Choked"
+    IDS_STATUS_NEXT         "Next"
+    IDS_STATUS_Q            "Q"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RATING_NORATING     "(No Rating)"
+    IDS_RATING_1            "Fake / Corrupt"
+    IDS_RATING_2            "Poor"
+    IDS_RATING_3            "Average"
+    IDS_RATING_4            "Good"
+    IDS_RATING_5            "Very Good"
+    IDS_RATING_6            "Excellent"
 END
 
 STRINGTABLE 
@@ -5064,20 +5383,6 @@ BEGIN
     ID_TOOLS_SETTINGS       "Configure Shareaza settings..."
     ID_VIEW_SYSTEM          "Show or hide the SYSTEM window."
     ID_VIEW_NEIGHBOURS      "Show or hide the NEIGHBOURS window."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_HOSTCACHE_REMOVE     "Remove the selected hosts from the host cache."
-    ID_NETWORK_CONNECT_TO   "Manually connect to a host..."
-    ID_NETWORK_SEARCH       "Start a new search of the network..."
-    ID_SEARCH_DOWNLOAD      "Download the selected file(s)."
-    ID_SEARCH_SEARCH        "Search the network again..."
-    ID_SEARCH_FILTER        "Filter the search results by certain words and conditions..."
-    ID_SEARCH_FILTER_REMOVE "Remove filtering from the results."
-    ID_HITMONITOR_CLEAR     "Clear the hit monitor buffer."
-    ID_SEARCHMONITOR_PAUSE  "Pause search monitoring."
-    ID_HITMONITOR_PAUSE     "Pause hit monitoring."
 END
 
 STRINGTABLE 
@@ -5099,6 +5404,20 @@ BEGIN
     ID_VIEW_RESULTS_MONITOR "Show or hide the HIT MONITOR window."
     ID_HOSTCACHE_CONNECT    "Connect to the selected host(s)."
     ID_HOSTCACHE_DISCONNECT "Disconnect from the selected neighbour(s)."
+END
+
+STRINGTABLE 
+BEGIN
+    ID_HOSTCACHE_REMOVE     "Remove the selected hosts from the host cache."
+    ID_NETWORK_CONNECT_TO   "Manually connect to a host..."
+    ID_NETWORK_SEARCH       "Start a new search of the network..."
+    ID_SEARCH_DOWNLOAD      "Download the selected file(s)."
+    ID_SEARCH_SEARCH        "Search the network again..."
+    ID_SEARCH_FILTER        "Filter the search results by certain words and conditions..."
+    ID_SEARCH_FILTER_REMOVE "Remove filtering from the results."
+    ID_HITMONITOR_CLEAR     "Clear the hit monitor buffer."
+    ID_SEARCHMONITOR_PAUSE  "Pause search monitoring."
+    ID_HITMONITOR_PAUSE     "Pause hit monitoring."
 END
 
 STRINGTABLE 
@@ -5376,68 +5695,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_CHAT_CONNECTING_TO  "Initiating a connection to %s..."
-    IDS_CHAT_CANT_CONNECT   "Unable to create a connection to %s."
-    IDS_CHAT_PUSH_SENT      "Requesting a firewalled push connection from %s..."
-    IDS_CHAT_PUSH_DONE      "Accepted push connection from %s, handshaking..."
-    IDS_CHAT_CONNECTED      "Connection established, handshaking..."
-    IDS_CHAT_HANDSHAKE_FAIL "Handshake failed, host may not support chatting."
-    IDS_CHAT_HANDSHAKE_G1   "Handshake complete, chat protocol version %s."
-    IDS_CHAT_HANDSHAKE_G2   "Exchanging profile information..."
-    IDS_CHAT_PROFILE_ACCEPTED "Authenticated user "
-    IDS_CHAT_PRIVATE_START  "Requesting private conversation with user..."
-    IDS_CHAT_PRIVATE_ONLINE "Private conversation granted, you are now chatting with %s."
-    IDS_CHAT_PRIVATE_REFUSED 
-                            "%s is not accepting private conversations, sorry."
-    IDS_CHAT_PRIVATE_AWAY   "%s is away: %s"
-    IDS_CHAT_DROPPED        "The chat connection was lost."
-    IDS_CHAT_CLOSED         "Connection closed."
-    IDS_CHAT_CANT_PUSH      "Unable to request a push connection from %s, no route available."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_CHAT_NOT_CONNECTED_1 
-                            "Cannot send message, you are not connected.  Shareaza is trying to connect..."
-    IDS_CHAT_NOT_CONNECTED_2 
-                            "Cannot send message, a connection has not been established yet."
-    IDS_CHAT_NEED_PROFILE   "You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"
-    IDS_CHAT_PRIORITY_GRANTED "Granted upload priority to host %s."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_LIBRARY_TARGET_EXISTS 
-                            "Target file exists:\n\n%s\n\nWould you like to overwrite it?"
-    IDS_LIBRARY_TYPE_FILTER_ALL "Show All File Types"
-    IDS_LIBRARY_COLLECTION_INVALID 
-                            "Shareaza received a collection file:\r\n\r\n""%s""\r\n\r\nThis file does not appear to be a valid collection file."
-    IDS_LIBRARY_COLLECTION_INSTALLED 
-                            "Shareaza has added the collection file ""%s"" to your library."
-    IDS_LIBRARY_COLLECTION_CANT_INSTALL 
-                            "Shareaza was unable to install the collection file ""%s"" by copying it to the folder ""%s""."
-    IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 
-                            "Would you like to download this file?\r\n\r\n""%s""\r\n\r\nChoose Cancel to stop any further prompts."
-    IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 
-                            "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
-    IDS_LIBRARY_COLLECTION_LOCKDOWN 
-                            "Would you like to prevent this collection from prompting you to download anything else?"
-    IDS_LIBRARY_COPYURI     "Copy &URI"
-    IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_FILTER_DELETE_CONFIRM "Are you sure you want to delete this filter ?"
-    IDS_SCHEMAS             "&Schemas"
-    IDS_MULTIPLE_VALUES     "Multiple Values"
-    IDS_MULTIPLE            "Multiple"
-    IDS_FILTER_REPLACE      "There already is a filter called ""%s"", do you want to replace it?"
-    IDS_FILTER_NO_NAME      "Please give your filter a name."
-END
-
-STRINGTABLE 
-BEGIN
     ID_LIBRARY_FOLDER_FILE_PROPERTIES 
                             "View and edit the properties of all files in the selected folder(s)..."
     ID_LIBRARY_REBUILD      "Rebuild metadata and hashes for the selected folders or files."
@@ -5453,30 +5710,6 @@ BEGIN
     ID_SEARCH_FOR_THIS      "Search for other copies of the selected file."
     ID_SEARCH_FOR_SIMILAR   "Search for files which are similar to the selected file."
     ID_SEARCH_FOR_ARTIST    "Search for music files by the same artist as the selected file."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_UPLOAD_PREVIEW_SEND "Uploading a preview of ""%s"" to %s."
-    IDS_UPLOAD_PREVIEW_BUSY "Refusing to upload a preview of ""%s"" to %s, too many preview connections."
-    IDS_UPLOAD_PREVIEW_EMPTY 
-                            "Upload host %s requested a preview of ""%s"", but no preview is available."
-    IDS_UPLOAD_PREVIEW_DYNAMIC 
-                            "Scheduling a dynamic preview of ""%s"" for upload to %s."
-    IDS_UPLOAD_BROWSE_BUSY  "Refusing browse user request from %s, too many browse connections."
-    IDS_UPLOAD_FILE         "Uploading file ""%s"" to host %s..."
-    IDS_UPLOAD_QUEUE_DROP   "Upload connection to %s was lost, preserving queue position."
-    IDS_UPLOAD_QUEUE_TIMEOUT 
-                            "Offline queued upload host %s expired, removing."
-    IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
-    IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
-    IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
-    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
-    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
-    IDS_DOWNLOAD_CLEAR_GROUP 
-                            "Are you sure you want to cancel/abort every download in this group?"
-    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
-    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
 END
 
 STRINGTABLE 
@@ -5524,236 +5757,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ED2K_SERVER_CONNECTING 
-                            "Initiating connection to eDonkey2000 server at %s..."
-    IDS_ED2K_SERVER_CONNECTED 
-                            "Connected to eDonkey2000 server %s, handshaking..."
-    IDS_ED2K_SERVER_MESSAGE "ED2K[%s] %s"
-    IDS_ED2K_SERVER_REFUSED "eDonkey2000 server %s refused connection."
-    IDS_ED2K_SERVER_ONLINE  "eDonkey2000 server %s online, client ID is %lu."
-    IDS_ED2K_SERVER_IDCHANGE 
-                            "eDonkey2000 server %s changed our client ID from %lu to %lu."
-    IDS_ED2K_SERVER_IDENT   "eDonkey2000 server %s identified itself as ""%s""."
-    IDS_ED2K_SERVER_REJECTED "eDonkey2000 server %s rejected the connection."
-    IDS_ED2K_CLIENT_HANDSHAKE_FAIL 
-                            "Error exchanging handshake with eDonkey2000 client %s."
-    IDS_ED2K_CLIENT_DROPPED "eDonkey2000 client connection to %s was closed."
-    IDS_ED2K_CLIENT_BAD_PACKET 
-                            "Received a malformatted eDonkey2000 packet from %s (id=%x)."
-    IDS_ED2K_CLIENT_ACCEPTED 
-                            "Incoming connection from %s is an eDonkey2000 client link."
-    IDS_ED2K_CLIENT_SENT_HASHSET 
-                            "Sending eDonkey2000 hashset for ""%s"" to %s..."
-    IDS_ED2K_CLIENT_CLOSED  "eDonkey2000 client connection to %s was idle, closed."
-    IDS_ED2K_CLIENT_CONNECTING 
-                            "Initiating eDonkey2000 client connection to %s..."
-    IDS_ED2K_CLIENT_WRONG_GUID 
-                            "eDonkey2000 client %s has the wrong GUID, aborting handshake."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ED2K_CLIENT_CONNECT_TIMEOUT 
-                            "Timed out connecting to eDonkey2000 client %s."
-    IDS_ED2K_CLIENT_HANDSHAKE_TIMEOUT 
-                            "Timed out handshaking with eDonkey2000 client %s."
-    IDS_ED2K_CLIENT_DISABLED 
-                            "Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_ED2K_EPI_START      "Starting eDonkey2000 partial download import process..."
-    IDS_ED2K_EPI_FINISHED   "Process complete, %i partial downloads imported successfully."
-    IDS_ED2K_EPI_FOLDER     "Scanning folder: ""%s""..."
-    IDS_ED2K_EPI_FILE_FAILED "  Unable to import file."
-    IDS_ED2K_EPI_FILE_START " Found partial file ""%s"", importing..."
-    IDS_ED2K_EPI_CANT_OPEN_PART "  Unable to open part file ""%s""."
-    IDS_ED2K_EPI_DETECTED   "  Found download ""%s"", size %s."
-    IDS_ED2K_EPI_FILE_OLD   "  Download data file is newer than .part file, aborting."
-    IDS_ED2K_EPI_COPY_START "  Copying ""%s"" to ""%s""..."
-    IDS_ED2K_EPI_COPY_FINISHED "  Finished copying file."
-    IDS_ED2K_EPI_FILE_CREATED 
-                            "  Created Shareaza partial download, %s remaining."
-    IDS_ED2K_EPI_ALREADY    "  This file is already in the Shareaza download list."
-    IDS_ED2K_EPI_DISK_SPACE "  Insufficient disk space to copy download file."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BT_CLIENT_ACCEPTED  "Incoming connection from %s is a BitTorrent coupling, negotiating..."
-    IDS_BT_CLIENT_CONNECT_TIMEOUT 
-                            "Timed out connecting to BitTorrent client %s."
-    IDS_BT_CLIENT_HANDSHAKE_TIMEOUT 
-                            "Timed out handshaking with BitTorrent client %s."
-    IDS_BT_CLIENT_LOST      "Closing BitTorrent coupling with %s due to lack of traffic."
-    IDS_BT_CLIENT_WRONG_GUID 
-                            "BitTorrent coupling with %s failed because the remote client has a different Peer ID."
-    IDS_BT_CLIENT_WRONG_FILE 
-                            "BitTorrent coupling with %s responded with the wrong file."
-    IDS_BT_CLIENT_UNKNOWN_FILE 
-                            "BitTorrent coupling with %s requested an unknown file."
-    IDS_BT_CLIENT_ONLINE    "BitTorrent coupling with %s established for ""%s""."
-    IDS_BT_CLIENT_INACTIVE_FILE 
-                            "BitTorrent coupling with %s requested an inactive file."
-    IDS_BT_PREFETCH_FILE    "Received BitTorrent descriptor file: ""%s"""
-    IDS_BT_PREFETCH_ERROR   "Unable to parse prefetched BitTorrent file ""%s""."
-    IDS_BT_TRACK_ERROR      "Error from BitTorrent tracker for ""%s"" : ""%s""."
-    IDS_BT_TRACK_PARSE_ERROR "Error parsing BitTorrent tracker response."
-    IDS_BT_TRACK_SUCCESS    "Received BitTorrent tracker response for ""%s"", %i new sources."
-    IDS_BT_CLIENT_CONNECTING 
-                            "Initiating BitTorrent client coupling with %s..."
-    IDS_BT_CLIENT_HANDSHAKING 
-                            "Established BitTorrent coupling with %s, handshaking..."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BT_TRACK_CHANGE     "You have changed the tracker URL for this torrent.  Are you sure you want to save this change?\n\nAn invalid tracker URL may prevent further downloading."
-    IDS_BT_CLIENT_EXTENDED  "BitTorrent coupling with %s is extended protocol, identified ""%s""."
-    IDS_BT_CLIENT_EXCHANGE  "Received %i new BitTorrent sources from %s."
-    IDS_BT_SEED_ALREADY     "The torrent ""%s"" is already on your download list, and cannot be seeded."
-    IDS_BT_SEED_PARSE_ERROR "Error loading the torrent file ""%s"".  This may not be a valid torrent."
-    IDS_BT_SEED_CREATE_FAIL "Unable to create BitTorrent share file ""%s""."
-    IDS_BT_SEED_SOURCE_LOST "This torrent includes the file ""%s"", but Shareaza cannot find this file in your library.  If possible, move the file to a shared folder and try again."
-    IDS_BT_SEED_SOURCE_SIZE "This torrent includes the file ""%s"" which should be %s, however your version of the file is %s."
-    IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
-    IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
-    IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
-    IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
-    IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_BT_CLIENT_DROP_CONNECTING "BitTorrent connection to %s was dropped."
-    IDS_BT_CLIENT_DROP_HANDSHAKE "BitTorrent handshake with %s was dropped."
-    IDS_BT_CLIENT_DROP_CONNECTED "BitTorrent coupling with %s was dropped."
-    IDS_BT_CLIENT_DUPLICATE "BitTorrent coupling with %s not accepted, a connection to this client already exists."
-    IDS_BT_CLIENT_MAX_CONNECTIONS 
-                            "BitTorrent coupling with %s not accepted, maximum connections reached."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DOWNLOAD_EDIT_RENAME 
-                            "You have made changes to the name field.  Are you sure you want to rename this download?"
-    IDS_DOWNLOAD_EDIT_BAD_SHA1 
-                            "You have typed a SHA1 value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_BAD_TIGER 
-                            "You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_BAD_ED2K 
-                            "You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_CHANGE_SHA1 
-                            "You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"
-    IDS_DOWNLOAD_EDIT_CHANGE_TIGER 
-                            "You have provided a root tiger-tree hash value which is different to the one currently associated with this download.  Are you sure you want to change the tiger-tree root hash now?"
-    IDS_DOWNLOAD_EDIT_CHANGE_ED2K 
-                            "You have provided an eDonkey2000 hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey2000 hash now?"
-    IDS_DOWNLOAD_EDIT_FORGET_VERIFY 
-                            "Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
-    IDS_DOWNLOAD_EDIT_FORGET_SOURCES 
-                            "Are you sure you want to forget all sources for the selected download?"
-    IDS_DOWNLOAD_EDIT_BAD_RANGE 
-                            "Please enter a valid range to erase.  The ""from"" field is the first byte to erase, the ""last"" field is the last byte to erase."
-    IDS_DOWNLOAD_EDIT_CANT_ERASE 
-                            "Unable to erase the selected range from the download because no part of the range is present."
-    IDS_DOWNLOAD_EDIT_ERASED "Erased %I64i bytes from the download."
-    IDS_DOWNLOAD_QUEUE_HUGE "Dropping download source %s for ""%s"" because queue position %i is too high."
-    IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH 
-                            "You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset.  Without verification information the download cannot be reverified."
-    IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 
-                            "Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_REMOTE_DISABLED     "Remote access is disabled."
-    IDS_REMOTE_ENABLED      "You must chose a username and password."
-    IDS_REMOTE_UNAVAILABLE  "Unable to accept connections, URL unavailable."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_GENERAL_NOURNAVAILABLE "No URN available"
-    IDS_GENERAL_CLOSE       "Close"
-    IDS_GENERAL_OF          "of"
-    IDS_GENERAL_RTL_WARNING "Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"
-    IDS_GENERAL_RTL_NOTSUPPORTED 
-                            "Right-to-left languages are not supported in your OS."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DAY_SUNDAY          "Sunday"
-    IDS_DAY_MONDAY          "Monday"
-    IDS_DAY_TUESDAY         "Tuesday"
-    IDS_DAY_WEDNESDAY       "Wednesday"
-    IDS_DAY_THURSDAY        "Thursday"
-    IDS_DAY_FRIDAY          "Friday"
-    IDS_DAY_SATURDAY        "Saturday"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATUS_CONNECTING   "Connecting"
-    IDS_STATUS_REQUESTING   "Requesting"
-    IDS_STATUS_RESPONSE     "Response"
-    IDS_STATUS_DOWNLOADING  "Downloading"
-    IDS_STATUS_TIGERTREE    "TigerTree"
-    IDS_STATUS_HASHSET      "Hashset"
-    IDS_STATUS_METADATA     "Metadata"
-    IDS_STATUS_BUSY         "Busy"
-    IDS_STATUS_ENQUEUE      "Enqueue"
-    IDS_STATUS_QUEUED       "Queued"
-    IDS_STATUS_UNKNOWN      "Unknown"
-    IDS_STATUS_COMPLETED    "Completed"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATUS_SEEDING      "Seeding"
-    IDS_STATUS_MOVING       "Moving"
-    IDS_STATUS_PAUSED       "Paused"
-    IDS_STATUS_FILEERROR    "File Error"
-    IDS_STATUS_CANTMOVE     "Can't Move"
-    IDS_STATUS_VERIFYING    "Verifying"
-    IDS_STATUS_ACTIVE       "Active"
-    IDS_STATUS_PENDING      "Pending"
-    IDS_STATUS_SEARCHING    "Searching"
-    IDS_STATUS_CREATING     "Creating"
-    IDS_STATUS_TORRENT      "Torrent"
-    IDS_STATUS_TRACKERDOWN  "Tracker Down"
-    IDS_STATUS_NOSOURCES    "(No Sources)"
-    IDS_STATUS_VERIFIED     "Verified"
-    IDS_STATUS_UNVERIFIED   "Unverified"
-    IDS_STATUS_SOURCE       "source"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_STATUS_SOURCES      "sources"
-    IDS_STATUS_SOURCESTENS  "sources"
-    IDS_STATUS_SOURCES11TO19 "sources"
-    IDS_STATUS_SOURCES2TO4  "sources"
-    IDS_STATUS_SOURCES5TO9  "sources"
-    IDS_STATUS_UNINTERESTED "Uninterested"
-    IDS_STATUS_CHOKED       "Choked"
-    IDS_STATUS_NEXT         "Next"
-    IDS_STATUS_Q            "Q"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_PROPERTY_PAGE_GENERAL "General"
-    IDS_PROPERTY_PAGE_METADATA "Metadata"
-    IDS_PROPERTY_PAGE_COMMENTS "My Review"
-    IDS_PROPERTY_PAGE_SHARING "Sharing"
-    IDS_PROPERTY_PAGE_SOURCES "Sources"
-END
-
-STRINGTABLE 
-BEGIN
     ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
     ID_DOWNLOADS_RATE       "Rate the selected download."
     ID_LIBRARY_VIEW_COLLECTION 
@@ -5795,16 +5798,6 @@ BEGIN
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
 END
 
-STRINGTABLE 
-BEGIN
-    IDS_RATING_NORATING     "(No Rating)"
-    IDS_RATING_1            "Fake / Corrupt"
-    IDS_RATING_2            "Poor"
-    IDS_RATING_3            "Average"
-    IDS_RATING_4            "Good"
-    IDS_RATING_5            "Very Good"
-    IDS_RATING_6            "Excellent"
-END
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
