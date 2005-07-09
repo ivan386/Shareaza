@@ -512,7 +512,7 @@ BOOL CUploadTransferED2K::OpenFile()
 		return TRUE;
 	}
 	
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );	
+	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );	
 	
 	CEDPacket* pReply = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
 	pReply->Write( &m_pED2K, sizeof(MD4) );

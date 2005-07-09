@@ -243,7 +243,7 @@ BOOL CUploadTransferBT::OpenFile()
 	m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
 	if ( m_pDiskFile != NULL ) return TRUE;
 	
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName , (LPCTSTR)m_sAddress);
 	
 	Close();
 	return FALSE;
