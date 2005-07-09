@@ -4,7 +4,7 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 <!-- Manifest -->
 <manifest name="עברית"
-		author="_peer_ (la,Han)"
+		author="_peer_ (la. Han)"
 		description="Shareaza Default Hebrew Skin File"
 		link="http://www.shareaza.com/"
 		email="peer_l_ (at) hotmail (dot) com"
@@ -330,6 +330,7 @@
 		<button id="ID_MEDIA_CLEAR" text="‪נקה"/>
 		<button id="ID_MEDIA_SAVE" text="‪שמור"/>
 	</toolbar>
+	
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="‪הצג מידע משתמש"/>
@@ -1536,7 +1537,7 @@
 			<text>שליטה מרחוק בשרזה במצב מאופשר, שלוט בשרזה עם הדפדפן שלך דרך:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
-			<text>&#160;- or -&#160;</text>
+			<text>&#160;- או -&#160;</text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="16"/>
 		</group>
@@ -1580,14 +1581,14 @@
 				<newline gap="8"/>
 				<text>קבצים&#160;</text>
 				<text id="LibraryHashRemaining" format="b">%lu</text>
-				<text>&#160;שרזה סורק ומעבד</text>
+				<text>&#160;שרזה סורק ומעבד.</text>
 				<newline gap="8"/>
 			</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">מהיר יותר hash לחץ כאן לביצוע</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">מהיר יותר hash לחץ כאן לביצוע.</link>
 			</group>
 			<group id="4">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">איטי יותר hash לחץ כאן לביצוע</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">איטי יותר hash לחץ כאן לביצוע.</link>
 			</group>
 		</para>
 	</document>
@@ -1600,33 +1601,33 @@
 		</styles>
 		<group id="1">
 			<para align="center">
-				<text format="b">לא מחובר</text>
+				<text format="b">לא מחובר.</text>
 				<newline gap="4"/>
-				<link target="raza:command:ID_NETWORK_CONNECT">לחץ כאן כדי להתחבר</link>
+				<link target="raza:command:ID_NETWORK_CONNECT">לחץ כאן כדי להתחבר.</link>
 			</para>
 		</group>
 
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">גונוטלה2: </text>
-		<text group="21" align="middle"> מנותק</text>
+		<text group="21" align="middle"> מנותק.</text>
 		<text group="22" align="middle"> מתחבר...</text>
-		<text group="23" align="middle"> מחובר</text>
+		<text group="23" align="middle"> מחובר.</text>
 		<text group="24" align="middle" id="G2Hubs">‪(hubs) מוקדים ‎%i</text>
-		<text group="25" align="middle" id="G2Leaves">‪&#160; ענפי קו‎ %i</text>
+		<text group="25" align="middle" id="G2Leaves">‪&#160; ענפי קו‎ %i.</text>
 		<newline group="20" gap="2"/>
 
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">אידונקי: </text>
-		<text group="31" align="middle">מנותק</text>
+		<text group="31" align="middle">מנותק.</text>
 		<text group="32" align="middle"> מתחבר...</text>
-		<text group="33" align="middle">מחובר</text>
+		<text group="33" align="middle">מחובר.</text>
 		<newline group="30" gap="2"/>
 
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">גונוטלה1: </text>
-		<text group="11" align="middle"> מנותק</text>
+		<text group="11" align="middle"> מנותק.</text>
 		<text group="12" align="middle"> מתחבר...</text>
-		<text group="13" align="middle"> מחובר</text>
+		<text group="13" align="middle"> מחובר.</text>
 		<newline group="10" gap="2"/>
 
 		<group id="2">
@@ -1636,7 +1637,7 @@
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>שעות ו-</text>
 				<text id="ConnectedMinutes" format="b">%i </text>
-				<text>דקות </text>
+				<text>דקות. </text>
 			</para>
 		</group>
 	</document>
@@ -1650,13 +1651,13 @@
 		<para align="center">
 			<text id="UploadsNone" format="b">אין העלאות פעילות</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">העלאה פעילה אחת</link>
-			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">‏&#8234;‏פעילות‎ ‏העלאות‎ %i</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">‏&#8234;.‏פעילות‎ ‏העלאות‎ %i</link>
 
 			<newline gap="4"/>
 
-			<text id="UploadedNone">לא העלאתה אף קובץ היום.</text>
-			<text id="UploadedOne">&#8234;(%s). ‏אחד‎ ‏קובץ‎ ‏היום‎ ‏העלאת</text>
-			<text id="UploadedMany">&#8234;‏קבצים‎ %i ‏היום‎ ‏העלאתה (%s)</text>
+			<text id="UploadedNone">לא העלאת/ה אף קובץ היום.</text>
+			<text id="UploadedOne">&#8234;(%s). ‏אחד‎ ‏קובץ‎ ‏היום‎ העלאת/‏ה</text>
+			<text id="UploadedMany">&#8234;.‏קבצים‎ %i ‏היום‎ ‏העלאת/ה (%s)</text>
 		</para>
 	</document>
 
@@ -1667,17 +1668,17 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">לא מפיץ טורנטים כעת</text>
-			<text id="TorrentsOne" format="b">טורנט אחד מופץ כעת</text>
-			<text id="TorrentsMany" format="b">&#8234;‏טורנטים‎ %i ‏מופצים‎ ‏כעת</text>
+			<text id="TorrentsNone" format="b">לא מפיץ טורנטים כעת.</text>
+			<text id="TorrentsOne" format="b">טורנט אחד מופץ כעת.</text>
+			<text id="TorrentsMany" format="b">&#8234;.טורנטים‎ %i ‏מופצים‎ ‏כעת</text>
 			<newline gap="4"/>
-			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">&#8234;%s ‏הטורנט‎ ‏את‎ ‏מחדש‎ ‏הפץ</link>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">&#8234;.%s ‏הטורנט‎ ‏את‎ ‏מחדש‎ ‏הפץ</link>
 			<newline gap="4"/>
 			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">הפץ טורנט אחר</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">הפץ טורנט אחר.</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">הפץ את הטורנט</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">הפץ את הטורנט.</link>
 			</group>
 		</para>
 	</document>
@@ -2523,7 +2524,7 @@
 	<string id="8004" value="‪!(version) ברוכים הבאים לשרזה !\n.\nשרזה היא תוכנה חופשית.\nאנא השתמש בה בצורה אחראית, כבד את חוקי הרכוש וזכויות היוצרים.\n."/>
 	<string id="8005" value="‪(סוגר בסיום ההעברות)"/>
 	<string id="8006" value="‪.אינך מחובר, אנא לחץ על כפתור התחבר בכדי להתחיל"/>
-	<string id="8007" value="‪.אין חיפושים פעילים, אנא לחץ כאן כדי לחפש"/>
+	<string id="8007" value="‪.אין חיפושים פעילים, אנא לחץ כאן בכדי לחפש"/>
 	<string id="8008" value="‪?האם אתה מעוניין לשדרג כעת .(%s) שרזה סיים להוריד את הגרסא החדשה\n\nאם תבחר כן, שרזה תסגר באופן זמני, למהלך ההתקנה"/>
 	<string id="8009" value="‪.המעטפת תימחק לקיבעון &quot;%s&quot; האם אתה בטוח שברצונך למחוק את המעטפת"/>
 	<string id="8010" value="‪&#8234;‏הסתיימה‎ ‏הנסיון‎ תקופת‎ ‏שרזה‎ ‏של‎ ‏נסיונית‎ ‏גרסה‎ ‏&#13;&#10;זוהי www.shareaza.com ‏מהאתר‎ ‏והרשמית‎ ‏המלאה‎ ‏הגרסא‎ ‏את‎ ‏הורד‎ ‏אנא‎"/>
@@ -2600,7 +2601,7 @@
 	<string id="8226" value="‪:שרזה סיים להוריד"/>
 	<string id="8227" value="‪&#8235;%i שעות %i דקות"/>
 	<string id="8228" value="‪&#8235;%i דקות %i שניות"/>
-	<string id="8229" value="‪שניות %i"/>
+	<string id="8229" value="‪%i שניות"/>
 	<string id="8230" value="‪:שרזה מחפשת מקורות עבור"/>
 	<string id="8231" value="‪אין מקורות"/>
 	<string id="8232" value="‪פתח"/>
@@ -3094,6 +3095,9 @@
 	<string id="19000" value="‪גישה מרחוק לא מאופשרת"/>
 	<string id="19001" value="‪.אתה חייב לבחור שם משתמש וסיסמא"/>
 	<string id="19002" value="‪לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>
+	<string id="19100" value="רשימת משתמשים"/>
+	<string id="19101" value="רשימת ערוצים"/>
+	<string id="19102" value="חלון מצב"/>
 	<string id="20000" value="‪זמין URN אין"/>
 	<string id="20002" value="מתוך"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
@@ -3310,7 +3314,7 @@
 		<control caption="שתף חלקי הורדות חדשים"/>
 		<control caption="הגבל שיתוף במצב מוקד"/>
 		<control caption="שתף קבצי תצוגה מקדימה"/>
-		<control caption=":הגבלת מס' משתמשים"/>
+		<control caption=":מקס' העלאות למשתמש"/>
 		<control/><control/>
 		<control caption=":סוכן-משתמש לסינון"/>
 		<control/>
