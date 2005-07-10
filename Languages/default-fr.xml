@@ -2058,7 +2058,7 @@ Other:
         <newline gap="8"/>
         <text>Il n'y a pas de serveur dans votre liste de serveurs eDonkey2000. Vous devez télécharger une liste de serveur (fichier met) mise à jour pour vous connecter à ED2K.</text>
         <newline gap="8"/>
-        <text>Vous pouvez télécharger une liste de serveurs depuis la page des réglages eDonkey, ou depuis la fenêtre du service découverte.</text>
+        <text>Vous pouvez télécharger une liste de serveurs depuis la page des réglages eDonkey, ou depuis la fenêtre du service découverte. (Pressez F9 pour ouvrir la fenêtre des services découverte)</text>
     </document>
 
     <document name="GeneralHelp.UploadWarning"> 
