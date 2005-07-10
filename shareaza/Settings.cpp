@@ -212,6 +212,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella.HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella.ConnectThrottle"), &Gnutella.ConnectThrottle, 120 );
 	Add( _T("Gnutella.BlockBlankClients"), &Gnutella.BlockBlankClients, TRUE );
+	Add( _T("Gnutella.SpecifyProtocol"), &Gnutella.SpecifyProtocol, FALSE );
 	
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );

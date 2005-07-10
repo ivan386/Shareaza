@@ -118,11 +118,10 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(IN_ADDR* pAddress, WORD nPort, PRO
 		if ( pNeighbour->ConnectTo( pAddress, nPort, bAutomatic, bNoUltraPeer ) ) 
 		{
 			// Started connecting to a G1/G2 neighbour
-			/*
+
 			// If we only want G1 connections now, specify that to begin with.
-			if ( ( nProtocol == PROTOCOL_G1 ) && ( ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) )
+			if ( ( Settings.Gnutella.SpecifyProtocol ) && ( nProtocol == PROTOCOL_G1 ) && ( ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) )
 				pNeighbour->m_nProtocol = PROTOCOL_G1;
-			*/
 			return pNeighbour;
 		}
 		delete pNeighbour;

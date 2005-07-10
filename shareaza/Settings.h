@@ -238,6 +238,7 @@ public:
 		DWORD		HostCacheView;
 		DWORD		ConnectThrottle;
 		BOOL		BlockBlankClients;			// Block Ultrapeers with no user agent
+		BOOL		SpecifyProtocol;			// Specify G1 or G2 when initiating a connection
 	} Gnutella;
 	
 	struct sGnutella1
