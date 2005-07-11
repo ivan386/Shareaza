@@ -2087,7 +2087,7 @@ prompt="Kattints ide a magyar nyelvhez."
                    friss listát (.met fájlt) , hogy tudj kapcsolódni az eD2k hálózathoz.</text>
                    <newline gap="8"/>
                    <text>Ezt megteheted az ed2k beállításoknál vagy a szerverkereső
-                   ablakban.</text>
+                   ablakban. Nyomd le F9 gombot a Szerverkereső szolgáltatás megnyitásához.</text>
           </document>
 
        <document name="GeneralHelp.UploadWarning">
@@ -2930,7 +2930,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16810" value="éves"/>
        <string id="16811" value="Automatikus"/>
        <string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkented a sorok maximális számát, valószínűleg nem fognak elidulni a letöltéseid. \nBiztos csökkenteni akarod a számodra kirendelt sorszámot?"/>
-       <string id="16817" value="A Windows csak 256 karakter hosszú elérési utakat kezel.\nVálassz egy rövidebb elérési utat."/>
+       <string id="16817" value="A Windows 256 karakter hosszú elérési utaknál rövidebbeket kezel.\nVálassz egy rövidebb elérési utat."/>
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
