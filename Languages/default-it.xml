@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 20 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 24 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.3"
+		version="2.1.1.11"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -2086,7 +2086,22 @@
 		lista aggiornata dei server (file met) per connetterti a ED2K.</text>
 		<newline gap="8"/>
 		<text>Puoi scaricare una lista dei server dalla pagina delle opzioni di ed2k, o dalla finestra
-		dei servizi di connessione.</text>
+		dei servizi di connessione. (Premi F9 per aprire la finestra dei servizi di connessione)</text>
+	</document>
+
+	<document name="GeneralHelp.UploadWarning">
+		<text format="b">Limitare gli upload può rallentare i download</text>
+		<newline gap="8"/>
+		<text>Shareaza si collega a parecchie reti per fare rispettare i rapporti, limita gli upload
+		ai client che non condividono, o semplicemente preferenzia l'invio a condivisori conosciuti.</text>
+		<newline/>
+		<text>Fortunatamente, la connessioni DSL a banda larga sono a due vie:
+		allocano separatamente l'invio e la ricezione. Se il client è configurato correttamente, 
+		dovresti essere in grado di inviare a buona velocità mantenendo la piena velocità di scaricamento.</text>
+		<newline gap="8"/>
+		<text>Di default, il limite di invio è fissato a circa 85% della banda di invio disponibile,
+		mentre la ricezione è illimitata. Questa configurazione dovrebbe farti scaricare
+		alla massima velocità possibile.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -2498,6 +2513,8 @@
 	<string id="7001" value="&amp;Schemi"/>	
 	<string id="7002" value="Valori multipli"/>	
 	<string id="7003" value="Multiplo"/>
+	<string id="7004" value="C'è già un filtro chiamato &quot;%s&quot;, vuoi sostituirlo?"/>
+	<string id="7005" value="Dai un nome al filtro."/>
 	<string id="8000" value="Opzioni di Shareaza"/>
 	<string id="8001" value="Benvenuto su Shareaza"/>
 	<string id="8002" value="Proprietà file"/>
@@ -2576,6 +2593,7 @@
 	<string id="8180" value="La dimens. del file deve essere"/>	
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza sta calcolando l'hash per %i file:"/>
+	<string id="8223" value="%i giorni e %i ore"/>
 	<string id="8224" value="Shareaza sta scaricando:"/>
 	<string id="8225" value="Questo download è in pausa:"/>
 	<string id="8226" value="Shareaza ha completato il download di:"/>
@@ -2914,6 +2932,7 @@
 	<string id="16810" value="anni"/>
 	<string id="16811" value="Automatico"/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
+	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
 	<string id="16864" value="Interrogazione dei servizi di ricerca host..."/>
 	<string id="16865" value="Interrogazione del servizio di ricerca &quot;%s&quot;..."/>
 	<string id="16866" value="Transazione GWebCache eseguita con successo (&quot;%s&quot;)."/>
@@ -3036,7 +3055,6 @@
 	<string id="17477" value="L'aggancio BitTorrent con %s ha risposto con il file sbagliato."/>
 	<string id="17478" value="L'aggancio BitTorrent con %s ha richiesto un file sconosciuto."/>
 	<string id="17479" value="L'aggancio BitTorrent con %s è stabilito per &quot;%s&quot;."/>
-	<string id="17480" value="L'aggancio BitTorrent con %s si è perso."/>
 	<string id="17481" value="Ricevuto il file descrittore di BitTorrent: &quot;%s&quot;"/>
 	<string id="17482" value="Impossibile esaminare il file BitTorrent precaricato &quot;%s&quot;."/>
 	<string id="17483" value="Errore dal tracker BitTorrent per &quot;%s&quot;: &quot;%s&quot;."/>
@@ -3055,6 +3073,8 @@
 	<string id="17496" value="Si è verificato un errore durante la copia da &quot;%s&quot; a un file condiviso su BitTorrent."/>
 	<string id="17497" value="Si è verificato un errore sconosciuto durante il tentativo di condividere &quot;%s&quot;."/>
 	<string id="17498" value="È stato rivelato un errore nel file &quot;%s&quot;."/>
+	<string id="17500" value="Il tracker non ha risposto - Riprova annuncio (%i di %i)"/>
+	<string id="17501" value="Impossibile comunicare con il tracker"/>
 	<string id="18496" value="Hai modificato il nome del file.  Desideri rinominare questo download?"/>
 	<string id="18497" value="Hai inserito un hash SHA1 non valido.  Controlla e riprova di nuovo."/>
 	<string id="18498" value="Hai inserito un hash tiger-tree root non valido.  Controlla e riprova di nuovo."/>
@@ -3075,6 +3095,8 @@
 	<string id="19002" value="Impossibile accettare connessioni, URL non disponibile."/>
 	<string id="20000" value="Nessuna URN disponibile"/>
 	<string id="20002" value="di"/><!-- e.g. 1 of 10 -->
+	<string id="20003" value="Cambiare la direzione dell'interfaccia richiede il riavvio di Shareaza. \nDovrai lanciare Shareaza manualmente. Vuoi uscire ora?"/>
+	<string id="20004" value="Le lingue da destra-a-sinistra non sono supportate dal tuo sistema operativo."/>
 	<string id="20100" value="Connessione"/>
 	<string id="20101" value="Richiesta"/>
 	<string id="20102" value="Risposta"/>
@@ -3535,7 +3557,7 @@
 		<control caption="Hai un firewall o un router NAT sulla tua connessione Internet di casa?"/>
 		<control caption="&#160;No, ho PIENO ACCESSO a Internet| Si, ma configurerò un port-forwarding per Shareaza| Si, NON POSSO accettare connessioni in entrata da Internet| Non lo so, AUTO-RILEVA lo stato del firewall"/>
 		<control caption="Se sai la velocità della tua connessione Internet, seleziona l'opzione migliore qui sotto:"/>
-		<control caption="| Modem analogico| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Modem via cavo/SDSL| T1| T3| LAN| OC3"/>
+		<control caption="| Modem analogico| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Modem via cavo/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="O scegli:"/>
 		<control/>
 	</dialog>
