@@ -1850,9 +1850,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat to User</link>
 		</group>
 		
-		<newline gap="16" indent="0"/>
-		<text format="b">Favourite Web Links</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Favourite Web Links</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 		
 		<newline gap="16" indent="0"/>
 		
