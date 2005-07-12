@@ -47,7 +47,7 @@ SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
 WizardImageFile=setup\misc\sidebar.bmp
 WizardSmallImageFile=setup\misc\corner.bmp
-AppModifyPath="{app}\Uninstall\repair.exe"
+;AppModifyPath="{app}\Uninstall\repair.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest.txt
@@ -92,7 +92,7 @@ Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwriterea
 Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Copy repair installer
-Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
+;Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
 
 ; Plugins
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
