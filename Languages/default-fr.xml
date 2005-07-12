@@ -2503,8 +2503,8 @@ Other:
 	<string id="8105" value="Incapable de télécharger le contenu de la prévisualisation à partir de &quot;%s&quot;."/>
 	<string id="8128" value="Cliquez ici pour rechercher à nouveau"/>
 	<string id="8129" value="Aucune recherche en cours dans cette fenêtre."/>
-	<string id="8130" value="Shareaza recherche le réseau..."/>
-	<string id="8131" value="Le réseau ne retourne pas encore de résultat."/>
+	<string id="8130" value="Shareaza recherche sur le réseau..."/>
+	<string id="8131" value="Le réseau n'a pas encore retourné de résultat."/>
 	<string id="8132" value="Quelques résultats sont disponibles mais ont été filtrés."/>
 	<string id="8133" value="Shareaza recherche activement sur le réseau..."/>
 	<string id="8134" value="Vous êtes sur le point de commencer une nouvelle recherche.  Voulez-vous nettoyer les résultats de votre précédente recherche?"/>
