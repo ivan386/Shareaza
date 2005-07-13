@@ -3251,7 +3251,7 @@
 	<dialog name="CInternetSettingsGroup" caption="Интернет"/>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Соединения">
-		<control caption="_Локальные адреса:"/>
+		<control caption="Адрес для входящего потока:"/>
 		<control caption="Адрес:"/>
 		<control caption="Автоматический"/>
 		<control caption="Порт:"/>
@@ -3260,7 +3260,7 @@
 		<control caption="Скорость:"/>
 		<control/>
 		<control caption="Настоять на этом адресе"/>
-		<control caption="_Внешние адреса:"/>
+		<control caption="Адрес для выходящего потока:"/>
 		<control caption="Адрес:"/>
 		<control caption="Автоматический"/>
 		<control caption="Скорость:"/>

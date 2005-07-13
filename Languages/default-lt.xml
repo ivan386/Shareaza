@@ -3269,7 +3269,7 @@ right quote	&#147;
 	<dialog name="CInternetSettingsGroup" caption="Internetas"/>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Ryšys">
-		<control caption="_Išorinis adresas:"/>
+		<control caption="_Gavimų adresas:"/>
 		<control caption="Adresas:"/>
 		<control caption="Automatinis"/>
 		<control caption="Prievadas:"/>
@@ -3278,7 +3278,7 @@ right quote	&#147;
 		<control caption="Sparta:"/>
 		<control/>
 		<control caption="Dirbtinai susieti su adresu"/>
-		<control caption="_Vidinis adresas:"/>
+		<control caption="_Išsiuntimų adresas:"/>
 		<control caption="Adresas:"/>
 		<control caption="Automatinis"/>
 		<control caption="Sparta:"/>
