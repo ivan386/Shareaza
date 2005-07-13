@@ -703,6 +703,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
        </members>
        <typeFilter>
                <type extension="3gp"/>
+               <type extension="3gpp"/>
                <type extension="3g2"/>
                <type extension="asf"/>
                <type extension="avi"/>
