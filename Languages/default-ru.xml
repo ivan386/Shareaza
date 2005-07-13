@@ -12,7 +12,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -1876,9 +1876,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Чат с юзером</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Избранные вэб ссылки</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Избранные вэб ссылки</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2077,7 +2079,7 @@
 		новый список серверов (файл met), чтобы Вы смогли подключиться к ED2K.</text>
 		<newline gap="8"/>
 		<text>Вы можете скачать этот список со страницы опций edonkey2000 или с окна
-		служб ресурсов.</text>
+		служб ресурсов. (Нажмите F9, если хотите открыть это окно)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">

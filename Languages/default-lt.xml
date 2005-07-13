@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -1895,9 +1895,11 @@ right quote	&#147;
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Kalbėtis su vartotoju</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Mėgiamos interneto nuorodos</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Mėgiamos interneto nuorodos</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2098,7 +2100,7 @@ right quote	&#147;
 		naują serverių sąrašą (met bylą), kad galėtumėte prisijungti prie ED2K.</text>
 		<newline gap="8"/>
 		<text>Jūs galite parsisiųsti šį sąrašą iš edonkey2000 nuostatų puslapio arba iš
-		paslaugų radimo tarnybų lango.</text>
+		paslaugų radimo tarnybų lango. (Paspauskite F9, jei norite atverti šį langą)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
