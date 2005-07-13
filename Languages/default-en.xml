@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -1881,9 +1881,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat to User</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Favourite Web Links</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Favourite Web Links</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
