@@ -28,7 +28,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.francais(at)laposte.net"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -1890,10 +1890,12 @@ Other:
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Discuter avec l'utilisateur</link>
 		</group>
-
-		<newline gap="16" indent="0"/>
-		<text format="b">Liens web favoris</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		
+		<group id="3">
+            <newline gap="16" indent="0"/>
+            <text format="b">Liens web favoris</text>
+            <newline gap="4" indent="8" id="Bookmarks"/>
+        </group>
 
 		<newline gap="16" indent="0"/>
 
