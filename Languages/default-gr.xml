@@ -1,15 +1,14 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Shareaza Greek Skin File -->
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-
 <!-- Manifest -->
 <manifest name="Ελλάδα"
 	author="Δημήτρης Πετσαλάκης"
 	description="Shareaza Default Greek Skin File"
 	link="http://www.shareaza.com/"
 	email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 	type="Language"
 	language="gr"
 	prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
@@ -33,7 +32,7 @@
 		<button id="ID_TAB_HOME" text="Αρχική Σελίδα"/>
 		<button id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
 		<button id="ID_TAB_MEDIA" text="Μέσο αναπαραγωγής"/>
-		<button id="ID_TAB_SEARCH" text="Ερευνα"/>
+		<button id="ID_TAB_SEARCH" text="Έρευνα"/>
 		<button id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
 		<button id="ID_TAB_NETWORK" text="Δίκτυο"/>
 	</toolbar>
@@ -72,7 +71,7 @@
 		<button id="ID_SEARCH_PANEL" text="Δείξε την έρευνα"/>
 		<button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
@@ -83,7 +82,7 @@
 		<button id="ID_SEARCH_PANEL" text="Δείξε τα αποτελέσματα"/>
 		<button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
@@ -97,14 +96,14 @@
 		<button id="ID_SEARCH_PANEL" text="Δείξε τα αποτελέσματα"/>
 		<button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
 	<toolbar name="CBrowseHeaderCtrl">
 		<button id="ID_BROWSE_PROFILE" text="Προφίλ"/>
-		<button id="ID_BROWSE_FILES" text="Τα αρχεία που μοιράζεσε"/>
+		<button id="ID_BROWSE_FILES" text="Τα αρχεία που μοιράζεσαι"/>
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
 		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Φάκελοι"/>
@@ -116,7 +115,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
@@ -129,7 +128,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Δείξε λεπτομέρειες"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
@@ -362,7 +361,7 @@
 		<button id="ID_HITMONITOR_PAUSE" text="Παύση"/>
 		<button id="ID_SEARCH_CLEAR" text="Καθάρισε"/>
 		<rightAlign/>
-		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτέλεσματα"/>
+		<label text="Φίλτρο:" tip="Γράψε μερικές λέξεις για να  φιλτράρεις τα αποτελέσματα"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Περισσότερα..."/>
 	</toolbar>
@@ -435,7 +434,7 @@
 			<item id="ID_VIEW_TABBED" text="_Ενισχυμένη Μορφή"/>
 		</menu>
 		<menu text="_Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _Μοιράζεσε..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _Μοιράζεσαι..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Πρόσθεσε/κατέβασε Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Διάλεξε S_kin..."/>
@@ -519,7 +518,7 @@
 			<item id="ID_VIEW_WINDOWED" text="Μορφή _Windowed"/>
 		</menu>
 		<menu text="_Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσε..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσαι..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Πρόσθεσε/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Διάλεξε S_kin..."/>
@@ -578,7 +577,7 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _μετά την μεταφορά"/>
 			<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
 		</menu>
-		<menu text="_Επιλογές">
+		<menu text="_Επισκόπηση">
 			<item id="ID_VIEW_SYSTEM" text="_Σύστημα" shortcut="F11"/>
 			<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες" shortcut="F2"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Κατέβασμα" shortcut="F3"/>
@@ -600,7 +599,7 @@
 			<item id="ID_VIEW_WINDOWED" text="Μορφή Windowed"/>
 		</menu>
 		<menu text="_Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσε..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Τα αρχεία που _μοιράζεσαι..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Πρόσθεσε/Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Διάλεξε S_kin..."/>
@@ -699,7 +698,7 @@
 	<menu name="CMainWnd.Tray">
 		<item id="ID_TRAY_OPEN" text="_Άνοιξε το Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Νε_α έρευνα..."/>
+		<item id="ID_NETWORK_SEARCH" text="Νέ_α έρευνα..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="_Κατέβασε το αρχείο ..."/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Παίξε το αρχείο"/>
@@ -707,7 +706,7 @@
 		<item id="ID_MEDIA_STOP" text="_Σταμάτησε το αρχείο "/>
 		<separator/>
 		<item id="ID_MEDIA_PREVIOUS" text="Π_ροηγούμενο κομμάτι"/>
-		<item id="ID_MEDIA_NEXT" text="_Επόμενο κομματι"/>
+		<item id="ID_MEDIA_NEXT" text="_Επόμενο κομμάτι"/>
 		<separator/>
 		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _μετά την μεταφορά"/>
 		<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
@@ -789,9 +788,9 @@
 		<menu text="_Ψάξε για">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια απο την ίδια την σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια την σειρά"/>
 		</menu>
 		<menu text="Υπηρεσίες _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες το _Bitzi Ticket"/>
@@ -809,11 +808,11 @@
 		<separator/>
 		<menu text="_Ψάξε για">
 			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρομοια αρχεία"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια απο την ίδια την σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια την σειρά"/>
 		</menu>
 		<menu text="Υπηρεσίες _Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες το _Bitzi Ticket"/>
@@ -835,9 +834,9 @@
 		<menu text="_Ψάξε για">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια απο την ίδια σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια σειρά"/>
 		</menu>
 		<menu text="_Web File Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες _Bitzi Ticket"/>
@@ -855,9 +854,9 @@
 			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το αρχείο"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια απο την ίδια σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια σειρά"/>
 		</menu>
 		<menu text="_Υπηρεσίες Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες το _Bitzi Ticket"/>
@@ -880,9 +879,9 @@
 			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το αρχείο"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια απο την ίδια σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια σειρά"/>
 		</menu>
 		<menu text="_Υπηρεσίες Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες το _Bitzi Ticket"/>
@@ -892,7 +891,7 @@
 		<item id="ID_SEARCH_FILTER_REMOVE" text="_Απομάκρυνε το φίλτρο"/>
 		<separator/>
 		<item id="ID_HITMONITOR_PAUSE" text="_Διέκοψε την αναπαραγωγή"/>
-		<item id="ID_HITMONITOR_CLEAR" text="Κ_αθάρισε το αχείο που παίζει"/>
+		<item id="ID_HITMONITOR_CLEAR" text="Κ_αθάρισε το αρχείο που παίζει"/>
 		<separator/>
 		<item id="ID_SEARCH_COLUMNS" text="Άλλαξε την σ_τήλη..."/>
 	</menu>
@@ -901,7 +900,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Επισκόπηση"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Δες τις κριτικές"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Επανέφερε"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Επανάφερε"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="Δ_ιέκοψε"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Διέγραψε"/>
 		<separator/>
@@ -936,7 +935,7 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Προχώρα _επάνω"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Προχώρα _κάτω"/>
-			<item id="ID_DOWNLOADS_BOOST" text="_Αγνόησε το όριο του Εύρου ζώνης"/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Αγνόησε το όριο του Εύρους ζώνης"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 	</menu>
@@ -978,7 +977,7 @@
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Αυ_τόματο καθάρισμα"/>
 	</menu>
 	<menu name="CDownloadTabBar">
-		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Επανέφερε όλα τα αρχεία"/>
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Επανάφερε όλα τα αρχεία"/>
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Σ_ταμάτα όλα τα αρχεία"/>
 		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Καθάρισε όλα τα αρχεία"/>
 		<separator/>
@@ -1088,9 +1087,9 @@
 			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το αρχείο"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδεια απο την ίδια σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδεια από την ίδια σειρά"/>
 		</menu>
 		<menu text="_Υπηρεσίες web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Δες το _Bitzi Ticket"/>
@@ -1703,7 +1702,7 @@
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">Γενικά:</link>
 		<gap size="4"/>
-		<text>Κοινές επιλογές όπως tooltips, minimise behaviour, number formats, prompts, και άλλα.</text>
+		<text>Κοινες επιλογές όπως tooltips, minimise behaviour, number formats, prompts, και άλλα.</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CLibrarySettingsPage" format="b">Βιβλιοθήκη:</link>
@@ -1870,11 +1869,13 @@
 			<icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Μίλα στον χρήστη</link>
-		</group>
+                </group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Favourite Web Links</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Favourite Web Links</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2078,22 +2079,22 @@
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window.</text>
+		services window. (Press F9 to open the discovery services window)</text> 
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
-		<text format="b">Limiting uploads may slow downloads</text>
+		<text format="b">Περιορίζοντας το ανέβασμα ίσως καθυστερίσει και το κατέβασμα</text>
 		<newline gap="8"/>
-		<text>Several networks Shareaza connects to enforce ratios, limit uploads to
-		clients that do not share, or simply preference uploading to known sharers.</text>
+		<text>Ορισμένα δίκτυα του Shareaza συνδέονται και επιβάλουν το ratio ώστε να περιορίσουν το ανέβασμα σε πελάτες 
+		που δεν μοιράζουν, ή απλά προτειμούν να ανεβάζουν σε γνωστά άτομα.</text>
 		<newline/>
-		<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured, 
-		you should be able to upload at a good rate while retaining full download capacity.</text>
+		<text>Ευτυχώς, οι συνδέσεις DSL είναι σαν συο γραμμές στην εθνική: έχετε
+		διαφορετική κατανομή για το ανέβασμα και κατέβασμα. Εάν ο πελάτης σας είναι σωστά ρυθμισμένος, 
+		θα είστε σε θέση να ανεβάζετε με μια καλή ταχύτητα ενώ διατηρείτε τις ταχύτητες κατεβάσματος σε πλήρη δυναμικότητα.</text>
 		<newline gap="8"/>
-		<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible 
-		downloads that are available.</text>
+		<text>Εξ ορισμού, το όριο για ανέβασμα είναι περίπου στο 85% του ελέυθερου εύρους ζώνης για ανέβασμα,
+		ενώ κατεβάζετε απεριόριστα. Αυτή η διαμόρφωση θα σας δώσει την γρηγορότερη δυνατή ταχύτητα για 
+		κατέβασμα που είναι διαθέσιμη.</text>
 	</document>
 
 	<!-- Search help documents -->
@@ -2211,7 +2212,7 @@
 	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Διέκοψε όλα τα αρχεία που κατεβαίνουν σε αυτό το group."/>
 	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Επεξεργάσου τις ιδιότητες του συγκεκριμένου download group."/>
 	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Διέγραψε το συγκεκριμένο download group."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Επανέφερε όλα τα αρχεία σε αυτό το group."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Επανάφερε όλα τα αρχεία σε αυτό το group."/>
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Εμφάνισε ή απόκρυψε την download group bar."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Αυτόματα καθάρισε τα αρχεία που έχουν τελειώσει."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Αύξησε την ταχύτητα των συγκεκριμένων αρχείων αφαιρώντας  το όριο του έύρου Ζώνης."/>
@@ -2239,7 +2240,7 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Μετακίνησε το συγκεκριμένο αρχείο(α) στην μεγαλύτερη λίστα προτεραιότητας."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Διέκοψε το συγεκριμένο αρχείο(α)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Βαθμολόγησε το συγκεκριμένο αρχείο."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="Επανέφερε το συγκεκριμένο αρχείο(α)."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="Επανάφερε το συγκεκριμένο αρχείο(α)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Ρύθμισε τα download settings..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Δείξε τις πηγές που δεν χρησιμοποιούντε αυτήν την στιγμή."/>
@@ -2305,7 +2306,7 @@
 	<tip id="ID_LIBRARY_REBUILD" message="Rebuild metadata and hashes for the selected folders or files."/>
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using other language."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Ανανέωσε την Βιβλιοθήκη."/>
-	<tip id="ID_LIBRARY_REMOVE" message="Απομάκρυνε τα συγκεκριμένα αρχεία που μοιράζεσε."/>
+	<tip id="ID_LIBRARY_REMOVE" message="Απομάκρυνε τα συγκεκριμένα αρχεία που μοιράζεσαι."/>
 	<tip id="ID_LIBRARY_RENAME" message="Μετονόμασε το συγκεκριμένο αρχείο."/>
 	<tip id="ID_LIBRARY_SCAN" message="Εξέτασε του συγκεκριμένους φακέλους ή αρχεία για αλλαγές."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Ψάξε τα αρχεία στην Βιβλιοθήκη..."/>
@@ -2337,7 +2338,7 @@
 	<tip id="ID_MEDIA_FULLSCREEN" message="Δες το video σε όλη την οθόνη."/>
 	<tip id="ID_MEDIA_MUTE" message="Βγάλε τον ήχο απο το audio playback"/>
 	<tip id="ID_MEDIA_NEXT" message=" Πήγαινε στο αμέσως επόμενο αρχείο στην Λίστα Αναπαραγωγής." tip="Επόμενο αρχείο"/>
-	<tip id="ID_MEDIA_OPEN" message="Άνοιξε και παίξε ένα αρχείο απο τον υπολογιστή..."/>
+	<tip id="ID_MEDIA_OPEN" message="Άνοιξε και παίξε ένα αρχείο απο την..."/>
 	<tip id="ID_MEDIA_PAUSE" message="Διέκοψε την αναπαραγωγή του αρχείου." tip="Παύση"/>
 	<tip id="ID_MEDIA_PLAY" message="Άρχισε να παίζεις το αρχείο." tip="Παίξε"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Εμφάνισε ή απόκρυψε την playlist editor."/>
@@ -2405,7 +2406,7 @@
 	<tip id="ID_SECURITY_POLICY_ACCEPT" message="Ρύθμισε την κανονική ασφάλεια να δέχετε όλους τους hosts."/>
 	<tip id="ID_SECURITY_POLICY_DENY" message="Ρύθμισε την κανονική ασφάλεια να μην δέχετε όλους τους hosts."/>
 	<tip id="ID_SECURITY_REMOVE" message="Απομάκρυνε τον συγκεκριμένο κανόνα ασφαλείας."/>
-	<tip id="ID_SECURITY_RESET" message="Επανέφερε το hit counts στο συγκεκριμένο κανόνα."/>
+	<tip id="ID_SECURITY_RESET" message="Επανάφερε το hit counts στο συγκεκριμένο κανόνα."/>
 	<tip id="ID_SYSTEM_CLEAR" message="Καθάρισε το αρχείο λειτουργίας."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Κατέγραψε ένα timestamp για κάθε γραμμή."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Δείξε ένα αναλυτικό system activity log."/>
@@ -2467,9 +2468,9 @@
 	<tip id="ID_VIEW_TABBED" message="Χρησιμοποίησε το Shareaza σε power Tabbed mode (Αρχική Σελίδα, Βιβλιοθήκη, Media, Μεταφορές, Δίκτυο)."/>
 	<tip id="ID_VIEW_TRAFFIC" message="Εμφάνισε ή κρύψε ένα παράθυρο Γραφικών."/>
 	<tip id="ID_VIEW_UPLOADS" message="Εμφάνισε ή κρύψε το παράθυρο των Αρχείων που ανεβαίνουν."/>
-	<tip id="ID_VIEW_WINDOWED" message="Χρησιμοποίησε το Shareaza σε Windowed μορφή."/>
+	<tip id="ID_VIEW_WINDOWED" message="Χρησιμοποίησε το Shareaza σε power Παραθυρική Μορφή."/>
 	<tip id="ID_WINDOW_CASCADE" message="Επέκτεινε όλα τα ανοικτά παράθυρα για να γεμίσουν την οθόνη."/>
-	<tip id="ID_WINDOW_MONITOR" message="Εμφάνισε ή κρύψε το παράθυρο του Εύρου Ζώνης."/>
+	<tip id="ID_WINDOW_MONITOR" message="Εμφάνισε ή κρύψε το παράθυρο του Εύρους Ζώνης."/>
 	<tip id="ID_WINDOW_NAVBAR" message="Εμφάνισε ή απόκρυψε την navigation bar."/>
 	<tip id="ID_WINDOW_REMOTE" message="Εμφάνισε ή απόκρυψε το Shareaza Remote Control"/>
 	<tip id="ID_WINDOW_TABBAR" message="Εμφάνισε ή κρύψε την window tab bar."/>
@@ -2914,7 +2915,7 @@
 	<string id="16804" value="Δεν έχεις βάλει ένα όνομα για να φαίνετε στο προφίλ σου.\n\nΕίναι καλή ιδέα να βάλεις ένα τυχαίο όνομα ώστε οι άλλοι χρήστες να βλέπουν με ποιον συνδέονται.\n\nΕίσαι σίγουρος ότι θες να συνεχίσεις χωρίς να βάλεις ένα όνομα?"/>
 	<string id="16805" value="Δεν έχεις βάλει μια τοποθεσία για να φαίνετε στο προφίλ σου.\n\nΕίναι καλή ιδέα να βάλεις την περιοχή σου ώστε οι άλλοι χρήστες να βλέπουν απο που είσαι.\n\nΕίσαι σίγουρος ότι θες να συνεχίσεις χωρίς να βαλεις την τοποθεσία σου?"/>
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
-	<string id="16807" value="Παρακαλώ θέστε το όριο του Εύρου Ζώνης που θέλετε &quot;123 kb/s&quot; για kilobits per second, ή &quot;123 KB/s&quot; για kilobytes per second."/>
+	<string id="16807" value="Παρακαλώ θέστε το όριο του Εύρους Ζώνης που θέλετε &quot;123 kb/s&quot; για kilobits per second, ή &quot;123 KB/s&quot; για kilobytes per second."/>
 	<string id="16808" value="Δεν έχεις βάλει την ηλικία σου και το φίλο σου.  Είσαι σίγουρος ότι θες να συνεχίσεις χωρίς να τα βάλεις?"/>
 	<string id="16809" value="E&amp;xit"/>
 	<string id="16810" value="Ετών"/>
@@ -3061,14 +3062,14 @@
 	<string id="17495" value="Αυτό το torrent περιλμβάνει το αρχείο &quot;%s&quot; που είναι %s, αλλά η έκδοση του αρχείου είναι %s."/>
 	<string id="17496" value="Ένα σφάλμα δημιουργήθηκε καθώς γινόταν η αντιγραφή απο &quot;%s&quot; προς ένα BitTorrent share file."/>
 	<string id="17497" value="Ένα άγνωστο σφάλμα δημιουργήθηκε καθώς προσπαθούσε να γίνει η αναπαραγωγή &quot;%s&quot;."/>
-	<string id="17498" value="Ένα σφάλμα εντοπίστηκε στο αρχείο &quot;%s&quot;.."/>
+	<string id="17498" value="Ένα σφάλμα εντοπίστηκε στο αρχείο &quot;%s&quot;."/>
 	<string id="17500" value="Ο Tracker δεν απάντησε- Επανάληψη αναγγελίας (%i of %i)"/>
 	<string id="17501" value="Αδυναμία επικοινωνίας με τον tracker"/>
 	<string id="18496" value="Έχετε κάνει αλλαγές στο όνομα.  Είσε σίγουρος ότι θέλετε να μετονομάσε τε αυτό το αρχείο?"/>
 	<string id="18497" value="Έχετε πατήσει ένα SHA1 value, αλλά είναι άκυρο.  Παρακαλώ ελένξτε το και ξαναπροσπαθήστε."/>
 	<string id="18498" value="Έχετε πατήσει ένα root tiger-tree value, αλλά είναι άκυρο.  Παρακαλώ ελένξτε το και ξαναπροσπαθήστε"/>
 	<string id="18499" value="Έχετε πατήσει ένα eDonkey2000 hash value, αλλά είναι άκυρο.  Παρακαλώ ελένξτε το και ξαναπροσπαθήστε."/>
-	<string id="18500" value="Έχετε βάλει ένα SHA1 hash value που είναι διαφορετικό απο αυτό που έχει τώρα το αρχείο.  Είστε σίγουροι ότι θέλετε να αλλάξετε το SHA1 hash τώρα?"/>
+	<string id="18500" value="Έχετε βάλει ένα SHA1 hash value που είναι διαφορετικό απο αυτό που έχει τώρα το αρχείο..  Είστε σίγουροι ότι θέλετε να αλλάξετε το SHA1 hash τώρα?"/>
 	<string id="18501" value="Έχετε βάλει ένα root tiger-tree hash value που είναι διαφορετικό απο αυτό που έχει τώρα το αρχείο.  Είστε σίγουροι ότι θέλετε να αλλάξετε το tiger-tree root hash τώρα?"/>
 	<string id="18502" value="Έχετε βάλει ένα eDonkey2000 hash value που είναι διαφορετικό απο αυτό που έχει τώρα το αρχείο.  Είστε σίγουροι ότι θέλετε να αλλάξετε το eDonkey2000 hash τώρα?"/>
 	<string id="18503" value="Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
@@ -3118,7 +3119,7 @@
 	<string id="20131" value="Πηγές"/><!-- from 2 to 4 -->
 	<string id="20132" value="Πηγές"/><!-- from 5 to 9 -->
 	<string id="20133" value="Αδιάφορο"/>
-	<string id="20134" value="Choked"/>
+	<string id="20134" value="Παγωμένο"/>
 	<string id="20135" value="Επόμενο"/>
 	<string id="20136" value="Q"/>
 	<string id="20200" value="Κυριακή"/>
@@ -3412,22 +3413,22 @@
 		<control caption="Άλλοι eDonkey clients."/>
 		<control caption="Τα _ερργαλεία του eDonkey2000:"/>
 		<control caption="Εισαγωγή eDonkey/eMule partial downloads (.part):"/>
-		<control caption="Εισαγωγή..."/>
+		<control caption="Εισαγωγη..."/>
 		<control caption="Κατέβασμα eDonkey2000 serverlist απο το web:"/>
 		<control caption="Κατέβασμα..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
 		<control caption="_Διασύνδεση:"/>
 		<control caption="Display additional BitTorrent interface elements"/>
-		<control caption="_Download Connections :"/>
+		<control caption="_Download Connections:"/>
 		<control/><control/>
 		<control caption="Κατέβασμα Torrents με τη μια"/>
 		<control/><control/>
 		<control caption="Client connections"/>
 		<control caption="&#160;Καθαρ. των κατεβ. torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;When the share ratio reaches"/>
 		<control/><control/><control/>
-		<control caption="&#160;Preference torrent sources"/>
+		<control caption="&#160;Prefer torrent sources"/>
 		<control caption="_EndGame:"/>
 		<control caption="Ενεργοποίησε την μορφή EndGame όταν τελειώνουν τα torrents"/>
 		<control caption="_Αποθήκευσε τα Torrents εδώ:"/>
@@ -4110,7 +4111,7 @@
 		<control caption="Κατέβασε"/>
 		<control caption="Seed"/>
 		<control caption="Ακύρωσε"/>
-		<control caption="Για να κάνετε share ένα ολοκληρωμένο αχείο χρησιμοποιώντας BitTorrent πρέπει πρώτα να γίνει seeded.  Μόλις γίνει θα εμφανιστεί σαν νέο αντικείμενο στην λίστα με τα κατεβασμένα αρχεία σας."/>
+		<control caption="Για να κάνετε share ένα ολοκληρωμένο αρχείο χρησιμοποιώντας BitTorrent πρέπει πρώτα να γίνει seeded.  Μόλις γίνει θα εμφανιστεί σαν νέο αντικείμενο στην λίστα με τα κατεβασμένα αρχεία σας."/>
 		<control/>
 	</dialog>
 
