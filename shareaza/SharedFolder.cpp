@@ -387,6 +387,8 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			}
 			else
 			{
+				if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_ENCRYPTED) ) continue;
+
 				CLibraryFile* pFile = GetFile( pFind.cFileName );
 				
 				if ( pFile != NULL )
