@@ -531,6 +531,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	if ( m_sFileName.IsEmpty() )
 	{
 		if ( m_bSHA1 ) m_sFileName = CSHA::HashToString( &m_pSHA1, TRUE );
+		else m_sFileName = m_sRequest;
 	}
 	
 	SendResponse( IDR_HTML_FILENOTFOUND );
