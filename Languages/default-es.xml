@@ -9,7 +9,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="luis.help@gmail.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -147,8 +147,8 @@
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Limpiar Completados"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir"/>
@@ -163,8 +163,8 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Información de Torrent"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Limpiar Completados"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtro"/>
 	</toolbar>
@@ -173,7 +173,7 @@
 		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
 		<button id="ID_UPLOADS_CHAT" text="Platicar con Usuario"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completado"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
 		<button id="ID_UPLOADS_LAUNCH" text="Abrir o Reproducir"/>
@@ -185,7 +185,7 @@
 		<button id="ID_UPLOADS_CHAT" text="Platicar con Usuario"/>
 		<button id="ID_SECURITY_BAN" text="Bloquear Usuario"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completado"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtro"/>
 	</toolbar>
@@ -437,7 +437,7 @@
 		</menu>
 		<menu text="_Herramientas">
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir Carpetas..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Cambiar el _Skin..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Cambiar el _Idioma..."/>
@@ -706,7 +706,7 @@
 		<item id="ID_TRAY_OPEN" text="_Abrir Shareaza"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="Nueva _Búsqueda..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Reproducir"/>
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
@@ -723,7 +723,7 @@
 		<item id="ID_TRAY_OPEN" text="_Abrir Shareaza"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="Nu_eva Búsqueda..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo.."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Reproducir Media"/>
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
@@ -912,9 +912,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancelar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Buscar Más Fuentes"/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impiar Completo"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Limpiar"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
 	</menu>
@@ -980,7 +977,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Limpiar Completados"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Limpiar"/>
 	</menu>
 	<menu name="CDownloadTabBar">
@@ -1021,12 +1018,12 @@
 		</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impiar Completado"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Limpiar"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Ayuda..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impiar Completado"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Limpiar"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
@@ -1880,9 +1877,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Platicar con el usuario</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Páginas web favoritas</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Páginas web favoritas</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -4125,7 +4124,7 @@
 		<control caption="Información _Torrent:"/>
 		<control caption="Nombre:"/>
 		<control/>
-		<control caption="Createdo:"/>
+		<control caption="Creaado:"/>
 		<control/>
 		<control caption="Por:"/>
 		<control/>
@@ -4146,7 +4145,6 @@
 		<control caption="_Actualizar"/>
 		<control/>
 		<control caption="Cerrar"/>
-		<control caption="Como sea necesario|Cuando el ratio es más bajo de 100%|Nunca"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propiedades del Grupo de Descarga">
