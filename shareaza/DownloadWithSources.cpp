@@ -423,17 +423,17 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN)
 
 BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
-	//Check/Reject if source is invalid
+	// Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
 	{
-		//Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		// Reject invalid IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pAddress.S_un.S_un_b.s_b1 == 0 )
 		{
 			delete pSource;
 			return FALSE;
 		}
 
-		//Reject if source is the local IP/port
+		// Reject if source is the local IP/port
 		if ( Network.m_pHost.sin_addr.S_un.S_addr == pSource->m_pAddress.S_un.S_addr )
 		{
 			if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
@@ -446,11 +446,22 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	}
 	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 	{
-		//Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
+		// Reject invalid server IPs (Sometimes ed2k sends invalid 0.x.x.x sources)
 		if ( pSource->m_pServerAddress.S_un.S_un_b.s_b1 == 0 )
 		{
 			delete pSource;
 			return FALSE;
+		}
+	}
+
+	// Check if GUID is valid (MLDonkey source exchange bug)
+	if ( pSource->m_bGUID )
+	{
+		if ( ( pSource->m_pGUID.w[0] == 0 ) && ( pSource->m_pGUID.w[1] == 0 ) && 
+			 ( pSource->m_pGUID.w[2] == 0 ) && ( pSource->m_pGUID.w[3] == 0 ) )
+		{
+			// GUID appear to be null, so invalidate it to prevent duplicate sources
+			pSource->m_bGUID = FALSE;
 		}
 	}
 
