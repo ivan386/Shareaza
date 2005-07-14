@@ -460,25 +460,25 @@ BOOL CBTClient::OnHandshake2()
 		}
 
 		if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsPaused() )
-	{
-		ASSERT( m_pDownloadTransfer == NULL );
-		
-		if ( m_pDownload->m_nStartTorrentDownloads != dtNever ) 
 		{
+			ASSERT( m_pDownloadTransfer == NULL );
+			
 			// Download from uploaders, unless the user has turned off downloading for this torrent
-		
-			m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
-			// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
-			// May just be clients sending duplicate connection requests, though...
-			if ( m_pDownloadTransfer == NULL )
+			if ( m_pDownload->m_nStartTorrentDownloads != dtNever ) 
 			{
-				m_pDownload = NULL;
-				theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
-				Close();
-				return FALSE;
+				// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
+				// May just be clients sending duplicate connection requests, though...
+				m_pDownloadTransfer = m_pDownload->CreateTorrentTransfer( this );
+
+				if ( m_pDownloadTransfer == NULL )
+				{
+					m_pDownload = NULL;
+					theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
+					Close();
+					return FALSE;
+				}
 			}
 		}
-	}
 	}
 	
 	ASSERT( m_pUpload == NULL );
@@ -536,7 +536,7 @@ void CBTClient::DetermineUserAgent()
 	CString strVer;
 
 	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )	
-	{	//Azerus style
+	{	// Azerus style
 		if ( m_pGUID.b[1] == 'A' && m_pGUID.b[2] == 'R' )
 		{
 			m_sUserAgent = _T("Arctic");
@@ -581,7 +581,7 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("Swarmscope");
 		}
-		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )	//ToDo: Make certain SZ isn't used before 2.2 final
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )
 		{	
 			//m_sUserAgent = _T("Shareaza");
 			// Shareaza versions don't always 'fit' into the BT numbering, so skip that
@@ -603,7 +603,7 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("ZipTorrent");
 		}
-		else //Unknown client using this naming.
+		else // Unknown client using this naming.
 		{
 			m_sUserAgent.Format( _T("%c%c"), m_pGUID.b[1], m_pGUID.b[2] );
 		}
@@ -625,7 +625,7 @@ void CBTClient::DetermineUserAgent()
 
 	}
 	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
-	{	//Shadow style
+	{	// Shadow style
 		switch ( m_pGUID.b[0] )
 		{
 		case 'A':
@@ -640,7 +640,7 @@ void CBTClient::DetermineUserAgent()
 		case 'U':
 			m_sUserAgent = _T("UPnP NAT BT");
 			break;
-		default: //Unknown client using this naming.
+		default: // Unknown client using this naming.
 			m_sUserAgent.Format(_T("%c"), m_pGUID.b[0]);
 		}
 		
@@ -650,19 +650,19 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent += strVer;
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[2] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[6] == '-' )
-	{	//BitTorrent (Standard client, newer version)
+	{	// BitTorrent (Standard client, newer version)
 		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
-	{	//BitComet
+	{	// BitComet
 		m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
-	{	//Burst
+	{	// Burst
 		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_pGUID.b[5] - '0', m_pGUID.b[7] - '0', m_pGUID.b[9] - '0' );
 	}
 	else
-	{	//Unknown peer ID string
+	{	// Unknown peer ID string
 		m_sUserAgent = _T("BitTorrent");
 	}
 	
