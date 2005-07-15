@@ -10,7 +10,7 @@
 		description="Shareaza Default Croatian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="hr"
 		prompt="Ovdje odaberi Shareazu na hrvatskom jeziku..."
@@ -220,7 +220,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Napravi Album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Obriši Album"/>
 		<rightAlign/>
-		<label text="Find:" tip="Ovdje upišite što tražite u kolekciji"/>
+		<label text="Traži:" tip="Ovdje upišite što tražite u kolekciji"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
 	</toolbar>
@@ -1580,7 +1580,7 @@
 				<newline gap="8"/>
 			</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Click here to hash faster</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Klikni ovdje za brži hash</link>
 			</group>
 			<group id="4">
 				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Click here to hash slower</link>
@@ -1873,9 +1873,12 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Popričaj sa Osobom</link>
 		</group>
-		<newline gap="16" indent="0"/>
-		<text format="b">Preporučene Web Adrese</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Preporučene Web Adrese</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -1942,9 +1945,9 @@
 	</document>
 
 	<document name="DownloadHelp.Pending">
-		<text format="b">This Download is Pending</text>
+		<text format="b">Ovo Skidanje je na Čekanju</text>
 		<newline gap="8"/>
-		<text>This download is waiting for someone to start uploading.
+		<text>Ovo skidanje čeka da netko počne davati.
 		Shareaza is ready to start downloading this file, but no-one is sending it at
 		the moment. You are probably waiting in other user's queues, and the download
 		may start transfering at any time. You can examine the individual sources to
@@ -1953,9 +1956,9 @@
 	</document>
 
 	<document name="DownloadHelp.Queued">
-		<text format="b">This Download is Queued</text>
+		<text format="b">Ovo Skidanje Čeka</text>
 		<newline gap="8"/>
-		<text>This download is waiting for some of your other downloads to complete.
+		<text>Ovo skidanje čeka da neko drugo skidanje završi.
 		Your download settings limit the number of downloads which may be active at
 		any given time, to ensure that each download gets a good share of the available
 		bandwidth.You can change these settings via Tools, Shareaza Settings.
@@ -2205,11 +2208,11 @@
 	<tip id="ID_DISCOVERY_SERVERMET" message="Show eDonkey2000 Server.met services in the Discovery window."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="Show GWebCache services in the Discovery window."/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Cancel and remove all downloads in this group."/>
-	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Create a new download group..."/>
-	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pause all downloads in this group."/>
-	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Edit the properties of the selected download group."/>
-	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Remove the selected download group."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Resume all downloads in this group."/>
+	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Radi novu grupu skidanja..."/>
+	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Pauziraj sva skidanja u ovoj grupi."/>
+	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Promjeni postavke označene grupe skidanja."/>
+	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Makni označenu grupu skidanja."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Nastavi sva skidanja u ovoj grupi."/>
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Show or hide the download group bar."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatically clear downloads which have been completed."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
@@ -2236,8 +2239,8 @@
 	<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Move the selected download(s) down the priority list."/>
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pause the selected download(s)."/>
-	<tip id="ID_DOWNLOADS_RATE" message="Rate the selected download."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="Resume the selected download(s)."/>
+	<tip id="ID_DOWNLOADS_RATE" message="Ocjeni odabrano skidanje."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="nastavi odabrano skidanje."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Configure download settings..."/>
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
@@ -2344,7 +2347,7 @@
 	<tip id="ID_MEDIA_REMOVE" message="Remove the selected media file from the playlist."/>
 	<tip id="ID_MEDIA_REPEAT" message="Repeat the current media file."/>
 	<tip id="ID_MEDIA_SAVE" message="Save the current playlist to a file..."/>
-	<tip id="ID_MEDIA_SELECT" message="Select and play this file."/>
+	<tip id="ID_MEDIA_SELECT" message="Označi i pokreni ovu datoteku."/>
 	<tip id="ID_MEDIA_SETTINGS" message="Display the media settings page..."/>
 	<tip id="ID_MEDIA_SIZE_DISTORT" message="Stretch the video to fill the window, potentially distorting it."/>
 	<tip id="ID_MEDIA_SIZE_FILL" message="Choose the best size for the video based on its aspect ratio."/>
@@ -2686,7 +2689,7 @@
 	<string id="16152" value="Hub susjed %s vas ne prihvača kao hub, prekidam vezu."/>
 	<string id="16153" value="Spojeni susjed %s prelazi u zaštičeni leaf način."/>
 	<string id="16154" value="Hub connection established, closing peer connections."/>
-	<string id="16155" value="Acting as a hub for leaf neighbour %s."/>
+	<string id="16155" value="Glumim hub za leaf susjeda %s."/>
 	<string id="16156" value="Susjed %s želi postati hub, prekidam vezu."/>
 	<string id="16157" value="Susjed %s nije hub, prekidam vezu."/>
 	<string id="16158" value="Gnutella2 veza sa susjedom %s je uspješno uspostavljena (%s)."/>
@@ -3095,7 +3098,7 @@
 	<string id="20106" value="Metadata"/>
 	<string id="20107" value="Zauzeto"/>
 	<string id="20108" value="Dodaj"/>
-	<string id="20109" value="Na čekanju"/>
+	<string id="20109" value="Čekam"/>
 	<string id="20110" value="Nepoznato"/>
 	<string id="20111" value="Gotovo"/>
 	<string id="20112" value="Seeding"/>
