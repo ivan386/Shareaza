@@ -88,6 +88,8 @@ protected:
 	BOOL			m_bSelSourceExtended;
 	BOOL			m_bSelHasReviews;
 
+	BOOL			m_bConnectOkay;
+
 // Overrides
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);

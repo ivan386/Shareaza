@@ -51,6 +51,7 @@
 #include "DlgURLCopy.h"
 #include "DlgHelp.h"
 #include "Skin.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -463,6 +464,8 @@ void CDownloadsWnd::Prepare()
 	m_bSelShareConsistent = TRUE;
 	m_bSelMoreSourcesOK = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
+
+	m_bConnectOkay = FALSE;
 	
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	BOOL bFirstShare = TRUE;
@@ -537,6 +540,9 @@ void CDownloadsWnd::Prepare()
 			}
 		}
 	}
+		
+	if ( ( ! Settings.Connection.RequireForTransfers ) || ( Network.IsConnected() ) )
+		m_bConnectOkay = TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1250,7 +1256,7 @@ void CDownloadsWnd::OnDownloadsMoveDown()
 void CDownloadsWnd::OnUpdateTransfersConnect(CCmdUI* pCmdUI) 
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelIdleSource );
+	pCmdUI->Enable( m_bSelIdleSource && m_bConnectOkay );
 }
 
 void CDownloadsWnd::OnTransfersConnect() 
