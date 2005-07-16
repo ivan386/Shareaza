@@ -350,6 +350,8 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	// Update the G2 host cache (if necessary)
 	if ( HostCache.Gnutella2.CountHosts() < 25 ) DiscoveryServices.QueryForHosts( PROTOCOL_G2 );
 
+	// Load default ed2k server list (if necessary)
+	if ( HostCache.eDonkey.CountHosts() < 10 ) HostCache.eDonkey.LoadDefaultED2KServers();
 	
 	return 0;
 }

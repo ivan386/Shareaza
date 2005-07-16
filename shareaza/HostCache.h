@@ -65,6 +65,7 @@ public:
 	void			Serialize(CArchive& ar, int nVersion);
 	int				Import(LPCTSTR pszFile);
 	int				ImportMET(CFile* pFile);
+	int				LoadDefaultED2KServers();
 protected:
 	CHostCacheHost*	AddInternal(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor);
 	void			RemoveOldest();

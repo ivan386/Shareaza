@@ -1,8 +1,8 @@
 //
 // HostCache.cpp
 //
-//	Date:			"$Date: 2005/07/06 17:50:07 $"
-//	Revision:		"$Revision: 1.15 $"
+//	Date:			"$Date: 2005/07/16 14:43:11 $"
+//	Revision:		"$Revision: 1.16 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -33,6 +33,7 @@
 #include "VendorCache.h"
 #include "G1Packet.h"
 #include "EDPacket.h"
+#include "Buffer.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -729,6 +730,75 @@ int CHostCacheList::ImportMET(CFile* pFile)
 	
 	return nServers;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CHostCacheList MET import
+
+int CHostCacheList::LoadDefaultED2KServers()
+{
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
+	CFile pFile;
+	int nServers = 0;
+	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServers.dat");
+
+	if (  pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
+	{
+		theApp.Message( MSG_DEFAULT, _T("Loading default ED2K server list") );
+
+		try
+		{
+			CString strLine;
+			CBuffer pBuffer;
+			TCHAR cType;
+
+			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
+			pBuffer.m_nLength = (DWORD)pFile.GetLength();
+			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
+			pFile.Close();
+
+			while ( pBuffer.ReadLine( strLine ) )
+			{
+				if ( strLine.GetLength() < 7 ) continue; // Blank comment line
+
+				cType = strLine.GetAt( 0 );
+
+				if ( cType != '#' )
+				{
+					CString strServer = strLine.Right( strLine.GetLength() - 2 );
+
+					int nIP[4], nPort;
+
+					if ( _stscanf( strServer, _T("%i.%i.%i.%i:%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3],	&nPort ) == 5 )
+					{
+						IN_ADDR pAddress;
+						pAddress.S_un.S_un_b.s_b1 = nIP[0];
+						pAddress.S_un.S_un_b.s_b2 = nIP[1];
+						pAddress.S_un.S_un_b.s_b3 = nIP[2];
+						pAddress.S_un.S_un_b.s_b4 = nIP[3];
+
+						CHostCacheHost* pServer = Add( &pAddress, nPort );
+
+						if ( cType == 'P' )
+							pServer->m_bPriority = TRUE;
+						else
+							pServer->m_bPriority = FALSE;
+
+						nServers++;
+					}
+				}
+			}
+		}
+		catch ( CException* pException )
+		{
+			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); // Check if file is still open, if yes close
+			pException->Delete();
+		}
+	}
+
+	return nServers;
+}
+
 
 
 //////////////////////////////////////////////////////////////////////
