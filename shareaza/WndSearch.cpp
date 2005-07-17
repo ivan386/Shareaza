@@ -34,6 +34,7 @@
 #include "ShellIcons.h"
 #include "Skin.h"
 #include "SHA.h"
+#include "ED2K.h"
 #include "XML.h"
 
 #include "WndSearch.h"
@@ -767,6 +768,10 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		else if ( pSearch->m_bSHA1 ) 
 		{
 			strCaption += CSHA::HashToString( &pSearch->m_pSHA1, TRUE );
+		}
+		else if ( pSearch->m_bED2K )
+		{
+			strCaption += CED2K::HashToString( &pSearch->m_pED2K, TRUE );
 		}
 		
 		if ( pSearch->m_pSchema )
