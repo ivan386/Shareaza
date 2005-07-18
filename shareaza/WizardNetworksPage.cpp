@@ -142,7 +142,7 @@ void CWizardNetworksPage::DoDonkeyImport()
 	HostCache.eDonkey.Import( strFolder );
 	
 	// Get a server list from the web (if you need one)
-	if ( ( Settings.eDonkey.EnableToday ) && ( HostCache.eDonkey.CountHosts() < 10 ) ) 
+	if ( ( Settings.eDonkey.EnableToday ) && ( HostCache.eDonkey.CountHosts() < 20 ) ) 
 		DiscoveryServices.QueryForHosts( PROTOCOL_ED2K );
 	
 	LPCTSTR pszFolders[] =
