@@ -210,12 +210,12 @@ Other:
 		<toolbar name="CLibraryHeaderBar.Physical">
 			<button id="ID_LIBRARY_VIEW" text="Ansicht"/>
 			<button id="ID_LIBRARY_PANEL" text="Details"/>
-			<button id="ID_LIBRARY_PARENT" text=""/>
+			<button id="ID_LIBRARY_PARENT" text="Up"/>
 		</toolbar>
 		<toolbar name="CLibraryHeaderBar.Virtual">
 			<button id="ID_LIBRARY_VIEW" text="Ansicht"/>
 			<button id="ID_LIBRARY_PANEL" text="Details"/>
-			<button id="ID_LIBRARY_PARENT"/>
+			<button id="ID_LIBRARY_PARENT" text="Up"/>
 		</toolbar>
 	<!-- LIBRARY VIEWS -->
 		<toolbar name="CLibraryHomeView.Physical">
@@ -1885,9 +1885,11 @@ Other:
 				<link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat</link>
 			</group>
 
-			<newline gap="16" indent="0"/>
-			<text format="b">Internet Bookmarks</text>
-			<newline gap="4" indent="8" id="Bookmarks"/>
+			<group id="3">
+				<newline gap="16" indent="0"/>
+				<text format="b">Internet Bookmarks</text>
+				<newline gap="4" indent="8" id="Bookmarks"/>
+			</group>
 
 			<newline gap="16" indent="0"/>
 
@@ -2614,7 +2616,7 @@ Other:
 		<string id="8241" value="Shareaza überprüft den Download auf Fehler:"/>
 		<string id="8243" value="Hochgeladen: "/>
 		<string id="8288" value="Bibliothek durchsuchen"/>
-		<string id="8289" value=""/>
+		<string id="8289" value=" "/>
 		<string id="8290" value="Inhalt von %i Ordnern anzeigen"/>
 		<string id="8291" value="Mehrere Ordner"/>
 		<string id="8292" value="%i Dateien markiert"/>
