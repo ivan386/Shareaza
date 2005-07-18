@@ -10,10 +10,10 @@ OBJ =	lib/unzip/ioapi.o \
 		utils.o \
 		window.o
 
-LIB = -lgdi32 -lcomctl32 ../shareaza/zlib/zdll.lib
+LIB = -lgdi32 -lcomctl32 ../shareaza/zlib/zlibwapi.lib
 BIN = skin.exe
 
-CFLAGS  = -Os -DZLIB_DLL -DNOCRYPT -DWIN32 -I../shareaza/zlib -Ilib/unzip
+CFLAGS  = -Os -DZLIB_DLL -DZLIB_WINAPI -DNOCRYPT -DWIN32 -I../shareaza/zlib -Ilib/unzip
 LFLAGS  = -s -mwindows
 RCFLAGS = --input-format rc --output-format coff
 
