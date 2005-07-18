@@ -931,8 +931,23 @@ void CNeighboursWithConnect::Maintain()
 
 			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
 			
-			int nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
-			nAttempt *= ( nProtocol != PROTOCOL_ED2K ) ? Settings.Gnutella.ConnectFactor : Settings.eDonkey.FastConnect + 1;
+			int nAttempt;
+			if ( nProtocol != PROTOCOL_ED2K )
+			{
+				// For G1 and G2 we try connecting to free slots * ConnectFactor
+				nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
+				nAttempt *=  Settings.Gnutella.ConnectFactor;
+			}
+			else
+			{
+				// For ed2k we try one attempt at a time to begin with, but we can step up to 
+				// 2 at a time after a few seconds if the FastConnect option is selected. 
+				if ( ( Settings.eDonkey.FastConnect ) && ( Network.ReadyToTransfer( tTimer ) ) )
+					nAttempt = 2;
+				else
+					nAttempt = 1;
+			}
+
 			// Prevent XP sp2 from maxing out half open connections
 			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) ); 
 			
