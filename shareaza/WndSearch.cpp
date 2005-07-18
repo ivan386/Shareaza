@@ -511,29 +511,11 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_wndPanel.m_bSendSearch )
 	{
 		pSearch = m_wndPanel.GetSearch();
-		if ( pSearch == NULL )
-		{
-			CString strHash( m_sCaption );
-			int nHashStart = strHash.Find( _T(" : urn:sha1:") );
-
-			if ( nHashStart != -1 )
-			{
-				SHA1 pSHA1;
-				strHash = strHash.Mid( nHashStart + 3 );
-				if ( CSHA::HashFromURN( strHash, &pSHA1 ) )
-					pSearch = m_wndPanel.GetSearch( strHash );
-			}
-			nHashStart = strHash.Find( _T(" : urn:ed2khash:") );
-			if ( pSearch == NULL && nHashStart != -1)
-			{
-				MD4 pED2K;
-				strHash = strHash.Mid( nHashStart + 3 );
-				if ( CED2K::HashFromURN( strHash, &pED2K ) )
-					pSearch = m_wndPanel.GetSearch( strHash );
-			}
-		}
 		if ( pSearch == NULL ) //Invalid search, open help window
 		{				
+			// ToDo: If there was a previous search by hash, it was lost and won't re-search
+			// Maybe add a search by hash schema?
+
 			// Increment counter
 			m_nLastSearchHelp++;
 			// Open help window

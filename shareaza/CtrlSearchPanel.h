@@ -202,7 +202,6 @@ public:
 	void			OnSchemaChange();
 	void			ExecuteSearch();
 	CManagedSearch*	GetSearch();
-	CManagedSearch*	GetSearch(LPCTSTR pszHash);
 	void			OnSkinChange();
 	void			Disable();
 	void			Enable();
