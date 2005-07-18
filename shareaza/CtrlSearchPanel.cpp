@@ -350,6 +350,12 @@ CManagedSearch* CSearchPanel::GetSearch()
 	return pSearch;
 }
 
+CManagedSearch* CSearchPanel::GetSearch(LPCTSTR pszHash)
+{
+	m_boxSearch.m_wndSearch.SetWindowText( pszHash );
+	return GetSearch();
+}
+
 void CSearchPanel::ExecuteSearch()
 {
 	m_bSendSearch = TRUE;
