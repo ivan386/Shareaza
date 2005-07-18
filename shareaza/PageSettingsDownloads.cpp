@@ -1,8 +1,8 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/09 16:28:02 $"
-//	Revision:		"$Revision: 1.16 $"
+//	Date:			"$Date: 2005/07/18 16:49:06 $"
+//	Revision:		"$Revision: 1.17 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -258,7 +258,7 @@ void CDownloadsSettingsPage::OnOK()
 
 	// Check the queue limit value is okay
 	if ( ( nQueueLimit > 0 ) && ( nQueueLimit < 2000 ) && ( ! Settings.Live.QueueLimitWarning ) &&
-		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) )
+		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways ) && ( Settings.Downloads.QueueLimit != nQueueLimit ) )
 	{
 		// Warn the user about setting the max queue wait limit too low
 		CString strMessage;
