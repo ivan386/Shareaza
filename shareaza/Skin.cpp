@@ -1662,7 +1662,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	pszWord = pszSource;
 	pszScan = pszSource;
 
-	if ( !bNormalFlow ) 
+	if ( ! bNormalFlow ) 
 	{
 		if ( bIsRTLStart != theApp.m_bRTL ) pDC->SetTextAlign( TA_RTLREADING );
 		pszScan += nLenFull - 1;
@@ -1707,7 +1707,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 			
 			if ( pszWord <= pszScan )
 			{
-				int nLen = pszScan - pszWord;
+				int nLen = pszScan - pszWord + ( *pszScan ? 1 : 0 );
 				CSize sz = pDC->GetTextExtent( pszWord, nLen );
 
 				if ( ptStart.x > pBox->left && ptStart.x + sz.cx > pBox->right )
@@ -1729,7 +1729,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 				pBox->top = ptStart.y + sz.cy;
 			}
 
-			pszWord = pszScan;
+			pszWord = pszScan + 1;
 			if ( ! *pszScan ) break;
 		}
 	}
