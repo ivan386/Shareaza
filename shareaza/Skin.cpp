@@ -1619,7 +1619,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 	unsigned short nLenFull = _tcslen( pszText );
 
-	// Collect stats about the text from the start and from the end
+	// Collect stats about the text from the start
 	BOOL bIsRTLStart, bNormalFlow;
 	int nTestStart	= GetTextFlowChange( pszText, &bIsRTLStart );
 
