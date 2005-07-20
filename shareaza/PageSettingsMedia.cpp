@@ -139,7 +139,7 @@ void CMediaSettingsPage::OnMediaAdd()
 	m_sType.TrimRight();
 	if ( m_sType.IsEmpty() ) return;
 
-	if ( m_wndList.FindString( -1, m_sType ) >= 0 ) return;
+	if ( m_wndList.FindStringExact( -1, m_sType ) >= 0 ) return;
 
 	m_wndList.AddString( m_sType );
 	m_sType.Empty();

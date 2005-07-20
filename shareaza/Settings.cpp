@@ -128,7 +128,7 @@ void CSettings::Setup()
 
 	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
 	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );
-	Add( _T("MediaPlayer.FileTypes"), &MediaPlayer.FileTypes, _T("|asx|wax|m3u|wvx|wmx|asf|wav|snd|au|aif|aifc|aiff|wma|mp3|cda|mid|rmi|midi|avi|asf|mpeg|mpg|m1v|mp2|mpa|mpe|wmv|") );
+	Add( _T("MediaPlayer.FileTypes"), &MediaPlayer.FileTypes, _T("|asx|wax|m3u|wvx|wmx|asf|wav|snd|au|aif|aifc|aiff|wma|mp3|cda|mid|rmi|midi|avi|mpeg|mpg|m1v|mp2|mpa|mpe|wmv|") );
 	Add( _T("MediaPlayer.Repeat"), &MediaPlayer.Repeat, FALSE );
 	Add( _T("MediaPlayer.Random"), &MediaPlayer.Random, FALSE );
 	Add( _T("MediaPlayer.Zoom"), (DWORD*)&MediaPlayer.Zoom, smzFill );
