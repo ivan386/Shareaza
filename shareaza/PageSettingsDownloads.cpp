@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/18 16:49:06 $"
-//	Revision:		"$Revision: 1.17 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/07/20 19:06:38 $"
+//	Revision:		"$Revision: 1.18 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -163,7 +163,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	pMalloc->Release();
 	
 	// Warn user about a path that's too long
-	if ( _tcslen( szPath ) > MAX_PATH - 33 )
+	if ( _tcslen( szPath ) > 256 - 33 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
