@@ -43,6 +43,7 @@ public:
 	BOOL		Update(int nGroupCookie);
 	BOOL		DropShowTarget(CPtrList* pSel, const CPoint& ptScreen);
 	BOOL		DropObjects(CPtrList* pSel, const CPoint& ptScreen);
+	int			GetExpandableColumnX() const;
 protected:
 	void		InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth);
 	void		SaveColumnState();

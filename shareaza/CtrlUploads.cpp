@@ -1234,18 +1234,7 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	if ( HitTest( point, &pQueue, &pFile, &nIndex, &rcItem ) )
 	{
-		HDITEM pColumn;
-		int nTitleStarts = 0;
-		
-		ZeroMemory( &pColumn, sizeof(pColumn) );
-		pColumn.mask = HDI_LPARAM | HDI_WIDTH;
-
-		for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )
-		{
-			if ( pColumn.lParam == UPLOAD_COLUMN_TITLE ) break;
-			else nTitleStarts += pColumn.cxy;
-		}
-
+		int nTitleStarts = GetExpandableColumnX();
 		if ( point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			if ( pQueue != NULL )
@@ -1312,7 +1301,8 @@ void CUploadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	
 	if ( HitTest( point, &pQueue, &pFile, NULL, &rcItem ) )
 	{
-		if ( pQueue != NULL && point.x <= rcItem.left + 16 )
+		int nTitleStarts = GetExpandableColumnX();
+		if ( pQueue != NULL && point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			pQueue->m_bExpanded = ! pQueue->m_bExpanded;
 			
@@ -1402,4 +1392,20 @@ void CUploadsCtrl::OnKillFocus(CWnd* pNewWnd)
 {
 	CWnd::OnKillFocus( pNewWnd );
 	Invalidate();
+}
+
+int CUploadsCtrl::GetExpandableColumnX() const
+{
+	HDITEM pColumn;
+	int nTitleStarts = 0;
+	
+	ZeroMemory( &pColumn, sizeof(pColumn) );
+	pColumn.mask = HDI_LPARAM | HDI_WIDTH;
+
+	for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )
+	{
+		if ( pColumn.lParam == UPLOAD_COLUMN_TITLE ) break;
+		else nTitleStarts += pColumn.cxy;
+	}
+	return nTitleStarts;
 }

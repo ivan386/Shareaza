@@ -1,8 +1,8 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/21 06:30:58 $"
-//	Revision:		"$Revision: 1.37 $"
+//	Date:			"$Date: 2005/07/21 07:29:23 $"
+//	Revision:		"$Revision: 1.38 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1718,19 +1718,7 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if ( HitTest( point, &pDownload, &pSource, &nIndex, &rcItem ) )
 	{
-
-		HDITEM pColumn;
-		int nTitleStarts = 0;
-		
-		ZeroMemory( &pColumn, sizeof(pColumn) );
-		pColumn.mask = HDI_LPARAM | HDI_WIDTH;
-
-		for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )
-		{
-			if ( pColumn.lParam == DOWNLOAD_COLUMN_TITLE ) break;
-			else nTitleStarts += pColumn.cxy;
-		}
-
+		int nTitleStarts = GetExpandableColumnX();
 		if ( point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			if ( pDownload != NULL && IsExpandable( pDownload ) )
@@ -1801,7 +1789,8 @@ void CDownloadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	
 	if ( HitTest( point, &pDownload, &pSource, NULL, &rcItem ) )
 	{
-		if ( pDownload != NULL && point.x <= rcItem.left + 16 )
+		int nTitleStarts = GetExpandableColumnX();
+		if ( pDownload != NULL && point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			if ( IsExpandable( pDownload ) )
 			{
@@ -2044,4 +2033,20 @@ CImageList* CDownloadsCtrl::CreateDragImage(CPtrList* pSel, const CPoint& ptMous
 	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
 	
 	return pAll;
+}
+
+int CDownloadsCtrl::GetExpandableColumnX() const
+{
+	HDITEM pColumn;
+	int nTitleStarts = 0;
+	
+	ZeroMemory( &pColumn, sizeof(pColumn) );
+	pColumn.mask = HDI_LPARAM | HDI_WIDTH;
+
+	for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )
+	{
+		if ( pColumn.lParam == DOWNLOAD_COLUMN_TITLE ) break;
+		else nTitleStarts += pColumn.cxy;
+	}
+	return nTitleStarts;
 }
