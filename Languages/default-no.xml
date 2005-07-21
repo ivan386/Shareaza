@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.70 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.72 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -1881,9 +1881,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Snakk med bruker</link>
 		</group>
 
+		<group id="3">
 		<newline gap="16" indent="0"/>
 		<text format="b">Favorittlinker</text>
 		<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2086,7 +2088,7 @@
 		oppdatert serverliste (met-fil) for å koble til ED2K.</text>
 		<newline gap="8"/>
 		<text>Du kan laste ned en serverliste i instillingene for ed2k, eller vinduet for
-		opppdagelsestjenester.</text>
+		opppdagelsestjenester. (Trykk F9 for å åpne vinduet for oppdagelsestjenester)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
