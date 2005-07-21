@@ -45,6 +45,7 @@ protected:
 	CObArray		m_pControls;
 	CStringArray	m_pCaptions;
 	int				m_nScroll;
+	int				m_nScrollWheelLines;
 	CString			strMultipleString;
 
 // Operations
@@ -79,6 +80,8 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNcPaint();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	afx_msg void OnControlEdit();
 

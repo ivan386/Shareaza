@@ -50,6 +50,7 @@ protected:
 	CPtrArray	m_pList;
 	Item*		m_pHover;
 	int			m_nColumns;
+	int			m_nScrollWheelLines;
 
 // Operations
 public:
@@ -71,6 +72,8 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

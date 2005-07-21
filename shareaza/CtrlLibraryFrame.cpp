@@ -61,7 +61,6 @@ BEGIN_MESSAGE_MAP(CLibraryFrame, CWnd)
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_SETCURSOR()
-	ON_WM_MOUSEWHEEL()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
 	ON_WM_RBUTTONDOWN()
@@ -114,7 +113,6 @@ CLibraryFrame::CLibraryFrame()
 	m_bPanelShow	= Settings.Library.ShowPanel;
 	m_nHeaderSize	= 0;
 	m_bUpdating		= FALSE;
-	m_bMouseWheel	= FALSE;
 
 	m_pDragList		= NULL;
 	m_pDragImage	= NULL;
@@ -404,21 +402,6 @@ void CLibraryFrame::OnPaint()
 		dc.FillSolidRect( rc.left, rc.top + 2, rc.Width(), rc.Height() - 3,
 			GetSysColor( COLOR_BTNFACE ) );
 	}
-}
-
-BOOL CLibraryFrame::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
-{
-	CWnd* pWnd = ChildWindowFromPoint( pt );
-
-	if ( pWnd && pWnd != this && ! m_bMouseWheel )
-	{
-		m_bMouseWheel = TRUE;
-		pWnd->SendMessage( WM_MOUSEWHEEL,
-			MAKELONG( nFlags, zDelta ), MAKELONG( pt.x, pt.y ) );
-		m_bMouseWheel = FALSE;
-	}
-
-	return TRUE;
 }
 
 void CLibraryFrame::OnContextMenu(CWnd* pWnd, CPoint point)

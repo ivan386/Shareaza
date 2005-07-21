@@ -56,6 +56,7 @@ END_MESSAGE_MAP()
 
 CHomeSearchCtrl::CHomeSearchCtrl()
 {
+	m_pTextInput = NULL;
 }
 
 CHomeSearchCtrl::~CHomeSearchCtrl()
@@ -74,16 +75,16 @@ BOOL CHomeSearchCtrl::PreTranslateMessage(MSG* pMsg)
 	}
 	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
-		CWnd* pFocus = GetFocus();
-
-		if ( pFocus == &m_wndText )
+		if ( m_pTextInput == &m_wndText && m_wndText.GetWindowTextLength() > 0 )
 		{
 			m_wndSchema.SetFocus();
+			m_pTextInput = &m_wndSchema;
 			return TRUE;
 		}
-		else if ( pFocus == &m_wndSchema )
+		else
 		{
 			m_wndText.SetFocus();
+			m_pTextInput = &m_wndText;
 			return TRUE;
 		}
 	}
@@ -327,5 +328,5 @@ void CHomeSearchCtrl::OnSearchAdvanced()
 void CHomeSearchCtrl::OnSetFocus(CWnd* pOldWnd)
 {
 	CWnd::OnSetFocus( pOldWnd );
-	m_wndText.SetFocus();
+	//m_wndText.SetFocus();
 }

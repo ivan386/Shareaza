@@ -42,6 +42,8 @@ public:
 	CIconButtonCtrl	m_wndSearch;
 	CIconButtonCtrl	m_wndAdvanced;
 	COLORREF		m_crWindow;
+private:
+	CWnd*			m_pTextInput; // Holds pointer to window that receives text input
 
 // Operations
 public:

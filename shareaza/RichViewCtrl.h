@@ -53,6 +53,7 @@ protected:
 	DWORD			m_nCookie;
 	CPtrArray		m_pFragments;
 	int				m_nLength;
+	int				m_nScrollWheelLines;
 protected:
 	CRichElement*	m_pHover;
 	BOOL			m_bSelecting;
@@ -112,6 +113,7 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

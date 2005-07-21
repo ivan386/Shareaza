@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CRichViewCtrl, CWnd)
 	ON_WM_VSCROLL()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_TIMER()
+	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -64,6 +65,12 @@ CRichViewCtrl::CRichViewCtrl()
 	m_nLength		= 0;
 	m_pHover		= NULL;
 	m_bSelecting	= FALSE;
+
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CRichViewCtrl::~CRichViewCtrl()
@@ -458,6 +465,12 @@ void CRichViewCtrl::OnTimer(UINT nIDEvent)
 		m_pHover = NULL;
 		Invalidate();
 	}
+}
+
+BOOL CRichViewCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 16 ), NULL );
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

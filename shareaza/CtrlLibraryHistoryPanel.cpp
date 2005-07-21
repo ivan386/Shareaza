@@ -46,6 +46,8 @@ BEGIN_MESSAGE_MAP(CLibraryHistoryPanel, CLibraryPanel)
 	ON_WM_VSCROLL()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -55,6 +57,11 @@ END_MESSAGE_MAP()
 
 CLibraryHistoryPanel::CLibraryHistoryPanel()
 {
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CLibraryHistoryPanel::~CLibraryHistoryPanel()
@@ -297,7 +304,7 @@ void CLibraryHistoryPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrol
 		break;
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
-		pScroll.nPos = pScroll.nTrackPos;
+		pScroll.nPos = nPos;
 		break;
 	}
 	
@@ -348,6 +355,17 @@ void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	point.y -= GetScrollPos( SB_VERT );
 	
 	CLibraryPanel::OnLButtonUp( nFlags, point );
+}
+
+void CLibraryHistoryPanel::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	SetFocus();
+}
+
+BOOL CLibraryHistoryPanel::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
+	return TRUE;
 }
 
 void CLibraryHistoryPanel::OnClickFile(DWORD nFile)

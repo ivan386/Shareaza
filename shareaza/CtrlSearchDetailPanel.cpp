@@ -361,7 +361,7 @@ void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollB
 		break;
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
-		pScroll.nPos = pScroll.nTrackPos;
+		pScroll.nPos = nPos;
 		break;
 	}
 	

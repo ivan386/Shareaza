@@ -42,6 +42,8 @@ BEGIN_MESSAGE_MAP(CSchemaCtrl, CWnd)
 	ON_WM_SIZE()
 	ON_WM_NCPAINT()
 	ON_WM_SETFOCUS()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	//}}AFX_MSG_MAP
 	ON_EN_CHANGE(IDC_METADATA_CONTROL, OnControlEdit)
 	ON_CBN_SELCHANGE(IDC_METADATA_CONTROL, OnControlEdit)
@@ -61,6 +63,12 @@ CSchemaCtrl::CSchemaCtrl()
 	m_bShowBorder	= TRUE;
 	m_pSchema		= NULL;
 	m_nScroll		= 0;
+
+	// Try to get the number of lines to scroll when the mouse wheel is rotated
+	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
+	{
+		m_nScrollWheelLines = 3;
+	}
 }
 
 CSchemaCtrl::~CSchemaCtrl()
@@ -359,7 +367,7 @@ void CSchemaCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		break;
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
-		m_nScroll = pScroll.nTrackPos;
+		m_nScroll = nPos;
 		break;
 	}
 
@@ -385,6 +393,17 @@ void CSchemaCtrl::ScrollBy(int nDelta)
 	ScrollWindowEx( 0, -nDelta, NULL, NULL, NULL, NULL, SW_SCROLLCHILDREN|SW_INVALIDATE );
 	Layout();
 	UpdateWindow();
+}
+
+void CSchemaCtrl::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	SetFocus();
+}
+
+BOOL CSchemaCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
