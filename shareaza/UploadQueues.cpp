@@ -573,7 +573,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
-		pQueue->m_nMinTransfers		= 2;
+		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
@@ -642,7 +642,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nCapacity			= 10;
-		pQueue->m_nMinTransfers		= 2;
+		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 60*60;
@@ -699,7 +699,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nBandwidthPoints	= 30;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
-		pQueue->m_nMinTransfers		= 2;
+		pQueue->m_nMinTransfers		= 3;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_bRotate			= TRUE;
@@ -757,7 +757,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nMinSize			= 10 * 1024 * 1024;
-		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_nCapacity			= 10;
 		pQueue->m_bRotate			= TRUE;
@@ -794,7 +794,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nBandwidthPoints	= 20;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
 		pQueue->m_nCapacity			= 8;
-		pQueue->m_nMinTransfers		= 1;
+		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 3;
 		pQueue->m_bRotate			= TRUE;
 		pQueue->m_nRotateTime		= 20*60;

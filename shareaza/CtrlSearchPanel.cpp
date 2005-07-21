@@ -122,7 +122,7 @@ int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( m_bAdvanced ) 
 	{
 		AddBox( &m_boxAdvanced );
-		if ( GetSystemMetrics( SM_CYSCREEN ) <= 1024 ) m_boxAdvanced.Expand( FALSE );
+		if ( GetSystemMetrics( SM_CYSCREEN ) < 1024 ) m_boxAdvanced.Expand( FALSE );
 	}
 	AddBox( &m_boxSchema );
 	if ( m_bAdvanced ) AddBox( &m_boxResults );
