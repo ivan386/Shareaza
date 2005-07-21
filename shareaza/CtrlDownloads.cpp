@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/09 12:57:37 $"
-//	Revision:		"$Revision: 1.36 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/07/21 06:30:58 $"
+//	Revision:		"$Revision: 1.37 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1715,10 +1715,23 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	SetFocus();
 	m_wndTip.Hide();
-	
+
 	if ( HitTest( point, &pDownload, &pSource, &nIndex, &rcItem ) )
 	{
-		if ( point.x <= rcItem.left + 16 )
+
+		HDITEM pColumn;
+		int nTitleStarts = 0;
+		
+		ZeroMemory( &pColumn, sizeof(pColumn) );
+		pColumn.mask = HDI_LPARAM | HDI_WIDTH;
+
+		for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )
+		{
+			if ( pColumn.lParam == DOWNLOAD_COLUMN_TITLE ) break;
+			else nTitleStarts += pColumn.cxy;
+		}
+
+		if ( point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			if ( pDownload != NULL && IsExpandable( pDownload ) )
 			{
