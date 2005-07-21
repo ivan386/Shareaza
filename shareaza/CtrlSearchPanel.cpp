@@ -118,15 +118,24 @@ int CSearchPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_boxSchema.Create( this, 0, _T("Schema"), IDR_SEARCHFRAME );
 	m_boxResults.Create( this, 80, _T("Results"), IDR_HOSTCACHEFRAME );
 	
+	// Basic search box
 	AddBox( &m_boxSearch );
+
+	// Advanced search options
 	if ( m_bAdvanced ) 
 	{
 		AddBox( &m_boxAdvanced );
+		// If the resolution is low, minimise the advanced box by default
 		if ( GetSystemMetrics( SM_CYSCREEN ) < 1024 ) m_boxAdvanced.Expand( FALSE );
 	}
+
+	// Metadata
 	AddBox( &m_boxSchema );
+
+	// Results summary
 	if ( m_bAdvanced ) AddBox( &m_boxResults );
 	
+	// The metadata box varies in height to fill available space
 	SetStretchBox( &m_boxSchema );
 	
 	OnSkinChange();
