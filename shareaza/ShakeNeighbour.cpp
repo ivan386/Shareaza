@@ -624,15 +624,16 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		{
 			// Record that the remote computer is running Shareaza
 			m_bShareaza = TRUE;
+		} 
 
-		} // Otherwise, if the remote computer is running a program we don't want to talk to
-		else if ( IsAgentBlocked() )
+		// If the remote computer is running a program we don't want to talk to
+		if ( IsAgentBlocked() )
 		{
 			// Record that we're rejecting this handshake, and set the state to rejected
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
 		}
-
+				
 		// Check if it's an old version of Shareaza
 		m_bObsoleteClient = IsClientObsolete();
 
