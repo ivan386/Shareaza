@@ -191,19 +191,19 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 		break;
 	case ban5Mins:
 		pRule->m_nExpire	= time( NULL ) + 300;
-		pRule->m_sComment	= _T("Temp Block");
+		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case ban30Mins:
 		pRule->m_nExpire	= time( NULL ) + 1800;
-		pRule->m_sComment	= _T("Temp Block");
+		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case banWeek:
 		pRule->m_nExpire	= time( NULL ) + 604800;
-		pRule->m_sComment	= _T("Temp Block");
+		pRule->m_sComment	= _T("Client Block");
 		break;		
 	case banForever:
 		pRule->m_nExpire	= CSecureRule::srIndefinite;
-		pRule->m_sComment	= _T("Perm Ban");
+		pRule->m_sComment	= _T("Ban");
 		break;
 	default:
 		pRule->m_nExpire	= CSecureRule::srSession;
