@@ -12,7 +12,7 @@
 
 <!-- Manifest -->
 <manifest	name="Nederlands"
-		author="-=R@y-M@n=-"
+		author="Shareaza Dutch Translation Team"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
@@ -2059,11 +2059,11 @@
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Volwassen inhoud filter geactiveerd</text>
 		<newline gap="8"/>
-		<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than
-		as a 100% safe block.</text>
+		<text>Vergeet a.u.b. niet dat (zoals met elke andere automatische filter) de weergegeven
+		inhoud niet voor 100% veilig is. Het is eerder ontworpen om resultaten te filteren dan
+		om volwasseninhoud 100% te blokkeren.</text>
 		<newline gap="8"/>
-		<text>Children's Internet use (including P2P file sharing)  should always be under parental supervision.</text>
+		<text>Het gebruik van internet door kinderen (ook Shareaza) zou altijd onder toezicht van de ouders moeten gebeuren.</text>
 	</document>
 
 	<document name="GeneralHelp.BadTorrentEncoding">
