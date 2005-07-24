@@ -8,7 +8,7 @@
 		description="Shareaza Default Hebrew Skin File"
 		link="http://www.shareaza.com/"
 		email="peer_l_ (at) hotmail (dot) com"
-		version="2.1.1.11"
+		version="2.1.2.7"
 		type="Language"
 		language="heb"
 		prompt="המחדל ברירת כשפת עברית לקביעת כאן לחץ"
@@ -1518,7 +1518,7 @@
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/><gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">מעטפות</link>
-		<text align="middle">&#160;- שנה לשרזה את המראה &amp; הרגשה</text>
+		<text align="middle">&#160;- שנה לשרזה את המראה וההרגשה</text>
 		<newline gap="8"/>
 
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/><gap size="8"/>
@@ -1547,7 +1547,7 @@
 	<document name="CHomeDownloadsBox" title="ההורדות שלי" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font face="Tahoma" size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1564,7 +1564,7 @@
 	<document name="CHomeLibraryBox" title="הספריה שלי" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font face="Tahoma" size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1579,9 +1579,9 @@
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">עבור לספריה שלי</link>
 			<group id="1">
 				<newline gap="8"/>
-				<text>קבצים&#160;</text>
-				<text id="LibraryHashRemaining" format="b">%lu</text>
 				<text>&#160;שרזה סורק ומעבד.</text>
+				<text id="LibraryHashRemaining" format="b">%lu</text>
+				<text>קבצים&#160;</text>
 				<newline gap="8"/>
 			</group>
 			<group id="3">
@@ -1596,7 +1596,7 @@
 	<document name="CHomeConnectionBox" title="חיבור" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font face="Tahoma" size="10"/>
 			</style>
 		</styles>
 		<group id="1">
@@ -1645,7 +1645,7 @@
 	<document name="CHomeUploadsBox" title="העלאות" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font face="Tahoma" size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1664,7 +1664,7 @@
 	<document name="CHomeTorrentsBox" title="טורנטים" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font face="Tahoma" size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1877,11 +1877,11 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">שוחח עם משתמש</link>
 		</group>
-
-		<newline gap="16" indent="0"/>
-		<text format="b">מועדפים:</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
-
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">מועדפים:</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 		<newline gap="16" indent="0"/>
 
 	</document>
@@ -2088,7 +2088,7 @@
 		up to date server list (met file) to connect to ED2K.</text>
 		<newline gap="8"/>
 		<text>You can download a server list from the ed2k setting page, or the discovery
-		services window.</text>
+		services window. (Press F9 to open the discovery services window)</text>
 	</document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2653,7 +2653,7 @@
 	<string id="8334" value="‪ה‪מקורות לקובץ כרגע עסוקים"/>
 	<string id="8335" value="‪המקורות לקובץ כרגע מוגנים בחומת אש"/>
 	<string id="8336" value="‪המקורות לקובץ כרגע במצב לא יציב"/>
-	<string id="16064" value="‪...מאתחל את בסיס הרשת של שרזה"/>
+	<string id="16064" value="‪מאתחל את בסיס הרשת של שרזה..."/>
 	<string id="16065" value="‪&#8234;‏נכנסים‎ ‏לחיבורים‎ ‏תמיכה‎ ‏תיהיה‎ ‏לא‎ ‏לכן‎ ‏נכנסים‎. ‏לחיבורים‎ %s ‏של‎ %i ‏פורט‎ ‏את‎ ‏לקבוע‎ ‏ניתן‎ ‏לא"/>
 	<string id="16066" value="‪‪...סוגר את בסיס הרשת של שרזה"/>
 	<string id="16067" value="‪‪‪.מנותק מהרשת"/>
