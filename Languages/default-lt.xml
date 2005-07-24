@@ -3692,7 +3692,7 @@ right quote	&#147;
 		<control/>
 	</dialog>
 
-	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Įsikūnijimas">
+	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Kaukė">
 		<control caption="_Peržiūra:"/>
 		<control/>
 		<control caption="Pasi_rinkti:"/>
