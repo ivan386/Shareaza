@@ -3431,7 +3431,7 @@
 		<control caption="Downloaden..."/>
 	</dialog>
 
-	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuStEdmsBuBuBuEdBuBuEdBuStEdSt" caption="BitTorrent">
+	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Omgeving:"/>
 		<control caption="Laat extra BitTorrent besturingselementen zien"/>
 		<control caption="_Download Verbindingen:"/>
