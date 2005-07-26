@@ -1,6 +1,10 @@
 //
 // WndMain.cpp
 //
+//	Date:			"$Date: 2005/07/26 16:34:41 $"
+//	Revision:		"$Revision: 1.39 $"
+//  Last change by:	"$Author: spooky23 $"
+//
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
@@ -734,6 +738,9 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 	
 	if ( bNeedTrayIcon && ! m_bTrayIcon )
 	{
+		// Delete existing tray icon (if any), windows can't create a new icon with same uID
+		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
+
 		m_pTray.cbSize				= sizeof(m_pTray);
 		m_pTray.hWnd				= GetSafeHwnd();
 		m_pTray.uID					= 0;
@@ -746,7 +753,7 @@ void CMainWnd::OnTimer(UINT nIDEvent)
 			m_pTray.hIcon = AfxGetApp()->LoadIcon( IDI_ICON );
 		
 		_tcscpy( m_pTray.szTip, _T("Shareaza") );
-		m_bTrayIcon = ( Shell_NotifyIcon( NIM_ADD, &m_pTray ) != 0 );
+		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
 	}
 	else if ( m_bTrayIcon && ! bNeedTrayIcon )
 	{
