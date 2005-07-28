@@ -2070,7 +2070,7 @@ Other:
         <newline/> 
         <text>Heureusement, les connexions DSL à large bande sont comme des autoroutes à deux voies: vous avez des attributions séparées pour l'envoi et le téléchargement. Si votre client est correctement configuré, vous devriez pouvoir envoyer à un bon taux tout en gardant une pleine capacité de téléchargement.</text> 
         <newline gap="8"/> 
-        <text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponible les plus rapide possible.</text> 
+        <text>Par défaut, votre limite d'envoi est mis à environ 85% de votre bande passante montante disponible, tandis que les téléchargements sont illimités. Cette configuration devrait vous donner les téléchargements disponibles les plus rapides possible.</text> 
     </document>
 	
 	<!-- Search help documents -->
@@ -4133,13 +4133,13 @@ Other:
 		<control caption="Annuler"/>
 	</dialog>
 
-	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Alerte de mise à jour">
+	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Notification de mise à jour">
 		<control/>
 		<control caption="Une nouvelle version de Shareaza est maintenant disponible.  Voulez-vous mettre à jour?"/>
-		<control caption="Si vous sélectionnez Mettre à jour maintenant, Shareaza va ajouter la mise à jour à votre liste de téléchargement et commencer automatiquement à la télécharger."/>
-		<control caption="_Mettre à jour maintenant"/>
-		<control caption="Ne pas vérifier la disponibilité de nouvelles versions"/>
-		<control caption="Ne pas mettre à jour"/>
+		<control caption="Si vous sélectionnez Mettre à jour, Shareaza va ajouter la mise à jour à votre liste de téléchargements et commencer à la télécharger."/>
+		<control caption="_Mettre à Jour"/>
+		<control caption="Ne pas vérifier les MàJ"/>
+		<control caption="Ne pas MàJ"/>
 		
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Télécharger les Revues">
   	    <control/>
