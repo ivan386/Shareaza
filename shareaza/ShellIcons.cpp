@@ -288,8 +288,37 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 	if ( RegOpenKeyEx( hKey, _T("DefaultIcon"), 0, KEY_READ, &hSub ) != ERROR_SUCCESS )
 	{
+		if ( RegOpenKeyEx( hKey, _T("CurVer"), 0, KEY_READ, &hSub ) != ERROR_SUCCESS )
+		{
+			RegCloseKey( hKey );
+			return FALSE;
+		}
+		nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+		if ( RegQueryValueEx( hSub, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) != ERROR_SUCCESS )
+		{
+			RegCloseKey( hSub );
+			RegCloseKey( hKey );
+			return FALSE;
+		}
 		RegCloseKey( hKey );
-		return FALSE;
+		szResult[ nResult / sizeof(TCHAR) ] = 0;
+
+		if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, szResult, 0, KEY_READ, &hKey ) != ERROR_SUCCESS ) return 0;
+		if ( psName )
+		{
+			nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+			if ( RegQueryValueEx( hKey, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) == ERROR_SUCCESS )
+			{
+				szResult[ nResult / sizeof(TCHAR) ] = 0;
+				*psName = szResult;
+			}
+		}
+
+		if ( RegOpenKeyEx( hKey, _T("DefaultIcon"), 0, KEY_READ, &hSub ) != ERROR_SUCCESS )
+		{
+			RegCloseKey( hKey );
+			return FALSE;
+		}
 	}
 
 	nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
