@@ -1473,12 +1473,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 		
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">L I S T E N &#160; T O &#160; N E W &#160; M U S I C</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-		
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">C U S T O M I S E &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
