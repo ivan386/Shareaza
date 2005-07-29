@@ -1503,12 +1503,6 @@
             <link target="raza:command:ID_HELP_ROUTER">Clique aqui para aprender como configurar o Router ou o Firewall</link>
             <newline gap="18" indent="0"/>
         </group>
-
-        <icon res="254" width="32" height="32"/><gap size="8"/>
-        <heading align="middle" colour="6060FF">O U Ç A &#160; A &#160; N O V A S &#160; M Ú S I C A S</heading>
-        <newline gap="8" indent="42"/>
-        <bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-        <newline gap="18" indent="0"/>
 		
 		<icon res="236" width="32" height="32"/><gap size="8"/>
         <heading align="middle">M O D I F I C A R &#160; O &#160; S H A R E A Z A</heading>
@@ -2442,7 +2436,6 @@
 <tip id="ID_TAB_TRANSFERS" message="Monitore uploads e downloads que você está fazendo."/>
 <tip id="ID_TOOLS_DOWNLOAD" message="Baixar uma URL HTTP com o sistema de download do Shareaza..."/>
 <tip id="ID_TOOLS_LANGUAGE" message="Selecionar o idioma que você deseja usar no Shareaza..."/>
-<tip id="ID_TOOLS_MERCORA" message="Iniciar Rádio P2P"/>
 <tip id="ID_TOOLS_PROFILE" message="Editar o seu perfil..."/>
 <tip id="ID_TOOLS_RESKIN" message="Recarregar e aplicar a sua atual escolha de Pele."/>
 <tip id="ID_TOOLS_SEEDTORRENT" message="Fazer Seed de um torrent"/>

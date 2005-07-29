@@ -1510,12 +1510,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">收 听 新 的 音 乐</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">定 制 &#160;S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2413,7 +2407,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="监视正在进行的上传和下载。"/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="下载新的文件或者 BitTorrent 文件。"/>
 	<tip id="ID_TOOLS_LANGUAGE" message="选择您想在 Shareaza 中使用的语言..."/>
-	<tip id="ID_TOOLS_MERCORA" message="启动 P2P 广播"/>
 	<tip id="ID_TOOLS_PROFILE" message="编辑您的个人资料..."/>
 	<tip id="ID_TOOLS_RESKIN" message="重新载入当前选定的皮肤。"/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="在 BitTorrent 中将选定的 Torrent 做种。"/>

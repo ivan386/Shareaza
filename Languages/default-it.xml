@@ -1504,12 +1504,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">A S C O L T A &#160; M U S I C A &#160; N U O V A</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">P E R S O N A L I Z Z A &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2428,7 +2422,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Mostra gli upload e i download che stai effettuando."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Scarica un nuovo file o un torrent..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Seleziona la lingua che desideri utilizzare su Shareaza..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Start P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Modifica il tuo profilo utente..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Ricarica e applica la skin correntemente selezionata."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Cerca i Torrent selezionati su BitTorrent."/>

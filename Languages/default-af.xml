@@ -1498,12 +1498,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
         
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">L U I S T E R &#160; N A &#160; N U W E &#160; M U S I E K</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-        
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">V E R A N D E R &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2412,7 +2406,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Monitor huidige af- en oplaaie."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Begin 'n nuwe lêer of BitTorrent torrent aflaai..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Selekteer die taal waarin jy Shareaza wil gebruik..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Begin P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Verander jou gebruikersprofiel..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Herlaai en aktiveer jou huidige omslagseleksie."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Saai die geselekteerde Torrent op BitTorrent."/>

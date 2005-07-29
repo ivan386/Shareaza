@@ -1495,12 +1495,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">Α Κ Ο Υ Σ Τ Ε &#160; Μ Ο Υ Σ Ι Κ Η</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">Π Ρ Ο Σ Α Ρ Μ Ο Γ Η &#160;  Τ Ο Υ &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2420,7 +2414,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Έλενξε τα αρχεία που ανεβάζεις και κατεβάζεις."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Άρχισε να κατεβάζεις ένα νέο αρχείο ή BitTorrent torrent..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Διάλεξε την γλώσσα που θέλεις το Shareaza να χρησιμοποιήσει..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Άρχισε ένα P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Επεξεργάσου το προφίλ σου..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Ξαναφόρτωσε και χρησιμοποίησε το τρέχων skin."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>

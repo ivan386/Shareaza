@@ -1504,12 +1504,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">L Y T T &#160; T I L &#160; M U S I K K</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">M O D I F I S E R &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2430,7 +2424,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Se alle aktive opplastinger og nedlastinger."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Last ned en ny fil eller torrent..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Velg hvilket språk du vil bruke i Shareaza."/>
-	<tip id="ID_TOOLS_MERCORA" message="Start P2P-radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Endre din bruker profil..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Oppdater og bruk valgte skin."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Spre denne filen på BitTorrent."/>

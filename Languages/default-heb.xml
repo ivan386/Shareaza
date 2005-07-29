@@ -1501,20 +1501,11 @@
 		<heading align="middle" colour="6060FF">ה כ נ ס &#160;</heading>
 		<link target="http://www.hebrew.co.nr/" format="bu" align="middle">ל א י נ ד ק ס &#160; ה ע ב ר י</link>
 		<heading align="middle" colour="6060FF">&#160; ל מ י ד ע &#160; מ ו מ ל ץ </heading>
-	  
-		
 		<newline gap="20" indent="16"/>
-		
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">ה ק ש ב &#160; ל מ ו ז י ק ה &#160; ח ד ש ה  &#160; מ ה ע ו ל ם&#160;&#160;&#160;</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="16"/>
 
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">ה ת א מ ת &#160; ש ר ז ה&#160;&#160;&#160;</heading>
 		<newline gap="12" indent="42"/>
-
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/><gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">מעטפות</link>
@@ -2430,7 +2421,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="צפה בהורדות והעלאות שאתה מבצע"/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="התחל להוריד קובץ או טורנט חדש"/>
 	<tip id="ID_TOOLS_LANGUAGE" message="בחר את השפה בה תרצה להשתמש בשרזה"/>
-	<tip id="ID_TOOLS_MERCORA" message="P2P הפעל רדיו"/>
 	<tip id="ID_TOOLS_PROFILE" message="ערוך את פרופיל המשתמש שלך"/>
 	<tip id="ID_TOOLS_RESKIN" message="טען מחדש והחל את המעטפת הנוכחית שנבחרה"/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="הפץ את הטורנט הנבחר בביט-טורנט"/>

@@ -1487,12 +1487,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">П О С Л У Ш А Й Т Е  &#160; Н О В У Ю  &#160; М У З Ы К У</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">H A C T P O Й T E  &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2419,7 +2413,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Контроль выгрузок и выполняемых Вами загрузок."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Начать загрузку нового файла или BitTorrent торрента..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Выбрать язык Shareaza (Select the language of Shareaza)"/>
-	<tip id="ID_TOOLS_MERCORA" message="Запустить P2P радио"/>
 	<tip id="ID_TOOLS_PROFILE" message="Правка своего профиля пользователя..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Перегрузить и применить выбранную Вами шкурку."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Распросранять помеченный торрент в сети BitTorrent."/>

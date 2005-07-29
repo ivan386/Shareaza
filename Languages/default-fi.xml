@@ -1503,12 +1503,6 @@
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">K U U N T E L E &#160; U U T T A &#160; M U S I I K K I A</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">K U S T O M O I &#160; S H A R E A Z A A</heading>
   		<newline gap="12" indent="42"/>
@@ -2411,7 +2405,6 @@
 	<tip id="ID_TAB_TRANSFERS" message="Katsele latauksia jotka ovat käynnissä."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Aloita tiedoston tai torrent-tiedoston lataus..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Valitse kieli jota haluat käyttää Shareazassa..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Aloita P2P Radio"/>
 	<tip id="ID_TOOLS_PROFILE" message="Muokkaa profiiliasi..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Uudelleenlataa ja lisää nykyinen ulkoasu."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Jaa valittua torrent-tietostoa BitTorrentilla."/>

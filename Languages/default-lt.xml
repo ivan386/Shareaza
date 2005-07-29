@@ -1509,12 +1509,6 @@ right quote	&#147;
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">K L A U S Y K I T Ė S &#160; N A U J O S &#160; M U Z I K O S</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">P R I S I T A I K Y K I T E &#160; S A U &#160; „S H A R E A Z A“</heading>
 		<newline gap="12" indent="42"/>
@@ -2437,7 +2431,6 @@ right quote	&#147;
 	<tip id="ID_TAB_TRANSFERS" message="Stebėkite, kaip vyksta bylų atsisiuntimas ir išsiuntimas."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Parsisiųsti naują ar BitTorrent tinklo torrent bylą..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Pasirinkti „Shareaza“ grafinės sąsajos kalbą..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Paleisti P2P radiją"/>
 	<tip id="ID_TOOLS_PROFILE" message="Taisyti savo vartotojo profilį..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Perkrauti ir pritaikyti pasirinktą apvalkalą."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Skleisti pasirinktą Torrent bylą BitTorrent tinkle."/>

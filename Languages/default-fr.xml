@@ -1516,12 +1516,6 @@ Other:
 			<newline gap="18" indent="0"/>
 		</group>
 
-		<icon res="254" width="32" height="32"/><gap size="8"/>
-		<heading align="middle" colour="6060FF">É C O U T E Z &#160; D E &#160; L A &#160; N O U V E L L E &#160; M U S I Q U E</heading>
-		<newline gap="8" indent="42"/>
-		<bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-		<newline gap="18" indent="0"/>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">P E R S O N N A L I S E Z &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
@@ -2381,7 +2375,6 @@ Other:
 	<tip id="ID_TAB_TRANSFERS" message="Surveiller les envois et les téléchargements que vous effectuez."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Commencer le téléchargement d'un fichier ou d'un torrent BitTorrent..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Sélectionner la langue dans laquelle vous désirez utiliser Shareaza..."/>
-	<tip id="ID_TOOLS_MERCORA" message="Démarrez la Radio P2P"/>
 	<tip id="ID_TOOLS_PROFILE" message="Modifier votre profil utilisateur..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Recharger et appliquer votre sélection de thème actuelle."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed du Torrent sélectionné sur BitTorrent."/>

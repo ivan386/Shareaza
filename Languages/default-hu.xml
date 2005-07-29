@@ -1501,12 +1501,6 @@ prompt="Kattints ide a magyar nyelvhez."
                        <newline gap="18" indent="0"/>
                </group>
 
-               <icon res="254" width="32" height="32"/><gap size="8"/>
-               <heading align="middle" colour="6060FF">H A L L G A S S &#160; Z E N É T !</heading>
-               <newline gap="8" indent="42"/>
-               <bitmap res="res:255.PNG" target="raza:command:ID_TOOLS_MERCORA"/>
-               <newline gap="18" indent="0"/>
-
                <icon res="236" width="32" height="32"/><gap size="8"/>
                <heading align="middle">T E S T R E S Z A B Á S</heading>
                <newline gap="12" indent="42"/>
@@ -2426,7 +2420,6 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_TAB_TRANSFERS" message="Fel- és letöltések figyelése."/>
        <tip id="ID_TOOLS_DOWNLOAD" message="Új fájl vagy torrent letöltése..."/>
        <tip id="ID_TOOLS_LANGUAGE" message="Válaszd ki a neked legmegfelelőbb nyelvet..."/>
-       <tip id="ID_TOOLS_MERCORA" message="P2P Rádió indítása"/>
        <tip id="ID_TOOLS_PROFILE" message="Saját profil szerkesztése..."/>
        <tip id="ID_TOOLS_RESKIN" message="A jelenlegi kinézet újratöltése és alkalmazása."/>
        <tip id="ID_TOOLS_SEEDTORRENT" message="Torrent terjesztése."/>
