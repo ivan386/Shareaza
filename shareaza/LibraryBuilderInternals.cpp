@@ -399,6 +399,10 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 				pXML->AddAttribute( _T("seconds"), strMS );
 			}
 		}
+		else if ( strcmp( szFrameTag, "TCOP" ) == 0 )
+		{
+			CopyID3v2Field( pXML, _T("copyright"), pBuffer, nFrameSize );
+		}
 		else if ( strcmp( szFrameTag, "TCON" ) == 0 || strcmp( szFrameTag, "TCO" ) == 0 )
 		{
 			if ( CopyID3v2Field( pXML, _T("genre"), pBuffer, nFrameSize ) )
@@ -1474,6 +1478,10 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		else if ( strKey == _T("DATE") )
 		{
 			pXML->AddAttribute( _T("year"), strValue );
+		}
+		else if ( strKey == _T("LICENSE") )
+		{
+			pXML->AddAttribute( _T("copyright"), strValue );
 		}
 	}
 	
