@@ -227,6 +227,7 @@
 			<enumeration value="Uberstandard"/>
 		</simpleType>
 	</attribute>
+      <attribute name="copyright" type="string"/>
       <attribute name="qualitynotes" type="string"/>
       <attribute name="keywords" type="string"/>
       <attribute name="releaseDate" type="string"/>
