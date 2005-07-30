@@ -464,7 +464,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="ru">Ссылка</title>
                        <title language="sv">Länk</title>
                </member>
-               <member name="copyright" search="indexed">
+               <member name="copyright" search="none">
                        <title language="en">Copyright</title>
                        <title language="af">Kopiereg</title>
                        <title language="chs">版权</title>
