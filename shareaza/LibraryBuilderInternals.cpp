@@ -399,7 +399,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2( HANDLE hFile)
 				pXML->AddAttribute( _T("seconds"), strMS );
 			}
 		}
-		else if ( strcmp( szFrameTag, "TCOP" ) == 0 )
+		else if ( strcmp( szFrameTag, "TCOP" ) == 0 || strcmp( szFrameTag, "TCR" ) == 0 )
 		{
 			CopyID3v2Field( pXML, _T("copyright"), pBuffer, nFrameSize );
 		}
