@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/07/26 16:34:41 $"
-//	Revision:		"$Revision: 1.39 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/08/01 15:36:16 $"
+//	Revision:		"$Revision: 1.40 $"
+//  Last change by:	"$Author: mikewalsh $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -220,7 +220,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_BROWSE_TO, OnNetworkBrowseTo)
 	ON_COMMAND(ID_TOOLS_SKIN, OnToolsSkin)
 	ON_COMMAND(ID_TOOLS_LANGUAGE, OnToolsLanguage)
-	ON_COMMAND(ID_TOOLS_MERCORA, OnToolsMercora)
 	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
 	ON_COMMAND(ID_TOOLS_RESEEDTORRENT, OnToolsReseedTorrent)
 	ON_COMMAND(ID_HELP_DISKSPACE, OnDiskSpace)
@@ -2079,33 +2078,6 @@ void CMainWnd::OnToolsLanguage()
 	{
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
-}
-
-void CMainWnd::OnToolsMercora()
-{
-	if ( CWnd* pWnd = FindWindow( _T("MercoraClient"), NULL ) )
-	{
-		pWnd->ShowWindow( SW_SHOWNORMAL );
-		pWnd->BringWindowToTop();
-		pWnd->SetForegroundWindow();
-		return;
-	}
-	
-	HKEY hKey = NULL;
-	RegOpenKeyEx( HKEY_LOCAL_MACHINE, _T("Software\\Mercora\\MercoraClient"), 0, KEY_READ, &hKey );
-	
-	if ( hKey != NULL )
-	{
-		DWORD nType = REG_SZ, nEXE = sizeof(TCHAR) * MAX_PATH;
-		TCHAR szEXE[MAX_PATH+1];
-		RegQueryValueEx( hKey, _T("EXE"), NULL, &nType, (PBYTE)szEXE, &nEXE );
-		szEXE[ nEXE ] = 0;
-		RegCloseKey( hKey );
-		int nResult = (int)ShellExecute( GetSafeHwnd(), NULL, szEXE, NULL, NULL, SW_SHOWNORMAL );
-		if ( nResult > 32 ) return;
-	}
-	
-	ShellExecute( GetSafeHwnd(), NULL, _T("http://www.shareaza.com/help/external/?mercora"), NULL, NULL, SW_SHOWNORMAL );
 }
 
 

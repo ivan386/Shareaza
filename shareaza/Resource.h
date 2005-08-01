@@ -158,8 +158,6 @@
 #define IDD_SETTINGS_SCHEDULER          250
 #define IDD_DOWNLOAD_REVIEWS            251
 #define IDI_FIREWALLED                  252
-#define IDI_MERCORA                     254
-#define IDR_MERCORA_BUTTON              255
 #define IDR_HOME_HEADER_1               257
 #define IDR_HOME_HEADER_2               258
 #define IDR_SPLASH                      259
@@ -1642,7 +1640,6 @@
 #define ID_MEDIA_MUTE                   33113
 #define ID_WINDOW_REMOTE                33114
 #define ID_UPLOADS_FILTER_TORRENT       33115
-#define ID_TOOLS_MERCORA                33116
 #define ID_TOOLS_SEEDTORRENT            33117
 #define ID_TOOLS_RESEEDTORRENT          33118
 #define ID_HELP_FORUMS                  33120

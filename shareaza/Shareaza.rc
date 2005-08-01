@@ -116,7 +116,6 @@ IDI_PAINTBRUSHES        ICON                    "Res\\Paintbrushes.ICO"
 IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
 IDI_COLLECTION          ICON                    "Res\\Collection.ico"
 IDI_FIREWALLED          ICON                    "Res\\Firewalled.ico"
-IDI_MERCORA             ICON                    "Res\\Mercora.ico"
 IDI_SMALL               ICON                    "Res\\ShareazaSmall.ico"
 IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
 IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
@@ -148,7 +147,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
             VALUE "FileVersion", "2, 1, 3, 3"
             VALUE "InternalName", "Shareaza"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
+            VALUE "LegalCopyright", "Copyright  Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 1, 3, 3"
@@ -219,7 +218,6 @@ BEGIN
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
         MENUITEM "Choose &Language...",         ID_TOOLS_LANGUAGE
-        MENUITEM "Mercora",                     ID_TOOLS_MERCORA
         MENUITEM SEPARATOR
         MENUITEM "QuickStart &Wizard...",       ID_TOOLS_WIZARD
         MENUITEM "&Shareaza Settings...",       ID_TOOLS_SETTINGS
@@ -1355,7 +1353,7 @@ BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,
                     SS_CENTERIMAGE
-    LTEXT           "Copyright © Shareaza Development Team, 2002-2005.",
+    LTEXT           "Copyright  Shareaza Development Team, 2002-2005.",
                     IDC_STATIC,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",
                     IDC_STATIC,20,75,262,24
@@ -4307,7 +4305,6 @@ IDR_LARGE_LOGO          JPEG                    "Res\\LogoLarge.jpg"
 // PNG
 //
 
-IDR_MERCORA_BUTTON      PNG                     "Res\\Mercora.png"
 IDR_HOME_HEADER_1       PNG                     "Res\\HomeHeader.1.png"
 IDR_HOME_HEADER_2       PNG                     "Res\\HomeHeader.2.png"
 IDR_SPLASH              PNG                     "Res\\Splash.png"
@@ -5781,7 +5778,6 @@ BEGIN
     ID_MEDIA_MUTE           "Mute audio playback"
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
-    ID_TOOLS_MERCORA        "Start P2P Radio"
     ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
 END
 

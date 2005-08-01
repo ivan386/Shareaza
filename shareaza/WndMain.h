@@ -206,7 +206,6 @@ protected:
 	afx_msg void OnToolsSkin();
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI);
 	afx_msg void OnToolsLanguage();
-	afx_msg void OnToolsMercora();
 	afx_msg void OnToolsSeedTorrent();
 	afx_msg void OnToolsReseedTorrent();
 	afx_msg void OnDiskSpace();
