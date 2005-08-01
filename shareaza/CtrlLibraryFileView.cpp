@@ -1,8 +1,8 @@
 //
 // CtrlLibraryFileView.cpp
 //
-//	Date:			"$Date: 2005/06/15 21:59:59 $"
-//	Revision:		"$Revision: 1.21 $"
+//	Date:			"$Date: 2005/08/01 14:51:54 $"
+//	Revision:		"$Revision: 1.22 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -565,7 +565,7 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 					nMetaDataTime.QuadPart /= 10000000;
 
 					// assume that XML was not modified during the first 10 sec. of creation
-					if ( nMetaDataTime.HighPart = nFileDataTime.HighPart &&
+					if ( nMetaDataTime.HighPart == nFileDataTime.HighPart &&
 						nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 ) 
 						bXmlPossiblyModified = TRUE;
 					CloseHandle( hFile );
