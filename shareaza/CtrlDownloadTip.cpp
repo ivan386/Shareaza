@@ -243,22 +243,37 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	}
 	if ( m_sTiger.GetLength() )
 	{
-		if( pDownload->m_bTigerTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else pDC->SelectObject( &CoolInterface.m_fntItalic );
+		pDC->SelectObject( pDownload->m_bTigerTrusted
+			? pDownload->m_pTigerBlock				// do we have a hashset ?
+				? &CoolInterface.m_fntBold			// if so, use a bold font
+				: &CoolInterface.m_fntNormal
+			: pDownload->m_pTigerBlock
+				? &CoolInterface.m_fntBoldItalic
+				: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sTiger );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sED2K.GetLength() )
 	{
-		if( pDownload->m_bED2KTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else pDC->SelectObject( &CoolInterface.m_fntItalic );
+		pDC->SelectObject( pDownload->m_bED2KTrusted
+			? pDownload->m_pHashsetBlock			// do we have a hashset ?
+				? &CoolInterface.m_fntBold			// if so, use a bold font
+				: &CoolInterface.m_fntNormal
+			: pDownload->m_pHashsetBlock
+				? &CoolInterface.m_fntBoldItalic
+				: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sBTH.GetLength() )
 	{
-		if( pDownload->m_bBTHTrusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else pDC->SelectObject( &CoolInterface.m_fntItalic );
+		pDC->SelectObject( pDownload->m_bBTHTrusted
+			? pDownload->m_pTorrentBlock			// do we have a hashset ?
+				? &CoolInterface.m_fntBold			// if so, use a bold font
+				: &CoolInterface.m_fntNormal
+			: pDownload->m_pTorrentBlock
+				? &CoolInterface.m_fntBoldItalic
+				: &CoolInterface.m_fntItalic );
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
 	}

@@ -84,6 +84,7 @@ public:
 	virtual void	Serialize(CArchive& ar, int nVersion);
 
 	friend class CEDClient;
+	friend class CDownloadTipCtrl;
 };
 
 #endif // !defined(AFX_DOWNLOADWITHTIGER_H__8F105434_164D_4F58_BAA4_8DB2B29CA259__INCLUDED_)

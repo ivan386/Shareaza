@@ -43,6 +43,7 @@ public:
 	CFont		m_fntUnder;
 	CFont		m_fntCaption;
 	CFont		m_fntItalic;
+	CFont		m_fntBoldItalic;
 public:
 	BOOL		m_bCustom;
 	COLORREF	m_crWindow;
