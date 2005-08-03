@@ -682,6 +682,7 @@ void CEDNeighbour::SendSharedFiles()
 					DWORD nTags;
 					CString strType(_T("")), strCodec(_T(""));
 					DWORD nBitrate = 0, nLength = 0;
+					BYTE nRating = 0;
 
 					// Send the file hash to the ed2k server
 					pPacket->Write( &pFile->m_pED2K, sizeof(MD4) );
@@ -707,7 +708,7 @@ void CEDNeighbour::SendSharedFiles()
 						}
 					}
 
-					// Send the file tags (Metadata)
+					//// Set the file tags (Metadata) for the server
 
 					// First, figure out what tags should be sent.
 					nTags = 2; // File name and size are always present
@@ -761,8 +762,16 @@ void CEDNeighbour::SendSharedFiles()
 								}
 							}
 						}
-
 					}
+
+					// Only newer servers support file ratings
+					if ( ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS ) && ( pFile->m_nRating ) )
+					{
+						nRating = min ( pFile->m_nRating, 5 );
+						nTags ++;
+					}
+
+					//// End of server metadata calculation
 
 					// Set the number of tags present
 					pPacket->WriteLongLE( nTags );
@@ -779,6 +788,8 @@ void CEDNeighbour::SendSharedFiles()
 					if ( nLength )	CEDTag( ED2K_FT_LENGTH, nLength ).Write( pPacket, m_nTCPFlags );
 					// Send the codec to the ed2k server
 					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, m_nTCPFlags );
+					// Send the file rating to the ed2k server
+					if ( nRating ) CEDTag( ED2K_FT_FILERATING, nRating ).Write( pPacket, m_nTCPFlags );
 
 					// Increment count of files sent
 					nCount++;
