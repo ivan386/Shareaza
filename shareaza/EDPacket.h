@@ -345,6 +345,7 @@ public:
 #define ED2K_FT_LENGTH				0xD3
 #define ED2K_FT_BITRATE				0xD4
 #define ED2K_FT_CODEC				0xD5
+#define ED2K_FT_FILERATING			0xF7
 
 // eMuleinfo tags. Note this is now obsolete, due to ED2K_CT_FEATUREVERSIONS
 #define ED2K_ET_COMPRESSION			0x20
