@@ -242,6 +242,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.QueryHitUTF8"), &Gnutella1.QueryHitUTF8, FALSE );
 
 	Add( _T("Gnutella2.ClientMode"), &Gnutella2.ClientMode, MODE_AUTO );
+	Add( _T("Gnutella2.HubVerified"), &Gnutella2.HubVerified, FALSE );
 	Add( _T("Gnutella2.EnableAlways"), &Gnutella2.EnableAlways, TRUE );
 	Add( _T("Gnutella2.NumHubs"), &Gnutella2.NumHubs, 2 );
 	Add( _T("Gnutella2.NumLeafs"), &Gnutella2.NumLeafs, 300 );
@@ -500,7 +501,7 @@ void CSettings::Load()
 	
 	if ( pRegistry.GetInt( _T("Settings"), _T("Running"), FALSE ) )
 	{
-		pRegistry.SetInt( _T("VersionCheck"), _T("NextCheck"), 0 );
+		//pRegistry.SetInt( _T("VersionCheck"), _T("NextCheck"), 0 );
 	}
 	else
 	{
@@ -571,7 +572,31 @@ void CSettings::SmartUpgrade()
 {	//This function resets certain values when upgrading, depending on version.
 	CRegistry pRegistry;
 	int nVersion = pRegistry.GetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
+
+	// Set next update check
+	if ( nVersion < SMART_VERSION )
+	{
+		// Don't check for a week if we've just upgraded
+		CTimeSpan tPeriod( 7, 0, 0, 0 );
+		CTime tNextCheck = CTime::GetCurrentTime() + tPeriod;
+		theApp.WriteProfileInt( _T("VersionCheck"), _T("NextCheck"), (DWORD)tNextCheck.GetTime() );
+	}
 	
+	// Add OGG handling if needed
+	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
+		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
+	{
+		LONG nReg = 0;
+		
+		if ( RegQueryValue( HKEY_CLASSES_ROOT,
+			_T("CLSID\\{02391F44-2767-4E6A-A484-9B47B506F3A4}"), NULL, &nReg )
+			== ERROR_SUCCESS && nReg > 0 )
+		{
+			MediaPlayer.FileTypes += _T("|ogg|");
+		}
+	}
+	
+	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
 		//Gnutella.HubForce	= FALSE;
@@ -649,21 +674,12 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 30 )
 	{
 		BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented) 
-	}
-	
-	//Add OGG handling if needed
-	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
-		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
-	{
-		LONG nReg = 0;
 		
-		if ( RegQueryValue( HKEY_CLASSES_ROOT,
-			_T("CLSID\\{02391F44-2767-4E6A-A484-9B47B506F3A4}"), NULL, &nReg )
-			== ERROR_SUCCESS && nReg > 0 )
-		{
-			MediaPlayer.FileTypes += _T("|ogg|");
-		}
 	}
+
+
+
+
 }
 
 //////////////////////////////////////////////////////////////////////

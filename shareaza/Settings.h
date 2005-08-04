@@ -275,6 +275,7 @@ public:
 	struct sGnutella2
 	{
 		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_HUB
+		BOOL		HubVerified;
 		BOOL		EnableToday;
 		BOOL		EnableAlways;
 		int			NumHubs;					// Number of hubs a leaf has
