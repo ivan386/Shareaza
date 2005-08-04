@@ -3419,7 +3419,7 @@
 		<control caption="Torrentów równocześnie"/>
 		<control/><control/>
 		<control caption="Połączeń z innymi klientami"/>
-		<control caption="Czyść pobrane torrenty&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kiedy share ratio osiągnie"/>
+		<control caption="Czyść pobrane torrenty&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kiedy share ratio osiągnie"/>
 		<control/><control/><control/>
 		<control caption="&#160;Prefer torrent sources"/>
 		<control caption="GraKońcowa:"/>
