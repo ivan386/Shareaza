@@ -355,11 +355,20 @@ BOOL CG2Neighbour::OnPacket(CG2Packet* pPacket)
 	{
 		return OnHAW( pPacket );
 	}
-	else if ( pPacket->IsType( G2_PACKET_QUERY ) || pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
+	else if ( pPacket->IsType( G2_PACKET_QUERY ) )
 	{
 		return OnQuery( pPacket );
 	}
-	else if ( pPacket->IsType( G2_PACKET_HIT ) || pPacket->IsType( G2_PACKET_HIT_WRAP ) )
+	else if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
+	{
+		//return OnQuery( pPacket );
+		theApp.Message( MSG_DEBUG, _T("CG2Neighbour::OnPacket Ignoring wrapped query packet") );
+	}
+	else if ( pPacket->IsType( G2_PACKET_HIT_WRAP ) )
+	{
+		return OnCommonHit( pPacket );
+	}
+	else if ( pPacket->IsType( G2_PACKET_HIT ) )
 	{
 		return OnCommonHit( pPacket );
 	}
@@ -966,6 +975,16 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		}
 	}
 
+	// Check for old wrapped queries
+	if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
+	{
+		theApp.Message( MSG_DEBUG, _T("CG2Neighbour::OnQuery Ignoring wrapped query packet") );
+		delete pSearch;
+		Statistics.Current.Gnutella2.Dropped++;
+		m_nDropCount++;
+		return TRUE;
+	}
+
 	if ( m_nNodeType == ntLeaf && pSearch->m_bUDP &&
 		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
 	{
@@ -985,6 +1004,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 
 	if ( m_nNodeType != ntHub )
 	{
+		/*
 		if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
 		{
 			if ( ! pPacket->SeekToWrapped() ) return TRUE;
@@ -1000,7 +1020,9 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		else
 		{
 			Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
-		}
+		}*/
+
+		Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
 	}
 
 	Network.OnQuerySearch( pSearch );
@@ -1013,6 +1035,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	}
 	else
 	{
+		/*
 		BOOL bIsG1 = pPacket->IsType( G2_PACKET_QUERY_WRAP );
 
 		if ( ! bIsG1 || Settings.Gnutella1.EnableToday )
@@ -1020,6 +1043,9 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 			CLocalSearch pLocal( pSearch, this, bIsG1 );
 			pLocal.Execute();
 		}
+		*/
+		CLocalSearch pLocal( pSearch, this, FALSE );
+		pLocal.Execute();
 	}
 
 	if ( m_nNodeType == ntLeaf ) Send( Neighbours.CreateQueryWeb( &pSearch->m_pGUID, this ), TRUE, FALSE );
