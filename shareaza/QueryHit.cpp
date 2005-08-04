@@ -1071,9 +1071,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES )
 		{
-			if ( ! pTag.m_nValue ) //If there are no complete sources
+			if ( ! pTag.m_nValue ) // If there are no complete sources
 			{
-				//Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
+				// Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
 				m_nPartial = (DWORD)m_nSize >> 2;
 				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );				
 			}
@@ -1083,20 +1083,25 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			}
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH )
-		{	//Length- new style (DWORD)
+		{	// Length- new style (DWORD)
 			nLength = pTag.m_nValue;	
 		}
-		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )
-		{	//Bitrate- new style
+		else if ( pTag.m_nKey == ED2K_FT_BITRATE )
+		{	// Bitrate- new style
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
-		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC ) )
-		{	//Codec - new style
+		else if  ( pTag.m_nKey == ED2K_FT_CODEC )
+		{	// Codec - new style
 			strCodec = pTag.m_sValue;
 		}
-		//Note: Maybe ignore these keys? They seem to have a lot of bad values....
+		else if  ( pTag.m_nKey == ED2K_FT_FILERATING )
+		{	// File Rating
+			m_nRating = pTag.m_nValue & 0x0F;
+			m_nRating = min ( m_nRating, 6 );
+		}
+		// Note: Maybe ignore these keys? They seem to have a lot of bad values....
 		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("length") )  )
-		{	//Length- old style (As a string- x:x:x, x:x or x)
+		{	// Length- old style (As a string- x:x:x, x:x or x)
 			DWORD nSecs = 0, nMins = 0, nHours = 0;
 
 			if ( pTag.m_sValue.GetLength() < 3 )
@@ -1115,11 +1120,11 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);
 		}
 		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_INT ) && ( pTag.m_sKey == _T("bitrate") ) )
-		{	//Bitrate- old style			
+		{	// Bitrate- old style			
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
 		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("codec") ) )
-		{	//Codec - old style
+		{	// Codec - old style
 			strCodec = pTag.m_sValue;
 		}
 		else
