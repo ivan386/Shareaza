@@ -47,10 +47,12 @@ CNeighboursWithConnect::CNeighboursWithConnect()
 {
 	ZeroMemory( m_tPresent, sizeof(m_tPresent) );
 
-	m_bG2Leaf		= FALSE;
-	m_bG2Hub		= FALSE;
-	m_bG1Leaf		= FALSE;
-	m_bG1Ultrapeer	= FALSE;
+	m_bG2Leaf			= FALSE;
+	m_bG2Hub			= FALSE;
+	m_bG1Leaf			= FALSE;
+	m_bG1Ultrapeer		= FALSE;
+
+	m_tHubG2Promotion	= 0;
 }
 
 CNeighboursWithConnect::~CNeighboursWithConnect()
@@ -307,15 +309,33 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		//
 
 		// Confirm how long the node has been running.
-		if ( Network.GetStableTime() < 7200 )
+		if ( Settings.Gnutella2.HubVerified )
 		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
-			return FALSE;
+			// Systems that have been good hubs before can promote in 2 hours
+			if ( Network.GetStableTime() < 7200 )
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
+				return FALSE;
+			}
+			else
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+			}
 		}
 		else
 		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+			// Untested hubs need 3 hours uptime to be considered
+			if ( Network.GetStableTime() < 10800 )
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 3 hours") );
+				return FALSE;
+			}
+			else
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 3 hours") );
+			}
 		}
+
 		if ( ! Datagrams.IsStable() )
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: datagram not stable") );
@@ -864,6 +884,27 @@ void CNeighboursWithConnect::Maintain()
 		else if ( pNeighbour->m_nState < nrsConnected )		// If it's still conecting, we aren't sure of the protocol
 		{
 			nCount[ pNeighbour->m_nProtocol ][ 0 ] ++;
+		}
+	}
+
+	// Set our "promoted to hub" timer
+	if ( m_bG2Hub == FALSE )
+		m_tHubG2Promotion = 0;			// If we're not a hub, time promoted is 0
+	else if ( m_tHubG2Promotion == 0 ) 
+		m_tHubG2Promotion = tNow;		// If we've just been promoted, set the timer
+
+	// Check if we have verified if we make a good G2 hub
+	if ( ( Settings.Gnutella2.HubVerified == FALSE ) && ( m_tHubG2Promotion > 0 ) && ( Network.m_bEnabled ) )
+	{
+		// If we have been a hub for at least 8 hours
+		if ( ( tNow - m_tHubG2Promotion ) > ( 8 * 60 * 60 ) )
+		{
+			// And we're loaded ( 75% capacity )
+			if ( ( nCount[ PROTOCOL_G2 ][ ntHub ] ) > ( Settings.Gnutella2.NumLeafs * 3 / 4 ) )
+			{
+				// Then we probably make a pretty good hub
+				Settings.Gnutella2.HubVerified = TRUE;
+			}
 		}
 	}
 	

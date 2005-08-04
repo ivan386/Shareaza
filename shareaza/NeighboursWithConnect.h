@@ -52,12 +52,14 @@ public:
 	//Either protocol
 	BOOL	NeedMoreHubs(PROTOCOLID nProtocol);			//Does this node need more hubs for the specified protocol
 	BOOL	NeedMoreLeafs(PROTOCOLID nProtocol);		//Does this node need more leaves for the specified protocol
-	BOOL	IsHubLoaded(PROTOCOLID nProtocol);			//Is this hub/up at more than 3/4 capacity? (Unused?)
+	BOOL	IsHubLoaded(PROTOCOLID nProtocol);			//Is this hub/up at more than 3/4 capacity?
 protected:
 	BOOL	m_bG2Leaf;									// Are we a G2 leaf?
 	BOOL	m_bG2Hub;									// Are we a G2 hub?
 	BOOL	m_bG1Leaf;									// Are we a G1 leaf?
 	BOOL	m_bG1Ultrapeer;								// Are we a G1 ultrapeer?
+
+	DWORD	m_tHubG2Promotion;							// Time we were promoted to a G2 hub
 public:
 	virtual void	OnRun();
 protected:
