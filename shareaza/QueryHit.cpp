@@ -1096,8 +1096,28 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if  ( pTag.m_nKey == ED2K_FT_FILERATING )
 		{	// File Rating
-			m_nRating = pTag.m_nValue & 0x0F;
-			m_nRating = min ( m_nRating, 6 );
+
+			// The server returns rating as a full range (1-255).
+			// If the majority of ratings are "very good", take it up to "excellent"
+
+			m_nRating = ( pTag.m_nValue & 0xFF );
+
+			if ( m_nRating >= 250 )			// Excellent
+				m_nRating = 6;			 
+			else if ( m_nRating >= 220 )	// Very good
+				m_nRating = 5;	
+			else if ( m_nRating >= 180 )	// Good
+				m_nRating = 4;	
+			else if ( m_nRating >= 120 )	// Average
+				m_nRating = 3;	
+			else if ( m_nRating >= 80 )		// Poor
+				m_nRating = 2;
+			else							// Fake
+				m_nRating = 1;
+
+			// the percentage of clients that have given ratings is:
+			// = ( pTag.m_nValue >> 8 ) & 0xFF;
+			// We could use this in the future to weight the rating...
 		}
 		// Note: Maybe ignore these keys? They seem to have a lot of bad values....
 		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("length") )  )
