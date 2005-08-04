@@ -42,10 +42,12 @@ protected:
 public:
 	struct sTorrentDetails
 	{
-		DWORD			m_tLastSeeded;
 		CString			m_sName;
 		CString			m_sPath;
 		SHA1			m_pBTH;
+		DWORD			m_tLastSeeded;
+		QWORD			m_nUploaded;
+		QWORD			m_nDownloaded;
 	};
 	
 	sTorrentDetails	LastSeededTorrent;			// Most recently seeded torrent (for home page button)

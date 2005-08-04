@@ -195,12 +195,18 @@ void CTorrentSeedDlg::OnSeed()
 			CSingleLock pLock( &Library.m_pSection );
 			if ( pLock.Lock( 250 ) )
 			{
-			LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
-			LibraryHistory.LastSeededTorrent.m_tLastSeeded = time( NULL );
-			LibraryHistory.LastSeededTorrent.m_sName = m_pInfo.m_sName.Left( 40 );
-			LibraryHistory.LastSeededTorrent.m_pBTH = m_pInfo.m_pInfoSHA1;
-			}
+				LibraryHistory.LastSeededTorrent.m_sName		= m_pInfo.m_sName.Left( 40 );
+				LibraryHistory.LastSeededTorrent.m_sPath		= m_sTorrent;
+				LibraryHistory.LastSeededTorrent.m_tLastSeeded	= time( NULL );
 
+				// If it's a 'new' torrent, reset the counters
+				if ( LibraryHistory.LastSeededTorrent.m_pBTH != m_pInfo.m_pInfoSHA1 )
+				{
+					LibraryHistory.LastSeededTorrent.m_nUploaded	= 0;
+					LibraryHistory.LastSeededTorrent.m_nDownloaded	= 0;
+					LibraryHistory.LastSeededTorrent.m_pBTH			= m_pInfo.m_pInfoSHA1;
+				}
+			}
 
 			// Start the torrent seed process
 			m_hThread = AfxBeginThread( ThreadStart, this,
