@@ -1066,6 +1066,16 @@ void CEDClient::DeriveSoftwareVersion()
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
 				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
 			break;
+		case 40:
+			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
+				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
+				( ( m_nSoftwareVersion >>  7 ) &0x03 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+			
+			//Client allows G2 browse, etc
+			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
+			break;
 		default:
 			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), m_nEmCompatible,
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
@@ -1133,6 +1143,11 @@ void CEDClient::DeriveVersion()
 			break;
 		case 20:
 			m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+			break;
+		case 40:
+			m_sUserAgent.Format( _T("Shareaza") );
+			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
+			if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 			break;
 		case ED2K_CLIENT_MOD:	// (Did not send a compatible client ID, but did send a MOD tag)
 			m_sUserAgent.Format( _T("eMule mod %i"), m_nEmVersion );
