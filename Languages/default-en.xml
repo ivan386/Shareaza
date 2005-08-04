@@ -3435,7 +3435,7 @@
 		<control caption="Client connections"/>
 		<control caption="&#160;Clear downloaded torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;When the share ratio reaches"/>
 		<control/><control/><control/>
-		<control caption="&#160;Preference torrent sources"/>
+		<control caption="&#160;Prefer torrent sources"/>
 		<control caption="_EndGame:"/>
 		<control caption="Enable EndGame mode when completing torrents"/>
 		<control caption="_Store Torrents Here:"/>
