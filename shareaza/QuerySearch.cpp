@@ -490,7 +490,8 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 	{
 		if ( ((CG2Packet*)pPacket)->IsType( G2_PACKET_QUERY_WRAP ) )
 		{
-			if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket ) ) return pSearch;
+			//if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket ) ) return pSearch;
+			theApp.Message( MSG_DEBUG, _T("CQuerySearch::FromPacket dropping obsolete wrapped packet") );
 		}
 		else
 		{

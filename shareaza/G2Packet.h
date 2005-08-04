@@ -153,7 +153,7 @@ inline void CG2Packet::CG2PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G2_PACKET_QUERY_KEY_ANS		"QKA"
 #define G2_PACKET_QUERY				"Q2"
 #define G2_PACKET_HIT				"QH2"
-#define G2_PACKET_QUERY_WRAP		"Q1"
+#define G2_PACKET_QUERY_WRAP		"Q1"			// Obsolete
 #define G2_PACKET_HIT_WRAP			"QH1"
 #define G2_PACKET_QUERY_ACK			"QA"
 #define G2_PACKET_PUSH				"PUSH"

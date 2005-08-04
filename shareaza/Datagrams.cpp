@@ -877,7 +877,11 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	{
 		return OnQueryKeyRequest( pHost, pPacket );
 	}
-	else if ( pPacket->IsType( G2_PACKET_HIT ) || pPacket->IsType( G2_PACKET_HIT_WRAP ) )
+	else if ( pPacket->IsType( G2_PACKET_HIT ) )
+	{
+		return OnHit( pHost, pPacket );
+	}
+	else if ( pPacket->IsType( G2_PACKET_HIT_WRAP ) )
 	{
 		return OnHit( pHost, pPacket );
 	}

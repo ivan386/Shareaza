@@ -126,7 +126,8 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 			{
 				if ( pG2 == NULL )
 				{
-					pG2 = pG2Q1 = CG2Packet::New( G2_PACKET_QUERY_WRAP, pG1, Settings.Gnutella1.TranslateTTL );
+					//pG2 = pG2Q1 = CG2Packet::New( G2_PACKET_QUERY_WRAP, pG1, Settings.Gnutella1.TranslateTTL );
+					theApp.Message( MSG_ERROR, _T("CNeighboursWithRouting::RouteQuery not relaying wrapped packet to leaf") );
 				}
 
 				if ( pNeighbour->SendQuery( pSearch, pG2, FALSE ) ) nCount++;
@@ -137,7 +138,8 @@ int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, 
 				{
 					if ( pG2 == NULL )
 					{
-						pG2 = pG2Q1 = CG2Packet::New( G2_PACKET_QUERY_WRAP, pG1, Settings.Gnutella1.TranslateTTL );
+						//pG2 = pG2Q1 = CG2Packet::New( G2_PACKET_QUERY_WRAP, pG1, Settings.Gnutella1.TranslateTTL );
+						theApp.Message( MSG_ERROR, _T("CNeighboursWithRouting::RouteQuery not relaying wrapped packet to hub") );
 					}
 
 					if ( pNeighbour->SendQuery( pSearch, pG2, FALSE ) ) nCount++;

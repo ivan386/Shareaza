@@ -187,6 +187,11 @@ BOOL CLocalSearch::AddHit(CLibraryFile* pFile, int nIndex)
 
 	if ( m_nProtocol == PROTOCOL_G1 )
 	{
+		if ( ! Settings.Gnutella1.EnableToday ) 
+		{
+			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit G1- network not enabled ") );
+			return FALSE;
+		}
 		if ( ! AddHitG1( pFile, nIndex ) ) return FALSE;
 	}
 	else
@@ -949,6 +954,10 @@ void CLocalSearch::DispatchPacket()
 	{
 		if ( m_bWrapped )
 		{
+			// ****Debug
+			theApp.Message( MSG_DEFAULT, _T("CLocalSearch::DispatchPacket() Wrapped query hit created") );
+			// ****
+
 			CG2Packet* pG2 = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)m_pPacket );
 			m_pPacket->Release();
 			m_pPacket = pG2;
