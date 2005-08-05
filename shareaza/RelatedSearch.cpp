@@ -37,7 +37,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define MIN_LENGTH		3
+#define MIN_LENGTH		4
 
 
 //////////////////////////////////////////////////////////////////////
@@ -147,6 +147,14 @@ BOOL CRelatedSearch::RunSearchForSimilar()
 	if ( ! CanSearchForSimilar() ) return FALSE;
 	CQuerySearch* pSearch = new CQuerySearch();
 	pSearch->m_sSearch = Tokenise( m_sName );
+
+	// Support "Related Search" in ed2k
+	if ( m_bED2K )
+	{
+		pSearch->m_bSimilarSearch = TRUE;
+		pSearch->m_pSimilarED2K	= m_pED2K;
+	}
+
 	return pSearch->OpenWindow() != NULL;
 }
 

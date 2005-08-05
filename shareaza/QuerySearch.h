@@ -60,6 +60,9 @@ public:
 	BOOL			m_bBTH;
 	SHA1			m_pBTH;
 public:
+	BOOL			m_bSimilarSearch;
+	MD4				m_pSimilarED2K;
+public:
 	BOOL			m_bWantURL;
 	BOOL			m_bWantDN;
 	BOOL			m_bWantXML;
