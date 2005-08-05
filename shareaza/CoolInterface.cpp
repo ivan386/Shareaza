@@ -242,6 +242,7 @@ void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 	if ( m_fntUnder.m_hObject ) m_fntUnder.DeleteObject();
 	if ( m_fntCaption.m_hObject ) m_fntCaption.DeleteObject();
 	if ( m_fntItalic.m_hObject ) m_fntItalic.DeleteObject();
+	if ( m_fntBoldItalic.m_hObject ) m_fntBoldItalic.DeleteObject();
 	
 	m_fntNormal.CreateFont( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
