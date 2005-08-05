@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/08/01 15:36:16 $"
-//	Revision:		"$Revision: 1.40 $"
-//  Last change by:	"$Author: mikewalsh $"
+//	Date:			"$Date: 2005/08/05 22:28:51 $"
+//	Revision:		"$Revision: 1.41 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1541,6 +1541,7 @@ void CMainWnd::OnNetworkG2()
 void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI) 
 {
 	pCmdUI->SetCheck( Settings.Gnutella1.EnableToday );
+	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
 }
 
 void CMainWnd::OnNetworkG1() 
@@ -1570,7 +1571,7 @@ void CMainWnd::OnNetworkED2K()
 	}
 	else
 	{
-		Settings.eDonkey.EnableToday = Settings.GetOutgoingBandwidth() >= 2;
+		Settings.eDonkey.EnableToday = TRUE;
 		Network.Connect( TRUE );
 	}
 }

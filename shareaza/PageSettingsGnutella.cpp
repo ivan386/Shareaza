@@ -201,6 +201,17 @@ void CGnutellaSettingsPage::OnG2Today()
 
 void CGnutellaSettingsPage::OnG1Today() 
 {
+	UpdateData( TRUE );
+
+	if ( m_bG1Today && ( Settings.GetOutgoingBandwidth() < 2 ) )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_BANDWIDTH_LOW );
+		AfxMessageBox( strMessage, MB_OK );
+		m_bG1Today = FALSE;
+		UpdateData( FALSE );
+	}
+
 	CNetworksSettingsPage* ppNetworks =
 		(CNetworksSettingsPage*)GetPage( RUNTIME_CLASS(CNetworksSettingsPage) );
 	
@@ -229,6 +240,12 @@ void CGnutellaSettingsPage::OnOK()
 			Settings.Gnutella2.ClientMode = MODE_AUTO;
 			UpdateData( FALSE );
 		}
+	}
+
+	// Limit networks if low bandwidth
+	if ( ( Settings.GetOutgoingBandwidth() < 2 ) )
+	{
+		m_bG1Today = m_bG1Always = FALSE;
 	}
 	
 	//Load values into the settings variables
