@@ -4926,6 +4926,10 @@ BEGIN
                             "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"
     IDS_SETTINGS_FILEPATH_TOO_LONG 
                             "Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."
+    IDS_SETTINGS_FILEPATH_NOT_SAME 
+                            "The complete and incomplete folders should not be the same"
+    IDS_SETTINGS_INCOMPLETE_LIBRARY 
+                            "The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."
 END
 
 STRINGTABLE 

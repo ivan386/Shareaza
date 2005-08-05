@@ -545,6 +545,15 @@ void CSettings::Load()
 	Gnutella2.NumHubs			= min( Gnutella2.NumHubs, 3 );
 	Gnutella2.NumLeafs			= min( Gnutella2.NumLeafs, 1024 );
 
+	// Make sure download/incomplete folders aren't the same
+	if ( _tcsicmp( Downloads.IncompletePath, Downloads.CompletePath ) == 0 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		// Downloads.IncompletePath = General.Path + _T("\\Incomplete");
+	}
+
 	//Temporary- until G1 ultrapeer has been updated
 	Gnutella1.ClientMode		= MODE_LEAF; 
 }

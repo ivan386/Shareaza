@@ -1,9 +1,9 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/20 19:06:38 $"
-//	Revision:		"$Revision: 1.18 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/08/05 07:09:04 $"
+//	Revision:		"$Revision: 1.19 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -170,6 +170,15 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return;
 	}
+
+	// Make sure download/incomplete folders aren't the same
+	if ( _tcsicmp( szPath, m_sIncompletePath ) == 0 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
 	
 	UpdateData( TRUE );
 	m_sDownloadsPath = szPath;
@@ -204,6 +213,24 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
+
+	// Make sure download/incomplete folders aren't the same
+	if ( _tcsicmp( szPath, m_sDownloadsPath ) == 0 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
+
+	// Warn user about an incomplete folder in the library
+	if ( LibraryFolders.IsFolderShared( szPath ) )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_INCOMPLETE_LIBRARY );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return;
 	}
