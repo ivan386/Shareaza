@@ -349,6 +349,8 @@ BOOL CUploadsSettingsPage::OnKillActive()
 void CUploadsSettingsPage::OnOK()
 {
 	UpdateData();
+
+	DWORD nOldLimit = Settings.Bandwidth.Uploads;
 	
 	Settings.Uploads.MaxPerHost			= m_nMaxPerHost;
 	Settings.Uploads.SharePartials		= m_bSharePartials;
@@ -364,8 +366,21 @@ void CUploadsSettingsPage::OnOK()
 		Settings.Bandwidth.Uploads = min ( Settings.Bandwidth.Uploads, ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
 	}
 	*/
+
+	// Warn the user about the effects of upload limiting
+	if ( ( ! Settings.Live.UploadLimitWarning ) && ( Settings.Bandwidth.Uploads > 0 ) && ( Settings.Bandwidth.Uploads != nOldLimit ) )
+	{
+		DWORD nDownload = max( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
+		DWORD nUpload	= min( Settings.Bandwidth.Uploads,   ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
+		
+		if ( ( nUpload * 16 ) < ( nDownload ) )
+		{
+			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
+			Settings.Live.UploadLimitWarning = TRUE;
+		}
+	}
 	
-	// Blocked clients/strings
+	// Set blocked user agents/strings
 	Settings.Uploads.BlockAgents.Empty();
 	
 	for ( int nItem = 0 ; nItem < m_wndAgentList.GetCount() ; nItem++ )
@@ -396,19 +411,6 @@ void CUploadsSettingsPage::OnOK()
 	}
 
 	UpdateQueues();
-
-	// Warn the user about upload limiting and ed2k/BT downloads
-	if ( ( ! Settings.Live.UploadLimitWarning ) &&
-		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface ) ) 
-	{
-		DWORD nUpload	= min ( Settings.Bandwidth.Uploads,   ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
-		DWORD nDownload = max ( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
-		if ( ( nUpload * 16 ) < ( nDownload ) )
-		{
-			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
-			Settings.Live.UploadLimitWarning = TRUE;
-		}
-	}
 }
 
 

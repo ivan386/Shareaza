@@ -242,15 +242,16 @@ void CConnectionSettingsPage::OnOK()
 	if ( ( ! Settings.Live.UploadLimitWarning ) &&
 		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface ) ) 
 	{
-		DWORD nUpload	= min ( Settings.Bandwidth.Uploads,   ( ( Settings.Connection.OutSpeed / 8 ) * 1024 ) );
-		DWORD nDownload = max ( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
+		DWORD nDownload = max( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
+		DWORD nUpload = ( ( Settings.Connection.OutSpeed / 8 ) * 1024 );
+		if ( Settings.Bandwidth.Uploads > 0 ) nUpload =  min( Settings.Bandwidth.Uploads, nUpload );
+		
 		if ( ( nUpload * 16 ) < ( nDownload ) )
 		{
 			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
 			Settings.Live.UploadLimitWarning = TRUE;
 		}
 	}
-
 	CSettingsPage::OnOK();
 }
 
