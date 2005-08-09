@@ -46,7 +46,9 @@ public:
 	DWORD		m_nTCPFlags;
 	DWORD		m_nUDPFlags;
 	CString		m_sServerName;
+
 	CPtrList	m_pQueries;
+	DWORD		m_nFilesSent;
 
 // Operations
 public:

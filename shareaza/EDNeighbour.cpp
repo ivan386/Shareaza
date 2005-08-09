@@ -63,6 +63,7 @@ CEDNeighbour::CEDNeighbour() : CNeighbour( PROTOCOL_ED2K )
 	m_nFileLimit	= 1000;
 	m_nTCPFlags		= 0;
 	m_nUDPFlags		= 0;
+	m_nFilesSent	= 0;
 	m_pMoreResultsGUID = NULL;
 }
 
@@ -587,26 +588,27 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CEDNeighbour file adverising
 
-//This function sends the list of shared files to the ed2k server. Note that it's best to
-//keep it as brief as possible to reduce the load. This means the metadata should be limited, 
-//and only files that are actually available for upload right now should be sent.
+// This function sends the list of shared files to the ed2k server. Note that it's best to
+// keep it as brief as possible to reduce the load. This means the metadata should be limited
+// to known good values, and only files that are actually available for upload right now should 
+// be sent.
 void CEDNeighbour::SendSharedFiles()
 {	
-	m_nFileLimit = Settings.eDonkey.MaxShareCount;
+	// Set the limits for number of files sent to the ed2k server
+	m_nFileLimit = max( Settings.eDonkey.MaxShareCount, ( (DWORD)25 ) );
 	
 	CHostCacheHost *pServer = HostCache.eDonkey.Find( &m_pHost.sin_addr );
 	if ( pServer && ( pServer->m_nFileLimit > 10 ) )
 	{
-		m_nFileLimit = pServer->m_nFileLimit;
-		//m_nFileLimit = min( Settings.eDonkey.MaxShareCount, pServer->m_nFileLimit );
+		m_nFileLimit = min( m_nFileLimit, pServer->m_nFileLimit );
 	}
 
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2S_OFFERFILES );
 	POSITION pos;
 	
-	DWORD nCount = 0;
+	m_nFilesSent = 0;
 	
-	pPacket->WriteLongLE( nCount );			//Write number of files. (update this later)
+	pPacket->WriteLongLE( m_nFilesSent );		//Write number of files. (update this later)
 	
 	
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
@@ -614,12 +616,13 @@ void CEDNeighbour::SendSharedFiles()
 
 	//Send files on download list to ed2k server (partials)
 	pTransfersLock.Lock();
-	for ( pos = Downloads.GetIterator() ; pos != NULL && ( nCount < m_nFileLimit ) ; )
+	for ( pos = Downloads.GetIterator() ; pos != NULL && ( m_nFilesSent < m_nFileLimit ) ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
-		if ( pDownload->m_bED2K && pDownload->IsStarted() && ! pDownload->IsMoving() &&
-			 pDownload->NeedHashset() == FALSE )	//If the file has an ed2k hash, has started, etc...
+		//If the file has an ed2k hash, has started, has a known size and a hashset, etc...
+		if ( ( pDownload->m_bED2K ) && ( pDownload->IsStarted() ) && ( pDownload->m_nSize != SIZE_UNKNOWN ) &&
+			 ( pDownload->NeedHashset() == FALSE ) && ( ! pDownload->IsMoving() ) )	
 		{
 			//Send the file hash to the ed2k server
 			pPacket->Write( &pDownload->m_pED2K, sizeof(MD4) );
@@ -661,20 +664,20 @@ void CEDNeighbour::SendSharedFiles()
 			// to be a bit of a problem with bad data there... (Possibly old clients?)
 
 			//Increment count of files sent
-			nCount++;
+			m_nFilesSent++;
 		}
 	}
 	pTransfersLock.Unlock();
 	
 	//Send files in library to ed2k server (Complete files)
 	pLibraryLock.Lock();
-	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( nCount < m_nFileLimit ) ; )
+	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( m_nFilesSent < m_nFileLimit ) ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 		
 		if ( pFile->IsShared() && pFile->m_bED2K )	//If file is shared and has an ed2k hash
 		{
-			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( nCount < ( m_nFileLimit / 2 ) ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
+			if ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) // If file is large enough to meet minimum requirement
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
@@ -792,14 +795,14 @@ void CEDNeighbour::SendSharedFiles()
 					if ( nRating ) CEDTag( ED2K_FT_FILERATING, nRating ).Write( pPacket, m_nTCPFlags );
 
 					// Increment count of files sent
-					nCount++;
+					m_nFilesSent++;
 				}
 			}
 		}
 	}
 	pLibraryLock.Unlock();
 
-	*(DWORD*)pPacket->m_pBuffer = nCount;	// Correct the number of files sent
+	*(DWORD*)pPacket->m_pBuffer = m_nFilesSent;	// Correct the number of files sent
 	
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();	// ZLIB compress if available
 
@@ -809,8 +812,13 @@ void CEDNeighbour::SendSharedFiles()
 // This function adds a download to the ed2k server file list.
 BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 {
+	// Don't send this file if we aren't properly connected yet, don't have an ed2k hash/hashset,
+	// or have already sent too many files.
 	if ( m_nState < nrsConnected ) return FALSE;
 	if ( ! pDownload->m_bED2K || pDownload->NeedHashset() ) return FALSE;
+	if ( pDownload->m_nSize == SIZE_UNKNOWN ) return FALSE;
+	if ( m_nFilesSent >= m_nFileLimit ) return FALSE;
+	
 	
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_OFFERFILES );
 	pPacket->WriteLongLE( 1 );		// Number of files that will be sent
@@ -850,6 +858,9 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	// Compress if the server supports it
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();
 	Send( pPacket );
+
+	// Increment the number of files sent
+	m_nFilesSent ++;
 	
 	return TRUE;
 }
