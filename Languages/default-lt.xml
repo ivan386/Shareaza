@@ -2938,7 +2938,7 @@ right quote	&#147;
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
 	<string id="16818" value="Laikinųjų bylų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigtos siųstis bylos gali būti bendrinamos atsisiuntimų lange."/>
-	<string id="16819" value="Pasirinkto aplanko &quot;%s&quot; poaplankis jau yra Jūsų kolekcijoje.\n\nAr tikrai norite pridėti pasirinktą aplanką į Jūsų kolekciją?\n\nŠis apalankas taps pasirinkto aplanko poaplankiu, ir visų bylų maišos bus perskaičiuojamos iš naujo."/>
+	<string id="16819" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\n\nAr tikrai norite pridėti pasirinktą aplanką į Jūsų kolekciją?\n\nŠis apalankas taps pasirinkto aplanko poaplankiu, ir visų bylų maišos bus perskaičiuojamos iš naujo."/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
