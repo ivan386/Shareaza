@@ -799,6 +799,7 @@
 #define IDS_TIP_HITS                    8316
 #define IDS_TIP_UPLOADS                 8317
 #define IDS_TIP_TODAYTOTAL              8318
+#define IDS_TIP_NOHASHSET               8319
 #define IDS_TIP_STATUS                  8320
 #define IDS_TIP_SPEED                   8321
 #define IDS_TIP_URL                     8322

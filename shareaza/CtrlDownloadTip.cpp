@@ -236,44 +236,45 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( m_sSHA1.GetLength() )
 	{
-		if( pDownload->m_bSHA1Trusted ) pDC->SelectObject( &CoolInterface.m_fntNormal );
-		else pDC->SelectObject( &CoolInterface.m_fntItalic );
+		// If verbose mode is enabled, untrusted hashes are in italics
+		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bSHA1Trusted ) )
+			pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else 
+			pDC->SelectObject( &CoolInterface.m_fntItalic );
+
 		DrawText( pDC, &pt, m_sSHA1 );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sTiger.GetLength() )
 	{
-		pDC->SelectObject( pDownload->m_bTigerTrusted
-			? pDownload->m_pTigerBlock				// do we have a hashset ?
-				? &CoolInterface.m_fntBold			// if so, use a bold font
-				: &CoolInterface.m_fntNormal
-			: pDownload->m_pTigerBlock
-				? &CoolInterface.m_fntBoldItalic
-				: &CoolInterface.m_fntItalic );
+		// If verbose mode is enabled, untrusted hashes are in italics
+		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bTigerTrusted ) )
+			pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else 
+			pDC->SelectObject( &CoolInterface.m_fntItalic );
+
 		DrawText( pDC, &pt, m_sTiger );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sED2K.GetLength() )
 	{
-		pDC->SelectObject( pDownload->m_bED2KTrusted
-			? pDownload->m_pHashsetBlock			// do we have a hashset ?
-				? &CoolInterface.m_fntBold			// if so, use a bold font
-				: &CoolInterface.m_fntNormal
-			: pDownload->m_pHashsetBlock
-				? &CoolInterface.m_fntBoldItalic
-				: &CoolInterface.m_fntItalic );
+		// If verbose mode is enabled, untrusted hashes are in italics
+		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bED2KTrusted ) )
+			pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else 
+			pDC->SelectObject( &CoolInterface.m_fntItalic );
+
 		DrawText( pDC, &pt, m_sED2K );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sBTH.GetLength() )
 	{
-		pDC->SelectObject( pDownload->m_bBTHTrusted
-			? pDownload->m_pTorrentBlock			// do we have a hashset ?
-				? &CoolInterface.m_fntBold			// if so, use a bold font
-				: &CoolInterface.m_fntNormal
-			: pDownload->m_pTorrentBlock
-				? &CoolInterface.m_fntBoldItalic
-				: &CoolInterface.m_fntItalic );
+		// If verbose mode is enabled, untrusted hashes are in italics
+		if ( ( ! Settings.General.VerboseMode ) || ( pDownload->m_bBTHTrusted ) )
+			pDC->SelectObject( &CoolInterface.m_fntNormal );
+		else 
+			pDC->SelectObject( &CoolInterface.m_fntItalic );
+
 		DrawText( pDC, &pt, m_sBTH );
 		pt.y += TIP_TEXTHEIGHT;
 	}
@@ -503,22 +504,37 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sBTH.Empty();
 	m_sURL.Empty();
 
-	if ( pDownload->m_bSHA1 && Settings.General.GUIMode != GUI_BASIC)
+	// Include hashes if we aren't in basic mode
+	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
-		m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pDownload->m_pSHA1 );
-	}
-	if ( pDownload->m_bTiger && Settings.General.GUIMode != GUI_BASIC)
-	{
-		m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pDownload->m_pTiger );
-	}
-	if ( pDownload->m_bED2K && Settings.General.GUIMode != GUI_BASIC)
-	{
-		m_sED2K = _T("ed2k:") + CED2K::HashToString( &pDownload->m_pED2K );
-	}
-	if ( pDownload->m_bBTH && Settings.General.GUIMode != GUI_BASIC)
-	{
-		m_sBTH = _T("btih:") + CSHA::HashToString( &pDownload->m_pBTH );
-		m_sURL = pDownload->m_pTorrent.m_sTracker;
+		// We also report on if we have a hashset if verbose mode is enabled
+		CString strNoHashset;
+		LoadString( strNoHashset, IDS_TIP_NOHASHSET );
+
+		if ( pDownload->m_bSHA1 )
+		{
+			m_sSHA1 = _T("sha1:") + CSHA::HashToString( &pDownload->m_pSHA1 );
+		}
+		if ( pDownload->m_bTiger )
+		{
+			m_sTiger = _T("tree:tiger/:") + CTigerNode::HashToString( &pDownload->m_pTiger );
+			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pTigerBlock ) ) 
+				m_sTiger += strNoHashset;
+		}
+		if ( pDownload->m_bED2K )
+		{
+			m_sED2K = _T("ed2k:") + CED2K::HashToString( &pDownload->m_pED2K );
+			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pHashsetBlock ) ) 
+				m_sED2K += strNoHashset;
+		}
+		if ( pDownload->m_bBTH )
+		{
+			m_sBTH = _T("btih:") + CSHA::HashToString( &pDownload->m_pBTH );
+			if ( ( Settings.General.VerboseMode ) && ( ! pDownload->m_pTorrentBlock ) ) 
+				m_sBTH += strNoHashset;
+
+			m_sURL = pDownload->m_pTorrent.m_sTracker;
+		}
 	}
 
 	int nPeriod = m_sName.ReverseFind( '.' );

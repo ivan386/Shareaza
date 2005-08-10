@@ -4520,6 +4520,7 @@ BEGIN
     IDS_TIP_HITS            "Hits"
     IDS_TIP_UPLOADS         "Uploads"
     IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
+    IDS_TIP_NOHASHSET       " (No Hashset)"
 END
 
 STRINGTABLE 
