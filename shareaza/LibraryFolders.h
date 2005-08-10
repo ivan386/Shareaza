@@ -55,6 +55,7 @@ public:
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
 	CLibraryFolder*	IsFolderShared(LPCTSTR pszPath);
+	CLibraryFolder*	IsSubFolderShared(LPCTSTR pszPath);
 
 // Virtual Album Operations
 public:

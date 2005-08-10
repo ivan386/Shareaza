@@ -196,23 +196,42 @@ void CDownloadGroupDlg::OnOK()
 
 	if ( m_sFolder.GetLength() && ! LibraryFolders.IsFolderShared( m_sFolder ) )
 	{
+		BOOL bAdd;
 		CString strFormat, strMessage;
 
 		LoadString( strFormat, IDS_LIBRARY_DOWNLOADS_ADD );
 		strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
 
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+		if ( bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
 		{
-			if ( CLibraryFolder* pFolder = LibraryFolders.AddFolder( m_sFolder ) )
+			if ( LibraryFolders.IsSubFolderShared( m_sFolder ) )
 			{
-				LoadString( strMessage, IDS_LIBRARY_DOWNLOADS_SHARE );
+				CString strFormat, strMessage;
+				LoadString( strFormat, IDS_LIBRARY_SUBFOLDER_IN_LIBRARY );
+				strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
 
-				BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
+				if ( bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
+				{
+					CLibraryFolder* pFolder;
+					while ( ( pFolder = LibraryFolders.IsSubFolderShared( m_sFolder ) ) != NULL )
+					{
+						LibraryFolders.RemoveFolder( pFolder );
+					}
+				}
+			}
+			if ( bAdd )
+			{
+				if ( CLibraryFolder* pFolder = LibraryFolders.AddFolder( m_sFolder ) )
+				{
+					LoadString( strMessage, IDS_LIBRARY_DOWNLOADS_SHARE );
 
-				CQuickLock oLock( Library.m_pSection );
-				if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
-					pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
-				Library.Update();
+					BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
+
+					CQuickLock oLock( Library.m_pSection );
+					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
+						pFolder->m_bShared = bShare ? TS_TRUE : TS_FALSE;
+					Library.Update();
+				}
 			}
 		}
 	}

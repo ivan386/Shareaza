@@ -115,6 +115,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 		strPath = strPath.Left( 2 );
 	
 	if ( IsFolderShared( strPath ) ) return NULL;
+	if ( IsSubFolderShared( strPath ) ) return NULL;
 
 	CLibraryFolder* pFolder;
 	{
@@ -181,7 +182,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryFolders check if a physical folder is shared
+// CLibraryFolders check if a physical folder is part of the library
 
 CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 {
@@ -201,19 +202,41 @@ CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 		{
 			int nLength = strOldLC.GetLength();
 			if ( strPathLC.Left( nLength ) == strOldLC && 
-				 strPathLC.GetAt( nLength + 1 ) == '\\' ) 
+				 strPathLC.GetAt( nLength ) == _T('\\') ) 
 				return pFolder;
-		}
-		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
-		{
-			int nLength = strPathLC.GetLength();
-			if ( strOldLC.Left( nLength ) == strPathLC && 
-				 strOldLC.GetAt( nLength + 1 ) == '\\' ) 
-				 return pFolder;
 		}
 		else
 		{
 			if ( strPathLC == strOldLC ) return pFolder;
+		}
+	}
+	
+	return NULL;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryFolders check if a subfolder of a physical folder is part of the library
+
+CLibraryFolder* CLibraryFolders::IsSubFolderShared(LPCTSTR pszPath)
+{
+	CString strPathLC( pszPath );
+	CharLower( strPathLC.GetBuffer() );
+	strPathLC.ReleaseBuffer();
+	
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	{
+		CLibraryFolder* pFolder = GetNextFolder( pos );
+		
+		CString strOldLC( pFolder->m_sPath );
+		CharLower( strOldLC.GetBuffer() );
+		strOldLC.ReleaseBuffer();
+		
+		if ( strPathLC.GetLength() < strOldLC.GetLength() )
+		{
+			int nLength = strPathLC.GetLength();
+			if ( strOldLC.Left( nLength ) == strPathLC && 
+				 strOldLC.GetAt( nLength ) == _T('\\') ) 
+				 return pFolder;
 		}
 	}
 	
