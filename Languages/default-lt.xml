@@ -21,7 +21,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.2.7"
+		version="2.1.3.7"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2636,6 +2636,7 @@ right quote	&#147;
 	<string id="8316" value="Kreipinių"/>
 	<string id="8317" value="Išsiųsta"/>
 	<string id="8318" value="%lu šiandien, %lu iš viso"/>
+	<string id="8319" value="&#160;(Be maišos rinkinio)"/>
 	<string id="8320" value="Būklė:"/>
 	<string id="8321" value="Sparta:"/>
 	<string id="8322" value="URL adresas:"/>
@@ -2870,6 +2871,7 @@ right quote	&#147;
 	<string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
 	<string id="16408" value="Kopijuoti &amp;nuorodą"/>
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
+	<string id="16410" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų bylų aplanku"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -2935,6 +2937,8 @@ right quote	&#147;
 	<string id="16811" value="Automatinis"/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
+	<string id="16818" value="Laikinųjų bylų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigtos siųstis bylos gali būti bendrinamos atsisiuntimų lange."/>
+	<string id="16819" value="Pasirinkto aplanko &quot;%s&quot; poaplankis jau yra Jūsų kolekcijoje.\n\nAr tikrai norite pridėti pasirinktą aplanką į Jūsų kolekciją?\n\nŠis apalankas taps pasirinkto aplanko poaplankiu ir visų bylų maišos bus perskaičiuojamos iš naujo."/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
