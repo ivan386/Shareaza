@@ -197,13 +197,13 @@ void CDownloadGroupDlg::OnOK()
 
 	if ( m_sFolder.GetLength() && ! LibraryFolders.IsFolderShared( m_sFolder ) )
 	{
-		BOOL bAdd;
 		CString strFormat, strMessage;
 
 		LoadString( strFormat, IDS_LIBRARY_DOWNLOADS_ADD );
 		strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
 
-		if ( bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
+		BOOL bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES );
+		if ( bAdd )
 		{
 			if ( LibraryFolders.IsSubFolderShared( m_sFolder ) )
 			{
@@ -211,7 +211,8 @@ void CDownloadGroupDlg::OnOK()
 				LoadString( strFormat, IDS_LIBRARY_SUBFOLDER_IN_LIBRARY );
 				strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
 
-				if ( bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
+				bAdd = ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES );
+				if ( bAdd )
 				{
 					CLibraryFolder* pFolder;
 					while ( ( pFolder = LibraryFolders.IsSubFolderShared( m_sFolder ) ) != NULL )
