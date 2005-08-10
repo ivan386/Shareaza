@@ -16,7 +16,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.2.7"
+		version="2.1.3.7"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2629,6 +2629,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
 	<string id="8318" value="%lu today, %lu total"/>
+	<string id="8319" value="&#160;(No Hashset)"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Speed:"/>
 	<string id="8322" value="URL:"/>
@@ -2863,6 +2864,7 @@
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
+	<string id="16410" value="The complete and incomplete folders should not be the same"/>
 	<string id="16448" value="Connected to %s, handshaking..."/>
 	<string id="16449" value="Now chatting with %s (%s)."/>
 	<string id="16450" value="Connection to %s closed."/>
@@ -2928,6 +2930,8 @@
 	<string id="16811" value="Automatic"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
+	<string id="16818" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
+	<string id="16819" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library. \n\nDo you still want to add the selected folder to your library ?\n\n The existing folder will then be a subfolder of the selected folder. This will also cause re-hashing of all the files in the existing folder."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
