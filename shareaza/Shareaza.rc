@@ -5063,7 +5063,7 @@ BEGIN
     IDS_LIBRARY_COPYURI     "Copy &URI"
     IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
     IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 
-                            "A subfolder of the selected folder ""%s"" is already part of your library. \n\nDo you still want to add the selected folder to your library ?\n\n The existing folder will then be a subfolder of the selected folder. This will also cause re-hashing of all the files in the existing folder."
+                            "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
 END
 
 STRINGTABLE 

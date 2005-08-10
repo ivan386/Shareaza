@@ -27,6 +27,7 @@
 #include "DownloadGroup.h"
 #include "DownloadGroups.h"
 #include "DlgDownloadGroup.h"
+#include "DlgHelp.h"
 
 #include "Schema.h"
 #include "SchemaCache.h"
@@ -217,6 +218,14 @@ void CDownloadGroupDlg::OnOK()
 					{
 						LibraryFolders.RemoveFolder( pFolder );
 					}
+				}
+			}
+			if ( bAdd )
+			{
+				if ( !LibraryFolders.IsShareable( m_sFolder ) )
+				{
+					CHelpDlg::Show( _T("ShareHelp.BadShare") );
+					bAdd = FALSE;
 				}
 			}
 			if ( bAdd )
