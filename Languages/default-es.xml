@@ -2620,6 +2620,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Subidas"/>
 	<string id="8318" value="%lu hoy, %lu total"/>
+	<string id="8319" value="&#160;(No Hay Hashset)"/>
 	<string id="8320" value="Estado:"/>
 	<string id="8321" value="Velocidad:"/>
 	<string id="8322" value="URL:"/>
@@ -2853,7 +2854,8 @@
 	<string id="16406" value="驴Deseas descargar todos los archivos de esta colecci贸n?\n\nElige cancelar para evitar futuros avisos."/>
 	<string id="16407" value="驴Deseas prevenit que esta colecci贸n te pregunte si deseas descargar otra cosa de esta?"/>
 	<string id="16408" value="Copiar &amp;URI"/>
-	<string id="16409" value="Exportar &amp;URIs..."/>
+	<string id="16409" value="Exportar &amp;URIs..."/>	
+    <string id="16410" value="Las carpetas Completas e Incompletas deben de no ser las mismas"/>
 	<string id="16448" value="Conectando a %s, handshaking..."/>
 	<string id="16449" value="Chateando con %s (%s)."/>
 	<string id="16450" value="La conexi贸n con %s fu茅 cerrada."/>
@@ -2919,6 +2921,8 @@
 	<string id="16811" value="Automatico"/>
     <string id="16816" value="La red eDonkey utiliza largas colas con tiempos largos de espera. Limitando tu m谩xima cola de posici贸n puede que te de problemas para iniciar las descargas.\nEstas seguro que deseas limitar las posiciones de cola que vas a aceptar?"/>
     <string id="16817" value="Windows no soporta nomres ms grandes que 256 caracteres.\nPlor favor selecciona un nombre con un tamao ms pequeo."/>
+    <string id="16818" value="La carpeta de archivos incompletos no debe de estar en la librer韆, porque reduce velocidad. Archivos incompletos pueden ser compartidos directamente de la ventana de transferencias."/>
+	<string id="16819" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ya es parte de tu librer韆. \n\n緿eseas agregar la carpeta seleccionada a tu librer韆 ?\n\n La carpeta existente va a ser un subfolder de la nueva carpeta. Esto va a causar re-hashing re-hashing de todos los archivos en esta carpeta."/>
     <string id="16864" value="Accesando servicios de descubrimiento..."/>
 	<string id="16865" value="Accesando el servicio de descubrimiento en &quot;%s&quot;..."/>
 	<string id="16866" value="Transacci贸n con el GWebCache (&quot;%s&quot;) fu茅 completada."/>
