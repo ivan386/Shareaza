@@ -2931,7 +2931,7 @@
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
 	<string id="16818" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
-	<string id="16819" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library. \n\nDo you still want to add the selected folder to your library ?\n\n The existing folder will then be a subfolder of the selected folder. This will also cause re-hashing of all the files in the existing folder."/>
+	<string id="16819" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
