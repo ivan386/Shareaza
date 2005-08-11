@@ -16,7 +16,7 @@
 			description="Tradução para o português do Brasil do  Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
-			version="2.1.1.11"
+			version="2.1.4.0"
 			type="Language"
 			language="br"
 			prompt="Clique aqui para selecionar a tradução do Shareaza em português do Brasil."
@@ -80,7 +80,7 @@
         <button id="ID_SEARCH_PANEL" text="Painel de Pesquisa"/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="130"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -91,7 +91,7 @@
 		<button id="ID_SEARCH_PANEL" text="Painel de Pesquisa"/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -105,7 +105,7 @@
 		<button id="ID_SEARCH_PANEL" text="Painel de Pesquisa"/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="150"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -124,7 +124,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -137,7 +137,7 @@
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Exibir Detalhes"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -150,12 +150,12 @@
 		<button id="ID_DOWNLOADS_RESUME" text="Continuar Download"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Download"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Download"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Arquivos Baixados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Downloads Completados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Exibir Monitor"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download ou Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Arquivos Baixados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Downloads Completados"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
@@ -165,13 +165,13 @@
 		<button id="ID_DOWNLOADS_RESUME" text="Continuar Download"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Download"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Download"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Arquivos Baixados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Downloads Completados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Exibir Monitor"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Informação do Torrent"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Arquivos Baixados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Downloads Completados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -180,7 +180,7 @@
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Arquivos Enviados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Uploads Completados"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
 		<button id="ID_UPLOADS_LAUNCH" text="Abrir ou Tocar"/>
@@ -192,7 +192,7 @@
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<button id="ID_SECURITY_BAN" text="Banir Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Arquivos Enviados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Uploads Completados"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -218,7 +218,7 @@
 	<toolbar name="CLibraryHomeView.Physical">
 		<button id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	 </toolbar>
@@ -226,7 +226,7 @@
         <button id="ID_LIBRARY_FOLDER_NEW" text="Criar Álbum..."/>
         <button id="ID_LIBRARY_ALBUM_DELETE" text="Apagar Álbum"/>
         <rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
         <control id="108" width="120"/>
 	    <button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -234,7 +234,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Criar Álbum..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Apagar Álbum"/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -242,7 +242,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista"/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -256,7 +256,7 @@
 		<button id="ID_LIBRARY_COPY" text="Copiar"/>
 		<button id="ID_LIBRARY_DELETE" text="Apagar"/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
   </toolbar>
@@ -265,7 +265,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar à Lista"/>
 	 	<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
         <rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
    		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -276,7 +276,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -285,7 +285,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Baixar Todos Os Arquivos"/>
 		<rightAlign/>
-		<label text="Pesquisar:" tip="Digite algumas palavras para procurar arquivos na sua Biblioteca"/>
+		<label text="Pesquisar:" tip="Digite algo para procurar em sua Biblioteca"/>
 		<control id="108" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Pesquisa Avançada"/>
 	</toolbar>
@@ -316,7 +316,7 @@
 		<control id="117" width="190" height="22"/>
 		<label text="Velocidade:" tip="Ajustar a velocidade do arquivo"/>
 		<control id="118" width="50" height="22"/>
-		<label text="Volume:" tip="Ajustar o volume"/>
+		<label text="Volume:" tip="Ajustar o volume do áudio"/>
 		<control id="119" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir"/>
@@ -349,7 +349,7 @@
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurações"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Conectar em"/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Conectar Em"/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Desconectar"/>
 		<separator/>
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
@@ -370,7 +370,7 @@
 		<button id="ID_HITMONITOR_PAUSE" text="Pausar"/>
 		<button id="ID_SEARCH_CLEAR" text="Limpar"/>
 		<rightAlign/>
-		<label text="Filtrar:" tip="Remove os resultados que contêm a palavra digitada"/>
+		<label text="Filtrar:" tip="Remover os resultados que contenham"/>
 		<control id="107" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Mais..."/>
 	</toolbar>
@@ -423,7 +423,7 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Sair Após as _Transferências"/>
 			<item id="ID_NETWORK_EXIT" text="_Sair"/>
 		</menu>
-		<menu text="_Ver">
+		<menu text="_Visualizar">
 			<item id="ID_TAB_HOME" text="_Lar"/>
 			<item id="ID_TAB_LIBRARY" text="_Biblioteca"/>
 			<item id="ID_TAB_MEDIA" text="Tocador de _Mídia"/>
@@ -457,9 +457,9 @@
 		<menu text="_Ajuda">
 			<item id="ID_HELP_FAQ" text="_FAQ do Shareaza"/>
 			<separator/>
-			<menu text="_Guides">
+			<menu text="_Guias">
 				<item id="ID_HELP_GUIDE" text="_Guia do Usuário do Shareaza"/>
-				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores"/>
+				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores/Firewalls"/>
 				<item id="ID_HELP_SECURITY" text="_Ajuda para a Segurança"/>
 				<item id="ID_HELP_CODEC" text="_Ajuda para Codecs"/>
 			</menu>
@@ -493,7 +493,7 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Sair Após as _Transferências"/>
 			<item id="ID_NETWORK_EXIT" text="_Sair"/>
 		</menu>
-		<menu text="_Ver">
+		<menu text="_Visualizar">
 			<item id="ID_TAB_HOME" text="_Lar"/>
 			<item id="ID_TAB_LIBRARY" text="_Biblioteca"/>
 			<item id="ID_TAB_MEDIA" text="Tocador de _Mídia"/>
@@ -529,6 +529,7 @@
 		<menu text="_Ferramentas">
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar _Arquivos..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Baixar uma URL/Arquivo/Torrent..."/>
+			<item id="ID_TOOLS_SEEDTORRENT" text="Fazer _Seed de Torrent..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Escolher uma _Pele..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Escolher um _Idioma..."/>
@@ -548,10 +549,10 @@
 		<menu text="_Ajuda">
 			<item id="ID_HELP_FAQ" text="_FAQ do Shareaza"/>
 			<separator/>
-			<menu text="_Guides">
+			<menu text="_Guias">
 				<item id="ID_HELP_GUIDE" text="_Guia do Usuário do Shareaza"/>
-				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores"/>
-				<item id="ID_HELP_SECURITY" text="_AJuda para a Segurança"/>
+				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores/Firewalls"/>
+				<item id="ID_HELP_SECURITY" text="_Ajuda para a Segurança"/>
 				<item id="ID_HELP_CODEC" text="_Ajuda para Codecs"/>
 			</menu>
 			<separator/>
@@ -586,7 +587,7 @@
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Fechar Após as _Transferências"/>
 			<item id="ID_NETWORK_EXIT" text="S_air"/>
 		</menu>
-		<menu text="_Ver">
+		<menu text="_Visualizar">
 			<item id="ID_VIEW_SYSTEM" text="_Sistema" shortcut="F11"/>
 			<item id="ID_VIEW_NEIGHBOURS" text="_Rede" shortcut="F2"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
@@ -633,9 +634,9 @@
 		<menu text="_Ajuda">
 			<item id="ID_HELP_FAQ" text="FAQ do  Shareaza"/>
 			<separator/>
-			<menu text="_Guides">
+			<menu text="_Guias">
 				<item id="ID_HELP_GUIDE" text="_Guia do Usuário do Shareaza"/>
-				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores"/>
+				<item id="ID_HELP_ROUTER" text="_Ajuda para Roteadores/Firewalls"/>
 				<item id="ID_HELP_SECURITY" text="_Ajuda para a Segurança"/>
 				<item id="ID_HELP_CODEC" text="_Ajuda para Codecs"/>
 			</menu>
@@ -915,7 +916,7 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="Procurar Mais _Fontes"/>
                 <!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impar Baixados"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impar Completados"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Li_mpar Automaticamente"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>
@@ -970,10 +971,10 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Remover Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="C_opiar URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informação do torrent"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Apagar Arquivo"/>
-		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
+		<item id="ID_DOWNLOADS_RATE" text="_Classificar Arquivo..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir"/>
@@ -1469,7 +1470,7 @@
 			<icon res="130" width="32" height="32"/><gap size="8"/>
             <heading align="middle">C O N E C T E &#160; - &#160; S E</heading>
 			<newline gap="8" indent="42"/>
-            <text>Bem-vindo ao Shareaza! &#160;Vocé não está conectado a nenhuma rede P2P. &#160;</text>
+            <text>Bem-vindo ao Shareaza! &#160;Você não está conectado a nenhuma rede P2P. &#160;</text>
             <link target="raza:command:ID_NETWORK_CONNECT">Clique aqui para Iniciar!</link>
             <newline gap="18" indent="0"/>
 		</group>
@@ -1503,8 +1504,8 @@
             <link target="raza:command:ID_HELP_ROUTER">Clique aqui para aprender como configurar o Router ou o Firewall</link>
             <newline gap="18" indent="0"/>
         </group>
-		
-		<icon res="236" width="32" height="32"/><gap size="8"/>
+
+	<icon res="236" width="32" height="32"/><gap size="8"/>
         <heading align="middle">M O D I F I C A R &#160; O &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
 		
@@ -1516,14 +1517,14 @@
 		
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-        <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Assistente de Configuração Rápida</link>
+        <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Assistente de Configuração</link>
         <text align="middle">&#160;- Edite as configurações do Shareaza</text>
 		<newline gap="8"/>
 		
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
-        <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Ajuda Rápida</link>
-        <text align="middle">&#160;- Consiga uma ajuda básica sobre como usar o Shareaza</text>
+        <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Ajuda: FAQ</link>
+        <text align="middle">&#160;- Consulte o FAQ do Shareza para respostas às suas dúvidas</text>
 		<newline gap="18" indent="0"/>
 		<icon res="185" width="25" height="25"/><gap size="8"/>
             <heading align="middle">C O N V E R S E &#160; C O M &#160; Q U E M &#160; F A L A &#160; A &#160; S U A &#160; L Í N G U A</heading>
@@ -1570,9 +1571,9 @@
 				<text>Você não está baixando nenhum arquivo.</text>
 				<newline gap="4"/>
 			</group>
-			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Vá para Downloads</link>
-			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Vá para Downloads (1)</link>
-			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Vá para Downloads (%i)</link>
+			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir para Downloads</link>
+			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir para Download (1)</link>
+			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir para Downloads (%i)</link>
 		</para>
 	</document>
 
@@ -1594,16 +1595,16 @@
 				<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ir para a Biblioteca</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>Shareaza está escaneando e procesando </text>
+					<text>Shareaza está examinando e procesando </text>
 					<text id="LibraryHashRemaining" format="b">%lu </text>
 					<text>arquivos.</text>
 					<newline gap="8"/>
 				</group>
 			<group id="3">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Clique aqui para o Hash Rápido</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Clique aqui para o Hashing Rápido</link>
 			</group>
 			<group id="4">
-				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Clique aqui para o Hash Normal</link>
+				<link target="raza:command:ID_LIBRARY_HASH_PRIORITY">Clique aqui para o Hashing Normal</link>
 			</group>
 		</para>
 	</document>
@@ -1627,8 +1628,8 @@
 		<text group="21" align="middle">Desconectado</text>
 		<text group="22" align="middle">Conectando...</text>
 		<text group="23" align="middle">Conectado</text>
-		<text group="24" align="middle" id="Hubs G2">%i hubs</text>
-		<text group="25" align="middle" id="Leaves G2">%i leaves</text>
+		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
+		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
 		
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
@@ -1683,17 +1684,17 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">Não Fazendo seed de nenhum torrent</text>
+			<text id="TorrentsNone" format="b">Fazendo seed de zero torrents</text>
 			<text id="TorrentsOne" format="b">Fazendo seed de 1 torrent</text>
 			<text id="TorrentsMany" format="b">Fazendo seed de %i torrents</text>
 			<newline gap="4"/>
-			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Fazer seed novamente de%s</link>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Fazer novamente seed de %s</link>
 			<newline gap="4"/>
 			<group id="1">
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Fazer seed de outro Torrent</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Fazer seed de Torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Fazer seed de um Torrent</link>
 			</group>
 		</para>
 
@@ -1713,18 +1714,18 @@
 		<newline gap="16"/>
 		
 		<text>
-			As configurações permitem aos usuários avançados customizar 
+			As configurações permitem aos usuários avançados modificar 
             totalmente o Shareaza.  As configurações na seção
 		</text>
 		<text format="b">Geral </text>
 		<text>
-			controlam a experiência do usuário.
+			controlam a experiência do usuário em relação ao Shareaza.
 		</text>
 		<newline gap="16" margin="16"/>
 		
 		<link target="raza:page:CGeneralSettingsPage" format="b">Geral:</link>
 		<gap size="4"/>
-		<text>Configurações comuns de interface, como dicas, comportamento ao minimizar, formato dos números, avisos etc.</text>
+		<text>Configurações comuns de interface, como dicas, comportamento ao minimizar, formato dos números, avisos, etc.</text>
 		<newline gap="10"/>
 		
 		<link target="raza:page:CLibrarySettingsPage" format="b">Biblioteca:</link>
@@ -1744,7 +1745,7 @@
 
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
-		<text>Integrar o Shareaza ao seu navegar para aceitar links peer-to-peer e baixar conteúdo.</text>
+		<text>Integrar o Shareaza ao seu navegar para aceitar links peer-to-peer ou funcionar como gerenciador de downloads.</text>
 		<newline gap="10"/>
 	
 	</document>
@@ -1761,8 +1762,8 @@
 		<newline gap="16"/>
 		
 		<text>
-			As configurações permitem aos usuários avançados customizar 
-            totalmente o Shareaza. As configurações na seção 
+			As configurações permitem aos usuários avançados modificar 
+            totalmente o Shareaza.  As configurações na seção
 		</text>
 		<text format="b">Internet </text>
 		<text>
@@ -1778,7 +1779,7 @@
 		
 		<link target="raza:page:CDownloadsSettingsPage" format="b">Downloads:</link>
 		<gap size="4"/>
-		<text>Pasta de download, número de downloads e limitação de banda.</text>
+		<text>Pasta de download, número de downloads e limitação da banda.</text>
 		<newline gap="10"/>
 		
 		<link target="raza:page:CUploadsSettingsPage" format="b">Uploads:</link>
@@ -1788,7 +1789,7 @@
 
 		<link target="raza:page:CRemoteSettingsPage" format="b">Acesso Remoto:</link>
 		<gap size="4"/>
-		<text>Acesse o Shareaza remotamente através de um navegador de Internet .</text>
+		<text>Acesse o Shareaza remotamente através de um navegador de Internet.</text>
 		<newline gap="10"/>
 
 	</document>
@@ -1893,10 +1894,12 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Conversar com Usuário</link>
 		</group>
-		
-		<newline gap="16" indent="0"/>
-		<text format="b">Links da Web Favoritos</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+
+        <group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Links da Web Favoritos</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+        </group>
 		
 		<newline gap="16" indent="0"/>
 		
@@ -1952,8 +1955,8 @@
 		<text format="b">Este download está ativo!</text>
 		<newline gap="8"/>
 		<text>Este download está em ativo. Isso significa que o Shareaza 
-        está bsucando e se conectando a novas fontes para o download.
-        assim que essa tarefa terminar, o download entrar em modo Pendente</text>
+        está buscando e se conectando a novas fontes para o download.
+        Assim que essa tarefa terminar, o download entrar em modo Pendente</text>
 	</document>
 	
 	<document name="DownloadHelp.Pending">
@@ -2090,7 +2093,7 @@
 		uma lista atualizada (met file) para conectar ao EDK2K.</text>
 		<newline gap="8"/>
 		<text>Você pode baixar uma lista na página de condigurações do ED2K, ou na janela
-		de Descobrimento de Serviços</text>		
+		de Descobrimento de Serviços (Aperte F9 para exibir os Serviços de Descobrimento)</text>		
         </document>
 
 	<document name="GeneralHelp.UploadWarning">
@@ -2111,7 +2114,7 @@
 
         <!-- Search help documents -->
 
-<document name="SearchHelp.BadSearch">
+<document name="SearchHelp.BadSearch1">
     <text format="b">Esta busca não é possível</text>
     <newline gap="8"/>
     <text>Esta busca está mal formatada, e pode não funcionar corretamente. 
@@ -2243,7 +2246,7 @@
 <tip id="ID_DOWNLOADS_FILE_DELETE" message="Apagar o(s) arquivo(s) completado(s) selecionado(s)."/>
 <tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Exibir downloads que estão ativos."/>
 <tip id="ID_DOWNLOADS_FILTER_ALL" message="Exibir todos os downloads."/>
-<tip id="ID_DOWNLOADS_FILTER_MENU" message="Escolher quais tipos de downloads você quer esconder e ver nesta visão."/>
+<tip id="ID_DOWNLOADS_FILTER_MENU" message="Escolher quais tipos de downloads você quer esconder e ver nesta exibição."/>
 <tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Exibir downloads que estão pausados."/>
 <tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Exibir downloads que estão na fila de espera."/>
 <tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Exibir downloads que estão esperando por fontes."/>
@@ -2321,7 +2324,7 @@
 <tip id="ID_LIBRARY_PROPERTIES" message="Ver e editar as propriedades dos arquivos selecionados..."/>
 <tip id="ID_LIBRARY_REBUILD" message="Reconstruir metadata e hash para as pastas selecionadas."/>
 <tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruir metadata usando outra linguagem."/>
-<tip id="ID_LIBRARY_REFRESH" message="Atualizar a visão da Biblioteca.."/>
+<tip id="ID_LIBRARY_REFRESH" message="Atualizar a exibição da Biblioteca.."/>
 <tip id="ID_LIBRARY_REMOVE" message="Remover a pasta compartilhada selecionada."/>
 <tip id="ID_LIBRARY_RENAME" message="Renomear o arquivo selecionado."/>
 <tip id="ID_LIBRARY_SCAN" message="Varrer as pastas ou arquivos selecionados para mudanças."/>
@@ -2335,11 +2338,11 @@
 <tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organizar sua Biblioteca."/>
 <tip id="ID_LIBRARY_UNLINK" message="Remover os arquivos selecionados da pasta de álbum atual."/>
 <tip id="ID_LIBRARY_URL" message="Copiar a URI do arquivo selecionado."/>
-<tip id="ID_LIBRARY_VIEW" message="Selecionar uma visão da Biblioteca..."/>
-<tip id="ID_LIBRARY_VIEW_ALBUM" message="Mostrar um visão de Álbum" tip="Ver Álbuns"/>
+<tip id="ID_LIBRARY_VIEW" message="Selecionar uma exibição da Biblioteca..."/>
+<tip id="ID_LIBRARY_VIEW_ALBUM" message="Mostrar um exibição de Álbum" tip="Ver Álbuns"/>
 <tip id="ID_LIBRARY_VIEW_COLLECTION" message="Exibir Coleção" tip="Ver Coleção"/>
 <tip id="ID_LIBRARY_VIEW_DETAIL" message="Ver nome do arquivos, metadata e detalhes" tip="Ver detalhes"/>
-<tip id="ID_LIBRARY_VIEW_HOME" message="Visão da página principal da Biblioteca" tip="Página Principal"/>
+<tip id="ID_LIBRARY_VIEW_HOME" message="Exibição da página principal da Biblioteca" tip="Página Principal"/>
 <tip id="ID_LIBRARY_VIEW_ICON" message="Exibir arquivos como ícones" tip="Ver Ícones"/>
 <tip id="ID_LIBRARY_VIEW_LIST" message="Exibir arquivos como uma lista horizontal" tip="Ver Lista"/>
 <tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Exibir Miniaturas para os arquivos" tip="Ver Miniaturas"/>
@@ -2461,7 +2464,7 @@
 <tip id="ID_UPLOADS_FILTER_ACTIVE" message="Mostrar todos os uploads que estão ativos."/>
 <tip id="ID_UPLOADS_FILTER_ALL" message="Mostrar todos os uploads."/>
 <tip id="ID_UPLOADS_FILTER_HISTORY" message="Mostrar uploads que não estão mais conectados."/>
-<tip id="ID_UPLOADS_FILTER_MENU" message="Escolher que tipos de downloads você quer esconder e ver nesta visão."/>
+<tip id="ID_UPLOADS_FILTER_MENU" message="Escolher que tipos de downloads você quer esconder e ver nesta exibição."/>
 <tip id="ID_UPLOADS_FILTER_QUEUED" message="Mostrar todos os uploads que estão na fila de espera."/>
 <tip id="ID_UPLOADS_FILTER_TORRENT" message="Mostra os Uploads de Bittorrent."/>
 <tip id="ID_UPLOADS_LAUNCH" message="Iniciar o(s) arquivo(s) compartilhado(s) selecionado(s)."/>
@@ -2600,7 +2603,7 @@
 	<string id="8180" value="O tamanho do arquivo deve ser"/>
 	<string id="8181" value="&#160;para"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza está criando Hash(s) para %i arquivo(s):"/>
-        <string id="8223" value="%i dias e %i horas"/>
+    <string id="8223" value="%i dias e %i horas"/>
 	<string id="8224" value="Shareaza está baixando:"/>
 	<string id="8225" value="Este download está pausado:"/>
 	<string id="8226" value="Shareaza terminou de baixar:"/>
@@ -2617,11 +2620,11 @@
 	<string id="8238" value="Número de fontes:"/>
 	<string id="8239" value="Completado"/>
 	<string id="8240" value="Shareaza está movendo downloads:"/>
-	<string id="8241" value="Shareaza etá verificando se o aqruivos tem erros:"/>
+	<string id="8241" value="Shareaza está verificando se o aqruivos tem erros:"/>
 	<string id="8243" value="Taxa de upload:"/>
-	<string id="8288" value="Explorando a sua Biblioteca"/>
-	<string id="8289" value="Explorando "/>
-	<string id="8290" value="Explorando os conteúdos de %i pastas"/>
+	<string id="8288" value="Visualizando a sua Biblioteca"/>
+	<string id="8289" value="Visualizando "/>
+	<string id="8290" value="Visualizando os conteúdos de %i pastas"/>
 	<string id="8291" value="Múltiplas Pastas"/>
 	<string id="8292" value="%i arquivos selecionados"/>
 	<string id="8293" value="Nenhum arquivo selecionado"/>
@@ -2641,6 +2644,7 @@
 	<string id="8316" value="Acertos"/>
 	<string id="8317" value="Uploads"/>
 	<string id="8318" value="%lu hoje, %lu no total"/>
+    <string id="8319" value="&#160;(Sem Hash)"/>
 	<string id="8320" value="Estado:"/>
 	<string id="8321" value="Velocidade:"/>
 	<string id="8322" value="URL:"/>
@@ -2875,6 +2879,7 @@
 	<string id="16407" value="Você gostaria de impedir essa coleção de pedir para baixar mais alguma coisa?"/>
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>
+	<string id="16410" value="As pastas de arquivos completos e de arquivos incompletos não podem ser as mesmas"/>
 	<string id="16448" value="Conectado a %s, inicializando..."/>
 	<string id="16449" value="Conversando com %s (%s)."/>
 	<string id="16450" value="A conexão com %s foi fechada."/>
@@ -2940,6 +2945,8 @@
 	<string id="16811" value="Automático"/>
 	<string id="16816" value="A rede eDonkey faz uso de longas filas e um longo tempo de espera. Limitando tão estritamente a posição máxima na fila você poderá ter problemas para iniciar seu downloas.\nTem certeza que deseja limitar a posição máxima que você aceitará para a fila?"/>
 	<string id="16817" value="O Windows não aceita nomes de caminhos maiores do que 256 caracteres.\nPor favor selecione uma pasta com uma caminho menor."/>
+	<string id="16818" value="A pasta de arquivos incompletos não deve ficar na Bibilioteca, pois reduziria a performance. Arquivos incompletos podem ser compartilhados diretamente da janela de Transferências."/>
+	<string id="16819" value="Um subdiretório do diretório &quot;%s&quot; já é parte da sua Biblioteca.\nAdicionar este diretório pode causar o hashing novamente de alguns arquivos.\n\nVocê deseja continuar? ?"/>
 	<string id="16864" value="Pesquisando host de Descobrimento de Serviço..."/>
 	<string id="16865" value="Pesquisando Serviço de Descobrimento &quot;%s&quot;..."/>
 	<string id="16866" value="Transação GWebCache obteve sucesso(&quot;%s&quot;)."/>
@@ -2969,8 +2976,8 @@
 	<string id="16995" value="Este arquivo pode estar danificado, ou você pode não ter os codecs necessários para usá-lo."/>
 	<string id="16996" value="Parte deste arquivos não pôde ser exibida, pode ser necessário que você baixe outros codecs."/>
 	<string id="16997" value="Não há arquivo tocando.  Clique duas vezes num arquivo de mídia da Biblioteca para tocar."/>	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
-        <string id="16998" value="T &#160; &#160; O &#160; &#160; C &#160; &#160; A &#160; &#160; D &#160; &#160; O &#160; &#160; R &#160; &#160; &#160; &#160; &#160; D &#160; &#160; E &#160; &#160; &#160; &#160; &#160; M &#160; &#160; Í &#160; &#160; D &#160; &#160; I &#160; &#160; A"/><!-- on one line -->
-        <string id="16999" value="L I S T A"/>
+    <string id="16998" value="T &#160; &#160; O &#160; &#160; C &#160; &#160; A &#160; &#160; D &#160; &#160; O &#160; &#160; R &#160; &#160; &#160; &#160; &#160; D &#160; &#160; E &#160; &#160; &#160; &#160; &#160; M &#160; &#160; Í &#160; &#160; D &#160; &#160; I &#160; &#160; A"/><!-- on one line -->
+    <string id="16999" value="L I S T A"/>
 	<string id="17024" value="Iniciando conexão para %s..."/>
 	<string id="17025" value="Incapz de criar conexão para %s."/>
 	<string id="17026" value="Aceitando conexão push de %s..."/>
@@ -3021,8 +3028,8 @@
 	<string id="17127" value="Leaf G2"/>
 	<string id="17128" value="Servidor eDonkey2000"/>
 	<string id="17129" value="eDonkey2000 (LowID)"/>
-        <string id="17130" value="eDonkey2000 (HighID)"/>
-        <string id="17216" value="Iniciando conexão com servidor eDonkey2000 em %s..."/>
+    <string id="17130" value="eDonkey2000 (HighID)"/>
+    <string id="17216" value="Iniciando conexão com servidor eDonkey2000 em %s..."/>
 	<string id="17217" value="Conectando no servidor eDonkey2000 %s, inicializando..."/>
 	<string id="17218" value="ED2K[%s] %s"/>
 	<string id="17219" value="Servidor eDonkey2000 %s recusou conexão."/>
@@ -3102,8 +3109,8 @@
 	<string id="19002" value="Incapaz de acietar conexões, URL não disponível."/>
 	<string id="20000" value="URN Indisponível"/>
 	<string id="20002" value="de"/><!-- e.g. 1 of 10 -->
-        <string id="20003" value="Para mudar a interface é necessário reiniciar. \nVocê precisára iniciar o Shareaza manualmente. Sair agora?"/>
-        <string id="20004" value="Linguas de leitura da ´Direita-para-esquerda´ não são suportadas pelo seu Sistema Operacional."/>
+    <string id="20003" value="Para mudar a interface é necessário reiniciar. \nVocê precisára iniciar o Shareaza manualmente. Sair agora?"/>
+    <string id="20004" value="Linguas de leitura da ´Direita-para-esquerda´ não são suportadas pelo seu Sistema Operacional."/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pedindo"/>
 	<string id="20102" value="Resposta"/>
@@ -3138,7 +3145,7 @@
 	<string id="20131" value="Fontes"/>
 	<string id="20132" value="Fontes"/>
 	<string id="20133" value="Não-Interessado"/>
-	<string id="20134" value="Estrangulado"/>
+	<string id="20134" value="Ocupado"/>
 	<string id="20135" value="Próximo"/>
 	<string id="20136" value="P"/>
 	<string id="20200" value="Domingo"/>
@@ -3169,10 +3176,10 @@
 	
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Geral"/>
 	
-	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
+	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Geral">
 		<control caption="_Geral:"/>
 		<control caption="Conectar ao iniciar o Shareaza"/>
-		<control caption="Inciar o Shareaza junto com o Windows"/>
+		<control caption="Iniciar o Shareaza junto com o Windows"/>
 		<control caption="Exibir janela antes de abrir URIs"/>
 		<control caption="Velocidade em:"/>
 		<control caption="bits/segundo|bytes/segundo|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
@@ -3181,8 +3188,8 @@
                 <control caption="Exibir barra de progresso simplificada"/>
 		<control caption="_Pesquisa:"/>
 		<control caption="Expandir arquivos multi-fontes"/>
-		<control caption="Ir para Tranferências ao abixar"/>
-		<control caption="Esconder barra ao pesquisar"/>
+		<control caption="Ir para Tranferências ao iniciar download"/>
+		<control caption="Esconder barra lateral ao pesquisar"/>
 		<control caption="Filtrar conteúdo adulto na pesquisas"/>
 		<control caption="_Dicas:"/>
 		<control/>
@@ -3191,35 +3198,35 @@
 		<control caption="Opaco"/>
 		<control/>
 		<control caption="_Bandeja:"/>
-		<control caption="Quando eu clicar em fechar:"/>
+		<control caption="Quando eu clicar em Fechar:"/>
 		<control caption="Perguntar|Fechar Imediatamente|Minimizar|Fechar Apoós as Transferências"/>
-		<control caption="Quando eu clicar minimizar:"/>
+		<control caption="Quando eu Minimizar:"/>
 		<control caption="Normal|Minimizar para a Bandeja"/>
 	</dialog>
 
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBu" caption="Biblioteca">	
                 <control caption="_Opções:"/>
-		<control caption="Lembrar visão das pastas"/>
+		<control caption="Lembrar exibição das pastas"/>
 		<control caption="Manter Biblioteca atualizada"/>
-		<control caption="Hash Rápido (Usa mais CPU)"/>
-		<control caption="Permitir navegação dos seus arquivos"/>
+		<control caption="Hashing Rápido (Usa mais da CPU)"/>
+		<control caption="Permitir Navegação na Biblioteca"/>
 		<control caption="_Arquivos Recentes:"/>
-		<control caption="Lembrar:"/>
+		<control caption="Lembrar de:"/>
 			<control/><control/>
-		<control caption="arqvs"/>
+		<control caption="arquivos"/>
 		<control caption="Por até:"/>
 			<control/><control/>
 		<control caption="dias"/>
 		<control caption="Limpar Histórico"/>
-		<control caption="_Seguros para abrir:"/>
+		<control caption="Arquivos _seguros para abrir:"/>
 			<control/>
 		<control caption="_Adicionar"/>
 		<control caption="_Remover"/>
-		<control caption="_Não compartilhar:"/>
+		<control caption="_Não compartilhar Arquivos:"/>
 			<control/>
 		<control caption="_Adicionar"/>
 		<control caption="_Remover"/>
-		<control caption="Guarde _Coleções Aqui:"/>
+		<control caption="Guardar _Coleções aqui:"/>
         	<control/><control/>
 		</dialog>
 
@@ -3241,10 +3248,10 @@
 		<control caption="Meu _Perfil:"/>
 		<control caption="Você pode usar o seu perfil do Shareaza para compartilhar suas informações, seus interesses e sites e arquivos recomendados."/>
 		<control caption="Editar Meu Perfil"/>
-		<control caption="_conversar:"/>
-                <control caption="Permitar conversar com programas compatíveis"/>
+		<control caption="_Conversar:"/>
+                <control caption="Permitir conversas com programas compatíveis"/>
 		<control caption="Permitir conversas em todas as redes"/>
-		<control caption="Filtrar mensagens de spm"/>
+		<control caption="Filtrar mensagens de spam"/>
 		<control caption="Censurar obscenidades no chat"/>
 	</dialog>
 	
@@ -3257,11 +3264,11 @@
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Gerenciador de Downloads:"/>
-		<control caption="Usar o Shareaza para gerenciar todos os meus downloads da web:"/>
+		<control caption="Usar o Shareaza para gerenciar todos os meus downloads da Internet:"/>
 		<control/>
 		<control caption="_Adicionar"/>
 		<control caption="_Remover"/>
-		<control caption="O Plugin de Download só vai tentar baixar os arquivos abaixo.  Outros tipos de arquivos serão baixados pelo seu navegador.  O Shareaza deve estar aberto para baixar."/>
+		<control caption="O Plugin de Download só vai tentar baixar os tipos de arquivos ao lado.  Outros tipos serão baixados pelo seu navegador.  O Shareaza deve estar aberto para baixar."/>
 	</dialog>
 	
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
@@ -3292,14 +3299,14 @@
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
-		<control caption="Salvar Arquivos _Completados Aqui:"/>
+		<control caption="Salvar arquivos _completados aqui:"/>
 		<control/><control/>
-		<control caption="Manter Arquivos _Incompletos Aqui:"/>
+		<control caption="Manter arquivos _incompletos aqui:"/>
 		<control/><control/>
 		<control caption="_Número de Downloads:"/>
 		<control caption="Máximo de Downloads:"/>
 		<control/><control/>
-		<control caption="Transf. Máximas:"/>
+		<control caption="Transferências Máx:"/>
 		<control/><control/>
 		<control caption="Transf. por Arquivo:"/>
 		<control/><control/>
@@ -3308,15 +3315,15 @@
 		<control/>
 		<control caption="Posição Máxima na Fila:"/>
 		<control/><control/>
-		<control caption="Apenas baixar e enviar arquivos nas redes conectadas."/>
+		<control caption="Baixar apenas das redes conectadas."/>
 	</dialog>
 	
 <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Opções:"/>
 		<control caption="Compartilhar downloads parciais"/>
-		<control caption="Limitar compart. quando Hub"/>
-		<control caption="Compartilhar prévia"/>
-		<control caption="Upload por pessoa:"/>
+		<control caption="Se Hub: limitar compartilhamento"/>
+		<control caption="Compartilhar arquivos de prévias"/>
+		<control caption="Uploads por pessoa:"/>
 		<control/><control/>
 		<control caption="_Bloquear Uploads para:"/>
 		<control/>
@@ -3332,12 +3339,12 @@
 		<control caption="_Nova..."/>
 		<control caption="_Editar..."/>
 		<control caption="_Apagar"/>
-		<control caption="(Mudanças agem imetidamente)"/>
+		<control caption="(Mudanças funcionam imediatamente)"/>
 	</dialog>
 
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Acesso Remoto">
 		<control caption="_Guia:"/>
-		<control caption="O Acesso Remoto do Shareaza permite que você controle o shareaza remotamente usando algum navegador. Procure no menu ajuda o item configurando o Router/Firewall caso encontre problemas ao acessar esse recurso."/>
+		<control caption="O Acesso Remoto do Shareaza permite que você controle o shareaza remotamente usando algum navegador. Procure no menu 'Ajuda' o item 'Ajuda para Roteadores/Firewalls' caso encontre problemas ao acessar esse recurso."/>
 		<control caption="_Ativar:"/>
 		<control caption="Ativar o Acesso Remoto do Shareaza:"/>
 		<control/>
@@ -3388,14 +3395,14 @@
 	
 <dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Rede Gnutella2:"/>
-		<control caption="(G2 recomendada)"/>
+		<control caption="Sempre conectar à rede Gnutella2"/>
 		<control caption="Conectar à Gnutella2 hoje"/>
 		<control caption="Modo:"/>
 		<control caption="Otimizado|Leaf|Hub"/>
 		<control caption="Conexões G_2:"/>
 		<control caption="Leaf para Hub:"/>
 		<control/><control/>
-		<control caption="Hub par Leaf:"/>
+		<control caption="Hub para Leaf:"/>
 		<control/><control/>
 		<control caption="Hub para Hub:"/>
 		<control/><control/>
@@ -3438,24 +3445,24 @@
 	</dialog>
 
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-		<control caption="_Interface:"/>
-		<control caption="Exibir interface adicional do BitTorrent"/>
-		<control caption="_Conexões de Download:"/>
-		<control/><control/>
-		<control caption="Torrents ao mesmo tempo"/>
-		<control/><control/>
-		<control caption="Conexões de  clientes"/>
-		<control caption="Limpar torrents completados"/>
-		<control/><control/><control/>
-		<control caption="&#160;Dar preferência à fontes BitTorrent"/>
-		<control caption="Modo _EndGame:"/>
-		<control caption="Acionar modo EndGame mode quando completando torrents"/>
-		<control caption="_Guardar Torrents aqui:"/>
-		<control/><control/>
-		<control caption="_Criador de Torrents"/>
-		<control/><control/>
-		<control caption="Tracker Padrão: "/>
-		<control/>
+	<control caption="_Interface:"/>
+	<control caption="Exibir interface adicional do BitTorrent"/>
+	<control caption="_Conexões de Download:"/>
+	<control/><control/>
+	<control caption="Torrents ao mesmo tempo"/>
+	<control/><control/>
+	<control caption="Conexões com clientes"/>
+	<control caption="Limpar Torrents completados"/>
+        <control/><control/><control/>
+	<control caption="Dar preferência à fontes BitTorrent"/>
+	<control caption="Modo _EndGame:"/>
+	<control caption="Acionar modo EndGame quando completando Torrents"/>
+	<control caption="_Guardar Torrents aqui:"/>
+	<control/><control/>
+	<control caption="_Criador de Torrents"/>
+	<control/><control/>
+	<control caption="Tracker Padrão: "/>
+	<control/>
 	</dialog>
 
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocolos">
@@ -3484,8 +3491,8 @@
 		<control caption="..."/>
 		<control caption="Descrição:"/>
 		<control/>
-		<control caption="_Configuração..."/>
-		<control caption="Mais Peles"/>
+		<control caption="_Configuração"/>
+		<control caption="Mais Plugins"/>
 	</dialog>
 	
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Avançado">
@@ -3529,8 +3536,8 @@
 		<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
-	        <control caption="Recompensar quem faz upload à você"/>	
-</dialog>
+	    <control caption="Recompensar quem faz upload à você"/>	
+	</dialog>
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bem-Vindo ao Shareaza [1 de 7]">
 		<control caption="Bem-Vindo ao Shareaza!"/>
@@ -3560,9 +3567,9 @@
 		<control caption="Para um boa perfomace, O Shareaza precisa saber um pouco sobre a sua conexão de Internet."/>
 		<control caption="&#160;( por favor selecione )| Estou usando internet em casa| Eu estou usando numa LAN de universidade| Eu etsou usando numa LAN de escritório| Eu estou usando em um hotel ou aeroporto"/>
 		<control caption="A sua rede ou campus é protegida por um firewall ou roteador NAT?"/>
-	        <control caption="&#160;Não, eu  POSSO aceitar todas as conexões| Sim, eu NÃO POSSO aceitar todas as conexões da Internet| Eu não sei, por favor detecte automaticamente"/>
+	    <control caption="&#160;Não, eu  POSSO aceitar todas as conexões| Sim, eu NÃO POSSO aceitar todas as conexões da Internet| Eu não sei, por favor detecte automaticamente"/>
 		<control caption="Você usa um firewall ou roteador NAT na sua conexão de casa?"/>
-	        <control caption="&#160;Não, eu tenho ACESSO TOTAL a Internet| SIm, mas eu irei configurar a porta para o Shareaza| Sim, eu NÃO POSSO aceitar conexões da Internet| Eu não sei, por favor detecte automaticamente"/>
+	    <control caption="&#160;Não, eu tenho ACESSO TOTAL a Internet| SIm, mas eu irei configurar a porta para o Shareaza| Sim, eu NÃO POSSO aceitar conexões da Internet| Eu não sei, por favor detecte automaticamente"/>
 		<control caption="Se você conhece a velocidade da sua conexão, selecione a melhor opção abaixo:"/>
 		<control caption="|Conexão Discada| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Internet a Cabo/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="Ou então, escolha:"/>
@@ -3739,9 +3746,9 @@
 	</dialog>
 	
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Baixar Arquivo ou Torrent">
-			<control/><control/>
+		<control/><control/>
 		<control caption="Baixar arquivos com o Shareaza é fácil.  Simplesmente escreva ou copie a URI do arquivo, e clique em Baixar."/>
-			<control/>
+		<control/>
 		<control caption="Baixar"/>
 		<control caption="Cancelar"/>
 		<control caption="Shareaza pode baixar arquivos da web (HTTP), e automaticamente pesquisar e baixar links P2P (Magnet, Gnutella, eDonkey2000, mP2P)."/>
@@ -3755,7 +3762,7 @@
 		<control caption="Cancelar"/>
 	</dialog>
 	
-                <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtrar">
+	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filtrar">
 		<control caption="Apenas mostrar acertos que incluam as _palavras:"/>
 		<control/>
 		<control caption="( você também pode excluir palavras com -palavra )"/>
@@ -3942,10 +3949,10 @@
 		<control caption="Emparelhar Todos"/>
 		<control caption="_Opções:"/>
 		<control caption="Ação:"/>
-	        <control caption="Nenhuma|Aceitar|Negar"/>
+	    <control caption="Nenhuma|Aceitar|Negar"/>
 		<control caption="Expirar:"/>
 		<control caption="Nunca (Indefinidamente)|Ao fim da Sessão|Após:"/>
-	        <control/>
+	    <control/>
 		<control caption="d"/>
 		<control/>
 		<control caption="h"/>
@@ -4138,28 +4145,28 @@
 		<control caption="Informação do  _Torrent:"/>
 		<control caption="Nome:"/>
 		<control/>
-		<control caption="Criado:"/>
+		<control caption="Criado em:"/>
 		<control/>
-		<control caption="Pr:"/>
+		<control caption="Por:"/>
 		<control/>
 		<control caption="Comentários:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
-		<control caption="_Baixando:"/>
+		<control caption="_Usuários com arquivos:"/>
 		<control caption="Completos (Seeds):"/>
 		<control/>
 		<control caption="Incompletos:"/>
 		<control/>
 		<control caption="_Transferências:"/>
 		<control caption="Iniciar novas tranferências:"/>
-		<control caption="Quando necessário|Quando a razão estiver acima de 100%|Apeanas quando pedido|Nunca"/>
+		<control caption="Quando necessário|Quando a razão estiver acima de 100%|Apenas quando pedido|Nunca"/>
 		<control caption="_Arquivos:"/>
 		<control/>
 		<control caption="_Atualizar"/>
 		<control/>
 		<control caption="Fechar"/>
-         </dialog>
+	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriedades dos grupos de Download">
 		<control caption="_Nome:"/>
@@ -4178,28 +4185,28 @@
 		<control/>
 		<control caption="Selecionar uma visualização de áudio da lista:"/>
 		<control/>
-                <control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display"/>
+        <control caption="Visualização Embaixo|Preencher Tela|Tamanho Grande|Tamanho Médio|Tamanho Pequeno"/>
 		<control caption="_Configurar..."/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 	</dialog>
 
-	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade Alert">
+	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Alerta de Atualização">
 		<control/>
 		<control caption="Uma nova versão do Shareaza está disponível.  Você gostaria de atualizar?"/>
-		<control caption="Se você selecionar Atualizar Agora, o Shareaza irá adicionar a atualização na sua lista de downloads e começará a baixá-lo automaticamente."/>
+		<control caption="Se você selecionar Atualizar Agora, o Shareaza irá adicionar a atualização na sua lista de downloads e começará a baixar automaticamente."/>
 		<control caption="_Atualizar Agora"/>
-		<control caption="Não cheque por novas versões"/>
+		<control caption="Não procurar por novas versões"/>
 		<control caption="Não Atualizar"/>
 	</dialog>
 
-	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Análise de Downloads">
+	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Comentários do Download">
 		<control/>
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localização da Metadata">
+	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Recodificação da Metadata">
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control caption="Por favor selecione o método de recodificação"/>
@@ -4327,7 +4334,7 @@
 	<list name="CReviewList">
 		<column from="User" to="Usuário"/>
 		<column from="Rating" to="Classificação"/>
-		<column from="Comments" to="Comentários"/>
+		<column from="Comments" to="Comentário"/>
 		<column from="Order" to="Ordem"/>
 	</list>
 </listColumns>
