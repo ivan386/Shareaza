@@ -19,7 +19,7 @@ Other:
 		description="Shareaza 2.2 German Skin File" 
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de" 
-		version="2.2.2.6" 
+		version="2.2.2.7" 
 		type="Language" 
 		language="de" 
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -2630,6 +2630,7 @@ Other:
 		<string id="8316" value="Hits"/>
 		<string id="8317" value="Uploads"/>
 		<string id="8318" value="Heute: %lu , Gesamt: %lu "/>
+		<string id="8319" value="&#160;(Kein Hashset)"/>
 		<string id="8320" value="Status:"/>
 		<string id="8321" value="Geschw.:"/>
 		<string id="8322" value="URL:"/>
@@ -2864,6 +2865,7 @@ Other:
 		<string id="16407" value="Möchte Sie von dieser Kollektion nicht gefragt werden etwas herunterzuladen?"/>
 		<string id="16408" value="&amp;URI kopieren"/>
 		<string id="16409" value="&amp;URIs exportieren..."/>
+		<string id="16410" value="Das Downloadverzeichnis und das Verzeichnis für unvollständige Dateien sollte nicht das selbe sein."/>
 		<string id="16448" value="Verbunden mit %s, handshaking..."/>
 		<string id="16449" value="Chatten mit %s (%s)."/>
 		<string id="16450" value="Verbindung zu %s beendet."/>
@@ -2929,6 +2931,8 @@ Other:
 		<string id="16811" value="Automatisch"/>
 		<string id="16816" value="Das eDonkey Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition, die akzeptiert wird, limitieren wollen?"/>
 		<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
+		<string id="16818" value="Das Verzeichnis für unvollständige Dateien sollte nicht in der Bibliothek sein, weil dadurch Probleme entstehen können."/>
+		<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu gehasht werden.\n\nWollen Sie fortfahren ?"/>
 		<string id="16864" value="Service Provider abfragen..."/>
 		<string id="16865" value="Service Provider &quot;%s&quot; abfragen..."/>
 		<string id="16866" value="GWebCache Übertragung erfolgreich (&quot;%s&quot;)."/>
