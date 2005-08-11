@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
@@ -270,6 +271,25 @@ void CDownloadGroupDlg::OnBrowse()
 	SHGetMalloc( &pMalloc );
 	pMalloc->Free( pPath );
 	pMalloc->Release();
+
+
+	// Make sure download/incomplete folders aren't the same
+	if ( _tcsicmp( szPath, Settings.Downloads.IncompletePath ) == 0 )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		return;
+	}
+
+	// If the group folder and download folders are the same, use the default download folder
+	if ( _tcsicmp( szPath, Settings.Downloads.CompletePath ) == 0 )
+	{
+		UpdateData( TRUE );
+		m_sFolder.Empty();
+		UpdateData( FALSE );
+		return;
+	}
 
 	UpdateData( TRUE );
 	m_sFolder = szPath;
