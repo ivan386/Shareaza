@@ -173,7 +173,7 @@ BOOL CEDNeighbour::OnConnected()
 	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
 							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) | 
 							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
-							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
+							( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
 	theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );

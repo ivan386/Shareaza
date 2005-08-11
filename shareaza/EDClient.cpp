@@ -694,7 +694,7 @@ void CEDClient::SendHello(BYTE nType)
 	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
 							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) | 
 							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
-							( ( theApp.m_nVersion[2] & 0x03 ) << 7  ) |
+							( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
@@ -1020,34 +1020,34 @@ void CEDClient::DeriveSoftwareVersion()
 		case 0:
 			m_sUserAgent.Format( _T("eMule %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 /*
 			//This code displays the eMule build number- not currently used
 			m_sUserAgent.Format( _T("eMule %i.%i%c (%i)"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a', ( ( m_nSoftwareVersion ) & 0x7F ) );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a', ( ( m_nSoftwareVersion ) & 0x7F ) );
 */
 			break;
 		case 1:
 			m_sUserAgent.Format( _T("cDonkey %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 2:
 			m_sUserAgent.Format( _T("xMule %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 3:
 			m_sUserAgent.Format( _T("aMule %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 4:
 			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
 				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) &0x03 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+				( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 			
 			//Client allows G2 browse, etc
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
@@ -1056,7 +1056,7 @@ void CEDClient::DeriveSoftwareVersion()
 		case 5:
 			m_sUserAgent.Format( _T("ePlus %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 10:
 			m_sUserAgent.Format( _T("MlDonkey") );
@@ -1064,13 +1064,13 @@ void CEDClient::DeriveSoftwareVersion()
 		case 20:
 			m_sUserAgent.Format( _T("Lphant %i.%i%c"), 
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		case 40:
 			//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 			m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"), 
 				( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) &0x03 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+				( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 			
 			//Client allows G2 browse, etc
 			if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
@@ -1079,7 +1079,7 @@ void CEDClient::DeriveSoftwareVersion()
 		default:
 			m_sUserAgent.Format( _T("eMule/c(%i) %i.%i%c"), m_nEmCompatible,
 				( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ), 
-				( ( m_nSoftwareVersion >>  7 ) & 0x03 ) + 'a' );
+				( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 			break;
 		}
 	}
