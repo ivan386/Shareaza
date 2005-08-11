@@ -219,7 +219,7 @@ BOOL CSchedulerSettingsPage::OnEraseBkgnd(CDC* pDC)
 
 void CSchedulerSettingsPage::OnPaint()
 {
-	//Draw the schedule box
+	// Draw the schedule box
 	int nDay, nHour;
 	CPaintDC dc( this );
 	CRect rc;
@@ -249,11 +249,11 @@ void CSchedulerSettingsPage::OnPaint()
 		}
 	}
 
-	//Draw the border of the box
+	// Draw the border of the box
 	dc.Draw3dRect( 33, 9, 385, 145, RGB( 0, 0, 0 ), RGB( 0, 0, 0 ) );
 
-	//Draw the schedule time slices for the 'key'
-	LONG nYpos = ( rc.bottom / 2 ) + 5; 
+	// Draw the schedule time slices for the 'key'
+	LONG nYpos = ( rc.bottom / 2 ) + 7; 
 
 	ImageList_DrawEx( m_pTimeSlices, SCHEDULE_OFF, dc.GetSafeHdc(),
 					30 , nYpos , 16, 16, CLR_DEFAULT, CLR_DEFAULT, ILD_NORMAL );
