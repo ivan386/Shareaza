@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 24 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 27 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.1.11"
+		version="2.1.3.7"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -1778,8 +1778,8 @@
 
 	<document name="CBrowseHostProfile.1">
 
+		<heading>Profilo di </heading>
 		<heading id="Nick"/>
-		<heading>'s Profile</heading>
 		<newline gap="8"/>
 
 		<group id="1">
@@ -1808,7 +1808,7 @@
 
 		<group id="4">
 			<newline gap="8" indent="0"/>
-			<text format="b">Informazioni di contatto</text>
+			<text format="b">Informazioni del contatto</text>
 			<newline gap="1" indent="8"/>
 		</group>
 		<group id="40">
@@ -1851,7 +1851,7 @@
 
 		<group id="6">
 			<newline gap="8" indent="0"/>
-			<text format="b">Bio</text>
+			<text format="b">Descrizione</text>
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
@@ -1875,9 +1875,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Avvia una sessione di chat</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">Collegamenti preferiti</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">Link preferiti</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2627,6 +2629,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Upload"/>
 	<string id="8318" value="%lu oggi, %lu totale"/>
+	<string id="8319" value="&#160;(No hashset)"/>
 	<string id="8320" value="Stato:"/>
 	<string id="8321" value="Velocità:"/>
 	<string id="8322" value="URL:"/>
@@ -2812,90 +2815,91 @@
 	<string id="16352" value="Salvataggio di un'anteprima di &quot;%s&quot; da %s."/>
 	<string id="16353" value="Impossibile scaricare un'anteprima di &quot;%s&quot; da %s, troppe connessioni di anteprima."/>
 	<string id="16354" value="L'host di upload %s ha richiesto un'anteprima di &quot;%s&quot;, ma non è disponibile nessuna anteprima."/>
-	<string id="16355" value="Programmata una anteprima dinamica di &quot;%s&quot; per upload a %s."/>
-	<string id="16356" value="Impossibile esaminare la richiesta dell'utente da %s, troppe richieste di esame."/>
+	<string id="16355" value="Programmata una anteprima dinamica di &quot;%s&quot; per l'upload a %s."/>
+	<string id="16356" value="Rifiutata la richiesta da %s di esplorare l'utente, troppe connessioni per esplorare l'utente."/>
 	<string id="16357" value="Invio del file &quot;%s&quot; all'host %s in corso..."/>
 	<string id="16358" value="La connessione in upload a %s è persa, la posizione in coda viene conservata."/>
 	<string id="16359" value="La coda in upload dell'host %s si è disconnessa, rimossa."/>
 	<string id="16360" value="Upload di &quot;%s&quot; a %s (%s) rifiutato, tutte le code sono piene."/>
-	<string id="16361" value="Upload di %s (%s) rifiutato, rete disabilitata."/>
-	<string id="16362" value="Gli upload di eDonkey2000 non dovrebbero essere annullati. Desideri annullarli comunque?"/>
+	<string id="16361" value="Upload a %s (%s) rifiutato, rete disabilitata."/>
+	<string id="16362" value="Gli upload di eDonkey2000 non dovrebbero essere annullati. Sei sicuro di voler annullare questo upload?"/>
 	<string id="16363" value="Upload torrent"/>
 	<string id="16364" value="Upload completati"/>
-	<string id="16365" value="Eliminare/annullare tutti i download di questo gruppo?"/>
+	<string id="16365" value="Sei sicuro di voler eliminare/annullare tutti i download di questo gruppo?"/>
 	<string id="16366" value="Coda"/>
 	<string id="16367" value="Core eDonkey"/>
 	<string id="16368" value="Parziali eDonkey"/>
 	<string id="16369" value="Guardia eDonkey"/>
-	<string id="16370" value="Piccoli File"/>
-	<string id="16371" value="File Medi"/>
-	<string id="16372" value="File Grandi"/>
-	<string id="16373" value="File Parziali"/>
-	<string id="16374" value="Nuova Coda"/>
+	<string id="16370" value="File piccoli"/>
+	<string id="16371" value="File medi"/>
+	<string id="16372" value="File grandi"/>
+	<string id="16373" value="File parziali"/>
+	<string id="16374" value="Nuova coda"/>
 	<string id="16375" value="Parziali"/>
 	<string id="16376" value="Tutti i file"/>
 	<string id="16377" value="Guardia HTTP"/>
-	<string id="16384" value="Desideri eseguire il file &quot;%s&quot; ?\n\nAlcuni file potrebbero essere pericolosi per il tuo computer. Assicurati sulla natura del file prima di eseguirlo."/>
+	<string id="16384" value="Desideri eseguire il file &quot;%s&quot; ?\n\nAlcuni file potrebbero essere pericolosi per il tuo computer. Assicurati di conoscere la natura del file prima di eseguirlo."/>
 	<string id="16385" value="Stai per modificare i metadata di %i file, desideri continuare?"/>
 	<string id="16386" value="Modifica dei metadata di %i file."/>
 	<string id="16387" value="Il file &quot;%s&quot; non ha subito il processo di hash.  Attendi che il file abbia subito il processo di hash, poi prova ancora."/>
-	<string id="16388" value="Questa opzione utilizza i servizi di Bitzi.com per il riconoscimento e la condivisione dei file selezionati.\n\nShareaza trasmetterà il codice hash SHA1 per i file selezionati per poter effettuare richieste al database di Bitzi.  Se non conosci le condizioni sulla privacy, consultale su Bitzi.com .\n\nDesideri continuare?"/>
-	<string id="16389" value="Desideri eliminare definitivamente i %i file selezionati?\n\nQuesta azione non potrà essere revocata e non utilizza il tuo &quot;cestino&quot;."/>
+	<string id="16388" value="Questa opzione utilizza i servizi di Bitzi.com per il riconoscimento e la condivisione delle informazioni sui file selezionati.\n\nShareaza trasmetterà il codice hash SHA1 per i file selezionati per poter effettuare richieste al database di Bitzi.  Se non conosci le condizioni sulla privacy, consultale su Bitzi.com .\n\nDesideri continuare?"/>
+	<string id="16389" value="Desideri eliminare definitivamente i %i file selezionati?\n\nI file saranno spostati nel tuo &quot;cestino&quot; se è abilitato."/>
 	<string id="16390" value="Non hai selezionato un lettore multimediale per accodare i file (per esempio Nullsoft Winamp). Desideri selezionarlo ora?\n\nShareaza passerà il nome del file al programma indicato con il parametro &quot;/ADD&quot;."/>
 	<string id="16391" value="Non sei connesso alla rete."/>
 	<string id="16392" value="Clicca sul pulsante Connetti per iniziare."/>
-	<string id="16393" value="Il file &quot;%s&quot; ha fallito il test della verifica hash e potrebbe non essere il file che intendevi scaricare.  Desideri aprirlo comunque?"/>
+	<string id="16393" value="Il file &quot;%s&quot; ha fallito il test di verifica dell'hash e potrebbe non essere il file che intendevi scaricare.  Desideri aprirlo comunque?"/>
 	<string id="16394" value="Desideri rimuovere l'attributo &quot;potenzialmente non sicuro&quot; da questo file?"/>
-	<string id="16395" value="La cartella dei tuoi file scaricati &quot;%s&quot; non è ancora nella tua libreria.\n\nIncludendola nella tua libreria rende più semplice vedere e organizzare i nuovi download, inoltre ti permette di trarre vantaggio dalle funzionalità avanzate di Shareaza quali la verifica dei download e l'aggiornamento automatico.  Ponendo i file scaricati nella tua libreria non richiede necessariamente che tu li metta in condivisione: puoi scegliere indipendentemente se condividerli o meno.\n\nDesideri aggiungere la cartella dei tuoi file scaricati alla tua libreria ora?"/>
+	<string id="16395" value="La cartella dei tuoi file scaricati &quot;%s&quot; non è ancora nella tua libreria.\n\nIncluderla nella tua libreria rende più semplice vedere e organizzare i nuovi download, inoltre ti permette di trarre vantaggio dalle funzionalità avanzate di Shareaza quali la verifica dei download e l'aggiornamento automatico.  Porre i file scaricati nella tua libreria non richiede necessariamente che tu li condivida: puoi scegliere indipendentemente se condividerli o meno.\n\nDesideri aggiungere la cartella dei tuoi file scaricati alla tua libreria ora?"/>
 	<string id="16396" value="La cartella dei tuoi download è stata aggiunta alla tua libreria.  Desideri condividerla?"/>
-	<string id="16397" value="Desideri eliminare le cartelle album selezionate?\n\nQuest'azione non eliminerà i file nelle cartelle album, ma solo le cartelle stesse."/>
-	<string id="16398" value="Shareaza non riesce a rinominare:\n\n%s\na\n%s"/>
+	<string id="16397" value="Desideri eliminare le cartelle album selezionate %i?\n\nQuest'azione non eliminerà i file nelle cartelle album, ma solo le cartelle stesse."/>
+	<string id="16398" value="Shareaza non riesce a rinominare:\n\n%s\nin\n%s"/>
 	<string id="16399" value="Shareaza non riesce ad eliminare il file:\n\n%s"/>
 	<string id="16400" value="Il file di destinazione è presente:\n\n%s\n\nDesideri sovrascriverlo?"/>
 	<string id="16401" value="Mostra tutti i tipi di file"/>
-	<string id="16402" value="Shareaza ha ricevuto un file collezione:\n\n\n\n&quot;%s&quot;\n\n\n\nQuesto file non sembra essere un file collezione valido."/>
-	<string id="16403" value="Shareaza ha aggiunto il file collezione &quot;%s&quot; alla tua libreria."/>
-	<string id="16404" value="Shareaza non è riuscito ad installare il file collezione &quot;%s&quot; copiandolo nella cartella &quot;%s&quot;."/>
-	<string id="16405" value="Desideri scaricare questo file?\n\n\n\n&quot;%s&quot;\n\n\n\nScegli Annulla per non mostrare ulteriori richieste."/>
-	<string id="16406" value="Desideri scaricare tutti i file in questa collezione?\n\n\n\nScegli Annulla per non mostrare ulteriori richieste."/>
-	<string id="16407" value="Desideri che questo file collezione non ti venga proposto ancora per il download?"/>
+	<string id="16402" value="Shareaza ha ricevuto un file collezione:\n\n&quot;%s&quot;\n\nQuesto file non sembra essere un file collezione valido."/>
+	<string id="16403" value="Shareaza ha aggiunto la collezione &quot;%s&quot; alla tua libreria."/>
+	<string id="16404" value="Shareaza non è riuscito ad installare la collezione &quot;%s&quot; copiandola nella cartella &quot;%s&quot;."/>
+	<string id="16405" value="Desideri scaricare questo file?\n\n&quot;%s&quot;\n\nScegli Annulla per non mostrare ulteriori richieste."/>
+	<string id="16406" value="Desideri scaricare tutti i file in questa collezione?\n\nScegli Annulla per non mostrare ulteriori richieste."/>
+	<string id="16407" value="Desideri impedire a questa collezione di chiederti di scaricare qualcosiasi altra cosa?"/>
 	<string id="16408" value="Copia &amp;URI"/>
-	<string id="16409" value="Esporta &amp;URIs..."/>
+	<string id="16409" value="Esporta &amp;URI..."/>
+	<string id="16410" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
 	<string id="16448" value="Connesso a %s, negoziazione in corso..."/>
-	<string id="16449" value="Conversazione con %s (%s)."/>
+	<string id="16449" value="Stai chattando con %s (%s)."/>
 	<string id="16450" value="Connessione con %s chiusa."/>
 	<string id="16451" value="La connessione con %s è caduta."/>
 	<string id="16452" value="Comando &quot;%s&quot; sconosciuto."/>
 	<string id="16453" value="Connesso con %s per chat..."/>
-	<string id="16454" value="Avvio della richiesta chat da %s accettato, negoziazione in corso..."/>
+	<string id="16454" value="Accettata richiesta di chat da %s, negoziazione in corso..."/>
 	<string id="16455" value="%s è ora conosciuto come %s."/>
 	<string id="16456" value="Impossibile connettersi con l'host %s."/>
 	<string id="16457" value="Connessione fallita a causa di dati non validi sulla linea."/>
 	<string id="16458" value="Risposta sconosciuta ricevuta: %s"/>
 	<string id="16459" value="Non sei connesso."/>
-	<string id="16512" value="Totale banda ricevuta"/>
-	<string id="16513" value="Totale banda trasmessa"/>
+	<string id="16512" value="Totale banda in ricezione"/>
+	<string id="16513" value="Totale banda in trasmessione"/>
 	<string id="16514" value="Connessioni Gnutella (totale)"/>
 	<string id="16515" value="Connessioni Gnutella (attive)"/>
 	<string id="16516" value="Banda Gnutella in ricezione"/>
 	<string id="16517" value="Banda Gnutella in trasmissione"/>
-	<string id="16518" value="Contatore file scaricati"/>
-	<string id="16519" value="Contatore file trasferiti"/>
+	<string id="16518" value="Conteggio file scaricati"/>
+	<string id="16519" value="Conteggio trasferimenti download"/>
 	<string id="16520" value="Banda download"/>
-	<string id="16521" value="Contatore trasferimenti upload"/>
+	<string id="16521" value="Conteggio trasferimenti upload"/>
 	<string id="16522" value="Banda upload"/>
 	<string id="16523" value="Pacchetti Gnutella ricevuti"/>
 	<string id="16524" value="Pacchetti Gnutella trasmessi"/>
-	<string id="16525" value="Pacchetti Gnutella istradati"/>
+	<string id="16525" value="Pacchetti Gnutella instradati"/>
 	<string id="16526" value="Pacchetti Gnutella caduti"/>
 	<string id="16527" value="Pacchetti Gnutella persi"/>
-	<string id="16528" value="Richieste locali"/>
+	<string id="16528" value="Richieste locali Gnutella"/>
 	<string id="16532" value="Totale banda ricezione TCP"/>
 	<string id="16533" value="Totale banda trasmissione TCP"/>
 	<string id="16534" value="Totale banda ricezione UDP"/>
 	<string id="16535" value="Totale banda trasmissione UDP"/>
 	<string id="16768" value="URL &quot;%s&quot; ricevuto"/>
-	<string id="16769" value="Impossibile utilizzare URL: Shareaza non riesce a leggere questa URL."/>
+	<string id="16769" value="Impossibile analizzare l'URL: Shareaza non riesce a leggere questo URL."/>
 	<string id="16770" value="Impossibile mostrare il dialogo di azione dell'URL perchè Shareaza è occupato."/>
 	<string id="16771" value="Possiedi già il file &quot;%s&quot; nella tua libreria. Desideri scaricarlo comunque?"/>
 	<string id="16772" value="Host:"/>
@@ -2903,18 +2907,18 @@
 	<string id="16774" value="&amp;Connetti"/>
 	<string id="16775" value="&amp;Sfoglia"/>
 	<string id="16776" value="Aggiungi"/>
-	<string id="16777" value="Nome File:"/>
+	<string id="16777" value="Nome file:"/>
 	<string id="16778" value="URL:"/>
 	<string id="16779" value="Tipo:"/>
 	<string id="16780" value="Non specificato"/>
-	<string id="16781" value="Richiedo..."/>
+	<string id="16781" value="Richiesta in corso..."/>
 	<string id="16782" value="Successo!"/>
 	<string id="16783" value="Finito, clicca Chiudi"/>
 	<string id="16784" value="&amp;Chiudi"/>
-	<string id="16785" value="(Nessuna Visualizzazione)"/>
-	<string id="16800" value="Non hai specificato ancora la velocità di connessione. Prima di continuare, scegli il tipo di connessione Internet, o scrivi la velocità di connessione."/>
-	<string id="16801" value="Non hai ancora indicato se la tua connessione Internet è protetta da un firewall. Scegli l'opzione firewall prima di continuare."/>
-	<string id="16802" value="Non hai indicato nessuna cartella da condividere. Desideri continuare?"/>
+	<string id="16785" value="(Nessuna visualizzazione)"/>
+	<string id="16800" value="Non hai ancora specificato la velocità di connessione.  Prima di continuare, scegli il tipo di connessione Internet, o scrivi la velocità di connessione."/>
+	<string id="16801" value="Scegli il tipo di connessione Internet che stai usando prima di continuare."/>
+	<string id="16802" value="Non hai indicato nessuna cartella da condividere.  Desideri continuare?"/>
 	<string id="16803" value="La cartella che vuoi condividere è già condivisa come parte di un'altra cartella condivisa:\n\n%s"/>
 	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente.\n\nÈ consigliato inserire un nickname in modo che gli altri utenti sanno con chi sono connessi.\n\nDesideri continuare senza un nickname?"/>
 	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nÈ consigliato inserire una località in modo che gli altri utenti sanno dove sei.\n\nDesideri continuare senza inserire una località?"/>
@@ -2926,6 +2930,8 @@
 	<string id="16811" value="Automatico"/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
+	<string id="16818" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/> 
+	<string id="16819" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\n\nVuoi ancora aggiungere la cartella selezionata alla tua libreria?\n\nLa cartella esistente sarà una sottocartella della cartella selezionata. Questo inoltre causerà il re-hashing di tutti i file nella cartella esistente."/> 
 	<string id="16864" value="Interrogazione dei servizi di ricerca host..."/>
 	<string id="16865" value="Interrogazione del servizio di ricerca &quot;%s&quot;..."/>
 	<string id="16866" value="Transazione GWebCache eseguita con successo (&quot;%s&quot;)."/>
@@ -3026,7 +3032,7 @@
 	<string id="17231" value="Il client eDonkey2000 %s ha la GUID sbagliata, negoziazione terminata."/>
 	<string id="17232" value="Tempo scaduto per la connessione al client eDonkey2000 %s."/>
 	<string id="17233" value="Tempo scaduto per la negoziazione con il client eDonkey2000 %s."/>
-	<string id="17234" value="Rifiuto del collegamento al client eDonkey2000 da %s perchè eDonkey2000 è disabilitato."/>
+	<string id="17234" value="Rifiuto del collegamento al client eDonkey2000 %s perchè eDonkey2000 è disabilitato."/>
 	<string id="17248" value="Avvio del processo di importazione del download parziale di eDonkey2000 in corso..."/>
 	<string id="17249" value="Processo completato, %i download parziali importati con successo."/>
 	<string id="17250" value="Scansione della cartella: &quot;%s&quot;..."/>
