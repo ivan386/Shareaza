@@ -476,6 +476,11 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		if ( nLength < 3 ) return FALSE;
 		pBuffer += 3;
 		nLength -= 3;
+		if ( nLength > 0 && pBuffer[ 0 ] == 0 )
+		{
+			pBuffer += 1;
+			nLength -= 1;
+		}
 	}
 	
 	if ( nEncoding == 0 )
