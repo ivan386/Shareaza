@@ -27,8 +27,8 @@ Other:
 		author="Antoine Martin-Lalande (Sensi)"
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
-		email="shareaza.francais(at)laposte.net"
-		version="2.1.2.7"
+		email="shareaza.fr(at)gmail.com"
+		version="2.1.3.7"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -2580,6 +2580,7 @@ Other:
 	<string id="8316" value="Accès"/>
 	<string id="8317" value="Envois"/>
 	<string id="8318" value="%lu aujourd'hui, %lu total"/>
+	<string id="8319" value="&#160;(Aucun Hashset)"/>
 	<string id="8320" value="Statut:"/>
 	<string id="8321" value="Vitesse:"/>
 	<string id="8322" value="URL:"/>
@@ -2814,6 +2815,7 @@ Other:
 	<string id="16407" value="Voulez-vous stopper tout message de sollicitation à télécharger autre chose de cette collection?"/>
 	<string id="16408" value="Copier l'&amp;URI"/>
 	<string id="16409" value="Exporter les &amp;URIs..."/>
+	<string id="16410" value="Les dossiers complete et incomplete ne doivent pas être le même"/>
 	<string id="16448" value="Connecté à %s, liaison..."/>
 	<string id="16449" value="Discussion avec %s (%s)."/>
 	<string id="16450" value="Connexion à %s fermée."/>
@@ -2879,6 +2881,8 @@ Other:
     <string id="16811" value="Automatique"/>
 	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nEtes-vous certain de vouloir limiter le nombre de positions en file d'attente que vous acceptez?"/>
 	<string id="16817" value="Windows ne supporte pas les chemins d'accès au fichier de plus de 256 caractères.\nMerci de sélectionner un dossier avec un chemin plus court."/>
+	<string id="16818" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/> 
+    <string id="16819" value="Un sous-dossier du dossier sélectionné &quot;%s&quot; fait déjà partie de votre bibliothèque. \n\nÊtes-vous certain de vouloir ajouter le dossier sélectionné à votre bibliothèque?\n\n Le dossier existant sera alors un sous-dossier du dossier sélectionné. Cela sera également la cause du re-hachement de tous les fichiers du dossier existant."/>
 	<string id="16864" value="Requiert le service Découverte de l'hôte..."/>
 	<string id="16865" value="Requiert le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
