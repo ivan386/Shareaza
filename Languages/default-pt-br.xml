@@ -1531,11 +1531,6 @@
             <newline gap="8" indent="42"/>		
 	<icon res="175" width="20" height="20" target="http://www.shareazaport.cjb.net"/>
 	<gap size="8"/>
-       		<link target="http://www.shareazaport.cjb.net" format="bu" align="middle">Web-Site  em Português do Shareaza</link>
-       		<text align="middle">&#160;- Acesse a página em Português do Shareaza</text>
-	<newline gap="8" indent="42"/>
-	<icon res="175" width="20" height="20" target="http://forums.shareaza.com/forumdisplay.php?s=ab720a818cca3a23f3764e403aaabbdf&amp;daysprune=&amp;forumid=33"/>
-	<gap size="8"/>
        		<link target="http://forums.shareaza.com/forumdisplay.php?s=ab720a818cca3a23f3764e403aaabbdf&amp;daysprune=&amp;forumid=33" format="bu" align="middle">Fórum em Português do Shareaza</link>
         	<text align="middle">&#160;- Acesse o fórum em Português do Shareaza</text>
 	   <newline gap="8" indent="42"/>		
