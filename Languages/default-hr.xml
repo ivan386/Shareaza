@@ -10,7 +10,7 @@
 		description="Shareaza Default Croatian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.2.7"
+		version="2.1.3.7"
 		type="Language"
 		language="hr"
 		prompt="Ovdje odaberi Shareazu na hrvatskom jeziku..."
@@ -433,8 +433,8 @@
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Normalno"/>
-			<item id="ID_VIEW_TABBED" text="Napredno"/>
+			<item id="ID_VIEW_BASIC" text="Normalni Pogled"/>
+			<item id="ID_VIEW_TABBED" text="Napredni Pogled"/>
 		</menu>
 		<menu text="Ala_ti">
 			<item id="ID_LIBRARY_FOLDERS" text="Podjeli..."/>
@@ -1647,7 +1647,7 @@
 
 			<text id="UploadedNone">Danas još niste ništa dali.</text>
 			<text id="UploadedOne">Danas ste dali 1 datoteku (%s).</text>
-			<text id="UploadedMany">Danas ste dali %i datoteke (%s).</text>
+			<text id="UploadedMany">Danas ste dali %i datotek(a)e (%s).</text>
 		</para>
 	</document>
 
@@ -1870,9 +1870,9 @@
 		</group>
 
 		<group id="3">
-			<newline gap="16" indent="0"/>
-			<text format="b">Preporučene Web Adrese</text>
-			<newline gap="4" indent="8" id="Bookmarks"/>
+		<newline gap="16" indent="0"/>
+		<text format="b">Preporučene Web Adrese</text>
+		<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
 
 		<newline gap="16" indent="0"/>
@@ -2324,9 +2324,9 @@
 	<tip id="ID_LIBRARY_VIEW_THUMBNAIL" message="Pokazuje datoteke kao sličice(thumbnails)" tip="Sličice"/>
 	<tip id="ID_LIBRARY_VIEW_TILE" message="Pokazuje listu mapa albuma." tip="Tile View"/>
 	<tip id="ID_MEDIA_ADD" message="Dodaj datoteku u playlistu..."/>
-	<tip id="ID_MEDIA_ADD_FOLDER" message="Add a folder of media files to the playlist..."/>
-	<tip id="ID_MEDIA_ASPECT_16_9" message="Lock video to 16:9 aspect ratio, suitable for film."/>
-	<tip id="ID_MEDIA_ASPECT_4_3" message="Lock video to 4:3 aspect ratio, suitable for TV."/>
+	<tip id="ID_MEDIA_ADD_FOLDER" message="Dodaje mapu u playlistu..."/>
+	<tip id="ID_MEDIA_ASPECT_16_9" message="Zaključava sliku na 16:9 omjer, pogodno za gledanje filmova."/>
+	<tip id="ID_MEDIA_ASPECT_4_3" message="aključava sliku na 4:3 omjer, pogodno za gledanje TV programa."/>
 	<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Use the video's default aspect ratio."/>
 	<tip id="ID_MEDIA_CLEAR" message="Clear (empty) the playlist."/>
 	<tip id="ID_MEDIA_CLOSE" message="Close the current media file, freeing up memory."/>
@@ -2620,6 +2620,7 @@
 	<string id="8316" value="Pogodaka"/>
 	<string id="8317" value="Djeljenja"/>
 	<string id="8318" value="%lu danas, %lu ukupno"/>
+	<string id="8319" value="&#160;(No Hashset)"/>
 	<string id="8320" value="Stanje:"/>
 	<string id="8321" value="Brzina:"/>
 	<string id="8322" value="URL:"/>
@@ -2682,7 +2683,7 @@
 	<string id="16151" value="Odbijam vezu sa %s jer je u zaštičenom leaf čvoru."/>
 	<string id="16152" value="Hub susjed %s vas ne prihvača kao hub, prekidam vezu."/>
 	<string id="16153" value="Spojeni susjed %s prelazi u zaštičeni leaf način."/>
-	<string id="16154" value="Hub connection established, closing peer connections."/>
+	<string id="16154" value="Hub veza uspostavljena, prekidam peer veze."/>
 	<string id="16155" value="Glumim hub za leaf susjeda %s."/>
 	<string id="16156" value="Susjed %s želi postati hub, prekidam vezu."/>
 	<string id="16157" value="Susjed %s nije hub, prekidam vezu."/>
@@ -2854,7 +2855,8 @@
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
-	<string id="16448" value="Spojeno na %s, pozdravljamo..."/>
+	<string id="16410" value="Skinute i djelomično skinute datoteke nebi smjele biti u istoj mapi"/>
+	<string id="16448" value="Spojeno sa %s, pozdravljamo..."/>
 	<string id="16449" value="Pričate sa %s (%s)."/>
 	<string id="16450" value="Veza prema %s je prekinuta."/>
 	<string id="16451" value="Veza prema %s je izgubljena."/>
@@ -2919,6 +2921,8 @@
 	<string id="16811" value="Automatski"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windowsi ne podržavaju putanju dužu od 256 znakova.\nMolim da odeberete mapu sa kraćim putem."/>
+	<string id="16818" value="Mapa sa nedovršenim datotekama ne bi smjela biti u kolekciji jer uzrokuje usporavanje. Nedovršene datoteke se mogu djeliti direktno iz prozora razmjene."/>
+	<string id="16819" value="Podmapa u odabranoj mapi &quot;%s&quot; je već dio vaše kolekcije.\nDodavanje ove mape če izazvati re-hashing nekih datoteka.\n\nŽelite li svejedno nastaviti?"/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -2939,8 +2943,8 @@
 	<string id="16939" value="Završena pretraga korisnika %s, %i nađenih datoteka."/>
 	<string id="16940" value="Browse user connection to %s was dropped."/>
 	<string id="16941" value="Closing browse user connection %s due to lack of traffic."/>
-	<string id="16942" value="Closing browse user connection to %s."/>
-	<string id="16943" value="Browsing %s"/>
+	<string id="16942" value="Zatvaram pregled korisnika %s."/>
+	<string id="16943" value="Pregledavam %s"/>
 	<string id="16944" value="Nađeno %i djeljenih datoteka u %svoj kolekciji."/>
 	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
@@ -2949,7 +2953,7 @@
 	<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 	<string id="16997" value="There is no file playing.Double-click a media file in your library to play it."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; I &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
-	<string id="16999" value="P L A Y L I S T A"/>
+	<string id="16999" value="P  L A  Y  L  I  S  T  A "/>
 	<string id="17024" value="Započinjem spajanje na %s..."/>
 	<string id="17025" value="Ne mogu se spojiti sa %s."/>
 	<string id="17026" value="Tražim spajanje preko vatrozida na %s..."/>
@@ -3426,7 +3430,7 @@
 		<control caption="Klijent veze"/>
 		<control caption="&#160;Makni skinunte torrente&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kada omjer djeljenja dođe do"/>
         <control/><control/><control/>
-		<control caption="&#160;Preference torrent sources"/>
+		<control caption="&#160;Preferiraj torrent izvore"/>
 		<control caption="_EndGame:"/>
 		<control caption="Omoguči EndGame način prilikom dovršenja torrentsa"/>
 		<control caption="Ovdje _Spremi Torrente::"/>
@@ -3513,7 +3517,7 @@
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Dobrodošli u Shareazu">
 		<control caption="Dobrodošli u Shareazu!"/>
-		<control caption="Ako još niste koristili Shareazu ili neki drugi P2P klijent, ovaj brzo i lagano pomoćnik će vam u nekoliko jednostavnih koraka pomoći prilikom naštimavanja osnovnih opcija."/>
+		<control caption="Ako još niste koristili Shareazu ili neki drugi P2P klijent, brzo i lagano pomoćnik će vam u nekoliko jednostavnih koraka pomoći prilikom naštimavanja osnovnih opcija."/>
 		<control caption="Ukoliko ste napredni korisnik, sve Shareazine opcije možete naći u izborniku Alati.Ako želite zatvoriti ovu pomoć u bilo kojem trentku kliknite na Izlaz."/>
 		<control caption="Ovdje možete jednostavno podesiti slijedeće:"/>
 		<control/>
@@ -3691,7 +3695,7 @@
 
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Datoteke">
 		<control caption="Vaše Datoteke Koje Preporučate Ostalim Korisnicima:"/>
-		<control caption="Datoteke koje preporučate ostalim korisnicima su vidljive svim korisnicima koji pogledaju Vaš profil.Datoteku možete staviti u preporuke tako da ih stavite u &quot;Favourites&quot; mapu u kolekciji."/>
+		<control caption="Datoteke koje preporučate su vidljive svima koji pogledaju Vaš profil.Datoteku možete staviti u preporuke tako da ju stavite u &quot;Favourites&quot; mapu u kolekciji."/>
 		<control/>
 	</dialog>
 
