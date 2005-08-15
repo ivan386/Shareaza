@@ -16,7 +16,7 @@
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.2.7"
+		version="2.1.3.7"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -2628,6 +2628,7 @@
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
 	<string id="8318" value="%lu nu, %lu totaal"/>
+	<string id="8319" value="&#160;(Geen Hashset)"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Snelheid:"/>
 	<string id="8322" value="URL:"/>
@@ -2862,6 +2863,7 @@
 	<string id="16407" value="Wil je voorkomen dat je nog een keer wordt gevraagd om iets van deze collectie te downloaden?"/>
 	<string id="16408" value="Kopieer &amp;URI"/>
 	<string id="16409" value="Exporteer &amp;URIs..."/>
+	<string id="16410" value="De complete en incomplete folders mogen niet dezelfde zijn"/>
 	<string id="16448" value="Verbonden met %s, bezig met handen schudden..."/>
 	<string id="16449" value="Nu aan het chatten met %s (%s)."/>
 	<string id="16450" value="Verbinding met %s is afgebroken."/>
@@ -2927,6 +2929,8 @@
 	<string id="16811" value="Automatisch"/>
 	<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal u zo strikt goedkeuren, dat u problemen kunt ondervinden bij downloads om te beginnen.\nBent u zeker dat u de maxim rijpositie die u wilt goedkeuren, beperken?"/>
 	<string id="16817" value="Windows ondersteund geen lokaties met meer dan 256 karakters.\nslecteer een map met een kortere lokatie."/>
+	<string id="16818" value="De incomplete folder mag niet in de bibliotheek omdat dit de performance nadelig beinvloed. Incomplete bestanden deel je rechtstreeks in het download venster."/>
+	<string id="16819" value="Een submap van de geselecteerde map &quot;%s&quot; is al een onderdeel van de bibliotheek.\nToevoegen van deze map resulteert in opnieuw hashen van sommige bestanden.\n\nWil je hiermee doorgaan ?"/>
 	<string id="16864" value="Bezig met het opvragen van gastheer discovery services..."/>
 	<string id="16865" value="Bezig met het opvragen van discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transactie successvol (&quot;%s&quot;)."/>
