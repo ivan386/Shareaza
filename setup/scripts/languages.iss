@@ -485,9 +485,9 @@ sv.icons_uninstall=Avinstallera
 sv.icons_downloads=Nedladdningar
 sv.dialog_shutdown=%1 körs för tillfället. Vill du att %1 ska stängas ned så att installationen kan fortsätta?
 sv.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
-sv.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
-sv.page_viruswarning_title=Virus Warning
-sv.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+sv.page_viruswarning_text=När du använder internet ska du alltid försäkra dig om att du har ett uppdaterat antivirusprogram som skyddar dig mot trojaner, maskar och andra skadliga program. Här finns en lista på bra antivirusprogram och andra säkerhetstips för att skydda din dator:
+sv.page_viruswarning_title=Virusvarning
+sv.page_viruswarning_subtitle=Har du ett antivirusprogram installerat?
 ; Finnish
 fi.components_plugins=Laajennukset
 fi.components_skins=Ulkoasut
