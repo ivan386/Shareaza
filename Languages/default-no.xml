@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Norwegian Skin File based on English CVS v1.72 -->
+<!-- Shareaza Norwegian Skin File based on English CVS v1.76 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +16,7 @@
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.2.7"
+		version="2.1.3.7"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -2629,6 +2629,7 @@
 	<string id="8316" value="Treff"/>
 	<string id="8317" value="opplastinger"/>
 	<string id="8318" value="%lu i dag, %lu totalt"/>
+	<string id="8319" value="&#160;(Intet hashsett)"/>
 	<string id="8320" value="Status:"/>
 	<string id="8321" value="Hastighet:"/>
 	<string id="8322" value="URL:"/>
@@ -2863,6 +2864,7 @@
 	<string id="16407" value="Vil du sette en stopp på denne samlingen slik at du slipper flere spørsmål om å laste ned mer"/>
 	<string id="16408" value="Kopier &amp;URI"/>
 	<string id="16409" value="Eksporter &amp;URI'er..."/>
+	<string id="16410" value="Mappen for fullstendige filer og mappen for ufullstendige filer bør ikke være den samme"/>
 	<string id="16448" value="Koblet til %s, starter håndtrykk..."/>
 	<string id="16449" value="Du chatter med %s (%s)."/>
 	<string id="16450" value="Kobling til %s lukket."/>
@@ -2928,6 +2930,8 @@
 	<string id="16811" value="Automatisk"/>
 	<string id="16816" value="eDonkey-nettverket har lange køer med lange ventetider. Ved å begrense den maksimale akseptable køposisjonen så strengt, kan du få problemer med å få nedlastinger til å begynne.\nEr du sikker på at du vil begrense hvilken køposisjon du vil akseptere?"/>
 	<string id="16817" value="Windows støtter ikke filbaner langre enn 256 tegn.\nVennligst angi en mappe med kortere filbane."/>
+	<string id="16818" value="Mappen for ufullstendige filer bør ikke være i biblioteket, ettersom det vil senkt ytelsen. Ufullstendige filer kan deles direkte fra overføringsvinduet."/>
+	<string id="16819" value="En undermappe av den valgte mappen &quot;%s&quot; er allerede en del av biblioteket ditt.\nÅ legge til denne mapen vil føre til re-hashing av noen filer.\n\nØnsker du å fortsette?"/>
 	<string id="16864" value="Oppdaterer vert-oppdagelsestjeneste..."/>
 	<string id="16865" value="Oppdaterer oppdagelsestjeneste &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache overføring fullført (&quot;%s&quot;)."/>
