@@ -98,7 +98,9 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	// ***********
+	// **********************
+
+/*
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCompileTime; 
@@ -112,13 +114,14 @@ BOOL CShareazaApp::InitInstance()
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
+*/
 
 /*
-	// Alpha warning. Remember to remove this section for final releases and public betas.
+	// Alpha warning nag message. Remember to remove this section for final releases and public betas.
 	if ( AfxMessageBox( _T("WARNING: This is an ALPHA TEST version of Shareaza.\n\nIt it NOT FOR GENERAL USE, and is only for testing specific features in a controlled environment. It will frequently stop running, or display debug information to assist testing.\n\nIf you wish to actually use this software, you should download the current stable release from www.shareaza.com\nIf you continue past this point, you may experience system instability, lose downloads, or corrupt system files. Corrupted downloads/files may not be recoverable. Do you wish to continue?"), MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
 */
-	// ***********
+	// **********************
 
 
 
