@@ -261,6 +261,14 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		}
 		m_nGnutella |= 1;
 	}
+	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 )
+	{
+		// Dead alt-sources
+	}
+	else if ( strHeader.CompareNoCase( _T("X-Node") ) == 0 )
+	{
+		m_bNotShareaza = TRUE; // Shareaza doesn't send this header
+	}
 	else if ( strHeader.CompareNoCase( _T("X-Queue") ) == 0 )
 	{
 		m_bQueueMe = TRUE;
@@ -280,7 +288,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( _tcsistr( strValue, _T("gnutella2/") ) != NULL ) m_nGnutella |= 2;
 		if ( m_nGnutella == 0 ) m_nGnutella = 1;
 	}
-	
+
 	return CUploadTransfer::OnHeaderLine( strHeader, strValue );
 }
 
@@ -297,7 +305,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		m_nGnutella |= 3;
 		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
 
-		if ( m_bNotShareaza )	// Client spoofing a Shareaza header
+		// Check for non-shareaza clients spoofing a Shareaza user agent
+		if ( m_bNotShareaza ) 
 		{
 			SendResponse( IDR_HTML_FILENOTFOUND );
 			theApp.Message( MSG_ERROR, _T("Client %s has a spoofed user agent, banning"), (LPCTSTR)m_sAddress );
@@ -313,6 +322,27 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	{
 		// Assume Gnutella2 capability for certain user-agents
 		m_nGnutella |= 3;
+	}
+	else if ( m_nGnutella & 2 )
+	{
+		// Check for clients spoofing a G2 header
+		if ( _tcsistr( m_sUserAgent, _T("phex") ) != NULL )
+		{
+			// This is actually a G1-only client sending a fake header, so they can download 
+			// from (but not upload to) clients that are only connected to G2. 
+			m_nGnutella = 1;
+			
+			if ( ! Settings.Gnutella1.EnableToday )
+			{
+				// Terminate the connection and do not try to download from them.
+				SendResponse( IDR_HTML_FILENOTFOUND );
+				theApp.Message( MSG_ERROR, _T("Client %s has a fake G2 header, banning"), (LPCTSTR)m_sAddress );
+
+				Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
+				Remove( FALSE );
+				return FALSE;
+			}
+		}
 	}
 	
 	if ( m_sRequest == _T("/") || StartsWith( m_sRequest, _T("/gnutella/browse/v1") ) )
