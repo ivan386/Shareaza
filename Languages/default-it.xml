@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 27 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 28 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -1876,9 +1876,9 @@
 		</group>
 
 		<group id="3">
-			<newline gap="16" indent="0"/>
-			<text format="b">Link preferiti</text>
-			<newline gap="4" indent="8" id="Bookmarks"/>
+		<newline gap="16" indent="0"/>
+		<text format="b">Link preferiti</text>
+		<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
 
 		<newline gap="16" indent="0"/>
@@ -2930,8 +2930,8 @@
 	<string id="16811" value="Automatico"/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
-	<string id="16818" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/> 
-	<string id="16819" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\n\nVuoi ancora aggiungere la cartella selezionata alla tua libreria?\n\nLa cartella esistente sarà una sottocartella della cartella selezionata. Questo inoltre causerà il re-hashing di tutti i file nella cartella esistente."/> 
+	<string id="16818" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/>
+	<string id="16819" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\nAggiungere questa cartella causerà il re-hashing di alcuni file.\n\nVuoi continuare?"/>
 	<string id="16864" value="Interrogazione dei servizi di ricerca host..."/>
 	<string id="16865" value="Interrogazione del servizio di ricerca &quot;%s&quot;..."/>
 	<string id="16866" value="Transazione GWebCache eseguita con successo (&quot;%s&quot;)."/>
