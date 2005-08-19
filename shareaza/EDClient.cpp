@@ -236,7 +236,8 @@ void CEDClient::Merge(CEDClient* pClient)
 		pClient->m_pUpload = NULL;
 	}
 
-	m_bOpenChat = pClient->m_bOpenChat;
+	if ( ! m_bOpenChat ) m_bOpenChat = pClient->m_bOpenChat;
+
 }
 
 //////////////////////////////////////////////////////////////////////
