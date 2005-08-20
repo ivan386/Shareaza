@@ -12,7 +12,8 @@
 
 <!-- Manifest -->
 <manifest	name="Norsk"
-		author="Tom Seland and Vegard Martinsen"
+		author="Tom Seland"
+		updatedBy="Vegard Martinsen"
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"

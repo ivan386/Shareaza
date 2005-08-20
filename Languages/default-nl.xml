@@ -12,7 +12,8 @@
 
 <!-- Manifest -->
 <manifest	name="Nederlands"
-		author="Shareaza Dutch Translation Team"
+		author="Jan-Willem Koornwinder (Thurstydog)"
+		updatedBy=" -=R@y-M@n=-"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"

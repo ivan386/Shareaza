@@ -8,7 +8,8 @@
 
 <!-- Manifest -->
 <manifest	name="Pусский"
-		author="dAbserver &amp; Rolandas Rudomanskis"
+		author="dAbserver"
+		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"

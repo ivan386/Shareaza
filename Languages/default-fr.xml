@@ -24,7 +24,8 @@ Other:
 
 <!-- Manifest -->
 <manifest	name="Français"
-		author="Antoine Martin-Lalande (Sensi)"
+		author="Surf@ceS"
+		updatedBy="Antoine Martin-Lalande (Sensi)"
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.fr(at)gmail.com"

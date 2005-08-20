@@ -4,7 +4,8 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 <!-- Manifest -->
 <manifest name="עברית"
-		author="_peer_ (la. Han)"
+		author="David Aravon"
+		updatedBy="_peer_ (la. Han)"
 		description="Shareaza Default Hebrew Skin File"
 		link="http://www.shareaza.com/"
 		email="peer_l_ (at) hotmail (dot) com"

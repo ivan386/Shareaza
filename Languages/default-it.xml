@@ -12,7 +12,8 @@
 
 <!-- Manifest -->
 <manifest	name="Italiano"
-		author="Salvatore Scirè, Francesco Gabrielli, Daniel Forestieri e ale5000"
+		author="Salvatore Scirè"
+		updatedBy="ale5000"
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"

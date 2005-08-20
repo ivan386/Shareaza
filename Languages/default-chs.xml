@@ -19,6 +19,7 @@
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
+		updatedBy="Sanly"
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"

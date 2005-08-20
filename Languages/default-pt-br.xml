@@ -12,7 +12,8 @@
 
 <!-- Manifest -->
 <manifest	name="Português"
-			author="André Cavon e Lukas Taves"
+			author="Lukas Taves"
+			updatedBy="André Cavon"
 			description="Tradução para o português do Brasil do  Shareaza"
 			link="http://www.shareaza.com/"
 			email="lukas taves ARROBA pop PONTO com PONTO br(nospam)"
