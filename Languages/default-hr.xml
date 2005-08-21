@@ -1774,7 +1774,7 @@
 	<document name="CBrowseHostProfile.1">
 
 		<heading id="Nick"/>
-		<heading>ov Profil</heading>
+		<heading> Profil</heading>
 		<newline gap="8"/>
 
 		<group id="1">
@@ -2585,15 +2585,15 @@
 	<string id="8225" value="Ovo skidanje je pauzirano"/>
 	<string id="8226" value="Shareaza je završila skidanje:"/>
 	<string id="8227" value="%i sati i %i minuta"/>
-	<string id="8228" value="%i minuta and %i sekunda"/>
+	<string id="8228" value="%i minuta i %i sekunda"/>
 	<string id="8229" value="%i sekunda"/>
 	<string id="8230" value="Shareaza traži izvore za:"/>
 	<string id="8231" value="Nažalost nema izvora"/>
 	<string id="8232" value="Otvori"/>
 	<string id="8233" value="Pregledaj"/>
 	<string id="8235" value="Brzina prijenosa:"/>
-	<string id="8236" value="Još:"/>
-	<string id="8237" value="Skinuto:"/>
+	<string id="8236" value="Preostalo vremena:"/>
+	<string id="8237" value="Skinuto:    "/>
 	<string id="8238" value="Broj izvora:"/>
 	<string id="8239" value="Skinuto"/>
 	<string id="8240" value="Shareaza premješta skinuto:"/>
@@ -2946,7 +2946,7 @@
 	<string id="16941" value="Closing browse user connection %s due to lack of traffic."/>
 	<string id="16942" value="Zatvaram pregled korisnika %s."/>
 	<string id="16943" value="Pregledavam %s"/>
-	<string id="16944" value="Nađeno %i djeljenih datoteka u %svoj kolekciji."/>
+	<string id="16944" value="Nađeno %i djeljenih datoteka kod %s."/>
 	<string id="16992" value="Shareaza could not instantiate its MediaServices plugin.Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
 	<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 	<string id="16994" value="Ne mogu učitati datoteku &quot;%s&quot;"/>
@@ -2954,7 +2954,7 @@
 	<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 	<string id="16997" value="There is no file playing.Double-click a media file in your library to play it."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; I &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
-	<string id="16999" value="P  L A  Y  L  I  S  T  A "/>
+	<string id="16999" value="P L A Y L I S T A"/>
 	<string id="17024" value="Započinjem spajanje na %s..."/>
 	<string id="17025" value="Ne mogu se spojiti sa %s."/>
 	<string id="17026" value="Tražim spajanje preko vatrozida na %s..."/>
@@ -3013,7 +3013,7 @@
 	<string id="17220" value="eDonkey2000 server %s online, client ID is %lu."/>
 	<string id="17221" value="eDonkey2000 server %s changed our client ID from %lu to %lu."/>
 	<string id="17222" value="eDonkey2000 server %s identified itself as &quot;%s&quot;."/>
-	<string id="17223" value="eDonkey2000 server %s rejected the connection."/>
+	<string id="17223" value="eDonkey2000 server %s odbija vezu."/>
 	<string id="17224" value="Error exchanging handshake with eDonkey2000 client %s."/>
 	<string id="17225" value="eDonkey2000 client connection to %s was closed."/>
 	<string id="17226" value="Received a malformatted eDonkey2000 packet from %s (id=%x)."/>
@@ -3518,7 +3518,7 @@
 
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Dobrodošli u Shareazu">
 		<control caption="Dobrodošli u Shareazu!"/>
-		<control caption="Ako još niste koristili Shareazu ili neki drugi P2P klijent, brzo i lagano pomoćnik će vam u nekoliko jednostavnih koraka pomoći prilikom naštimavanja osnovnih opcija."/>
+		<control caption="Ako još niste koristili Shareazu ili neki drugi P2P klijent,brzo i lagano pomoćnik će vam u nekoliko jednostavnih koraka pomoći prilikom naštimavanja osnovnih opcija."/>
 		<control caption="Ukoliko ste napredni korisnik, sve Shareazine opcije možete naći u izborniku Alati.Ako želite zatvoriti ovu pomoć u bilo kojem trentku kliknite na Izlaz."/>
 		<control caption="Ovdje možete jednostavno podesiti slijedeće:"/>
 		<control/>
