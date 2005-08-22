@@ -18,7 +18,7 @@ updatedBy="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.1.11"
+version="2.1.3.7"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -1878,9 +1878,11 @@ prompt="Kattints ide a magyar nyelvhez."
                        <link target="raza:command:ID_SEARCH_CHAT" align="middle">Chat</link>
                </group>
 
+               <group id="3">
                <newline gap="16" indent="0"/>
                <text format="b">Kedvenc webhelyek</text>
                <newline gap="4" indent="8" id="Bookmarks"/>
+               </group>
 
                <newline gap="16" indent="0"/>
 
@@ -2254,7 +2256,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <tip id="ID_HELP_FAQ" message="A Shareaza gyakran ismételt kérdésekhez vezet el."/>
        <tip id="ID_HELP_ROUTER" message="Router és tűzfal beállítási segítség."/>
        <tip id="ID_HELP_FORUMS" message="Látogasd meg a Shareaza hivatalos fórumait."/>
-       <tip id="ID_HELP_GUIDE" message="A Shareaza használíti utasításához vezet el."/>
+       <tip id="ID_HELP_GUIDE" message="A Shareaza használati utasításához vezet el."/>
        <tip id="ID_HELP_HOMEPAGE" message="Visit the Shareaza.com web site."/>
        <tip id="ID_HELP_SECURITY" message="Veszélyes programok elleni védekezés."/>
        <tip id="ID_HELP_UPDATE" message="Check for news and updates."/>
@@ -2626,6 +2628,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8316" value="Találatok"/>
        <string id="8317" value="Feltöltések"/>
        <string id="8318" value="%lu ma, %lu teljes"/>
+          <string id="8319" value="&#160;(Nincs Hash)"/>
        <string id="8320" value="Státusz:"/>
        <string id="8321" value="Sebesség:"/>
        <string id="8322" value="URL:"/>
@@ -2678,7 +2681,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16139" value="%s bezárta a kapcsolatot (%i : %s)."/>
        <string id="16140" value="%s kapcsolatok keresése."/>
        <string id="16141" value="Kapcsolat bezárása: %s, mert nem hub."/>
-       <string id="16144" value="Viszontválasz nem érkezett időben %s."/>
+       <string id="16144" value="Viszontválasz nem érkezett időben: %s."/>
        <string id="16145" value="Gnutella kapcsolódás sikeres: %s  (G%i.%i : %s)."/>
        <string id="16146" value="Viszontválasz hiba: %s, érvénytelen adatok."/>
        <string id="16147" value="Felesleges kapcsolat bezárása: %s  (%s port %i)."/>
@@ -2754,7 +2757,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16295" value="Letöltés gyorsítása a korlátozások elvételével: &quot;%s&quot;."/>
        <string id="16296" value="Sikeresen ellenőriztem: &quot;%s&quot;."/>
        <string id="16297" value="FIGYELEM: A(z) &quot;%s&quot; fájlt nem elhetett elenőrizni. Lehet, hogy nem az a fájl, amit teszeretnél!"/>
-       <string id="16298" value="Letöltési kiszolgáló %s elfoglalt, beállok a sorba #%i / %i (&quot;%s&quot;)."/>
+       <string id="16298" value="Letöltési kiszolgáló %s elfoglalt, beállok a sorba: #%i / %i (&quot;%s&quot;)."/>
        <string id="16299" value="Biztos törölni akarod a szüneteltetett letöltéseket? Ha egyszer kitörölted, már nem tudot folytatni később."/>
        <string id="16300" value="Biztos törölni akarod ezt a letöltést: &quot;%s&quot;?"/>
        <string id="16301" value="TTH adatok kérése: &quot;%s&quot; from %s..."/>
@@ -2781,7 +2784,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16322" value="Nem tudtam kapcsolódni pusholáshoz: %s."/>
        <string id="16323" value="Feltöltési kapcsolat bezárva: %s."/>
        <string id="16324" value="A feltöltési kiszolgáló túllépte az időt: %s."/>
-       <string id="16325" value="%s a feltöltési kiszolgáló egy nem létező vagy nemtalálható objektumot kért: &quot;%s&quot;."/>
+       <string id="16325" value="%s a feltöltési kiszolgáló egy nem létező vagy nem található objektumot kért: &quot;%s&quot;."/>
        <string id="16326" value=" %s a feltöltési kiszolgáló a(z) &quot;%s&quot; fájlt kéte más SHA1 értékkel."/>
        <string id="16327" value="A(z) &quot;%s&quot; feltöltésének megtagadása ide: %s (%s), a kliens nem támogatja a sorbanállást."/>
        <string id="16328" value="Push kapcsolat létrehozva: %s, viszontválaszra várok..."/>
@@ -2812,9 +2815,9 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16353" value="Előnézet feltöltésének megtagadása: &quot;%s&quot; ide: %s, túl sok előnézetfeltöltés."/>
        <string id="16354" value="%s előnézetet kért a(z) &quot;%s&quot; fájlból, de nem elérhető."/>
        <string id="16355" value="Dinamikus előőnézet előkészítése a feltöltéshez: &quot;%s&quot; ide: %s."/>
-       <string id="16356" value="Fájllista lekérdezés megtagadása %s, túl sok fájllistalekérdezés."/>
+       <string id="16356" value="Fájllista lekérdezés megtagadása %s, túl sok fájllista-lekérdezés."/>
        <string id="16357" value="Fájl feltöltése: &quot;%s&quot; ide: %s..."/>
-       <string id="16358" value="Feltöltési kapcsolat megszakadt, régi hely a sorban megtartása: %s."/>
+       <string id="16358" value="Feltöltési kapcsolat megszakadt, megtartom a régi helyet a sorban: %s."/>
        <string id="16359" value="Offline várakozási sor lejárt %s, eltávolít."/>
        <string id="16360" value="Feltöltés megtagadása: &quot;%s&quot; ide: %s (%s), az egész feltöltési sor tele van."/>
        <string id="16361" value="Feltöltés megtagadása %s (%s), hálózat kikapcsolva."/>
@@ -2860,6 +2863,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16407" value="Meg akarod-e akadályozni, hogy minden fájl előtt kérdezzen?"/>
        <string id="16408" value="URL másolása"/>
        <string id="16409" value="URL exportálása..."/>
+          <string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
        <string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
        <string id="16449" value="Jelenleg vele beszélgetsz: %s (%s)."/>
        <string id="16450" value="Kapcsolat bezárva: %s."/>
@@ -2925,6 +2929,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16811" value="Automatikus"/>
        <string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkented a sorok maximális számát, valószínűleg nem fognak elidulni a letöltéseid. \nBiztos csökkenteni akarod a számodra kirendelt sorszámot?"/>
        <string id="16817" value="A Windows 256 karakter hosszú elérési utaknál rövidebbeket kezel.\nVálassz egy rövidebb elérési utat."/>
+          <string id="16818" value="A félkész fájlok ne kerüljenek be a Könyvtárba, mert esetleg csökkenthetik a teljesítményt. A félkész fájlokat a Forgalom ablakban lehet megosztani."/>
+          <string id="16819" value="A kiválasztott mappa &quot;%s&quot; egy másik mappa almappájaként már meg van osztva.\nEz újrahashelést okozhat.\n\nBiztos folytatni akarod?"/>
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
@@ -4131,10 +4137,10 @@ prompt="Kattints ide a magyar nyelvhez."
            <control/>
            <control caption="Tracker:"/>
            <control/>
-           <control caption="Letöltések:"/>
+           <control caption="Letöltők:"/>
            <control caption="Kész (terjesztők):"/>
            <control/>
-           <control caption="Flélkész:"/>
+           <control caption="Félkész:"/>
            <control/>
            <control caption="Forgalom:"/>
            <control caption="Új letöltés indítása:"/>
