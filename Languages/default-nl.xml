@@ -459,7 +459,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
 			<menu text="_Handleidingen">
-				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiding"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikershandleiding"/>
 				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
 				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
 				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
@@ -550,7 +550,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
 			<menu text="_Handleidingen">
-				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiding"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikershandleiding"/>
 				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
 				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
 				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
@@ -635,7 +635,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
 			<menu text="_Handleidingen">
-				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikers Handleiging"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikershandleiding/>
 				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
 				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
 				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
