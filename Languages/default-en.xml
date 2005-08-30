@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.3.7"
+		version="2.1.4.1"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2042,14 +2042,14 @@
 	</document>
 	
 	<document name="GeneralHelp.XPsp2">
-		<text format="b">Windows XP Service Pack 2 detected</text>
+		<text format="b">Half open connection limit detected</text>
 		<newline gap="8"/>
-		<text>Shareaza has detected Windows XP Service Pack 2. This restricts the number of
-		connections that applications can attempt at once.</text>
+		<text>Shareaza has detected Windows XP Service Pack 2 (or a similar environment). This 
+		restricts the number of connections that applications can attempt at once.</text>
 		<newline gap="8"/>
-		<text>Shareaza has limited network connections and set appropriate default values to
-		ensure proper operation, however performance may be reduced. Please visit the Shareaza
-		forums for further information, and up to date news.</text>
+		<text>Shareaza has limited network connections and set appropriate default values to 
+		ensure proper operation, however performance may be slightly reduced. Please visit the 
+		Shareaza forums for further information, and up to date news.</text>
 	</document>
 
 	<document name="GeneralHelp.AdultFilter">
