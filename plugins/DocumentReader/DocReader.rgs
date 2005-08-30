@@ -1,0 +1,69 @@
+HKCR
+{
+	Shareaza.DocReader.1 = s 'Document Metadata Reader and Thumbnailer'
+	{
+		CLSID = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+	}
+	Shareaza.DocReader = s 'Document Metadata Reader and Thumbnailer'
+	{
+		CLSID = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+		CurVer = s 'Shareaza.DocReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E9F51B1E-DB0F-4EEE-9B36-46151994C715} = s 'Document Metadata Reader and Thumbnailer'
+		{
+			ProgID = s 'Shareaza.DocReader.1'
+			VersionIndependentProgID = s 'Shareaza.DocReader'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{607C3F69-850D-4413-A81A-CF1C849BF387}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		Shareaza
+		{
+			Shareaza
+			{
+				Plugins
+				{
+					ImageService
+					{
+						ForceRemove val '.doc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xlt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xla' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ppt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ppa' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+					}
+					LibraryBuilder
+					{
+						ForceRemove val '.doc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xlt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xla' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ppt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ppa' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+					}
+				}
+			}
+		}
+	}
+}

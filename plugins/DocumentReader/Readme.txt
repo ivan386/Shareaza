@@ -1,0 +1,1 @@
+Place ImageServices.cpp to Shareaza codebase.
