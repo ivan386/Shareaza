@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Nederlands"
 		author="Jan-Willem Koornwinder (Thurstydog)"
-		updatedBy=" -=R@y-M@n=-"
+		updatedBy="-=R@y-M@n=-,Jonne, Joren, ceceboyken"
 		description="Shareaza Dutch Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.3.7"
+		version="2.2.0.0"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te selecteren."
@@ -622,8 +622,8 @@
 		</menu>
 		<menu text="_Venster">
 			<item id="ID_WINDOW_CASCADE" text="_Volledig Scherm"/>
-			<item id="ID_WINDOW_TILE_HORZ" text="_Horizontaal Betegelen"/>
-			<item id="ID_WINDOW_TILE_VERT" text="Verticaal _Betegelen"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="_Horizontaal Indelen"/>
+			<item id="ID_WINDOW_TILE_VERT" text="Verticaal _Indelen"/>
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="_Navigatiebalk Tonen"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Knoppenbalk Tonen"/>
@@ -635,7 +635,7 @@
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
 			<separator/>
 			<menu text="_Handleidingen">
-				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikershandleiding/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _Gebruikershandleiding"/>
 				<item id="ID_HELP_ROUTER" text="_Router Hulp"/>
 				<item id="ID_HELP_SECURITY" text="_Beveiligings Hulp"/>
 				<item id="ID_HELP_CODEC" text="_Codec Hulp"/>
@@ -645,7 +645,7 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.com"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_UPDATE" text="Laatste Nieuws"/>
+				<item id="ID_HELP_UPDATE" text="Recentste versie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 			</menu>
@@ -1524,7 +1524,7 @@
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Help</link>
-		<text align="middle">&#160;- Shareaza Gebruikers Handleiding en FAQ</text>
+		<text align="middle">&#160;- Shareaza Gebruikerhandleiding en FAQ</text>
 		<newline gap="18" indent="0"/>
 
 		<group id="5">
@@ -2002,7 +2002,7 @@
 	<document name="UploadHelp">
 		<text format="b">Upload Gedeelte</text>
 		<newline gap="8"/>
-		<text>Hier worden wachtrijen en uploads weergegeven. je kan iedere wachtrij uitvouwen
+		<text>Hier worden wachtrijen en uploads weergegeven. Je kan iedere wachtrij uitvouwen
 		met het + teken links en filteren wat er weergegeven wordt met de knop
 		rechts op de window toolbar</text>
 	</document>
@@ -2020,13 +2020,13 @@
 	</document>
 
 	<document name="GeneralHelp.DiskWriteFail">
-		<text format="b">Een vereiste folder is niet-lezen</text>
+		<text format="b">Een vereiste map is niet beschrijfbaar</text>
 		<newline gap="8"/>
-		<text>Er kan niet geschreven worden naar een schijf of een folder die Shareaza nodig heeft.</text>
+		<text>Er kan niet geschreven worden naar een schijf of een map die Shareaza nodig heeft.</text>
 		<newline gap="8"/>
-		<text>Een netwerkverbinding kan verbroken zijn of je hebt geen schrijf rechten
-		op de geselecteerde folder. Controleer de folders en rechten of verander
-		de tijdelijke bestands lokatie.</text>
+		<text>Een netwerkverbinding kan verbroken zijn of je hebt geen schrijfrechten
+		op de geselecteerde map. Controleer de mappen en rechten of wijzig
+		de tijdelijke bestandslocatie.</text>
 	</document>
 
 	<document name="GeneralHelp.ConnectionFail">
@@ -2128,25 +2128,25 @@
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Formuleer de zoekopdracht anders</text>
 		<newline gap="8"/>
-		<text>Deze zoekopdracht bezit blijkbaar enkel bekende bestandsextenties of geen opzoekbare
+		<text>Deze zoekopdracht bevat blijkbaar enkel bekende bestandsextenties of geen opzoekbare
 		woorden.</text>
 		<newline gap="8"/>
-		<text>Als je moeilijkheden ondervindt bij het maken van zoekopdrachten, bedenk dat het gelijkaardig is
-		aan een internetzoekopdracht. Specifieke termen of zinnen zijn het best- Unieke namen titels en
+		<text>Als je moeilijkheden ondervindt bij het uitvoeren van zoekopdrachten, bedenk dat het gelijkaardig is
+		aan een internetzoekopdracht. Specifieke termen of zinnen zijn het best- Unieke namen, titels en
 		sleutelwoorden.</text>
 		<newline gap="8"/>
-		<text>Standaardtermen kunnen ook niet effeciënt gebruikt worden in zoekopdrachtend en kan leiden tot slechte
+		<text>Standaardtermen kunnen ook niet effeciënt gebruikt worden in zoekopdrachten en kunnen leiden tot slechte
 		zoekresultaten en hoog bandbreedteverbruik tijdens de zoekopdracht.</text>
 		<newline gap="8"/>
-		<text>Meer help is beschikbaar op de Shareaza website.</text>
+		<text>Meer hulp is beschikbaar op de Shareaza website.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Deze zoekopdracht kan niet gestart worden</text>
 		<newline gap="8"/>
 		<text>De opgegeven zoekopdracht zou waarschijnlijk een groot aantal resultaten weergeven met
-		volwasseneninhoud, en dit is uitgeschakeld in de instellingen. Je zal de zoekopdracht opnieuw moeten formuleren,
-		of de filter moeten uitschakelen.</text>
+		inhoud voor volwassenen, en dit is uitgeschakeld in de instellingen. Je zal de zoekopdracht anders moeten formuleren,
+		of de filter uitschakelen.</text>
 		<newline gap="8"/>
 		<text>Om de filter uit te schakelen, ga naar Hulpmiddelen &gt; Instellingen &gt; Algemeen en vink de
 		 volwasseneninhoud filter uit.</text>
@@ -2270,16 +2270,16 @@
 	<tip id="ID_HITMONITOR_CLEAR" message="De buffer van de hit monitor wissen."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pauzeer het meekijken naar hits."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Op het netwerk zoeken naar de geselecteerde term."/>
-	<tip id="ID_HOSTCACHE_CONNECT" message="Verbinden met de geselecteerde gasth(e)r(en)."/>
-	<tip id="ID_HOSTCACHE_DISCONNECT" message="De verbinding verbreken met de geselecteerde bron(nen)."/>
+	<tip id="ID_HOSTCACHE_CONNECT" message="Verbinden met de geselecteerde gastheren."/>
+	<tip id="ID_HOSTCACHE_DISCONNECT" message="De verbinding verbreken met de geselecteerde gastheren."/>
 	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Toon eDonkey2000 servers."/>
 	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download een eDonkey2000 &quot;server.met&quot; bestand..."/>
-	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 cached bronnen tonen."/>
-	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 cached bronnen tonen."/>
+	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 cached gastheren tonen."/>
+	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 cached gastheren tonen."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 horizon hubs tonen."/>
-	<tip id="ID_HOSTCACHE_IMPORT" message="Importeer een lijst van bekende bronnen, bijvoorbeeld een &quot;server.met&quot; bestand..."/>
+	<tip id="ID_HOSTCACHE_IMPORT" message="Importeer een lijst van bekende gastheren, bijvoorbeeld een &quot;server.met&quot; bestand..."/>
 	<tip id="ID_HOSTCACHE_PRIORITY" message="Probeer eerst met deze server te verbinden, voordat met andere servers wordt verbonden."/>
-	<tip id="ID_HOSTCACHE_REMOVE" message="Verwijder de geselecteerde gastheren uit de Host Cache."/>
+	<tip id="ID_HOSTCACHE_REMOVE" message="Verwijder de geselecteerde gastheren uit de gastheren cache."/>
 	<tip id="ID_LIBRARY_ADD" message="Voeg een nieuwe map toe aan je bibliotheek..."/>
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Verwijder het geselecteerde album."/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Open het geselecteerde album."/>
@@ -2318,7 +2318,7 @@
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="De geselecteerde Torrent uitzaaien via BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Selecteer en bekijk alle mappen van je bibliotheek."/>
 	<tip id="ID_LIBRARY_SHARED_FILE" message="De geselecteerde bestanden al dan niet delen."/>
-	<tip id="ID_LIBRARY_SHARED_FOLDER" message="De geselecteer(de) mappen al dan niet delen."/>
+	<tip id="ID_LIBRARY_SHARED_FOLDER" message="De geselecteerde mappen al dan niet delen."/>
 	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Laat de mappen van je bibliotheek zien."/>
 	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organiseer je bibliotheek."/>
 	<tip id="ID_LIBRARY_UNLINK" message="Verwijder de geselecteerde bestanden uit het huidige album."/>
@@ -2340,32 +2340,32 @@
 	<tip id="ID_MEDIA_CLEAR" message="De afspeellijst compleet wissen."/>
 	<tip id="ID_MEDIA_CLOSE" message="Het huidige mediabestand afsluiten, waardoor geheugen vrijgemaakt wordt."/>
 	<tip id="ID_MEDIA_FULLSCREEN" message="In- of uitschakelen van het afspelen van de video in het volledige beeldscherm."/>
-	<tip id="ID_MEDIA_MUTE" message="De audio weergave afzwakken"/>
+	<tip id="ID_MEDIA_MUTE" message="Het geluid stilzetten"/>
 	<tip id="ID_MEDIA_NEXT" message="Ga naar het volgende bestand van de afspeellijst."/>
 	<tip id="ID_MEDIA_OPEN" message="Een media bestand of afspeellijst openen of afspelen..."/>
 	<tip id="ID_MEDIA_PAUSE" message="Pauzeer het afspelen van het mediabestand."/>
 	<tip id="ID_MEDIA_PLAY" message="Het huidige mediabestand afspelen."/>
-	<tip id="ID_MEDIA_PLAYLIST" message="Toon of verberg de afspeellijst editor."/>
+	<tip id="ID_MEDIA_PLAYLIST" message="Toon of verberg de afspeellijst."/>
 	<tip id="ID_MEDIA_PREVIOUS" message="Ga terug naar het vorige bestand van de afspeellijst."/>
-	<tip id="ID_MEDIA_RANDOM" message="In- of uitschakelen van het afspelen van afspeellijst in toevalstijl (shuffle)."/>
+	<tip id="ID_MEDIA_RANDOM" message="In- of uitschakelen van het afspelen van afspeellijst in willekeurige volgorde."/>
 	<tip id="ID_MEDIA_REMOVE" message="Verwijder de geselecteerde mediabestanden van de afspeellijst."/>
 	<tip id="ID_MEDIA_REPEAT" message="De huidige afspeellijst herhalen."/>
 	<tip id="ID_MEDIA_SAVE" message="De huidige afspeellijst opslaan als een bestand..."/>
 	<tip id="ID_MEDIA_SELECT" message="Het geselecteerde bestand afspelen."/>
 	<tip id="ID_MEDIA_SETTINGS" message="De media-instellingen aanpassen..."/>
 	<tip id="ID_MEDIA_SIZE_DISTORT" message="Bekijk de video in het volledige venster, met het risico van vervorming."/>
-	<tip id="ID_MEDIA_SIZE_FILL" message="Kies het beste formaat voor de video, gebaseerd op zijn breedte-hoogte verhouding."/>
+	<tip id="ID_MEDIA_SIZE_FILL" message="Kies het beste formaat voor de video, gebaseerd op de breedte-hoogte verhouding."/>
 	<tip id="ID_MEDIA_SIZE_ONE" message="Bekijk de video in het originele formaat."/>
-	<tip id="ID_MEDIA_SIZE_THREE" message="Bekijk de video in het driedubbele formaat."/>
-	<tip id="ID_MEDIA_SIZE_TWO" message="Bekijk de video in het dubbele formaat."/>
-	<tip id="ID_MEDIA_STATUS" message="Toon of verberg de statusregel van de media."/>
-	<tip id="ID_MEDIA_STOP" message="Stoppen met het huidige mediabestand af te spelen."/>
-	<tip id="ID_MEDIA_VIS" message="Kies een visualisatie plug-in voor de audio..."/>
+	<tip id="ID_MEDIA_SIZE_THREE" message="Bekijk de video in driedubbel formaat."/>
+	<tip id="ID_MEDIA_SIZE_TWO" message="Bekijk de video in dubbel formaat."/>
+	<tip id="ID_MEDIA_STATUS" message="Toon of verberg de statusregel van de mediaspeler."/>
+	<tip id="ID_MEDIA_STOP" message="Stoppen het afspelen van het huidige mediabestand."/>
+	<tip id="ID_MEDIA_VIS" message="Kies een visualisatie plugin voor audio..."/>
 	<tip id="ID_MEDIA_ZOOM" message="De zoom en de breedte-hoogte verhouding van de video aanpassen."/>
-	<tip id="ID_MONITOR_CLOSE" message="Sluit het monitor venster."/>
-	<tip id="ID_NEIGHBOURS_CHAT" message="Open een chat sessie met de geselecteerde gebruiker."/>
+	<tip id="ID_MONITOR_CLOSE" message="Sluit de monitor."/>
+	<tip id="ID_NEIGHBOURS_CHAT" message="Open een chatsessie met de geselecteerde gebruiker."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te verkrijgen tot de geselecteerde gastheer."/>
-	<tip id="ID_NEIGHBOURS_DISCONNECT" message="De verbinding met de geselecteerde bron(nen) verbreken."/>
+	<tip id="ID_NEIGHBOURS_DISCONNECT" message="De verbinding met de geselecteerde gastheren verbreken."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="De netwerkinstellingen aanpassen..."/>
 	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Een nieuw Pakket Dump venster openen om deze bron te controleren."/>
 	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Een nieuw Pakket Dump venster openen om binnenkomend verkeer van deze bron te controleren."/>
@@ -2380,42 +2380,42 @@
 	<tip id="ID_NETWORK_G1" message="Verbinden met het originele Gnutella netwerk."/>
 	<tip id="ID_NETWORK_G2" message="Verbinden met het Gnutella2 netwerk (zeer aanbevolen)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Begin een nieuwe zoekopdracht van het netwerk..."/>
-	<tip id="ID_SEARCH_CHAT" message="Open een chat sessie met de geselecteerde gebruiker."/>
+	<tip id="ID_SEARCH_CHAT" message="Open een chatsessie met de geselecteerde gebruiker."/>
 	<tip id="ID_SEARCH_CLEAR" message="De zoekresultaten wissen."/>
 	<tip id="ID_SEARCH_COLUMNS" message="Selecteer de te tonen metadata kolommen..."/>
-	<tip id="ID_SEARCH_COPY" message="Het URI kopiëren van het geselecteerde bestand."/>
+	<tip id="ID_SEARCH_COPY" message="De URI kopiëren van het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_DETAILS" message="Toon gedetailleerde informatie over het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Download het/de uitgekozen bestand(en)."/>
 	<tip id="ID_SEARCH_DOWNLOADNOW" message="Download de geselecteerde bestand(en) met voorrang."/>
-	<tip id="ID_SEARCH_FILTER" message="Filter de zoek resultaten met bepaalde woorden en voorwaarden..."/>
-	<tip id="ID_SEARCH_FILTER_RAW" message="Filter de zoekresultaten met enkele woorden en voorwaarden..."/>
+	<tip id="ID_SEARCH_FILTER" message="Filter de zoekresultaten met bepaalde woorden en voorwaarden..."/>
+	<tip id="ID_SEARCH_FILTER_RAW" message="Filter de zoekresultaten met bepaalde woorden en voorwaarden..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Het filteren van de resultaten ongedaan maken."/>
 	<tip id="ID_SEARCH_FOR_ALBUM" message="Zoek naar muziekbestanden van hetzelfde album als het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_FOR_ARTIST" message="Zoek naar muziekbestanden die dezelfde artist als het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_FOR_SERIES" message="Zoek naar videobestanden van dezelfde serie als het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_FOR_SIMILAR" message="Zoek naar bestanden die lijken op het geselecteerde bestand."/>
 	<tip id="ID_SEARCH_FOR_THIS" message="Zoek naar andere kopiëen van het geselecteerde bestand."/>
-	<tip id="ID_SEARCH_PANEL" message="Toon het zoekpaneel aan de linkerkant van het Zoek venster."/>
-	<tip id="ID_SEARCH_SEARCH" message="Zoek nog een keer op het netwerk..."/>
+	<tip id="ID_SEARCH_PANEL" message="Toon het zoekpaneel aan de linkerkant van het zoekvenster."/>
+	<tip id="ID_SEARCH_SEARCH" message="Zoek opnieuw op het netwerk..."/>
 	<tip id="ID_SEARCH_STOP" message="Stop met het ontvangen van resultaten in dit venster."/>
-	<tip id="ID_SEARCHMONITOR_CLEAR" message="De buffer van de zoek controle wissen."/>
-	<tip id="ID_SEARCHMONITOR_PAUSE" message="Pauzeer het meekijken naar zoekopdrachten."/>
-	<tip id="ID_SECURITY_ADD" message="Voeg een nieuwe regel toe aan de beveiligingsketen..." tip="Regel toevoegen"/>
+	<tip id="ID_SEARCHMONITOR_CLEAR" message="De buffer van de zoekmonitor wissen."/>
+	<tip id="ID_SEARCHMONITOR_PAUSE" message="Pauzeer het meekijken met zoekopdrachten."/>
+	<tip id="ID_SECURITY_ADD" message="Voeg een nieuwe beveilingsregel toe..." tip="Regel toevoegen"/>
 	<tip id="ID_SECURITY_BAN" message="De geselecteerde gastheer verbannen voor de duur van deze sessie."/>
 	<tip id="ID_SECURITY_EDIT" message="Wijzig de geselecteerde beveiligingsregel..."/>
 	<tip id="ID_SECURITY_EXPORT" message="Exporteer de geselecteerde beveiligingsregels naar een bestand..."/>
 	<tip id="ID_SECURITY_IMPORT" message="Importeer beveiligingsregels vanuit een bestand..."/>
 	<tip id="ID_SECURITY_MOVE_DOWN" message="Verplaats de geselecteerde beveiligingsregels naar beneden in de prioriteitenlijst."/>
 	<tip id="ID_SECURITY_MOVE_UP" message="Verplaats de geselecteerde beveiligingsregels naar boven in de prioriteitenlijst."/>
-	<tip id="ID_SECURITY_POLICY_ACCEPT" message="De beveiliging zodanig instellen, dat als standaard alle bronnen geaccepteerd worden."/>
-	<tip id="ID_SECURITY_POLICY_DENY" message="De beveiliging zodanig instellen, dat als standaard alle bronnen worden geweigerd."/>
+	<tip id="ID_SECURITY_POLICY_ACCEPT" message="De beveiliging zodanig instellen, dat standaard alle bronnen geaccepteerd worden."/>
+	<tip id="ID_SECURITY_POLICY_DENY" message="De beveiliging zodanig instellen, dat standaard alle bronnen worden geweigerd."/>
 	<tip id="ID_SECURITY_REMOVE" message="Verwijder de geselecteerde beveiligingsregel."/>
-	<tip id="ID_SECURITY_RESET" message="De treffer tellers terugzetten voor de geselecteerde regels." tip="Teller terugzetten"/>
+	<tip id="ID_SECURITY_RESET" message="De tellers terugzetten voor de geselecteerde regels." tip="Teller terugzetten"/>
 	<tip id="ID_SYSTEM_CLEAR" message="Het statuslog wissen."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Geef elke regel een tijdstempel."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Een uitgebreider log weergeven van de systeemactiviteiten."/>
 	<tip id="ID_TAB_CONNECT" message="Met het netwerk verbinden of de verbinding verbreken."/>
-	<tip id="ID_TAB_HELP" message="Krijg hulp over het gebruiken van Shareaza."/>
+	<tip id="ID_TAB_HELP" message="Krijg hulp over het gebruik van Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Ga terug naar het Shareaza Home venster."/>
 	<tip id="ID_TAB_LIBRARY" message="Je lokale bestandenbibliotheek openen en beheren."/>
 	<tip id="ID_TAB_MEDIA" message="Audio- en videobestanden uit je bibliotheek afspelen."/>
@@ -2436,7 +2436,7 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Toon legenda."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Selecteer en configureer elementen voor de grafiek..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Open een nieuw grafiek venster..."/>
-	<tip id="ID_TRANSFERS_CHAT" message="Open een chat sessie met de geselecteerde gebruiker."/>
+	<tip id="ID_TRANSFERS_CHAT" message="Open een chatsessie met de geselecteerde gebruiker."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Benader de geselecteerde downloadbron(nen) en probeer te downloaden."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="De geselecteerde download(s) afbreken."/>
 	<tip id="ID_TRANSFERS_FORGET" message="De geselecteerde download(s) afbreken en de bron(nen) vergeten."/>
@@ -2578,7 +2578,7 @@
 	<string id="8162" value="Verbonden, het bekijken is aangevraagd..."/>
 	<string id="8163" value="Antwoord om te bekijken wordt gedownload (%2.f%%)..."/>
 	<string id="8164" value="Niet mogelijk om te verbinden met gastheer voor het bekijken van de gebruiker."/>
-	<string id="8165" value="Niet mogelijk om de bestandenlijst te downloaden.  Deze gastheer ondersteunt misschien niet het bekijken."/>
+	<string id="8165" value="Niet mogelijk om de bestandenlijst te downloaden. Deze gastheer ondersteunt misschien het bekijken niet."/>
 	<string id="8166" value="Op dit netwerk zoeken:"/>
 	<string id="8167" value="Alle Netwerken"/>
 	<string id="8176" value="Doorzoek het Shareaza netwerk"/>
@@ -2607,7 +2607,7 @@
 	<string id="8240" value="Shareaza verplaatst de download:"/>
 	<string id="8241" value="Shareaza is de download aan het controleren op fouten:"/>
 	<string id="8243" value="Hoeveelheid geüpload:"/>
-	<string id="8288" value="Bezig Met verkennen Van Jouw Shareaza Bibliotheek"/>
+	<string id="8288" value="Bezig met verkennen van je Shareaza Bibliotheek"/>
 	<string id="8289" value="Bezig met verkennen van "/>
 	<string id="8290" value="Bezig met verkennen van de inhoud van %i mappen"/>
 	<string id="8291" value="Meerdere mappen"/>
@@ -2624,7 +2624,7 @@
 	<string id="8311" value="Je hebt dit bestand al in je bibliotheek."/>
 	<string id="8312" value="Je hebt dit bestand al in je downloadlijst."/>
 	<string id="8313" value="Dit bestand is spam."/>
-	<string id="8314" value="Je hebt dit bestand al een keer gedownload en verwijderd."/>
+	<string id="8314" value="Je hebt dit bestand al eens gedownload en verwijderd."/>
 	<string id="8315" value="Op de zwarte lijst: "/>
 	<string id="8316" value="Hits"/>
 	<string id="8317" value="Uploads"/>
@@ -2645,7 +2645,7 @@
 	<string id="8332" value="Deze bron zit achter een firewall"/>
 	<string id="8333" value="deze bron kan instabiel zijn"/>
 	<string id="8334" value="Bronnen voor dit bestand zijn op dit moment bezig"/>
-	<string id="8335" value="Bronnen voor dit bestand zitten achter firewalls"/>
+	<string id="8335" value="Bronnen voor dit bestand zitten achter een firewall"/>
 	<string id="8336" value="Bronnen voor dit bestand kunnen instabiel zijn"/>
 	<string id="16064" value="Opstarten van het netwerkcentrum van Shareaza..."/>
 	<string id="16065" value="Kan geen contact maken met %s poort %i voor binnenkomende verbindingen. Binnenkomende verbindingen zijn niet mogelijk."/>
@@ -3095,7 +3095,7 @@
 	<string id="20000" value="Geen URN beschikbaar"/>
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Veranderen van leesrichting vereist een herstart van Shareaza.\nje zal Shareaza zelf opnieuw moeten starten. Nu afsluiten?"/>
-	<string id="20004" value="Rechts-naar links talenworden niet ondersteund door jouw OS."/>
+	<string id="20004" value="Rechts-naar links talenworden niet ondersteund door dit besturingssysteem."/>
 	<string id="20100" value="Verbindt..."/>
 	<string id="20101" value="Vraagt Aan..."/>
 	<string id="20102" value="Antwoordt..."/>
@@ -3174,7 +3174,7 @@
 		<control caption="_Zoeken:"/>
 		<control caption="Multi-bron bestanden altijd uitbreiden"/>
 		<control caption="Ga bij nieuwe d/l naar het venster Verkeer"/>
-		<control caption="Verberg de zijbalk na het starten van de zoekopdracht"/>
+		<control caption="Verberg de zijbalk tijdens het zoeken"/>
 		<control caption="Filter volwassen inhoud uit zoekresultaten"/>
 		<control caption="_Tooltips:"/>
 		<control/>
@@ -3365,7 +3365,7 @@
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netwerken">
 		<control caption="Shareaza kan met meerdere P2P netwerken tegelijkertijd verbinden.  Je kunt hier selecteren met welke P2P netwerken je verbinding wilt maken en vervolgens voor elk netwerk de specifieke instellingen aanpassen."/>
 		<control caption="Gnutella2 Netwerk:"/>
-		<control caption="Het Gnutella2 netwerk is Shareaza's belangrijkste netwerk, het biedt meer eigenschappen en vermogen dan enig ander P2P net.  Zeer aanbevolen."/>
+		<control caption="Het Gnutella2 netwerk is Shareaza's belangrijkste netwerk, het biedt meer eigenschappen en vermogen dan enig ander P2P-netwerk. Aanbevolen."/>
 		<control caption="Verbinden met Gnutella2 (G2)"/>
 		<control caption="Gnutella2 Instellingen"/>
 		<control caption="eDonkey2000 Netwerk:"/>
@@ -3604,7 +3604,7 @@
 
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 Downloads Importeren">
 		<control/>
-		<control caption="Shareaza heeft ontdekt dat je een ander eDonkey2000 programma op jouw computer hebt geïnstalleerd.  Wil je de niet afgeronde downloads importeren naar Shareaza?"/>
+		<control caption="Shareaza heeft ontdekt dat je een ander eDonkey2000 programma op deze computer hebt geïnstalleerd. Wil je de niet afgeronde downloads importeren naar Shareaza?"/>
 		<control caption="Ja"/>
 		<control caption="Nee|Annuleren"/>
 		<control/>
@@ -3612,7 +3612,7 @@
 	</dialog>
 
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welkom bij Shareaza [7 van 7]">
-		<control caption="Dat was alles!  Shareaza is nu geconfigureerd om met jouw computer te werken."/>
+		<control caption="Dat was alles!  Shareaza is nu geconfigureerd om met je computer te werken."/>
 		<control caption="Als je ooit je instellingen dient te veranderen, kun je deze SnelStart Assistent nogmaals starten door de optie te selecteren vanuit het Hulpmiddelen menu."/>
 		<control caption="Nadat je op &quot;Einde&quot; hebt gedrukt, kun je je verbinden met de door jou geselecteerde netwerken en starten met zoeken en downloaden van bestanden."/>
 		<control caption="Verbinden met het netwerk nadat ik de assistent afgesloten heb"/>
@@ -3686,7 +3686,7 @@
 		<control caption="_Voorvertoning"/>
 		<control/>
 		<control caption="_Selecteer:"/>
-		<control caption="Andere Gnutella gebruikers die je profiel en gedeelde bestanden bekijken, zullen je avatar zien.  Zelf gemaakte avatars moeten 128x128 pixels zijn en kunnen elk door jouw PC ondersteund afbeeldingsbestand zijn."/>
+		<control caption="Andere Gnutella gebruikers die je profiel en gedeelde bestanden bekijken, zullen je avatar zien.  Zelf gemaakte avatars moeten 128x128 pixels zijn en kunnen elk door deze PC ondersteund afbeeldingsbestand zijn."/>
 		<control caption="_Zoeken..."/>
 		<control caption="_Verwijderen"/>
 	</dialog>
