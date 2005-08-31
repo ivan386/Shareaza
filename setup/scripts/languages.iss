@@ -555,8 +555,8 @@ fi.dialog_firewall=Asentaja epäonnistui lisätessään Shareazaa Windowsiin Firewal
 fi.page_viruswarning_text=Kun käytät internetiä, sinun tulee aina varmistaa että sinulla on viimeisimmät päivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Löydät hyvän listan hyvistä virusohjelmista ja turvallisuusvinkkejä seuraavista linkeistä:
 fi.page_viruswarning_title=Virus Varoitus
 fi.page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
-fi.CreateDesktopIcon=Display a &desktop icon
-fi.CreateQuickLaunchIcon=Display a &Quick Launch icon
+fi.CreateDesktopIcon=Luo kuvake työpöydälle
+fi.CreateQuickLaunchIcon=Luo kuvake pikakäynnistyspalkkiin
 ; Hebrew
 heb.components_plugins=úåñôéí
 heb.components_skins=îòèôåú
