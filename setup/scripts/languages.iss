@@ -5,24 +5,26 @@
 ; Use compiler's built in ISL file to patch up holes in ISL collection and specify localized license files
 ; Note: first language specified is default > English
 
-Name: "en"; MessagesFile: "compiler:Default.isl,setup\isl\default.isl"; LicenseFile: "setup/license/default.rtf"
-Name: "nl"; MessagesFile: "compiler:Default.isl,setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"
-Name: "lt"; MessagesFile: "compiler:Default.isl,setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
-Name: "de"; MessagesFile: "compiler:Default.isl,setup\isl\german.isl"; LicenseFile: "setup/license/German.rtf"
-Name: "pt"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-std.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
-Name: "it"; MessagesFile: "compiler:Default.isl,setup\isl\italian.isl"; LicenseFile: "setup/license/italian.rtf"
-Name: "no"; MessagesFile: "compiler:Default.isl,setup\isl\norwegian.isl"; LicenseFile: "setup/license/default.rtf"
-Name: "af"; MessagesFile: "compiler:Default.isl,setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
-Name: "br"; MessagesFile: "compiler:Default.isl,setup\isl\portuguese-braz.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
-Name: "fr"; MessagesFile: "compiler:Default.isl,setup\isl\french.isl"; LicenseFile: "setup/license/default.rtf"
-Name: "es"; MessagesFile: "compiler:Default.isl,setup\isl\spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
-Name: "ru"; MessagesFile: "compiler:Default.isl,setup\isl\russian.isl"; LicenseFile: "setup/license/russian.rtf"
-Name: "gr"; MessagesFile: "compiler:Default.isl,setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
-Name: "hu"; MessagesFile: "compiler:Default.isl,setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
-Name: "chs"; MessagesFile: "compiler:Default.isl,setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
-Name: "sv"; MessagesFile: "compiler:Default.isl,setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
-Name: "fi"; MessagesFile: "compiler:Default.isl,setup\isl\finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
-Name: "heb"; MessagesFile: "compiler:Default.isl,setup\isl\hebrew.isl"; LicenseFile: "setup/license/hebrew.rtf"
+Name: "en"; MessagesFile: "compiler:Default.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "nl"; MessagesFile: "setup\isl\dutch.isl"; LicenseFile: "setup/license/dutch.rtf"
+Name: "lt"; MessagesFile: "setup\isl\lithuanian.isl"; LicenseFile: "setup/license/lithuanian.rtf"
+Name: "de"; MessagesFile: "setup\isl\german.isl"; LicenseFile: "setup/license/German.rtf"
+Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "setup/license/italian.rtf"
+Name: "no"; MessagesFile: "setup\isl\norwegian.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "af"; MessagesFile: "setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
+Name: "br"; MessagesFile: "setup\isl\portuguese-braz.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "fr"; MessagesFile: "setup\isl\french.isl"; LicenseFile: "setup/license/default.rtf"
+Name: "es"; MessagesFile: "setup\isl\spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "setup/license/russian.rtf"
+Name: "gr"; MessagesFile: "setup\isl\greek.isl"; LicenseFile: "setup/license/greek.rtf"
+Name: "hu"; MessagesFile: "setup\isl\hungarian.isl"; LicenseFile: "setup/license/hungarian.rtf"
+Name: "chs"; MessagesFile: "setup\isl\chinese-simp.isl"; LicenseFile: "setup/license/chinese.rtf"
+Name: "sv"; MessagesFile: "setup\isl\swedish.isl"; LicenseFile: "setup/license/swedish.rtf"
+Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
+Name: "heb"; MessagesFile: "setup\isl\hebrew.isl"; LicenseFile: "setup/license/hebrew.rtf"
+Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "setup/license/polish.rtf"
+;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 
 [Files]
 #ifndef debug
@@ -64,7 +66,11 @@ Source: "Remote\sv\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Finnish
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 ; Hebrew
-Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
+; Polish
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
+; Czech
+;Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -105,6 +111,10 @@ Source: "setup\license\swedish.rtf"; DestDir: "{app}\Uninstall"; DestName: "lice
 Source: "setup\license\finnish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 ; Hebrew
 Source: "setup\license\hebrew.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
+; Polish
+Source: "setup\license\polish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
+; Czech
+;Source: "setup\license\czech.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -145,12 +155,16 @@ Source: "setup\filter\swedish.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: fi; Components: language
 ; Hebrew
 Source: "setup\filter\hebrew.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: heb; Components: language
+; Polish
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
+; Czech
+;Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 #endif
 
 [CustomMessages]
 ; This section specifies phrazes and words not specified in the ISL files
 ; Avoid customizing the ISL files since they will change with each version of Inno Setup.
-; English:
+; English
 components_plugins=Plugins
 components_skins=Skins
 components_languages=Languages
@@ -171,10 +185,12 @@ dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease ad
 page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
 page_viruswarning_title=Virus Warning
 page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+CreateDesktopIcon=Display a &desktop icon
+CreateQuickLaunchIcon=Display a &Quick Launch icon
 page_viruswarning_link=http://www.shareaza.com/securityhelp
 page_viruswarning_destination=http://www.shareaza.com/securityhelp/
 ; Don't copy these last 2 messages, they are just links.
-; Dutch:
+; Dutch
 nl.components_plugins=Plugins
 nl.components_skins=Skins
 nl.components_languages=Talen
@@ -195,7 +211,9 @@ nl.dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de W
 nl.page_viruswarning_text=Als u het internet gebruikt moet u een recente virusscanner gebruiken om u te beschermen tegen virussen, wormen en andere kwaadaardige programma's. U kan een lijst van virusscanners en andere veiligheidstips vinden om uw computer the beschermen door deze link te volgen:
 nl.page_viruswarning_title=Virus Waarschuwing
 nl.page_viruswarning_subtitle=Heeft u een antivirus programma geïnstalleerd?
-; Lithuanian:
+nl.CreateDesktopIcon=Toon een snelkoppeling op het &bureaublad
+nl.CreateQuickLaunchIcon=Toon een snelkoppeling op de &Snel Starten werkbalk
+; Lithuanian
 lt.components_plugins=Papildiniai
 lt.components_skins=Apvalkalai
 lt.components_languages=Kalbos
@@ -216,6 +234,8 @@ lt.dialog_firewall=Ádiegimo programai nepavyko pridëti „Shareaza“ prie Windows u
 lt.page_viruswarning_text=Visada, kai naudojatës Internetu, ásitikinkite, jog turite naujausià virusø skenerá, tam kad bûtumëte apsaugoti nuo trojanø, kirminø ir kitokiø kenkëjiğkø programø. Jûs galite rasti gerø virusø skeneriø sàrağà ir kitokius kompiuterio apsaugojimo patarimus nuëjæ ğiuo adresu:
 lt.page_viruswarning_title=Áspëjimas apie virusus
 lt.page_viruswarning_subtitle=Ar Jûs turite ásidiegæ antivirusinæ programà?
+lt.CreateDesktopIcon=Rodyti piktogramà &Darbalaukyje
+lt.CreateQuickLaunchIcon=Rodyti Sparèiosios &Paleisties piktogramà
 ; German
 de.components_plugins=Plugins
 de.components_skins=Skins
@@ -237,6 +257,8 @@ de.dialog_firewall=Setup konnte Shareaza nicht zur Windows Firewall hinzufügen.%
 de.page_viruswarning_text=Wenn Sie das Internet benutzen, sollten Sie stets einen aktuellen Virenscanner installiert haben, der ihren Computer vor Trojanern, Würmern und anderen bösartigen Programmen beschützt. Sie finden eine Liste guter Virenscanner und andere Tipps, wie Sie ihren Computer schützen können, unter folgendem Link:
 de.page_viruswarning_title=Virenwarnung
 de.page_viruswarning_subtitle=Haben Sie ein Antivirenprogramm installiert?
+de.CreateDesktopIcon=&Symbol auf dem Desktop anzeigen
+de.CreateQuickLaunchIcon=&Quick Launch Symbol anzeigen
 ; Portuguese std
 pt.components_plugins=Plugins
 pt.components_skins=Peles
@@ -258,6 +280,8 @@ pt.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease
 pt.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
 pt.page_viruswarning_title=Virus Warning
 pt.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+pt.CreateDesktopIcon=Criar ícone no &Ambiente de Trabalho
+pt.CreateQuickLaunchIcon=Criar ícone na barra de Iniciação &Rápida
 ; Italian
 it.components_plugins=Plugins
 it.components_skins=Skins
@@ -279,6 +303,8 @@ it.dialog_firewall=Impossibile aggiungere Shareaza a Windows Firewall.%nAggiungi
 it.page_viruswarning_text=Quando usi internet, dovresti sempre assicurarti di aver un antivirus aggiornato per proteggerti dai trojan, worm e dagli altri programmi malevoli. Puoi trovare una lista di buoni antivirus e altri suggerimenti di sicurezza per proteggere il tuo computer seguendo questo link:
 it.page_viruswarning_title=Attenzione ai virus
 it.page_viruswarning_subtitle=Hai installato un programma antivirus?
+it.CreateDesktopIcon=Visualizza un'icona sul &desktop
+it.CreateQuickLaunchIcon=Visualizza un'icona in &Avvio veloce
 ; Norwegian
 no.components_plugins=Plugins
 no.components_skins=Skins
@@ -300,6 +326,8 @@ no.dialog_firewall=Installasjonen klarte ikke å lage unntak for Shareaza i Windo
 no.page_viruswarning_text=Når du bruker internett bør du alltid ha et oppdatert antivirus-program, for å beskytte deg fra trojaner, ormer, og annen skadelig programvare. Du kan finne en liste over gode antivirus-prgrammer og andre sikkerhetstips, for å beskytte din datamaskin, ved å følge denne linken:
 no.page_viruswarning_title=Virusadvarsel
 no.page_viruswarning_subtitle=Har du et antivirus-program installert?
+no.CreateDesktopIcon=Vis ikon på &skrivebordet
+no.CreateQuickLaunchIcon=Vis et &Hurtigstarts-ikon
 ; Afrikaans
 af.components_plugins=Inpropprogramme
 af.components_skins=Omslagte
@@ -321,6 +349,8 @@ af.dialog_firewall=Die Opsteller kon nie Shareaza by die Windows netskans uitson
 af.page_viruswarning_text=Maak altyd seker dat jy 'n opgedateerde anti-virus program geïnstalleer het wanneer jy die internet gebruik, om jou rekenaar te beskerm teen virusse, wurms, en ander ongewenste programme. Jy kan 'n lys van goeie anti-virus programme en ander sekuriteitswenke oor hoe om jou rekenaar te beskerm verkry deur die volgende skakel te volg:
 af.page_viruswarning_title=Virus Waarskuwing
 af.page_viruswarning_subtitle=Het jy 'n Anti-Virus program geïnstalleer?
+af.CreateDesktopIcon=Vertoon 'n &werkskerm ikoon
+af.CreateQuickLaunchIcon=Vertoon 'n &Quick Launch ikoon
 ; Portuguese braz
 br.components_plugins=Plugins
 br.components_skins=Peles
@@ -342,6 +372,8 @@ br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza à lista de
 br.page_viruswarning_text=Ao usar a Internet você deve sempre manter seu Anti-Vírus atualizado, para proteger contra vírus, worms, cavalos-de-tróia e outros programas perigosos. Você encontra uma lista de bons anti-vírus e dicas de segurança entrando no seguinte endereço:
 br.page_viruswarning_title=Aviso sobre Vírus
 br.page_viruswarning_subtitle=Você tem um programa anti-vírus instalado?
+br.CreateDesktopIcon=Mostrar um ícone na &área de trabalho
+br.CreateQuickLaunchIcon=Mostrar um ícone na barra de &Inicialização Rápida
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
@@ -363,6 +395,8 @@ fr.dialog_firewall=L'installation n'a pas pu ajouter Shareaza au Pare-feu Window
 fr.page_viruswarning_text=Lorsque vous utilisez internet, vous devriez toujours vous assurer que vous avez un scanner de virus à jour pour vous protéger des troyens (trojans), vers (worms), et autres programmes malveillants. Vous pouvez trouver une liste de bons antivirus et conseils de sécurité pour protéger votre ordinateur en suivant ce lien:
 fr.page_viruswarning_title=Avertissement sur les virus
 fr.page_viruswarning_subtitle=Avez-vous un antivirus installé?
+fr.CreateDesktopIcon=Afficher un raccourci sur le &Bureau
+fr.CreateQuickLaunchIcon=Afficher un raccouri dans la barre de &Lancement rapide
 ; Spanish
 es.components_plugins=Plugins
 es.components_skins=Skins
@@ -384,6 +418,8 @@ es.dialog_firewall=La instalación fallo al agregar la excepción de Shareaza al c
 es.page_viruswarning_text=Cuando estas usando Internet, debes siempre asegurarte que tienes un antivirus actualizado hasta la fecha para protegerte de troyanos, gusanos, y otros programas maliciosos. Puedes encontrar una lista de buenos antivirus y sugerencias de seguridad para proteger tu computadora en la siguiente dirección:
 es.page_viruswarning_title=Peligro de Virus
 es.page_viruswarning_subtitle=¿Tienes un programa antivirus instalado?
+es.CreateDesktopIcon=Mostrar/Quitar icono de &Escritorio
+es.CreateQuickLaunchIcon=Mostrar/Quitar icono de &Inicio Rápido
 ; Russian
 ru.components_plugins=Ìîäóëè
 ru.components_skins=Øêóğêè
@@ -405,6 +441,8 @@ ru.dialog_firewall=Ïğîãğàììà óñòàíîâêè íå ñìîãëà äîáàâèòü Shareaza â ñïèñîê èñêë
 ru.page_viruswarning_text=Âñåãäà, êîãäà ïîëüçóåòåñü èíòåğíåòîì, óäîñòîâåğüòåñü, ÷òî ó Âàñ åñòü íîâåéøèé ñêàíåğ äëÿ âèğóñîâ, ÷òîáû çàùèòèòü êîìïüşòåğ îò òğîÿíîâ, ÷åğâåé è äğóãèõ âğåäèòåëüñêèõ ïğîãğàìì. Âû ìîæåòå íàéòè ñïèñîê õîğîøèõ ñêàíåğîâ äëÿ âèğóñîâ è äğóãèå ñîâåòû î çàùèòå êîìïüşòåğà ïî ıòîìó àäğåñó:
 ru.page_viruswarning_title=Ïğåäîñòåğåæåíèå î âèğóñàõ
 ru.page_viruswarning_subtitle=Èìååòå ëè Âû óñòàíîâëåííóş àíòèâèğóñíóş ïğîãğàììó?
+ru.CreateDesktopIcon=Ïîêàçûâàòü çíà÷îê íà &Ğàáî÷åì ñòîëå
+ru.CreateQuickLaunchIcon=Ïîêàçûâàòü çíà÷îê â &Ïàíåëè áûñòğîãî çàïóñêà
 ; Greek
 gr.components_plugins=Plugins
 gr.components_skins=Skins
@@ -426,6 +464,8 @@ gr.dialog_firewall=Ç åãêáôÜóôáóç ôïõ ğñïãñÜììáôïò áğİôõ÷å íá ğñïóèİóåé ôï Sharea
 gr.page_viruswarning_text=¼ôáí ÷ñçóéìïğïéåßôå ôï internet, èá ğñİğåé ğÜíôá íá İ÷åôå İíá ğñüãñáììá ğñïóôáóßáò ãéá éïıò åíçìåñùìİíï ãéá íá óáò ğñïóôáôåıåé áğï áõôïıò êáé Üëëá åğéêßíäõíá ğñïãñÜììáôá. Ìğïñåßôå íá âñåßôå ìéá ëßóôá ìå êáëÜ ğñïãñÜììáôá ğñïóôáóßáò ãéá éïıò êáé Üëëá âïçèŞìáôá ãéá íá ğñïóôáôİøåôå ôïí õğïëïãéóôŞ óáò áêïëïõèşíôáò áõôüí ôïí óıíäåóìï:
 gr.page_viruswarning_title=Ğñïåéäïğïßçóç ãéá éü
 gr.page_viruswarning_subtitle=¸÷åôå İíá ğñüãñáììá ğñïóôáóßáò ãéá éïıò åãêáôåóôçìİíï?
+gr.CreateDesktopIcon=ÅìöÜíéóå ôï &åéêïíßäéï óôçí åğéöÜíåéá åñãáóßáò
+gr.CreateQuickLaunchIcon=ÅìöÜíéóå İíá å&éêïíßäéï ÃñŞãïñçò Åêêßíçóçò
 ; Hungarian
 hu.components_plugins=Pluginek
 hu.components_skins=Kinézetek
@@ -447,6 +487,8 @@ hu.dialog_firewall=A telepíto nem tudta hozzáadni a Shareazát a Windows tuzfal k
 hu.page_viruswarning_text=Ha az internetet használod, mindig legyen föltelepítve egy, a legfrissebb vírusadatbázissal rendelkezõ antivírus program, ami megvéd a férgektõl, trójai és egyéb kártékony programoktól. Ha követed ezt a linket, sok jó víruskeresõt találhatsz és hasznos tippeket kaphatsz a számítógép védelmérõl:
 hu.page_viruswarning_title=Vírusveszély
 hu.page_viruswarning_subtitle=Van feltelepített antivírus programod?
+hu.CreateDesktopIcon=Ikon létrehozása az &Asztalon
+hu.CreateQuickLaunchIcon=Ikon létrehozása a &Gyorsindítás eszköztáron
 ; Chinese Simp
 chs.components_plugins=²å¼ş
 chs.components_skins=Æ¤·ô
@@ -468,6 +510,8 @@ chs.dialog_firewall=°²×°Ìí¼Ó Shareaza µ½ Windows ·À»ğÇ½Ê§°Ü¡£%nÇë½« Shareaza ÊÖ¶
 chs.page_viruswarning_text=ÔÚÊÔÓÃ»¥ÁªÍøÊ±£¬ÄúĞèÒªÈ·¶¨ÄúÓµÓĞ×îĞÂµÄ²¡¶¾É¨ÃèÈí¼şÒÔ±£»¤ÄúÃâÊÜÄ¾Âí¡¢Èä³æºÍÆäËû¶ñÒâ³ÌĞòµÄÇÖº¦¡£Äú¿ÉÒÔÔÚÒÔÏÂÁ´½ÓÖĞÕÒµ½½ÏºÃµÄ²¡¶¾É¨ÃèÈí¼şµÄÁĞ±íÒÔ¼°ÆäËû±£»¤ÄúµÄ¼ÆËã»úµÄ°²È«½¨Òé:
 chs.page_viruswarning_title=²¡¶¾¾¯¸æ
 chs.page_viruswarning_subtitle=Äú°²×°ÁË·À²¡¶¾Èí¼şÁËÂğ£¿
+chs.CreateDesktopIcon=ÏÔÊ¾×ÀÃæÍ¼±ê(&D)
+chs.CreateQuickLaunchIcon=ÏÔÊ¾¿ìËÙÆô¶¯À¸Í¼±ê(&Q)
 ; Swedish
 sv.components_skins=Skinn
 sv.components_languages=Språk
@@ -488,6 +532,8 @@ sv.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease
 sv.page_viruswarning_text=När du använder internet ska du alltid försäkra dig om att du har ett uppdaterat antivirusprogram som skyddar dig mot trojaner, maskar och andra skadliga program. Här finns en lista på bra antivirusprogram och andra säkerhetstips för att skydda din dator:
 sv.page_viruswarning_title=Virusvarning
 sv.page_viruswarning_subtitle=Har du ett antivirusprogram installerat?
+sv.CreateDesktopIcon=Skapa en ikon på srivbordet
+sv.CreateQuickLaunchIcon=Skapa en ikon i Snabbstartfältet
 ; Finnish
 fi.components_plugins=Laajennukset
 fi.components_skins=Ulkoasut
@@ -509,6 +555,8 @@ fi.dialog_firewall=Asentaja epäonnistui lisätessään Shareazaa Windowsiin Firewal
 fi.page_viruswarning_text=Kun käytät internetiä, sinun tulee aina varmistaa että sinulla on viimeisimmät päivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Löydät hyvän listan hyvistä virusohjelmista ja turvallisuusvinkkejä seuraavista linkeistä:
 fi.page_viruswarning_title=Virus Varoitus
 fi.page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
+fi.CreateDesktopIcon=Display a &desktop icon
+fi.CreateQuickLaunchIcon=Display a &Quick Launch icon
 ; Hebrew
 heb.components_plugins=úåñôéí
 heb.components_skins=îòèôåú
@@ -530,3 +578,51 @@ heb.dialog_firewall=ääú÷ğä ğëùìä ìäåñéó àú ùøæä àì çåîú äàù%nàğà äåñó àú ùøæä ìø
 heb.page_viruswarning_text=ëùàú/ä îùúîù áàéğèøğè òìééê úîéã ìååãà ùîåú÷ï àöìê àğèé-åéøåñ îòåãëï ìäâğä îôğé åéøåñéí/úåìòéí/øåâìåú, ìøùéîä ùì àğèé-åéøåñéí åèéôéí áğåùà àáèçä ôğä ì÷éùåø äáà:
 heb.page_viruswarning_title=äúøàú åéøåñ
 heb.page_viruswarning_subtitle=?äàí éù ìê úåëğú àğèé-åéøåñ îåú÷ğú
+heb.CreateDesktopIcon= äöâ ñîì òì ù&åìçï òáåãä
+heb.CreateQuickLaunchIcon=äöâ ñîì òì ä&ôòìä îäéøä
+; Polish
+pl.components_plugins=Plugins
+pl.components_skins=Skins
+pl.components_languages=Languages
+pl.tasks_allusers=All users
+pl.tasks_selectusers=Install %1 for:
+pl.tasks_currentuser=%1 only
+pl.tasks_multisetup=Enable multi-user support
+pl.tasks_firewall=Add an exception to the Windows Firewall
+;pl.tasks_deleteoldsetup=Delete old installers
+pl.run_skinexe=Running skin installation...
+pl.reg_incomingchat=Incoming chat message
+pl.reg_apptitle=Shareaza Ultimate File Sharing
+pl.icons_license=License
+pl.icons_uninstall=Uninstall
+pl.icons_downloads=Downloads
+pl.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+pl.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+pl.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+pl.page_viruswarning_title=Virus Warning
+pl.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+pl.CreateDesktopIcon=Display a &desktop icon
+pl.CreateQuickLaunchIcon=Display a &Quick Launch icon
+; Czech
+;cz.components_plugins=Plugins
+;cz.components_skins=Skins
+;cz.components_languages=Languages
+;cz.tasks_allusers=All users
+;cz.tasks_selectusers=Install %1 for:
+;cz.tasks_currentuser=%1 only
+;cz.tasks_multisetup=Enable multi-user support
+;cz.tasks_firewall=Add an exception to the Windows Firewall
+;;cz.tasks_deleteoldsetup=Delete old installers
+;cz.run_skinexe=Running skin installation...
+;cz.reg_incomingchat=Incoming chat message
+;cz.reg_apptitle=Shareaza Ultimate File Sharing
+;cz.icons_license=License
+;cz.icons_uninstall=Uninstall
+;cz.icons_downloads=Downloads
+;cz.dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+;cz.dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+;cz.page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+;cz.page_viruswarning_title=Virus Warning
+;cz.page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+;cz.CreateDesktopIcon=Display a &desktop icon
+;cz.CreateQuickLaunchIcon=Display a &Quick Launch icon
