@@ -172,7 +172,6 @@ WizardSelectProgramGroup=בחר תיקיית תפריט התחל
 SelectStartMenuFolderDesc=?היכן על ההתקנה ליצור את קישורי הקיצור לתוכנה
 SelectStartMenuFolderLabel3=תוכנית ההתקנה תיצור את קיצורי הדרך בתיקיית תפריט התחל הבאה
 SelectStartMenuFolderBrowseLabel='להמשך לחץ על 'הבא' אם תרצה לבחור תיקייה אחרת לחץ על 'סייר
-NoIconsCheck=א&ל תיצור קיצורי דרך
 MustEnterGroupName=אתה מוכרח להכניס שם תיקייה
 GroupNameTooLong=שם או כתובת התיקייה ארוך מדי
 InvalidGroupName=שם התיקייה אינו חוקי

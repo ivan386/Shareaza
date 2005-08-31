@@ -124,7 +124,6 @@ WizardSelectProgramGroup=Επιλέξτε φάκελο στο μενού Έναρξη
 SelectStartMenuFolderDesc=Πού θέλετε να τοποθετηθούν συντομεύσεις;
 SelectStartMenuFolderLabel3=Η Εγκατάσταση θα δημιουργήσει τα εικονίδια του προγράμματος στον ακόλουθο φάκελο του μενού Εναρξη(Start Menu).
 SelectStartMenuFolderBrowseLabel=Για συνέχεια, πατήστε Επόμενο. Εάν θέλετε να επιλέξετε άλλο φάκελο, πατήστε στο Αναζήτηση.
-NoIconsCheck=&Να μη δημιουργηθούν εικονίδια
 MustEnterGroupName=Πρέπει να εισάγετε ένα όνομα φακέλου.
 GroupNameTooLong=Το όνομα του φακέλου ή της διαδρομής είναι υπερβολικά μεγάλο.
 InvalidGroupName=Μη έγκυρο όνομα φακέλου.

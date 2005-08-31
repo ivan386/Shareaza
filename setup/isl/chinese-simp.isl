@@ -172,7 +172,6 @@ WizardSelectProgramGroup=选择开始菜单文件夹
 SelectStartMenuFolderDesc=准备将程序的快捷方式放置在哪里？
 SelectStartMenuFolderLabel3=安装程序将在下列开始菜单中创建程序的快捷方式。
 SelectStartMenuFolderBrowseLabel=继续安装，请单击“下一步”。如果您希望选择其他文件夹，请单击“浏览”。
-NoIconsCheck=不创建任何图标(&D)
 MustEnterGroupName=您必须输入一个文件夹名。
 GroupNameTooLong=文件夹名或路径过长。
 InvalidGroupName=此文件夹名无效。

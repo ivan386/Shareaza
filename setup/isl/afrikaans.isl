@@ -167,7 +167,6 @@ WizardSelectProgramGroup=Selekteer Start Kieslys Gids
 SelectStartMenuFolderDesc=Waar moet die Opsteller die program se kortpaaie plaas?
 SelectStartMenuFolderLabel3=Die Opsteller sal die program se kortpaaie in die volgende Start Kieslys gids skep.
 SelectStartMenuFolderBrowseLabel=Om voort te gaan, kliek Volgende. As jy 'n ander gids wil selekteer, kliek Blaai.
-NoIconsCheck=&Moenie enige ikone skep nie
 MustEnterGroupName=Jy moet 'n gidsnaam invul.
 GroupNameTooLong=Die gidsnaam of pad is te lank.
 InvalidGroupName=Die gidsnaam is nie geldig nie.

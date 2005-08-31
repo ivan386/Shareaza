@@ -166,7 +166,6 @@ WizardSelectProgramGroup=Välj Startmeny-mapp
 SelectStartMenuFolderDesc=Var skall installationsprogrammet placera programmets genvägar?
 SelectStartMenuFolderLabel3=Installationsprogrammet kommer att skapa programmets genvägar i följande mapp.
 SelectStartMenuFolderBrowseLabel=För att fortsätta, klicka på Nästa. Om du vill välja en annan mapp, klicka på Bläddra.
-NoIconsCheck=&Skapa inte ikoner
 MustEnterGroupName=Du måste ange en mapp.
 GroupNameTooLong=Mappens namn eller sökväg är för lång.
 InvalidGroupName=Mappen du har valt är inte tillgänglig.

@@ -172,7 +172,6 @@ WizardSelectProgramGroup=Selecciona el Menu Inicio
 SelectStartMenuFolderDesc=¿Donde debe la instalación poner los accesos directos del programa?
 SelectStartMenuFolderLabel3=El Instalador va a crear los accesos directs del programa en el Menu Inicio.
 SelectStartMenuFolderBrowseLabel=Para continuar, haz click a Siguiente. Si deseas seleccionar una carpeta diferente , haga click a Explorar.
-NoIconsCheck=&No crear iconos
 MustEnterGroupName=Debes dar un nombre a la carpeta.
 GroupNameTooLong=El nombre de la carpeta o el destino es muy largo.
 InvalidGroupName=El nombre de la carpeta es invalido.
@@ -202,7 +201,7 @@ WizardInstalling=Instalando
 InstallingLabel=Por favor espere mientras se instala [name] en tu computadora.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Completando Instalación de [name] 
+FinishedHeadingLabel=Completando Instalación de [name]
 FinishedLabelNoIcons=El Instalador ha terminado de instalar [name] en tu computadora.
 FinishedLabel=El Instalador ha terminado de instalar [name] en tu computadora. La aplicación puede ser lanzada seleccionando los iconos instalados.
 ClickFinish=Haz click aquí para cerrar el instalador.
@@ -258,7 +257,7 @@ FileAbortRetryIgnore=Haga click a volver a tratar, Ignorar para saltarse este ar
 FileAbortRetryIgnore2=Haga click a volver a tratar, Ignorar para proceder de cualquier forma (no recomendado), o Abortar para cancelar la instalación.
 SourceIsCorrupted=El archivo fuente esta corrupto
 SourceDoesntExist=El archivo fuente %1 no existe
-ExistingFileReadOnly=El archivo existente esta marcado como solo lectura.%n%Haga click a volver a tratar para remover el atributo y tratar de nuevo, Ignorar para pasarde este archivo, o Abortar para cancelar la instalación 
+ExistingFileReadOnly=El archivo existente esta marcado como solo lectura.%n%Haga click a volver a tratar para remover el atributo y tratar de nuevo, Ignorar para pasarde este archivo, o Abortar para cancelar la instalación
 ErrorReadingExistingDest=Ocurrio un error al tratar de leer el archivo existente:
 FileExists=Este archivo ya existe.%n%¿Deseas que la instalación lo reescriba?
 ExistingFileNewer=El archivo existente es mas nuevo que el que la instalacon esta tratando de instalar. It is recommended that you keep the existing file.%n%nDo you want to keep the existing file?

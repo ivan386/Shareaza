@@ -175,7 +175,6 @@ WizardSelectProgramGroup=Nurodykite „Start Menu“ katalogà
 SelectStartMenuFolderDesc=Kur ádiegimo programa turëtø sukurti nuorodas?
 SelectStartMenuFolderLabel3=Nuorodos bus sukurtos ðiame „Start Menu“ kataloge.
 SelectStartMenuFolderBrowseLabel=Norëdami tæsti ádiegimà spauskite „Pirmyn“. Jei norite pasirinkti kità katalogà, spauskite „Nurodyti“.
-NoIconsCheck=&Nekurti jokiø nuorodø
 MustEnterGroupName=Jûs privalote ávesti katalogo pavadinimà.
 GroupNameTooLong=Katalogo pavadinimas ar kelias iki jo per ilgas.
 InvalidGroupName=Katalogo pavadinimas yra nekorektiðkas
