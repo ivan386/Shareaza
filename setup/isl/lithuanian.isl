@@ -1,4 +1,4 @@
-; *** Inno Setup version 4.2.2+ Lithuanian messages ***
+; *** Inno Setup version 5.1.0+ English messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -7,10 +7,8 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Lithuanian.isl,v 1.00 2004/06/19 $
 ; Translated by Robertas Rimas (Loptar@takas.lt)
-; Corrected by Rolandas Rudomanskis
+; Corrected and updated by Rolandas Rudomanskis
 
 [LangOptions]
 LanguageName=Lietuvi<0173>
@@ -52,6 +50,8 @@ SetupFileCorrupt=Ádiegimo bylos sugadintos. Ásigykite naujà programos kopijà.
 SetupFileCorruptOrWrongVer=Ádiegiamos bylos yra sugadintos arba nesuderinamos su ádiegimo programa. Iðtaisykite problemà arba ásigykite naujà programos kopijà.
 NotOnThisPlatform=Ði programa negali bûti paleista %1 aplinkoje.
 OnlyOnThisPlatform=Ði programa turi bûti leidþiama %1 aplinkoje.
+OnlyOnTheseArchitectures=Ði programa gali bûti ádiegta tik Windows versijose, turinèiose ðias procesoriaus architektûras:%n%n%1
+MissingWOW64APIs=Windows versija, kurià Jûs naudojate, neturi funkcijø, reikalingø atlikti 64 bitø ádiegimams. Tam, kad iðspræstumëte ðià problemà, ádiekite Service Pack %1.
 WinVersionTooLowError=Ði programa reikalauja %1 %2 ar vëlesnës versijos.
 WinVersionTooHighError=Ði programa negali bûti ádiegta %1 %2 ar vëlesnës versijos aplinkoje.
 AdminPrivilegesRequired=Ðios programos ádiegimui privalote bûti prisijungæs Administratoriaus teisëmis.
@@ -70,6 +70,7 @@ AboutSetupMenuItem=&Apie ádiegimo programà...
 AboutSetupTitle=Apie ádiegimo programà
 AboutSetupMessage=%1 versija %2%n%3%n%n%1 puslapis internete:%n%4
 AboutSetupNote=
+TranslatorNote=
 
 ; *** Buttons
 ButtonBack=< &Atgal
@@ -100,7 +101,6 @@ NewFolderName=Naujas katalogas
 ; *** "Welcome" wizard page
 WelcomeLabel1=Sveiki! Èia „[name]“ ádiegimo programa.
 WelcomeLabel2=Ádiegimo programa ádiegs „[name]“ Jûsø kompiuteryje.%n%nPrieð tæsiant ádiegimà, rekomenduojama uþdaryti visas nereikalingas programas.
-
 
 ; *** "Password" wizard page
 WizardPassword=Slaptaþodis
@@ -285,6 +285,7 @@ UninstallOpenError=Byla "%1" negali bûti atidaryta. Paðalinti neámanoma.
 UninstallUnsupportedVer=Paðalinimo log byla „%1“ yra formato, kurio nesupranta paðalinimo programa. Paðalinti neámanoma.
 UninstallUnknownEntry=Neþinomas áraðas (%1) rastas paðalinimo log byloje
 ConfirmUninstall=Ar esate tikri, kad norite paðalinti „%1“ ir visus priklausanèius komponentus?
+UninstallOnlyOnWin64=Ðis ádiegimas gali bûti anuliuotas tik 64 bitø Windows sistemose.
 OnlyAdminCanUninstall=Tik administratoriaus teises turintis vartotojas gali paðalinti programà.
 UninstallStatusLabel=Praðome palaukti, kol „%1“ bus paðalinta ið Jûsø kompiuterio.
 UninstalledAll=„%1“ buvo sëkmingai paðalinta ið Jûsø kompiuterio.
