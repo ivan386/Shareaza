@@ -1,4 +1,4 @@
-; *** Inno Setup version 4.2.2+ Polish messages ***
+; *** Inno Setup version 5.1.0+ Polish messages ***
 ; Krzysztof Cynarski <krzysztof at cynarski.net>
 ;
 ; To download user-contributed translations of this file, go to:
@@ -9,7 +9,7 @@
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ;
-; $jrsoftware: issrc/Files/Languages/Polish.isl,v 1.8 2004/04/28 08:10:54 kcynarsk Exp $
+; $jrsoftware: issrc/Files/Languages/Polish.isl,v 1.15 2005/02/27 19:09:39 jr Exp $
 
 [LangOptions]
 LanguageName=Polski
@@ -32,33 +32,36 @@ ErrorTitle=B³¹d
 ; *** SetupLdr messages
 SetupLdrStartupMessage=Ten program zainstaluje aplikacjê %1. Czy chcesz kontynuowaæ?
 LdrCannotCreateTemp=Nie mo¿na utworzyæ pliku tymczasowego. Instalacja przerwana
-LdrCannotExecTemp=Nie mo¿na uruchomiæ pliku w tymczasowym folderze. Instalacja przerwana
+LdrCannotExecTemp=Nie mo¿na uruchomiæ pliku w folderze tymczasowym. Instalacja przerwana
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nB³¹d %2: %3
-SetupFileMissing=W folderze Instalatora brakuje pliku %1. Proszê rozwi¹zaæ ten problem lub uzyskaæ now¹ kopiê Instalatora tego programu od producenta.
+SetupFileMissing=W folderze instalacyjnym brak pliku %1.%nProszê usun¹æ problem lub uzyskaæ now¹ kopiê programu instalacyjnego.
 SetupFileCorrupt=Pliki sk³adowe Instalatora s¹ uszkodzone. Proszê uzyskaæ now¹ kopiê Instalatora od producenta.
 SetupFileCorruptOrWrongVer=Pliki sk³adowe instalatora s¹ uszkodzone lub niezgodne z t¹ wersj¹ Instalatora. Proszê rozwi¹zaæ ten problem lub uzyskaæ now¹ kopiê Instalatora od producenta.
-NotOnThisPlatform=Ten program nie uruchomi siê pod systemem %1.
+NotOnThisPlatform=Tego programu nie mo¿na uruchomiæ w systemie %1.
 OnlyOnThisPlatform=Ten program wymaga systemu %1.
+OnlyOnTheseArchitectures=Ten program mo¿e byæ uruchomiony tylko w systemie Windows zaprojektowanym na procesory o architekturach:%n%n%1
+MissingWOW64APIs=Ta wersja systemu Windows nie zawiera komponentów niezbêdnych do przeprowadzenia 64 bitowej instalacji. Aby usun¹æ ten problem, proszê zainstalowaæ Service Pack %1.
 WinVersionTooLowError=Ten program wymaga %1 w wersji %2 lub póŸniejszej.
 WinVersionTooHighError=Ten program nie mo¿e byæ zainstalowany w wersji %2 lub póŸniejszej systemu %1.
-AdminPrivilegesRequired=Musisz mieæ uprawnienia administratora aby zainstalowaæ ten program.
-PowerUserPrivilegesRequired=Musisz mieæ uprawnienia administratora lub uzytkownika zaawansowanego aby zainstalowaæ ten program.
+AdminPrivilegesRequired=Aby przeprowadziæ instalacjê tego programu, U¿ytkownik musi byæ zalogowany z uprawnieniami administratora.
+PowerUserPrivilegesRequired=Aby przeprowadziæ instalacjê tego programu, U¿ytkownik musi byæ zalogowany z uprawnieniami administratora lub u¿ytkownika zaawansowanego.
 SetupAppRunningError=Instalator wykry³, ¿e %1 jest aktualnie uruchomiony.%n%nZamknij wszystkie okienka tej aplikacji, a potem wybierz przycisk OK, aby kontynuowaæ, lub Anuluj, aby przerwaæ instalacjê.
 UninstallAppRunningError=Deinstalator wykry³, ¿e %1 jest aktualnie uruchomiony.%n%nZamknij teraz wszystkie okna tej aplikacji, a nastêpnie wybierz przycisk OK, aby kontynuowaæ, lub Anuluj, aby przerwaæ deinstalacje.
 
 ; *** Misc. errors
-ErrorCreatingDir=Instalator nie móg³ utworzyæ folderu "%1"
+ErrorCreatingDir=Instalator nie móg³ utworzyæ foldera "%1"
 ErrorTooManyFilesInDir=Nie mo¿na utworzyæ pliku w folderze %1, poniewa¿ zawiera on za du¿o plików
 
 ; *** Setup common messages
 ExitSetupTitle=Zakoñcz instalacjê
-ExitSetupMessage=Instalacja nie zosta³a zakoñczona. Jeœli zakoñczysz j¹ teraz, aplikacja nie bêdzie zainstalowana.%n%nJeœli chcesz dokoñczyæ instalacjê innym razem, uruchom ponownie Instalatora.%n%nZakoñczyc instalacjê?
+ExitSetupMessage=Instalacja nie jest zakoñczona. Je¿eli przerwiesz j¹ teraz, program nie zostanie zainstalowany. Mo¿na ponowiæ instalacjê póŸniej, uruchamiaj¹c pakiet Instalatora.%n%nCzy chcesz przerwaæ instalacjê ?
 AboutSetupMenuItem=&O Instalatorze...
 AboutSetupTitle=O Instalatorze
 AboutSetupMessage=%1 wersja %2%n%3%n%n Strona domowa %1:%n%4
-AboutSetupNote=Polska wersja: Krzysztof Cynarski
+AboutSetupNote=
+TranslatorNote=Wersja Polska: Krzysztof Cynarski%n<krzysztof at cynarski.net>
 
 ; *** Buttons
 ButtonBack=< &Wstecz
@@ -145,10 +148,10 @@ SelectComponentsDesc=Które komponenty maj¹ byæ zainstalowane?
 SelectComponentsLabel2=Zaznacz komponenty, które chcesz zainstalowaæ, odznacz te, których nie chcesz zainstalowaæ. Kliknij przycisk Dalej, aby kontynuowaæ.
 FullInstallation=Instalacja pe³na
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
-CompactInstallation=Instalacja minimalna
+CompactInstallation=Instalacja podstawowa
 CustomInstallation=Instalacja u¿ytkownika
 NoUninstallWarningTitle=Zainstalowane komponenty
-NoUninstallWarning=Instalator wykry³, ¿e w twoim komputerze s¹ ju¿ zainstalowane nastêpuj¹ce komponenty:%n%n%1%n%nOdznaczenie któregokolwiek z nich nie spowoduje ich odinstalacji.%n%nCzy pomimo tego chcesz kontynuowaæ?
+NoUninstallWarning=Instalator wykry³, ¿e w twoim komputerze s¹ ju¿ zainstalowane nastêpuj¹ce komponenty:%n%n%1%n%nOdznaczenie któregokolwiek z nich nie spowoduje ich deinstalacji.%n%nCzy pomimo tego chcesz kontynuowaæ?
 ComponentSize1=%1 KB
 ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=Wybrane komponenty wymagaj¹ co najmniej [mb] MB na dysku.
@@ -163,12 +166,11 @@ WizardSelectProgramGroup=Wybierz folder Menu Start
 SelectStartMenuFolderDesc=Gdzie maj¹ byæ umieszczone skróty do programu?
 SelectStartMenuFolderLabel3=Instalator stworzy skróty do programu w poni¿szym folderze Menu Start.
 SelectStartMenuFolderBrowseLabel=Kliknij przycisk Dalej, aby kontynuowaæ. Jeœli chcesz okreœliæ inny folder, kliknij przycisk Przegl¹daj.
-NoIconsCheck=&Nie twórz ¿adnych skrótów
 MustEnterGroupName=Musisz wprowadziæ nazwê folderu.
 GroupNameTooLong=Nazwa folderu lub œcie¿ki jest za d³uga.
 InvalidGroupName=Niepoprawna nazwa folderu.
 BadGroupName=Nazwa folderu nie mo¿e zawieraæ ¿adnego z nastêpuj¹cych znaków:%n%n%1
-NoProgramGroupCheck2=&Nie twórz folderu w Menu Start
+NoProgramGroupCheck2=Nie twórz folderu w &Menu Start
 
 ; *** "Ready to Install" wizard page
 WizardReady=Gotowy do rozpoczêcia instalacji
@@ -254,15 +256,15 @@ ExistingFileReadOnly=Istniej¹cy plik jest oznaczony jako tylko-do-odczytu.%n%nMo
 ErrorReadingExistingDest=Wyst¹pi³ b³¹d podczas próby odczytu istniej¹cego pliku:
 FileExists=Plik ju¿ istnieje.%n%nCzy chcesz, aby Instalator zamieni³ go na nowy?
 ExistingFileNewer=Istniej¹cy plik jest nowszy ni¿ ten, który Instalator próbuje skopiowaæ. Zalecanym jest zachowanie istniej¹cego pliku.%n%nCzy chcesz zachowaæ istniej¹cy plik?
-ErrorChangingAttr=Podczas próby zmiany atrybutów istniej¹cego pliku wyst¹pi³ b³¹d:
-ErrorCreatingTemp=Podczas próby utworzenia pliku w folderze docelowym wyst¹pi³ b³¹d:
-ErrorReadingSource=Podczas próby odczytu pliku Ÿród³owego wyst¹pi³ b³¹d:
-ErrorCopying=Podczas próby kopiowania pliku wyst¹pi³ b³¹d:
-ErrorReplacingExistingFile=Podczas próby zamiany istniej¹cego pliku wyst¹pi³ b³¹d:
-ErrorRestartReplace=B³¹d RestartReplace:
-ErrorRenamingTemp=Podczas próby zmiany nazwy pliku w folderze docelowym wyst¹pi³ b³¹d:
+ErrorChangingAttr=Wyst¹pi³ b³¹d podczas próby zmiany atrybutów docelowego pliku:
+ErrorCreatingTemp=Wyst¹pi³ b³¹d podczas próby utworzenia pliku w folderze docelowym:
+ErrorReadingSource=Wyst¹pi³ b³¹d podczas próby odczytu pliku Ÿród³owego:
+ErrorCopying=Wyst¹pi³ b³¹d podczas próby kopiowania pliku:
+ErrorReplacingExistingFile=Wyst¹pi³ b³¹d podczas próby zamiany istniej¹cego pliku:
+ErrorRestartReplace=Próba zast¹pienia plików podczas restartu komputera nie powiod³a siê.
+ErrorRenamingTemp=Wyst¹pi³ b³¹d podczas próby zmiany nazwy pliku w folderze docelowym:
 ErrorRegisterServer=Nie mo¿na zarejestrowaæ DLL/OCX: %1
-ErrorRegisterServerMissingExport=Eksportowana funkcja DllRegisterServer nie zosta³a znaleziony
+ErrorRegisterServerMissingExport=Eksportowana funkcja DllRegisterServer nie zosta³a znaleziona
 ErrorRegisterTypeLib=Nie mogê zarejestrowaæ biblioteki typów: %1
 
 ; *** Post-installation errors
@@ -273,8 +275,9 @@ ErrorRestartingComputer=Instalator nie móg³ zrestartowaæ tego komputera. Proszê 
 UninstallNotFound=Plik "%1" nie istnieje. Nie mo¿na go odinstalowaæ.
 UninstallOpenError=Plik "%1" nie móg³ byæ otwarty. Nie mo¿na odinstalowaæ
 UninstallUnsupportedVer=Ta wersja programu deinstalacyjnego nie rozpoznaje formatu logu deinstalacji. Nie mo¿na odinstalowaæ
-UninstallUnknownEntry=W logu deinstalacji wyst¹pi³a nie znana pozycja (%1)
+UninstallUnknownEntry=W logu deinstalacji wyst¹pi³a nieznana pozycja (%1)
 ConfirmUninstall=Czy na pewno chcesz usun¹æ program %1 i wszystkie jego sk³adniki?
+UninstallOnlyOnWin64=Ten program moze byæ odinstalowany tylo w 64 bitowej wersji systemu Windows.
 OnlyAdminCanUninstall=Ta instalacja mo¿e byæ odinstalowana tylko przez u¿ytkownika z prawami administratora.
 UninstallStatusLabel=Poczekaj a¿ program %1 zostanie usuniêty z Twojego komputera.
 UninstalledAll=%1 zosta³ usuniêty z Twojego komputera.

@@ -1,7 +1,5 @@
-; *** Inno Setup version 4.2.2+ Portuguese (Standard) messages ***
+; *** Inno Setup version 5.1.0+ Portuguese (Brazil) messages ***
 ;
-; Author: NARS (http://nars.cjb.net)
-; Last update: 29 Apr 2004
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -11,7 +9,7 @@
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ;
-; $jrsoftware: issrc/Files/Languages/portuguese-braz.isl,v 1.4 2004/05/18 20:46:55 nars Exp $
+; $jrsoftware: issrc/Files/Default.isl,v 1.66 2005/02/25 20:23:48 mlaan Exp $
 
 [LangOptions]
 LanguageName=Portugu<00EA>s (Brasileiro)
@@ -43,6 +41,8 @@ SetupFileCorrupt=Os arquivos de instalação estão corrompidos. Obtenha uma nova c
 SetupFileCorruptOrWrongVer=Os arquivos de instalação estão corrompidos, ou são incompatíveis com esta versão do Assistente de Instalação. Corrija o problema ou obtenha uma nova cópia do programa.
 NotOnThisPlatform=Este programa não pode ser executado no %1.
 OnlyOnThisPlatform=Este programa deve ser executado no %1.
+OnlyOnTheseArchitectures=Este programa só pode ser instalado em versões do Windows projetadas para as seguintes arquiteturas de processador:%n%n%1
+MissingWOW64APIs=A versão de Windows que você está utilizando não inclui funcionalidade requerida pelo Programa de Instalação para realizar uma instalação de 64 bits. Para corrigir este problema, por favor instale o Service Pack %1.
 WinVersionTooLowError=Este programa necessita do %1 versão %2 ou mais recente.
 WinVersionTooHighError=Este programa não pode ser instalado no %1 versão %2 ou mais recente.
 AdminPrivilegesRequired=Deve iniciar sessão como administrador para instalar este programa.
@@ -61,6 +61,7 @@ AboutSetupMenuItem=&Sobre...
 AboutSetupTitle=Sobre o Assistente de Instalação
 AboutSetupMessage=%1 versão %2%n%3%n%n%1 home page:%n%4
 AboutSetupNote=Traduzido por Lukas Taves
+TranslatorNote=
 
 ; *** Buttons
 ButtonBack=< &Anterior
@@ -275,6 +276,7 @@ UninstallOpenError=Não foi possível abrir o arquivo "%1". Não é possível desinst
 UninstallUnsupportedVer=O arquivo do relatório de desinstalação "%1" está num formato que não é reconhecido por esta versão do desinstalador. Não é possível desinstalar
 UninstallUnknownEntry=Foi encontrada uma entrada desconhecida (%1) no arquivo do relatório de desinstalação
 ConfirmUninstall=Tem a certeza que deseja remover completamente o %1 e todos os seus componentes?
+UninstallOnlyOnWin64=Esta instalação não pode ser desinstalada em Windows 64 bits.
 OnlyAdminCanUninstall=Esta desinstalação só pode ser realizada por um usuário com direitos administrativos.
 UninstallStatusLabel=Por favor aguarde enquanto o %1 está sendo removido de seu computador.
 UninstalledAll=O %1 foi removido de seu computador com sucesso.

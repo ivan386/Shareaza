@@ -50,6 +50,8 @@ SetupFileCorrupt=Los archivos del Instalador son corruptos. Por favor consigue u
 SetupFileCorruptOrWrongVer=Los archivos del Instalador son corruptos, o son incompatibles con esta versión del Instalador. Por favor corrige o consigue una nueva copia del programa.
 NotOnThisPlatform=Este programa no va a correr en %1.
 OnlyOnThisPlatform=Este programa debe ser corrido en %1.
+OnlyOnTheseArchitectures=Este programa solo puede ser instalado en versiones de Windows diseñadas para los siguientes procesadores:%n%n%1
+MissingWOW64APIs=La versión de Windows que estás utilizando no cuenta con la funcionalidad requerida por el instalador para realizar una instalación de 64-bits. Para solucionar este problema instale el "Service Pack" %1.
 WinVersionTooLowError=Este programa requiere la versión %1 %2 o más nueva.
 WinVersionTooHighError=Este programa no puede ser instalado en la %1 versión %2 o más nueva.
 AdminPrivilegesRequired=Debes de estar logeado como administrador para instalar este programa.
@@ -68,6 +70,7 @@ AboutSetupMenuItem=&About Setup...
 AboutSetupTitle=About Setup
 AboutSetupMessage=%1 version %2%n%3%n%n%1 home page:%n%4
 AboutSetupNote=
+TranslatorNote=
 
 ; *** Buttons
 ButtonBack=< &Atrás
@@ -260,13 +263,13 @@ SourceDoesntExist=El archivo fuente %1 no existe
 ExistingFileReadOnly=El archivo existente esta marcado como solo lectura.%n%Haga click a volver a tratar para remover el atributo y tratar de nuevo, Ignorar para pasarde este archivo, o Abortar para cancelar la instalación
 ErrorReadingExistingDest=Ocurrio un error al tratar de leer el archivo existente:
 FileExists=Este archivo ya existe.%n%¿Deseas que la instalación lo reescriba?
-ExistingFileNewer=El archivo existente es mas nuevo que el que la instalacon esta tratando de instalar. It is recommended that you keep the existing file.%n%nDo you want to keep the existing file?
 ExistingFileNewer=El archivo existente es más reciente del que se está tratando de instalar.  Se recomienda que mantenga el archivo existente.%n%n¿Desea mantener el archivo existente?
 ErrorChangingAttr=Ocurrió un error al tratar de cambiar los atributos del archivo:
 ErrorCreatingTemp=Ocurrió un error al tratar de crear un archivo en el directorio destino:
+ErrorReadingSource=Ocurrió un error al tratar de leer el archivo fuente:
 ErrorCopying=Ocurrió un error al tratar de copiar un archivo:
 ErrorReplacingExistingFile==Ocurrió un error al tratar de reemplazar el archivo existente:
-ErrorReadingSource=Ocurrió un error al tratar de leer el archivo fuente:
+ErrorRestartReplace=Error al reintentar reemplazo:
 ErrorRenamingTemp=Ocurrió un error al tratar de renombrar un archivo en el directorio destino:
 ErrorRegisterServer=Imposible registrar el DLL/OCX: %1
 ErrorRegisterServerMissingExport=El módulo de registro DllRegisterServer no fué encontrado
@@ -282,6 +285,7 @@ UninstallOpenError=El archivo %1 no pudo ser abierto.  No se puede desinstalar.
 UninstallUnsupportedVer=La bitácora de desinstalación %1 está en un formato no reconocido por esta versión del desinstalador.  No es posible desinstalar.
 UninstallUnknownEntry=Una entrada desconocida (%1) fué encontrada en la bitácora de desinstalación.
 ConfirmUninstall=¿Está seguro que desea eliminar completamente %1 y todos sus componentes?
+UninstallOnlyOnWin64=Este programa solo puede ser desinstalado en una versión de Windows de 64-bits.
 OnlyAdminCanUninstall=Este sistema solo puede ser desinstalado por un usuario con privilegios de administración.
 UninstallStatusLabel=Por favor espere mientras %1 es eliminado de su computadora.
 UninstalledAll=%1 fué exitosamente eliminado de su computadora.
@@ -290,7 +294,6 @@ UninstalledAndNeedsRestart=Para completar la desinstalación de %1, su computador
 UninstallDataCorrupted="%1" archivo corrupto.  No se puede desinstalar.
 
 ; *** Uninstallation phase messages
-; *** Mensajes de fase de desinstalación
 ConfirmDeleteSharedFileTitle=¿Borrar los archivos compartidos?
 ConfirmDeleteSharedFile2=El sistema indica que el siguiente archivo compartido ya no es usado por ningún programa. ¿Desea que la desinstalación borre este archivo compartido?%n%nSi algún programa aún lo utiliza y es borrado, ese programa no funcionará correctamente.  Si no está seguro, elija No.  Dejar el archivo en su sistema no causará ningún daño.
 SharedFileNameLabel=Nombre del archivo:
@@ -312,5 +315,3 @@ UninstallProgram=Desinstalar %1
 LaunchProgram=Lanzar %1
 AssocFileExtension=&Asociar %1 con %2 extensión de archivo
 AssocingFileExtension=Asociando %1 con %2 extensión de archivo...
-
-

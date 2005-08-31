@@ -1,26 +1,23 @@
-; *** Inno Setup version 4.2.2+ Traditional Chinese messages ***
-;
-; *** Translated by Patrick Pang (patrickp@mail.hongkong.com)
-; *** If you find any mistake, please email to me.
+; *** Inno Setup version 5.1.0+ Chinese (Traditional) messages ***
 ;
 ; To download user-contributed translations of this file, go to:
-;   http://www.jrsoftware.org/is3rdparty.htm
+;   http://www.jrsoftware.org/is3rdparty.php
+;
+; Translated by: Patrick Pang (uncleleft at yahoo.com.hk)
 ;
 ; Note: When translating this text, do not add periods (.) to the end of
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Default.isl,v 1.51 2004/02/08 18:50:49 jr Exp $
 
 [LangOptions]
-LanguageName=繁體中文
+LanguageName=<7e41><9ad4><4e2d><6587>
 LanguageID=$0404
+LanguageCodepage=950
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 DialogFontName=新細明體
 DialogFontSize=9
-;DialogFontStandardHeight=12
 TitleFontName=Arial
 TitleFontSize=28
 WelcomeFontName=新細明體
@@ -53,6 +50,8 @@ SetupFileCorrupt=安裝檔案已經損毀。請重新取得此軟體。
 SetupFileCorruptOrWrongVer=安裝檔案已經損毀，或與安裝程式的版本不符。請重新取得此軟體。
 NotOnThisPlatform=這個程式無法在 %1 執行。
 OnlyOnThisPlatform=這個程式必須在 %1 執行。
+OnlyOnTheseArchitectures=這個程式只能在專門為以下處理器架構而設計的 Windows 上安裝:%n%n%1
+MissingWOW64APIs=這個版本的 Windows 不包含安裝程式執行 64 位元安裝所需的功能。請安裝 Service Pack %1 去修正此問題。
 WinVersionTooLowError=這個程式必須在 %1 版本 %2 或以上的系統執行。
 WinVersionTooHighError=這個程式無法安裝在 %1 版本 %2 或以上的系統。
 AdminPrivilegesRequired=您必須登入成系統管理員以安裝這個程式。
@@ -71,6 +70,7 @@ AboutSetupMenuItem=關於安裝程式(&A)...
 AboutSetupTitle=關於安裝程式
 AboutSetupMessage=%1 版本 %2%n%3%n%n%1 網址:%n%4
 AboutSetupNote=
+TranslatorNote=繁體中文語系由 Patrick Pang (uncleleft@yahoo.com.hk) 維護。
 
 ; *** Buttons
 ButtonBack=< 上一步(&B)
@@ -175,7 +175,6 @@ WizardSelectProgramGroup=選擇「開始」功能表的資料夾
 SelectStartMenuFolderDesc=選擇安裝程式建立程式的捷徑的位置。
 SelectStartMenuFolderLabel3=安裝程式將會把程式的捷徑建立在下面的「開始」功能表資料夾。
 SelectStartMenuFolderBrowseLabel=按 [確定] 繼續，如果您想選擇另一個資料夾，請按 [瀏覽]。
-NoIconsCheck=不要建立任何圖示(&D)
 MustEnterGroupName=您必須輸入一個資料夾的名稱。
 GroupNameTooLong=資料夾名稱或路徑太長。
 InvalidGroupName=資料夾名稱不正確。
@@ -228,7 +227,7 @@ SelectDirectoryLabel=請指定下一張磁片的位置。
 
 ; *** Installation phase messages
 SetupAborted=安裝沒有完成。%n%n請更正問題後重新安裝一次。
-EntryAbortRetryIgnore=按 [重試] 重試一次，按下 [忽略] 跳過這個檔案，或按下 [中止] 結束安裝。
+EntryAbortRetryIgnore=按 [重試] 重試一次，按下 [略過] 跳過這個檔案，或按下 [中止] 結束安裝。
 
 ; *** Installation status messages
 StatusCreateDirs=正在建立資料夾...
@@ -257,11 +256,11 @@ ErrorRegWriteKey=無法變更登錄項目:%n%1\%2
 ErrorIniEntry=無法建立 INI 項目 "%1"。
 
 ; *** File copying errors
-FileAbortRetryIgnore=按 [重試] 再試一次，按 [忽略] 跳過這個檔案（不建議），或按 [中止] 結束安裝。
-FileAbortRetryIgnore2=按 [重試] 再試一次，按 [忽略] 繼續進行（不建議），或按 [中止] 結束安裝。
+FileAbortRetryIgnore=按 [重試] 再試一次，按 [略過] 跳過這個檔案（不建議），或按 [中止] 結束安裝。
+FileAbortRetryIgnore2=按 [重試] 再試一次，按 [略過] 繼續進行（不建議），或按 [中止] 結束安裝。
 SourceIsCorrupted=來源檔案已經損毀。
 SourceDoesntExist=來源檔案 "%1" 不存在。
-ExistingFileReadOnly=檔案屬性已設為唯讀。%n%n按 [重試] 將唯讀屬性移除並再試一次，按 [忽略] 跳過這個檔案，或按 [中止] 結束安裝。
+ExistingFileReadOnly=檔案屬性已設為唯讀。%n%n按 [重試] 將唯讀屬性移除並再試一次，按 [略過] 跳過這個檔案，或按 [中止] 結束安裝。
 ErrorReadingExistingDest=讀取一個已存在的檔案時發生錯誤:
 FileExists=檔案已經存在。您要取代目前的檔案嗎?
 ExistingFileNewer=存在的檔案版本比較新，建議您保留目前已存在的檔案。%n%n您要保留目前已存在的檔案嗎?
@@ -286,6 +285,7 @@ UninstallOpenError=無法開啟檔案 "%1"，無法移除程式。
 UninstallUnsupportedVer=這個版本的解除安裝程式無法辨識記錄檔 "%1" 之格式，無法解除安裝。
 UninstallUnknownEntry=解除安裝記錄檔中發現未知的記錄 (%1)。
 ConfirmUninstall=您確定要完全移除 %1 及其相關的檔案嗎?
+UninstallOnlyOnWin64=這個程式只能在 64 位元的 Windows 上解除安裝。
 OnlyAdminCanUninstall=這個程式要具備系統管理員權限的使用者方可解除安裝。
 UninstallStatusLabel=正在從您的電腦移除 %1 中，請稍候...
 UninstalledAll=%1 已經成功從您的電腦中移除。

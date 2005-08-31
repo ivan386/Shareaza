@@ -1,17 +1,8 @@
-; *** Inno Setup version 4.2.2+ Portuguese (Standard) messages ***
+; *** Inno Setup version 5.1.0+ Portuguese (Standard) messages ***
 ;
-; Author: NARS (http://nars.cjb.net)
-; Last update: 29 Apr 2004
+; Maintained by NARS (nars@gmx.net)
 ;
-; To download user-contributed translations of this file, go to:
-;   http://www.jrsoftware.org/is3rdparty.php
-;
-; Note: When translating this text, do not add periods (.) to the end of
-; messages that didn't have them already, because on those messages Inno
-; Setup adds the periods automatically (appending a period would result in
-; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Languages/PortugueseStd.isl,v 1.4 2004/05/18 20:46:55 nars Exp $
+; $jrsoftware: issrc/Files/Languages/PortugueseStd.isl,v 1.7 2005/03/01 05:16:13 nars Exp $
 
 [LangOptions]
 LanguageName=Portugu<00EA>s (Standard)
@@ -43,6 +34,8 @@ SetupFileCorrupt=Os ficheiros de instalação estão corrompidos. Obtenha uma nova 
 SetupFileCorruptOrWrongVer=Os ficheiros de instalação estão corrompidos, ou são incompatíveis com esta versão do Assistente de Instalação. Corrija o problema ou obtenha uma nova cópia do programa.
 NotOnThisPlatform=Este programa não pode ser executado no %1.
 OnlyOnThisPlatform=Este programa deve ser executado no %1.
+OnlyOnTheseArchitectures=Este programa só pode ser instalado em versões do Windows preparadas para as seguintes arquitecturas:%n%n%1
+MissingWOW64APIs=A versão do Windows que está a utilizar não dispõe das funcionalidades necessárias para o Assistente de Instalação poder realizar uma instalação de 64-bit's. Para corrigir este problema, por favor instale o Service Pack %1.
 WinVersionTooLowError=Este programa necessita do %1 versão %2 ou mais recente.
 WinVersionTooHighError=Este programa não pode ser instalado no %1 versão %2 ou mais recente.
 AdminPrivilegesRequired=Deve iniciar sessão como administrador para instalar este programa.
@@ -60,7 +53,8 @@ ExitSetupMessage=A instalação não está completa. Se terminar agora, o programa n
 AboutSetupMenuItem=&Acerca de...
 AboutSetupTitle=Acerca do Assistente de Instalação
 AboutSetupMessage=%1 versão %2%n%3%n%n%1 home page:%n%4
-AboutSetupNote=Traduzido por NARS
+AboutSetupNote=
+TranslatorNote=Portuguese translation maintained by NARS (nars@gmx.net)
 
 ; *** Buttons
 ButtonBack=< &Anterior
@@ -165,7 +159,6 @@ WizardSelectProgramGroup=Seleccione a pasta do Menu Iniciar
 SelectStartMenuFolderDesc=Onde deverão ser colocados os ícones de atalho do programa?
 SelectStartMenuFolderLabel3=Os ícones de atalho do programa serão criados na seguinte pasta do Menu Iniciar.
 SelectStartMenuFolderBrowseLabel=Para continuar, clique em Seguinte. Se desejar seleccionar uma pasta diferente, clique em Procurar.
-NoIconsCheck=&Não criar ícones
 MustEnterGroupName=É necessário introduzir um nome para a pasta.
 GroupNameTooLong=O nome ou caminho para a pasta é demasiado longo.
 InvalidGroupName=O nome da pasta não é válido.
@@ -276,6 +269,7 @@ UninstallOpenError=Não foi possível abrir o ficheiro "%1". Não é possível desins
 UninstallUnsupportedVer=O ficheiro log de desinstalação "%1" está num formato que não é reconhecido por esta versão do desinstalador. Não é possível desinstalar
 UninstallUnknownEntry=Foi encontrada uma entrada desconhecida (%1) no ficheiro log de desinstalação
 ConfirmUninstall=Tem a certeza que deseja remover completamente o %1 e todos os seus componentes?
+UninstallOnlyOnWin64=Esta desinstalação só pode ser realizada na versão de 64-bit's do Windows.
 OnlyAdminCanUninstall=Esta desinstalação só pode ser realizada por um utilizador com privilégios administrativos.
 UninstallStatusLabel=Por favor aguarde enquanto o %1 está a ser removido do seu computador.
 UninstalledAll=O %1 foi removido do seu computador com sucesso.

@@ -1,10 +1,10 @@
-; *** Inno Setup version 4.2.2+ Dutch messages ***
+; *** Inno Setup version 5.1.0+ Dutch messages ***
 ;
 ; This file is based on a user-contributed translations by various authors
 ;
 ; Maintained by Martijn Laan (mlaan@wintax.nl)
 ;
-; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.13 2004/04/28 19:30:44 mlaan Exp $
+; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.18 2005/02/25 23:07:04 mlaan Exp $
 
 [LangOptions]
 LanguageName=Nederlands
@@ -36,6 +36,8 @@ SetupFileCorrupt=De installatiebestanden zijn beschadigd. Gebruik een andere kop
 SetupFileCorruptOrWrongVer=De installatiebestanden zijn beschadigd, of zijn niet compatibel met deze versie van Setup. Corrigeer dit probleem of gebruik een andere kopie van het programma.
 NotOnThisPlatform=Dit programma kan niet worden uitgevoerd onder %1.
 OnlyOnThisPlatform=Dit programma moet worden uitgevoerd onder %1.
+OnlyOnTheseArchitectures=Dit programma kan alleen geïnstalleerd worden onder versies van Windows ontworpen voor de volgende processor architecturen:%n%n%1
+MissingWOW64APIs=De versie van Windows die u gebruikt bevat niet de door Setup benodige functionaliteit om een 64-bit installatie uit te voeren. Installeer Service Pack %1 om dit probleem te corrigeren.
 WinVersionTooLowError=Dit programma vereist %1 versie %2 of hoger.
 WinVersionTooHighError=Dit programma kan niet worden geïnstalleerd onder %1 versie %2 of hoger.
 AdminPrivilegesRequired=U moet aangemeld zijn als een systeembeheerder om dit programma te kunnen installeren.
@@ -49,11 +51,12 @@ ErrorTooManyFilesInDir=Kan geen bestand maken in de map "%1" omdat deze te veel 
 
 ; *** Setup common messages
 ExitSetupTitle=Setup afsluiten
-ExitSetupMessage=Setup is niet voltooid. Als u nu stopt, wordt het programma niet geïnstalleerd.%n%nU kunt Setup later opnieuw uitvoeren om de installatie te voltooien.%n%nSetup afsluiten?
+ExitSetupMessage=Setup is niet voltooid. Als u nu afsluit, wordt het programma niet geïnstalleerd.%n%nU kunt Setup later opnieuw uitvoeren om de installatie te voltooien.%n%nSetup afsluiten?
 AboutSetupMenuItem=&Over Setup...
 AboutSetupTitle=Over Setup
 AboutSetupMessage=%1 versie %2%n%3%n%n%1-homepage:%n%4
 AboutSetupNote=
+TranslatorNote=Dutch translation maintained by Martijn Laan (mlaan@wintax.nl)
 
 ; *** Buttons
 ButtonBack=< Vo&rige
@@ -83,7 +86,7 @@ NewFolderName=Nieuwe map
 
 ; *** "Welcome" wizard page
 WelcomeLabel1=Welkom bij het installatieprogramma van [name].
-WelcomeLabel2=Hiermee wordt [name/ver] geïnstalleerd op deze computer.%n%nU wordt aanbevolen alle actieve programma's af te sluiten voordat u verder gaat. Dit helpt conflicten tijdens de installatie voorkomen.
+WelcomeLabel2=Hiermee wordt [name/ver] geïnstalleerd op deze computer.%n%nU wordt aanbevolen alle actieve programma's af te sluiten voordat u verder gaat.
 
 ; *** "Password" wizard page
 WizardPassword=Wachtwoord
@@ -264,6 +267,7 @@ UninstallNotFound=Bestand "%1" bestaat niet. Kan het programma niet verwijderen.
 UninstallUnsupportedVer=Het installatie-logbestand "%1" heeft een formaat dat niet herkend wordt door deze versie van het verwijderprogramma. Kan het programma niet verwijderen
 UninstallUnknownEntry=Er is een onbekend gegeven (%1) aangetroffen in het installatie-logbestand
 ConfirmUninstall=Weet u zeker dat u %1 en alle bijbehorende componenten wilt verwijderen?
+UninstallOnlyOnWin64=Deze installatie kan alleen worden verwijderd onder 64-bit Windows.
 OnlyAdminCanUninstall=Deze installatie kan alleen worden verwijderd door een gebruiker met administratieve rechten.
 UninstallStatusLabel=%1 wordt verwijderd van uw computer. Een ogenblik geduld.
 UninstallOpenError=Bestand "%1" kon niet worden geopend. Kan het verwijderen niet voltooien.
@@ -285,7 +289,7 @@ StatusUninstalling=Verwijderen van %1...
 NameAndVersion=%1 versie %2
 AdditionalIcons=Extra snelkoppelingen:
 CreateDesktopIcon=Toon een snelkoppeling op het &bureaublad
-CreateQuickLaunchIcon=Toon een snelkoppeling op de &Snel Starten werkbalk
+CreateQuickLaunchIcon=Toon een snelkoppeling op de &Snel starten werkbalk
 ProgramOnTheWeb=%1 op het Web
 UninstallProgram=Verwijder %1
 LaunchProgram=&Start %1

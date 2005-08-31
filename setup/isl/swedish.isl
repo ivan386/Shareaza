@@ -1,20 +1,10 @@
 [LangOptions]
 
-; *** Inno Setup version 4.2.1+ Swedish messages ***
+;*** Inno Setup version 5.1.0+ Swedish messages ***
 ;
 ; Translated by stefan@bodingh.se
-; -------+---------+---------+---------+---------+---------+---------+---------
-; Translators notes (for Swedes only :)
 ;
-; Rev 040128: 4.1.2 av stefan@bodingh.se
-; Rev 030501: 4.0.0 av stefan@bodingh.se
-; Rev 020903: 3.0.3 av soren.edzen@frontec.se
-; Rev 020602: 3.0.2 av peter@peterandlinda.com
-; Rev 010508: 2.0.8 av peter.kind@telia.com
-; Rev 001019: 1.3.21 av peter.kind@telia.com
-; Rev 000428: 1.3x
-; Rev 991028: Smärre ändringar.
-; Rev 990927: Nytt
+;
 LanguageName=Svenska
 LanguageID=$041D
 LanguageCodePage=0
@@ -43,6 +33,8 @@ SetupFileCorrupt=Installationsfilerna är felaktiga. Hämta en ny kopia av program
 SetupFileCorruptOrWrongVer=Installationsfilerna är felaktiga, eller stämmer ej överens med denna version av installationsprogrammet. Rätta till felet eller hämta en ny programkopia.
 NotOnThisPlatform=Detta program kan ej köras på %1.
 OnlyOnThisPlatform=Detta program måste ha %1.
+OnlyOnTheseArchitectures=Detta program kan bara installeras på Windows versioner med följande processor arkitekturer:%n%n%1
+MissingWOW64APIs=Den versionen av Windows du kör har inte den funktionalitet installationsprogrammet behöver för att genomföra en 64-bitars installation. Rätta till problemet genom att installera Service Pack %1.
 WinVersionTooLowError=Detta program kräver %1, version %2 eller senare.
 WinVersionTooHighError=Programmet kan inte installeras på %1 version %2 eller senare.
 AdminPrivilegesRequired=Du måste vara inloggad som administratör när du installerar detta program.
@@ -56,11 +48,12 @@ ErrorTooManyFilesInDir=Kunde inte skapa en fil i mappen "%1" därför att den inne
 
 ; *** Setup common messages
 ExitSetupTitle=Avsluta installationen
-ExitSetupMessage=Installationen är inte färdig. Om du slutar nu, kommer programmet inte att installeras.%n%nDu kan köra installationsprogrammet  vid ett senare tillfälle för att avsluta installationen.%n%nVill du avbryta installationen?
+ExitSetupMessage=Installationen är inte färdig. Om du avbryter nu, kommer programmet inte att installeras.%n%nDu kan köra installationsprogrammet  vid ett senare tillfälle för att avsluta installationen.%n%nVill du avbryta installationen?
 AboutSetupMenuItem=&Om installationsprogrammet...
 AboutSetupTitle=Om installationsprogrammet
 AboutSetupMessage=%1 version %2%n%3%n%n%1 hemsida:%n%4
-AboutSetupNote=Svensk översättning är gjord av dickg@go.to 1999, 2002%n%nUppdatering till 3.0.2+ av peter@peterandlinda.com, 4.x.x av  Stefan Bodingh
+AboutSetupNote=Svensk översättning är gjord av dickg@go.to 1999, 2002%n%nUppdatering till 3.0.2+ av peter@peterandlinda.com, 4.+ av stefan@bodingh.se
+TranslatorNote=
 
 ; *** Buttons
 ButtonBack=< &Tillbaka
@@ -143,7 +136,7 @@ DirDoesntExist=Mappen:%n%n%1%n%nfinns inte. Vill du skapa den?
 
 ; *** "Select Components" wizard page
 WizardSelectComponents=Välj komponenter
-SelectComponentsDesc=Vilka komonenter skall installeras?
+SelectComponentsDesc=Vilka komponenter skall installeras?
 SelectComponentsLabel2=Välj de komponenter som du vill ska installeras; avmarkera de komponenter som du inte vill ha. Klicka på Nästa när du är klar att  fortsätta.
 FullInstallation=Fullständig installation
 
@@ -278,6 +271,7 @@ UninstallOpenError=Filen "%1" kan inte öppnas. Kan inte avinstallera.
 UninstallUnsupportedVer=Avinstallationsloggen "%1" är i ett format som denna version inte känner igen. Kan ej avinstallera
 UninstallUnknownEntry=En okänd rad (%1) hittades i avinstallationsloggen
 ConfirmUninstall=Är du säker på att du vill ta bort %1 och alla tillhörande komponenter?
+UninstallOnlyOnWin64=Denna installation kan endast avinstalleras på en 64-bitarsversion av Windows.
 OnlyAdminCanUninstall=Denna installation kan endast avinstalleras av en användare med administrativa rättigheter.
 UninstallStatusLabel=Var god och vänta medan %1 tas bort från din dator.
 UninstalledAll=%1 är nu borttaget från din dator.
@@ -295,7 +289,7 @@ StatusUninstalling=Avinstallerar %1...
 [CustomMessages]
 NameAndVersion=%1 version %2
 AdditionalIcons=Återstående ikoner:
-CreateDesktopIcon=Skapa en ikon på srivbordet
+CreateDesktopIcon=Skapa en ikon på skrivbordet
 CreateQuickLaunchIcon=Skapa en ikon i Snabbstartfältet
 ProgramOnTheWeb=%1 på Webben
 UninstallProgram=Avinstallera %1

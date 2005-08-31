@@ -45,6 +45,8 @@ SetupFileCorrupt=Die opstellingslêers is korrup. Verkry asseblief 'n nuwe kopie 
 SetupFileCorruptOrWrongVer=Die opstellingslêers is korrup, of is nie aanpasbaar vir hierdie weergawe van die Opsteller nie. Korrigeer asseblief die probleem, of verkry 'n nuwe kopie van die program.
 NotOnThisPlatform=Hierdie program sal nie uitvoer op %1 nie.
 OnlyOnThisPlatform=Hierdie program moet uitgevoer word op %1.
+OnlyOnTheseArchitectures=Hierdie program kan net geinstalleer word op weergawes van Windows ontwerp vir die volgende verwerker argitekture:%n%n%1
+MissingWOW64APIs=Die weergawe van Windows wat u gebruik sluit nie die funksionaliteit in wat die Installeerder vereis vir 'n 64-bis installasie nie. Om hierdie probleem te korrigeer, installeer asb. Service Pack %1.
 WinVersionTooLowError=Hierdie program benodig %1 weergawe %2 of later.
 WinVersionTooHighError=Hierdie program kan nie geïnstalleer word op %1 weergawe %2 of later nie.
 AdminPrivilegesRequired=Jy moet as 'n administrateur ingeteken wees om hierdie program te installeer.
@@ -65,6 +67,7 @@ AboutSetupMessage=%1 weergawe %2%n%3%n%n%1 tuisblad:%n%4
 AboutSetupNote=
 
 ; *** Buttons
+TranslatorNote= 
 ButtonBack=< &Terug
 ButtonNext=&Volgende >
 ButtonInstall=&Installeer
@@ -277,6 +280,7 @@ UninstallOpenError=Lêer "%1" kan nie oopgemaak word nie. Kan nie deïnstalleer ni
 UninstallUnsupportedVer=Die deïnstallasie-loglêer "%1" is in 'n formaat wat nie herken word deur hierdie weergawe van die deïnstalleerder nie. Kan nie deïnstalleer nie
 UninstallUnknownEntry='n Onbekende inskrywing (%1) is teëgekom in die deïnstallasie-log
 ConfirmUninstall=Is jy seker jy wil %1 en al sy komponente ten volle verwyder?
+UninstallOnlyOnWin64=Hierdie installasie kan slegs verwyder word op 64-bis Windows.
 OnlyAdminCanUninstall=Hierdie installasie kan slegs gedeïnstalleer word deur 'n gebruiker met administratiewe voorregte.
 UninstallStatusLabel=Wag asseblief 'n oomblik terwyl %1 verwyder word vanaf jou rekenaar.
 UninstalledAll=%1 is suksesvol verwyder vanaf jou rekenaar.

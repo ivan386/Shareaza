@@ -1,31 +1,14 @@
-; *** Inno Setup version 4.1.8+ Finnish messages ***
-;
-; To download user-contributed translations of this file, go to:
-;   http://www.jrsoftware.org/is3rdparty.htm
-;
-; Note: When translating this text, do not add periods (.) to the end of
-; messages that didn't have them already, because on those messages Inno
-; Setup adds the periods automatically (appending a period would result in
-; two periods being displayed).
+; *** Inno Setup version 5.1.0+ Finnish messages ***
 ;
 ; Finnish translation by Antti Karttunen
 ; E-mail: antti.karttunen@joensuu.fi
 ; Translation home page: http://cc.joensuu.fi/~ankarttu/innosetup/
-; Last modification date: 2004-02-29
+; Last modification date: 2005-03-06
 
 [LangOptions]
 LanguageName=Suomi
 LanguageID=$040B
-; If the language you are translating to requires special font faces or
-; sizes, uncomment any of the following entries and change them accordingly.
-;DialogFontName=
-;DialogFontSize=8
-;WelcomeFontName=Verdana
-;WelcomeFontSize=12
-;TitleFontName=Arial
-;TitleFontSize=29
-;CopyrightFontName=Arial
-;CopyrightFontSize=8
+LanguageCodePage=1252
 
 [Messages]
 
@@ -47,11 +30,13 @@ LdrCannotExecTemp=Väliaikaisessa hakemistossa olevaa tiedostoa ei voitu suoritta
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nVirhe %2: %3
-SetupFileMissing=Tiedostoa %1 ei löydy asennuksen lähdehakemistosta. Korjaa ongelma tai hanki uusi kopio ohjelmasta.
+SetupFileMissing=Tiedostoa %1 ei löydy asennushakemistosta. Korjaa ongelma tai hanki uusi kopio ohjelmasta.
 SetupFileCorrupt=Asennustiedostot ovat vaurioituneet. Hanki uusi kopio ohjelmasta.
 SetupFileCorruptOrWrongVer=Asennustiedostot ovat vaurioituneet tai ovat epäyhteensopivia tämän Asennuksen version kanssa. Korjaa ongelma tai hanki uusi kopio ohjelmasta.
 NotOnThisPlatform=Tämä ohjelma ei toimi %1-käyttöjärjestelmässä.
 OnlyOnThisPlatform=Tämä ohjelma toimii vain %1-käyttöjärjestelmässä.
+OnlyOnTheseArchitectures=Tämä ohjelma voidaan asentaa vain niihin Windowsin versioihin, jotka on suunniteltu seuraaville prosessorityypeille:%n%n%1
+MissingWOW64APIs=Tämä Windowsin versio ei sisällä ominaisuuksia, joita Asennus tarvitsee suorittaakseen 64-bittisen asennuksen. Korjaa ongelma asentamalla Service Pack %1.
 WinVersionTooLowError=Tämä ohjelma vaatii version %2 tai myöhemmän %1-käyttöjärjestelmästä.
 WinVersionTooHighError=Tätä ohjelmaa ei voi asentaa %1-käyttöjärjestelmän versioon %2 tai myöhempään.
 AdminPrivilegesRequired=Sinun täytyy kirjautua sisään järjestelmänvalvojana asentaaksesi tämän ohjelman.
@@ -65,11 +50,12 @@ ErrorTooManyFilesInDir=Tiedoston luominen hakemistoon "%1" epäonnistui, koska se
 
 ; *** Setup common messages
 ExitSetupTitle=Poistu Asennuksesta
-ExitSetupMessage=Asennus ei ole valmis. Jos lopetat nyt, ohjelmaa ei asenneta.%n%nVoit ajaa asennusohjelman toiste asentaaksesi ohjelman.%n%nPoistutaanko Asennuksesta?
+ExitSetupMessage=Asennus ei ole valmis. Jos lopetat nyt, ohjelmaa ei asenneta.%n%nVoit ajaa Asennuksen toiste asentaaksesi ohjelman.%n%nLopetetaanko Asennus?
 AboutSetupMenuItem=&Tietoja Asennuksesta...
 AboutSetupTitle=Tietoja Asennuksesta
 AboutSetupMessage=%1 versio %2%n%3%n%n%1 -ohjelman kotisivu:%n%4
-AboutSetupNote=Suomenkielinen käännös: Antti Karttunen
+AboutSetupNote=
+TranslatorNote=Suomenkielinen käännös: Antti Karttunen (antti.karttunen@joensuu.fi)
 
 ; *** Buttons
 ButtonBack=< &Takaisin
@@ -87,8 +73,8 @@ ButtonWizardBrowse=S&elaa...
 ButtonNewFolder=&Luo uusi kansio
 
 ; *** "Select Language" dialog messages
-SelectLanguageTitle=Valitse asennusohjelman kieli
-SelectLanguageLabel=Valitse asennusohjelmassa käytettävä kieli:
+SelectLanguageTitle=Valitse Asennuksen kieli
+SelectLanguageLabel=Valitse asentamisen aikana käytettävä kieli:
 
 ; *** Common wizard text
 ClickNext=Valitse Seuraava jatkaaksesi tai Peruuta poistuaksesi.
@@ -104,14 +90,14 @@ WelcomeLabel2=Tällä asennusohjelmalla koneellesi asennetaan [name/ver]. %n%nOn s
 ; *** "Password" wizard page
 WizardPassword=Salasana
 PasswordLabel1=Tämä asennusohjelma on suojattu salasanalla.
-PasswordLabel3=Anna salasana ja valitse sitten Seuraava jatkaaksesi.%n%nIsot ja pienet kirjaimet ovat merkitseviä.
+PasswordLabel3=Anna salasana ja valitse sitten Seuraava jatkaaksesi.%n%nIsot ja pienet kirjaimet ovat eriarvoisia.
 PasswordEditLabel=&Salasana:
 IncorrectPassword=Antamasi salasana oli virheellinen. Anna salasana uudelleen.
 
 ; *** "License Agreement" wizard page
 WizardLicense=Käyttöoikeussopimus
 LicenseLabel=Lue seuraava tärkeä tiedotus ennen kuin jatkat.
-LicenseLabel3=Lue seuraava käyttöoikeussopimus tarkasti. Sinun täytyy hyväksyä sopimus, jos haluat jatkaa asennusta.
+LicenseLabel3=Lue seuraava käyttöoikeussopimus tarkasti. Sinun täytyy hyväksyä sopimus, jos haluat jatkaa asentamista.
 LicenseAccepted=&Hyväksyn sopimuksen
 LicenseNotAccepted=&En hyväksy sopimusta
 
@@ -137,7 +123,7 @@ SelectDirDesc=Mihin [name] asennetaan?
 SelectDirLabel3=[name] asennetaan tähän kansioon.
 SelectDirBrowseLabel=Valitse Seuraava jatkaaksesi. Jos haluat vaihtaa kansiota, valitse Selaa.
 DiskSpaceMBLabel=Vapaata levytilaa tarvitaan vähintään [mb] Mt.
-ToUNCPathname=Asennusohjelma ei osaa käyttää UNC-polunnimiä. Jos haluat asentaa ohjelman verkkolevylle, yhdistä verkkoasema ensin levyasematunnukseen.
+ToUNCPathname=Asennus ei osaa käyttää UNC-polunnimiä. Jos haluat asentaa ohjelman verkkolevylle, yhdistä verkkoasema ensin levyasematunnukseen.
 InvalidPath=Anna täydellinen polku levyaseman kirjaimen kanssa. Esimerkiksi %nC:\OHJELMA%n%ntai UNC-polku muodossa %n%n\\palvelin\resurssi
 InvalidDrive=Valitsemaasi asemaa tai UNC-polkua ei ole olemassa tai sitä ei voi käyttää. Valitse toinen asema tai UNC-polku.
 DiskSpaceWarningTitle=Ei tarpeeksi vapaata levytilaa
@@ -155,7 +141,6 @@ WizardSelectComponents=Valitse asennettavat osat
 SelectComponentsDesc=Mitkä osat asennetaan?
 SelectComponentsLabel2=Valitse ne osat, jotka haluat asentaa, ja poista niiden osien valinta, joita et halua asentaa. Valitse Seuraava, kun olet valmis.
 FullInstallation=Normaali asennus
-; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
 CompactInstallation=Suppea asennus
 CustomInstallation=Mukautettu asennus
 NoUninstallWarningTitle=Asennettuja osia löydettiin
@@ -167,14 +152,13 @@ ComponentsDiskSpaceMBLabel=Nykyiset valinnat vaativat vähintään [mb] Mt levytila
 ; *** "Select Additional Tasks" wizard page
 WizardSelectTasks=Valitse muut toiminnot
 SelectTasksDesc=Mitä muita toimintoja suoritetaan?
-SelectTasksLabel2=Valitse muut toiminnot, jotka haluat asennusohjelman suorittavan samalla kun [name] asennetaan. Valitse Seuraava, kun olet valmis.
+SelectTasksLabel2=Valitse muut toiminnot, jotka haluat Asennuksen suorittavan samalla kun [name] asennetaan. Valitse Seuraava, kun olet valmis.
 
 ; *** "Select Start Menu Folder" wizard page
 WizardSelectProgramGroup=Valitse Käynnistä-valikon kansio
 SelectStartMenuFolderDesc=Mihin ohjelman pikakuvakkeet sijoitetaan?
 SelectStartMenuFolderLabel3=Ohjelman pikakuvakkeet luodaan tähän Käynnistä-valikon kansioon.
 SelectStartMenuFolderBrowseLabel=Valitse Seuraava jatkaaksesi. Jos haluat vaihtaa kansiota, valitse Selaa.
-NoIconsCheck=&Älä luo kuvakkeita
 MustEnterGroupName=Kansiolle pitää antaa nimi.
 GroupNameTooLong=Kansion nimi tai polku on liian pitkä.
 InvalidGroupName=Virheellinen kansion nimi.
@@ -195,7 +179,7 @@ ReadyMemoTasks=Muut toiminnot:
 
 ; *** "Preparing to Install" wizard page
 WizardPreparing=Valmistellaan asennusta
-PreparingDesc=Asennusohjelma valmistelee [name] -ohjelman asennusta koneellesi.
+PreparingDesc=Valmistaudutaan asentamaan [name] koneellesi.
 PreviousInstallNotCompleted=Edellisen ohjelman asennus tai asennuksen poisto ei ole valmis. Sinun täytyy käynnistää kone uudelleen viimeistelläksesi edellisen asennuksen.%n%nAja [name] -asennusohjelma uudestaan, kun olet käynnistänyt koneen uudelleen.
 CannotContinue=Asennusta ei voida jatkaa. Valitse Peruuta poistuaksesi.
 
@@ -204,8 +188,8 @@ WizardInstalling=Asennus käynnissä
 InstallingLabel=Odota, kun [name] asennetaan koneellesi.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=[name] -asennusohjelman viimeistely
-FinishedLabelNoIcons=[name] on nyt asennettu.
+FinishedHeadingLabel=[name] - Asennuksen viimeistely
+FinishedLabelNoIcons=[name] on nyt asennettu koneellesi.
 FinishedLabel=[name] on nyt asennettu. Sovellus voidaan käynnistää valitsemalla jokin asennetuista kuvakkeista.
 ClickFinish=Valitse Lopeta poistuaksesi Asennuksesta.
 FinishedRestartLabel=Jotta [name] saataisiin asennettua loppuun, pitää kone käynnistää uudelleen. Haluatko käynnistää koneen uudelleen nyt?
@@ -213,9 +197,7 @@ FinishedRestartMessage=Jotta [name] saataisiin asennettua loppuun, pitää kone kä
 ShowReadmeCheck=Kyllä, haluan nähdä LUEMINUT-tiedoston
 YesRadio=&Kyllä, käynnistä kone uudelleen
 NoRadio=&Ei, käynnistän koneen uudelleen myöhemmin
-; used for example as 'Run MyProg.exe'
 RunEntryExec=Käynnistä %1
-; used for example as 'View Readme.txt'
 RunEntryShellExec=Näytä %1
 
 ; *** "Setup Needs the Next Disk" stuff
@@ -282,9 +264,10 @@ ErrorRestartingComputer=Koneen uudelleenkäynnistäminen ei onnistunut. Suorita uu
 ; *** Uninstaller messages
 UninstallNotFound=Tiedostoa "%1" ei löytynyt. Asennuksen poisto ei onnistu.
 UninstallOpenError=Tiedostoa "%1" ei voitu avata. Asennuksen poisto ei onnistu.
-UninstallUnsupportedVer=Tämä versio asennuksen poisto-ohjelmasta ei pysty lukemaan lokitiedostoa "%1". Asennuksen poisto ei onnistu
+UninstallUnsupportedVer=Tämä versio Asennuksen poisto-ohjelmasta ei pysty lukemaan lokitiedostoa "%1". Asennuksen poisto ei onnistu
 UninstallUnknownEntry=Asennuksen poisto-ohjelman lokitiedostosta löytyi tuntematon merkintä (%1)
 ConfirmUninstall=Poistetaanko %1 ja kaikki sen osat?
+UninstallOnlyOnWin64=Tämä ohjelma voidaan poistaa vain 64-bittisestä Windowsista käsin.
 OnlyAdminCanUninstall=Tämän asennuksen poistaminen vaatii järjestelmänvalvojan oikeudet.
 UninstallStatusLabel=Odota, kun %1 poistetaan koneeltasi.
 UninstalledAll=%1 poistettiin onnistuneesti.
@@ -300,3 +283,14 @@ SharedFileLocationLabel=Sijainti:
 WizardUninstalling=Asennuksen poiston tila
 StatusUninstalling=Poistetaan %1...
 
+[CustomMessages]
+
+NameAndVersion=%1 versio %2
+AdditionalIcons=Lisäkuvakkeet:
+CreateDesktopIcon=Luo kuvake työpöydälle
+CreateQuickLaunchIcon=Luo kuvake pikakäynnistyspalkkiin
+ProgramOnTheWeb=%1 Internetissä
+UninstallProgram=Poista %1
+LaunchProgram=Käynnistä %1
+AssocFileExtension=Yhdistä %1 tiedostopäätteeseen %2
+AssocingFileExtension=Yhdistä %1 tiedostopäätteeseen %2 ...
