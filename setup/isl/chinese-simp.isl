@@ -11,7 +11,7 @@
 ; $jrsoftware: issrc/Files/Default.isl,v 1.53 2004/02/25 01:55:24 jr Exp $
 
 [LangOptions]
-LanguageName=Chinese Simplified(PRC)
+LanguageName=<7B80><4F53><4E2D><6587>
 LanguageID=$0804
 LanguageCodePage=936
 ; If the language you are translating to requires special font faces or
