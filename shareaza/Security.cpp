@@ -1148,9 +1148,9 @@ void CAdultFilter::Load()
 
 	// Insert some defaults if the load failed
 	if ( strBlockedWords.IsEmpty() )
-		strBlockedWords = _T("xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian whore shit rape preteen hardcore lolita playboy penthouse dick dildo upskirt beastiality pedofil necrofil");
+		strBlockedWords = _T("xxx porn fuck cock cunt vagina pussy nude naked hentai lesbian whore shit rape preteen hardcore lolita playboy penthouse dildo upskirt beastiality bestiality pedofil necrofil");
 	if ( strDubiousWords.IsEmpty() )
-		strDubiousWords = _T("ass sex anal gay teen thong babe bikini viagra");
+		strDubiousWords = _T("ass sex anal gay teen thong babe bikini viagra dick");
 
 	// Load the blocked words into the Adult Filter
 	if ( strBlockedWords.GetLength() > 3 )
