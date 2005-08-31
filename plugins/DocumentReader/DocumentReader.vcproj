@@ -22,7 +22,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\shareaza"
+				AdditionalIncludeDirectories="..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_MERGE_PROXYSTUB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -96,7 +96,7 @@
 				FavorSizeOrSpeed="1"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\shareaza"
+				AdditionalIncludeDirectories="..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;_MERGE_PROXYSTUB"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="0"
