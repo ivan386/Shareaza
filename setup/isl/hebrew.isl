@@ -9,7 +9,7 @@
 ; two periods being displayed).
 
 [LangOptions]
-LanguageName=Hebrew
+LanguageName=<05E2><05D1><05E8><05D9><05EA>
 LanguageID=$040D
 LanguageCodePage=1255
 ; If the language you are translating to requires special font faces or
