@@ -167,7 +167,6 @@ WizardSelectProgramGroup=Startmenü-Ordner auswählen
 SelectStartMenuFolderDesc=Wo soll das Setup die Programm-Verknüpfungen anlegen?
 SelectStartMenuFolderLabel3=Das Setup wird die Programm-Verknüpfungen im folgenden Startmenü-Ordner anlegen.
 SelectStartMenuFolderBrowseLabel=Klicken Sie auf "Weiter", um fortzufahren. Klicken Sie auf "Durchsuchen", falls Sie einen anderen Ordner auswählen möchten.
-NoIconsCheck=Keine Programm-Verknüpfungen erzeugen
 MustEnterGroupName=Sie müssen einen Ordnernamen eingeben.
 GroupNameTooLong=Der Ordnername/Pfad ist zu lang.
 InvalidGroupName=Der Ordnername ist nicht gültig.

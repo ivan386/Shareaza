@@ -166,7 +166,6 @@ WizardSelectProgramGroup=Sélection du dossier du menu Démarrer
 SelectStartMenuFolderDesc=Où l'assistant d'installation doit-il placer les raccourcis du programme ?
 SelectStartMenuFolderLabel3=L'assistant va créer les raccourcis du programme dans le dossier du menu Démarrer indiqué ci-dessous.
 SelectStartMenuFolderBrowseLabel=Appuyez sur Suivant pour continuer. Appuyez sur Parcourir si vous souhaitez sélectionner un autre dossier du menu Démarrer.
-NoIconsCheck=&Ne pas créer d'icône
 MustEnterGroupName=Vous devez saisir un nom de dossier du menu Démarrer.
 GroupNameTooLong=Le nom ou le chemin du dossier est trop long.
 InvalidGroupName=Le nom du dossier n'est pas valide.

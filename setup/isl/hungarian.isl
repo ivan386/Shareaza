@@ -176,7 +176,6 @@ SelectStartMenuFolderDesc=Hova helyezze a Telepítõ a program parancsikonjait?
 SelectStartMenuFolderLabel3=A Telepítõ program a parancsikonjait a Start menü következõ mappájában fogja létrehozni.
 SelectStartMenuFolderBrowseLabel=A folytatáshoz kattintson a Tovább gombra. Másik mappa kiválasztásához kattintson a Tallózás gombra.
 
-NoIconsCheck=Ne hozzon létre ikonokat
 MustEnterGroupName=Meg kell adnia egy mappanevet.
 GroupNameTooLong=A mappanév vagy az útvonal túl hosszú.
 InvalidGroupName=A mappanév érvénytelen.

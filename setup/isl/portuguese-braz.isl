@@ -165,7 +165,6 @@ WizardSelectProgramGroup=Selecione a pasta do Menu Iniciar
 SelectStartMenuFolderDesc=Onde deverão ser colocados os ícones de atalho do programa?
 SelectStartMenuFolderLabel3=Os ícones de atalho do programa serão criados na seguinte pasta do Menu Iniciar.
 SelectStartMenuFolderBrowseLabel=Para continuar, clique em Próximo. Se desejar selecionar uma pasta diferente, clique em Procurar.
-NoIconsCheck=&Não criar ícones
 MustEnterGroupName=É necessário nomear a pasta.
 GroupNameTooLong=O nome ou caminho para a pasta é muito grande.
 InvalidGroupName=O nome da pasta é inválido.

@@ -165,7 +165,6 @@ WizardSelectProgramGroup=Velg mappe på start-menyen
 SelectStartMenuFolderDesc=Where skal installasjonsprogrammet plassere snarveiene?
 SelectStartMenuFolderLabel3=Installasjonsprogrammet vil opprette snarveier på følgende startmeny-mappe.
 SelectStartMenuFolderBrowseLabel=Klikk på Neste for å fortsette. Klikk på Bla igjennom hvis du vil velge en annen mappe.
-NoIconsCheck=&Ikke lag ikoner
 MustEnterGroupName=Du må skrive inn et mappe-navn.
 GroupNameTooLong=Det er for langt navn på mappen eller banen.
 InvalidGroupName=Navnet på mappen er ugyldig.
