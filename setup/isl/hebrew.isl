@@ -1,4 +1,4 @@
-;*** Inno Setup version 4.2.2+ English messages ***
+; *** Inno Setup version 5.1.0+ English messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -7,8 +7,6 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-;
-; $jrsoftware: issrc/Files/Default.isl,v 1.58 2004/04/07 20:17:13 jr Exp $
 
 [LangOptions]
 LanguageName=Hebrew
@@ -50,6 +48,8 @@ SetupFileCorrupt=קבצי ההתקנה פגומים, אנא השג עותק תקין של התוכנית
 SetupFileCorruptOrWrongVer=קבצי ההתקנה פגומים או לא מתאימים לגרסה של התוכנית, אנא תקן את הבעיה או השג עותק תקין של התוכנה
 NotOnThisPlatform=%1 התוכנית לא תוכל לפעול על
 OnlyOnThisPlatform=%1 התוכנית חייבת להיות מופעלת על
+OnlyOnTheseArchitectures=This program can only be installed on versions of Windows designed for the following processor architectures:%n%n%1
+MissingWOW64APIs=The version of Windows you are running does not include functionality required by Setup to perform a 64-bit installation. To correct this problem, please install Service Pack %1.
 WinVersionTooLowError=%1 ‏של‎ ‏ואילך‎ %2 ‏גרסא‎ ‏דרוש‎ ‏לתוכנית
 WinVersionTooHighError=%1 ‏של‎ ‏ואילך‎ %2 ‏גרסא‎ ‏על‎ ‏מותקנת‎ ‏להיות‎ ‏יכולה‎ ‏אינה‎ ‏התוכנית
 AdminPrivilegesRequired=עלייך להיות רשום כמנהל בכדי להתקין את התוכנה
@@ -68,6 +68,7 @@ AboutSetupMenuItem=א&ודות ההתקנה
 AboutSetupTitle=אודות התקנה
 AboutSetupMessage=%1 , %2%n%3%n%n%1 :גרסא %n%4 :עמוד בית
 AboutSetupNote=
+TranslatorNote=
 
 ; *** Buttons
 ButtonBack=< הק&ודם
@@ -282,6 +283,7 @@ UninstallOpenError=הקובץ  "%1" לא ניתן לפתיחה, לא ניתן להסיר התקנה
 UninstallUnsupportedVer=The uninstall log file "%1" is in a format not recognized by this version of the uninstaller. Cannot uninstall
 UninstallUnknownEntry=נמצא רישום לא ידוע (%1) בקובץ הרישום של תוכנית הסרת ההתקנה
 ConfirmUninstall=?האם אתה בטוח שתרצה להסיר את %1 וכל מרכיביו
+UninstallOnlyOnWin64=This installation can only be uninstalled on 64-bit Windows.
 OnlyAdminCanUninstall=התוכנית יכולה להיות מוסרת אך ורק על ידי משתמש עם זכויות ניהול
 UninstallStatusLabel=אנא המתן בעת שהתוכנית %1 מוסרת ממחשבך
 UninstalledAll=%1 הוסרה בהצלחה התוכנית
