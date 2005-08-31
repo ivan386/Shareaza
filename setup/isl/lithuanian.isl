@@ -1,4 +1,4 @@
-; *** Inno Setup version 5.1.0+ English messages ***
+; *** Inno Setup version 5.1.0+ Lithuanian messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -8,7 +8,7 @@
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ; Translated by Robertas Rimas (Loptar@takas.lt)
-; Corrected and updated by Rolandas Rudomanskis
+; Corrected and updated by Rolandas Rudomanskis (rolandasr@gmail.com)
 
 [LangOptions]
 LanguageName=Lietuvi<0173>
@@ -111,7 +111,7 @@ IncorrectPassword=Ávestas slaptaþodis yra neteisingas. Praðome bandyti ið naujo.
 
 ; *** "License Agreement" wizard page
 WizardLicense=Licencinë sutartis
-LicenseLabel=Praðome perkaityti ðià informacijà prieð tæsdami ádiegimà.
+LicenseLabel=Praðome perskaityti ðià informacijà prieð tæsdami ádiegimà.
 LicenseLabel3=Praðome perskaityti Licencijos sutartá. Prieð tæsdami ádiegimà Jûs turite sutikti su reikalavimais.
 LicenseAccepted=Að &sutinku su reikalavimais
 LicenseNotAccepted=Að &nesutinku su reikalavimais
