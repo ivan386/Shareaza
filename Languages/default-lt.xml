@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.3.7"
+		version="2.1.4.1"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2055,13 +2055,13 @@ right quote	&#147;
 	</document>
 	
 	<document name="GeneralHelp.XPsp2">
-		<text format="b">Aptiktas Windows XP Service Pack 2</text>
+		<text format="b">Aptiktas susijungimų bandymų apribojimas</text>
 		<newline gap="8"/>
-		<text>„Shareaza“ aptiko Windows XP Service Pack 2. Šioje versijoje yra nustatytas susijungimų apribojimas
+		<text>„Shareaza“ aptiko Windows XP Service Pack 2 ar panašią sistemą, kurioje yra nustatytas susijungimų apribojimas
 		visoms programoms.</text>
 		<newline gap="8"/>
 		<text>„Shareaza“ sumažino tinklo susijungimų skaičių ir nustatė tam tikras numatytąsias reikšmes,
-		kad užtikrintų deramą veikimą, tačiau našumas gali sumažėti. Aplankykite „Shareaza“ forumus,
+		kad užtikrintų deramą veikimą, tačiau našumas gali šiek tiek sumažėti. Aplankykite „Shareaza“ forumus,
 		jei reikalinga papildoma informacija ir norite sužinoti paskutines naujienas.</text>
 	</document>
 
