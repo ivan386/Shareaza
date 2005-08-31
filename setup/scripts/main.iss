@@ -105,7 +105,6 @@ Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignorever
 
 ; Skins
 Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
-Source: "Skins\NucleoX\*"; DestDir: "{app}\Skins\NucleoX"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
@@ -371,7 +370,7 @@ begin
     end;
   end;
 end;
-        
+
 Function InitializeSetup: Boolean;
 Begin
   Result := True;
