@@ -163,7 +163,7 @@ public:
 	struct sConnection
 	{
 		BOOL		AutoConnect;
-		BOOL		Firewalled;
+		int			FirewallStatus;
 		CString		OutHost;
 		CString		InHost;
 		DWORD		InPort;
@@ -528,6 +528,11 @@ enum
 enum
 {
 	MODE_AUTO, MODE_LEAF, MODE_HUB, MODE_ULTRAPEER = MODE_HUB
+};
+
+enum
+{
+	CONNECTION_FIREWALLED, CONNECTION_OPEN, CONNECTION_AUTO
 };
 
 #define GNUTELLA_DEFAULT_PORT	6346

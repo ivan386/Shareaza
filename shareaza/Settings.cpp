@@ -148,7 +148,7 @@ void CSettings::Setup()
 	Add( _T("Web.Torrent"), &Web.Torrent, TRUE );
 	
 	Add( _T("Connection.AutoConnect"), &Connection.AutoConnect, FALSE );
-	Add( _T("Connection.Firewalled"), &Connection.Firewalled, TRUE );
+	Add( _T("Connection.FirewallStatus"), &Connection.FirewallStatus, CONNECTION_AUTO );
 	Add( _T("Connection.OutHost"), &Connection.OutHost, NULL );
 	Add( _T("Connection.InHost"), &Connection.InHost, NULL );
 	Add( _T("Connection.InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
@@ -665,7 +665,6 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 28 )
 	{
-		Connection.Firewalled	= TRUE;		// We now assume so until proven otherwise
 		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
 		BitTorrent.Endgame		= TRUE;		// Endgame on
 	}
