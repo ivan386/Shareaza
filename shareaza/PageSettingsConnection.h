@@ -40,24 +40,24 @@ public:
 public:
 	//{{AFX_DATA(CConnectionSettingsPage)
 	enum { IDD = IDD_SETTINGS_CONNECTION };
-	CEdit	m_wndInPort;
-	CComboBox	m_wndInSpeed;
-	CComboBox	m_wndOutSpeed;
-	CComboBox	m_wndInHost;
-	CButton	m_wndInBind;
+	CEdit			m_wndInPort;
+	CComboBox		m_wndInSpeed;
+	CComboBox		m_wndOutSpeed;
+	CComboBox		m_wndInHost;
+	CButton			m_wndInBind;
 	CSpinButtonCtrl	m_wndTimeoutHandshake;
 	CSpinButtonCtrl	m_wndTimeoutConnection;
-	BOOL	m_bIgnoreLocalIP;
-	BOOL	m_bInBind;
-	CString	m_sInHost;
-	int		m_nInPort;
-	CString	m_sOutHost;
-	DWORD	m_nTimeoutConnection;
-	DWORD	m_nTimeoutHandshake;
-	BOOL	m_bCanAccept;
-	CString	m_sOutSpeed;
-	CString	m_sInSpeed;
-	BOOL	m_bInRandom;
+	BOOL			m_bInBind;
+	CString			m_sInHost;
+	int				m_nInPort;
+	CString			m_sOutHost;
+	CComboBox		m_wndCanAccept;
+	BOOL			m_bIgnoreLocalIP;
+	DWORD			m_nTimeoutConnection;
+	DWORD			m_nTimeoutHandshake;
+	CString			m_sOutSpeed;
+	CString			m_sInSpeed;
+	BOOL			m_bInRandom;
 	//}}AFX_DATA
 
 	CString	FormatSpeed(DWORD nSpeed);
