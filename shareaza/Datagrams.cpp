@@ -207,8 +207,12 @@ BOOL CDatagrams::IsStable()
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 	if ( ! Network.IsListening() ) return FALSE;
 
-	// Are we stable OR know we are not firewalled
-	return m_bStable || ! Settings.Connection.Firewalled;
+	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED )
+		return FALSE;			// We know we are firewalled
+	else if ( Settings.Connection.FirewallStatus == CONNECTION_OPEN )
+		return TRUE;			// We know we are not firewalled
+	else // ( Settings.Connection.FirewallStatus == CONNECTION_AUTO )
+		return m_bStable;		// Use detected state
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -947,6 +951,11 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	if ( ! bRelayed ) return TRUE;
 
 	if ( ! Network.IsConnectedTo( &pHost->sin_addr ) ) m_bStable = TRUE;
+
+	/*
+	CString str = inet_ntoa( pHost->sin_addr );
+	theApp.Message( MSG_ERROR, _T("Relayed Pong from %s:%u"), str, pHost->sin_port );
+	*/
 
 	return TRUE;
 }
