@@ -23,7 +23,7 @@
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.1.11"
+		version="2.1.4.4"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -3076,6 +3076,9 @@
 	<string id="20002" value="于"/><!-- 例如: 1 于 10 -->
 	<string id="20003" value="变更界面方向需要重新启动。\n您需要手动启动 Shareaza。立即退出？"/>
 	<string id="20004" value="您的操作系统不支持从右向左方向的语言。"/>
+	<string id="20005" value="No"/>
+	<string id="20006" value="Yes"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="连接中"/>
 	<string id="20101" value="请求中"/>
 	<string id="20102" value="回应"/>
@@ -3238,15 +3241,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="连接">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="连接">
 		<control caption="传入地址(_I):"/>
 		<control caption="地址:"/>
 		<control caption="自动"/>
+		<control caption="速度:"/>
+		<control/>
 		<control caption="端口:"/>
 		<control/>
 		<control caption="随机"/>
-		<control caption="速度:"/>
-		<control/>
 		<control caption="强制绑定到此地址"/>
 		<control caption="传出地址(_O):"/>
 		<control caption="地址:"/>
@@ -3254,13 +3257,14 @@
 		<control caption="速度:"/>
 		<control/>
 		<control caption="选项(_O):"/>
+		<control caption="我可以接收传入连接"/>
+		<control/>
 		<control caption="忽略 私人/本地 IP 地址"/>
 		<control caption="超时(_T):"/>
 		<control caption="连接:"/>
 		<control/><control/>
 		<control caption="握手:"/>
 		<control/><control/>
-		<control caption="我可以接收传入连接"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="下载">

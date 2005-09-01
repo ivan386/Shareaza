@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.3.7"
+		version="2.1.4.4"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -3097,6 +3097,9 @@
 	<string id="20002" value="di"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiare la direzione dell'interfaccia richiede il riavvio di Shareaza. \nDovrai lanciare Shareaza manualmente. Vuoi uscire ora?"/>
 	<string id="20004" value="Le lingue da destra-a-sinistra non sono supportate dal tuo sistema operativo."/>
+	<string id="20005" value="No"/>
+	<string id="20006" value="Sì"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Connessione"/>
 	<string id="20101" value="Richiesta"/>
 	<string id="20102" value="Risposta"/>
@@ -3259,15 +3262,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Connessione">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Connessione">
 		<control caption="Indirizzi in _entrata:"/>
 		<control caption="Indirizzo:"/>
 		<control caption="Automatico"/>
+		<control caption="Velocità:"/>
+		<control/>
 		<control caption="Porta:"/>
 		<control/>
 		<control caption="Casuale"/>
-		<control caption="Velocità:"/>
-		<control/>
 		<control caption="Forza conn. a questo indirizzo"/>
 		<control caption="Indirizzi in _uscita:"/>
 		<control caption="Indirizzo:"/>
@@ -3275,13 +3278,14 @@
 		<control caption="Velocità:"/>
 		<control/>
 		<control caption="_Opzioni:"/>
+		<control caption="Posso accettare conn. in entrata"/>
+		<control/>
 		<control caption="Ignora indirizzi IP privati/locali"/>
 		<control caption="_Timeout:"/>
 		<control caption="Connessione:"/>
 		<control/><control/>
 		<control caption="Negoziazione:"/>
 		<control/><control/>
-		<control caption="Posso accettare conn. in entrata"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Download">

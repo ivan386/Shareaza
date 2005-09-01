@@ -3097,6 +3097,9 @@
 	<string id="20002" value="av"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Forandring av grensesnittets retning krever omstart. \nDu må starte Shareaza på nytt manuelt. Avslutte nå?"/>
 	<string id="20004" value="Høyre-mot-venstre-språk støttes ikke av ditt OS."/>
+	<string id="20005" value="Nei"/>
+	<string id="20006" value="Ja"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Kobler til"/>
 	<string id="20101" value="Anmoder"/>
 	<string id="20102" value="Respons"/>
@@ -3259,15 +3262,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internett"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Forbindelse">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Forbindelse">
 		<control caption="_Inngående adresse:"/>
 		<control caption="Adresse:"/>
 		<control caption="Automatisk"/>
+		<control caption="Hastighet:"/>
+		<control/>
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Tilfeldig"/>
-		<control caption="Hastighet:"/>
-		<control/>
 		<control caption="Tving binding til denne adressen"/>
 		<control caption="_Utgående adresse:"/>
 		<control caption="Adresse:"/>
@@ -3275,13 +3278,14 @@
 		<control caption="Hastighet:"/>
 		<control/>
 		<control caption="E_genskaper:"/>
+		<control caption="Jeg kan motta innkommende tilkoblinger"/>
+		<control/>
 		<control caption="Ignorer private/lokale IP-adresser"/>
 		<control caption="_Tidsavbrudd:"/>
 		<control caption="Tilkobling:"/>
 		<control/><control/>
 		<control caption="Håndtrykk:"/>
 		<control/><control/>
-		<control caption="Jeg kan motta innkommende tilkoblinger"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedlastinger">

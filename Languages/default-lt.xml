@@ -22,7 +22,7 @@ right quote	&#147;
 		description="Shareaza Lithuanian Skin File"
 		link="http://www.shareaza.com/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.1.4.1"
+		version="2.1.4.4"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3104,6 +3104,9 @@ right quote	&#147;
 	<string id="20002" value="iš"/>
 	<string id="20003" value="Sąsajos krypties pakeitimui reikalinga startuoti iš naujo. \nJums reikės paleisti „Shareaza“ programą rankiniu būdu. Ar baigti darbą dabar?"/>
 	<string id="20004" value="Jūsų operacinė sistema nepalaiko kalbų su rašmenimis iš dešinės į kairę."/>
+	<string id="20005" value="Ne"/>
+	<string id="20006" value="Taip"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Jungiamasi"/>
 	<string id="20101" value="Užklausiama"/>
 	<string id="20102" value="Atsakas"/>
@@ -3266,15 +3269,15 @@ right quote	&#147;
 
 	<dialog name="CInternetSettingsGroup" caption="Internetas"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Ryšys">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Ryšys">
 		<control caption="_Gavimų adresas:"/>
 		<control caption="Adresas:"/>
 		<control caption="Automatinis"/>
+		<control caption="Sparta:"/>
+		<control/>
 		<control caption="Prievadas:"/>
 		<control/>
 		<control caption="Atsitiktinis"/>
-		<control caption="Sparta:"/>
-		<control/>
 		<control caption="Dirbtinai susieti su adresu"/>
 		<control caption="_Išsiuntimų adresas:"/>
 		<control caption="Adresas:"/>
@@ -3282,13 +3285,14 @@ right quote	&#147;
 		<control caption="Sparta:"/>
 		<control/>
 		<control caption="_Parinktys:"/>
+		<control caption="Aš galiu priimti įeinančias užklausas"/>
+		<control/>
 		<control caption="Ignoruoti vietinius IP adresus"/>
 		<control caption="_Laiko limitai:"/>
 		<control caption="Susijungimui:"/>
 		<control/><control/>
 		<control caption="Patvirtinimui:"/>
 		<control/><control/>
-		<control caption="Aš galiu priimti įeinančias užklausas"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Atsisiuntimai">

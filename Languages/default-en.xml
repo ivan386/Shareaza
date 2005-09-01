@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.4.1"
+		version="2.1.4.4"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3097,6 +3097,9 @@
 	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
+	<string id="20005" value="No"/>
+	<string id="20006" value="Yes"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Connecting"/>
 	<string id="20101" value="Requesting"/>
 	<string id="20102" value="Response"/>
@@ -3259,15 +3262,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Connection">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Connection">
 		<control caption="_Inbound Address:"/>
 		<control caption="Address:"/>
 		<control caption="Automatic"/>
+		<control caption="Speed:"/>
+		<control/>
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Random"/>
-		<control caption="Speed:"/>
-		<control/>
 		<control caption="Force binding to this address"/>
 		<control caption="_Outbound Address:"/>
 		<control caption="Address:"/>
@@ -3275,13 +3278,14 @@
 		<control caption="Speed:"/>
 		<control/>
 		<control caption="O_ptions:"/>
-		<control caption="Ignore private/local IP addresses"/>
+		<control caption="Can accept incoming connections"/>
+		<control/>
+		<control caption="Ignore private/local IP addresses "/>
 		<control caption="_Timeouts:"/>
 		<control caption="Connection:"/>
 		<control/><control/>
 		<control caption="Handshake:"/>
 		<control/><control/>
-		<control caption="I can accept incoming connections"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">

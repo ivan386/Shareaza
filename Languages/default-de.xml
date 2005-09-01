@@ -3096,6 +3096,9 @@ Other:
 		<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
 		<string id="20000" value="Keine URN verfügbar."/>
 		<string id="20002" value="von"/>
+		<string id="20005" value="Nein"/>
+		<string id="20006" value="Ja"/>
+		<string id="20007" value="Auto"/>
 		<string id="20100" value="Verbinden"/>
 		<string id="20101" value="Anfordern"/>
 		<string id="20102" value="Antwort"/>
@@ -3258,15 +3261,15 @@ Other:
 
 		<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-		<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Verbindung">
+		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Verbindung">
 			<control caption="_Inbound Adresse:"/>
 			<control caption="Adresse:"/>
 			<control caption="Automatisch"/>
+			<control caption="Geschw.:"/>
+			<control />
 			<control caption="Port:"/>
 			<control />
 			<control caption="Zufällig"/>
-			<control caption="Geschw.:"/>
-			<control />
 			<control caption="Diese Adresse erzwingen"/>
 			<control caption="_Outbound Adresse:"/>
 			<control caption="Adresse:"/>
@@ -3274,13 +3277,14 @@ Other:
 			<control caption="Geschw.:"/>
 			<control />
 			<control caption="O_ptionen:"/>
+			<control caption="Eingehende Verbindungen möglich"/>
+			<control />
 			<control caption="_Private Netzwerk IPs ignorieren"/>
 			<control caption="_Wartezeiten:"/>
 			<control caption="Verbindung:"/>
 			<control /><control />
 			<control caption="Handshake:"/>
 			<control /><control />
-			<control caption="Eingehende Verbindungen möglich"/>
 		</dialog>
 
 		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">

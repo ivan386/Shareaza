@@ -13,7 +13,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://zamoskvaretsi.dtn.ru/dab/shareaza/shareaza.html"
 		email="contact@shareaza.com"
-		version="2.1.4.1"
+		version="2.1.4.4"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -3086,6 +3086,9 @@
 	<string id="20002" value="из"/>
 	<string id="20003" value="Для смены направления интерфейса Вы должны вручную перезапустить Shareaza.\מВыйти сейчас?"/>
 	<string id="20004" value="Ваша ОС не поддеживает языки с направлением текста справа налево."/>
+	<string id="20005" value="Нет"/>
+	<string id="20006" value="Да"/>
+	<string id="20007" value="Ауто"/>
 	<string id="20100" value="Соединение"/>
 	<string id="20101" value="Запрос"/>
 	<string id="20102" value="Ответ"/>
@@ -3248,15 +3251,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Интернет"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Соединения">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Соединения">
 		<control caption="Адрес для входящего потока:"/>
 		<control caption="Адрес:"/>
 		<control caption="Автоматический"/>
+		<control caption="Скорость:"/>
+		<control/>
 		<control caption="Порт:"/>
 		<control/>
 		<control caption="Случайный"/>
-		<control caption="Скорость:"/>
-		<control/>
 		<control caption="Настоять на этом адресе"/>
 		<control caption="Адрес для выходящего потока:"/>
 		<control caption="Адрес:"/>
@@ -3264,13 +3267,14 @@
 		<control caption="Скорость:"/>
 		<control/>
 		<control caption="О_пции:"/>
+		<control caption="Могу принять входящие соединения"/>
+		<control/>
 		<control caption="Отклонять локальные IP адреса"/>
 		<control caption="_Тайм-ауты:"/>
 		<control caption="Соединение:"/>
 		<control/><control/>
 		<control caption="Приветствие:"/>
 		<control/><control/>
-		<control caption="Могу принять вход. соединения"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Загрузки">

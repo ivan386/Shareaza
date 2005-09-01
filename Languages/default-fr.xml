@@ -29,7 +29,7 @@ Other:
 		description="Shareaza French Skin File"
 		link="http://www.shareaza.com/"
 		email="shareaza.fr(at)gmail.com"
-		version="2.1.3.7"
+		version="2.1.4.4"
 		type="Language"
 		language="fr"
 		prompt="Cliquez ici pour utiliser Shareaza en Français."
@@ -3047,7 +3047,10 @@ Other:
 	<string id="20000" value="Pas d'URN disponible"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Sortir maintenant?"/> 
-    <string id="20004" value="Les langues écrites de droite vers la gauche ne sont pas supportées dans votre OS."/> 
+    <string id="20004" value="Les langues écrites de droite vers la gauche ne sont pas supportées dans votre OS."/>
+	<string id="20005" value="Non"/>
+	<string id="20006" value="Oui"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Se connecte"/>
 	<string id="20101" value="Requiert"/>
 	<string id="20102" value="Réponse"/>
@@ -3210,15 +3213,15 @@ Other:
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Connexion">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Connexion">
 		<control caption="Adresse _entrante:"/>
 		<control caption="Adresse:"/>
 		<control caption="Automatique"/>
+		<control caption="Vitesse:"/>
+		<control/>
 		<control caption="Port:"/>
 		<control/>
 		<control caption="Aléatoire"/>
-		<control caption="Vitesse:"/>
-		<control/>
 		<control caption="Rester sur cette adresse"/>
 		<control caption="Adresse sortante:"/>
 		<control caption="Adresse:"/>
@@ -3226,13 +3229,14 @@ Other:
 		<control caption="Vitesse:"/>
 		<control/>
 		<control caption="O_ptions:"/>
+		<control caption="Accepter les connexions entrantes"/>
+		<control/>
 		<control caption="Ignorer les IP privées/locales"/>
 		<control caption="_Délai avant expiration:"/>
 		<control caption="Connexion:"/>
 		<control/><control/>
 		<control caption="Poignée de m.:"/>
 		<control/><control/>
-		<control caption="Accepter les connexions entrantes"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Téléchargements">

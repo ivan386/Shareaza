@@ -3067,6 +3067,9 @@
 	<string id="19002" value="Yhteyttä ei voida muodostaa, URL ei ole saatavilla."/>
 	<string id="20000" value="URN ei ole saatavilla"/>
 	<string id="20002" value="/"/><!-- e.g. 1 of 10 -->
+	<string id="20005" value="Ei"/>
+	<string id="20006" value="Kyllä"/>
+	<string id="20007" value="Auto"/>
 	<string id="20100" value="Yhdistetään"/>
 	<string id="20101" value="Pyydetään"/>
 	<string id="20102" value="Vastaus"/>
@@ -3229,15 +3232,15 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStEdBuStCoBuBuStCoStCoBuBuBuStEdmsStEdmsBu" caption="Yhteydet">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Yhteydet">
 		<control caption="_Sisääntuleva osoite:"/>
 		<control caption="Osoite:"/>
 		<control caption="Automaattinen"/>
+		<control caption="Nopeus:"/>
+		<control/>
 		<control caption="Portti:"/>
 		<control/>
 		<control caption="Satunnainen"/>
-		<control caption="Nopeus:"/>
-		<control/>
 		<control caption="Force binding to this address"/>
 		<control caption="_Ulosmenevä osoite:"/>
 		<control caption="Osoite:"/>
@@ -3245,13 +3248,14 @@
 		<control caption="Nopeus:"/>
 		<control/>
 		<control caption="Valinnat:"/>
+		<control caption="Hyväksyn saapuvat yhteydet"/>
+		<control/>
 		<control caption="Hylkää paikalliset IP osoitteet"/>
 		<control caption="Aikakatkaisut:"/>
 		<control caption="Yhteys:"/>
 		<control/><control/>
 		<control caption="Kädenpuristus:"/>
 		<control/><control/>
-		<control caption="Hyväksyn saapuvat yhteydet"/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Lataukset">
