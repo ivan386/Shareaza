@@ -18,7 +18,7 @@ updatedBy="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.3.7"
+version="2.1.4.4"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -2043,13 +2043,13 @@ prompt="Kattints ide a magyar nyelvhez."
        </document>
 
 <document name="GeneralHelp.XPsp2">
-                <text format="b">Windows XP Service Pack 2 észlelve</text>
+                <text format="b">Korlátozott kapcsolatkísérletek</text>
               <newline gap="8"/>
-                <text>A Shareaza észlelte a Windows XP SP2 jelenlétét. Ez korlátozza az egyszerre létrehozható
-                kapcsolatokat.</text>
+                <text>A Shareaza észlelte a Windows XP SP2 jelenlétét (vagy valami hasonló helyzetet). A TCP/IP elérte az egyidejű TCP
+                kapcsolatkísérletek számára vonatkozó korlátot.</text>
                 <newline gap="8"/>
-                <text>A Shareaza csökkentette a kapcsolatok számát és beállította a megfelelő értékeket, de a teljesítmény így csökkenhet
-                További információkért látogasd meg a
+                <text>A Shareaza csökkentette a kapcsolatok számát és beállította a megfelelő értékeket, de
+                a teljesítmény így csökkenhet. További információkért látogasd meg a
                 Shareaza fórumait.</text>
        </document>
 
@@ -2587,7 +2587,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="8180" value="Fájlméret"/>
        <string id="8181" value="&#160;-"/><!-- size from xx TO xx-->
        <string id="8208" value="%i fájl hashelése:"/>
-       <string id="8223" value="%i napja és %i órája"/>
+       <string id="8223" value="%i nap %i óra"/>
        <string id="8224" value="Letöltés folyamatban:"/>
        <string id="8225" value="Letöltés szüneteltetve:"/>
        <string id="8226" value="Letöltés befejezve:"/>
@@ -2863,7 +2863,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16407" value="Meg akarod-e akadályozni, hogy minden fájl előtt kérdezzen?"/>
        <string id="16408" value="URL másolása"/>
        <string id="16409" value="URL exportálása..."/>
-          <string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
+       <string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
        <string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
        <string id="16449" value="Jelenleg vele beszélgetsz: %s (%s)."/>
        <string id="16450" value="Kapcsolat bezárva: %s."/>
@@ -2929,8 +2929,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16811" value="Automatikus"/>
        <string id="16816" value="Az eDonkey hálózaton sokáig kell sorbanállni és várakozni egy fájlért. Ha csökkented a sorok maximális számát, valószínűleg nem fognak elidulni a letöltéseid. \nBiztos csökkenteni akarod a számodra kirendelt sorszámot?"/>
        <string id="16817" value="A Windows 256 karakter hosszú elérési utaknál rövidebbeket kezel.\nVálassz egy rövidebb elérési utat."/>
-          <string id="16818" value="A félkész fájlok ne kerüljenek be a Könyvtárba, mert esetleg csökkenthetik a teljesítményt. A félkész fájlokat a Forgalom ablakban lehet megosztani."/>
-          <string id="16819" value="A kiválasztott mappa &quot;%s&quot; egy másik mappa almappájaként már meg van osztva.\nEz újrahashelést okozhat.\n\nBiztos folytatni akarod?"/>
+       <string id="16818" value="A félkész fájlok ne kerüljenek be a Könyvtárba, mert esetleg csökkenthetik a teljesítményt. A félkész fájlokat a Forgalom ablakban lehet megosztani."/>
+       <string id="16819" value="A kiválasztott mappa &quot;%s&quot; egy másik mappa almappájaként már meg van osztva.\nEz újrahashelést okozhat.\n\nBiztos folytatni akarod?"/>
        <string id="16864" value="Szerverkereső szolgáltatás keresése..."/>
        <string id="16865" value="Szerverkereső szolgáltatás keresése &quot;%s&quot;..."/>
        <string id="16866" value="GWebCache tranzakció sikeres (&quot;%s&quot;)."/>
@@ -3095,14 +3095,14 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="20002" value="/"/><!-- e.g. 1 of 10 -->
        <string id="20003" value="A szövegirány megváltoztatásához újra kell indítani a programot. \nKézzel kell újra elindítanod a Shareazát. Kilépés most?"/>
        <string id="20004" value="A jobbról balra írást nem támogatja az operációs rendszered."/>
-	<string id="20005" value="No"/>
-	<string id="20006" value="Yes"/>
-	<string id="20007" value="Auto"/>
+       <string id="20005" value="Nem"/>
+       <string id="20006" value="Igen"/>
+       <string id="20007" value="Auto"/>
        <string id="20100" value="Kapcsolódás"/>
        <string id="20101" value="Kérés"/>
        <string id="20102" value="Válasz"/>
        <string id="20103" value="Letöltés"/>
-       <string id="20104" value="TTH"/>
+       <string id="20104" value="TigerTree"/>
        <string id="20105" value="Hash érték"/>
        <string id="20106" value="Metadata"/>
        <string id="20107" value="Elfoglalt"/>
@@ -3195,7 +3195,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Opciók:"/>
                <control caption="Utolsó mappa megjegyzése"/>
                <control caption="Mappák figyelése"/>
-               <control caption="Gyors hash (nagy CPUhasználat)"/>
+               <control caption="Gyors hash (nagy CPU használat)"/>
                <control caption="Mások is lássák a megosztásom"/>
                <control caption="Legutóbbi fájlok:"/>
                <control caption="Megjegyez"/>
