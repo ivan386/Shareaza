@@ -38,7 +38,7 @@ InternalCompressLevel=Ultra
 VersionInfoCompany=Shareaza Development Team
 VersionInfoDescription=Shareaza Ultimate File Sharing
 PrivilegesRequired=poweruser
-ShowLanguageDialog=auto
+ShowLanguageDialog=yes
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\setup.exe
 UninstallDisplayName={cm:NameAndVersion,Shareaza,{#version}}
@@ -60,6 +60,9 @@ SourceDir=..\..
 AppPublisherURL=http://www.shareaza.com/?id=home
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
+
+[LangOptions]
+LanguageCodePage=0
 
 [Components]
 ; Ask user wich components to install
@@ -433,12 +436,55 @@ Begin
   End;
 End;
 
+Function IsLanguageRTL(LangCode: String): String;
+Begin
+  if ( (LangCode = 'heb') or (LangCode = 'ar') ) then
+    Result := '1'
+  else
+    Result := '0';
+End;
+
+Function GetRelFilePath(LangCode: String): String;
+Begin
+  if ( LangCode = 'br' ) then
+    Result := 'Languages\default-pt-' + LangCode + '.xml'
+  else
+    Result := 'Languages\default-' + LangCode + '.xml';
+End;
+
+Function ResetLanguages: boolean;
+var
+  Names: TArrayOfString;
+  I: Integer;
+  S: String;
+  Value: String;
+begin
+  if RegGetValueNames(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Skins', Names) then
+  begin
+    S := '';
+    Value := LowerCase(GetRelFilePath(ExpandConstant('{language}')));
+    for I := 0 to GetArrayLength(Names)-1 do
+    begin
+      S := LowerCase(Names[I]);
+      if Pos('languages', S) <> 0 then
+        if Value <> S then
+          RegWriteDWordValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Skins', S, 0);
+    end;
+    RegWriteDWordValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Skins', Value, 1);
+    Value := IsLanguageRTL(ExpandConstant('{language}'));
+    RegWriteDWordValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'LanguageRTL', StrToInt(Value));
+    RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'Language', ExpandConstant('{language}'));
+  end;
+  Result := True;
+end;
+
 Procedure CurStepChanged(CurStep: TSetupStep);
 var
   InstallFolder: string;
   FirewallObject: Variant;
   FirewallManager: Variant;
   FirewallProfile: Variant;
+  Reset: boolean;
 Begin
   if CurStep=ssPostInstall then begin
     if IsTaskSelected('firewall') then begin
@@ -488,6 +534,7 @@ Begin
       End;
     End;
   End;
+  if CurStep=ssDone then Reset := ResetLanguages;
 End;
 
 { Pull in custom wizard pages }

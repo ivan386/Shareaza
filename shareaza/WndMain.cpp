@@ -1,9 +1,9 @@
 //
 // WndMain.cpp
 //
-//	Date:			"$Date: 2005/08/05 22:28:51 $"
-//	Revision:		"$Revision: 1.41 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/09/01 18:00:14 $"
+//	Revision:		"$Revision: 1.42 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -425,11 +425,10 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetGUIMode( Settings.General.GUIMode, FALSE );
 	
 	// Boot
-	
-	if ( theApp.GetProfileInt( _T("Windows"), _T("RunLanguage"), FALSE ) == FALSE )
+
+	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
 	{
-		ShowControlBar( &m_wndMonitorBar, FALSE, TRUE );
-		PostMessage( WM_COMMAND, ID_TOOLS_LANGUAGE );
+		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
 	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunWarnings"), FALSE ) == FALSE )
 	{
@@ -2073,11 +2072,6 @@ void CMainWnd::OnToolsLanguage()
 		CWaitCursor pCursor;
 		OnSkinChanged( 0, 0 );
 		SetGUIMode( Settings.General.GUIMode );
-	}
-	
-	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
-	{
-		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
 }
 
