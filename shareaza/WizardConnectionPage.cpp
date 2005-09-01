@@ -179,24 +179,24 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		switch ( m_wndHomeSelect.GetCurSel() )
 		{
 		case 0:
-			Settings.Connection.Firewalled	= FALSE;
-			if ( Settings.Connection.InPort == 6346 )
+			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
+			if ( Settings.Connection.InPort	== 6346 )
 				Settings.Connection.InPort	= Network.RandomPort();
 			break;
 		case 1:
-			Settings.Connection.Firewalled	= FALSE;
+			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
 			// Settings.Connection.InPort		= 6346;
 			LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );
 			strMessage.Format( strFormat, Settings.Connection.InPort );
 			AfxMessageBox( strMessage, MB_ICONINFORMATION );
 			break;
 		case 2:
-			Settings.Connection.Firewalled	= TRUE;
-			Settings.Connection.InPort		= 6346;
+			Settings.Connection.FirewallStatus	= CONNECTION_FIREWALLED;
+			Settings.Connection.InPort			= 6346;
 			break;
 		case 3:
-			Settings.Connection.Firewalled	= TRUE;
-			Settings.Connection.InPort		= 6346;
+			Settings.Connection.FirewallStatus	= CONNECTION_AUTO;
+			Settings.Connection.InPort			= 6346;
 			break;
 		}
 	}
@@ -205,17 +205,17 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		switch ( m_wndLanSelect.GetCurSel() )
 		{
 		case 0:
-			Settings.Connection.Firewalled	= FALSE;
+			Settings.Connection.FirewallStatus	= CONNECTION_OPEN;
 			if ( Settings.Connection.InPort == 6346 )
 				Settings.Connection.InPort	= Network.RandomPort();
 			break;
 		case 1:
-			Settings.Connection.Firewalled	= TRUE;
-			Settings.Connection.InPort		= 6346;
+			Settings.Connection.FirewallStatus	= CONNECTION_FIREWALLED;
+			Settings.Connection.InPort			= 6346;
 			break;
 		case 2:
-			Settings.Connection.Firewalled	= TRUE;
-			Settings.Connection.InPort		= 6346;
+			Settings.Connection.FirewallStatus	= CONNECTION_AUTO;
+			Settings.Connection.InPort			= 6346;
 			break;
 		}
 	}
