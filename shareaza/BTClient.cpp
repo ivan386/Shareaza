@@ -391,7 +391,7 @@ BOOL CBTClient::OnHandshake1()
 
 		// Check we don't have too many active torrent connections 
 		// (Prevent routers overloading for very popular torrents)
-		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.5 ) ) 
+		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.25 ) ) 
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_MAX_CONNECTIONS, (LPCTSTR)m_sAddress );
 			Close();
