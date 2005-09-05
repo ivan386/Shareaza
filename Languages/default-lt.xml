@@ -2627,7 +2627,7 @@ right quote	&#147;
 	<string id="8306" value="Vieta"/>
 	<string id="8307" value="Tipas"/>
 	<string id="8308" value="Dydis"/>
-	<string id="8309" value="Dalies šaltinis (%.2f%% turima)"/>
+	<string id="8309" value="Dalinės bylos šaltinis (turima %.2f%%)"/>
 	<string id="8310" value="%i išsiuntimo vietų, %i laukia eilėje"/>
 	<string id="8311" value="Jūs jau turite šią bylą savo kolekcijoje."/>
 	<string id="8312" value="Ši byla jau yra parsisiunčiamų bylų sąraše."/>
