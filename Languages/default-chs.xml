@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Chinese(Simplified) Skin File -->
 
@@ -19,7 +19,7 @@
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
-		updatedBy="Sanly"
+		updatedBy="John"
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
@@ -2035,9 +2035,9 @@
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
-		<text format="b">检测到 Windows XP Service Pack 2</text>
+		<text format="b">检测半开放连接限制</text>
 		<newline gap="8"/>
-		<text>Shareaza 已经检测到 Windows XP Service Pack 2。它会限制应用程序一次试图连接的数量。</text>
+		<text>Shareaza 已经检测到 Windows XP Service Pack 2（或者一个相似的环境）。它会限制应用程序一次试图连接的数量。</text>
 		<newline gap="8"/>
 		<text>Shareaza 已经限制了网络连接并设置了合适的默认值
 		以保证适当的操作，但是性能可能会降低。请访问 Shareaza 
@@ -3076,9 +3076,9 @@
 	<string id="20002" value="于"/><!-- 例如: 1 于 10 -->
 	<string id="20003" value="变更界面方向需要重新启动。\n您需要手动启动 Shareaza。立即退出？"/>
 	<string id="20004" value="您的操作系统不支持从右向左方向的语言。"/>
-	<string id="20005" value="No"/>
-	<string id="20006" value="Yes"/>
-	<string id="20007" value="Auto"/>
+        <string id="20005" value="否"/>
+        <string id="20006" value="是"/>
+        <string id="20007" value="自动"/>
 	<string id="20100" value="连接中"/>
 	<string id="20101" value="请求中"/>
 	<string id="20102" value="回应"/>
