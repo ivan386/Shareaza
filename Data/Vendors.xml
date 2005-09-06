@@ -8,6 +8,10 @@
 		<capability name="chatFlag"/>
 	</vendor>
 	
+	<vendor code="ACQL"> 
+		<title>Acqlite</title> 
+	</vendor>
+
 	<vendor code="ACQX"> 
 		<title>Acquisition</title> 
 		<link>http://www.xlife.org/acquisition.php</link> 
@@ -48,6 +52,11 @@
 		<link>http://www.edonkey2000.com/</link>
 		<capability name="edonkey2000"/>
 	</vendor>
+
+	<vendor code="GIFT">
+		<title>giFT-Gnutella</title>
+		<link>http://sourceforge.net/projects/gtk-gnutella</link>
+	</vendor>
 	
 	<vendor code="GNEW">
 		<title>GNewtellium</title>
@@ -78,6 +87,10 @@
 		<link>http://www.gnutelliums.com/linux_unix/gnut</link>
 	</vendor>
 	
+	<vendor code="GNZL">
+		<title>Gnoozle</title>
+	</vendor>
+
 	<vendor code="GTKG">
 		<title>Gtk-Gnutella</title>
 		<link>http://sourceforge.net/projects/gtk-gnutella</link>
@@ -103,7 +116,12 @@
 		<title>Mactella</title>
 		<link>http://www.cxc.com/</link>
 	</vendor>
-	
+
+	<vendor code="MESH">
+		<title>iMesh</title>
+		<link>http://www.imesh.com/</link>
+	</vendor>
+
 	<vendor code="MMMM">
 		<title>Morpheus</title>
 		<link>http://www.morpheus-os.com/</link>
@@ -114,6 +132,11 @@
 		<link>http://www.mynapster.com/</link>
 	</vendor>
 	
+	<vendor code="MOOD">
+		<title>MoodAmp</title>
+		<link>http://www.moodamp.com/</link>
+	</vendor>
+
 	<vendor code="MRPH">
 		<title>Morpheus</title>
 		<link>http://www.morpheus-os.com/</link>
@@ -121,6 +144,10 @@
 
 	<vendor code="MUTE">
 		<title>Mutella</title>
+	</vendor>
+
+	<vendor code="MXIE">
+		<title>mxie</title>
 	</vendor>
 	
 	<vendor code="NAPS">
@@ -161,6 +188,11 @@
 	<vendor code="SWFT">
 		<title>SwiftPeer</title>
 		<link>http://www.swiftsoftwaregroup.com/</link>
+	</vendor>
+
+	<vendor code="TFLS">
+		<title>TrustyFiles</title>
+		<link>http://www.www.trustyfiles.com/</link>
 	</vendor>
 	
 	<vendor code="TOAD">
