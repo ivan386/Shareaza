@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.h
 //
-//	Date:			"$Date: 2005/06/21 22:01:55 $"
-//	Revision:		"$Revision: 1.4 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/09/06 10:40:39 $"
+//	Revision:		"$Revision: 1.5 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -66,6 +66,7 @@ protected:
 	void	ZoomTo(MediaZoom nZoom);
 	void	AspectTo(double nAspect);
 	void	UpdateState();
+	HRESULT PluginPlay( BSTR bsFileName );
 public:
 	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
 	inline MediaState GetState() { return m_pPlayer != NULL ? m_nState : smsNull; }

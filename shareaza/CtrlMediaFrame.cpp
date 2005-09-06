@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/06/21 22:01:52 $"
-//	Revision:		"$Revision: 1.20 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/09/06 10:40:39 $"
+//	Revision:		"$Revision: 1.21 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1453,8 +1453,8 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 	HINSTANCE hRes = AfxGetResourceHandle();
 	
 	BSTR bsFile = CString( pszFile ).AllocSysString();
+	HRESULT hr = PluginPlay( bsFile );
 
-	HRESULT hr = m_pPlayer->Open( bsFile );
 	SysFreeString( bsFile );
 
 	AfxSetResourceHandle( hRes );
@@ -1508,6 +1508,17 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 	}
 	
 	return TRUE;
+}
+
+HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
+{
+	HRESULT hr = E_FAIL;
+	__try
+	{
+		hr = m_pPlayer->Open( bsFilePath );
+	} 
+	__except( GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ){}
+	return hr;
 }
 
 void CMediaFrame::Cleanup()
