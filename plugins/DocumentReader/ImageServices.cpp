@@ -118,8 +118,9 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR pszType, HANDLE hFi
 	if ( pCLSID != NULL && ( *pCLSID == CLSID_AVIThumb || *pCLSID == CLSID_DocReader ) && *pszType != '.' )
 	{
 		USES_CONVERSION;
-		LPCSTR pszASCII = T2CA(pszType);
-		hr = pService->LoadFromFile( (HANDLE)pszASCII, 0xFEFEFEFE, &pParams, &pArray );
+		BSTR bsPath = T2BSTR(pszType);
+		hr = pService->LoadFromFile( (HANDLE)bsPath, 0xFEFEFEFE, &pParams, &pArray );
+		SysFreeString( bsPath );
 	}
 	else
 	{
