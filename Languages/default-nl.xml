@@ -1651,7 +1651,7 @@
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i actieve uploads</link>
 
 			<newline gap="4"/>
-			
+
 			<text id="UploadedNone">Je hebt nog geen bestanden geüpload.</text>
 			<text id="UploadedOne">Je hebt 1 bestand geüpload (%s).</text>
 			<text id="UploadedMany">Je hebt %i bestanden geüpload (%s).</text>
@@ -1943,7 +1943,7 @@
 		<text>Deze download is momenteel bezig.  Als het downloaden te langzaam gaat, kun je proberen om
 		op het netwerk naar meer bronnen te zoeken met de knop </text>
 		<text format="b">Zoek Meer Bronnen </text>
-		<text>.  Als dit de snelheid niet verbetert, kan het zijn dat de gebruikers waar je het bestand van downloadt slechts een 
+		<text>.  Als dit de snelheid niet verbetert, kan het zijn dat de gebruikers waar je het bestand van downloadt slechts een
 		geringe upload snelheid hebben.  Normaal gesproken wordt de download snelheid beter naarmate de tijd vordert.</text>
 	</document>
 
@@ -1992,7 +1992,7 @@
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent tracker buiten werking</text>
 		<newline gap="8"/>
-		<text>De BitTorrent Tracker voor deze download is buiten werking 
+		<text>De BitTorrent Tracker voor deze download is buiten werking
 		of functioneert slecht. Shareaza kan er geen contact mee maken om
 		een lijst met downloadbronnen te ontvangen .</text>
 	</document>
@@ -2078,8 +2078,8 @@
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Je eDonkey serverlijst is leeg.</text>
 		<newline gap="8"/>
-		<text>Er zijn geen servers in je eDonkey2000 serverlijst. Je moet een recente 
-		serverlijst hebben om te kunnen verbinden met ED2K.</text>	
+		<text>Er zijn geen servers in je eDonkey2000 serverlijst. Je moet een recente
+		serverlijst hebben om te kunnen verbinden met ED2K.</text>
 		<newline gap="8"/>
 		<text>Je kan een serverlijst downloaden van de eDonkey2000 instellingspagina,
 		of op de Discovery Services pagina. Druk op F9 om het scherm te openen</text>
@@ -2097,7 +2097,7 @@
 		<newline gap="8"/>
 		<text>Standaard wordt je upload limiet op 85% van je upload bandbreedte gezet, terwijl je download
 		geen limiet heeft. Over het algemeen geeft dit de best mogelijke download snelheid.</text>
-	
+
 	</document>
 
 	<!-- Search help documents -->
@@ -2721,7 +2721,7 @@
 	<string id="16258" value="Het downloaden van &quot;%s&quot; is gepauzeerd."/>
 	<string id="16259" value="Het downloaden van &quot;%s&quot; is hervat."/>
 	<string id="16260" value="De download &quot;%s&quot; is gewist."/>
-	<string id="16261" value="Bestand &quot;%s&quot; aanmaken om te downaloaden."/>
+	<string id="16261" value="Bestand &quot;%s&quot; aanmaken om te downloaden."/>
 	<string id="16262" value="Niet mogelijk lokaal bestand &quot;%s&quot; aan te maken voor het downloaden, geannuleerd."/>
 	<string id="16263" value="Niet mogelijk lokaal bestand &quot;%s&quot; te openen voor het downloaden, geannuleerd."/>
 	<string id="16264" value="Verbinding zoeken met %s poort %i om &quot;%s&quot; te downloaden..."/>
