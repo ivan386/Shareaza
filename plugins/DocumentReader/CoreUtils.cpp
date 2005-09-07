@@ -386,7 +386,7 @@ STDAPI_(BOOL) VarTypeReadable(VARTYPE vt)
 //   we allow are realtively small in size, we have not seen a performance benefit to
 //   make this worth the extra code and regression risk.
 //
-STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, CDocProperty** pplist)
+STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, CDocProperty** pplist, BOOL bOnlyThumb)
 {
 	HRESULT hr;
     CDocProperty* pList = NULL;
@@ -420,16 +420,17 @@ STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, CDocPro
     *pplist = NULL;
 
  // Get the property enumerator to see what properties are stored...
-	hr = pPropStg->Enum(&pEnumProp);
-    if (SUCCEEDED(hr) && (pEnumProp))
+	hr = pPropStg->Enum( &pEnumProp );
+    if ( SUCCEEDED(hr) && (pEnumProp) )
     {
-		while (SUCCEEDED(hr) && (pEnumProp->Next(1, &sps, &fetched) == S_OK))
+		while ( SUCCEEDED(hr) && ( pEnumProp->Next( 1, &sps, &fetched ) == S_OK ) )
 		{
          // We don't handle VECTOR data in this sample. And the PROPVARIANT
          // data types we handle are limited to just a subset we can convert
          // to VB supportted types (variant arrays and ole picdisp)...
-            if (((sps.vt & VT_VECTOR) != VT_VECTOR) && 
-                VarTypeReadable((sps.vt & VT_TYPEMASK)))
+			BOOL bDontSkip = !( ( ( sps.vt & VT_CF ) == VT_CF ) ^ bOnlyThumb );
+            if ( ( ( sps.vt & VT_VECTOR ) != VT_VECTOR ) && 
+                VarTypeReadable( (sps.vt & VT_TYPEMASK) ) && bDontSkip )
             {
                 spc.ulKind = PRSPEC_PROPID;
                 spc.propid = sps.propid;

@@ -17,7 +17,7 @@ HKCR
 			VersionIndependentProgID = s 'Shareaza.DocReader'
 			InprocServer32 = s '%MODULE%'
 			{
-				val ThreadingModel = s 'Apartment'
+				val ThreadingModel = s 'Both'
 			}
 			val AppID = s '%APPID%'
 			'TypeLib' = s '{607C3F69-850D-4413-A81A-CF1C849BF387}'
@@ -46,6 +46,7 @@ HKLM
 						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppa' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 					LibraryBuilder
@@ -60,6 +61,7 @@ HKLM
 						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppa' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 				}

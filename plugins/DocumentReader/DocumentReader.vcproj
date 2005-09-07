@@ -176,21 +176,6 @@
 				RelativePath=".\CoreUtils.cpp">
 			</File>
 			<File
-				RelativePath=".\dlldatax.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\DocReader.cpp">
 			</File>
 			<File
@@ -225,9 +210,6 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\dlldatax.h">
-			</File>
 			<File
 				RelativePath=".\DocReader.h">
 			</File>

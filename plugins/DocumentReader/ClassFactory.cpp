@@ -24,7 +24,7 @@ STDMETHODIMP CDocumentClassFactory::QueryInterface(REFIID riid, void** ppv)
 	
 	if ( CLSID_DocReader == riid )
 	{
-		*ppv = (ILibraryBuilderPlugin*)this;
+		*ppv = (IImageServicePlugin*)this;
 		this->AddRef();
 		return S_OK;
 	}
@@ -73,13 +73,13 @@ STDMETHODIMP CDocumentClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, 
 
 	if ( IID_ILibraryBuilderPlugin == riid || IID_IImageServicePlugin == riid )
 	{
-		//CComObject< CDocReader >::CreateInstance(&pDocReader);
 		CComObject<CDocReader>*pDocReader = new CComObject<CDocReader>;
 
 		CHECK_NULL_RETURN(pDocReader, E_OUTOFMEMORY);
-		hr = pDocReader->QueryInterface( riid, ppv );
+		hr = pDocReader->QueryInterface( IID_IUnknown, ppv );
 		if ( SUCCEEDED(hr) )
 		{
+			pDocReader->Initialize( ( IID_IImageServicePlugin == riid ) );
 			*ppv = pDocReader;
 		}
 		else return hr;

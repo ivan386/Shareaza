@@ -61,7 +61,7 @@ extern PFN_STGOPENSTGEX v_pfnStgOpenStorageEx;
 STDAPI OpenPropertyStorage(IPropertySetStorage* pPropSS, REFFMTID fmtid, BOOL fReadOnly, DWORD dwFlags, IPropertyStorage** ppPropStg);
 STDAPI ReadProperty(IPropertyStorage* pPropStg, PROPSPEC spc, WORD wCodePage, VARIANT* pvtResult);
 STDAPI WriteProperty(IPropertyStorage* pPropStg, PROPSPEC spc, WORD wCodePage, VARIANT* pvtValue);
-STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, class CDocProperty** pplist);
+STDAPI LoadPropertySetList(IPropertyStorage *pPropStg, WORD *pwCodePage, class CDocProperty** pplist, BOOL bOnlyThumb);
 STDAPI SavePropertySetList(IPropertyStorage *pPropStg, WORD wCodePage, class CDocProperty* plist, ULONG *pcSavedItems);
 
 ////////////////////////////////////////////////////////////////////

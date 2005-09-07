@@ -10,8 +10,8 @@
 class ATL_NO_VTABLE CDocReader : 
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CDocReader, &CLSID_DocReader>,
-	public ILibraryBuilderPlugin,
-	public IImageServicePlugin
+	public IImageServicePlugin,
+	public ILibraryBuilderPlugin
 {
 public:
 	CDocReader();
@@ -23,34 +23,29 @@ public:
 	DECLARE_NOT_AGGREGATABLE(CDocReader)
 
 	BEGIN_COM_MAP(CDocReader)
-		COM_INTERFACE_ENTRY_AGGREGATE(IID_IMarshal, m_pUnkMarshaler.p)
-		COM_INTERFACE_ENTRY_NOINTERFACE(IDocReader)
 		COM_INTERFACE_ENTRY(IImageServicePlugin)
-		COM_INTERFACE_ENTRY_BREAK(ILibraryBuilderPlugin)
+		COM_INTERFACE_ENTRY(ILibraryBuilderPlugin)
 	END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
-	DECLARE_GET_CONTROLLING_UNKNOWN()
 
 	HRESULT FinalConstruct()
 	{
-		return CoCreateFreeThreadedMarshaler(
-			GetControllingUnknown(), &m_pUnkMarshaler.p);
+		return S_OK;
 	}
 
 	void FinalRelease() 
 	{
-		m_pUnkMarshaler.Release();
 	}
 
-	CComPtr<IUnknown> m_pUnkMarshaler;
-
-private:
+protected:
 	class CDocumentProperties
 	{
 	public:
-		CDocumentProperties();
+		CDocumentProperties(BOOL bOnlyThumb	= FALSE);
 		~CDocumentProperties(void);
+
+		BOOL	m_bOnlyThumb;
 
 		////////////////////////////////////////////////////////////////////
 		// CSummaryProperties - Collection Class For Summary Properties
@@ -59,8 +54,10 @@ private:
 		class CSummaryProperties
 		{
 		public:
-			CSummaryProperties();
+			CSummaryProperties(BOOL bOnlyThumb	= FALSE);
 			~CSummaryProperties(void);
+
+			BOOL	m_bOnlyThumb;
 
 		// SummaryProperties Implementation
 		// FMTID_SummaryInformation Properties...
@@ -163,6 +160,7 @@ private:
 		WORD                    m_wCodePage;    // Code Page for MBCS/Unicode translation
 	};
 
+public:
 	CDocumentProperties*	m_pDocProps;
 
 	// ILibraryBuilderPlugin Methods
@@ -179,8 +177,11 @@ public:
 	STDMETHOD(SaveToMemory)(SAFEARRAY** ppMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 
-private:
+protected:
+	void Initialize(BOOL bOnlyThumb);
 	HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 
+		WORD wBitsPerSample, BITMAPINFO **ppBI);
+	HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);
 	BOOL ConvertToDFB(HBITMAP& hBitmap);
 

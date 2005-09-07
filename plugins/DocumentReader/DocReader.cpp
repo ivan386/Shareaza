@@ -4,22 +4,11 @@
 #include "DocReader.h"
 #include "Palette.h"
 #include <string>
-#include <atlimage.h>
 
 // CDocReader
 CDocReader::CDocReader()
 {
 	ODS("CDocReader::CDocReader\n");
-	HRESULT hr;
-
-	m_pUnkMarshaler = NULL;
-
- // Create a new instance of the control
-	m_pDocProps = new CDocumentProperties();
-
- // Initialize the object
-	if ( FAILED(hr = m_pDocProps->InitializeNewInstance()) )
-		delete m_pDocProps; // cleanup the object
 }
 
 CDocReader::~CDocReader()
@@ -27,6 +16,18 @@ CDocReader::~CDocReader()
 	ODS("CDocReader::~CDocReader\n");
 
 	delete m_pDocProps;
+}
+
+void CDocReader::Initialize(BOOL bOnlyThumb)
+{
+	HRESULT hr;
+
+ // Create a new instance of the control
+	m_pDocProps = new CDocumentProperties( bOnlyThumb );
+
+ // Initialize the object
+	if ( FAILED(hr = m_pDocProps->InitializeNewInstance()) )
+		delete m_pDocProps; // cleanup the object
 }
 
 // ILibraryBuilderPlugin Methods
@@ -97,31 +98,61 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 	LONG nWidth, nHeight;
 	LPBYTE pData;
 	HRESULT hr;
+	BSTR bsFile;
+	int nPathLength = 0;
+	BOOL bError = FALSE;
 
-	USES_CONVERSION;
-	BSTR bsFile = ConvertToBSTR( (LPCSTR)hFile, CP_ACP );
-	if ( SysStringLen( bsFile ) == 0 ) return S_FALSE;
+	// We don't accept handles; check if it has a path.
+	SEH_TRY
+		SEH_TRY
+			bsFile = (BSTR)hFile;
+			nPathLength = SysStringLen( bsFile );
+		SEH_START_FINALLY
+			if ( nPathLength == 0 )
+			{
+				bError = TRUE;
+				DllRelease();
+				LeaveCritical();
+			}
+		SEH_END_FINALLY
+	SEH_EXCEPT_NULL
+
+	if ( bError ) return S_FALSE;
 	hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
-	
 	SysFreeString( bsFile );
+
+	// Opening the document failed; give up
 	if ( FAILED(hr) )
 	{
 		m_pDocProps->Close( VARIANT_FALSE );
+		DllRelease();
+		LeaveCritical();
 		return E_FAIL;
 	}
 
+	// Retrieve thumbnail data in safearray if any
 	VariantInit( &va );
 	m_pDocProps->m_pSummProps->get_Thumbnail( &va );
 	m_pDocProps->Close( VARIANT_FALSE );
-	if ( va.vt & VT_EMPTY ) return E_FAIL;
-	if ( !(va.vt & VT_ARRAY) ) return E_UNEXPECTED;
+
+	// Check if we have it
+	if ( va.vt == VT_EMPTY )
+	{
+		DllRelease();
+		LeaveCritical();
+		return S_FALSE;
+	}
+	if ( !(va.vt & VT_ARRAY) ) 
+	{
+		DllRelease();
+		LeaveCritical();
+		return E_UNEXPECTED;
+	}
 
 	BYTE* pclp = NULL;
 	LONG nSize = 0;
 	PICTDESC pds;
 	HBITMAP hBitmap;
-	WORD biBitCount;
-	DWORD biSizeImage;
 	RGBQUAD pPalette[256];
 	BITMAPINFO* pBI;
 
@@ -130,10 +161,12 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 	
 	nSize += 1;
 	SEH_TRY
+	// Most MS documents have thumbnails in WMF format
 	if ( (DWORD)*pclp == CF_METAFILEPICT )
 	{
 		DWORD cbDataSize, cbHeaderSize;
 		HMETAFILE hwmf;
+		// Weird header structure, not found described anywhere
 		cbHeaderSize = sizeof(DWORD) + 4 * sizeof(WORD);
 		cbDataSize = nSize - cbHeaderSize;
 
@@ -150,8 +183,9 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 			pds.wmf.xExt = cHeader.Width; 
 			pds.wmf.yExt = cHeader.Height;
 
+			// We will make such images
 			const int nResolution = 300;
-			const WORD wColorDepth = 8;
+			const WORD wColorDepth = 24;
 
 			// We will allocate pBI, do not forget to delete it
 			hBitmap = GetBitmapFromMetaFile( pds, nResolution, wColorDepth, &pBI );
@@ -160,27 +194,21 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 
  			pParams->nWidth = nWidth;
 			pParams->nHeight = nHeight;
+			// Component number is required for Image Viewer
 			pParams->nComponents = 3;
 
-			if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
-			biBitCount = pBI->bmiHeader.biBitCount;
-			SetStdPalette( (void*)pPalette, biBitCount );
-			biSizeImage = pBI->bmiHeader.biSizeImage;
-			//nReadOffset = pBI->bmiHeader.biSize + sizeof(RGBQUAD) * 256;
-
-			// Debugging
-				//CImage img;
-				//img.Attach( static_cast<HBITMAP>(hBitmap), CImage::DIBOR_DEFAULT );
-				//img.Save( _T("c:\\xxx.bmp") );
-				//img.Destroy();
-				// Destroy it.
-				//DeleteObject( hBitmap );
-				//if ( pBI != 0 ) delete[] (BYTE*)pBI;
-
-			// Continue
-
+			if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
+			{
+				DllRelease();
+				LeaveCritical();
+				return S_OK;
+			}
+			// Save palette
+			SetStdPalette( (void*)pPalette, pBI->bmiHeader.biBitCount );
 		}
 	}
+	// They say MS supports such formats. Couldn't find anywhere.
+	// NOT TESTED !!!
 	else if ( (DWORD)*pclp == CF_DIB || (DWORD)*pclp == CF_BITMAP )
 	{
 		BITMAP bm;
@@ -196,13 +224,17 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 		pParams->nHeight = nHeight;
 		pParams->nComponents = 1;
 
-		if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
+		if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
+		{
+			DllRelease();
+			LeaveCritical();
+			return S_OK;
+		}
 
 		bm.bmPlanes = pBmH->biPlanes;
-		bm.bmBitsPixel = biBitCount = pBmH->biBitCount;
+		bm.bmBitsPixel = pBmH->biBitCount;
 		bm.bmWidthBytes = ( pBmH->biSizeImage / bm.bmHeight );
-		SetStdPalette( (void*)pPalette, biBitCount );
-		biSizeImage = pBmH->biSizeImage;
+		SetStdPalette( (void*)pPalette, bm.bmBitsPixel );
 		bm.bmBits = ( pclp + 4 + pBmH->biSize );
 
 		hBitmap = CreateBitmapIndirect( &bm );
@@ -215,89 +247,122 @@ STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGES
 			pds.bmp.hbitmap = (HBITMAP)hBitmap;
 		}
 	}
+	// Only some MS Visio documents keep them
+	else if ( (DWORD)*pclp == CF_ENHMETAFILE )
+	{
+		HENHMETAFILE hemf;
 
+		// Remove clipboard data type; save to EMF handle
+		hemf = SetEnhMetaFileBits( nSize - sizeof(DWORD), (BYTE*)(pclp + sizeof(DWORD)) );
+		if ( NULL != hemf )
+		{
+			pds.cbSizeofstruct = sizeof(PICTDESC);
+			pds.picType = PICTYPE_ENHMETAFILE;
+			pds.emf.hemf = hemf;
+
+			// We will make such images
+			const int nResolution = 300;
+			const WORD wColorDepth = 24;
+
+			// We will allocate pBI, do not forget to delete it
+			hBitmap = GetBitmapFromEnhMetaFile( pds, nResolution, wColorDepth, &pBI );
+			nWidth = pBI->bmiHeader.biWidth;
+			nHeight = pBI->bmiHeader.biHeight;
+
+ 			pParams->nWidth = nWidth;
+			pParams->nHeight = nHeight;
+			pParams->nComponents = 3;
+
+			if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
+			{
+				DllRelease();
+				LeaveCritical();
+				return S_OK;
+			}
+			// Save pallete
+			SetStdPalette( (void*)pPalette, pBI->bmiHeader.biBitCount );
+		}
+	}
+	// Release safearray
 	SafeArrayUnaccessData( va.parray );
 	SEH_EXCEPT_NULL
 
-	UINT nInPitch = ( nWidth * biBitCount / 8 + 3 ) & ~3u;
-	UINT nOutPitch = ( nWidth * 3 + 3 ) & ~3u;
-	LPBYTE pRowBuf, pRowIn, pRowOut;
-	DWORD nRead;
+	// Check if we have a bitmap
+	if ( hBitmap == NULL )
+	{
+		DllRelease();
+		LeaveCritical();
+		return S_FALSE;
+	}
+
+	// Get bitmap byte buffer from the handle
+
+	BYTE* pBytes = new BYTE[ pBI->bmiHeader.biSizeImage ];
+
+	BITMAP stBitmap;
+	GetObject( hBitmap, sizeof(stBitmap), &stBitmap );
+	HDC hScreen = GetDC( NULL );
+	// Create bitmap
+	HBITMAP hOffscreen = CreateCompatibleBitmap( hScreen, stBitmap.bmWidth, stBitmap.bmHeight );
+	HDC hMemSrc = CreateCompatibleDC( NULL );
+	HBITMAP OldBmp = (HBITMAP)SelectObject( hMemSrc, hOffscreen );
+	// Copy bitmap to the memory DC
+	BitBlt( hMemSrc, 0, 0, stBitmap.bmWidth, stBitmap.bmHeight, hScreen, 0, 0, SRCCOPY );
+	// We don't need screen DC anymore
+	ReleaseDC( NULL, hScreen ); hScreen = NULL;
+	// We need to select something before calling GetDIBits
+	SelectObject( hMemSrc, OldBmp );
+	GetDIBits( hMemSrc, hBitmap, 0, nHeight, (VOID*)pBytes, pBI, DIB_RGB_COLORS );
+
+	if ( hMemSrc ) DeleteDC( hMemSrc );
+	if ( hOffscreen ) DeleteObject( hOffscreen );
+
+	// Calculate resulting bitmap scanline width (pitch) in bytes
+	unsigned short nAlignSize = sizeof(DWORD) * 8 - 1;
+	ULONG nInPitch = ( ( pBI->bmiHeader.biBitCount * pBI->bmiHeader.biWidth ) + nAlignSize ) & ~nAlignSize;
+	nInPitch /= 8;
+	// We will make 3 bytes out off 1 if bitmap has less than 256 colors
+	// For 24-bit images it is not needed
+	ULONG nOutPitch = ( pBI->bmiHeader.biWidth * 3 + 3 ) & ~3u;
+	LPBYTE pRowBuf, pRowOut;
 
 	pRowBuf	= new BYTE[ nInPitch ];
-	BYTE* pBytes = new BYTE[ biSizeImage ];
-	DWORD nReadTotal = 0;
+	ULONG nArray = nOutPitch * (ULONG)pBI->bmiHeader.biHeight;
+	WORD nBitCount = pBI->bmiHeader.biBitCount;
+	// All calculations are performed, delete it now
+	if ( pBI != 0 ) delete[] (BYTE*)pBI;
 
-BITMAP stBitmap;
-GetObject( hBitmap, sizeof(stBitmap), &stBitmap );
-HDC hScreen = GetDC( NULL );
-HBITMAP hOffscreen = CreateCompatibleBitmap( hScreen, stBitmap.bmWidth, stBitmap.bmHeight );
-HDC hMemSrc = CreateCompatibleDC( NULL );
-//select into memory
-HBITMAP OldBmp = (HBITMAP)SelectObject(hMemSrc, hOffscreen);
-BitBlt(hMemSrc, 0, 0, stBitmap.bmWidth, stBitmap.bmHeight, hScreen, 0, 0, SRCCOPY);
-ReleaseDC(NULL, hScreen); hScreen = NULL;
-SelectObject(hMemSrc, OldBmp);
-GetDIBits( hMemSrc, hBitmap, 0, nHeight, (VOID*)pBytes, pBI, DIB_RGB_COLORS );
-if (hMemSrc) DeleteDC(hMemSrc);
-if (hOffscreen) DeleteObject(hOffscreen);
-if ( pBI != 0 ) delete[] (BYTE*)pBI;
-
-	//GetBitmapBits( hBitmap, lpbi->bmiHeader.biSizeImage, (VOID*)pBytes );
-
-	UINT nArray = nOutPitch * (UINT)nHeight;
-
+	// Store byte array start position; we will need to delete it later
+	BYTE* pStart = pBytes;
+	
+	// Create 1-dimensional safearray 
 	*ppImage = SafeArrayCreateVector( VT_UI1, 0, nArray );
 	SafeArrayAccessData( *ppImage, (VOID**)&pData );
 
+	// We are reading scanlines from bottom to top
 	for ( int nY = nHeight - 1 ; nY >= 0 ; nY-- )
 	{
-		nRead = 0;
-		for ( UINT nBytes = 0 ; nBytes < nInPitch ; nBytes++ )
-		{
-			if ( nReadTotal + nBytes > biSizeImage - 1 ) break;
-			pRowBuf[ nBytes ] = pBytes[ nReadTotal + nBytes ];
-			nReadTotal++;
-			nRead++;
-		}
-		if ( nRead != nInPitch )
-		{
-			delete [] pRowBuf;
-			delete [] pBytes;
-			SafeArrayUnaccessData( *ppImage );
-			if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
-			{
-				pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
-				return S_OK;
-			}
-			else
-			{
-				SafeArrayDestroy( *ppImage );
-				*ppImage = NULL;
-				return E_FAIL;
-			}
-		}
+		pRowOut	= &pData[ nOutPitch * nY ];
 
-		pRowOut	= &pData[ nY * nOutPitch ];
-		pRowIn	= pRowBuf;
-		
-		if ( biBitCount == 24 )
+		if ( nBitCount == 24 )
 		{
 			for ( int nX = 0 ; nX < nWidth ; nX++ )
 			{
-				pRowOut[ 0 ] = pRowIn[ 2 ];
-				pRowOut[ 1 ] = pRowIn[ 1 ];
-				pRowOut[ 2 ] = pRowIn[ 0 ];
+				pRowOut[ 0 ] = pBytes[ 2 ];
+				pRowOut[ 1 ] = pBytes[ 1 ];
+				pRowOut[ 2 ] = pBytes[ 0 ];
 				
 				pRowOut += 3;
-				pRowIn += 3;
+				pBytes += 3;
 			}
+			// skip junk at the end of scanline
+			pBytes = pBytes + ( nInPitch - nWidth * 3 );
 		}
 		else
 		{
 			for ( int nX = 0 ; nX < nWidth ; nX++ )
 			{
-				RGBQUAD& color = pPalette[ *pRowIn++ ];
+				RGBQUAD& color = pPalette[ *pBytes++ ];
 
 				pRowOut[ 0 ] = color.rgbRed;
 				pRowOut[ 1 ] = color.rgbGreen;
@@ -305,17 +370,22 @@ if ( pBI != 0 ) delete[] (BYTE*)pBI;
 
 				pRowOut += 3;
 			}
+			// skip junk at the end of scanline
+			pBytes = pBytes + ( nInPitch - nWidth );
 		}
 	}
 
+	// Unlock safearray; we are ready to deliver it back to Shareaza
 	SafeArrayUnaccessData( *ppImage );
 
 	delete [] pRowBuf;
-	delete [] pBytes;
+	delete [] pStart;
 
 	VariantClear( &va );
 	DllRelease();
 	LeaveCritical();
+	if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
+		pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
 	return S_OK;
 }
 
@@ -410,6 +480,14 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	long nDotsWidth = CalculateDotsForHimetric( nResolution, nWidth);
 	long nDotsHeight = CalculateDotsForHimetric( nResolution, nHeight);
 
+	// make smaller
+	if ( nDotsHeight > 800 )
+	{
+		double nFactor = static_cast<double>(nDotsHeight) / 800.0;
+		nDotsHeight = 800;
+		nDotsWidth = static_cast<long>(nDotsWidth / nFactor);
+	}
+
 	int nInfoSize;
 	nInfoSize = sizeof( BITMAPINFOHEADER );
 	int nColorTableSize = 0;
@@ -421,7 +499,9 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	
 	if ( bmInfo == NULL ) return NULL;
 	ZeroMemory( bmInfo, nInfoSize );
-	DWORD dwEffectiveWidth = ( ( wBitsPerSample * nDotsWidth ) + 31 ) / 32 * 4;
+	// Align scanline size to dword
+	unsigned short nAlignSize = sizeof(DWORD) * 8 - 1;
+	DWORD dwEffectiveWidth = ( ( wBitsPerSample * nDotsWidth ) + nAlignSize ) & ~nAlignSize;
 
 	//prepare the bitmap attributes
 	memset( &bmInfo->bmiHeader, 0, sizeof(BITMAPINFOHEADER) );
@@ -433,7 +513,8 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	bmInfo->bmiHeader.biYPelsPerMeter=static_cast<long>(nResolution / 2.54E-2);
 	bmInfo->bmiHeader.biPlanes = 1;
 	bmInfo->bmiHeader.biBitCount = wBitsPerSample;
-	bmInfo->bmiHeader.biSizeImage = dwEffectiveWidth * nDotsHeight;
+	// size in bytes
+	bmInfo->bmiHeader.biSizeImage = dwEffectiveWidth * nDotsHeight / 8;
 
 	if ( wBitsPerSample <= 8 )
 	{
@@ -491,7 +572,108 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	return hTempBmp;
 }
 
-CDocReader::CDocumentProperties::CDocumentProperties()
+HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD wBitsPerSample, BITMAPINFO **ppBI)
+{
+	ENHMETAHEADER cHeader;
+	GetEnhMetaFileHeader( pds.emf.hemf, sizeof(ENHMETAHEADER), &cHeader );
+	long nWidth = cHeader.rclFrame.right - cHeader.rclFrame.left;
+	long nHeight = cHeader.rclFrame.bottom - cHeader.rclFrame.top;
+	long nDotsWidth = CalculateDotsForHimetric( nResolution, nWidth);
+	long nDotsHeight = CalculateDotsForHimetric( nResolution, nHeight);
+
+	// make smaller
+	if ( nDotsHeight > 800 )
+	{
+		double nFactor = static_cast<double>(nDotsHeight) / 800.0;
+		nDotsHeight = 800;
+		nDotsWidth = static_cast<long>(nDotsWidth / nFactor);
+	}
+
+	int nInfoSize;
+	nInfoSize = sizeof( BITMAPINFOHEADER );
+	int nColorTableSize = 0;
+	if ( wBitsPerSample <= 8 )
+		nColorTableSize = sizeof(RGBQUAD) * ( 1 << wBitsPerSample );
+	nInfoSize += nColorTableSize;
+
+	BITMAPINFO* bmInfo = (LPBITMAPINFO) new BYTE[ nInfoSize ];
+	
+	if ( bmInfo == NULL ) return NULL;
+	ZeroMemory( bmInfo, nInfoSize );
+	// Align scanline size to dword
+	unsigned short nAlignSize = sizeof(DWORD) * 8 - 1;
+	DWORD dwEffectiveWidth = ( ( wBitsPerSample * nDotsWidth ) + nAlignSize ) & ~nAlignSize;
+
+	//prepare the bitmap attributes
+	memset( &bmInfo->bmiHeader, 0, sizeof(BITMAPINFOHEADER) );
+	bmInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmInfo->bmiHeader.biWidth = nDotsWidth;
+	bmInfo->bmiHeader.biHeight = nDotsHeight;
+	bmInfo->bmiHeader.biCompression = BI_RGB; // no compression
+	bmInfo->bmiHeader.biXPelsPerMeter = static_cast<long>(nResolution / 2.54E-2);
+	bmInfo->bmiHeader.biYPelsPerMeter=static_cast<long>(nResolution / 2.54E-2);
+	bmInfo->bmiHeader.biPlanes = 1;
+	bmInfo->bmiHeader.biBitCount = wBitsPerSample;
+	// size in bytes
+	bmInfo->bmiHeader.biSizeImage = dwEffectiveWidth * nDotsHeight / 8;
+
+	if ( wBitsPerSample <= 8 )
+	{
+		SetStdPalette( bmInfo->bmiColors, wBitsPerSample );
+		bmInfo->bmiHeader.biClrUsed = 1 << wBitsPerSample;
+	}
+
+	if ( ppBI != NULL )
+	{
+		*ppBI = (LPBITMAPINFO) new BYTE[ nInfoSize ];
+		//copy BITMAPINFO
+		memcpy( *ppBI, bmInfo, nInfoSize );
+	}
+
+	//create a temporary dc in memory
+	HDC hDC = GetDC(0);
+	ASSERT( hDC != NULL );
+
+	HDC tempDC = CreateCompatibleDC( hDC );
+	ASSERT( tempDC != NULL );
+
+	//create a new bitmap and select it in the memory dc
+	BYTE* pBase;
+
+	HBITMAP hTempBmp = CreateDIBSection( hDC, bmInfo, DIB_RGB_COLORS,(void**)&pBase, 0, 0 );
+	// Probably, will speed-up rendering in dc
+	//BOOL bDIB = ConvertToDFB( hTempBmp );
+	ASSERT( hTempBmp != NULL );
+	HGDIOBJ hTempObj = SelectObject( tempDC, hTempBmp );
+	ASSERT( hTempObj != NULL );
+
+	SaveDC( tempDC );
+
+	int nPrevMode = SetMapMode( tempDC, MM_ANISOTROPIC );
+	SetWindowOrgEx( tempDC, 0, 0, NULL );
+	SetWindowExtEx( tempDC, nWidth, nHeight, NULL );
+	SetViewportExtEx( tempDC, nDotsWidth, nDotsHeight, NULL );
+
+	// Erase the background.
+    HBRUSH hBrBkGnd = CreateSolidBrush( PALETTERGB(0xff, 0xff, 0xff) );
+	RECT rc = {0, 0, nWidth, nHeight};
+    FillRect( tempDC, &rc, hBrBkGnd );
+    DeleteObject( hBrBkGnd );
+
+	SetBkMode( tempDC, TRANSPARENT );
+
+	PlayEnhMetaFile( tempDC, pds.emf.hemf, &rc );
+
+	SelectObject( tempDC, hTempObj );
+
+	RestoreDC( tempDC, -1 );
+	DeleteDC( tempDC );
+
+	ReleaseDC( 0, hDC );
+	return hTempBmp;
+}
+
+CDocReader::CDocumentProperties::CDocumentProperties(BOOL bOnlyThumb)
 {
 	ODS("CDocReader::CDocumentProperties::CDocumentProperties()\n");
 	m_bstrFileName   = NULL;
@@ -502,6 +684,7 @@ CDocReader::CDocumentProperties::CDocumentProperties()
 	m_fReadOnly		 = FALSE;
     m_wCodePage      = 0;
     m_pSummProps     = NULL;
+	m_bOnlyThumb	 = bOnlyThumb;
 }
 
 CDocReader::CDocumentProperties::~CDocumentProperties(void)
@@ -635,10 +818,16 @@ HRESULT CDocReader::
  // and should free them if caller has also released them...
     ZOMBIE_OBJECT(m_pSummProps);
     
-    m_pPropSetStg->Release();
-	m_pPropSetStg = NULL;
-    m_pStorage->Release();
-	m_pStorage = NULL;
+    if ( m_pPropSetStg )
+	{
+		m_pPropSetStg->Release();
+		m_pPropSetStg = NULL;
+	}
+	if ( m_pStorage )
+	{
+		m_pStorage->Release();
+		m_pStorage = NULL;
+	}
     FREE_BSTR(m_bstrFileName);
     m_cFilePartIdx = 0;
     m_dwFlags = dsoOptionDefault;
@@ -721,7 +910,7 @@ HRESULT CDocReader::
 
     if (m_pSummProps == NULL)
     {
-        m_pSummProps = new CSummaryProperties();
+        m_pSummProps = new CSummaryProperties(m_bOnlyThumb);
         if (m_pSummProps)
             { hr = m_pSummProps->LoadProperties(m_pPropSetStg, m_fReadOnly, m_dwFlags); }
         else hr = E_OUTOFMEMORY;
@@ -921,7 +1110,7 @@ HRESULT CDocReader::
 // Class Constructor/Destructor
 //
 CDocReader::CDocumentProperties::
-	CSummaryProperties::CSummaryProperties()
+	CSummaryProperties::CSummaryProperties(BOOL	bOnlyThumb)
 {
 	ODS("CSummaryProperties::CSummaryProperties()\n");
     m_pPropSetStg    = NULL;
@@ -933,6 +1122,7 @@ CDocReader::CDocumentProperties::
     m_pDocPropList   = NULL;
     m_wCodePageSI    = CP_ACP;
     m_wCodePageDSI   = CP_ACP;
+	m_bOnlyThumb	 = bOnlyThumb;
 }
 
 CDocReader::CDocumentProperties::
@@ -1326,7 +1516,7 @@ HRESULT CDocReader::CDocumentProperties::
      // Load all the properties into a list set (and save the code page). The list
      // may return NULL if no properties are found, but that is OK. We just return
      // blank values for items as if they were set to zero...
-        hr = LoadPropertySetList(pProps, &m_wCodePageSI, &m_pSummPropList);
+        hr = LoadPropertySetList( pProps, &m_wCodePageSI, &m_pSummPropList, m_bOnlyThumb );
         pProps->Release();
     }
     else
@@ -1353,7 +1543,7 @@ HRESULT CDocReader::CDocumentProperties::
      // Load all the properties into a list set (and save the code page). The list
      // may return NULL if no properties are found, but that is OK. We just return
      // blank values for items as if they were set to zero...
-        hr = LoadPropertySetList(pProps, &m_wCodePageDSI, &m_pDocPropList);
+        hr = LoadPropertySetList(pProps, &m_wCodePageDSI, &m_pDocPropList, m_bOnlyThumb);
         pProps->Release();
     }
     else
