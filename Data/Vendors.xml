@@ -69,7 +69,8 @@
 	</vendor>
 	
 	<vendor code="GNTD">
-		<title>gtk-gnutella</title>
+		<title>Gtk-Gnutella</title>
+		<link>http://gtk-gnutella.sourceforge.net</link>
 	</vendor>
 	
 	<vendor code="GNTG">
@@ -144,10 +145,12 @@
 
 	<vendor code="MUTE">
 		<title>Mutella</title>
+		<link>http://mutella.sourceforge.net/</link>
 	</vendor>
 
 	<vendor code="MXIE">
 		<title>mxie</title>
+		<link>http://www.mxie.com/</link>
 	</vendor>
 	
 	<vendor code="NAPS">
@@ -192,7 +195,7 @@
 
 	<vendor code="TFLS">
 		<title>TrustyFiles</title>
-		<link>http://www.www.trustyfiles.com/</link>
+		<link>http://www.trustyfiles.com/</link>
 	</vendor>
 	
 	<vendor code="TOAD">
