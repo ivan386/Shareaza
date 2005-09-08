@@ -80,10 +80,15 @@ STDMETHODIMP CDocumentClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, 
 		if ( SUCCEEDED(hr) )
 		{
 			pDocReader->Initialize( ( IID_IImageServicePlugin == riid ) );
-			*ppv = pDocReader;
+			if ( IID_ILibraryBuilderPlugin == riid )
+				*ppv = static_cast<ILibraryBuilderPlugin*>(pDocReader);
+			else
+				*ppv = static_cast<IImageServicePlugin*>(pDocReader);
 		}
 		else return hr;
 	}
+	else return E_NOINTERFACE;
+
 	LockServer(TRUE); // on success, bump up the lock count
 
 	return hr;
