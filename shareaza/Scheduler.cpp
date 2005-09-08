@@ -51,7 +51,7 @@ CScheduler::~CScheduler()
 BOOL CScheduler::Load()
 {
 	CFile pFile;
-	CString strFile = Settings.General.Path + _T("\\Data\\Schedule.dat");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Schedule.dat");
 
 	if ( ! pFile.Open( strFile, CFile::modeRead ) )
 	{
