@@ -81,9 +81,9 @@ STDMETHODIMP CDocumentClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, 
 		{
 			pDocReader->Initialize( ( IID_IImageServicePlugin == riid ) );
 			if ( IID_ILibraryBuilderPlugin == riid )
-				*ppv = static_cast<ILibraryBuilderPlugin*>(pDocReader);
+				*ppv = dynamic_cast<ILibraryBuilderPlugin*>(pDocReader);
 			else
-				*ppv = static_cast<IImageServicePlugin*>(pDocReader);
+				*ppv = dynamic_cast<IImageServicePlugin*>(pDocReader);
 		}
 		else return hr;
 	}
