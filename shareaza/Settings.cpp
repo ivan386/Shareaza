@@ -347,7 +347,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.StaggardStart"), &Downloads.StaggardStart, FALSE );
 	Add( _T("Downloads.AllowBackwards"), &Downloads.AllowBackwards, TRUE );
 	Add( _T("Downloads.ChunkSize"), &Downloads.ChunkSize, 512*1024 );
-	Add( _T("Downloads.ChunkStrap"), &Downloads.ChunkStrap, 64*1024 );
+	Add( _T("Downloads.ChunkStrap"), &Downloads.ChunkStrap, 128*1024 );
 	Add( _T("Downloads.Metadata"), &Downloads.Metadata, TRUE );
 	Add( _T("Downloads.VerifyFiles"), &Downloads.VerifyFiles, TRUE );
 	Add( _T("Downloads.VerifyTiger"), &Downloads.VerifyTiger, TRUE );
