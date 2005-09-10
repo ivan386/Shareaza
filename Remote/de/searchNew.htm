@@ -1,0 +1,35 @@
+﻿<td class="tabsel">New Search</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Um eine neue Suche zu starten, geben Sie ihren Suchbegriff in das Feld unten ein und klicken Sie auf 
+			<b>Suche starten</b>. Wenn Sie ihre Suche auf einen bestimmten Dateityp beschränken wollen, 
+			so können Sie ihn in der Liste auswählen.
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Suche nach:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Dateityp:</td>
+					<td>
+						<select name="schema">
+							<option value="">Jeder Dateityp</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Suche starten">
+					</td>
+				</tr>
+			</table>
+		</form>
