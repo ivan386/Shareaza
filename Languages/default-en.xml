@@ -3981,7 +3981,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
-		<control caption="&Copy"/>
+		<control caption="_Copy"/>
 		<control caption="Save..."/>
 		<control/>
 		<control caption="Cancel"/>
