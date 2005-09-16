@@ -98,6 +98,11 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="ru">Альбом</title>
                        <title language="sv">Album</title>
                </member>
+               <member name="composer" search="generic">
+                       <display prompt="true"/>
+                       <title language="en">Composer</title>
+                       <title language="it">Compositore</title>
+               </member>
                <member name="genre" search="generic">
                        <display prompt="true"/>
                        <link location="http://www.shareaza.com/schemas/musicGenre.xsd" remote="name"/>
@@ -481,6 +486,23 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="ru">Автор. права</title>
                        <title language="sv">Upphovsrätt</title>
                </member>
+               <member name="origAlbum" search="generic">
+                       <title language="en">Original album</title>
+                       <title language="it">Album originale</title>
+               </member>
+               <member name="origArtist" search="generic">
+                       <title language="en">Original artist</title>
+                       <title language="it">Artista originale</title>
+               </member>
+               <member name="encoder">
+                       <title language="en">Encoder</title>
+                       <title language="it">Encoder</title>
+               </member>
+               <member name="channels" search="indexed">
+                        <display prompt="true" defaultColumn="true" columnAlign="center"/>
+                       <title language="en">Channels</title>
+                       <title language="it">Canali</title>
+               </member>
        </members>
        <typeFilter>
                <type extension="aac"/>
@@ -525,6 +547,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <mapping from="rdf:rdf/rdf:Description/mm:duration" to="seconds" factor="0.001"/>
                <mapping from="rdf:rdf/rdf:Description/bz:audioBitrate" to="bitrate"/>
                <mapping from="rdf:rdf/rdf:Description/bz:audioSamplerate" to="sampleRate"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:audioChannels" to="channels"/>
                <mapping from="rdf:rdf/rdf:Description/dc:description/dc:title" to="title"/>
                <mapping from="rdf:rdf/rdf:Description/dc:description/dc:creator" to="artist"/>
                <mapping from="rdf:rdf/rdf:Description/dc:description/bz:albumName" to="album"/>

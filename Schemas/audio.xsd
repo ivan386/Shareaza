@@ -12,6 +12,7 @@
       <attribute name="title" type="string"/>
       <attribute name="artist" type="string"/>
       <attribute name="album" type="string"/>
+      <attribute name="composer" type="string"/>
       <attribute name="genre">
         <simpleType base="string">
           <enumeration value="Acapella"/>
@@ -163,6 +164,8 @@
           <enumeration value="World"/>
         </simpleType>
       </attribute>
+      <attribute name="origArtist" type="string"/>
+      <attribute name="origAlbum" type="string"/>
       <attribute name="track" type="short"/>
       <attribute name="disc">
       	<simpleType base="short">
@@ -192,6 +195,7 @@
                 <enumeration value="Audiobook"/>
         </simpleType>
       </attribute>
+      <attribute name="channels" type="string"/>
 	<attribute name="language">
 			<simpleType base="string">
 			<enumeration value="Danish"/>
@@ -228,6 +232,7 @@
 		</simpleType>
 	</attribute>
       <attribute name="copyright" type="string"/>
+      <attribute name="encoder" type="string"/>
       <attribute name="qualitynotes" type="string"/>
       <attribute name="keywords" type="string"/>
       <attribute name="releaseDate" type="string"/>
@@ -242,8 +247,3 @@
   </complexType>
 
 </schema>
-
-
-
-
-
