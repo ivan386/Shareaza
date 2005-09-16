@@ -101,7 +101,21 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <member name="composer" search="generic">
                        <display prompt="true"/>
                        <title language="en">Composer</title>
+                       <title language="af">Composer</title>
+                       <title language="chs">Composer</title>
+                       <title language="de">Composer</title>
+                       <title language="es">Composer</title>
+                       <title language="fr">Composer</title>
+                       <title language="heb">Composer</title>
+                       <title language="hr">Composer</title>
+                       <title language="hu">Composer</title>
                        <title language="it">Compositore</title>
+                       <title language="lt">Kompozitorius</title>
+                       <title language="nl">Composer</title>
+                       <title language="no">Composer</title>
+                       <title language="br">Composer</title>
+                       <title language="ru">Композитор</title>
+                       <title language="sv">Composer</title>
                </member>
                <member name="genre" search="generic">
                        <display prompt="true"/>
@@ -488,20 +502,76 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                </member>
                <member name="origAlbum" search="generic">
                        <title language="en">Original album</title>
+                       <title language="af">Original album</title>
+                       <title language="chs">Original album</title>
+                       <title language="de">Original album</title>
+                       <title language="es">Original album</title>
+                       <title language="fr">Original album</title>
+                       <title language="heb">Original album</title>
+                       <title language="hr">Original album</title>
+                       <title language="hu">Original album</title>
                        <title language="it">Album originale</title>
+                       <title language="lt">Pirminis albumas</title>
+                       <title language="nl">Original album</title>
+                       <title language="no">Original album</title>
+                       <title language="br">Original album</title>
+                       <title language="ru">Альбом-источник</title>
+                       <title language="sv">Original album</title>
                </member>
                <member name="origArtist" search="generic">
                        <title language="en">Original artist</title>
+                       <title language="af">Original artist</title>
+                       <title language="chs">Original artist</title>
+                       <title language="de">Original artist</title>
+                       <title language="es">Original artist</title>
+                       <title language="fr">Original artist</title>
+                       <title language="heb">Original artist</title>
+                       <title language="hr">Original artist</title>
+                       <title language="hu">Original artist</title>
                        <title language="it">Artista originale</title>
+                       <title language="lt">Pradinis atlikėjas</title>
+                       <title language="nl">Original artist</title>
+                       <title language="no">Original artist</title>
+                       <title language="br">Original artist</title>
+                       <title language="ru">Первоначальный артист</title>
+                       <title language="sv">Original artist</title>
                </member>
                <member name="encoder">
-                       <title language="en">Encoder</title>
-                       <title language="it">Encoder</title>
+                       <title language="en">Encoder Used</title>
+                       <title language="af">Enkodeerder Gebruik</title>
+                       <title language="chs">使用编码</title>
+                       <title language="de">Benutzter Encoder</title>
+                       <title language="es">Encoder Usado</title>
+                       <title language="fr">Encodeur utilisé</title>
+                       <title language="heb">המקודד שנעשה בו שימוש</title>
+                       <title language="hr">Korišteni Encoder</title>
+                       <title language="hu">Kódoló használva</title>
+                       <title language="it">Encoder usato</title>
+                       <title language="lt">Naudotas koduoklis</title>
+                       <title language="nl">Gebruikte Encoder</title>
+                       <title language="no">Brukt omkoder</title>
+                       <title language="br">Codificador Usado</title>
+                       <title language="ru">Перекодировщик</title>
+                       <title language="sv">Omkodare använd</title>
                </member>
                <member name="channels" search="indexed">
                         <display prompt="true" defaultColumn="true" columnAlign="center"/>
                        <title language="en">Channels</title>
+                       <title language="af">Channels</title>
+                       <title language="chs">Channels</title>
+                       <title language="de">Channels</title>
+                       <title language="es">Channels</title>
+                       <title language="fr">Channels</title>
+                       <title language="heb">Channels</title>
+                       <title language="hr">Channels</title>
+                       <title language="hu">Channels</title>
                        <title language="it">Canali</title>
+                       <title language="lt">Kanalų</title>
+                       <title language="nl">Channels</title>
+                       <title language="no">Channels</title>
+                       <title language="br">Channels</title>
+                       <title language="ru">Каналы</title>
+                       <title language="sv">Channels</title>
                </member>
        </members>
        <typeFilter>
