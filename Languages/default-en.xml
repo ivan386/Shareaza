@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.4.4"
+		version="2.2.0.0"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3978,7 +3978,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
-		<control caption="Cancel"/>
+		<control caption="&Copy"/>
 		<control caption="Save..."/>
 		<control/>
 		<control caption="Cancel"/>
