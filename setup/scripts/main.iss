@@ -61,9 +61,6 @@ AppPublisherURL=http://www.shareaza.com/?id=home
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
 
-[LangOptions]
-LanguageCodePage=0
-
 [Components]
 ; Ask user wich components to install
 Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
@@ -73,7 +70,7 @@ Name: "multiuser"; Description: "{cm:tasks_multisetup}"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
-;Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
+Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 
 [Files]
 #ifndef debug
@@ -316,8 +313,8 @@ Type: filesandordirs; Name: "{app}\Skins\Languages"; Components: not language
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins\Languages"; Components: not language
 
 ; Delete old Shareaza installers
-;Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and multiuser
-;Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and not multiuser
+Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and multiuser
+Type: files; Name: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}\Shareaza*.exe"; Tasks: deleteoldsetup and not multiuser
 
 [UninstallDelete]
 ; Clean up files created after installation
