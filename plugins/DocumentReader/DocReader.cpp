@@ -5,6 +5,11 @@
 #include "Palette.h"
 #include <string>
 
+LPCWSTR	CDocReader::uriBook		= L"http://www.limewire.com/schemas/book.xsd";
+LPCWSTR	CDocReader::uriDocument	 = L"http://www.shareaza.com/schemas/wordProcessing.xsd";
+LPCWSTR	CDocReader::uriSpreadsheet	 = L"http://www.shareaza.com/schemas/spreadsheet.xsd";
+LPCWSTR CDocReader::uriPresentation = L"http://www.shareaza.com/schemas/presentation.xsd";
+
 // CDocReader
 CDocReader::CDocReader()
 {
@@ -32,54 +37,196 @@ void CDocReader::Initialize(BOOL bOnlyThumb)
 
 // ILibraryBuilderPlugin Methods
 
-STDMETHODIMP CDocReader::Process(void* hFile, BSTR sFile, ISXMLElement* pXML)
+STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 {
 	ODS("CDocReader::Process\n");
-	return E_NOTIMPL;
 	EnterCritical();
 	DllAddRef();
-	//pXML->AddRef();
 	HRESULT hr;
+	BSTR bsValue = NULL;
 
 	hr = m_pDocProps->Open( sFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
-	
-	BSTR bsValue = NULL;
+	if ( FAILED(hr) ) return E_INVALIDOBJECT;
+
+	// Check if it was MS document
+	hr = m_pDocProps->get_ProgID( &bsValue );
+	if ( FAILED(hr) ) return S_FALSE;
+
+	BSTR bsName = NULL;
+	LPCWSTR pszSchema = NULL;
+	LPCWSTR pszSingular = NULL;
+	LPCWSTR pszFormat = NULL;
 	std::string sTemp;
-	BSTR bsResult = NULL;
 	LONG nCount = 0;
-	//VARIANT va;
-	//VariantInit( &va );
+	BOOL bBook = FALSE;
 
-	// Reads from Word documents only
-	hr = m_pDocProps->get_OleDocumentFormat( &bsValue );	// MSWordDoc
-	hr = m_pDocProps->get_OleDocumentType( &bsValue );		// Microsoft Word Document
+	LPCWSTR pszExt = wcsrchr( sFile, '.');
 
-	m_pDocProps->m_pSummProps->get_ApplicationName( &bsValue );
-	sTemp.assign("<wordprocessings xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://www.shareaza.com/schemas/wordProcessing.xsd\"><wordprocessing author=\"");
-	m_pDocProps->m_pSummProps->get_Author( &bsValue );
+	if ( LPCWSTR pszName = wcsrchr( sFile, '\\' ) )
+	{
+		pszName++;
+		
+		if ( wcsnicmp( pszName, L"ebook - ", 8 ) == 0 ||
+			 wcsnicmp( pszName, L"(ebook", 6 ) == 0 )
+		{
+			pszSchema = CDocReader::uriBook;
+			bBook = TRUE;
+		}
+		if ( wcsnicmp( pszExt, L".doc", 3 ) == 0 || wcsnicmp( pszExt, L".dot", 3 ) == 0 ||
+				  wcsnicmp( pszExt, L".mpp", 3 ) == 0 || wcsnicmp( pszExt, L".mpt", 3 ) == 0 ||
+				  wcsnicmp( pszExt, L".vsd", 3 ) == 0 || wcsnicmp( pszExt, L".vst", 3 ) == 0 )
+		{
+			if ( !bBook ) pszSchema = CDocReader::uriDocument;
+			if ( pszExt[1] == 'd' || pszExt[1] == 'D' ) 
+				pszFormat = L"Word";
+			else if ( pszExt[1] == 'm' || pszExt[1] == 'M' ) 
+				pszFormat = L"Project";
+			else if ( pszExt[1] == 'v' || pszExt[1] == 'V' ) 
+				pszFormat = L"Visio";
+		}
+		else if ( wcsnicmp( pszExt, L".ppt", 3 ) == 0 || wcsnicmp( pszExt, L".pot", 3 ) == 0 ||
+				  wcsnicmp( pszExt, L".ppa", 3 ) == 0 )
+		{
+			if ( !bBook ) pszSchema = CDocReader::uriPresentation;
+			pszFormat = L"PowerPoint";
+		}
+		else if ( wcsnicmp( pszExt, L".xls", 3 ) == 0 || wcsnicmp( pszExt, L".xlt", 3 ) == 0 ||
+				  wcsnicmp( pszExt, L".xla", 3 ) == 0 )
+		{
+			if ( !bBook ) pszSchema = CDocReader::uriSpreadsheet;
+			pszFormat = L"Excel";
+		}
+		else return E_UNEXPECTED;
+	}
+
+	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
+
 	USES_CONVERSION;
-	sTemp.append( OLE2T( bsValue ) );
-	sTemp.append("\"/></wordprocessings>");
-	bsResult = SysAllocString( T2OLE(sTemp.c_str()) );
-	hr = pXML->FromString( bsResult, &pXML );
-	SysFreeString( bsResult );
-	m_pDocProps->m_pSummProps->get_Comments( &bsValue );
-	m_pDocProps->m_pSummProps->get_Company( &bsValue );
-	m_pDocProps->m_pSummProps->get_Keywords( &bsValue );
-	m_pDocProps->m_pSummProps->get_PageCount( &nCount );
-	m_pDocProps->m_pSummProps->get_PresentationFormat( &bsValue );
-	m_pDocProps->m_pSummProps->get_RevisionNumber( &bsValue );
-	m_pDocProps->m_pSummProps->get_SlideCount( &nCount );
-	m_pDocProps->m_pSummProps->get_Subject( &bsValue );
-	m_pDocProps->m_pSummProps->get_Title( &bsValue );
-	m_pDocProps->m_pSummProps->get_Version( &bsValue );
-	//m_pDocProps->m_pSummProps->get_Thumbnail( &va );
-    
-	//VariantClear( &va );
-	hr = pXML->ToStringEx( VARIANT_TRUE, VARIANT_TRUE, &bsValue );
-	m_pDocProps->Close( VARIANT_FALSE );
+	sTemp.assign( W2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.append( "s" );
+	bsName = SysAllocString( T2OLE(sTemp.c_str()) );
 
-	//pXML->Release();
+	// Get a pointer to elements node and create a root element
+	ISXMLElement* pPlural;
+	ISXMLElements* pElements;
+
+	pXML->get_Elements( &pElements );
+	pElements->Create( bsName, &pPlural );
+	pElements->Release();
+	SysFreeString( bsName );
+
+	// Add root element attributes
+	ISXMLAttributes* pAttributes;
+	pPlural->get_Attributes( &pAttributes );
+	pAttributes->Add( L"xmlns:xsi", L"http://www.w3.org/2001/XMLSchema-instance" );
+	pAttributes->Add( L"xsi:noNamespaceSchemaLocation", W2OLE((LPWSTR)pszSchema) );
+	pAttributes->Release();
+
+	// Create inner element describing metadata
+	ISXMLElement* pSingular;
+	pPlural->get_Elements( &pElements );
+
+	sTemp.resize( sTemp.length() - 1 );
+	bsName = SysAllocString( T2OLE(sTemp.c_str()) );
+	pElements->Create( bsName, &pSingular );
+	pElements->Release();
+	SysFreeString( bsName );
+
+	// Get attributes and add all metadata
+	pSingular->get_Attributes( &pAttributes );
+
+	hr = m_pDocProps->m_pSummProps->get_Author( &bsValue );
+	if ( SUCCEEDED(hr) )
+		pAttributes->Add( L"author", bsValue );
+
+	hr = m_pDocProps->m_pSummProps->get_Title( &bsValue );
+	if ( SUCCEEDED(hr) )
+		pAttributes->Add( L"title", bsValue );
+
+	hr = m_pDocProps->m_pSummProps->get_Subject( &bsValue );
+	if ( SUCCEEDED(hr) )
+		pAttributes->Add( L"subject", bsValue );
+
+	hr = m_pDocProps->m_pSummProps->get_Keywords( &bsValue );
+	if ( SUCCEEDED(hr) )
+		pAttributes->Add( L"keywords", bsValue );
+
+	if ( pszSchema == CDocReader::uriPresentation )
+	{
+		hr = m_pDocProps->m_pSummProps->get_SlideCount( &nCount );
+		if ( SUCCEEDED(hr) )
+		{
+			_ltow( nCount, bsValue, 10 );
+			pAttributes->Add( L"slides", bsValue );
+		}
+	}
+	else
+	{
+		hr = m_pDocProps->m_pSummProps->get_PageCount( &nCount );
+		// Windows usually doesn't refresh page count automatically (MS bug)
+		// So, we will add it when it is greater than 1.
+		// Maybe approximate from:
+		// m_pDocProps->m_pSummProps->get_LineCount( &nCount ) / 16;
+		// (when font size = 10)?
+
+		if ( SUCCEEDED(hr) && nCount > 1 )
+		{
+			_ltow( nCount, bsValue, 10 );
+			pAttributes->Add( L"pages", bsValue );
+		}
+	}
+
+	if ( pszSchema != CDocReader::uriBook )
+	{
+		// Shareaza will shorten it to 100 characters, so there's nothing we can do
+		hr = m_pDocProps->m_pSummProps->get_Comments( &bsValue );
+		if ( SUCCEEDED(hr) )
+			pAttributes->Add( L"comments", bsValue );
+
+		hr = m_pDocProps->m_pSummProps->get_Version( &bsValue );
+		if ( SUCCEEDED(hr) )
+		{
+			if ( wcsnicmp( bsValue, L"0.0", 3 ) != 0 ) 
+				pAttributes->Add( L"version", bsValue );
+		}
+
+		hr = m_pDocProps->m_pSummProps->get_RevisionNumber( &bsValue );
+		if ( SUCCEEDED(hr) )
+			pAttributes->Add( L"revision", bsValue );
+	}
+
+	hr = m_pDocProps->m_pSummProps->get_Company( &bsValue );
+	if ( SUCCEEDED(hr) )
+	{
+		if ( pszSchema == CDocReader::uriBook )
+			pAttributes->Add( L"publisher", bsValue );
+		else
+			pAttributes->Add( L"copyright", bsValue );
+	}
+
+	// Now add some internal data
+
+	if ( pszFormat )
+	{
+		sTemp.assign( "Microsoft " );
+		sTemp.append( W2T(pszFormat) );
+		bsName = SysAllocString( T2OLE(sTemp.c_str()) );
+		pAttributes->Add( L"format", bsName );
+		SysFreeString( bsName );
+	}
+
+	if ( pszSchema == CDocReader::uriBook )
+	{
+		pAttributes->Add( L"back", L"Digital" );
+	}
+
+	// Cleanup
+	pAttributes->Release();
+	pSingular->Release();
+	pPlural->Release();
+
+	SysFreeString( bsValue );    
+	m_pDocProps->Close( VARIANT_FALSE );
 	DllRelease();
 	LeaveCritical();
 	return S_OK;
@@ -87,7 +234,7 @@ STDMETHODIMP CDocReader::Process(void* hFile, BSTR sFile, ISXMLElement* pXML)
 
 // IImageServicePlugin Methods
 
-STDMETHODIMP CDocReader::LoadFromFile(void* hFile, unsigned long nLength, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
 	ODS("CDocReader::LoadFromFile\n");
 
@@ -459,7 +606,7 @@ STDMETHODIMP CDocReader::LoadFromMemory(SAFEARRAY* pMemory, IMAGESERVICEDATA* pP
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CDocReader::SaveToFile(void* hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
+STDMETHODIMP CDocReader::SaveToFile(HANDLE hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
 {
 	ODS("CDocReader::SaveToFile\n");
 	return E_NOTIMPL;

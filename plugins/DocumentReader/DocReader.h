@@ -163,25 +163,31 @@ protected:
 public:
 	CDocumentProperties*	m_pDocProps;
 
+public:
+	static LPCWSTR	uriBook;
+	static LPCWSTR	uriDocument;
+	static LPCWSTR	uriSpreadsheet;
+	static LPCWSTR	uriPresentation;
+
 	// ILibraryBuilderPlugin Methods
 public:
-	STDMETHOD(Process)(void* hFile, BSTR sFile, ISXMLElement* pXML);
+	STDMETHOD(Process)(HANDLE hFile, BSTR sFile, ISXMLElement* pXML);
 
 	// IImageServicePlugin Methods
 public:
-	STDMETHOD(LoadFromFile)(void* hFile, unsigned long nLength, 
+	STDMETHOD(LoadFromFile)(HANDLE hFile, DWORD nLength, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
 	STDMETHOD(LoadFromMemory)(SAFEARRAY* pMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	STDMETHOD(SaveToFile)(void* hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
+	STDMETHOD(SaveToFile)(HANDLE hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 	STDMETHOD(SaveToMemory)(SAFEARRAY** ppMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 
 protected:
 	void Initialize(BOOL bOnlyThumb);
-	HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 
+	HBITMAP GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);
-	HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, 
+	HBITMAP GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);
 	BOOL ConvertToDFB(HBITMAP& hBitmap);
 

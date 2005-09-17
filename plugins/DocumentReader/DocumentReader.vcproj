@@ -36,6 +36,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="unicows.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\DocumentReader.def"
@@ -108,7 +109,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="Libcmt.lib User32.lib GDI32.lib ComDlg32.lib WinSpool.lib shell32.lib version.lib"
+				AdditionalDependencies="unicows.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
 				IgnoreAllDefaultLibraries="FALSE"

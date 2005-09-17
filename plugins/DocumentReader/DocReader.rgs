@@ -40,7 +40,6 @@ HKLM
 						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xlt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
-						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xla' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
@@ -48,6 +47,7 @@ HKLM
 						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.vst' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 					LibraryBuilder
 					{
@@ -55,7 +55,6 @@ HKLM
 						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xlt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
-						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xla' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
@@ -63,6 +62,7 @@ HKLM
 						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.vst' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 				}
 			}

@@ -24,7 +24,7 @@ STDMETHODIMP CDocumentClassFactory::QueryInterface(REFIID riid, void** ppv)
 	
 	if ( CLSID_DocReader == riid )
 	{
-		*ppv = (IImageServicePlugin*)this;
+		*ppv = this;
 		this->AddRef();
 		return S_OK;
 	}
