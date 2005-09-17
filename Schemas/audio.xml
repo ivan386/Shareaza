@@ -104,7 +104,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="af">Composer</title>
                        <title language="chs">Composer</title>
                        <title language="de">Composer</title>
-                       <title language="es">Composer</title>
+                       <title language="es">Compositor</title>
                        <title language="fr">Composer</title>
                        <title language="heb">Composer</title>
                        <title language="hr">Composer</title>
@@ -501,40 +501,40 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="sv">Upphovsrätt</title>
                </member>
                <member name="origAlbum" search="generic">
-                       <title language="en">Original album</title>
-                       <title language="af">Original album</title>
-                       <title language="chs">Original album</title>
-                       <title language="de">Original album</title>
-                       <title language="es">Original album</title>
-                       <title language="fr">Original album</title>
-                       <title language="heb">Original album</title>
-                       <title language="hr">Original album</title>
-                       <title language="hu">Original album</title>
+                       <title language="en">Original Album</title>
+                       <title language="af">Original Album</title>
+                       <title language="chs">Original Album</title>
+                       <title language="de">Original Album</title>
+                       <title language="es">Album Original</title>
+                       <title language="fr">Original Album</title>
+                       <title language="heb">Original Album</title>
+                       <title language="hr">Original Album</title>
+                       <title language="hu">Original Album</title>
                        <title language="it">Album originale</title>
                        <title language="lt">Pirminis albumas</title>
-                       <title language="nl">Original album</title>
-                       <title language="no">Original album</title>
-                       <title language="br">Original album</title>
+                       <title language="nl">Original Album</title>
+                       <title language="no">Original Album</title>
+                       <title language="br">Original Album</title>
                        <title language="ru">Альбом-источник</title>
-                       <title language="sv">Original album</title>
+                       <title language="sv">Original Album</title>
                </member>
                <member name="origArtist" search="generic">
-                       <title language="en">Original artist</title>
-                       <title language="af">Original artist</title>
-                       <title language="chs">Original artist</title>
-                       <title language="de">Original artist</title>
-                       <title language="es">Original artist</title>
-                       <title language="fr">Original artist</title>
-                       <title language="heb">Original artist</title>
-                       <title language="hr">Original artist</title>
-                       <title language="hu">Original artist</title>
+                       <title language="en">Original Artist</title>
+                       <title language="af">Original Artist</title>
+                       <title language="chs">Original Artist</title>
+                       <title language="de">Original Artist</title>
+                       <title language="es">Artista Original</title>
+                       <title language="fr">Original Artist</title>
+                       <title language="heb">Original Artist</title>
+                       <title language="hr">Original Artist</title>
+                       <title language="hu">Original Artist</title>
                        <title language="it">Artista originale</title>
                        <title language="lt">Pradinis atlikėjas</title>
-                       <title language="nl">Original artist</title>
-                       <title language="no">Original artist</title>
-                       <title language="br">Original artist</title>
+                       <title language="nl">Original Artist</title>
+                       <title language="no">Original Artist</title>
+                       <title language="br">Original Artist</title>
                        <title language="ru">Первоначальный артист</title>
-                       <title language="sv">Original artist</title>
+                       <title language="sv">Original Artist</title>
                </member>
                <member name="encoder">
                        <title language="en">Encoder Used</title>
@@ -560,7 +560,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="af">Channels</title>
                        <title language="chs">Channels</title>
                        <title language="de">Channels</title>
-                       <title language="es">Channels</title>
+                       <title language="es">Canales</title>
                        <title language="fr">Channels</title>
                        <title language="heb">Channels</title>
                        <title language="hr">Channels</title>
@@ -572,6 +572,24 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="br">Channels</title>
                        <title language="ru">Каналы</title>
                        <title language="sv">Channels</title>
+               </member>
+               <member name="soundType" search="generic">
+                       <title language="en">Sound Type</title>
+                       <title language="af">Sound Type</title>
+                       <title language="chs">Sound Type</title>
+                       <title language="de">Sound Type</title>
+                       <title language="es">Sound Type</title>
+                       <title language="fr">Sound Type</title>
+                       <title language="heb">Sound Type</title>
+                       <title language="hr">Sound Type</title>
+                       <title language="hu">Sound Type</title>
+                       <title language="it">Tipo di suono</title>
+                       <title language="lt">Garso tipas</title>
+                       <title language="nl">Sound Type</title>
+                       <title language="no">Sound Type</title>
+                       <title language="br">Sound Type</title>
+                       <title language="ru">Тип звука</title>
+                       <title language="sv">Sound Type</title>
                </member>
        </members>
        <typeFilter>
