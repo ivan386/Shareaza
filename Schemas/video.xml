@@ -297,6 +297,24 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="ru">Студия</title>
                        <title language="sv">Studio</title>
                </member>
+               <member name="copyright" search="none">
+                       <title language="en">Copyright</title>
+                       <title language="af">Kopiereg</title>
+                       <title language="chs">版权</title>
+                       <title language="de">Copyright</title>
+                       <title language="es">Copyright</title>
+                       <title language="fr">Copyright</title>
+                       <title language="heb">זכויות יוצרים</title>
+                       <title language="hr">Prava</title>
+                       <title language="hu">Copyright</title>
+                       <title language="it">Diritti d'autore</title>
+                       <title language="lt">Autorių teisės</title>
+                       <title language="nl">Copyright</title>
+                       <title language="no">Kopibeskyttelse</title>
+                       <title language="br">Direitos de Cópia</title>
+                       <title language="ru">Автор. права</title>
+                       <title language="sv">Upphovsrätt</title>
+               </member>
                <member name="stars" search="indexed">
                        <display prompt="true"/>
                        <title language="en">Actors</title>
@@ -408,6 +426,24 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="br">Codec</title>
                        <title language="ru">Кодек</title>
                        <title language="sv">Codec</title>
+               </member>
+               <member name="frameRate">
+                       <title language="en">Frame Rate</title>
+                       <title language="af">Frame Rate</title>
+                       <title language="chs">Frame Rate</title>
+                       <title language="de">Framerate</title>
+                       <title language="es">Frame Rate</title>
+                       <title language="fr">Frame Rate</title>
+                       <title language="heb">קצב פריימים</title>
+                       <title language="hr">Frame Rate</title>
+                       <title language="hu">Kép/másodperc</title>
+                       <title language="it">Frame Rate</title>
+                       <title language="lt">Kadrų dažnis</title>
+                       <title language="nl">Frame Rate</title>
+                       <title language="no">Frame Rate</title>
+                       <title language="br">Frame Rate</title>
+                       <title language="ru">Частота кадров</title>
+                       <title language="sv">Frame Rate</title>
                </member>
                <member name="year">
                        <title language="en">Year</title>
