@@ -113,7 +113,8 @@
 			<attribute name="codec" type="string"/>
 			<attribute name="year" type="year"/>
 			<attribute name="artist" type="string"/>
-
+			<attribute name="frameRate" type="decimal"/>
+			<attribute name="copyright" type="string"/>
 			<attribute name="subtitles">
 				<simpleType base="string">
 					<enumeration value="Danish"/>
