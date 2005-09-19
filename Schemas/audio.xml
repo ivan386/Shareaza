@@ -107,7 +107,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Compositor</title>
                        <title language="fr">Composer</title>
                        <title language="heb">מלחין</title>
-                       <title language="hr">Composer</title>
+                       <title language="hr">Kompozitor</title>
                        <title language="hu">Szerző</title>
                        <title language="it">Compositore</title>
                        <title language="lt">Kompozitorius</title>
@@ -508,7 +508,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Album Original</title>
                        <title language="fr">Original Album</title>
                        <title language="heb">אלבום מקורי</title>
-                       <title language="hr">Original Album</title>
+                       <title language="hr">Originalni Album</title>
                        <title language="hu">Eredeti album</title>
                        <title language="it">Album originale</title>
                        <title language="lt">Pirminis albumas</title>
@@ -526,7 +526,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Artista Original</title>
                        <title language="fr">Original Artist</title>
                        <title language="heb">אמן מקורי</title>
-                       <title language="hr">Original Artist</title>
+                       <title language="hr">Originalni izvođač</title>
                        <title language="hu">Eredeti előadó</title>
                        <title language="it">Artista originale</title>
                        <title language="lt">Pradinis atlikėjas</title>
@@ -563,7 +563,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="es">Canales</title>
                        <title language="fr">Channels</title>
                        <title language="heb">ערוצים</title>
-                       <title language="hr">Channels</title>
+                       <title language="hr">Kanali</title>
                        <title language="hu">Csatornák</title>
                        <title language="it">Canali</title>
                        <title language="lt">Kanalų</title>
@@ -578,10 +578,10 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="af">Sound Type</title>
                        <title language="chs">Sound Type</title>
                        <title language="de">Soundtyp</title>
-                       <title language="es">Sound Type</title>
+                       <title language="es">Tipo de Sonido</title>
                        <title language="fr">Sound Type</title>
                        <title language="heb">סוג צליל</title>
-                       <title language="hr">Sound Type</title>
+                       <title language="hr">Vrsta Zvuka</title>
                        <title language="hu">Hang típusa</title>
                        <title language="it">Tipo di suono</title>
                        <title language="lt">Garso tipas</title>
