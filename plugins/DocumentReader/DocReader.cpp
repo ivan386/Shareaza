@@ -46,11 +46,24 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	BSTR bsValue = NULL;
 
 	hr = m_pDocProps->Open( sFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
-	if ( FAILED(hr) ) return E_INVALIDOBJECT;
+	if ( FAILED(hr) )
+	{
+		m_pDocProps->Close( VARIANT_FALSE );
+		DllRelease();
+		LeaveCritical();
+		return E_INVALIDOBJECT;
+	}
 
 	// Check if it was MS document
-	hr = m_pDocProps->get_ProgID( &bsValue );
-	if ( FAILED(hr) ) return S_FALSE;
+	VARIANT_BOOL bMSDoc = VARIANT_FALSE;
+	hr = m_pDocProps->get_IsOleFile( &bMSDoc );
+	if ( FAILED(hr) || bMSDoc == VARIANT_FALSE )
+	{
+		m_pDocProps->Close( VARIANT_FALSE );
+		DllRelease();
+		LeaveCritical();
+		return S_FALSE;
+	}
 
 	BSTR bsName = NULL;
 	LPCWSTR pszSchema = NULL;
