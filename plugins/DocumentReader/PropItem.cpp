@@ -25,7 +25,6 @@ CDocProperty::CDocProperty()
 CDocProperty::~CDocProperty(void)
 {
     ODS("CDocProperty::~CDocProperty()\n");
-    //RELEASE_INTERFACE(m_ptiDispType);
     FREE_BSTR(m_bstrName); VariantClear(&m_vValue);
 }
 
@@ -83,7 +82,7 @@ HRESULT CDocProperty::put_Value(VARIANT *pvValue)
 
     ODS("CDocProperty::put_Value\n");
     CHECK_NULL_RETURN(pvValue, E_POINTER);
-    CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), E_INVALIDOBJECT);
 
  // We don't support arrays (in this sample at least)...
     if ((pvValue->vt) & VT_ARRAY)
@@ -117,7 +116,7 @@ HRESULT CDocProperty::put_Value(VARIANT *pvValue)
 HRESULT CDocProperty::Remove()
 {
 	ODS("CDocProperty::Remove\n");
-    CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), E_INVALIDOBJECT);
 	VariantClear(&m_vValue);
 	m_fRemovedItem = TRUE;
     return S_OK;
@@ -163,7 +162,7 @@ CDocProperty* CDocProperty::CreateObject(BSTR bstrName, PROPID propid, VARIANT* 
 	{
 		if (FAILED(pitem->InitProperty(bstrName, propid, pvData, fNewItem, pPreviousItem)))
 		{
-			/*pitem->Release();*/ pitem = NULL;
+			pitem = NULL;
 		}
 	}
 	return pitem;

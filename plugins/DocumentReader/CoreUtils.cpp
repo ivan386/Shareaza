@@ -889,28 +889,6 @@ STDAPI_(BOOL) FGetModuleFileName(HMODULE hModule, WCHAR** wzFileName)
 }
 
 ////////////////////////////////////////////////////////////////////////
-// FSetRegKeyValue
-//
-STDAPI_(BOOL) FSetRegKeyValue(HKEY hk, WCHAR* pwsz)
-{
-	LONG lret;
-
-	if ( v_fRunningOnNT ) 
-    {
-        lret = RegSetValueExW( hk, NULL, 0, REG_SZ, (BYTE*)pwsz, 
-								( (lstrlenW(pwsz) + 1) * sizeof(WCHAR)) );
-    }
-    else
-	{
-		LPSTR psz = ConvertToMBCS( pwsz, CP_ACP );
-		lret = RegSetValueEx( hk, NULL, 0, REG_SZ, (BYTE*)psz, (lstrlen(psz) + 1) );
-		CoTaskMemFree(psz);
-	}
-
-	return (lret == ERROR_SUCCESS);
-}
-
-////////////////////////////////////////////////////////////////////////
 // FGetIconForFile
 //
 typedef HICON (APIENTRY* PFN_ExtractAssociatedIconA)(HINSTANCE, LPSTR, LPWORD);

@@ -93,6 +93,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
+				GlobalOptimizations="TRUE"
 				FavorSizeOrSpeed="1"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
@@ -108,7 +109,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="Libcmt.lib User32.lib GDI32.lib ComDlg32.lib WinSpool.lib shell32.lib version.lib"
+				AdditionalDependencies="Libcmt.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
 				IgnoreAllDefaultLibraries="FALSE"

@@ -186,7 +186,6 @@ STDAPI_(UINT)   CompareStrings(LPCWSTR pwsz1, LPCWSTR pwsz2);
 //
 STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *pcPathIdx);
 STDAPI_(BOOL) FGetModuleFileName(HMODULE hModule, WCHAR** wzFileName);
-STDAPI_(BOOL) FSetRegKeyValue(HKEY hk, WCHAR* pwsz);
 STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico);
 
 ////////////////////////////////////////////////////////////////////////

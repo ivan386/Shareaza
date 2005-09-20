@@ -549,70 +549,6 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 	return S_OK;
 }
 
-// This function converts the given bitmap to a DFB.
-// Returns true if the conversion took place,
-// false if the conversion either unneeded or unavailable
-BOOL CDocReader::ConvertToDFB(HBITMAP& hBitmap)
-{
-  BOOL bConverted = FALSE;
-  BITMAP stBitmap;
-  if ( GetObject( hBitmap, sizeof(stBitmap), &stBitmap ) && stBitmap.bmBits )
-  {
-    // that is a DIB. Now we attempt to create a DFB with the same sizes, 
-	// and with the pixel format of the display.
-    HDC hScreen = GetDC( NULL );
-    if ( hScreen )
-    {
-      HBITMAP hDfb = CreateCompatibleBitmap( hScreen, stBitmap.bmWidth, stBitmap.bmHeight );
-      if ( hDfb )
-      {
-        // now let's ensure what we've created is a DIB.
-        if ( GetObject( hDfb, sizeof(stBitmap), &stBitmap ) && !stBitmap.bmBits )
-        {
-          // ok, we're lucky. Now we have to transfer the image to the DFB.
-          HDC hMemSrc = CreateCompatibleDC( NULL );
-          if ( hMemSrc )
-          {
-            HGDIOBJ hOldSrc = SelectObject( hMemSrc, hBitmap );
-            if ( hOldSrc )
-            {
-              HDC hMemDst = CreateCompatibleDC( NULL );
-              if ( hMemDst )
-              {
-                HGDIOBJ hOldDst = SelectObject( hMemDst, hDfb );
-                if ( hOldDst )
-                {
-                  // transfer the image using BitBlt
-                  // function. It will probably end in the
-                  // call to driver's DrvCopyBits function.
-                  if ( BitBlt( hMemDst, 0, 0, stBitmap.bmWidth, 
-					  stBitmap.bmHeight, hMemSrc, 0, 0, SRCCOPY ) )
-                    bConverted = TRUE; // success
-
-                  ASSERT(SelectObject( hMemDst, hOldDst ));
-                }
-                ASSERT(DeleteDC( hMemDst ));
-              }
-              ASSERT(SelectObject( hMemSrc, hOldSrc ));
-            }
-            ASSERT(DeleteDC( hMemSrc ));
-          }
-        }
-
-        if ( bConverted )
-        {
-          ASSERT(DeleteObject( hBitmap )); // it's no longer needed
-          hBitmap = hDfb;
-        }
-        else
-          ASSERT(DeleteObject(hDfb));
-      }
-      ReleaseDC( NULL, hScreen );
-    }
-  }
-  return bConverted;
-}
-
 STDMETHODIMP CDocReader::LoadFromMemory(SAFEARRAY* pMemory, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
 	ODS("CDocReader::LoadFromMemory\n");
@@ -700,8 +636,6 @@ HBITMAP CDocReader::GetBitmapFromMetaFile(PICTDESC pds, int nResolution, WORD wB
 	BYTE* pBase;
 
 	HBITMAP hTempBmp = CreateDIBSection( hDC, bmInfo, DIB_RGB_COLORS,(void**)&pBase, 0, 0 );
-	// Probably, will speed-up rendering in dc
-	//BOOL bDIB = ConvertToDFB( hTempBmp );
 	ASSERT( hTempBmp != NULL );
 	HGDIOBJ hTempObj = SelectObject( tempDC, hTempBmp );
 	ASSERT( hTempObj != NULL );
@@ -801,8 +735,6 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 	BYTE* pBase;
 
 	HBITMAP hTempBmp = CreateDIBSection( hDC, bmInfo, DIB_RGB_COLORS,(void**)&pBase, 0, 0 );
-	// Probably, will speed-up rendering in dc
-	//BOOL bDIB = ConvertToDFB( hTempBmp );
 	ASSERT( hTempBmp != NULL );
 	HGDIOBJ hTempObj = SelectObject( tempDC, hTempBmp );
 	ASSERT( hTempObj != NULL );
@@ -872,12 +804,12 @@ HRESULT CDocReader::
  // Open method called. Ensure we don't have file already open...
 	ODS("CDocReader::CDocumentProperties::Open\n");
     ASSERT(m_pStorage == NULL); // We should only load one at a time per object!
-    CHECK_NULL_RETURN((m_pStorage == NULL), /*ReportError(*/E_DOCUMENTOPENED/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN((m_pStorage == NULL), E_DOCUMENTOPENED);
 
  // Validate the name passed and resolve to full path (if relative)...
     CHECK_NULL_RETURN(sFileName, E_INVALIDARG);
     if (!FFindQualifiedFileName(sFileName, wszFullName, &ulIdx))
-        return /*ReportError(*/STG_E_INVALIDNAME/*, NULL, m_pDispExcep)*/;
+        return STG_E_INVALIDNAME;
 
  // Save file name and path index from SearchFile API...
     m_bstrFileName = SysAllocString(wszFullName);
@@ -942,7 +874,6 @@ HRESULT CDocReader::
 
     if ( FAILED(hr) )
     {
-        //ReportError(hr, NULL, m_pDispExcep);
         Close( VARIANT_FALSE ); // Force a cleanup on error...
     }
 	else
@@ -1037,13 +968,13 @@ HRESULT CDocReader::
     BOOL fSaveMade = FALSE;
 
  	ODS("CDocReader::CDocumentProperties::Save\n");
-    CHECK_FLAG_RETURN(m_fReadOnly, /*ReportError(*/E_DOCUMENTREADONLY/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN(m_fReadOnly, E_DOCUMENTREADONLY);
 
  // Ask SummaryProperties to save its changes...
     if (m_pSummProps)
     {
         hr = m_pSummProps->SaveProperties(TRUE);
-        if (FAILED(hr)) return /*ReportError(*/hr/*, NULL, m_pDispExcep)*/;
+        if (FAILED(hr)) return hr;
         fSaveMade = (hr == S_OK);
     }
 
@@ -1078,11 +1009,10 @@ HRESULT CDocReader::
         if (FAILED(hr))
         {
             ZOMBIE_OBJECT(m_pSummProps);
-            return /*ReportError(*/hr/*, NULL, m_pDispExcep)*/;
+            return hr;
         }
     }
 	*ppSummaryProperties = m_pSummProps;
-    //hr = m_pSummProps->QueryInterface(IID_SummaryProperties, (void**)ppSummaryProperties);
     return hr;
 }
 
@@ -1096,9 +1026,9 @@ HRESULT CDocReader::
 
 	ODS("CDocReader::CDocumentProperties::get_Icon\n");
 	CHECK_NULL_RETURN(ppicIcon,  E_POINTER); *ppicIcon = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
 
-    if ((m_bstrFileName) && FGetIconForFile(m_bstrFileName, &hIco))
+    if ( (m_bstrFileName) && FGetIconForFile( m_bstrFileName, &hIco ))
     {
 		PICTDESC  icoDesc;
 		icoDesc.cbSizeofstruct = sizeof(PICTDESC);
@@ -1117,7 +1047,7 @@ HRESULT CDocReader::
 {
 	ODS("CDocReader::CDocumentProperties::get_Name\n");
 	CHECK_NULL_RETURN(pbstrName,  E_POINTER); *pbstrName = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
 
 	if (m_bstrFileName != NULL && m_cFilePartIdx > 0)
 		*pbstrName = SysAllocString((LPOLESTR)&(m_bstrFileName[m_cFilePartIdx]));
@@ -1133,7 +1063,7 @@ HRESULT CDocReader::
 {
 	ODS("CDocReader::CDocumentProperties::get_Path\n");
 	CHECK_NULL_RETURN(pbstrPath,  E_POINTER); *pbstrPath = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
 
 	if (m_bstrFileName != NULL && m_cFilePartIdx > 0)
 	    *pbstrPath = SysAllocStringLen(m_bstrFileName, m_cFilePartIdx);
@@ -1165,8 +1095,8 @@ HRESULT CDocReader::
 
 	ODS("CDocReader::CDocumentProperties::get_CLSID\n");
 	CHECK_NULL_RETURN(pbstrCLSID,  E_POINTER); *pbstrCLSID = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
-    CHECK_NULL_RETURN(m_pStorage, /*ReportError(*/E_MUSTHAVESTORAGE/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
+    CHECK_NULL_RETURN(m_pStorage, E_MUSTHAVESTORAGE);
 
     memset(&stat, 0, sizeof(stat));
     hr = m_pStorage->Stat(&stat, STATFLAG_NONAME);
@@ -1191,8 +1121,8 @@ HRESULT CDocReader::
 
 	ODS("CDocReader::CDocumentProperties::get_ProgID\n");
 	CHECK_NULL_RETURN(pbstrProgID,  E_POINTER); *pbstrProgID = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
-    CHECK_NULL_RETURN(m_pStorage, /*ReportError(*/E_MUSTHAVESTORAGE/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
+    CHECK_NULL_RETURN(m_pStorage, E_MUSTHAVESTORAGE);
 
     memset(&stat, 0, sizeof(stat));
     hr = m_pStorage->Stat(&stat, STATFLAG_NONAME);
@@ -1216,8 +1146,8 @@ HRESULT CDocReader::
 
 	ODS("CDocReader::CDocumentProperties::get_OleDocumentFormat\n");
 	CHECK_NULL_RETURN(pbstrFormat,  E_POINTER); *pbstrFormat = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
-    CHECK_NULL_RETURN(m_pStorage, /*ReportError(*/E_MUSTHAVESTORAGE/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
+    CHECK_NULL_RETURN(m_pStorage, E_MUSTHAVESTORAGE);
 
     if (SUCCEEDED(ReadFmtUserTypeStg(m_pStorage, &cf, NULL)) == TRUE)
     {
@@ -1250,8 +1180,8 @@ HRESULT CDocReader::
 
 	ODS("CDocReader::CDocumentProperties::get_OleDocumentType\n");
 	CHECK_NULL_RETURN(pbstrType,  E_POINTER); *pbstrType = NULL;
-    CHECK_NULL_RETURN(m_pPropSetStg, /*ReportError(*/E_DOCUMENTNOTOPEN/*, NULL, m_pDispExcep)*/);
-    CHECK_NULL_RETURN(m_pStorage, /*ReportError(*/E_MUSTHAVESTORAGE/*, NULL, m_pDispExcep)*/);
+    CHECK_NULL_RETURN(m_pPropSetStg, E_DOCUMENTNOTOPEN);
+    CHECK_NULL_RETURN(m_pStorage, E_MUSTHAVESTORAGE);
 
     if (SUCCEEDED(ReadFmtUserTypeStg(m_pStorage, NULL, &lpolestr)) == TRUE)
     {
@@ -1467,7 +1397,7 @@ HRESULT CDocReader::CDocumentProperties::
 
     ODS("CSummaryProperties::get_Thumbnail\n");
 	CHECK_NULL_RETURN(pvtThumbnail, E_POINTER);
-    CHECK_FLAG_RETURN(m_fDeadObj, /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN(m_fDeadObj, E_INVALIDOBJECT);
 
  // Get thumbnail item from the collection (if it was added).
     pitem = GetPropertyFromList(m_pSummPropList, PIDSI_THUMBNAIL, FALSE);
@@ -1642,7 +1572,7 @@ HRESULT CDocReader::CDocumentProperties::
 
     ODS("CSummaryProperties::get_DigitalSignature\n");
 	CHECK_NULL_RETURN(pvtDigSig, E_POINTER);
-    CHECK_FLAG_RETURN(m_fDeadObj, /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN(m_fDeadObj, E_INVALIDOBJECT);
 
  // Get DigSig data as CF_BLOB...
     pitem = GetPropertyFromList(m_pDocPropList, PID_DIGSIG, FALSE);
@@ -1726,7 +1656,6 @@ HRESULT CDocReader::CDocumentProperties::
     if (SUCCEEDED(hr))
     {
         m_pPropSetStg = pPropSS;
-        //ADDREF_INTERFACE(m_pPropSetStg);
         m_fReadOnly = fIsReadOnly;
         m_dwFlags = dwFlags;
     }
@@ -1747,7 +1676,7 @@ HRESULT CDocReader::CDocumentProperties::
 	TRACE1("CSummaryProperties::ReadProperty(id=%d)\n", pid);
 	ASSERT(ppv); *ppv = NULL;
 
-    CHECK_FLAG_RETURN(m_fDeadObj, /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN(m_fDeadObj, E_INVALIDOBJECT);
 
     pitem = GetPropertyFromList(pPropList, pid, FALSE);
     if ( pitem )
@@ -1789,8 +1718,8 @@ HRESULT CDocReader::CDocumentProperties::
  // Going to add property to list. Make sure we allow writes, and make sure prop list exists...
 	TRACE1("CSummaryProperties::WriteProperty(id=%d)\n", pid);
     CHECK_NULL_RETURN(ppPropList,  E_POINTER);
-    CHECK_FLAG_RETURN(m_fDeadObj,  /*ReportError(*/E_INVALIDOBJECT/*, NULL, m_pDispExcep)*/);
-    CHECK_FLAG_RETURN(m_fReadOnly, /*ReportError(*/E_DOCUMENTREADONLY/*, NULL, m_pDispExcep)*/);
+    CHECK_FLAG_RETURN(m_fDeadObj,  E_INVALIDOBJECT);
+    CHECK_FLAG_RETURN(m_fReadOnly, E_DOCUMENTREADONLY);
 
  // We load Variant based on selected VT (only handle values of 32-bit or lower)
  // This would be a problem for generic read/write, but for summary and doc summary
@@ -1911,7 +1840,6 @@ CDocProperty* CDocReader::CDocumentProperties::
             if ( FAILED(pitem->InitProperty( NULL, id, &var, TRUE, (plast->AppendLink( pitem )) )) )
             { // If we fail, try to reverse the append and kill the new object...
                 plast->AppendLink( ( pitem->GetNextProperty() ) );
-                //pitem->Release();
                 pitem = NULL;
             }
         }
@@ -1981,8 +1909,5 @@ void CDocReader::CDocumentProperties::
  // We are now dead ourselves (release prop storage ref)...
     m_pPropSetStg = NULL;
     m_fDeadObj = TRUE;
-
- // Call release on ourself (this will free the object on last ref)...
-    //Release();
     return;
 }

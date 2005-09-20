@@ -5,7 +5,6 @@
 // produce the type library (DocumentReader.tlb) and marshalling code.
 
 import "oaidl.idl";
-import "ocidl.idl";
 
 cpp_quote("#include <ShareazaOM.h>")
 

@@ -22,24 +22,17 @@ public :
 	DECLARE_LIBID(LIBID_DocumentReaderLib)
 	DECLARE_REGISTRY_APPID_RESOURCEID(IDR_DOCUMENTREADER, "{BEC42E3F-4B6B-49A3-A099-EB3D6752AA02}")
 	HRESULT DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv);
-	DWORD m_dwThreadID;
 };
 
 CDocumentReaderModule _AtlModule;
 
 CDocumentReaderModule::CDocumentReaderModule()
 {
-	m_dwThreadID = GetCurrentThreadId();
 }
 
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-#ifdef _MERGE_PROXYSTUB
-    if (!PrxDllMain(hInstance, dwReason, lpReserved))
-        return FALSE;
-#endif
-
 	switch ( dwReason )
 	{
 	case DLL_PROCESS_ATTACH:
@@ -90,7 +83,7 @@ STDAPI DllUnregisterServer(void)
 	LPWSTR  pwszModule;
 	HRESULT hr;
 	//If we can't find the path to the DLL, we can't unregister...
-	if (!FGetModuleFileName( v_hModule, &pwszModule) )
+	if ( !FGetModuleFileName( v_hModule, &pwszModule) )
 		return E_UNEXPECTED;
 
 	hr = _AtlModule.DllUnregisterServer();

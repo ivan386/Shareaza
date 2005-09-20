@@ -27,7 +27,6 @@
 #endif
 
 #define _ATL_APARTMENT_THREADED
-// #define _ATL_FREE_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
@@ -35,25 +34,8 @@
 // turns off ATL's hiding of some common and often safely ignored warning messages
 #define _ATL_ALL_WARNINGS
 
-
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
 
 using namespace ATL;
-
-//#define _CRTDBG_MAP_ALLOC
-//#include <stdlib.h>
-//#include <crtdbg.h>
-//
-//#ifdef _DEBUG
-//#define MYDEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__)
-//#define DEBUG_MALLOC(size) _malloc_dbg(size, _NORMAL_BLOCK, __FILE__, __LINE__)
-//#define new MYDEBUG_NEW
-//#define malloc DEBUG_MALLOC
-//#endif // _DEBUG 
-//
-//// 2. Call the following function at the very beginnning of the excutable function (e.g. _tWinMain).
-//_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//// 2a. or call the following function at the very last of the excution.
-//_CrtDumpMemoryLeaks();
