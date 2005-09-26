@@ -288,6 +288,7 @@ DWORD CLibraryMaps::AllocateIndex()
 
 void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 {
+	BOOL bSkipStats = FALSE;
 	if ( pFile->m_nIndex )
 	{
 		if ( CLibraryFile* pOld = LookupFile( pFile->m_nIndex ) )
@@ -296,21 +297,25 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 			{
 				pFile->m_nIndex = AllocateIndex();
 				m_pIndexMap.SetAt( (LPVOID)pFile->m_nIndex, pFile );
-				m_nVolume += ( pFile->m_nSize >> 10 );
-				m_nFiles ++;
+			}
+			else
+			{
+				bSkipStats = TRUE;
 			}
 		}
 		else
 		{
 			m_pIndexMap.SetAt( (LPVOID)pFile->m_nIndex, pFile );
-			m_nVolume += ( pFile->m_nSize >> 10 );
-			m_nFiles ++;
 		}
 	}
 	else
 	{
 		pFile->m_nIndex = AllocateIndex();
 		m_pIndexMap.SetAt( (LPVOID)pFile->m_nIndex, pFile );
+	}
+
+	if ( ( pFile->m_pFolder != NULL ) && ( ! bSkipStats ) )
+	{
 		m_nVolume += ( pFile->m_nSize >> 10 );
 		m_nFiles ++;
 	}
@@ -363,8 +368,11 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		{
 			m_pIndexMap.RemoveKey( (LPVOID)pFile->m_nIndex );
 			
-			m_nFiles --;
-			m_nVolume -= ( pFile->m_nSize >> 10 );
+			if ( pOld->m_pFolder != NULL )
+			{
+				m_nFiles --;
+				m_nVolume -= ( pFile->m_nSize >> 10 );
+			}
 		}
 	}
 	
