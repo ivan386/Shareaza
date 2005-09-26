@@ -41,6 +41,8 @@ BEGIN_MESSAGE_MAP(CSchedulerSettingsPage, CSettingsPage)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDBLCLK()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONUP()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -98,6 +100,8 @@ BOOL CSchedulerSettingsPage::OnInitDialog()
 
 	m_nDownDay			= m_nHoverDay = 0xFF;
 	m_nDownHour			= m_nHoverHour = 0xFF;
+	m_bPaint			= FALSE;
+	m_nPaintValue		= 0;
 
 	m_wndLimitedSpin.SetRange( 5, 95 );
 
@@ -134,23 +138,32 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 		int nHoverDay = ( point.y - rc.top ) / 16;
 		int nHoverHour = ( point.x - rc.left ) / 16;
 
-		if ( nHoverDay != m_nHoverDay )
+		if ( ( nHoverDay != m_nHoverDay ) || ( nHoverHour != m_nHoverHour ) )
 		{
-			m_nHoverDay = nHoverDay;
+			if ( m_bPaint )
+			{
+				m_pSchedule[nHoverDay][nHoverHour] = m_nPaintValue;
+				Invalidate();
+			}
 
-			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
-			m_wndDisplay.SetWindowText( strSliceDisplay );
+			if ( nHoverDay != m_nHoverDay )
+			{
+				m_nHoverDay = nHoverDay;
 
-			Invalidate();
-		}
-		if ( nHoverHour != m_nHoverHour )
-		{
-			m_nHoverHour = nHoverHour;
+				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
+				m_wndDisplay.SetWindowText( strSliceDisplay );
 
-			strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
-			m_wndDisplay.SetWindowText( strSliceDisplay );
+				Invalidate();
+			}
+			if ( nHoverHour != m_nHoverHour )
+			{
+				m_nHoverHour = nHoverHour;
 
-			Invalidate();
+				strSliceDisplay.Format(_T("%s, %d:00 - %d:59"), m_sDayName[m_nHoverDay], m_nHoverHour, m_nHoverHour );
+				m_wndDisplay.SetWindowText( strSliceDisplay );
+
+				Invalidate();
+			}
 		}
 	}
 	else
@@ -174,23 +187,30 @@ void CSchedulerSettingsPage::OnMouseMove(UINT nFlags, CPoint point)
 void CSchedulerSettingsPage::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
-	m_nDownDay = m_nHoverDay;
-	m_nDownHour = m_nHoverHour;
+	m_nDownDay		= m_nHoverDay;
+	m_nDownHour		= m_nHoverHour;
+	m_bPaint		= TRUE;
+	m_nPaintValue	= m_pSchedule[m_nHoverDay][m_nHoverHour];
 	SetCapture();
 	Invalidate();
 }
 
 void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
+	m_bPaint		= FALSE;
+	m_nPaintValue	= 0;
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+
 	if ( m_nDownDay != m_nHoverDay ) return;
 	if ( m_nDownHour != m_nHoverHour ) return;
-	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+
 
 	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
 	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
 
-	m_nDownDay	= 0xFF;
-	m_nDownHour	= 0xFF;
+	m_nDownDay		= 0xFF;
+	m_nDownHour		= 0xFF;
+
 
 	ReleaseCapture();
 	Invalidate();
@@ -199,13 +219,47 @@ void CSchedulerSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CSchedulerSettingsPage::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
+	m_bPaint		= FALSE;
+	m_nPaintValue	= 0;
 	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
 
 	m_pSchedule[m_nHoverDay][m_nHoverHour] ++;
 	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
 
-	m_nDownDay	= 0xFF;
-	m_nDownHour = 0xFF;
+	m_nDownDay		= 0xFF;
+	m_nDownHour		= 0xFF;
+
+	ReleaseCapture();
+	Invalidate();
+	UpdateWindow();
+}
+
+void CSchedulerSettingsPage::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+	m_nDownDay		= m_nHoverDay;
+	m_nDownHour		= m_nHoverHour;
+	m_bPaint		= TRUE;
+	m_nPaintValue	= m_pSchedule[m_nHoverDay][m_nHoverHour];
+	SetCapture();
+	Invalidate();
+}
+
+void CSchedulerSettingsPage::OnRButtonUp(UINT nFlags, CPoint point)
+{
+	m_bPaint		= FALSE;
+	m_nPaintValue	= 0;
+	if ( ( m_nHoverDay == 0xFF ) || ( m_nHoverHour == 0xFF ) ) return;
+
+	if ( m_nDownDay != m_nHoverDay ) return;
+	if ( m_nDownHour != m_nHoverHour ) return;
+
+	m_pSchedule[m_nHoverDay][m_nHoverHour] += 2;
+	m_pSchedule[m_nHoverDay][m_nHoverHour] %= 3;
+
+	m_nDownDay		= 0xFF;
+	m_nDownHour		= 0xFF;
+
 
 	ReleaseCapture();
 	Invalidate();
