@@ -1,9 +1,9 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/03/26 13:56:45 $"
-//	Revision:		"$Revision: 1.19 $"
-//  Last change by:	"$Author: thetruecamper $"
+//	Date:			"$Date: 2005/09/26 00:09:36 $"
+//	Revision:		"$Revision: 1.20 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -447,6 +447,7 @@ BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
+				strHeader.CompareNoCase( _T("X-Node") ) == 0 ||
 				strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		int nColon = strValue.Find( ':' );

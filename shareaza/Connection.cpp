@@ -1,8 +1,8 @@
 //
 // Connection.cpp
 //
-//	Date:			"$Date: 2005/06/16 21:36:12 $"
-//	Revision:		"$Revision: 1.26 $"
+//	Date:			"$Date: 2005/09/26 00:09:36 $"
+//	Revision:		"$Revision: 1.27 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -818,6 +818,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 	} // It's the x my address, listen IP, or node header, like "X-My-Address: 10.254.0.16:6349"
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
+				strHeader.CompareNoCase( _T("X-Node") ) == 0 ||
 				strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find another colon in the value
