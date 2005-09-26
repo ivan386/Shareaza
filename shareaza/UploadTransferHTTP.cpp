@@ -162,6 +162,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	m_bBackwards	= FALSE;
 	m_bRange		= FALSE;
 	m_bQueueMe		= FALSE;
+	m_bNotShareaza	= FALSE;
 	
 	m_bMetadata		= FALSE;
 	m_bTigerTree	= FALSE;
@@ -207,7 +208,6 @@ BOOL CUploadTransferHTTP::ReadRequest()
 BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	theApp.Message( MSG_DEBUG, _T("%s: UPLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, strValue );
-	m_bNotShareaza = FALSE;
 	
 	if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
