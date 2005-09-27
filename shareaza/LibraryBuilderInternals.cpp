@@ -1382,7 +1382,7 @@ BOOL CLibraryBuilderInternals::ReadMPEG( HANDLE hFile)
 	LPCTSTR pszFPS[] = { _T("23.976"), _T("24"), _T("25"), _T("29.97"), _T("30"), _T("50"), _T("59.94"), _T("60") };
 	int nFrameIndex = ( nBuffer[3] & 0x0F );
 	
-	if ( nFrameIndex >= 1 && nFrameIndex <= 9 )
+	if ( nFrameIndex >= 1 && nFrameIndex < 9 )
 	{
 		pXML->AddAttribute( _T("frameRate"), pszFPS[ nFrameIndex - 1 ] );
 	}
@@ -1453,7 +1453,28 @@ BOOL CLibraryBuilderInternals::ReadOGG( HANDLE hFile)
 		CharUpper( strKey.GetBuffer() );
 		strKey.ReleaseBuffer();
 
+		// decode UTF-8 string
+		int nLength = strValue.GetLength();
+
+		LPTSTR pszSource = new TCHAR[ nLength + 1 ]; 
+		CHAR* pszDest = new CHAR[ nLength + 1 ];
+
+		_tcscpy( pszSource, strValue.GetBuffer() );
+		for ( unsigned int nLen = 0; nLen < _tcslen( pszSource ); nLen++ )
+			pszDest[ nLen ] = (CHAR) pszSource[ nLen ];
+		delete pszSource;
+
+		int nWide = MultiByteToWideChar( CP_UTF8, 0, pszDest, nLength, NULL, 0 );
+		LPWSTR pszWide = new WCHAR[ nWide + 1 ];
+		MultiByteToWideChar( CP_UTF8, 0, pszDest, nLength, pszWide, nWide );
+		pszWide[ nWide ] = 0;
+		strValue = pszWide;
+		
+		delete [] pszWide;
+		delete pszDest;
+
 		strValue.TrimLeft(); strValue.TrimRight();
+
 		if ( strValue.IsEmpty() ) continue;
 		
 		if ( strKey == _T("TITLE") )
