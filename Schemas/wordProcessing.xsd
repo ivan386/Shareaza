@@ -97,8 +97,10 @@
 					<enumeration value="Novell Perfect Works"/>
 					<enumeration value="Novell WordPerfect"/>
 					<enumeration value="Office Writer"/>
-					<enumeration value="OpenOffice.org Text Document"/>
-					<enumeration value="OpenOffice.org Text Document Template"/>
+					<enumeration value="OpenDocument Text"/>
+					<enumeration value="OpenDocument Text Template"/>
+					<enumeration value="OpenOffice.org 1.0 Text Document"/>
+					<enumeration value="OpenOffice.org 1.0 Text Document Template"/>
 					<enumeration value="Palm Document"/>
 					<enumeration value="PC-File Letter"/>
 					<enumeration value="PC-File+ Letter"/>
@@ -117,6 +119,7 @@
 					<enumeration value="Spreadsheet DIF"/>
 					<enumeration value="Sprint"/>
 					<enumeration value="Sun StarOffice Writer"/>
+					<enumeration value="Sun StarOffice Writer Template"/>
 					<enumeration value="Total Word"/>
 					<enumeration value="Volkswriter"/>
 					<enumeration value="Unicode"/>

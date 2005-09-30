@@ -40,14 +40,17 @@
 					<enumeration value="ASCII Delimited Text"/>
 					<enumeration value="ASCII Generic Word Processor"/>
 					<enumeration value="Corel Quattro Pro"/>
-					<enumeration value="Microsoft Excel 3.0"/>
-					<enumeration value="Microsoft Excel 4.0"/>
+					<enumeration value="Microsoft Excel"/>
 					<enumeration value="Lotus 123"/>
 					<enumeration value="Navy DIF Standard"/>
 					<enumeration value="Novell Quattro Pro"/>
-					<enumeration value="Openoffice.org Spreadsheet"/>
-					<enumeration value="Openoffice.org Spreadsheet Template"/>
+					<enumeration value="OpenDocument Spreadsheet"/>
+					<enumeration value="OpenDocument Spreadsheet Template"/>
+					<enumeration value="OpenOffice.org 1.0 Spreadsheet"/>
+					<enumeration value="OpenOffice.org 1.0 Spreadsheet Template"/>
 					<enumeration value="Spreadsheet DIF"/>
+					<enumeration value="Sun StarOffice Calc"/>
+					<enumeration value="Sun StarOffice Calc Template"/>
 				</simpleType>
 			</attribute>
 

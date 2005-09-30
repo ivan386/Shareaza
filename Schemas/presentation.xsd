@@ -28,8 +28,12 @@
 					<enumeration value="HTML"/>
 					<enumeration value="Macromedia Flash"/>
 					<enumeration value="Microsoft PowerPoint"/>
-					<enumeration value="Openoffice.org Presentation"/>
-					<enumeration value="Openoffice.org Presentation Template"/>
+					<enumeration value="OpenDocument Presentation"/>
+					<enumeration value="OpenDocument Presentation Template"/>
+					<enumeration value="OpenOffice.org 1.0 Presentation"/>
+					<enumeration value="OpenOffice.org 1.0 Presentation Template"/>
+					<enumeration value="Sun StarOffice Impress"/>
+					<enumeration value="Sun StarOffice Impress Template"/>
 				</simpleType>
 			</attribute>
 	
