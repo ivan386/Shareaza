@@ -3977,7 +3977,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis Bestandsnaam|Bestands Extensie|Bestands Grootte|Bestands Grootte (bytes)|Folder Pad|Lokale Host|Lokale Poort"/>
 		<control caption="Selecteer Preset:"/>
 		<control/>
-		<control caption="Annuleren"/>
+		<control caption="Kopiëren"/>
 		<control caption="Opslaan..."/>
 		<control/>
 		<control caption="Annuleren"/>

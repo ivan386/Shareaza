@@ -3930,7 +3930,7 @@ Other:
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nom de fichier|Nom de fichier (URI)|Nom de fichier Base|Extension du fichier|Taille du fichier|Taille du fichier (bytes)|Chemin du dossier|Hôte local|Port local"/>
 		<control caption="Présélection:"/>
 		<control/>
-		<control caption="Annuler"/>
+		<control caption="Copier"/>
 		<control caption="Sauvegarder"/>
 		<control/>
 		<control caption="Annuler"/>
