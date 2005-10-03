@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/07/21 07:29:23 $"
-//	Revision:		"$Revision: 1.38 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/10/03 20:44:33 $"
+//	Revision:		"$Revision: 1.39 $"
+//  Last change by:	"$Author: spooky23 $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1668,6 +1668,17 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 			SelectAll();
 		return;
+	case 'E':
+		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		{
+			GetOwner()->PostMessage( WM_TIMER, 5 );
+			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_ENQUEUE );	// Add the current file to playlist
+		}
+		return;
+	case 'R':
+		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_VIEW_REVIEWS );
+		return;
 	case VK_DELETE:
 		GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_CLEAR );
 		return;
@@ -1687,15 +1698,10 @@ void CDownloadsCtrl::OnEnterKey()
 		GetAt( m_nFocus, &pDownload, &pSource );								// Get the data for the current focus
 		if ( pDownload != NULL )												// If the selected object is a download...
 		{
-			if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )						// And the control key is pressed...
+			if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )						// And the control key is pressed...
 			{
 				GetOwner()->PostMessage( WM_TIMER, 5 );
 				GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_LAUNCH );		// Launch the current file
-			}
-			else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )					// Or the shift key is pressed...
-			{
-				GetOwner()->PostMessage( WM_TIMER, 5 );
-				GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_ENQUEUE );	// Add the current file to playlist
 			}
 		}
 		else if ( pSource != NULL )												// If the selected object is a download source...
