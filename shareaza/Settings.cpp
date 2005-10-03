@@ -224,7 +224,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.DefaultTTL"), &Gnutella1.DefaultTTL, 5 );
 	Add( _T("Gnutella1.SearchTTL"), &Gnutella1.SearchTTL, 4 );
 	Add( _T("Gnutella1.TranslateTTL"), &Gnutella1.TranslateTTL, 2 );
-	Add( _T("Gnutella1.MaximumTTL"), &Gnutella1.MaximumTTL, 11 );
+	Add( _T("Gnutella1.MaximumTTL"), &Gnutella1.MaximumTTL, 10 );
 	Add( _T("Gnutella1.MaximumPacket"), &Gnutella1.MaximumPacket, 65535 );
 	Add( _T("Gnutella1.MaximumQuery"), &Gnutella1.MaximumQuery, 256 );
 	Add( _T("Gnutella1.StrictPackets"), &Gnutella1.StrictPackets, FALSE );
@@ -479,7 +479,7 @@ void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	30
+#define SMART_VERSION	31
 
 void CSettings::Load()
 {
@@ -612,8 +612,6 @@ void CSettings::SmartUpgrade()
 		
 		Gnutella1.RequeryDelay			= 45*60;
 		
-		Gnutella2.NumPeers				= 4;
-		Gnutella2.QueryGlobalThrottle	= 200;
 		Gnutella2.UdpOutResend			= 6000;
 		Gnutella2.UdpOutExpire			= 26000;
 		
@@ -634,24 +632,28 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 21 )
 	{
-		General.CloseMode				= 0;
 		Library.ThumbSize				= 96;
 		Library.SourceExpire			= 86400;
+		
 		Gnutella1.TranslateTTL			= 2;
 	}
 	
 	if ( nVersion < 24 )
 	{
 		General.CloseMode				= 0;
+		
 		Connection.TimeoutConnect		= 16000;
 		Connection.TimeoutHandshake		= 45000;
+		
 		Downloads.RetryDelay			= 10*60000;
+		
 		Uploads.FilterMask				= 0xFFFFFFFD;
 	}
 	
 	if ( nVersion < 25 )
 	{
 		Connection.TimeoutTraffic		= 140000;
+		
 		Gnutella2.NumHubs				= 2;
 		Gnutella2.NumLeafs				= 300;
 		Gnutella2.NumPeers				= 6;
@@ -666,6 +668,7 @@ void CSettings::SmartUpgrade()
 	if ( nVersion < 28 )
 	{
 		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
+		
 		BitTorrent.Endgame		= TRUE;		// Endgame on
 	}
 
@@ -673,10 +676,10 @@ void CSettings::SmartUpgrade()
 	{
 		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case  
 		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
+		
 		Gnutella.MaxResults		= 100;		// No longer includes ed2k max files
+		
 		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
-		Uploads.QueuePollMin	= 20000;	// Lower values for re-ask times- a dynamic multiplier
-		Uploads.QueuePollMax	= 60000;	//  is now applied based on Q# (from 1x to 5x)
 	}
 
 	if ( nVersion < 30 )
@@ -685,8 +688,17 @@ void CSettings::SmartUpgrade()
 		
 	}
 
-
-
+	if ( nVersion < 31 )
+	{
+		Downloads.SearchPeriod			= 120000;
+		
+		Gnutella1.MaximumTTL			= 10;
+		
+		Gnutella2.QueryGlobalThrottle	= 125;
+		
+		Uploads.QueuePollMin	= 45000;	// Lower values for re-ask times- a dynamic multiplier
+		Uploads.QueuePollMax	= 120000;	//  is now applied based on Q# (from 1x to 5x)
+	}
 
 }
 
@@ -1036,23 +1048,23 @@ QWORD CSettings::ParseVolume(LPCTSTR psz, BOOL bSpeedInBits)
 
 	if ( _stscanf( psz1 , _T("%lf"), &val ) != 1 ) return 0;
 
-	if ( _tcsstr( psz1, _T(" K") ) ) val *= 1024;						// Kilo
-	if ( _tcsstr( psz1, _T(" k") ) ) val *= 1024;
+	if ( _tcsstr( psz1, _T("K") ) ) val *= 1024;						// Kilo
+	if ( _tcsstr( psz1, _T("k") ) ) val *= 1024;
 	
-	if ( _tcsstr( psz1, _T(" M") ) ) val *= 1024*1024;					// Mega
-	if ( _tcsstr( psz1, _T(" m") ) ) val *= 1024*1024;
+	if ( _tcsstr( psz1, _T("M") ) ) val *= 1024*1024;					// Mega
+	if ( _tcsstr( psz1, _T("m") ) ) val *= 1024*1024;
 	
-	if ( _tcsstr( psz1, _T(" G") ) ) val *= 1024*1024*1024;				// Giga
-	if ( _tcsstr( psz1, _T(" g") ) ) val *= 1024*1024*1024;
+	if ( _tcsstr( psz1, _T("G") ) ) val *= 1024*1024*1024;				// Giga
+	if ( _tcsstr( psz1, _T("g") ) ) val *= 1024*1024*1024;
 	
-	if ( _tcsstr( psz1, _T(" T") ) ) val *= 1099511627776.0f;			// Tera
-	if ( _tcsstr( psz1, _T(" t") ) ) val *= 1099511627776.0f;
+	if ( _tcsstr( psz1, _T("T") ) ) val *= 1099511627776.0f;			// Tera
+	if ( _tcsstr( psz1, _T("t") ) ) val *= 1099511627776.0f;
 
-	if ( _tcsstr( psz1, _T(" P") ) ) val *= 1125899906842624.0f;			// Peta
-	if ( _tcsstr( psz1, _T(" p") ) ) val *= 1125899906842624.0f;
+	if ( _tcsstr( psz1, _T("P") ) ) val *= 1125899906842624.0f;			// Peta
+	if ( _tcsstr( psz1, _T("p") ) ) val *= 1125899906842624.0f;
 	
-	if ( _tcsstr( psz1, _T(" E") ) ) val *= 1152921504606846976.0f;		// Exa
-	if ( _tcsstr( psz1, _T(" e") ) ) val *= 1152921504606846976.0f;
+	if ( _tcsstr( psz1, _T("E") ) ) val *= 1152921504606846976.0f;		// Exa
+	if ( _tcsstr( psz1, _T("e") ) ) val *= 1152921504606846976.0f;
 
 	if ( bSpeedInBits )
 	{

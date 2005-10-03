@@ -277,7 +277,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	
 	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
 	
-	if ( nSpeed > 2500 && theApp.m_bNT && !theApp.m_bLimitedConnections )
+	if ( nSpeed > 2500 && theApp.m_bNT && ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 ) )
 	{	// Very high capacity connection
 		Settings.Downloads.MaxFiles				= 32;
 		Settings.Downloads.MaxTransfers			= 200;
