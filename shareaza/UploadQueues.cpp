@@ -46,6 +46,7 @@ CUploadQueues::CUploadQueues()
 	m_pTorrentQueue = new CUploadQueue();
 	m_pHistoryQueue = new CUploadQueue();
 	m_pHistoryQueue->m_bExpanded = FALSE;
+	m_bDonkeyLimited = FALSE;
 }
 
 CUploadQueues::~CUploadQueues()
@@ -648,7 +649,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nRotateTime		= 60*60;
 		pQueue->m_bRewardUploaders	= FALSE;
 	}
-	else if ( Settings.Connection.OutSpeed > 200 )  // >200 Kb/s (Good Broadband)
+	else if ( Settings.Connection.OutSpeed > 250 )  // >250 Kb/s (Good Broadband)
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
 		pQueue						= Create( strQueueName );
@@ -742,21 +743,10 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nRotateTime		= 5*60;
 		pQueue->m_bRewardUploaders	= TRUE;
 
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_SMALL_FILES );
-		pQueue						= Create( strQueueName );
-		pQueue->m_nBandwidthPoints	= 10;
-		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_nMaxSize			= 10 * 1024 * 1024 - 1;
-		pQueue->m_nCapacity			= 10;
-		pQueue->m_nMinTransfers		= 1;
-		pQueue->m_nMaxTransfers		= 4;
-		pQueue->m_bRewardUploaders	= FALSE;
-
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_LARGE_FILES );
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_COMPLETE );
 		pQueue						= Create( strQueueName );
 		pQueue->m_nBandwidthPoints	= 40;
 		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_nMinSize			= 10 * 1024 * 1024;
 		pQueue->m_nMinTransfers		= 2;
 		pQueue->m_nMaxTransfers		= 4;
 		pQueue->m_nCapacity			= 10;
@@ -889,5 +879,52 @@ void CUploadQueues::Validate()
 			pQueue->m_nRotateTime		= 30*60;
 		}
 	}
+
+	// Check ED2K ratio limiter
+	DWORD nTotal = Settings.Connection.OutSpeed * 128;
+	DWORD nLimit = Settings.Bandwidth.Uploads;
+	DWORD nDonkeyPoints = 0;
+	DWORD nTotalPoints = 0;
+	DWORD nBandwidth = 0;
+
+	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
+	m_bDonkeyLimited = FALSE;
+
+	CSingleLock pLock( &m_pSection, TRUE );
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CUploadQueue* pQueue = GetNext( pos );
+
+		nTotalPoints += pQueue->m_nBandwidthPoints;
+
+		if ( pQueue->m_nProtocols == 0 || ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+			nDonkeyPoints += pQueue->m_nBandwidthPoints;
+	}
+	pLock.Unlock();
+	if ( nTotalPoints < 1 ) nTotalPoints = 1;
+	
+	// Limit if torrents are active
+	//if ( Uploads.m_nTorrentSpeed > 0 ) nLimit = ( nLimit * ( 100 - Settings.BitTorrent.BandwidthPercentage ) ) / 100;
+
+	nBandwidth = nLimit * nDonkeyPoints / nTotalPoints;
+
+	if ( nBandwidth < 10240 )
+	{
+		m_bDonkeyLimited = TRUE;
+	}
+	else
+	{
+		m_bDonkeyLimited = FALSE;
+	}
+
+	// Display warning if needed
+	if ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways )
+	{
+		if ( m_bDonkeyLimited ) 
+			theApp.Message( MSG_SYSTEM, _T("eDonkey upload ratio active- Low upload may slow downloads.")  );
+		else
+			theApp.Message( MSG_DEBUG, _T("eDonkey upload ratio is OK.")  );
+	}
+
 }
 

@@ -43,6 +43,8 @@ public:
 protected:
 	CPtrList			m_pList;
 
+	BOOL				m_bDonkeyLimited;
+
 // Operations
 public:
 	BOOL	Enqueue(CUploadTransfer* pUpload, BOOL bForce = FALSE);
@@ -97,6 +99,11 @@ public:
 	{
 		if ( pQueue == NULL ) return FALSE;
 		return m_pList.Find( pQueue ) != NULL;
+	}
+
+	inline BOOL	IsDonkeyRatioActive() const 
+	{ 
+		return ( m_bDonkeyLimited ); 
 	}
 
 };
