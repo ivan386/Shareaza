@@ -46,8 +46,8 @@
 #define PACKET_BUF_WCHAR 127
 
 // Shareaza's vendor code is "RAZA", here is that text in ASCII and wide characters
-#define SHAREAZA_VENDOR_A "RAZA"
-#define SHAREAZA_VENDOR_T _T("RAZA")
+#define SHAREAZA_VENDOR_A VENDOR_CODE
+#define SHAREAZA_VENDOR_T _T( VENDOR_CODE )
 
 // Tell the compiler these classes exist, and it will find out more about them soon
 class CBuffer;

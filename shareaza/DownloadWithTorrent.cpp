@@ -273,8 +273,8 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	{
 		// Use the new (but not official) peer ID style.
 		m_pPeerID.n[ 0 ] = '-';
-		m_pPeerID.n[ 1 ] = 'S';
-		m_pPeerID.n[ 2 ] = 'Z';
+		m_pPeerID.n[ 1 ] = BT_ID1;
+		m_pPeerID.n[ 2 ] = BT_ID2;
 		m_pPeerID.n[ 3 ] = (BYTE)theApp.m_nVersion[0] + '0';
 		m_pPeerID.n[ 4 ] = (BYTE)theApp.m_nVersion[1] + '0';
 		m_pPeerID.n[ 5 ] = (BYTE)theApp.m_nVersion[2] + '0';

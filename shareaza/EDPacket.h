@@ -367,7 +367,7 @@ public:
 #define ED2K_COMMENT_MAX			250
 
 // Client ID
-#define ED2K_COMPATIBLECLIENT_ID	0x28		// Used to be 4, changed on request
+#define ED2K_COMPATIBLECLIENT_ID	ED2K_CLIENT_ID	// Used to be 4, changed on request
 
 // "Unknown" and "Unknown mod" client ID for compatible client variable
 #define ED2K_CLIENT_UNKNOWN			0xFF

@@ -213,3 +213,24 @@ static inline bool IsWord(LPCTSTR pszString, int nStart, int nLength)
 		(AFX_PMSG) \
 		(reinterpret_cast<BOOL (AFX_MSG_CALL CCmdTarget::*)(NMHDR*, LRESULT*) > \
 		(memberFxn)) },
+
+
+// Client's name
+#define CLIENT_NAME			"Shareaza"
+
+
+// Network ID stuff
+
+// 4 Character vendor code (used on G1, G2)
+// BEAR, LIME, RAZA, etc
+#define VENDOR_CODE			"RAZA"
+
+// ed2k client ID number.
+// 0 = eMule, 1 - cDonkey, 4 = Shareaza mod/fork/etc, 28 = Raza.
+#define ED2K_CLIENT_ID		0x28
+
+// 2 Character BT peer-id code
+// SZ = Raza
+#define BT_ID1				'S'
+#define BT_ID2				'Z'
+
