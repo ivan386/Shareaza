@@ -399,9 +399,12 @@ void CUploadsSettingsPage::OnOK()
 	
 	// Create/Validate queues
 	if ( UploadQueues.GetCount() == 0 )
+	{
 		UploadQueues.CreateDefault();
-	else
-		UploadQueues.Validate();
+		m_bQueuesChanged = TRUE;
+	}
+
+	UploadQueues.Validate();
 
 	if ( m_bQueuesChanged )
 	{
