@@ -197,6 +197,10 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 		pRule->m_nExpire	= time( NULL ) + 1800;
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
+	case ban2Hours:
+		pRule->m_nExpire	= time( NULL ) + 7200;
+		pRule->m_sComment	= _T("Temp Ignore");
+		break;
 	case banWeek:
 		pRule->m_nExpire	= time( NULL ) + 604800;
 		pRule->m_sComment	= _T("Client Block");
@@ -1241,6 +1245,15 @@ void CAdultFilter::Load()
 
 }
 
+BOOL CAdultFilter::IsHitAdult( LPCTSTR pszText )
+{
+	if ( pszText )
+	{
+		return IsFiltered( pszText );
+	}
+	return FALSE;
+}
+
 BOOL CAdultFilter::IsSearchFiltered( LPCTSTR pszText )
 {
 	if ( Settings.Search.AdultFilter && pszText )
@@ -1295,7 +1308,7 @@ BOOL CAdultFilter::Censor( TCHAR* pszText )
 
 BOOL CAdultFilter::IsFiltered( LPCTSTR pszText )
 {
-	if ( Settings.Search.AdultFilter && pszText )
+	if ( pszText )
 	{
 		LPCTSTR pszWord;
 

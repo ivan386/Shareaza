@@ -49,6 +49,8 @@ public:
 	BOOL			m_bFilterReject;
 	BOOL			m_bFilterLocal;
 	BOOL			m_bFilterBogus;
+	BOOL			m_bFilterDRM;
+	BOOL			m_bFilterAdult;
 	QWORD			m_nFilterMinSize;
 	QWORD			m_nFilterMaxSize;
 	DWORD			m_nFilterSources;

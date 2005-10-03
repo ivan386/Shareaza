@@ -74,7 +74,7 @@ protected:
 
 enum
 {
-	banSession, ban5Mins, ban30Mins, banWeek, banForever 
+	banSession, ban5Mins, ban30Mins, ban2Hours, banWeek, banForever 
 };
 
 class CSecureRule
@@ -137,7 +137,8 @@ private:
 // Operations
 public:
 	void		Load();
-	BOOL		IsSearchFiltered( LPCTSTR );// Check filter for search
+	BOOL		IsHitAdult( LPCTSTR );		// Does this search result have adult content?
+	BOOL		IsSearchFiltered( LPCTSTR );// Check if search is filtered
 	BOOL		IsChatFiltered( LPCTSTR );	// Check filter for chat
 	BOOL		Censor( TCHAR* );			// Censor (remove) bad words from a string
 private:

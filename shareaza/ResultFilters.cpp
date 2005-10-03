@@ -1,9 +1,9 @@
 //
 // ResultFilters.cpp
 //
-//	Date:			"$Date: 2005/06/19 10:00:18 $"
-//	Revision:		"$Revision: 1.6 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/10/03 17:21:43 $"
+//	Revision:		"$Revision: 1.7 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -184,6 +184,8 @@ CFilterOptions::CFilterOptions()
 	m_bFilterReject		= ( Settings.Search.FilterMask & ( 1 << 3 ) ) > 0;
 	m_bFilterLocal		= ( Settings.Search.FilterMask & ( 1 << 4 ) ) > 0;
 	m_bFilterBogus		= ( Settings.Search.FilterMask & ( 1 << 5 ) ) > 0;
+	m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
+	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
