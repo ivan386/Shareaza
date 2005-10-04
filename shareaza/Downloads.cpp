@@ -869,10 +869,11 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 
 void CDownloads::OnRun()
 {
-	DWORD nActiveDownloads	= 0;
-	DWORD nActiveTransfers	= 0;
-	DWORD nTotalTransfers	= 0;
-	DWORD nTotalBandwidth	= 0;
+	DWORD nActiveDownloads		= 0;
+	DWORD nActiveTransfers		= 0;
+	DWORD nTotalTransfers		= 0;
+	DWORD nTotalBandwidth		= 0;
+	DWORD nActiveED2KTransfers	= 0;
 
 	{
 		CTransfers::Lock oLock;
@@ -908,6 +909,7 @@ void CDownloads::OnRun()
 				{
 					nTotalBandwidth += pTransfer->GetMeasuredSpeed();
 					nActiveTransfers ++;
+					if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) nActiveED2KTransfers ++;
 				}
 			}
 			
@@ -928,12 +930,22 @@ void CDownloads::OnRun()
 	if ( nActiveTransfers > 0 )
 	{
 		m_nLimitGeneric	= Settings.Bandwidth.Downloads / nActiveTransfers;
-		m_nLimitDonkey	= UploadQueues.GetDonkeyBandwidth();
+		m_nLimitDonkey = m_nLimitGeneric;
+
+		if ( UploadQueues.IsDonkeyRatioActive() )
+		{
+			DWORD nDonkeyLimit = UploadQueues.GetDonkeyBandwidth();
 		
-		if ( m_nLimitDonkey < 10240 )
-			m_nLimitDonkey	= min( m_nLimitGeneric, m_nLimitDonkey * 3 / nActiveTransfers );
-		else
-			m_nLimitDonkey = m_nLimitGeneric;
+			if ( nDonkeyLimit < 10240 )
+			{
+				if ( nActiveED2KTransfers > 0 )
+					m_nLimitDonkey = nDonkeyLimit * 3 / nActiveED2KTransfers;
+				else 
+					m_nLimitDonkey = nDonkeyLimit * 3;
+
+				m_nLimitDonkey	= min( m_nLimitGeneric, m_nLimitDonkey );
+			}
+		}
 	}
 	else
 	{
