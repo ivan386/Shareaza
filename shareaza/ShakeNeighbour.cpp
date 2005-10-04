@@ -302,7 +302,7 @@ BOOL CShakeNeighbour::OnRun()
 void CShakeNeighbour::SendMinimalHeaders()
 {
 	// Say what program we are with a line like "User-Agent: Shareaza 1.2.3.4\r\n"
-	CString strHeader = Settings.SmartAgent( Settings.General.UserAgent );
+	CString strHeader = Settings.SmartAgent();
 	if ( strHeader.GetLength() )
 	{
 		strHeader = _T("User-Agent: ") + strHeader + _T("\r\n");
@@ -331,7 +331,7 @@ void CShakeNeighbour::SendMinimalHeaders()
 void CShakeNeighbour::SendPublicHeaders()
 {
 	// Tell the remote we are running Shareza with a header like "User-Agent: Shareaza 2.1.0.97"
-	CString strHeader = Settings.SmartAgent( Settings.General.UserAgent ); // UserAgent is just "."
+	CString strHeader = Settings.SmartAgent();
 	if ( strHeader.GetLength() )
 	{
 		strHeader = _T("User-Agent: ") + strHeader + _T("\r\n");
@@ -626,14 +626,22 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_bShareaza = TRUE;
 		} 
 
-		// If the remote computer is running a program we don't want to talk to
+		// If the remote computer is running a client the user has blocked
 		if ( IsAgentBlocked() )
 		{
 			// Record that we're rejecting this handshake, and set the state to rejected
 			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
 		}
-				
+
+		// If the remote computer is running a client that is blocked for breaking GPL, causing problems, or leeching
+		if ( IsClientBlocked() )
+		{
+			// Record that we're rejecting this handshake, and set the state to rejected
+			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			m_nState = nrsRejected;
+		}
+		
 		// Check if it's an old version of Shareaza
 		m_bObsoleteClient = IsClientObsolete();
 
@@ -646,6 +654,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 	} // The remote computer is telling us its IP address
 	else if (	strHeader.CompareNoCase( _T("X-My-Address") ) == 0 ||
 				strHeader.CompareNoCase( _T("Listen-IP") ) == 0 ||
+				strHeader.CompareNoCase( _T("X-Node") ) == 0 ||
 				strHeader.CompareNoCase( _T("Node") ) == 0 )
 	{
 		// Find the index of the first colon in the text
@@ -960,15 +969,29 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		}
 
 		// If it's a leaf and an old version
-		if ( ( m_nNodeType == ntLeaf ) && ( m_bObsoleteClient ) )
+		if ( m_nNodeType == ntLeaf ) 
 		{
-			// Check our loading. (Old clients consume more resources)
-			if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
+			if ( m_bObsoleteClient ) 
 			{
-				theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
-				SendHostHeaders( _T("GNUTELLA/0.6 503 Old client version, please update. www.shareaza.com") );
-				DelayClose( IDS_HANDSHAKE_SURPLUS );
-				return FALSE;
+				// Check our loading. (Old clients consume more resources)
+				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
+				{
+					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
+					SendHostHeaders( _T("GNUTELLA/0.6 503 Old client version, please update. www.shareaza.com") );
+					DelayClose( IDS_HANDSHAKE_SURPLUS );
+					return FALSE;
+				}
+			}
+			else if ( ! m_bShareaza )
+			{
+				// Check to see if we have plenty of free leaf slots.
+				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )
+				{
+					SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") ); // Send this error code along with some more IP addresses it can try
+					DelayClose( IDS_HANDSHAKE_SURPLUS ); // Close the connection, but not until we've written the buffered outgoing data first
+					return FALSE;
+				}
+
 			}
 		}
 
@@ -1394,23 +1417,83 @@ void CShakeNeighbour::OnHandshakeComplete()
 // Checks the user agent to see if it's an outdated client. (An old Shareaza beta, or something)
 BOOL CShakeNeighbour::IsClientObsolete()
 {
+	if ( m_sUserAgent.IsEmpty() ) return TRUE;
+
+	if ( _tcsistr( m_sUserAgent, _T("Shareaza") ) )
+	{
+		// Shareaza client
+
+		// Check for fakes / version hacks.
+		if (( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||	// Fakes
+			( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) )
+			return TRUE;
+
+		// Check for old version and betas
+		if (( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old versions
+			( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) )
+			return TRUE;
+
+		// Assumed to be reasonably current
+		return FALSE;
+	}
+	else if ( _tcsistr( m_sUserAgent, _T("gnucdna") ) )
+	{
+		// DNA based client
+
+		// Assumed to be reasonably current
+		return FALSE;
+	}
+	else if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) )
+	{
+		// TrustyFiles- assume up to date
+		return FALSE;
+	}
+	else if ( _tcsistr( m_sUserAgent, _T("adagio") ) )
+	{
+		// Adagio- assume up to date
+		return FALSE;
+	}
+	else if ( _tcsistr( m_sUserAgent, _T("eTomi") ) )
+	{
+		// GPL violating rip- Uses outdated code
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShakeNeighbour IsClientBlocked
+
+// Checks the user agent to see if it's a leecher client, GPL breaker, or other trouble-maker
+BOOL CShakeNeighbour::IsClientBlocked()
+{
+	// Unknown client
 	if ( m_sUserAgent.IsEmpty() ) return FALSE;
 
-	if ( ( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// Old Shareazas
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 2.0." ) ) ) ||
+	// Known good clients
+	if ( _tcsistr( m_sUserAgent, _T("gnucdna") ) )		return FALSE;
 
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||	// Fake Shareaza
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) ||
+	if ( _tcsistr( m_sUserAgent, _T("adagio") ) )		return FALSE;
 
-		 ( _tcsistr( m_sUserAgent, _T("K-Lite 2.1"	  ) ) ) ||	// Based on old Shareaza code
-		 ( _tcsistr( m_sUserAgent, _T("SlingerX 2."   ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.0."    ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("eTomi 2.1."    ) ) ) ||
-		 ( _tcsistr( m_sUserAgent, _T("360Share"      ) ) ) )
+	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )		return FALSE;
+	
+	if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) )	return FALSE;
 
-		 return TRUE;
+	// GPL breakers. 
+	// See http://www.gnu.org/copyleft/gpl.html
+	if ( _tcsistr( m_sUserAgent, _T("K-Lite") ) )		return TRUE;
 
+	if ( _tcsistr( m_sUserAgent, _T("SlingerX") ) )		return TRUE;
+
+	if ( _tcsistr( m_sUserAgent, _T("C -3.0.1") ) )		return TRUE;
+
+	if ( _tcsistr( m_sUserAgent, _T("vagaa") ) )		return TRUE;
+
+	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )			return TRUE;
+
+	// Unknown- Assume OK
 	return FALSE;
 }
 

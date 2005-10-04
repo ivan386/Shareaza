@@ -133,6 +133,7 @@ protected:
 	void OnHandshakeComplete();									// Turn this object into one specialized for Gnutella or Gnutella2
 
 	BOOL IsClientObsolete();									// Checks the user agent to see if it's an old client.
+	BOOL IsClientBlocked();										// Checks to see if it's a leecher or non-functional client.
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom
