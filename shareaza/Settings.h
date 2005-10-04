@@ -53,7 +53,6 @@ public:
 		BOOL		RatesInBytes;
 		DWORD		RatesUnit;
 		BOOL		AlwaysOpenURLs;
-		CString		UserAgent;
 		CString		Language;
 		BOOL		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
 	} General;
@@ -94,7 +93,6 @@ public:
 		CString		SafeExecute;
 		CString		PrivateTypes;
 		DWORD		ThumbSize;
-		CString		BitziAgent;
 		CString		BitziWebView;
 		CString		BitziWebSubmit;
 		CString		BitziXML;
@@ -321,6 +319,7 @@ public:
 		DWORD		GetSourcesThrottle;			// Max rate a general GetSources can done
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
+		DWORD		SourceThrottle;				// ED2K source rate limiter
 		DWORD		MetAutoQuery;				// Auto query for a new server list
 		BOOL		LearnNewServers;
 		CString		ServerListURL;
@@ -503,7 +502,7 @@ public:
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
 	void	SaveList(LPCTSTR pszName, CListCtrl* pCtrl);
-	CString	SmartAgent(LPCTSTR pszAgent);
+	CString	SmartAgent();
 	CString	SmartVolume(QWORD nVolume, BOOL bInKB, BOOL bRateInBits = FALSE, BOOL bTruncate = FALSE );
 	QWORD	ParseVolume(LPCTSTR psz, BOOL bSpeedInBits);
 	DWORD	GetOutgoingBandwidth();						//Returns available outgoing bandwidth in KB/s

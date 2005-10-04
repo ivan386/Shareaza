@@ -59,7 +59,6 @@ void CSettings::Setup()
 	Add( _T("Settings.RatesInBytes"), &General.RatesInBytes, FALSE );
 	Add( _T("Settings.RatesUnit"), &General.RatesUnit, 0 );
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
-	Add( _T("Settings.UserAgent"), &General.UserAgent, _T(".") );
 	Add( _T("Settings.Language"), &General.Language, _T("en") );
 	Add( _T("Settings.IgnoreXPsp2"), &General.IgnoreXPsp2, FALSE );
 	
@@ -93,7 +92,6 @@ void CSettings::Setup()
 	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|ace|ape|asf|avi|bmp|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|mp2|mp3|mpa|mpe|mpg|mpeg|ogg|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
 	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|dat|part|partial|getright|pif|lnk|sd|url|") );
 	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
-	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
 	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(SHA1)?detail&ref=shareaza") );
 	Add( _T("Library.BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza") );
 	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1)") );
@@ -282,7 +280,8 @@ void CSettings::Setup()
 	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000 );
 	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
 	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
-	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 1000 );
+	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 500 );
+	Add( _T("eDonkey.SourceThrottle"), &eDonkey.SourceThrottle, 1000 );
 	Add( _T("eDonkey.MetAutoQuery"), &eDonkey.MetAutoQuery, FALSE );
 	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
 	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-good.met") );
@@ -522,11 +521,13 @@ void CSettings::Load()
 	if ( Live.FirstRun ) Search.AdvancedPanel = ! Interface.LowResMode;
 
 	// Reset certain network variables if bandwidth is too low
-	// Set ed2k
+	// Set ed2k and G1
 	if ( GetOutgoingBandwidth() < 2 ) 
 	{
 		eDonkey.EnableToday		= FALSE;
 		eDonkey.EnableAlways	= FALSE;
+		Gnutella1.EnableToday	= FALSE;
+		Gnutella1.EnableAlways	= FALSE;
 	}
 	// Set number of torrents
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
@@ -608,24 +609,17 @@ void CSettings::SmartUpgrade()
 	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 	if ( nVersion < 20 )
 	{
-		//Gnutella.HubForce	= FALSE;
-		
 		Gnutella1.RequeryDelay			= 45*60;
-		
 		Gnutella2.UdpOutResend			= 6000;
 		Gnutella2.UdpOutExpire			= 26000;
-		
 		Library.TigerHeight		= 9;
 		Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&a=(AGENT)&v=Q0.4&ref=shareaza");
-		
 		Downloads.MaxFiles				= max( Downloads.MaxFiles, 8 );
 		Downloads.MaxFileTransfers		= max( Downloads.MaxFileTransfers, 16 );
 		Downloads.AutoExpand			= FALSE;
-		
 		Uploads.SharePartials			= TRUE;
 		Uploads.MaxPerHost				= 2;
 		Uploads.ShareTiger				= TRUE;
-		
 		Replace( Library.PrivateTypes, _T("|nfo|"), _T("|") );
 		Replace( Library.SafeExecute, _T("|."), _T("|") );
 	}
@@ -634,26 +628,21 @@ void CSettings::SmartUpgrade()
 	{
 		Library.ThumbSize				= 96;
 		Library.SourceExpire			= 86400;
-		
 		Gnutella1.TranslateTTL			= 2;
 	}
 	
 	if ( nVersion < 24 )
 	{
 		General.CloseMode				= 0;
-		
 		Connection.TimeoutConnect		= 16000;
 		Connection.TimeoutHandshake		= 45000;
-		
 		Downloads.RetryDelay			= 10*60000;
-		
 		Uploads.FilterMask				= 0xFFFFFFFD;
 	}
 	
 	if ( nVersion < 25 )
 	{
 		Connection.TimeoutTraffic		= 140000;
-		
 		Gnutella2.NumHubs				= 2;
 		Gnutella2.NumLeafs				= 300;
 		Gnutella2.NumPeers				= 6;
@@ -667,8 +656,7 @@ void CSettings::SmartUpgrade()
 	
 	if ( nVersion < 28 )
 	{
-		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
-		
+		Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on	
 		BitTorrent.Endgame		= TRUE;		// Endgame on
 	}
 
@@ -676,28 +664,23 @@ void CSettings::SmartUpgrade()
 	{
 		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case  
 		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
-		
 		Gnutella.MaxResults		= 100;		// No longer includes ed2k max files
-		
 		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
 	}
 
 	if ( nVersion < 30 )
 	{
 		BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented) 
-		
 	}
 
 	if ( nVersion < 31 )
 	{
-		Downloads.SearchPeriod			= 120000;
-		
-		Gnutella1.MaximumTTL			= 10;
-		
-		Gnutella2.QueryGlobalThrottle	= 125;
-		
+		Downloads.SearchPeriod	= 120000;
+		Gnutella1.MaximumTTL	= 10;
+		Gnutella2.QueryGlobalThrottle = 125;
 		Uploads.QueuePollMin	= 45000;	// Lower values for re-ask times- a dynamic multiplier
-		Uploads.QueuePollMax	= 120000;	//  is now applied based on Q# (from 1x to 5x)
+		Uploads.QueuePollMax	= 120000;	// Is now applied based on Q# (from 1x to 5x)
+		eDonkey.PacketThrottle	= 500;		// Second throttle added for finer control
 	}
 
 }
@@ -925,20 +908,14 @@ void CSettings::SetStartup(BOOL bStartup)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSettings configurable user agent
+// CSettings configurable user agent (Client Name + Version)
 
-CString CSettings::SmartAgent(LPCTSTR pszAgent)
+CString CSettings::SmartAgent()
 {
-	CString strAgent;
-
-	if ( pszAgent && *pszAgent )
-	{
-		if ( _tcscmp( pszAgent, _T(".") ) == 0 )
-			strAgent = _T("Shareaza ") + theApp.m_sVersion;
-		else
-			strAgent = pszAgent;
-	}				
-
+	CString strAgent = _T( CLIENT_NAME ); 
+	strAgent += _T(" ");
+	strAgent += theApp.m_sVersion;
+		
 	return strAgent;
 }
 
