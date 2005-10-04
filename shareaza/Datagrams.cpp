@@ -1316,8 +1316,10 @@ BOOL CDatagrams::OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( bWantREXT )
 	{
-		vendorCode = "RAZA";
-		currentVersion = "Shareaza " + theApp.m_sVersion;
+		vendorCode = VENDOR_CODE;
+		currentVersion = CLIENT_NAME;
+		currentVersion += " ";
+		currentVersion += theApp.m_sVersion;
 	}
 
 	pPacket->WritePacket(
