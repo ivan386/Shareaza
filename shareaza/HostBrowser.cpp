@@ -318,7 +318,7 @@ void CHostBrowser::SendRequest()
 		m_pOutput->Print( Settings.Downloads.RequestHTTP11 ? _T("GET / HTTP/1.1\r\n") : _T("GET / HTTP/1.0\r\n") );
 	}
 
-	CString strHeader = Settings.SmartAgent( Settings.General.UserAgent );
+	CString strHeader = Settings.SmartAgent();
 
 	if ( strHeader.GetLength() )
 	{

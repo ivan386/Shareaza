@@ -84,7 +84,7 @@ BOOL CBitziDownloader::Start(CBitziDownloadDlg* pDlg)
 {
 	if ( m_hInternet != NULL ) return FALSE;
 
-	CString strAgent = Settings.SmartAgent( Settings.Library.BitziAgent );
+	CString strAgent = Settings.SmartAgent();
 
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( ! m_hInternet ) return FALSE;

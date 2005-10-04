@@ -108,7 +108,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	
 	if ( Settings.BitTorrent.StandardPeerID )
 	{
-		CString strUserAgent = Settings.SmartAgent( Settings.General.UserAgent );
+		CString strUserAgent = Settings.SmartAgent();
 		m_pRequest.SetUserAgent( strUserAgent );
 	}
 

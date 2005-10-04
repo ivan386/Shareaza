@@ -215,7 +215,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	Replace( strURL, _T("(NAME)"), CConnection::URLEncode( pFile->m_sName ) );
 	Replace( strURL, _T("(SHA1)"), CSHA::HashToString( &pFile->m_pSHA1 ) );
 	Replace( strURL, _T("(TTH)"), CTigerNode::HashToString( &pFile->m_pTiger ) );
-	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent( Settings.Library.BitziAgent ) ) );
+	Replace( strURL, _T("(AGENT)"), CConnection::URLEncode( Settings.SmartAgent() ) );
 
 	str.Format( _T("%I64i"), pFile->GetSize() );
 	Replace( strURL, _T("(SIZE)"), str );

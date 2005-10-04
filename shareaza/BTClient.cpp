@@ -768,7 +768,7 @@ void CBTClient::SendBeHandshake()
 
 	
 	pRoot.Add( "source-exchange" )->SetInt( 2 );
-	pRoot.Add( "user-agent" )->SetString( Settings.SmartAgent( Settings.General.UserAgent ) );
+	pRoot.Add( "user-agent" )->SetString( Settings.SmartAgent() );
 	
 	CBuffer pOutput;
 	pRoot.Encode( &pOutput );

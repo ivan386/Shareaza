@@ -101,7 +101,7 @@ void CDonkeyServersDlg::OnOK()
 
 	Settings.eDonkey.ServerListURL = m_sURL;
 
-	CString strAgent = Settings.SmartAgent( Settings.General.UserAgent );
+	CString strAgent = Settings.SmartAgent();
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( m_hInternet == NULL ) return;
 

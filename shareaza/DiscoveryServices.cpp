@@ -1,8 +1,8 @@
 //
 // DiscoveryServices.cpp
 //
-//	Date:			"$Date: 2005/07/06 17:46:31 $"
-//	Revision:		"$Revision: 1.37 $"
+//	Date:			"$Date: 2005/10/04 02:44:01 $"
+//	Revision:		"$Revision: 1.38 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -974,7 +974,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	
 	if ( m_pWebCache == NULL ) return FALSE;
 	
-	CString strAgent = Settings.SmartAgent( Settings.General.UserAgent );
+	CString strAgent = Settings.SmartAgent();
 	
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( ! m_hInternet ) return FALSE;

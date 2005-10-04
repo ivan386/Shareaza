@@ -1,8 +1,8 @@
 //
 // ChatSession.cpp
 //
-//	Date:			"$Date: 2005/09/26 00:09:36 $"
-//	Revision:		"$Revision: 1.20 $"
+//	Date:			"$Date: 2005/10/04 02:42:09 $"
+//	Revision:		"$Revision: 1.21 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -283,7 +283,7 @@ BOOL CChatSession::OnConnected()
 		m_pOutput->Print( "CHAT CONNECT/0.2\r\n" );
 		m_pOutput->Print( "Accept: text/plain,application/x-gnutella2\r\n" );
 		m_pOutput->Print( "User-Agent: " );
-		m_pOutput->Print( Settings.SmartAgent( Settings.General.UserAgent ) );
+		m_pOutput->Print( Settings.SmartAgent() );
 		m_pOutput->Print( "\r\n" );
 		if ( m_bInitiated ) SendMyAddress();
 		m_pOutput->Print( "\r\n" );
@@ -485,7 +485,7 @@ BOOL CChatSession::OnHeadersComplete()
 		}
 		
 		m_pOutput->Print( "User-Agent: " );
-		m_pOutput->Print( Settings.SmartAgent( Settings.General.UserAgent ) );
+		m_pOutput->Print( Settings.SmartAgent() );
 		m_pOutput->Print( "\r\n" );
 		m_pOutput->Print( "\r\n" );
 		
