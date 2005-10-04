@@ -340,7 +340,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		m_pOutput->Print( "Accept-Encoding: backwards\r\n" );
 	}
 	
-	strLine = Settings.SmartAgent( Settings.General.UserAgent );
+	strLine = Settings.SmartAgent();
 	
 	if ( strLine.GetLength() )
 	{
@@ -626,6 +626,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( _tcsistr( m_sUserAgent, _T("shareaza") ) != NULL ) m_pSource->SetGnutella( 3 );
 		if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) != NULL ) m_pSource->SetGnutella( 3 );
 		if ( _tcsistr( m_sUserAgent, _T("gnucdna") ) != NULL ) m_pSource->SetGnutella( 3 );
+		if ( _tcsistr( m_sUserAgent, _T("vagaa") ) != NULL ) m_pSource->SetGnutella( 3 );
+		if ( _tcsistr( m_sUserAgent, _T("mxie") ) != NULL ) m_pSource->SetGnutella( 3 );
 		if ( _tcsistr( m_sUserAgent, _T("adagio") ) != NULL ) m_pSource->SetGnutella( 2 );
 	}
 	else if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
