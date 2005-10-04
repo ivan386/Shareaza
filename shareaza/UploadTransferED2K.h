@@ -44,6 +44,7 @@ public:
 	int				m_nRanking;					// The last queue position the remote client was sent.
 	DWORD			m_tRankingSent;				// The time a queue ranking packet was last sent.
 	DWORD			m_tRankingCheck;			// The time the queue position was last checked.
+	DWORD			m_tLastRun;					// The time the transfer was last run
 private:
     FF::SimpleFragmentQueue m_oRequested;
     FF::SimpleFragmentQueue m_oServed;

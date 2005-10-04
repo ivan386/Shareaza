@@ -65,6 +65,7 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( 
 	
 	m_tRankingSent	= 0;
 	m_tRankingCheck	= 0;
+	m_tLastRun		= 0;
 	
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 }
@@ -180,6 +181,11 @@ BOOL CUploadTransferED2K::OnRun()
 
 BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 {
+	// Limit per-source packet rate
+	if ( tNow - m_tLastRun < Settings.eDonkey.SourceThrottle ) return FALSE;
+	m_tLastRun = tNow;
+
+
 	if ( m_nState == upsQueued )
 	{
 		if ( m_pClient->IsOnline() == FALSE && tNow > m_tRequest &&

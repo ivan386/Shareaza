@@ -167,7 +167,8 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.QueryFileThrottle, 60*1000, 30, 120, _T(" m") );
 	AddSetting( &Settings.eDonkey.GetSourcesThrottle, 60*60*1000, 1, 24, _T(" h") );
 	AddSetting( &Settings.eDonkey.QueueRankThrottle, 1000, 60, 600, _T(" s") );
-	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 500, 5000, _T(" ms") );
+	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 250, 5000, _T(" ms") );
+	AddSetting( &Settings.eDonkey.SourceThrottle, 1, 250, 5000, _T(" ms") );
 	AddSetting( &Settings.eDonkey.LearnNewServers, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.RequestPipe, 1, 1, 10 );
 	AddSetting( &Settings.eDonkey.RequestSize, 1024, 10, 1000, _T(" KB") );
