@@ -393,9 +393,38 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( IsNetworkDisabled() )
 	{
-		SendResponse( IDR_HTML_DISABLED );
+		// Network isn't active- Check if we should send 404 or 403
+
+		if ( StartsWith( m_sRequest, _T("/uri-res/N2R?urn:") ) )
+		{
+			LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
+		
+			CSingleLock oLock( &Library.m_pSection );
+
+			if ( oLock.Lock( 50 ) )
+			{
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+				{
+					if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, TRUE ) )
+					{
+						// Have the file, but the network is disabled.
+						SendResponse( IDR_HTML_DISABLED );
+						theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+						Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
+						Remove( FALSE );
+						return FALSE;
+					}
+				}
+			}
+			// Network is disabled, but we don't have the file anyway.
+			SendResponse( IDR_HTML_FILENOTFOUND );
+		}
+		else
+		{
+			SendResponse( IDR_HTML_DISABLED );
+		}
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
+		Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
 		Remove( FALSE );
 		return FALSE;
 	}
@@ -869,7 +898,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 
 void CUploadTransferHTTP::SendDefaultHeaders()
 {
-	CString strLine = Settings.SmartAgent( Settings.General.UserAgent );
+	CString strLine = Settings.SmartAgent();
 	
 	if ( strLine.GetLength() )
 	{
