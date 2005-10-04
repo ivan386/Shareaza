@@ -181,7 +181,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
 	AddSetting( &Settings.eDonkey.Endgame, 1, 0, 1 );
 	
-	AddSetting( &Settings.BitTorrent.AutoSeed, 1, 0, 1 );
 	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );
 	AddSetting( &Settings.BitTorrent.MaxTrackerRetry, 1, 1, 8 );
 	AddSetting( &Settings.BitTorrent.TorrentCodePage, 1, 0, 9999999 );
@@ -195,7 +194,10 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.BitTorrent.RandomPeriod, 1000, 1, 60*5, _T(" s") );
 	AddSetting( &Settings.BitTorrent.SourceExchangePeriod, 1, 1, 60*5, _T(" m") );
 	AddSetting( &Settings.BitTorrent.UploadCount, 1, 2, 16 );
+	AddSetting( &Settings.BitTorrent.AutoSeed, 1, 0, 1 );
+	AddSetting( &Settings.BitTorrent.BandwidthPercentage, 1, 50, 95, _T("%") );
 	AddSetting( &Settings.BitTorrent.TrackerKey, 1, 0, 1 );
+	AddSetting( &Settings.BitTorrent.StandardPeerID, 1, 0, 1 );
 	
 	AddSetting( &Settings.Discovery.AccessThrottle, 60, 1, 180, _T(" m") );
 	AddSetting( &Settings.Discovery.Lowpoint, 1, 1, 512 );
