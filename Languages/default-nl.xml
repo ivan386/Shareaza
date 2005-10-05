@@ -3309,7 +3309,7 @@
 
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 		<control caption="_Opties:"/>
-		<control caption="Deel niewe gedeeltelijke downloads"/>
+		<control caption="Deel gedeeltelijke downloads"/>
 		<control caption="Limiteer Delen in hub modus"/>
 		<control caption="Deel nieuwe voorvertoningen"/>
 		<control caption="Limiet per gastheer:"/>
