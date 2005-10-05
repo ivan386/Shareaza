@@ -118,11 +118,11 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_nG2Leafs			= Settings.Gnutella2.NumLeafs;
 	m_nG2Peers			= Settings.Gnutella2.NumPeers;
 	
-	m_wndG1Peers.SetRange( 0, 128 );
+	m_wndG1Peers.SetRange( 0, 64 );
 	m_wndG1Leafs.SetRange( 0, 1024 );
 	m_wndG1Hubs.SetRange( 0, 2 );
 	
-	m_wndG2Peers.SetRange( 0, 128 );
+	m_wndG2Peers.SetRange( 0, 64 );
 	m_wndG2Leafs.SetRange( 0, 1024 );
 	m_wndG2Hubs.SetRange( 0, 3 );
 	
@@ -228,12 +228,12 @@ void CGnutellaSettingsPage::OnOK()
 {
 	UpdateData();
 
-	//Check if G2 hub mode is forced now, and wasn't forced before.
+	// Check if G2 hub mode is forced now, and wasn't forced before.
 	if ( ( m_wndG2ClientMode.GetCurSel() == MODE_HUB ) && ( Settings.Gnutella2.ClientMode != MODE_HUB ) )	
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_FORCE_HUB );
-		//Warn the user, give them a chance to reset it.
+		// Warn the user, give them a chance to reset it.
 		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
 		{
 			m_wndG2ClientMode.SetCurSel( MODE_AUTO );
@@ -247,18 +247,26 @@ void CGnutellaSettingsPage::OnOK()
 	{
 		m_bG1Today = m_bG1Always = FALSE;
 	}
+
+	// Verify good setting to prevent user killing their connection
+	m_nG1Hubs	= min( m_nG1Hubs, 2 );
+	m_nG1Leafs	= min( m_nG1Leafs, 1024 );
+	m_nG1Peers	= min( m_nG1Peers, 64 );
+	m_nG2Hubs	= min( m_nG2Hubs, 3 );
+	m_nG2Leafs	= min( m_nG2Leafs, 1024 );
+	m_nG2Peers	= min( m_nG2Peers, 64 );
 	
-	//Load values into the settings variables
+	// Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today;
 	Settings.Gnutella1.EnableToday		= m_bG1Today || m_bG1Always;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always;
 	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub;
 	Settings.Gnutella.DeflateLeaf2Hub	= m_bDeflateLeaf2Hub;
 	Settings.Gnutella.DeflateHub2Leaf	= m_bDeflateHub2Leaf;
-	Settings.Gnutella1.NumHubs			= min( m_nG1Hubs, 2 );
+	Settings.Gnutella1.NumHubs			= m_nG1Hubs;
 	Settings.Gnutella1.NumLeafs			= m_nG1Leafs;
 	Settings.Gnutella1.NumPeers			= m_nG1Peers;
-	Settings.Gnutella2.NumHubs			= min( m_nG2Hubs, 3 );
+	Settings.Gnutella2.NumHubs			= m_nG2Hubs;
 	Settings.Gnutella2.NumLeafs			= m_nG2Leafs;
 	Settings.Gnutella2.NumPeers			= m_nG2Peers;
 	
@@ -279,6 +287,9 @@ void CGnutellaSettingsPage::OnOK()
 		Settings.Gnutella2.NumLeafs		= max( Settings.Gnutella2.NumLeafs, 50 );
 		Settings.Gnutella2.NumPeers		= max( Settings.Gnutella2.NumPeers, 4 );
 	}
+
+	// Update display in case settings were changed
+	UpdateData( FALSE );
 
 	CSettingsPage::OnOK();
 }
