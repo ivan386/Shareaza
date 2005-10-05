@@ -227,10 +227,10 @@ static inline bool IsWord(LPCTSTR pszString, int nStart, int nLength)
 
 // ed2k client ID number.
 // 0 = eMule, 1 - cDonkey, 4 = Shareaza mod/fork/etc, 28 = Raza.
-#define ED2K_CLIENT_ID		0x28
+#define ED2K_CLIENT_ID		4
 
 // 2 Character BT peer-id code
-// SZ = Raza
+// SZ = Raza, AZ = Azerus, etc
 #define BT_ID1				'S'
-#define BT_ID2				'Z'
+#define BT_ID2				'B'
 

@@ -100,7 +100,7 @@ BOOL CShareazaApp::InitInstance()
 
 	// **********************
 
-/*
+
 	// Beta expiry. Remember to re-compile to update the time, and remove this 
 	// section for final releases and public betas.
 	COleDateTime tCompileTime; 
@@ -114,7 +114,7 @@ BOOL CShareazaApp::InitInstance()
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
-*/
+
 
 /*
 	// Alpha warning nag message. Remember to remove this section for final releases and public betas.
