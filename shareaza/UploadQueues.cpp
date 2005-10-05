@@ -315,7 +315,38 @@ BOOL CUploadQueues::IsTransferAvailable()
 	return FALSE;
 }
 
-DWORD CUploadQueues::GetDonkeyBandwidth()
+DWORD CUploadQueues::GetMinimumDonkeyBandwidth()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	// Check ED2K ratio limiter
+	DWORD nTotal = Settings.Connection.OutSpeed * 128;
+	DWORD nLimit = Settings.Bandwidth.Uploads;
+	DWORD nDonkeyPoints = 0;
+	DWORD nTotalPoints = 0;
+	DWORD nBandwidth = 0;
+
+	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CUploadQueue* pQueue = GetNext( pos );
+
+		nTotalPoints += pQueue->m_nBandwidthPoints;
+
+		if ( pQueue->m_nProtocols == 0 || ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
+			nDonkeyPoints += pQueue->m_nBandwidthPoints;
+	}
+
+	if ( nTotalPoints < 1 ) nTotalPoints = 1;
+
+
+	nBandwidth = nLimit * nDonkeyPoints / nTotalPoints;
+
+	return nBandwidth;
+}
+
+DWORD CUploadQueues::GetCurrentDonkeyBandwidth()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	DWORD nBandwidth = 0;
@@ -880,35 +911,7 @@ void CUploadQueues::Validate()
 		}
 	}
 
-	// Check ED2K ratio limiter
-	DWORD nTotal = Settings.Connection.OutSpeed * 128;
-	DWORD nLimit = Settings.Bandwidth.Uploads;
-	DWORD nDonkeyPoints = 0;
-	DWORD nTotalPoints = 0;
-	DWORD nBandwidth = 0;
-
-	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
-	m_bDonkeyLimited = FALSE;
-
-	CSingleLock pLock( &m_pSection, TRUE );
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CUploadQueue* pQueue = GetNext( pos );
-
-		nTotalPoints += pQueue->m_nBandwidthPoints;
-
-		if ( pQueue->m_nProtocols == 0 || ( pQueue->m_nProtocols & ( 1 << PROTOCOL_ED2K ) ) != 0 )
-			nDonkeyPoints += pQueue->m_nBandwidthPoints;
-	}
-	pLock.Unlock();
-	if ( nTotalPoints < 1 ) nTotalPoints = 1;
-	
-	// Limit if torrents are active
-	//if ( Uploads.m_nTorrentSpeed > 0 ) nLimit = ( nLimit * ( 100 - Settings.BitTorrent.BandwidthPercentage ) ) / 100;
-
-	nBandwidth = nLimit * nDonkeyPoints / nTotalPoints;
-
-	if ( nBandwidth < 10240 )
+	if ( GetMinimumDonkeyBandwidth() < 10240 )
 	{
 		m_bDonkeyLimited = TRUE;
 	}

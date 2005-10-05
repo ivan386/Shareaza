@@ -65,7 +65,8 @@ public:
 	int		GetQueueRemaining();
 	int		GetTransferCount();
 	BOOL	IsTransferAvailable();
-	DWORD	GetDonkeyBandwidth();
+	DWORD	GetMinimumDonkeyBandwidth();
+	DWORD	GetCurrentDonkeyBandwidth();
 	BOOL	CanUpload(PROTOCOLID nProtocol, CLibraryFile *pFile, BOOL bCanQueue = FALSE );	// Can this file be uploaded with the current queue setup?
 	int		QueueRank(PROTOCOLID nProtocol, CLibraryFile *pFile );	// What queue position would this file be in?
 

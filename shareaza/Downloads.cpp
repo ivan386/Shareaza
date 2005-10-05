@@ -869,11 +869,13 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 
 void CDownloads::OnRun()
 {
-	DWORD nActiveDownloads		= 0;
-	DWORD nActiveTransfers		= 0;
-	DWORD nTotalTransfers		= 0;
-	DWORD nTotalBandwidth		= 0;
-	DWORD nActiveED2KTransfers	= 0;
+	DWORD nActiveDownloads		= 0;	// Number of downloads that are doing something
+	DWORD nActiveTransfers		= 0;	// Number of transfers that are in the downloading state
+	DWORD nTotalTransfers		= 0;	// Total transfers
+	DWORD nTotalBandwidth		= 0;	// Total bandwidth in use
+	DWORD nRunningTransfers		= 0;	// Number of transfers that are downloading and transfering data
+	DWORD nRunningED2KTransfers	= 0;	// Number of ed2k transfers that are downloading and transfering data
+	DWORD nTotalED2KBandwidth	= 0;	// Total ed2k bandwidth in use.
 
 	{
 		CTransfers::Lock oLock;
@@ -907,9 +909,16 @@ void CDownloads::OnRun()
 				
 				if ( pTransfer->m_nState == dtsDownloading )
 				{
-					nTotalBandwidth += pTransfer->GetMeasuredSpeed();
+					DWORD nSpeed = pTransfer->GetMeasuredSpeed();
+					nTotalBandwidth += nSpeed;
 					nActiveTransfers ++;
-					if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) nActiveED2KTransfers ++;
+					if ( nSpeed > 32 ) nRunningTransfers ++; 
+
+					if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) 
+					{
+						nTotalED2KBandwidth += nSpeed;
+						if ( nSpeed > 32 ) nRunningED2KTransfers ++;
+					}
 				}
 			}
 			
@@ -927,23 +936,35 @@ void CDownloads::OnRun()
 	m_bAllowMoreDownloads = nActiveDownloads < (DWORD)Settings.Downloads.MaxFiles;
 	m_bAllowMoreTransfers = nTotalTransfers < (DWORD)Settings.Downloads.MaxTransfers;
 	
-	if ( nActiveTransfers > 0 )
+	// Transfers that are not managing at least 32 bytes/sec are not counted when averaging limits
+	if ( nRunningTransfers > 0 )
 	{
-		m_nLimitGeneric	= Settings.Bandwidth.Downloads / nActiveTransfers;
+		m_nLimitGeneric	= Settings.Bandwidth.Downloads / nRunningTransfers;
 		m_nLimitDonkey = m_nLimitGeneric;
-
 		if ( UploadQueues.IsDonkeyRatioActive() )
 		{
-			DWORD nDonkeyLimit = UploadQueues.GetDonkeyBandwidth();
+			// Use either the minimum we have reserved, or the current upload allocation, whichever is greater.
+			DWORD nDonkeyLimit = max( UploadQueues.GetMinimumDonkeyBandwidth(), UploadQueues.GetCurrentDonkeyBandwidth() );
 		
 			if ( nDonkeyLimit < 10240 )
 			{
-				if ( nActiveED2KTransfers > 0 )
-					m_nLimitDonkey = nDonkeyLimit * 3 / nActiveED2KTransfers;
-				else 
-					m_nLimitDonkey = nDonkeyLimit * 3;
+				// ED2K 3:1 ratio if you aren't uploading at 10KB/s
+				nDonkeyLimit *= 3;	
 
-				m_nLimitDonkey	= min( m_nLimitGeneric, m_nLimitDonkey );
+				// Because this is a per-source limit, we should check overall usage as well.
+				if ( nTotalED2KBandwidth > ( nDonkeyLimit / 2 ) )
+				{
+					// We're getting close to the ed2k ratio, so we need to limit some sources.
+
+					if ( nRunningED2KTransfers > 0 )
+						m_nLimitDonkey = nDonkeyLimit / nRunningED2KTransfers;
+					else 
+						m_nLimitDonkey = nDonkeyLimit;
+
+				}
+
+				// Make sure we have not set the ed2k limit higher than the general limit
+				if ( m_nLimitGeneric ) m_nLimitDonkey = min( m_nLimitGeneric, m_nLimitDonkey );
 			}
 		}
 	}
