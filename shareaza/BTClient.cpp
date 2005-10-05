@@ -581,6 +581,10 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("Swarmscope");
 		}
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'B' )
+		{	
+			m_sUserAgent = _T("SBeta");
+		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )
 		{	
 			//m_sUserAgent = _T("Shareaza");
