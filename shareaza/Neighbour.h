@@ -105,6 +105,7 @@ public:
 	BOOL    m_bGGEP;
 	DWORD   m_tLastQuery;		// The time we last got a query packet, recorded as the number of seconds since 1970
 	BOOL    m_bObsoleteClient;	// Is the remote client running an 'old' version of software. (An old beta, etc)
+	BOOL    m_bBadClient;		// Is the remote client running a 'bad' client- GPL rip, buggy, etc. (not banned, though)
 
 // Attributes: Statistics
 public:

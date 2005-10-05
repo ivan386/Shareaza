@@ -79,7 +79,8 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol)
 	m_bPongCaching  = FALSE;
 	m_bVendorMsg    = FALSE;  // The remote computer hasn't told us it supports the vendor-specific messages yet
 	m_bGGEP         = FALSE;  // The remote computer hasn't told us it supports the GGEP block yet
-	m_bObsoleteClient= FALSE;
+	m_bObsoleteClient= FALSE; //
+	m_bBadClient	= FALSE;  //
 
 	// Start out time variables as 0
 	m_tLastQuery  = 0; // We'll set these to the current tick or seconds count when we get a query or packet
