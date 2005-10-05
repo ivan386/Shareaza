@@ -201,15 +201,9 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const SHA1* pSHA1) const
 			{
 				nCount++;
 
-				if ( pUpload->m_bSHA1 && pSHA1 )
-				{
-					if ( pUpload->m_pSHA1 == *pSHA1 ) 
-					{
-						theApp.Message( MSG_SYSTEM, _T("******************************Duplicate request from %s (%s)"), pUpload->m_sAddress, pUpload->m_sUserAgent );
-						Beep(500, 200);
-						return FALSE;
-					}
-				}
+				// If we're already uploading this file to this client
+				if ( ( pUpload->m_bSHA1 ) && ( pSHA1 ) && ( pUpload->m_pSHA1 == *pSHA1 ) )
+					return FALSE;
 			}
 		}
 	}

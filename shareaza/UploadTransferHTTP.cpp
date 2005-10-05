@@ -758,6 +758,8 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 
 BOOL CUploadTransferHTTP::QueueRequest()
 {
+	SHA1* pSHA1 = NULL;
+
 	if ( m_bHead ) return OpenFileSendHeaders();
 	
 	AllocateBaseFile();
@@ -775,8 +777,13 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		if ( pQueue ) pQueue->Dequeue( this );
 	}
 
+	if ( m_bSHA1 )
+	{
+		pSHA1 = &m_pSHA1;
+	}
 
-	if ( Uploads.AllowMoreTo( &m_pHost.sin_addr ) )
+	
+	if ( Uploads.CanUploadFileTo( &m_pHost.sin_addr, pSHA1 ) )	//if ( Uploads.AllowMoreTo( &m_pHost.sin_addr ) )
 	{
 		if ( ( nPosition = UploadQueues.GetPosition( this, TRUE ) ) >= 0 )
 		{
