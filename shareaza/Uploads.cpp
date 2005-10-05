@@ -35,6 +35,7 @@
 #include "Neighbours.h"
 #include "Statistics.h"
 #include "Remote.h"
+#include "SHA.h"
 
 #include "WndMain.h"
 #include "WndMedia.h"
@@ -183,6 +184,37 @@ BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 	}
 	
 	return ( nCount <= Settings.Uploads.MaxPerHost );
+}
+
+BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const SHA1* pSHA1) const
+{
+	int nCount = 0;
+	
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CUploadTransfer* pUpload = GetNext( pos );
+		
+		if ( pUpload->m_nState == upsUploading ||
+			 pUpload->m_nState == upsQueued )
+		{
+			if ( pUpload->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
+			{
+				nCount++;
+
+				if ( pUpload->m_bSHA1 && pSHA1 )
+				{
+					if ( pUpload->m_pSHA1 == *pSHA1 ) 
+					{
+						theApp.Message( MSG_SYSTEM, _T("******************************Duplicate request from %s (%s)"), pUpload->m_sAddress, pUpload->m_sUserAgent );
+						Beep(500, 200);
+						return FALSE;
+					}
+				}
+			}
+		}
+	}
+	
+	return ( nCount < Settings.Uploads.MaxPerHost );
 }
 
 BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
