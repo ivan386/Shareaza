@@ -174,7 +174,7 @@ BOOL CEDClient::Connect()
 		// If we're really overloaded, we may have to drop some queued downloads
 		if ( EDClients.IsOverloaded() ) 
 		{
-			theApp.Message( MSG_ERROR, _T("**** ED2K Queued download was dropped due to connection overloading") );
+			theApp.Message( MSG_ERROR, _T("ED2K Queued download was dropped due to connection overloading") );
 			return FALSE;
 		}
 	}
@@ -236,8 +236,47 @@ void CEDClient::Merge(CEDClient* pClient)
 		pClient->m_pUpload = NULL;
 	}
 
-	if ( ! m_bOpenChat ) m_bOpenChat = pClient->m_bOpenChat;
+	// Make sure connection stuff is copied over
+	if ( ( pClient->m_mInput.pLimit = &Downloads.m_nLimitDonkey ) ||
+		 ( m_mInput.pLimit = &Downloads.m_nLimitDonkey ) )
+	{
+		m_mInput.pLimit = &Downloads.m_nLimitDonkey;
+	}
+	else
+	{
+		m_mInput.pLimit = &Settings.Bandwidth.Request;
+	}
 
+	if ( ( pClient->m_mOutput.pLimit != &Settings.Bandwidth.Request ) &&
+		 ( pClient->m_mOutput.pLimit != NULL ) )
+	{
+		m_mOutput.pLimit = pClient->m_mOutput.pLimit;
+	}
+	else if ( m_mOutput.pLimit == NULL )
+	{
+		m_mOutput.pLimit = &Settings.Bandwidth.Request;
+	}
+
+	// Make sure chat/comments values are carried over
+	if ( ! m_bOpenChat )		m_bOpenChat = pClient->m_bOpenChat;
+	if ( ! m_bCommentSent )		m_bOpenChat = pClient->m_bCommentSent;
+
+	// Copy client capabilities. (This should not be necessary)
+	if ( ! m_nEmVersion )		m_nEmVersion = pClient->m_nEmVersion;
+	if ( ! m_nEmCompatible )	m_nEmCompatible = pClient->m_nEmCompatible;
+	if ( ! m_nSoftwareVersion )	m_nSoftwareVersion = pClient->m_nSoftwareVersion;
+	if ( ! m_bEmAICH )			m_bEmAICH = pClient->m_bEmAICH;
+	if ( ! m_bEmUnicode )		m_bEmUnicode = pClient->m_bEmUnicode;
+	if ( ! m_bEmUDPVersion )	m_bEmUDPVersion = pClient->m_bEmUDPVersion;
+	if ( ! m_bEmDeflate )		m_bEmDeflate = pClient->m_bEmDeflate;
+	if ( ! m_bEmSecureID )		m_bEmSecureID = pClient->m_bEmSecureID;	
+	if ( ! m_bEmSources )		m_bEmSources = pClient->m_bEmSources;
+	if ( ! m_bEmRequest )		m_bEmRequest = pClient->m_bEmRequest;	
+	if ( ! m_bEmComments )		m_bEmComments = pClient->m_bEmComments;
+	if ( ! m_bEmPeerCache )		m_bEmPeerCache = pClient->m_bEmPeerCache;
+	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
+	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;	
+	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
 }
 
 //////////////////////////////////////////////////////////////////////
