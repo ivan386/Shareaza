@@ -4,6 +4,10 @@
 #include "resource.h"       // main symbols
 #include "globals.h"
 #include "DocumentReader.h"
+#include <string>
+#include "..\unzip\Unzip.h"
+
+using namespace std;
 
 // CDocReader
 
@@ -168,6 +172,14 @@ public:
 	static LPCWSTR	uriDocument;
 	static LPCWSTR	uriSpreadsheet;
 	static LPCWSTR	uriPresentation;
+	static LPCWSTR	msWordExt;
+	static LPCWSTR	msExcelExt;
+	static LPCWSTR	msPPointExt;
+	static LPCWSTR	msProjectExt;
+	static LPCWSTR	msVisioExt;
+	static LPCWSTR	ooWriterExt;
+	static LPCWSTR	ooCalcExt;
+	static LPCWSTR	ooImpressExt;
 
 	// ILibraryBuilderPlugin Methods
 public:
@@ -183,13 +195,21 @@ public:
 	STDMETHOD(SaveToMemory)(SAFEARRAY** ppMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 
-protected:
+private:
+	STDMETHODIMP ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
+	STDMETHODIMP ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
+	STDMETHODIMP GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
+	STDMETHODIMP GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
+	CComBSTR GetMetadataXML(unzFile pFile);
+
 	void Initialize(BOOL bOnlyThumb);
 	HBITMAP GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);
 	HBITMAP GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, 
 		WORD wBitsPerSample, BITMAPINFO **ppBI);
-	BOOL ConvertToDFB(HBITMAP& hBitmap);
+public:
+	LPWSTR GetDocumentFormat(LPCWSTR pszExt);
+	LPWSTR GetSchema(BSTR sFile, LPCWSTR pszExt);
 
 	inline int CalculateDotsForHimetric(int nResolution, int nHimetricUnits)
 	{
@@ -198,3 +218,4 @@ protected:
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DocReader), CDocReader)
+const CLSID CLSID_PNGReader = { 0xD427C22F, 0x23FB, 0x4E51, { 0xA8, 0xB8, 0x70, 0xF2, 0x03, 0x6E, 0xD3, 0xBA } };

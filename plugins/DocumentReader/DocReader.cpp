@@ -3,12 +3,23 @@
 #include "stdafx.h"
 #include "DocReader.h"
 #include "Palette.h"
-#include <string>
+#include "zlib.h"
+#include "..\unzip\iowin32.h"
 
-LPCWSTR	CDocReader::uriBook		= L"http://www.limewire.com/schemas/book.xsd";
-LPCWSTR	CDocReader::uriDocument	 = L"http://www.shareaza.com/schemas/wordProcessing.xsd";
-LPCWSTR	CDocReader::uriSpreadsheet	 = L"http://www.shareaza.com/schemas/spreadsheet.xsd";
-LPCWSTR CDocReader::uriPresentation = L"http://www.shareaza.com/schemas/presentation.xsd";
+LPCWSTR	CDocReader::uriBook			= L"http://www.limewire.com/schemas/book.xsd";
+LPCWSTR	CDocReader::uriDocument		= L"http://www.shareaza.com/schemas/wordProcessing.xsd";
+LPCWSTR	CDocReader::uriSpreadsheet	= L"http://www.shareaza.com/schemas/spreadsheet.xsd";
+LPCWSTR CDocReader::uriPresentation	= L"http://www.shareaza.com/schemas/presentation.xsd";
+
+LPCWSTR	CDocReader::msWordExt		= L".doc.dot";
+LPCWSTR	CDocReader::msExcelExt		= L".xls.xlt.xla";
+LPCWSTR	CDocReader::msPPointExt		= L".ppt.pot.ppa";
+LPCWSTR	CDocReader::msProjectExt	= L".mpp.mpt";
+LPCWSTR	CDocReader::msVisioExt		= L".vsd.vst";
+LPCWSTR	CDocReader::ooWriterExt		= L".odt.ott.sxw.stw";
+LPCWSTR	CDocReader::ooCalcExt		= L".ods.ots.sxc.stc";
+LPCWSTR	CDocReader::ooImpressExt	= L".odp.otp.sxi.sti";
+
 
 // CDocReader
 CDocReader::CDocReader()
@@ -42,15 +53,43 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	ODS("CDocReader::Process\n");
 	EnterCritical();
 	DllAddRef();
+
+	HRESULT hr;
+	LPCWSTR pszExt = wcslwr( wcsrchr( sFile, '.') );
+	LPCWSTR pszSchema = GetSchema( sFile, pszExt );
+	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
+
+	if ( ! pszFormat || ! pszSchema )
+	{
+		DllRelease();
+		LeaveCritical();
+		return E_UNEXPECTED;
+	}
+	if ( pszFormat[ 0 ] == 'M' ) // Microsoft
+		hr = ProcessMSDocument( sFile, pXML, pszSchema, pszFormat );
+	else if ( pszFormat[ 0 ] == 'O' ) // OpenOffice or OpenDocument
+		hr = ProcessOODocument( sFile, pXML, pszSchema, pszFormat );
+
+	DllRelease();
+	LeaveCritical();
+	return hr;
+}
+
+
+STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat)
+{
+	ODS("CDocReader::ProcessMSDocument\n");
 	HRESULT hr;
 	BSTR bsValue = NULL;
+	BSTR bsName = NULL;
+	LPCWSTR pszSingular = NULL;
+	string sTemp;
+	LONG nCount = 0;
 
-	hr = m_pDocProps->Open( sFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
+	hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
 	if ( FAILED(hr) )
 	{
 		m_pDocProps->Close( VARIANT_FALSE );
-		DllRelease();
-		LeaveCritical();
 		return E_INVALIDOBJECT;
 	}
 
@@ -60,64 +99,15 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	if ( FAILED(hr) || bMSDoc == VARIANT_FALSE )
 	{
 		m_pDocProps->Close( VARIANT_FALSE );
-		DllRelease();
-		LeaveCritical();
 		return S_FALSE;
-	}
-
-	BSTR bsName = NULL;
-	LPCWSTR pszSchema = NULL;
-	LPCWSTR pszSingular = NULL;
-	LPCWSTR pszFormat = NULL;
-	std::string sTemp;
-	LONG nCount = 0;
-	BOOL bBook = FALSE;
-
-	LPCWSTR pszExt = wcsrchr( sFile, '.');
-
-	if ( LPCWSTR pszName = wcsrchr( sFile, '\\' ) )
-	{
-		pszName++;
-		
-		if ( wcsnicmp( pszName, L"ebook - ", 8 ) == 0 ||
-			 wcsnicmp( pszName, L"(ebook", 6 ) == 0 )
-		{
-			pszSchema = CDocReader::uriBook;
-			bBook = TRUE;
-		}
-		if ( wcsnicmp( pszExt, L".doc", 3 ) == 0 || wcsnicmp( pszExt, L".dot", 3 ) == 0 ||
-				  wcsnicmp( pszExt, L".mpp", 3 ) == 0 || wcsnicmp( pszExt, L".mpt", 3 ) == 0 ||
-				  wcsnicmp( pszExt, L".vsd", 3 ) == 0 || wcsnicmp( pszExt, L".vst", 3 ) == 0 )
-		{
-			if ( !bBook ) pszSchema = CDocReader::uriDocument;
-			if ( pszExt[1] == 'd' || pszExt[1] == 'D' ) 
-				pszFormat = L"Word";
-			else if ( pszExt[1] == 'm' || pszExt[1] == 'M' ) 
-				pszFormat = L"Project";
-			else if ( pszExt[1] == 'v' || pszExt[1] == 'V' ) 
-				pszFormat = L"Visio";
-		}
-		else if ( wcsnicmp( pszExt, L".ppt", 3 ) == 0 || wcsnicmp( pszExt, L".pot", 3 ) == 0 ||
-				  wcsnicmp( pszExt, L".ppa", 3 ) == 0 )
-		{
-			if ( !bBook ) pszSchema = CDocReader::uriPresentation;
-			pszFormat = L"PowerPoint";
-		}
-		else if ( wcsnicmp( pszExt, L".xls", 3 ) == 0 || wcsnicmp( pszExt, L".xlt", 3 ) == 0 ||
-				  wcsnicmp( pszExt, L".xla", 3 ) == 0 )
-		{
-			if ( !bBook ) pszSchema = CDocReader::uriSpreadsheet;
-			pszFormat = L"Excel";
-		}
-		else return E_UNEXPECTED;
 	}
 
 	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
 
 	USES_CONVERSION;
-	sTemp.assign( W2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.assign( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
 	sTemp.append( "s" );
-	bsName = SysAllocString( T2OLE(sTemp.c_str()) );
+	bsName = CComBSTR( sTemp.c_str() );
 
 	// Get a pointer to elements node and create a root element
 	ISXMLElement* pPlural;
@@ -140,7 +130,7 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 	pPlural->get_Elements( &pElements );
 
 	sTemp.resize( sTemp.length() - 1 );
-	bsName = SysAllocString( T2OLE(sTemp.c_str()) );
+	bsName = CComBSTR( sTemp.c_str() );
 	pElements->Create( bsName, &pSingular );
 	pElements->Release();
 	SysFreeString( bsName );
@@ -219,14 +209,10 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 
 	// Now add some internal data
 
-	if ( pszFormat )
-	{
-		sTemp.assign( "Microsoft " );
-		sTemp.append( W2T(pszFormat) );
-		bsName = SysAllocString( T2OLE(sTemp.c_str()) );
-		pAttributes->Add( L"format", bsName );
-		SysFreeString( bsName );
-	}
+	sTemp.assign( CW2T(pszFormat) );
+	bsName = CComBSTR( sTemp.c_str() );
+	pAttributes->Add( L"format", bsName );
+	SysFreeString( bsName );
 
 	if ( pszSchema == CDocReader::uriBook )
 	{
@@ -240,9 +226,295 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 
 	SysFreeString( bsValue );    
 	m_pDocProps->Close( VARIANT_FALSE );
-	DllRelease();
-	LeaveCritical();
 	return S_OK;
+}
+
+STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat)
+{
+	ODS("CDocReader::ProcessOODocument\n");
+	CHECK_NULL_RETURN(bsFile, E_INVALIDARG);
+
+	WCHAR pszName[MAX_PATH];
+	ULONG ulIdx;
+	if ( ! FFindQualifiedFileName( bsFile, pszName, &ulIdx ) )
+        return STG_E_INVALIDNAME;
+
+	// OpenOffice and OpenDocument files are zips
+	// Open it with the UNZIP library
+	unzFile pFile = NULL;
+	zlib_filefunc_def FileFunc;
+	fill_win32_filefunc( &FileFunc );
+	pFile = unzOpen2( CW2A(pszName), &FileFunc );
+	
+	if ( ! pFile )
+	{
+		// Probably unicode path...
+		// Try to find a short name, since UNZIP can not handle them
+		if ( GetShortPathNameW( bsFile, pszName, MAX_PATH ) )
+		{
+			pFile = unzOpen2( CW2A(pszName), &FileFunc );
+			if ( ! pFile ) return STG_E_INVALIDNAME;
+		}
+		else return E_FAIL; // system doesn't support 8.3 filenames
+	}
+
+	// Read meta.xml from the archive
+	CComBSTR sXML = GetMetadataXML( pFile );
+
+	// Close the file
+	unzClose( pFile );
+
+	if ( ! sXML.Length() ) return S_FALSE;
+
+	ISXMLElement* pInputXML = NULL;
+
+	if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
+	{
+		return S_FALSE;
+	}
+	
+	ISXMLElements* pElements;
+	// Get the Elements collection from the XML document
+	if ( FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL )
+	{
+		pInputXML->Delete();
+		pInputXML->Release();
+		return S_FALSE;
+	}
+	
+	ISXMLElement* pMeta;
+	
+	// Get root element of metadata
+	if ( FAILED( pElements->get_ByName( L"office:meta", &pMeta ) ) || pMeta == NULL )
+	{
+		pElements->Release();
+		pInputXML->Delete();
+		pInputXML->Release();
+		return S_FALSE;
+	}
+
+	ISXMLElements* pMetaElements;
+	// Get metadata elements collection from which we will get all data
+	if ( FAILED( pMeta->get_Elements( &pMetaElements ) ) || pMetaElements == NULL )
+	{
+		pMeta->Release();
+		pElements->Release();
+		pInputXML->Delete();
+		pInputXML->Release();
+		return S_FALSE;
+	}
+
+	BSTR bsValue = NULL;
+	BSTR bsName = NULL;
+	LPCWSTR pszSingular = NULL;
+	string sTemp;
+
+	pszSingular = wcsrchr( pszSchema, '/' ) + 1;
+
+	USES_CONVERSION;
+	sTemp.assign( CW2T(pszSingular), wcslen( pszSingular ) - 4 );
+	sTemp.append( "s" );
+	bsName = CComBSTR( sTemp.c_str() );
+
+	// Get a pointer to elements node and create a root element
+	ISXMLElement* pPlural;
+	ISXMLElements* pDestElements;
+
+	pXML->get_Elements( &pDestElements );
+	pDestElements->Create( bsName, &pPlural );
+	pDestElements->Release();
+	SysFreeString( bsName );
+
+	// Add root element attributes
+	ISXMLAttributes* pAttributes;
+	pPlural->get_Attributes( &pAttributes );
+	pAttributes->Add( L"xmlns:xsi", L"http://www.w3.org/2001/XMLSchema-instance" );
+	pAttributes->Add( L"xsi:noNamespaceSchemaLocation", W2OLE((LPWSTR)pszSchema) );
+	pAttributes->Release();
+
+	// Create inner element describing metadata
+	ISXMLElement* pSingular;
+	pPlural->get_Elements( &pDestElements );
+
+	sTemp.resize( sTemp.length() - 1 );
+	bsName = CComBSTR( sTemp.c_str() );
+	pDestElements->Create( bsName, &pSingular );
+	pDestElements->Release();
+	SysFreeString( bsName );
+
+	// Get attributes and add all metadata
+	pSingular->get_Attributes( &pAttributes );
+
+	ISXMLElement* pData = NULL;
+
+	HRESULT hr = pMetaElements->get_ByName( L"meta:initial-creator", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"author", bsValue );
+		pData->Release();
+	}
+
+	hr = pMetaElements->get_ByName( L"dc:title", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"title", bsValue );
+		pData->Release();
+	}
+
+	hr = pMetaElements->get_ByName( L"dc:subject", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"subject", bsValue );
+		pData->Release();
+	}
+
+	// Loop through all keywords
+	CComBSTR bsKeywords;
+	do
+	{
+		hr = pMetaElements->get_ByName( L"meta:keyword", &pData );
+		if ( SUCCEEDED(hr) && pData )
+		{
+			if ( pData && SUCCEEDED(pData->get_Value( &bsValue )) )
+			{
+				if ( ! bsKeywords.Length() ) 
+				{
+					bsKeywords.AssignBSTR( bsValue );
+				}
+				else 
+				{
+					bsKeywords.Append( L";" );
+					bsKeywords.AppendBSTR( bsValue );
+				}
+				// delete keyword to get the next
+				pData->Delete();
+			}
+			pData->Release();
+		}
+	}
+	while ( pData );
+	if ( bsKeywords ) pAttributes->Add( L"keywords", bsKeywords );
+
+	hr = pMetaElements->get_ByName( L"dc:description", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		// should be abstract by definition but it corresponds to comments
+		// in MS documents
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"comments", bsValue );
+		pData->Release();
+	}
+
+	hr = pMetaElements->get_ByName( L"dc:language", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( pData && SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"language", bsValue );
+		pData->Release();
+	}
+
+	hr = pMetaElements->get_ByName( L"meta:document-statistic", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		ISXMLAttributes* pStatAttributes;
+		hr = pData->get_Attributes( &pStatAttributes );
+		if ( SUCCEEDED(hr) && pStatAttributes )
+		{
+			ISXMLAttribute* pAttribute;
+			if ( SUCCEEDED(pStatAttributes->get_ByName( L"meta:page-count", &pAttribute )) &&
+				 pAttribute )
+			{
+				if ( SUCCEEDED(pAttribute->get_Value( &bsValue )) )
+				{
+					if ( pszSchema == CDocReader::uriPresentation )
+						pAttributes->Add( L"slides", bsValue );
+					else
+						pAttributes->Add( L"pages", bsValue );
+				}
+				pAttribute->Release();
+			}
+			pStatAttributes->Release();
+		}
+		pData->Release();
+	}
+
+	// Now add some internal data
+
+	sTemp.assign( CW2T(pszFormat) );
+	bsName = CComBSTR( sTemp.c_str() );
+	pAttributes->Add( L"format", bsName );
+	SysFreeString( bsName );
+
+	if ( pszSchema == CDocReader::uriBook )
+	{
+		pAttributes->Add( L"back", L"Digital" );
+	}
+
+	// Cleanup destination
+	pAttributes->Release();
+	pSingular->Release();
+	pPlural->Release();
+
+	// Cleanup source
+	pMetaElements->Release();
+	pMeta->Release();
+	pElements->Release();
+
+	pInputXML->Delete();
+	pInputXML->Release();
+
+	return S_OK;
+}
+
+CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
+{
+	string sXML;
+
+	CHAR szFile[256] = "meta.xml";
+	if ( unzLocateFile( pFile, szFile, 0 ) != UNZ_OK ) return "";
+
+	// Open the metadata.xml
+	int nError = UNZ_OK;
+	nError = unzOpenCurrentFilePassword( pFile, 0 );
+	if ( nError != UNZ_OK ) return "";
+
+	unz_file_info pInfo;
+	if ( unzGetCurrentFileInfo( pFile, &pInfo, szFile, sizeof(szFile), NULL, 0, NULL, 0 ) != UNZ_OK )
+		return "";
+    
+	// Prepare a buffer to read into
+	UINT nBufferSize = pInfo.uncompressed_size;
+	if ( nBufferSize > 8192 ) nBufferSize = 8192;
+
+    CHAR* pBuffer = new CHAR[ nBufferSize ];
+	if ( ! pBuffer ) return "";
+
+	// Extract the file into buffer
+	do
+	{
+		nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
+		if ( nError < 0 ) 
+			break;
+		else if ( nError > 0 )
+			sXML.append( pBuffer, nBufferSize ); 
+	} while ( nError > 0 );
+
+	delete [] pBuffer;
+	if ( nError != UNZ_OK ) return "";
+
+	// Just make a buffer enough to fit string
+	WCHAR* pszUnicode = new WCHAR[ sXML.length() + 1 ];
+	if ( ! pszUnicode ) return "";
+
+	ConvertToUnicodeEx( sXML.c_str(), sXML.length(), pszUnicode, sXML.length(), CP_UTF8 );
+	CComBSTR sUnicode( pszUnicode );
+	
+	delete [] pszUnicode;
+
+	return sUnicode; 
 }
 
 // IImageServicePlugin Methods
@@ -253,12 +525,9 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 
 	EnterCritical();
 	DllAddRef();
-
-	VARIANT va;
-	LONG nWidth, nHeight;
-	LPBYTE pData;
+	
 	HRESULT hr;
-	BSTR bsFile;
+	BSTR bsFile = NULL;
 	int nPathLength = 0;
 	BOOL bError = FALSE;
 
@@ -278,15 +547,43 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 	SEH_EXCEPT_NULL
 
 	if ( bError ) return S_FALSE;
-	hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
+
+	LPCWSTR pszExt = wcslwr( wcsrchr( bsFile, '.') );
+	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
+
+	if ( ! pszFormat )
+	{
+		DllRelease();
+		LeaveCritical();
+		return E_UNEXPECTED;
+	}
+	if ( pszFormat[ 0 ] == 'M' ) // Microsoft
+		hr = GetMSThumbnail( bsFile, pParams, ppImage );
+	else if ( pszFormat[ 0 ] == 'O' ) // OpenOffice or OpenDocument
+		hr = GetOOThumbnail( bsFile, pParams, ppImage );
+
+	DllRelease();
+	LeaveCritical();
+	if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
+		pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
+
+	return hr;
+}
+
+STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+{
+	ODS("CDocReader::GetMSThumbnail\n");
+	VARIANT va;
+	LONG nWidth, nHeight;
+	LPBYTE pData;
+
+	HRESULT hr = m_pDocProps->Open( bsFile, VARIANT_TRUE, dsoOptionOpenReadOnlyIfNoWriteAccess );
 	SysFreeString( bsFile );
 
 	// Opening the document failed; give up
 	if ( FAILED(hr) )
 	{
 		m_pDocProps->Close( VARIANT_FALSE );
-		DllRelease();
-		LeaveCritical();
 		return E_FAIL;
 	}
 
@@ -296,18 +593,8 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 	m_pDocProps->Close( VARIANT_FALSE );
 
 	// Check if we have it
-	if ( va.vt == VT_EMPTY )
-	{
-		DllRelease();
-		LeaveCritical();
-		return S_FALSE;
-	}
-	if ( !(va.vt & VT_ARRAY) ) 
-	{
-		DllRelease();
-		LeaveCritical();
-		return E_UNEXPECTED;
-	}
+	if ( va.vt == VT_EMPTY ) return S_FALSE;
+	if ( ! ( va.vt & VT_ARRAY ) ) return E_UNEXPECTED;
 
 	BYTE* pclp = NULL;
 	LONG nSize = 0;
@@ -357,12 +644,7 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 			// Component number is required for Image Viewer
 			pParams->nComponents = 3;
 
-			if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
-			{
-				DllRelease();
-				LeaveCritical();
-				return S_OK;
-			}
+			if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
 			// Save palette
 			SetStdPalette( (void*)pPalette, pBI->bmiHeader.biBitCount );
 		}
@@ -382,14 +664,9 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 
  		pParams->nWidth = nWidth;
 		pParams->nHeight = nHeight;
-		pParams->nComponents = 1;
+		pParams->nComponents = 3;
 
-		if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
-		{
-			DllRelease();
-			LeaveCritical();
-			return S_OK;
-		}
+		if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
 
 		bm.bmPlanes = pBmH->biPlanes;
 		bm.bmBitsPixel = pBmH->biBitCount;
@@ -433,12 +710,7 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 			pParams->nHeight = nHeight;
 			pParams->nComponents = 3;
 
-			if ( pParams->nFlags & IMAGESERVICE_SCANONLY )
-			{
-				DllRelease();
-				LeaveCritical();
-				return S_OK;
-			}
+			if ( pParams->nFlags & IMAGESERVICE_SCANONLY ) return S_OK;
 			// Save pallete
 			SetStdPalette( (void*)pPalette, pBI->bmiHeader.biBitCount );
 		}
@@ -448,12 +720,7 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 	SEH_EXCEPT_NULL
 
 	// Check if we have a bitmap
-	if ( hBitmap == NULL )
-	{
-		DllRelease();
-		LeaveCritical();
-		return S_FALSE;
-	}
+	if ( hBitmap == NULL ) return S_FALSE;
 
 	// Get bitmap byte buffer from the handle
 
@@ -542,11 +809,132 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 	delete [] pStart;
 
 	VariantClear( &va );
-	DllRelease();
-	LeaveCritical();
-	if ( pParams->nFlags & IMAGESERVICE_PARTIAL_IN )
-		pParams->nFlags |= IMAGESERVICE_PARTIAL_OUT;
 	return S_OK;
+}
+
+STDMETHODIMP CDocReader::GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+{
+	ODS("CDocReader::GetOOThumbnail\n");
+
+	CHECK_NULL_RETURN(bsFile, E_INVALIDARG);
+
+	WCHAR pszName[MAX_PATH];
+	ULONG ulIdx;
+	if ( ! FFindQualifiedFileName( bsFile, pszName, &ulIdx ) )
+        return STG_E_INVALIDNAME;
+
+	// OpenOffice and OpenDocument files are zips
+	// Open it with the UNZIP library
+	unzFile pFile = NULL;
+	zlib_filefunc_def FileFunc;
+	fill_win32_filefunc( &FileFunc );
+	pFile = unzOpen2( CW2A(pszName), &FileFunc );
+	
+	if ( ! pFile )
+	{
+		// Probably unicode path...
+		// Try to find a short name, since UNZIP can not handle them
+		if ( GetShortPathNameW( bsFile, pszName, MAX_PATH ) )
+		{
+			pFile = unzOpen2( CW2A(pszName), &FileFunc );
+			if ( ! pFile ) return STG_E_INVALIDNAME;
+		}
+		else return E_FAIL; // system doesn't support 8.3 filenames
+	}
+
+	// Load thumbnail.png file to memory. The thumbnail is 24-bit with alpha channel
+	// and located in Thumbnails folder.
+	CHAR szFile[256] = "Thumbnails/thumbnail.png";
+	if ( unzLocateFile( pFile, szFile, 0 ) != UNZ_OK ) return S_FALSE;
+
+	// Open the metadata.xml
+	int nError = UNZ_OK;
+	nError = unzOpenCurrentFilePassword( pFile, 0 );
+	if ( nError != UNZ_OK ) return E_FAIL;
+
+	// Prepare a buffer to read into
+	UINT nBufferSize = 8192;
+    CHAR* pBuffer = new CHAR[ nBufferSize ];
+	if ( ! pBuffer ) return E_OUTOFMEMORY;
+
+	ILockBytes*	pLockBuffer = NULL;
+	IStorage*	pStorage = NULL;
+	IStream*	FileStream = NULL;
+	UINT		nBytesWritten = 0;
+
+	// Prepare stream to transfer the buffer
+	CreateILockBytesOnHGlobal( NULL, TRUE, &pLockBuffer ); // Create ILockBytes Buffer
+
+	HRESULT hr = StgCreateDocfileOnILockBytes( pLockBuffer,
+		STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, &pStorage );
+
+	hr = pStorage->CreateStream( L"PICTURE",
+		STGM_SHARE_EXCLUSIVE | STGM_CREATE | STGM_READWRITE, 0, 0, &FileStream );
+
+	// Extract the file into buffer and transfer to stream (buffered reading)
+	do
+	{
+		nError = unzReadCurrentFile( pFile, pBuffer, nBufferSize );
+		if ( nError < 0 ) 
+			break;
+		else if ( nError > 0 )
+		{
+			hr = FileStream->Write( (void*)pBuffer, nBufferSize, (ULONG*)&nBytesWritten );
+			if ( FAILED(hr) || nBufferSize != nBytesWritten ) break;
+			pLockBuffer->Flush();
+		}
+	} while ( nError > 0 );
+
+	// Close the file
+	unzClose( pFile );
+	delete [] pBuffer;
+
+	if ( nError != UNZ_OK ) 
+	{
+		FileStream->Release();
+		pStorage->Release();
+		pLockBuffer->Release();
+		return E_FAIL;
+	}
+
+	// Get statistics for the final size of byte array
+	STATSTG  BytesStatistics;
+	pLockBuffer->Stat( &BytesStatistics, STATFLAG_NONAME );
+	ULONG nArray = static_cast<ULONG>(BytesStatistics.cbSize.QuadPart);
+
+	// Create 1-dimensional safearray 
+
+	SAFEARRAY* psa = SafeArrayCreateVector( VT_UI1, 0, nArray );
+	ULONG nRead = 0;
+    LARGE_INTEGER llMove;
+    llMove.QuadPart = 0;
+
+	// Go to the beginning of the stream
+	hr = FileStream->Seek( llMove, STREAM_SEEK_SET, NULL );
+	// Read byte array from the stream
+	BYTE* pData = NULL;
+    SafeArrayAccessData( psa, (VOID**)&pData );
+	hr = FileStream->Read( (VOID*)pData, nArray, &nRead );
+    SafeArrayUnaccessData( psa );
+
+	FileStream->Release();
+	pStorage->Release();
+	pLockBuffer->Release();
+	if ( FAILED(hr) ) return E_FAIL;
+
+	// Initialize COM
+	HRESULT hr_coinit = CoInitialize( NULL );
+	if ( FAILED(hr_coinit) && hr_coinit != RPC_E_CHANGED_MODE ) return E_FAIL;
+
+	CComPtr<IImageServicePlugin> pPNGReader;
+	hr = pPNGReader.CoCreateInstance( CLSID_PNGReader, NULL, CLSCTX_INPROC );
+	if ( FAILED(hr) ) return E_FAIL;
+
+	hr = pPNGReader->LoadFromMemory( psa, pParams, ppImage );
+
+	if ( SUCCEEDED(hr_coinit) ) CoUninitialize();
+
+	return hr;
 }
 
 STDMETHODIMP CDocReader::LoadFromMemory(SAFEARRAY* pMemory, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
@@ -763,6 +1151,103 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 
 	ReleaseDC( 0, hDC );
 	return hTempBmp;
+}
+
+LPWSTR CDocReader::GetDocumentFormat(LPCWSTR pszExt)
+{
+	if ( wcsstr( msWordExt, pszExt ) != NULL ||
+		 wcsstr( msProjectExt, pszExt ) != NULL ||
+		 wcsstr( msVisioExt, pszExt ) != NULL ||
+		 wcsstr( ooWriterExt, pszExt ) != NULL )
+	{
+		switch ( pszExt[1] )
+		{
+			case 'd' : return L"Microsoft Word";
+			case 'm' : return L"Microsoft Project";
+			case 'v' : return L"Microsoft Visio";
+			case 'o' :
+				if ( wcscmp( pszExt, L".odt" ) == 0 )
+					return L"OpenDocument Text";
+				else
+					return L"OpenDocument Text Template";
+			case 's' :
+				if ( wcscmp( pszExt, L".sxw" ) == 0 )
+					return L"OpenOffice.org 1.0 Text Document";
+				else
+					return L"OpenOffice.org 1.0 Text Document Template";
+		}
+	}
+	else if ( wcsstr( msPPointExt, pszExt ) != NULL ||
+			  wcsstr( ooImpressExt, pszExt ) != NULL )
+	{
+		switch ( pszExt[1] )
+		{
+			case 'p' : return L"Microsoft PowerPoint";
+			case 'o' :
+				if ( wcscmp( pszExt, L".odp" ) == 0 )
+					return L"OpenDocument Presentation";
+				else
+					return L"OpenDocument Presentation Template";
+			case 's' :
+				if ( wcscmp( pszExt, L".sxi" ) == 0 )
+					return L"OpenOffice.org 1.0 Presentation";
+				else
+					return L"OpenOffice.org 1.0 Presentation Template";
+		}
+	}
+	else if ( wcsstr( msExcelExt, pszExt ) != NULL ||
+			  wcsstr( ooCalcExt, pszExt ) != NULL )
+	{
+		switch ( pszExt[1] )
+		{
+			case 'x' : return L"Microsoft Excel";
+			case 'o' :
+				if ( wcscmp( pszExt, L".ods" ) == 0 )
+					return L"OpenDocument Spreadsheet";
+				else
+					return L"OpenDocument Spreadsheet Template";
+			case 's' :
+				if ( wcscmp( pszExt, L".sxc" ) == 0 )
+					return L"OpenOffice.org 1.0 Spreadsheet";
+				else
+					return L"OpenOffice.org 1.0 Spreadsheet Template";
+		}
+	}
+	
+	return LPWSTR();
+}
+
+LPWSTR CDocReader::GetSchema(BSTR sFile, LPCWSTR pszExt)
+{
+	if ( LPCWSTR pszName = wcsrchr( sFile, '\\' ) )
+	{
+		pszName++;
+		
+		if ( wcsnicmp( pszName, L"ebook - ", 8 ) == 0 ||
+			 wcsnicmp( pszName, L"(ebook", 6 ) == 0 )
+		{
+			return (LPWSTR)CDocReader::uriBook;
+		}
+		else if ( wcsstr( msWordExt, pszExt ) != NULL ||
+				  wcsstr( msProjectExt, pszExt ) != NULL ||
+				  wcsstr( msVisioExt, pszExt ) != NULL ||
+				  wcsstr( ooWriterExt, pszExt ) != NULL )
+		{
+			return (LPWSTR)CDocReader::uriDocument;
+		}
+		else if ( wcsstr( msPPointExt, pszExt ) != NULL ||
+				  wcsstr( ooImpressExt, pszExt ) != NULL )
+		{
+			return (LPWSTR)CDocReader::uriPresentation;
+		}
+		else if ( wcsstr( msExcelExt, pszExt ) != NULL ||
+				  wcsstr( ooCalcExt, pszExt ) != NULL )
+		{
+			return (LPWSTR)CDocReader::uriSpreadsheet;
+		}
+	}
+
+	return LPWSTR();
 }
 
 CDocReader::CDocumentProperties::CDocumentProperties(BOOL bOnlyThumb)

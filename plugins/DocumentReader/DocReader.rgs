@@ -48,6 +48,18 @@ HKLM
 						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vst' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.odt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ott' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ods' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ots' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.odp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.otp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxw' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.stw' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxi' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sti' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.stc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 					LibraryBuilder
 					{
@@ -63,6 +75,18 @@ HKLM
 						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vsd' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.vst' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.odt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ott' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ods' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.ots' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.odp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.otp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxw' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.stw' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxi' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sti' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.sxc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.stc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 					}
 				}
 			}
