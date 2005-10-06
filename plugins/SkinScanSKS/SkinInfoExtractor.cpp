@@ -1,9 +1,9 @@
 //
 // SkinInfoExtractor.cpp
 //
-//	Date:			"$Date: 2005/05/11 17:22:56 $"
-//	Revision:		"$Revision: 1.1 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/10/06 23:07:36 $"
+//	Revision:		"$Revision: 1.2 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -27,7 +27,7 @@
 #include "SkinScanSKS.h"
 #include "SkinInfoExtractor.h"
 #include <zlib.h>
-#include "unzip/Unzip.h"
+#include "../unzip/Unzip.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////

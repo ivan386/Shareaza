@@ -610,7 +610,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Name="unzip"
 				Filter="">
 				<File
-					RelativePath=".\unzip\ioapi.c">
+					RelativePath="..\unzip\ioapi.c">
 					<FileConfiguration
 						Name="Unicode Release MinSize|Win32">
 						<Tool
@@ -649,7 +649,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\unzip\iowin32.c">
+					RelativePath="..\unzip\iowin32.c">
 					<FileConfiguration
 						Name="Unicode Release MinSize|Win32">
 						<Tool
@@ -688,7 +688,7 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\unzip\Unzip.c">
+					RelativePath="..\unzip\Unzip.c">
 					<FileConfiguration
 						Name="Unicode Release MinSize|Win32">
 						<Tool
@@ -747,16 +747,16 @@ echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;
 				Name="unzip"
 				Filter="">
 				<File
-					RelativePath=".\unzip\crypt.h">
+					RelativePath="..\unzip\crypt.h">
 				</File>
 				<File
-					RelativePath=".\unzip\ioapi.h">
+					RelativePath="..\unzip\ioapi.h">
 				</File>
 				<File
-					RelativePath=".\unzip\iowin32.h">
+					RelativePath="..\unzip\iowin32.h">
 				</File>
 				<File
-					RelativePath=".\unzip\Unzip.h">
+					RelativePath="..\unzip\Unzip.h">
 				</File>
 			</Filter>
 		</Filter>
