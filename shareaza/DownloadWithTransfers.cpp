@@ -60,6 +60,24 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers counting
 
+int CDownloadWithTransfers::GetTransferCount() const
+{
+	int nCount = 0;
+
+	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
+    {
+		if ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) ||
+		( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient &&
+		static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+		{
+			
+			++nCount;
+		}
+	}
+	return nCount;
+}
+
+
 // This macro is used to clean up the function below and make it more readable. It's the first 
 // condition in any IF statement that checks if the current transfer should be counted
 #define VALID_TRANSFER ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&	\
@@ -70,7 +88,6 @@ CDownloadWithTransfers::~CDownloadWithTransfers()
 
 int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
 {
-	// if ( nState == -1 && pAddress == NULL ) return m_pTransfers.GetCount();
     int nCount = 0;
 
     switch ( nState )

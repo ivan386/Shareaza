@@ -47,7 +47,8 @@ protected:
 
 // Operations
 public:
-	int			GetTransferCount(int nState = -1, IN_ADDR* pAddress = NULL) const;
+	int			GetTransferCount() const;
+	int			GetTransferCount(int nState, IN_ADDR* pAddress = NULL) const;
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress) const;
 	BOOL		CanStartTransfers(DWORD tNow = 0);
 	BOOL		StartTransfersIfNeeded(DWORD tNow = 0);
