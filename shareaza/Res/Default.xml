@@ -1883,8 +1883,8 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">This Download is Paused</text>
 		<newline gap="8"/>
-		<text>You have paused this download.  If you want it to resume downloading, you
-		can click the </text><text format="b">Resume Download </text><text>command.</text>
+		<text>You have paused this download. If you want it to resume downloading, you
+		can click the '</text><text format="b">Resume Download</text><text>' command.</text>
 	</document>
 	
 	<document name="DownloadHelp.DiskFull">
@@ -1909,10 +1909,10 @@
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
 		<text>This download is currently in progress.  If it is downloading too slowly,
-		you could try searching the network for more sources with the </text>
-		<text format="b">Find More Sources </text><text>command.  If the speed does not
-		improve it may be due to limited upload speeds of the users you are downloading
-		from.  Download speed usually increases over time.</text>
+		you could try searching the network for more sources with the '</text>
+		<text format="b">Find More Sources</text><text>' command. If the speed does not 
+		improve it may be due to limited upload speeds of the users you are downloading 
+		from. Download speed usually increases over time.</text>
 	</document>
 	
 	<document name="DownloadHelp.Pending">
