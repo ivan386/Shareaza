@@ -581,7 +581,7 @@
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella1"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Cerrar _Después de Transferencias"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
 			<item id="ID_NETWORK_EXIT" text="S_alir"/>
 		</menu>
 		<menu text="_Ver">
@@ -733,7 +733,7 @@
 		<item id="ID_MEDIA_PREVIOUS" text="P_ista Anterior"/>
 		<item id="ID_MEDIA_NEXT" text="_Pista Siguiente"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Salir despus _de transferencias"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
 		<item id="ID_NETWORK_EXIT" text="S_alir"/>
 	</menu>
 	<!-- HOME MENU -->
@@ -4084,6 +4084,15 @@
 		<control caption="Esto le ayuda a exportar el contenido de un album o carpeta a una colección de Shareaza."/>
 		<control caption="Exportar..."/>
 		<control caption="Cancelar"/>
+		<control caption="Nombre:"/>
+		<control/>
+		<control caption="Autor:"/>
+		<control/>
+		<control caption="Descripcin:"/>
+		<control/>
+		<control caption="Borrar|_Regresar"/>
+		<control caption="_Siguiente|Exportar"/>
+		<control caption="_Cancelar"/>
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Editar Descarga (Avanzado)">
