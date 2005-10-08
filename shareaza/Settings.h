@@ -179,6 +179,7 @@ public:
 		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
 		BOOL		DetectConnectionLoss;		// Detect loss of internet connection
 		BOOL		DetectConnectionReset;		// Detect regaining of internet connection
+		BOOL		ForceConnectedState;		// Force WinINet into a connected state on startup. (Put IE into online mode)
 		BOOL		SlowConnect;				// Connect to one network at a time. Don't download while connecting. (XPsp2)
 	} Connection;
 

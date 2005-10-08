@@ -36,6 +36,7 @@
 #include "Downloads.h"
 #include "Statistics.h"
 #include "DiscoveryServices.h"
+#include "HttpRequest.h"
 
 #include "CrawlSession.h"
 #include "SearchManager.h"
@@ -179,7 +180,18 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	
 	// Begin network startup
 	theApp.Message( MSG_SYSTEM, IDS_NETWORK_STARTUP );
-	
+
+	// Make sure WinINet is connected (IE is not in offline mode)
+	if ( Settings.Connection.ForceConnectedState )
+	{
+		INTERNET_CONNECTED_INFO ici = { 0 };
+		HINTERNET hInternet = InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
+
+		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
+		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
+		InternetCloseHandle( hInternet );
+	}
+
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 	
 	if ( Settings.Connection.FirewallStatus == CONNECTION_FIREWALLED )
