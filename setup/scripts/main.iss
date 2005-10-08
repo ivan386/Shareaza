@@ -61,6 +61,9 @@ AppPublisherURL=http://www.shareaza.com/?id=home
 AppSupportURL=http://www.shareaza.com/?id=support
 AppUpdatesURL=http://www.shareaza.com/?id=download
 
+[LangOptions]
+LanguageCodePage=0
+
 [Components]
 ; Ask user wich components to install
 Name: "language"; Description: "{cm:components_languages}"; Types: full; Flags: disablenouninstallwarning
@@ -111,8 +114,23 @@ Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreve
 Source: "Skins\Skin+\*"; DestDir: "{app}\Skins\Skin+"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: "CVS"
 
 ; Languages: English gets installed by default
-Source: "Languages\default-en.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
-Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: "language"; Excludes: "default-en.xml,*.bak"
+Source: "Languages\default-af.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-chs.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-de.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-es.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-fi.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-fr.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-gr.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-heb.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-hr.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-hu.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-it.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-lt.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-nl.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-no.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-pl.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-pt-br.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
+Source: "Languages\default-ru.xml"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension;
 
 ; Copy skins back from {userappdata}\Shareaza\Skins
 Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteFolder('{userappdata}\Shareaza\Skins')
@@ -299,6 +317,7 @@ Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.xml"
 Type: files; Name: "{app}\Skins\Languages\default-es-mx.ico"
+Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 
 ; Clean up old Shareaza icons
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
@@ -443,8 +462,8 @@ End;
 
 Function GetRelFilePath(LangCode: String): String;
 Begin
-  if ( LangCode = 'br' ) then
-    Result := 'Languages\default-pt-' + LangCode + '.xml'
+  if ( (LangCode = 'br') or (LangCode = 'pt') ) then
+    Result := 'Languages\default-pt-br.xml'
   else
     Result := 'Languages\default-' + LangCode + '.xml';
 End;
