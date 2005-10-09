@@ -2921,8 +2921,8 @@
 	<string id="16801" value="Vennligst velg hvilken internettilkobling du bruker før du fortsetter."/>
 	<string id="16802" value="Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"/>
 	<string id="16803" value="Mappen du deler er allerede delt gjennom en annen delt mappe:\n\n%s"/>
-	<string id="16804" value="Du har ikke angitt et navn i brukerprofilen din.\n\nDet er en god ide å angi et spesielt navn slik at brukerne kan se hvem de er koblet til.\n\nEr du sikker på at du vil fortsette?"/>
-	<string id="16805" value="Du har ikke angitt hvor du er fra i brukerprofilen din.\n\nDet er en god ide å angi hvor du er fra slik at andre kan se hvor de er koblet til.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
+	<string id="16804" value="Du har ikke valgt et navn i din bruker profil."/>
+	<string id="16805" value="Du har ikke angitt hvor du er fra i bruker profilen din.\n\nDet er en god idé å angi hvor du er fra slik at andre kan se hvor de er koblet til. Dette vil ikke gjøre noe utslag på din sikkerhet.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
 	<string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\n\nVennligst sett opp nettverket til å videresende TCP og UDP port %i til din lokale PC."/>
 	<string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per sekund, eller &quot;123 KB/s&quot; for kilobytes per sekund."/>
 	<string id="16808" value="Du har ikke valgt alder og kjønn.  Er du sikker på at du vil fortsette?"/>

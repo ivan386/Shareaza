@@ -2919,8 +2919,8 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16801" value="Válaszd ki az internetkapcsolatod típusát."/>
        <string id="16802" value="Nem választottál ki megosztani való mappákat. Bizots ilyen köcsög akarsz lenni?"/>
        <string id="16803" value="A mappa, amit meg akarsz osztani egy másik mappában már meg van osztva:\n\n%s"/>
-       <string id="16804" value="Nem írtál be becenevet.\n\nJó ötlet beírni egy nevet, mert mások tudni fogják, hogy kihez kapcsolódtak.\n\nBiztos név nélkül akarsz maradni?"/>
-       <string id="16805" value="Nem írtál be lakhelyet.\n\nMás felhasználók így tudni fogják, hogy hol laksz.\n\nLakhely nélkül akarsz maradni?"/>
+       <string id="16804" value="Nem adtál meg becenevet a profilodban."/>
+       <string id="16805" value="Nem adtál meg lakhelyet a profilodban.\n\nEz egy jó ötlet, így mások is tudják, hogy hol laksz. Ennek a megadása nem fog semmilyen személyes információt kiszolgáltatni!\n\nBiztos lakhely nélkül akarsz maradni?"/>
        <string id="16806" value="Port-forwardingot akarsz csinálni a NAT router vagy a tűzfal felé.\n\nÁllítsd be a hálózatodat, hogy a TCP és UDP port %i-ot forwardolja."/>
        <string id="16807" value="Írd be a sávszél-korlátozást: &quot;123 kb/s&quot; kilobit per másodperc vagy &quot;123 KB/s&quot; kilobájt per másodperc formában."/>
        <string id="16808" value="Nem adtad meg a korodat és a nemedet. Tovább akarsz így menni?"/>
