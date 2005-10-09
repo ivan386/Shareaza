@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 28 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 31 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -17,7 +17,7 @@
 		description="Shareaza Default Italian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.4.4"
+		version="2.2.0.2"
 		type="Language"
 		language="it"
 		prompt="Clicca qui per selezionare l'Italiano come lingua predefinita."
@@ -2042,13 +2042,13 @@
 	</document>
 
 	<document name="GeneralHelp.XPsp2">
-	 	<text format="b">È stato rilevato Windows XP Service Pack 2</text>
+	 	<text format="b">Rilevato limite dei tentativi di connessione</text>
 	    <newline gap="8"/>
-		<text>Shareaza ha rilevato Windows XP Service Pack 2. Questo fa si che riduca il numero di connessioni
-		che l'applicazione riesce a gestire nello stesso momento.</text>
+		<text>Shareaza ha rilevato Windows XP Service Pack 2 (o un ambiente simile). Questo riduce il numero di connessioni
+		che l'applicazione può effettuare nello stesso momento.</text>
 		<newline gap="8"/>
 		<text>Shareaza ha connessioni limitate nella rete e seleziona valori appropriati per
-		assicurare corrette operazioni, tuttavia le performances si possono ridurre. Vai nei Forum di Shareaza
+		assicurare corrette operazioni, tuttavia le prestazioni possone essere ridotte. Vai nei forum di Shareaza
 		per ottenere ulteriori informazioni, e novità sull'argomento.</text>
 	</document>
 
@@ -2789,31 +2789,31 @@
 	<string id="16325" value="L'host dell'upload %s ha richiesto un file sconosciuto o non disponibile &quot;%s&quot;."/>
 	<string id="16326" value="L'host dell'upload %s ha richiesto &quot;%s&quot; con differente SHA1."/>
 	<string id="16327" value="Upload di &quot;%s&quot; con %s (%s) rifiutato, troppi upload."/>
-	<string id="16328" value="Push GIV all'host upload %s inviato, in attesa della richiesta..."/>
-	<string id="16329" value="Impossibile aprire &quot;%s&quot; per l'upload con l'host %s."/>
-	<string id="16330" value="Invio del contenuto dell'upload range %I64i-%I64i da &quot;%s&quot; all'host %s (%s)."/>
-	<string id="16331" value="Upload &quot;%s&quot; con l'host %s finito."/>
-	<string id="16332" value="Connessione da %s è una richiesta di upload avviata."/>
-	<string id="16333" value="Troppo occupato per l'upload &quot;%s&quot; con %s, accodato a  #%i."/>
-	<string id="16334" value="Il push %s ha richiesto un file sconosciuto, connessione in corso..."/>
-	<string id="16335" value="Connessione di upload con %s annullata."/>
-	<string id="16336" value="L'host di upload %s è un browser,file &quot;%s&quot; non autorizzato."/>
+	<string id="16328" value="Connessione push all'host %s stabilita, negoziazione in corso..."/>
+	<string id="16329" value="Impossibile aprire &quot;%s&quot; per l'invio all'host %s, errore del disco/file."/>
+	<string id="16330" value="Invio del range %I64i-%I64i di &quot;%s&quot; all'host %s (%s)."/>
+	<string id="16331" value="Terminato l'invio della parte di &quot;%s&quot; a %s."/>
+	<string id="16332" value="La connessione da %s è una richiesta di upload HTTP."/>
+	<string id="16333" value="Troppo occupato per l'upload di &quot;%s&quot; a %s, accodato a #%i di %i (&quot;%s&quot;)."/>
+	<string id="16334" value="Richiest push da %s di un file sconosciuto, connessione in corso..."/>
+	<string id="16335" value="Rimosso upload di &quot;%s&quot; a %s."/>
+	<string id="16336" value="L'host di upload %s è nella lista degli user-agent bloccati, richiesta rifiutata."/>
 	<string id="16337" value="Invio delle intestazioni di upload da &quot;%s&quot; all'host %s (%s)."/>
-	<string id="16338" value="L'host di upload %s ha richiesto un range non soddisfacente di file &quot;%s&quot;."/>
+	<string id="16338" value="L'host di upload %s ha richiesto un range non soddisfacente del file &quot;%s&quot;."/>
 	<string id="16339" value="Invio di una risposta HTML predefinita all'host di upload %s (%s)."/>
 	<string id="16340" value="Negato l'esame dall'host %s."/>
-	<string id="16341" value="L'host di upload %s (%s) ha richiesto una lista dei file, invio in corso..."/>
-	<string id="16342" value="Chiusura della connessione di upload %s per mancanza di traffico."/>
-	<string id="16343" value="Chiusura dell'upload più vecchio %s perchè c'è una connessione più recente."/>
-	<string id="16344" value="Nuovo upload con %s rifiutato perchè una connessione più recente è ancora in attesa."/>
-	<string id="16345" value="Upload &quot;%s&quot; con %s sospeso perchè il file è stato cancellato."/>
-	<string id="16346" value="Invio del contenuto del range di upload %I64i-%I64i dal file parziale &quot;%s&quot; all'host %s (%s)."/>
-	<string id="16347" value="Un upload accodato %s sta richiedendo troppo velocemente, chiusura della connessione."/>
-	<string id="16348" value="Richiesta push con %s rifiutata perchè ci sono troppe connessioni in upload."/>
-	<string id="16349" value="L'upload dei dati tiger-tree per &quot;%s&quot; con &quot;%s&quot;."/>
-	<string id="16350" value="Upload di metadata per &quot;%s&quot; a %s."/>
-	<string id="16351" value="Upload di &quot;%s&quot; a %s rifiutato, troppe richieste dall'host."/>
-	<string id="16352" value="Salvataggio di un'anteprima di &quot;%s&quot; da %s."/>
+	<string id="16341" value="L'host di upload %s (%s) ha richiesto la lista dei file, risposta in corso..."/>
+	<string id="16342" value="Chiusura della connessione di upload a %s per mancanza di traffico."/>
+	<string id="16343" value="Chiusura dell'upload più vecchio a %s perchè c'è una connessione più recente."/>
+	<string id="16344" value="Nuovo upload a %s rifiutato perchè una connessione più recente è ancora in attesa."/>
+	<string id="16345" value="Invio di &quot;%s&quot; a %s sospeso perchè il file è stato cancellato."/>
+	<string id="16346" value="Invio del contenuto del range %I64i-%I64i dal file parziale &quot;%s&quot; all'host %s (%s)."/>
+	<string id="16347" value="L'upload accodato %s sta richiedendo troppo velocemente, chiusura della connessione."/>
+	<string id="16348" value="Richiesta push da %s rifiutata perchè ci sono troppe connessioni in upload."/>
+	<string id="16349" value="Invio dei dati tiger-tree per &quot;%s&quot; a %s."/>
+	<string id="16350" value="Invio di metadata per &quot;%s&quot; a %s."/>
+	<string id="16351" value="Invio di &quot;%s&quot; a %s (%s) rifiutato, troppe richieste dall'host."/>
+	<string id="16352" value="Invio dell'anteprima di &quot;%s&quot; a %s."/>
 	<string id="16353" value="Impossibile scaricare un'anteprima di &quot;%s&quot; da %s, troppe connessioni di anteprima."/>
 	<string id="16354" value="L'host di upload %s ha richiesto un'anteprima di &quot;%s&quot;, ma non è disponibile nessuna anteprima."/>
 	<string id="16355" value="Programmata una anteprima dinamica di &quot;%s&quot; per l'upload a %s."/>
@@ -2921,8 +2921,8 @@
 	<string id="16801" value="Scegli il tipo di connessione Internet che stai usando prima di continuare."/>
 	<string id="16802" value="Non hai indicato nessuna cartella da condividere.  Desideri continuare?"/>
 	<string id="16803" value="La cartella che vuoi condividere è già condivisa come parte di un'altra cartella condivisa:\n\n%s"/>
-	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente.\n\nÈ consigliato inserire un nickname in modo che gli altri utenti sanno con chi sono connessi.\n\nDesideri continuare senza un nickname?"/>
-	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nÈ consigliato inserire una località in modo che gli altri utenti sanno dove sei.\n\nDesideri continuare senza inserire una località?"/>
+	<string id="16804" value="Non hai inserito un nickname nel tuo profilo utente."/>
+	<string id="16805" value="Non hai inserito la località nel tuo profilo utente.\n\nÈ consigliato inserire una località in modo che gli altri utenti sanno dove sei.  Si noti che inserire la località non rivela nessuna informazione compromettente.\n\nDesideri continuare senza inserire una località?"/>
 	<string id="16806" value="Hai indicato che vuoi impostare il port-forwarding sul tuo router NAT o firewall.\n\nConfigura la tua rete per impostare il forward delle porte TCP e UDP %i al tuo PC."/>
 	<string id="16807" value="Inserisci il limite di banda che desideri impostare nella forma &quot;123 kb/s&quot; per kilobit al secondo, oppure &quot;123 KB/s&quot; per kilobyte al secondo."/>
 	<string id="16808" value="Non hai selezionato la tua età e il tuo sesso.  Continuare comunque?"/>
@@ -3539,7 +3539,7 @@
 		<control/>
 		<control caption="Scegliere quali file condividere"/>
 		<control/>
-		<control caption="Connettere alle reti P2P di tua scelta"/>
+		<control caption="Connetterti alle reti P2P di tua scelta"/>
 		<control/>
 		<control caption="Iniziare ad usare Shareaza"/>
 	</dialog>
@@ -3602,7 +3602,7 @@
 		<control caption="Connetti a Gnutella2 (Fortemente raccomandato)"/>
 		<control caption="La rete Gnutella2 è la rete primaria di Shareaza, in quanto offre più funzionalità e prestazioni di qualsiasi altra rete P2P."/>
 		<control caption="Connetti a eDonkey2000"/>
-		<control caption="La rete eDonkey2000 è una rete popolare basata su server.  Non possiede molte funzionalità come Gnutella2, ma eDonkey2000 ha un'impressionante collezione di file."/>
+		<control caption="La rete eDonkey2000 è una rete popolare basata su server.  Non possiede molte funzionalità come Gnutella2, ma è molto più vasta."/>
 		<control caption="Connetti a Gnutella originale"/>
 		<control caption="Sebbene la rete originale Gnutella abbia meno funzionalità rispetto a Gnutella2, ed abbia meno file di eDonkey2000, è sempre una notevole risorsa."/>
 	</dialog>
@@ -3619,7 +3619,7 @@
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Benvenuto su Shareaza [7 di 7]">
 		<control caption="Complimenti!  Shareaza è stato configurato con successo."/>
 		<control caption="Se vuoi cambiare le impostazioni, puoi riavviare questa configurazione guidata dal menu Strumenti."/>
-		<control caption="Dopo la chiusura di questa configurazione guidata cliccando su Fine, puoi connetterti alle reti selezionate e iniziare ad effetuare le tue ricerche e i tuoi download."/>
+		<control caption="Dopo la chiusura di questa configurazione guidata cliccando su Fine, puoi connetterti alle reti selezionate e iniziare a cercare e a scaricare."/>
 		<control caption="Connetti alla rete quando chiudo la configurazione guidata"/>
 		<control caption="Connetti alla rete tutte le volte che avvio Shareaza"/>
 		<control caption="Esegui Shareaza all'avvio di Windows"/>
@@ -3978,7 +3978,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nome file|Nome file (URI)|Nome file di base|Estensione file|Dimensione file |Dimensione file (byte)|Percorso cartella|Host locale|Porta locale"/>
 		<control caption="Formato:"/>
 		<control/>
-		<control caption="Annulla"/>
+		<control caption="_Copia"/>
 		<control caption="Salva..."/>
 		<control/>
 		<control caption="Annulla"/>

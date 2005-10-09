@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Chinese(Simplified) Skin File -->
 
@@ -19,11 +19,11 @@
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
-		updatedBy="John"
+		updatedBy="Sanly"
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.1.4.4"
+		version="2.2.0.2(EN1.85)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -1517,7 +1517,7 @@
 
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">皮肤</link>
+		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">皮肤外观</link>
 		<text align="middle">&#160;- 更改 Shareaza 的外观</text>
 		<newline gap="8"/>
 
@@ -1547,7 +1547,7 @@
 
 	</document>
 
-	<document name="CHomeDownloadsBox" title="我的下载" leftMargin="6" topMargin="6">
+	<document name="CHomeDownloadsBox" title="下载" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Tahoma" size="11"/>
@@ -1564,7 +1564,7 @@
 		</para>
 	</document>
 
-	<document name="CHomeLibraryBox" title="我的收藏" leftMargin="6" topMargin="6">
+	<document name="CHomeLibraryBox" title="收藏" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Tahoma" size="11"/>
@@ -1653,8 +1653,8 @@
 		</styles>
 		<para align="center">
 			<text id="UploadsNone" format="b">没有活动的上传</text>
-			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 个激活上传</link>
-			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i 个激活上传</link>
+			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 个活动上传</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i 个活动上传</link>
 
 			<newline gap="4"/>
 
@@ -1719,9 +1719,9 @@
 		<text>描述和管理收藏的文件，查看文件。</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CMediaSettingsPage" format="b">媒体播放器:</link>
+		<link target="raza:page:CMediaSettingsPage" format="b">媒体:</link>
 		<gap size="4"/>
-		<text>何时何地使用内置的播放器。</text>
+		<text>何时何地使用内置的媒体播放器。</text>
 		<newline gap="10"/>
 
 		<link target="raza:page:CCommunitySettingsPage" format="b">社区:</link>
@@ -1729,14 +1729,14 @@
 		<text>个人资料，聊天和及时讯息的设置。</text>
 		<newline gap="10"/>
 
-		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CWebSettingsPage" format="b">网页:</link>
 		<gap size="4"/>
 		<text>集成 Shareaza 到浏览器以便允许对等连接和下载。</text>
 		<newline gap="10"/>
 
 	</document>
 
-	<document name="CInternetSettingsGroup" title="互联网" leftMargin="8" topMargin="8">
+	<document name="CInternetSettingsGroup" title="互联" leftMargin="8" topMargin="8">
 
 		<styles>
 			<style name="default">
@@ -1750,7 +1750,7 @@
 		<text>
 			设置管理器使得高级用户可以完全定制 Shareaza 的工作方式。此
 		</text>
-		<text format="b">互联网 </text>
+		<text format="b">互联 </text>
 		<text>
 			部分的设置决定 Shareaza 如何与其他 P2P 网络交换信息。
 		</text>
@@ -2037,7 +2037,7 @@
 	<document name="GeneralHelp.XPsp2">
 		<text format="b">检测半开放连接限制</text>
 		<newline gap="8"/>
-		<text>Shareaza 已经检测到 Windows XP Service Pack 2（或者一个相似的环境）。它会限制应用程序一次试图连接的数量。</text>
+		<text>Shareaza 已经检测到 Windows XP Service Pack 2 (或者一个相似的环境)。它会限制应用程序一次试图连接的数量。</text>
 		<newline gap="8"/>
 		<text>Shareaza 已经限制了网络连接并设置了合适的默认值
 		以保证适当的操作，但是性能可能会降低。请访问 Shareaza 
@@ -2213,7 +2213,7 @@
 	<tip id="ID_DOWNLOADS_EDIT" message="显示下载的高级编辑界面..."/>
 	<tip id="ID_DOWNLOADS_ENQUEUE" message="添加选定的下载到播放列表。"/>
 	<tip id="ID_DOWNLOADS_FILE_DELETE" message="删除选定的已完成的下载文件。"/>
-	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="显示所有激活的下载。"/>
+	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="显示所有活动的下载。"/>
 	<tip id="ID_DOWNLOADS_FILTER_ALL" message="显示所有下载。"/>
 	<tip id="ID_DOWNLOADS_FILTER_MENU" message="选择在此视图中要显示或隐藏的下载类型。"/>
 	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="显示暂停的下载。"/>
@@ -2590,7 +2590,7 @@
 	<string id="8239" value="完成"/>
 	<string id="8240" value="Shareaza 正在移动下载:"/>
 	<string id="8241" value="Shareaza 正在检测下载的错误:"/>
-	<string id="8243" value="已上传数量:"/>
+	<string id="8243" value="已经上传数量:"/>
 	<string id="8288" value="正在浏览您的 Shareaza 收藏"/>
 	<string id="8289" value="浏览"/>
 	<string id="8290" value="正在浏览 %i 个文件夹的内容"/>
@@ -2902,8 +2902,8 @@
 	<string id="16801" value="请在连接前选择您使用的 Internet 连接类型。"/>
 	<string id="16802" value="您还未指定任何共享文件夹。您确定吗？"/>
 	<string id="16803" value="您共享的文件夹是后面已共享文件夹的一部分:\n\n%s"/>
-	<string id="16804" value="您尚未在您的配置文件中输入屏幕名称。\n\n输入一个自定的屏幕名称是非常有益的，它可以使其他用户看见它们与谁连接。\n\n您确定要继续而不带有屏幕名称吗？"/>
-	<string id="16805" value="您尚未在您的配置文件中输入您的地址。\n\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。\n\n您确定要继续而不输入您的地址吗？"/>
+	<string id="16804" value="您尚未在您的配置文件中输入屏幕名称。"/>
+	<string id="16805" value="您尚未在您的配置文件中输入您的地址。\n\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。注意，输入您的地址并不会暴露任何对您的安全有害的信息。\n\n您确定要继续而不输入您的地址吗？"/>
 	<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口映射。\n\n请配置您的网络将 TCP 和 UDP 端口 %i 映射到您的本地计算机。"/>
 	<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千比特每秒，或 &quot;123 KB/s&quot; 千字节每秒。"/>
 	<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
@@ -3076,9 +3076,9 @@
 	<string id="20002" value="于"/><!-- 例如: 1 于 10 -->
 	<string id="20003" value="变更界面方向需要重新启动。\n您需要手动启动 Shareaza。立即退出？"/>
 	<string id="20004" value="您的操作系统不支持从右向左方向的语言。"/>
-        <string id="20005" value="否"/>
-        <string id="20006" value="是"/>
-        <string id="20007" value="自动"/>
+	<string id="20005" value="否"/>
+	<string id="20006" value="是"/>
+	<string id="20007" value="自动"/>
 	<string id="20100" value="连接中"/>
 	<string id="20101" value="请求中"/>
 	<string id="20102" value="回应"/>
@@ -3153,7 +3153,7 @@
 		<control caption="bits/s|bytes/s|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
 		<control caption="下载(_D):"/>
 		<control caption="默认展开新的下载"/>
-		<control caption="显示简易程序栏"/>
+		<control caption="显示简易的进度栏"/>
 		<control caption="搜索(_S):"/>
 		<control caption="默认展开多个资源文件"/>
 		<control caption="下载时切换到传输视图"/>
@@ -3198,7 +3198,7 @@
 		<control/><control/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="媒体播放器">
+	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="媒体">
 		<control caption="选项(_O):"/>
 		<control caption="使用 Shareaza 媒体播放器播放下列文件类型"/>
 		<control caption="使用 Shareaza 媒体播放器列队下列文件类型"/>
@@ -3223,7 +3223,7 @@
 		<control caption="在聊天中检查粗俗用语"/>
 	</dialog>
 
-	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="网页">
 		<control caption="P2P 链接控制(_P):"/>
 		<control caption="使用 Shareaza 打开下列类型的链接:"/>
 		<control caption="Magnet ( magnet: )"/>
@@ -3232,7 +3232,7 @@
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="下载管理器(_D):"/>
-		<control caption="使用 Shareaza 管理所有的 web 下载:"/>
+		<control caption="使用 Shareaza 管理所有的网页下载:"/>
 		<control/>
 		<control caption="添加(_A)"/>
 		<control caption="移除(_R)"/>
@@ -3311,7 +3311,7 @@
 		<control caption="(变更立即生效)"/>
 	</dialog>
 
-	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="远程访问">
+	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="远程">
 		<control caption="指南(_G):"/>
 		<control caption="Shareaza 远程访问允许您让 Shareaza 在您的计算机上运行，并使用网页浏览器对它进行远程控制。您将需要能够接受传入连接以使用此功能(也就是正确地配置路由器，等等)。"/>
 		<control caption="启用(_E):"/>
@@ -3957,7 +3957,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|文件名|文件名 (URI)|基础文件名|文件扩展名|文件大小|文件大小 (字节)|文件夹路径|本地主机|本地端口"/>
 		<control caption="选择预设:"/>
 		<control/>
-		<control caption="取消"/>
+		<control caption="复制(_C)"/>
 		<control caption="保存..."/>
 		<control/>
 		<control caption="取消"/>
