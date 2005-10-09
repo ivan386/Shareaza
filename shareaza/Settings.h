@@ -340,6 +340,7 @@ public:
 	struct sBitTorrent
 	{
 		BOOL		AdvancedInterface;			// Display BT 'extras' (Seed Torrent box, etc)
+		BOOL		AdvancedInterfaceSet;		// Has Shareaza auto-set the above value (first time a user downloads a torrent)
 		CString		TorrentCreatorPath;			// Location of the program used to create .torrent files
 		CString		DefaultTracker;
 		DWORD		DefaultTrackerPeriod;		// Delay between tracker contact attempts if one is not specified by tracker

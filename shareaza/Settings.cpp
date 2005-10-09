@@ -299,6 +299,7 @@ void CSettings::Setup()
 	Add( _T("eDonkey.Endgame"), &eDonkey.Endgame, TRUE );
 	
 	Add( _T("BitTorrent.AdvancedInterface"), &BitTorrent.AdvancedInterface, FALSE );
+	Add( _T("BitTorrent.AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, FALSE );
 	Add( _T("BitTorrent.TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
 	Add( _T("BitTorrent.DefaultTracker"), &BitTorrent.DefaultTracker, _T("") );
 	Add( _T("BitTorrent.DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000 );

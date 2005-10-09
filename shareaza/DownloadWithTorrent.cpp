@@ -151,7 +151,13 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	CreateDirectory( Settings.Downloads.TorrentPath, NULL );//Create/set up torrents folder
 	LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	pTorrent->SaveTorrentFile( Settings.Downloads.TorrentPath );
-	Settings.BitTorrent.AdvancedInterface = TRUE;
+
+	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
+	{
+		// If this is the first time the user has downloaded a torrent, turn the extra interface on.
+		Settings.BitTorrent.AdvancedInterfaceSet	= TRUE;
+		Settings.BitTorrent.AdvancedInterface		= TRUE;
+	}
 	
 	return TRUE;
 }

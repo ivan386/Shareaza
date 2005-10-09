@@ -394,7 +394,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		nRating++;	// Not running ed2k improves hub performance
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
 	}
-	if ( ! Settings.BitTorrent.AdvancedInterface )
+	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
 	{
 		nRating++;	// This user hasn't ever used BitTorrent, so probably won't be using bandwidth for that
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BT is not in use") );

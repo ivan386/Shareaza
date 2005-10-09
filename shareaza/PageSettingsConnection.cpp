@@ -250,7 +250,7 @@ void CConnectionSettingsPage::OnOK()
 
 	// Warn the user about upload limiting and ed2k/BT downloads
 	if ( ( ! Settings.Live.UploadLimitWarning ) &&
-		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface ) ) 
+		 ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) ) 
 	{
 		DWORD nDownload = max( Settings.Bandwidth.Downloads, ( ( Settings.Connection.InSpeed  / 8 ) * 1024 ) );
 		DWORD nUpload = ( ( Settings.Connection.OutSpeed / 8 ) * 1024 );
