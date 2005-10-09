@@ -144,6 +144,20 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_wndQueueDelete.EnableWindow( m_wndQueues.GetSelectedCount() > 0 );
 
 	m_bQueuesChanged = FALSE;
+
+	// Update value in limit combo box
+	if ( Settings.Bandwidth.Uploads )
+	{
+		m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
+	}
+	else
+	{
+		m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
+		int nSpace			= m_sBandwidthLimit.Find( ' ' );
+		m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
+	}
+
+	UpdateData( FALSE );
 	
 	return TRUE;
 }
@@ -422,18 +436,6 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	CSettingsPage::OnShowWindow(bShow, nStatus);
 	if ( bShow )
 	{
-		// Update speed units
-		if ( Settings.Bandwidth.Uploads )
-		{
-			m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Uploads * 8, FALSE, TRUE );
-		}
-		else
-		{
-			m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
-			int nSpace			= m_sBandwidthLimit.Find( ' ' );
-			m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
-		}
-
 		// Update the bandwidth limit combo values
 
 		// Remove any existing strings
@@ -447,7 +449,7 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 
 		UpdateData( FALSE );
 
-		// Update queue window to show currentt limit
+		// Update queue window to show current limit
 		UpdateQueues();
 	}
 }

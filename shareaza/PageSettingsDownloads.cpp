@@ -1,8 +1,8 @@
 //
 // PageSettingsDownloads.cpp
 //
-//	Date:			"$Date: 2005/08/05 07:09:04 $"
-//	Revision:		"$Revision: 1.19 $"
+//	Date:			"$Date: 2005/10/09 16:34:00 $"
+//	Revision:		"$Revision: 1.20 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -134,6 +134,19 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 		m_sQueueLimit = _T("MAX");
 
 	m_bDownloadsChanged = FALSE;
+
+	
+	// Update the text in the bandwidth limit combo
+	if ( Settings.Bandwidth.Downloads )
+	{
+		m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
+	}
+	else
+	{
+		m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
+		int nSpace			= m_sBandwidthLimit.Find( ' ' );
+		m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
+	}
 	
 	UpdateData( FALSE );
 	
@@ -392,20 +405,6 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 	CSettingsPage::OnShowWindow(bShow, nStatus);
 	if ( bShow )
 	{
-		CString str;
-
-		// Update speed units for the text in the bandwidth limit combo
-		if ( Settings.Bandwidth.Downloads )
-		{
-			m_sBandwidthLimit = Settings.SmartVolume( Settings.Bandwidth.Downloads * 8, FALSE, TRUE );
-		}
-		else
-		{
-			m_sBandwidthLimit	= Settings.SmartVolume( 0, FALSE, TRUE );
-			int nSpace			= m_sBandwidthLimit.Find( ' ' );
-			m_sBandwidthLimit	= _T("MAX") + m_sBandwidthLimit.Mid( nSpace );
-		}
-
 		// Update the bandwidth limit combo values
 
 		// Remove any existing strings
