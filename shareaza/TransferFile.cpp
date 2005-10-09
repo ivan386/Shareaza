@@ -200,7 +200,7 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 	DWORD dwDesiredAccess = GENERIC_READ;
 	if ( bWrite ) dwDesiredAccess |= GENERIC_WRITE;
 
-	DWORD dwShare = FILE_SHARE_READ|FILE_SHARE_WRITE;
+	DWORD dwShare = FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE;
 	DWORD dwCreation = bCreate ? CREATE_ALWAYS : OPEN_EXISTING;
 
 #if 1
