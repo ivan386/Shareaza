@@ -259,7 +259,7 @@ void CEDClient::Merge(CEDClient* pClient)
 
 	// Make sure chat/comments values are carried over
 	if ( ! m_bOpenChat )		m_bOpenChat = pClient->m_bOpenChat;
-	if ( ! m_bCommentSent )		m_bOpenChat = pClient->m_bCommentSent;
+	if ( ! m_bCommentSent )		m_bCommentSent = pClient->m_bCommentSent;
 
 	// Copy client capabilities. (This should not be necessary)
 	if ( ! m_nEmVersion )		m_nEmVersion = pClient->m_nEmVersion;
@@ -1310,7 +1310,8 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 		WritePartStatus( pReply, pDownload );
 		m_nUpSize = pDownload->m_nSize;
 		
-		pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ),
+		if ( ! pDownload->IsMoving() )
+			pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ), 
 			m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), &m_pGUID );
 		
 		Send( pReply );
