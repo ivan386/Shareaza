@@ -20,7 +20,7 @@ Other:
 		description="Shareaza 2.2 German Skin File" 
 		link="http://www.shareaza.com/"
 		email="spooky23 at arcor dot de" 
-		version="2.2.2.7" 
+		version="2.2.2.8" 
 		type="Language" 
 		language="de" 
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
@@ -2049,19 +2049,19 @@ Other:
 		</document>
 
 		<document name="GeneralHelp.XPsp2">
-			<text format="b">Windows XP Service Pack 2</text>
+			<text format="b">Begrenzung halb-offener Verbindungen entdeckt.</text>
 			<newline gap="8"/>
-			<text>Sie haben Windows XP Service Pack 2 installiert. Service Pack 2 beschränkt die Anzahl der Verbindungen die ein Programm gleichzeitig aufbauen kann.</text>
+			<text>Sie haben eine Windowsversion installiert, welche die Anzahl der Verbindungen beschränkt, die ein Programm gleichzeitig aufbauen kann.</text>
 			<newline gap="8"/>
-			<text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindugen beschränkt und andere Parameter entsprechend eingestellt, 
-               die Geschwindigkeit kann dadurch jedoch reduziert sein. Bitte besuchen Sie das 
+			<text>Um trotzdem richtig funktionieren zu können, hat Shareaza die Netzwerkverbindungen beschränkt und andere Parameter entsprechend eingestellt. 
+               Die Geschwindigkeit kann dadurch jedoch leicht reduziert sein. Bitte besuchen Sie das 
                Shareaza Forum für weitere Informationen und aktuelle Neuigkeiten.</text>
 		</document>
 		
 		<document name="GeneralHelp.AdultFilter">
 			<text format="b">Erotikfitler aktiviert</text>
 			<newline gap="8"/>
-			<text>Bitte beachten Sie, dieser Filter (wie jeder automatische Filter) nicht 100% genau arbeiten kann.
+			<text>Bitte beachten Sie, dass dieser Filter (wie jeder automatische Filter) nicht 100% genau arbeiten kann.
                Er wurde entwickelt, um übermäßige ungewollte Suchergebnisse herauszufiltern und nicht als eine 100% sichere Blockade.</text>
 			<newline gap="8"/>
 			<text>Die Internetnutzung von Kindern (inklusive P2P file sharing) sollte immer von ihren Eltern überwacht werden.</text>
@@ -2648,7 +2648,7 @@ Other:
 		<string id="8333" value="Diese Quelle kann instabil sein"/>
 		<string id="8334" value="Quellen für diese Datei haben zur Zeit keine freien Uploadslots"/>
 		<string id="8335" value="Quellen für diese Datei sind hinter einer Firewall"/>
-		<string id="8336" value="Quellen für diese Datei können instabil sein"/>
+		<string id="8336" value="Quellen für diese Datei könnten instabil sein"/>
 		<string id="16064" value="Der Shareaza Netzwerkkern wird gestartet..."/>
 		<string id="16065" value="Kann nicht an %s port %i für eingehende Verbindungen binden.  Eingehende Verbindungen werden nicht unterstützt"/>
 		<string id="16066" value="Der Shareaza Netzwerkkern wird heruntergefahren..."/>
