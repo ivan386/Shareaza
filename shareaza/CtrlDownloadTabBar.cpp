@@ -505,7 +505,7 @@ void CDownloadTabBar::GetSelectedDownloads(CPtrList* pDownloads)
 void CDownloadTabBar::NotifySelection()
 {
 	Invalidate();
-	GetOwner()->PostMessage( WM_TIMER, 3 );
+	GetOwner()->PostMessage( WM_TIMER, 2 );
 }
 
 
