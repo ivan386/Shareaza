@@ -3533,13 +3533,16 @@
 		<control caption="Начать пользоваться Shareaza'ой."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Добро пожаловать в Shareaza [2 из 7]">
-		<control caption="Shareaza поддерживает два разных пользовательских интерфейса, так что Вы можете выбрать тот, который является наиболее удобным для Вас."/>
-		<control caption="Выберите один из двух пользовательских интерфейса:"/>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Добро пожаловать в Shareaza">
+		<control caption="Shareaza поддерживает два типа интерфейса, так что Вы можете выбрать наиболее удобный. Вы сможете изменить эти опции и позже."/>
+		<control caption="Выберите один пользовательский интерфейс:"/>
 		<control caption="Обычный режим"/>
 		<control caption="Режим опытным"/>
-		<control caption="Обычный - удобные меню и кнопки. Знакомый пользователям других программ."/>
-		<control caption="Опытным - предлагает опытным пользователям много дополнительных команд, окон, и т.д."/>
+		<control caption="Обычный - удобные меню и кнопки.{n}Знакомый пользователям других программ файлообмена."/>
+		<control caption="Опытным - предлагает много дополнительных команд, окон, и т.д. Он может несколько смутить новичков!"/>
+		<control caption="Показывать упрощенную полосу прогресса. (Уменьшает нагрузку ЦПУ)"/>
+		<control caption="Показывать дополнительные элементы BitTorrent интерфейса."/>
+		<control caption="Ассоциировать файлы торрентов с программой."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Добро пожаловать в Shareaza [3 из 7]">
