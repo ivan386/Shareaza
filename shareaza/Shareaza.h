@@ -223,7 +223,7 @@ static inline bool IsWord(LPCTSTR pszString, int nStart, int nLength)
 
 // 4 Character vendor code (used on G1, G2)
 // BEAR, LIME, RAZA, etc
-#define VENDOR_CODE			"RAZA"
+#define VENDOR_CODE			"RAZB"
 
 // ed2k client ID number.
 // 0 = eMule, 1 - cDonkey, 4 = Shareaza mod/fork/etc, 28 = Raza.
@@ -232,5 +232,5 @@ static inline bool IsWord(LPCTSTR pszString, int nStart, int nLength)
 // 2 Character BT peer-id code
 // SZ = Raza, AZ = Azerus, etc
 #define BT_ID1				'S'
-#define BT_ID2				'B'
+#define BT_ID2				'~'
 
