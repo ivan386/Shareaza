@@ -128,11 +128,17 @@ void CLibraryBuilder::UpdateStatus(CString* pStr, int* pRemaining )
 {
 	m_pSection.Lock();
 		
-	*pRemaining = m_pFiles.GetCount();
-	if ( m_bThread ) *pRemaining ++;
+	if ( pRemaining != NULL )
+	{
+		*pRemaining = m_pFiles.GetCount();
+		if ( m_bThread ) *pRemaining ++;
+	}
 
-	*pStr = m_sPath;
-	if ( ! m_bThread ) pStr->Empty();
+	if ( pStr != NULL )
+	{
+		*pStr = m_sPath;
+		if ( ! m_bThread ) pStr->Empty();
+	}
 	m_pSection.Unlock();
 
 }
