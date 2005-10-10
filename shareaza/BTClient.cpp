@@ -533,7 +533,8 @@ BOOL CBTClient::OnNoHandshake2()
 
 void CBTClient::DetermineUserAgent()
 {
-	CString strVer;
+	int nNickStart = 0, nNickEnd = 13;
+	CString strVer, strNick;
 
 	if ( m_pGUID.b[0] == '-' && m_pGUID.b[7] == '-' )	
 	{	// Azerus style
@@ -553,13 +554,18 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("BitComet");
 		}
+		else if ( m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'k' )
+		{
+			m_sUserAgent = _T("BitKitten");
+		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'O' )
 		{
+			// ?
 			m_sUserAgent = _T("BO");
 		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'S' )
 		{
-			m_sUserAgent = _T("BitSlave");
+			m_sUserAgent = _T("BTSlave");
 		}
 		else if ( m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'X' )
 		{
@@ -569,13 +575,13 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("CTorrent");
 		}
-		else if ( m_pGUID.b[1] == 'L' && m_pGUID.b[2] == 'T' )
+		else if ( ( m_pGUID.b[1] == 'L' && m_pGUID.b[2] == 'T' ) || ( m_pGUID.b[1] == 'l' && m_pGUID.b[2] == 't' ) )
 		{
 			m_sUserAgent = _T("libtorrent");
 		}
 		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'P' )
 		{
-			m_sUserAgent = _T("MooP");
+			m_sUserAgent = _T("MooPolice");
 		}
 		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'T' )
 		{
@@ -585,13 +591,17 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("QT4");
 		}
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'B' )
+		{
+			m_sUserAgent = _T("Swiftbit");
+		}
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'N' )
+		{
+			m_sUserAgent = _T("ShareNET");
+		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'S' )
 		{
 			m_sUserAgent = _T("Swarmscope");
-		}
-		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'B' )
-		{	
-			m_sUserAgent = _T("Swiftbit");
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == '~' )
 		{	
@@ -637,8 +647,6 @@ void CBTClient::DetermineUserAgent()
 				( m_pGUID.b[5] - '0' ), ( m_pGUID.b[6] - '0' ) );
 			m_sUserAgent += strVer;
 		}
-		
-
 	}
 	else if ( m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '-' && m_pGUID.b[7] == '-' )
 	{	// Shadow style
@@ -672,36 +680,95 @@ void CBTClient::DetermineUserAgent()
 	{	// BitTorrent (Standard client, newer version)
 		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
+	else if  ( m_pGUID.b[0] == 'P' && m_pGUID.b[1] == 'l' && m_pGUID.b[2] == 'u' && m_pGUID.b[3] == 's' )
+	{	// BitTorrent Plus
+		m_sUserAgent.Format( _T("BitTorrent Plus %i.%i%i"), m_pGUID.b[4] - '0', m_pGUID.b[5] - '0', m_pGUID.b[6] - '0' );
+	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
-	{	// Old BitComet
-		m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
+	{	
+		// BitLord
+		if  ( m_pGUID.b[6] == 'L' && m_pGUID.b[7] == 'O' && m_pGUID.b[8] == 'R' && m_pGUID.b[9] == 'D' )
+			m_sUserAgent.Format( _T("BitLord %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
+		// Old BitComet
+		else 
+			m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
+	}
+	else if  ( ( m_pGUID.b[0] == 'B' && m_pGUID.b[1] == 'S' ) || ( m_pGUID.b[2] == 'B' && m_pGUID.b[3] == 'S' ) )
+	{	// BitSpirit
+		m_sUserAgent.Format( _T("BitSpirit") );
+	}
+	else if  ( m_pGUID.b[0] == 'B' && m_pGUID.b[1] == 'T' && m_pGUID.b[2] == 'M' )
+	{	// BTuga Revolution
+		m_sUserAgent.Format( _T("BTuga Rv %i.%i"), m_pGUID.b[3] - '0', m_pGUID.b[4] - '0' );
+		nNickStart = 5;
+	}
+	else if  ( ( m_pGUID.b[0] == 'b' && m_pGUID.b[1] == 't' && m_pGUID.b[2] == 'u' && m_pGUID.b[3] == 'g' && m_pGUID.b[4] == 'a' ) || ( m_pGUID.b[0] == 'o' && m_pGUID.b[1] == 'e' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 'n' && m_pGUID.b[4] == 'u' ) )
+	{	// BTugaXP
+		m_sUserAgent.Format( _T("BTugaXP") );
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
 	{	// Burst
 		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_pGUID.b[5] - '0', m_pGUID.b[7] - '0', m_pGUID.b[9] - '0' );
 	}
+	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'X' )
+	{	// eXeem
+		m_sUserAgent.Format( _T("eXeem") );
+		nNickStart = 2;
+	}
+	else if  ( m_pGUID.b[0] == '-' && m_pGUID.b[1] == 'G' && m_pGUID.b[2] == '3' )
+	{	// G3 Torrent
+		m_sUserAgent.Format( _T("G3 Torrent") );
+		nNickStart = 3;
+		nNickEnd = 11;
+	}
+	else if  ( m_pGUID.b[0] == '-' && m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'L' )
+	{	// MLdonkey
+		m_sUserAgent.Format( _T("MLdonkey %i.%i.%i"), m_pGUID.b[3] - '0' , m_pGUID.b[5] - '0' , m_pGUID.b[7] - '0' );
+	}
 	else if  ( m_pGUID.b[0] == 'O' && m_pGUID.b[1] == 'P' )
 	{	// Opera
-		m_sUserAgent.Format( _T("Opera")  );
+		m_sUserAgent.Format( _T("Opera %i%i%i%i"), m_pGUID.b[2] - '0', m_pGUID.b[3] - '0', m_pGUID.b[4] - '0', m_pGUID.b[5] - '0' );
+	}
+	else if  ( ( m_pGUID.b[0] == 'a' && m_pGUID.b[1] == '0' && m_pGUID.b[2] == '0' && m_pGUID.b[3] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '0' ) || ( m_pGUID.b[0] == 'a' && m_pGUID.b[1] == '0' && m_pGUID.b[2] == '2' && m_pGUID.b[3] == '-' && m_pGUID.b[4] == '-' && m_pGUID.b[5] == '-' && m_pGUID.b[6] == '0' ) )
+	{	// Swarmy
+		m_sUserAgent.Format( _T("Swarmy") );
+	}
+	else if  ( m_pGUID.b[0] == 'X' && m_pGUID.b[1] == 'B' && m_pGUID.b[2] == 'T' )
+	{	// XBT
+		m_sUserAgent.Format( _T("XBT %i.%i.%i"), m_pGUID.b[3] - '0', m_pGUID.b[4] - '0', m_pGUID.b[5] - '0' );
+	}
+	else if  ( !m_pGUID.b[0] && !m_pGUID.b[1] && !m_pGUID.b[2] && !m_pGUID.b[3] && !m_pGUID.b[4] && !m_pGUID.b[5] && !m_pGUID.b[6] && !m_pGUID.b[7] && m_pGUID.b[8] && m_pGUID.b[9] && m_pGUID.b[10] && m_pGUID.b[11] && m_pGUID.b[12] && m_pGUID.b[13] && m_pGUID.b[14] && m_pGUID.b[15] && m_pGUID.b[16] == 'U' && m_pGUID.b[17] == 'D' && m_pGUID.b[18] == 'P' && m_pGUID.b[19] == '0' )
+	{	// BitSpirit	(Spoofed Client ID)	// GUID 0 - 7: 0	GUID 8 - 15: !0	GUID 16 -19: UDP0	// ToDO: Check that other clients don't use this method
+		m_sUserAgent.Format( _T("BitSpirit") );
 	}
 	else
 	{	// Unknown peer ID string
 		m_sUserAgent = _T("BitTorrent");
 	}
-	
+
+	if ( nNickStart > 0 )
+		for ( int i = nNickStart; i <= nNickEnd; i++ )	// Extract nick from m_pGUID.b
+		{
+			if ( m_pGUID.b[i] == NULL ) break;
+
+			strNick.AppendFormat( _T("%c"), m_pGUID.b[i] );
+		}
+
 	if ( m_pDownloadTransfer != NULL )
 	{
 		m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
 		if ( m_pDownloadTransfer->m_pSource != NULL )
 		{
 			m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
+			if ( strNick.GetLength() ) m_pDownloadTransfer->m_pSource->m_sNick = strNick;
 			m_pDownloadTransfer->m_pSource->m_bClientExtended = ( m_bExtended && ! m_pDownloadTransfer->m_pSource->m_bPushOnly);
 		}
 	}
-	
+
 	if ( m_pUpload != NULL )
 	{
 		m_pUpload->m_sUserAgent = m_sUserAgent;
+		if ( strNick.GetLength() ) m_pUpload->m_sNick = strNick;
 		m_pUpload->m_bClientExtended = m_bExtended;
 	}
 }
