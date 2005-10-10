@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Norsk"
 		author="Tom Seland"
-		updatedBy="Vegard Martinsen"
+		updatedBy="Tom Seland"
 		description="Shareaza Norwegian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.3.7"
+		version="2.2.0.2"
 		type="Language"
 		language="no"
 		prompt="Klikk her for å velge norsk som språk"
@@ -3544,13 +3544,16 @@
 		<control caption="Hvordan du vil starte Shareaza"/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Velkommen til Shareaza [2 av 7]">
-		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, så du selv kan velge det du liker best"/>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Velkommen til Shareaza [2 av 7]">
+		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, du kan selv velge det du liker best"/>
 		<control caption="Vennligst velg et av disse grensesnittene:"/>
-		<control caption="Normalmodus"/>
-		<control caption="Powermodus"/>
+		<control caption="Normal modus"/>
+		<control caption="Power modus"/>
 		<control caption="Enkle menyer og store knapper. Liknende andre fildelingsprogrammer."/>
-		<control caption="Powermodus gir ekspertene mange ekstra kommandoer og vinduer o.l."/>
+		<control caption="Power modus gir ekspertene mange ekstra kommandoer, vinduer o.l."/>
+		<control caption="Vis enkel fremgangs indikator for nedlastninger. (Reduserer bruk av CPU)"/>
+		<control caption="Vis utvidede torrent elementer."/>
+		<control caption="Åpne torrent linker."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Velkommen til Shareaza [3 av 7]">
