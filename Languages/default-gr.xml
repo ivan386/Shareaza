@@ -9,7 +9,7 @@
 	description="Shareaza Default Greek Skin File"
 	link="http://www.shareaza.com/"
 	email="contact@shareaza.com"
-		version="2.1.4.4"
+		version="2.2.0.2"
 	type="Language"
 	language="gr"
 	prompt="Πατήστε εδώ για να διαλέξετε τα Ελληνικά ως γλώσσα επιλογής σας."
@@ -2096,7 +2096,7 @@
 	<!-- Search help documents -->
 
 	<document name="SearchHelp.BadSearch1">
-		<text format="b">Παρακαλώ επανα-διατυπώστε</text>
+		<text format="b">Παρακαλώ επαναδιατυπώστε</text>
 		<newline gap="8"/>
 		<text>Αυτή η έρευνα είναι φτωχά διατυπωμένη, και μπορεί να μην λειτουργήσει σωστά.
 		Οι έρευνες πρέπει να περιλαμβάνουν πολλούς όρους όπου είναι πιθανό, και πρέπει να καθορίζουν ένα σχήμα
@@ -2108,30 +2108,30 @@
 	</document>
 
 	<document name="SearchHelp.BadSearch2">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Παρακαλώ επαναδιατυπώστε</text>
 		<newline gap="8"/>
-		<text>This search does not contain enough terms to function properly. All searches need
-		a minimum number of valid, alphabetic characters to be able to start.</text>
+		<text>Αυτή η έρευνα δεν περιέχει αρκετούς όρους για να αρχίσει κανονικά.Όλες οι έρευνες χρειάζονται
+		έναν ελάχιστο αριθμό ,έγκυρων, αλφαβητικών χαρακτήρων για να είναι σε θέση να αρχίσει.</text>
 		<newline gap="8"/>
-		<text>While common file extentions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used
-		in searches, just the text you enter.</text>
+		<text>Ενώ με γνωστούς τύπους αρχείων (και νούμερα) μπορεί να γίνει έρευνα, πρέπει να γράψετε
+		και άλλους όρους επίσης όταν αρχίζετε μια έρευνα. Τα σημεία στίξης και τα wildcards (; , *) δεν χρησιμοποιούνται
+		στις έρευνες, απλά το κείμενο που βάζετε.</text>
 	</document>
   	 
 	<document name="SearchHelp.BadSearch3">
-		<text format="b">Please re-phrase the search</text>
+		<text format="b">Παρακαλώ επαναδιατυπώστε</text>
 		<newline gap="8"/>
-		<text>This search seems to contain only common file extentions, or no searchable
-		words.</text>
+		<text>Αυτή η έρευνα φαίνετε να περιέχει μόνο γνωστούς τύπους αρχείων, ή μη ερευνήσιμες
+		λέξεις.</text>
 		<newline gap="8"/>
-		<text>If you are having trouble creating searches, keep in mind that it's quite similar
-		to a web search. Specific terms or phrases are best- Unique names, titles and
-		keywords.</text>
+		<text>Εάν έχετε πρόβλημα να αρχίζετε μια έρευνα, θυμηθείτε ότι είναι σχεδόν το ίδιο με μια έρευνα στο
+		διαδίκτιο. Συγκεκριμένες λέξεις οι εκφράσεις είναι καλύτερες- Μοναδικά ονόματα, τίτλοι και
+		λέξεις κλειδιά.</text>
 		<newline gap="8"/>
-		<text>General terms cannot be searched for efficiently and may result in poor
-		search performance, as well as high bandwidth use during searches.</text>
+		<text>Με γενικούς όρους δεν μπορεί να γίνει μια αποτελεσματική έρευνα και μπορεί να έχει ως αποτέλεσμα τις χαμηλες
+		αποδόσεις στις έρευνες, όπως επίσης και μεγάλη χρησιμοποίηση του εύρου ζώνης στις έρευνες.</text>
 		<newline gap="8"/>
-		<text>Further help is available on the Shareaza web site.</text>
+		<text>Επιπλέον βοήθεια είναι διαθέσιμη στο web site του Shareaza.</text>
 	</document>
 
 	<document name="SearchHelp.AdultSearch">
@@ -2500,17 +2500,19 @@
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Multiple Values"/>
 	<string id="7003" value="Multiple"/>
+	<string id="7004" value="There already is a filter called &quot;%s&quot;, do you want to replace it?"/>
+	<string id="7005" value="Please give your filter a name."/>
 	<string id="8000" value="Οι επιλογές του Shareaza"/>
 	<string id="8001" value="Καλώς ήρθατε στο Shareaza"/>
 	<string id="8002" value="Ιδιότητες του αρχείου"/>
 	<string id="8003" value="Επεξεργασία του προφίλ μου"/>
 	<string id="8004" value="!Καλώς ήρθατε στο Shareaza (version) !\n.\nΤο Shareaza είναι ένα εντελώς ελεύθερο προοιόν.\nΠαρακαλώ χρησιμοποιήστε υπεύθυνα και σεβαστείτε τους νόμους περι πνευματικής ιδιοκτησίας.\n.."/>
 	<string id="8005" value="(Κλείσιμο μετά τις μεταφορές)"/>
-	<string id="8006" value="YΔεν είστε συνδεδεμένοι.  Πατήστε το κουμπί Σύνδεση για να αρχίσετε."/>
+	<string id="8006" value="Δεν είστε συνδεδεμένοι.  Πατήστε το κουμπί Σύνδεση για να αρχίσετε."/>
 	<string id="8007" value="Δεν υπάρχουν ενεργές αναζητήσεις.  Πατήστε εδώ για να ψάξετε για αρχεία."/>
-	<string id="8008" value="Το Shareaza  τελείωσε την λήψη της επόμενης έκδοσης (%s).  Θέλετε να την εγκαταστήσετε τώρα?\n\nΕαν πατήσετε Ναι, το Shareaza θα κλείσει προσωρινά καθώς η νέα έκδοση εγκαθίστατε."/>
+	<string id="8008" value="Το Shareaza  τελείωσε την λήψη της επόμενης έκδοσης (%s).  Θέλετε να την εγκαταστήσετε τώρα?\n\nΕαν πατήσετε Ναι, το Shareaza θα κλείσει προσωρινά καθώς η νέα έκδοση εγκαθίστατε."/>"/>
 	<string id="8009" value="Είστε σίγουροι ότι θέλετε να διαγράψετε το &quot;%s&quot; skin?  Αυτό δεν μπορεί να ανασταλεί."/>
-	<string id="8010" value="Αυτή είναι μία beta έκδοση του Shareaza της οποίας η περίοδος τελείωσε.  Παρακαλώ κατεβάστε την ολοκληρωμένη επίσημη έκδοση απο το www.shareaza.com"/>
+	<string id="8010" value="Αυτή είναι μία beta έκδοση του Shareaza της οποίας η περίοδος τελείωσε.  Παρακαλώ κατεβάστε την ολοκληρωμένη επίσημη έκδοση απο το www.shareaza.com"/>"/>
 	<string id="8011" value="Η αλλαγή της όψης θα κλείσει όποιο παράθυρο έχετε ανοιχτό.  Θέλετε να την αλλάξετε τώρα?"/>
 	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
 	<string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library."/>
@@ -2519,8 +2521,8 @@
 	<string id="8064" value="Σύνδεση σε %lu γείτονα(ες).  %s σε τοπικές βιβλιοθήκες."/>
 	<string id="8065" value="Σύνδεση με το δίκτυο..."/>
 	<string id="8066" value="Δεν έχετε συνδεθεί με το δίκτυο."/>
-	<string id="8067" value="%s in : %s out [D:%i/U:%i]"/>
-	<string id="8068" value="[H:%i] %s in : %s out [D:%i/U:%i]"/>
+	<string id="8067" value="%s μέσα : %s έξω [D:%i/U:%i]"/>
+	<string id="8068" value="[H:%i] %s μέσα : %s έξω [D:%i/U:%i]"/>
 	<string id="8069" value="Σύνδεση"/>
 	<string id="8070" value="Σύνδεση..."/>
 	<string id="8071" value="Συνδέθηκε"/>
@@ -2530,7 +2532,7 @@
 	<string id="8098" value="%i πηγές είναι διαθέσιμες (%s).  "/>
 	<string id="8099" value="Υπάρχει μια κριτική."/>
 	<string id="8100" value="Υπάρχουν %i κριτικές."/>
-	<string id="8101" value="%s writes:"/>
+	<string id="8101" value="%s γράφει:"/>
 	<string id="8102" value="%s Βαθμολόγηση αυτού του αρχείου:"/>
 	<string id="8103" value="Πατήστε για επισκόπηση"/>
 	<string id="8104" value="Επισκόπηση..."/>
@@ -2909,7 +2911,7 @@
 	<string id="16801" value="Παρακαλώ διαλέχτε τον τύπο της σύνδεσης του Ιnternet σας πριν συνεχίσετε."/>
 	<string id="16802" value="Δεν έχετε διαλέξει φακέλους για να μοιράζεστε.  Είστε σίγουροι?"/>
 	<string id="16803" value="The folder you are sharing is already shared as part of another shared folder:\n\n%s"/>
-	<string id="16804" value="Δεν έχεις βάλει ένα όνομα για να φαίνετε στο προφίλ σου.\n\nΕίναι καλή ιδέα να βάλεις ένα τυχαίο όνομα ώστε οι άλλοι χρήστες να βλέπουν με ποιον συνδέονται.\n\nΕίσαι σίγουρος ότι θες να συνεχίσεις χωρίς να βάλεις ένα όνομα?"/>
+	<string id="16804" value="Δεν έχεις βάλει ένα όνομα για να φαίνετε στο προφίλ σου.\n\nΕίσαι σίγουρος ότι θες να συνεχίσεις χωρίς να βάλεις ένα όνομα?"/>
 	<string id="16805" value="Δεν έχεις βάλει μια τοποθεσία για να φαίνετε στο προφίλ σου.\n\nΕίναι καλή ιδέα να βάλεις την περιοχή σου ώστε οι άλλοι χρήστες να βλέπουν απο που είσαι.\n\nΕίσαι σίγουρος ότι θες να συνεχίσεις χωρίς να βαλεις την τοποθεσία σου?"/>
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
 	<string id="16807" value="Παρακαλώ θέστε το όριο του Εύρους Ζώνης που θέλετε &quot;123 kb/s&quot; για kilobits per second, ή &quot;123 KB/s&quot; για kilobytes per second."/>
@@ -3954,7 +3956,7 @@
 		<control caption="You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"/>
 		<control/><control/><control/>
 		<control caption="Include _myself as a fixed source in the URL"/>
-		<control caption="Cancel"/>
+		<control caption="Ακύρωση"/>
 	</dialog>
 
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Export URIs">
@@ -3965,10 +3967,10 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
-		<control caption="Cancel"/>
-		<control caption="Save..."/>
+		<control caption="_Αντιγραφή"/>
+		<control caption="Σώσιμο..."/>
 		<control/>
-		<control caption="Cancel"/>
+		<control caption="Ακύρωση"/>
 	</dialog>
 
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Manager">
