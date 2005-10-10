@@ -573,9 +573,17 @@ void CBTClient::DetermineUserAgent()
 		{
 			m_sUserAgent = _T("libtorrent");
 		}
+		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'P' )
+		{
+			m_sUserAgent = _T("MooP");
+		}
 		else if ( m_pGUID.b[1] == 'M' && m_pGUID.b[2] == 'T' )
 		{
 			m_sUserAgent = _T("MoonlightTorrent");
+		}
+		else if ( m_pGUID.b[1] == 'Q' && m_pGUID.b[2] == 'T' )
+		{
+			m_sUserAgent = _T("QT4");
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'S' )
 		{
@@ -583,7 +591,11 @@ void CBTClient::DetermineUserAgent()
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'B' )
 		{	
-			m_sUserAgent = _T("SBeta");
+			m_sUserAgent = _T("Swiftbit");
+		}
+		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == '~' )
+		{	
+			m_sUserAgent = _T("Sbeta");
 		}
 		else if ( m_pGUID.b[1] == 'S' && m_pGUID.b[2] == 'Z' )
 		{	
@@ -635,6 +647,9 @@ void CBTClient::DetermineUserAgent()
 		case 'A':
 			m_sUserAgent = _T("ABC");
 			break;
+		case 'O':
+			m_sUserAgent = _T("Osprey");
+			break;
 		case 'S':
 			m_sUserAgent = _T("Shadow");
 			break;
@@ -658,12 +673,16 @@ void CBTClient::DetermineUserAgent()
 		m_sUserAgent.Format( _T("BitTorrent %i.%i.%i"), m_pGUID.b[1] - '0' , m_pGUID.b[3] - '0' , m_pGUID.b[5]- '0' );
 	}
 	else if  ( m_pGUID.b[0] == 'e' && m_pGUID.b[1] == 'x' && m_pGUID.b[2] == 'b' && m_pGUID.b[3] == 'c' )
-	{	// BitComet
+	{	// Old BitComet
 		m_sUserAgent.Format( _T("BitComet %i.%02i"), m_pGUID.b[4], m_pGUID.b[5] );
 	}
 	else if  ( m_pGUID.b[0] == 'M' && m_pGUID.b[1] == 'b' && m_pGUID.b[2] == 'r' && m_pGUID.b[3] == 's' && m_pGUID.b[4] == 't' )
 	{	// Burst
 		m_sUserAgent.Format( _T("Burst %i.%i.%i"), m_pGUID.b[5] - '0', m_pGUID.b[7] - '0', m_pGUID.b[9] - '0' );
+	}
+	else if  ( m_pGUID.b[0] == 'O' && m_pGUID.b[1] == 'P' )
+	{	// Opera
+		m_sUserAgent.Format( _T("Opera")  );
 	}
 	else
 	{	// Unknown peer ID string
