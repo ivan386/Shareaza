@@ -22,10 +22,10 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "WndMain.h"
 //#include "Library.h"
 //#include "LibraryHistory.h"
 #include "PageSettingsBitTorrent.h"
-#include ".\pagesettingsbittorrent.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -185,6 +185,7 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 
 void CBitTorrentSettingsPage::OnOK() 
 {
+	BOOL bRedraw = FALSE;
 	UpdateData( TRUE );
 
 	m_nClearPercentage = min (m_nClearPercentage, 999);
@@ -212,6 +213,8 @@ void CBitTorrentSettingsPage::OnOK()
 
 	UpdateData( FALSE );
 
+	if ( Settings.BitTorrent.AdvancedInterface != m_bTorrentInterface ) bRedraw = TRUE;
+
 	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
 	Settings.BitTorrent.Endgame				= m_bEndGame;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
@@ -222,6 +225,15 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;
+
+	/*
+	// Redraw the GUI to make torrents box show/hide if we need to
+	if ( bRedraw ) 
+	{
+		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	}
+	*/
 
 	CSettingsPage::OnOK();
 }
