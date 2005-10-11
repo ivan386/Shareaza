@@ -3535,22 +3535,25 @@
 		<control caption="Empezar usando Shareza."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Bienvenido(a) a Shareaza [2 de 7]">
-		<control caption="Shareaza soporta 2 interfaces diferentes, puedes elegir la que se te haga más comoda."/>
-		<control caption="Por favor selecciona alguna de estas interfaces:"/>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Bienvenido a Shareaza">
+		<control caption="Shareaza tiene una interface de usuario muy flexible, tu puedes seleccionar la que tu sientas que es más confortable para ti. Puedes cambiar las opciones en cualquier momento."/>
+		<control caption="Selecciona una interface gráfica:"/>
 		<control caption="Modo Normal"/>
 		<control caption="Modo Avanzado"/>
-		<control caption="Simple, botones y menus fácil de usar.	Familiar para usuarios que han utilizado otros programas para compartir archivos."/>
-		<control caption="El modo avanzado le da a los usuarios expertos muchos comandos, ventanas, etc."/>
+		<control caption="Simple, menus facil de usar y botones.{n}Familiar a usuarios que han usado otros programas para compartir archvios."/>
+		<control caption="El modo avanzado proporciona comandos extras, ventanas, etc.{n}¡Puede ser algo confuso para nuevos usuarios!"/>
+		<control caption="Mostrar barras de progreso simplificadas. (Reduce uso de CPU)"/>
+		<control caption="Mostrar elementos adiccionales de interface de torrent."/>
+		<control caption="Manejar enlaces torrent."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Bienvenido a Shareaza [3 de 7]">
 		<control caption="Para un rendimiento optimo, Shareaza necesita saber un poco más sobre tu conexión a Internet."/>
 		<control caption="&#160;( por favor selecciona )| Estoy usando Internet en casa| Estoy usando Internet en una RED colegial| Estoy usando Internet en una RED de oficina| Estoy usando Internet en un hotel o aeropuerto"/>
 		<control caption="Esta tu red o campus protegido por un firewall o NAT router?"/>
-		<control caption="&#160;No, Yo puedo aceptar todas las conexiones entrantes| S, y no puedo aceptar conexiones entrantes de Internet| No lo se, por favor AUTO-DETECTA el estado"/>
+		<control caption="&#160;No, Yo puedo aceptar todas las conexiones entrantes| Sí, y no puedo aceptar conexiones entrantes de Internet| No lo se, por favor AUTO-DETECTA el estado"/>
 		<control caption="Tienes un firewall o NAT router en tu conexión de Internet de tu casa?"/>
-		<control caption="&#160;No, Tengo completo acceso a Internet| Si, pero voy a configurar redireccin de puertos a Shareaza| S , y no puedo aceptar conexiones entrantes de Internet| o lo se, por favor AUTO-DETECTA el estado"/>
+		<control caption="&#160;No, Tengo completo acceso a Internet| Sí, pero voy a configurar redireccin de puertos a Shareaza| Sí, y no puedo aceptar conexiones entrantes de Internet| No lo se, por favor AUTO-DETECTA el estado"/>
 		<control caption="Si sabes que tan rápido es tu conexión a internet, selecciona la mejor opción de abajo:"/>
 		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="O, escoge:"/>
