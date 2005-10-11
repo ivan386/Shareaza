@@ -14,15 +14,15 @@ Other:
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
 	<manifest 
-		name="Deutsch" 
+		name="Deutsch"
 		author="Jann Röder"
-		updatedBy="Jann Röder" 
-		description="Shareaza 2.2 German Skin File" 
+		updatedBy="zero9999" 
+		description="Shareaza 2.2 German Skin File"
 		link="http://www.shareaza.com/"
-		email="spooky23 at arcor dot de" 
-		version="2.2.2.8" 
-		type="Language" 
-		language="de" 
+		email="spooky23 at arcor dot de"
+		version="2.2.2.8"
+		type="Language"
+		language="de"
 		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
 	/>
 
@@ -3543,13 +3543,16 @@ Other:
 			<control caption="Shareaza zu benutzen"/>
 		</dialog>
 
-		<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Wilkommen bei Shareaza [2 von 7]">
-			<control caption="Shareaza besitzt zwei verschiedene Benutzoberflächen."/>
-			<control caption="Bitte wählen Sie eine der Benutzeroberflächen:"/>
-			<control caption="Normal Modus)"/>
-			<control caption="Power Modus"/>
-			<control caption="Simpel, einfach zu benutzende Menüs und Buttons. Ähnlich anderen File Sharing Programmen"/>
-			<control caption="Der Power Modus erlaubt fortgeschrittenen Benutzern den Zugriff auf erweiterte Funktionen und zusätzliche Fenster."/>
+		<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Willkommen bei Shareaza">
+			<control caption="Shareaza bietet eine flexible Benutzeroberfläche, das bedeutet Sie können wählen was ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
+			<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
+			<control caption="Normalmodus"/>
+			<control caption="Powermodus"/>
+			<control caption="Simple, einfach zu bedienende Menüs und Buttons.{n}Gewohnt für Benutzer anderer File-Sharing-Programme."/>
+			<control caption="Der Powermodus bietet Experten viele zusätzliche Befehle, Fenster, usw.{n}Kann für neue Benutzer etwas irritierend sein!"/>
+			<control caption="Vereinfachte Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
+			<control caption="Zusätzliche BitTorrent-Bedienelemente anzeigen."/>
+			<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 		</dialog>
 
 		<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Wilkommen bei Shareaza [3 von 7]">
