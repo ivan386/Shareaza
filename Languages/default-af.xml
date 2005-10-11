@@ -8,7 +8,7 @@
 <!-- Manifest -->
 <manifest	name="Afrikaans"
 		author="Johann van der Walt - Thesage"
-		updatedBy="Johann van der Walt - Thesage"
+		updatedBy="Rolandas Rudomanskis"
 		description="Shareaza Afrikaanse Omslaglêer"
 		link="http://www.freewebs.com/afrshareaza"
 		email="jvdwalt AT tuks DOT co.za"
@@ -2898,7 +2898,7 @@
 	<string id="16801" value="Kies asseblief die tipe internet konneksie wat jy gebruik, voor jy aangaan."/>
 	<string id="16802" value="Jy het nie enige gidse geselekteer om te deel nie.  Is jy seker?"/>
 	<string id="16803" value="Hierdie gids word alreeds as deel van die volgende gids gedeel:\n\n%s"/>
-	<string id="16804" value="Jy het nog nie 'n bynaam ingevul nie.\n\nDit is 'n goeie idee om 'n bynaam in te vul sodat ander gebruikers kan sien aan wie hulle gekonnekteer is.\n\nIs jy seker jy wil voortgaan sonder 'n bynaam?"/>
+	<string id="16804" value="Jy het nog nie 'n bynaam ingevul nie."/>
 	<string id="16805" value="Jy het nie jou ligging ingevul nie.\n\nDit is 'n goeie idee om jou ligging in te vul sodat ander gebruikers kan sien waar jy vandaan kom.\n\nIs jy seker jy wil voortgaan sonder om jou ligging in te vul?"/>
 	<string id="16806" value="Jy het aangedui dat jy poort-aanstuur wil opstel op jou NAT roeteerder of netskans.\n\nStel asseblief jou netwerk om TCP poort %i aan te stuur na jou lokale rekenaar."/>
 	<string id="16807" value="Tik asseblief die bandwydte limiet wat jy wil hê, in die vorm &quot;123 kb/s&quot; vir kilobits per sekonde, of &quot;123 KB/s&quot; vir kilobytes per sekonde."/>
@@ -3515,13 +3515,16 @@
 		<control caption="Shareaza te begin gebruik."/>
 	</dialog>
 	
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Welkom by Shareaza [2 van 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom by Shareaza">
 		<control caption="Shareaza ondersteun twee verskillende gebruikerskoppelvlakke, sodat jy een kan kies wat die mees gerieflikste vir jou is."/>
 		<control caption="Selekteer asseblief een van die twee gebruikerskoppelvlakke:"/>
 		<control caption="Normale Modus"/>
 		<control caption="Kragmodus"/>
 		<control caption="Eenvoudige, gebruikersvriendelike kieslyste en knoppies.	Bekend aan gebruikers van ander lêerdelingsprogramme."/>
 		<control caption="Kragmodus bied gevorderde gebruikers verskeie ekstra opdragte, vensters, ens."/>
+		<control caption="Display simplified download progress bars. (Reduces CPU use)"/>
+		<control caption="Display additional torrent interface elements."/>
+		<control caption="Handle torrent links."/>
 	</dialog>
 	
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza [3 van 7]">
