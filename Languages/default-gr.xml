@@ -3533,14 +3533,17 @@
 		<control caption="Να αρχίσετε να χρησιμοποιήτε το Shareaza."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Καλώς ήρθατε στο Shareaza [2 of 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Καλώς ήρθατε στο Shareaza [2 of 7]">
 		<control caption="Το Shareaza υποστηρίζει δυο διαφορετικά user interfaces, ώστε να μπορείτε να διαλέξετε όποιο σας βολεύει περισσότερο."/>
 		<control caption="Παρακαλώ διαλέχτε ποιο απο τα δυο user interfaces θέλετε:"/>
 		<control caption="Κανονική μορφή"/>
 		<control caption="Δυναμική μορφή"/>
-		<control caption="Απλό, Εύκολο να χρησιμοποιήτε τα μενού και τα κουμπιά.	Συνηθίζει τους χρήστες σε άλλα προγράμματα file sharing."/>
-		<control caption="Η Δυναμική μορφή προσφέρει στους εξιδικευμένους χρήστες πολλές επιπλεόν εντολές, παράθυρα, κτλ."/>
-	</dialog>
+		<control caption="Απλό, Εύκολο στην χρήση των μενού και των κουμπιιών.{n}Συνηθισμένο απο χρήστες σε άλλα προγράμματα file sharing."/>
+		<control caption="Η Δυναμική μορφή προσφέρει στους εξιδικευμένους χρήστες πολλές επιπλεόν εντολές, παράθυρα, κτλ.Ίσως μπερδέψει τους νέους χρήστες!"/>
+		<control caption="&#160;Εμφάνισε μια απλή μπάρα προόδου.(Μειώνει την χρήση της CPU)"/>
+		<control caption="&#160;Εμφάνισε περισσότερα στοιχεία ελέγχου για τα torrent."/>
+		<control caption="&#160;Χειρισμός των torrent links."/>
+</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Καλώς ήρθατε στο Shareaza [3 of 7]">
 		<control caption="Για βέλτιστη απόδοση, το Shareaza πρέπει να ξέρει λίγα πράγματα για την σύνδεσή σας στο Internet.."/>
