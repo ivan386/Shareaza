@@ -1280,9 +1280,10 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		}
 
 		// If we don't need this connection
-		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) &&  // This connection is to a leaf below us, and we don't need more hubs
-			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||                          // And we don't need more leaves
-			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ) // All that, or this connection is to a hub and we don't need more hubs
+		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) &&		// This connection is to a leaf below us, and we don't need more hubs/leaves
+			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||	// This connection is to a hub and we don't need more hubs
+			 ( ( m_nNodeType != ntHub ) && ( m_bObsoleteClient || m_bBadClient ) ) )	// This is an obsolete version of Shareaza
 		{
 			// Tell the remote computer we can't connect because we already have too many connections
 			SendHostHeaders( _T("GNUTELLA/0.6 503 Maximum connections reached") );
