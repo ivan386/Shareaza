@@ -18,7 +18,7 @@ updatedBy="Yuri"
 description="Shareaza Default Hungarian Skin File"
 link="http://totenkopf.uw.hu"
 email="yuri1(AT)freemail(DOT)hu"
-version="2.1.4.4"
+version="2.2.0.2"
 type="Language"
 language="hu"
 prompt="Kattints ide a magyar nyelvhez."
@@ -3542,13 +3542,16 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="A Shareaza használata"/>
        </dialog>
 
-       <dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Köszöntelek a Shareazában [2/7]">
+       <dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Köszöntelek a Shareazában [2/7]">
                <control caption="A Shareaza több felhasználói felülettel rendelkezik. Válaszd ki a neked legmegfelelőbbet."/>
                <control caption="Válassz:"/>
                <control caption="Egyszerű nézet"/>
                <control caption="Összetett nézet"/>
                <control caption="Könnyen használható, hasonló a többi fájlmegosztóhoz."/>
                <control caption="Több lehetőség a tapasztaltabb felhasználóknak."/>
+               <control caption="Egyszerűsített letöltési folyamatcsík. (Kevesebb CPU használat)"/>
+               <control caption="További Bittorrent elemek megjelenítése."/>
+               <control caption="Torrentfájlok társítása a Shareazához."/>
        </dialog>
 
        <dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Köszöntelek a Shareazában [3/7]">
@@ -3976,7 +3979,7 @@ prompt="Kattints ide a magyar nyelvhez."
                <control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Fájlnév|Fájlnév (URL)|Alap fájlnév|Fájl kiterjesztése|Fájl mérete|Fájl mérete (bájlt)|Mappa útvonal|Helyi hálózati kiszolgáló|Helyi hálózati port"/>
                <control caption="Beállítás kiválasztása:"/>
                <control/>
-               <control caption="Mégse"/>
+               <control caption="Másolás"/>
                <control caption="Mentés..."/>
                <control/>
                <control caption="Mégse"/>
