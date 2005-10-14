@@ -2872,7 +2872,8 @@ right quote	&#147;
 	<string id="16407" value="Ar norite, kad šiam rinkiniui daugiau nebebūtų klausiama apie kokius nors atsisiuntimus?"/>
 	<string id="16408" value="Kopijuoti &amp;nuorodą"/>
 	<string id="16409" value="Eksportuoti &amp;nuorodas..."/>
-	<string id="16410" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų bylų aplanku"/>
+	<string id="16410" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių bylų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
+	<string id="16411" value="Neįmanoma perkelti bylos „%s“. Bylą turbūt naudoja kita programa.\nAr norėtumėte šią bylą nukopijuoti užuot perkėlus?"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -2938,8 +2939,8 @@ right quote	&#147;
 	<string id="16811" value="Automatinis"/>
 	<string id="16816" value="eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\nAr įsitikinę, kad norite apriboti eilės numerius?"/>
 	<string id="16817" value="Windows nepalaiko kelių, ilgesnių už 256 simbolius.\nPasirinkite aplanką, kurio kelias yra trumpesnis."/>
-	<string id="16818" value="Laikinųjų bylų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigtos siųstis bylos gali būti bendrinamos atsisiuntimų lange."/>
-	<string id="16819" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių bylų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
+	<string id="16818" value="Atsisiuntimų aplankas neturi sutapti su laikinųjų bylų aplanku"/>
+	<string id="16819" value="Laikinųjų bylų aplankas negali būti įtrauktas į kolekciją, nes tai sumažins darbo efektyvumą. Nebaigtos siųstis bylos gali būti bendrinamos atsisiuntimų lange."/>
 	<string id="16864" value="Siunčiama užklausa apie paslaugų radimo tarnybas..."/>
 	<string id="16865" value="Siunčiama užklausa paslaugų radimo tarnybai „%s“..."/>
 	<string id="16866" value="GWebCache transakcija sėkminga („%s“)."/>
