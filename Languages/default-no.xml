@@ -2866,6 +2866,7 @@
 	<string id="16408" value="Kopier &amp;URI"/>
 	<string id="16409" value="Eksporter &amp;URI'er..."/>
 	<string id="16410" value="Mappen for fullstendige filer og mappen for ufullstendige filer bør ikke være den samme"/>
+	<string id="16411" value="Kan ikke flytte filen %s. Filen kan være i bruk av et annet program.\n\nVil du forsøke å kopiere filen i stedet?"/>
 	<string id="16448" value="Koblet til %s, starter håndtrykk..."/>
 	<string id="16449" value="Du chatter med %s (%s)."/>
 	<string id="16450" value="Kobling til %s lukket."/>
