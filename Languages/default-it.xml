@@ -2089,8 +2089,8 @@
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limitare gli upload può rallentare i download</text>
 		<newline gap="8"/>
-		<text>Shareaza si collega a parecchie reti per fare rispettare i rapporti, limita gli upload
-		ai client che non condividono, o semplicemente preferenzia l'invio a condivisori conosciuti.</text>
+		<text>Shareaza si collega a molte reti per fare rispettare i rapporti, limita gli upload
+		ai client che non condividono o preferenzia l'invio a condivisori conosciuti.</text>
 		<newline/>
 		<text>Fortunatamente, la connessioni DSL a banda larga sono a due vie:
 		allocano separatamente l'invio e la ricezione. Se il client è configurato correttamente, 
@@ -3544,13 +3544,16 @@
 		<control caption="Iniziare ad usare Shareaza"/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Benvenuto su Shareaza [2 di 7]">
-		<control caption="Shareaza supporta due interfacce utente diverse, in modo da poter scegliere quella più confortevole per voi."/>
-		<control caption="Seleziona una di queste due interfacce utente:"/>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Benvenuto su Shareaza">
+		<control caption="Shareaza supporta un'interfaccia utente flessibile, così puoi scegliere quella più confortevole per te. Puoi cambiare queste opzioni in qualunque momento."/>
+		<control caption="Seleziona l'interfaccia utente:"/>
 		<control caption="Modalità normale"/>
 		<control caption="Modalità avanzata"/>
-		<control caption="Semplice con menu e pulsanti facili da usare.	 Ben nota agli utenti di altri programmi di condivisione file."/>
-		<control caption="La modalità avanzata offre agli utenti esperti molti comandi extra, finestre, ecc."/>
+		<control caption="Semplice con menu e pulsanti facili da usare.{n}Familiare agli utenti di altri programmi di condivisione file."/>
+		<control caption="La modalità avanzata offre agli utenti esperti comandi extra, finestre, ecc.{n}Può confondere i nuovi utenti!"/>
+		<control caption="Visualizza le barre dei progressi semplificate. (Riduce l'uso della CPU)"/>
+		<control caption="Mostra elementi addizionali dell'interfaccia dei torrent."/>
+		<control caption="Gestisci collegamenti ai torrent."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Benvenuto su Shareaza [3 di 7]">
