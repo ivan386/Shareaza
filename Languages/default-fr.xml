@@ -2816,7 +2816,8 @@ Other:
 	<string id="16407" value="Voulez-vous stopper tout message de sollicitation à télécharger autre chose de cette collection?"/>
 	<string id="16408" value="Copier l'&amp;URI"/>
 	<string id="16409" value="Exporter les &amp;URIs..."/>
-	<string id="16410" value="Les dossiers complete et incomplete ne doivent pas être le même"/>
+    <string id="16410" value="Un sous-dossier du dossier sélectionné &quot;%s&quot; fait déjà partie de votre bibliothèque.\nAjouter ce dossier entraînera le re-hachement de certains fichiers.\n\nVoulez-vous continuer?"/>
+	<string id="16411" value="incapable de déplacer le fichier %s. Le fichier est peut-être utilisé par une autre application.\n\nVoulez-vous à la place essayer de copier ce fichier?"/>
 	<string id="16448" value="Connecté à %s, liaison..."/>
 	<string id="16449" value="Discussion avec %s (%s)."/>
 	<string id="16450" value="Connexion à %s fermée."/>
@@ -2882,8 +2883,8 @@ Other:
     <string id="16811" value="Automatique"/>
 	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nEtes-vous certain de vouloir limiter le nombre de positions en file d'attente que vous acceptez?"/>
 	<string id="16817" value="Windows ne supporte pas les chemins d'accès au fichier de plus de 256 caractères.\nMerci de sélectionner un dossier avec un chemin plus court."/>
-	<string id="16818" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/> 
-    <string id="16819" value="Un sous-dossier du dossier sélectionné &quot;%s&quot; fait déjà partie de votre bibliothèque.\nAjouter ce dossier entraînera le re-hachement de certains fichiers.\n\nVoulez-vous continuer?"/>
+	<string id="16818" value="Les dossiers complete et incomplete ne doivent pas être les mêmes"/>
+	<string id="16819" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/> 
 	<string id="16864" value="Requiert le service Découverte de l'hôte..."/>
 	<string id="16865" value="Requiert le service Découverte &quot;%s&quot;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&quot;%s&quot;)."/>
