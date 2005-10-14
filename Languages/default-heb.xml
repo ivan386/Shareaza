@@ -9,7 +9,7 @@
 		description="Shareaza Default Hebrew Skin File"
 		link="http://www.shareaza.com/"
 		email="peer_l_ (at) hotmail (dot) com"
-		version="2.1.4.4"
+		version="2.2.0.2"
 		type="Language"
 		language="heb"
 		prompt="המחדל ברירת כשפת עברית לקביעת כאן לחץ"
@@ -2861,6 +2861,8 @@
 	<string id="16407" value="‪Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="‪העתק &amp;URI"/>
 	<string id="16409" value="‪ייצא &amp;URI..."/>
+	<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
+	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
 	<string id="16448" value="‪...לוחץ ידיים ,%s מחובר אל"/>
 	<string id="16449" value="‪Now chatting with %s (%s)."/>
 	<string id="16450" value="‪נסגר %s החיבור אל"/>
@@ -2926,6 +2928,8 @@
 	<string id="16811" value="‪אוטומטי"/>
 	<string id="16816" value="‪The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 chracters.\nPlease select a folder with a shorter path."/>
+	<string id="16818" value="שמות ספריית הקבצים השלמים והחלקיים חייבים להיות שונים"/>
+	<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 	<string id="16864" value="‪Querying host discovery services..."/>
 	<string id="16865" value="‪Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="‪GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -3540,13 +3544,16 @@
 		<control caption="התחלת השימוש בשרזה"/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="[2/7] ברוכים הבאים לשרזה">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="ברוכים הבאים לשרזה">
 		<control caption="שרזה תומך בשתי ממשקי משתמש, כך שאתה יכול לבחור את האחד שהכי נוח בשבילך"/>
 		<control caption=":אנא בחר אחד משני הממשקים"/>
 		<control caption="מצב רגיל"/>
 		<control caption="מצב מתקדם"/>
 		<control caption="פשוט - קל להשתמש בתפריטים ובכפתורים. מוכר למשתמשים של תוכנות שיתוף אחרות"/>
-		<control caption="מצב מתקדם - מציע למשתמשים מתקדמים המון פקודות נוספות, חלונות ועוד"/>
+		<control caption="מצב מתקדם - מציע למשתמשים מתקדמים המון פקודות נוספות, חלונות ועוד ( עלול להיות מבלבל למשתמשים חדשים)"/>
+		<control caption="הצג פסי התקדמות פשוטים (מפחית שימוש במעבד)"/>
+		<control caption=".הצג אלמנטים מורחבים בממשק לקבצי טורנט"/>
+		<control caption=".טפל בקישורי טורנטים"/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="[3/7] ברוכים הבאים לשרזה">
@@ -3967,7 +3974,7 @@
 		<control caption="ביטול"/>
 	</dialog>
 
-	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URI ייצא">
+	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URIs ייצא">
 		<control/>
 		<control caption="אנא בחר את הצורה לקישורים ולחץ על כפתור שמור URI קבצים לייצא להפניות של קישורי %lu בחרת"/>
 		<control/>
@@ -3975,7 +3982,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption=":בחר מוצג"/>
 		<control/>
-		<control caption="ביטול"/>
+		<control caption="_העתק"/>
 		<control caption="...שמור"/>
 		<control/>
 		<control caption="ביטול"/>
