@@ -66,7 +66,7 @@ public:	//Client capabilities
 	BOOL		m_bEmSecureID;		// Not supported
 	BOOL		m_bEmSources;
 	BOOL		m_bEmRequest;
-	BOOL		m_bEmComments;		// Not over ed2k
+	BOOL		m_bEmComments;
 	BOOL		m_bEmPeerCache;		// Not supported
 	BOOL		m_bEmBrowse;		// Not over ed2k
 	BOOL		m_bEmMultiPacket;	// Not supported
