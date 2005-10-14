@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Italian Skin File --> <!-- Revisione 31 -->
+<!-- Shareaza Default Italian Skin File --> <!-- Revisione 32 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2865,7 +2865,8 @@
 	<string id="16407" value="Desideri impedire a questa collezione di chiederti di scaricare qualcosiasi altra cosa?"/>
 	<string id="16408" value="Copia &amp;URI"/>
 	<string id="16409" value="Esporta &amp;URI..."/>
-	<string id="16410" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
+	<string id="16410" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\nAggiungere questa cartella causerà il re-hashing di alcuni file.\n\nVuoi continuare?"/>
+	<string id="16411" value="Impossibile spostare il file %s. Il file può essere in uso da un'altra applicazione.\n\nVuoi provare a copiarlo invece di spostarlo?"/>
 	<string id="16448" value="Connesso a %s, negoziazione in corso..."/>
 	<string id="16449" value="Stai chattando con %s (%s)."/>
 	<string id="16450" value="Connessione con %s chiusa."/>
@@ -2931,8 +2932,8 @@
 	<string id="16811" value="Automatico"/>
 	<string id="16816" value="La rete eDonkey usa grandi code con lunghi tempi di attesa. Limitando la posizione massima in coda accetti questo, puoi avere problemi nella partenza dei download.\nSei sicuro di voler limitare la posizione in coda da accettare?"/>
 	<string id="16817" value="Windows non supporta i percorsi più lunghi di 256 caratteri.\nSeleziona una cartella con un percorso più corto."/>
-	<string id="16818" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/>
-	<string id="16819" value="Una sottocartella della cartella selezionata &quot;%s&quot; è già parte della tua libreria.\nAggiungere questa cartella causerà il re-hashing di alcuni file.\n\nVuoi continuare?"/>
+	<string id="16818" value="Le cartelle dei file completi e incompleti non dovrebbero essere la stessa"/>
+	<string id="16819" value="La cartella dei file incompleti non dovrebbe essere nella libreria, poichè questo riduce le prestazioni. I file incompleti possono essere condivisi direttamente dalla finestra di trasferimenti."/>
 	<string id="16864" value="Interrogazione dei servizi di ricerca host..."/>
 	<string id="16865" value="Interrogazione del servizio di ricerca &quot;%s&quot;..."/>
 	<string id="16866" value="Transazione GWebCache eseguita con successo (&quot;%s&quot;)."/>
