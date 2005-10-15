@@ -3052,7 +3052,7 @@
 	<string id="17473" value="Timed out connecting to BitTorrent client %s."/>
 	<string id="17474" value="Timed out handshaking with BitTorrent client %s."/>
 	<string id="17475" value="Closing BitTorrent coupling with %s due to lack of traffic."/>
-	<string id="17476" value="BitTorrent coupling with %s failed because the remote client has a different GUID."/>
+	<string id="17476" value="BitTorrent coupling with %s failed because the remote client has a different Peer ID."/>
 	<string id="17477" value="BitTorrent coupling with %s responded with the wrong file."/>
 	<string id="17478" value="BitTorrent coupling with %s requested an unknown file."/>
 	<string id="17479" value="BitTorrent coupling with %s established for &quot;%s&quot;."/>
@@ -3095,6 +3095,7 @@
 	<string id="19001" value="You must choose a username and password."/>
 	<string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
+	<string id="20001" value="Close"/>
 	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
