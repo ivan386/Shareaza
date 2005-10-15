@@ -141,9 +141,11 @@ void CShareManagerDlg::OnShareAdd()
 		return;
 	}
 
+	BOOL bForceAdd = FALSE;
 	//Check shared path isn't already shared
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
+		BOOL bSubFolder = FALSE;
 		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
 		CharLower( strOldLC.GetBuffer() );
 		strOldLC.ReleaseBuffer();
@@ -159,6 +161,7 @@ void CShareManagerDlg::OnShareAdd()
 		}
 		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
 		{
+			bSubFolder = TRUE;
 			if ( strOldLC.Left( strPathLC.GetLength() + 1 ) != strPathLC + '\\' )
 				continue;
 		}
@@ -167,12 +170,34 @@ void CShareManagerDlg::OnShareAdd()
 			continue;
 		}
 
-		CString strFormat, strMessage;
-		Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
-		strMessage.Format( strFormat, (LPCTSTR)strOldLC );
-		AfxMessageBox( strMessage, MB_ICONINFORMATION );
-		//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
-		return;
+		if ( bSubFolder )
+		{
+			CString strFormat, strMessage;
+			LoadString( strFormat, IDS_LIBRARY_SUBFOLDER_IN_LIBRARY );
+			strMessage.Format( strFormat, (LPCTSTR)szPath );
+
+			if ( bForceAdd || AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				// Don't bother asking again- remove all sub-folders
+				bForceAdd = TRUE;
+				// Remove the sub-folder
+				m_wndList.DeleteItem( nItem );
+				nItem--;
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			CString strFormat, strMessage;
+			Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
+			strMessage.Format( strFormat, (LPCTSTR)strOldLC );
+			AfxMessageBox( strMessage, MB_ICONINFORMATION );
+			//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
+			return;
+		}
 	}
 
 	//Add path to shared list
