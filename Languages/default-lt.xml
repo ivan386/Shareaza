@@ -3059,7 +3059,7 @@ right quote	&#147;
 	<string id="17473" value="Baigėsi susijungimo su BitTorrent klientu %s laiko limitas."/>
 	<string id="17474" value="Baigėsi ryšio su BitTorrent klientu %s patvirtinimo laiko limitas."/>
 	<string id="17475" value="Nutraukiamas BitTorrent ryšys su adresatu %s dėl siuntimų srauto kamščio."/>
-	<string id="17476" value="BitTorrent ryšio užmezgimas su %s nepasisekė, nes nutolęs klientas turi ne tą GUID."/>
+	<string id="17476" value="BitTorrent ryšio užmezgimas su %s nepasisekė, nes nutolęs klientas kitokį ID."/>
 	<string id="17477" value="BitTorrent adresato %s atsakyme nurodyta ne ta byla."/>
 	<string id="17478" value="BitTorrent adresatas %s užklausė nežinomos bylos."/>
 	<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas bylai „%s“ siųstis."/>
@@ -3102,6 +3102,7 @@ right quote	&#147;
 	<string id="19001" value="Jūs privalote įrašyti vartotojo vardą ir slaptažodį."/>
 	<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
 	<string id="20000" value="Nėra universalių šaltinių vardų."/>
+	<string id="20001" value="Užverti"/>
 	<string id="20002" value="iš"/>
 	<string id="20003" value="Sąsajos krypties pakeitimui reikalinga startuoti iš naujo. \nJums reikės paleisti „Shareaza“ programą rankiniu būdu. Ar baigti darbą dabar?"/>
 	<string id="20004" value="Jūsų operacinė sistema nepalaiko kalbų su rašmenimis iš dešinės į kairę."/>
