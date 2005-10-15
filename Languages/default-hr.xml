@@ -11,7 +11,7 @@
 		description="Shareaza Default Croatian Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.1.4.4"
+		version="2.2.0.2"
 		type="Language"
 		language="hr"
 		prompt="Ovdje odaberi Shareazu na hrvatskom jeziku..."
@@ -2722,20 +2722,20 @@
 	<string id="16267" value="Zahtjevam djelić (%I64i-%I64i) koji trebam skinuti za &quot;%s&quot; od %s."/>
 	<string id="16268" value="Nema više djelova, prekidam vezu sa %s."/>
 	<string id="16269" value="Fragment shortened, closing connection to %s."/>
-	<string id="16270" value="Download request to %s timed out, closing connection."/>
+	<string id="16270" value="Isteklo je vrijeme zahtjeva za skidanje sa %s, prekidam vezu."/>
 	<string id="16271" value="Closing download connection %s due to lack of traffic."/>
-	<string id="16272" value="Download host %s does not have the file &quot;%s&quot;."/>
+	<string id="16272" value="Domačin skidanja %s nema potrbnu &quot;%s&quot; datoteku."/>
 	<string id="16273" value="Download host % responded with an invalid HTTP response."/>
 	<string id="16274" value="Download host %s responded with %s (%s)."/>
 	<string id="16275" value="Download host %s's version of &quot;%s&quot; has a different URN, aborting."/>
 	<string id="16276" value="Download host %s's version of &quot;%s&quot; has a different length, aborting."/>
 	<string id="16277" value="Download host %s responded with a useless byte range of &quot;%s&quot;, pending."/>
 	<string id="16278" value="Download connection to %s was lost."/>
-	<string id="16279" value="Receiving download content from host %s (%s)."/>
-	<string id="16280" value="Download host %s is busy, retrying in %i seconds."/>
-	<string id="16281" value="Are you sure you want to clear &quot;%s&quot;?\n\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."/>
+	<string id="16279" value="Primam sadržaj skidanja sa %s (%s)."/>
+	<string id="16280" value="Davaoc %s je zauzet, ponovo ću pokušati za %i sekunda."/>
+	<string id="16281" value="Jeste li sigurni da želite obrisati &quot;%s&quot;?\n\nKada se skidanje obriše iz ovog prozora, više se ne može nastaviti."/>
 	<string id="16282" value="Aborting download of &quot;%s&quot; from %s (%s), network disabled."/>
-	<string id="16283" value="The file &quot;%s&quot; is already being downloaded, adding sources."/>
+	<string id="16283" value="Datoteka &quot;%s&quot; se već skida, dodajem nove izvore."/>
 	<string id="16284" value="Received a faulty push connection from %s, closing connection."/>
 	<string id="16285" value="Received an unnecessary push connection from %s."/>
 	<string id="16286" value="Host %s is pushing download &quot;%s&quot;, accepting."/>
@@ -2747,8 +2747,8 @@
 	<string id="16292" value="Couldn't move download &quot;%s&quot; to &quot;%s&quot;.Check that the incomplete file is not in use, and that your downloads folder exists and is writable."/>
 	<string id="16293" value="Resolving &quot;%s&quot; to download &quot;%s&quot;..."/>
 	<string id="16294" value="Unable to resolve &quot;%s&quot;."/>
-	<string id="16295" value="Boosting download &quot;%s&quot; by removing bandwidth caps."/>
-	<string id="16296" value="Successfully verified download &quot;%s&quot;."/>
+	<string id="16295" value="Friziram skidanje &quot;%s&quot; tko što mičem ograničenje bandwitha."/>
+	<string id="16296" value="Uspješno provjereno skidanje &quot;%s&quot;."/>
 	<string id="16297" value="UPOZORENJE: Datoteka &quot;%s&quot; nije prošla na provjeri, može biti da to nije datoteka koju želite skinuti!"/>
 	<string id="16298" value="Davaoc %s je zauzet, čekam u redu na poziciji #%i od %i (&quot;%s&quot;)."/>
 	<string id="16299" value="Jeste li sigurni da želite izbrisati sva pauzirana skidanja?Jednom kad se skidanje izbriše, ne može se više nastaviti."/>
@@ -2770,7 +2770,7 @@
 	<string id="16315" value="Unable to initialize inflate for download &quot;%s&quot;."/>
 	<string id="16316" value="Timed out waiting for queue update from eDonkey2000 download host %s for file &quot;%s&quot;."/>
 	<string id="16317" value="Staying in queue for &quot;%s&quot;."/>
-	<string id="16318" value="Insufficient disk space to download &quot;%s&quot; (%s)."/>
+	<string id="16318" value="Nedovoljo prostora na disku za skinuti &quot;%s&quot; (%s)."/>
 	<string id="16319" value="Dropping source %s (%s) for sending corrupted parts of &quot;%s&quot; (%I64i-%I64i)."/>
 	<string id="16320" value="Upload host %s sent an invalid HTTP request."/>
 	<string id="16321" value="Initiating a push connection to %s. %s"/>
@@ -2844,20 +2844,20 @@
 	<string id="16395" value="Your downloaded files folder &quot;%s&quot; is not yet in your library.\n\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading.Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\n\nWould you like to add your downloaded files folder to your library now?"/>
 	<string id="16396" value="Your downloads folder has been added to your library.Would you like to share it too?"/>
 	<string id="16397" value="Are you sure you want to delete the %i selected album folder(s) ?\n\nNote that this action does not delete the files within the album folders, only the folders themselves."/>
-	<string id="16398" value="Shareaza could not rename:\n\n%s\nto\n%s"/>
+	<string id="16398" value="Shareaza ne može preimenovati:\n\n%s\nto\n%s"/>
 	<string id="16399" value="Shareaza ne može izbrisati datoteku:\n\n%s"/>
 	<string id="16400" value="Ta datoteka već postoji:\n\n%s\n\nŽelite li ju prebrisati?"/>
 	<string id="16401" value="Pokaži Datoteke Svih Vrsta"/>
 	<string id="16402" value="Shareaza received a collection file:\n\n&quot;%s&quot;\n\nThis file does not appear to be a valid collection file."/>
 	<string id="16403" value="Shareaza has added the collection file &quot;%s&quot; to your library."/>
 	<string id="16404" value="Shareaza was unable to install the collection file &quot;%s&quot; by copying it to the folder &quot;%s&quot;."/>
-	<string id="16405" value="Would you like to download this file?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
-	<string id="16406" value="Would you like to download all files in this collection?\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16405" value="Želite li skinuti ovu datoteku?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
+	<string id="16406" value="Želite li skinuti sve datoteke u ovoj kolekciji?\n\nOdaberite prekini da vam više ne dolazi ova obavjest."/>
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
-	<string id="16410" value="Skinute i djelomično skinute datoteke nebi smjele biti u istoj mapi"/>
-	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
+	<string id="16410" value="Podmapa u odabranoj mapi &quot;%s&quot; je već dio vaše kolekcije.\nDodavanje ove mape če izazvati re-hashing nekih datoteka.\n\nŽelite li svejedno nastaviti?"/>
+	<string id="16411" value="Nemogu premjestiti datoteku %s. Vjerovatno ju neki drugi program koristi.\n\nDa li je želite kopirati?"/>
 	<string id="16448" value="Spojeno sa %s, pozdravljamo..."/>
 	<string id="16449" value="Pričate sa %s (%s)."/>
 	<string id="16450" value="Veza prema %s je prekinuta."/>
@@ -2923,8 +2923,8 @@
 	<string id="16811" value="Automatski"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windowsi ne podržavaju putanju dužu od 256 znakova.\nMolim da odeberete mapu sa kraćim putem."/>
-	<string id="16818" value="Mapa sa nedovršenim datotekama ne bi smjela biti u kolekciji jer uzrokuje usporavanje. Nedovršene datoteke se mogu djeliti direktno iz prozora razmjene."/>
-	<string id="16819" value="Podmapa u odabranoj mapi &quot;%s&quot; je već dio vaše kolekcije.\nDodavanje ove mape če izazvati re-hashing nekih datoteka.\n\nŽelite li svejedno nastaviti?"/>
+	<string id="16818" value="Mape za skinute i djelomično skinute datoteke moraju biti različite"/> 
+	<string id="16819" value="Mapa sa nedovršenim datotekama ne bi smjela biti u kolekciji jer uzrokuje usporavanje. Nedovršene datoteke se mogu djeliti direktno iz prozora razmjene."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -3025,7 +3025,7 @@
 	<string id="17231" value="eDonkey2000 client %s has the wrong GUID, aborting handshake."/>
 	<string id="17232" value="Timed out connecting to eDonkey2000 client %s."/>
 	<string id="17233" value="Timed out handshaking with eDonkey2000 client %s."/>
-	<string id="17234" value="Refusing eDonkey2000 client link from %s because eDonkey2000 is disabled."/>
+	<string id="17234" value="Odbijam eDonkey2000 klient link od %s jer je eDonkey2000 onemogučen."/>
 	<string id="17248" value="Počinjem ubacivanje djelomično skinute eDonkey2000 datoteke..."/>
 	<string id="17249" value="Gotovo, %i djelomično skidanje uspješno ubačeno."/>
 	<string id="17250" value="Skeniram mapu: &quot;%s&quot;..."/>
@@ -3036,14 +3036,14 @@
 	<string id="17255" value="Download data file is newer than .part file, aborting."/>
 	<string id="17256" value="Kopiram &quot;%s&quot; u &quot;%s&quot;..."/>
 	<string id="17257" value="Završeno kopiranje datoteke."/>
-	<string id="17258" value="Stvoren Shareazino djelomično skidanje, %s do završetka."/>
+	<string id="17258" value="Stvoreno Shareazino djelomično skidanje, %s do završetka."/>
 	<string id="17259" value="Ova datoteka je već na Shareazinoj listi za skidanje."/>
 	<string id="17260" value="Nedovoljno prostora na disku za kopiranje skinute datoteke."/>
 	<string id="17472" value="Incoming connection from %s is a BitTorrent coupling, negotiating..."/>
 	<string id="17473" value="Timed out connecting to BitTorrent client %s."/>
 	<string id="17474" value="Timed out handshaking with BitTorrent client %s."/>
 	<string id="17475" value="Closing BitTorrent coupling with %s due to lack of traffic."/>
-	<string id="17476" value="BitTorrent coupling with %s failed because the remote client has a different GUID."/>
+	<string id="17476" value="BitTorrent coupling with %s failed because the remote client has a different Peer ID."/>
 	<string id="17477" value="BitTorrent coupling with %s responded with the wrong file."/>
 	<string id="17478" value="BitTorrent coupling with %s requested an unknown file."/>
 	<string id="17479" value="BitTorrent coupling with %s established for &quot;%s&quot;."/>
@@ -3086,6 +3086,7 @@
 	<string id="19001" value="Morate odabrati ime i lozinku"/>
 	<string id="19002" value="U nemogučnosti sam primati veze, URL je nedostupan."/>
 	<string id="20000" value="Nema dostupnog URN-a"/>
+	<string id="20001" value="Zatvori"/>
 	<string id="20002" value="od"/><!-- e.g. 1 of 10 --> 
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20004" value="Right-to-left languages are not supported in your OS."/>
@@ -3189,7 +3190,7 @@
 		<control caption="_Opcije:"/>
 		<control caption="Zapamti mape"/>
 		<control caption="Prati mape moje kolekcije"/>
-		<control caption="Quick hashing (Koristi više CPU-a)"/>
+		<control caption="Brzi hashing (Koristi više CPU-a)"/>
 		<control caption="Dopusti drugima da vide što djelite"/>
 		<control caption="Ko_rištene Datoteke:"/>
 		<control caption="Pamti:"/>
@@ -3490,12 +3491,12 @@
 		<control caption="Ime:"/>
 		<control/>
 		<control caption="_Entry Criteria:"/>
-		<control caption="Partially downloaded files only"/>
-		<control caption="Minimum source file size:"/>
+		<control caption="Samo djelomično skinute datoteke"/>
+		<control caption="Minimalna veličina izvorne datoteke:"/>
 		<control/>
-		<control caption="Maximum source file size:"/>
+		<control caption="Maximalna veličina izvorne datoteke:"/>
 		<control/>
-		<control caption="Marked files:"/>
+		<control caption="Označene datoteke:"/>
 		<control/>
 		<control caption="Filename match:"/>
 		<control/>
@@ -3545,7 +3546,7 @@
 		<control caption="Power sučelje naprednim korisnicima nudi više naredbi, prozora i sl."/>
 		<control caption="Pokaži jednostavni pokazivač napretka."/>
 		<control caption="Prikaži dodatne BitTorrent elemente."/>
-		<control caption="Handle torrent links."/>
+		<control caption="Preuzmi torrent linkove."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Dobrodošli u Shareazu [3 od 7]">
@@ -3723,7 +3724,7 @@
 		<control caption="Započmi novu vezu sa hostom ili serverom:|Pogledaj što ima ovaj host:"/>
 		<control/><control/>
 		<control caption="Mrežni _Protokol:"/>
-		<control/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Suppress Ultrapeer"/>
 		<control caption="Spoji"/>
 		<control caption="Odustani"/>
@@ -3972,7 +3973,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
-		<control caption="Copy"/>
+		<control caption="Kopiraj"/>
 		<control caption="Spremi..."/>
 		<control/>
 		<control caption="Odustani"/>
@@ -4225,7 +4226,7 @@
 		<column from="Size" to="Veličina"/>
 		<column from="Progress" to="Stanje"/>
 		<column from="Speed" to="Brzina"/>
-		<column from="Client" to="Primalac"/>
+		<column from="Client" to="Klijent"/>
 		<column from="Rating" to="Ocjena"/>
 	</list>
 	<list name="CNeighboursWnd">
