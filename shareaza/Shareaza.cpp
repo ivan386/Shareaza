@@ -492,10 +492,15 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog)
 	
 	if ( pFile.Open( _T("\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
-		if ( ( Settings.General.MaxDebugLogSize ) &&					// If file rotation is on 
+		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on 
 			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
 		{	
-			pFile.Close();				// Close the file and start a new one
+			// Close the file
+			pFile.Close();				
+			// Rotate the logs 
+			DeleteFile(  _T("\\Shareaza.old.log") );
+			MoveFile( _T("\\Shareaza.log"), _T("\\Shareaza.old.log") );
+			// Start a new log
 			if ( ! pFile.Open( _T("\\Shareaza.log"), CFile::modeWrite|CFile::modeCreate ) ) return;
 			// Unicode marker
 			WORD nByteOrder = 0xFEFF;
