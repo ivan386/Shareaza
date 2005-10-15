@@ -1,8 +1,8 @@
 //
 // MatchObjects.cpp
 //
-//	Date:			"$Date: 2005/10/03 17:21:43 $"
-//	Revision:		"$Revision: 1.18 $"
+//	Date:			"$Date: 2005/10/15 10:18:04 $"
+//	Revision:		"$Revision: 1.19 $"
 //  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -209,6 +209,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 		int nHadCount		= 0;
 		int nHadFiltered	= 0;
 		BOOL bHad[3];
+		PROTOCOLID nProtocol= pHit->m_nProtocol;
 		
 		if ( pHit->m_bSHA1 )
 		{
@@ -221,7 +222,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
+					bHad[0] = pSeek->m_bSHA1; 
+					bHad[1] = pSeek->m_bTiger; 
+					bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -245,7 +248,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
+					bHad[0] = pSeek->m_bSHA1; 
+					bHad[1] = pSeek->m_bTiger; 
+					bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -269,7 +274,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 					nHadCount		= pSeek->GetItemCount();
 					nHadFiltered	= pSeek->m_nFiltered;
 					
-					bHad[0] = pSeek->m_bSHA1; bHad[1] = pSeek->m_bTiger; bHad[2] = pSeek->m_bED2K;
+					bHad[0] = pSeek->m_bSHA1; 
+					bHad[1] = pSeek->m_bTiger; 
+					bHad[2] = pSeek->m_bED2K;
 					
 					if ( pSeek->Add( pHit, TRUE ) )
 					{
@@ -338,7 +345,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 				m_nFilteredFiles --;
 				m_nFilteredHits -= nHadFiltered;
 
-				switch ( pHit->m_nProtocol )
+				switch ( nProtocol )
 				{
 				case PROTOCOL_G1:
 				case PROTOCOL_G2:
@@ -411,7 +418,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter, BOOL bRequire)
 			m_nFilteredFiles ++;
 			m_nFilteredHits += pFile->m_nFiltered;
 
-			switch ( pHit->m_nProtocol )
+			switch ( nProtocol )
 			{
 			case PROTOCOL_G1:
 			case PROTOCOL_G2:
