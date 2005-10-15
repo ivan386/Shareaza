@@ -79,7 +79,7 @@ CEDClient::CEDClient()
 	m_bEmSecureID	= FALSE;		// Not supported
 	m_bEmSources	= FALSE;
 	m_bEmRequest	= FALSE;
-	m_bEmComments	= FALSE;		// Not over ed2k
+	m_bEmComments	= FALSE;
 	m_bEmPeerCache	= FALSE;		// Not supported
 	m_bEmBrowse		= FALSE;		// Not over ed2k
 	m_bEmMultiPacket= FALSE;		// Not supported
@@ -322,6 +322,12 @@ void CEDClient::Close()
 	ASSERT( this != NULL );
 	CTransfer::Close();
 	m_bConnected = m_bLogin = FALSE;
+
+	if ( ( m_pDownload ) && ( m_pDownload->m_nState == dtsDownloading ) )
+	{
+		theApp.Message( MSG_ERROR, _T("Warning: CEDClient::Close() called for downloading client %s"), m_sAddress );
+		m_pDownload->SetState( dtsNull );
+	}
 	// if ( ! m_bGUID ) Remove();
 }
 
@@ -423,6 +429,9 @@ BOOL CEDClient::OnRun()
 		else if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic &&
 			 tNow - m_mOutput.tLast > Settings.Connection.TimeoutTraffic )
 		{
+			// Don't time out downloading clients.
+			if ( ( m_pDownload ) && ( m_pDownload->m_nState == dtsDownloading ) )
+				return TRUE;
 			// Connection closed (Inactive)
 			theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_CLOSED, (LPCTSTR)m_sAddress );
 			Close();
