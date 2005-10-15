@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/09/06 10:40:39 $"
-//	Revision:		"$Revision: 1.21 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/10/15 09:30:15 $"
+//	Revision:		"$Revision: 1.22 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1594,6 +1594,7 @@ void CMediaFrame::UpdateState()
 	}
 	else
 	{
+		if ( m_nState != smsNull && m_wndList.GetCount() == 0 ) Cleanup();
 		m_wndPosition.SetPos( 0 );
 		m_wndPosition.SetRange( 0, 0 );
 		m_wndPosition.EnableWindow( FALSE );
@@ -1616,7 +1617,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 
 	if ( nCurrent >= 0 )
 	{
-		if ( OpenFile( m_wndList.GetPath( nCurrent ) ) )
+		if ( ( ! m_pPlayer || m_bAutoPlay ) && OpenFile( m_wndList.GetPath( nCurrent ) ) )
 		{
 			if ( m_bAutoPlay )
 			{
