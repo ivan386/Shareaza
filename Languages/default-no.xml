@@ -3052,7 +3052,7 @@
 	<string id="17473" value="Mistet kobling til BitTorrent klient %s."/>
 	<string id="17474" value="Mistet håndtrykk med BitTorrent klient %s."/>
 	<string id="17475" value="Lukker BitTorrent kobling med %s på grunn av mangel på trafikk."/>
-	<string id="17476" value="BitTorrent kobling med %s feilet fordi kliente hadde en annen type GUID."/>
+	<string id="17476" value="BitTorrent kobling med %s feilet fordi kliente hadde en annen type Peer ID."/>
 	<string id="17477" value="BitTorrent koblingen med %s svarte med feil fil."/>
 	<string id="17478" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
 	<string id="17479" value="BitTorrent kobling med %s startet for &quot;%s&quot;."/>
@@ -3546,13 +3546,13 @@
 	</dialog>
 
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Velkommen til Shareaza [2 av 7]">
-		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, du kan selv velge det du liker best"/>
+		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, så du selv kan velge det du liker best"/>
 		<control caption="Vennligst velg et av disse grensesnittene:"/>
-		<control caption="Normal modus"/>
-		<control caption="Power modus"/>
+		<control caption="Normalmodus"/>
+		<control caption="Powermodus"/>
 		<control caption="Enkle menyer og store knapper. Liknende andre fildelingsprogrammer."/>
-		<control caption="Power modus gir ekspertene mange ekstra kommandoer, vinduer o.l."/>
-		<control caption="Vis enkel fremgangs indikator for nedlastninger. (Reduserer bruk av CPU)"/>
+		<control caption="Powermodus gir ekspertene mange ekstra kommandoer og vinduer o.l."/>
+		<control caption="Vis enkel fremgangsindikator for nedlasninger. (Reduserer bruk av CPU)"/>
 		<control caption="Vis utvidede torrent elementer."/>
 		<control caption="Åpne torrent linker."/>
 	</dialog>
