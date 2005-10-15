@@ -3553,7 +3553,7 @@
 		<control caption="De Gevorderde modus biedt voor de gespecialiseerde gebuiker veel meer commando's, vensters, enz."/>
 		<control caption="Toon een simpele voortgangsbalk."/>
 		<control caption="Laat extra BitTorrent besturingselementen zien."/>
-		<control caption="Handle torrent links."/>
+		<control caption="Gebruik Shareaza om torrent links te openen."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom bij Shareaza [3 van 7]">
