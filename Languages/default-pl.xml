@@ -2852,6 +2852,8 @@
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
 	<string id="16408" value="Kopiuj &amp;URI"/>
 	<string id="16409" value="Eksportuj &amp;URI..."/>
+	<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
+	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
 	<string id="16448" value="Połączony z %s, handshaking..."/>
 	<string id="16449" value="Rozmawiasz z %s (%s)."/>
 	<string id="16450" value="Połączenie do %s zostało zamknięte."/>
@@ -2907,8 +2909,8 @@
 	<string id="16801" value="Please choose the type of Internet connection you are using before continuing."/>
 	<string id="16802" value="You have not specified any folders to share.  Are you sure?"/>
 	<string id="16803" value="The folder you are sharing is already shared as part of another shared folder:\n\n%s"/>
-	<string id="16804" value="You haven't entered a screen name in your user profile.\n\nIt's a good idea to enter a custom screen name so that other users can see who they're connected to.\n\nAre you sure you want to continue without a screen name?"/>
-	<string id="16805" value="You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see where you're from.\n\nAre you sure you want to continue without entering your location?"/>
+	<string id="16804" value="You haven't entered a screen name in your user profile."/>
+	<string id="16805" value="You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"/>
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP and UDP ports %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 	<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
@@ -2917,6 +2919,8 @@
 	<string id="16811" value="Automatycznie"/>
 	<string id="16816" value="The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\nAre you sure you want to limit what queue positions you will accept?"/>
 	<string id="16817" value="Windows doesn't support filepaths longer than 256 characters.\nPlease select a folder with a shorter path."/>
+	<string id="16818" value="The complete and incomplete folders should not be the same"/>
+	<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
 	<string id="16864" value="Querying host discovery services..."/>
 	<string id="16865" value="Querying discovery service &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaction successful (&quot;%s&quot;)."/>
@@ -3528,13 +3532,16 @@
 		<control caption="Zacząć używać Shareazy."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Witaj w Shareazie [2 z 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Witaj w Shareazie">
 		<control caption="Shareaza posiada dwa różne interfejsy użytkownika. Możesz wybrać ten, który jest dla ciebie najwygodniejszy."/>
 		<control caption="Proszę wybrać jeden z poniższych interfejsów:"/>
 		<control caption="Tryb Normalny"/>
 		<control caption="Tryb Zaawansowany"/>
 		<control caption="Prosty i przyjazny w użyciu. Znajomy dla użytkowników innych programów do wymiany plików."/>
 		<control caption="Tryb Zaawansowany oferuje ekspertom dużo dodatkowych poleceń, okien, etc."/>
+		<control caption="Pokaż prosty pasek postępu."/>
+		<control caption="Pokaż dodatkowe elementy interfejsu BitTorrent."/>
+		<control caption="Handle torrent links."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Witaj w Shareazie [3 z 7]">
@@ -3962,7 +3969,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nazwa pliku|Nazwa pliku (URI)|Bazowa nazwa pliku|Rozszerzenie pliku|Rozmiar pliku|Rozmiar pliku (w bajtach)|Ścieżka folderu|Local Host|Local Port"/>
 		<control caption="Wybierz preset:"/>
 		<control/>
-		<control caption="Anuluj"/>
+		<control caption="_Kopiuj"/>
 		<control caption="Zapisz..."/>
 		<control/>
 		<control caption="Anuluj"/>

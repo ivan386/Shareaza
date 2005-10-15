@@ -2857,6 +2857,7 @@
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>	
     <string id="16410" value="Las carpetas Completas e Incompletas deben de no ser las mismas"/>
+
 	<string id="16448" value="Conectando a %s, handshaking..."/>
 	<string id="16449" value="Chateando con %s (%s)."/>
 	<string id="16450" value="La conexión con %s fué cerrada."/>

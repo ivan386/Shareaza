@@ -3982,7 +3982,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filnavn|Filnavn (URI)|Base filnavn|Filetternavn|Filstørrelse|Filstørrelse (byte)|Katalog|Lokal vert|Lokal port"/>
 		<control caption="Velg forhåndsinstilling:"/>
 		<control/>
-		<control caption="Avbryt"/>
+		<control caption="_Kopier"/>
 		<control caption="Lagre..."/>
 		<control/>
 		<control caption="Avbryt"/>

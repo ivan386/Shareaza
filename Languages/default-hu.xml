@@ -2864,6 +2864,7 @@ prompt="Kattints ide a magyar nyelvhez."
        <string id="16408" value="URL másolása"/>
        <string id="16409" value="URL exportálása..."/>
        <string id="16410" value="A kész és a félkész fájlok ne legyenek azonos mappában!"/>
+       <string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
        <string id="16448" value="Kapcsolódva: %s, viszontválaszra várva..."/>
        <string id="16449" value="Jelenleg vele beszélgetsz: %s (%s)."/>
        <string id="16450" value="Kapcsolat bezárva: %s."/>

@@ -2817,7 +2817,7 @@ Other:
 	<string id="16408" value="Copier l'&amp;URI"/>
 	<string id="16409" value="Exporter les &amp;URIs..."/>
     <string id="16410" value="Un sous-dossier du dossier sélectionné &quot;%s&quot; fait déjà partie de votre bibliothèque.\nAjouter ce dossier entraînera le re-hachement de certains fichiers.\n\nVoulez-vous continuer?"/>
-	<string id="16411" value="incapable de déplacer le fichier %s. Le fichier est peut-être utilisé par une autre application.\n\nVoulez-vous à la place essayer de copier ce fichier?"/>
+	<string id="16411" value="Incapable de déplacer le fichier %s. Le fichier est peut-être utilisé par une autre application.\n\nVoulez-vous à la place essayer de copier ce fichier?"/>
 	<string id="16448" value="Connecté à %s, liaison..."/>
 	<string id="16449" value="Discussion avec %s (%s)."/>
 	<string id="16450" value="Connexion à %s fermée."/>

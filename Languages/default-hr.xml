@@ -2857,6 +2857,7 @@
 	<string id="16408" value="Copy &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
 	<string id="16410" value="Skinute i djelomično skinute datoteke nebi smjele biti u istoj mapi"/>
+	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
 	<string id="16448" value="Spojeno sa %s, pozdravljamo..."/>
 	<string id="16449" value="Pričate sa %s (%s)."/>
 	<string id="16450" value="Veza prema %s je prekinuta."/>
@@ -2912,7 +2913,7 @@
 	<string id="16801" value="Molim Vas da odaberete vašu vrstu veze na internet."/>
 	<string id="16802" value="Niste odabrali mape za djeljenje. Jeste li sigurni da želite nastaviti?"/>
 	<string id="16803" value="Mapu koju djelite je već na listi za djeljenje kao dio druge mape:\n\n%s"/>
-	<string id="16804" value="Niste upisali nadimak u profil.\n\nUpisati nadimak je korisno, tako drugi ljudi mogu vidjeti s kim su spojeni.\n\n Jeste li sigurni da želite nastaviti bez nadimka?"/>
+	<string id="16804" value="Niste upisali nadimak u profil."/>
 	<string id="16805" value="Niste upisali vašu lokaciju u profil.\n\nUpisati lokaciju je korisno, tako drugi ljudi mogu vidjeti gdje živite.\n\n Jeste li sigurni da želite nastaviti bez lokacije?"/>
 	<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP port %i to your local PC."/>
 	<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
@@ -3535,13 +3536,16 @@
 		<control caption="Započeti koristiti Shareazu."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Dobrodošli u Shareazu [2 od 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Dobrodošli u Shareazu">
 		<control caption="Shareaza podržava dva korisnička sučelja, ovdje možete izabrati koji vam više leži."/>
 		<control caption="Molim odaberite korisničko sučelje:"/>
 		<control caption="Normalno Sučelje"/>
 		<control caption="Power Sučelje"/>
-		<control caption="Jednostavno, lagano za korištenje.			 Za korisnike koji su već radili sa sličnim programima."/>
+		<control caption="Jednostavno, lagano za korištenje.{n}Za korisnike koji su već radili sa sličnim programima."/>
 		<control caption="Power sučelje naprednim korisnicima nudi više naredbi, prozora i sl."/>
+		<control caption="Pokaži jednostavni pokazivač napretka."/>
+		<control caption="Prikaži dodatne BitTorrent elemente."/>
+		<control caption="Handle torrent links."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Dobrodošli u Shareazu [3 od 7]">
@@ -3968,7 +3972,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
 		<control/>
-		<control caption="Odustani"/>
+		<control caption="Copy"/>
 		<control caption="Spremi..."/>
 		<control/>
 		<control caption="Odustani"/>

@@ -2843,6 +2843,8 @@
 	<string id="16407" value="Wil jy hierdie versameling verhoed om jou te vra om enigeiets anders af te laai?"/>
 	<string id="16408" value="Kopieer &amp;URI"/>
 	<string id="16409" value="Voer &amp;URI's Uit..."/>
+	<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
+	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
 	<string id="16448" value="Gekonnekteer aan %s, besig om blad te skud..."/>
 	<string id="16449" value="Nou besig om met %s (%s) te gesels."/>
 	<string id="16450" value="Konneksie aan %s gesluit."/>
@@ -2907,6 +2909,9 @@
 	<string id="16810" value="jaar oue"/>
 	<string id="16811" value="Outomaties"/>
 	<string id="16816" value="Die eDonkey netwerk gebruik groot waglyste met lang wagtye. Deur die maksimum aanvaarde waglysposisie so streng te beperk, mag jou aflaaie dalk sukkel om te begin.\nIs jy seker jy wil die waglysposisies beperk?"/>
+
+
+
 	<string id="16864" value="Navraag word gedoen by gasheer-ontdekkingsdiens..."/>
 	<string id="16865" value="Navraag word gedoen by gasheer-ontdekkingsdiens &quot;%s&quot;..."/>
 	<string id="16866" value="GWebCache transaksie suksesvol (&quot;%s&quot;)."/>
@@ -3952,7 +3957,7 @@
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Lêernaam|Lêernaam (URI)|Lêernaam Basis|Lêeruitbreiding|Lêer Grootte|Lêer Grootte (bytes)|Gids Pad|Lokale Gasheer|Lokale Poort"/>
 		<control caption="Selekteer instellings:"/>
 		<control/>
-		<control caption="Kopieer"/>
+		<control caption="_Kopieer"/>
 		<control caption="Stoor..."/>
 		<control/>
 		<control caption="Kanselleer"/>

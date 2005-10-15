@@ -2865,6 +2865,7 @@
 	<string id="16408" value="Kopieer &amp;URI"/>
 	<string id="16409" value="Exporteer &amp;URIs..."/>
 	<string id="16410" value="De complete en incomplete folders mogen niet dezelfde zijn"/>
+
 	<string id="16448" value="Verbonden met %s, bezig met handen schudden..."/>
 	<string id="16449" value="Nu aan het chatten met %s (%s)."/>
 	<string id="16450" value="Verbinding met %s is afgebroken."/>
@@ -2920,7 +2921,7 @@
 	<string id="16801" value="Kies voordat je verdergaat alsjeblieft het type internetverbinding dat je gebruikt."/>
 	<string id="16802" value="Je hebt geen mappen aangegeven om vrij te geven.  Weet je het zeker?"/>
 	<string id="16803" value="De map die je wilt vrijgeven is al vrijgegeven als deel van een andere vrijgegeven map:\n\n%s"/>
-	<string id="16804" value="Je hebt geen schuilnaam ingevuld in je gebruikersprofiel.\n\nHet is een goed idee om een zelfverzonnen schuilnaam in te geven, zodat andere gebruikers kunnen zien met wie ze zijn verbonden.\n\nWeet je zeker dat je wilt verdergaan zonder een schuilnaam?"/>
+	<string id="16804" value="Je hebt geen schuilnaam ingevuld in je gebruikersprofiel."/>
 	<string id="16805" value="Je hebt geen locatie ingevuld in je gebruikersprofiel.\n\nHet is een goed idee om je locatie in te geven, zodat andere gebruikers kunnen zien waar je vandaan komt.\n\nWeet je zeker dat je wilt verdergaan zonder een locatie op te geven?"/>
 	<string id="16806" value="Je hebt aangegeven dat je je poorten wilt vrijgeven (port-forwarding) op je NAT-router of firewall.\n\nConfigureer alsjeblieft je netwerk zo, dat TCP poort %i wordt doorgestuurd naar je lokale PC."/>
 	<string id="16807" value="Geef alsjeblieft de bandbreedtelimiet die je wilt invoeren in de vorm van &quot;123 kb/s&quot; voor kilobits per seconde, of &quot;123 KB/s&quot; voor kilobytes per seconde."/>
@@ -3543,13 +3544,16 @@
 		<control caption="Het gebruik van Shareaza te activeren."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StStBuBuStSt" caption="Welkom bij Shareaza [2 van 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom bij Shareaza">
 		<control caption="Shareaza ondersteunt twee verschillende gebruikersoppervlakken, dus je kunt kiezen welke het meest bij jou past."/>
 		<control caption="Selecteer één van deze twee gebruikersoppervlakken:"/>
 		<control caption="Normale Modus"/>
 		<control caption="Gevorderde Modus"/>
-		<control caption="Eenvoudige, gemakkelijk te gebruiken menu's en knoppen.       Bekend voor gebruikers van andere soortgelijke programma's."/>
+		<control caption="Eenvoudige, gemakkelijk te gebruiken menu's en knoppen. Bekend voor gebruikers van andere soortgelijke programma's."/>
 		<control caption="De Gevorderde modus biedt voor de gespecialiseerde gebuiker veel meer commando's, vensters, enz."/>
+		<control caption="Toon een simpele voortgangsbalk."/>
+		<control caption="Laat extra BitTorrent besturingselementen zien."/>
+		<control caption="Handle torrent links."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom bij Shareaza [3 van 7]">
