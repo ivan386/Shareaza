@@ -4531,10 +4531,6 @@ BEGIN
     IDS_TIP_UPLOADS         "Uploads"
     IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
     IDS_TIP_NOHASHSET       " (No Hashset)"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_TIP_STATUS          "Status:"
     IDS_TIP_SPEED           "Speed:"
     IDS_TIP_URL             "URL:"
@@ -4551,10 +4547,6 @@ BEGIN
     IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
     IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
     IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
 END
 
@@ -4795,6 +4787,38 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_DOWNLOAD_TIGER_CORRUPT 
+                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
+    IDS_DOWNLOAD_TIGER_MISMATCH 
+                            "Download host's tiger-tree does not match expected root value."
+    IDS_DOWNLOAD_TIGER_READY 
+                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
+    IDS_DOWNLOAD_CLOSING_EXTRA 
+                            "Closing download connection to %s, no longer required."
+    IDS_DOWNLOAD_CLOSING_OVERFLOW 
+                            "Download host %s sent unsolicited data, closing connection."
+    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
+    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
+    IDS_DOWNLOAD_HASHSET_REQUEST 
+                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
+    IDS_DOWNLOAD_HASHSET_ERROR 
+                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
+    IDS_DOWNLOAD_HASHSET_READY 
+                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
+    IDS_DOWNLOAD_HASHSET_CORRUPT 
+                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
+    IDS_DOWNLOAD_INFLATE_ERROR 
+                            "Unable to initialize inflate for download ""%s""."
+    IDS_DOWNLOAD_QUEUE_TIMEOUT 
+                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
+    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
+    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
+    IDS_DOWNLOAD_VERIFY_DROP 
+                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_UPLOAD_NOHTTP       "Upload host %s sent an invalid HTTP request."
     IDS_UPLOAD_CONNECT      "Initiating a push connection to %s. %s"
     IDS_UPLOAD_CONNECT_ERROR "Unable to connect to host %s for push."
@@ -4838,6 +4862,66 @@ BEGIN
     IDS_UPLOAD_TIGER_SEND   "Uploading tiger-tree data for ""%s"" to %s."
     IDS_UPLOAD_METADATA_SEND "Uploading metadata for ""%s"" to %s."
     IDS_UPLOAD_BUSY_HOST    "Refusing upload of ""%s"" to %s (%s), too many concurrent from host."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UPLOAD_PREVIEW_SEND "Uploading a preview of ""%s"" to %s."
+    IDS_UPLOAD_PREVIEW_BUSY "Refusing to upload a preview of ""%s"" to %s, too many preview connections."
+    IDS_UPLOAD_PREVIEW_EMPTY 
+                            "Upload host %s requested a preview of ""%s"", but no preview is available."
+    IDS_UPLOAD_PREVIEW_DYNAMIC 
+                            "Scheduling a dynamic preview of ""%s"" for upload to %s."
+    IDS_UPLOAD_BROWSE_BUSY  "Refusing browse user request from %s, too many browse connections."
+    IDS_UPLOAD_FILE         "Uploading file ""%s"" to host %s..."
+    IDS_UPLOAD_QUEUE_DROP   "Upload connection to %s was lost, preserving queue position."
+    IDS_UPLOAD_QUEUE_TIMEOUT 
+                            "Offline queued upload host %s expired, removing."
+    IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
+    IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
+    IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
+    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
+    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
+    IDS_DOWNLOAD_CLEAR_GROUP 
+                            "Are you sure you want to cancel/abort every download in this group?"
+    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
+    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
+    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
+    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
+    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
+    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
+    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
+    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
+    IDS_UPLOAD_QUEUE_NEW    "New Queue"
+    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
+    IDS_UPLOAD_QUEUE_COMPLETE "All Files"
+    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
+    IDS_DOWNLOAD_416_WITHOUT_RANGE 
+                            "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBRARY_TARGET_EXISTS 
+                            "Target file exists:\n\n%s\n\nWould you like to overwrite it?"
+    IDS_LIBRARY_TYPE_FILTER_ALL "Show All File Types"
+    IDS_LIBRARY_COLLECTION_INVALID 
+                            "Shareaza received a collection file:\r\n\r\n""%s""\r\n\r\nThis file does not appear to be a valid collection file."
+    IDS_LIBRARY_COLLECTION_INSTALLED 
+                            "Shareaza has added the collection file ""%s"" to your library."
+    IDS_LIBRARY_COLLECTION_CANT_INSTALL 
+                            "Shareaza was unable to install the collection file ""%s"" by copying it to the folder ""%s""."
+    IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 
+                            "Would you like to download this file?\r\n\r\n""%s""\r\n\r\nChoose Cancel to stop any further prompts."
+    IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 
+                            "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
+    IDS_LIBRARY_COLLECTION_LOCKDOWN 
+                            "Would you like to prevent this collection from prompting you to download anything else?"
+    IDS_LIBRARY_COPYURI     "Copy &URI"
+    IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
+    IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 
+                            "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
+    IDS_LIBRARY_MOVE_FAIL   "Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"
 END
 
 STRINGTABLE 
@@ -4903,10 +4987,6 @@ BEGIN
     IDS_BITZI_REQUESTING    "Requesting..."
     IDS_BITZI_SUCCESS       "Success!"
     IDS_BITZI_FINISHED      "Finished, click Close"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_BITZI_CLOSE         "&Close"
     IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
 END
@@ -4974,107 +5054,7 @@ BEGIN
     IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
     IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
     IDS_BROWSE_TITLE_FORMAT "Browsing %s"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_DOWNLOAD_TIGER_CORRUPT 
-                            "Download host's tiger-tree data is corrupt or internally inconsistent, ignoring it."
-    IDS_DOWNLOAD_TIGER_MISMATCH 
-                            "Download host's tiger-tree does not match expected root value."
-    IDS_DOWNLOAD_TIGER_READY 
-                            "Received tiger-tree volume for ""%s"", %i levels, minimum verifiable chunk %s."
-    IDS_DOWNLOAD_CLOSING_EXTRA 
-                            "Closing download connection to %s, no longer required."
-    IDS_DOWNLOAD_CLOSING_OVERFLOW 
-                            "Download host %s sent unsolicited data, closing connection."
-    IDS_DOWNLOAD_METADATA_REQUEST "Requesting metadata for ""%s"" from %s..."
-    IDS_DOWNLOAD_METADATA_RECV "Receiving tiger-tree data from %s (%s)..."
-    IDS_DOWNLOAD_HASHSET_REQUEST 
-                            "Requesting eDonkey2000 hashset for ""%s"" from %s..."
-    IDS_DOWNLOAD_HASHSET_ERROR 
-                            "Received an invalid eDonkey2000 hashset from %s, dropping source."
-    IDS_DOWNLOAD_HASHSET_READY 
-                            "Received eDonkey2000 hashset for ""%s"", minimum verifiable chunk %s."
-    IDS_DOWNLOAD_HASHSET_CORRUPT 
-                            "Download host's eDonkey2000 hashset is corrupt or internally inconsistent, dropping source."
-    IDS_DOWNLOAD_INFLATE_ERROR 
-                            "Unable to initialize inflate for download ""%s""."
-    IDS_DOWNLOAD_QUEUE_TIMEOUT 
-                            "Timed out waiting for queue update from eDonkey2000 download host %s for file ""%s""."
-    IDS_DOWNLOAD_QUEUE_DROP "Staying in queue for ""%s""."
-    IDS_DOWNLOAD_DISK_SPACE "Insufficient disk space to download ""%s"" (%s)."
-    IDS_DOWNLOAD_VERIFY_DROP 
-                            "Dropping source %s (%s) for sending corrupted parts of ""%s"" (%I64i-%I64i)."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_UPLOAD_PREVIEW_SEND "Uploading a preview of ""%s"" to %s."
-    IDS_UPLOAD_PREVIEW_BUSY "Refusing to upload a preview of ""%s"" to %s, too many preview connections."
-    IDS_UPLOAD_PREVIEW_EMPTY 
-                            "Upload host %s requested a preview of ""%s"", but no preview is available."
-    IDS_UPLOAD_PREVIEW_DYNAMIC 
-                            "Scheduling a dynamic preview of ""%s"" for upload to %s."
-    IDS_UPLOAD_BROWSE_BUSY  "Refusing browse user request from %s, too many browse connections."
-    IDS_UPLOAD_FILE         "Uploading file ""%s"" to host %s..."
-    IDS_UPLOAD_QUEUE_DROP   "Upload connection to %s was lost, preserving queue position."
-    IDS_UPLOAD_QUEUE_TIMEOUT 
-                            "Offline queued upload host %s expired, removing."
-    IDS_UPLOAD_BUSY_QUEUE   "Refusing upload of ""%s"" to %s (%s), all matching queues are full."
-    IDS_UPLOAD_DISABLED     "Refusing upload to %s (%s), network disabled."
-    IDS_UPLOAD_CANCEL_ED2K  "eDonkey2000 uploads should not be cancelled.  Are you sure you want to cancel this upload?"
-    IDS_UPLOAD_QUEUE_TORRENT "Torrent Uploads"
-    IDS_UPLOAD_QUEUE_HISTORY "Completed Uploads"
-    IDS_DOWNLOAD_CLEAR_GROUP 
-                            "Are you sure you want to cancel/abort every download in this group?"
-    IDS_UPLOAD_QUEUE_QUEUE  "Queue"
-    IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
-    IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
-    IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
-    IDS_UPLOAD_QUEUE_MEDIUM_FILES "Medium Files"
-    IDS_UPLOAD_QUEUE_LARGE_FILES "Large Files"
-    IDS_UPLOAD_QUEUE_PARTIAL_FILES "Partial Files"
-    IDS_UPLOAD_QUEUE_NEW    "New Queue"
-    IDS_UPLOAD_QUEUE_PARTIAL "Partial"
-    IDS_UPLOAD_QUEUE_COMPLETE "All Files"
-    IDS_UPLOAD_QUEUE_HTTP_GUARD "HTTP Guard"
-    IDS_DOWNLOAD_416_WITHOUT_RANGE 
-                            "Host ""%s"" sent a 416, without providing available ranges. Closing connection."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_LIBRARY_TARGET_EXISTS 
-                            "Target file exists:\n\n%s\n\nWould you like to overwrite it?"
-    IDS_LIBRARY_TYPE_FILTER_ALL "Show All File Types"
-    IDS_LIBRARY_COLLECTION_INVALID 
-                            "Shareaza received a collection file:\r\n\r\n""%s""\r\n\r\nThis file does not appear to be a valid collection file."
-    IDS_LIBRARY_COLLECTION_INSTALLED 
-                            "Shareaza has added the collection file ""%s"" to your library."
-    IDS_LIBRARY_COLLECTION_CANT_INSTALL 
-                            "Shareaza was unable to install the collection file ""%s"" by copying it to the folder ""%s""."
-    IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 
-                            "Would you like to download this file?\r\n\r\n""%s""\r\n\r\nChoose Cancel to stop any further prompts."
-    IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 
-                            "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
-    IDS_LIBRARY_COLLECTION_LOCKDOWN 
-                            "Would you like to prevent this collection from prompting you to download anything else?"
-    IDS_LIBRARY_COPYURI     "Copy &URI"
-    IDS_LIBRARY_EXPORTURIS  "Export &URIs..."
-    IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 
-                            "A subfolder of the selected folder ""%s"" is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"
-    IDS_LIBRARY_MOVE_FAIL   "Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"
 END
 
 STRINGTABLE 
@@ -5097,10 +5077,6 @@ BEGIN
     IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
     IDS_NEIGHBOUR_G1UL      "Gnutella: Ultrapeer-to-Leaf Connection"
     IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
     IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
     IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
@@ -5374,10 +5350,6 @@ BEGIN
     IDS_STATUS_VERIFIED     "Verified"
     IDS_STATUS_UNVERIFIED   "Unverified"
     IDS_STATUS_SOURCE       "source"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_STATUS_SOURCES      "sources"
     IDS_STATUS_SOURCESTENS  "sources"
     IDS_STATUS_SOURCES11TO19 "sources"
