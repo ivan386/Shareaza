@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Shareaza German Skin File -->
 <!-- Special characters used in German:
 
@@ -2588,7 +2588,7 @@ Other:
 		<string id="8178" value="Dateityp:"/>
 		<string id="8179" value="(Verlauf löschen)"/>
 		<string id="8180" value="File size must be"/>
-		<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
+		<string id="8181" value="&#160;bis"/><!-- size from xx TO xx-->
 		<string id="8208" value="Shareaza hasht %i Datei(en):"/>
 		<string id="8223" value="%i Tage und %i Stunden"/>
 		<string id="8224" value="Shareaza lädt herunter:"/>
@@ -2840,6 +2840,7 @@ Other:
 		<string id="16375" value="Unvollständig"/>
 		<string id="16376" value="Alle Dateien"/>
 		<string id="16377" value="HTTP Guard"/>
+		<string id="16378" value="Host %s hat mit 416 geantwortet, ohne verfügbare Bereiche anzugeben. Verbindung wird geschlossen.."/>
 		<string id="16384" value="Sind Sie sicher dass Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen.  Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern, wollen Sie fortfahren?"/>
 		<string id="16386" value="Metadaten von %i bearbeiten."/>
@@ -2866,8 +2867,8 @@ Other:
 		<string id="16407" value="Möchte Sie von dieser Kollektion nicht gefragt werden etwas herunterzuladen?"/>
 		<string id="16408" value="&amp;URI kopieren"/>
 		<string id="16409" value="&amp;URIs exportieren..."/>
-		<string id="16410" value="Das Downloadverzeichnis und das Verzeichnis für unvollständige Dateien sollte nicht das selbe sein."/>
-		<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
+		<string id="16410" value="Ein Unterordner des ausgewählten Ordners &quot;%s&quot; befindet sich schon in ihrer Bibliothek.\nDas Hinzufügen dieses Ordners hat zur Folge, dass einige Dateien neu gehasht werden müssen.\n\nMöchten Sie fortfahren?"/>
+		<string id="16411" value="Kann Datei %s nicht verschieben. Es ist möglich, dass eine andere Anwendung Datei gerade verwendet.\n\nMöchten Sie stattdessen versuchen die Datei zu kopieren?"/>
 		<string id="16448" value="Verbunden mit %s, handshaking..."/>
 		<string id="16449" value="Chatten mit %s (%s)."/>
 		<string id="16450" value="Verbindung zu %s beendet."/>
@@ -2923,8 +2924,8 @@ Other:
 		<string id="16801" value="Sie haben noch nicht angegeben, ob Sie eine Firewall benutzen. Bitte wählen Sie eine Firewalloption bevor Sie fortfahren."/>
 		<string id="16802" value="Sie haben keine Ordner freigegeben.  Sind Sie sicher?"/>
 		<string id="16803" value="Der Ordner, den Sie freigegeben möchten, ist bereits als Teil eines anderen Ordners freigegeben:\n\n%s"/>
-		<string id="16804" value="Sie haben in ihrem Profil keinen Nickname angegeben."/>
-		<string id="16805" value="Sie haben in ihrem Profil keinen Standort angegeben.\n\nEs wird empfohlen einen Standort anzugeben, damit andere Benutzer sehen können woher Sie kommen.\n\nSind Sie sicher, dass Sie ohne einen Standort anzugeben fortfahren möchten?"/>
+		<string id="16804" value="Sie haben in ihrem Benutzerprofil keinen Nicknamen angegeben."/>
+		<string id="16805" value="Sie haben in ihrem Profil keinen Standort angegeben.\n\nEs wird empfohlen einen Standort anzugeben, damit andere Benutzer sehen können aus welchem Land Sie kommen.Ein angegebener Standort ist keine bloßstellende Information.\n\nSind Sie sicher, dass Sie ohne einen Standort anzugeben fortfahren möchten?"/>
 		<string id="16806" value="Sie haben angegeben, dass Sie in ihrem NAT Router / Firewall port-forwarding benutzen möchten.\n\nBitte konfigurieren Sie ihr Netzwerk um port %i (TCP und UDP)an ihren PC weiterzuleiten."/>
 		<string id="16807" value="Bitte geben sie das gewünschte Bandbreitenlimit ein. &quot;123 kb/s&quot; für Kilobits pro Sekunde, oder &quot;123 KB/s&quot; für Kilobytes pro Sekunde."/>
 		<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht angegeben. Sind Sie sicher, dass sie fortfahren möchten?"/>
@@ -2933,7 +2934,7 @@ Other:
 		<string id="16811" value="Automatisch"/>
 		<string id="16816" value="Das eDonkey Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition, die akzeptiert wird, limitieren wollen?"/>
 		<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
-		<string id="16818" value="Das Verzeichnis für unvollständige Dateien sollte nicht in der Bibliothek sein, weil dadurch Probleme entstehen können."/>
+		<string id="16818" value="Das Downloadverzeichnis und das Verzeichnis für unvollständige Dateien sollte nicht das selbe sein."/>
 		<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu gehasht werden.\n\nWollen Sie fortfahren ?"/>
 		<string id="16864" value="Service Provider abfragen..."/>
 		<string id="16865" value="Service Provider &quot;%s&quot; abfragen..."/>
@@ -3053,10 +3054,11 @@ Other:
 		<string id="17473" value="Zeitüberschreitung beim Verbinden zu BitTorrent Client %s."/>
 		<string id="17474" value="Zeitüberschreitung beim Handshake mit BitTorrent Client %s."/>
 		<string id="17475" value="BitTorrent Kopplung mit %s mangels Aktivität geschlossen."/>
-		<string id="17476" value="BitTorrent Kopplung mit %s fehlgeschlagen. Entferneter Client hat andere GUID."/>
+		<string id="17476" value="BitTorrent Kopplung mit %s fehlgeschlagen. Remote-Client hat andere PeerID."/>
 		<string id="17477" value="BitTorrent Kopplung mit %s hat mit der falschen Datei geantwortet."/>
 		<string id="17478" value="BitTorrent Kopplung mit %s hat eine unbekannte Datei angefordert."/>
 		<string id="17479" value="BitTorrent Kopplung %s hergestellt für &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrent Kopplung mit %s hat eine inaktive Datei angefordert."/>
 		<string id="17481" value="BitTorrent Datei (Descriptor): &quot;%s&quot; empfangen"/>
 		<string id="17482" value="Auswertung der vorgeladenen BitTorrent Datei &quot;%s&quot; nicht möglich."/>
 		<string id="17483" value="Fehler von BitTorrent Tracker für &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3077,6 +3079,11 @@ Other:
 		<string id="17498" value="In der Datei &quot;%s&quot; wurde ein Fehler gefunden."/>
 		<string id="17500" value="Tracker hat nicht geantwortet - Announce erneut versuchen (%i von %i)"/>
 		<string id="17501" value="Kommunikation mit dem Tracker nicht möglich"/>
+		<string id="17505" value="BitTorrent-Verbindung mit %s wurde verworfen."/>
+		<string id="17506" value="BitTorrent-Handshake mit %s wurde verworfen."/>		
+		<string id="17507" value="BitTorrent-Kopplung mit %s wurde verworfen."/>
+		<string id="17510" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da bereits eine Verbindung mit diesem Client besteht."/>
+		<string id="17511" value="BitTorrent-Kopplung mit %s wurde nicht akzeptiert, da die maximale Anzahl an Verbindungen erreicht ist."/>
 		<string id="18496" value="Sie haben das Namensfeld geändert.  Sind Sie sicher, dass Sie diesen Download umbenennen wollen?"/>
 		<string id="18497" value="Sie haben einen ungültigen SHA1 Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
 		<string id="18498" value="Sie haben einen ungültigen tiger-tree root Hash angegeben.  Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut."/>
@@ -3096,6 +3103,7 @@ Other:
 		<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
 		<string id="19002" value="Kann keine Verbindungen akzeptieren, URL nicht verfügbar."/>
 		<string id="20000" value="Keine URN verfügbar."/>
+		<string id="20001" value="Schließen"/>
 		<string id="20002" value="von"/>
 		<string id="20005" value="Nein"/>
 		<string id="20006" value="Ja"/>
@@ -3545,7 +3553,7 @@ Other:
 		</dialog>
 
 		<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Willkommen bei Shareaza">
-			<control caption="Shareaza bietet eine flexible Benutzeroberfläche, das bedeutet Sie können wählen was ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
+			<control caption="Shareaza bietet eine flexible Benutzeroberfläche, Sie können also wählen was ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
 			<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
 			<control caption="Normalmodus"/>
 			<control caption="Powermodus"/>
