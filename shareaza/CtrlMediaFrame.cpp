@@ -1,9 +1,9 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/15 09:30:15 $"
-//	Revision:		"$Revision: 1.22 $"
-//  Last change by:	"$Author: mogthecat $"
+//	Date:			"$Date: 2005/10/16 13:56:56 $"
+//	Revision:		"$Revision: 1.23 $"
+//  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -1093,7 +1093,7 @@ void CMediaFrame::OnUpdateMediaStop(CCmdUI* pCmdUI)
 
 void CMediaFrame::OnMediaStop() 
 {
-	// if ( m_pPlayer ) m_pPlayer->Stop();
+	if ( m_pPlayer ) m_pPlayer->Stop();
 	m_bAutoPlay = FALSE;
 	m_wndList.Reset();
 	m_bAutoPlay = TRUE;
