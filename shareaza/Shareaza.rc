@@ -4563,15 +4563,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_PROPERTY_PAGE_GENERAL "General"
-    IDS_PROPERTY_PAGE_METADATA "Metadata"
-    IDS_PROPERTY_PAGE_COMMENTS "My Review"
-    IDS_PROPERTY_PAGE_SHARING "Sharing"
-    IDS_PROPERTY_PAGE_SOURCES "Sources"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_NETWORK_STARTUP     "Starting Shareaza network core..."
     IDS_NETWORK_CANT_LISTEN "Can't bind to %s port %i for incoming connections.  Incoming connections will not be supported."
     IDS_NETWORK_DISCONNECTING "Shutting down Shareaza network core..."
