@@ -2865,7 +2865,7 @@
 	<string id="16408" value="Kopieer &amp;URI"/>
 	<string id="16409" value="Exporteer &amp;URIs..."/>
 	<string id="16410" value="De complete en incomplete folders mogen niet dezelfde zijn"/>
-
+	<string id="16411" value="Niet in staat om bestand %s te verplaatsen. Het bestand is mogelijk in gebruik door een andere toepassing.\n\nWil je proberen om het bestand te kopiëren in plaats van te verplaatsen?"/>
 	<string id="16448" value="Verbonden met %s, bezig met handen schudden..."/>
 	<string id="16449" value="Nu aan het chatten met %s (%s)."/>
 	<string id="16450" value="Verbinding met %s is afgebroken."/>
@@ -2922,7 +2922,7 @@
 	<string id="16802" value="Je hebt geen mappen aangegeven om vrij te geven.  Weet je het zeker?"/>
 	<string id="16803" value="De map die je wilt vrijgeven is al vrijgegeven als deel van een andere vrijgegeven map:\n\n%s"/>
 	<string id="16804" value="Je hebt geen schuilnaam ingevuld in je gebruikersprofiel."/>
-	<string id="16805" value="Je hebt geen locatie ingevuld in je gebruikersprofiel.\n\nHet is een goed idee om je locatie in te geven, zodat andere gebruikers kunnen zien waar je vandaan komt.\n\nWeet je zeker dat je wilt verdergaan zonder een locatie op te geven?"/>
+	<string id="16805" value="Je hebt je locatie niet ingevoerd in je gebruikersprofiel.\n\nHet is aan te raden om je locatie in te voeren zodat andere gebruikers kunnen zien uit welk land je komt. Merk op dat het invoeren van je locatie geen andere gevoelige informatie bekend maakt.\n\nWil je echt verder gaan zonder je locatie in te voeren?"/>
 	<string id="16806" value="Je hebt aangegeven dat je je poorten wilt vrijgeven (port-forwarding) op je NAT-router of firewall.\n\nConfigureer alsjeblieft je netwerk zo, dat TCP poort %i wordt doorgestuurd naar je lokale PC."/>
 	<string id="16807" value="Geef alsjeblieft de bandbreedtelimiet die je wilt invoeren in de vorm van &quot;123 kb/s&quot; voor kilobits per seconde, of &quot;123 KB/s&quot; voor kilobytes per seconde."/>
 	<string id="16808" value="Je hebt je leeftijd en geslacht niet aangegeven.  Weet je zeker dat je verder wilt gaan zonder dit te doen?"/>
@@ -3050,11 +3050,11 @@
 	<string id="17472" value="Binnenkomende verbinding van %s is een BitTorrent koppeling, in onderhandeling..."/>
 	<string id="17473" value="Verbinden met BitTorrent cliënt %s is uitgeteld."/>
 	<string id="17474" value="Handen schudden met BitTorrent cliënt %s is uitgeteld."/>
-	<string id="17475" value="BitTorrent koppeling met %s wordt gesloten vanwege een gebrek aan verkeer."/>
-	<string id="17476" value="BitTorrent koppeling met %s mislukte omdat de verre cliënt een andere GUID heeft."/>
-	<string id="17477" value="BitTorrent koppeling met %s antwoordde met het verkeerde bestand."/>
-	<string id="17478" value="BitTorrent koppeling met %s vroeg een onbekend bestand aan."/>
-	<string id="17479" value="BitTorrent koppeling met %s tot stand gekomen voor &quot;%s&quot;."/>
+	<string id="17475" value="BitTorrent verbinding met %s wordt gesloten vanwege een gebrek aan verkeer."/>
+	<string id="17476" value="BitTorrent verbinding met %s is mislukt omdat de andere cliënt een andere Peer ID heeft."/> 
+	<string id="17477" value="BitTorrent verbinding met %s antwoordde met het verkeerde bestand."/>
+	<string id="17478" value="BitTorrent verbinding met %s vroeg een onbekend bestand aan."/>
+	<string id="17479" value="BitTorrent verbinding met %s tot stand gekomen voor &quot;%s&quot;."/>
 	<string id="17481" value="BitTorrent beschrijvend bestand (Descriptor) ontvangen: &quot;%s&quot;"/>
 	<string id="17482" value="Niet mogelijk om het prefetched BitTorrent bestand &quot;%s&quot; te ontleden."/>
 	<string id="17483" value="Fout van BitTorrent tracker voor &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3063,7 +3063,7 @@
 	<string id="17486" value="BitTorrent cliënt koppeling met %s wordt aangemaakt..."/>
 	<string id="17487" value="BitTorrent koppeling met %s vastgelegd, bezig met handen schudden..."/>
 	<string id="17488" value="Je hebt de tracker URL van deze torrent veranderd.  Weet je zeker dat je deze aanpassing wilt bewaren?\n\nEen An foutieve tracker URL zou de voortgang van het downloaden kunnen verhinderen."/>
-	<string id="17489" value="BitTorrent koppeling met %s is uitgebreid protocol, geïdentificeerd als &quot;%s&quot;."/>
+	<string id="17489" value="BitTorrent verbinding met %s is uitgebreid protocol, geïdentificeerd als &quot;%s&quot;."/>
 	<string id="17490" value="%i nieuwe BitTorrent bronnen ontvangen van %s."/>
 	<string id="17491" value="De torrent &quot;%s&quot; is al in je downloadlijst, en kan niet worden uitgezaaid."/>
 	<string id="17492" value="Er is een fout opgetreden bij het laden van het torrentbestand &quot;%s&quot;.  Waarschijnlijk is dit een ongeldige torrent."/>
@@ -3094,6 +3094,7 @@
 	<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 	<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>
 	<string id="20000" value="Geen URN beschikbaar"/>
+	<string id="20001" value="Sluiten"/> 
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Veranderen van leesrichting vereist een herstart van Shareaza.\nje zal Shareaza zelf opnieuw moeten starten. Nu afsluiten?"/>
 	<string id="20004" value="Rechts-naar links talenworden niet ondersteund door dit besturingssysteem."/>
@@ -3545,15 +3546,15 @@
 	</dialog>
 
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom bij Shareaza">
-		<control caption="Shareaza ondersteunt twee verschillende gebruikersoppervlakken, dus je kunt kiezen welke het meest bij jou past."/>
-		<control caption="Selecteer één van deze twee gebruikersoppervlakken:"/>
+		<control caption="Shareaza ondersteund een flexibele gebruikersomgeving, zodat je kunt kiezen wat het meest comfortabel is voor jou. Je kunt deze opties altijd veranderen."/>
+		<control caption="Selecteer alstublieft de gebruikersomgeving:"/>
 		<control caption="Normale Modus"/>
-		<control caption="Gevorderde Modus"/>
-		<control caption="Eenvoudige, gemakkelijk te gebruiken menu's en knoppen. Bekend voor gebruikers van andere soortgelijke programma's."/>
-		<control caption="De Gevorderde modus biedt voor de gespecialiseerde gebuiker veel meer commando's, vensters, enz."/>
-		<control caption="Toon een simpele voortgangsbalk."/>
-		<control caption="Laat extra BitTorrent besturingselementen zien."/>
-		<control caption="Gebruik Shareaza om torrent links te openen."/>
+		<control caption="Tabblad Stijl"/>
+		<control caption="Simpele en gemakkelijk te gebruiken menu's en knoppen.{n}Komt bekend voor bij gebruikers van andere file-sharing programma's."/>
+		<control caption="Tabblad stijl biedt gebruikers tal van extra commando's, schermen, etc.{n}Het kan een beetje verwarrend zijn voor nieuwe gebruikers!"/>
+		<control caption="Toon simpele download voortgangsbalken. (Verminderd CPU gebruik)"/>
+		<control caption="Toon additionele torrent gebruikersomgevings elementen."/>
+		<control caption="Open torrent links."/>
 	</dialog>
 
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom bij Shareaza [3 van 7]">
@@ -3973,13 +3974,13 @@
 		<control caption="Annuleren"/>
 	</dialog>
 
-	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URI's Exporteren">
+	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exporteer URIs">
 		<control/>
-		<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-gestuurde URI snelkoppelingen.  Selecteer alsjeblieft het formaat van de URIs, en druk op Opslaan:"/>
+		<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-powered URI referencies.  Selecteer alstublieft het formaat voor de URIs, en klik op Opslaan:"/>
 		<control/>
-		<control caption="Toevoegen:"/>
-		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis Bestandsnaam|Bestands Extensie|Bestands Grootte|Bestands Grootte (bytes)|Folder Pad|Lokale Host|Lokale Poort"/>
-		<control caption="Selecteer Preset:"/>
+		<control caption="Importeer:"/>
+		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Bestandsnaam|Bestandsnaam (URI)|Basis Bestandsnaam|Bestands Extensie|Bestands Grootte|Bestands Grootte (bytes)|Pad naar Map|Lokale Gastheer(Localhost)|Lokale Poort"/>
+		<control caption="Selecteer voorinstelling:"/>
 		<control/>
 		<control caption="Kopiëren"/>
 		<control caption="Opslaan..."/>
