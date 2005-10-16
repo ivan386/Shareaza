@@ -135,6 +135,8 @@ BOOL CDownloadTransferED2K::Initiate()
 
 void CDownloadTransferED2K::Close(TRISTATE bKeepSource)
 {
+	SetState( dtsNull );
+
 	if ( m_pClient != NULL )
 	{
 		m_pClient->OnDownloadClose();
