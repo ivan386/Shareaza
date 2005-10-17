@@ -988,6 +988,7 @@ void CUploadTransferHTTP::SendFileHeaders()
 			+ _T("&depth=9&ed2k=0;") 
 			+ CTigerNode::HashToString( &m_pTiger, FALSE )
 			+ _T("\r\n");
+		m_pOutput->Print( strHeader );
 	}
 	
 	if ( m_bMetadata )
