@@ -19,11 +19,11 @@
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
-		updatedBy="Sanly"
+		updateBy="Sanly"
 		description="Shareaza Chinese(Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
 		email="ShareazaSTC(AT)gmail(DOT)com"
-		version="2.2.0.2(EN1.86)"
+		version="2.2.0.2(EN1.88)"
 		type="Language"
 		language="chs"
 		prompt="单击这里显示简体中文"
@@ -406,7 +406,7 @@
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="浏览用户"/>
-		<!--<button id="ID_CHAT_SEND_FILE" text="发送文件"/>-->
+		<!--<button id="ID_CHAT_SEND_FILE" text="发送文件"/> -->
 		<button id="ID_CHAT_PRIORITY" text="准予优先权"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="连接" visible="false"/>
@@ -466,8 +466,8 @@
 			<separator/>
 			<menu text="指南(_G)">
 				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
-			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
-			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
+				<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
 			</menu>
 			<separator/>
@@ -557,8 +557,8 @@
 			<separator/>
 			<menu text="指南(_G)">
 				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
-			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
-			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
+				<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
 			</menu>
 			<separator/>
@@ -642,8 +642,8 @@
 			<separator/>
 			<menu text="指南(_G)">
 				<item id="ID_HELP_GUIDE" text="Shareaza 用户指南(_U)"/>
-			<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
-			<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
+				<item id="ID_HELP_ROUTER" text="路由器帮助(_R)"/>
+				<item id="ID_HELP_SECURITY" text="安全帮助(_C)"/>
 				<item id="ID_HELP_CODEC" text="解码器帮助(_C)"/>
 			</menu>
 			<separator/>
@@ -923,13 +923,13 @@
 		<item id="ID_DOWNLOADS_SOURCES" text="查找更多资源(_F)"/>
 		<!-- <separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件(_L)"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/>-->
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="自动清除(_U)"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="预览(_P)"/>
-		<!--<item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/>-->
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览副本(_V)"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="加入播放列表(_Y)"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="查看评价(_V)"/>
 		<separator/>
@@ -1880,9 +1880,11 @@
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">与用户聊天</link>
 		</group>
 
-		<newline gap="16" indent="0"/>
-		<text format="b">最爱的网页链接</text>
-		<newline gap="4" indent="8" id="Bookmarks"/>
+		<group id="3">
+			<newline gap="16" indent="0"/>
+			<text format="b">最爱的网页链接</text>
+			<newline gap="4" indent="8" id="Bookmarks"/>
+		</group>
 
 		<newline gap="16" indent="0"/>
 
@@ -2066,7 +2068,7 @@
 		<link target="http://www.shareaza.com/help/?torrentencoding">单击这里以获得额外的帮助</link>
 		<text>&#160;或下载软件修复此 Torrent 文件。</text>
 	</document>
-	
+
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">您的 eDonkey 服务器列表没有内容</text>
 		<newline gap="8"/>
@@ -2613,6 +2615,7 @@
 	<string id="8316" value="命中"/>
 	<string id="8317" value="上传"/>
 	<string id="8318" value="%lu 今天，%lu 总计"/>
+	<string id="8319" value="&#160;(无 Hashset)"/>
 	<string id="8320" value="状态:"/>
 	<string id="8321" value="速度:"/>
 	<string id="8322" value="链接:"/>
@@ -2802,7 +2805,7 @@
 	<string id="16356" value="正拒绝来自于 %s 的浏览用户请求，太多浏览连接。"/>
 	<string id="16357" value="正在上传文件 &quot;%s&quot; 到主机 %s..."/>
 	<string id="16358" value="连接到 %s 的上传已丢失，保存队列位置。"/>
-	<string id="16359" value="离线列队上传主机 %s 过期，移除中。"/>
+	<string id="16359" value="离线排队上传主机 %s 过期，移除中。"/>
 	<string id="16360" value="拒绝上传 &quot;%s&quot; 到 %s (%s)，所有匹配队列已满。"/>
 	<string id="16361" value="刷新上传到 %s (%s)，网络失效。"/>
 	<string id="16362" value="eDonkey2000 的上传不能被取消。您确定您要取消此上传吗？"/>
@@ -2847,8 +2850,8 @@
 	<string id="16407" value="您要防止此收集提示您下载的任何文件吗？"/>
 	<string id="16408" value="复制 URI(_U)"/>
 	<string id="16409" value="导出 URI(_U)..."/>
-	<string id="16410" value="A subfolder of the selected folder &quot;%s&quot; is already part of your library.\nAdding this folder will cause re-hashing of some files.\n\nDo you want to continue ?"/>
-	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
+	<string id="16410" value="选定文件夹的子目录 &quot;%s&quot; 已经是您收藏的一部分。\n添加此文件夹将导致重新 Hash 某些文件。\n\n您希望继续吗？"/>
+	<string id="16411" value="不能移动文件 %s。此文件可能正在被其他程序使用。\n\n您希望以复制方式来替代移动吗？"/>
 	<string id="16448" value="连接到 %s，握手..."/>
 	<string id="16449" value="正在与 %s (%s) 聊天。"/>
 	<string id="16450" value="到 %s 的连接已关闭。"/>
@@ -2914,8 +2917,8 @@
 	<string id="16811" value="自动"/>
 	<string id="16816" value="eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\n您确定要限制您能接受的队列位置吗？"/>
 	<string id="16817" value="Windows 系统不支持超过 256 个字符的文件路径。\n请选择一个较短路径的文件夹。"/>
-	<string id="16818" value="The complete and incomplete folders should not be the same"/>
-	<string id="16819" value="The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."/>
+	<string id="16818" value="完成文件的文件夹与未完成文件的文件夹不能为同一文件夹。"/>
+	<string id="16819" value="未完成文件的文件夹不能添加到收藏中，因为它将降低程序的性能。未完成文件可以在传送窗口中直接共享。"/>
 	<string id="16864" value="正在查询主机探索服务..."/>
 	<string id="16865" value="正在查询探索服务 &quot;%s&quot;..."/>
 	<string id="16866" value="G网缓存处理成功 (&quot;%s&quot;)。"/>
@@ -3034,7 +3037,7 @@
 	<string id="17473" value="连接到 BitTorrent 客户端 %s 超时。"/>
 	<string id="17474" value="与 BitTorrent 客户端 %s 握手超时。"/>
 	<string id="17475" value="关闭与 %s 的 BitTorrent 联结因为缺少通讯。"/>
-	<string id="17476" value="与 %s 的 BitTorrent 联结失败因为远程客户端具有不同的 GUID。"/>
+	<string id="17476" value="BitTorrent 与 %s 的联结失败，因为远程客户端具有不同的对等标识。"/>
 	<string id="17477" value="与 %s 的 BitTorrent 联结回应以错误的文件。"/>
 	<string id="17478" value="与 %s 的 BitTorrent 联结请求了错误的文件。"/>
 	<string id="17479" value="与 %s 的 BitTorrent 联结已为 &quot;%s&quot; 建立。"/>
@@ -3077,6 +3080,7 @@
 	<string id="19001" value="您必须选择一个用户名和密码。"/>
 	<string id="19002" value="未能接受连接，链接不可用。"/>
 	<string id="20000" value="无 URN 可用"/>
+	<string id="20001" value="关闭"/>
 	<string id="20002" value="于"/><!-- 例如: 1 于 10 -->
 	<string id="20003" value="变更界面方向需要重新启动。\n您需要手动启动 Shareaza。立即退出？"/>
 	<string id="20004" value="您的操作系统不支持从右向左方向的语言。"/>
@@ -3091,8 +3095,8 @@
 	<string id="20105" value="Hashset"/>
 	<string id="20106" value="元数据"/>
 	<string id="20107" value="繁忙"/>
-	<string id="20108" value="列队"/>
-	<string id="20109" value="已列队"/>
+	<string id="20108" value="排队"/>
+	<string id="20109" value="已排队"/>
 	<string id="20110" value="未知"/>
 	<string id="20111" value="已完成"/>
 	<string id="20112" value="做种中"/>
@@ -3205,7 +3209,7 @@
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="媒体">
 		<control caption="选项(_O):"/>
 		<control caption="使用 Shareaza 媒体播放器播放下列文件类型"/>
-		<control caption="使用 Shareaza 媒体播放器列队下列文件类型"/>
+		<control caption="使用 Shareaza 媒体播放器排队下列文件类型"/>
 		<control caption="文件类型(_T):"/>
 		<control/>
 		<control caption="添加(_A)"/>
@@ -3286,7 +3290,7 @@
 		<control caption="限制(_L):"/>
 		<control caption="全部下载带宽:"/>
 		<control/>
-		<control caption="最大列队长度:"/>
+		<control caption="最大排队长度:"/>
 		<control/><control/>
 		<control caption="只在已连接的网络下载和上传。"/>
 	</dialog>
