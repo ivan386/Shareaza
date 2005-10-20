@@ -907,8 +907,8 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	m_pServer.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 	m_pServer.sin_port = htons( pPacket->ReadShortLE() );
 
-	// If we are learning new servers
-	if ( Settings.eDonkey.LearnNewServers && ! Network.IsFirewalledAddress( &m_pServer.sin_addr ) )
+	// If we are learning new servers from clients
+	if ( Settings.eDonkey.LearnNewServersClient && ! Network.IsFirewalledAddress( &m_pServer.sin_addr ) )
 	{	// Add their server
 		HostCache.eDonkey.Add( &m_pServer.sin_addr, htons( m_pServer.sin_port ) );
 	}

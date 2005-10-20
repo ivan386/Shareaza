@@ -322,7 +322,8 @@ public:
 		DWORD		PacketThrottle;				// ED2K packet rate limiter
 		DWORD		SourceThrottle;				// ED2K source rate limiter
 		DWORD		MetAutoQuery;				// Auto query for a new server list
-		BOOL		LearnNewServers;
+		BOOL		LearnNewServers;			// Get new servers from servers
+		BOOL		LearnNewServersClient;		// Get new servers from clients
 		CString		ServerListURL;
 		DWORD		RequestPipe;
 		DWORD		RequestSize;
