@@ -10,7 +10,7 @@
 		description="Traducción de Shareaza al Español Internacional"
 		link="http://www.shareaza.com/"
 		email="luis.help@gmail.com"
-		version="2.1.4.4"
+		version="2.2.0.2"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -450,7 +450,6 @@
 		</menu>
 		<menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-
 			<separator/>
 			<menu text="_Guías">
 			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
@@ -540,8 +539,7 @@
 			<item id="ID_WINDOW_MONITOR" text="Mostrar _Monitor"/>
 			<item id="ID_WINDOW_REMOTE" text="Mostrar _Control Remoto"/>
 		</menu>
-
-
+ 
         <menu text="_Ayuda">
 			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
 
@@ -3086,7 +3084,8 @@
 	<string id="19001" value="Debes elegir un nombre de usuario y contraseña."/>
 	<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
 	<string id="20000" value="No hay URN disponible"/>
-	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
+	<string id="20001" value="Cerrar"/>
+    <string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiando la direccin de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
 	<string id="20004" value="Lenguajes de Derecha-Izquierda no se soportan en tu SO."/>
 	<string id="20005" value="No"/>
@@ -4088,15 +4087,6 @@
 		<control caption="Esto le ayuda a exportar el contenido de un album o carpeta a una colección de Shareaza."/>
 		<control caption="Exportar..."/>
 		<control caption="Cancelar"/>
-		<control caption="Nombre:"/>
-		<control/>
-		<control caption="Autor:"/>
-		<control/>
-		<control caption="Descripcin:"/>
-		<control/>
-		<control caption="Borrar|_Regresar"/>
-		<control caption="_Siguiente|Exportar"/>
-		<control caption="_Cancelar"/>
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Editar Descarga (Avanzado)">
