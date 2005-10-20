@@ -2687,8 +2687,8 @@
 	<string id="16156" value="El vecino %s quiere actuar como hub cerrando conexión."/>
 	<string id="16157" value="El vecino %s no es un hub, cerrando conexión."/>
 	<string id="16158" value="Gnutella][ conexion con vecino %s ha sido establecido (%s)."/>
-  	<string id="16159" value="Cerrando conexin con no vecino Gnutella2 %s."/>
-	<string id="16192" value="El vecino %s remitio un paquete con tama o excesivo, cerrando conexin."/>
+  	<string id="16159" value="Cerrando conexión con no vecino Gnutella2 %s."/>
+	<string id="16192" value="El vecino %s remitio un paquete con tama o excesivo, cerrando conexión."/>
 	<string id="16193" value="El veicno %s remitio un paquete con zero TTL, ignorando."/>
 	<string id="16194" value="Neighbour %s remitio un paquete con excesivo TTL, tirando paquete (TTL=%i, Hops=%i)."/>
 	<string id="16195" value="Neighbour %s remitio un paquete de ping con tama o invalido, ignorando."/>
