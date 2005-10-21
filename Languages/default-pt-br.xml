@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
 
@@ -2596,10 +2596,10 @@
 	<string id="8177" value="Digite algumas palavras para pesquisar:"/>
 	<string id="8178" value="Qual o tipo de arquivo?"/>
 	<string id="8179" value="(Limpar Histórico de pesquisa)"/>
-	<string id="8180" value="O tamanho do arquivo deve ser"/>
-	<string id="8181" value="&#160;para"/><!-- size from xx TO xx-->
+	<string id="8180" value="O tamanho do arquivo deve ter"/>
+	<string id="8181" value="&#160;até"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza está criando Hash(s) para %i arquivo(s):"/>
-    <string id="8223" value="%i dias e %i horas"/>
+        <string id="8223" value="%i dias e %i horas"/>
 	<string id="8224" value="Shareaza está baixando:"/>
 	<string id="8225" value="Este download está pausado:"/>
 	<string id="8226" value="Shareaza terminou de baixar:"/>
@@ -2629,7 +2629,7 @@
 	<string id="8304" value="N/A"/>
 	<string id="8306" value="Localizado"/>
 	<string id="8307" value="Tipo"/>
-	<string id="8308" value="Vol."/>
+	<string id="8308" value="Tamanho"/>
 	<string id="8309" value="Fonte Parcial (%.2f%% disponível)"/>
 	<string id="8310" value="%i slots de upload, %i esperando na fila de espera"/>
 	<string id="8311" value="Você já tem este arquivo na sua Biblioteca."/>
@@ -2875,8 +2875,8 @@
 	<string id="16407" value="Você gostaria de impedir essa coleção de pedir para baixar mais alguma coisa?"/>
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>
-	<string id="16410" value="As pastas de arquivos completos e de arquivos incompletos não podem ser as mesmas"/>
-	<string id="16411" value="Unable to move the file %s. The file may be in use by another application.\n\nDo you wish to try to copy this file instead?"/>
+	<string id="16410" value="Uma pasta do diretório &quot;%s&quot; já está na Biblioteca.\nAdicionar esta pasta irá obrigar novamente o hashing de alguns arquivos.\n\nVocê deseja continuar? ?"/>
+	<string id="16411" value="Impossível mover o arquivo %s. Ele pode estar sendo usado por outra aplicação.\n\nDeseja então tentar copiar o arquivo? "/>
 	<string id="16448" value="Conectado a %s, inicializando..."/>
 	<string id="16449" value="Conversando com %s (%s)."/>
 	<string id="16450" value="A conexão com %s foi fechada."/>
@@ -2933,7 +2933,7 @@
 	<string id="16802" value="Você não selecionou nenhuma pasta para compartilhar.  Tem certeza disto?"/>
 	<string id="16803" value="A pasta que você está compartilhando já é compartilhada como parte de outra pasta compartilhada:\n\n%s"/>
 	<string id="16804" value="Você não colocou o seu nome de usuário no Perfil."/>
-	<string id="16805" value="Você não colocou a sua localidade no Perfil.\n\nÉ uma boa idéia colocar uma localidade para os outros usuário saberem de onde você está falando.\n\nTem certeza que deseja continuar sem colocar a sua localidade?"/>
+	<string id="16805" value="Você não colocou a sua localidade no Perfil.\n\nÉ uma boa idéia colocar uma localidade para os outros usuário saberem de qual país você está falando. Colocar informações sobre a sua localidade não revela nenhuma informação comprometedora.\n\nTem certeza que deseja continuar sem colocar a sua localidade?"/>
 	<string id="16806" value="Você indicou que usa um NAT-router ou um firewall.\n\nPor favor configure sua rede para repassar a porta TCP %i para o seu PC local."/>
 	<string id="16807" value="Por favor selecione o tipo de limite de banda &quot;123 kb/s&quot; para kilobits por segundo, ou &quot;123 KB/s&quot; para kilobytes por segundo."/>
 	<string id="16808" value="Você não escolheu sua idade e sexo. Tem certeza que deseja continuar sem fazer isso?"/>
@@ -2942,8 +2942,8 @@
 	<string id="16811" value="Automático"/>
 	<string id="16816" value="A rede eDonkey faz uso de longas filas e um longo tempo de espera. Limitando tão estritamente a posição máxima na fila você poderá ter problemas para iniciar seu downloas.\nTem certeza que deseja limitar a posição máxima que você aceitará para a fila?"/>
 	<string id="16817" value="O Windows não aceita nomes de caminhos maiores do que 256 caracteres.\nPor favor selecione uma pasta com uma caminho menor."/>
-	<string id="16818" value="A pasta de arquivos incompletos não deve ficar na Bibilioteca, pois reduziria a performance. Arquivos incompletos podem ser compartilhados diretamente da janela de Transferências."/>
-	<string id="16819" value="Um subdiretório do diretório &quot;%s&quot; já é parte da sua Biblioteca.\nAdicionar este diretório pode causar o hashing novamente de alguns arquivos.\n\nVocê deseja continuar? ?"/>
+    <string id="16818" value="O diretório de arquivos completos e o de arquivos incompletos não devem ser os mesmos"/>
+	<string id="16819" value="O diretório de arquivos incompletos não deve ficar na Biblioteca, pois a performance seria reduzida. Arquivos incompletos podem ser compartilhados diretamente da janela de Transferências."/>
 	<string id="16864" value="Pesquisando host de Descobrimento de Serviço..."/>
 	<string id="16865" value="Pesquisando Serviço de Descobrimento &quot;%s&quot;..."/>
 	<string id="16866" value="Transação GWebCache obteve sucesso(&quot;%s&quot;)."/>
@@ -2973,8 +2973,8 @@
 	<string id="16995" value="Este arquivo pode estar danificado, ou você pode não ter os codecs necessários para usá-lo."/>
 	<string id="16996" value="Parte deste arquivos não pôde ser exibida, pode ser necessário que você baixe outros codecs."/>
 	<string id="16997" value="Não há arquivo tocando.  Clique duas vezes num arquivo de mídia da Biblioteca para tocar."/>	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
-    <string id="16998" value="T &#160; &#160; O &#160; &#160; C &#160; &#160; A &#160; &#160; D &#160; &#160; O &#160; &#160; R &#160; &#160; &#160; &#160; &#160; D &#160; &#160; E &#160; &#160; &#160; &#160; &#160; M &#160; &#160; Í &#160; &#160; D &#160; &#160; I &#160; &#160; A"/><!-- on one line -->
-    <string id="16999" value="L I S T A"/>
+        <string id="16998" value="T &#160; &#160; O &#160; &#160; C &#160; &#160; A &#160; &#160; D &#160; &#160; O &#160; &#160; R &#160; &#160; &#160; &#160; &#160; D &#160; &#160; E &#160; &#160; &#160; &#160; &#160; M &#160; &#160; Í &#160; &#160; D &#160; &#160; I &#160; &#160; A"/><!-- on one line -->
+        <string id="16999" value="L I S T A"/>
 	<string id="17024" value="Iniciando conexão para %s..."/>
 	<string id="17025" value="Incapz de criar conexão para %s."/>
 	<string id="17026" value="Aceitando conexão push de %s..."/>
@@ -3062,7 +3062,7 @@
 	<string id="17473" value="Tempo de espera de conexão terminou para o cliente BitTorrent  %s."/>
 	<string id="17474" value="Tempo de espera de inicialização terminou para o cliente BitTorrent  %s."/>
 	<string id="17475" value="Fechando conexão com BitTorrent %s devido à falta de tráfego."/>
-	<string id="17476" value="Conexão BitTorrent com %s falhou porque um cliente remoto tem um GUID diferente."/>
+	<string id="17476" value="Conexão BitTorrent com %s falhou porque um cliente remoto tem um Peer ID diferente."/>
 	<string id="17477" value="Conexão BitTorrent com %s respondeu com o arquivo diferente."/>
 	<string id="17478" value="Conexão BitTorrent com %s respondeu com um arquivo diferente."/>
 	<string id="17479" value="Conexão BitTorrent com %s estabelecida para &quot;%s&quot;."/>
@@ -3105,6 +3105,7 @@
 	<string id="19001" value="Você deve escolher um nome de usuário e uma senha."/>
 	<string id="19002" value="Incapaz de acietar conexões, URL não disponível."/>
 	<string id="20000" value="URN Indisponível"/>
+    <string id="20001" value="Fechar"/>
 	<string id="20002" value="de"/><!-- e.g. 1 of 10 -->
     <string id="20003" value="Para mudar a interface é necessário reiniciar. \nVocê precisára iniciar o Shareaza manualmente. Sair agora?"/>
     <string id="20004" value="Linguas de leitura da ´Direita-para-esquerda´ não são suportadas pelo seu Sistema Operacional."/>
@@ -3543,7 +3544,7 @@
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bem-Vindo ao Shareaza [1 de 7]">
 		<control caption="Bem-Vindo ao Shareaza!"/>
 		<control caption="Se você nunca usou um programa de peer-to-peer, este Assistente vai configurar o Shareaza para você em poucos passos."/>
-		<control caption="Se você é um usuário avançado, você pode acessar todas as opções do Shareaza no menu Ferramentas.  Clique a qualquer momento Exit para fechar este Assistente."/>
+		<control caption="Se você é um usuário avançado, você pode acessar todas as opções do Shareaza no menu Ferramentas.  Clique a qualquer momento em Sair para fechar este Assistente."/>
 		<control caption="Este Asssistente vai ajuda-lo a:"/>
 		<control/>
 		<control caption="Escolher a melhor interface para você"/>
@@ -3556,15 +3557,15 @@
 	</dialog>
 	
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Bem-Vindo ao Shareaza [2 de 7]">
-		<control caption="O Shareaza suporta duas interfaces, portanto você pode a escolher a mais confortável para você."/>
-		<control caption="Por favor selecione umas destas duas interfaces:"/>
+		<control caption="O Shareaza suporta dois tipos de interface, portanto você pode a escolher a mais confortável para você."/>
+		<control caption="Por favor selecione umas das interfaces:"/>
 		<control caption="Modo Simples"/>
 		<control caption="Modo Avançado"/>
 		<control caption="Simples, fácil de usar e familiar para usuários de outros programas."/>
-		<control caption="O Modo avançado oferece mais opções e janelas aos usuário mais experientes."/>
+		<control caption="O Modo avançado oferece mais opções e janelas aos usuário mais experientes. Pode ser um pouco confuso para usuários novatos."/>
 		<control caption="Exibir barra de progresso simplificada."/>
 		<control caption="Exibir interface adicional do BitTorrent."/>
-		<control caption="Handle torrent links."/>
+		<control caption="Sempre abrir arquivos .torrent."/>
 	</dialog>
 	
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Bem-Vindo ao Shareaza [3 de 7]">
@@ -3633,7 +3634,7 @@
     <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bem-Vindo ao Shareaza [7 de 7]">
 		<control caption="É isso aí!  O Shareaza foi configurado para trabalhar no seu computador."/>
 		<control caption="Se você precisar mudar alguma configuração, você pode refazer este Assistente selecionando-o no menu Ferramentas."/>
-		<control caption="Apos fechar o Assistente com o botão Exit, você pode conectar nas redes que você escolheu e começar a baixar conteúdo."/>
+		<control caption="Apos fechar o Assistente com o botão Sair, você pode conectar nas redes que você escolheu e começar a baixar conteúdo."/>
 		<control caption="Conectar à rede quando eu fechar este Asssistente"/>
 		<control caption="Conectar à rede toda vez que eu abrir o Shareaza"/>
 		<control caption="Iniciar o Shareaza com o Windows"/>
@@ -4110,7 +4111,7 @@
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Editar Download (Avançado)">
-		<control caption="ATENÇO: Aqui pode-se configurar as opções avançadas deste download, que podem danificar ou perder o arquivo."/>
+		<control caption="ATENÇÃO: Aqui pode-se configurar as opções avançadas deste download, que podem danificar ou perder o arquivo."/>
 		<control caption="_Nome do Arquivo:"/>
 		<control/>
 		<control caption="_URNs:"/>
@@ -4130,7 +4131,7 @@
 		<control caption="até"/>
 		<control/>
 		<control caption="Apagar"/>
-		<control caption="Info do _Torrent..."/>
+		<control caption="Info do _Torrent"/>
 		<control caption="Aceitar"/>
 		<control caption="Cancelar"/>
 	</dialog>
