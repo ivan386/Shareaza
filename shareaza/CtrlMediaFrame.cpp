@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/21 20:18:43 $"
-//	Revision:		"$Revision: 1.25 $"
+//	Date:			"$Date: 2005/10/21 20:29:41 $"
+//	Revision:		"$Revision: 1.26 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -124,6 +124,7 @@ CMediaFrame::CMediaFrame()
 	m_bLastMedia	= FALSE;
 	m_bLastNotPlayed= FALSE;
 	m_bStopFlag		= FALSE;
+	m_bEnqueue		= FALSE;
 	m_tLastPlay		= 0;
 	m_tMetadata		= 0;
 	
@@ -1638,7 +1639,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		BOOL bPlayIt;
 		BOOL bCorrupted = FALSE;
 
-		if ( m_bEnqueue || m_bStopFlag )
+		if ( m_bEnqueue )
 			bPlayIt = FALSE;
 		else
 		{
@@ -1674,7 +1675,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		{
 			// reset list and cleanup
 			m_bLastNotPlayed = FALSE;
-			if ( ! m_bStopFlag ) m_wndList.Reset( TRUE );
+			m_wndList.Reset( TRUE );
 			m_bStopFlag = FALSE;
 			if ( m_pPlayer ) Cleanup();
 		}
