@@ -6,7 +6,7 @@
 
 <!-- Manifest -->
 <manifest	name="Srpski"
-		author="Woodstoock"
+		author="Biza"
 		updatedBy="Woodstoock"
 		description="Shareaza Default Serbian Skin File"
 		link="http://www.shareaza.com/"
@@ -145,7 +145,7 @@
 		<button id="ID_DOWNLOADS_RESUME" text="Nastavi Skidanje"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pauziraj Skidanje"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Prekini Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Obriši Skinuto"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Očisti Skinuto"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometa"/>
 		<rightAlign/>
@@ -160,7 +160,7 @@
 		<button id="ID_DOWNLOADS_RESUME" text="Nastavi Skidanje"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pauziraj Skidanje"/>
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Prekini Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Obriši Skinuto"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Očisti Skinuto"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometa"/>
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Info o Torrentu"/>
@@ -930,7 +930,7 @@
 		<menu text="N_apredno">
 			<item id="ID_DOWNLOADS_SHARE" text="Deli Datoteku"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="Zapamti URI"/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopiraj URI"/>
 			<item id="ID_DOWNLOADS_URL" text="Dod_aj Izvor..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Prozor za Praćenje"/>
@@ -968,7 +968,7 @@
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informacije o Torrent"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Obriši"/>
-		<item id="ID_DOWNLOADS_RATE" text="Ocjeni..."/>
+		<item id="ID_DOWNLOADS_RATE" text="Oceni..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otvori"/>
@@ -1051,13 +1051,13 @@
 		<item id="ID_LIBRARY_REBUILD" text="O_bnovi"/>
 		<item id="ID_LIBRARY_FOLDERS" text="Deli..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_podešavanja Datoteke"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Podešavanja Datoteke"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual.Basic">
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Pokreni Album"/>
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="Obriši"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="podešavanja Datoteke"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Podešavanja Datoteke"/>
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Podešavanja _Albuma"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual">
@@ -1129,7 +1129,7 @@
 		</menu>
 		<menu text="_Web Usluge">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Pogledaj _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Skini Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
 		</menu>
@@ -1479,7 +1479,7 @@
 
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">O B A V E S T E N J E&#160; O &#160; N A D O O G R A D NJ I</heading>
+			<heading align="middle">O B A V E S T E N J E&#160; O &#160; N A D O O G R A D N J I</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Nadogradi"/>
 			<newline gap="6"/>
@@ -1648,7 +1648,7 @@
 
 			<text id="UploadedNone">Danas još niste ništa dali.</text>
 			<text id="UploadedOne">Danas ste dali 1 datoteku (%s).</text>
-			<text id="UploadedMany">Danas ste dali %i datotek(a)e (%s).</text>
+			<text id="UploadedMany">Danas ste dali %i datoteke(a) (%s).</text>
 		</para>
 	</document>
 
@@ -1934,7 +1934,7 @@
 		<text format="b">Ovo Skidanje je u Toku!</text>
 		<newline gap="8"/>
 		<text>Ovu datoteku upravo skidam.Ako je skidanje sporo,	probajte
-		potražiti više izvora naredbom</text>
+		potražiti više izvora naredbom </text>
 		<text format="b"> Nađi više izvora</text><text> .  Ako ni to ne pomogne
 		može biti da korisnici koji dele imaju malu brzinu davanja.
 		Brzina skidanja se obično poveća s vremenom.</text>
@@ -1996,7 +1996,7 @@
 	<document name="UploadHelp">
 		<text format="b">Praćenje Davanja</text>
 		<newline gap="8"/>
-		<text>Ovde se nalaze datoteke koje trenutno dajete. Pritiskom na maleni +	na lijevoj
+		<text>Ovde se nalaze datoteke koje trenutno dajete. Pritiskom na maleni +	na levoj
 		strani otvara se red čekanja, a dole desno pored windows trake sa alatima imate koristan filter.</text>
 	</document>
 
@@ -2209,25 +2209,25 @@
 	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Promeni podešavanja označene grupe skidanja."/>
 	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Ukloni označenu grupu skidanja."/>
 	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Nastavi sva skidanja u ovoj grupi."/>
-	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Pirkaži ili sakrij the download group bar."/>
-	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automatically clear downloads which have been completed."/>
+	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Prikaži ili sakrij the download group bar."/>
+	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Automastski očisti gotova skidanja."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Boost the performance of the selected download by removing bandwidth limits."/>
 	<tip id="ID_DOWNLOADS_CLEAR" message="Clear/remove the selected download(s)."/>
-	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Remove the selected download(s) from the list."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Očisti selektovano skidanje(a) sa liste."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Očisti skidanja koja su se završila."/>
-	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Otkaži selektovano nezavršeno skidanje(a)."/>
+	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Otkaži i obriši selektovano nezavršeno skidanje(a)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Clear downloads which have been paused."/>
-	<tip id="ID_DOWNLOADS_COPY" message="Copy the URI of the selected file."/>
+	<tip id="ID_DOWNLOADS_COPY" message="Kopiraj URI selektovane datoteke."/>
 	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
-	<tip id="ID_DOWNLOADS_ENQUEUE" message="Add the selected download(s) to your media playlist."/>
-	<tip id="ID_DOWNLOADS_FILE_DELETE" message="Delete the selected completed file(s)."/>
-	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Show downloads which are active."/>
-	<tip id="ID_DOWNLOADS_FILTER_ALL" message="Show all downloads."/>
+	<tip id="ID_DOWNLOADS_ENQUEUE" message="Dodaj označenu datoteku u moju media playlistu."/>
+	<tip id="ID_DOWNLOADS_FILE_DELETE" message="Obriši selektovanu završenu datoteku(e))."/>
+	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Pokaži aktivne download-e."/>
+	<tip id="ID_DOWNLOADS_FILTER_ALL" message="Pokaži sva skidanja."/>
 	<tip id="ID_DOWNLOADS_FILTER_MENU" message="Izaberi koji tipovi downloada-a da budu prikazani, a koji sakriveni u ovom pregledu."/>
-	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Show downloads which are paused."/>
-	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Show downloads which are waiting in queues."/>
-	<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Show downloads which are waiting for sources."/>
-	<tip id="ID_DOWNLOADS_HELP" message="View help information on this download..."/>
+	<tip id="ID_DOWNLOADS_FILTER_PAUSED" message="Pokaži pauzirane download-e."/>
+	<tip id="ID_DOWNLOADS_FILTER_QUEUED" message="Pokaži download-e koji čekaju u redu."/>
+	<tip id="ID_DOWNLOADS_FILTER_SOURCES" message="Pokaži download-e koji čekaju bez izvora."/>
+	<tip id="ID_DOWNLOADS_HELP" message="Vidite pomoć o ovom download-u..."/>
 	<tip id="ID_DOWNLOADS_LAUNCH" message="Pregledaj selektovanu datoteku(e)."/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="Otvori ili pokreni selektovanu datoteku(e)."/>
 	<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="SmartPreview the selected download(s)."/>
@@ -2236,22 +2236,22 @@
 	<tip id="ID_DOWNLOADS_MOVE_UP" message="Move the selected download(s) up the priority list."/>
 	<tip id="ID_DOWNLOADS_PAUSE" message="Pauziraj selektovano skidanje(a)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Oceni odabrano skidanje."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="nastavi odabrano skidanje."/>
-	<tip id="ID_DOWNLOADS_SETTINGS" message="Configure download settings..."/>
-	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
-	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
-	<tip id="ID_DOWNLOADS_SOURCES" message="Search for more sources for the selected download(s)."/>
-	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
-	<tip id="ID_DOWNLOADS_URL" message="Add a source URL to the selected download..."/>
-	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download"/>
+	<tip id="ID_DOWNLOADS_RESUME" message="Nastavi odabrano skidanje."/>
+	<tip id="ID_DOWNLOADS_SETTINGS" message="Podesite download podešavanja..."/>
+	<tip id="ID_DOWNLOADS_SHARE" message="Deli ovu delimično skinutu datoteku sa ostalim korisnicima."/>
+	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Prikaži izvore koji nisu trenutno u upotrebi."/>
+	<tip id="ID_DOWNLOADS_SOURCES" message="Nadji više izvora za selektovanu datoteku(e)."/>
+	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Pogledaj inforamacije o selektovanom BitTorrent download-u..."/>
+	<tip id="ID_DOWNLOADS_URL" message="Dodaj URL izvor u selektovano skidanje..."/>
+	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Pogledaj kritike za selektovani download"/>
 	<tip id="ID_HELP_ABOUT" message="Prikazuje prozor O Shareazi..."/>
 	<tip id="ID_HELP_CODEC" message="Sve vezano uz codece i video probleme."/>
 	<tip id="ID_HELP_FAQ" message="Pogledajte Shareazin FAQ (najčešče postavljana pitanja)."/>
-	<tip id="ID_HELP_ROUTER" message="Get help configuring your router or firewall."/>
-	<tip id="ID_HELP_FORUMS" message="Posjetite Shareazine Forume."/>
+	<tip id="ID_HELP_ROUTER" message="Konfigurišite Vaš router ili firewall - pomoć."/>
+	<tip id="ID_HELP_FORUMS" message="Posetite Shareazine Forume."/>
 	<tip id="ID_HELP_GUIDE" message="Pogledajte Shareazine Upute."/>
 	<tip id="ID_HELP_HOMEPAGE" message="Posetite Shareaza.com web stranicu."/>
-	<tip id="ID_HELP_SECURITY" message="Help protecting your system from hostile programs."/>
+	<tip id="ID_HELP_SECURITY" message="Zaštite Vaš sistem od neprijateljskih programa - pomoć."/>
 	<tip id="ID_HELP_UPDATE" message="Pogledajte novosti."/>
 	<tip id="ID_HELP_WEB_1" message="Poseti ovu web stranicu"/>
 	<tip id="ID_HELP_WEB_2" message="Poseti ovu web stranicu"/>
@@ -2276,10 +2276,10 @@
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Obriši odabranu fasciklu albuma."/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Otvori odabranu fasciklu albuma."/>
 	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Pogledaj i uredi svojstva selektovane album fascikle..."/>
-	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Download metadata for the selected file(s) from Bitzi(TM)..."/>
-	<tip id="ID_LIBRARY_BITZI_WEB" message="View the Bitzi(TM) ticket for the selected file on the web."/>
-	<tip id="ID_LIBRARY_COLUMNS" message="Select metadata columns to be displayed..."/>
-	<tip id="ID_LIBRARY_COPY" message="Copy the selected files to another library folder..."/>
+	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Skini metadata za selektovanu datoteku(e) sa Bitzi(TM)..."/>
+	<tip id="ID_LIBRARY_BITZI_WEB" message="Pogledaj Bitzi(TM) ticket za selektovanu datoteku na netu."/>
+	<tip id="ID_LIBRARY_COLUMNS" message="Selektuj metadata kolone za prikaz..."/>
+	<tip id="ID_LIBRARY_COPY" message="Kopiraj selektovane datoteke u drugu fasciklu kolekcije..."/>
 	<tip id="ID_LIBRARY_CREATETORRENT" message="Create a .torrent for this file to upload to a website."/>
 	<tip id="ID_LIBRARY_DELETE" message="Obrišite selektovane datoteke zauvek."/>
 	<tip id="ID_LIBRARY_ENQUEUE" message="Dodaj označeno u moju media playlistu."/>
@@ -2296,14 +2296,14 @@
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Boost the speed of file scanning and hashing."/>
 	<tip id="ID_LIBRARY_LAUNCH" message="Otvori ili pokreni selektovanu datoteku(e)."/>
 	<tip id="ID_LIBRARY_MOVE" message="Premestite selektovane datoteke u drugu fasciklu kolekcije(library)..."/>
-	<tip id="ID_LIBRARY_PANEL" message="Pirkaži ili sakrij the library detail panel."/>
-	<tip id="ID_LIBRARY_PARENT" message="Move up to the parent folder."/>
+	<tip id="ID_LIBRARY_PANEL" message="Prikaži ili sakrij detalje o datoteci u detail panelu."/>
+	<tip id="ID_LIBRARY_PARENT" message="Jedan nivo nagore."/>
 	<tip id="ID_LIBRARY_PROPERTIES" message="Pogledaj i uredi svojstva selektovanih datoteka..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Obnovi metadatu i hashere za ozačene fascikle i datoteke."/>
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Rebuild metadata using other language."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Osveži Kolekciju."/>
 	<tip id="ID_LIBRARY_REMOVE" message="Ukloni odabrane deljene fascikle."/>
-	<tip id="ID_LIBRARY_RENAME" message="Rename the selected file in-place."/>
+	<tip id="ID_LIBRARY_RENAME" message="Preimenuj selektovanu datoteku in-place."/>
 	<tip id="ID_LIBRARY_SCAN" message="Potraži promene u označenim fasciklama ili datotekama."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Traži u vašoj kolekciji..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Traži u vašoj kolekciji..."/>
@@ -2314,7 +2314,7 @@
 	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Vidite fascikle u vasoj kolekciji (library)."/>
 	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Organizirajte vašu kolekciju."/>
 	<tip id="ID_LIBRARY_UNLINK" message="Remove the select files from the current album folder."/>
-	<tip id="ID_LIBRARY_URL" message="Copy the URI of the selected file."/>
+	<tip id="ID_LIBRARY_URL" message="Kopiraj URI selektovane datoteke."/>
 	<tip id="ID_LIBRARY_VIEW" message="Odaberite prikaz..."/>
 	<tip id="ID_LIBRARY_VIEW_ALBUM" message="Show an album view" tip="Po Albumima"/>
 	<tip id="ID_LIBRARY_VIEW_COLLECTION" message="Show the rich collection view" tip="Kolekcije"/>
@@ -2350,7 +2350,7 @@
 	<tip id="ID_MEDIA_SIZE_ONE" message="Show the video at its original (natural) size."/>
 	<tip id="ID_MEDIA_SIZE_THREE" message="Show the video at triple its original (natural) size."/>
 	<tip id="ID_MEDIA_SIZE_TWO" message="Show the video at double its original (natural) size."/>
-	<tip id="ID_MEDIA_STATUS" message="Pirkaži ili sakrij the media status line."/>
+	<tip id="ID_MEDIA_STATUS" message="Prikaži ili sakrij the media status line."/>
 	<tip id="ID_MEDIA_STOP" message="Stani playing the media file." tip="Stani"/>
 	<tip id="ID_MEDIA_VIS" message="Odaberi audio-vizuelni plugin..."/>
 	<tip id="ID_MEDIA_ZOOM" message="Podesi video zum i podesavanja promera."/>
@@ -2375,21 +2375,21 @@
 	<tip id="ID_SEARCH_CHAT" message="Pokreni chet sesiju sa selektovanim korisnikom."/>
 	<tip id="ID_SEARCH_CLEAR" message="Očisti rezultate potrage."/>
 	<tip id="ID_SEARCH_COLUMNS" message="Select metadata columns to be displayed..."/>
-	<tip id="ID_SEARCH_COPY" message="Copy the URI of the selected file."/>
-	<tip id="ID_SEARCH_DETAILS" message="Pirkaži detaljne informacije o selektovanoj datoteci."/>
+	<tip id="ID_SEARCH_COPY" message="Kopiraj URI selektovane datoteke."/>
+	<tip id="ID_SEARCH_DETAILS" message="Prikaži detaljne informacije o selektovanoj datoteci."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Skini selektovanu datoteku(e)."/>
 	<tip id="ID_SEARCH_DOWNLOADNOW" message="Skini selektovanu datoteku(e) sa prioritetom."/>
 	<tip id="ID_SEARCH_FILTER" message="Filtiraj resultate po odredjenim rečima i uslovima..."/>
 	<tip id="ID_SEARCH_FILTER_RAW" message="Filtiraj resultate po odredjenim rečima i uslovima..."/>
 	<tip id="ID_SEARCH_FILTER_REMOVE" message="Remove filtering from the results."/>
-	<tip id="ID_SEARCH_FOR_ALBUM" message="Traži for music files in the same album as the selected file."/>
-	<tip id="ID_SEARCH_FOR_ARTIST" message="Traži for music files by the same artist as the selected file."/>
-	<tip id="ID_SEARCH_FOR_SERIES" message="Traži for video files in the same series as the selected file."/>
-	<tip id="ID_SEARCH_FOR_SIMILAR" message="Traži for files which are similar to the selected file."/>
-	<tip id="ID_SEARCH_FOR_THIS" message="Traži for other copies of the selected file."/>
+	<tip id="ID_SEARCH_FOR_ALBUM" message="Traži muzičke fajlove sa istog albuma kao selektovani fajl."/>
+	<tip id="ID_SEARCH_FOR_ARTIST" message="Traži muzičke fajlove koji potiču od istog izvodjača kao i odabrani fajl."/>
+	<tip id="ID_SEARCH_FOR_SERIES" message="Traži epizode iste serije kao selektovana datoteka(video)."/>
+	<tip id="ID_SEARCH_FOR_SIMILAR" message="Traži datoteke slične selektovanoj datoteci."/>
+	<tip id="ID_SEARCH_FOR_THIS" message="Traži druge kopije selktovane datoteke."/>
 	<tip id="ID_SEARCH_PANEL" message="Display the quick search panel on the left of the Traži window."/>
-	<tip id="ID_SEARCH_SEARCH" message="Traži the network again..."/>
-	<tip id="ID_SEARCH_STOP" message="Stani receiving results in this window."/>
+	<tip id="ID_SEARCH_SEARCH" message="Pretraži mrežu ponovo..."/>
+	<tip id="ID_SEARCH_STOP" message="Zaustavi potragu u ovom prozoru."/>
 	<tip id="ID_SEARCHMONITOR_CLEAR" message="Clear the search monitor buffer."/>
 	<tip id="ID_SEARCHMONITOR_PAUSE" message="Pause search monitoring."/>
 	<tip id="ID_SECURITY_ADD" message="Add a new rule to the security chain..."/>
@@ -2415,63 +2415,63 @@
 	<tip id="ID_TAB_SEARCH" message="Potraži šta želiš skinuti na mreži"/>
 	<tip id="ID_TAB_TRANSFERS" message="Prati skidanje i davanje u toku."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Započni skidanje nove datoteke (fajla) ili BitTorrent torrenta..."/>
-	<tip id="ID_TOOLS_LANGUAGE" message="Select the language you wish to use Shareaza in..."/>
+	<tip id="ID_TOOLS_LANGUAGE" message=" Izaberite jezik na kojim želite da koristite Shareaza-u..."/>
 	<tip id="ID_TOOLS_PROFILE" message="Promenite vaš profil..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Reload and apply your current skin selection."/>
-	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed the selected Torrent on BitTorrent."/>
+	<tip id="ID_TOOLS_SEEDTORRENT" message="Seed selektovani Torrent on BitTorrent."/>
 	<tip id="ID_TOOLS_SETTINGS" message="Podesite Shareazina podešavanja..."/>
-	<tip id="ID_TOOLS_SKIN" message="Choose a different skin for Shareaza to use..."/>
-	<tip id="ID_TOOLS_WIZARD" message="Open the Shareaza QuickStart wizard..."/>
-	<tip id="ID_TRAFFIC_AXIS" message="Display Vertical Axis"/>
-	<tip id="ID_TRAFFIC_CLEAR" message="Clear the traffic graph."/>
-	<tip id="ID_TRAFFIC_GRID" message="Display grid lines."/>
-	<tip id="ID_TRAFFIC_LEGEND" message="Display legend."/>
-	<tip id="ID_TRAFFIC_SETUP" message="Select and configure items to graph..."/>
-	<tip id="ID_TRAFFIC_WINDOW" message="Open a new graph window..."/>
+	<tip id="ID_TOOLS_SKIN" message="Promenite izgled Shareaza-e,izaberite drugi skin..."/>
+	<tip id="ID_TOOLS_WIZARD" message="Otvori Shareaza Brzo i Lako pomoćnik..."/>
+	<tip id="ID_TRAFFIC_AXIS" message="Pokaži Vertikalnu Osu"/>
+	<tip id="ID_TRAFFIC_CLEAR" message="Očisti promet u graph-u."/>
+	<tip id="ID_TRAFFIC_GRID" message="Prikaži grid linije."/>
+	<tip id="ID_TRAFFIC_LEGEND" message="Prikaži legendu."/>
+	<tip id="ID_TRAFFIC_SETUP" message="Izaberi i podesi pojedinosti vezane za graf..."/>
+	<tip id="ID_TRAFFIC_WINDOW" message="Otvori novi graph prozor..."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Pokreni chet sesiju sa selektovanim korisnikom."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Access the selected download source(s) and attempt to download."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Disconnect the selected download transfer(s)."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Disconnect and forget the selected download source(s)."/>
 	<tip id="ID_TRAY_OPEN" message="Open the Shareaza window."/>
-	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatically clear uploads which have been completed."/>
+	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Automatski očisti davanja koja su se završila."/>
 	<tip id="ID_UPLOADS_CHAT" message="Pokreni chet sesiju sa selektovanim korisnikom."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Očisti selektovano davanje(a) sa liste."/>
 	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Očisti davanja koja su se završila."/>
 	<tip id="ID_UPLOADS_DISCONNECT" message="Disconnect the selected upload transfer(s)."/>
-	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Show all uploads which are actively sending."/>
+	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Pokaži sva davanja koja su trenutno aktivna."/>
 	<tip id="ID_UPLOADS_FILTER_ALL" message="Pokaži sva davanja."/>
-	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Show uploads which are no longer connected."/>
+	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Pokaži završena davanja."/>
 	<tip id="ID_UPLOADS_FILTER_MENU" message="Izaberi koji tipovi upload-a da budu prikazani, a koji sakriveni u ovom pregledu."/>
-	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Show uploads which are waiting in your queues."/>
-	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Show BitTorrent uploads."/>
+	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Pokaži davanja koja čekaju kod Vas u redu."/>
+	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Pokaži BitTorrent davanja."/>
 	<tip id="ID_UPLOADS_LAUNCH" message="Pokreni selektovani deljenu datoteku(e)."/>
 	<tip id="ID_UPLOADS_SETTINGS" message="Configure upload settings..."/>
 	<tip id="ID_UPLOADS_START" message="Pokreni selektovano davanje(a) u redu(queued)."/>
-	<tip id="ID_VIEW_BASIC" message="Use Shareaza in Normal mode."/>
+	<tip id="ID_VIEW_BASIC" message="Koristi Shareaza-u u Normal modu - Normalni Prikaz."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Prikaži ili sakrij DISCOVERY SERVICES prozor."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Prikaži ili sakrij SKIDAM prozor."/>
-	<tip id="ID_VIEW_HELP" message="Pirkaži ili sakrij HELP prozor."/>
-	<tip id="ID_VIEW_HOSTS" message="Pirkaži ili sakrij HOST CACHE prozor."/>
-	<tip id="ID_VIEW_LIBRARY" message="Pirkaži ili sakrij KOLEKCIJA prozor."/>
-	<tip id="ID_VIEW_MEDIA" message="Pirkaži ili sakrij MEDIA PLAYER prozor."/>
-	<tip id="ID_VIEW_NEIGHBOURS" message="Pirkaži ili sakrij SUSEDI prozor."/>
-	<tip id="ID_VIEW_PACKETS" message="Pirkaži ili sakrij PACKET DUMP prozor."/>
-	<tip id="ID_VIEW_RESULTS_MONITOR" message="Pirkaži ili sakrij POKAZIVAČ POGODAKA prozor."/>
-	<tip id="ID_VIEW_SEARCH_MONITOR" message="Pirkaži ili sakrij POKAZIVAČ POTRAGE prozor."/>
-	<tip id="ID_VIEW_SECURITY" message="Pirkaži ili sakrij SIGURNOST prozor."/>
+	<tip id="ID_VIEW_HELP" message="Prikaži ili sakrij HELP prozor."/>
+	<tip id="ID_VIEW_HOSTS" message="Prikaži ili sakrij HOST CACHE prozor."/>
+	<tip id="ID_VIEW_LIBRARY" message="Prikaži ili sakrij KOLEKCIJA prozor."/>
+	<tip id="ID_VIEW_MEDIA" message="Prikaži ili sakrij MEDIA PLAYER prozor."/>
+	<tip id="ID_VIEW_NEIGHBOURS" message="Prikaži ili sakrij SUSEDI prozor."/>
+	<tip id="ID_VIEW_PACKETS" message="Prikaži ili sakrij PACKET DUMP prozor."/>
+	<tip id="ID_VIEW_RESULTS_MONITOR" message="Prikaži ili sakrij POKAZIVAČ POGODAKA prozor."/>
+	<tip id="ID_VIEW_SEARCH_MONITOR" message="Prikaži ili sakrij POKAZIVAČ POTRAGE prozor."/>
+	<tip id="ID_VIEW_SECURITY" message="Prikaži ili sakrij SIGURNOST prozor."/>
 	<tip id="ID_VIEW_SYSTEM" message="Prikaži ili sakrij SYSTEM prozor."/>
-	<tip id="ID_VIEW_TABBED" message="Use Shareaza in power Tabbed mode (Home, Library, Media, Transfers, Network)."/>
-	<tip id="ID_VIEW_TRAFFIC" message="Pirkaži ili sakrij GRAPH prozor."/>
-	<tip id="ID_VIEW_UPLOADS" message="Pirkaži ili sakrij DAJEM prozor."/>
-	<tip id="ID_VIEW_WINDOWED" message="Use Shareaza in power Windowed mode."/>
+	<tip id="ID_VIEW_TABBED" message="Koristi Shareaza-u u naprednom modu - Prikaz s Karticama (Home, Library, Media, Transfers, Network)."/>
+	<tip id="ID_VIEW_TRAFFIC" message="Prikaži ili sakrij GRAPH prozor."/>
+	<tip id="ID_VIEW_UPLOADS" message="Prikaži ili sakrij DAJEM prozor."/>
+	<tip id="ID_VIEW_WINDOWED" message="Koristi Shareaza-u u naprednom modu - U prozoru."/>
 	<tip id="ID_WINDOW_CASCADE" message="Raširi sve otvorene prozore preko celog ekrana."/>
-	<tip id="ID_WINDOW_MONITOR" message="Pirkaži ili sakrij the bandwidth monitor."/>
-	<tip id="ID_WINDOW_NAVBAR" message="Pirkaži ili sakrij the navigation bar."/>
-	<tip id="ID_WINDOW_REMOTE" message="Pirkaži ili sakrij the Shareaza Remote Control"/>
-	<tip id="ID_WINDOW_TABBAR" message="Pirkaži ili sakrij the window tab bar."/>
+	<tip id="ID_WINDOW_MONITOR" message="Prikaži ili sakrij praćenje prometa."/>
+	<tip id="ID_WINDOW_NAVBAR" message="Prikaži ili sakrij navigacijsku traku."/>
+	<tip id="ID_WINDOW_REMOTE" message="Prikaži ili sakrij Shareaza Remote Control"/>
+	<tip id="ID_WINDOW_TABBAR" message="Prikaži ili sakrij traku sa tabovima."/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Složi otvorene prozore naporedno vodoravno, bez preklapanja."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Složi otvorene prozore naporedno uspravno, bez preklapanja."/>
-	<tip id="ID_WINDOW_TOOLBAR" message="Pirkaži ili sakrij the toolbar."/>
+	<tip id="ID_WINDOW_TOOLBAR" message="Prikaži ili sakrij traku sa alatima."/>
 </commandTips>
 
 <!-- Localised Strings -->
@@ -2533,7 +2533,7 @@
 	<string id="8099" value="Jedna kritika je dostupna."/>
 	<string id="8100" value="Dostupno je %i kritika."/>
 	<string id="8101" value="%s piše:"/>
-	<string id="8102" value="%s ocijena ove datoteke:"/>
+	<string id="8102" value="%s ocena ove datoteke:"/>
 	<string id="8103" value="klikni za Pregled"/>
 	<string id="8104" value="Pregledavam..."/>
 	<string id="8105" value="Ne mogu skinuti pregled sa &quot;%s&quot;."/>
@@ -2854,7 +2854,7 @@
 	<string id="16405" value="Želite li skinuti ovu datoteku?\n\n&quot;%s&quot;\n\nChoose Cancel to stop any further prompts."/>
 	<string id="16406" value="Želite li skinuti sve datoteke u ovoj kolekciji?\n\nOdaberite prekini da vam više ne dolazi ovo obavestenje."/>
 	<string id="16407" value="Would you like to prevent this collection from prompting you to download anything else?"/>
-	<string id="16408" value="Copy &amp;URI"/>
+	<string id="16408" value="Kopiraj &amp;URI"/>
 	<string id="16409" value="Export &amp;URIs..."/>
 	<string id="16410" value="Podfascikla u odabranoj fascikli &quot;%s&quot; je već deo vaše kolekcije.\nDodavanje ove fascikle će izazvati re-hashing nekih datoteka.\n\nŽelite li svejedno nastaviti?"/>
 	<string id="16411" value="Nemogu premestiti datoteku %s. Verovatno ju neki drugi program koristi.\n\nDa li je želite kopirati?"/>
@@ -3957,11 +3957,11 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copy URI">
+	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopiraj URI">
 		<control/>
-		<control caption="You can copy a URI for the selected item in a variety of different formats.Please choose the format you wish to use by clicking one of the URIs below:"/>
+		<control caption="Vi možete kopirati URI za selektovanu datoteku u više različith formata. Molimo Vas izaberite foramat koji želite da koristite tako što ćete kliknuti na URIe ispod:"/>
 		<control/><control/><control/>
-		<control caption="Include _myself as a fixed source in the URL"/>
+		<control caption="Uključi _sebe kao stalni izvor u URL"/>
 		<control caption="Odustani"/>
 	</dialog>
 
@@ -3996,7 +3996,7 @@
 
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Skidam Metadate...">
 		<control/>
-		<control caption="Shareaza pokušava da skinute metadata od Bitzi(TM)..."/>
+		<control caption="Shareaza pokušava da skine metadata od Bitzi(TM)..."/>
 		<control/>
 		<control caption="Odustani"/>
 		<control/>
@@ -4084,7 +4084,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder">
+	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder-Izvezi Fasciklu">
 		<control caption="This feature is used to export the contents of an album folder as a rich collection file."/>
 		<control caption="Export..."/>
 		<control caption="Odustani"/>
