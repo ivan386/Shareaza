@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.h
 //
-//	Date:			"$Date: 2005/09/06 10:40:39 $"
-//	Revision:		"$Revision: 1.5 $"
+//	Date:			"$Date: 2005/10/21 19:47:34 $"
+//	Revision:		"$Revision: 1.6 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -79,7 +79,11 @@ protected:
 	LONGLONG		m_nPosition;
 	BOOL			m_bMute;
 	BOOL			m_bThumbPlay;
-	BOOL			m_bAutoPlay;
+	BOOL			m_bRepeat;
+	BOOL			m_bLastMedia;
+	BOOL			m_bLastNotPlayed;
+	BOOL			m_bEnqueue;
+	BOOL			m_bStopFlag;
 	DWORD			m_tLastPlay;
 protected:
 	CString			m_sFile;

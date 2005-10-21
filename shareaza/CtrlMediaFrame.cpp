@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/16 13:56:56 $"
-//	Revision:		"$Revision: 1.23 $"
+//	Date:			"$Date: 2005/10/21 19:47:34 $"
+//	Revision:		"$Revision: 1.24 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -120,7 +120,10 @@ CMediaFrame::CMediaFrame()
 	m_nState		= smsNull;
 	m_bMute			= FALSE;
 	m_bThumbPlay	= FALSE;
-	m_bAutoPlay		= TRUE;
+	m_bRepeat		= FALSE;
+	m_bLastMedia	= FALSE;
+	m_bLastNotPlayed= FALSE;
+	m_bStopFlag		= FALSE;
 	m_tLastPlay		= 0;
 	m_tMetadata		= 0;
 	
@@ -1094,9 +1097,8 @@ void CMediaFrame::OnUpdateMediaStop(CCmdUI* pCmdUI)
 void CMediaFrame::OnMediaStop() 
 {
 	if ( m_pPlayer ) m_pPlayer->Stop();
-	m_bAutoPlay = FALSE;
+	m_bStopFlag = TRUE;
 	m_wndList.Reset();
-	m_bAutoPlay = TRUE;
 	EnableScreenSaver();
 }
 
@@ -1277,9 +1279,9 @@ BOOL CMediaFrame::PlayFile(LPCTSTR pszFile)
 
 BOOL CMediaFrame::EnqueueFile(LPCTSTR pszFile)
 {
-	m_bAutoPlay = FALSE;
+	m_bEnqueue = TRUE;
 	BOOL bResult = m_wndList.Enqueue( pszFile, TRUE );
-	m_bAutoPlay = TRUE;
+	m_bEnqueue = FALSE;
 	return bResult;
 }
 
@@ -1515,9 +1517,14 @@ HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 	HRESULT hr = E_FAIL;
 	__try
 	{
+		hr = m_pPlayer->Stop();
 		hr = m_pPlayer->Open( bsFilePath );
 	} 
-	__except( GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ){}
+	__except( GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION )
+	{ 
+		Cleanup(); 
+		return EXCEPTION_CONTINUE_EXECUTION;
+	}
 	return hr;
 }
 
@@ -1614,42 +1621,80 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 {
 	int nCurrent = m_wndList.GetCurrent();
 	m_wndList.UpdateWindow();
+	m_bRepeat = Settings.MediaPlayer.Repeat;
+	m_bLastMedia = ( nCurrent == m_wndList.GetItemCount() - 1 );
 
-	if ( nCurrent >= 0 )
+	if ( m_bStopFlag )
 	{
-		if ( ( ! m_pPlayer || m_bAutoPlay ) && OpenFile( m_wndList.GetPath( nCurrent ) ) )
-		{
-			if ( m_bAutoPlay )
-			{
-				m_pPlayer->Play();
-				UpdateState();
-			}
-		}
-		else if ( m_bAutoPlay )
-		{
-			m_bAutoPlay = FALSE;
-			m_wndList.Reset();
-			m_bAutoPlay = TRUE;
-		}
+		m_bStopFlag = FALSE;
+		m_bLastNotPlayed = FALSE;
+		if ( m_pPlayer ) Cleanup();
+		*pResult = 0;
+		return;
 	}
-	else if ( m_wndList.GetItemCount() > 0 )
+
+	if ( nCurrent >= 0 ) // not the last in the list
 	{
-		m_wndList.Reset( FALSE );
-		nCurrent = m_wndList.GetNext( FALSE );
+		BOOL bPlayIt;
+		BOOL bCorrupted = FALSE;
 
-		m_bAutoPlay = m_bAutoPlay && Settings.MediaPlayer.Repeat;
-
-		if ( nCurrent >= 0 )
-			m_wndList.SetCurrent( nCurrent );
+		if ( m_bEnqueue || m_bStopFlag )
+			bPlayIt = FALSE;
 		else
-			Cleanup();
+		{
+			// Play when repeat is on or when whithin the playlist
+			bPlayIt = m_bRepeat || ! m_bLastMedia || m_bLastNotPlayed;
+			// The whole playlist was played and the list was reset
+			if ( ! m_bRepeat && m_bLastNotPlayed && ! m_bLastMedia )
+			{
+				if ( m_nState != smsPlaying )
+                	bPlayIt = FALSE;
+				else // New file was clicked, clear the flag
+					m_bLastNotPlayed = FALSE;
+			}
 
-		m_bAutoPlay = TRUE;
+			if ( ! m_pPlayer || bPlayIt )
+				bCorrupted = ! OpenFile( m_wndList.GetPath( nCurrent ) );
+		}
+
+		if ( bPlayIt && ! bCorrupted )
+		{
+			m_pPlayer->Play();
+			// check if the last was not played; flag only when we are playing the file before it
+			if ( ! m_bLastNotPlayed )
+				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
+			UpdateState();
+		}
+		else if ( bCorrupted ) // file was corrupted, move to the next file
+		{
+			nCurrent = m_wndList.GetNext( FALSE );
+			m_wndList.SetCurrent( nCurrent );
+		}
+		else
+		{
+			// reset list and cleanup
+			m_bLastNotPlayed = FALSE;
+			if ( ! m_bStopFlag ) m_wndList.Reset( TRUE );
+			m_bStopFlag = FALSE;
+			if ( m_pPlayer ) Cleanup();
+		}
 	}
-	else
+	else if ( m_wndList.GetItemCount() > 0 ) // the last in the list
 	{
-		Cleanup();
+		nCurrent = m_wndList.GetCurrent(); // get the number 0
+
+		if ( m_pPlayer )
+		{
+			if ( ! m_bRepeat ) 
+				m_bStopFlag = TRUE; // imitate enqueue after reset, so it won't play
+			else
+				nCurrent = m_wndList.GetNext( FALSE );
+			if ( ! m_bEnqueue ) 
+				m_wndList.SetCurrent( nCurrent );
+		}
 	}
+	else if ( m_pPlayer ) 
+		Cleanup();
 
 	*pResult = 0;
 }
