@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/21 19:47:34 $"
-//	Revision:		"$Revision: 1.24 $"
+//	Date:			"$Date: 2005/10/21 20:18:43 $"
+//	Revision:		"$Revision: 1.25 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1679,14 +1679,14 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 			if ( m_pPlayer ) Cleanup();
 		}
 	}
-	else if ( m_wndList.GetItemCount() > 0 ) // the last in the list
+	else if ( m_wndList.GetItemCount() > 0 ) // the list was reset; current file was set to -1
 	{
-		nCurrent = m_wndList.GetCurrent(); // get the number 0
+		nCurrent = m_wndList.GetCurrent(); // get file #0
 
 		if ( m_pPlayer )
 		{
 			if ( ! m_bRepeat ) 
-				m_bStopFlag = TRUE; // imitate enqueue after reset, so it won't play
+				m_bStopFlag = TRUE;
 			else
 				nCurrent = m_wndList.GetNext( FALSE );
 			if ( ! m_bEnqueue ) 
