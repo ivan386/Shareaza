@@ -218,10 +218,14 @@ class CLowerCaseTable
 public:
 	explicit CLowerCaseTable()
 	{
-		for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = i;
+		for ( size_t i = 0 ; i < 65536 ; ++i ) cTable[ i ] = i;
 		cTable[ 65536 ] = 0;
 		CharLower( &cTable[ 1 ] );
 		cTable[ 304 ] = 105; // turkish capital I with dot is converted to "i"
+		// convert fullwidth characters to halfwidth
+		for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = i - 65248;
+		for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = i - 65216;
+		for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = i - 65248;
 	};
 	const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
 	const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
