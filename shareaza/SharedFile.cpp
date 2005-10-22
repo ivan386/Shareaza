@@ -158,8 +158,7 @@ CString CLibraryFile::GetSearchName() const
 		str = m_pFolder->m_sPath.Mid( nBase + 1 ) + '\\' + m_sName;
 	}
 	
-	CharLower( str.GetBuffer() );
-	str.ReleaseBuffer();
+	ToLower( str );
 	return str;
 }
 
@@ -310,7 +309,7 @@ BOOL CLibraryFile::Delete()
 		int nReturn = SHFileOperation( &pOp );
 		
 		delete [] pszPath;
-		
+
 		if ( nReturn != 0 )
 		{
 			Uploads.OnRename( GetPath(), GetPath() );
