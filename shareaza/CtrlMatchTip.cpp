@@ -697,8 +697,13 @@ CSize CMatchTipCtrl::ComputeSize()
 	}
 
 	sz.cy += 32;
-	ExpandSize( dc, sz, m_sSize, 80 );
-	ExpandSize( dc, sz, m_sType, 80 );
+	CString strTest;
+	LoadString( strTest, IDS_TIP_SIZE );
+	strTest.Append( _T(": ") );
+	ExpandSize( dc, sz, strTest + m_sSize, 40 );
+	LoadString( strTest, IDS_TIP_TYPE );
+	strTest.Append( _T(": ") );
+	ExpandSize( dc, sz, strTest + m_sType, 40 );
 
 	if ( m_sSHA1.GetLength() || m_sTiger.GetLength() || m_sED2K.GetLength() )
 	{
@@ -873,16 +878,20 @@ void CMatchTipCtrl::OnPaint()
 
 	pt.x += 40;
 	LoadString( str, IDS_TIP_SIZE );
-	DrawText( dc, pt, str + ':' );
-	pt.x += 40;
+	str.Append( _T(": ") );
+	DrawText( dc, pt, str );
+	CSize sz = dc.GetTextExtent( str, str.GetLength() );
+	pt.x += sz.cx;
 	DrawText( dc, pt, m_sSize );
-	pt.x -= 40;
+	pt.x -= sz.cx;
 	pt.y += 16;
 	LoadString( str, IDS_TIP_TYPE );
-	DrawText( dc, pt, str + ':' );
-	pt.x += 40;
+	str.Append( _T(": ") );
+	DrawText( dc, pt, str );
+	sz = dc.GetTextExtent( str, str.GetLength() );
+	pt.x += sz.cx;
 	DrawText( dc, pt, m_sType );
-	pt.x -= 40;
+	pt.x -= sz.cx;
 	pt.x -= 40;
 	pt.y += 16;
 
