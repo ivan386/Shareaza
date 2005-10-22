@@ -24,6 +24,7 @@ Name: "sv"; MessagesFile: "setup\isl\swedish.isl"; LicenseFile: "setup/license/s
 Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "setup/license/finnish.rtf"
 Name: "heb"; MessagesFile: "setup\isl\hebrew.isl"; LicenseFile: "setup/license/hebrew.rtf"
 Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "setup/license/polish.rtf"
+Name: "sr"; MessagesFile: "setup\isl\Serbian.isl"; LicenseFile: "setup/license/serbian.rtf"
 ;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 
 [Files]
@@ -71,6 +72,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
 ; Czech
 ;Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
+; Serbian
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -115,6 +118,8 @@ Source: "setup\license\hebrew.rtf"; DestDir: "{app}\Uninstall"; DestName: "licen
 Source: "setup\license\polish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
 ; Czech
 ;Source: "setup\license\czech.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
+; Serbian
+Source: "setup\license\serbian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -159,6 +164,8 @@ Source: "setup\filter\hebrew.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: pl; Components: language
 ; Czech
 ;Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
+; Serbian
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
 #endif
 
 [CustomMessages]
@@ -603,6 +610,29 @@ pl.page_viruswarning_title=Ostrze¿enie przed wirusem
 pl.page_viruswarning_subtitle=Czy masz zainstalowany jakiœ program antywirusowy?
 pl.CreateDesktopIcon=Wyœwietl ikonê na pulpicie
 pl.CreateQuickLaunchIcon=Wyœwietl ikonê na pasku szybkiego uruchamiania
+; Serbian
+sr.components_plugins=Pluginovi
+sr.components_skins=Skinovi
+sr.components_languages=Jezici
+sr.tasks_allusers=Svi korisnici
+sr.tasks_selectusers=Instaliraj %1 za:
+sr.tasks_currentuser=%1 samo
+sr.tasks_multisetup=Omoguæi više-korisnièku podršku
+sr.tasks_firewall=Dodaj izuzetak u Windows Vatrozid
+sr.tasks_deleteoldsetup=Ukloni stare instalere
+sr.run_skinexe=Instalacija skina u toku...
+sr.reg_incomingchat=Dolazeæe cet poruke
+sr.reg_apptitle=Shareaza Najbolji P2P za Deljenje Datoteka
+sr.icons_license=Licenca
+sr.icons_uninstall=Ukloni Program
+sr.icons_downloads=Skinutno
+sr.dialog_shutdown=%1 je ukljuèena. Da li bi želeli da %1 bude ugašena da bi se instalacija nastavila?
+sr.dialog_firewall=Instalacija nije uspla da doda Shareaza-u u Windows Vatrozid.%nMolimo dodajte Shareaza-u na listu izuzetaka ruèno.
+sr.page_viruswarning_text=Kada koristite internet, trebali bi uvek da budete sigurni da imate ažuriaran virus skener koji Vas štiti od trojanaca, crva, i drugih zlonamernih programa. Možete pronaæi listu dobrih anti-virus programa i drugih sigurnosnih saveta kako da zaštitite Vaš raèunar prateæi ovaj link:
+sr.page_viruswarning_title=Virus Uopzorenje
+sr.page_viruswarning_subtitle=Da li imate AntiVirus program instaliran?
+sr.CreateDesktopIcon=Napravi &desktop ikonu
+sr.CreateQuickLaunchIcon=Napravi &Brzo Pokretanje(QL) ikonu
 ; Czech
 ;cz.components_plugins=Plugins
 ;cz.components_skins=Skins
