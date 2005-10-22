@@ -10,7 +10,7 @@
 ;
 [LangOptions]
 
-LanguageName=Srpski ( Latinica )
+LanguageName=Srpski
 LanguageID=$181a
 DialogFontName=
 DialogFontSize=12
