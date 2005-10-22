@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/21 20:29:41 $"
-//	Revision:		"$Revision: 1.26 $"
+//	Date:			"$Date: 2005/10/22 16:47:44 $"
+//	Revision:		"$Revision: 1.27 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1655,7 +1655,10 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 			}
 
 			if ( ! m_pPlayer || bPlayIt )
+			{
+				bPlayIt = TRUE;
 				bCorrupted = ! OpenFile( m_wndList.GetPath( nCurrent ) );
+			}
 		}
 
 		if ( bPlayIt && ! bCorrupted )
