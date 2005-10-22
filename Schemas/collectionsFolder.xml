@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/collectionsFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
               <title language="no">Samlinger: mine samlinger</title>
               <title language="br">Coleções:Minhas Coleções</title>
               <title language="ru">&#160;Коллекции: Мои коллекции</title>
-              <title language="sv">Samlingar: Mina samlingar</title>
+              <title language="sr">Kolekcija:Moja Kolekcija</title>
        </titles>
        <images>
                <icon path="collectionsFolder.ico"/>
@@ -60,7 +60,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
        </members>
        <headerContent version="1.0">
@@ -79,7 +79,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Mine samlinger</title>
                <title language="br">Minhas Coleções</title>
                <title language="ru">Мои коллекции</title>
-               <title language="sv">Mina samlingar</title>
+               <title language="sr">Moja Kolekcija</title>
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的任何文件收集。</subtitle>
@@ -95,7 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Denne mappen inneholde en hvilken som helst filsamling i mine filer.</subtitle>
                <subtitle language="br">Esta pasta contém todas coleções da sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает все файлы коллекций (.collection) в Вашем хранилище.</subtitle>
-               <subtitle language="sv">Denna mapp innehåller alla dina filsamlingar som du har i ditt bibliotek.</subtitle>
+               <subtitle language="sr">Ove fascikla sadrži sve vaše rich File datoteke u vašoj kolekciji.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

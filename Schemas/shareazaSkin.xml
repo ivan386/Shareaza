@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/shareazaSkin.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -36,7 +36,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Skin</title>
                <title language="br">Pele</title>
                <title language="ru">Шкурка</title>
-               <title language="sv">Skinn</title>
+               <title language="sr">Skin</title>
        </titles>
        <members>
                <member name="name" search="generic">
@@ -56,7 +56,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Navn</title>
                        <title language="br">Nome</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Namn</title>
+                       <title language="sr">Ime</title>
                </member>
                <member name="author" search="generic">
                        <title language="en">Author</title>
@@ -74,7 +74,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Forfatter</title>
                        <title language="br">Autor</title>
                        <title language="ru">Автор</title>
-                       <title language="sv">Författare</title>
+                       <title language="sr">Autor</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -92,7 +92,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Link</title>
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
-                       <title language="sv">Länk</title>
+                       <title language="sr">Link</title>
                </member>
                <member name="email">
                        <title language="en">Email</title>
@@ -110,7 +110,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">E-post</title>
                        <title language="br">Email</title>
                        <title language="ru">E-mail</title>
-                       <title language="sv">E-post</title>
+                       <title language="sr">Email</title>
                </member>
                <member name="version">
                        <title language="en">Version</title>
@@ -128,7 +128,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Versjon</title>
                        <title language="br">Versão</title>
                        <title language="ru">Версия</title>
-                       <title language="sv">Version</title>
+                       <title language="sr">Verzija</title>
                </member>
                <member name="type">
                        <display defaultColumn="true" columnAlign="center"/>
@@ -147,7 +147,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Type</title>
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
-                       <title language="sv">Typ</title>
+                       <title language="sr">Vrsta</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
@@ -165,7 +165,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Språk</title>
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
-                       <title language="sv">Språk</title>
+                       <title language="sr">Jezik</title>
                </member>
                <member name="description">
                        <title language="en">Description</title>
@@ -183,7 +183,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
-                       <title language="sv">Beskrivning</title>
+                       <title language="sr">Opis</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -201,7 +201,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
-                       <title language="sv">Kommentarer</title>
+                       <title language="sr">Komentari</title>
                </member>
        </members>
        <typeFilter>

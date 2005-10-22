@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/libraryRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Generelt: mine filer</title>
                <title language="br">Geral:Minha Biblioteca do Shareaza</title>
                <title language="ru">&#160;Основное: Моё хранилище</title>
-               <title language="sv">Generellt: Mitt Shareazabibliotek</title>
+               <title language="sr">Opšte:Moja Kolekcija</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -57,7 +57,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
                <member name="owner" search="indexed">
                        <title language="en">Owner</title>
@@ -75,7 +75,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Eier</title>
                        <title language="br">Proprietário</title>
                        <title language="ru">Владелец</title>
-                       <title language="sv">Ägare</title>
+                       <title language="sr">Vlasnik</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -93,7 +93,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
-                       <title language="sv">Kommentarer</title>
+                       <title language="sr">Komentari</title>
                </member>
        </members>
        <images>
@@ -115,7 +115,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Velkommen til mine filer</title>
                <title language="br">Bem-vindo à Sua Biblioteca</title>
                <title language="ru">Добро пожаловать в Ваше хранилище!</title>
-               <title language="sv">Välkommen till ditt bibliotek!</title>
+               <title language="sr">Dobrodošli U Vašu Kolekciju!</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
                <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的收藏中。</subtitle>
@@ -131,7 +131,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Du har {totalFiles} filer totalt {totalVolume} i mine filer.</subtitle>
                <subtitle language="br">Você tem {totalFiles} arquivos totalizando {totalVolume} na sua biblioteca.</subtitle>
                <subtitle language="ru">У Вас файлов {totalFiles} занимающих {totalVolume} в Вашем хранилище.</subtitle>
-               <subtitle language="sv">Du har {totalFiles} filer som upptar {totalVolume} i ditt bibliotek.</subtitle>
+               <subtitle language="sr">Imate {totalFiles} datoteka Tj {totalVolume} koje delite sa svetom.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

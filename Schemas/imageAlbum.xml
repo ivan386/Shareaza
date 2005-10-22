@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/imageAlbum.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Bildealbum</title>
                <title language="br">Álbum de Imagens</title>
                <title language="ru">&#160;Альбом картинок</title>
-               <title language="sv">Albumbild</title>
+               <title language="sr">Album Slika</title>
        </titles>
        <images>
                <icon path="imageFolder.ico"/>
@@ -60,7 +60,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
                <member name="description">
                        <title language="en">Description</title>
@@ -78,7 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
-                       <title language="sv">Beskrivning</title>
+                       <title language="sr">Opis</title>
                </member>
                <member name="type">
                        <title language="en">Type</title>
@@ -96,7 +96,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Type</title>
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
-                       <title language="sv">Typ</title>
+                       <title language="sr">Vrsta</title>
                </member>
                <member name="rating">
                        <title language="en">Rating</title>
@@ -114,7 +114,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Vurdering</title>
                        <title language="br">Classificação</title>
                        <title language="ru">Райтинг</title>
-                       <title language="sv">Värdering</title>
+                       <title language="sr">Ocena</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -132,7 +132,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
-                       <title language="sv">Samlare</title>
+                       <title language="sr">Sakupio</title>
                </member>
                <member name="distributer" search="indexed">
                        <title language="en">Distributer</title>
@@ -150,7 +150,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Distributør</title>
                        <title language="br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
-                       <title language="sv">Distributör</title>
+                       <title language="sr">Distributer</title>
                </member>
                <member name="distributerLink">
                       <title language="en">Distributer Link</title>
@@ -168,7 +168,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                       <title language="no">Distributørlink</title>
                       <title language="br">Link do Distribuidor</title>
                       <title language="ru">Ссылка агента</title>
-                      <title language="sv">Distributionslänk</title>
+                      <title language="sr">Link na Distributera</title>
                </member>
                <member name="releasegroup">
                        <title language="en">Release Group</title>
@@ -186,7 +186,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Releasegruppe</title>
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
-                       <title language="sv">Lanseringsgrupp</title>
+                       <title language="sr">Grupa Objavljivača</title>
                </member>
                <member name="releasegroupLink">
                        <title language="en">Release Group Link</title>
@@ -204,7 +204,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Releasegruppe-link</title>
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
-                       <title language="sv">Lanseringsgrupplänk</title>
+                       <title language="sr">Link na Grupu Objavljivača</title>
                </member>
                <member name="keywords" search="generic">
                        <title language="en">Keywords</title>
@@ -222,7 +222,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Nøkkelord</title>
                        <title language="br">Palavras-chave</title>
                        <title language="ru">Ключ. слова</title>
-                       <title language="sv">Nyckelord</title>
+                       <title language="sr">Ključne Reči</title>
                </member>
        </members>
        <extends>

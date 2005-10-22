@@ -16,7 +16,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,7 +38,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">ROM image</title>
                <title language="br">Imagem ROM</title>
                <title language="ru">Образ ROM</title>
-               <title language="sv">ROM-spegling</title>
+               <title language="sr">ROM Image</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -58,7 +58,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
                <member name="company" search="generic">
                        <display defaultColumn="true"/>
@@ -77,7 +77,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Firma</title>
                        <title language="br">Companhia</title>
                        <title language="ru">Компания</title>
-                       <title language="sv">Företag</title>
+                       <title language="sr">Proizvođač</title>
                </member>
                <member name="system">
                        <display defaultColumn="true"/>
@@ -96,7 +96,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">System</title>
                        <title language="br">Sistema</title>
                        <title language="ru">Система</title>
-                       <title language="sv">System</title>
+                       <title language="sr">Sistem</title>
                </member>
                <member name="year">
                        <title language="en">Year</title>
@@ -114,7 +114,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">År</title>
                        <title language="br">Ano</title>
                        <title language="ru">Год</title>
-                       <title language="sv">År</title>
+                       <title language="sr">Godina</title>
                </member>
                <member name="type">
                        <title language="en">Type</title>
@@ -132,7 +132,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Type</title>
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
-                       <title language="sv">Typ</title>
+                       <title language="sr">Vrsta</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
@@ -150,7 +150,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Språk</title>
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
-                       <title language="sv">Språk</title>
+                       <title language="sr">Jezik</title>
                </member>
                <member name="rating">
                        <title language="en">Rating</title>
@@ -168,7 +168,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Vurdering</title>
                        <title language="br">Classificação</title>
                        <title language="ru">Райтинг</title>
-                       <title language="sv">Värdering</title>
+                       <title language="sr">Ocena</title>
                </member>
                <member name="price">
                        <title language="en">Price</title>
@@ -186,7 +186,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Pris</title>
                        <title language="br">Preço</title>
                        <title language="ru">Цена</title>
-                       <title language="sv">Pris</title>
+                       <title language="sr">Cena</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -204,7 +204,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Link</title>
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
-                       <title language="sv">Länk</title>
+                       <title language="sr">Link</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -222,7 +222,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
-                       <title language="sv">Kommentarer</title>
+                       <title language="sr">Komentari</title>
                </member>
        </members>
        <typeFilter>

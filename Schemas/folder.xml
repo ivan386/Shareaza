@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Mappe</title>
                <title language="br">Pasta</title>
                <title language="ru">&#160;Папка</title>
-               <title language="sv">Mapp</title>
+               <title language="sr">Fascikla</title>
        </titles>
        <images>
                <icon path="folder.ico"/>
@@ -59,7 +59,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -77,7 +77,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
-                       <title language="sv">Beskrivning</title>
+                       <title language="sr">Opis</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -95,7 +95,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
-                       <title language="sv">Samlare</title>
+                       <title language="sr">Sakupio</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -113,7 +113,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
-                       <title language="sv">Kommentarer</title>
+                       <title language="sr">Komentari</title>
                </member>
        </members>
        <contains>

@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Musikksjanger</title>
                <title language="br">Gênero Musical</title>
                <title language="ru">&#160;Стиль музыки</title>
-               <title language="sv">Musikgenre</title>
+               <title language="sr">Muzika Žanr</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -60,7 +60,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -78,7 +78,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Beskrivelse</title>
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
-                       <title language="sv">Beskrivning</title>
+                       <title language="sr">Opis</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -96,7 +96,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Samler</title>
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
-                       <title language="sv">Samlare</title>
+                       <title language="sr">Sakupio</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -114,7 +114,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Kommentar</title>
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
-                       <title language="sv">Kommentarer</title>
+                       <title language="sr">Komentari</title>
                </member>
        </members>
        <extends>
@@ -141,7 +141,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">{name} Musikk</title>
                <title language="br">{name} - Música</title>
                <title language="ru">Музыка {name}</title>
-               <title language="sv">{name} musik</title>
+               <title language="sr">{name} - Muzika</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="chs">此文件夹中包含了流派为 {name} 的音乐。</subtitle>
@@ -157,7 +157,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name}-sjangeren.</subtitle>
                <subtitle language="br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
-               <subtitle language="sv">Denna mapp innehåller all din musik som tillhör genren {name}.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve vaše pesme koje spadaju u {name} žanr.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

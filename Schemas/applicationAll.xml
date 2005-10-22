@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/applicationAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Program: alle programmer</title>
                <title language="br">Aplicativo:Todos os Aplicativos</title>
                <title language="ru">&#160;Приложение: Все приложения</title>
-               <title language="sv">Applikation: Alla applikationer</title>
+               <title language="sr">Program:Svi Programi</title>
        </titles>
        <images>
                <icon path="applicationFolder.ico"/>
@@ -60,7 +60,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
        </members>
        <contains>
@@ -82,7 +82,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Alle programmer</title>
                <title language="br">Todos os Aplicativos</title>
                <title language="ru">Все приложения</title>
-               <title language="sv">Alla applikationer</title>
+               <title language="sr">Svi Programi</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有程序。</subtitle>
@@ -98,7 +98,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Denne mappen inneholder alle programmene i mine filer</subtitle>
                <subtitle language="br">Esta pasta contém todos os aplicativos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждое приложение в Вашем хранилище.</subtitle>
-               <subtitle language="sv">Denna mapp innehåller alla applikationsfiler som du har i ditt bibliotek.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve programe u vašoj kolekciji.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

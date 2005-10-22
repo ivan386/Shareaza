@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/applicationRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Program: mine programmer</title>
                <title language="br">Aplicativo:Meus Aplicativos</title>
                <title language="ru">&#160;Приложение: Мои приложения</title>
-               <title language="sv">Applikation: Mina applikationer</title>
+               <title language="sr">Program:Svi Programi</title>
        </titles>
        <images>
                <icon path="applicationFolder.ico"/>
@@ -60,7 +60,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
        </members>
        <contains>
@@ -82,7 +82,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Velkommen til mine programmer</title>
                <title language="br">Bem-vindo à Minhas Aplicações</title>
                <title language="ru">Добро пожаловать в Ваши приложения!</title>
-               <title language="sv">Välkommen till mina program!</title>
+               <title language="sr">Dobrodošli Među Vaše Programe!</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的程序。</subtitle>
@@ -98,7 +98,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Disse mappene inneholder alle dine programmer</subtitle>
                <subtitle language="br">Estas pastas contém todos os seus arquivos de aplicativos.</subtitle>
                <subtitle language="ru">Эти папки отображают все Ваши приложения.</subtitle>
-               <subtitle language="sv">Denna mapp innehåller alla dina applikationsfiler.</subtitle>
+               <subtitle language="sr">Ove fascikle sadrže sve vaše programe.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

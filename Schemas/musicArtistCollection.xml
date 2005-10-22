@@ -15,7 +15,7 @@ Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans
+Shareaza Serbian Schemas File translated by Woodstoock
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicArtistCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,7 +37,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Musikk: per artist</title>
                <title language="br">Música:Por Artista</title>
                <title language="ru">&#160;Музыка: По артистам</title>
-               <title language="sv">Musik: Efter artist</title>
+               <title language="sr">Muzika:Po Izvođaču</title>
        </titles>
        <members>
                <member name="title" search="none">
@@ -57,7 +57,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                        <title language="no">Tittel</title>
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
-                       <title language="sv">Titel</title>
+                       <title language="sr">Naslov</title>
                </member>
        </members>
        <images>
@@ -82,7 +82,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <title language="no">Musikk per artist</title>
                <title language="br">Música por Artista</title>
                <title language="ru">Музыка по артистам</title>
-               <title language="sv">Musik efter artist</title>
+               <title language="sr">Muzika Po Izvođaču</title>
                <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中艺人的清单。</subtitle>
@@ -98,7 +98,7 @@ Shareaza Swedish Schemas File translated by Marcus Ehrenlans
                <subtitle language="no">Denne mappen inneholder en liste over artister i mine filer</subtitle>
                <subtitle language="br">Esta pasta contém todos os artistas presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает список артистов найденных в музыкальных файлах Вашего хранилища.</subtitle>
-               <subtitle language="sv">Denna mapp innehåller en lista över artister som du har i ditt bibliotek.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
        </headerContent>
 
 </schemaDescriptor>
