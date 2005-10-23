@@ -144,7 +144,7 @@ BOOL CShareazaApp::InitInstance()
 	dlgSplash->Step( _T("Settings Database") );
 		Settings.Load();
 	dlgSplash->Step( _T("P2P URIs") );
-		CShareazaURL::Register();
+		CShareazaURL::Register( TRUE );
 	dlgSplash->Step( _T("Shell Icons") );
 		ShellIcons.Clear();
 	dlgSplash->Step( _T("Metadata Schemas") );
