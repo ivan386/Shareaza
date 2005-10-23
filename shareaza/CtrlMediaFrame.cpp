@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/23 01:56:14 $"
-//	Revision:		"$Revision: 1.29 $"
+//	Date:			"$Date: 2005/10/23 17:27:58 $"
+//	Revision:		"$Revision: 1.30 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1655,7 +1655,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 					m_bLastNotPlayed = FALSE;
 			}
 
-			if ( ! m_pPlayer || bPlayIt )
+			if ( ! m_pPlayer || bPlayIt || m_wndList.GetItemCount() == 1 )
 			{
 				bPlayIt = TRUE;
 				bCorrupted = ! OpenFile( m_wndList.GetPath( nCurrent ) );
@@ -1673,9 +1673,10 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		else if ( bCorrupted ) // file was corrupted, move to the next file
 		{
 			nCurrent = m_wndList.GetNext( FALSE );
-			if ( nCurrent != -1 ) 
+			if ( m_wndList.GetItemCount() != 1 ) 
 				m_wndList.SetCurrent( nCurrent );
-			else if ( m_pPlayer ) Cleanup();
+			else if ( m_pPlayer ) 
+				Cleanup(); //cleanup when no exception happened but the file couldn't be opened (png files)
 		}
 		else
 		{
