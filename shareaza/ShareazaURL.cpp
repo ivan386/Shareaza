@@ -671,7 +671,7 @@ CQuerySearch* CShareazaURL::ToQuery()
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaURL shell registration
 
-void CShareazaURL::Register()
+void CShareazaURL::Register(BOOL bOnStartup)
 {
 	RegisterShellType( _T("shareaza"), _T("URL:Shareaza P2P"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	RegisterMagnetHandler( _T("Shareaza"), _T("Shareaza Peer to Peer"), _T("Shareaza can automatically search for and download the selected content its peer-to-peer networks."), _T("Shareaza"), IDR_MAINFRAME );
@@ -714,14 +714,17 @@ void CShareazaURL::Register()
 		UnregisterShellType( _T("mp2p") );
 	}
 	
-	if ( Settings.Web.Torrent )
+	if ( ( ! bOnStartup ) || ( ! Settings.Live.FirstRun ) )
 	{
-		RegisterShellType( _T("bittorrent"), _T("TORRENT File"), _T(".torrent"),
-			_T("Shareaza"), _T("TORRENT"), IDR_MAINFRAME );
-	}
-	else
-	{
-		UnregisterShellType( _T("bittorrent") );
+		if ( Settings.Web.Torrent )
+		{
+			RegisterShellType( _T("bittorrent"), _T("TORRENT File"), _T(".torrent"),
+				_T("Shareaza"), _T("TORRENT"), IDR_MAINFRAME );
+		}
+		else
+		{
+			UnregisterShellType( _T("bittorrent") );
+		}
 	}
 	
 	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
