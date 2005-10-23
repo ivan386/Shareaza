@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/22 16:47:44 $"
-//	Revision:		"$Revision: 1.27 $"
+//	Date:			"$Date: 2005/10/23 00:24:43 $"
+//	Revision:		"$Revision: 1.28 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -1595,7 +1595,7 @@ void CMediaFrame::UpdateState()
 			m_pPlayer->GetVolume( &Settings.MediaPlayer.Volume );
 		}
 		
-		if ( m_nState == smsPlaying && nPosition >= nLength )
+		if ( m_nState == smsPlaying && nPosition >= nLength && nPosition != 0 )
 		{
 			m_wndList.GetNext();
 		}
