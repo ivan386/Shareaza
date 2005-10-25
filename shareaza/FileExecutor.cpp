@@ -107,10 +107,9 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 		else if ( nResult == IDNO ) return TRUE;
 	}
 
-	if ( Plugins.OnExecuteFile( pszFile ) ) return TRUE;
+	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
 
-	if ( Settings.MediaPlayer.EnablePlay && strType.GetLength() &&
-		 ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
+	if ( Settings.MediaPlayer.EnablePlay && strType.GetLength() && ! bShiftKey )
 	{
 		if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
 		{
@@ -123,6 +122,9 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce)
 			}
 		}
 	}
+
+	if ( ! bShiftKey )
+		if ( Plugins.OnExecuteFile( pszFile ) ) return TRUE;
 
 	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
 		NULL, pszFile, NULL, strPath, SW_SHOWNORMAL );
