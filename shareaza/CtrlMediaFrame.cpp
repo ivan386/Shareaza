@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.cpp
 //
-//	Date:			"$Date: 2005/10/23 17:27:58 $"
-//	Revision:		"$Revision: 1.30 $"
+//	Date:			"$Date: 2005/10/25 18:30:37 $"
+//	Revision:		"$Revision: 1.31 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -216,7 +216,7 @@ void CMediaFrame::OnDestroy()
 	
 	Cleanup();
 	
-	EnableScreenSaver();
+	if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
 
 	CWnd::OnDestroy();
 }
@@ -1072,7 +1072,6 @@ void CMediaFrame::OnMediaPlay()
 		if ( m_pPlayer != NULL ) m_pPlayer->Play();
 		UpdateState();
 	}
-	DisableScreenSaver();
 }
 
 void CMediaFrame::OnUpdateMediaPause(CCmdUI* pCmdUI) 
@@ -1088,6 +1087,7 @@ void CMediaFrame::OnMediaPause()
 {
 	if ( m_pPlayer ) m_pPlayer->Pause();
 	UpdateState();
+	if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
 }
 
 void CMediaFrame::OnUpdateMediaStop(CCmdUI* pCmdUI) 
@@ -1282,6 +1282,8 @@ BOOL CMediaFrame::EnqueueFile(LPCTSTR pszFile)
 {
 	m_bEnqueue = TRUE;
 	BOOL bResult = m_wndList.Enqueue( pszFile, TRUE );
+	m_bLastMedia = FALSE;
+	m_bLastNotPlayed = TRUE;
 	m_bEnqueue = FALSE;
 	return bResult;
 }
@@ -1631,6 +1633,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		m_bStopFlag = FALSE;
 		m_bLastNotPlayed = FALSE;
 		if ( m_pPlayer ) Cleanup();
+		if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
 		*pResult = 0;
 		return;
 	}
@@ -1665,6 +1668,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* pNotify, LRESULT* pResult)
 		if ( bPlayIt && ! bCorrupted )
 		{
 			m_pPlayer->Play();
+			if ( m_bScreenSaverEnabled ) DisableScreenSaver();
 			// check if the last was not played; flag only when we are playing the file before it
 			if ( ! m_bLastNotPlayed )
 				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
@@ -1753,5 +1757,19 @@ void CMediaFrame::EnableScreenSaver()
 
 		delete[] m_pScreenSaveValue;
 		m_bScreenSaverEnabled = TRUE;
+	}
+}
+
+void CMediaFrame::UpdateScreenSaverStatus(BOOL bWindowActive)
+{
+	if ( bWindowActive )
+	{
+		if ( m_bScreenSaverEnabled && IsPlaying() ) 
+			DisableScreenSaver();
+	}
+	else
+	{
+		if ( ! m_bScreenSaverEnabled ) 
+			EnableScreenSaver();
 	}
 }

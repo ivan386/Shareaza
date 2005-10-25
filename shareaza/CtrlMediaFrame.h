@@ -1,8 +1,8 @@
 //
 // CtrlMediaFrame.h
 //
-//	Date:			"$Date: 2005/10/21 19:47:34 $"
-//	Revision:		"$Revision: 1.6 $"
+//	Date:			"$Date: 2005/10/25 18:30:37 $"
+//	Revision:		"$Revision: 1.7 $"
 //  Last change by:	"$Author: rolandas $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
@@ -51,8 +51,7 @@ public:
 	BOOL	SeekTo(float nPosition);
 	BOOL	SetVolume(float nVolume);
 	BOOL	PaintStatusMicro(CDC& dc, CRect& rcBar);
-	void	DisableScreenSaver();
-	void	EnableScreenSaver();
+	void	UpdateScreenSaverStatus(BOOL bWindowActive);
 protected:
 	void	SetFullScreen(BOOL bFullScreen);
 	void	PaintSplash(CDC& dc, CRect& rcBar);
@@ -66,6 +65,8 @@ protected:
 	void	ZoomTo(MediaZoom nZoom);
 	void	AspectTo(double nAspect);
 	void	UpdateState();
+	void	DisableScreenSaver();
+	void	EnableScreenSaver();
 	HRESULT PluginPlay( BSTR bsFileName );
 public:
 	inline IMediaPlayer* GetPlayer() { return m_pPlayer; }
