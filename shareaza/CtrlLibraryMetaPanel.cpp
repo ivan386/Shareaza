@@ -77,6 +77,7 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 	{
 		m_nScrollWheelLines = 3;
 	}
+	m_bNewFile = TRUE;
 }
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
@@ -123,7 +124,9 @@ void CLibraryMetaPanel::Update()
 	{
 		m_nIndex	= pFirst->m_nIndex;
 		m_sName		= pFirst->m_sName;
-		m_sPath		= pFirst->GetPath();
+		CString strNewFile( pFirst->GetPath() );
+		m_bNewFile = ( m_sPath != strNewFile );
+		if ( m_bNewFile ) m_sPath = strNewFile;
 		if ( pFirst->m_pFolder != NULL ) m_sFolder = pFirst->m_pFolder->m_sPath;
 		m_sSize		= Settings.SmartVolume( pFirst->GetSize(), FALSE );
 		m_sType		= ShellIcons.GetTypeString( m_sName );
@@ -134,6 +137,7 @@ void CLibraryMetaPanel::Update()
 	else if ( m_nSelected > 1 )
 	{
 		CString strFormat;
+		m_bNewFile = TRUE;
 		LoadString( strFormat, IDS_LIBPANEL_MULTIPLE_FILES );
 		m_sName.Format( strFormat, m_nSelected );
 		QWORD nSize = 0;
@@ -628,6 +632,11 @@ void CLibraryMetaPanel::OnRun()
 	{
 		WaitForSingleObject( m_pWakeup, INFINITE );
 		if ( ! m_bThread ) break;
+		if ( ! m_bNewFile )
+		{
+			m_bThread = FALSE;
+			break;
+		}
 		
 		m_pSection.Lock();
 		CString strPath = m_sPath;
