@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_WM_NCLBUTTONUP()
 	ON_WM_SETCURSOR()
 	ON_WM_SYSCOMMAND()
+	ON_WM_NCACTIVATE()
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_IDLEUPDATECMDUI, OnIdleUpdateCmdUI)
 	ON_MESSAGE(0x0319, OnMediaKey)
@@ -243,4 +244,11 @@ void CMediaWnd::OnDropFiles(HDROP hDropInfo)
 
 		OnDropFiles( oFileList, oPoint, TRUE );
 	}
+}
+
+BOOL CMediaWnd::OnNcActivate(BOOL bActive)
+{
+	m_wndFrame.UpdateScreenSaverStatus( bActive );
+
+	return CPanelWnd::OnNcActivate(bActive);
 }

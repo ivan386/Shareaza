@@ -67,6 +67,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg BOOL OnNcActivate(BOOL bActive);
 	//}}AFX_MSG
 
 	afx_msg LONG OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam);
