@@ -97,7 +97,16 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	{
 		strValue = pszDefault;
 	}
-	
+
+	// validate numeric value, empty if invalid
+	if ( m_bNumeric )
+	{
+		float nNumber = 0.0;
+		_stscanf( strValue, _T("%f"), &nNumber );
+		if ( nNumber < (float)m_nMinOccurs || nNumber > (float)m_nMaxOccurs )
+			strValue.Empty();
+	}
+
 	if ( strValue.IsEmpty() ) return strValue;
 	
 	if ( bFormat && m_bNumeric )
@@ -136,7 +145,7 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 		}
 		if ( bInvalid ) strValue.Empty();
 	}
-	
+
 	return strValue;
 }
 
