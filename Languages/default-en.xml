@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="English (Default)"
 		author="Michael Stokes"
-		updateBy="MogTheCat"
+		updateBy="Rolandas Rudomanskis"
 		description="Shareaza Default English Skin File"
 		link="http://www.shareaza.com/"
 		email="contact@shareaza.com"
-		version="2.2.0.2"
+		version="2.2.1.1"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -2511,6 +2511,9 @@
 	<string id="7003" value="Multiple"/>
 	<string id="7004" value="There already is a filter called &quot;%s&quot;, do you want to replace it?"/>
 	<string id="7005" value="Please give your filter a name."/>
+	<string id="7100" value="This template is invalid."/>
+	<string id="7101" value="This template does not have any customizations."/>
+	<string id="7102" value="Are you sure you want to delete the &quot;%s&quot; template?\nThis cannot be undone."/>
 	<string id="8000" value="Shareaza Settings"/>
 	<string id="8001" value="Welcome to Shareaza"/>
 	<string id="8002" value="File Properties"/>
@@ -4094,10 +4097,19 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder">
-		<control caption="This feature is used to export the contents of an album folder as a rich collection file."/>
-		<control caption="Export..."/>
-		<control caption="Cancel"/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Export Folder">
+		<control caption="This feature is used to export the contents of an album folder as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data bellow."/>
+		<control/>
+		<control caption="Template Information:"/>
+		<control caption="Name:"/>
+		<control/>
+		<control caption="Author:"/>
+		<control/>
+		<control caption="Description:"/>
+		<control/>
+		<control caption="Delete|_Back"/>
+		<control caption="_Next|Export"/>
+		<control caption="_Cancel"/>
 	</dialog>
 
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
