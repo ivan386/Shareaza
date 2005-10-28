@@ -1,1 +1,0 @@
-Place Image.cpp to Image Viewer plugin code
