@@ -324,6 +324,13 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	
 	SAFEARRAY* pArray = NULL;
 	HRESULT hr = pService->LoadFromFile( hFile, nLength, &pParams, &pArray );
+	if ( hr == S_FALSE )
+	{
+		USES_CONVERSION;
+		BSTR bsPath = T2BSTR(pszPath);
+		hr = pService->LoadFromFile( (HANDLE)bsPath, 0xFEFEFEFE, &pParams, &pArray );
+		SysFreeString( bsPath );
+	}
 	
 	// Check the result
 	
