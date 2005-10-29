@@ -126,8 +126,8 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,1,0
- PRODUCTVERSION 2,2,1,0
+ FILEVERSION 2,2,1,1
+ PRODUCTVERSION 2,2,1,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -145,12 +145,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 2, 1, 0"
+            VALUE "FileVersion", "2, 2, 1, 1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 2, 1, 0"
+            VALUE "ProductVersion", "2, 2, 1, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -4531,6 +4531,10 @@ BEGIN
     IDS_TIP_UPLOADS         "Uploads"
     IDS_TIP_TODAYTOTAL      "%lu today, %lu total"
     IDS_TIP_NOHASHSET       " (No Hashset)"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_TIP_STATUS          "Status:"
     IDS_TIP_SPEED           "Speed:"
     IDS_TIP_URL             "URL:"
@@ -4547,6 +4551,10 @@ BEGIN
     IDS_TIP_SOURCE_UNSTABLE "This source may be unstable"
     IDS_TIP_FILE_BUSY       "Sources for this file are currently busy"
     IDS_TIP_FILE_FIREWALLED "Sources for this file are firewalled"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
 END
 
@@ -4877,6 +4885,10 @@ BEGIN
                             "Are you sure you want to cancel/abort every download in this group?"
     IDS_UPLOAD_QUEUE_QUEUE  "Queue"
     IDS_UPLOAD_QUEUE_ED2K_CORE "eDonkey Core"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_UPLOAD_QUEUE_ED2K_PARTIALS "eDonkey Partials"
     IDS_UPLOAD_QUEUE_ED2K_GUARD "eDonkey Guard"
     IDS_UPLOAD_QUEUE_SMALL_FILES "Small Files"
@@ -4978,6 +4990,10 @@ BEGIN
     IDS_BITZI_REQUESTING    "Requesting..."
     IDS_BITZI_SUCCESS       "Success!"
     IDS_BITZI_FINISHED      "Finished, click Close"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_BITZI_CLOSE         "&Close"
     IDS_MEDIAVIS_NOVIS      "(No Visualisation)"
 END
@@ -5045,6 +5061,10 @@ BEGIN
     IDS_BROWSE_TIMEOUT      "Closing browse user connection %s due to lack of traffic."
     IDS_BROWSE_CLOSED       "Closing browse user connection to %s."
     IDS_BROWSE_TITLE_FORMAT "Browsing %s"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_BROWSE_INTRO_FORMAT "Found %i shared files in %s's library."
 END
 
@@ -5068,6 +5088,10 @@ BEGIN
     IDS_NEIGHBOUR_G1LU      "Gnutella: Leaf-to-Ultrapeer Connection"
     IDS_NEIGHBOUR_G1UL      "Gnutella: Ultrapeer-to-Leaf Connection"
     IDS_NEIGHBOUR_G2HH      "Gnutella II: Hub-to-Hub Connection"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_NEIGHBOUR_G2LH      "Gnutella II: Leaf-to-Hub Connection"
     IDS_NEIGHBOUR_G2HL      "Gnutella II: Hub-to-Leaf Connection"
     IDS_NEIGHBOUR_ED2K_LOW  "eDonkey Server Connection (LOWID: %lu)"
@@ -5321,6 +5345,10 @@ BEGIN
     IDS_STATUS_QUEUED       "Queued"
     IDS_STATUS_UNKNOWN      "Unknown"
     IDS_STATUS_COMPLETED    "Completed"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_STATUS_SEEDING      "Seeding"
     IDS_STATUS_MOVING       "Moving"
     IDS_STATUS_PAUSED       "Paused"
@@ -5337,6 +5365,10 @@ BEGIN
     IDS_STATUS_VERIFIED     "Verified"
     IDS_STATUS_UNVERIFIED   "Unverified"
     IDS_STATUS_SOURCE       "source"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_STATUS_SOURCES      "sources"
     IDS_STATUS_SOURCESTENS  "sources"
     IDS_STATUS_SOURCES11TO19 "sources"
@@ -5558,6 +5590,10 @@ BEGIN
     ID_LIBRARY_LAUNCH       "Open or play the selected file(s)."
     ID_NEIGHBOURS_COPY      "Copy a URI to access the selected host."
     ID_TOOLS_RESKIN         "Reload and apply your current skin selection."
+END
+
+STRINGTABLE 
+BEGIN
     ID_MONITOR_CLOSE        "Close the monitor window."
     ID_WINDOW_TOOLBAR       "Show or hide the toolbar."
     ID_WINDOW_TABBAR        "Show or hide the window tab bar."
@@ -5572,6 +5608,10 @@ BEGIN
     ID_DOWNLOADS_MOVE_DOWN  "Move the selected download(s) down the priority list."
     ID_TOOLS_LANGUAGE       "Select the language you wish to use Shareaza in..."
     ID_DOWNLOADS_SETTINGS   "Configure download settings..."
+END
+
+STRINGTABLE 
+BEGIN
     ID_UPLOADS_SETTINGS     "Configure upload settings..."
     ID_DOWNLOADS_FILTER_ALL "Show all downloads."
     ID_DOWNLOADS_FILTER_ACTIVE "Show downloads which are active."
@@ -5589,6 +5629,10 @@ BEGIN
     ID_LIBRARY_VIEW_LIST    "Show files in a horizontal list\nList View"
     ID_LIBRARY_VIEW_ICON    "Show files as icons\nIcon View"
     ID_LIBRARY_VIEW_THUMBNAIL "Show thumbnails for files\nThumbnail View"
+END
+
+STRINGTABLE 
+BEGIN
     ID_LIBRARY_PARENT       "Move up to the parent folder."
     ID_LIBRARY_PANEL        "Show or hide the library detail panel."
     ID_LIBRARY_FOLDER_PROPERTIES 
@@ -5606,6 +5650,10 @@ BEGIN
     ID_MEDIA_PREVIOUS       "Skip back to the previous file in the current playlist.\nPrevious File"
     ID_MEDIA_NEXT           "Skip ahead to the next file in the current playlist.\nNext File"
     ID_MEDIA_SIZE_FILL      "Choose the best size for the video based on its aspect ratio."
+END
+
+STRINGTABLE 
+BEGIN
     ID_MEDIA_SIZE_DISTORT   "Stretch the video to fill the window, potentially distorting it."
     ID_MEDIA_SIZE_ONE       "Show the video at its original (natural) size."
     ID_MEDIA_SIZE_TWO       "Show the video at double its original (natural) size."
@@ -5622,6 +5670,10 @@ BEGIN
     ID_MEDIA_SELECT         "Select and play this file."
     ID_MEDIA_ADD            "Add a media file to the playlist..."
     ID_MEDIA_REMOVE         "Remove the selected media file from the playlist."
+END
+
+STRINGTABLE 
+BEGIN
     ID_MEDIA_CLEAR          "Clear (empty) the playlist."
     ID_MEDIA_SAVE           "Save the current playlist to a file..."
     ID_MEDIA_PLAYLIST       "Show or hide the playlist editor."
@@ -5656,6 +5708,10 @@ BEGIN
     ID_CHAT_EMOTICONS       "Insert an emoticon."
     ID_DOWNLOADS_SHARE      "Share this partially downloaded file with other users."
     ID_MEDIA_ADD_FOLDER     "Add a folder of media files to the playlist..."
+END
+
+STRINGTABLE 
+BEGIN
     ID_LIBRARY_FOLDER_FILE_PROPERTIES 
                             "View and edit the properties of all files in the selected folder(s)..."
     ID_LIBRARY_REBUILD      "Rebuild metadata and hashes for the selected folders or files."
@@ -5671,6 +5727,10 @@ BEGIN
     ID_SEARCH_FOR_THIS      "Search for other copies of the selected file."
     ID_SEARCH_FOR_SIMILAR   "Search for files which are similar to the selected file."
     ID_SEARCH_FOR_ARTIST    "Search for music files by the same artist as the selected file."
+END
+
+STRINGTABLE 
+BEGIN
     ID_SEARCH_FOR_ALBUM     "Search for music files in the same album as the selected file."
     ID_SEARCH_FOR_SERIES    "Search for video files in the same series as the selected file."
     ID_CHAT_TIMESTAMP       "Show the time when each message was received."
@@ -5685,6 +5745,10 @@ BEGIN
     ID_NETWORK_ED2K         "Connect to the eDonkey2000 network."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Normal mode."
+END
+
+STRINGTABLE 
+BEGIN
     ID_LIBRARY_SEARCH_QUICK "Search your file library..."
     ID_DOWNLOAD_GROUP_NEW   "Create a new download group..."
     ID_DOWNLOAD_GROUP_REMOVE "Remove the selected download group."
