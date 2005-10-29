@@ -271,7 +271,7 @@
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&nbsp;&nbsp;&nbsp;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
@@ -288,7 +288,7 @@
 		<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Play"/>
+		<button id="ID_MEDIA_PLAY" text="Play&nbsp;&nbsp;&nbsp;"/>
 		<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 		<button id="ID_MEDIA_STOP" text="Stop"/>
 		<separator/>
