@@ -778,9 +778,6 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			// Append a comma onto the end of the value text once, and then loop forever
 			for ( strValue += ',' ; ; ) // for (;;) is the same thing as forever
 			{
-				// Get the port number we are listening on from settings, 6346 by default
-				int nPort = Settings.Connection.InPort; // Not used (do)
-
 				// Find the first comma in the value text
 				int nPos = strValue.Find( ',' ); // Set nPos to the distance in characters from the start to the comma
 				if ( nPos < 0 ) break;           // If no comma was found, leave the loop
