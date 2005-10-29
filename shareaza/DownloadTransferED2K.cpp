@@ -838,7 +838,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		{
 			// Then activate endgame
 			m_pDownload->m_bTorrentEndgame = TRUE;
-			theApp.Message( MSG_DEBUG, _T("Activating endgame for ed2k transfer %s"), m_pDownload->m_sLocalName );
+			theApp.Message( MSG_DEBUG, _T("Activating endgame for ed2k transfer %s"), m_pDownload->m_sRemoteName );
 		}
 	}
 
