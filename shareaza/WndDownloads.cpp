@@ -632,7 +632,7 @@ void CDownloadsWnd::OnDownloadsClear()
 			else if ( pDownload->IsStarted() )
 			{
 				CDeleteFileDlg dlg;
-				dlg.m_sName = pDownload->m_sRemoteName;
+				dlg.m_sName = pDownload->m_sDisplayName;
 				BOOL bShared = pDownload->IsShared();
 				
 				pLock.Unlock();
@@ -686,7 +686,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 				if ( pDownload->IsStarted() )
 				{
 					CDeleteFileDlg dlg;
-					dlg.m_sName = pDownload->m_sRemoteName;
+					dlg.m_sName = pDownload->m_sDisplayName;
 					BOOL bShared = pDownload->IsShared();
 					
 					pLock.Unlock();
@@ -784,7 +784,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 		
 		if ( Downloads.Check( pDownload ) )
 		{
-			CString strName = pDownload->m_sLocalName;
+			CString strName = pDownload->m_sDiskName;
 			
 			if ( pDownload->IsCompleted() )
 			{
@@ -883,8 +883,8 @@ void CDownloadsWnd::OnDownloadsLaunchCopy()
 			{
 				CString strType;
 				
-				int nExtPos = pDownload->m_sLocalName.ReverseFind( '.' );
-				if ( nExtPos > 0 ) strType = pDownload->m_sLocalName.Mid( nExtPos + 1 );
+				int nExtPos = pDownload->m_sSafeName.ReverseFind( '.' );
+				if ( nExtPos > 0 ) strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
 				strType = _T("|") + strType + _T("|");
 				
 				if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL ||
@@ -893,7 +893,7 @@ void CDownloadsWnd::OnDownloadsLaunchCopy()
 					CString strFormat, strPrompt;
 					
 					LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
-					strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sLocalName );
+					strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sSafeName );
 					
 					pLock.Unlock();
 					int nResult = AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
@@ -938,7 +938,7 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 		{
 			if ( pDownload->IsStarted() )
 			{
-				CString strPath = pDownload->m_sLocalName;
+				CString strPath = pDownload->m_sDiskName;
 				pLock.Unlock();
 				CFileExecutor::Enqueue( strPath );
 				pLock.Lock();
@@ -1087,7 +1087,7 @@ void CDownloadsWnd::OnDownloadsCopy()
 		if ( Downloads.Check( pDownload ) && ( pDownload->m_bSHA1 || pDownload->m_bED2K ) )
 		{
 			CURLCopyDlg dlg;
-			dlg.m_sName		= pDownload->m_sRemoteName;
+			dlg.m_sName		= pDownload->m_sDisplayName;
 			dlg.m_bSHA1		= pDownload->m_bSHA1;
 			dlg.m_pSHA1		= pDownload->m_pSHA1;
 			dlg.m_bTiger	= pDownload->m_bTiger;
@@ -1453,8 +1453,8 @@ void CDownloadsWnd::OnDownloadsFileDelete()
 		if ( Downloads.Check( pDownload ) && pDownload->IsCompleted() )
 		{
 			CDeleteFileDlg dlg;
-			dlg.m_sName		= pDownload->m_sRemoteName;
-			CString strPath	= pDownload->m_sLocalName;
+			dlg.m_sName		= pDownload->m_sDisplayName;
+			CString strPath	= pDownload->m_sDiskName;
 			
 			pLock.Unlock();
 			if ( dlg.DoModal() != IDOK ) break;
@@ -1490,7 +1490,7 @@ void CDownloadsWnd::OnDownloadsRate()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected && pDownload->IsCompleted() )
-			pList.AddTail( pDownload->m_sLocalName );
+			pList.AddTail( pDownload->m_sDiskName );
 	}
 	
 	pLock.Unlock();

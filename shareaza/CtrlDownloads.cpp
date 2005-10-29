@@ -1,9 +1,9 @@
 //
 // CtrlDownloads.cpp
 //
-//	Date:			"$Date: 2005/10/03 20:44:33 $"
-//	Revision:		"$Revision: 1.39 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/10/29 21:41:59 $"
+//	Revision:		"$Revision: 1.40 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -985,7 +985,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				break;
 			}
 
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sRemoteName, 16 ), dc.GetSafeHdc(),
+			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sDisplayName, 16 ), dc.GetSafeHdc(),
 					rcCell.left, rcCell.top, 16, 16, crNatural, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );

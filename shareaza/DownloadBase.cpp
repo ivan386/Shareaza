@@ -1,9 +1,9 @@
 //
 // DownloadBase.cpp
 //
-//	Date:			"$Date: 2005/06/15 22:00:06 $"
-//	Revision:		"$Revision: 1.10 $"
-//  Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/10/29 21:41:59 $"
+//	Revision:		"$Revision: 1.11 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -74,30 +74,56 @@ void CDownloadBase::SetModified()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadBase local name
+// CDownloadBase disk file name (the <hash>.partial file in the incomplete directory)
 
-void CDownloadBase::GenerateLocalName()
+void CDownloadBase::GenerateDiskName()
 {
-	if ( m_sLocalName.GetLength() > 0 ) return;
+	// Exit if we've already named the temp file
+	if ( m_sDiskName.GetLength() > 0 ) return;
 
-	if ( m_bSHA1 ) m_sLocalName += CSHA::HashToString( &m_pSHA1 );
-	else if ( m_bTiger ) m_sLocalName += CTigerNode::HashToString( &m_pTiger );
-	else if ( m_bED2K ) m_sLocalName += CED2K::HashToString( &m_pED2K );
-	else if ( m_bBTH ) m_sLocalName += CSHA::HashToString( &m_pBTH );
+	// Get a meaningful (but safe) name. Used for previews, etc. Make sure we get extention if name is long.
+	m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
 
-	if ( m_sRemoteName.GetLength() > 0 )
+	// Start disk file name with hash
+	if ( m_bSHA1 ) 
 	{
-		if ( m_sLocalName.GetLength() > 0 ) m_sLocalName += _T(" ");
-		m_sLocalName += CDownloadTask::SafeFilename( m_sRemoteName );
+		m_sDiskName += _T("sha1_");
+		m_sDiskName += CSHA::HashToString( &m_pSHA1 );
+	}
+	else if ( m_bTiger ) 
+	{
+		m_sDiskName += _T("ttr_");
+		m_sDiskName += CTigerNode::HashToString( &m_pTiger );
+	}
+	else if ( m_bED2K )
+	{
+		m_sDiskName += _T("ed2k_");
+		m_sDiskName += CED2K::HashToString( &m_pED2K );
+	}
+	else if ( m_bBTH ) 
+	{
+		m_sDiskName += _T("btih_");
+		m_sDiskName += CSHA::HashToString( &m_pBTH );
+	}
+	else if ( m_sDisplayName.GetLength() > 0 )
+	{
+		m_sDiskName += _T("name_");
+		m_sDiskName += CDownloadTask::SafeFilename( m_sDisplayName.Left( 32 ) );
+	}
+	else
+	{
+		srand( (unsigned)GetTickCount() );
+		m_sDiskName.Format( _T("rand_%2i%2i%2i%2i"), rand() % 100, rand() % 100, rand() % 100, rand() % 100 );
 	}
 
-	if ( m_sLocalName.GetLength() > 0 )
-	{
-		CreateDirectory( Settings.Downloads.IncompletePath, NULL );
-		m_sLocalName = Settings.Downloads.IncompletePath + _T("\\") + m_sLocalName;
-	}
+	// Add a .partial extention
+	m_sDiskName += _T(".partial");
+	// Create download directory if it doesn't exist
+	CreateDirectory( Settings.Downloads.IncompletePath, NULL );
+	// Add the path
+	m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sDiskName;
 
-	ASSERT( m_sLocalName.GetLength() < MAX_PATH - 1 );
+	ASSERT( m_sDiskName.GetLength() < MAX_PATH - 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -107,7 +133,7 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
-		ar << m_sRemoteName;
+		ar << m_sDisplayName;
 		ar << m_nSize;
 
 		ar << m_bSHA1;
@@ -128,7 +154,8 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
-		ar >> m_sRemoteName;
+		ar >> m_sDisplayName;
+		m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
 
 		if ( nVersion >= 29 )
 		{

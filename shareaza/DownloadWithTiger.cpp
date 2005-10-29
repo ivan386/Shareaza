@@ -322,7 +322,7 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 void CDownloadWithTiger::RunValidation(BOOL bSeeding)
 {
 	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return;
-	if ( m_sLocalName.IsEmpty() ) return;
+	if ( m_sDiskName.IsEmpty() ) return;
 
 	if ( ! bSeeding )
 	{
@@ -490,7 +490,7 @@ void CDownloadWithTiger::ContinueValidation()
 
 	if ( m_pFile == NULL )
 	{
-		hComplete = CreateFile( m_sLocalName, GENERIC_READ,
+		hComplete = CreateFile( m_sDiskName, GENERIC_READ,
 			FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL, NULL );
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;

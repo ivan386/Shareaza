@@ -436,7 +436,7 @@ BOOL CDownloadTransferBT::SendRequests()
 		{
 			// Then activate endgame
 			m_pDownload->m_bTorrentEndgame = TRUE;
-			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), m_pDownload->m_sRemoteName );
+			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), m_pDownload->m_sDisplayName );
 		}
 	}
 	

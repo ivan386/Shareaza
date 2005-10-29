@@ -175,7 +175,7 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 
 	if ( pFile == NULL )
 	{
-		pFile = new CLibraryFile( NULL, pDownload->m_sRemoteName );
+		pFile = new CLibraryFile( NULL, pDownload->m_sDisplayName );
 		pFile->m_nSize		= pDownload->m_nSize;
 		pFile->m_bSHA1		= pDownload->m_bSHA1;
 		pFile->m_pSHA1		= pDownload->m_pSHA1;

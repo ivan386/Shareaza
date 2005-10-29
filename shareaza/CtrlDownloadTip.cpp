@@ -494,7 +494,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 {
-	m_sName = pDownload->m_sRemoteName;
+	m_sName = pDownload->m_sDisplayName;
 	m_sSize = Settings.SmartVolume( pDownload->m_nSize, FALSE );
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) m_sSize = _T("?");
 

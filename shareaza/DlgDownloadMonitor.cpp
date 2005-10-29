@@ -179,7 +179,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 	
 	if ( Downloads.Check( m_pDownload ) )
 	{
-		m_sName = m_pDownload->m_sRemoteName;
+		m_sName = m_pDownload->m_sDisplayName;
 		CString strType = m_sName;
 
 		int nPeriod = strType.ReverseFind( '.' );
@@ -280,18 +280,18 @@ void CDownloadMonitorDlg::OnTimer(UINT nIDEvent)
 		if ( theApp.m_bRTL )
 		{
 			strText.Format( _T("%s %s %.1f%% : Shareaza"),
-				(LPCTSTR)m_pDownload->m_sRemoteName, strOf, m_pDownload->GetProgress() * 100.0 );
+				(LPCTSTR)m_pDownload->m_sDisplayName, strOf, m_pDownload->GetProgress() * 100.0 );
 		}
 		else
 		{
 		strText.Format( _T("%.1f%% %s %s : Shareaza"),
-			m_pDownload->GetProgress() * 100.0, strOf, (LPCTSTR)m_pDownload->m_sRemoteName );
+			m_pDownload->GetProgress() * 100.0, strOf, (LPCTSTR)m_pDownload->m_sDisplayName );
 	}
 	}
 	else
 	{
 		strText.Format( _T("%s : Shareaza"),
-			(LPCTSTR)m_pDownload->m_sRemoteName );
+			(LPCTSTR)m_pDownload->m_sDisplayName );
 	}
 	
 	Update( this, strText );
@@ -518,7 +518,7 @@ void CDownloadMonitorDlg::OnDownloadLaunch()
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) || ! Downloads.Check( m_pDownload ) ) return;
 	
-	CString strName = m_pDownload->m_sLocalName;
+	CString strName = m_pDownload->m_sSafeName;
 	BOOL bCompleted = m_pDownload->IsMoving();
 	
 	CString strType;
@@ -561,7 +561,7 @@ void CDownloadMonitorDlg::OnDownloadStop()
 	{
 		CString strFormat, strPrompt;
 		::LoadString( strFormat, IDS_DOWNLOAD_CONFIRM_CLEAR );
-		strPrompt.Format( strFormat, (LPCTSTR)m_pDownload->m_sRemoteName );
+		strPrompt.Format( strFormat, (LPCTSTR)m_pDownload->m_sDisplayName );
 
 		pLock.Unlock();
 		if ( MessageBox( strPrompt, NULL, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;

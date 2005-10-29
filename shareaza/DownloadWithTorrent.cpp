@@ -174,8 +174,8 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	
 	if ( m_pFile != NULL && m_pFile->IsOpen() == FALSE )
 	{
-		BOOL bCreated = ( m_sLocalName.IsEmpty() ||
-						GetFileAttributes( m_sLocalName ) == 0xFFFFFFFF );
+		BOOL bCreated = ( m_sDiskName.IsEmpty() ||
+						GetFileAttributes( m_sDiskName ) == 0xFFFFFFFF );
 		
 		if ( ! PrepareFile() ) return FALSE;
 		
@@ -634,7 +634,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	CDownload* pDownload = reinterpret_cast<CDownload*>(this);
 	
 	if ( IsMoving() || IsCompleted() ) return FALSE;
-	if ( m_sLocalName == pszTarget ) return FALSE;
+	if ( m_sDiskName == pszTarget ) return FALSE;
 	
 	ASSERT( m_pFile != NULL );
 	if ( m_pFile == NULL ) return FALSE;
@@ -652,14 +652,14 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	memset( m_pTorrentBlock, TS_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;
 	
-	if ( m_sLocalName.GetLength() > 0 )
+	if ( m_sDiskName.GetLength() > 0 )
 	{
 		ASSERT( FALSE );
-		::DeleteFile( m_sLocalName );
-		::DeleteFile( m_sLocalName + _T(".sd") );
+		::DeleteFile( m_sDiskName );
+		::DeleteFile( m_sDiskName + _T(".sd") );
 	}
 	
-	m_sLocalName = pszTarget;
+	m_sDiskName = pszTarget;
 	SetModified();
 	
 	m_tTorrentTracker		= GetTickCount() + ( 60 * 1000 );

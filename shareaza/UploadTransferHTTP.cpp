@@ -451,7 +451,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			{
 				if ( pDownload->m_pXML != NULL )
 				{
-					m_sFileName	= pDownload->m_sRemoteName;
+					m_sFileName	= pDownload->m_sDisplayName;
 					pMetadata	= pDownload->m_pXML->Clone();
 				}
 			}
@@ -476,7 +476,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sRemoteName;
+				m_sFileName = pDownload->m_sDisplayName;
 				return RequestTigerTreeRaw( pDownload->GetTigerTree(), FALSE );
 			}
 		}
@@ -508,7 +508,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sRemoteName;
+				m_sFileName = pDownload->m_sDisplayName;
 				m_nFileSize = pDownload->m_nSize;
 				return RequestTigerTreeDIME( pDownload->GetTigerTree(), nDepth,
 					bHashset ? pDownload->GetHashset() : NULL, FALSE );

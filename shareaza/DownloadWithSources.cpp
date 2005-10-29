@@ -198,11 +198,11 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	{
 		if ( Settings.General.HashIntegrity ) return FALSE;
 		
-		if ( m_sRemoteName.IsEmpty() || pHit->m_sName.IsEmpty() ) return FALSE;
+		if ( m_sDisplayName.IsEmpty() || pHit->m_sName.IsEmpty() ) return FALSE;
 		if ( m_nSize == SIZE_UNKNOWN || ! pHit->m_bSize ) return FALSE;
 		
 		if ( m_nSize != pHit->m_nSize ) return FALSE;
-		if ( m_sRemoteName.CompareNoCase( pHit->m_sName ) ) return FALSE;
+		if ( m_sDisplayName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 	
 	if ( ! m_bSHA1 && pHit->m_bSHA1 )
@@ -226,9 +226,9 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 		m_nSize = pHit->m_nSize;
 	}
 	
-	if ( m_sRemoteName.IsEmpty() && pHit->m_sName.GetLength() )
+	if ( m_sDisplayName.IsEmpty() && pHit->m_sName.GetLength() )
 	{
-		m_sRemoteName = pHit->m_sName;
+		m_sDisplayName = pHit->m_sName;
 	}
 	
 	if ( Settings.Downloads.Metadata && m_pXML == NULL )
@@ -314,23 +314,23 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		if ( m_pSHA1 != pURL.m_pSHA1 ) return FALSE;
 	}
 	
-	if ( m_sRemoteName.IsEmpty() && _tcslen( pszURL ) > 9 )
+	if ( m_sDisplayName.IsEmpty() && _tcslen( pszURL ) > 9 )
 	{
-		m_sRemoteName = &pszURL[8];
+		m_sDisplayName = &pszURL[8];
 		
-		int nPos = m_sRemoteName.ReverseFind( '/' );
+		int nPos = m_sDisplayName.ReverseFind( '/' );
 		
 		if ( nPos >= 0 )
 		{
-			m_sRemoteName = m_sRemoteName.Mid( nPos + 1 ).SpanExcluding( _T("?") );
-			m_sRemoteName = CTransfer::URLDecode( m_sRemoteName );
+			m_sDisplayName = m_sDisplayName.Mid( nPos + 1 ).SpanExcluding( _T("?") );
+			m_sDisplayName = CTransfer::URLDecode( m_sDisplayName );
 		}
 		else
 		{
-			m_sRemoteName.Empty();
+			m_sDisplayName.Empty();
 		}
 		
-		if ( m_sRemoteName.IsEmpty() ) m_sRemoteName = _T("default.htm");
+		if ( m_sDisplayName.IsEmpty() ) m_sDisplayName = _T("default.htm");
 	}
 	
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, pszURL, bURN, bHashAuth, pLastSeen ) );
@@ -571,7 +571,7 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_DROP,
 				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sRemoteName,
+				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sDisplayName,
 				nOffset, nOffset + nLength - 1 );
 			pSource->Remove( TRUE, TRUE );
 		}

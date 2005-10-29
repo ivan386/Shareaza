@@ -568,7 +568,7 @@ void CLocalSearch::AddHit(CDownload* pDownload, int nIndex)
 
 	if ( m_pSearch->m_bWantDN )
 	{
-		nGroup += 8 + pPacket->GetStringLen( pDownload->m_sRemoteName );
+		nGroup += 8 + pPacket->GetStringLen( pDownload->m_sDisplayName );
 	}
 
 	if ( m_pSearch->m_bWantURL )
@@ -628,16 +628,16 @@ void CLocalSearch::AddHit(CDownload* pDownload, int nIndex)
 	{
 		if ( pDownload->m_nSize <= 0xFFFFFFFF )
 		{
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sRemoteName ) + 4 );
+			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sDisplayName ) + 4 );
 			pPacket->WriteLongBE( (DWORD)pDownload->m_nSize );
-			pPacket->WriteString( pDownload->m_sRemoteName, FALSE );
+			pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
 		}
 		else
 		{
 			pPacket->WritePacket( "SZ", 8 );
 			pPacket->WriteInt64( pDownload->m_nSize );
-			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sRemoteName ) );
-			pPacket->WriteString( pDownload->m_sRemoteName, FALSE );
+			pPacket->WritePacket( "DN", pPacket->GetStringLen( pDownload->m_sDisplayName ) );
+			pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
 		}
 	}
 

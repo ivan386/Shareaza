@@ -41,7 +41,7 @@ public:
 public:
 	CCriticalSection m_pSection;
 	CDownload*		m_pDownload;
-	CString			m_sRemoteName;
+	CString			m_sDisplayName;
 	CString			m_sSourceName;
 	CString			m_sTargetName;
 	QWORD			m_nRange;

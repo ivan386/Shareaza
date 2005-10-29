@@ -86,7 +86,7 @@ BOOL CDownloadEditDlg::OnInitDialog()
 		return TRUE;
 	}
 
-	m_sName = m_pDownload->m_sRemoteName;
+	m_sName = m_pDownload->m_sDisplayName;
 
 	if ( m_pDownload->m_bSHA1 )
 		m_sSHA1 = CSHA::HashToString( &m_pDownload->m_pSHA1 );
@@ -307,7 +307,7 @@ BOOL CDownloadEditDlg::Commit()
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
     if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 
-	if ( m_pDownload->m_sRemoteName != m_sName )
+	if ( m_pDownload->m_sDisplayName != m_sName )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_RENAME );

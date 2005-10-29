@@ -94,7 +94,7 @@ BOOL CDownloadReviewDlg::OnInitDialog()
 	
 	if ( ! m_pDownload ) return FALSE;
 
-	m_sReviewFileName = m_pDownload->m_sRemoteName;
+	m_sReviewFileName = m_pDownload->m_sDisplayName;
 
 	CDownloadReview* pReview = m_pDownload->GetFirstReview();
 

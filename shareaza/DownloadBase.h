@@ -38,8 +38,10 @@ public:
 public:
 	int			m_nCookie;
 public:
-	CString		m_sRemoteName;
-	CString		m_sLocalName;
+	CString		m_sDisplayName;				// The name of the file (Displayed in windows, etc). May have 'unsafe' characters
+	CString		m_sSafeName;				// The name, with invalid characters removed. (A meaningful local disk name)
+	CString		m_sDiskName;				// The name and path of the incomplete file on disk (the .partial). 
+											// The .sd will be the same as above with ".sd" on the end
 	QWORD		m_nSize;
 public:
 	BOOL		m_bSHA1;
@@ -74,7 +76,7 @@ public:
 public:
 	void			SetModified();
 protected:
-	void			GenerateLocalName();
+	void			GenerateDiskName();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 
 };

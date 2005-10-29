@@ -551,7 +551,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	
 	if ( pDownload->IsCompleted() )
 	{
-		CString strName = pDownload->m_sLocalName;
+		CString strName = pDownload->m_sDiskName;
 		
 		if ( pDownload->m_bVerify == TS_FALSE )
 		{
@@ -573,8 +573,8 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	{
 		CString strType;
 		
-		int nExtPos = pDownload->m_sLocalName.ReverseFind( '.' );
-		if ( nExtPos > 0 ) strType = pDownload->m_sLocalName.Mid( nExtPos + 1 );
+		int nExtPos = pDownload->m_sSafeName.ReverseFind( '.' );
+		if ( nExtPos > 0 ) strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
 		strType = _T("|") + strType + _T("|");
 		
 		if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL )
@@ -582,7 +582,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 			CString strFormat, strPrompt;
 			
 			LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
-			strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sLocalName );
+			strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sSafeName );
 			
 			pLock.Unlock();
 			int nResult = AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 );

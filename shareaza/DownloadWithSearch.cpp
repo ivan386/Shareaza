@@ -163,7 +163,7 @@ void CDownloadWithSearch::PrepareSearch()
 	
 	if ( pSearch->m_bAndG1 )
 	{
-		pSearch->m_sSearch = m_sRemoteName;
+		pSearch->m_sSearch = m_sDisplayName;
 		pSearch->BuildWordList();
 	}
 	
@@ -194,7 +194,7 @@ void CDownloadWithSearch::PrepareSearch()
 	}
 	
 	pSearch->m_bWantURL	= TRUE;
-	pSearch->m_bWantDN	= ( m_sRemoteName.GetLength() == 0 );
+	pSearch->m_bWantDN	= ( m_sDisplayName.GetLength() == 0 );
 	pSearch->m_bWantXML	= FALSE;
 	pSearch->m_bWantPFS	= TRUE;
 	pSearch->m_bWantCOM = FALSE;

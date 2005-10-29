@@ -1268,7 +1268,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 
 	if ( CDownload* pDownload = Downloads.FindByED2K( &m_pUpMD4, TRUE ) )
 	{
-		pReply->WriteEDString( pDownload->m_sRemoteName, m_bEmUnicode );
+		pReply->WriteEDString( pDownload->m_sDisplayName, m_bEmUnicode );
 		Send( pReply );
 		return TRUE;
 	}
@@ -1371,7 +1371,7 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 		{
 			if ( pHashset = pDownload->GetHashset() )
 			{
-				strName		= pDownload->m_sRemoteName;
+				strName		= pDownload->m_sDisplayName;
 				bDelete		= FALSE;
 			}
 		}

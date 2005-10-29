@@ -416,8 +416,8 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	if ( m_bTiger && pFile->m_bTiger && m_pTiger != pFile->m_pTiger ) return FALSE;
 	if ( m_bED2K && pFile->m_bED2K && m_pED2K != pFile->m_pED2K ) return FALSE;
 
-	m_sFileName	= pFile->m_sRemoteName;
-	m_sFilePath	= pFile->m_sLocalName;
+	m_sFileName	= pFile->m_sDisplayName;
+	m_sFilePath	= pFile->m_sDiskName;
 	m_nFileBase	= 0;
 	m_nFileSize	= pFile->m_nSize;
 	m_bFilePartial = TRUE;

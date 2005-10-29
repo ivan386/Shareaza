@@ -85,11 +85,11 @@ BOOL CDownloadWithExtras::CanPreview()
 {
 	if ( m_pPreviewWnd != NULL ) return FALSE;
 	
-	LPCTSTR pszType = _tcsrchr( m_sLocalName, '.' );
+	LPCTSTR pszType = _tcsrchr( m_sSafeName, '.' );
 	if ( pszType == NULL )
 	{
-		pszType = _tcsrchr( m_sRemoteName, '.' );
-	if ( pszType == NULL ) return FALSE;
+		pszType = _tcsrchr( m_sDisplayName, '.' );
+		if ( pszType == NULL ) return FALSE;
 	}
 	
 	CString strType( pszType );

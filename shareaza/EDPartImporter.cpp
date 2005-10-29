@@ -1,9 +1,9 @@
 //
 // EDPartImporter.cpp
 //
-//	Date:			"$Date: 2005/05/01 11:42:52 $"
-//	Revision:		"$Revision: 1.10 $"
-//	Last change by:	"$Author: rolandas $"
+//	Date:			"$Date: 2005/10/29 21:41:59 $"
+//	Revision:		"$Revision: 1.11 $"
+//	Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -313,10 +313,9 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	}
 
 	CString strTarget;
-	strTarget.Format( _T("%s\\%s %s"),
+	strTarget.Format( _T("%s\\ed2k_%s"),
 		(LPCTSTR)Settings.Downloads.IncompletePath,
-		(LPCTSTR)CED2K::HashToString( &pMD4 ),
-		(LPCTSTR)strName );
+		(LPCTSTR)CED2K::HashToString( &pMD4 ) );
 
 	Message( IDS_ED2K_EPI_COPY_START, (LPCTSTR)strPath, (LPCTSTR)strTarget );
 
@@ -333,8 +332,8 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	pDownload->m_bED2K			= TRUE;
 	pDownload->m_pED2K			= pMD4;
 	pDownload->m_nSize			= nSize;
-	pDownload->m_sRemoteName	= strName;
-	pDownload->m_sLocalName		= strTarget;
+	pDownload->m_sDisplayName	= strName;
+	pDownload->m_sDiskName		= strTarget;
 
 	pDownload->m_pFile->m_oFList.swap( FF::SimpleFragmentList( nSize ) );
 

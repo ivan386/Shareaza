@@ -1,9 +1,9 @@
 //
 // DownloadTask.cpp
 //
-//	Date:			"$Date: 2005/07/20 19:06:38 $"
-//	Revision:		"$Revision: 1.20 $"
-//  Last change by:	"$Author: spooky23 $"
+//	Date:			"$Date: 2005/10/29 21:41:59 $"
+//	Revision:		"$Revision: 1.21 $"
+//  Last change by:	"$Author: mogthecat $"
 //
 // Copyright (c) Shareaza Development Team, 2002-2005.
 // This file is part of SHAREAZA (www.shareaza.com)
@@ -61,20 +61,23 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
 {
 	ASSERT( pDownload->m_pTask == NULL );
 	pDownload->m_pTask = this;
+
+
+	CString strLocalName = pDownload->m_sDisplayName;
 	
 	m_nTask		= nTask;
 	m_pDownload	= pDownload;
 	m_bSuccess	= FALSE;
 	m_nTorrentFile = 0;
 	m_nSize		= pDownload->m_nSize;
-	m_sName		= pDownload->m_sRemoteName;
-	m_sFilename	= pDownload->m_sLocalName;
+	m_sName		= pDownload->m_sDisplayName;
+	m_sFilename	= pDownload->m_sDiskName;
 	m_sPath		= DownloadGroups.GetCompletedPath( pDownload );
 
-	int nExt = m_sFilename.ReverseFind( '.' );
+	int nExt = strLocalName.ReverseFind( '.' );
 	if ( nExt >= 2 )
 	{
-		CString sExtention = m_sFilename.Mid( nExt );
+		CString sExtention = strLocalName.Mid( nExt );
 		CharLower( sExtention.GetBuffer() );
 		sExtention.ReleaseBuffer();
 

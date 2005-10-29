@@ -279,7 +279,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	
 	if ( pURL->m_sName.GetLength() )
 	{
-		pDownload->m_sRemoteName = pURL->m_sName;
+		pDownload->m_sDisplayName = pURL->m_sName;
 	}
 	
 	if ( pURL->m_bSize )

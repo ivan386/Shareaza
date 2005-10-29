@@ -31,6 +31,8 @@
 #include "FileExecutor.h"
 #include "Plugins.h"
 
+#include "DownloadTask.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -97,8 +99,9 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 	m_pDownload = pDownload;
 	ASSERT( m_pDownload != NULL );
 	
-	m_sSourceName = pDownload->m_sLocalName;
-	m_sRemoteName = pDownload->m_sRemoteName;
+	m_sSourceName = pDownload->m_sDiskName;
+	m_sDisplayName = pDownload->m_sDisplayName;
+	CString strFileName = pDownload->m_sSafeName;
 	
 	int nPos = m_sSourceName.ReverseFind( '\\' );
 	
@@ -110,13 +113,13 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 			{
 				m_sTargetName.Format( _T("%sPreview (%i) of %s"),
 					(LPCTSTR)m_sSourceName.Left( nPos + 1 ), nCount,
-					(LPCTSTR)m_sSourceName.Mid( nPos + 1 ) );
+					(LPCTSTR)strFileName );
 			}
 			else
 			{
 				m_sTargetName.Format( _T("%sPreview of %s"),
 					(LPCTSTR)m_sSourceName.Left( nPos + 1 ),
-					(LPCTSTR)m_sSourceName.Mid( nPos + 1 ) );
+					(LPCTSTR)strFileName );
 			}
 			
 			if ( GetFileAttributes( m_sTargetName ) == 0xFFFFFFFF ) break;
@@ -124,8 +127,8 @@ void CFilePreviewDlg::SetDownload(CDownload* pDownload)
 	}
 
 	// if user changes extension or extension is lost
-	LPCTSTR pszExt1 = _tcsrchr( m_sSourceName, '.' );
-	LPCTSTR pszExt2 = _tcsrchr( m_sRemoteName, '.' );
+	LPCTSTR pszExt1 = _tcsrchr( strFileName, '.' );
+	LPCTSTR pszExt2 = _tcsrchr( m_sDisplayName, '.' );
 	if ( ! pszExt1 && pszExt2 || pszExt1 && pszExt2 && _tcsicmp( pszExt1, pszExt2 ) != 0 ) 
 		m_sTargetName += pszExt2;
 
@@ -214,7 +217,7 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_wndProgress.SetPos( 0 );
 	m_sOldStatus = m_sStatus;
 	
-	m_wndName.SetWindowText( m_sRemoteName );
+	m_wndName.SetWindowText( m_sDisplayName );
 	m_wndCancel.EnableWindow( FALSE );
 	
 	m_bThread = TRUE;

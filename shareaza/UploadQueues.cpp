@@ -202,7 +202,7 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CLibraryFile* pFi
 
 CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CDownload* pFile)
 {
-	return SelectQueue( nProtocol, pFile->m_sRemoteName, pFile->m_nSize, TRUE );
+	return SelectQueue( nProtocol, pFile->m_sDisplayName, pFile->m_nSize, TRUE );
 }
 
 CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, BOOL bPartial, LPCTSTR pszShareTags)
