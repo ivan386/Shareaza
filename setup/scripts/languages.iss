@@ -25,6 +25,7 @@ Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "setup/
 Name: "heb"; MessagesFile: "setup\isl\hebrew.isl"; LicenseFile: "setup/license/hebrew.rtf"
 Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "setup/license/polish.rtf"
 Name: "sr"; MessagesFile: "setup\isl\Serbian.isl"; LicenseFile: "setup/license/serbian.rtf"
+Name: "tr"; MessagesFile: "setup\isl\turkish.isl"; LicenseFile: "setup/license/turkish.rtf"
 ;Name: "cz"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "setup/license/czech.rtf"
 
 [Files]
@@ -74,6 +75,8 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ;Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 ; Serbian
 Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
+; Turkish
+Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tr; Components: language
 
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -120,6 +123,8 @@ Source: "setup\license\polish.rtf"; DestDir: "{app}\Uninstall"; DestName: "licen
 ;Source: "setup\license\czech.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 ; Serbian
 Source: "setup\license\serbian.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
+; Turkish
+Source: "setup\license\turkish.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tr; Components: language
 
 ; Install default filter
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Components: not language
@@ -166,6 +171,8 @@ Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilte
 ;Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: cz; Components: language
 ; Serbian
 Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: sr; Components: language
+; Turkish
+Source: "setup\filter\default.dat"; DestDir: "{app}\Data"; DestName: "AdultFilter.dat"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Languages: tr; Components: language
 #endif
 
 [CustomMessages]
@@ -633,6 +640,29 @@ sr.page_viruswarning_title=Virus Uopzorenje
 sr.page_viruswarning_subtitle=Da li imate AntiVirus program instaliran?
 sr.CreateDesktopIcon=Napravi &desktop ikonu
 sr.CreateQuickLaunchIcon=Napravi &Brzo Pokretanje(QL) ikonu
+;Turkish
+tr.components_plugins=Pluginler
+tr.components_skins=Ara Yüzler
+tr.components_languages=Diller
+tr.tasks_allusers=Tüm Kullanýcýlar
+tr.tasks_selectusers=%1 Kuruldu:
+tr.tasks_currentuser=Sadece %1
+tr.tasks_multisetup=Çoklu-kullanýcý desteðini etkinleþtir
+tr.tasks_firewall=Windows Güvenlik Duvarýna bir istisna ekle
+tr.tasks_deleteoldsetup=Eski kurulumlarý sil
+tr.run_skinexe=Arayüz kurulumu çalýþýyor...
+tr.reg_incomingchat=Gelen sohbet mesajý
+tr.reg_apptitle=Shareaza En iyi Dosya Paylaþýmý
+tr.icons_license=Lisans
+tr.icons_uninstall=Kurulumu Kaldýr
+tr.icons_downloads=Downloadlar
+tr.dialog_shutdown=Þuan %1 çalýþýyor.Kurulumun devam edebilmesi için %1'in kapalý olmasýný istiyor musunuz?
+tr.dialog_firewall=Windows güvenlik duvarýna Shareaza kurulumunu eklemek baþarýsýz oldu.%n Lütfen Shareaza'yý el ile istisna listesine ekle
+tr.page_viruswarning_text=Ýnternet kullanýyorken, trojanlardan, wormlardan ve diðer kötü niyetli programlardan sizi koruyan güncel bir virüs tarayýcýsýna sahip olduðunuzdan emin olmalýsýnýz. Bu baðlantý takibiyle bilgisayarýnýzý koruyan iyi virüs tarayýcýlarýnýn ve diðer güvenlik tiplerinin listesini bulacaksýnýz:
+tr.page_viruswarning_title=Virüs Uyarýsý
+tr.page_viruswarning_subtitle=Bir AntiVirus programý yükledin mi?
+tr.CreateDesktopIcon=Bir &Masaüstü ikonu görüntüle
+tr.CreateQuickLaunchIcon=Bir &Hýzlý Baþlat ikonu görüntüle
 ; Czech
 ;cz.components_plugins=Plugins
 ;cz.components_skins=Skins
