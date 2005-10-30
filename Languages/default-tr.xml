@@ -2553,7 +2553,7 @@
 	<string id="8178" value="Dosyanın türü nedir?"/>
 	<string id="8179" value="(Arama geçmişini temizle)"/>
 	<string id="8180" value="Dosya uzunluğu"/>
-	<string id="8181" value="&#160; olmalı"/><!-- size from xx TO xx-->
+	<string id="8181" value="olmalı"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza %i dosyası için hash yaratıyor:"/>
 	<string id="8223" value="%i güz ve %i saat"/>
 	<string id="8224" value="Shareaza download ediliyor:"/>
