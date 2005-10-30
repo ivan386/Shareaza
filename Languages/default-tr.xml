@@ -2717,7 +2717,7 @@
 	<string id="16287" value="&quot;%s&quot; download u için kaynak edinemezsin çünkü ağ bağlantısı yok."/>
 	<string id="16288" value="&quot;%s&quot; downloadu için %i bağlantısında kaynak sorgulanıyor..."/> 
 	<string id="16289" value="&quot;%s&quot; download u için istek gönderiliyor..."/>
-	<string id="16290" value="%s download Hostu farklı bir yanıt verdi fakat &quot;%s&quot; den yararlı dağılım (%I64i-%I64i)."/>
+	<string id="16290" value="Download host %s responded with a different, but useful range (%I64i-%I64i) of &quot;%s&quot;."/>
 	<string id="16291" value="&quot;%s&quot; dan &quot;%s&quot;'a taşındı, download tamamlandı."/>
 	<string id="16292" value="&quot;%s&quot; dan &quot;%s&quot;'a taşınamadı. Dosyanın kullanımda olup olmadığını, download klasörünüzün mevcut ve yazılabilir olduğunu kontrol edin."/>
 	<string id="16293" value="&quot;%s&quot; 'dan &quot;%s&quot; 'a downloada karar veriliyor..."/>
