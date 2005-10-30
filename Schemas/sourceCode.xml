@@ -15,8 +15,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/sourceCode.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Código Fonte</title>
                <title language="ru">Исходный код</title>
                <title language="sr">Izvorni Kod</title>
+               <title language="tr">Kaynak Kod</title>
        </titles>
        <images>
                <icon path="sourceCode.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="author" search="generic">
                        <display defaultColumn="true"/>
@@ -80,6 +83,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Autor</title>
                        <title language="ru">Автор</title>
                        <title language="sr">Autor</title>
+                       <title language="tr">Yazar</title>
                </member>
                <member name="company">
                        <display defaultColumn="true"/>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Companhia</title>
                        <title language="ru">Компания</title>
                        <title language="sr">Proizvođač</title>
+                       <title language="tr">Şirket</title>
                </member>
                <member name="subject">
                        <display defaultColumn="true"/>
@@ -118,6 +123,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Assunto</title>
                        <title language="ru">Тема</title>
                        <title language="sr">Tema</title>
+                       <title language="tr">Konu</title>
                </member>
                <member name="keywords">
                        <title language="en">Keywords</title>
@@ -136,6 +142,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Palavras-chave</title>
                        <title language="ru">Ключ. слова</title>
                        <title language="sr">Ključne Reči</title>
+                       <title language="tr">Anahtar Kelimeler</title>
                </member>
                <member name="abstract">
                        <title language="en">Abstract</title>
@@ -154,6 +161,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Abstração</title>
                        <title language="ru">Содержание</title>
                        <title language="sr">Abstrakt</title>
+                       <title language="tr">Özet</title>
                </member>
                <member name="copyright">
                        <title language="en">Copyright</title>
@@ -172,6 +180,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Direitos de Cópia</title>
                        <title language="ru">Автор. права</title>
                        <title language="sr">Prava</title>
+                       <title language="tr">Telif Hakkı</title>
                </member>
                <member name="version">
                        <title language="en">Version</title>
@@ -190,6 +199,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Versão</title>
                        <title language="ru">Версия</title>
                        <title language="sr">Verzija</title>
+                       <title language="tr">Versiyon</title>
                </member>
                <member name="revision">
                        <title language="en">Revision</title>
@@ -208,6 +218,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Revisão</title>
                        <title language="ru">Ревизия</title>
                        <title language="sr">Revizija</title>
+                       <title language="tr">Düzenleme </title>
                </member>
                <member name="language">
                        <display defaultColumn="true"/>
@@ -227,6 +238,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
                        <title language="sr">Jezik</title>
+                       <title language="tr">Dil</title>
                </member>
                <member name="languageVersion">
                        <display defaultColumn="true"/>
@@ -246,6 +258,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Versão do Idioma</title>
                        <title language="ru">Версия языка</title>
                        <title language="sr">Narečje</title>
+                       <title language="tr">Dil Versiyonu</title>
                </member>
                <member name="license">
                        <title language="en">Licence</title>
@@ -264,6 +277,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Licença</title>
                        <title language="ru">Лицензия</title>
                        <title language="sr">Dozvola</title>
+                       <title language="tr">Lisans</title>
                </member>
                <member name="OS">
                        <title language="en">OS</title>
@@ -282,6 +296,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Sistema Operacional</title>
                        <title language="ru">ОС</title>
                        <title language="sr">OS</title>
+                       <title language="tr">İşletim Sistemi</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -300,6 +315,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sr">Link</title>
+                       <title language="tr">Bağlantı</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -318,6 +334,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
                </member>
        </members>
        <typeFilter>

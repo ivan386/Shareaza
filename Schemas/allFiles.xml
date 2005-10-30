@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/allFiles.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Geral:Todos os Arquivos</title>
                <title language="ru">&#160;Основное: Все файлы</title>
                <title language="sr">Opšte:Sve Datoteke</title>
+               <title language="tr">Genel: Tüm Dosyalar</title>
         </titles>
        <images>
                <icon path="allfilesFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <headerContent version="1.0">
@@ -80,6 +83,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Todos os Arquivos</title>
                <title language="ru">Все файлы</title>
                <title language="sr">Sve Datoteke</title>
+               <title language="tr">Tüm Dosyalar</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有文件。</subtitle>
@@ -96,6 +100,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém todos os arquivos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл в Вашем хранилище.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her dosyayı içerir.</subtitle>
      </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

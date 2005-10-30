@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Música:Todas as Músicas</title>
                <title language="ru">&#160;Музыка: Вся музыка</title>
                <title language="sr">Muzika:Sva Muzika</title>
+               <title language="tr">Müzik: Tüm Müzikler</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <contains>
@@ -83,6 +86,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Todas as Músicas</title>
                <title language="ru">Вся музыка</title>
                <title language="sr">Sva Muzika</title>
+               <title language="tr">Tüm Müzikler</title>
                <subtitle language="en">This folder contains every music file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle musieklêers in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有音乐。</subtitle>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém todas as músicas presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый музыкальный файл в Вашем хранилище.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve pesme u vašoj kolekciji.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her müzik dosyasını içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

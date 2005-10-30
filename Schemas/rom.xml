@@ -15,8 +15,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -39,6 +40,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Imagem ROM</title>
                <title language="ru">Образ ROM</title>
                <title language="sr">ROM Image</title>
+               <title language="tr">ROM Görüntü</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -59,6 +61,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="company" search="generic">
                        <display defaultColumn="true"/>
@@ -78,6 +81,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Companhia</title>
                        <title language="ru">Компания</title>
                        <title language="sr">Proizvođač</title>
+                       <title language="tr">Şirket</title>
                </member>
                <member name="system">
                        <display defaultColumn="true"/>
@@ -97,6 +101,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Sistema</title>
                        <title language="ru">Система</title>
                        <title language="sr">Sistem</title>
+                       <title language="tr">Sistem</title>
                </member>
                <member name="year">
                        <title language="en">Year</title>
@@ -115,6 +120,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Ano</title>
                        <title language="ru">Год</title>
                        <title language="sr">Godina</title>
+                       <title language="tr">Yıl</title>
                </member>
                <member name="type">
                        <title language="en">Type</title>
@@ -133,6 +139,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
                        <title language="sr">Vrsta</title>
+                       <title language="tr">Tip</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
@@ -151,6 +158,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
                        <title language="sr">Jezik</title>
+                       <title language="tr">Dil</title>
                </member>
                <member name="rating">
                        <title language="en">Rating</title>
@@ -169,6 +177,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Classificação</title>
                        <title language="ru">Райтинг</title>
                        <title language="sr">Ocena</title>
+                       <title language="tr">Değerlendirme</title>
                </member>
                <member name="price">
                        <title language="en">Price</title>
@@ -187,6 +196,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Preço</title>
                        <title language="ru">Цена</title>
                        <title language="sr">Cena</title>
+                       <title language="tr">Fiyat</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -205,6 +215,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sr">Link</title>
+                       <title language="tr">Bağlantı</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -223,6 +234,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
                </member>
        </members>
        <typeFilter>

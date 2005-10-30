@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/videoMusicCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Vídeo:Clipes Musicais</title>
                <title language="ru">&#160;Видео: Музыкальные видео</title>
                <title language="sr">Film:Spotovi</title>
+               <title language="tr">Video: Klipler</title>
        </titles>
        <images>
                <icon path="videoFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <contains>
@@ -83,6 +86,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Clipes Musicais</title>
                <title language="ru">Музыкальные видео</title>
                <title language="sr">Spotovi</title>
+               <title language="tr">Klipler</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
                <subtitle language="chs">此文件夹包括音乐电视。</subtitle>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém todos vlipes musicais.</subtitle>
                <subtitle language="ru">Эта папка отображает каждое музыкальное видео в Вашем хранилище.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži vaše spotove.</subtitle>
+               <subtitle language="tr">Bu klasör müzik videolarını içerir.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

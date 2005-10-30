@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/shareazaSkin.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -37,6 +38,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Pele</title>
                <title language="ru">Шкурка</title>
                <title language="sr">Skin</title>
+               <title language="tr">Arayüz</title>
        </titles>
        <members>
                <member name="name" search="generic">
@@ -57,6 +59,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Nome</title>
                        <title language="ru">Название</title>
                        <title language="sr">Ime</title>
+                       <title language="tr">İsim</title>
                </member>
                <member name="author" search="generic">
                        <title language="en">Author</title>
@@ -75,6 +78,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Autor</title>
                        <title language="ru">Автор</title>
                        <title language="sr">Autor</title>
+                       <title language="tr">Yazar</title>
                </member>
                <member name="link">
                        <title language="en">Link</title>
@@ -93,6 +97,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sr">Link</title>
+                       <title language="tr">Bağlantı</title>
                </member>
                <member name="email">
                        <title language="en">Email</title>
@@ -111,6 +116,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Email</title>
                        <title language="ru">E-mail</title>
                        <title language="sr">Email</title>
+                       <title language="tr">e-mail</title>
                </member>
                <member name="version">
                        <title language="en">Version</title>
@@ -129,6 +135,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Versão</title>
                        <title language="ru">Версия</title>
                        <title language="sr">Verzija</title>
+                       <title language="tr">Versiyon</title>
                </member>
                <member name="type">
                        <display defaultColumn="true" columnAlign="center"/>
@@ -148,6 +155,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
                        <title language="sr">Vrsta</title>
+                       <title language="tr">Tip</title>
                </member>
                <member name="language">
                        <title language="en">Language</title>
@@ -166,6 +174,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
                        <title language="sr">Jezik</title>
+                       <title language="tr">Dil</title>
                </member>
                <member name="description">
                        <title language="en">Description</title>
@@ -184,6 +193,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sr">Opis</title>
+                       <title language="tr">Tanımlama</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -202,6 +212,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
                </member>
        </members>
        <typeFilter>

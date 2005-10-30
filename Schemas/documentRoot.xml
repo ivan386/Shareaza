@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/documentRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Documento:Meus Documentos</title>
                <title language="ru">&#160;Документ:&#160;Мои документы</title>
                <title language="sr">Dokument:Moji Dokumenti</title>
+               <title language="tr">Doküman: Dokümanlarım</title>
        </titles>
        <images>
                <icon path="documentFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <contains>
@@ -83,6 +86,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Bem-Vindo aos Meus Documentos</title>
                <title language="ru">Добро пожаловать в Ваши документы!</title>
                <title language="sr">Dobrodošli Među Vaše Dokumente!</title>
+               <title language="tr">Dokümanlarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou dokumente.</subtitle>
                <subtitle language="chs">这些文件夹包含您所有的文档。</subtitle>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Estas pastas contêm todos os seu documentos.</subtitle>
                <subtitle language="ru">Эти папки отображают все Ваши документы.</subtitle>
                <subtitle language="sr">Ove fascile sadrže sve vaše dokumente.</subtitle>
+               <subtitle language="tr">Bu klasörler tüm dokümanlarınızı içerir.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

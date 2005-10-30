@@ -16,6 +16,7 @@ Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); j
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
 Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/ghostFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
               <title language="br">General:Ghost Files</title>
               <title language="ru">&#160;Основное: Теневые файлы</title>
               <title language="sr">General:Ghost Files</title>
+              <title language="tr">Genel: Niteliksiz Dosyalar</title>
         </titles>
        <images>
                <icon path="ghostFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <headerContent version="1.0">
@@ -80,6 +83,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Ghost Files</title>
                <title language="ru">Теневые файлы</title>
                <title language="sr">Ghost Files</title>
+               <title language="tr">Niteliksiz Dosyalar</title>
                <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="af">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="chs">This folder contains every file which you've deleted from the Library.</subtitle>
@@ -96,6 +100,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="ru">Эта папка отображает каждый файл, который Вы удалили с хранилища.</subtitle>
                <subtitle language="sr">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="tr">Bu klasör kütüphaneden sildiğiniz tüm dosyaları içerir.</subtitle>
      </headerContent>
      <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

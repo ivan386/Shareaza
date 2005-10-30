@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/imageRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Imagem:Minhas Imagens</title>
                <title language="ru">&#160;Картинка: Мои картинки</title>
                <title language="sr">Slike:Moje Slike</title>
+               <title language="tr">Görüntü: Görüntülerim</title>
        </titles>
        <images>
                <icon path="imageFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <contains>
@@ -83,6 +86,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Bem-vindo à Minhas Imagens</title>
                <title language="ru">Добро пожаловать в Ваши картинки!</title>
                <title language="sr">Dobrodošli Među Vaše Slike!</title>
+               <title language="tr">Görüntülerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the images in your library, organised by album.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
                <subtitle language="chs">这些文件夹包括您收藏中的所有图片，按相册进行编制。打开下面的文件夹可进行查看。</subtitle>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Estas pastas contém todas as imagens da sua biblioteca, organizadas por àlbum. Abra uma pasta abaixo para continuar.</subtitle>
                <subtitle language="ru">Эти папки отображают все картинки в Вашем хранилище организовнные по альбомам.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve slike iz vaše kolekcije složene u albume. Otvorite željenu fasciklu.</subtitle>
+               <subtitle language="tr">Bu klasörler arşivinizdeki albümden düzenlenen tüm görüntüleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

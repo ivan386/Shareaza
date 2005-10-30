@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Gênero Musical</title>
                <title language="ru">&#160;Стиль музыки</title>
                <title language="sr">Muzika Žanr</title>
+               <title language="tr">Müzik Tarzı</title>
        </titles>
        <images>
                <icon path="musicFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -79,6 +82,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sr">Opis</title>
+                       <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -97,6 +101,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
                        <title language="sr">Sakupio</title>
+                       <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -115,6 +120,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
                </member>
        </members>
        <extends>
@@ -142,6 +148,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">{name} - Música</title>
                <title language="ru">Музыка {name}</title>
                <title language="sr">{name} - Muzika</title>
+               <title language="tr">{name} Müzik</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
                <subtitle language="chs">此文件夹中包含了流派为 {name} 的音乐。</subtitle>
@@ -158,6 +165,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém todas as músicas do gênero: {name}.</subtitle>
                <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše pesme koje spadaju u {name} žanr.</subtitle>
+               <subtitle language="tr">Bu klasör {name} tarzının tüm müziklerini içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
 

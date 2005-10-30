@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Pasta</title>
                <title language="ru">&#160;Папка</title>
                <title language="sr">Fascikla</title>
+               <title language="tr">Klasörler</title>
        </titles>
        <images>
                <icon path="folder.ico"/>
@@ -60,6 +62,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="description" search="none">
                        <title language="en">Description</title>
@@ -78,6 +81,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sr">Opis</title>
+                       <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -96,6 +100,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
                        <title language="sr">Sakupio</title>
+                       <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="comments">
                        <title language="en">Comments</title>
@@ -114,6 +119,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Comentários</title>
                        <title language="ru">Коментарии</title>
                        <title language="sr">Komentari</title>
+                       <title language="tr">Yorumlar</title>
                </member>
        </members>
        <contains>

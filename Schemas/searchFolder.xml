@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/searchFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Pesquisar:Resultados de Pesquisa</title>
                <title language="ru">&#160;Поиск: Результаты поиска</title>
                <title language="sr">Traži:Rezultati Potrage</title>
+               <title language="tr">Ara: Arama Sonuçları</title>
        </titles>
        <members>
                <member name="title" search="none">
@@ -57,6 +59,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="time" search="none">
                        <title language="en">Time</title>
@@ -75,6 +78,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Tempo</title>
                        <title language="ru">Время</title>
                        <title language="sr">Vreme</title>
+                       <title language="tr">Süre</title>
                </member>
                <member name="date" search="none">
                        <title language="en">Date</title>
@@ -93,6 +97,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Data</title>
                        <title language="ru">Дата</title>
                        <title language="sr">Datum</title>
+                       <title language="tr">Tarih</title>
                </member>
                <member name="content" search="none">
                        <title language="en">Content</title>
@@ -111,6 +116,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Conteúdo</title>
                        <title language="ru">Содержание</title>
                        <title language="sr">Sadržaj</title>
+                       <title language="tr">İçerik</title>
                </member>
        </members>
        <images>
@@ -133,6 +139,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Pesquisar por "{content}"</title>
                <title language="ru">Поиск для "{content}"</title>
                <title language="sr">Traži "{content}"</title>
+               <title language="tr">Ara "{content}"</title>
                <subtitle language="en">This folder contains the files which matched your search for "{content}"</subtitle>
                <subtitle language="af">Hierdie gids bevat die lêers wat jou soektog vir " {content} " bevredig.</subtitle>
                <subtitle language="chs">此文件夹包含了匹配搜索 "{content}" 的文件</subtitle>
@@ -149,6 +156,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém os arquivos que foram encontrados na sua pesquisa por "{content}".</subtitle>
                <subtitle language="ru">Эта папка отображает результаты поиска для {content}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži nađene datoteke po izrazu "{content}"</subtitle>
+               <subtitle language="tr">Bu klasör "{content}" aramanıza benzer içeriğe sahip dosyaları içerir.</subtitle>
        </headerContent>
 
 </schemaDescriptor>

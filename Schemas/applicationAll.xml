@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/applicationAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Aplicativo:Todos os Aplicativos</title>
                <title language="ru">&#160;Приложение: Все приложения</title>
                <title language="sr">Program:Svi Programi</title>
+               <title language="tr">Uygulama: Tüm Uygulamalar</title>
        </titles>
        <images>
                <icon path="applicationFolder.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
        </members>
        <contains>
@@ -83,6 +86,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Todos os Aplicativos</title>
                <title language="ru">Все приложения</title>
                <title language="sr">Svi Programi</title>
+               <title language="tr">Tüm Uygulamalar</title>
                <subtitle language="en">This folder contains every application file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle programlêers in jou biblioteek.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有程序。</subtitle>
@@ -99,6 +103,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <subtitle language="br">Esta pasta contém todos os aplicativos presentes em sua biblioteca.</subtitle>
                <subtitle language="ru">Эта папка отображает каждое приложение в Вашем хранилище.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve programe u vašoj kolekciji.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her uygulama dosyasını içerir</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>
 

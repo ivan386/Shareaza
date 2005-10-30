@@ -14,8 +14,9 @@ Shareaza Italian Schemas File translated by ale5000
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
 Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); jonne
 Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Russian Schemas File translated by dAbserver
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/musicAlbum.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -38,6 +39,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                <title language="br">Álbum de Músicas</title>
                <title language="ru">&#160;Альбом музыки</title>
                <title language="sr">Album Pesma</title>
+               <title language="tr">Müzik Albümü</title>
        </titles>
        <images>
                <icon path="musicDisk.ico"/>
@@ -61,6 +63,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Título</title>
                        <title language="ru">Название</title>
                        <title language="sr">Naslov</title>
+                       <title language="tr">Başlık</title>
                </member>
                <member name="artist" search="generic">
                        <display defaultColumn="true"/>
@@ -81,6 +84,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Artista</title>
                        <title language="ru">Артист</title>
                        <title language="sr">Izvođač</title>
+                       <title language="tr">Sanatçı</title>
                </member>
                <member name="genre" search="generic">
                        <display defaultColumn="true"/>
@@ -101,6 +105,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Gênero</title>
                        <title language="ru">Жанр</title>
                        <title language="sr">Žanr</title>
+                       <title language="tr">Tarz</title>
                </member>
                <member name="tracks" search="none">
                        <title language="en">Tracks</title>
@@ -119,6 +124,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Faixas</title>
                        <title language="ru">Треки</title>
                        <title language="sr">Pesme</title>
+                       <title language="tr">İzler</title>
                </member>
                <member name="disks" search="none">
                        <title language="en">Disks</title>
@@ -137,6 +143,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Discos</title>
                        <title language="ru">Диски</title>
                        <title language="sr">Diskovi</title>
+                       <title language="tr">Diskler</title>
                </member>
                <member name="label">
                        <title language="en">Label</title>
@@ -155,6 +162,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Etiqueta</title>
                        <title language="ru">Этикетка</title>
                        <title language="sr">Oznaka</title>
+                       <title language="tr">Etiket</title>
                </member>
                <member name="source">
                        <title language="en">Source</title>
@@ -173,6 +181,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Fonte</title>
                        <title language="ru">Источник</title>
                        <title language="sr">Izvor</title>
+                       <title language="tr">Kaynak</title>
                </member>
                <member name="type" search="indexed">
                        <title language="en">Type</title>
@@ -191,6 +200,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Tipo</title>
                        <title language="ru">Тип</title>
                        <title language="sr">Vrsta</title>
+                       <title language="tr">Tip</title>
                </member>
                <member name="TotalTime" search="indexed">
                        <title language="en">Total Time</title>
@@ -209,6 +219,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Tempo Total</title>
                        <title language="ru">Время всего</title>
                        <title language="sr">Vreme Trajanja</title>
+                       <title language="tr">Toplam Süre</title>
                </member>
                <member name="language" search="none">
                        <title language="en">Language</title>
@@ -227,6 +238,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Idioma</title>
                        <title language="ru">Язык</title>
                        <title language="sr">Jezik</title>
+                       <title language="tr">Dil</title>
                </member>
                <member name="completeness" search="none">
                        <title language="en">Completeness</title>
@@ -245,6 +257,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Completado</title>
                        <title language="ru">Полнота</title>
                        <title language="sr">Popunjeno</title>
+                       <title language="tr">Tamamlık</title>
                </member>
                <member name="EncoderUsed" search="indexed">
                        <title language="en">Encoder Used</title>
@@ -263,6 +276,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Codificador Usado</title>
                        <title language="ru">Перекодировщик</title>
                        <title language="sr">Korišteni Encoder</title>
+                       <title language="tr">Kullanılan Kodlayıcı</title>
                </member>
                <member name="bitrate" search="indexed">
                        <title language="en">Bitrate</title>
@@ -281,6 +295,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Bitrate</title>
                        <title language="ru">Битрейт</title>
                        <title language="sr">Gustina Zapisa</title>
+                       <title language="tr">Bitrate</title>
                </member>
                <member name="SampleRate" search="indexed">
                        <title language="en">Sample Rate</title>
@@ -299,6 +314,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Taxa de Sample</title>
                        <title language="ru">Ср. битрейт</title>
                        <title language="sr">Sample Rate</title>
+                       <title language="tr">Örnekler</title>
                </member>
                <member name="description">
                        <title language="en">Description</title>
@@ -317,6 +333,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Descrição</title>
                        <title language="ru">Описание</title>
                        <title language="sr">Opis</title>
+                       <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
                        <title language="en">Collector</title>
@@ -335,6 +352,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Colecionador</title>
                        <title language="ru">Коллекционер</title>
                        <title language="sr">Sakupio</title>
+                       <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="qualitynotes">
                        <title language="en">Quality Notes</title>
@@ -353,6 +371,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Notas de Qualidade</title>
                        <title language="ru">Прим. о качестве</title>
                        <title language="sr">O Kvalitetu</title>
+                       <title language="tr">Kalite Notları</title>
                </member>
                <member name="Distributer" search="indexed">
                        <title language="en">Distributer</title>
@@ -371,6 +390,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Distribuidor</title>
                        <title language="ru">Дистрибьютер</title>
                        <title language="sr">Distributer</title>
+                       <title language="tr">Dağıtıcı</title>
                </member>
                <member name="DistributerLink">
                        <title language="en">Distributer Link</title>
@@ -389,6 +409,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link do Distribuidor</title>
                        <title language="ru">Ссылка агента</title>
                        <title language="sr">Link na Distributera</title>
+                       <title language="tr">Dağıtıcı Bağlantısı</title>
                </member>
                <member name="Releasegroup" search="indexed">
                        <title language="en">Release Group</title>
@@ -407,6 +428,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Grupo de Lançamento</title>
                        <title language="ru">Релиз группа</title>
                        <title language="sr">Grupa Objavljivača</title>
+                       <title language="tr">Yayın Grubu</title>
                </member>
                <member name="ReleasegroupLink">
                        <title language="en">Release Group Link</title>
@@ -425,6 +447,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link do Grupo</title>
                        <title language="ru">Ссылка группы</title>
                        <title language="sr">Link na Grupu Objavljivača</title>
+                       <title language="tr">Yayın Grubu Bağlantısı</title>
                </member>
                <member name="year" search="none">
                        <title language="en">Year</title>
@@ -443,6 +466,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Ano</title>
                        <title language="ru">Год</title>
                        <title language="sr">Godina</title>
+                       <title language="tr">Yıl</title>
                </member>
                <member name="link" search="none">
                        <title language="en">Link</title>
@@ -461,6 +485,7 @@ Shareaza Serbian Schemas File translated by Woodstoock
                        <title language="br">Link</title>
                        <title language="ru">Ссылка</title>
                        <title language="sr">Link</title>
+                       <title language="tr">Bağlantı</title>
                </member>
        </members>
        <extends>
