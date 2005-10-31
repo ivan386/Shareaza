@@ -46,13 +46,14 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,2
+ FILEVERSION 1,0,0,3
  PRODUCTVERSION 2,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -71,7 +72,7 @@ BEGIN
             VALUE "Comments", "Shareaza Document Reader Plugin"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Document Reader Plugin"
-            VALUE "FileVersion", "1.0.0.2"
+            VALUE "FileVersion", "1.0.0.3"
             VALUE "InternalName", "DocumentReader"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2005. All rights reserved."
             VALUE "OriginalFilename", "DocumentReader.dll"
@@ -106,6 +107,7 @@ END
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
+
 
 
 #ifndef APSTUDIO_INVOKED

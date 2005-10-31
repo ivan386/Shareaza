@@ -323,14 +323,9 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	// Ask the ImageService to load from file handle
 	
 	SAFEARRAY* pArray = NULL;
-	HRESULT hr = pService->LoadFromFile( hFile, nLength, &pParams, &pArray );
-	if ( hr == S_FALSE )
-	{
-		USES_CONVERSION;
-		BSTR bsPath = T2BSTR(pszPath);
-		hr = pService->LoadFromFile( (HANDLE)bsPath, 0xFEFEFEFE, &pParams, &pArray );
-		SysFreeString( bsPath );
-	}
+	BSTR sFile = SysAllocString (CT2CW (pszPath));
+	HRESULT hr = pService->LoadFromFile( sFile, &pParams, &pArray );
+	SysFreeString (sFile);
 	
 	// Check the result
 	
@@ -377,8 +372,12 @@ BOOL CImage::Load(LPCTSTR pszPath)
 					}
 					
 					// Ask the ImageService to load from memory
+					LPCTSTR pszType = _tcsrchr( pszPath, '.' );
+					if ( pszType == NULL ) return FALSE;
 					
-					hr = pService->LoadFromMemory( pInput, &pParams, &pArray );
+					BSTR bstrType = SysAllocString ( pszType );
+					hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
+					SysFreeString( bstrType );
 					SafeArrayDestroy( pInput );
 				}
 				

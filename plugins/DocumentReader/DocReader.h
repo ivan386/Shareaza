@@ -1,8 +1,8 @@
 //
 // DocReader.h
 //
-//	Date:			"$Date: 2005/10/29 03:54:57 $"
-//	Revision:		"$Revision: 1.5 $"
+//	Date:			"$Date: 2005/10/31 16:46:05 $"
+//	Revision:		"$Revision: 1.6 $"
 //  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
@@ -87,8 +87,8 @@ protected:
 
 			BOOL	m_bOnlyThumb;
 
-		// SummaryProperties Implementation
-		// FMTID_SummaryInformation Properties...
+			// SummaryProperties Implementation
+			// FMTID_SummaryInformation Properties...
 			HRESULT get_Title(BSTR* pbstrTitle);
 			HRESULT put_Title(BSTR bstrTitle);
 			HRESULT get_Subject(BSTR* pbstrSubject);
@@ -114,7 +114,7 @@ protected:
 			HRESULT get_ApplicationName(BSTR* pbstrAppName);
 			HRESULT get_DocumentSecurity(long* plDocSecurity);
 
-		// FMTID_DocSummaryInformation Properties...
+			// FMTID_DocSummaryInformation Properties...
 			HRESULT get_Category(BSTR* pbstrCategory);
 			HRESULT put_Category(BSTR bstrCategory);
 			HRESULT get_PresentationFormat(BSTR* pbstrPresFormat);
@@ -134,7 +134,7 @@ protected:
 			HRESULT get_Version(BSTR* pbstrVersion);
 			HRESULT get_DigitalSignature(VARIANT* pvtDigSig);
 
-		// Internal Functions
+			// Internal Functions
 			HRESULT LoadProperties(IPropertySetStorage* pPropSS, BOOL fIsReadOnly, dsoFileOpenOptions dwFlags);
 			HRESULT ReadProperty(CDocProperty* pPropList, PROPID pid, VARTYPE vt, void** ppv);
 			HRESULT WriteProperty(CDocProperty** ppPropList, PROPID pid, VARTYPE vt, void* pv);
@@ -157,7 +157,7 @@ protected:
 
 		CSummaryProperties*		m_pSummProps;   // Summary Properties Object
 
-	// Implementation
+		// Implementation
 		HRESULT Open(BSTR sFileName, VARIANT_BOOL ReadOnly, dsoFileOpenOptions Options);
 		HRESULT Close(VARIANT_BOOL SaveBeforeClose);
 		HRESULT get_IsReadOnly(VARIANT_BOOL* pbReadOnly);
@@ -172,7 +172,7 @@ protected:
 		HRESULT get_OleDocumentFormat(BSTR* pbstrFormat);
 		HRESULT get_OleDocumentType(BSTR* pbstrType);
 
-	// Internal Functions
+		// Internal Functions
 		HRESULT InitializeNewInstance(){return S_OK;} // (for future use?)
 
 	private:
@@ -211,12 +211,11 @@ public:
 
 	// IImageServicePlugin Methods
 public:
-	STDMETHOD(LoadFromFile)(HANDLE hFile, DWORD nLength, 
+	STDMETHOD(LoadFromFile)(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
+	STDMETHOD(LoadFromMemory)(BSTR sType, SAFEARRAY* pMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	STDMETHOD(LoadFromMemory)(SAFEARRAY* pMemory, 
-		IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	STDMETHOD(SaveToFile)(HANDLE hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
-	STDMETHOD(SaveToMemory)(SAFEARRAY** ppMemory, 
+	STDMETHOD(SaveToFile)(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
+	STDMETHOD(SaveToMemory)(BSTR sType, SAFEARRAY** ppMemory, 
 		IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 
 private:
@@ -242,4 +241,6 @@ public:
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DocReader), CDocReader)
-const CLSID CLSID_PNGReader = { 0xD427C22F, 0x23FB, 0x4E51, { 0xA8, 0xB8, 0x70, 0xF2, 0x03, 0x6E, 0xD3, 0xBA } };
+//Old ImageServices
+//const CLSID CLSID_PNGReader = { 0xD427C22F, 0x23FB, 0x4E51, { 0xA8, 0xB8, 0x70, 0xF2, 0x03, 0x6E, 0xD3, 0xBA } };
+const CLSID CLSID_PNGReader = { 0xFF5FCD00, 0x2C20, 0x49D8, { 0x84, 0xF6, 0x88, 0x8D, 0x2E, 0x2C, 0x95, 0xDA } };

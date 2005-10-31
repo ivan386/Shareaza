@@ -1,8 +1,8 @@
 //
 // DocReader.cpp
 //
-//	Date:			"$Date: 2005/10/29 03:54:57 $"
-//	Revision:		"$Revision: 1.7 $"
+//	Date:			"$Date: 2005/10/31 16:46:04 $"
+//	Revision:		"$Revision: 1.8 $"
 //  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
@@ -543,36 +543,16 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
 
 // IImageServicePlugin Methods
 
-STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+STDMETHODIMP CDocReader::LoadFromFile(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
 	ODS("CDocReader::LoadFromFile\n");
 
 	EnterCritical();
 	DllAddRef();
 	
-	HRESULT hr;
-	BSTR bsFile = NULL;
-	int nPathLength = 0;
-	BOOL bError = FALSE;
+	HRESULT hr = E_FAIL;
 
-	// We don't accept handles; check if it has a path.
-	SEH_TRY
-		SEH_TRY
-			bsFile = (BSTR)hFile;
-			nPathLength = SysStringLen( bsFile );
-		SEH_START_FINALLY
-			if ( nPathLength == 0 )
-			{
-				bError = TRUE;
-				DllRelease();
-				LeaveCritical();
-			}
-		SEH_END_FINALLY
-	SEH_EXCEPT_NULL
-
-	if ( bError ) return S_FALSE;
-
-	LPCWSTR pszExt = wcslwr( wcsrchr( bsFile, '.') );
+	LPCWSTR pszExt = wcslwr( wcsrchr( sFile, '.') );
 	LPCWSTR pszFormat = GetDocumentFormat( pszExt );
 
 	if ( ! pszFormat )
@@ -582,9 +562,9 @@ STDMETHODIMP CDocReader::LoadFromFile(HANDLE hFile, DWORD nLength, IMAGESERVICED
 		return E_UNEXPECTED;
 	}
 	if ( pszFormat[ 0 ] == 'M' ) // Microsoft
-		hr = GetMSThumbnail( bsFile, pParams, ppImage );
+		hr = GetMSThumbnail( sFile, pParams, ppImage );
 	else if ( pszFormat[ 0 ] == 'O' ) // OpenOffice or OpenDocument
-		hr = GetOOThumbnail( bsFile, pParams, ppImage );
+		hr = GetOOThumbnail( sFile, pParams, ppImage );
 
 	DllRelease();
 	LeaveCritical();
@@ -951,29 +931,29 @@ STDMETHODIMP CDocReader::GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	if ( FAILED(hr_coinit) && hr_coinit != RPC_E_CHANGED_MODE ) return E_FAIL;
 
 	CComPtr<IImageServicePlugin> pPNGReader;
-	hr = pPNGReader.CoCreateInstance( CLSID_PNGReader, NULL, CLSCTX_INPROC );
+	hr = pPNGReader.CoCreateInstance( CLSID_PNGReader, NULL, CLSCTX_ALL );
 	if ( FAILED(hr) ) return E_FAIL;
 
-	hr = pPNGReader->LoadFromMemory( psa, pParams, ppImage );
+	hr = pPNGReader->LoadFromMemory( bsFile, psa, pParams, ppImage );
 
 	if ( SUCCEEDED(hr_coinit) ) CoUninitialize();
 
 	return hr;
 }
 
-STDMETHODIMP CDocReader::LoadFromMemory(SAFEARRAY* pMemory, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
+STDMETHODIMP CDocReader::LoadFromMemory(BSTR sType, SAFEARRAY* pMemory, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
 	ODS("CDocReader::LoadFromMemory\n");
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CDocReader::SaveToFile(HANDLE hFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
+STDMETHODIMP CDocReader::SaveToFile(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
 {
 	ODS("CDocReader::SaveToFile\n");
 	return E_NOTIMPL;
 }
 
-STDMETHODIMP CDocReader::SaveToMemory(SAFEARRAY** ppMemory, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
+STDMETHODIMP CDocReader::SaveToMemory(BSTR sType, SAFEARRAY** ppMemory, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage)
 {
 	ODS("CDocReader::SaveToMemory\n");
 	return E_NOTIMPL;
